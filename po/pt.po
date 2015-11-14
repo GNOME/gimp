@@ -9,8 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-07-21 17:28+0000\n"
 "PO-Revision-Date: 2015-08-07 11:14+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
@@ -24,6 +23,8 @@ msgstr ""
 "X-Poedit-Country: PORTUGAL\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Gtranslator 2.91.6\n"
+"X-Language: pt_PT\n"
+"X-Source-Language: C\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -736,8 +737,7 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Intersetar este canal com a seleção atual"
 
-#: ../app/actions/channels-commands.c:85
-#: ../app/actions/channels-commands.c:402
+#: ../app/actions/channels-commands.c:85 ../app/actions/channels-commands.c:402
 msgid "Channel Attributes"
 msgstr "Atributos do canal"
 
@@ -749,8 +749,7 @@ msgstr "Editar atributos do canal"
 msgid "Edit Channel Color"
 msgstr "Editar cor do canal"
 
-#: ../app/actions/channels-commands.c:91
-#: ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:91 ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
 msgstr "_Opacidade do preenchimento:"
 
@@ -988,8 +987,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:118
-#: ../app/actions/tool-options-commands.c:72
+#: ../app/actions/data-commands.c:118 ../app/actions/tool-options-commands.c:72
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1529
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
@@ -3236,15 +3234,12 @@ msgstr "A redimensionar"
 msgid "Set Image Print Resolution"
 msgstr "Definir resolução de impressão da imagem"
 
-#: ../app/actions/image-commands.c:379
-#: ../app/pdb/drawable-transform-cmds.c:159
-#: ../app/pdb/drawable-transform-cmds.c:247
-#: ../app/pdb/item-transform-cmds.c:162
+#: ../app/actions/image-commands.c:379 ../app/pdb/drawable-transform-cmds.c:159
+#: ../app/pdb/drawable-transform-cmds.c:247 ../app/pdb/item-transform-cmds.c:162
 msgid "Flipping"
 msgstr "A inverter"
 
-#: ../app/actions/image-commands.c:403
-#: ../app/pdb/drawable-transform-cmds.c:602
+#: ../app/actions/image-commands.c:403 ../app/pdb/drawable-transform-cmds.c:602
 #: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:534
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
@@ -4622,14 +4617,13 @@ msgstr "Abrir ficheiro de texto (UTF-8)"
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
 #: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
-#: ../app/core/gimpbrushgenerated-load.c:73
-#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
-#: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
-#: ../app/core/gimppalette-load.c:274 ../app/core/gimppalette-load.c:320
-#: ../app/core/gimppalette-load.c:377 ../app/core/gimppalette-load.c:467
-#: ../app/core/gimppalette-load.c:634 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:642 ../app/tools/gimplevelstool.c:747
-#: ../app/xcf/xcf.c:359
+#: ../app/core/gimpbrushgenerated-load.c:73 ../app/core/gimpbrushpipe-load.c:81
+#: ../app/core/gimpcurve-load.c:54 ../app/core/gimpgradient-load.c:63
+#: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
+#: ../app/core/gimppalette-load.c:320 ../app/core/gimppalette-load.c:377
+#: ../app/core/gimppalette-load.c:467 ../app/core/gimppalette-load.c:634
+#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpcurvestool.c:642
+#: ../app/tools/gimplevelstool.c:747 ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossível abrir \"%s\" para leitura: %s"
@@ -6070,8 +6064,8 @@ msgid ""
 "backup of your configuration has been created at '%s'."
 msgstr ""
 "Ocorreu um erro ao processar o seu ficheiro \"%s\". Serão usados os valores "
-"predefinidos. Foi criada uma cópia de segurança da sua configuração em \"%s"
-"\"."
+"predefinidos. Foi criada uma cópia de segurança da sua configuração em "
+"\"%s\"."
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -6080,8 +6074,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Quando ativo, uma imagem torna-se a imagem ativa quando a sua janela de "
 "imagem recebe o foco. Isto é útil para gestores de janelas que usem \"clique "
@@ -7590,8 +7584,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Cadeia UTF-8 inválida no ficheiro de pincel \"%s\"."
 
 #: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:146
-#: ../app/dialogs/template-options-dialog.c:83
-#: ../app/tools/gimpvectortool.c:317
+#: ../app/dialogs/template-options-dialog.c:83 ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Sem nome"
 
@@ -7983,8 +7976,7 @@ msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "Equilíbrio de cores"
 
-#: ../app/core/gimpdrawable-colorize.c:72
-#: ../app/core/gimpdrawable-colorize.c:84
+#: ../app/core/gimpdrawable-colorize.c:72 ../app/core/gimpdrawable-colorize.c:84
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Colorir"
@@ -7995,8 +7987,7 @@ msgid "Curves"
 msgstr "Curvas"
 
 #: ../app/core/gimpdrawable-desaturate.c:70
-#: ../app/core/gimpdrawable-desaturate.c:76
-#: ../app/tools/gimpdesaturatetool.c:77
+#: ../app/core/gimpdrawable-desaturate.c:76 ../app/tools/gimpdesaturatetool.c:77
 msgid "Desaturate"
 msgstr "Mudar saturação"
 
@@ -8924,8 +8915,8 @@ msgstr "Erro ao processar \"%s\""
 #: ../app/core/gimptemplate.c:129
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
-"A unidade usada para mostrar coordenadas quando não se está em modo ponto-"
-"por-ponto."
+"A unidade usada para mostrar coordenadas quando não se está em modo "
+"ponto-por-ponto."
 
 #: ../app/core/gimptemplate.c:136
 msgid "The horizontal image resolution."
@@ -9356,8 +9347,7 @@ msgstr "_Modelo:"
 msgid "Confirm Image Size"
 msgstr "Confirmar tamanho da imagem"
 
-#: ../app/dialogs/image-new-dialog.c:338
-#: ../app/dialogs/image-scale-dialog.c:239
+#: ../app/dialogs/image-new-dialog.c:338 ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "Está a tentar criar uma imagem com um tamanho de %s."
@@ -9457,13 +9447,11 @@ msgid "Layer _name:"
 msgstr "_Nome da camada:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1129
+#: ../app/dialogs/layer-options-dialog.c:139 ../app/tools/gimpmeasuretool.c:1129
 msgid "Width:"
 msgstr "Largura:"
 
-#: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1157
+#: ../app/dialogs/layer-options-dialog.c:145 ../app/tools/gimpmeasuretool.c:1157
 msgid "Height:"
 msgstr "Altura:"
 
@@ -9960,8 +9948,7 @@ msgstr "Tornar ativa a camada ou caminho"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1963
-#: ../app/dialogs/preferences-dialog.c:2162
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2162 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Aparência"
 
@@ -10146,9 +10133,8 @@ msgid "Monitor Resolution"
 msgstr "Resolução do monitor"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2335
-#: ../app/display/gimpcursorview.c:206 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2335 ../app/display/gimpcursorview.c:206
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Pixels"
 
@@ -10524,8 +10510,7 @@ msgstr "Clique em %s para descartar as alterações e sair."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Clique em %s para descartar as alterações e fechar as imagens."
 
-#: ../app/dialogs/quit-dialog.c:341
-#: ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "_Descartar alterações"
 
@@ -10765,14 +10750,12 @@ msgid "n/a"
 msgstr "n/d"
 
 #: ../app/display/gimpcursorview.c:219 ../app/display/gimpcursorview.c:244
-#: ../app/display/gimpcursorview.c:269
-#: ../app/widgets/gimpdeviceinfoeditor.c:138
+#: ../app/display/gimpcursorview.c:269 ../app/widgets/gimpdeviceinfoeditor.c:138
 msgid "X"
 msgstr "X"
 
 #: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:250
-#: ../app/display/gimpcursorview.c:275
-#: ../app/widgets/gimpdeviceinfoeditor.c:139
+#: ../app/display/gimpcursorview.c:275 ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "Y"
 msgstr "Y"
 
@@ -10816,8 +10799,8 @@ msgstr "Alternar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar pela visualização da imagem"
 
-#: ../app/display/gimpdisplayshell.c:746
-#: ../app/display/gimpdisplayshell.c:1331 ../app/widgets/gimptoolbox.c:253
+#: ../app/display/gimpdisplayshell.c:746 ../app/display/gimpdisplayshell.c:1331
+#: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Largue aqui os ficheiros para abri-los"
 
@@ -11072,8 +11055,9 @@ msgstr "Encher a posição original da gaiola com uma cor simples"
 #. * Leave an empty string as translation. It does not matter.
 #.
 #: ../app/gui/gui.c:207
+#, fuzzy
 msgid "default:LTR"
-msgstr ""
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:438
@@ -11528,8 +11512,7 @@ msgstr ""
 "O procedimento \"%s\" foi chamado com um valor de tipo incorreto para o "
 "argumento nº %d. Esperado \"%s\", obtido \"%s\"."
 
-#: ../app/pdb/gimppdbcontext.c:89
-#: ../app/tools/gimpforegroundselectoptions.c:79
+#: ../app/pdb/gimppdbcontext.c:89 ../app/tools/gimpforegroundselectoptions.c:79
 #: ../app/tools/gimpselectionoptions.c:78
 msgid "Smooth edges"
 msgstr "Margens suaves"
@@ -11545,14 +11528,14 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"O procedimento \"%s\" devolveu um valor de tipo incorreto para o valor \"%s"
-"\" (n°%d). Esperado %s, obtido %s."
+"O procedimento \"%s\" devolveu um valor de tipo incorreto para o valor "
+"\"%s\" (n°%d). Esperado %s, obtido %s."
 
 #: ../app/pdb/gimpprocedure.c:656
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
 "O procedimento \"%s\" foi chamado com um valor de tipo incorreto para o "
 "argumento \"%s\" (n°%d). Esperado %s, obtido %s."
@@ -11560,8 +11543,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:689
 #, c-format
 msgid ""
-"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
-"in is trying to work on a layer that doesn't exist any longer."
+"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a "
+"plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
 "O procedimento \"%s\" devolveu uma ID inválida para o argumento \"%s\". O "
 "mais provável é que uma extensão esteja a tentar operar numa camada que já "
@@ -11573,15 +11556,15 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"O procedimento \"%s\" foi chamado com uma ID inválida para o argumento \"%s"
-"\". O mais provável é que uma extensão esteja a tentar operar numa camada "
-"que já não existe."
+"O procedimento \"%s\" foi chamado com uma ID inválida para o argumento "
+"\"%s\". O mais provável é que uma extensão esteja a tentar operar numa "
+"camada que já não existe."
 
 #: ../app/pdb/gimpprocedure.c:719
 #, c-format
 msgid ""
-"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
-"in is trying to work on an image that doesn't exist any longer."
+"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a "
+"plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
 "O procedimento \"%s\" devolveu uma ID inválida para o argumento \"%s\". O "
 "mais provável é que uma extensão esteja a tentar operar numa imagem que já "
@@ -11593,9 +11576,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"O procedimento \"%s\" foi chamado com uma ID inválida para o argumento \"%s"
-"\". O mais provável é que uma extensão esteja a tentar operar numa imagem "
-"que já não existe."
+"O procedimento \"%s\" foi chamado com uma ID inválida para o argumento "
+"\"%s\". O mais provável é que uma extensão esteja a tentar operar numa "
+"imagem que já não existe."
 
 #: ../app/pdb/gimpprocedure.c:753
 #, c-format
@@ -11612,8 +11595,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento \"%s"
-"\" (nº %d, tipo %s). Este valor está fora dos limites permitidos."
+"O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento \"%s\" "
+"(nº %d, tipo %s). Este valor está fora dos limites permitidos."
 
 #: ../app/pdb/image-cmds.c:2361
 msgid ""
@@ -12302,8 +12285,7 @@ msgstr "%s para definir uma nova origem da clonagem"
 msgid "Click to set a new clone source"
 msgstr "Clique para definir uma nova origem da clonagem"
 
-#: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:899
+#: ../app/tools/gimpclonetool.c:109 ../app/tools/gimpperspectiveclonetool.c:899
 msgid "Source"
 msgstr "Origem"
 
@@ -12418,18 +12400,15 @@ msgstr "Colorir só opera sobre camadas em cor RGB."
 msgid "Select Color"
 msgstr "Selecionar cor"
 
-#: ../app/tools/gimpcolorizetool.c:241
-#: ../app/tools/gimphuesaturationtool.c:381
+#: ../app/tools/gimpcolorizetool.c:241 ../app/tools/gimphuesaturationtool.c:381
 msgid "_Hue:"
 msgstr "_Matiz:"
 
-#: ../app/tools/gimpcolorizetool.c:254
-#: ../app/tools/gimphuesaturationtool.c:413
+#: ../app/tools/gimpcolorizetool.c:254 ../app/tools/gimphuesaturationtool.c:413
 msgid "_Saturation:"
 msgstr "_Saturação:"
 
-#: ../app/tools/gimpcolorizetool.c:267
-#: ../app/tools/gimphuesaturationtool.c:397
+#: ../app/tools/gimpcolorizetool.c:267 ../app/tools/gimphuesaturationtool.c:397
 msgid "_Lightness:"
 msgstr "_Luminosidade:"
 
@@ -12439,8 +12418,7 @@ msgstr "Raio médio da pipeta"
 
 #: ../app/tools/gimpcoloroptions.c:157
 #: ../app/tools/gimprectangleselectoptions.c:163
-#: ../app/tools/gimpselectionoptions.c:277
-#: ../app/widgets/gimpbrusheditor.c:155
+#: ../app/tools/gimpselectionoptions.c:277 ../app/widgets/gimpbrusheditor.c:155
 msgid "Radius"
 msgstr "Raio"
 
@@ -13168,8 +13146,7 @@ msgstr "Ajuste"
 msgid "Size"
 msgstr "Tamanho"
 
-#: ../app/tools/gimpinkoptions-gui.c:71
-#: ../app/tools/gimppaintoptions-gui.c:181
+#: ../app/tools/gimpinkoptions-gui.c:71 ../app/tools/gimppaintoptions-gui.c:181
 #: ../app/widgets/gimpbrusheditor.c:199
 msgid "Angle"
 msgstr "Ângulo"
@@ -13179,8 +13156,7 @@ msgstr "Ângulo"
 msgid "Sensitivity"
 msgstr "Sensibilidade"
 
-#: ../app/tools/gimpinkoptions-gui.c:94
-#: ../app/widgets/gimpdynamicseditor.c:144
+#: ../app/tools/gimpinkoptions-gui.c:94 ../app/widgets/gimpdynamicseditor.c:144
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Tilt"
 msgstr "Inclinação"
@@ -13490,8 +13466,8 @@ msgid "_Paintbrush"
 msgstr "_Pintor"
 
 #: ../app/tools/gimppaintoptions-gui.c:89
-#: ../app/tools/gimpselectionoptions.c:217
-#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
+#: ../app/tools/gimpselectionoptions.c:217 ../app/widgets/gimpbrushselect.c:190
+#: ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr "Modo:"
 
@@ -13535,8 +13511,7 @@ msgstr "Opções de desvanecimento"
 msgid "Fade length"
 msgstr "Duração do desvanecimento"
 
-#: ../app/tools/gimppaintoptions-gui.c:332
-#: ../app/widgets/gimpviewablebox.c:311
+#: ../app/tools/gimppaintoptions-gui.c:332 ../app/widgets/gimpviewablebox.c:311
 msgid "Reverse"
 msgstr "Reverso"
 
@@ -14598,8 +14573,7 @@ msgstr "_Procurar:"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:338
-#: ../app/widgets/gimpcontrollereditor.c:341
+#: ../app/widgets/gimpactionview.c:338 ../app/widgets/gimpcontrollereditor.c:341
 msgid "Action"
 msgstr "Ação"
 
@@ -14659,13 +14633,11 @@ msgid "Aspect ratio"
 msgstr "Proporção"
 
 #: ../app/widgets/gimpbrusheditor.c:210
-#: ../app/widgets/gimpbrushfactoryview.c:80
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:80 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaçamento"
 
-#: ../app/widgets/gimpbrusheditor.c:215
-#: ../app/widgets/gimpbrushfactoryview.c:84
+#: ../app/widgets/gimpbrusheditor.c:215 ../app/widgets/gimpbrushfactoryview.c:84
 msgid "Percentage of width of brush"
 msgstr "Percentagem da largura do pincel"
 
@@ -15671,8 +15643,7 @@ msgid_plural "Message repeated %d times."
 msgstr[0] "Mensagem repetida uma vez."
 msgstr[1] "Mensagem repetida %d vezes."
 
-#: ../app/widgets/gimppaletteeditor.c:240
-#: ../app/widgets/gimppaletteeditor.c:715
+#: ../app/widgets/gimppaletteeditor.c:240 ../app/widgets/gimppaletteeditor.c:715
 msgid "Undefined"
 msgstr "Indefinido"
 
@@ -16350,8 +16321,8 @@ msgstr ""
 
 #: ../desktop/gimp.appdata.xml.in.h:3
 msgid ""
-"GIMP is expandable and extensible. It is designed to be augmented with plug-"
-"ins and extensions to do just about anything. The advanced scripting "
+"GIMP is expandable and extensible. It is designed to be augmented with "
+"plug-ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and OS X."
