@@ -49,7 +49,7 @@ static const GimpActionEntry dockable_actions[] =
     NC_("dockable-action", "Dialogs Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCK },
 
-  { "dockable-menu",              "image-mising", ""           },
+  { "dockable-menu",              "image-missing", ""           },
   { "dockable-add-tab-menu",      NULL, NC_("dockable-action",
                                             "_Add Tab")        },
   { "dockable-preview-size-menu", NULL, NC_("dockable-action",
