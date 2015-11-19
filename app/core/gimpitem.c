@@ -546,7 +546,7 @@ gimp_item_real_duplicate (GimpItem *item,
 
     if ((strlen (name) >= len &&
          strcmp (&name[strlen (name) - len], _("copy")) == 0) ||
-        g_regex_match_simple ("([0-9]+)\\s*$", name, 0, 0))
+        g_regex_match_simple ("#([0-9]+)\\s*$", name, 0, 0))
       {
         /* don't have redundant "copy"s */
         new_name = g_strdup (name);

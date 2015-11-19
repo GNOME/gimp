@@ -661,19 +661,15 @@ gimp_item_tree_uniquefy_name (GimpItemTree *tree,
       gchar      *new_name    = NULL;
       gint        number      = 0;
       gint        precision   = 1;
-      gboolean    hashed      = TRUE;
-      GRegex     *end_numbers = g_regex_new ("(^|[^0-9])([0-9]+)\\s*$", 0, 0, NULL);
+      GRegex     *end_numbers = g_regex_new (" ?#([0-9]+)\\s*$", 0, 0, NULL);
       GMatchInfo *match_info  = NULL;
 
       if (g_regex_match (end_numbers, name, 0, &match_info))
         {
-          /* Allow counting styles without a hash as alternative. */
           gchar *match;
           gint   start_pos;
 
-          hashed = FALSE;
-
-          match  = g_match_info_fetch (match_info, 2);
+          match  = g_match_info_fetch (match_info, 1);
           if (match && match[0] == '0')
             {
               precision = strlen (match);
@@ -681,7 +677,7 @@ gimp_item_tree_uniquefy_name (GimpItemTree *tree,
           number = atoi (match);
           g_free (match);
 
-          g_match_info_fetch_pos (match_info, 2,
+          g_match_info_fetch_pos (match_info, 0,
                                   &start_pos, NULL);
           name[start_pos] = '\0';
         }
@@ -694,9 +690,8 @@ gimp_item_tree_uniquefy_name (GimpItemTree *tree,
 
           g_free (new_name);
 
-          new_name = g_strdup_printf ("%s%s%.*d",
+          new_name = g_strdup_printf ("%s #%.*d",
                                       name,
-                                      hashed ? " #" : "",
                                       precision,
                                       number);
         }
