@@ -782,86 +782,6 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
     }
 }
 
-static void
-gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
-                                    const GimpCoords   *coords,
-                                    guint32             time,
-                                    GimpDisplay        *display)
-{
-  GimpFreeSelectToolPrivate *priv  = GET_PRIVATE (fst);
-  GimpImage                 *image = gimp_display_get_image (display);
-
-  /*  If there is a floating selection, anchor it  */
-  if (gimp_image_get_floating_selection (image))
-    {
-      floating_sel_anchor (gimp_image_get_floating_selection (image));
-
-      gimp_tool_control (GIMP_TOOL (fst), GIMP_TOOL_ACTION_HALT, display);
-    }
-  else
-    {
-      /* First finish of the line segment if no point was grabbed */
-      if (! gimp_free_select_tool_is_point_grabbed (fst))
-        {
-          gimp_free_select_tool_finish_line_segment (fst);
-        }
-
-      /* After the segments are up to date and we have handled
-       * double-click, see if it's committing time
-       */
-      if (gimp_free_select_tool_should_close (fst,
-                                              display,
-                                              time,
-                                              coords))
-        {
-          /* We can get a click notification even though the end point
-           * has been moved a few pixels. Since a move will change the
-           * free selection, revert it before doing the commit.
-           */
-          gimp_free_select_tool_revert_to_saved_state (fst);
-
-          gimp_free_select_tool_commit (fst, display);
-        }
-
-      priv->last_click_time  = time;
-      priv->last_click_coord = *coords;
-    }
-}
-
-static void
-gimp_free_select_tool_handle_normal_release (GimpFreeSelectTool *fst,
-                                             const GimpCoords   *coords,
-                                             GimpDisplay        *display)
-{
-  /* First finish of the free segment if no point was grabbed */
-  if (! gimp_free_select_tool_is_point_grabbed (fst))
-    {
-      gimp_free_select_tool_finish_free_segment (fst);
-    }
-
-  /* After the segments are up to date, see if it's committing time */
-  if (gimp_free_select_tool_should_close (fst,
-                                          display,
-                                          NO_CLICK_TIME_AVAILABLE,
-                                          coords))
-    {
-      gimp_free_select_tool_commit (fst, display);
-    }
-}
-
-static void
-gimp_free_select_tool_handle_cancel (GimpFreeSelectTool *fst)
-{
-  if (gimp_free_select_tool_is_point_grabbed (fst))
-    {
-      gimp_free_select_tool_revert_to_saved_state (fst);
-    }
-  else
-    {
-      gimp_free_select_tool_remove_last_segment (fst);
-    }
-}
-
 void
 gimp_free_select_tool_select (GimpFreeSelectTool *fst,
                               GimpDisplay        *display)
@@ -869,8 +789,7 @@ gimp_free_select_tool_select (GimpFreeSelectTool *fst,
   g_return_if_fail (GIMP_IS_FREE_SELECT_TOOL (fst));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  GIMP_FREE_SELECT_TOOL_GET_CLASS (fst)->select (fst,
-                                                 display);
+  GIMP_FREE_SELECT_TOOL_GET_CLASS (fst)->select (fst, display);
 }
 
 static void
@@ -1073,6 +992,7 @@ gimp_free_select_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
+      gimp_free_select_tool_commit (fst, display);
       break;
     }
 
@@ -1089,6 +1009,13 @@ gimp_free_select_tool_oper_update (GimpTool         *tool,
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
   gboolean                   hovering_first_point;
+
+  if (display != tool->display)
+    {
+      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
+                                                   proximity, display);
+      return;
+    }
 
   gimp_free_select_tool_handle_segment_selection (fst,
                                                   display,
@@ -1143,18 +1070,7 @@ gimp_free_select_tool_oper_update (GimpTool         *tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-  if (tool->display == NULL)
-    {
-      GIMP_TOOL_CLASS (parent_class)->oper_update (tool,
-                                                   coords,
-                                                   state,
-                                                   proximity,
-                                                   display);
-    }
-  else
-    {
-      gimp_free_select_tool_status_update (fst, display, coords, proximity);
-    }
+  gimp_free_select_tool_status_update (fst, display, coords, proximity);
 }
 
 static void
@@ -1167,9 +1083,7 @@ gimp_free_select_tool_cursor_update (GimpTool         *tool,
 
   if (tool->display == NULL)
     {
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,
-                                                     coords,
-                                                     state,
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                      display);
     }
   else
@@ -1210,7 +1124,7 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
   GimpSelectionOptions      *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   if (tool->display && tool->display != display)
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
 
   if (tool->display == NULL)
     {
@@ -1283,8 +1197,9 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
                                       GimpButtonReleaseType  release_type,
                                       GimpDisplay           *display)
 {
-  GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
-  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
+  GimpFreeSelectTool        *fst   = GIMP_FREE_SELECT_TOOL (tool);
+  GimpFreeSelectToolPrivate *priv  = GET_PRIVATE (fst);
+  GimpImage                 *image = gimp_display_get_image (display);
 
   gimp_tool_control_halt (tool->control);
 
@@ -1297,20 +1212,58 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
       /* If a click was made, we don't consider the polygon modified */
       priv->polygon_modified = FALSE;
 
-      gimp_free_select_tool_handle_click (fst,
-                                          coords,
-                                          time,
-                                          display);
+      /*  If there is a floating selection, anchor it  */
+      if (gimp_image_get_floating_selection (image))
+        {
+          floating_sel_anchor (gimp_image_get_floating_selection (image));
+
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+        }
+      else
+        {
+          /* First finish of the line segment if no point was grabbed */
+          if (! gimp_free_select_tool_is_point_grabbed (fst))
+            gimp_free_select_tool_finish_line_segment (fst);
+
+          /* After the segments are up to date and we have handled
+           * double-click, see if it's committing time
+           */
+          if (gimp_free_select_tool_should_close (fst, display,
+                                                  time, coords))
+            {
+              /* We can get a click notification even though the end point
+               * has been moved a few pixels. Since a move will change the
+               * free selection, revert it before doing the commit.
+               */
+              gimp_free_select_tool_revert_to_saved_state (fst);
+
+              gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+            }
+
+          priv->last_click_time  = time;
+          priv->last_click_coord = *coords;
+        }
       break;
 
     case GIMP_BUTTON_RELEASE_NORMAL:
-      gimp_free_select_tool_handle_normal_release (fst,
-                                                   coords,
-                                                   display);
+      /* First finish of the free segment if no point was grabbed */
+      if (! gimp_free_select_tool_is_point_grabbed (fst))
+        gimp_free_select_tool_finish_free_segment (fst);
+
+      /* After the segments are up to date, see if it's committing time */
+      if (gimp_free_select_tool_should_close (fst, display,
+                                              NO_CLICK_TIME_AVAILABLE,
+                                              coords))
+        {
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+        }
       break;
 
     case GIMP_BUTTON_RELEASE_CANCEL:
-      gimp_free_select_tool_handle_cancel (fst);
+      if (gimp_free_select_tool_is_point_grabbed (fst))
+        gimp_free_select_tool_revert_to_saved_state (fst);
+      else
+        gimp_free_select_tool_remove_last_segment (fst);
       break;
 
     default:
@@ -1362,7 +1315,7 @@ gimp_free_select_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      gimp_free_select_tool_commit (fst, display);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
       return TRUE;
 
     case GDK_KEY_Escape:
@@ -1399,10 +1352,7 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
       gimp_draw_tool_resume (draw_tool);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
-                                                key,
-                                                press,
-                                                state,
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
                                                 display);
 }
 
@@ -1436,10 +1386,7 @@ gimp_free_select_tool_active_modifier_key (GimpTool        *tool,
 
   gimp_draw_tool_resume (draw_tool);
 
-  GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool,
-                                                       key,
-                                                       press,
-                                                       state,
+  GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press, state,
                                                        display);
 }
 
