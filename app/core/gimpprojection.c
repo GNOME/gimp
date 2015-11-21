@@ -934,7 +934,7 @@ gimp_projection_paint_area (GimpProjection *proj,
                                                         x, y, w, h);
 
           gegl_node_blit_buffer (graph, proj->priv->buffer,
-                                 GEGL_RECTANGLE (x, y, w, h));
+                                 GEGL_RECTANGLE (x, y, w, h), 0, GEGL_ABYSS_NONE);
         }
 
       /*  add the projectable's offsets because the list of update areas
