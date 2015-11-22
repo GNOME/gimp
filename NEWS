@@ -59,19 +59,18 @@ GUI:
 
   - Add GUI to handle the new high bit depths and conversion between them
   - Add new action group "filters" which can run arbitrary GEGL ops
-  - Add lots of actions invoking GEGL ops that replace remove plug-ins
+  - Add lots of actions invoking GEGL ops that replace removed plug-ins
   - Mostly switch from using stock-ids to icon-names
   - Turn all stock icons into names icons and add an icon theme
-  - Allow to select colors from an image's colormap
+  - Allow selecting colors from an image's colormap
   - Add "Show in file manager" to everything that has a filename
-  - add an action search dialog to find actions by keyword and execute them
+  - Add an action search dialog to find actions by keyword and execute them
   - Split the save dialog into subclasses for save and export
   - Implement various color management dialogs that were in the lcms plug-in
-  - Make sure windows appear on the right monitor
+  - Make sure windows appear on the correct monitor
   - Simplify and reduce the actions that modify paint tool behavior
-  - Add an "experimental playground" for unfinished tools
   - Add canvas rotation and flipping
-  - Allow to zoom to the selection
+  - Allow zooming to the selection
   - Make the image tab position configurable in single window mode
   - Add separate snapping settings for fullscreen mode
   - Remove bitmaps cursors and only support RGBA cursors
@@ -86,6 +85,7 @@ GUI:
 
 Tools:
 
+  - Add an "experimental playground" for unfinished tools
   - (experimental) Add a tool that paints with MyPaint brushes
   - (experimental) Add an n-point deformation tool
   - (experimental) Add a transform tool with a variable # of handles
@@ -94,7 +94,7 @@ Tools:
   - Add a warp tool as replacement for the IWarp plug-in
   - Allow tool dialogs to be embedded on the canvas genrically
   - Add much more options to painting, like the ability to lock
-    tool options to brush defaults, and to zoom the brush with the cancas
+    tool options to brush defaults, and to zoom the brush with the canvas
   - Make the blend tool work interactively in realtime
   - Add undo/redo to many tools (using the normal shortcuts)
 
