@@ -61,11 +61,11 @@ GUI:
   - Add new action group "filters" which can run arbitrary GEGL ops
   - Add lots of actions invoking GEGL ops that replace removed plug-ins
   - Mostly switch from using stock-ids to icon-names
-  - Turn all stock icons into names icons and add an icon theme
+  - Turn all stock icons into named icons and add an icon theme
   - Allow selecting colors from an image's colormap
   - Add "Show in file manager" to everything that has a filename
   - Add an action search dialog to find actions by keyword and execute them
-  - Split the save dialog into subclasses for save and export
+  - Split the save dialog into subclasses for load, save and export
   - Implement various color management dialogs that were in the lcms plug-in
   - Make sure windows appear on the correct monitor
   - Simplify and reduce the actions that modify paint tool behavior
