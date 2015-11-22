@@ -4,6 +4,7 @@
  * gimpcolorprofile.c
  * Copyright (C) 2014  Michael Natterer <mitch@gimp.org>
  *                     Elle Stone <ellestone@ninedegreesbelow.com>
+ *                     Øyvind Kolås <pippin@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1290,4 +1291,49 @@ gimp_color_profile_get_format (const Babl *format,
     }
 
   return output_format;
+}
+
+/**
+ * gimp_color_profile_is_linear:
+ * @profile: a #GimpColorProfile
+ *
+ * This function determines is the ICC profile represented by a GimpColorProfile
+ * is a linear RGB profile or not, some profiles that are LUTs though linear
+ * will also return FALSE;
+ *
+ * Return value: TRUE if the profile is a matrix shaping profile with linear
+ * TRCs.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_profile_is_linear (GimpColorProfile *profile)
+{
+  cmsHPROFILE prof;
+  cmsToneCurve *curve;
+
+  if (!profile)
+    return FALSE;
+  prof = profile->priv->lcms_profile;
+
+  if (!cmsIsMatrixShaper (prof))
+    return FALSE;
+
+  if(cmsIsCLUT(prof, INTENT_PERCEPTUAL, LCMS_USED_AS_INPUT))
+    return FALSE;
+
+  if(cmsIsCLUT(prof, INTENT_PERCEPTUAL, LCMS_USED_AS_OUTPUT))
+    return FALSE;
+
+  curve = cmsReadTag(prof, cmsSigRedTRCTag);
+  if (curve == NULL || !cmsIsToneCurveLinear (curve))
+    return FALSE;
+  curve = cmsReadTag(prof, cmsSigGreenTRCTag);
+  if (curve == NULL || !cmsIsToneCurveLinear (curve))
+    return FALSE;
+  curve = cmsReadTag(prof, cmsSigBlueTRCTag);
+  if (curve == NULL || !cmsIsToneCurveLinear (curve))
+    return FALSE;
+
+  return TRUE;
 }

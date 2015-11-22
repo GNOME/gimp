@@ -99,6 +99,7 @@ gboolean           gimp_color_profile_is_equal              (GimpColorProfile  *
                                                              GimpColorProfile  *profile2);
 
 gboolean           gimp_color_profile_is_rgb                (GimpColorProfile  *profile);
+gboolean           gimp_color_profile_is_linear             (GimpColorProfile  *profile);
 gboolean           gimp_color_profile_is_cmyk               (GimpColorProfile  *profile);
 
 const Babl       * gimp_color_profile_get_format            (const Babl        *format,
