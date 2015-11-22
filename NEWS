@@ -23,36 +23,66 @@ Core:
 
   base
   composite
-  paint-funcs: removed these directories, they contained the old pixel
-    manipulation functions.
+  paint-funcs:
+  - Remove these directories, they contained the old pixel
+    manipulation functions
 
-  gegl: now contains utility functions and abstractions to work with
-    GEGL more easily.
+  config:
+  - Remove GimpBaseConfig, add GimpGeglConfig
+  - Add config options for new features
 
-  operations: new directory containing all GIMP-internal GEGL operations
-    and their config objects (if any).
-
-  - Add some things that used to live in base/ to core/, like the
-    temp-buf, boundary and histogram code
-  - Port all core functions to GEGL and higher bit depths
+  core:
+  - Add some things that used to live in base/, like the temp-buf,
+    boundary and histogram code
+  - Port all functions to GEGL and higher bit depths
   - Keep the image around as GEGL graph, all other compositing is gone
   - Add non-destructive drawable filters, but use them only for previews
   - Implement the floating selection as drawable filter
   - Implement GimpImageMap using drawable filters
-  - Move batch processing to core/gimp-batch.[ch]
+  - Move batch processing to gimp-batch.[ch]
   - Run batch commands in an already running GIMP instance
-  - Add a correct version of the overlay layer mode
-  - Add LCH layer modes
   - Ported almost everything from filenames/FILE/fd to GFile/GIO
+  - Be smarter about migrating old user config files
+  - Move many object struct members to private structs
+
+  file:
   - Support GIO-ported file load/save procs, handle remote files generically
+
   - Add content locking to items to prevent them from being edited
   - Add position locking to items to prevent them from being translated
   - Implement all color management in the core
   - Add an automatic palette of recently used colors
   - Implement metadata handling in the core
+
+  gegl:
+  - Now contains utility functions and abstractions to work with
+    GEGL more easily
+  - Move all operations to the new operations/ directory
+
+  operations:
+  - New directory containing all GIMP-internal GEGL operations
+    and their config objects (if any)
+  - Add a correct version of the overlay layer mode
+  - Add LCH layer modes
+
+  paint:
+  - Port all paint cores to Gegl
+  - Add MyPaint brush paint core
+
+  pdb:
+  - Add compat procedures that work like the removed plug-ins
+  - Use the new GimpValueArray, GValueArray got deprecated
+
+  plug-in:
+  - Allow plug-ins to access image data at full bit depth
+  - Add a compat mode so unported plug-ins always get 8-bit data
+
+  text:
+  - Port text rendering to GEGL
+  - Use HarfBuzz to inspect fonts for creating an example string
+
+  xcf:
   - Add zlib compression to XCF loading/saving
-  - Be smarter about migrating old user config files
-  - Move many object struct members to private structs
 
 
 GUI:
@@ -60,6 +90,7 @@ GUI:
   - Add GUI to handle the new high bit depths and conversion between them
   - Add new action group "filters" which can run arbitrary GEGL ops
   - Add lots of actions invoking GEGL ops that replace removed plug-ins
+  - Preview all GEGL ops live on the canvas, using drawable filters
   - Mostly switch from using stock-ids to icon-names
   - Turn all stock icons into named icons and add an icon theme
   - Allow selecting colors from an image's colormap
@@ -116,17 +147,11 @@ Libgimp:
 Plug-ins:
 
   - Remove lots of plug-ins that are now implemented as GEGL ops
-  - Remove the lcms plug-in, color management is now done in the core
+  - Remove the lcms plug-in, this is now done in the core/libgimp
   - Remove the metadata plug-ins, this is now done in the core/libgimp
   - Remove the file-uri plug-in, this is now done in the core using GIO
   - Port many file plug-ins to GIO
   - Port many plug-ins that are not strictly filters to GEGL
-
-
-PDB:
-
-  - Add compat procedures that work like the removed plug-ins
-  - Use the new GimpValueArray, GValueArray got deprecated
 
 
 Source and build system:
