@@ -452,13 +452,13 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
     {
       constrain_name  = "constrain-rotate";
-      constrain_label = _("15 degrees  (%s)");
+      constrain_label = _("15 degrees (%s)");
       constrain_tip   = _("Limit rotation steps to 15 degrees");
     }
   else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
     {
       constrain_name  = "constrain-scale";
-      constrain_label = _("Keep aspect  (%s)");
+      constrain_label = _("Keep aspect (%s)");
       constrain_tip   = _("Keep the original aspect ratio");
     }
 
@@ -477,31 +477,31 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
       }
       opt_list[] =
       {
-        { shift, NULL, N_("Constrain  (%s)") },
+        { shift, NULL, N_("Constrain (%s)") },
         { shift, "constrain-move", N_("Move"),
-          N_("Constrain movement to 45 degree angles from center  (%s)") },
+          N_("Constrain movement to 45 degree angles from center (%s)") },
         { shift, "constrain-scale", N_("Scale"),
-          N_("Maintain aspect ratio when scaling  (%s)") },
+          N_("Maintain aspect ratio when scaling (%s)") },
         { shift, "constrain-rotate", N_("Rotate"),
-          N_("Constrain rotation to 15 degree increments  (%s)") },
+          N_("Constrain rotation to 15 degree increments (%s)") },
         { shift, "constrain-shear", N_("Shear"),
-          N_("Shear along edge direction only  (%s)") },
+          N_("Shear along edge direction only (%s)") },
         { shift, "constrain-perspective", N_("Perspective"),
-          N_("Constrain perspective handles to move along edges and diagonal  (%s)") },
+          N_("Constrain perspective handles to move along edges and diagonal (%s)") },
 
         { ctrl, NULL,
           N_("From pivot  (%s)") },
         { ctrl, "frompivot-scale", N_("Scale"),
-          N_("Scale from pivot point  (%s)") },
+          N_("Scale from pivot point (%s)") },
         { ctrl, "frompivot-shear", N_("Shear"),
-          N_("Shear opposite edge by same amount  (%s)") },
+          N_("Shear opposite edge by same amount (%s)") },
         { ctrl, "frompivot-perspective", N_("Perspective"),
-          N_("Maintain position of pivot while changing perspective  (%s)") },
+          N_("Maintain position of pivot while changing perspective (%s)") },
 
         { 0, NULL,
           N_("Pivot") },
-        { shift, "cornersnap", N_("Snap  (%s)"),
-          N_("Snap pivot to corners and center  (%s)") },
+        { shift, "cornersnap", N_("Snap (%s)"),
+          N_("Snap pivot to corners and center (%s)") },
         { 0, "fixedpivot", N_("Lock"),
           N_("Lock pivot position to canvas") },
       };
