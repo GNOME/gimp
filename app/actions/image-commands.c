@@ -244,54 +244,68 @@ image_convert_precision_cmd_callback (GtkAction *action,
                                       GtkAction *current,
                                       gpointer   data)
 {
-  GimpImage     *image;
-  GimpDisplay   *display;
-  GtkWidget     *widget;
-  GtkWidget     *dialog;
-  GimpPrecision  value;
+  GimpImage         *image;
+  GimpDisplay       *display;
+  GtkWidget         *widget;
+  GtkWidget         *dialog;
+  GimpComponentType  value;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value == gimp_image_get_precision (image))
+  if (value == gimp_image_get_component_type (image))
     return;
 
   dialog = g_object_get_data (G_OBJECT (image),
                               IMAGE_CONVERT_PRECISION_DIALOG_KEY);
 
-  if ((value < gimp_image_get_precision (image)) ||
-      (gimp_babl_component_type (value) == gimp_image_get_component_type (image)))
+  if (! dialog)
     {
-      if (! dialog)
-        {
-          dialog = convert_precision_dialog_new (image,
-                                                 action_data_get_context (data),
-                                                 widget,
-                                                 value,
-                                                 GIMP_PROGRESS (display));
+      dialog = convert_precision_dialog_new (image,
+                                             action_data_get_context (data),
+                                             widget,
+                                             value,
+                                             GIMP_PROGRESS (display));
 
-          g_object_set_data (G_OBJECT (image),
-                             IMAGE_CONVERT_PRECISION_DIALOG_KEY, dialog);
+      g_object_set_data (G_OBJECT (image),
+                         IMAGE_CONVERT_PRECISION_DIALOG_KEY, dialog);
 
-          g_signal_connect_object (dialog, "destroy",
-                                   G_CALLBACK (image_convert_precision_dialog_unset),
-                                   image, G_CONNECT_SWAPPED);
-        }
-
-      gtk_window_present (GTK_WINDOW (dialog));
+      g_signal_connect_object (dialog, "destroy",
+                               G_CALLBACK (image_convert_precision_dialog_unset),
+                               image, G_CONNECT_SWAPPED);
     }
-  else
-    {
-      if (dialog)
-        gtk_widget_destroy (dialog);
 
-      gimp_image_convert_precision (image, value, 0, 0, 0,
-                                    GIMP_PROGRESS (display));
-    }
+  gtk_window_present (GTK_WINDOW (dialog));
 
   /*  see comment above  */
+  gimp_image_flush (image);
+}
+
+void
+image_convert_gamma_cmd_callback (GtkAction *action,
+                                  GtkAction *current,
+                                  gpointer   data)
+{
+  GimpImage     *image;
+  GimpDisplay   *display;
+  gboolean       value;
+  GimpPrecision  precision;
+  return_if_no_image (image, data);
+  return_if_no_display (display, data);
+
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+
+  if (value == gimp_babl_format_get_linear (gimp_image_get_layer_format (image,
+                                                                         FALSE)))
+    return;
+
+  precision = gimp_babl_precision (gimp_image_get_component_type (image),
+                                   value);
+
+  gimp_image_convert_precision (image, precision, 0, 0, 0,
+                                GIMP_PROGRESS (display));
   gimp_image_flush (image);
 }
 

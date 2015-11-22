@@ -26,6 +26,8 @@
 
 #include "config/gimpguiconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
@@ -185,77 +187,56 @@ static const GimpRadioActionEntry image_convert_base_type_actions[] =
 
 static const GimpRadioActionEntry image_convert_precision_actions[] =
 {
-  { "image-convert-u8-linear", NULL,
-    NC_("image-convert-action", "8 bit integer (linear)"), NULL,
+  { "image-convert-u8", NULL,
+    NC_("image-convert-action", "8 bit integer"), NULL,
     NC_("image-convert-action",
-        "Convert the image to 8 bit linear integer"),
-    GIMP_PRECISION_U8_LINEAR, GIMP_HELP_IMAGE_CONVERT_U8 },
+        "Convert the image to 8 bit integer"),
+    GIMP_COMPONENT_TYPE_U8, GIMP_HELP_IMAGE_CONVERT_U8 },
 
-  { "image-convert-u8-gamma", NULL,
-    NC_("image-convert-action", "8 bit integer (gamma)"), NULL,
+  { "image-convert-u16", NULL,
+    NC_("image-convert-action", "16 bit integer"), NULL,
     NC_("image-convert-action",
-        "Convert the image to 8 bit gamma-corrected integer"),
-    GIMP_PRECISION_U8_GAMMA, GIMP_HELP_IMAGE_CONVERT_U8 },
+        "Convert the image to 16 bit integer"),
+    GIMP_COMPONENT_TYPE_U16, GIMP_HELP_IMAGE_CONVERT_U16 },
 
-  { "image-convert-u16-linear", NULL,
-    NC_("image-convert-action", "16 bit integer (linear)"), NULL,
+  { "image-convert-u32", NULL,
+    NC_("image-convert-action", "32 bit integer"), NULL,
     NC_("image-convert-action",
-        "Convert the image to 16 bit linear integer"),
-    GIMP_PRECISION_U16_LINEAR, GIMP_HELP_IMAGE_CONVERT_U16 },
+        "Convert the image to 32 bit integer"),
+    GIMP_COMPONENT_TYPE_U32, GIMP_HELP_IMAGE_CONVERT_U32 },
 
-  { "image-convert-u16-gamma", NULL,
-    NC_("image-convert-action", "16 bit integer (gamma)"), NULL,
+  { "image-convert-half", NULL,
+    NC_("image-convert-action", "16 bit floating point"), NULL,
     NC_("image-convert-action",
-        "Convert the image to 16 bit gamma-corrected integer"),
-    GIMP_PRECISION_U16_GAMMA, GIMP_HELP_IMAGE_CONVERT_U16 },
+        "Convert the image to 16 bit floating point"),
+    GIMP_COMPONENT_TYPE_HALF, GIMP_HELP_IMAGE_CONVERT_HALF },
 
-  { "image-convert-u32-linear", NULL,
-    NC_("image-convert-action", "32 bit integer (linear)"), NULL,
+  { "image-convert-float", NULL,
+    NC_("image-convert-action", "32 bit floating point"), NULL,
     NC_("image-convert-action",
-        "Convert the image to 32 bit linear integer"),
-    GIMP_PRECISION_U32_LINEAR, GIMP_HELP_IMAGE_CONVERT_U32 },
+        "Convert the image to 32 bit floating point"),
+    GIMP_COMPONENT_TYPE_FLOAT, GIMP_HELP_IMAGE_CONVERT_FLOAT },
 
-  { "image-convert-u32-gamma", NULL,
-    NC_("image-convert-action", "32 bit integer (gamma)"), NULL,
+  { "image-convert-double", NULL,
+    NC_("image-convert-action", "64 bit floating point"), NULL,
     NC_("image-convert-action",
-        "Convert the image to 32 bit gamma-corrected integer"),
-    GIMP_PRECISION_U32_GAMMA, GIMP_HELP_IMAGE_CONVERT_U32 },
+        "Convert the image to 64 bit floating point"),
+    GIMP_COMPONENT_TYPE_DOUBLE, GIMP_HELP_IMAGE_CONVERT_DOUBLE }
+};
 
-  { "image-convert-half-linear", NULL,
-    NC_("image-convert-action", "16 bit floating point (linear)"), NULL,
+static const GimpRadioActionEntry image_convert_gamma_actions[] =
+{
+  { "image-convert-gamma", NULL,
+    NC_("image-convert-action", "Perceptual gamma (sRGB)"), NULL,
     NC_("image-convert-action",
-        "Convert the image to 16 bit linear floating point"),
-    GIMP_PRECISION_HALF_LINEAR, GIMP_HELP_IMAGE_CONVERT_HALF },
+        "Convert the image to preceptual (sRGB) gamma"),
+    FALSE, GIMP_HELP_IMAGE_CONVERT_GAMMA },
 
-  { "image-convert-half-gamma", NULL,
-    NC_("image-convert-action", "16 bit floating point (gamma)"), NULL,
+  { "image-convert-linear", NULL,
+    NC_("image-convert-action", "Linear light"), NULL,
     NC_("image-convert-action",
-        "Convert the image to 16 bit gamma-corrected floating point"),
-    GIMP_PRECISION_HALF_GAMMA, GIMP_HELP_IMAGE_CONVERT_HALF },
-
-  { "image-convert-float-linear", NULL,
-    NC_("image-convert-action", "32 bit floating point (linear)"), NULL,
-    NC_("image-convert-action",
-        "Convert the image to 32 bit linear floating point"),
-    GIMP_PRECISION_FLOAT_LINEAR, GIMP_HELP_IMAGE_CONVERT_FLOAT },
-
-  { "image-convert-float-gamma", NULL,
-    NC_("image-convert-action", "32 bit floating point (gamma)"), NULL,
-    NC_("image-convert-action",
-        "Convert the image to 32 bit gamma-corrected floating point"),
-    GIMP_PRECISION_FLOAT_GAMMA, GIMP_HELP_IMAGE_CONVERT_FLOAT },
-
-  { "image-convert-double-linear", NULL,
-    NC_("image-convert-action", "64 bit floating point (linear)"), NULL,
-    NC_("image-convert-action",
-        "Convert the image to 64 bit linear floating point"),
-    GIMP_PRECISION_DOUBLE_LINEAR, GIMP_HELP_IMAGE_CONVERT_DOUBLE },
-
-  { "image-convert-double-gamma", NULL,
-    NC_("image-convert-action", "64 bit floating point (gamma)"), NULL,
-    NC_("image-convert-action",
-        "Convert the image to 64 bit gamma-corrected floating point"),
-    GIMP_PRECISION_DOUBLE_GAMMA, GIMP_HELP_IMAGE_CONVERT_DOUBLE }
+        "Convert the image to linear light"),
+    TRUE, GIMP_HELP_IMAGE_CONVERT_GAMMA }
 };
 
 static const GimpEnumActionEntry image_flip_actions[] =
@@ -314,6 +295,12 @@ image_actions_setup (GimpActionGroup *group)
                                        NULL, 0,
                                        G_CALLBACK (image_convert_precision_cmd_callback));
 
+  gimp_action_group_add_radio_actions (group, "image-convert-action",
+                                       image_convert_gamma_actions,
+                                       G_N_ELEMENTS (image_convert_gamma_actions),
+                                       NULL, 0,
+                                       G_CALLBACK (image_convert_gamma_cmd_callback));
+
   gimp_action_group_add_enum_actions (group, "image-action",
                                       image_flip_actions,
                                       G_N_ELEMENTS (image_flip_actions),
@@ -349,10 +336,15 @@ image_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      GimpContainer *layers;
-      const gchar   *action = NULL;
+      GimpContainer     *layers;
+      const gchar       *action = NULL;
+      GimpImageBaseType  base_type;
+      GimpPrecision      precision;
 
-      switch (gimp_image_get_base_type (image))
+      base_type = gimp_image_get_base_type (image);
+      precision = gimp_image_get_precision (image);
+
+      switch (base_type)
         {
         case GIMP_RGB:     action = "image-convert-rgb";       break;
         case GIMP_GRAY:    action = "image-convert-grayscale"; break;
@@ -361,51 +353,32 @@ image_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      switch (gimp_image_get_precision (image))
+      switch (gimp_image_get_component_type (image))
         {
-        case GIMP_PRECISION_U8_LINEAR:
-          action = "image-convert-u8-linear";
-          break;
-        case GIMP_PRECISION_U8_GAMMA:
-          action = "image-convert-u8-gamma";
-          break;
-        case GIMP_PRECISION_U16_LINEAR:
-          action = "image-convert-u16-linear";
-          break;
-        case GIMP_PRECISION_U16_GAMMA:
-          action = "image-convert-u16-gamma";
-          break;
-        case GIMP_PRECISION_U32_LINEAR:
-          action = "image-convert-u32-linear";
-          break;
-        case GIMP_PRECISION_U32_GAMMA:
-          action = "image-convert-u32-gamma";
-          break;
-        case GIMP_PRECISION_HALF_LINEAR:
-          action = "image-convert-half-linear";
-          break;
-        case GIMP_PRECISION_HALF_GAMMA:
-          action = "image-convert-half-gamma";
-          break;
-        case GIMP_PRECISION_FLOAT_LINEAR:
-          action = "image-convert-float-linear";
-          break;
-        case GIMP_PRECISION_FLOAT_GAMMA:
-          action = "image-convert-float-gamma";
-          break;
-        case GIMP_PRECISION_DOUBLE_LINEAR:
-          action = "image-convert-double-linear";
-          break;
-        case GIMP_PRECISION_DOUBLE_GAMMA:
-          action = "image-convert-double-gamma";
-          break;
+        case GIMP_COMPONENT_TYPE_U8:     action = "image-convert-u8";     break;
+        case GIMP_COMPONENT_TYPE_U16:    action = "image-convert-u16";    break;
+        case GIMP_COMPONENT_TYPE_U32:    action = "image-convert-u32";    break;
+        case GIMP_COMPONENT_TYPE_HALF:   action = "image-convert-half";   break;
+        case GIMP_COMPONENT_TYPE_FLOAT:  action = "image-convert-float";  break;
+        case GIMP_COMPONENT_TYPE_DOUBLE: action = "image-convert-double"; break;
         }
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      is_indexed  = (gimp_image_get_base_type (image) == GIMP_INDEXED);
-      is_u8_gamma = (gimp_image_get_precision (image) ==
-                     GIMP_PRECISION_U8_GAMMA);
+      if (gimp_babl_format_get_linear (gimp_image_get_layer_format (image,
+                                                                    FALSE)))
+        {
+          gimp_action_group_set_action_active (group, "image-convert-linear",
+                                               TRUE);
+       }
+      else
+        {
+          gimp_action_group_set_action_active (group, "image-convert-gamma",
+                                               TRUE);
+        }
+
+      is_indexed  = (base_type == GIMP_INDEXED);
+      is_u8_gamma = (precision == GIMP_PRECISION_U8_GAMMA);
       aux         = (gimp_image_get_active_channel (image) != NULL);
       lp          = ! gimp_image_is_empty (image);
       sel         = ! gimp_channel_is_empty (gimp_image_get_mask (image));
@@ -424,18 +397,15 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-grayscale", image);
   SET_SENSITIVE ("image-convert-indexed",   image && !groups && is_u8_gamma);
 
-  SET_SENSITIVE ("image-convert-u8-gamma",      image);
-  SET_SENSITIVE ("image-convert-u8-linear",     image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u16-gamma",     image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u16-linear",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u32-gamma",     image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u32-linear",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-half-gamma",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-half-linear",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-float-gamma",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-float-linear",  image && !is_indexed);
-  SET_SENSITIVE ("image-convert-double-gamma",  image && !is_indexed);
-  SET_SENSITIVE ("image-convert-double-linear", image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u8",     image);
+  SET_SENSITIVE ("image-convert-u16",    image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u32",    image && !is_indexed);
+  SET_SENSITIVE ("image-convert-half",   image && !is_indexed);
+  SET_SENSITIVE ("image-convert-float",  image && !is_indexed);
+  SET_SENSITIVE ("image-convert-double", image && !is_indexed);
+
+  SET_SENSITIVE ("image-convert-gamma",  image);
+  SET_SENSITIVE ("image-convert-linear", image && !is_indexed);
 
   SET_SENSITIVE ("image-color-profile-assign",  image);
   SET_SENSITIVE ("image-color-profile-convert", image);

@@ -133,6 +133,7 @@
 #define GIMP_HELP_IMAGE_CONVERT_HALF              "gimp-image-convert-half"
 #define GIMP_HELP_IMAGE_CONVERT_FLOAT             "gimp-image-convert-float"
 #define GIMP_HELP_IMAGE_CONVERT_DOUBLE            "gimp-image-convert-double"
+#define GIMP_HELP_IMAGE_CONVERT_GAMMA             "gimp-image-convert-gamma"
 #define GIMP_HELP_IMAGE_CONVERT_PRECISION         "gimp-image-convert-precision"
 #define GIMP_HELP_IMAGE_FLIP_HORIZONTAL           "gimp-image-flip-horizontal"
 #define GIMP_HELP_IMAGE_FLIP_VERTICAL             "gimp-image-flip-vertical"
