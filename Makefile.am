@@ -64,6 +64,7 @@ EXTRA_DIST = \
 	NEWS.pre-2-2		\
 	NEWS.pre-2-4		\
 	NEWS.pre-2-6		\
+	NEWS.pre-2-8		\
 	README			\
 	README.i18n		\
 	authors.dtd		\
