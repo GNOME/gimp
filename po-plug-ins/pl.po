@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-02 20:40+0200\n"
-"PO-Revision-Date: 2015-09-02 20:42+0200\n"
+"POT-Creation-Date: 2015-11-23 00:20+0100\n"
+"PO-Revision-Date: 2015-11-23 00:22+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -176,27 +176,27 @@ msgstr "Obracanie kolorów"
 
 #: ../plug-ins/common/alien-map.c:140
 msgid "_Modify red channel"
-msgstr "Z_modyfikuj kanał czerwony"
+msgstr "_Modyfikuj kanał czerwony"
 
 #: ../plug-ins/common/alien-map.c:140
 msgid "_Modify hue channel"
-msgstr "Z_modyfikuj kanał barwy"
+msgstr "_Modyfikuj kanał barwy"
 
 #: ../plug-ins/common/alien-map.c:141
 msgid "Mo_dify green channel"
-msgstr "Zmo_dyfikuj kanał zielony"
+msgstr "Mo_dyfikuj kanał zielony"
 
 #: ../plug-ins/common/alien-map.c:141
 msgid "Mo_dify saturation channel"
-msgstr "Zmo_dyfikuj kanał nasycenia"
+msgstr "Mo_dyfikuj kanał nasycenia"
 
 #: ../plug-ins/common/alien-map.c:142
 msgid "Mod_ify blue channel"
-msgstr "Zmodyf_ikuj kanał niebieski"
+msgstr "Modyf_ikuj kanał niebieski"
 
 #: ../plug-ins/common/alien-map.c:142
 msgid "Mod_ify luminosity channel"
-msgstr "Zmodyf_ikuj kanał luminancji"
+msgstr "Modyf_ikuj kanał luminancji"
 
 #: ../plug-ins/common/alien-map.c:147
 msgid "Red _frequency:"
@@ -626,8 +626,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-jpeg/jpeg-load.c:824
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1655 ../plug-ins/file-sgi/sgi.c:409
-#: ../plug-ins/gfig/gfig-dialog.c:1321
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -1076,7 +1075,7 @@ msgstr "Zapis ustawień miksera kanałów"
 #: ../plug-ins/common/file-xmc.c:1449 ../plug-ins/common/file-xwd.c:637
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:311 ../plug-ins/file-fits/fits.c:478
-#: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1020
 #: ../plug-ins/file-jpeg/jpeg-save.c:355 ../plug-ins/file-psd/psd-save.c:1653
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1280 ../plug-ins/file-xjt/xjt.c:1719
@@ -1968,8 +1967,7 @@ msgstr "Wartość maski"
 msgid "Stretch brightness values to cover the full range"
 msgstr "Rozciąga wartości jasności, aby pokryć pełny zakres"
 
-#: ../plug-ins/common/contrast-normalize.c:91
-#: ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
 msgid "_Normalize"
 msgstr "_Normalizuj"
 
@@ -2083,9 +2081,9 @@ msgstr "_Alfa"
 msgid "E_xtend"
 msgstr "_Rozszerz"
 
-#: ../plug-ins/common/convolution-matrix.c:74
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:700
-#: ../plug-ins/common/fractal-trace.c:737 ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/convolution-matrix.c:74 ../plug-ins/common/displace.c:477
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/fractal-trace.c:737
+#: ../plug-ins/common/ripple.c:585
 msgid "_Wrap"
 msgstr "_Zawiń"
 
@@ -3124,7 +3122,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
 #: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
 #: ../plug-ins/file-bmp/bmp-write.c:322 ../plug-ins/file-fits/fits.c:483
-#: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1014
 #: ../plug-ins/file-jpeg/jpeg-save.c:312 ../plug-ins/file-psd/psd-save.c:1658
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-xjt/xjt.c:1700
 #, c-format
@@ -4297,8 +4295,7 @@ msgid "_Millimeter"
 msgstr "_Milimetr"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3302
-#: ../plug-ins/map-object/map-object-ui.c:989
+#: ../plug-ins/common/file-ps.c:3302 ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Obrót"
 
@@ -4665,8 +4662,7 @@ msgstr "%s-%d-z-%d-stron"
 msgid "TIFF Channel"
 msgstr "Kanały TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1038
-#: ../plug-ins/file-psd/psd-load.c:333
+#: ../plug-ins/common/file-tiff-load.c:1038 ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6001,27 +5997,27 @@ msgstr "Zastosuj _soczewki…"
 msgid "Applying lens"
 msgstr "Zastosowywanie soczewek"
 
-#: ../plug-ins/common/lens-apply.c:394
+#: ../plug-ins/common/lens-apply.c:395
 msgid "Lens Effect"
 msgstr "Efekt soczewki"
 
-#: ../plug-ins/common/lens-apply.c:429
+#: ../plug-ins/common/lens-apply.c:430
 msgid "_Keep original surroundings"
 msgstr "_Pozostawienie pierwotnego otoczenia"
 
-#: ../plug-ins/common/lens-apply.c:444
+#: ../plug-ins/common/lens-apply.c:445
 msgid "_Set surroundings to index 0"
 msgstr "Usta_wienie otoczenia na indeks 0"
 
-#: ../plug-ins/common/lens-apply.c:445
+#: ../plug-ins/common/lens-apply.c:446
 msgid "_Set surroundings to background color"
 msgstr "Ustawienie _koloru otoczenia na kolor tła"
 
-#: ../plug-ins/common/lens-apply.c:460
+#: ../plug-ins/common/lens-apply.c:461
 msgid "_Make surroundings transparent"
 msgstr "P_rzezroczyste otoczenie"
 
-#: ../plug-ins/common/lens-apply.c:477
+#: ../plug-ins/common/lens-apply.c:478
 msgid "_Lens refraction index:"
 msgstr "_Współczynnik załamania soczewki:"
 
@@ -10170,8 +10166,7 @@ msgstr "Wyświetlanie punktów kontrolnych"
 msgid "Max undo:"
 msgstr "Maksimum cofnięć:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1320
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Przezroczysty"
 
@@ -11316,8 +11311,7 @@ msgstr "Ziarno losowości:"
 msgid "_Second Flares"
 msgstr "_Dodatkowe błyski"
 
-#: ../plug-ins/help-browser/dialog.c:184
-#: ../plug-ins/help-browser/dialog.c:1133
+#: ../plug-ins/help-browser/dialog.c:184 ../plug-ins/help-browser/dialog.c:1133
 msgid "GIMP Help Browser"
 msgstr "Przeglądarka pomocy programu GIMP"
 
@@ -11634,8 +11628,7 @@ msgstr "_X środka:"
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
 #: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:249
-#: ../plug-ins/imagemap/imap_grid.c:255
-#: ../plug-ins/imagemap/imap_polygon.c:505
+#: ../plug-ins/imagemap/imap_grid.c:255 ../plug-ins/imagemap/imap_polygon.c:505
 #: ../plug-ins/imagemap/imap_polygon.c:513
 #: ../plug-ins/imagemap/imap_rectangle.c:392
 #: ../plug-ins/imagemap/imap_rectangle.c:399
