@@ -65,7 +65,7 @@ static const GimpStringActionEntry filters_actions[] =
     NULL /* FIXME GIMP_HELP_FILTER_BUMP_MAP */ },
 
   { "filters-c2g", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Color to Gray..."), NULL, NULL,
+    NC_("filters-action", "_Color to Gray..."), NULL, NULL,
     "gegl:c2g",
     NULL /* FIXME GIMP_HELP_FILTER_C2G */ },
 
@@ -225,7 +225,7 @@ static const GimpStringActionEntry filters_actions[] =
     NULL /* FIXME GIMP_HELP_FILTER_MAZE */ },
 
   { "filters-mono-mixer", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Mono Mixer..."), NULL, NULL,
+    NC_("filters-action", "_Mono Mixer..."), NULL, NULL,
     "gegl:mono-mixer",
     NULL /* FIXME GIMP_HELP_FILTER_MONO_MIXER */ },
 
@@ -353,6 +353,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Semi-Flatten..."), NULL, NULL,
     "gimp:semi-flatten",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
+
+  { "filters-sepia", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Sepia..."), NULL, NULL,
+    "gegl:sepia",
+    NULL /* FIXME GIMP_HELP_FILTER_SEPIA */ },
 
   { "filters-shift", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Shift..."), NULL, NULL,
@@ -563,6 +568,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
+  SET_SENSITIVE ("filters-sepia",                   writable && !gray);
   SET_SENSITIVE ("filters-shift",                   writable);
   SET_SENSITIVE ("filters-sinus",                   writable);
   SET_SENSITIVE ("filters-softglow",                writable);

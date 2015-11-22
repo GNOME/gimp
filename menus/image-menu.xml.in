@@ -556,6 +556,7 @@
       <menu action="colors-desaturate-menu" name="Desaturate">
 	<menuitem action="filters-mono-mixer" />
 	<menuitem action="filters-c2g" />
+	<menuitem action="filters-sepia" />
         <separator />
       </menu>
       <menu action="colors-map-menu" name="Map">

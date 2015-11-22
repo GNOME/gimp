@@ -543,6 +543,7 @@ sanity_check_gegl_ops (void)
     "gegl:ripple",
     "gegl:scale-ratio",
     "gegl:seamless-clone",
+    "gegl:sepia",
     "gegl:shift",
     "gegl:simplex-noise",
     "gegl:shift",
