@@ -271,9 +271,9 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-about-dialog",
       GIMP_HELP_ABOUT_DIALOG },
 
-  { "help-action-search", "edit-find",
-    NC_("help-action", "_Search and Run a Command"), "slash",
-    NC_("help-action", "Search commands by keyword, and run them"),
+  { "dialogs-action-search", "edit-find",
+    NC_("dialogs-action", "_Search and Run a Command"), "slash",
+    NC_("dialogs-action", "Search commands by keyword, and run them"),
     "gimp-action-search-dialog",
     GIMP_HELP_ACTION_SEARCH_DIALOG }
 };
