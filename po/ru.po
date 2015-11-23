@@ -71,8 +71,7 @@ msgstr ""
 "Лицензию GNU.\n"
 "\n"
 "Вы должны были получить копию Стандартной Общественной Лицензии GNU вместе с "
-"этой программой. Если это не так, напишите в Фонд Свободного ПО (Free "
-"Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA"
+"этой программой. Если это не так, прочтите страницу http://www.gnu.org/licenses/."
 
 #: ../app/app.c:225
 #, c-format
@@ -126,7 +125,7 @@ msgstr "Запустить без пользовательского интер�
 
 #: ../app/main.c:178
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "Не загружать кисти, градиенты, текстуры, …"
+msgstr "Не загружать кисти, градиенты, текстуры…"
 
 #: ../app/main.c:183
 msgid "Do not load any fonts"
@@ -208,7 +207,7 @@ msgstr ""
 
 #: ../app/main.c:440
 msgid "Another GIMP instance is already running."
-msgstr "Уже запущена другая копия GIMP"
+msgstr "Уже запущена другая копия GIMP."
 
 #: ../app/main.c:512
 msgid "GIMP output. Type any character to close this window."
@@ -1394,7 +1393,7 @@ msgstr "Открыть _экран…"
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
 msgid "Connect to another display"
-msgstr "Соеидиниться с другим экраном"
+msgstr "Соединиться с другим экраном"
 
 #: ../app/actions/dock-actions.c:63
 msgctxt "dock-action"
@@ -2283,7 +2282,7 @@ msgstr "Открыть файлы изображений как слои"
 #: ../app/actions/file-actions.c:88
 msgctxt "file-action"
 msgid "Open _Location..."
-msgstr "Открыть из с_ети.."
+msgstr "Открыть из с_ети…"
 
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
@@ -2762,7 +2761,7 @@ msgstr "Удалить _выделение"
 
 #: ../app/actions/gradient-editor-actions.c:813
 msgid "Re-_center Midpoints in Selection"
-msgstr "Отцентровать средние точки выделения"
+msgstr "От_центрировать средние точки выделения"
 
 #: ../app/actions/gradient-editor-actions.c:815
 msgid "Re-distribute _Handles in Selection"
@@ -4602,7 +4601,7 @@ msgstr "Справа налево"
 #: ../app/actions/text-editor-commands.c:62
 #: ../app/actions/text-tool-commands.c:117
 msgid "Open Text File (UTF-8)"
-msgstr "Открыть текствый файл (UTF-8)"
+msgstr "Открыть текстовый файл (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
@@ -5360,7 +5359,7 @@ msgstr "Показывать панель меню в окнах изображ�
 #: ../app/actions/view-actions.c:210
 msgctxt "view-action"
 msgid "Show R_ulers"
-msgstr "Показывать _линейки "
+msgstr "Показывать _линейки"
 
 #: ../app/actions/view-actions.c:211
 msgctxt "view-action"
@@ -5599,7 +5598,7 @@ msgstr "_Вернуть масштаб"
 #: ../app/actions/view-actions.c:761
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr "_Другой (%s) …"
+msgstr "_Другой (%s)…"
 
 #: ../app/actions/view-actions.c:770
 #, c-format
@@ -7351,11 +7350,11 @@ msgstr "Основной в фоновый (резкий переход)"
 
 #: ../app/core/gimp-gradients.c:87
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "Основной в фоновый (HSV против часовой )"
+msgstr "Основной в фоновый (HSV против часовой)"
 
 #: ../app/core/gimp-gradients.c:95
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Основной в фоновый (HSV по часовой )"
+msgstr "Основной в фоновый (HSV по часовой)"
 
 #: ../app/core/gimp-gradients.c:103
 msgid "FG to Transparent"
@@ -10659,7 +10658,7 @@ msgstr "Нажмите %s для отказа от всех изменений �
 #: ../app/display/gimpdisplayshell-close.c:277
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "Сохранить изменения в изображениии «%s» перед закрытием"
+msgstr "Сохранить изменения в изображении «%s» перед закрытием"
 
 #: ../app/display/gimpdisplayshell-close.c:310
 #, c-format
@@ -10790,11 +10789,11 @@ msgstr "Масштаб:"
 
 #: ../app/display/gimpdisplayshell-title.c:282
 msgid "(modified)"
-msgstr "(измененен)"
+msgstr "(изменен)"
 
 #: ../app/display/gimpdisplayshell-title.c:287
 msgid "(clean)"
-msgstr "(неизменен)"
+msgstr "(не изменен)"
 
 #: ../app/display/gimpdisplayshell-title.c:338
 #: ../app/display/gimpdisplayshell-title.c:351
@@ -10814,7 +10813,7 @@ msgstr "Необычный файл"
 #: ../app/file/file-open.c:188
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr "Расширение %s успешно закончило работу, но не возвратило изображение."
+msgstr "Расширение %s успешно закончило работу, но не возвратило изображение"
 
 #: ../app/file/file-open.c:199
 #, c-format
@@ -13270,7 +13269,7 @@ msgstr "_Перемещение"
 
 #: ../app/tools/gimpmovetool.c:249 ../app/tools/gimpmovetool.c:554
 msgid "Move Guide: "
-msgstr "Переместить направляющую:"
+msgstr "Переместить направляющую: "
 
 #: ../app/tools/gimpmovetool.c:548
 msgid "Remove Guide"
@@ -14498,7 +14497,7 @@ msgstr "Синий:"
 
 #: ../app/widgets/gimpcolorframe.c:539 ../app/widgets/gimpcolorframe.c:572
 msgid "Value:"
-msgstr "Яркость"
+msgstr "Яркость:"
 
 #: ../app/widgets/gimpcolorframe.c:563
 msgid "Hex:"
