@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-14 02:32+0300\n"
-"PO-Revision-Date: 2015-11-14 02:53+0300\n"
+"POT-Creation-Date: 2015-11-23 00:22+0300\n"
+"PO-Revision-Date: 2015-11-23 06:23+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -230,7 +230,7 @@ msgstr "(Введите любой символ для закрытия этог
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вывод GIMP. Вы можете свернуть это окно, но не закрывайте его."
 
-#: ../app/sanity.c:603
+#: ../app/sanity.c:604
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -241,7 +241,7 @@ msgstr ""
 "\n"
 "Проверьте значение переменной окружения G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:622
+#: ../app/sanity.c:623
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -842,10 +842,9 @@ msgid "_Select this Color"
 msgstr "Выбрать цвет"
 
 #: ../app/actions/colormap-actions.c:74
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Select all pixels with this color"
-msgstr "Выделение областей с заливкой схожего цвета"
+msgstr "Выделить все точки растра с этим цветом"
 
 #: ../app/actions/colormap-actions.c:79
 #, fuzzy
@@ -854,10 +853,9 @@ msgid "_Add to Selection"
 msgstr "_Добавить к выделению"
 
 #: ../app/actions/colormap-actions.c:80
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
-msgstr "Добавить этот канал в выделенную область"
+msgstr "Добавить все точки растра этого цвета в активное выделение"
 
 #: ../app/actions/colormap-actions.c:85
 #, fuzzy
@@ -1420,12 +1418,12 @@ msgid "_About"
 msgstr "О прог_рамме"
 
 #: ../app/actions/dialogs-actions.c:275
-msgctxt "help-action"
+msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "_Найти и выполнить действие"
 
 #: ../app/actions/dialogs-actions.c:276
-msgctxt "help-action"
+msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Найти действие по ключевым словам и выполнить его"
 
@@ -2670,12 +2668,12 @@ msgstr "_Линза..."
 #: ../app/actions/filters-actions.c:63
 msgctxt "filters-action"
 msgid "_Bump Map..."
-msgstr ""
+msgstr "Карта _рельефа..."
 
 #: ../app/actions/filters-actions.c:68
 msgctxt "filters-action"
-msgid "Color to Gray..."
-msgstr "Цвет в градации серого..."
+msgid "_Color to Gray..."
+msgstr "_Цвет в градации серого..."
 
 #: ../app/actions/filters-actions.c:73
 msgctxt "filters-action"
@@ -2748,16 +2746,14 @@ msgid "Diffraction Patterns..."
 msgstr "Дифракционные узоры..."
 
 #: ../app/actions/filters-actions.c:143
-#, fuzzy
 msgctxt "filters-action"
 msgid "Displace..."
-msgstr "Убрать _череcстрочность..."
+msgstr "_Смещение..."
 
 #: ../app/actions/filters-actions.c:148
-#, fuzzy
 msgctxt "filters-action"
 msgid "Distance Map..."
-msgstr "Расстояние:"
+msgstr "Карта расстояний..."
 
 #: ../app/actions/filters-actions.c:153
 msgctxt "filters-action"
@@ -2795,10 +2791,9 @@ msgid "_E_xposure..."
 msgstr "_Экспозиция..."
 
 #: ../app/actions/filters-actions.c:188
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
-msgstr "Размер _изображения..."
+msgstr "_Фрактальный след..."
 
 #: ../app/actions/filters-actions.c:193
 msgctxt "filters-action"
@@ -2831,14 +2826,13 @@ msgid "Lens Flare..."
 msgstr "Блик линзы..."
 
 #: ../app/actions/filters-actions.c:223
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Maze..."
-msgstr "_Ослабить..."
+msgstr "_Лабиринт..."
 
 #: ../app/actions/filters-actions.c:228
 msgctxt "filters-action"
-msgid "Mono Mixer..."
+msgid "_Mono Mixer..."
 msgstr "_Монохромный микшер каналов..."
 
 #: ../app/actions/filters-actions.c:233
@@ -2902,10 +2896,9 @@ msgid "Noise R_eduction..."
 msgstr "_Подавление шума..."
 
 #: ../app/actions/filters-actions.c:293
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
-msgstr "Образ_цовые точки"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:298
 msgctxt "filters-action"
@@ -2969,95 +2962,98 @@ msgstr "По_лусведение..."
 
 #: ../app/actions/filters-actions.c:358
 msgctxt "filters-action"
+msgid "_Sepia..."
+msgstr "_Сепия..."
+
+#: ../app/actions/filters-actions.c:363
+msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "С_двиг..."
 
-#: ../app/actions/filters-actions.c:363
-#, fuzzy
+#: ../app/actions/filters-actions.c:368
 msgctxt "filters-action"
 msgid "_Sinus..."
-msgstr "_Кривые..."
+msgstr "_Синус..."
 
-#: ../app/actions/filters-actions.c:368
+#: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Мягкое свечение..."
 
-#: ../app/actions/filters-actions.c:373
+#: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "Растянуть _контраст..."
 
-#: ../app/actions/filters-actions.c:378
+#: ../app/actions/filters-actions.c:383
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV..."
 msgstr "Растянуть ко_нтраст в HSV..."
 
-#: ../app/actions/filters-actions.c:383
+#: ../app/actions/filters-actions.c:388
 msgctxt "filters-action"
 msgid "_Super_nova..."
 msgstr "Свер_хновая..."
 
-#: ../app/actions/filters-actions.c:388
+#: ../app/actions/filters-actions.c:393
 #, fuzzy
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "Поро_г..."
 
-#: ../app/actions/filters-actions.c:393
+#: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Стеклянные _блоки..."
 
-#: ../app/actions/filters-actions.c:398
-#, fuzzy
-msgctxt "filters-action"
-msgid "_Paper Tile..."
-msgstr "_Постеризация..."
-
 #: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
-msgid "_Tile Seamless..."
-msgstr ""
+msgid "_Paper Tile..."
+msgstr "_Разрез бумаги..."
 
 #: ../app/actions/filters-actions.c:408
+msgctxt "filters-action"
+msgid "_Tile Seamless..."
+msgstr "_Без швов..."
+
+#: ../app/actions/filters-actions.c:413
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Нерезкая маска..."
 
-#: ../app/actions/filters-actions.c:413
+#: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Распространение значений..."
 
-#: ../app/actions/filters-actions.c:418
+#: ../app/actions/filters-actions.c:423
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
-msgstr "Ви_део..."
+msgstr ""
 
-#: ../app/actions/filters-actions.c:423
+#: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Виньетирование..."
 
-#: ../app/actions/filters-actions.c:428
+#: ../app/actions/filters-actions.c:433
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Волны..."
 
-#: ../app/actions/filters-actions.c:433
+#: ../app/actions/filters-actions.c:438
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "В_ихрь и щипок..."
 
-#: ../app/actions/filters-actions.c:438
+#: ../app/actions/filters-actions.c:443
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "В_етер..."
 
 #: ../app/actions/filters-commands.c:75
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: ../app/actions/fonts-actions.c:44
 msgctxt "fonts-action"
@@ -3543,177 +3539,177 @@ msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "Показать справку по той или иной части интерфейса"
 
-#: ../app/actions/image-actions.c:49 ../app/actions/image-actions.c:53
+#: ../app/actions/image-actions.c:51 ../app/actions/image-actions.c:55
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr "Меню изображения"
 
-#: ../app/actions/image-actions.c:56
+#: ../app/actions/image-actions.c:58
 msgctxt "image-action"
 msgid "_Image"
 msgstr "И_зображение"
 
-#: ../app/actions/image-actions.c:57
+#: ../app/actions/image-actions.c:59
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "Ре_жим"
 
-#: ../app/actions/image-actions.c:58
+#: ../app/actions/image-actions.c:60
 msgctxt "image-action"
 msgid "_Precision"
 msgstr "То_чность"
 
-#: ../app/actions/image-actions.c:60
+#: ../app/actions/image-actions.c:62
 msgctxt "image-action"
 msgid "_Color Management"
 msgstr "Управление _цветом"
 
-#: ../app/actions/image-actions.c:61
+#: ../app/actions/image-actions.c:63
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "Пре_образования"
 
-#: ../app/actions/image-actions.c:62
+#: ../app/actions/image-actions.c:64
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Направляющие"
 
-#: ../app/actions/image-actions.c:64
+#: ../app/actions/image-actions.c:66
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Цвет"
 
-#: ../app/actions/image-actions.c:65
+#: ../app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "_Инфо"
 
-#: ../app/actions/image-actions.c:66
+#: ../app/actions/image-actions.c:68
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Авто"
 
-#: ../app/actions/image-actions.c:67
+#: ../app/actions/image-actions.c:69
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Проекция"
 
-#: ../app/actions/image-actions.c:68
+#: ../app/actions/image-actions.c:70
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Составляющие"
 
-#: ../app/actions/image-actions.c:69
+#: ../app/actions/image-actions.c:71
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "О_бесцвечивание"
 
-#: ../app/actions/image-actions.c:72
+#: ../app/actions/image-actions.c:74
 msgctxt "image-action"
 msgid "_New..."
 msgstr "_Создать..."
 
-#: ../app/actions/image-actions.c:73
+#: ../app/actions/image-actions.c:75
 msgctxt "image-action"
 msgid "Create a new image"
 msgstr "Создать новое изображение"
 
-#: ../app/actions/image-actions.c:78
+#: ../app/actions/image-actions.c:80
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Назначить цветовой профиль"
 
-#: ../app/actions/image-actions.c:79
+#: ../app/actions/image-actions.c:81
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Назначить изображению цветовой профиль"
 
-#: ../app/actions/image-actions.c:84
+#: ../app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
 msgstr "С_конвертировать по цветовому профилю..."
 
-#: ../app/actions/image-actions.c:85
+#: ../app/actions/image-actions.c:87
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
 msgstr "Применить цветовой профиль к изображению"
 
-#: ../app/actions/image-actions.c:90
+#: ../app/actions/image-actions.c:92
 msgctxt "image-action"
 msgid "_Discard Color Profile"
 msgstr "_Снять цветовой профиль"
 
-#: ../app/actions/image-actions.c:91
+#: ../app/actions/image-actions.c:93
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Удалить цветовой профиль изображения"
 
-#: ../app/actions/image-actions.c:96
+#: ../app/actions/image-actions.c:98
 msgctxt "image-action"
 msgid "Can_vas Size..."
 msgstr "Ра_змер холста..."
 
-#: ../app/actions/image-actions.c:97
+#: ../app/actions/image-actions.c:99
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "Изменить размер холста изображения"
 
-#: ../app/actions/image-actions.c:102
+#: ../app/actions/image-actions.c:104
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
 msgstr "Холст по _размеру слоев"
 
-#: ../app/actions/image-actions.c:103
+#: ../app/actions/image-actions.c:105
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "Изменить размер изображения, чтобы поместились все слои"
 
-#: ../app/actions/image-actions.c:108
+#: ../app/actions/image-actions.c:110
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr "_Холст в выделение"
 
-#: ../app/actions/image-actions.c:109
+#: ../app/actions/image-actions.c:111
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "Изменить размер изображения, чтобы поместилось выделение"
 
-#: ../app/actions/image-actions.c:114
+#: ../app/actions/image-actions.c:116
 msgctxt "image-action"
 msgid "_Print Size..."
 msgstr "_Размер при печати..."
 
-#: ../app/actions/image-actions.c:115
+#: ../app/actions/image-actions.c:117
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "Изменить разрешение при печати"
 
-#: ../app/actions/image-actions.c:120
+#: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr "Размер _изображения..."
 
-#: ../app/actions/image-actions.c:121
+#: ../app/actions/image-actions.c:123
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "Изменить размер содержимого изображения"
 
-#: ../app/actions/image-actions.c:126
+#: ../app/actions/image-actions.c:128
 msgctxt "image-action"
 msgid "_Crop to Selection"
 msgstr "О_брезать до выделения"
 
-#: ../app/actions/image-actions.c:127
+#: ../app/actions/image-actions.c:129
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr "Откадрировать изображение до размеров выделения"
 
-#: ../app/actions/image-actions.c:132
+#: ../app/actions/image-actions.c:134
 msgctxt "image-action"
 msgid "Crop to C_ontent"
 msgstr "Обрезать до со_держимого"
 
-#: ../app/actions/image-actions.c:133
+#: ../app/actions/image-actions.c:135
 #, fuzzy
 msgctxt "image-action"
 msgid ""
@@ -3721,324 +3717,279 @@ msgid ""
 "image)"
 msgstr "Откадрировать изображение до размеров выделения"
 
-#: ../app/actions/image-actions.c:138
+#: ../app/actions/image-actions.c:140
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "Соз_дать копию"
 
-#: ../app/actions/image-actions.c:139
+#: ../app/actions/image-actions.c:141
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Создать копию этого изображения"
 
-#: ../app/actions/image-actions.c:144
+#: ../app/actions/image-actions.c:146
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "Объединить _видимые слои..."
 
-#: ../app/actions/image-actions.c:145
+#: ../app/actions/image-actions.c:147
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Сводит все видимые слои в один"
 
-#: ../app/actions/image-actions.c:150
+#: ../app/actions/image-actions.c:152
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "Свести _изображение"
 
-#: ../app/actions/image-actions.c:151
+#: ../app/actions/image-actions.c:153
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Сводит все слои в один и удаляет прозрачность"
 
-#: ../app/actions/image-actions.c:156
+#: ../app/actions/image-actions.c:158
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "Настроить с_етку..."
 
-#: ../app/actions/image-actions.c:157
+#: ../app/actions/image-actions.c:159
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Параметры сетки для этого изображения"
 
-#: ../app/actions/image-actions.c:162
+#: ../app/actions/image-actions.c:164
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "Сво_йства изображения"
 
-#: ../app/actions/image-actions.c:163
+#: ../app/actions/image-actions.c:165
 msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Показывает информацию об изображении"
 
-#: ../app/actions/image-actions.c:171
+#: ../app/actions/image-actions.c:173
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../app/actions/image-actions.c:172
+#: ../app/actions/image-actions.c:174
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Преобразовать изображение в RGB"
 
-#: ../app/actions/image-actions.c:176
+#: ../app/actions/image-actions.c:178
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Градации _серого"
 
-#: ../app/actions/image-actions.c:177
+#: ../app/actions/image-actions.c:179
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Преобразовать изображение в градации серого"
 
-#: ../app/actions/image-actions.c:181
+#: ../app/actions/image-actions.c:183
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "Ин_дексированный..."
 
-#: ../app/actions/image-actions.c:182
+#: ../app/actions/image-actions.c:184
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Преобразовать изображение в индексированное"
 
-#: ../app/actions/image-actions.c:189
-msgctxt "image-convert-action"
-msgid "8 bit integer (linear)"
-msgstr ""
-
 #: ../app/actions/image-actions.c:191
+msgctxt "image-convert-action"
+msgid "8 bit integer"
+msgstr "8bit целочисленное"
+
+#: ../app/actions/image-actions.c:193
 #, fuzzy
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit linear integer"
+msgid "Convert the image to 8 bit integer"
 msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:195
-msgctxt "image-convert-action"
-msgid "8 bit integer (gamma)"
-msgstr ""
 
 #: ../app/actions/image-actions.c:197
+msgctxt "image-convert-action"
+msgid "16 bit integer"
+msgstr "16bit целочисленное"
+
+#: ../app/actions/image-actions.c:199
 #, fuzzy
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit gamma-corrected integer"
+msgid "Convert the image to 16 bit integer"
 msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:201
-msgctxt "image-convert-action"
-msgid "16 bit integer (linear)"
-msgstr ""
 
 #: ../app/actions/image-actions.c:203
+msgctxt "image-convert-action"
+msgid "32 bit integer"
+msgstr "32bit целочисленное"
+
+#: ../app/actions/image-actions.c:205
 #, fuzzy
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit linear integer"
+msgid "Convert the image to 32 bit integer"
 msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:207
-msgctxt "image-convert-action"
-msgid "16 bit integer (gamma)"
-msgstr ""
 
 #: ../app/actions/image-actions.c:209
+msgctxt "image-convert-action"
+msgid "16 bit floating point"
+msgstr "16bit с плавающей точкой"
+
+#: ../app/actions/image-actions.c:211
 #, fuzzy
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit gamma-corrected integer"
+msgid "Convert the image to 16 bit floating point"
 msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:213
-msgctxt "image-convert-action"
-msgid "32 bit integer (linear)"
-msgstr ""
 
 #: ../app/actions/image-actions.c:215
+msgctxt "image-convert-action"
+msgid "32 bit floating point"
+msgstr "32bit с плавающей точкой"
+
+#: ../app/actions/image-actions.c:217
 #, fuzzy
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit linear integer"
+msgid "Convert the image to 32 bit floating point"
 msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:219
-msgctxt "image-convert-action"
-msgid "32 bit integer (gamma)"
-msgstr ""
 
 #: ../app/actions/image-actions.c:221
+msgctxt "image-convert-action"
+msgid "64 bit floating point"
+msgstr "64bit с плавающей точкой"
+
+#: ../app/actions/image-actions.c:223
 #, fuzzy
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit gamma-corrected integer"
+msgid "Convert the image to 64 bit floating point"
 msgstr "Преобразовать изображение в индексированное"
 
-#: ../app/actions/image-actions.c:225
+#: ../app/actions/image-actions.c:230
 msgctxt "image-convert-action"
-msgid "16 bit floating point (linear)"
-msgstr ""
+msgid "Perceptual gamma (sRGB)"
+msgstr "Пространство с гамма-коррекцией (sRGB)"
 
-#: ../app/actions/image-actions.c:227
+#: ../app/actions/image-actions.c:232
 #, fuzzy
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit linear floating point"
-msgstr "Преобразовать изображение в индексированное"
+msgid "Convert the image to preceptual (sRGB) gamma"
+msgstr "Преобразовать изображение в градации серого"
 
-#: ../app/actions/image-actions.c:231
+#: ../app/actions/image-actions.c:236
 msgctxt "image-convert-action"
-msgid "16 bit floating point (gamma)"
-msgstr ""
+msgid "Linear light"
+msgstr "Линейное пространство"
 
-#: ../app/actions/image-actions.c:233
-#, fuzzy
+#: ../app/actions/image-actions.c:238
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit gamma-corrected floating point"
-msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:237
-msgctxt "image-convert-action"
-msgid "32 bit floating point (linear)"
-msgstr ""
-
-#: ../app/actions/image-actions.c:239
-#, fuzzy
-msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit linear floating point"
-msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:243
-msgctxt "image-convert-action"
-msgid "32 bit floating point (gamma)"
-msgstr ""
+msgid "Convert the image to linear light"
+msgstr "Преобразовать изображение в линейное"
 
 #: ../app/actions/image-actions.c:245
-#, fuzzy
-msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit gamma-corrected floating point"
-msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:249
-msgctxt "image-convert-action"
-msgid "64 bit floating point (linear)"
-msgstr ""
-
-#: ../app/actions/image-actions.c:251
-#, fuzzy
-msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit linear floating point"
-msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:255
-msgctxt "image-convert-action"
-msgid "64 bit floating point (gamma)"
-msgstr ""
-
-#: ../app/actions/image-actions.c:257
-#, fuzzy
-msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit gamma-corrected floating point"
-msgstr "Преобразовать изображение в индексированное"
-
-#: ../app/actions/image-actions.c:264
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "Отразить по _горизонтали"
 
-#: ../app/actions/image-actions.c:265
+#: ../app/actions/image-actions.c:246
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Отразить изображение по горизонтали"
 
-#: ../app/actions/image-actions.c:270
+#: ../app/actions/image-actions.c:251
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "Отразить по _вертикали"
 
-#: ../app/actions/image-actions.c:271
+#: ../app/actions/image-actions.c:252
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Отразить изображение по вертикали"
 
-#: ../app/actions/image-actions.c:279
+#: ../app/actions/image-actions.c:260
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Повернуть на 90° _по часовой стрелке"
 
-#: ../app/actions/image-actions.c:280
+#: ../app/actions/image-actions.c:261
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Повернуть изображение на 90 градусов вправо"
 
-#: ../app/actions/image-actions.c:285
+#: ../app/actions/image-actions.c:266
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "П_овернуть на 180°"
 
-#: ../app/actions/image-actions.c:286
+#: ../app/actions/image-actions.c:267
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Повернуть изображение вверх ногами"
 
-#: ../app/actions/image-actions.c:291
+#: ../app/actions/image-actions.c:272
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Повернуть на 90° п_ротив часовой стрелки"
 
-#: ../app/actions/image-actions.c:292
+#: ../app/actions/image-actions.c:273
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Повернуть изображение на 90 градусов влево"
 
-#: ../app/actions/image-commands.c:410
+#: ../app/actions/image-commands.c:424
 msgid "Set Image Canvas Size"
 msgstr "Установка размера холста"
 
-#: ../app/actions/image-commands.c:439 ../app/actions/image-commands.c:463
-#: ../app/actions/image-commands.c:804
+#: ../app/actions/image-commands.c:453 ../app/actions/image-commands.c:477
+#: ../app/actions/image-commands.c:818
 msgid "Resizing"
 msgstr "Изменяется размер..."
 
-#: ../app/actions/image-commands.c:490
+#: ../app/actions/image-commands.c:504
 msgid "Set Image Print Resolution"
 msgstr "Смена разрешения при печати"
 
-#: ../app/actions/image-commands.c:552 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:566 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Производится отражение..."
 
-#: ../app/actions/image-commands.c:576 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:590 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
 msgid "Rotating"
 msgstr "Производится вращение..."
 
-#: ../app/actions/image-commands.c:602 ../app/actions/layers-commands.c:702
+#: ../app/actions/image-commands.c:616 ../app/actions/layers-commands.c:702
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
 "что выделенная область пуста."
 
-#: ../app/actions/image-commands.c:636
+#: ../app/actions/image-commands.c:650
 #, fuzzy
 msgid "Cannot crop because the image has no content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
 "что выделенная область пуста."
 
-#: ../app/actions/image-commands.c:642
+#: ../app/actions/image-commands.c:656
 #, fuzzy
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
 "что выделенная область пуста."
 
-#: ../app/actions/image-commands.c:852
+#: ../app/actions/image-commands.c:866
 msgid "Change Print Size"
 msgstr "Изменить размер при печати"
 
-#: ../app/actions/image-commands.c:893
+#: ../app/actions/image-commands.c:907
 msgid "Scale Image"
 msgstr "Смена размера изображения"
 
 #. Scaling
-#: ../app/actions/image-commands.c:904 ../app/actions/layers-commands.c:1197
+#: ../app/actions/image-commands.c:918 ../app/actions/layers-commands.c:1197
 #: ../app/dialogs/preferences-dialog.c:1814
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -7553,22 +7504,19 @@ msgid "Hue (HSV)"
 msgstr ""
 
 #: ../app/core/core-enums.c:303
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Saturation (HSV)"
-msgstr "Насыщенность"
+msgstr "Насыщенность (HSV)"
 
 #: ../app/core/core-enums.c:304
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color (HSV)"
-msgstr "Цвет"
+msgstr "Цвет (HSV)"
 
 #: ../app/core/core-enums.c:305
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Value (HSV)"
-msgstr "Значение"
+msgstr "Значение (HSV)"
 
 #: ../app/core/core-enums.c:306
 msgctxt "layer-mode-effects"
@@ -7618,24 +7566,22 @@ msgstr "Перекрытие"
 #: ../app/core/core-enums.c:315
 msgctxt "layer-mode-effects"
 msgid "Hue (LCH)"
-msgstr ""
+msgstr "Тон (LCH)"
 
 #: ../app/core/core-enums.c:316
 msgctxt "layer-mode-effects"
 msgid "Chroma (LCH)"
-msgstr ""
+msgstr "Насыщенность (LCH)"
 
 #: ../app/core/core-enums.c:317
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color (LCH)"
-msgstr "Цвет"
+msgstr "Цвет (LCH)"
 
 #: ../app/core/core-enums.c:318
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Lightness (LCH)"
-msgstr "_Освещённость:"
+msgstr "Светлота (LCH)"
 
 #: ../app/core/core-enums.c:319
 msgctxt "layer-mode-effects"
@@ -10005,14 +9951,12 @@ msgid "Initialize from _selection"
 msgstr "Создать из _выделения"
 
 #: ../app/dialogs/color-profile-dialog.c:163
-#, fuzzy
 msgid "Convert to ICC Color Profile"
-msgstr "Выберите профиль CMYK"
+msgstr "Сконвертировать по цветовому профилю"
 
 #: ../app/dialogs/color-profile-dialog.c:166
-#, fuzzy
 msgid "Convert the image to a color profile"
-msgstr "Преобразовать изображение в RGB"
+msgstr "Преобразовать изображение по цветовому профилю"
 
 #: ../app/dialogs/color-profile-dialog.c:180
 msgid "Assign ICC Color Profile"
@@ -10051,14 +9995,13 @@ msgid "_Black Point Compensation"
 msgstr "Компенсация _чёрной точки"
 
 #: ../app/dialogs/color-profile-dialog.c:304
-#, fuzzy
 msgid "Select destination profile"
-msgstr "Выберите угол поворота"
+msgstr "Выберите целевой цветовой профиль"
 
 #: ../app/dialogs/color-profile-dialog.c:312
-#, fuzzy, c-format
+#, c-format
 msgid "Built-in RGB (%s)"
-msgstr "Направление (%s)"
+msgstr "Встроенный (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:326
 #, c-format
@@ -10066,9 +10009,9 @@ msgid "Preferred RGB (%s)"
 msgstr ""
 
 #: ../app/dialogs/color-profile-dialog.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Converting to '%s'"
-msgstr "Сменить точность до %s"
+msgstr "Преобразование в %s"
 
 #: ../app/dialogs/color-profile-dialog.c:413
 msgid "Assign color profile"
@@ -10085,7 +10028,7 @@ msgstr "Импортировать профили из файла"
 
 #: ../app/dialogs/color-profile-import-dialog.c:86
 msgid "Keep"
-msgstr ""
+msgstr "Оставить"
 
 #: ../app/dialogs/color-profile-import-dialog.c:87
 msgid "Convert"
@@ -10094,55 +10037,68 @@ msgstr "Преобразовать"
 #: ../app/dialogs/color-profile-import-dialog.c:104
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr ""
+msgstr "Изображение '%s' содержит цветовой профиль"
 
 #: ../app/dialogs/color-profile-import-dialog.c:115
-#, fuzzy
 msgid "Convert the image to the RGB working space?"
-msgstr "Преобразовать изображение в RGB"
+msgstr "Преобразовать изображение в рабочее пространство RGB?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:125
 msgid "_Don't ask me again"
 msgstr ""
 
-#: ../app/dialogs/convert-precision-dialog.c:128
+#: ../app/dialogs/convert-precision-dialog.c:135
 #, c-format
 msgid "Convert Image to %s"
-msgstr "Сменить точность до %s"
+msgstr "Сменить точность на %s"
 
-#: ../app/dialogs/convert-precision-dialog.c:132
+#: ../app/dialogs/convert-precision-dialog.c:139
 msgid "Precision Conversion"
 msgstr "Смена точности"
 
-#: ../app/dialogs/convert-precision-dialog.c:147
+#: ../app/dialogs/convert-precision-dialog.c:154
 #: ../app/dialogs/convert-type-dialog.c:141
 msgid "C_onvert"
 msgstr "_Преобразовать"
 
 #. dithering
-#: ../app/dialogs/convert-precision-dialog.c:178
+#: ../app/dialogs/convert-precision-dialog.c:185
 #: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:248
 msgid "Dithering"
 msgstr "Подмешивание шума"
 
-#: ../app/dialogs/convert-precision-dialog.c:197
+#: ../app/dialogs/convert-precision-dialog.c:204
 msgid "_Layers:"
 msgstr "_Растровые слои:"
 
-#: ../app/dialogs/convert-precision-dialog.c:219
+#: ../app/dialogs/convert-precision-dialog.c:226
 msgid "_Text Layers:"
 msgstr "Т_екстовые слои:"
 
-#: ../app/dialogs/convert-precision-dialog.c:236
+#: ../app/dialogs/convert-precision-dialog.c:243
 #: ../app/dialogs/convert-type-dialog.c:289
 msgid "Dithering text layers will make them uneditable"
 msgstr "Подмешивание шума в текстовые слои сделает их нередактируемыми"
 
-#: ../app/dialogs/convert-precision-dialog.c:245
+#: ../app/dialogs/convert-precision-dialog.c:252
 msgid "_Channels and Masks:"
 msgstr "_Каналы и маски:"
 
-#: ../app/dialogs/convert-precision-dialog.c:279
+#. gamma
+#: ../app/dialogs/convert-precision-dialog.c:272
+#: ../app/operations/gimplevelsconfig.c:111 ../app/tools/gimplevelstool.c:482
+msgid "Gamma"
+msgstr "Гамма"
+
+#: ../app/dialogs/convert-precision-dialog.c:285
+msgid "Perceptual gamma (sRGB)"
+msgstr "Пространство с гамма-коррекцией (sRGB)"
+
+#: ../app/dialogs/convert-precision-dialog.c:286
+msgid "Linear light"
+msgstr "Линейное пространство"
+
+#: ../app/dialogs/convert-precision-dialog.c:309
 #, fuzzy
 msgid "Converting to lower bit depth"
 msgstr "Преобразование в индексированное"
@@ -10165,16 +10121,15 @@ msgstr "_Удалить неиспользуемые цвета из цвето�
 
 #: ../app/dialogs/convert-type-dialog.c:251
 msgid "Color _dithering:"
-msgstr "_Размывание цвета:"
+msgstr ""
 
 #: ../app/dialogs/convert-type-dialog.c:266
 msgid "Enable dithering of _transparency"
-msgstr "Включить размывание прозрачности"
+msgstr "Применить подмешивание шума к _альфа-каналу"
 
 #: ../app/dialogs/convert-type-dialog.c:278
-#, fuzzy
 msgid "Enable dithering of text layers"
-msgstr "Включить размывание прозрачности"
+msgstr "Применить подмешивание шума к текстовым слоям"
 
 #: ../app/dialogs/convert-type-dialog.c:309
 msgid "Converting to indexed colors"
@@ -10303,9 +10258,8 @@ msgstr ""
 "расширение файла или выберите формат из списка."
 
 #: ../app/dialogs/file-save-dialog.c:597
-#, fuzzy
 msgid "The given filename cannot be used for exporting"
-msgstr "Это имя файла не содержит никакого известного расширения."
+msgstr "Предложенное имя файла не может быть использовано при экспорте"
 
 #: ../app/dialogs/file-save-dialog.c:598
 msgid ""
@@ -10321,9 +10275,8 @@ msgid "Take me to the Save dialog"
 msgstr "Перейти к диалогу сохранения"
 
 #: ../app/dialogs/file-save-dialog.c:605
-#, fuzzy
 msgid "The given filename cannot be used for saving"
-msgstr "Это имя файла не содержит никакого известного расширения."
+msgstr "Предложенное имя файла не может быть использовано при сохранении"
 
 #: ../app/dialogs/file-save-dialog.c:606
 msgid ""
@@ -12508,10 +12461,6 @@ msgstr "Режим обесцвечивания"
 msgid "Overlap"
 msgstr "Перекрытие"
 
-#: ../app/operations/gimplevelsconfig.c:111 ../app/tools/gimplevelstool.c:482
-msgid "Gamma"
-msgstr "Гамма"
-
 #: ../app/operations/gimplevelsconfig.c:116
 msgid "Low Input"
 msgstr ""
@@ -13254,13 +13203,12 @@ msgstr "Свободное выделение"
 #: ../app/pdb/plug-in-compat-cmds.c:241
 msgctxt "undo-type"
 msgid "Bump Map"
-msgstr ""
+msgstr "Карта рельефа"
 
 #: ../app/pdb/plug-in-compat-cmds.c:313
-#, fuzzy
 msgctxt "undo-type"
 msgid "Displace"
-msgstr "Дисплей"
+msgstr "Смещение"
 
 #: ../app/pdb/plug-in-compat-cmds.c:347
 msgctxt "undo-type"
@@ -13425,7 +13373,7 @@ msgstr "Сверхновая"
 #: ../app/pdb/plug-in-compat-cmds.c:2876
 msgctxt "undo-type"
 msgid "Paper Tile"
-msgstr ""
+msgstr "Разрез бумаги"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2917 ../app/pdb/plug-in-compat-cmds.c:2960
 msgctxt "undo-type"
@@ -14345,7 +14293,7 @@ msgstr "_Насыщенность"
 
 #: ../app/tools/gimpcolorizetool.c:188 ../app/tools/gimphuesaturationtool.c:310
 msgid "_Lightness"
-msgstr "_Освещённость"
+msgstr "_Светлота"
 
 #: ../app/tools/gimpcolorizetool.c:199
 msgid "Colorize Color"
@@ -14892,27 +14840,27 @@ msgstr ""
 msgid "_Free Select"
 msgstr "С_вободное выделение"
 
-#: ../app/tools/gimpfreeselecttool.c:1031
+#: ../app/tools/gimpfreeselecttool.c:950
 msgid "Click to complete selection"
 msgstr "Щёлкните для завершения выделения"
 
-#: ../app/tools/gimpfreeselecttool.c:1035
+#: ../app/tools/gimpfreeselecttool.c:954
 msgid "Click-Drag to move segment vertex"
 msgstr "Щёлкните и потащите, чтобы переместить вершину сегмента"
 
-#: ../app/tools/gimpfreeselecttool.c:1040
+#: ../app/tools/gimpfreeselecttool.c:959
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "Ввод завершает выделение, Escape отменяет его, Забой убирает последний "
 "сегмент"
 
-#: ../app/tools/gimpfreeselecttool.c:1044
+#: ../app/tools/gimpfreeselecttool.c:963
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Щелчок и перетаскивание рисует произвольную линию, щелчок добавляет прямой "
 "отрезок"
 
-#: ../app/tools/gimpfreeselecttool.c:1568
+#: ../app/tools/gimpfreeselecttool.c:1515
 msgctxt "command"
 msgid "Free Select"
 msgstr "Свободное выделение"
@@ -14949,7 +14897,7 @@ msgstr "Инструмент GEGL: выполнение произвольной
 msgid "_GEGL Operation..."
 msgstr "Опера_ция GEGL..."
 
-#: ../app/tools/gimpgegltool.c:418
+#: ../app/tools/gimpgegltool.c:419
 msgid "Select an operation from the list above"
 msgstr "Выберите операцию из списка вверху"
 
@@ -14960,7 +14908,7 @@ msgstr "Режим работы с точками"
 
 #: ../app/tools/gimphandletransformoptions.c:166
 msgid "Add handles and transform the image"
-msgstr ""
+msgstr "Разместите регуляторы на холсте и трансформируйте изображение"
 
 #: ../app/tools/gimphandletransformoptions.c:171
 #, fuzzy
@@ -15026,7 +14974,7 @@ msgstr "Масштабирование гистограммы"
 
 #: ../app/tools/gimphuesaturationtool.c:92
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr "Тон-Насыщенность: коррекция тона, насыщенности и освещённости"
+msgstr "Тон-Насыщенность: коррекция тона, насыщенности и светлоты"
 
 #: ../app/tools/gimphuesaturationtool.c:93
 msgid "Hue-_Saturation..."
@@ -15034,7 +14982,7 @@ msgstr "Тон-_Насыщенность..."
 
 #: ../app/tools/gimphuesaturationtool.c:107
 msgid "Adjust Hue / Lightness / Saturation"
-msgstr "Коррекция тона, освещённости, насыщенности"
+msgstr "Коррекция тона, светлоты, насыщенности"
 
 #: ../app/tools/gimphuesaturationtool.c:109
 msgid "Import Hue-Saturation Settings"
@@ -15869,7 +15817,7 @@ msgstr "Прямоугольное выделение: выделение пря
 msgid "_Rectangle Select"
 msgstr "Пр_ямоугольное выделение"
 
-#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2016
+#: ../app/tools/gimprectangletool.c:1140 ../app/tools/gimprectangletool.c:2009
 msgid "Rectangle: "
 msgstr "Прямоугольник: "
 
@@ -15895,9 +15843,8 @@ msgid "Select transparent areas"
 msgstr "Выделять прозрачные области"
 
 #: ../app/tools/gimpregionselectoptions.c:239
-#, fuzzy
 msgid "Select by"
-msgstr "Выбор по:"
+msgstr "Выбор по"
 
 #: ../app/tools/gimpregionselectoptions.c:245
 msgid "Draw Mask"
@@ -16302,16 +16249,16 @@ msgstr "Направляющие"
 
 #: ../app/tools/gimptransformoptions.c:455
 #, c-format
-msgid "15 degrees  (%s)"
-msgstr "15 градусов  (%s)"
+msgid "15 degrees (%s)"
+msgstr "15 градусов (%s)"
 
 #: ../app/tools/gimptransformoptions.c:456
 msgid "Limit rotation steps to 15 degrees"
-msgstr ""
+msgstr "Ограничить вращение шагами по 15 градусов"
 
 #: ../app/tools/gimptransformoptions.c:461
 #, c-format
-msgid "Keep aspect  (%s)"
+msgid "Keep aspect (%s)"
 msgstr "Сохранить пропорции  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:462
@@ -16320,7 +16267,7 @@ msgstr "Сохранять исходное соотношение сторон"
 
 #: ../app/tools/gimptransformoptions.c:480
 #, c-format
-msgid "Constrain  (%s)"
+msgid "Constrain (%s)"
 msgstr "Ограничить (%s)"
 
 #: ../app/tools/gimptransformoptions.c:481
@@ -16329,28 +16276,30 @@ msgstr "Перемещение"
 
 #: ../app/tools/gimptransformoptions.c:482
 #, c-format
-msgid "Constrain movement to 45 degree angles from center  (%s)"
-msgstr ""
+msgid "Constrain movement to 45 degree angles from center (%s)"
+msgstr "Ограничить движение шагами по 45 градусов от центра (%s)"
 
 #: ../app/tools/gimptransformoptions.c:484
 #, c-format
-msgid "Maintain aspect ratio when scaling  (%s)"
-msgstr ""
+msgid "Maintain aspect ratio when scaling (%s)"
+msgstr "Сохранять соотношение сторон при масштабировании (%s)"
 
 #: ../app/tools/gimptransformoptions.c:486
 #, c-format
-msgid "Constrain rotation to 15 degree increments  (%s)"
+msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Ограничить вращение шагами по 15 градусов (%s)"
 
 #: ../app/tools/gimptransformoptions.c:488
 #, c-format
-msgid "Shear along edge direction only  (%s)"
-msgstr ""
+msgid "Shear along edge direction only (%s)"
+msgstr "Искривлять только вдоль края (%s)"
 
 #: ../app/tools/gimptransformoptions.c:490
 #, c-format
-msgid "Constrain perspective handles to move along edges and diagonal  (%s)"
+msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
+"Ограничить перемещение вертикалью, горизонталью и диагональю при коррекции "
+"перспективы (%s)"
 
 #: ../app/tools/gimptransformoptions.c:493
 #, c-format
@@ -16358,19 +16307,19 @@ msgid "From pivot  (%s)"
 msgstr "От опорной точки  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:495
-#, fuzzy, c-format
-msgid "Scale from pivot point  (%s)"
-msgstr "Заполнять от первой точки"
+#, c-format
+msgid "Scale from pivot point (%s)"
+msgstr "Масштабировать от опорной точки (%s)"
 
 #: ../app/tools/gimptransformoptions.c:497
 #, c-format
-msgid "Shear opposite edge by same amount  (%s)"
-msgstr ""
+msgid "Shear opposite edge by same amount (%s)"
+msgstr "Искривлять противоположный край на ту же величину (%s)"
 
 #: ../app/tools/gimptransformoptions.c:499
 #, c-format
-msgid "Maintain position of pivot while changing perspective  (%s)"
-msgstr ""
+msgid "Maintain position of pivot while changing perspective (%s)"
+msgstr "Сохранять положение опорной точки при коррекции перспективы (%s)"
 
 #: ../app/tools/gimptransformoptions.c:502
 msgid "Pivot"
@@ -16378,31 +16327,30 @@ msgstr "Опорная точка"
 
 #: ../app/tools/gimptransformoptions.c:503
 #, c-format
-msgid "Snap  (%s)"
+msgid "Snap (%s)"
 msgstr "Прилипать (%s)"
 
 #: ../app/tools/gimptransformoptions.c:504
 #, c-format
-msgid "Snap pivot to corners and center  (%s)"
-msgstr ""
+msgid "Snap pivot to corners and center (%s)"
+msgstr "Прилипать опорной точкой к углам и центру (%s)"
 
 #: ../app/tools/gimptransformoptions.c:505
 msgid "Lock"
 msgstr "Блокировать"
 
 #: ../app/tools/gimptransformoptions.c:506
-#, fuzzy
 msgid "Lock pivot position to canvas"
-msgstr "Заблокировать _положение канала"
+msgstr "Заблокировать положение опорной точки на холсте"
 
 #: ../app/tools/gimptransformtool.c:239
 msgid "Transforming"
 msgstr "Преобразование"
 
 #: ../app/tools/gimptransformtool.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "The selection does not intersect with the layer."
-msgstr "Указанное расширение не соответствует выбранному типу файла."
+msgstr "Это выделение не пересекается со слоем."
 
 #: ../app/tools/gimptransformtool.c:794 ../app/tools/gimptransformtool.c:807
 msgid "Transform Step"
@@ -16413,14 +16361,12 @@ msgid "There is no layer to transform."
 msgstr "Нет слоя для преобразования."
 
 #: ../app/tools/gimptransformtool.c:1835
-#, fuzzy
 msgid "The active layer's position and size are locked."
-msgstr "Точки растра активного слоя заблокированы от изменений"
+msgstr "Размер и положение активного слоя заблокированы от изменений."
 
 #: ../app/tools/gimptransformtool.c:1846
-#, fuzzy
 msgid "There is no selection to transform."
-msgstr "Нет обводимого выделения"
+msgstr "Нет трансформируемого выделения."
 
 #: ../app/tools/gimptransformtool.c:1856
 msgid "There is no path to transform."
@@ -16628,11 +16574,11 @@ msgstr "Нет активного слоя или канала для обвод
 
 #: ../app/tools/gimpwarpoptions.c:83
 msgid "Effect Strength"
-msgstr ""
+msgstr "Сила эффекта"
 
 #: ../app/tools/gimpwarpoptions.c:89
 msgid "Effect Size"
-msgstr ""
+msgstr "Размер области воздействия"
 
 #: ../app/tools/gimpwarpoptions.c:95
 #, fuzzy
@@ -18870,6 +18816,36 @@ msgstr "круглые"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "растушеванные"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 8 bit gamma-corrected integer"
+#~ msgstr "Преобразовать изображение в индексированное"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 16 bit gamma-corrected integer"
+#~ msgstr "Преобразовать изображение в индексированное"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 32 bit gamma-corrected integer"
+#~ msgstr "Преобразовать изображение в индексированное"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 16 bit gamma-corrected floating point"
+#~ msgstr "Преобразовать изображение в индексированное"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 32 bit gamma-corrected floating point"
+#~ msgstr "Преобразовать изображение в индексированное"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 64 bit gamma-corrected floating point"
+#~ msgstr "Преобразовать изображение в индексированное"
 
 #~ msgctxt "view-action"
 #~ msgid "_Reset to 0°"
