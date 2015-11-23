@@ -304,12 +304,17 @@ convert_precision_dialog_response (GtkWidget     *widget,
     {
       GimpProgress  *progress;
       GimpPrecision  precision;
-
-      progress = gimp_progress_start (dialog->progress, FALSE,
-                                      _("Converting to lower bit depth"));
+      const gchar   *enum_desc;
 
       precision = gimp_babl_precision (dialog->component_type,
                                        dialog->linear);
+
+      gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
+                           NULL, NULL, &enum_desc, NULL);
+
+      progress = gimp_progress_start (dialog->progress, FALSE,
+                                      _("Converting image to %s"),
+                                      enum_desc);
 
       gimp_image_convert_precision (dialog->image,
                                     precision,
