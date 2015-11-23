@@ -86,56 +86,58 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void      query            (void);
-static void      run              (const gchar        *name,
-                                   gint                nparams,
-                                   const GimpParam    *param,
-                                   gint               *nreturn_vals,
-                                   GimpParam         **return_vals);
+static void               query            (void);
+static void               run              (const gchar        *name,
+                                            gint                nparams,
+                                            const GimpParam    *param,
+                                            gint               *nreturn_vals,
+                                            GimpParam         **return_vals);
 
-static gboolean  load_dialog      (TIFF               *tif,
-                                   TiffSelectedPages  *pages);
+static gboolean           load_dialog      (TIFF               *tif,
+                                            TiffSelectedPages  *pages);
 
-static gint32    load_image       (const gchar        *filename,
-                                   TIFF               *tif,
-                                   TiffSelectedPages  *pages,
-                                   gboolean           *resolution_loaded,
-                                   GError            **error);
+static gint32             load_image       (const gchar        *filename,
+                                            TIFF               *tif,
+                                            TiffSelectedPages  *pages,
+                                            gboolean           *resolution_loaded,
+                                            GError            **error);
 
-static void      load_rgba        (TIFF               *tif,
-                                   ChannelData        *channel);
-static void      load_contiguous  (TIFF               *tif,
-                                   ChannelData        *channel,
-                                   const Babl         *type,
-                                   gushort             bps,
-                                   gushort             spp,
-                                   gboolean            is_bw,
-                                   gint                extra);
-static void      load_separate    (TIFF               *tif,
-                                   ChannelData        *channel,
-                                   const Babl         *type,
-                                   gushort             bps,
-                                   gushort             spp,
-                                   gboolean            is_bw,
-                                   gint                extra);
-static void      load_paths       (TIFF               *tif,
-                                   gint                image);
+static GimpColorProfile * load_profile     (TIFF               *tif);
 
-static void      tiff_warning     (const gchar        *module,
-                                   const gchar        *fmt,
-                                   va_list             ap) G_GNUC_PRINTF (2, 0);
-static void      tiff_error       (const gchar        *module,
-                                   const gchar        *fmt,
-                                   va_list             ap) G_GNUC_PRINTF (2, 0);
-static TIFF    * tiff_open        (const gchar        *filename,
-                                   const gchar        *mode,
-                                   GError            **error);
+static void               load_rgba        (TIFF               *tif,
+                                            ChannelData        *channel);
+static void               load_contiguous  (TIFF               *tif,
+                                            ChannelData        *channel,
+                                            const Babl         *type,
+                                            gushort             bps,
+                                            gushort             spp,
+                                            gboolean            is_bw,
+                                            gint                extra);
+static void               load_separate    (TIFF               *tif,
+                                            ChannelData        *channel,
+                                            const Babl         *type,
+                                            gushort             bps,
+                                            gushort             spp,
+                                            gboolean            is_bw,
+                                            gint                extra);
+static void               load_paths       (TIFF               *tif,
+                                            gint                image);
 
-static void      fill_bit2byte    (void);
-static void      convert_bit2byte (const guchar       *src,
-                                   guchar             *dest,
-                                   gint                width,
-                                   gint                height);
+static void               tiff_warning     (const gchar        *module,
+                                            const gchar        *fmt,
+                                            va_list             ap) G_GNUC_PRINTF (2, 0);
+static void               tiff_error       (const gchar        *module,
+                                            const gchar        *fmt,
+                                            va_list             ap) G_GNUC_PRINTF (2, 0);
+static TIFF             * tiff_open        (const gchar        *filename,
+                                            const gchar        *mode,
+                                            GError            **error);
+
+static void               fill_bit2byte    (void);
+static void               convert_bit2byte (const guchar       *src,
+                                            guchar             *dest,
+                                            gint                width,
+                                            gint                height);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -554,36 +556,36 @@ load_image (const gchar        *filename,
    */
   for (li = 0; li < pages->n_pages; li++)
     {
-      gint           ilayer;
-      gushort        bps;
-      gushort        spp;
-      gushort        photomet;
-      gshort         sampleformat;
-      GimpPrecision  image_precision;
-      const Babl    *type;
-      const Babl    *base_format = NULL;
-      guint16        orientation;
-      gint           cols;
-      gint           rows;
-      gboolean       alpha;
-      gint           image_type           = GIMP_RGB;
-      gint           layer;
-      gint           layer_type           = GIMP_RGB_IMAGE;
-      float          layer_offset_x       = 0.0;
-      float          layer_offset_y       = 0.0;
-      gint           layer_offset_x_pixel = 0;
-      gint           layer_offset_y_pixel = 0;
-      gushort        extra;
-      gushort       *extra_types;
-      ChannelData   *channel = NULL;
-      uint16         planar = PLANARCONFIG_CONTIG;
-      gboolean       is_bw;
-      gint           i;
-      gboolean       worst_case = FALSE;
-
-      TiffSaveVals   save_vals;
-
-      const gchar   *name;
+      gint              ilayer;
+      gushort           bps;
+      gushort           spp;
+      gushort           photomet;
+      gshort            sampleformat;
+      GimpColorProfile *profile;
+      gboolean          profile_linear = FALSE;
+      GimpPrecision     image_precision;
+      const Babl       *type;
+      const Babl       *base_format = NULL;
+      guint16           orientation;
+      gint              cols;
+      gint              rows;
+      gboolean          alpha;
+      gint              image_type           = GIMP_RGB;
+      gint              layer;
+      gint              layer_type           = GIMP_RGB_IMAGE;
+      float             layer_offset_x       = 0.0;
+      float             layer_offset_y       = 0.0;
+      gint              layer_offset_x_pixel = 0;
+      gint              layer_offset_y_pixel = 0;
+      gushort           extra;
+      gushort          *extra_types;
+      ChannelData      *channel = NULL;
+      uint16            planar  = PLANARCONFIG_CONTIG;
+      gboolean          is_bw;
+      gint              i;
+      gboolean          worst_case = FALSE;
+      TiffSaveVals      save_vals;
+      const gchar      *name;
 
       TIFFSetDirectory (tif, pages->pages[li]);
       ilayer = pages->pages[li];
@@ -594,6 +596,10 @@ load_image (const gchar        *filename,
 
       TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLEFORMAT, &sampleformat);
 
+      profile = load_profile (tif);
+      if (profile)
+        profile_linear = gimp_color_profile_is_linear (profile);
+
       if (bps > 8 && bps != 8 && bps != 16 && bps != 32 && bps != 64)
         worst_case = TRUE; /* Wrong sample width => RGBA */
 
@@ -601,44 +607,72 @@ load_image (const gchar        *filename,
         {
         case 1:
         case 8:
-          image_precision = GIMP_PRECISION_U8_GAMMA;
-          type            = babl_type ("u8");
+          if (profile_linear)
+            image_precision = GIMP_PRECISION_U8_LINEAR;
+          else
+            image_precision = GIMP_PRECISION_U8_GAMMA;
+
+          type = babl_type ("u8");
           break;
 
         case 16:
           if (sampleformat == SAMPLEFORMAT_IEEEFP)
             {
-              image_precision = GIMP_PRECISION_HALF_GAMMA;
-              type            = babl_type ("half");
+              if (profile_linear)
+                image_precision = GIMP_PRECISION_HALF_LINEAR;
+              else
+                image_precision = GIMP_PRECISION_HALF_GAMMA;
+
+              type = babl_type ("half");
             }
           else
             {
-              image_precision = GIMP_PRECISION_U16_GAMMA;
-              type            = babl_type ("u16");
+              if (profile_linear)
+                image_precision = GIMP_PRECISION_U16_LINEAR;
+              else
+                image_precision = GIMP_PRECISION_U16_GAMMA;
+
+              type = babl_type ("u16");
             }
           break;
 
         case 32:
           if (sampleformat == SAMPLEFORMAT_IEEEFP)
             {
-              image_precision = GIMP_PRECISION_FLOAT_GAMMA;
-              type            = babl_type ("float");
+              if (profile_linear)
+                image_precision = GIMP_PRECISION_FLOAT_LINEAR;
+              else
+                image_precision = GIMP_PRECISION_FLOAT_GAMMA;
+
+              type = babl_type ("float");
             }
           else
             {
-              image_precision = GIMP_PRECISION_U32_GAMMA;
-              type            = babl_type ("u32");
+              if (profile_linear)
+                image_precision = GIMP_PRECISION_U32_LINEAR;
+              else
+                image_precision = GIMP_PRECISION_U32_GAMMA;
+
+              type = babl_type ("u32");
             }
           break;
 
         case 64:
-          image_precision = GIMP_PRECISION_DOUBLE_GAMMA;
-          type            = babl_type ("double");
+          if (profile_linear)
+            image_precision = GIMP_PRECISION_DOUBLE_LINEAR;
+          else
+            image_precision = GIMP_PRECISION_DOUBLE_GAMMA;
+
+          type = babl_type ("double");
           break;
 
         default:
-          image_precision = GIMP_PRECISION_U16_GAMMA;
-          type            = babl_type ("u16");
+          if (profile_linear)
+            image_precision = GIMP_PRECISION_U16_LINEAR;
+          else
+            image_precision = GIMP_PRECISION_U16_GAMMA;
+
+          type = babl_type ("u16");
         }
 
       g_printerr ("bps: %d\n", bps);
@@ -754,27 +788,59 @@ load_image (const gchar        *filename,
                 {
                   if (tsvals.save_transp_pixels)
                     {
-                      base_format = babl_format_new (babl_model ("Y'A"),
-                                                     type,
-                                                     babl_component ("Y'"),
-                                                     babl_component ("A"),
-                                                     NULL);
+                      if (profile_linear)
+                        {
+                          base_format = babl_format_new (babl_model ("YA"),
+                                                         type,
+                                                         babl_component ("Y"),
+                                                         babl_component ("A"),
+                                                         NULL);
+                        }
+                      else
+                        {
+                          base_format = babl_format_new (babl_model ("Y'A"),
+                                                         type,
+                                                         babl_component ("Y'"),
+                                                         babl_component ("A"),
+                                                         NULL);
+                        }
                     }
                   else
                     {
-                      base_format = babl_format_new (babl_model ("Y'aA"),
-                                                     type,
-                                                     babl_component ("Y'a"),
-                                                     babl_component ("A"),
-                                                     NULL);
+                      if (profile_linear)
+                        {
+                          base_format = babl_format_new (babl_model ("YaA"),
+                                                         type,
+                                                         babl_component ("Ya"),
+                                                         babl_component ("A"),
+                                                         NULL);
+                        }
+                      else
+                        {
+                          base_format = babl_format_new (babl_model ("Y'aA"),
+                                                         type,
+                                                         babl_component ("Y'a"),
+                                                         babl_component ("A"),
+                                                         NULL);
+                        }
                     }
                 }
               else
                 {
-                  base_format = babl_format_new (babl_model ("Y'"),
-                                                 type,
-                                                 babl_component ("Y'"),
-                                                 NULL);
+                  if (profile_linear)
+                    {
+                      base_format = babl_format_new (babl_model ("Y'"),
+                                                     type,
+                                                     babl_component ("Y'"),
+                                                     NULL);
+                    }
+                  else
+                    {
+                      base_format = babl_format_new (babl_model ("Y'"),
+                                                     type,
+                                                     babl_component ("Y'"),
+                                                     NULL);
+                    }
                 }
             }
           break;
@@ -787,33 +853,71 @@ load_image (const gchar        *filename,
             {
               if (tsvals.save_transp_pixels)
                 {
-                  base_format = babl_format_new (babl_model ("R'G'B'A"),
-                                                 type,
-                                                 babl_component ("R'"),
-                                                 babl_component ("G'"),
-                                                 babl_component ("B'"),
-                                                 babl_component ("A"),
-                                                 NULL);
+                  if (profile_linear)
+                    {
+                      base_format = babl_format_new (babl_model ("RGBA"),
+                                                     type,
+                                                     babl_component ("R"),
+                                                     babl_component ("G"),
+                                                     babl_component ("B"),
+                                                     babl_component ("A"),
+                                                     NULL);
+                    }
+                  else
+                    {
+                      base_format = babl_format_new (babl_model ("R'G'B'A"),
+                                                     type,
+                                                     babl_component ("R'"),
+                                                     babl_component ("G'"),
+                                                     babl_component ("B'"),
+                                                     babl_component ("A"),
+                                                     NULL);
+                    }
                 }
               else
                 {
-                  base_format = babl_format_new (babl_model ("R'aG'aB'aA"),
-                                                 type,
-                                                 babl_component ("R'a"),
-                                                 babl_component ("G'a"),
-                                                 babl_component ("B'a"),
-                                                 babl_component ("A"),
-                                                 NULL);
+                  if (profile_linear)
+                    {
+                      base_format = babl_format_new (babl_model ("RaGaBaA"),
+                                                     type,
+                                                     babl_component ("Ra"),
+                                                     babl_component ("Ga"),
+                                                     babl_component ("Ba"),
+                                                     babl_component ("A"),
+                                                     NULL);
+                    }
+                  else
+                    {
+                      base_format = babl_format_new (babl_model ("R'aG'aB'aA"),
+                                                     type,
+                                                     babl_component ("R'a"),
+                                                     babl_component ("G'a"),
+                                                     babl_component ("B'a"),
+                                                     babl_component ("A"),
+                                                     NULL);
+                    }
                 }
             }
           else
             {
-              base_format = babl_format_new (babl_model ("R'G'B'"),
-                                             type,
-                                             babl_component ("R'"),
-                                             babl_component ("G'"),
-                                             babl_component ("B'"),
-                                             NULL);
+              if (profile_linear)
+                {
+                  base_format = babl_format_new (babl_model ("RGB"),
+                                                 type,
+                                                 babl_component ("R"),
+                                                 babl_component ("G"),
+                                                 babl_component ("B"),
+                                                 NULL);
+                }
+              else
+                {
+                  base_format = babl_format_new (babl_model ("R'G'B'"),
+                                                 type,
+                                                 babl_component ("R'"),
+                                                 babl_component ("G'"),
+                                                 babl_component ("B'"),
+                                                 NULL);
+                }
             }
           break;
 
@@ -864,13 +968,27 @@ load_image (const gchar        *filename,
         {
           image_type  = GIMP_RGB;
           layer_type  = GIMP_RGBA_IMAGE;
-          base_format = babl_format_new (babl_model ("R'aG'aB'aA"),
-                                         type,
-                                         babl_component ("R'a"),
-                                         babl_component ("G'a"),
-                                         babl_component ("B'a"),
-                                         babl_component ("A"),
-                                         NULL);
+
+          if (profile_linear)
+            {
+              base_format = babl_format_new (babl_model ("RaGaBaA"),
+                                             type,
+                                             babl_component ("Ra"),
+                                             babl_component ("Ga"),
+                                             babl_component ("Ba"),
+                                             babl_component ("A"),
+                                             NULL);
+            }
+          else
+            {
+              base_format = babl_format_new (babl_model ("R'aG'aB'aA"),
+                                             type,
+                                             babl_component ("R'a"),
+                                             babl_component ("G'a"),
+                                             babl_component ("B'a"),
+                                             babl_component ("A"),
+                                             NULL);
+            }
         }
 
       if (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
@@ -923,31 +1041,13 @@ load_image (const gchar        *filename,
             }
         }
 
-#ifdef TIFFTAG_ICCPROFILE
-      /* If TIFFTAG_ICCPROFILE is defined we are dealing with a
-       * libtiff version that can handle ICC profiles. Otherwise just
-       * ignore this section.
-       */
-      {
-        uint32  profile_size;
-        guchar *icc_profile;
+      /* attach color profile */
 
-        /* set the ICC profile - if found in the TIFF */
-        if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile))
-          {
-            GimpColorProfile *profile;
-
-            profile = gimp_color_profile_new_from_icc_profile (icc_profile,
-                                                               profile_size,
-                                                               NULL);
-            if (profile)
-              {
-                gimp_image_set_color_profile (image, profile);
-                g_object_unref (profile);
-              }
-          }
-      }
-#endif
+      if (profile)
+        {
+          gimp_image_set_color_profile (image, profile);
+          g_object_unref (profile);
+        }
 
       /* attach parasites */
       {
@@ -1305,6 +1405,31 @@ load_image (const gchar        *filename,
     }
 
   return image;
+}
+
+static GimpColorProfile *
+load_profile (TIFF *tif)
+{
+  GimpColorProfile *profile = NULL;
+
+#ifdef TIFFTAG_ICCPROFILE
+  /* If TIFFTAG_ICCPROFILE is defined we are dealing with a
+   * libtiff version that can handle ICC profiles. Otherwise just
+   * return a NULL profile.
+   */
+  uint32  profile_size;
+  guchar *icc_profile;
+
+  /* set the ICC profile - if found in the TIFF */
+  if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile))
+    {
+      profile = gimp_color_profile_new_from_icc_profile (icc_profile,
+                                                         profile_size,
+                                                         NULL);
+    }
+#endif
+
+  return profile;
 }
 
 static void
