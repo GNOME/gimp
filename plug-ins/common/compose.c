@@ -150,43 +150,43 @@ static void      type_combo_callback    (GimpIntComboBox *combo,
  * All the following values have to be kept in sync with those of decompose.c
  */
 
-#define CPN_RGBA_R {"R", N_("_Red:"),   GIMP_STOCK_CHANNEL_RED, 0.0, 1.0, FALSE}
-#define CPN_RGBA_G {"G", N_("_Green:"), GIMP_STOCK_CHANNEL_GREEN, 0.0, 1.0, FALSE}
-#define CPN_RGBA_B {"B", N_("_Blue:"),  GIMP_STOCK_CHANNEL_BLUE, 0.0, 1.0, FALSE}
-#define CPN_RGBA_A {"A", N_("_Alpha:"), GIMP_STOCK_CHANNEL_ALPHA, 0.0, 1.0, TRUE}
+#define CPN_RGBA_R { "R", N_("_Red:"),   GIMP_STOCK_CHANNEL_RED, 0.0, 1.0, FALSE}
+#define CPN_RGBA_G { "G", N_("_Green:"), GIMP_STOCK_CHANNEL_GREEN, 0.0, 1.0, FALSE}
+#define CPN_RGBA_B { "B", N_("_Blue:"),  GIMP_STOCK_CHANNEL_BLUE, 0.0, 1.0, FALSE}
+#define CPN_RGBA_A { "A", N_("_Alpha:"), GIMP_STOCK_CHANNEL_ALPHA, 0.0, 1.0, TRUE}
 
-#define CPN_HSV_H {"hue", N_("_Hue:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_HSV_S {"saturation", N_("_Saturation:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_HSV_V {"value", N_("_Value:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_HSV_H  { "hue",        N_("_Hue:"),        NULL, 0.0, 1.0, TRUE}
+#define CPN_HSV_S  { "saturation", N_("_Saturation:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_HSV_V  { "value",      N_("_Value:"),      NULL, 0.0, 1.0, TRUE}
 
-#define CPN_HSL_H {"hue", N_("_Hue:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_HSL_S {"saturation", N_("_Saturation:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_HSL_L {"lightness", N_("_Lightness:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_HSL_H  { "hue",        N_("_Hue:"),        NULL, 0.0, 1.0, TRUE}
+#define CPN_HSL_S  { "saturation", N_("_Saturation:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_HSL_L  { "lightness",  N_("_Lightness:"),  NULL, 0.0, 1.0, TRUE}
 
-#define CPN_CMYK_C {"cyan", N_("_Cyan:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_CMYK_M {"magenta", N_("_Magenta:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_CMYK_Y {"yellow", N_("_Yellow:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_CMYK_K {"key", N_("_Black:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_CMYK_C { "cyan",    N_("_Cyan:"),    NULL, 0.0, 1.0, TRUE}
+#define CPN_CMYK_M { "magenta", N_("_Magenta:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_CMYK_Y { "yellow",  N_("_Yellow:"),  NULL, 0.0, 1.0, TRUE}
+#define CPN_CMYK_K { "key",     N_("_Black:"),   NULL, 0.0, 1.0, TRUE}
 
-#define CPN_CMY_C {"cyan", N_("_Cyan:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_CMY_M {"magenta", N_("_Magenta:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_CMY_Y {"yellow", N_("_Yellow:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_CMY_C  { "cyan",    N_("_Cyan:"),    NULL, 0.0, 1.0, TRUE}
+#define CPN_CMY_M  { "magenta", N_("_Magenta:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_CMY_Y  { "yellow",  N_("_Yellow:"),  NULL, 0.0, 1.0, TRUE}
 
-#define CPN_LAB_L {"CIE L", N_("_L:"), NULL, 0.0, 100.0, TRUE}
-#define CPN_LAB_A {"CIE a", N_("_A:"), NULL, -127.5, 127.5, TRUE}
-#define CPN_LAB_B {"CIE b", N_("_B:"), NULL, -127.5, 127.5, TRUE}
+#define CPN_LAB_L  { "CIE L", N_("_L:"), NULL, 0.0, 100.0, TRUE}
+#define CPN_LAB_A  { "CIE a", N_("_A:"), NULL, -127.5, 127.5, TRUE}
+#define CPN_LAB_B  { "CIE b", N_("_B:"), NULL, -127.5, 127.5, TRUE}
 
-#define CPN_LCH_L {"CIE L", N_("_L"), NULL, 0.0, 100.0, TRUE}
-#define CPN_LCH_C {"CIE C(ab)", N_("_C"), NULL, 0.0, 200.0, TRUE}
-#define CPN_LCH_H {"CIE H(ab)", N_("_H"), NULL, 0.0, 360.0, TRUE}
+#define CPN_LCH_L  { "CIE L",     N_("_L"), NULL, 0.0, 100.0, TRUE}
+#define CPN_LCH_C  { "CIE C(ab)", N_("_C"), NULL, 0.0, 200.0, TRUE}
+#define CPN_LCH_H  { "CIE H(ab)", N_("_H"), NULL, 0.0, 360.0, TRUE}
 
-#define CPN_YCBCR_Y  {"Y'", N_("_Luma y470:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_YCBCR_CB {"Cb", N_("_Blueness cb470:"), NULL, -0.5, 0.5, TRUE}
-#define CPN_YCBCR_CR {"Cr", N_("_Redness cr470:"), NULL, -0.5, 0.5, TRUE}
+#define CPN_YCBCR_Y  { "Y'", N_("_Luma y470:"),      NULL,  0.0, 1.0, TRUE }
+#define CPN_YCBCR_CB { "Cb", N_("_Blueness cb470:"), NULL, -0.5, 0.5, TRUE }
+#define CPN_YCBCR_CR { "Cr", N_("_Redness cr470:"),  NULL, -0.5, 0.5, TRUE }
 
-#define CPN_YCBCR709_Y  {"Y'", N_("_Luma y709:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_YCBCR709_CB {"Cb", N_("_Blueness cb709:"), NULL, -0.5, 0.5, TRUE}
-#define CPN_YCBCR709_CR {"Cr", N_("_Redness cr709:"), NULL, -0.5, 0.5, TRUE}
+#define CPN_YCBCR709_Y  { "Y'", N_("_Luma y709:"),      NULL,  0.0, 1.0, TRUE }
+#define CPN_YCBCR709_CB { "Cb", N_("_Blueness cb709:"), NULL, -0.5, 0.5, TRUE }
+#define CPN_YCBCR709_CR { "Cr", N_("_Redness cr709:"),  NULL, -0.5, 0.5, TRUE }
 
 
 static COMPOSE_DSC compose_dsc[] =
@@ -275,7 +275,7 @@ static COMPOSE_DSC compose_dsc[] =
     { CPN_YCBCR709_Y,
       CPN_YCBCR709_CB,
       CPN_YCBCR709_CR },
-    "ycbcr709F-compose" },
+    "ycbcr709F-compose" }
 };
 
 
@@ -331,10 +331,9 @@ static ComposeInterface composeint =
   0          /* Compose type */
 };
 
-static GimpRunMode run_mode;
-
 
 MAIN ()
+
 
 static void
 query (void)
@@ -379,7 +378,7 @@ query (void)
   };
 
   GString *type_desc;
-  int i;
+  gint     i;
 
   type_desc = g_string_new ("What to compose: ");
   g_string_append_c (type_desc, '"');
@@ -457,6 +456,7 @@ run (const gchar      *name,
 {
   static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunMode       run_mode;
   gint32            image_ID;
   gint32            drawable_ID = -1;
   gint              compose_by_drawable;
@@ -646,14 +646,13 @@ run (const gchar      *name,
 }
 
 static void
-cpn_affine_transform (GeglBuffer  *buffer,
-                      gdouble      min,
-                      gdouble      max)
+cpn_affine_transform (GeglBuffer *buffer,
+                      gdouble     min,
+                      gdouble     max)
 {
   GeglBufferIterator *gi;
-
-  const gdouble scale  = max - min;
-  const gdouble offset = min;
+  const gdouble       scale  = max - min;
+  const gdouble       offset = min;
 
   /* We want to scale values linearly, regardless of the format of the buffer */
   gegl_buffer_set_format (buffer, babl_format ("Y double"));
@@ -663,10 +662,8 @@ cpn_affine_transform (GeglBuffer  *buffer,
 
   while (gegl_buffer_iterator_next (gi))
     {
-      guint   k;
-      double *data;
-
-      data = (double*) gi->data[0];
+      gdouble *data = gi->data[0];
+      guint    k;
 
       for (k = 0; k < gi->length; k++)
         {
@@ -683,7 +680,7 @@ fill_buffer_from_components (GeglBuffer   *temp[MAX_COMPOSE_IMAGES],
                              gdouble       mask_vals[MAX_COMPOSE_IMAGES])
 {
   GeglBufferIterator *gi;
-  gint j;
+  gint                j;
 
   gi = gegl_buffer_iterator_new (dst, NULL, 0, NULL,
                                  GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
@@ -697,10 +694,9 @@ fill_buffer_from_components (GeglBuffer   *temp[MAX_COMPOSE_IMAGES],
 
   while (gegl_buffer_iterator_next (gi))
     {
-      gulong k, count;
-      gdouble *src_data[MAX_COMPOSE_IMAGES], *dst_data;
-
-      dst_data = (gdouble*) gi->data[0];
+      gdouble *src_data[MAX_COMPOSE_IMAGES];
+      gdouble *dst_data = (gdouble*) gi->data[0];
+      gulong   k, count;
 
       count = 1;
       for (j = 0; j < num_cpn; j++)
@@ -712,10 +708,12 @@ fill_buffer_from_components (GeglBuffer   *temp[MAX_COMPOSE_IMAGES],
           gulong pos = k * num_cpn;
 
           for (j = 0; j < num_cpn; j++)
-            if (inputs[j].is_ID)
-              dst_data[pos+j] = src_data[j][k];
-            else
-              dst_data[pos+j] = mask_vals[j];
+            {
+              if (inputs[j].is_ID)
+                dst_data[pos+j] = src_data[j][k];
+              else
+                dst_data[pos+j] = mask_vals[j];
+            }
         }
     }
 }
@@ -767,7 +765,6 @@ perform_composition (COMPOSE_DSC   curr_compose_dsc,
 
           if (cpn_dsc.range_min != 0.0 || cpn_dsc.range_max != 1.0)
             cpn_affine_transform (temp[i], cpn_dsc.range_min, cpn_dsc.range_max);
-
         }
 
       gimp_progress_update ((gdouble) i / (gdouble) (num_images + 1.0));
@@ -812,7 +809,8 @@ compose (const gchar  *compose_type,
   gint32         layer_ID_dst, image_ID_dst;
   gint           first_ID;
   GimpImageType  gdtype_dst;
-  GeglBuffer    *buffer_src[MAX_COMPOSE_IMAGES], *buffer_dst;
+  GeglBuffer    *buffer_src[MAX_COMPOSE_IMAGES];
+  GeglBuffer    *buffer_dst;
   GimpPrecision  precision;
 
   /* Search type of composing */
@@ -825,6 +823,7 @@ compose (const gchar  *compose_type,
           break;
         }
     }
+
   if (compose_idx < 0)
     return -1;
 
@@ -840,9 +839,10 @@ compose (const gchar  *compose_type,
           break;
         }
     }
+
   if (-1 == first_ID)
     {
-      g_message(_("At least one image is needed to compose"));
+      g_message (_("At least one image is needed to compose"));
       return -1;
     }
 
@@ -858,8 +858,9 @@ compose (const gchar  *compose_type,
           return -1;
         }
 
-      width = gimp_drawable_width (inputs[first_ID].comp.ID);
+      width  = gimp_drawable_width  (inputs[first_ID].comp.ID);
       height = gimp_drawable_height (inputs[first_ID].comp.ID);
+
       precision = gimp_image_get_precision (first_image);
 
       for (j = first_ID + 1; j < num_images; j++)
@@ -881,6 +882,7 @@ compose (const gchar  *compose_type,
                 }
             }
         }
+
       for (j = 0; j < num_images; j++)
         {
           if (inputs[j].is_ID)
@@ -893,6 +895,7 @@ compose (const gchar  *compose_type,
     {
       width  = gimp_image_width  (inputs[first_ID].comp.ID);
       height = gimp_image_height (inputs[first_ID].comp.ID);
+
       precision = gimp_image_get_precision (inputs[first_ID].comp.ID);
 
       for (j = first_ID + 1; j < num_images; j++)
