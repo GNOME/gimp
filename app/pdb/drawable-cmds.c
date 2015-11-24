@@ -624,6 +624,9 @@ drawable_get_pixel_invoker (GimpProcedure         *procedure,
       if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
           y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
         {
+          num_channels = babl_format_get_bytes_per_pixel (format);
+          pixel = g_new0 (guint8, num_channels);
+
           gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
                               x_coord, y_coord, NULL, pixel, format,
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
