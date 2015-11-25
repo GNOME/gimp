@@ -60,7 +60,7 @@ Sets how many processors GIMP should try to use simultaneously.  This is an
 integer value.
 
 .TP
-(tile-cache-size 6119688k)
+(tile-cache-size 6119260k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -236,7 +236,7 @@ Specify a default tool preset.  The tool preset is searched for in the
 specified tool prests path.  This is a string value.
 
 .TP
-(default-font "Sans")
+(default-font "Sans-serif")
 
 Specify a default font.  This is a string value.
 
@@ -318,7 +318,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1529922k)
+(undo-size 1529815k)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -491,7 +491,7 @@ When enabled, the mouse pointer will be shown over the image while using a
 paint tool.  Possible values are yes and no.
 
 .TP
-(image-title-format "%D*%f-%p.%i (%t, %L) %wx%h")
+(image-title-format "%D*%f-%p.%i (%t, %o, %L) %wx%h")
 
 Sets the text to appear in image window titles.  This is a format string;
 certain % character sequences are recognised and expanded as follows:
@@ -931,6 +931,11 @@ Enable the Handle Transform tool.  Possible values are yes and no.
 (playground-mybrush-tool no)
 
 Enable the MyPaint Brush tool.  Possible values are yes and no.
+
+.TP
+(playground-seamless-clone-tool no)
+
+Enable the Seamless Clone tool.  Possible values are yes and no.
 
 .TP
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")

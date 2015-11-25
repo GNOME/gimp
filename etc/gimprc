@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6119688k)
+# (tile-cache-size 6119260k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -184,7 +184,7 @@
 
 # Specify a default font.  This is a string value.
 # 
-# (default-font "Sans")
+# (default-font "Sans-serif")
 
 # Specify a default MyPaint brush.  This is a string value.
 # 
@@ -260,7 +260,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1529922k)
+# (undo-size 1529815k)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -438,7 +438,7 @@
 # %o  the name of the image's color profile
 # 
 # 
-# (image-title-format "%D*%f-%p.%i (%t, %L) %wx%h")
+# (image-title-format "%D*%f-%p.%i (%t, %o, %L) %wx%h")
 
 # Sets the text to appear in image window status bars.  This is a format
 # string; certain % character sequences are recognised and expanded as
@@ -734,6 +734,10 @@
 # Enable the MyPaint Brush tool.  Possible values are yes and no.
 # 
 # (playground-mybrush-tool no)
+
+# Enable the Seamless Clone tool.  Possible values are yes and no.
+# 
+# (playground-seamless-clone-tool no)
 
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
 # a colon-separated list of folders to search.
