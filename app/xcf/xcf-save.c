@@ -1654,6 +1654,13 @@ xcf_save_tile_rle (XcfInfo        *info,
                 {
                   const guchar *t;
 
+                  /* if we came here because of a new run, backup one */
+                  if (!((length == 32768) || ((size - length) == 0)))
+                    {
+                      length--;
+                      data -= bpp;
+                    }
+
                   count += length;
                   state = 0;
 
