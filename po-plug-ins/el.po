@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-25 07:12+0000\n"
-"PO-Revision-Date: 2015-10-25 12:19+0300\n"
+"POT-Creation-Date: 2015-11-25 07:11+0000\n"
+"PO-Revision-Date: 2015-11-25 12:19+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -337,15 +337,15 @@ msgstr "Κά_θετος"
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1008
-#: ../plug-ins/common/decompose.c:603 ../plug-ins/common/file-cel.c:438
+#: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
+#: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:438
 #: ../plug-ins/common/file-cel.c:441 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:442 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1014 ../plug-ins/common/file-pnm.c:669
+#: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:669
 #: ../plug-ins/common/file-raw-data.c:970 ../plug-ins/common/file-sunras.c:1049
-#: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-tiff-load.c:1135
+#: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-tiff-load.c:1235
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:255 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:699 ../plug-ins/file-exr/file-exr.c:245
@@ -380,7 +380,7 @@ msgstr "Απλή θόλωση, γρήγορη αλλά όχι πολύ ισχυ�
 msgid "_Blur"
 msgstr "_Θόλωση"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:588
+#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:589
 msgid "Blurring"
 msgstr "Θόλωση"
 
@@ -400,7 +400,7 @@ msgstr "Επιλεκτική θόλωση Γκάους"
 
 #: ../plug-ins/common/blur-gauss-selective.c:212
 #: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
-#: ../plug-ins/common/edge-neon.c:228 ../plug-ins/common/photocopy.c:244
+#: ../plug-ins/common/edge-neon.c:229 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/softglow.c:224
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
@@ -923,7 +923,7 @@ msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-gif-save.c:833
 #: ../plug-ins/common/file-mng.c:648 ../plug-ins/common/file-mng.c:985
 #: ../plug-ins/common/file-pcx.c:734 ../plug-ins/common/file-pdf-save.c:432
-#: ../plug-ins/common/file-png.c:1494 ../plug-ins/common/file-raw-data.c:785
+#: ../plug-ins/common/file-png.c:1504 ../plug-ins/common/file-raw-data.c:785
 #: ../plug-ins/common/file-raw-data.c:813 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-tiff-save.c:965
 #: ../plug-ins/common/file-xmc.c:1473 ../plug-ins/common/sphere-designer.c:2121
@@ -953,7 +953,7 @@ msgstr "Φόρτωση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/file-gif-load.c:361
 #: ../plug-ins/common/file-jp2-load.c:234
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:867
+#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:895
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3369
 #: ../plug-ins/common/file-psp.c:1714 ../plug-ins/common/file-raw-data.c:271
 #: ../plug-ins/common/file-raw-data.c:894 ../plug-ins/common/file-sunras.c:436
@@ -1199,94 +1199,113 @@ msgid "_B:"
 msgstr "_B:"
 
 #: ../plug-ins/common/compose.c:179
+#| msgid "_L:"
+msgid "_L"
+msgstr "_L"
+
+#: ../plug-ins/common/compose.c:180
+msgid "_C"
+msgstr "_C"
+
+#
+#: ../plug-ins/common/compose.c:181
+#| msgid "_Hue"
+msgid "_H"
+msgstr "_H"
+
+#: ../plug-ins/common/compose.c:183
 msgid "_Luma y470:"
 msgstr "_Φωτεινότητα y470:"
 
-#: ../plug-ins/common/compose.c:180
+#: ../plug-ins/common/compose.c:184
 msgid "_Blueness cb470:"
 msgstr "Γαλά_ζιο cb470:"
 
-#: ../plug-ins/common/compose.c:181
+#: ../plug-ins/common/compose.c:185
 msgid "_Redness cr470:"
 msgstr "Ε_ρυθρότητα cr470:"
 
-#: ../plug-ins/common/compose.c:183
+#: ../plug-ins/common/compose.c:187
 msgid "_Luma y709:"
 msgstr "_Φωτεινότητα y709:"
 
-#: ../plug-ins/common/compose.c:184
+#: ../plug-ins/common/compose.c:188
 msgid "_Blueness cb709:"
 msgstr "Γαλά_ζιο cb709:"
 
-#: ../plug-ins/common/compose.c:185
+#: ../plug-ins/common/compose.c:189
 msgid "_Redness cr709:"
 msgstr "Ε_ρυθρότητα cr709:"
 
-#: ../plug-ins/common/compose.c:191 ../plug-ins/common/decompose.c:176
+#: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
 #: ../plug-ins/common/file-raw-data.c:1404
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:198 ../plug-ins/common/decompose.c:177
+#: ../plug-ins/common/compose.c:202 ../plug-ins/common/decompose.c:176
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:206 ../plug-ins/common/decompose.c:183
+#: ../plug-ins/common/compose.c:210 ../plug-ins/common/decompose.c:183
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/common/compose.c:213 ../plug-ins/common/decompose.c:188
+#: ../plug-ins/common/compose.c:217 ../plug-ins/common/decompose.c:188
 msgid "HSL"
 msgstr "HSL"
 
-#: ../plug-ins/common/compose.c:220 ../plug-ins/common/decompose.c:193
+#: ../plug-ins/common/compose.c:224 ../plug-ins/common/decompose.c:193
 msgid "CMY"
 msgstr "CMY"
 
-#: ../plug-ins/common/compose.c:227 ../plug-ins/common/decompose.c:198
+#: ../plug-ins/common/compose.c:231 ../plug-ins/common/decompose.c:198
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:235 ../plug-ins/common/decompose.c:203
+#: ../plug-ins/common/compose.c:239 ../plug-ins/common/decompose.c:203
 msgid "LAB"
 msgstr "LAB"
 
-#: ../plug-ins/common/compose.c:242 ../plug-ins/common/decompose.c:205
+#: ../plug-ins/common/compose.c:246 ../plug-ins/common/decompose.c:205
+msgid "LCH"
+msgstr "LCH"
+
+#: ../plug-ins/common/compose.c:253 ../plug-ins/common/decompose.c:207
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: ../plug-ins/common/compose.c:249 ../plug-ins/common/decompose.c:208
+#: ../plug-ins/common/compose.c:260 ../plug-ins/common/decompose.c:210
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: ../plug-ins/common/compose.c:256 ../plug-ins/common/decompose.c:206
+#: ../plug-ins/common/compose.c:267 ../plug-ins/common/decompose.c:208
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: ../plug-ins/common/compose.c:263 ../plug-ins/common/decompose.c:209
+#: ../plug-ins/common/compose.c:274 ../plug-ins/common/decompose.c:211
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
-#: ../plug-ins/common/compose.c:390
+#: ../plug-ins/common/compose.c:400
 msgid "Create an image using multiple gray images as color channels"
 msgstr ""
 "Δημιουργία εικόνας χρησιμοποιώντας πολλαπλές εικόνες γκρι ως χρωματικά "
 "κανάλια"
 
-#: ../plug-ins/common/compose.c:396
+#: ../plug-ins/common/compose.c:406
 msgid "C_ompose..."
 msgstr "_Σύνθεση..."
 
-#: ../plug-ins/common/compose.c:420
+#: ../plug-ins/common/compose.c:430
 msgid "Recompose an image that was previously decomposed"
 msgstr "Ανασύνθεση μιας εικόνας που προηγουμένως αποσυντέθηκε"
 
 #
-#: ../plug-ins/common/compose.c:428
+#: ../plug-ins/common/compose.c:438
 msgid "R_ecompose"
 msgstr "Ανασύνθ_εση"
 
-#: ../plug-ins/common/compose.c:475
+#: ../plug-ins/common/compose.c:486
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -1294,67 +1313,67 @@ msgstr ""
 "Μπορείτε να τρέξετε 'ανασύνθεση' εάν η ενεργή εικόνα παράχθηκε αρχικά από "
 "'αποσύνθεση'."
 
-#: ../plug-ins/common/compose.c:499
+#: ../plug-ins/common/compose.c:510
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
 "Σφάλμα σάρωσης παρασίτου 'αποσύνθεση δεδομένων': εύρεση πολύ λίγων στρώσεων"
 
-#: ../plug-ins/common/compose.c:532
+#: ../plug-ins/common/compose.c:543
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Αδυναμία λήψης στρώσεων για την εικόνα %d"
 
-#: ../plug-ins/common/compose.c:599
+#: ../plug-ins/common/compose.c:610
 msgid "Composing"
 msgstr "Σύνθεση"
 
-#: ../plug-ins/common/compose.c:834 ../plug-ins/common/compose.c:1304
+#: ../plug-ins/common/compose.c:845 ../plug-ins/common/compose.c:1318
 msgid "At least one image is needed to compose"
 msgstr "Τουλάχιστον μια εικόνα χρειάζεται για σύνθεση"
 
-#: ../plug-ins/common/compose.c:845 ../plug-ins/common/compose.c:860
+#: ../plug-ins/common/compose.c:856 ../plug-ins/common/compose.c:872
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Αδυναμία εύρεσης καθορισμένης στρώσης %d"
 
-#: ../plug-ins/common/compose.c:868
+#: ../plug-ins/common/compose.c:880
 msgid "Drawables have different size"
 msgstr "Τα σχέδια έχουν διαφορετικό μέγεθος"
 
-#: ../plug-ins/common/compose.c:894
+#: ../plug-ins/common/compose.c:908
 msgid "Images have different size"
 msgstr "Οι εικόνες έχουν διαφορετικό μέγεθος"
 
-#: ../plug-ins/common/compose.c:912
+#: ../plug-ins/common/compose.c:926
 msgid "Error in getting layer IDs"
 msgstr "Σφάλμα στη λήψη ταυτοτήτων στρώσης"
 
-#: ../plug-ins/common/compose.c:930
+#: ../plug-ins/common/compose.c:944
 msgid "Unable to recompose, source layer not found"
 msgstr "Αδυναμία ανασύνθεσης, η πηγαία στρώση δε βρέθηκε"
 
 #
-#: ../plug-ins/common/compose.c:1056
+#: ../plug-ins/common/compose.c:1070
 msgid "Compose"
 msgstr "Σύνθεση"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1084
+#: ../plug-ins/common/compose.c:1098
 msgid "Compose Channels"
 msgstr "Σύνθεση καναλιού"
 
 #
-#: ../plug-ins/common/compose.c:1094 ../plug-ins/common/decompose.c:825
+#: ../plug-ins/common/compose.c:1108 ../plug-ins/common/decompose.c:851
 msgid "Color _model:"
 msgstr "Χρω_ματικό πρότυπο:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1126
+#: ../plug-ins/common/compose.c:1140
 msgid "Channel Representations"
 msgstr "Αναπαραστάσεις καναλιού"
 
 #
-#: ../plug-ins/common/compose.c:1189
+#: ../plug-ins/common/compose.c:1203
 msgid "Mask value"
 msgstr "Τιμή μάσκας"
 
@@ -1601,100 +1620,108 @@ msgstr "Φόρτωση σημείων καμπυλών από αρχείο"
 msgid "Save Curve Points to File"
 msgstr "Αποθήκευση σημείων καμπυλών σε αρχείο"
 
-#: ../plug-ins/common/decompose.c:139
+#: ../plug-ins/common/decompose.c:134
 msgid "red"
 msgstr "κόκκινο"
 
-#: ../plug-ins/common/decompose.c:140
+#: ../plug-ins/common/decompose.c:135
 msgid "green"
 msgstr "πράσινο"
 
-#: ../plug-ins/common/decompose.c:141
+#: ../plug-ins/common/decompose.c:136
 msgid "blue"
 msgstr "γαλάζιο"
 
-#: ../plug-ins/common/decompose.c:142
+#: ../plug-ins/common/decompose.c:137
 msgid "alpha"
 msgstr "άλφα"
 
-#: ../plug-ins/common/decompose.c:144 ../plug-ins/common/decompose.c:148
+#: ../plug-ins/common/decompose.c:139 ../plug-ins/common/decompose.c:143
 msgid "hue"
 msgstr "απόχρωση"
 
-#: ../plug-ins/common/decompose.c:145 ../plug-ins/common/decompose.c:149
+#: ../plug-ins/common/decompose.c:140 ../plug-ins/common/decompose.c:144
 msgid "saturation"
 msgstr "κορεσμός"
 
 #
-#: ../plug-ins/common/decompose.c:146
+#: ../plug-ins/common/decompose.c:141
 msgid "value"
 msgstr "τιμή"
 
-#: ../plug-ins/common/decompose.c:150
+#: ../plug-ins/common/decompose.c:145
 msgid "lightness"
 msgstr "φωτεινότητα"
 
-#: ../plug-ins/common/decompose.c:152
+#: ../plug-ins/common/decompose.c:147
 msgid "cyan-k"
 msgstr "κυανό-k"
 
-#: ../plug-ins/common/decompose.c:153
+#: ../plug-ins/common/decompose.c:148
 msgid "magenta-k"
 msgstr "ματζέντα-k"
 
-#: ../plug-ins/common/decompose.c:154
+#: ../plug-ins/common/decompose.c:149
 msgid "yellow-k"
 msgstr "κίτρινο-k"
 
-#: ../plug-ins/common/decompose.c:155
+#: ../plug-ins/common/decompose.c:150
 msgid "black"
 msgstr "μαύρο"
 
-#: ../plug-ins/common/decompose.c:157
+#: ../plug-ins/common/decompose.c:152
 msgid "cyan"
 msgstr "κυανό"
 
-#: ../plug-ins/common/decompose.c:158
+#: ../plug-ins/common/decompose.c:153
 msgid "magenta"
 msgstr "ματζέντα"
 
-#: ../plug-ins/common/decompose.c:159
+#: ../plug-ins/common/decompose.c:154
 msgid "yellow"
 msgstr "κίτρινο"
 
-#: ../plug-ins/common/decompose.c:161
+#: ../plug-ins/common/decompose.c:156 ../plug-ins/common/decompose.c:160
 msgid "L"
 msgstr "L"
 
-#: ../plug-ins/common/decompose.c:162
+#: ../plug-ins/common/decompose.c:157
 msgid "A"
 msgstr "A"
 
-#: ../plug-ins/common/decompose.c:163
+#: ../plug-ins/common/decompose.c:158
 msgid "B"
 msgstr "B"
 
-#: ../plug-ins/common/decompose.c:165
+#: ../plug-ins/common/decompose.c:161
+msgid "C"
+msgstr "C"
+
+#: ../plug-ins/common/decompose.c:162
+msgid "H"
+msgstr "H"
+
+#: ../plug-ins/common/decompose.c:164
 msgid "luma-y470"
 msgstr "φωτεινότητα-y470"
 
-#: ../plug-ins/common/decompose.c:166
+#: ../plug-ins/common/decompose.c:165
 msgid "blueness-cb470"
 msgstr "γαλάζιο-cb470"
 
-#: ../plug-ins/common/decompose.c:167
+#: ../plug-ins/common/decompose.c:166
 msgid "redness-cr470"
 msgstr "ερυθρότητα-cr470"
 
-#: ../plug-ins/common/decompose.c:169
+#: ../plug-ins/common/decompose.c:168
 msgid "luma-y709"
 msgstr "φωτεινότητα-y709"
 
-#: ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/decompose.c:169
 msgid "blueness-cb709"
 msgstr "γαλάζιο-cb709"
 
-#: ../plug-ins/common/decompose.c:171
+#: ../plug-ins/common/decompose.c:170
 msgid "redness-cr709"
 msgstr "ερυθρότητα-cr709"
 
@@ -1756,42 +1783,42 @@ msgstr "Ματζέντα_K"
 msgid "Yellow_K"
 msgstr "Κίτρινο_K"
 
-#: ../plug-ins/common/decompose.c:270 ../plug-ins/common/decompose.c:284
+#: ../plug-ins/common/decompose.c:271 ../plug-ins/common/decompose.c:285
 msgid "Decompose an image into separate colorspace components"
 msgstr "Αποσύνθεση μιας εικόνας σε ξεχωριστά συστατικά χρωματικού χώρου"
 
 #
-#: ../plug-ins/common/decompose.c:276 ../plug-ins/common/decompose.c:294
+#: ../plug-ins/common/decompose.c:277 ../plug-ins/common/decompose.c:295
 msgid "_Decompose..."
 msgstr "Α_ποσύνθεση..."
 
-#: ../plug-ins/common/decompose.c:381
+#: ../plug-ins/common/decompose.c:383
 msgid "Decomposing"
 msgstr "Αποσύνθεση"
 
-#: ../plug-ins/common/decompose.c:489
+#: ../plug-ins/common/decompose.c:492
 msgid "Image not suitable for this decomposition"
 msgstr "Η εικόνα δεν είναι κατάλληλη για αυτήν την αποσύνθεση"
 
 #
-#: ../plug-ins/common/decompose.c:790
+#: ../plug-ins/common/decompose.c:816
 msgid "Decompose"
 msgstr "Αποσύνθεση"
 
-#: ../plug-ins/common/decompose.c:813
+#: ../plug-ins/common/decompose.c:839
 msgid "Extract Channels"
 msgstr "Εξαγωγή καναλιών"
 
 #
-#: ../plug-ins/common/decompose.c:860
+#: ../plug-ins/common/decompose.c:886
 msgid "_Decompose to layers"
 msgstr "Α_ποσύνθεση σε στρώσεις"
 
-#: ../plug-ins/common/decompose.c:871
+#: ../plug-ins/common/decompose.c:897
 msgid "_Foreground as registration color"
 msgstr "Χρώμα Π_ροσκηνίου ως χρώμα καταγραφής"
 
-#: ../plug-ins/common/decompose.c:872
+#: ../plug-ins/common/decompose.c:898
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -1870,8 +1897,8 @@ msgstr "Προ_σθετικό"
 msgid "R_ecursive"
 msgstr "Ανα_δρομικό"
 
-#: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:735
-#: ../plug-ins/common/nl-filter.c:1091 ../plug-ins/common/unsharp-mask.c:871
+#: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:736
+#: ../plug-ins/common/nl-filter.c:1091 ../plug-ins/common/unsharp-mask.c:872
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -1943,24 +1970,24 @@ msgstr "_Ακτίνα 2:"
 msgid "_Invert"
 msgstr "Αντ_ιστροφή"
 
-#: ../plug-ins/common/edge-neon.c:134
+#: ../plug-ins/common/edge-neon.c:135
 msgid "Simulate the glowing boundary of a neon light"
 msgstr "Προσομοίωση του ορίου λάμψης του φωτός νέου"
 
-#: ../plug-ins/common/edge-neon.c:139
+#: ../plug-ins/common/edge-neon.c:140
 msgid "_Neon..."
 msgstr "_Νέον..."
 
 #
-#: ../plug-ins/common/edge-neon.c:211
+#: ../plug-ins/common/edge-neon.c:212
 msgid "Neon"
 msgstr "Νέον"
 
-#: ../plug-ins/common/edge-neon.c:697
+#: ../plug-ins/common/edge-neon.c:698
 msgid "Neon Detection"
 msgstr "Ανίχνευση νέου"
 
-#: ../plug-ins/common/edge-neon.c:750 ../plug-ins/common/unsharp-mask.c:884
+#: ../plug-ins/common/edge-neon.c:751 ../plug-ins/common/unsharp-mask.c:885
 msgid "_Amount:"
 msgstr "Ποσότητ_α:"
 
@@ -2073,10 +2100,10 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:668
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:859
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:887
 #: ../plug-ins/common/file-pnm.c:562 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:887 ../plug-ins/common/file-sunras.c:429
-#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-tiff-load.c:549
+#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-tiff-load.c:551
 #: ../plug-ins/common/file-wmf.c:985 ../plug-ins/common/file-xbm.c:740
 #: ../plug-ins/common/file-xmc.c:649 ../plug-ins/common/file-xpm.c:354
 #: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-read.c:200
@@ -2161,7 +2188,7 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/common/file-gif-save.c:824 ../plug-ins/common/file-gih.c:1294
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:533
 #: ../plug-ins/common/file-pcx.c:660 ../plug-ins/common/file-pix.c:536
-#: ../plug-ins/common/file-png.c:1487 ../plug-ins/common/file-pnm.c:1206
+#: ../plug-ins/common/file-png.c:1497 ../plug-ins/common/file-pnm.c:1206
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-tiff-save.c:758
 #: ../plug-ins/common/file-xbm.c:1033 ../plug-ins/common/file-xmc.c:1462
@@ -2761,7 +2788,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2113
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2123
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Αδυναμία αποθήκευσης διαφάνειας χωρίς απώλειες, αντ' αυτού αποθήκευση "
@@ -2797,7 +2824,7 @@ msgid "Save creation time"
 msgstr "Αποθήκευση χρόνου δημιουργίας"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2164
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2174
 msgid "PNG"
 msgstr "PNG"
 
@@ -2990,7 +3017,7 @@ msgid "Import from PDF"
 msgstr "Εισαγωγή από PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1090 ../plug-ins/common/file-ps.c:3421
-#: ../plug-ins/common/file-tiff-load.c:464
+#: ../plug-ins/common/file-tiff-load.c:466
 msgid "_Import"
 msgstr "Ε_ισαγωγή"
 
@@ -3088,7 +3115,7 @@ msgstr "Προσθήκη αυτής της εικόνας"
 #: ../plug-ins/common/file-pdf-save.c:1079
 #: ../plug-ins/common/file-pdf-save.c:1147
 #: ../plug-ins/common/file-pdf-save.c:1245 ../plug-ins/common/file-ps.c:1915
-#: ../plug-ins/common/file-tiff-load.c:1137
+#: ../plug-ins/common/file-tiff-load.c:1237
 #, c-format
 msgid "Page %d"
 msgstr "Σελίδα %d"
@@ -3119,28 +3146,28 @@ msgstr "Εικόνα PNG"
 msgid "Error loading PNG file: %s"
 msgstr "Σφάλμα φόρτωσης αρχείου PNG: %s"
 
-#: ../plug-ins/common/file-png.c:835
+#: ../plug-ins/common/file-png.c:863
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr "Σφάλμα δημιουργίας PNG διαβάζει δομή ενώ αποθηκεύει '%s'."
 
-#: ../plug-ins/common/file-png.c:845
+#: ../plug-ins/common/file-png.c:873
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Σφάλμα ανάγνωσης '%s'. Κατεστραμμένο αρχείο;"
 
-#: ../plug-ins/common/file-png.c:992
+#: ../plug-ins/common/file-png.c:1025
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Άγνωστο χρωματικό πρότυπο σε αρχείο PNG '%s'."
 
 # gconf/gconf-internals.c:2368
-#: ../plug-ins/common/file-png.c:1005 ../plug-ins/file-exr/file-exr.c:238
+#: ../plug-ins/common/file-png.c:1038 ../plug-ins/file-exr/file-exr.c:238
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Αδυναμία δημιουργίας νέας εικόνας για '%s': %s"
 
-#: ../plug-ins/common/file-png.c:1060
+#: ../plug-ins/common/file-png.c:1092
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3148,19 +3175,19 @@ msgstr ""
 "Το αρχείο PNG καθορίζει μια μετατόπιση που προκάλεσε τη τοποθέτηση της "
 "στρώσης εκτός εικόνας."
 
-#: ../plug-ins/common/file-png.c:1359
+#: ../plug-ins/common/file-png.c:1369
 msgid "Apply PNG Offset"
 msgstr "Εφαρμογή μετατόπισης PNG"
 
-#: ../plug-ins/common/file-png.c:1363
+#: ../plug-ins/common/file-png.c:1373
 msgid "Ignore PNG offset"
 msgstr "Παράβλεψη μετατόπισης PNG"
 
-#: ../plug-ins/common/file-png.c:1364
+#: ../plug-ins/common/file-png.c:1374
 msgid "Apply PNG offset to layer"
 msgstr "Εφαρμογή μετατόπισης PNG σε στρώση"
 
-#: ../plug-ins/common/file-png.c:1389
+#: ../plug-ins/common/file-png.c:1399
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3169,22 +3196,22 @@ msgstr ""
 "Η εισαγόμενη εικόνα PNG καθορίζει μια μετατόπιση %d, %d. Θέλετε να "
 "εφαρμόσετε αυτήν την μετατόπιση στη στρώση;"
 
-#: ../plug-ins/common/file-png.c:1463
+#: ../plug-ins/common/file-png.c:1473
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Σφάλμα δημιουργίας PNG γράφει δομή ενώ αποθηκεύει '%s'."
 
-#: ../plug-ins/common/file-png.c:1473
+#: ../plug-ins/common/file-png.c:1483
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Σφάλμα αποθήκευσης '%s'. Αδυναμία αποθήκευσης εικόνας."
 
-#: ../plug-ins/common/file-png.c:2181 ../plug-ins/common/file-tiff-save.c:1283
+#: ../plug-ins/common/file-png.c:2191 ../plug-ins/common/file-tiff-save.c:1283
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Σφάλμα φόρτωσης αρχείου UI '%s': %s"
 
-#: ../plug-ins/common/file-png.c:2182 ../plug-ins/common/file-tiff-save.c:1284
+#: ../plug-ins/common/file-png.c:2192 ../plug-ins/common/file-tiff-save.c:1284
 msgid "Unknown error"
 msgstr "Άγνωστο σφάλμα"
 
@@ -3827,27 +3854,27 @@ msgstr "Κάτω αριστερά"
 msgid "Top left"
 msgstr "Πάνω αριστερά"
 
-#: ../plug-ins/common/file-tiff-load.c:180
+#: ../plug-ins/common/file-tiff-load.c:182
 #: ../plug-ins/common/file-tiff-save.c:182
 #: ../plug-ins/common/file-tiff-save.c:199
 msgid "TIFF image"
 msgstr "Εικόνα TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:238
+#: ../plug-ins/common/file-tiff-load.c:240
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF '%s' δεν περιέχει καταλόγους"
 
-#: ../plug-ins/common/file-tiff-load.c:459
+#: ../plug-ins/common/file-tiff-load.c:461
 msgid "Import from TIFF"
 msgstr "Εισαγωγή από TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:914
+#: ../plug-ins/common/file-tiff-load.c:1032
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-από-%d-σελίδες"
 
-#: ../plug-ins/common/file-tiff-load.c:1166
+#: ../plug-ins/common/file-tiff-load.c:1266
 msgid "TIFF Channel"
 msgstr "Κανάλι TIFF"
 
@@ -4372,13 +4399,11 @@ msgstr "Αδυναμία αποθήκευσης εικόνων με άλφα κ�
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
-#| msgid "Could not open '%s' for writing: %s"
 msgid "Could not open '%s' for writing: "
 msgstr "Αδυναμία ανοίγματος του '%s' για εγγραφή: "
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
-#| msgid "Error while reading '%s': %s"
 msgid "Error saving '%s': "
 msgstr "Σφάλμα κατά την αποθήκευση του '%s': "
 
@@ -5282,7 +5307,7 @@ msgstr "Φωτοτυ_πία..."
 msgid "Photocopy"
 msgstr "Φωτοτυπία"
 
-#: ../plug-ins/common/photocopy.c:888 ../plug-ins/common/sharpen.c:507
+#: ../plug-ins/common/photocopy.c:888 ../plug-ins/common/sharpen.c:508
 #: ../plug-ins/common/softglow.c:699
 msgid "_Sharpness:"
 msgstr "Οξύ_τητα:"
@@ -5543,104 +5568,22 @@ msgstr "Ανάλυση δείγματος"
 msgid "Remap colorized"
 msgstr "Χρωματιστή επαναπεικόνιση"
 
-#: ../plug-ins/common/screenshot.c:250
-msgid "Create an image from an area of the screen"
-msgstr "Δημιουργία εικόνας από μια περιοχή της οθόνης"
-
-#: ../plug-ins/common/screenshot.c:272
-msgid "_Screenshot..."
-msgstr "_Στιγμιότυπο..."
-
-#: ../plug-ins/common/screenshot.c:453
-msgid "Error selecting the window"
-msgstr "Σφάλμα επιλογής παραθύρου"
-
-#: ../plug-ins/common/screenshot.c:821
-msgid "Importing screenshot"
-msgstr "Εισαγωγή στιγμιότυπου"
-
-#: ../plug-ins/common/screenshot.c:847 ../plug-ins/common/screenshot.c:1215
-msgid "Screenshot"
-msgstr "Στιγμιότυπο"
-
-#: ../plug-ins/common/screenshot.c:888
-msgid "Mouse Pointer"
-msgstr "Δείκτης ποντικιού"
-
-#: ../plug-ins/common/screenshot.c:1025
-msgid "Specified window not found"
-msgstr "Το καθορισμένο παράθυρο δεν βρέθηκε"
-
-#: ../plug-ins/common/screenshot.c:1224
-msgid "S_nap"
-msgstr "Πρό_σδεση"
-
-#: ../plug-ins/common/screenshot.c:1254
-msgid "After the delay, the screenshot is taken."
-msgstr "Μετά την καθυστέρηση, το στιγμιότυπο ελήφθη."
-
-#: ../plug-ins/common/screenshot.c:1256
-msgid ""
-"After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
-"Μετά την καθυστέρηση, σύρσιμο του ποντικιού σας για επιλογή της περιοχής "
-"στιγμιότυπου."
-
-#: ../plug-ins/common/screenshot.c:1259
-msgid "At the end of the delay, click in a window to snap it."
-msgstr "Στο τέλος της καθυστέρησης, κλικ σε παράθυρο για λήψη του."
-
-#. Area
-#: ../plug-ins/common/screenshot.c:1265
-msgid "Area"
-msgstr "Περιοχή"
-
-#: ../plug-ins/common/screenshot.c:1276
-msgid "Take a screenshot of a single _window"
-msgstr "Λή_ψη στιγμιότυπου ενός μονού παραθύρου"
-
-#: ../plug-ins/common/screenshot.c:1295
-msgid "Include window _decoration"
-msgstr "Συμπερίληψη _διακόσμησης παραθύρου"
-
-#: ../plug-ins/common/screenshot.c:1315
-msgid "Take a screenshot of the entire _screen"
-msgstr "Λήψη _στιγμιότυπου της συνολικής οθόνης"
-
-#: ../plug-ins/common/screenshot.c:1334
-msgid "Include _mouse pointer"
-msgstr "Συ_μπερίληψη δείκτη ποντικιού"
-
-#: ../plug-ins/common/screenshot.c:1355
-msgid "Select a _region to grab"
-msgstr "Επιλογή πε_ριοχή σύλληψης"
-
-#. Delay
-#: ../plug-ins/common/screenshot.c:1370
-msgid "Delay"
-msgstr "Καθυστέρηση"
-
-#. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1395
-msgid "seconds"
-msgstr "δευτερόλεπτα"
-
-#: ../plug-ins/common/sharpen.c:111
+#: ../plug-ins/common/sharpen.c:112
 msgid "Make image sharper (less powerful than Unsharp Mask)"
 msgstr "Οξύτερη εικόνα (λιγότερο δυνατό από τη μάσκα απόξυνσης)"
 
-#: ../plug-ins/common/sharpen.c:118
+#: ../plug-ins/common/sharpen.c:119
 msgid "_Sharpen..."
 msgstr "Όξυν_ση..."
 
 #.
 #. * Let the user know what we're doing...
 #.
-#: ../plug-ins/common/sharpen.c:301
+#: ../plug-ins/common/sharpen.c:302
 msgid "Sharpening"
 msgstr "Όξυνση"
 
-#: ../plug-ins/common/sharpen.c:471
+#: ../plug-ins/common/sharpen.c:472
 msgid "Sharpen"
 msgstr "Όξυνση"
 
@@ -6234,23 +6177,23 @@ msgstr "Παρακαλώ συμπληρώστε όλα τα πεδία κειμ�
 msgid "Unit Editor"
 msgstr "Επεξεργαστής Μονάδων"
 
-#: ../plug-ins/common/unsharp-mask.c:131
+#: ../plug-ins/common/unsharp-mask.c:132
 msgid "The most widely useful method for sharpening an image"
 msgstr "Η πιο πλατιά χρήσιμη μέθοδος για όξυνση μιας εικόνας"
 
-#: ../plug-ins/common/unsharp-mask.c:141
+#: ../plug-ins/common/unsharp-mask.c:142
 msgid "_Unsharp Mask..."
 msgstr "Μάσκα από_ξυνσης..."
 
-#: ../plug-ins/common/unsharp-mask.c:690
+#: ../plug-ins/common/unsharp-mask.c:691
 msgid "Merging"
 msgstr "Συγχώνευση"
 
-#: ../plug-ins/common/unsharp-mask.c:834
+#: ../plug-ins/common/unsharp-mask.c:835
 msgid "Unsharp Mask"
 msgstr "Μάσκα απόξυνσης"
 
-#: ../plug-ins/common/unsharp-mask.c:897
+#: ../plug-ins/common/unsharp-mask.c:898
 #: ../plug-ins/imagemap/imap_preferences.c:455
 #: ../plug-ins/map-object/map-object-ui.c:539
 msgid "_Threshold:"
@@ -11231,6 +11174,89 @@ msgstr "Σφάλμα κατά την εκτύπωση:"
 msgid "Printing"
 msgstr "Εκτύπωση"
 
+#: ../plug-ins/screenshot/screenshot.c:200
+msgid "Create an image from an area of the screen"
+msgstr "Δημιουργία εικόνας από μια περιοχή της οθόνης"
+
+#: ../plug-ins/screenshot/screenshot.c:222
+msgid "_Screenshot..."
+msgstr "_Στιγμιότυπο..."
+
+#: ../plug-ins/screenshot/screenshot.c:424
+#: ../plug-ins/screenshot/screenshot-x11.c:442
+msgid "Screenshot"
+msgstr "Στιγμιότυπο"
+
+#: ../plug-ins/screenshot/screenshot.c:433
+msgid "S_nap"
+msgstr "Πρό_σδεση"
+
+#: ../plug-ins/screenshot/screenshot.c:463
+msgid "After the delay, the screenshot is taken."
+msgstr "Μετά την καθυστέρηση, το στιγμιότυπο ελήφθη."
+
+#: ../plug-ins/screenshot/screenshot.c:465
+msgid ""
+"After the delay, drag your mouse to select the region for the screenshot."
+msgstr ""
+"Μετά την καθυστέρηση, σύρσιμο του ποντικιού σας για επιλογή της περιοχής "
+"στιγμιότυπου."
+
+#: ../plug-ins/screenshot/screenshot.c:468
+msgid "At the end of the delay, click in a window to snap it."
+msgstr "Στο τέλος της καθυστέρησης, κλικ σε παράθυρο για λήψη του."
+
+#. Area
+#: ../plug-ins/screenshot/screenshot.c:474
+msgid "Area"
+msgstr "Περιοχή"
+
+#: ../plug-ins/screenshot/screenshot.c:485
+msgid "Take a screenshot of a single _window"
+msgstr "Λή_ψη στιγμιότυπου ενός μονού παραθύρου"
+
+#: ../plug-ins/screenshot/screenshot.c:505
+msgid "Include window _decoration"
+msgstr "Συμπερίληψη _διακόσμησης παραθύρου"
+
+#: ../plug-ins/screenshot/screenshot.c:525
+msgid "Take a screenshot of the entire _screen"
+msgstr "Λήψη _στιγμιότυπου της συνολικής οθόνης"
+
+#: ../plug-ins/screenshot/screenshot.c:545
+msgid "Include _mouse pointer"
+msgstr "Συ_μπερίληψη δείκτη ποντικιού"
+
+#: ../plug-ins/screenshot/screenshot.c:565
+msgid "Select a _region to grab"
+msgstr "Επιλογή πε_ριοχή σύλληψης"
+
+#. Delay
+#: ../plug-ins/screenshot/screenshot.c:580
+msgid "Delay"
+msgstr "Καθυστέρηση"
+
+#. this is the unit label of a spinbutton
+#: ../plug-ins/screenshot/screenshot.c:605
+msgid "seconds"
+msgstr "δευτερόλεπτα"
+
+#: ../plug-ins/screenshot/screenshot-x11.c:98
+msgid "Error selecting the window"
+msgstr "Σφάλμα επιλογής παραθύρου"
+
+#: ../plug-ins/screenshot/screenshot-x11.c:416
+msgid "Importing screenshot"
+msgstr "Εισαγωγή στιγμιότυπου"
+
+#: ../plug-ins/screenshot/screenshot-x11.c:483
+msgid "Mouse Pointer"
+msgstr "Δείκτης ποντικιού"
+
+#: ../plug-ins/screenshot/screenshot-x11.c:619
+msgid "Specified window not found"
+msgstr "Το καθορισμένο παράθυρο δεν βρέθηκε"
+
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: ../plug-ins/selection-to-path/pxl-outline.c:81
 msgid "Selection to Path"
@@ -11250,9 +11276,9 @@ msgid "Align Threshold:"
 msgstr "Κατώφλι στοίχισης:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:102
-msgid "If two endpoints are closer than this,they are made to be equal."
+msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr ""
-"Αν τα δύο τελικά σημεία είναι πιο κοντά από αυτό, έγιναν για να είναι ίσα."
+"Αν δύο τελικά σημεία είναι πιο κοντά από αυτό, έγιναν για να είναι ίσα."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
 msgid "Corner Always Threshold:"

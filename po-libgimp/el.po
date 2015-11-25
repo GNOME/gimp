@@ -11,10 +11,10 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp.master.el.po\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-25 07:11+0000\n"
-"PO-Revision-Date: 2015-10-25 12:25+0300\n"
+"POT-Creation-Date: 2015-11-20 07:13+0000\n"
+"PO-Revision-Date: 2015-11-21 13:36+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: team@lists.gnome.gr\n"
+"Language-Team: www.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -233,7 +233,7 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:1004
 msgid "Export Image as "
-msgstr "Εξαγωγή εικόνας ως"
+msgstr "Εξαγωγή εικόνας ως "
 
 #
 #: ../libgimp/gimpfontselectbutton.c:139
@@ -499,695 +499,739 @@ msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "Γέμισμα με μοτίβο"
 
+#: ../libgimpbase/gimpbaseenums.c:162
+#| msgid "Button 0"
+msgctxt "cap-style"
+msgid "Butt"
+msgstr "Κομμένο"
+
 #: ../libgimpbase/gimpbaseenums.c:163
+msgctxt "cap-style"
+msgid "Round"
+msgstr "Στρογγυλό"
+
+#
+#: ../libgimpbase/gimpbaseenums.c:164
+#| msgctxt "brush-generated-shape"
+#| msgid "Square"
+msgctxt "cap-style"
+msgid "Square"
+msgstr "Τετράγωνο"
+
+#: ../libgimpbase/gimpbaseenums.c:195
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Προσθήκη στη τρέχουσα επιλογή"
 
-#: ../libgimpbase/gimpbaseenums.c:164
+#: ../libgimpbase/gimpbaseenums.c:196
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Αφαίρεση από την τρέχουσα επιλογή"
 
 #
-#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libgimpbase/gimpbaseenums.c:197
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Αντικατάσταση της τρέχουσας επιλογής"
 
-#: ../libgimpbase/gimpbaseenums.c:166
+#: ../libgimpbase/gimpbaseenums.c:198
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Τομή με την τρέχουσα επιλογή"
 
-#: ../libgimpbase/gimpbaseenums.c:199
+#: ../libgimpbase/gimpbaseenums.c:231
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Κόκκινο"
 
-#: ../libgimpbase/gimpbaseenums.c:200
+#: ../libgimpbase/gimpbaseenums.c:232
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Πράσινο"
 
-#: ../libgimpbase/gimpbaseenums.c:201
+#: ../libgimpbase/gimpbaseenums.c:233
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Γαλάζιο"
 
-#: ../libgimpbase/gimpbaseenums.c:202
+#: ../libgimpbase/gimpbaseenums.c:234
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Γκρι"
 
-#: ../libgimpbase/gimpbaseenums.c:203
+#: ../libgimpbase/gimpbaseenums.c:235
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Από ευρετήριο"
 
-#: ../libgimpbase/gimpbaseenums.c:204
+#: ../libgimpbase/gimpbaseenums.c:236
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Άλφα"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libgimpbase/gimpbaseenums.c:266
 msgctxt "check-size"
 msgid "Small"
 msgstr "Μικρό"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libgimpbase/gimpbaseenums.c:267
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Μεσαίο"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: ../libgimpbase/gimpbaseenums.c:268
 msgctxt "check-size"
 msgid "Large"
 msgstr "Μεγάλο"
 
-#: ../libgimpbase/gimpbaseenums.c:269
+#: ../libgimpbase/gimpbaseenums.c:301
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Ανοιχτές σκακιέρες"
 
-#: ../libgimpbase/gimpbaseenums.c:270
+#: ../libgimpbase/gimpbaseenums.c:302
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Ενδιάμεσες σκακιέρες"
 
-#: ../libgimpbase/gimpbaseenums.c:271
+#: ../libgimpbase/gimpbaseenums.c:303
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Σκοτεινές σκακιέρες"
 
-#: ../libgimpbase/gimpbaseenums.c:272
+#: ../libgimpbase/gimpbaseenums.c:304
 msgctxt "check-type"
 msgid "White only"
 msgstr "Λευκό μόνο"
 
-#: ../libgimpbase/gimpbaseenums.c:273
+#: ../libgimpbase/gimpbaseenums.c:305
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Γκρι μόνο"
 
-#: ../libgimpbase/gimpbaseenums.c:274
+#: ../libgimpbase/gimpbaseenums.c:306
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Μαύρο μόνο"
 
-#: ../libgimpbase/gimpbaseenums.c:303
+#: ../libgimpbase/gimpbaseenums.c:335
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Εικόνα"
 
-#: ../libgimpbase/gimpbaseenums.c:304
+#: ../libgimpbase/gimpbaseenums.c:336
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Μοτίβο"
 
-#: ../libgimpbase/gimpbaseenums.c:337
+#: ../libgimpbase/gimpbaseenums.c:369
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "Ακέραιος 8 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:338
+#: ../libgimpbase/gimpbaseenums.c:370
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "Ακέραιος 16 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:339
+#: ../libgimpbase/gimpbaseenums.c:371
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "Ακέραιος 32 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:340
+#: ../libgimpbase/gimpbaseenums.c:372
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "Κινητή υποδιαστολή 16 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:341
+#: ../libgimpbase/gimpbaseenums.c:373
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "Κινητή υποδιαστολή 32 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:342
+#: ../libgimpbase/gimpbaseenums.c:374
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "Κινητή υποδιαστολή 64 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:373
+#: ../libgimpbase/gimpbaseenums.c:405
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Δημιουργία βέλτιστης παλέτας"
 
-#: ../libgimpbase/gimpbaseenums.c:374
+#: ../libgimpbase/gimpbaseenums.c:406
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Χρήση βέλτιστης παλέτας για τον ιστό"
 
-#: ../libgimpbase/gimpbaseenums.c:375
+#: ../libgimpbase/gimpbaseenums.c:407
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Χρήση ασπρόμαυρης παλέτας (1-δυαδικού)"
 
-#: ../libgimpbase/gimpbaseenums.c:376
+#: ../libgimpbase/gimpbaseenums.c:408
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Χρήση προσαρμοσμένης παλέτας"
 
-#: ../libgimpbase/gimpbaseenums.c:405
+#: ../libgimpbase/gimpbaseenums.c:437
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Θόλωση"
 
-#: ../libgimpbase/gimpbaseenums.c:406
+#: ../libgimpbase/gimpbaseenums.c:438
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Όξυνση"
 
-#: ../libgimpbase/gimpbaseenums.c:437
+#: ../libgimpbase/gimpbaseenums.c:469
 msgctxt "desaturate-mode"
 msgid "Lightness"
 msgstr "Φωτεινότητα"
 
-#: ../libgimpbase/gimpbaseenums.c:438
+#: ../libgimpbase/gimpbaseenums.c:470
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr "Φωτεινότητα (λούμα)"
 
-#: ../libgimpbase/gimpbaseenums.c:439
+#: ../libgimpbase/gimpbaseenums.c:471
 msgctxt "desaturate-mode"
 msgid "Average"
 msgstr "Μέσος όρος"
 
-#: ../libgimpbase/gimpbaseenums.c:440
+#: ../libgimpbase/gimpbaseenums.c:472
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr "Λαμπρότητα"
 
-#: ../libgimpbase/gimpbaseenums.c:469
+#: ../libgimpbase/gimpbaseenums.c:501
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Ξάνοιγμα"
 
-#: ../libgimpbase/gimpbaseenums.c:470
+#: ../libgimpbase/gimpbaseenums.c:502
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Σκοτείνιασμα"
 
-#: ../libgimpbase/gimpbaseenums.c:502
+#: ../libgimpbase/gimpbaseenums.c:534
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Χρώμα προσκηνίου"
 
-#: ../libgimpbase/gimpbaseenums.c:503
+#: ../libgimpbase/gimpbaseenums.c:535
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Χρώμα παρασκηνίου"
 
-#: ../libgimpbase/gimpbaseenums.c:504
+#: ../libgimpbase/gimpbaseenums.c:536
 msgctxt "fill-type"
 msgid "White"
 msgstr "Λευκό"
 
-#: ../libgimpbase/gimpbaseenums.c:505
+#: ../libgimpbase/gimpbaseenums.c:537
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Διαφάνεια"
 
-#: ../libgimpbase/gimpbaseenums.c:506
+#: ../libgimpbase/gimpbaseenums.c:538
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Μοτίβο"
 
-#: ../libgimpbase/gimpbaseenums.c:642
+#: ../libgimpbase/gimpbaseenums.c:674
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Γραμμική"
 
-#: ../libgimpbase/gimpbaseenums.c:643
+#: ../libgimpbase/gimpbaseenums.c:675
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Διγραμμική"
 
-#: ../libgimpbase/gimpbaseenums.c:644
+#: ../libgimpbase/gimpbaseenums.c:676
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Ακτινική"
 
 #
-#: ../libgimpbase/gimpbaseenums.c:645
+#: ../libgimpbase/gimpbaseenums.c:677
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Τετράγωνη"
 
-#: ../libgimpbase/gimpbaseenums.c:646
+#: ../libgimpbase/gimpbaseenums.c:678
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Κωνική (συμμετρική)"
 
-#: ../libgimpbase/gimpbaseenums.c:647
+#: ../libgimpbase/gimpbaseenums.c:679
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Κωνική (ασύμμετρη)"
 
-#: ../libgimpbase/gimpbaseenums.c:648
+#: ../libgimpbase/gimpbaseenums.c:680
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Βασισμένη στο σχήμα (με γωνίες)"
 
-#: ../libgimpbase/gimpbaseenums.c:649
+#: ../libgimpbase/gimpbaseenums.c:681
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Βασισμένη στο σχήμα (σφαιρική)"
 
-#: ../libgimpbase/gimpbaseenums.c:650
+#: ../libgimpbase/gimpbaseenums.c:682
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Βασισμένη στο σχήμα (με πτυχώσεις)"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libgimpbase/gimpbaseenums.c:683
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Ελικοειδής (δεξιόστροφα)"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:684
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Ελικοειδής (αριστερόστροφα)"
 
-#: ../libgimpbase/gimpbaseenums.c:684
+#: ../libgimpbase/gimpbaseenums.c:716
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Τομές (κουκκίδες)"
 
-#: ../libgimpbase/gimpbaseenums.c:685
+#: ../libgimpbase/gimpbaseenums.c:717
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Τομές (σταυρονήματα)"
 
-#: ../libgimpbase/gimpbaseenums.c:686
+#: ../libgimpbase/gimpbaseenums.c:718
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Με παύλες"
 
-#: ../libgimpbase/gimpbaseenums.c:687
+#: ../libgimpbase/gimpbaseenums.c:719
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Διπλές παύλες"
 
-#: ../libgimpbase/gimpbaseenums.c:688
+#: ../libgimpbase/gimpbaseenums.c:720
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Συμπαγές"
 
-#: ../libgimpbase/gimpbaseenums.c:758
+#: ../libgimpbase/gimpbaseenums.c:790
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Όνομα εικονιδίου"
 
-#: ../libgimpbase/gimpbaseenums.c:759
+#: ../libgimpbase/gimpbaseenums.c:791
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "Ενσωματωμένο pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:760
+#: ../libgimpbase/gimpbaseenums.c:792
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Αρχείο εικόνας"
 
-#: ../libgimpbase/gimpbaseenums.c:790
+#: ../libgimpbase/gimpbaseenums.c:822
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "Χρώματα RGB"
 
 #
-#: ../libgimpbase/gimpbaseenums.c:791
+#: ../libgimpbase/gimpbaseenums.c:823
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Κλίμακα του γκρι"
 
-#: ../libgimpbase/gimpbaseenums.c:792
+#: ../libgimpbase/gimpbaseenums.c:824
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Χρώμα από ευρετήριο"
 
-#: ../libgimpbase/gimpbaseenums.c:825
+#: ../libgimpbase/gimpbaseenums.c:857
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:826
+#: ../libgimpbase/gimpbaseenums.c:858
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-άλφα"
 
 #
-#: ../libgimpbase/gimpbaseenums.c:827
+#: ../libgimpbase/gimpbaseenums.c:859
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Κλίμακα του γκρι"
 
-#: ../libgimpbase/gimpbaseenums.c:828
+#: ../libgimpbase/gimpbaseenums.c:860
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Άλφα γκρι κλίμακας"
 
-#: ../libgimpbase/gimpbaseenums.c:829
+#: ../libgimpbase/gimpbaseenums.c:861
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Από ευρετήριο"
 
-#: ../libgimpbase/gimpbaseenums.c:830
+#: ../libgimpbase/gimpbaseenums.c:862
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Άλφα από ευρετήριο"
 
-#: ../libgimpbase/gimpbaseenums.c:860
+#: ../libgimpbase/gimpbaseenums.c:892
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Κύκλος"
 
 #
-#: ../libgimpbase/gimpbaseenums.c:861
+#: ../libgimpbase/gimpbaseenums.c:893
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Τετράγωνο"
 
-#: ../libgimpbase/gimpbaseenums.c:862
+#: ../libgimpbase/gimpbaseenums.c:894
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Ρόμβος"
 
-#: ../libgimpbase/gimpbaseenums.c:894
+#: ../libgimpbase/gimpbaseenums.c:926
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Χωρίς"
 
-#: ../libgimpbase/gimpbaseenums.c:895
+#: ../libgimpbase/gimpbaseenums.c:927
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Γραμμική"
 
-#: ../libgimpbase/gimpbaseenums.c:896
+#: ../libgimpbase/gimpbaseenums.c:928
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Κυβική"
 
-#: ../libgimpbase/gimpbaseenums.c:897
+#: ../libgimpbase/gimpbaseenums.c:929
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "NoHalo"
 
-#: ../libgimpbase/gimpbaseenums.c:898
+#: ../libgimpbase/gimpbaseenums.c:930
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "LoHalo"
 
-#: ../libgimpbase/gimpbaseenums.c:1054
+#: ../libgimpbase/gimpbaseenums.c:960
+msgctxt "join-style"
+msgid "Miter"
+msgstr "Μύτη"
+
+#: ../libgimpbase/gimpbaseenums.c:961
+msgctxt "join-style"
+msgid "Round"
+msgstr "Στρογγυλό"
+
+#: ../libgimpbase/gimpbaseenums.c:962
+msgctxt "join-style"
+msgid "Bevel"
+msgstr "Λοξό"
+
+#: ../libgimpbase/gimpbaseenums.c:1118
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Οριζόντια"
 
-#: ../libgimpbase/gimpbaseenums.c:1055
+#: ../libgimpbase/gimpbaseenums.c:1119
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Κάθετα"
 
-#: ../libgimpbase/gimpbaseenums.c:1056
+#: ../libgimpbase/gimpbaseenums.c:1120
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Άγνωστος"
 
-#: ../libgimpbase/gimpbaseenums.c:1085
+#: ../libgimpbase/gimpbaseenums.c:1149
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Σταθερό"
 
-#: ../libgimpbase/gimpbaseenums.c:1086
+#: ../libgimpbase/gimpbaseenums.c:1150
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Βηματικό"
 
-#: ../libgimpbase/gimpbaseenums.c:1219
+#: ../libgimpbase/gimpbaseenums.c:1283
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Εσωτερική διαδικασία GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:1220
+#: ../libgimpbase/gimpbaseenums.c:1284
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "Πρόσθετο GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:1221
+#: ../libgimpbase/gimpbaseenums.c:1285
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "Επέκταση GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:1222
+#: ../libgimpbase/gimpbaseenums.c:1286
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Προσωρινή διαδικασία"
 
-#: ../libgimpbase/gimpbaseenums.c:1297
+#: ../libgimpbase/gimpbaseenums.c:1361
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "Γραμμικός ακέραιος 8 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1298
+#: ../libgimpbase/gimpbaseenums.c:1362
 msgctxt "precision"
 msgid "8-bit gamma integer"
 msgstr "Ακέραιος γάμα 8 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1299
+#: ../libgimpbase/gimpbaseenums.c:1363
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "Γραμμικός ακέραιος 16 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1300
+#: ../libgimpbase/gimpbaseenums.c:1364
 msgctxt "precision"
 msgid "16-bit gamma integer"
 msgstr "Ακέραιος γάμα 16 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1301
+#: ../libgimpbase/gimpbaseenums.c:1365
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "Γραμμικός ακέραιος 32 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1302
+#: ../libgimpbase/gimpbaseenums.c:1366
 msgctxt "precision"
 msgid "32-bit gamma integer"
 msgstr "Ακέραιος γάμα 32 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1303
+#: ../libgimpbase/gimpbaseenums.c:1367
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "Γραμμική κινητή υποδιαστολή 16 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1304
+#: ../libgimpbase/gimpbaseenums.c:1368
 msgctxt "precision"
 msgid "16-bit gamma floating point"
 msgstr "Γάμα κινητή υποδιαστολή 16 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1305
+#: ../libgimpbase/gimpbaseenums.c:1369
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "Γραμμική κινητή υποδιαστολή 32 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1306
+#: ../libgimpbase/gimpbaseenums.c:1370
 msgctxt "precision"
 msgid "32-bit gamma floating point"
 msgstr "Γάμα κινητή υποδιαστολή 32 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1307
+#: ../libgimpbase/gimpbaseenums.c:1371
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "Γραμμική κινητή υποδιαστολή 64 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1308
+#: ../libgimpbase/gimpbaseenums.c:1372
 msgctxt "precision"
 msgid "64-bit gamma floating point"
 msgstr "Γάμα κινητή υποδιαστολή 64 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1377
+#: ../libgimpbase/gimpbaseenums.c:1441
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Καμία (επέκταση)"
 
-#: ../libgimpbase/gimpbaseenums.c:1378
+#: ../libgimpbase/gimpbaseenums.c:1442
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Πριονωτό κύμα"
 
-#: ../libgimpbase/gimpbaseenums.c:1379
+#: ../libgimpbase/gimpbaseenums.c:1443
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Τριγωνικό κύμα"
 
-#: ../libgimpbase/gimpbaseenums.c:1380
+#: ../libgimpbase/gimpbaseenums.c:1444
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Αποκοπή"
 
-#: ../libgimpbase/gimpbaseenums.c:1442
+#: ../libgimpbase/gimpbaseenums.c:1506
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Διαδραστική εκτέλεση"
 
-#: ../libgimpbase/gimpbaseenums.c:1443
+#: ../libgimpbase/gimpbaseenums.c:1507
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Μη διαδραστική εκτέλεση"
 
-#: ../libgimpbase/gimpbaseenums.c:1444
+#: ../libgimpbase/gimpbaseenums.c:1508
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Εκτέλεση με τις τελευταίες χρησιμοποιημένες τιμές"
 
-#: ../libgimpbase/gimpbaseenums.c:1479
+#: ../libgimpbase/gimpbaseenums.c:1543
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Σύνθετο"
 
-#: ../libgimpbase/gimpbaseenums.c:1480
+#: ../libgimpbase/gimpbaseenums.c:1544
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Κόκκινο"
 
-#: ../libgimpbase/gimpbaseenums.c:1481
+#: ../libgimpbase/gimpbaseenums.c:1545
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Πράσινο"
 
-#: ../libgimpbase/gimpbaseenums.c:1482
+#: ../libgimpbase/gimpbaseenums.c:1546
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Γαλάζιο"
 
 #
-#: ../libgimpbase/gimpbaseenums.c:1483
+#: ../libgimpbase/gimpbaseenums.c:1547
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Απόχρωση"
 
-#: ../libgimpbase/gimpbaseenums.c:1484
+#: ../libgimpbase/gimpbaseenums.c:1548
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Κορεσμός"
 
-#: ../libgimpbase/gimpbaseenums.c:1485
+#: ../libgimpbase/gimpbaseenums.c:1549
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Τιμή"
 
-#: ../libgimpbase/gimpbaseenums.c:1486
-#| msgid "Alpha"
+#: ../libgimpbase/gimpbaseenums.c:1550
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Άλφα"
 
 #
-#: ../libgimpbase/gimpbaseenums.c:1515
+#: ../libgimpbase/gimpbaseenums.c:1579
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
-#: ../libgimpbase/gimpbaseenums.c:1516
+#: ../libgimpbase/gimpbaseenums.c:1580
 msgctxt "size-type"
 msgid "Points"
 msgstr "Στιγμές"
 
-#: ../libgimpbase/gimpbaseenums.c:1577
+#: ../libgimpbase/gimpbaseenums.c:1641
+#| msgid "_Stroke"
+msgctxt "stroke-method"
+msgid "Stroke line"
+msgstr "Γραμμή πινελιάς"
+
+#: ../libgimpbase/gimpbaseenums.c:1642
+msgctxt "stroke-method"
+msgid "Stroke with a paint tool"
+msgstr "Βάψιμο με εργαλείο ζωγραφικής"
+
+#: ../libgimpbase/gimpbaseenums.c:1671
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Από αριστερά προς τα δεξιά"
 
-#: ../libgimpbase/gimpbaseenums.c:1578
+#: ../libgimpbase/gimpbaseenums.c:1672
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Από δεξιά προς τα αριστερά"
 
-#: ../libgimpbase/gimpbaseenums.c:1609
+#: ../libgimpbase/gimpbaseenums.c:1703
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Χωρίς"
 
-#: ../libgimpbase/gimpbaseenums.c:1610
+#: ../libgimpbase/gimpbaseenums.c:1704
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Ελαφριές"
 
-#: ../libgimpbase/gimpbaseenums.c:1611
+#: ../libgimpbase/gimpbaseenums.c:1705
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Μεσαίες"
 
-#: ../libgimpbase/gimpbaseenums.c:1612
+#: ../libgimpbase/gimpbaseenums.c:1706
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Πλήρεις"
 
-#: ../libgimpbase/gimpbaseenums.c:1643
+#: ../libgimpbase/gimpbaseenums.c:1737
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Στοίχιση αριστερά"
 
-#: ../libgimpbase/gimpbaseenums.c:1644
+#: ../libgimpbase/gimpbaseenums.c:1738
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Στοίχιση δεξιά"
 
-#: ../libgimpbase/gimpbaseenums.c:1645
+#: ../libgimpbase/gimpbaseenums.c:1739
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Κεντραρισμένο"
 
-#: ../libgimpbase/gimpbaseenums.c:1646
+#: ../libgimpbase/gimpbaseenums.c:1740
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Πλήρης στοίχιση"
 
-#: ../libgimpbase/gimpbaseenums.c:1676
+#: ../libgimpbase/gimpbaseenums.c:1770
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Σκιές"
 
-#: ../libgimpbase/gimpbaseenums.c:1677
+#: ../libgimpbase/gimpbaseenums.c:1771
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Ενδιάμεσοι τόνοι"
 
-#: ../libgimpbase/gimpbaseenums.c:1678
+#: ../libgimpbase/gimpbaseenums.c:1772
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Φωτεινοί τόνοι"
 
-#: ../libgimpbase/gimpbaseenums.c:1707
+#: ../libgimpbase/gimpbaseenums.c:1801
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Κανονική (Εμπρός)"
 
-#: ../libgimpbase/gimpbaseenums.c:1708
+#: ../libgimpbase/gimpbaseenums.c:1802
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Διορθωτική (Πίσω)"
 
-#: ../libgimpbase/gimpbaseenums.c:1739
+#: ../libgimpbase/gimpbaseenums.c:1833
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Προσαρμογή"
 
-#: ../libgimpbase/gimpbaseenums.c:1740
+#: ../libgimpbase/gimpbaseenums.c:1834
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Περικοπή"
 
-#: ../libgimpbase/gimpbaseenums.c:1741
+#: ../libgimpbase/gimpbaseenums.c:1835
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Περικοπή στο αποτέλεσμα"
 
-#: ../libgimpbase/gimpbaseenums.c:1742
+#: ../libgimpbase/gimpbaseenums.c:1836
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Περικοπή με ίδιες αναλογίες"
