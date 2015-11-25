@@ -72,14 +72,17 @@
         git tag -s GIMP_2_x_y
         git push origin GIMP_2_x_y
 
- ( ) Move the tarball and the .md5 file to its final destination in the
-     FTP area (/srv/ftp/pub/gimp/v2.x).
+ ( ) Copy the tarball and the .md5 file to its final destination in
+     the FTP area (/srv/ftp/pub/gimp/v2.x). Really use cp not mv
+     because a moved file from the home directory will need extra
+     selinux magic to make it readable by the web server.
 
  ( ) Update the 0.0_LATEST-IS- file in the directory on the FTP server.
 
- ( ) Change permissions of the new files to make them writable by the 'ftp'
-     group. This will allow other members of this group to correct mistakes
-     and to update the 0.0_LATEST-IS- file next time.
+ ( ) Change permissions of the new files to make them writable by the
+     'gimpadmins' group. This will allow other members of this group
+     to correct mistakes and to update the 0.0_LATEST-IS- file next
+     time.
 
  ( ) Add the new version to the GIMP product on bugzilla.gimp.org.
 
