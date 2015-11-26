@@ -655,6 +655,7 @@
       <menu action="plug-in-blur-menu" name="Blur">
       	<menuitem action="filters-gaussian-blur" />
       	<menuitem action="filters-pixelize" />
+      	<menuitem action="filters-gaussian-blur-selective" />
 	<placeholder name="Motion">
 	  <menuitem action="filters-motion-blur-circular" />
 	  <menuitem action="filters-motion-blur-linear" />
