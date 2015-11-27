@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 00:20+0100\n"
-"PO-Revision-Date: 2015-11-23 00:22+0100\n"
+"POT-Creation-Date: 2015-11-27 21:47+0100\n"
+"PO-Revision-Date: 2015-11-27 21:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -5357,7 +5357,7 @@ msgstr "Wyświetlanie paska _menu"
 #: ../app/actions/view-actions.c:204
 msgctxt "view-action"
 msgid "Show this window's menubar"
-msgstr "Wyświetlanie paska menu tego okna"
+msgstr "Wyświetla pasek menu tego okna"
 
 #: ../app/actions/view-actions.c:210
 msgctxt "view-action"
@@ -5919,7 +5919,7 @@ msgstr "Podgląd"
 #: ../app/config/config-enums.c:90
 msgctxt "space-bar-action"
 msgid "Switch to Move tool"
-msgstr "Przełącza narzędzie przesuwania"
+msgstr "Przełączenie na narzędzie przesuwania"
 
 #: ../app/config/config-enums.c:118
 msgctxt "zoom-quality"
@@ -6643,7 +6643,7 @@ msgstr "Białe"
 #: ../app/core/core-enums.c:256
 msgctxt "fill-type"
 msgid "Transparency"
-msgstr "Przezroczysta"
+msgstr "Przezroczyste"
 
 #: ../app/core/core-enums.c:257
 msgctxt "fill-type"
@@ -6668,12 +6668,12 @@ msgstr "Deseń"
 #: ../app/core/core-enums.c:315
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "Rysuj linię"
+msgstr "Rysowanie linii"
 
 #: ../app/core/core-enums.c:316
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
-msgstr "Rysuje za pomocą narzędzia rysowania"
+msgstr "Rysowanie za pomocą narzędzia rysowania"
 
 #: ../app/core/core-enums.c:345
 msgctxt "join-style"
@@ -7215,22 +7215,22 @@ msgstr "Nie do cofnięcia"
 #: ../app/core/core-enums.c:1187
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr "Zbiorowy"
+msgstr "Zbiorowe"
 
 #: ../app/core/core-enums.c:1188
 msgctxt "select-criterion"
 msgid "Red"
-msgstr "Czerwony"
+msgstr "Czerwone"
 
 #: ../app/core/core-enums.c:1189
 msgctxt "select-criterion"
 msgid "Green"
-msgstr "Zielony"
+msgstr "Zielone"
 
 #: ../app/core/core-enums.c:1190
 msgctxt "select-criterion"
 msgid "Blue"
-msgstr "Niebieski"
+msgstr "Niebieskie"
 
 #: ../app/core/core-enums.c:1191
 msgctxt "select-criterion"
@@ -9615,35 +9615,35 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1268
 msgid "Show _menubar"
-msgstr "Wyświetlanie paska _menu"
+msgstr "Pasek _menu"
 
 #: ../app/dialogs/preferences-dialog.c:1272
 msgid "Show _rulers"
-msgstr "Wyświetlanie _linijek"
+msgstr "_Linijki"
 
 #: ../app/dialogs/preferences-dialog.c:1275
 msgid "Show scroll_bars"
-msgstr "Wyświetlanie pas_ków przewijania"
+msgstr "Pas_ki przewijania"
 
 #: ../app/dialogs/preferences-dialog.c:1278
 msgid "Show s_tatusbar"
-msgstr "Wyświetlanie paska _stanu"
+msgstr "Pasek _stanu"
 
 #: ../app/dialogs/preferences-dialog.c:1286
 msgid "Show s_election"
-msgstr "Wyświetlanie _zaznaczenia"
+msgstr "_Zaznaczenie"
 
 #: ../app/dialogs/preferences-dialog.c:1289
 msgid "Show _layer boundary"
-msgstr "Wyświetlanie g_ranic warstwy"
+msgstr "G_ranice warstwy"
 
 #: ../app/dialogs/preferences-dialog.c:1292
 msgid "Show _guides"
-msgstr "Wyświetlanie pr_owadnic"
+msgstr "Pr_owadnice"
 
 #: ../app/dialogs/preferences-dialog.c:1295
 msgid "Show gri_d"
-msgstr "Wyświetlanie sia_tek"
+msgstr "Sia_tka"
 
 #: ../app/dialogs/preferences-dialog.c:1301
 msgid "Canvas _padding mode:"
@@ -9914,7 +9914,7 @@ msgstr "Ustawienie domyślnego koloru szybkiej maski"
 
 #: ../app/dialogs/preferences-dialog.c:2041
 msgid "Quick Mask color:"
-msgstr "Koloru szybkiej maski:"
+msgstr "Kolor szybkiej maski:"
 
 #: ../app/dialogs/preferences-dialog.c:2051
 msgid "Default Image Grid"
@@ -10021,15 +10021,15 @@ msgstr "Domyślny format"
 
 #: ../app/dialogs/preferences-dialog.c:2207
 msgid "Show zoom percentage"
-msgstr "Wyświetlanie procentowego powiększenia"
+msgstr "Procentowe powiększenie"
 
 #: ../app/dialogs/preferences-dialog.c:2208
 msgid "Show zoom ratio"
-msgstr "Wyświetlanie współczynnika powiększenia"
+msgstr "Współczynnik powiększenia"
 
 #: ../app/dialogs/preferences-dialog.c:2209
 msgid "Show image size"
-msgstr "Wyświetlanie rozmiaru obrazu"
+msgstr "Rozmiar obrazu"
 
 #: ../app/dialogs/preferences-dialog.c:2222
 msgid "Image Title Format"
@@ -10207,7 +10207,7 @@ msgstr "Aktywowanie okien"
 
 #: ../app/dialogs/preferences-dialog.c:2652
 msgid "Activate the _focused image"
-msgstr "A_ktywowanie obraz z kursorem"
+msgstr "A_ktywowanie obrazu z kursorem"
 
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2656
@@ -10934,7 +10934,7 @@ msgstr "Utworzenie lub dostosowanie klatki"
 #: ../app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
-msgstr "Zniekształca klatkę, aby zniekształcić obraz"
+msgstr "Zniekształcenie klatki, aby zniekształcić obraz"
 
 #: ../app/gegl/gimpcurvesconfig.c:395
 msgid "not a GIMP Curves file"
@@ -10967,7 +10967,7 @@ msgstr "Wypełnij zwykłym kolorem"
 #: ../app/gegl/gimpoperationcagetransform.c:129
 #: ../app/tools/gimpcageoptions.c:144
 msgid "Fill the original position of the cage with a plain color"
-msgstr "Wypełnia pierwotne położenie klatki prostym kolorem"
+msgstr "Wypełnienie pierwotnego położenia klatki prostym kolorem"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -11134,17 +11134,17 @@ msgstr "Brak"
 #: ../app/paint/paint-enums.c:84
 msgctxt "source-align-mode"
 msgid "Aligned"
-msgstr "Wyrównany"
+msgstr "Wyrównane"
 
 #: ../app/paint/paint-enums.c:85
 msgctxt "source-align-mode"
 msgid "Registered"
-msgstr "Zarejestrowany"
+msgstr "Zarejestrowane"
 
 #: ../app/paint/paint-enums.c:86
 msgctxt "source-align-mode"
 msgid "Fixed"
-msgstr "Stały"
+msgstr "Stałe"
 
 #: ../app/paint/paint-enums.c:114
 msgctxt "convolve-type"
@@ -11811,12 +11811,12 @@ msgstr ""
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
 msgid "Dynamic"
-msgstr "Dynamiczny"
+msgstr "Dynamiczne"
 
 #: ../app/text/text-enums.c:24
 msgctxt "text-box-mode"
 msgid "Fixed"
-msgstr "Stały"
+msgstr "Stałe"
 
 #: ../app/tools/gimp-tools.c:351
 msgid ""
@@ -12331,7 +12331,7 @@ msgstr "Promień"
 
 #: ../app/tools/gimpcoloroptions.c:163
 msgid "Sample average"
-msgstr "Próbkuje średnią kolorów"
+msgstr "Próbowanie średniej kolorów"
 
 #: ../app/tools/gimpcolorpickeroptions.c:68
 msgid "Use accumulated color value from all composited visible layers"
@@ -12780,11 +12780,11 @@ msgstr "Interaktywne zachowanie  (%s)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:290
 msgid "Mark background"
-msgstr "Oznacz tło"
+msgstr "Oznaczenie tła"
 
 #: ../app/tools/gimpforegroundselectoptions.c:291
 msgid "Mark foreground"
-msgstr "Oznacz pierwszy plan"
+msgstr "Oznaczenie pierwszego planu"
 
 #: ../app/tools/gimpforegroundselectoptions.c:307
 msgid "Small brush"
@@ -13291,23 +13291,23 @@ msgstr "Kąt:"
 
 #: ../app/tools/gimpmoveoptions.c:139
 msgid "Pick a layer or guide"
-msgstr "Wybiera warstwę lub prowadnicę"
+msgstr "Wybór warstwy lub prowadnicy"
 
 #: ../app/tools/gimpmoveoptions.c:140
 msgid "Move the active layer"
-msgstr "Przemieszcza aktywną warstwę"
+msgstr "Przemieszczenie aktywnej warstwy"
 
 #: ../app/tools/gimpmoveoptions.c:144
 msgid "Move selection"
-msgstr "Przemieszcza zaznaczenie"
+msgstr "Przemieszczenie zaznaczenia"
 
 #: ../app/tools/gimpmoveoptions.c:148
 msgid "Pick a path"
-msgstr "Wybiera ścieżkę"
+msgstr "Wybór ścieżki"
 
 #: ../app/tools/gimpmoveoptions.c:149
 msgid "Move the active path"
-msgstr "Przemieszcza aktywną ścieżkę"
+msgstr "Przemieszczenie aktywnej ścieżki"
 
 #: ../app/tools/gimpmoveoptions.c:178
 msgid "Move:"
@@ -13404,7 +13404,7 @@ msgstr "Długość zanikania"
 
 #: ../app/tools/gimppaintoptions-gui.c:332 ../app/widgets/gimpviewablebox.c:311
 msgid "Reverse"
-msgstr "Odwróć"
+msgstr "Odwrócenie"
 
 #: ../app/tools/gimppaintoptions-gui.c:339
 msgid "Color Options"
@@ -14021,7 +14021,7 @@ msgstr "Krycie obrazu"
 
 #: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
-msgstr "Wyświetlanie podglądu obrazu"
+msgstr "Podgląd obrazu"
 
 #. the guides frame
 #: ../app/tools/gimptransformoptions.c:318
@@ -15104,7 +15104,7 @@ msgstr ""
 
 #: ../app/widgets/gimpdrawabletreeview.c:122
 msgid "Lock pixels"
-msgstr "Blokada pikseli"
+msgstr "Blokuje piksele"
 
 #: ../app/widgets/gimpdynamicseditor.c:135
 msgid "Mapping matrix"
@@ -15608,11 +15608,11 @@ msgstr "_Początkowe ustawienie kreski:"
 
 #: ../app/widgets/gimptagentry.c:45
 msgid "filter"
-msgstr "filtr"
+msgstr "filtrowanie"
 
 #: ../app/widgets/gimptagentry.c:46
 msgid "enter tags"
-msgstr "proszę wprowadzić etykiety"
+msgstr "wprowadzanie etykiet"
 
 #. Seperator for tags
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
