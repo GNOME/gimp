@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-29 17:58+0200\n"
-"PO-Revision-Date: 2015-08-29 17:59+0200\n"
+"POT-Creation-Date: 2015-11-27 21:47+0100\n"
+"PO-Revision-Date: 2015-11-27 21:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -798,32 +798,32 @@ msgstr "Światła"
 #: ../libgimpbase/gimpbaseenums.c:767
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
-msgstr "Zwykłe (przednie)"
+msgstr "Zwykły (przedni)"
 
 #: ../libgimpbase/gimpbaseenums.c:768
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
-msgstr "Korekcyjne (tylne)"
+msgstr "Korekcyjny (tylny)"
 
 #: ../libgimpbase/gimpbaseenums.c:799
 msgctxt "transform-resize"
 msgid "Adjust"
-msgstr "Dostosuj"
+msgstr "Dostosowanie"
 
 #: ../libgimpbase/gimpbaseenums.c:800
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr "Przytnij"
+msgstr "Przycięcie"
 
 #: ../libgimpbase/gimpbaseenums.c:801
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr "Kadruj do wyniku"
+msgstr "Kadrowanie do wyniku"
 
 #: ../libgimpbase/gimpbaseenums.c:802
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "Kadruj z proporcjami"
+msgstr "Kadrowanie z proporcjami"
 
 #: ../libgimpbase/gimpbaseenums.c:935
 msgctxt "pdb-proc-type"
@@ -1162,7 +1162,7 @@ msgstr "_Biały"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:146
 msgid "Select color profile from disk..."
-msgstr "Wybór profilu kolorów z dysku…"
+msgstr "Wybierz profil kolorów z dysku…"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgctxt "profile"
@@ -1648,13 +1648,11 @@ msgstr "Naciśnięcie przycisku %d"
 msgid "Button %d Release"
 msgstr "Zwolnienie przycisku %d"
 
-#: ../modules/controller-dx-dinput.c:441
-#: ../modules/controller-linux-input.c:89
+#: ../modules/controller-dx-dinput.c:441 ../modules/controller-linux-input.c:89
 msgid "X Move Left"
 msgstr "Ruch w lewo X"
 
-#: ../modules/controller-dx-dinput.c:444
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:444 ../modules/controller-linux-input.c:90
 msgid "X Move Right"
 msgstr "Ruch w prawo X"
 
@@ -1666,13 +1664,11 @@ msgstr "Duży ruch Y"
 msgid "Y Move Near"
 msgstr "Mały ruch Y"
 
-#: ../modules/controller-dx-dinput.c:459
-#: ../modules/controller-linux-input.c:93
+#: ../modules/controller-dx-dinput.c:459 ../modules/controller-linux-input.c:93
 msgid "Z Move Up"
 msgstr "Ruch do góry Z"
 
-#: ../modules/controller-dx-dinput.c:462
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:462 ../modules/controller-linux-input.c:94
 msgid "Z Move Down"
 msgstr "Ruch do dołu Z"
 
@@ -1684,13 +1680,11 @@ msgstr "Wychylenie Y duże"
 msgid "X Axis Tilt Near"
 msgstr "Wychylenie Y małe"
 
-#: ../modules/controller-dx-dinput.c:477
-#: ../modules/controller-linux-input.c:98
+#: ../modules/controller-dx-dinput.c:477 ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
 msgstr "Wychylenie Y w prawo"
 
-#: ../modules/controller-dx-dinput.c:480
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:480 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
 msgstr "Wychylenie Y w lewo"
 
