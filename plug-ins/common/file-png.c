@@ -794,6 +794,34 @@ get_bit_depth_for_palette (int num_palette)
     return 8;
 }
 
+static GimpColorProfile *
+load_color_profile (png_structp   pp,
+                    png_infop     info,
+                    gchar       **profile_name)
+{
+  GimpColorProfile *profile = NULL;
+
+#if defined(PNG_iCCP_SUPPORTED)
+  png_uint_32       proflen;
+  png_charp         profname;
+  png_charp         prof;
+  int               profcomp;
+
+  if (png_get_iCCP (pp, info, &profname, &profcomp, &prof, &proflen))
+    {
+      profile = gimp_color_profile_new_from_icc_profile ((guint8 *) prof,
+                                                         proflen, NULL);
+      if (profile && profname)
+        {
+          *profile_name = g_convert (profname, strlen (profname),
+                                     "ISO-8859-1", "UTF-8", NULL, NULL, NULL);
+        }
+    }
+#endif
+
+  return profile;
+}
+
 /*
  * 'load_image()' - Load a PNG image into a new image window.
  */
@@ -804,37 +832,37 @@ load_image (const gchar  *filename,
             gboolean     *resolution_loaded,
             GError      **error)
 {
-  int i,                        /* Looping var */
-  trns,                         /* Transparency present */
-  bpp,                          /* Bytes per pixel */
-  width,                        /* image width */
-  height,                       /* image height */
-  empty,                        /* Number of fully transparent indices */
-  num_passes,                   /* Number of interlace passes in file */
-  pass,                         /* Current pass in file */
-  tile_height,                  /* Height of tile in GIMP */
-  begin,                        /* Beginning tile row */
-  end,                          /* Ending tile row */
-  num;                          /* Number of rows to load */
-  GimpImageBaseType image_type; /* Type of image */
-  GimpPrecision image_precision;/* Precision of image */
-  GimpImageType layer_type;     /* Type of drawable/layer */
-  FILE *fp;                     /* File pointer */
-  volatile gint32 image = -1;   /* Image -- preserved against setjmp() */
-  gint32 layer;                 /* Layer */
-  GeglBuffer *buffer;           /* GEGL buffer for layer */
-  const Babl *file_format;      /* BABL format for layer */
-  png_structp pp;               /* PNG read pointer */
-  png_infop info;               /* PNG info pointers */
-  guchar **pixels,              /* Pixel rows */
- *pixel;                        /* Pixel data */
-  guchar alpha[256],            /* Index -> Alpha */
- *alpha_ptr;                    /* Temporary pointer */
-  struct read_error_data
-  error_data;
-
-  png_textp  text;
-  gint       num_texts;
+  gint              i;                    /* Looping var */
+  gint              trns;                 /* Transparency present */
+  gint              bpp;                  /* Bytes per pixel */
+  gint              width;                /* image width */
+  gint              height;               /* image height */
+  gint              empty;                /* Number of fully transparent indices */
+  gint              num_passes;           /* Number of interlace passes in file */
+  gint              pass;                 /* Current pass in file */
+  gint              tile_height;          /* Height of tile in GIMP */
+  gint              begin;                /* Beginning tile row */
+  gint              end;                  /* Ending tile row */
+  gint              num;                  /* Number of rows to load */
+  GimpImageBaseType image_type;           /* Type of image */
+  GimpPrecision     image_precision;      /* Precision of image */
+  GimpImageType     layer_type;           /* Type of drawable/layer */
+  GimpColorProfile *profile      = NULL;  /* Color profile */
+  gchar            *profile_name = NULL;  /* Profile's name */
+  gboolean          linear       = FALSE; /* Linear RGB */
+  FILE             *fp;                   /* File pointer */
+  volatile gint32   image        = -1;    /* Image -- protected for setjmp() */
+  gint32            layer;                /* Layer */
+  GeglBuffer       *buffer;               /* GEGL buffer for layer */
+  const Babl       *file_format;          /* BABL format for layer */
+  png_structp       pp;                   /* PNG read pointer */
+  png_infop         info;                 /* PNG info pointers */
+  guchar          **pixels;               /* Pixel rows */
+  guchar           *pixel;                /* Pixel data */
+  guchar            alpha[256];           /* Index -> Alpha */
+  png_textp         text;
+  gint              num_texts;
+  struct read_error_data error_data;
 
   pp = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if (!pp)
@@ -884,22 +912,41 @@ load_image (const gchar  *filename,
   png_set_compression_buffer_size (pp, 512);
 
   /*
-   * Get the image dimensions and create the image...
+   * Get the image info
    */
 
   png_read_info (pp, info);
 
+  if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+    png_set_swap (pp);
+
   /*
-   * Latest attempt, this should be my best yet :)
+   * Get the iCCP (color profile) chunk, if any, and figure if it's
+   * a linear RGB profile
+   */
+  profile = load_color_profile (pp, info, &profile_name);
+
+  if (profile)
+    linear = gimp_color_profile_is_linear (profile);
+
+  /*
+   * Get image precision and color model
    */
 
   if (png_get_bit_depth (pp, info) == 16)
-    image_precision = GIMP_PRECISION_U16_GAMMA;
+    {
+      if (linear)
+        image_precision = GIMP_PRECISION_U16_LINEAR;
+      else
+        image_precision = GIMP_PRECISION_U16_GAMMA;
+    }
   else
-    image_precision = GIMP_PRECISION_U8_GAMMA;
-
-  if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-    png_set_swap (pp);
+    {
+      if (linear)
+        image_precision = GIMP_PRECISION_U8_LINEAR;
+      else
+        image_precision = GIMP_PRECISION_U8_GAMMA;
+    }
 
   if (png_get_bit_depth (pp, info) < 8)
     {
@@ -932,13 +979,18 @@ load_image (const gchar  *filename,
   if (png_get_valid (pp, info, PNG_INFO_tRNS) &&
       png_get_color_type (pp, info) == PNG_COLOR_TYPE_PALETTE)
     {
+      guchar *alpha_ptr;
+
       png_get_tRNS (pp, info, &alpha_ptr, &num, NULL);
+
       /* Copy the existing alpha values from the tRNS chunk */
       for (i = 0; i < num; ++i)
         alpha[i] = alpha_ptr[i];
+
       /* And set any others to fully opaque (255)  */
       for (i = num; i < 256; ++i)
         alpha[i] = 255;
+
       trns = 1;
     }
   else
@@ -952,53 +1004,34 @@ load_image (const gchar  *filename,
 
   png_read_update_info (pp, info);
 
-  file_format = NULL;
-
   switch (png_get_color_type (pp, info))
     {
-    case PNG_COLOR_TYPE_RGB:           /* RGB */
+    case PNG_COLOR_TYPE_RGB:
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
-      if (image_precision == GIMP_PRECISION_U8_GAMMA)
-        file_format = babl_format ("R'G'B' u8");
-      else
-        file_format = babl_format ("R'G'B' u16");
       break;
 
-    case PNG_COLOR_TYPE_RGB_ALPHA:     /* RGBA */
+    case PNG_COLOR_TYPE_RGB_ALPHA:
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
-      if (image_precision == GIMP_PRECISION_U8_GAMMA)
-        file_format = babl_format ("R'G'B'A u8");
-      else
-        file_format = babl_format ("R'G'B'A u16");
       break;
 
-    case PNG_COLOR_TYPE_GRAY:          /* Grayscale */
+    case PNG_COLOR_TYPE_GRAY:
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAY_IMAGE;
-      if (image_precision == GIMP_PRECISION_U8_GAMMA)
-        file_format = babl_format ("Y' u8");
-      else
-        file_format = babl_format ("Y' u16");
       break;
 
-    case PNG_COLOR_TYPE_GRAY_ALPHA:    /* Grayscale + alpha */
+    case PNG_COLOR_TYPE_GRAY_ALPHA:
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAYA_IMAGE;
-      if (image_precision == GIMP_PRECISION_U8_GAMMA)
-        file_format = babl_format ("Y'A u8");
-      else
-        file_format = babl_format ("Y'A u16");
       break;
 
-    case PNG_COLOR_TYPE_PALETTE:       /* Indexed */
+    case PNG_COLOR_TYPE_PALETTE:
       image_type = GIMP_INDEXED;
       layer_type = GIMP_INDEXED_IMAGE;
-      /* we can get the format only after creating the layer */
       break;
 
-    default:                           /* Aie! Unknown type */
+    default:
       g_set_error (error, 0, 0,
                    _("Unknown color model in PNG file '%s'."),
                    gimp_filename_to_utf8 (filename));
@@ -1026,10 +1059,7 @@ load_image (const gchar  *filename,
                           layer_type, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image, layer, -1, 0);
 
-  *layer_ID = layer;
-
-  if (layer_type == GIMP_INDEXED_IMAGE)
-    file_format = gimp_drawable_get_format (layer);
+  file_format = gimp_drawable_get_format (layer);
 
   /*
    * Find out everything we can about the image resolution
@@ -1258,52 +1288,30 @@ load_image (const gchar  *filename,
       g_free (comment);
     }
 
-#if defined(PNG_iCCP_SUPPORTED)
   /*
-   * Get the iCCP (color profile) chunk, if any, and attach it as
-   * a parasite
+   * Attach the color profile, if any
    */
 
-  {
-    png_uint_32 proflen;
-    png_charp   profname;
-    png_charp   prof;
-    int         profcomp;
+  if (profile)
+    {
+      gimp_image_set_color_profile (image, profile);
+      g_object_unref (profile);
 
-    if (png_get_iCCP (pp, info, &profname, &profcomp, &prof, &proflen))
-      {
-        GimpColorProfile *profile;
+      if (profile_name)
+        {
+          GimpParasite *parasite;
 
-        profile = gimp_color_profile_new_from_icc_profile ((guint8 *) prof,
-                                                           proflen, NULL);
-        if (profile)
-          {
-            gimp_image_set_color_profile (image, profile);
-            g_object_unref (profile);
+          parasite = gimp_parasite_new ("icc-profile-name",
+                                        GIMP_PARASITE_PERSISTENT |
+                                        GIMP_PARASITE_UNDOABLE,
+                                        strlen (profile_name),
+                                        profile_name);
+          gimp_image_attach_parasite (image, parasite);
+          gimp_parasite_free (parasite);
 
-            if (profname)
-              {
-                gchar *tmp = g_convert (profname, strlen (profname),
-                                        "ISO-8859-1", "UTF-8", NULL, NULL, NULL);
-
-                if (tmp)
-                  {
-                    GimpParasite *parasite;
-
-                    parasite = gimp_parasite_new ("icc-profile-name",
-                                                  GIMP_PARASITE_PERSISTENT |
-                                                  GIMP_PARASITE_UNDOABLE,
-                                                  strlen (tmp), tmp);
-                    gimp_image_attach_parasite (image, parasite);
-                    gimp_parasite_free (parasite);
-
-                    g_free (tmp);
-                  }
-              }
-          }
-      }
-  }
-#endif
+          g_free (profile_name);
+        }
+    }
 
   /*
    * Done with the file...

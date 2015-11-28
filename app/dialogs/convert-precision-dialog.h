@@ -19,11 +19,11 @@
 #define __CONVERT_PRECISION_DIALOG_H__
 
 
-GtkWidget * convert_precision_dialog_new (GimpImage     *image,
-                                          GimpContext   *context,
-                                          GtkWidget     *parent,
-                                          GimpPrecision  precision,
-                                          GimpProgress  *progress);
+GtkWidget * convert_precision_dialog_new (GimpImage         *image,
+                                          GimpContext       *context,
+                                          GtkWidget         *parent,
+                                          GimpComponentType  component_type,
+                                          GimpProgress      *progress);
 
 
 #endif  /*  __CONVERT_PRECISION_DIALOG_H__  */

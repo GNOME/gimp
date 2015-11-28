@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimplist.h"
 #include "core/gimppaintinfo.h"
+#include "core/gimpstrokeoptions.h"
 
 #include "paint/gimpbrushcore.h"
 #include "paint/gimppaintoptions.h"
@@ -57,6 +58,8 @@ enum
 };
 
 
+static void   gimp_pdb_context_iface_init   (GimpConfigInterface *iface);
+
 static void   gimp_pdb_context_constructed  (GObject      *object);
 static void   gimp_pdb_context_finalize     (GObject      *object);
 static void   gimp_pdb_context_set_property (GObject      *object,
@@ -68,10 +71,16 @@ static void   gimp_pdb_context_get_property (GObject      *object,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 
+static void   gimp_pdb_context_reset        (GimpConfig   *config);
 
-G_DEFINE_TYPE (GimpPDBContext, gimp_pdb_context, GIMP_TYPE_CONTEXT)
+
+G_DEFINE_TYPE_WITH_CODE (GimpPDBContext, gimp_pdb_context, GIMP_TYPE_CONTEXT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_pdb_context_iface_init))
 
 #define parent_class gimp_pdb_context_parent_class
+
+static GimpConfigInterface *parent_config_iface = NULL;
 
 
 static void
@@ -146,6 +155,17 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
 }
 
 static void
+gimp_pdb_context_iface_init (GimpConfigInterface *iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_config_iface)
+    parent_config_iface = g_type_default_interface_peek (GIMP_TYPE_CONFIG);
+
+  iface->reset = gimp_pdb_context_reset;
+}
+
+static void
 gimp_pdb_context_init (GimpPDBContext *context)
 {
   context->paint_options_list = gimp_list_new (GIMP_TYPE_PAINT_OPTIONS,
@@ -155,11 +175,25 @@ gimp_pdb_context_init (GimpPDBContext *context)
 static void
 gimp_pdb_context_constructed (GObject *object)
 {
+  GimpPDBContext        *context = GIMP_PDB_CONTEXT (object);
   GimpInterpolationType  interpolation;
   gint                   threshold;
   GParamSpec            *pspec;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  context->stroke_options = gimp_stroke_options_new (GIMP_CONTEXT (context)->gimp,
+                                                     GIMP_CONTEXT (context),
+                                                     TRUE);
+
+  /* preserve the traditional PDB default */
+  g_object_set (context->stroke_options,
+                "method", GIMP_STROKE_PAINT_METHOD,
+                NULL);
+
+  g_object_bind_property (G_OBJECT (context),                 "antialias",
+                          G_OBJECT (context->stroke_options), "antialias",
+                          G_BINDING_SYNC_CREATE);
 
   /* get default interpolation from gimprc */
 
@@ -195,6 +229,12 @@ gimp_pdb_context_finalize (GObject *object)
     {
       g_object_unref (context->paint_options_list);
       context->paint_options_list = NULL;
+    }
+
+  if (context->stroke_options)
+    {
+      g_object_unref (context->stroke_options);
+      context->stroke_options = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -320,6 +360,31 @@ gimp_pdb_context_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_pdb_context_reset (GimpConfig *config)
+{
+  GimpPDBContext *context = GIMP_PDB_CONTEXT (config);
+  GList          *list;
+
+  for (list = GIMP_LIST (context->paint_options_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      gimp_config_reset (list->data);
+    }
+
+  gimp_config_reset (GIMP_CONFIG (context->stroke_options));
+
+  /* preserve the traditional PDB default */
+  g_object_set (context->stroke_options,
+                "method", GIMP_STROKE_PAINT_METHOD,
+                NULL);
+
+  parent_config_iface->reset (config);
+
+  g_object_notify (G_OBJECT (context), "antialias");
+}
+
 GimpContext *
 gimp_pdb_context_new (Gimp        *gimp,
                       GimpContext *parent,
@@ -403,4 +468,12 @@ gimp_pdb_context_get_brush_options (GimpPDBContext *context)
     }
 
   return g_list_reverse (brush_options);
+}
+
+GimpStrokeOptions *
+gimp_pdb_context_get_stroke_options (GimpPDBContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
+
+  return context->stroke_options;
 }

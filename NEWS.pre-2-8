@@ -1,0 +1,642 @@
+                   ------------------------------
+                   GNU Image Manipulation Program
+                          Development Branch
+                   ------------------------------
+
+This used to be the development branch that lead to GIMP 2.8.
+
+
+Changes in GIMP 2.8.0
+=====================
+
+
+Core:
+
+ - Add our own GimpOperationBrightnessContrast because GEGL one is different
+
+
+Plug-ins:
+
+ - Fix some GFig rendering issues
+
+
+Source and build system:
+
+ - Depend on Babl 0.1.10, GEGL 0.2.0 and some other new library versions
+
+
+General:
+
+ - Bug fixes
+ - Translation updates
+
+
+Changes in GIMP 2.7.5
+=====================
+
+
+UI:
+
+ - Minor application menu fixes on the Mac
+ - Make the toolbox arbitrarily resizable again
+ - Add axis labels to the dynamics curves to make them more obvious
+ - Fix dockable showing to do the right thing in both MWM and SWM
+ - Fix some glitches in the tool preset UI, like proper sensitivity
+
+
+Core:
+
+ - Restore autoshrink functionality in the rectangle tools
+ - Allow smudge to work with dynamic brushes
+ - Make sure tool presets and tool options are consistent after loading
+ - Add automatic tags for the folders a file lives in
+ - Make the default Quick Mask color configurable
+ - Fix Color Balance so the "range" setting actually makes a difference
+
+
+Plug-ins:
+
+ - Proper toplevel item sorting in the help browser
+ - Use libraries instead of launching programs in file-compressor
+ - Use the Ghostscript library instead of launching ghostscript
+ - Allow to switch off antialiasing when importing from PDF
+ - Embed the page setup in the main print dialog
+ - Port Gfig to cairo
+
+
+Libgimp:
+
+ - Add PDB API to modify a lot of paint and ink options
+
+
+Data:
+
+ - Add a new set of default brushes and tool presets from Ramon Miranda
+
+
+Developer documentation:
+
+ - Update everything including app/ so all functions appear again
+
+
+Source and build system:
+
+ - Remove the unmaintained makefile.msc build system
+ - Explicitly link plug-ins to -lm when needed
+ - Also create .xz tarballs
+
+
+General:
+
+ - Lots of bug fixes
+ - Tons and tons of translation updates
+
+
+Changes in GIMP 2.7.4
+=====================
+
+
+UI:
+
+ - Add a close button to image tabs in single-window mode
+ - Improve the transform tools' undo strings to be more descriptive
+ - Render the layer's "eye" icon in inconsistent state if the layer is
+   visible, but one of its parents isn't
+ - Add proper stacking for canvas items, so things don't hide each other
+ - Make sure single-window-mode and multi-window-mode are always saved
+   consistently in sessionrc
+
+
+Core:
+
+ - Fix "render_image_tile_fault: assertion `tile[4] != NULL' failed"
+   warnings that occurred for some image sizes
+ - Fix attachment of the floating selection when the gegl projection
+   is enabled
+ - Replace heal algorithm with a new one by Jean-Yves Couleaud that
+   works much better
+ - Make resource sub-folders show up in UI as tags, allowing users
+   to easily locate resource collections they may have installed
+ - Fix graphics tablet canvas interaction by moving from
+   gdk_pointer_grab() to gtk_grab_add() for most grabs
+ - Stop using motion hints, they are a concept from the dark ages
+
+
+Libgimp:
+
+ - Add a basic paint dynamics PDB interface
+
+
+Plug-ins:
+
+ - Make writing color space information to BMP files optional
+ - PSD loader now reads and imports working paths
+
+
+Script-Fu:
+
+ - Lots and lots of undeprecations
+
+
+Developer documentation:
+
+ - Add devel-docs/gegl-porting-plan.txt
+
+
+Source and build system:
+
+ - Make git-version.h generation work in shallow git clones
+ - Modernize use of autotools a bit, maintainer-mode and pdbgen
+   are now enabled by default
+
+
+General:
+
+ - Make gimptool install scripts in the correct system-wide directory
+ - Fix lots and lots of stuff found by static code analysis
+
+
+Changes in GIMP 2.7.3
+=====================
+
+
+UI:
+
+ - Use GimpSpinScales instead of scale entries in all dockable widgets
+ - Allow the spin scale to control a range larger than its scale's range
+ - Implement RTL mode in GimpSpinScale
+ - Add lots of tooltips to tool options
+ - Allow to drop more things to the empty image window, and simply
+   create new images from them
+ - Cage tool: allow to add handle to the cage when clicking on an edge
+ - Cage tool: allow to remove selected handles from the cage by hitting delete
+ - Remember column widths in multi-column dock windows
+ - Support starting GIMP in single-window mode
+ - When the brush is shared among paint tools, also share all
+   brush-modifying paint options
+ - Use ALT+number and ALT+Tab shortcuts to navigate between images
+   in both single- and multi-window mode
+ - Make 'Export to' always activatable and fall back to 'Export...' if
+   no export target has been set yet
+ - In single-window mode, add new dockable dialogs to the image window
+   instead of in a new window
+ - When switching on single-window mode, put docks in the image window
+   depending on what side of the window they originally had
+ - When switching off single-window mode, distribute dock windows
+   better
+ - Add a canvas item for the transform grid, fixing a major speed
+   regression, and add the same guides options as in the rectangle tools
+ - Don't unmaximize the single-window mode image window when closing
+   images
+ - Resurrect the "You can drop dockable dialogs here" help string
+   below the toolbox
+ - Make pick-and-move with the Move Tool work for layers in a layer
+   group
+
+
+Core:
+
+ - Add GimpMotionBuffer which abstracts away stroke smoothing behind
+   a simple API and takes it out of GimpDisplayShell
+ - Add a GimpIdTable utility class
+ - Add a GimpDockContainer interface
+ - Add a GimpSessionManaged interface
+ - Add GimpCanvasRectangleGuides which makes the rectangle tool's
+   guides draw properly
+
+
+Libgimp:
+
+ - Make libgimp depend on GdkPixbuf
+ - Add API to create layers from cairo surfaces
+ - Make it impossible to include individual files from any GIMP
+   library. This was always forbidden and designed so it most
+   probably breaks, but now it reliably breaks using #error
+ - Deprecate the "set_sensitive" logic and use g_object_bind_property()
+
+
+Plug-ins:
+
+ - Use poppler's cairo API to load PDFs, the pixbuf API is removed
+ - Port screenshot from GdkPixbuf to cairo
+ - Fix the annoying parser build warnings in imagemap
+ - Add a check-for-deprecated-procedures-in-script-fu make target
+ - Update libpng code to not use deprecated API (file-mng and file-png)
+ - Add an Item class to pygimp
+ - Correct/update some labels and defaults in the JPEG plug-in's save dialog UI
+ - Fix "Bug 596410 - gimp-image-get-filename returns NULL for imported files"
+
+
+Developer documentation:
+
+ - Many updates
+
+
+Source and build system:
+
+ - Make cairo a global dependency, starting at libgimpcolor
+ - Require poppler >= 0.12.4
+ - Remove gimp-remote for good, it has been disabled for years
+
+
+General:
+
+ - Some more undeprecations now that we use GTK+ 2.24
+ - Fix lots of warnings that are new in -Wall in GCC 4.6
+ - Lots of bug fixes and cleanup
+ - Lots of translation updates
+
+
+Changes in GIMP 2.7.2
+=====================
+
+
+UI:
+
+ - A lot of undeprecations due to GTK+ 2.22 and 2.24
+ - Lots and lots of cairo porting, calls to gdk_draw_* are gone
+ - Merge the cage transform tool from GSoC
+ - Remove the old bitmap cursors completely and always use RGBA cursors
+   also for compat cursors for old X servers
+ - Add new GimpCanvasItem infrastructure with subclasses for everything
+   that needs to be drawn on the canvas and port all tools to canvas items,
+   this is a huge change that touches all tools and almost all display
+   code, and which finally gets rid of XOR drawing altogether
+ - Switch from purely idle-rendering the display to something that ensures
+   a minimum framerate, so we don't fail to update under heavy load
+ - Make the text tool handle RTL mode better
+ - Change GimpColorMapEditor to use the newly added proxy GimpPalette
+ - Replace the brush scale control in tool options by a brush size
+   one that works in pixels, and does the right thing when the brush
+   changes
+ - Add new widget GimpSpinScale which is a scale with number entry,
+   and use it in all tool options
+ - Make the brush, pattern etc. selectors in tool options more
+   compact and allow to directly jump to the editor dialogs
+ - Make handle sizes in tools consistent
+ - Add an on-canvas progress and use it for tool progress instead of
+   the statusbar
+ - Add a new GimpToolPalette class with lots of code that was
+   in GimpToolBox
+ - Allow to properly drop into and after a layer group
+ - Refactor and clean up the dynamics editor widget, and add colors
+   for the curves
+ - Add support for F2 to rename items in lists
+ - Clean up GimpDeviceStatus internally and visually
+ - Allow to set GimpToolPreset's icon using the new GimpIconPicker widget
+ - Make the text tool's style overlay show default values from the
+   text object if there is no style active at the cursor position/selection
+ - Show the the text size's unit in the text style overlay
+ - Make tool dialogs transient to the image window again
+ - Consistently add a "gimp-" prefix to all window roles
+ - Make the preset buttons in tool options work on the global tool
+   presets instead of the removed per-tool preset lists
+ - Add GimpControllerMouse, which allows to bind extra mouse buttons to
+   arbitrary actions
+
+
+Core:
+
+ - Add uniform API to turn any GimpItem's outline into a selection
+ - Add support for color tags in text layers
+ - Remove the selection_control() stuff from GimpImage and with it
+   maybe last piece of UI code still not properly separated
+ - Add more validation code for XCF loading
+ - Add accessors to GimpPalette and use them globally
+ - Keep a proxy GimpPalette around for the image's colormap
+ - Don't scale SVGs when pasting or importing them
+ - A lot of changes to the input device handling code, partly
+   merged from the gtk3-port branch, add GimpDeviceManager class
+ - Add smoothing of paint strokes
+ - Fix display filters to work on a cairo surface
+ - Fix and enhance GimpImage's URI/filename handling API
+ - Unset "removed" flag on items when they get added back to
+   the image from the undo stack
+ - Change item creation to properly use GObject properties and
+   remove item_configure() and drawable_configure()
+ - Refactor tool event handling and move lots of stuff into
+   utility functions
+ - Clean up GimpViewRenderer API
+ - Implement transforms on group layers
+ - Clean up the transform tool a lot, and refactor away old junk
+ - Tool and tool event cleanup: enforce tool activate/halt invariants,
+   consistently shutdown all tools in control(HALT), and many other
+   tool fixes
+ - Remove GimpToolPresets object, this functionality got merged into
+   the new GimpToolPreset system
+ - Rename GimpFilteredContainer to GimpTaggedContainer and add a new
+   GimpFilteredContainer parent class which is a generic filter
+ - Remove the concept of an "offset" from TileManager and instead
+   pass around the offsets explicitly when needed, like when
+   transforming
+ - Move GimpBezier desc from vectors/ to core/ and add API to create
+   one from sorted BoundSegs
+ - Change GimpBrush boundary API to return a GimpBezierDesc
+ - Add GimpBrushCache object and use it to cache a brush's transformed
+   pixels and its outline, remove the caching code from GimpBrushCore
+ - Add GimpBezierDesc based API to GimpScanConvert and use it
+
+
+GEGL:
+
+ - Add operations and gegl infrastructure for the cage tool
+ - Disable View -> Use GEGL as we will not have time to finish the
+   GEGL projection code for GIMP 2.8
+
+
+Libgimp:
+
+ - Introduce an "item" type in the PDB and libgimp and deprecate
+   lots of old API in favor of item API
+ - Add procedures to create, traverse and manipulate layer trees
+ - Add more state to the context API, and deprecate functions with
+   too many parameters in favor of simpler ones that use context states,
+   particularly the entire transform and selection API
+ - Move GimpUnitStore and GimpUnitComboBox to libgimpwidgets, and
+   use them in GimpSizeEntry, deprecate GimpUnitMenu.
+ - Deprecate gimp_min_colors() and gimp_install_cmap()
+ - Add API that enables GimpRuler to track motion events by itself
+ - Add new selection API and deprecate all old selection functions
+ - Move around and rename all parasite functions, deprecate the old ones
+ - Add a generated PDB file in the "gimp" namespace and get rid
+   of "gimpmisc"
+ - Add unit conversion functions to libgimpbase
+ - Add function to reset a plug-in's context to default values
+
+
+Plug-ins:
+
+ - Make script-fu server IPv6 aware
+ - Follow libgimp deprecations in plug-ins and scripts
+ - Add PDF export plugin
+ - Lots of cairo porting here too
+ - UTF-8 fixes in script-fu
+ - Set the progress to 1.0 when done
+ - Merge a lot of upstream fixes into script-fu's Tinyscheme
+ - Add "New Layer" option to MapObject
+ - Support loading of 16-bit raw PPM files
+ - Add web-page, a new plug-in which renders images of web pages
+ - Fix some more plug-ins to not warn if applied on an empty region
+
+
+Data:
+
+ - Remove "Untitled" from palette names entries
+
+
+Developer documentation:
+
+ - Move libgimp documentation from templates to inline comments
+ - Generate standard deprecated sections
+
+
+Source and build system:
+
+ - Add more code documentation
+ - Add more unit tests and refactor existing ones to use global
+   test utility functions
+ - Add a manifest to executables (app and plug-ins, Win32)
+ - Depend on GLib 2.28, GTK+ 2.24, Cairo 1.10
+ - Make WebKit available to all plug-ins, not just the help browser
+ - Run UI tests on Xvfb if available
+ - Check for GdkPixbuf separately because it's now a separate library
+ - Allow tests to use uninstalled plug-ins from the build dir
+ - Remove, comment out, or build for GIMP_UNSTABLE some stuff that
+   should not be in a stable release
+
+
+General:
+
+ - Improve safety on Win32 by calling SetDllDirectory() and
+   SetProcessDEPPolicy()
+ - Switch from GtkObject::destroy() to GObject::dispose() all over
+   the place
+ - Various changes that make maintaining the gtk3-port branch easier,
+   such as s/GtkAnchorType/GimpHandleAnchor/ and s/GtkObject/GtkAdjustment/
+ - Don't use gtk_container_add() for adding to GtkBoxes
+ - Inherit from GtkBox directly, not from GtkHBox/GtkVBox
+ - Add namespace to the ink blob types and functions
+ - Remove all useless calls to gtk_range_set_update_policy()
+ - Use GObject::constructed() instead of GObject::constructor() all
+   over the place
+ - Move more members to private and add accessors for them
+ - Stop using GdkNativeWindow, use guint32 instead
+ - Plug memory leaks
+ - Remove ps-menurc, we are not a PS clone
+ - Use the new g_[s]list_free_full() instead of foreach() and free()
+ - Don't use newly deprecated GTK+ API
+ - Use the new GDK_KEY_foo key names
+ - Lots of bug fixes and cleanup
+ - Lots of translation updates
+
+
+Changes in GIMP 2.7.1
+=====================
+
+
+UI:
+
+ - Add "lock content" button to the layers, channels and paths dialogs,
+   make the lock buttons more compact
+ - Refuse to edit locked items
+ - Add support for layer groups
+ - Improve internals and GUI of the save/export functionality
+ - Move the shortcut dialog's "clear" button into the entry
+ - Clean up UI code by introducing GimpDockWindow and GimpImageWindow
+   classes
+ - Support multi-column dock windows
+ - Get rid of docking bars, use highlights in existing widget hierarchy instead
+ - Remove toolbox-window-hint gimprc setting and use dock-window-hint
+   for both toolbox and docks instead
+ - Move GimpDock::default-height style property to GimpDockWindow
+ - Polish save+export path-part precedence rules
+ - Merge the GSoC 2009 Advanced GUI for Brush Dynamics project
+ - Default to non-fixed-aspect in Canvas Size dialog
+ - Add a still incomplete and Single-window mode
+ - Have an Export button, not Save, in export dialogs
+ - Improve Free Select Tool handle highlighting
+ - Support changing user interface language from preferences
+ - Update ps-menurc with PS CS4 keyboard shortcuts
+ - Reduce spacing around canvas and use it for the canvas itself
+ - Put name of active dockables in dock window titles
+ - Don't have Toolbox in list of Recently Closed Docks, handle that
+   directly in the Windows menu
+ - Support selecting and tagging multiple objects in resource lists
+ - Improve on-canvas text editing and text attribute setting
+ - Add GimpContainerTreeStore and use it in all GtkTreeStore based views
+ - Add a new default "automatic" tab style that makes sure dockable tabs
+   always show as much detail as possible
+ - Remove the dockable title bar and add the menu arrow button next to the
+   notebook tabs
+ - Add an icon for the desaturate tool
+ - Add 'Rule of fifths' crop guide overlay
+ - Make Alt+Click on layers not affect active layer
+
+
+Core:
+
+ - Make all GimpItems lockable so their contents can't be changed
+ - Make more sense when naming imported layers
+ - Make group layers work except for layer masks and save them in
+   the XCF
+ - Change GimpProjectable::update to GimpProjectable:invalidate
+ - Make sure we don't mix font backends (and crash) by explicitly
+   asking for FT/Fontconfig backends
+ - Move members of GimpObject to a private struct
+ - gimp_object_get_name() takes a gconstpointer now, remove casts
+   from all callers
+ - Let drawables connect to their floating selection's "update" signal
+   instead of letting the image do this job
+ - Fix brush rotation artifacts at even 90 degree rotation
+ - Don't leak shared tile memory on Solaris
+ - Add a PDB procedure to access a text layer's markup
+ - Remove legacy cruft from pdbgen and make sure number ranges are correct
+ - Move all image creation functions to a common file
+ - Add translation context to all undo descriptions
+
+
+GEGL:
+
+ - Make sure all nodes are added to their resp. graphs
+ - Use GEGL for layer scaling if use-gegl is TRUE
+
+
+Plug-ins:
+
+ - Updated script-fu's scheme to latest upstream fixes
+ - Don't store image-specific print settings globally
+ - Add fundamental OpenRaster (.ora) import and export support
+ - Add RGB565 support to the csource plug-in
+
+
+Data:
+
+ - Add texture/grunge brushes made by Johannes Engelhardt
+
+
+Developer documentation:
+
+ - Explain GimpContext
+ - Add SVG graphic with GIMP application core module dependencies
+ - Add a schedule for 2.8 development
+
+
+Source and build system:
+
+ - Add more code documentation
+ - Clean up subsystem linking dependencies in app/
+ - Add unit testing framework in app/tests/ and some basic tests,
+   including basic UI tests and XCF tests
+ - Tentatively introduce usage of using Glade + GtkBuilder
+ - Depend on GLib 2.24.0 and GTK+ 2.20.0
+ - Add git commit hash in --verbose --version output
+ - Don't version control gtk-doc.m4, get it from gtkdocize
+ - Add GimpObject tracking code
+ - Plug memory leaks
+ - Lots of bug fixes and cleanup
+ - Lots of translation updates
+
+
+Changes in GIMP 2.7.0
+=====================
+
+UI:
+ - Change the Text Tool to perform text editing on-canvas (GSoC 2008)
+   and add the ability to mix different text styles in the same layer
+ - Add support for tagging GIMP resources such as brushes and allow
+   filtering based on these tags (GSoC 2008)
+ - Separate the activities of saving an image and exporting it, there is
+   now a 'File->Export...' for example
+ - Port file plug-ins to new export API which gets rid of many
+   annoying export dialogs
+ - Add a simple parser to size entry widgets, images can be scaled
+   to e.g. "50%" or "2 * 37px + 10in"
+ - Arrange layer modes into more logical and useful groups
+ - Added support for rotation of brushes
+ - Make the Pointer dockable show information about selection position
+   and size
+ - Get rid of the Tools dockable and move toolbox configuration to
+   Preferences
+ - Allow closing the toolbox without closing the whole application
+ - Add status bar feedback for keyboard changes to brush parameters
+ - Add diagonal guides to the Crop Tool
+ - New docks are created at the pointer position
+ - Add support for printing crop marks for images
+ - Move 'Text along path' from tool options to text context menu
+ - Change default shortcuts for "Shrink Wrap" and "Fit in Window" to
+   Ctrl+J and Ctrl+Shift+J respectively since the previous shortcuts
+   are now used for the save+export feature
+ - Make Alt+Click on layers in Layers dockable create a selection from
+   the layer
+ - Allow to specify written language in the Text Tool
+ - Support custom mapping curves for input device properties like "Pressure"
+ - New desktop launcher icon
+ - Add 'Windows→Hide docks' menu item that does what 'Tab' does and also displays
+   its state. Make the state persistent across sessions, too.
+ - Make dock window title separators translatable
+
+
+Plug-ins:
+
+ - Map the 'Linear Dodge' layer mode in PSD files to the 'Addition'
+   layer mode in GIMP
+ - Add JPEG2000 load plug-in
+ - Add X11 mouse cursor plug-in
+ - Add support for loading 16bit (RGB565) raw data
+ - Add palette exporter for CSS, PHP, Python, txt and Java, accessed
+   through palette context menu
+ - Add plug-in API for getting image URI, for manipulating size of
+   text layers, for getting and setting text layer hint, and for
+   unified export dialog appearance
+ - Add an 'As Animation' toggle to the GIF export options
+ - Add 'active_vectors' getsetter to Python 'gimp.Image'
+
+
+Data:
+
+ - Add large variants of round brushes and remove duplicate and
+   useless brushes
+ - Add "FG to BG (Hardedge)" gradient
+
+
+GEGL:
+
+ - Port the projection code, the code that composes a single image
+   from a stack of layers, to GEGL
+ - Port layer modes to GEGL
+ - Port the floating selection code to GEGL
+ - Refactor the layer stack code to prepare for layer groups later
+ - Prepare better and more intuitive handling of the floating
+   selection
+ - Add File->Debug->Show Image Graph that show the GEGL graph of an
+   image
+ - Allow to benchmark projection performance with
+   File->Debug->Benchmark Projection
+ - When using GEGL for the projection, use CIELCH instead of HSV/HSL
+   for color based layer modes
+
+
+Core:
+
+ - Make painting strokes Catmull-Rom Spline interpolated
+ - Add support for arbitrary affine transforms of brushes
+ - Add support for brush dynamics to depend on tilt
+ - Add aspect ratio to brush dynamics
+ - Add infrastructure to soon support vector layers (GSoC 2006)
+ - Rearrange legacy layer mode code to increase maintainability
+ - Drop support for the obsolete GnomeVFS file-uri backend
+ - Allow to dump keyboard shortcuts with File->Debug->Dump Keyboard
+   Shortcuts
+ - Prepare data structures for layer groups
+ - Remove gimprc setting "menu-mnemonics",
+   "GtkSettings:gtk-enable-mnemonics" shall be used instead
+ - Remove "transient-docks" gimprc setting, the 'Utility window' hint
+   and a sane window manager does a better job
+ - Remove "web-browser" gimprc setting and use gtk_show_uri() instead
+
+
+General:
+
+ - Changed license to (L)GPLv3+
+ - Use the automake 1.11 feature 'silent build rules' by default
+ - Lots of bug fixes and cleanup

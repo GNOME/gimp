@@ -128,7 +128,6 @@ libexec_PROGRAMS = \
 	qbist \
 	ripple \
 	sample-colorize \
-	$(SCREENSHOT) \
 	sharpen \
 	smooth-palette \
 	softglow \
@@ -157,7 +156,6 @@ EXTRA_PROGRAMS = \
 	file-xmc \
 	file-xpm \
 	mail \
-	screenshot \
 	web-page
 
 install-%: %
@@ -1655,27 +1653,6 @@ sample_colorize_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(sample_colorize_RC)
-
-screenshot_CFLAGS = $(XFIXES_CFLAGS)
-
-screenshot_SOURCES = \
-	screenshot.c
-
-screenshot_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
-	$(SCREENSHOT_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(screenshot_RC)
 
 sharpen_SOURCES = \
 	sharpen.c

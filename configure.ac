@@ -11,7 +11,7 @@ AC_PREREQ(2.54)
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [9])
-m4_define([gimp_micro_version], [1])
+m4_define([gimp_micro_version], [3])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
@@ -43,8 +43,8 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.12])
-m4_define([gegl_required_version], [0.3.0])
+m4_define([babl_required_version], [0.1.14])
+m4_define([gegl_required_version], [0.3.4])
 m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
@@ -1906,11 +1906,9 @@ AM_CONDITIONAL(BUILD_SCRIPT_FU, test "x$with_script_fu" != "xno")
 
 if test "x$os_win32" = xno; then
   MAIL='mail$(EXEEXT)'
-  SCREENSHOT='screenshot$(EXEEXT)'
 fi
 
 AC_SUBST(MAIL)
-AC_SUBST(SCREENSHOT)
 
 
 ####################
@@ -2334,6 +2332,7 @@ plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
+plug-ins/screenshot/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/ftx/Makefile
 plug-ins/script-fu/scripts/Makefile

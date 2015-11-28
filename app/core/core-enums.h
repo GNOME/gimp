@@ -235,41 +235,6 @@ typedef enum  /*< pdb-skip >*/
 } GimpFillStyle;
 
 
-#define GIMP_TYPE_STROKE_METHOD (gimp_stroke_method_get_type ())
-
-GType gimp_stroke_method_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_STROKE_METHOD_LIBART,     /*< desc="Stroke line"              >*/
-  GIMP_STROKE_METHOD_PAINT_CORE  /*< desc="Stroke with a paint tool" >*/
-} GimpStrokeMethod;
-
-
-#define GIMP_TYPE_JOIN_STYLE (gimp_join_style_get_type ())
-
-GType gimp_join_style_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_JOIN_MITER,  /*< desc="Miter" >*/
-  GIMP_JOIN_ROUND,  /*< desc="Round" >*/
-  GIMP_JOIN_BEVEL   /*< desc="Bevel" >*/
-} GimpJoinStyle;
-
-
-#define GIMP_TYPE_CAP_STYLE (gimp_cap_style_get_type ())
-
-GType gimp_cap_style_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_CAP_BUTT,   /*< desc="Butt"   >*/
-  GIMP_CAP_ROUND,  /*< desc="Round"  >*/
-  GIMP_CAP_SQUARE  /*< desc="Square" >*/
-} GimpCapStyle;
-
-
 #define GIMP_TYPE_DASH_PRESET (gimp_dash_preset_get_type ())
 
 GType gimp_dash_preset_get_type (void) G_GNUC_CONST;

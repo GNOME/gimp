@@ -41,6 +41,7 @@ plug-ins/maze
 plug-ins/metadata
 plug-ins/pagecurl
 plug-ins/print
+plug-ins/screenshot
 plug-ins/script-fu
 plug-ins/selection-to-path
 plug-ins/twain

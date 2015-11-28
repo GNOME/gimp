@@ -135,6 +135,25 @@ view_zoom_fill_cmd_callback (GtkAction *action,
 }
 
 void
+view_zoom_selection_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpDisplay *display;
+  GimpImage   *image;
+  gint         x, y, width, height;
+  return_if_no_display (display, data);
+  return_if_no_image (image, data);
+
+  gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                    &x, &y, &width, &height);
+
+  gimp_display_shell_scale_to_rectangle (gimp_display_get_shell (display),
+                                         GIMP_ZOOM_IN,
+                                         x, y, width, height,
+                                         FALSE);
+}
+
+void
 view_zoom_revert_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
@@ -287,6 +306,44 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
 }
 
 void
+view_flip_horizontally_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_display (display, data);
+
+  shell = gimp_display_get_shell (display);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (active != shell->flip_horizontally)
+    {
+      gimp_display_shell_flip (shell, active, shell->flip_vertically);
+    }
+}
+
+void
+view_flip_vertically_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_display (display, data);
+
+  shell = gimp_display_get_shell (display);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (active != shell->flip_vertically)
+    {
+      gimp_display_shell_flip (shell, shell->flip_horizontally, active);
+    }
+}
+
+void
 view_rotate_absolute_cmd_callback (GtkAction *action,
                                    gint       value,
                                    gpointer   data)
@@ -305,6 +362,9 @@ view_rotate_absolute_cmd_callback (GtkAction *action,
                                TRUE);
 
   gimp_display_shell_rotate_to (shell, angle);
+
+  if (value == GIMP_ACTION_SELECT_SET_TO_DEFAULT)
+    gimp_display_shell_flip (shell, FALSE, FALSE);
 }
 
 void

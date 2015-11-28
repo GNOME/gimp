@@ -169,6 +169,8 @@ static const NamedConstant const old_constants[] =
   { "MIDTONES",                GIMP_TRANSFER_MIDTONES   },
   { "HIGHLIGHTS",              GIMP_TRANSFER_HIGHLIGHTS },
 
+  { "DESATURATE-LUMINOSITY",   GIMP_DESATURATE_LUMA },
+
   { NULL, 0 }
 };
 

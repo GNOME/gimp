@@ -804,6 +804,14 @@ gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
    */
   g_object_ref_sink (filter);
 
+  if (file_proc->mime_type)
+    {
+      gtk_file_filter_add_mime_type (filter, file_proc->mime_type);
+      gtk_file_filter_add_mime_type (all, file_proc->mime_type);
+      if (all_savable)
+        gtk_file_filter_add_mime_type (all_savable, file_proc->mime_type);
+    }
+
   for (ext = file_proc->extensions_list, i = 0;
        ext;
        ext = g_slist_next (ext), i++)

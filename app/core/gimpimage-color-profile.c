@@ -36,6 +36,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimp.h"
 #include "gimpcontext.h"
@@ -501,14 +502,8 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
 
   for (list = layers; list; list = g_list_next (list))
     {
-      GimpDrawable    *drawable     = list->data;
-      GimpProgress    *sub_progress = NULL;
-      cmsHPROFILE      src_lcms;
-      cmsHPROFILE      dest_lcms;
-      const Babl      *iter_format;
-      cmsUInt32Number  lcms_format;
-      cmsUInt32Number  flags;
-      cmsHTRANSFORM    transform;
+      GimpDrawable *drawable     = list->data;
+      GimpProgress *sub_progress = NULL;
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         continue;
@@ -522,69 +517,26 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
 
       nth_drawable++;
 
-      src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
-      dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
+      gimp_drawable_push_undo (drawable, NULL, NULL,
+                               0, 0,
+                               gimp_item_get_width  (GIMP_ITEM (drawable)),
+                               gimp_item_get_height (GIMP_ITEM (drawable)));
 
-      iter_format =
-        gimp_color_profile_get_format (gimp_drawable_get_format (drawable),
-                                       &lcms_format);
+      gimp_gegl_convert_color_profile (gimp_drawable_get_buffer (drawable),
+                                       NULL,
+                                       src_profile,
+                                       gimp_drawable_get_buffer (drawable),
+                                       NULL,
+                                       dest_profile,
+                                       intent, bpc,
+                                       sub_progress);
 
-      flags = cmsFLAGS_NOOPTIMIZE;
-
-      if (bpc)
-        flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
-
-      transform = cmsCreateTransform (src_lcms,  lcms_format,
-                                      dest_lcms, lcms_format,
-                                      intent, flags);
-
-      if (transform)
-        {
-          GeglBuffer         *buffer;
-          GeglBufferIterator *iter;
-          gint                total_pixels;
-          gint                done_pixels = 0;
-
-          buffer = gimp_drawable_get_buffer (drawable);
-
-          gimp_drawable_push_undo (drawable, NULL, NULL,
-                                   0, 0,
-                                   gegl_buffer_get_width  (buffer),
-                                   gegl_buffer_get_height (buffer));
-
-          iter = gegl_buffer_iterator_new (buffer, NULL, 0,
-                                           iter_format,
-                                           GEGL_ACCESS_READWRITE,
-                                           GEGL_ABYSS_NONE);
-
-          total_pixels = (gegl_buffer_get_width  (buffer) *
-                          gegl_buffer_get_height (buffer));
-
-          while (gegl_buffer_iterator_next (iter))
-            {
-              cmsDoTransform (transform,
-                              iter->data[0], iter->data[0], iter->length);
-
-              done_pixels += iter->roi[0].width * iter->roi[0].height;
-
-              if (sub_progress)
-                gimp_progress_set_value (sub_progress,
-                                         (gdouble) done_pixels /
-                                         (gdouble) total_pixels);
-            }
-
-          gimp_drawable_update (drawable, 0, 0,
-                                gegl_buffer_get_width  (buffer),
-                                gegl_buffer_get_height (buffer));
-
-          cmsDeleteTransform (transform);
-        }
+      gimp_drawable_update (drawable, 0, 0,
+                            gimp_item_get_width  (GIMP_ITEM (drawable)),
+                            gimp_item_get_height (GIMP_ITEM (drawable)));
 
       if (sub_progress)
-        {
-          gimp_progress_set_value (sub_progress, 1.0);
-          g_object_unref (sub_progress);
-        }
+        g_object_unref (sub_progress);
     }
 
   g_list_free (layers);

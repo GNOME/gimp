@@ -32,6 +32,7 @@
 #include "gimpdesaturateconfig.h"
 
 
+static void      gimp_operation_desaturate_prepare (GeglOperation       *operation);
 static gboolean  gimp_operation_desaturate_process (GeglOperation       *operation,
                                                     void                *in_buf,
                                                     void                *out_buf,
@@ -62,7 +63,9 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
                                  "description", "GIMP Desaturate operation",
                                  NULL);
 
-  point_class->process = gimp_operation_desaturate_process;
+  operation_class->prepare = gimp_operation_desaturate_prepare;
+
+  point_class->process     = gimp_operation_desaturate_process;
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
@@ -77,6 +80,26 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
 static void
 gimp_operation_desaturate_init (GimpOperationDesaturate *self)
 {
+}
+
+static void
+gimp_operation_desaturate_prepare (GeglOperation *operation)
+{
+  GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
+  GimpDesaturateConfig     *config = GIMP_DESATURATE_CONFIG (point->config);
+  const Babl               *format;
+
+  if (config->mode == GIMP_DESATURATE_LUMINANCE)
+    {
+      format = babl_format ("RGBA float");
+    }
+  else
+    {
+      format = babl_format ("R'G'B'A float");
+    }
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -119,7 +142,8 @@ gimp_operation_desaturate_process (GeglOperation       *operation,
         }
       break;
 
-    case GIMP_DESATURATE_LUMINOSITY:
+    case GIMP_DESATURATE_LUMA:
+    case GIMP_DESATURATE_LUMINANCE:
       while (samples--)
         {
           gfloat value = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]);

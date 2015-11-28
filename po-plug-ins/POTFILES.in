@@ -86,7 +86,6 @@ plug-ins/common/procedure-browser.c
 plug-ins/common/qbist.c
 plug-ins/common/ripple.c
 plug-ins/common/sample-colorize.c
-plug-ins/common/screenshot.c
 plug-ins/common/sharpen.c
 plug-ins/common/smooth-palette.c
 plug-ins/common/softglow.c
@@ -221,6 +220,8 @@ plug-ins/pagecurl/pagecurl.c
 plug-ins/print/print-draw-page.c
 plug-ins/print/print-page-layout.c
 plug-ins/print/print.c
+plug-ins/screenshot/screenshot.c
+plug-ins/screenshot/screenshot-x11.c
 plug-ins/selection-to-path/pxl-outline.c
 plug-ins/selection-to-path/selection-to-path.c
 plug-ins/selection-to-path/selection-to-path-dialog.c

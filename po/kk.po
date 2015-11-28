@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-30 05:26+0000\n"
-"PO-Revision-Date: 2015-03-30 12:05+0500\n"
+"POT-Creation-Date: 2015-09-19 15:35+0000\n"
+"PO-Revision-Date: 2015-11-22 22:09+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -164,30 +164,30 @@ msgstr ""
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr ""
 
-#: ../app/main.c:399
+#: ../app/main.c:433
 msgid "[FILE|URI...]"
 msgstr ""
 
-#: ../app/main.c:421
+#: ../app/main.c:455
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 
-#: ../app/main.c:440
+#: ../app/main.c:474
 msgid "Another GIMP instance is already running."
 msgstr ""
 
-#: ../app/main.c:512
+#: ../app/main.c:546
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 
-#: ../app/main.c:513
+#: ../app/main.c:547
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr ""
 
-#: ../app/main.c:530
+#: ../app/main.c:564
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 
@@ -328,7 +328,6 @@ msgstr ""
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:404
 #: ../app/widgets/gimptoolpreseteditor.c:92
-#| msgid "Text Editor"
 msgid "Tool Preset Editor"
 msgstr ""
 
@@ -392,7 +391,6 @@ msgid "Templates"
 msgstr "Үлгілер"
 
 #: ../app/actions/actions.c:217
-#| msgid "Text Color"
 msgid "Text Tool"
 msgstr ""
 
@@ -401,7 +399,7 @@ msgid "Text Editor"
 msgstr "Мәтін түзетушісі"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:436
+#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:441
 msgid "Tool Options"
 msgstr ""
 
@@ -450,13 +448,11 @@ msgid "Brushes Menu"
 msgstr ""
 
 #: ../app/actions/brushes-actions.c:46
-#| msgid "_Open Image"
 msgctxt "brushes-action"
 msgid "_Open Brush as Image"
 msgstr ""
 
 #: ../app/actions/brushes-actions.c:47
-#| msgid "Open Image"
 msgctxt "brushes-action"
 msgid "Open brush as image"
 msgstr ""
@@ -472,19 +468,16 @@ msgid "Create a new brush"
 msgstr ""
 
 #: ../app/actions/brushes-actions.c:58
-#| msgid "_Duplicate"
 msgctxt "brushes-action"
 msgid "D_uplicate Brush"
 msgstr ""
 
 #: ../app/actions/brushes-actions.c:59
-#| msgid "_Duplicate"
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
 msgstr ""
 
 #: ../app/actions/brushes-actions.c:64
-#| msgid "Open Location"
 msgctxt "brushes-action"
 msgid "Copy Brush _Location"
 msgstr ""
@@ -495,7 +488,6 @@ msgid "Copy brush file location to clipboard"
 msgstr ""
 
 #: ../app/actions/brushes-actions.c:70
-#| msgid "Delete '%s'?"
 msgctxt "brushes-action"
 msgid "_Delete Brush"
 msgstr ""
@@ -531,7 +523,6 @@ msgid "Buffers Menu"
 msgstr ""
 
 #: ../app/actions/buffers-actions.c:45
-#| msgid "_Paste"
 msgctxt "buffers-action"
 msgid "_Paste Buffer"
 msgstr ""
@@ -562,7 +553,6 @@ msgid "Paste the selected buffer as a new image"
 msgstr ""
 
 #: ../app/actions/buffers-actions.c:63
-#| msgid "_Delete Image"
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
 msgstr ""
@@ -588,7 +578,6 @@ msgid "Edit the channel's name, color and opacity"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:54
-#| msgid "_Channels"
 msgctxt "channels-action"
 msgid "_New Channel..."
 msgstr ""
@@ -599,7 +588,6 @@ msgid "Create a new channel"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:60
-#| msgid "_Channels"
 msgctxt "channels-action"
 msgid "_New Channel"
 msgstr ""
@@ -610,7 +598,6 @@ msgid "Create a new channel with last used values"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:66
-#| msgid "_Duplicate"
 msgctxt "channels-action"
 msgid "D_uplicate Channel"
 msgstr ""
@@ -621,7 +608,6 @@ msgid "Create a duplicate of this channel and add it to the image"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:73
-#| msgid "_Delete Image"
 msgctxt "channels-action"
 msgid "_Delete Channel"
 msgstr ""
@@ -632,7 +618,6 @@ msgid "Delete this channel"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:79
-#| msgid "_Channels"
 msgctxt "channels-action"
 msgid "_Raise Channel"
 msgstr ""
@@ -653,7 +638,6 @@ msgid "Raise this channel to the top of the channel stack"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:92
-#| msgid "_Channels"
 msgctxt "channels-action"
 msgid "_Lower Channel"
 msgstr ""
@@ -674,7 +658,6 @@ msgid "Lower this channel to the bottom of the channel stack"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:108
-#| msgid "Invert Selection"
 msgctxt "channels-action"
 msgid "Channel to Sele_ction"
 msgstr ""
@@ -685,7 +668,6 @@ msgid "Replace the selection with this channel"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:114
-#| msgid "_Delete Selection"
 msgctxt "channels-action"
 msgid "_Add to Selection"
 msgstr ""
@@ -696,7 +678,6 @@ msgid "Add this channel to the current selection"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:120
-#| msgid "Invert Selection"
 msgctxt "channels-action"
 msgid "_Subtract from Selection"
 msgstr ""
@@ -707,7 +688,6 @@ msgid "Subtract this channel from the current selection"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:126
-#| msgid "Invert the selection"
 msgctxt "channels-action"
 msgid "_Intersect with Selection"
 msgstr ""
@@ -717,8 +697,7 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr ""
 
-#: ../app/actions/channels-commands.c:85
-#: ../app/actions/channels-commands.c:402
+#: ../app/actions/channels-commands.c:85 ../app/actions/channels-commands.c:402
 msgid "Channel Attributes"
 msgstr ""
 
@@ -730,8 +709,7 @@ msgstr ""
 msgid "Edit Channel Color"
 msgstr ""
 
-#: ../app/actions/channels-commands.c:91
-#: ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:91 ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
 msgstr ""
 
@@ -793,7 +771,6 @@ msgid "_Add Color from BG"
 msgstr ""
 
 #: ../app/actions/colormap-actions.c:64
-#| msgid "Background color"
 msgctxt "colormap-action"
 msgid "Add current background color"
 msgstr ""
@@ -818,31 +795,26 @@ msgid "If possible, use GEGL for image processing"
 msgstr ""
 
 #: ../app/actions/context-actions.c:46
-#| msgid "_Context Help"
 msgctxt "context-action"
 msgid "_Context"
 msgstr ""
 
 #: ../app/actions/context-actions.c:48
-#| msgid "_Colors"
 msgctxt "context-action"
 msgid "_Colors"
 msgstr ""
 
 #: ../app/actions/context-actions.c:50
-#| msgid "_Opacity"
 msgctxt "context-action"
 msgid "_Opacity"
 msgstr ""
 
 #: ../app/actions/context-actions.c:52
-#| msgid "_Mode"
 msgctxt "context-action"
 msgid "Paint _Mode"
 msgstr ""
 
 #: ../app/actions/context-actions.c:54
-#| msgid "_Tools"
 msgctxt "context-action"
 msgid "_Tool"
 msgstr ""
@@ -853,13 +825,11 @@ msgid "_Brush"
 msgstr ""
 
 #: ../app/actions/context-actions.c:58
-#| msgid "Pattern"
 msgctxt "context-action"
 msgid "_Pattern"
 msgstr ""
 
 #: ../app/actions/context-actions.c:60
-#| msgid "_Palette"
 msgctxt "context-action"
 msgid "_Palette"
 msgstr ""
@@ -905,7 +875,6 @@ msgid "A_ngle"
 msgstr ""
 
 #: ../app/actions/context-actions.c:80
-#| msgid "Select Color"
 msgctxt "context-action"
 msgid "_Default Colors"
 msgstr ""
@@ -916,13 +885,11 @@ msgid "Set foreground color to black, background color to white"
 msgstr ""
 
 #: ../app/actions/context-actions.c:87
-#| msgid "_Colors"
 msgctxt "context-action"
 msgid "S_wap Colors"
 msgstr ""
 
 #: ../app/actions/context-actions.c:88
-#| msgid "Change Background Color"
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
 msgstr ""
@@ -953,7 +920,6 @@ msgid "Pointer Information Menu"
 msgstr ""
 
 #: ../app/actions/cursor-info-actions.c:47
-#| msgid "_Merge"
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
 msgstr ""
@@ -964,8 +930,8 @@ msgid "Use the composite color of all visible layers"
 msgstr ""
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
-#: ../app/dialogs/file-open-dialog.c:277
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:265
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:592
@@ -978,8 +944,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../app/actions/data-commands.c:118
-#: ../app/actions/tool-options-commands.c:72
+#: ../app/actions/data-commands.c:118 ../app/actions/tool-options-commands.c:72
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1529
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
@@ -988,7 +953,6 @@ msgid "Untitled"
 msgstr "Атаусыз"
 
 #: ../app/actions/dialogs-actions.c:49
-#| msgid "Tools"
 msgctxt "windows-action"
 msgid "Tool_box"
 msgstr ""
@@ -1004,7 +968,6 @@ msgid "Open the tool options dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:61
-#| msgid "Devices"
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr ""
@@ -1015,7 +978,6 @@ msgid "Open the device status dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:67
-#| msgid "_Layers"
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr ""
@@ -1026,7 +988,6 @@ msgid "Open the layers dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:73
-#| msgid "_Channels"
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr ""
@@ -1037,7 +998,6 @@ msgid "Open the channels dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:79
-#| msgid "_Paths"
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr ""
@@ -1048,7 +1008,6 @@ msgid "Open the paths dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:85
-#| msgid "Color"
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr ""
@@ -1059,7 +1018,6 @@ msgid "Open the colormap dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:91
-#| msgid "History"
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr ""
@@ -1070,19 +1028,16 @@ msgid "Open the histogram dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:97
-#| msgid "Selection"
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:98
-#| msgid "Invert the selection"
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:103
-#| msgid "Navigation"
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr ""
@@ -1093,7 +1048,6 @@ msgid "Open the display navigation dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:109
-#| msgid "History"
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr ""
@@ -1124,7 +1078,6 @@ msgid "Open the sample points dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:127
-#| msgid "_Colors"
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr ""
@@ -1145,7 +1098,6 @@ msgid "Open the brushes dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:139
-#| msgid "Text Editor"
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr ""
@@ -1176,7 +1128,6 @@ msgid "Open the paint dynamics editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:157
-#| msgid "Pattern"
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr ""
@@ -1187,7 +1138,6 @@ msgid "Open the patterns dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:163
-#| msgid "_Gradient"
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr ""
@@ -1198,7 +1148,6 @@ msgid "Open the gradients dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:169
-#| msgid "Text Editor"
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr ""
@@ -1209,7 +1158,6 @@ msgid "Open the gradient editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:175
-#| msgid "Palette"
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr ""
@@ -1220,7 +1168,6 @@ msgid "Open the palettes dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:181
-#| msgid "Text Editor"
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr ""
@@ -1241,7 +1188,6 @@ msgid "Open tool presets dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:193
-#| msgid "_Fonts"
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr ""
@@ -1262,7 +1208,6 @@ msgid "Open the named buffers dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:205
-#| msgid "_Images"
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr ""
@@ -1273,7 +1218,6 @@ msgid "Open the images dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:211
-#| msgid "Document History"
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr ""
@@ -1294,7 +1238,6 @@ msgid "Open the image templates dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:223
-#| msgid "Errors"
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr ""
@@ -1315,7 +1258,6 @@ msgid "Open the preferences dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:240
-#| msgid "Input Devices"
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr ""
@@ -1326,19 +1268,16 @@ msgid "Open the input devices editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:246
-#| msgid "_Keyboard Shortcuts"
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:247
-#| msgid "Keyboard Shortcuts"
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:252
-#| msgid "_Modules"
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr ""
@@ -1359,7 +1298,6 @@ msgid "Show some helpful tips on using GIMP"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:265 ../app/actions/dialogs-actions.c:271
-#| msgid "_About"
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr ""
@@ -1397,13 +1335,11 @@ msgid "M_ove to Screen"
 msgstr ""
 
 #: ../app/actions/dock-actions.c:49
-#| msgid "Close %s"
 msgctxt "dock-action"
 msgid "Close Dock"
 msgstr ""
 
 #: ../app/actions/dock-actions.c:54
-#| msgid "_Open..."
 msgctxt "dock-action"
 msgid "_Open Display..."
 msgstr ""
@@ -1414,7 +1350,6 @@ msgid "Connect to another display"
 msgstr ""
 
 #: ../app/actions/dock-actions.c:63
-#| msgid "Invert Selection"
 msgctxt "dock-action"
 msgid "_Show Image Selection"
 msgstr ""
@@ -1435,7 +1370,6 @@ msgid "_Add Tab"
 msgstr ""
 
 #: ../app/actions/dockable-actions.c:55
-#| msgid "_Preview"
 msgctxt "dockable-action"
 msgid "_Preview Size"
 msgstr ""
@@ -1451,7 +1385,6 @@ msgid "_Close Tab"
 msgstr "Бетті _жабу"
 
 #: ../app/actions/dockable-actions.c:65
-#| msgid "_Detach Tab"
 msgctxt "dockable-action"
 msgid "_Detach Tab"
 msgstr ""
@@ -1462,7 +1395,6 @@ msgid "_Tiny"
 msgstr ""
 
 #: ../app/actions/dockable-actions.c:86
-#| msgid "_Small"
 msgctxt "preview-size"
 msgid "E_xtra Small"
 msgstr ""
@@ -1478,13 +1410,11 @@ msgid "_Medium"
 msgstr "О_рташа"
 
 #: ../app/actions/dockable-actions.c:92
-#| msgid "_Large"
 msgctxt "preview-size"
 msgid "_Large"
 msgstr ""
 
 #: ../app/actions/dockable-actions.c:94
-#| msgid "_Large"
 msgctxt "preview-size"
 msgid "Ex_tra Large"
 msgstr ""
@@ -1505,19 +1435,16 @@ msgid "_Gigantic"
 msgstr ""
 
 #: ../app/actions/dockable-actions.c:106
-#| msgid "_Icon"
 msgctxt "tab-style"
 msgid "_Icon"
 msgstr ""
 
 #: ../app/actions/dockable-actions.c:108
-#| msgid "Current"
 msgctxt "tab-style"
 msgid "Current _Status"
 msgstr ""
 
 #: ../app/actions/dockable-actions.c:110
-#| msgid "_Text"
 msgctxt "tab-style"
 msgid "_Text"
 msgstr ""
@@ -1548,7 +1475,6 @@ msgid "Protect this tab from being dragged with the mouse pointer"
 msgstr ""
 
 #: ../app/actions/dockable-actions.c:134
-#| msgid "Show _Menubar"
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
 msgstr ""
@@ -1564,25 +1490,21 @@ msgid "View as _Grid"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:41
-#| msgid "Documents"
 msgctxt "documents-action"
 msgid "Documents Menu"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:45
-#| msgid "_Open Image"
 msgctxt "documents-action"
 msgid "_Open Image"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:46
-#| msgid "Invert the selection"
 msgctxt "documents-action"
 msgid "Open the selected entry"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:51
-#| msgid "_Open Image"
 msgctxt "documents-action"
 msgid "_Raise or Open Image"
 msgstr ""
@@ -1598,13 +1520,11 @@ msgid "File Open _Dialog"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:58
-#| msgid "Open Image"
 msgctxt "documents-action"
 msgid "Open image dialog"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:63
-#| msgid "Open Location"
 msgctxt "documents-action"
 msgid "Copy Image _Location"
 msgstr ""
@@ -1620,13 +1540,11 @@ msgid "Remove _Entry"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:70
-#| msgid "Invert the selection"
 msgctxt "documents-action"
 msgid "Remove the selected entry"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:75
-#| msgid "_Clear History"
 msgctxt "documents-action"
 msgid "_Clear History"
 msgstr ""
@@ -1637,7 +1555,6 @@ msgid "Clear the entire document history"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:81
-#| msgid "_Preview"
 msgctxt "documents-action"
 msgid "Recreate _Preview"
 msgstr ""
@@ -1692,13 +1609,11 @@ msgid "Automatic contrast enhancement"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:51
-#| msgid "Revert"
 msgctxt "drawable-action"
 msgid "In_vert"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:52
-#| msgid "Invert the selection"
 msgctxt "drawable-action"
 msgid "Invert the colors"
 msgstr ""
@@ -1724,7 +1639,6 @@ msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:73
-#| msgid "_Visible"
 msgctxt "drawable-action"
 msgid "_Visible"
 msgstr ""
@@ -1746,7 +1660,6 @@ msgstr ""
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/drawable-actions.c:87
-#| msgid "pixels"
 msgctxt "drawable-action"
 msgid "L_ock pixels"
 msgstr ""
@@ -1757,25 +1670,21 @@ msgid "Keep the pixels on this drawable from being modified"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:98
-#| msgid "Flip _Horizontally"
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:99
-#| msgid "Flip horizontally"
 msgctxt "drawable-action"
 msgid "Flip horizontally"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:104
-#| msgid "Flip _Vertically"
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:105
-#| msgid "Flip vertically"
 msgctxt "drawable-action"
 msgid "Flip vertically"
 msgstr ""
@@ -1786,13 +1695,11 @@ msgid "Rotate 90° _clockwise"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:114
-#| msgid "Rotate the image 90 degrees to the right"
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the right"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:119
-#| msgid "Rotate"
 msgctxt "drawable-action"
 msgid "Rotate _180°"
 msgstr ""
@@ -1808,7 +1715,6 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:126
-#| msgid "Rotate the image 90 degrees to the left"
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the left"
 msgstr ""
@@ -1841,7 +1747,6 @@ msgid "Create a new dynamics"
 msgstr ""
 
 #: ../app/actions/dynamics-actions.c:52
-#| msgid "_Duplicate"
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
 msgstr ""
@@ -1852,7 +1757,6 @@ msgid "Duplicate this dynamics"
 msgstr ""
 
 #: ../app/actions/dynamics-actions.c:58
-#| msgid "Open Location"
 msgctxt "dynamics-action"
 msgid "Copy Dynamics _Location"
 msgstr ""
@@ -1863,7 +1767,6 @@ msgid "Copy dynamics file location to clipboard"
 msgstr ""
 
 #: ../app/actions/dynamics-actions.c:64
-#| msgid "_Delete Image"
 msgctxt "dynamics-action"
 msgid "_Delete Dynamics"
 msgstr ""
@@ -1909,7 +1812,6 @@ msgid "_Edit"
 msgstr "Түз_ету"
 
 #: ../app/actions/edit-actions.c:64
-#| msgid "Paste"
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr ""
@@ -1930,7 +1832,6 @@ msgid "_Undo"
 msgstr "Бол_дырмау"
 
 #: ../app/actions/edit-actions.c:73
-#| msgid "Undo the last operation"
 msgctxt "edit-action"
 msgid "Undo the last operation"
 msgstr ""
@@ -1941,7 +1842,6 @@ msgid "_Redo"
 msgstr "Қа_йталау"
 
 #: ../app/actions/edit-actions.c:79
-#| msgid "Undo the last operation"
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone"
 msgstr ""
@@ -1952,7 +1852,6 @@ msgid "Strong Undo"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:85
-#| msgid "Undo the last operation"
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
 msgstr ""
@@ -1968,7 +1867,6 @@ msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:97
-#| msgid "_Clear History"
 msgctxt "edit-action"
 msgid "_Clear Undo History"
 msgstr ""
@@ -2010,7 +1908,6 @@ msgstr ""
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:122
-#| msgid "_Visible"
 msgctxt "edit-action"
 msgid "Copy _Visible"
 msgstr ""
@@ -2031,7 +1928,6 @@ msgid "Paste the content of the clipboard"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:134
-#| msgid "Paste"
 msgctxt "edit-action"
 msgid "Paste _Into"
 msgstr ""
@@ -2042,7 +1938,6 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:141
-#| msgid "Clipboard"
 msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr ""
@@ -2053,13 +1948,11 @@ msgid "Create a new image from the content of the clipboard"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:147
-#| msgid "_Open Image"
 msgctxt "edit-action"
 msgid "_New Image"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:153
-#| msgid "_Layers"
 msgctxt "edit-action"
 msgid "New _Layer"
 msgstr ""
@@ -2116,7 +2009,6 @@ msgid "Cl_ear"
 msgstr "Та_зарту"
 
 #: ../app/actions/edit-actions.c:185
-#| msgid "Invert the selection"
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr ""
@@ -2305,13 +2197,11 @@ msgid "_File"
 msgstr "_Файл"
 
 #: ../app/actions/file-actions.c:72
-#| msgid "Create"
 msgctxt "file-action"
 msgid "Crea_te"
 msgstr ""
 
 #: ../app/actions/file-actions.c:73
-#| msgid "Open _Recent"
 msgctxt "file-action"
 msgid "Open _Recent"
 msgstr ""
@@ -2322,7 +2212,6 @@ msgid "_Open..."
 msgstr "_Ашу..."
 
 #: ../app/actions/file-actions.c:77
-#| msgid "Open Image"
 msgctxt "file-action"
 msgid "Open an image file"
 msgstr ""
@@ -2338,7 +2227,6 @@ msgid "Open an image file as layers"
 msgstr ""
 
 #: ../app/actions/file-actions.c:88
-#| msgid "Open _Location..."
 msgctxt "file-action"
 msgid "Open _Location..."
 msgstr ""
@@ -2359,7 +2247,6 @@ msgid "Create a new template from this image"
 msgstr ""
 
 #: ../app/actions/file-actions.c:100
-#| msgid "Revert"
 msgctxt "file-action"
 msgid "Re_vert"
 msgstr ""
@@ -2395,7 +2282,6 @@ msgid "_Save"
 msgstr "_Сақтау"
 
 #: ../app/actions/file-actions.c:122
-#| msgid "Save Image"
 msgctxt "file-action"
 msgid "Save this image"
 msgstr ""
@@ -2411,7 +2297,6 @@ msgid "Save this image with a different name"
 msgstr ""
 
 #: ../app/actions/file-actions.c:133
-#| msgid "Save _As..."
 msgctxt "file-action"
 msgid "Save a Cop_y..."
 msgstr ""
@@ -2424,7 +2309,6 @@ msgid ""
 msgstr ""
 
 #: ../app/actions/file-actions.c:140
-#| msgid "Save _As..."
 msgctxt "file-action"
 msgid "Save and Close..."
 msgstr ""
@@ -2540,7 +2424,6 @@ msgid ""
 msgstr ""
 
 #: ../app/actions/fonts-actions.c:43
-#| msgid "Fonts"
 msgctxt "fonts-action"
 msgid "Fonts Menu"
 msgstr ""
@@ -2561,7 +2444,6 @@ msgid "Gradient Editor Menu"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:49
-#| msgid "Text Color"
 msgctxt "gradient-editor-action"
 msgid "Left Color Type"
 msgstr ""
@@ -2572,7 +2454,6 @@ msgid "_Load Left Color From"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:53
-#| msgid "Select Color"
 msgctxt "gradient-editor-action"
 msgid "_Save Left Color To"
 msgstr ""
@@ -2629,14 +2510,12 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:165
 #: ../app/actions/gradient-editor-actions.c:213
-#| msgid "_Background Color"
 msgctxt "gradient-editor-action"
 msgid "_Foreground Color"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:170
 #: ../app/actions/gradient-editor-actions.c:218
-#| msgid "_Background Color"
 msgctxt "gradient-editor-action"
 msgid "_Background Color"
 msgstr ""
@@ -2659,7 +2538,6 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:262
 #: ../app/actions/gradient-editor-actions.c:292
-#| msgid "_Background Color"
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
 msgstr ""
@@ -2672,14 +2550,12 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:303
-#| msgid "_Background Color"
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:279
 #: ../app/actions/gradient-editor-actions.c:309
-#| msgid "_Background Color"
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
 msgstr ""
@@ -2715,7 +2591,6 @@ msgid "(Varies)"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:350
-#| msgid "_RGB"
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr ""
@@ -2824,7 +2699,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:811
 msgid "_Delete Selection"
-msgstr "ТаңдЛемуралғанды өшіру"
+msgstr "Таңдалғанды ө_шіру"
 
 #: ../app/actions/gradient-editor-actions.c:813
 msgid "Re-_center Midpoints in Selection"
@@ -2915,13 +2790,11 @@ msgid ""
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:43
-#| msgid "_Gradient"
 msgctxt "gradients-action"
 msgid "Gradients Menu"
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:47
-#| msgid "_Gradient"
 msgctxt "gradients-action"
 msgid "_New Gradient"
 msgstr ""
@@ -2932,7 +2805,6 @@ msgid "Create a new gradient"
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:53
-#| msgid "_Gradient"
 msgctxt "gradients-action"
 msgid "D_uplicate Gradient"
 msgstr ""
@@ -2943,7 +2815,6 @@ msgid "Duplicate this gradient"
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:59
-#| msgid "Open Location"
 msgctxt "gradients-action"
 msgid "Copy Gradient _Location"
 msgstr ""
@@ -2954,7 +2825,6 @@ msgid "Copy gradient file location to clipboard"
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:65
-#| msgid "Save _As..."
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
 msgstr ""
@@ -2965,7 +2835,6 @@ msgid "Save gradient as POV-Ray"
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:71
-#| msgid "_Gradient"
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
 msgstr ""
@@ -2976,7 +2845,6 @@ msgid "Delete this gradient"
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:77
-#| msgid "_Gradient"
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
 msgstr ""
@@ -2987,13 +2855,11 @@ msgid "Refresh gradients"
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:86
-#| msgid "_Gradient"
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
 msgstr ""
 
 #: ../app/actions/gradients-actions.c:87
-#| msgid "_Gradient"
 msgctxt "gradients-action"
 msgid "Edit gradient"
 msgstr ""
@@ -3014,7 +2880,6 @@ msgid "Open the GIMP user manual"
 msgstr ""
 
 #: ../app/actions/help-actions.c:46
-#| msgid "_Context Help"
 msgctxt "help-action"
 msgid "_Context Help"
 msgstr ""
@@ -3025,7 +2890,6 @@ msgid "Show the help for a specific user interface item"
 msgstr ""
 
 #: ../app/actions/image-actions.c:48 ../app/actions/image-actions.c:52
-#| msgid "Image type"
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr ""
@@ -3036,7 +2900,6 @@ msgid "_Image"
 msgstr "_Сурет"
 
 #: ../app/actions/image-actions.c:56
-#| msgid "_Mode"
 msgctxt "image-action"
 msgid "_Mode"
 msgstr ""
@@ -3052,7 +2915,6 @@ msgid "_Guides"
 msgstr ""
 
 #: ../app/actions/image-actions.c:60
-#| msgid "_Colors"
 msgctxt "image-action"
 msgid "_Colors"
 msgstr ""
@@ -3073,7 +2935,6 @@ msgid "_Map"
 msgstr ""
 
 #: ../app/actions/image-actions.c:64
-#| msgid "Documents"
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr ""
@@ -3109,13 +2970,11 @@ msgid "Resize the image to enclose all layers"
 msgstr ""
 
 #: ../app/actions/image-actions.c:85
-#| msgid "Invert Selection"
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr ""
 
 #: ../app/actions/image-actions.c:86
-#| msgid "Rotate the image 90 degrees to the left"
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr ""
@@ -3131,7 +2990,6 @@ msgid "Adjust the print resolution"
 msgstr ""
 
 #: ../app/actions/image-actions.c:97
-#| msgid "Save Image"
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr ""
@@ -3142,13 +3000,11 @@ msgid "Change the size of the image content"
 msgstr ""
 
 #: ../app/actions/image-actions.c:103
-#| msgid "Invert Selection"
 msgctxt "image-action"
 msgid "_Crop to Selection"
 msgstr ""
 
 #: ../app/actions/image-actions.c:104
-#| msgid "Rotate the image 90 degrees to the left"
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr ""
@@ -3174,7 +3030,6 @@ msgid "Merge all visible layers into one layer"
 msgstr ""
 
 #: ../app/actions/image-actions.c:121
-#| msgid "_Delete Image"
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr ""
@@ -3195,7 +3050,6 @@ msgid "Configure the grid for this image"
 msgstr ""
 
 #: ../app/actions/image-actions.c:133
-#| msgid "Image Properties"
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr ""
@@ -3206,7 +3060,6 @@ msgid "Display information about this image"
 msgstr ""
 
 #: ../app/actions/image-actions.c:142
-#| msgid "_RGB"
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr ""
@@ -3217,7 +3070,6 @@ msgid "Convert the image to the RGB colorspace"
 msgstr ""
 
 #: ../app/actions/image-actions.c:147
-#| msgid "_Grayscale"
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr ""
@@ -3238,25 +3090,21 @@ msgid "Convert the image to indexed colors"
 msgstr ""
 
 #: ../app/actions/image-actions.c:160
-#| msgid "Flip _Horizontally"
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr ""
 
 #: ../app/actions/image-actions.c:161
-#| msgid "Flip horizontally"
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr ""
 
 #: ../app/actions/image-actions.c:166
-#| msgid "Flip _Vertically"
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr ""
 
 #: ../app/actions/image-actions.c:167
-#| msgid "Flip vertically"
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr ""
@@ -3272,7 +3120,6 @@ msgid "Rotate the image 90 degrees to the right"
 msgstr "Суретті 90 градус оңға бұру"
 
 #: ../app/actions/image-actions.c:181
-#| msgid "Rotate"
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr ""
@@ -3305,15 +3152,13 @@ msgstr ""
 msgid "Set Image Print Resolution"
 msgstr ""
 
-#: ../app/actions/image-commands.c:379
-#: ../app/pdb/drawable-transform-cmds.c:159
+#: ../app/actions/image-commands.c:379 ../app/pdb/drawable-transform-cmds.c:159
 #: ../app/pdb/drawable-transform-cmds.c:247
 #: ../app/pdb/item-transform-cmds.c:162
 msgid "Flipping"
 msgstr ""
 
-#: ../app/actions/image-commands.c:403
-#: ../app/pdb/drawable-transform-cmds.c:602
+#: ../app/actions/image-commands.c:403 ../app/pdb/drawable-transform-cmds.c:602
 #: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:534
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
@@ -3344,7 +3189,6 @@ msgid "Scaling"
 msgstr ""
 
 #: ../app/actions/images-actions.c:43
-#| msgid "Images"
 msgctxt "images-action"
 msgid "Images Menu"
 msgstr ""
@@ -3360,7 +3204,6 @@ msgid "Raise this image's displays"
 msgstr ""
 
 #: ../app/actions/images-actions.c:53
-#| msgid "_View"
 msgctxt "images-action"
 msgid "_New View"
 msgstr ""
@@ -3376,19 +3219,16 @@ msgid "_Delete Image"
 msgstr "Суретті ө_шіру"
 
 #: ../app/actions/images-actions.c:60
-#| msgid "_Delete Image"
 msgctxt "images-action"
 msgid "Delete this image"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:49
-#| msgid "Layers"
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:53
-#| msgid "_Layers"
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr ""
@@ -3404,7 +3244,6 @@ msgid "_Mask"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:59
-#| msgid "Transparency"
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr ""
@@ -3420,19 +3259,16 @@ msgid "_Properties"
 msgstr "Қас_иеттері"
 
 #: ../app/actions/layers-actions.c:65
-#| msgid "_Opacity"
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:67
-#| msgid "_Mode"
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:70
-#| msgid "_Tools"
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr ""
@@ -3453,7 +3289,6 @@ msgid "Edit the layer's name"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:610
-#| msgid "_New..."
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr ""
@@ -3464,7 +3299,6 @@ msgid "Create a new layer and add it to the image"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:611
-#| msgid "_Layers"
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr ""
@@ -3475,7 +3309,6 @@ msgid "Create a new layer with last used values"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:94
-#| msgid "_Visible"
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr ""
@@ -3496,7 +3329,6 @@ msgid "Create a new layer group and add it to the image"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:107
-#| msgid "_Duplicate"
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr ""
@@ -3507,19 +3339,16 @@ msgid "Create a duplicate of the layer and add it to the image"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:114
-#| msgid "_Delete Image"
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:115
-#| msgid "_Delete Image"
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:120
-#| msgid "_Layers"
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr ""
@@ -3540,7 +3369,6 @@ msgid "Move this layer to the top of the layer stack"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:132
-#| msgid "_Layers"
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr ""
@@ -3561,7 +3389,6 @@ msgid "Move this layer to the bottom of the layer stack"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:144
-#| msgid "_Layers"
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr ""
@@ -3602,7 +3429,6 @@ msgid "Merge all visible layers into one layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:168
-#| msgid "_Delete Image"
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr ""
@@ -3653,7 +3479,6 @@ msgid "Adjust the layer dimensions"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:198
-#| msgid "Image Size"
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr ""
@@ -3674,7 +3499,6 @@ msgid "Change the size of the layer content"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:210
-#| msgid "Invert Selection"
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr ""
@@ -3725,7 +3549,6 @@ msgid "Keep transparency information on this layer from being modified"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:246
-#| msgid "_Layers"
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr ""
@@ -3736,7 +3559,6 @@ msgid "Work on the layer mask"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:253
-#| msgid "_Layers"
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr ""
@@ -3772,7 +3594,6 @@ msgid "Remove the layer mask and its effect"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:284
-#| msgid "_Delete Selection"
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr ""
@@ -3783,7 +3604,6 @@ msgid "Replace the selection with the layer mask"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:290
-#| msgid "_Delete Selection"
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr ""
@@ -3794,7 +3614,6 @@ msgid "Add the layer mask to the current selection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
-#| msgid "Invert Selection"
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr ""
@@ -3805,7 +3624,6 @@ msgid "Subtract the layer mask from the current selection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
-#| msgid "Invert the selection"
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr ""
@@ -3816,7 +3634,6 @@ msgid "Intersect the layer mask with the current selection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:311
-#| msgid "_Delete Selection"
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr ""
@@ -3827,7 +3644,6 @@ msgid "Replace the selection with the layer's alpha channel"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:318
-#| msgid "_Delete Selection"
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr ""
@@ -3848,19 +3664,16 @@ msgid "Intersect the layer's alpha channel with the current selection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:342
-#| msgid "Select None"
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:343
-#| msgid "Select Theme"
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:348
-#| msgid "Select Color"
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr ""
@@ -3881,7 +3694,6 @@ msgid "Select the layer above the current layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:360
-#| msgid "Select None"
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr ""
@@ -3895,7 +3707,6 @@ msgstr ""
 #. on thumbnail"
 #.
 #: ../app/actions/layers-actions.c:442
-#| msgid "Shortcut"
 msgid "Shortcut: "
 msgstr ""
 
@@ -3907,7 +3718,6 @@ msgid "-Click on thumbnail in Layers dockable"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:605 ../app/actions/layers-actions.c:606
-#| msgid "_Layers"
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr ""
@@ -3960,7 +3770,6 @@ msgid "Add Layer Mask"
 msgstr ""
 
 #: ../app/actions/palette-editor-actions.c:43
-#| msgid "Text Editor"
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
 msgstr ""
@@ -3976,13 +3785,11 @@ msgid "Edit this entry"
 msgstr ""
 
 #: ../app/actions/palette-editor-actions.c:53
-#| msgid "Select Color"
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
 msgstr ""
 
 #: ../app/actions/palette-editor-actions.c:54
-#| msgid "Delete Object"
 msgctxt "palette-editor-action"
 msgid "Delete this entry"
 msgstr ""
@@ -4033,13 +3840,11 @@ msgid "Edit Color Palette Entry"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:43
-#| msgid "Palette"
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:47
-#| msgid "_Palette"
 msgctxt "palettes-action"
 msgid "_New Palette"
 msgstr ""
@@ -4050,7 +3855,6 @@ msgid "Create a new palette"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:53
-#| msgid "_Palette"
 msgctxt "palettes-action"
 msgid "_Import Palette..."
 msgstr ""
@@ -4061,7 +3865,6 @@ msgid "Import palette"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:59
-#| msgid "_Duplicate"
 msgctxt "palettes-action"
 msgid "D_uplicate Palette"
 msgstr ""
@@ -4072,7 +3875,6 @@ msgid "Duplicate this palette"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:65
-#| msgid "_Palette"
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
 msgstr ""
@@ -4083,7 +3885,6 @@ msgid "Merge palettes"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:71
-#| msgid "Open Location"
 msgctxt "palettes-action"
 msgid "Copy Palette _Location"
 msgstr ""
@@ -4094,7 +3895,6 @@ msgid "Copy palette file location to clipboard"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:77
-#| msgid "_Delete Image"
 msgctxt "palettes-action"
 msgid "_Delete Palette"
 msgstr ""
@@ -4105,7 +3905,6 @@ msgid "Delete this palette"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:83
-#| msgid "_Palette"
 msgctxt "palettes-action"
 msgid "_Refresh Palettes"
 msgstr ""
@@ -4116,13 +3915,11 @@ msgid "Refresh palettes"
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:92
-#| msgid "_Palette"
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
 msgstr ""
 
 #: ../app/actions/palettes-actions.c:93
-#| msgid "Palette"
 msgctxt "palettes-action"
 msgid "Edit palette"
 msgstr ""
@@ -4136,13 +3933,11 @@ msgid "Enter a name for the merged palette"
 msgstr ""
 
 #: ../app/actions/patterns-actions.c:42
-#| msgid "Pattern"
 msgctxt "patterns-action"
 msgid "Patterns Menu"
 msgstr ""
 
 #: ../app/actions/patterns-actions.c:46
-#| msgid "_Open Image"
 msgctxt "patterns-action"
 msgid "_Open Pattern as Image"
 msgstr ""
@@ -4153,7 +3948,6 @@ msgid "Open this pattern as an image"
 msgstr ""
 
 #: ../app/actions/patterns-actions.c:52
-#| msgid "Pattern"
 msgctxt "patterns-action"
 msgid "_New Pattern"
 msgstr ""
@@ -4164,7 +3958,6 @@ msgid "Create a new pattern"
 msgstr ""
 
 #: ../app/actions/patterns-actions.c:58
-#| msgid "_Duplicate"
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
 msgstr ""
@@ -4175,7 +3968,6 @@ msgid "Duplicate this pattern"
 msgstr ""
 
 #: ../app/actions/patterns-actions.c:64
-#| msgid "Open Location"
 msgctxt "patterns-action"
 msgid "Copy Pattern _Location"
 msgstr ""
@@ -4186,7 +3978,6 @@ msgid "Copy pattern file location to clipboard"
 msgstr ""
 
 #: ../app/actions/patterns-actions.c:70
-#| msgid "_Delete Image"
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
 msgstr ""
@@ -4207,13 +3998,11 @@ msgid "Refresh patterns"
 msgstr ""
 
 #: ../app/actions/patterns-actions.c:85
-#| msgid "Pattern"
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
 msgstr ""
 
 #: ../app/actions/patterns-actions.c:86
-#| msgid "Pattern"
 msgctxt "patterns-action"
 msgid "Edit pattern"
 msgstr ""
@@ -4224,7 +4013,6 @@ msgid "Filte_rs"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:87
-#| msgid "Recently Used"
 msgctxt "plug-in-action"
 msgid "Recently Used"
 msgstr ""
@@ -4255,7 +4043,6 @@ msgid "C_ombine"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:99
-#| msgid "General"
 msgctxt "plug-in-action"
 msgid "_Generic"
 msgstr ""
@@ -4266,7 +4053,6 @@ msgid "_Light and Shadow"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:103
-#| msgid "History"
 msgctxt "plug-in-action"
 msgid "_Distorts"
 msgstr ""
@@ -4292,7 +4078,6 @@ msgid "_Render"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:113
-#| msgid "_Close"
 msgctxt "plug-in-action"
 msgid "_Clouds"
 msgstr ""
@@ -4303,7 +4088,6 @@ msgid "_Nature"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:117
-#| msgid "Pattern"
 msgctxt "plug-in-action"
 msgid "_Pattern"
 msgstr ""
@@ -4314,7 +4098,6 @@ msgid "_Web"
 msgstr "В_еб"
 
 #: ../app/actions/plug-in-actions.c:121
-#| msgid "Action"
 msgctxt "plug-in-action"
 msgid "An_imation"
 msgstr ""
@@ -4330,7 +4113,6 @@ msgid "Reset all plug-ins to their default settings"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:133
-#| msgid "Repeat:"
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
 msgstr ""
@@ -4428,7 +4210,6 @@ msgid "Sample Point Menu"
 msgstr ""
 
 #: ../app/actions/sample-points-actions.c:46
-#| msgid "_Merge"
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
 msgstr ""
@@ -4439,7 +4220,6 @@ msgid "Use the composite color of all visible layers"
 msgstr ""
 
 #: ../app/actions/select-actions.c:44
-#| msgid "Selection"
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr ""
@@ -4455,31 +4235,26 @@ msgid "_All"
 msgstr ""
 
 #: ../app/actions/select-actions.c:51
-#| msgid "Select Theme"
 msgctxt "select-action"
 msgid "Select everything"
 msgstr ""
 
 #: ../app/actions/select-actions.c:56
-#| msgid "None"
 msgctxt "select-action"
 msgid "_None"
 msgstr ""
 
 #: ../app/actions/select-actions.c:57
-#| msgid "Invert the selection"
 msgctxt "select-action"
 msgid "Dismiss the selection"
 msgstr ""
 
 #: ../app/actions/select-actions.c:62
-#| msgid "Revert"
 msgctxt "select-action"
 msgid "_Invert"
 msgstr ""
 
 #: ../app/actions/select-actions.c:63
-#| msgid "Invert the selection"
 msgctxt "select-action"
 msgid "Invert the selection"
 msgstr ""
@@ -4510,7 +4285,6 @@ msgid "_Sharpen"
 msgstr ""
 
 #: ../app/actions/select-actions.c:82
-#| msgid "Invert the selection"
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
 msgstr ""
@@ -4521,7 +4295,6 @@ msgid "S_hrink..."
 msgstr ""
 
 #: ../app/actions/select-actions.c:88
-#| msgid "Invert the selection"
 msgctxt "select-action"
 msgid "Contract the selection"
 msgstr ""
@@ -4532,7 +4305,6 @@ msgid "_Grow..."
 msgstr ""
 
 #: ../app/actions/select-actions.c:94
-#| msgid "Invert the selection"
 msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr ""
@@ -4548,31 +4320,26 @@ msgid "Replace the selection by its border"
 msgstr ""
 
 #: ../app/actions/select-actions.c:105
-#| msgid "_Channels"
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr ""
 
 #: ../app/actions/select-actions.c:106
-#| msgid "Invert the selection"
 msgctxt "select-action"
 msgid "Save the selection to a channel"
 msgstr ""
 
 #: ../app/actions/select-actions.c:111
-#| msgid "_Delete Selection"
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr ""
 
 #: ../app/actions/select-actions.c:112
-#| msgid "Invert the selection"
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr ""
 
 #: ../app/actions/select-actions.c:117
-#| msgid "_Delete Selection"
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr ""
@@ -4639,7 +4406,6 @@ msgid "Stroke Selection"
 msgstr ""
 
 #: ../app/actions/templates-actions.c:41
-#| msgid "Templates"
 msgctxt "templates-action"
 msgid "Templates Menu"
 msgstr ""
@@ -4685,13 +4451,11 @@ msgid "Edit this template"
 msgstr ""
 
 #: ../app/actions/templates-actions.c:69
-#| msgid "_Delete Image"
 msgctxt "templates-action"
 msgid "_Delete Template"
 msgstr ""
 
 #: ../app/actions/templates-actions.c:70
-#| msgid "_Delete Image"
 msgctxt "templates-action"
 msgid "Delete this template"
 msgstr ""
@@ -4735,13 +4499,11 @@ msgid "Clear"
 msgstr "Тазарту"
 
 #: ../app/actions/text-editor-actions.c:50
-#| msgid "Close all"
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr ""
 
 #: ../app/actions/text-editor-actions.c:58
-#| msgid "LTR"
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr ""
@@ -4769,14 +4531,13 @@ msgstr ""
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
 #: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
-#: ../app/core/gimpbrushgenerated-load.c:73
-#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
-#: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
-#: ../app/core/gimppalette-load.c:274 ../app/core/gimppalette-load.c:320
-#: ../app/core/gimppalette-load.c:377 ../app/core/gimppalette-load.c:467
-#: ../app/core/gimppalette-load.c:634 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:642 ../app/tools/gimplevelstool.c:747
-#: ../app/xcf/xcf.c:359
+#: ../app/core/gimpbrushgenerated-load.c:73 ../app/core/gimpbrushpipe-load.c:81
+#: ../app/core/gimpcurve-load.c:54 ../app/core/gimpgradient-load.c:63
+#: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
+#: ../app/core/gimppalette-load.c:320 ../app/core/gimppalette-load.c:377
+#: ../app/core/gimppalette-load.c:467 ../app/core/gimppalette-load.c:634
+#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpcurvestool.c:642
+#: ../app/tools/gimplevelstool.c:747 ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr ""
@@ -4812,7 +4573,6 @@ msgid "_Delete"
 msgstr "Ө_шіру"
 
 #: ../app/actions/text-tool-actions.c:78
-#| msgid "_Open..."
 msgctxt "text-tool-action"
 msgid "_Open text file..."
 msgstr ""
@@ -4823,7 +4583,6 @@ msgid "Cl_ear"
 msgstr "Та_зарту"
 
 #: ../app/actions/text-tool-actions.c:84
-#| msgid "Close all"
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr ""
@@ -4879,7 +4638,6 @@ msgid "E_dit Tool Preset"
 msgstr ""
 
 #: ../app/actions/tool-options-actions.c:72
-#| msgid "_Delete Selection"
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
 msgstr ""
@@ -4953,7 +4711,6 @@ msgid "Copy tool preset file location to clipboard"
 msgstr ""
 
 #: ../app/actions/tool-presets-actions.c:66
-#| msgid "_Delete Selection"
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
 msgstr ""
@@ -4999,13 +4756,11 @@ msgid "_Tools"
 msgstr "Са_ймандар"
 
 #: ../app/actions/tools-actions.c:46
-#| msgid "Selection"
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:47
-#| msgid "_Tools"
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr ""
@@ -5016,13 +4771,11 @@ msgid "_Transform Tools"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:49
-#| msgid "_Colors"
 msgctxt "tools-action"
 msgid "_Color Tools"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:55
-#| msgid "_Colors"
 msgctxt "tools-action"
 msgid "_By Color"
 msgstr ""
@@ -5043,13 +4796,11 @@ msgid "Rotate by an arbitrary angle"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:44
-#| msgid "Paths"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:48
-#| msgid "_Tools"
 msgctxt "vectors-action"
 msgid "Path _Tool"
 msgstr ""
@@ -5065,7 +4816,6 @@ msgid "Edit path attributes"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:59
-#| msgid "_New..."
 msgctxt "vectors-action"
 msgid "_New Path..."
 msgstr ""
@@ -5086,19 +4836,16 @@ msgid "Create a new path with last used values"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:71
-#| msgid "_Duplicate"
 msgctxt "vectors-action"
 msgid "D_uplicate Path"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:72
-#| msgid "_Duplicate"
 msgctxt "vectors-action"
 msgid "Duplicate this path"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:77
-#| msgid "_Delete Image"
 msgctxt "vectors-action"
 msgid "_Delete Path"
 msgstr ""
@@ -5174,13 +4921,11 @@ msgid "Paint along the path with last values"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:124
-#| msgid "_Paths"
 msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:129
-#| msgid "Paste"
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr ""
@@ -5196,7 +4941,6 @@ msgid "I_mport Path..."
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:147
-#| msgid "_Visible"
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr ""
@@ -5213,19 +4957,16 @@ msgid "L_ock strokes"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:168
-#| msgid "Selection"
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:169
-#| msgid "Invert the selection"
 msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:174
-#| msgid "_Paths"
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr ""
@@ -5236,55 +4977,46 @@ msgid "Replace selection with path"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:180
-#| msgid "_Delete Selection"
 msgctxt "vectors-action"
 msgid "_Add to Selection"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:181
-#| msgid "Invert the selection"
 msgctxt "vectors-action"
 msgid "Add path to selection"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:186
-#| msgid "Invert Selection"
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:187
-#| msgid "Invert the selection"
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:192
-#| msgid "Invert the selection"
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:193
-#| msgid "Invert the selection"
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:201
-#| msgid "Selection"
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
-#| msgid "Selection"
 msgctxt "vectors-action"
 msgid "Selection to path"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:207
-#| msgid "_Paths"
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr ""
@@ -5295,7 +5027,6 @@ msgid "Selection to Path (_Advanced)"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:214
-#| msgid "Advanced options"
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr ""
@@ -5342,13 +5073,11 @@ msgid "_Padding Color"
 msgstr ""
 
 #: ../app/actions/view-actions.c:72
-#| msgid "Screen"
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr ""
 
 #: ../app/actions/view-actions.c:76
-#| msgid "_View"
 msgctxt "view-action"
 msgid "_New View"
 msgstr ""
@@ -5359,7 +5088,6 @@ msgid "Create another view on this image"
 msgstr ""
 
 #: ../app/actions/view-actions.c:82
-#| msgid "_Close"
 msgctxt "view-action"
 msgid "_Close View"
 msgstr ""
@@ -5390,7 +5118,6 @@ msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr ""
 
 #: ../app/actions/view-actions.c:100
-#| msgid "Revert"
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr ""
@@ -5401,7 +5128,6 @@ msgid "Restore the previous zoom level"
 msgstr ""
 
 #: ../app/actions/view-actions.c:106
-#| msgid "Navigation"
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr ""
@@ -5432,7 +5158,6 @@ msgid "Reduce the image window to the size of the image display"
 msgstr ""
 
 #: ../app/actions/view-actions.c:124
-#| msgid "_Open..."
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr ""
@@ -5453,7 +5178,6 @@ msgid "A pixel on the screen represents an image pixel"
 msgstr ""
 
 #: ../app/actions/view-actions.c:140
-#| msgid "Selection"
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr ""
@@ -5464,7 +5188,6 @@ msgid "Display the selection outline"
 msgstr ""
 
 #: ../app/actions/view-actions.c:147
-#| msgid "Show _Menubar"
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr ""
@@ -5475,7 +5198,6 @@ msgid "Draw a border around the active layer"
 msgstr ""
 
 #: ../app/actions/view-actions.c:154
-#| msgid "Show gri_d"
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr ""
@@ -5486,7 +5208,6 @@ msgid "Display the image's guides"
 msgstr ""
 
 #: ../app/actions/view-actions.c:161
-#| msgid "Show gri_d"
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr ""
@@ -5547,19 +5268,16 @@ msgid "Tool operations snap to the active path"
 msgstr ""
 
 #: ../app/actions/view-actions.c:203
-#| msgid "Show _Menubar"
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr ""
 
 #: ../app/actions/view-actions.c:204
-#| msgid "Show _menubar"
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr ""
 
 #: ../app/actions/view-actions.c:210
-#| msgid "Show _Menubar"
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr ""
@@ -5570,7 +5288,6 @@ msgid "Show this window's rulers"
 msgstr ""
 
 #: ../app/actions/view-actions.c:217
-#| msgid "Show _Menubar"
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr ""
@@ -5581,7 +5298,6 @@ msgid "Show this window's scrollbars"
 msgstr ""
 
 #: ../app/actions/view-actions.c:224
-#| msgid "Show _Menubar"
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr ""
@@ -5617,19 +5333,16 @@ msgid "Zoom _Out"
 msgstr "Кі_шірейту"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-#| msgid "Zoom out"
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr ""
 
 #: ../app/actions/view-actions.c:269
-#| msgid "Zoom _In"
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr ""
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-#| msgid "Zoom in"
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr ""
@@ -5640,13 +5353,11 @@ msgid "Zoom Out"
 msgstr "Кішірейту"
 
 #: ../app/actions/view-actions.c:281
-#| msgid "Zoom In"
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr ""
 
 #: ../app/actions/view-actions.c:300 ../app/actions/view-actions.c:306
-#| msgid "1_6:1  (1600%)"
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr ""
@@ -5657,7 +5368,6 @@ msgid "Zoom 16:1"
 msgstr ""
 
 #: ../app/actions/view-actions.c:312 ../app/actions/view-actions.c:318
-#| msgid "_8:1  (800%)"
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr ""
@@ -5668,7 +5378,6 @@ msgid "Zoom 8:1"
 msgstr ""
 
 #: ../app/actions/view-actions.c:324 ../app/actions/view-actions.c:330
-#| msgid "_4:1  (400%)"
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr ""
@@ -5679,7 +5388,6 @@ msgid "Zoom 4:1"
 msgstr ""
 
 #: ../app/actions/view-actions.c:336 ../app/actions/view-actions.c:342
-#| msgid "_2:1  (200%)"
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr ""
@@ -5690,7 +5398,6 @@ msgid "Zoom 2:1"
 msgstr ""
 
 #: ../app/actions/view-actions.c:348 ../app/actions/view-actions.c:354
-#| msgid "_1:1  (100%)"
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr ""
@@ -5701,7 +5408,6 @@ msgid "Zoom 1:1"
 msgstr ""
 
 #: ../app/actions/view-actions.c:360
-#| msgid "1:_2  (50%)"
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr ""
@@ -5712,7 +5418,6 @@ msgid "Zoom 1:2"
 msgstr ""
 
 #: ../app/actions/view-actions.c:366
-#| msgid "_2:1  (200%)"
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr ""
@@ -5723,7 +5428,6 @@ msgid "Zoom 1:4"
 msgstr ""
 
 #: ../app/actions/view-actions.c:372
-#| msgid "1:_8  (12.5%)"
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr ""
@@ -5754,7 +5458,6 @@ msgid "Set a custom zoom factor"
 msgstr ""
 
 #: ../app/actions/view-actions.c:393
-#| msgid "Theme"
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr ""
@@ -5785,7 +5488,6 @@ msgid "Use the dark check color"
 msgstr ""
 
 #: ../app/actions/view-actions.c:411
-#| msgid "Select Color"
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
 msgstr ""
@@ -5796,7 +5498,6 @@ msgid "Use an arbitrary color"
 msgstr ""
 
 #: ../app/actions/view-actions.c:417
-#| msgid "_Preferences"
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr ""
@@ -5849,7 +5550,6 @@ msgid "_Windows"
 msgstr ""
 
 #: ../app/actions/windows-actions.c:95
-#| msgid "Recently Used"
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr ""
@@ -5860,7 +5560,6 @@ msgid "_Dockable Dialogs"
 msgstr ""
 
 #: ../app/actions/windows-actions.c:100
-#| msgid "Open Image"
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr ""
@@ -5932,13 +5631,11 @@ msgid "Blue"
 msgstr "Көк"
 
 #: ../app/base/base-enums.c:60
-#| msgid "Alpha"
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr ""
 
 #: ../app/base/base-enums.c:61
-#| msgid "RGB"
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr ""
@@ -5959,13 +5656,11 @@ msgid "Behind"
 msgstr ""
 
 #: ../app/base/base-enums.c:116
-#| msgid "Multiply"
 msgctxt "layer-mode-effects"
 msgid "Multiply"
 msgstr ""
 
 #: ../app/base/base-enums.c:117
-#| msgid "Screen"
 msgctxt "layer-mode-effects"
 msgid "Screen"
 msgstr ""
@@ -5976,19 +5671,16 @@ msgid "Overlay"
 msgstr ""
 
 #: ../app/base/base-enums.c:119
-#| msgid "Preferences"
 msgctxt "layer-mode-effects"
 msgid "Difference"
 msgstr ""
 
 #: ../app/base/base-enums.c:120
-#| msgid "Action"
 msgctxt "layer-mode-effects"
 msgid "Addition"
 msgstr ""
 
 #: ../app/base/base-enums.c:121
-#| msgid "Subtract"
 msgctxt "layer-mode-effects"
 msgid "Subtract"
 msgstr ""
@@ -6024,7 +5716,6 @@ msgid "Value"
 msgstr "Мәні"
 
 #: ../app/base/base-enums.c:128
-#| msgid "Divide"
 msgctxt "layer-mode-effects"
 msgid "Divide"
 msgstr ""
@@ -6040,7 +5731,6 @@ msgid "Burn"
 msgstr ""
 
 #: ../app/base/base-enums.c:131
-#| msgid "Highlight"
 msgctxt "layer-mode-effects"
 msgid "Hard light"
 msgstr ""
@@ -6061,13 +5751,11 @@ msgid "Grain merge"
 msgstr ""
 
 #: ../app/base/base-enums.c:135
-#| msgid "_Colors"
 msgctxt "layer-mode-effects"
 msgid "Color erase"
 msgstr ""
 
 #: ../app/base/base-enums.c:136
-#| msgid "Erase"
 msgctxt "layer-mode-effects"
 msgid "Erase"
 msgstr ""
@@ -6131,13 +5819,11 @@ msgid "Custom color"
 msgstr "Таңдауыңызша түс"
 
 #: ../app/config/config-enums.c:88
-#| msgid "Action"
 msgctxt "space-bar-action"
 msgid "No action"
 msgstr ""
 
 #: ../app/config/config-enums.c:89
-#| msgid "Preview"
 msgctxt "space-bar-action"
 msgid "Pan view"
 msgstr ""
@@ -6158,19 +5844,16 @@ msgid "High"
 msgstr "Жоғары"
 
 #: ../app/config/config-enums.c:147
-#| msgid "Web browser"
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
 msgstr ""
 
 #: ../app/config/config-enums.c:148
-#| msgid "Web browser"
 msgctxt "help-browser-type"
 msgid "Web browser"
 msgstr ""
 
 #: ../app/config/config-enums.c:177
-#| msgid "Normal"
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr ""
@@ -6186,7 +5869,6 @@ msgid "Keep above"
 msgstr ""
 
 #: ../app/config/config-enums.c:207
-#| msgid "Black & white"
 msgctxt "cursor-format"
 msgid "Black & white"
 msgstr ""
@@ -6733,7 +6415,6 @@ msgid "Foreground color"
 msgstr ""
 
 #: ../app/core/core-enums.c:254
-#| msgid "Background color"
 msgctxt "fill-type"
 msgid "Background color"
 msgstr ""
@@ -6749,7 +6430,6 @@ msgid "Transparency"
 msgstr "Мөлдірлілігі"
 
 #: ../app/core/core-enums.c:257
-#| msgid "Pattern"
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr ""
@@ -6760,13 +6440,11 @@ msgid "None"
 msgstr "Ешнәрсе"
 
 #: ../app/core/core-enums.c:286
-#| msgid "Select Color"
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr ""
 
 #: ../app/core/core-enums.c:287
-#| msgid "Pattern"
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr ""
@@ -6817,7 +6495,6 @@ msgid "Custom"
 msgstr "Таңдауыңызша"
 
 #: ../app/core/core-enums.c:416
-#| msgid "Line"
 msgctxt "dash-preset"
 msgid "Line"
 msgstr ""
@@ -6828,7 +6505,6 @@ msgid "Long dashes"
 msgstr ""
 
 #: ../app/core/core-enums.c:418
-#| msgid "Medium"
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr ""
@@ -6844,7 +6520,6 @@ msgid "Sparse dots"
 msgstr ""
 
 #: ../app/core/core-enums.c:421
-#| msgid "Normal"
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr ""
@@ -6905,13 +6580,11 @@ msgid "None"
 msgstr "Ешнәрсе"
 
 #: ../app/core/core-enums.c:519
-#| msgid "All files"
 msgctxt "item-set"
 msgid "All layers"
 msgstr ""
 
 #: ../app/core/core-enums.c:520
-#| msgid "Image size"
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr ""
@@ -6922,7 +6595,6 @@ msgid "All visible layers"
 msgstr ""
 
 #: ../app/core/core-enums.c:522
-#| msgid "All files"
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr ""
@@ -6933,7 +6605,6 @@ msgid "Tiny"
 msgstr ""
 
 #: ../app/core/core-enums.c:589
-#| msgid "Very small"
 msgctxt "view-size"
 msgid "Very small"
 msgstr ""
@@ -6954,7 +6625,6 @@ msgid "Large"
 msgstr "Үлкен"
 
 #: ../app/core/core-enums.c:593
-#| msgid "Very large"
 msgctxt "view-size"
 msgid "Very large"
 msgstr ""
@@ -7000,13 +6670,11 @@ msgid "Large (256x256)"
 msgstr ""
 
 #: ../app/core/core-enums.c:833
-#| msgid "<<invalid>>"
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr ""
 
 #: ../app/core/core-enums.c:834
-#| msgid "Save Image"
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr ""
@@ -7017,25 +6685,21 @@ msgid "Resize image"
 msgstr ""
 
 #: ../app/core/core-enums.c:836
-#| msgid "All images"
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr ""
 
 #: ../app/core/core-enums.c:837
-#| msgid "Rotating"
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr ""
 
 #: ../app/core/core-enums.c:838
-#| msgid "All images"
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr ""
 
 #: ../app/core/core-enums.c:839
-#| msgid "Save Image"
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr ""
@@ -7077,7 +6741,6 @@ msgid "Sample Point"
 msgstr ""
 
 #: ../app/core/core-enums.c:847 ../app/core/core-enums.c:878
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr ""
@@ -7088,7 +6751,6 @@ msgid "Layer/Channel modification"
 msgstr ""
 
 #: ../app/core/core-enums.c:849 ../app/core/core-enums.c:880
-#| msgid "Selection"
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr ""
@@ -7104,7 +6766,6 @@ msgid "Link/Unlink item"
 msgstr ""
 
 #: ../app/core/core-enums.c:852
-#| msgid "Image Properties"
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr ""
@@ -7145,13 +6806,11 @@ msgid "Floating selection to layer"
 msgstr ""
 
 #: ../app/core/core-enums.c:860
-#| msgid "_Delete Selection"
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr ""
 
 #: ../app/core/core-enums.c:861
-#| msgid "Invert the selection"
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr ""
@@ -7193,7 +6852,6 @@ msgid "Remove parasite"
 msgstr ""
 
 #: ../app/core/core-enums.c:869
-#| msgid "_Import"
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr ""
@@ -7204,13 +6862,11 @@ msgid "Plug-In"
 msgstr ""
 
 #: ../app/core/core-enums.c:871
-#| msgid "Image type"
 msgctxt "undo-type"
 msgid "Image type"
 msgstr ""
 
 #: ../app/core/core-enums.c:872
-#| msgid "Image size"
 msgctxt "undo-type"
 msgid "Image size"
 msgstr ""
@@ -7241,7 +6897,6 @@ msgid "New layer"
 msgstr ""
 
 #: ../app/core/core-enums.c:887
-#| msgid "_Delete Image"
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr ""
@@ -7277,7 +6932,6 @@ msgid "Convert group layer"
 msgstr ""
 
 #: ../app/core/core-enums.c:894
-#| msgid "Text Color"
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr ""
@@ -7288,7 +6942,6 @@ msgid "Text layer modification"
 msgstr ""
 
 #: ../app/core/core-enums.c:897
-#| msgid "_Delete Image"
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr ""
@@ -7299,19 +6952,16 @@ msgid "Show layer mask"
 msgstr ""
 
 #: ../app/core/core-enums.c:900
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "New channel"
 msgstr ""
 
 #: ../app/core/core-enums.c:901
-#| msgid "_Delete Image"
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr ""
 
 #: ../app/core/core-enums.c:902
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr ""
@@ -7322,7 +6972,6 @@ msgid "New path"
 msgstr ""
 
 #: ../app/core/core-enums.c:904
-#| msgid "Delete Object"
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr ""
@@ -7463,7 +7112,6 @@ msgid "Flow"
 msgstr ""
 
 #: ../app/core/core-enums.c:1302
-#| msgid "Pattern"
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr ""
@@ -7490,7 +7138,6 @@ msgid "Fill with Foreground Color"
 msgstr ""
 
 #: ../app/core/gimp-edit.c:443
-#| msgid "_Background Color"
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr ""
@@ -7501,7 +7148,6 @@ msgid "Fill with White"
 msgstr ""
 
 #: ../app/core/gimp-edit.c:451
-#| msgid "Transparency"
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr ""
@@ -7757,13 +7403,11 @@ msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr ""
 
 #: ../app/core/gimpchannel-select.c:60
-#| msgid "_Delete Selection"
 msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr ""
 
 #: ../app/core/gimpchannel-select.c:111
-#| msgid "Select"
 msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr ""
@@ -7774,62 +7418,52 @@ msgid "Rounded Rectangle Select"
 msgstr ""
 
 #: ../app/core/gimpchannel-select.c:407 ../app/core/gimplayer.c:275
-#| msgid "_Delete Selection"
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr ""
 
 #: ../app/core/gimpchannel-select.c:445
 #, c-format
-#| msgid "Invert Selection"
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr ""
 
 #: ../app/core/gimpchannel-select.c:493
-#| msgid "Select"
 msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr ""
 
 #: ../app/core/gimpchannel-select.c:540
-#| msgid "Select Color"
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:273
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:274
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:275
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:276
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:277
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:278
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr ""
@@ -7840,25 +7474,21 @@ msgid "Transform Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:280
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:281 ../app/core/gimpselection.c:582
-#| msgid "Invert Selection"
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:282
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:283
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr ""
@@ -7869,7 +7499,6 @@ msgid "Raise Channel to Top"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:285
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr ""
@@ -7888,49 +7517,41 @@ msgid "Channel cannot be lowered more."
 msgstr ""
 
 #: ../app/core/gimpchannel.c:310
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:311
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:312
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:313
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:314
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:315
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:316
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr ""
 
 #: ../app/core/gimpchannel.c:317
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr ""
@@ -7940,7 +7561,6 @@ msgid "Cannot stroke empty channel."
 msgstr ""
 
 #: ../app/core/gimpchannel.c:1763
-#| msgid "Select Color"
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr ""
@@ -7968,8 +7588,8 @@ msgstr ""
 msgid "Could not delete '%s': %s"
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:428 ../app/core/gimpdatafactory.c:457
-#: ../app/core/gimpdatafactory.c:623 ../app/core/gimpdatafactory.c:645
+#: ../app/core/gimpdatafactory.c:445 ../app/core/gimpdatafactory.c:470
+#: ../app/core/gimpdatafactory.c:637 ../app/core/gimpdatafactory.c:659
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7977,17 +7597,17 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:537 ../app/core/gimpdatafactory.c:540
+#: ../app/core/gimpdatafactory.c:551 ../app/core/gimpdatafactory.c:554
 #: ../app/core/gimpitem.c:495 ../app/core/gimpitem.c:498
 msgid "copy"
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:549 ../app/core/gimpitem.c:507
+#: ../app/core/gimpdatafactory.c:563 ../app/core/gimpitem.c:507
 #, c-format
 msgid "%s copy"
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:742
+#: ../app/core/gimpdatafactory.c:756
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -7995,7 +7615,7 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:763
+#: ../app/core/gimpdatafactory.c:777
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -8003,12 +7623,12 @@ msgid ""
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:773
+#: ../app/core/gimpdatafactory.c:787
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:941
+#: ../app/core/gimpdatafactory.c:955
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8044,7 +7664,6 @@ msgstr "Түстер балансы"
 
 #: ../app/core/gimpdrawable-colorize.c:72
 #: ../app/core/gimpdrawable-colorize.c:84
-#| msgid "Color"
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr ""
@@ -8268,13 +7887,11 @@ msgid "Colormap of Image #%d (%s)"
 msgstr ""
 
 #: ../app/core/gimpimage-colormap.c:162
-#| msgid "Select Color"
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr ""
 
 #: ../app/core/gimpimage-colormap.c:210
-#| msgid "Text Color"
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr ""
@@ -8317,25 +7934,21 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr ""
 
 #: ../app/core/gimpimage-crop.c:129
-#| msgid "Open Image"
 msgctxt "undo-type"
 msgid "Crop Image"
 msgstr ""
 
 #: ../app/core/gimpimage-crop.c:132 ../app/core/gimpimage-resize.c:86
-#| msgid "_Delete Image"
 msgctxt "undo-type"
 msgid "Resize Image"
 msgstr ""
 
 #: ../app/core/gimpimage-guides.c:52
-#| msgid "Horizontal"
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
 msgstr ""
 
 #: ../app/core/gimpimage-guides.c:76
-#| msgid "Vertical"
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr ""
@@ -8351,23 +7964,21 @@ msgid "Move Guide"
 msgstr ""
 
 #: ../app/core/gimpimage-item-list.c:51
-#| msgid "translator-credits"
 msgctxt "undo-type"
 msgid "Translate Items"
 msgstr ""
 
-#: ../app/core/gimpimage-item-list.c:78
+#: ../app/core/gimpimage-item-list.c:79
 msgctxt "undo-type"
 msgid "Flip Items"
 msgstr ""
 
-#: ../app/core/gimpimage-item-list.c:105
-#| msgid "Rotate"
+#: ../app/core/gimpimage-item-list.c:108 ../app/core/gimpitem-linked.c:125
 msgctxt "undo-type"
 msgid "Rotate Items"
 msgstr ""
 
-#: ../app/core/gimpimage-item-list.c:135
+#: ../app/core/gimpimage-item-list.c:140
 msgctxt "undo-type"
 msgid "Transform Items"
 msgstr ""
@@ -8378,7 +7989,6 @@ msgid "Merge Visible Layers"
 msgstr ""
 
 #: ../app/core/gimpimage-merge.c:195
-#| msgid "Open Image"
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr ""
@@ -8400,7 +8010,6 @@ msgid "There is no visible layer to merge down to."
 msgstr ""
 
 #: ../app/core/gimpimage-merge.c:289
-#| msgid "_Merge"
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr ""
@@ -8449,7 +8058,6 @@ msgid "Move Sample Point"
 msgstr ""
 
 #: ../app/core/gimpimage-scale.c:88
-#| msgid "Save Image"
 msgctxt "undo-type"
 msgid "Scale Image"
 msgstr ""
@@ -8492,7 +8100,6 @@ msgid "Remove Parasite from Image"
 msgstr ""
 
 #: ../app/core/gimpimage.c:3754
-#| msgid "Layers"
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr ""
@@ -8503,25 +8110,21 @@ msgid "Remove Layer"
 msgstr ""
 
 #: ../app/core/gimpimage.c:3818
-#| msgid "Invert Selection"
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr ""
 
 #: ../app/core/gimpimage.c:3983
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr ""
 
 #: ../app/core/gimpimage.c:4021 ../app/core/gimpimage.c:4034
-#| msgid "Channel"
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr ""
 
 #: ../app/core/gimpimage.c:4088
-#| msgid "Path"
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr ""
@@ -8576,7 +8179,6 @@ msgstr[0] "%d × %d пиксель"
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] ""
-msgstr[1] ""
 
 #: ../app/core/gimpimagefile.c:867
 #, c-format
@@ -8607,7 +8209,6 @@ msgid "Set Item Exclusive Linked"
 msgstr ""
 
 #: ../app/core/gimplayer-floating-sel.c:95
-#| msgid "Invert Selection"
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr ""
@@ -8629,7 +8230,6 @@ msgid "Rename Layer"
 msgstr ""
 
 #: ../app/core/gimplayer.c:269
-#| msgid "Layers"
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr ""
@@ -8645,13 +8245,11 @@ msgid "Resize Layer"
 msgstr ""
 
 #: ../app/core/gimplayer.c:272
-#| msgid "Layers"
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr ""
 
 #: ../app/core/gimplayer.c:273
-#| msgid "Rotate"
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr ""
@@ -8711,7 +8309,6 @@ msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
 #: ../app/core/gimplayer.c:1466
-#| msgid "Layers"
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr ""
@@ -8727,7 +8324,6 @@ msgid "Apply Layer Mask"
 msgstr ""
 
 #: ../app/core/gimplayer.c:1755
-#| msgid "_Delete Image"
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr ""
@@ -8743,7 +8339,6 @@ msgid "Remove Alpha Channel"
 msgstr ""
 
 #: ../app/core/gimplayer.c:1948
-#| msgid "Image Size"
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr ""
@@ -8754,7 +8349,6 @@ msgid "Move Layer Mask"
 msgstr ""
 
 #: ../app/core/gimplayermask.c:109
-#| msgid "Invert Selection"
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr ""
@@ -8877,25 +8471,21 @@ msgid "Please wait"
 msgstr "Күте тұрыңыз"
 
 #: ../app/core/gimpselection.c:155
-#| msgid "Invert Selection"
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr ""
 
 #: ../app/core/gimpselection.c:156
-#| msgid "_Delete Selection"
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr ""
 
 #: ../app/core/gimpselection.c:172
-#| msgid "_Delete Selection"
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr ""
 
 #: ../app/core/gimpselection.c:173
-#| msgid "Selection"
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr ""
@@ -8906,31 +8496,26 @@ msgid "Select None"
 msgstr "Ештеңе таңдамау"
 
 #: ../app/core/gimpselection.c:175
-#| msgid "Select All"
 msgctxt "undo-type"
 msgid "Select All"
 msgstr ""
 
 #: ../app/core/gimpselection.c:176
-#| msgid "Invert Selection"
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr ""
 
 #: ../app/core/gimpselection.c:177
-#| msgid "Invert Selection"
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr ""
 
 #: ../app/core/gimpselection.c:178
-#| msgid "Selection"
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr ""
 
 #: ../app/core/gimpselection.c:179
-#| msgid "Selection"
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr ""
@@ -8948,7 +8533,6 @@ msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 
 #: ../app/core/gimpselection.c:854
-#| msgid "_Delete Selection"
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr ""
@@ -8981,7 +8565,6 @@ msgid "The vertical image resolution."
 msgstr ""
 
 #: ../app/core/gimpunit.c:60
-#| msgid "pixel"
 msgctxt "unit-singular"
 msgid "pixel"
 msgstr ""
@@ -8997,19 +8580,16 @@ msgid "inch"
 msgstr "дюйм"
 
 #: ../app/core/gimpunit.c:64
-#| msgid "inches"
 msgctxt "unit-plural"
 msgid "inches"
 msgstr ""
 
 #: ../app/core/gimpunit.c:67
-#| msgid "millimeters"
 msgctxt "unit-singular"
 msgid "millimeter"
 msgstr ""
 
 #: ../app/core/gimpunit.c:67
-#| msgid "millimeters"
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr ""
@@ -9035,13 +8615,11 @@ msgid "picas"
 msgstr ""
 
 #: ../app/core/gimpunit.c:82
-#| msgid "percent"
 msgctxt "singular"
 msgid "percent"
 msgstr ""
 
 #: ../app/core/gimpunit.c:82
-#| msgid "percent"
 msgctxt "plural"
 msgid "percent"
 msgstr ""
@@ -9214,7 +8792,7 @@ msgstr "_Режимі:"
 msgid "_Opacity:"
 msgstr "_Мөлдірлілігі:"
 
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/dialogs/file-open-dialog.c:254
 msgid "Open layers"
 msgstr ""
 
@@ -9227,7 +8805,6 @@ msgid "Enter location (URI):"
 msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:113
-#| msgid "Open Image"
 msgid "Export Image"
 msgstr ""
 
@@ -9235,64 +8812,64 @@ msgstr ""
 msgid "_Export"
 msgstr "Э_кспорт"
 
-#: ../app/dialogs/file-save-dialog.c:458
+#: ../app/dialogs/file-save-dialog.c:454
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:601
 msgid "The given filename cannot be used for exporting"
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:602
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:609
+#: ../app/dialogs/file-save-dialog.c:605
 msgid "Take me to the Save dialog"
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:613
+#: ../app/dialogs/file-save-dialog.c:609
 msgid "The given filename cannot be used for saving"
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:614
+#: ../app/dialogs/file-save-dialog.c:610
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:616
+#: ../app/dialogs/file-save-dialog.c:612
 msgid "Take me to the Export dialog"
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:619 ../app/dialogs/file-save-dialog.c:694
+#: ../app/dialogs/file-save-dialog.c:615 ../app/dialogs/file-save-dialog.c:690
 msgid "Extension Mismatch"
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:678
+#: ../app/dialogs/file-save-dialog.c:674
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:710
+#: ../app/dialogs/file-save-dialog.c:706
 msgid "The given file extension does not match the chosen file type."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:714
+#: ../app/dialogs/file-save-dialog.c:710
 msgid "Do you want to save the image using this name anyway?"
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:776
+#: ../app/dialogs/file-save-dialog.c:772
 msgid "Saving canceled"
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:784 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:780 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9946,8 +9523,7 @@ msgstr ""
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1963
-#: ../app/dialogs/preferences-dialog.c:2162
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2162 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Сыртқы түрі"
 
@@ -9965,7 +9541,6 @@ msgstr ""
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:1983
-#| msgid "Configuration"
 msgid "Tools configuration"
 msgstr ""
 
@@ -10130,9 +9705,8 @@ msgid "Monitor Resolution"
 msgstr ""
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2335
-#: ../app/display/gimpcursorview.c:206 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2335 ../app/display/gimpcursorview.c:206
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr ""
 
@@ -10325,7 +9899,6 @@ msgid "Select Brush Folders"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2750
-#| msgid "Folders"
 msgid "Dynamics Folders"
 msgstr ""
 
@@ -10485,7 +10058,6 @@ msgstr ""
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] ""
-msgstr[1] ""
 
 #: ../app/dialogs/quit-dialog.c:311
 #, c-format
@@ -10507,8 +10079,7 @@ msgstr ""
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
 
-#: ../app/dialogs/quit-dialog.c:341
-#: ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "Өз_герістерді елемеу"
 
@@ -10776,8 +10347,8 @@ msgstr ""
 msgid "Navigate the image display"
 msgstr ""
 
-#: ../app/display/gimpdisplayshell.c:746
-#: ../app/display/gimpdisplayshell.c:1331 ../app/widgets/gimptoolbox.c:253
+#: ../app/display/gimpdisplayshell.c:746 ../app/display/gimpdisplayshell.c:1331
+#: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr ""
 
@@ -10803,7 +10374,6 @@ msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
-msgstr[1] ""
 
 #: ../app/display/gimpdisplayshell-close.c:321
 #, c-format
@@ -10814,7 +10384,6 @@ msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
 msgstr[0] ""
-msgstr[1] ""
 
 #: ../app/display/gimpdisplayshell-close.c:333
 #, c-format
@@ -10822,7 +10391,6 @@ msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
-msgstr[1] ""
 
 #: ../app/display/gimpdisplayshell-close.c:354
 #, c-format
@@ -10850,7 +10418,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1466
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1481
 msgid "The active layer's pixels are locked."
 msgstr ""
 
@@ -10922,30 +10490,30 @@ msgstr "(ешнәрсе)"
 msgid "Cancel <i>%s</i>"
 msgstr ""
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
+#: ../app/file/file-open.c:129 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "Қалыпты файл емес"
 
-#: ../app/file/file-open.c:188
+#: ../app/file/file-open.c:191
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr ""
 
-#: ../app/file/file-open.c:199
+#: ../app/file/file-open.c:202
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr ""
 
-#: ../app/file/file-open.c:530
+#: ../app/file/file-open.c:533
 msgid "Image doesn't contain any layers"
 msgstr ""
 
-#: ../app/file/file-open.c:590
+#: ../app/file/file-open.c:593
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr ""
 
-#: ../app/file/file-open.c:700
+#: ../app/file/file-open.c:703
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11010,18 +10578,17 @@ msgstr ""
 msgid "Fill the original position of the cage with a plain color"
 msgstr ""
 
-#. Normally this should have been taken care of during command line
-#. * parsing as a post-parse hook of gtk_get_option_group(), using the
-#. * system locales.
-#. * But user config may have overriden the language, therefore we must
-#. * check the widget directions again.
+#. TRANSLATORS: there is no need to translate this in GIMP. This uses
+#. * "gtk20" domain as a special trick to determine language direction,
+#. * but xgettext extracts it anyway mistakenly into GIMP po files.
+#. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:208
+#: ../app/gui/gui.c:207
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. initialize the document history
-#: ../app/gui/gui.c:433
+#: ../app/gui/gui.c:438
 msgid "Documents"
 msgstr "Құжаттар"
 
@@ -11174,7 +10741,6 @@ msgid "None"
 msgstr "Ешнәрсе"
 
 #: ../app/paint/paint-enums.c:84
-#| msgid "Align"
 msgctxt "source-align-mode"
 msgid "Aligned"
 msgstr ""
@@ -11450,8 +11016,7 @@ msgid ""
 "%s, got %s."
 msgstr ""
 
-#: ../app/pdb/gimppdbcontext.c:89
-#: ../app/tools/gimpforegroundselectoptions.c:79
+#: ../app/pdb/gimppdbcontext.c:89 ../app/tools/gimpforegroundselectoptions.c:79
 #: ../app/tools/gimpselectionoptions.c:78
 msgid "Smooth edges"
 msgstr ""
@@ -11525,10 +11090,6 @@ msgstr ""
 #: ../app/pdb/image-select-cmds.c:297 ../app/pdb/selection-tools-cmds.c:219
 #: ../app/tools/gimpfreeselecttool.c:196
 msgid "Free Select"
-msgstr ""
-
-#: ../app/pdb/layer-cmds.c:475 ../app/pdb/layer-cmds.c:513
-msgid "Move Layer"
 msgstr ""
 
 #: ../app/pdb/text-layer-cmds.c:91
@@ -11940,7 +11501,6 @@ msgid "Click to add this path to the list"
 msgstr ""
 
 #: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:344
-#| msgid "_Gradient"
 msgid "Gradient"
 msgstr ""
 
@@ -12169,8 +11729,7 @@ msgstr ""
 msgid "Click to set a new clone source"
 msgstr ""
 
-#: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:899
+#: ../app/tools/gimpclonetool.c:109 ../app/tools/gimpperspectiveclonetool.c:899
 msgid "Source"
 msgstr "Қайнар көзі"
 
@@ -12285,18 +11844,15 @@ msgstr ""
 msgid "Select Color"
 msgstr "Түсті таңдаңыз"
 
-#: ../app/tools/gimpcolorizetool.c:241
-#: ../app/tools/gimphuesaturationtool.c:381
+#: ../app/tools/gimpcolorizetool.c:241 ../app/tools/gimphuesaturationtool.c:381
 msgid "_Hue:"
 msgstr "Р_еңі:"
 
-#: ../app/tools/gimpcolorizetool.c:254
-#: ../app/tools/gimphuesaturationtool.c:413
+#: ../app/tools/gimpcolorizetool.c:254 ../app/tools/gimphuesaturationtool.c:413
 msgid "_Saturation:"
 msgstr "Қ_аңықтылығы:"
 
-#: ../app/tools/gimpcolorizetool.c:267
-#: ../app/tools/gimphuesaturationtool.c:397
+#: ../app/tools/gimpcolorizetool.c:267 ../app/tools/gimphuesaturationtool.c:397
 msgid "_Lightness:"
 msgstr ""
 
@@ -12306,8 +11862,7 @@ msgstr ""
 
 #: ../app/tools/gimpcoloroptions.c:157
 #: ../app/tools/gimprectangleselectoptions.c:163
-#: ../app/tools/gimpselectionoptions.c:277
-#: ../app/widgets/gimpbrusheditor.c:155
+#: ../app/tools/gimpselectionoptions.c:277 ../app/widgets/gimpbrusheditor.c:155
 msgid "Radius"
 msgstr ""
 
@@ -12434,7 +11989,6 @@ msgstr ""
 
 #: ../app/tools/gimpcropoptions.c:76
 #: ../app/tools/gimprectangleselectoptions.c:77
-#| msgid "Invert the selection"
 msgid "Dim everything outside selection"
 msgstr ""
 
@@ -12474,55 +12028,55 @@ msgstr ""
 msgid "There is no active layer to crop."
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:143
+#: ../app/tools/gimpcurvestool.c:144
 msgid "Curves"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:144
+#: ../app/tools/gimpcurvestool.c:145
 msgid "Curves Tool: Adjust color curves"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:145
+#: ../app/tools/gimpcurvestool.c:146
 msgid "_Curves..."
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:171
+#: ../app/tools/gimpcurvestool.c:172
 msgid "Adjust Color Curves"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:173
+#: ../app/tools/gimpcurvestool.c:174
 msgid "Import Curves"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:174
+#: ../app/tools/gimpcurvestool.c:175
 msgid "Export Curves"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:225
+#: ../app/tools/gimpcurvestool.c:226
 msgid "Curves does not operate on indexed layers."
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:333
+#: ../app/tools/gimpcurvestool.c:334
 msgid "Click to add a control point"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:338
+#: ../app/tools/gimpcurvestool.c:339
 msgid "Click to add control points to all channels"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:343
+#: ../app/tools/gimpcurvestool.c:344
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:456 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:457 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:482 ../app/tools/gimplevelstool.c:408
+#: ../app/tools/gimpcurvestool.c:483 ../app/tools/gimplevelstool.c:408
 msgid "R_eset Channel"
 msgstr ""
 
-#: ../app/tools/gimpcurvestool.c:576 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:574 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr ""
 
@@ -12608,18 +12162,14 @@ msgstr "Диапазон"
 msgid "Exposure"
 msgstr "Экспозиция уақыты"
 
-#: ../app/tools/gimpeditselectiontool.c:242
-msgid "Move Selection"
-msgstr ""
-
-#: ../app/tools/gimpeditselectiontool.c:246
-#: ../app/tools/gimpeditselectiontool.c:1241
-msgid "Move Floating Selection"
-msgstr ""
-
-#: ../app/tools/gimpeditselectiontool.c:455
-#: ../app/tools/gimpeditselectiontool.c:732
+#: ../app/tools/gimpeditselectiontool.c:484
+#: ../app/tools/gimpeditselectiontool.c:670
 msgid "Move: "
+msgstr ""
+
+#: ../app/tools/gimpeditselectiontool.c:982
+#: ../app/tools/gimpeditselectiontool.c:1234
+msgid "Move Floating Selection"
 msgstr ""
 
 #: ../app/tools/gimpellipseselecttool.c:66
@@ -12689,13 +12239,11 @@ msgid "_Flip"
 msgstr ""
 
 #: ../app/tools/gimpfliptool.c:187
-#| msgid "Flip horizontally"
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr ""
 
 #: ../app/tools/gimpfliptool.c:190
-#| msgid "Flip vertically"
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr ""
@@ -13010,8 +12558,7 @@ msgstr ""
 msgid "Size"
 msgstr "Өлшемі"
 
-#: ../app/tools/gimpinkoptions-gui.c:71
-#: ../app/tools/gimppaintoptions-gui.c:181
+#: ../app/tools/gimpinkoptions-gui.c:71 ../app/tools/gimppaintoptions-gui.c:181
 #: ../app/widgets/gimpbrusheditor.c:199
 msgid "Angle"
 msgstr ""
@@ -13021,8 +12568,7 @@ msgstr ""
 msgid "Sensitivity"
 msgstr ""
 
-#: ../app/tools/gimpinkoptions-gui.c:94
-#: ../app/widgets/gimpdynamicseditor.c:144
+#: ../app/tools/gimpinkoptions-gui.c:94 ../app/widgets/gimpdynamicseditor.c:144
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Tilt"
 msgstr ""
@@ -13324,8 +12870,8 @@ msgid "_Paintbrush"
 msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:89
-#: ../app/tools/gimpselectionoptions.c:217
-#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
+#: ../app/tools/gimpselectionoptions.c:217 ../app/widgets/gimpbrushselect.c:190
+#: ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr ""
 
@@ -13369,8 +12915,7 @@ msgstr ""
 msgid "Fade length"
 msgstr ""
 
-#: ../app/tools/gimppaintoptions-gui.c:332
-#: ../app/widgets/gimpviewablebox.c:311
+#: ../app/tools/gimppaintoptions-gui.c:332 ../app/widgets/gimpviewablebox.c:311
 msgid "Reverse"
 msgstr ""
 
@@ -13391,7 +12936,6 @@ msgid "Smooth stroke"
 msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:397
-#| msgid "Height"
 msgid "Weight"
 msgstr ""
 
@@ -13502,12 +13046,10 @@ msgid "Y coordinate of top left corner"
 msgstr ""
 
 #: ../app/tools/gimprectangleoptions.c:151
-#| msgid "Invert the selection"
 msgid "Width of selection"
 msgstr ""
 
 #: ../app/tools/gimprectangleoptions.c:160
-#| msgid "Invert the selection"
 msgid "Height of selection"
 msgstr ""
 
@@ -13516,7 +13058,6 @@ msgid "Unit of top left corner coordinate"
 msgstr ""
 
 #: ../app/tools/gimprectangleoptions.c:178
-#| msgid "Invert the selection"
 msgid "Unit of selection size"
 msgstr ""
 
@@ -13579,7 +13120,6 @@ msgid "Shrink merged"
 msgstr ""
 
 #: ../app/tools/gimprectangleselectoptions.c:83
-#| msgid "Invert the selection"
 msgid "Round corners of selection"
 msgstr ""
 
@@ -13616,7 +13156,6 @@ msgid "Base selection on all visible layers"
 msgstr ""
 
 #: ../app/tools/gimpregionselectoptions.c:101
-#| msgid "Selection"
 msgid "Selection criterion"
 msgstr ""
 
@@ -13792,7 +13331,6 @@ msgid "Font size unit"
 msgstr ""
 
 #: ../app/tools/gimptextoptions.c:136
-#| msgid "Fonts"
 msgid "Font size"
 msgstr ""
 
@@ -13806,7 +13344,6 @@ msgid "The text language may have an effect on the way the text is rendered."
 msgstr ""
 
 #: ../app/tools/gimptextoptions.c:164
-#| msgid "Alignment:"
 msgid "Text alignment"
 msgstr ""
 
@@ -13837,12 +13374,10 @@ msgid "Font"
 msgstr "Қаріп"
 
 #: ../app/tools/gimptextoptions.c:535
-#| msgid "Text Editor"
 msgid "Use editor"
 msgstr ""
 
 #: ../app/tools/gimptextoptions.c:555
-#| msgid "Hinting"
 msgid "Hinting:"
 msgstr ""
 
@@ -13940,7 +13475,6 @@ msgid "Direction of transformation"
 msgstr ""
 
 #: ../app/tools/gimptransformoptions.c:105
-#| msgid "Installation Log"
 msgid "Interpolation method"
 msgstr ""
 
@@ -13981,7 +13515,6 @@ msgid "Clipping:"
 msgstr ""
 
 #: ../app/tools/gimptransformoptions.c:310
-#| msgid "Image type"
 msgid "Image opacity"
 msgstr ""
 
@@ -14016,15 +13549,20 @@ msgstr ""
 msgid "Transforming"
 msgstr ""
 
-#: ../app/tools/gimptransformtool.c:1465
+#: ../app/tools/gimptransformtool.c:269
+#, c-format
+msgid "The selection does not intersect with the layer."
+msgstr ""
+
+#: ../app/tools/gimptransformtool.c:1480
 msgid "There is no layer to transform."
 msgstr ""
 
-#: ../app/tools/gimptransformtool.c:1476
+#: ../app/tools/gimptransformtool.c:1491
 msgid "There is no path to transform."
 msgstr ""
 
-#: ../app/tools/gimptransformtool.c:1477
+#: ../app/tools/gimptransformtool.c:1492
 msgid "The active path's strokes are locked."
 msgstr ""
 
@@ -14221,7 +13759,6 @@ msgid "Free select"
 msgstr ""
 
 #: ../app/tools/tools-enums.c:183
-#| msgid "Image size"
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr ""
@@ -14232,7 +13769,6 @@ msgid "Fixed aspect ratio"
 msgstr ""
 
 #: ../app/tools/tools-enums.c:213
-#| msgid "Layers"
 msgctxt "transform-type"
 msgid "Layer"
 msgstr ""
@@ -14243,13 +13779,11 @@ msgid "Selection"
 msgstr "Таңдалған"
 
 #: ../app/tools/tools-enums.c:215
-#| msgid "Path"
 msgctxt "transform-type"
 msgid "Path"
 msgstr ""
 
 #: ../app/tools/tools-enums.c:244
-#| msgid "Design"
 msgctxt "vector-mode"
 msgid "Design"
 msgstr ""
@@ -14285,13 +13819,11 @@ msgid "Resize Path"
 msgstr ""
 
 #: ../app/vectors/gimpvectors.c:212
-#| msgid "Path"
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr ""
 
 #: ../app/vectors/gimpvectors.c:213
-#| msgid "Rotate"
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr ""
@@ -14307,7 +13839,6 @@ msgid "Stroke Path"
 msgstr ""
 
 #: ../app/vectors/gimpvectors.c:216
-#| msgid "Selection"
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr ""
@@ -14453,8 +13984,7 @@ msgid "Aspect ratio"
 msgstr ""
 
 #: ../app/widgets/gimpbrusheditor.c:210
-#: ../app/widgets/gimpbrushfactoryview.c:80
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:80 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr ""
 
@@ -14903,18 +14433,15 @@ msgid "%s (read only)"
 msgstr "%s (тек оқу)"
 
 #: ../app/widgets/gimpdeviceeditor.c:165
-#| msgid "Invert the selection"
 msgid "Delete the selected device"
 msgstr ""
 
 #: ../app/widgets/gimpdeviceeditor.c:502
-#| msgid "_Delete Selection"
 msgid "Delete Device Settings"
 msgstr ""
 
 #: ../app/widgets/gimpdeviceeditor.c:523
 #, c-format
-#| msgid "Delete '%s'?"
 msgid "Delete \"%s\"?"
 msgstr ""
 
@@ -15050,7 +14577,6 @@ msgid ""
 msgstr ""
 
 #: ../app/widgets/gimpdrawabletreeview.c:122
-#| msgid "pixels"
 msgid "Lock pixels"
 msgstr ""
 
@@ -15107,12 +14633,10 @@ msgid "All images"
 msgstr "Барлық суреттер"
 
 #: ../app/widgets/gimpfiledialog.c:813
-#| msgid "All images"
 msgid "All XCF images"
 msgstr ""
 
 #: ../app/widgets/gimpfiledialog.c:815
-#| msgid "All images"
 msgid "All export images"
 msgstr ""
 
@@ -15130,7 +14654,6 @@ msgid "Extensions"
 msgstr "Кеңейтулер"
 
 #: ../app/widgets/gimpfilleditor.c:124
-#| msgid "Color"
 msgid "Fill Color"
 msgstr ""
 
@@ -15196,7 +14719,6 @@ msgstr ""
 #: ../app/widgets/gimpgradienteditor.c:1273
 #: ../app/widgets/gimpgradienteditor.c:1294
 #, c-format
-#| msgid "_Delete Selection"
 msgid "%s-Click: extend selection"
 msgstr ""
 
@@ -15557,7 +15079,7 @@ msgstr ""
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1734
+#: ../app/widgets/gimptagentry.c:1750
 msgid ","
 msgstr ""
 
@@ -15653,7 +15175,6 @@ msgid "Italic"
 msgstr "Көлбеу"
 
 #: ../app/widgets/gimptextstyleeditor.c:334
-#| msgid "Undefined"
 msgid "Underline"
 msgstr ""
 
@@ -15676,12 +15197,12 @@ msgstr ""
 msgid "No selection"
 msgstr ""
 
-#: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:617
+#: ../app/widgets/gimpthumbbox.c:612 ../app/widgets/gimpthumbbox.c:633
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr ""
 
-#: ../app/widgets/gimpthumbbox.c:730 ../app/widgets/gimpthumbbox.c:740
+#: ../app/widgets/gimpthumbbox.c:746 ../app/widgets/gimpthumbbox.c:756
 msgid "Creating preview..."
 msgstr ""
 
@@ -15751,7 +15272,6 @@ msgid "Reset tool order and visibility"
 msgstr ""
 
 #: ../app/widgets/gimptooloptionseditor.c:202
-#| msgid "Save _As..."
 msgid "Save Tool Preset..."
 msgstr ""
 
@@ -15764,7 +15284,6 @@ msgid "Delete Tool Preset..."
 msgstr ""
 
 #: ../app/widgets/gimptoolpreseteditor.c:148
-#| msgid "_Icon:"
 msgid "Icon:"
 msgstr ""
 
@@ -15802,7 +15321,6 @@ msgid "%s Preset"
 msgstr ""
 
 #: ../app/widgets/gimptranslationstore.c:100
-#| msgid "_Language:"
 msgid "System Language"
 msgstr ""
 
@@ -15886,13 +15404,11 @@ msgid "Background"
 msgstr "Фон"
 
 #: ../app/widgets/widgets-enums.c:85
-#| msgid "Pixel"
 msgctxt "color-frame-mode"
 msgid "Pixel"
 msgstr ""
 
 #: ../app/widgets/widgets-enums.c:86
-#| msgid "RGB"
 msgctxt "color-frame-mode"
 msgid "RGB"
 msgstr ""
@@ -15913,13 +15429,11 @@ msgid "Pick only"
 msgstr ""
 
 #: ../app/widgets/widgets-enums.c:119
-#| msgid "Background color"
 msgctxt "color-pick-mode"
 msgid "Set foreground color"
 msgstr ""
 
 #: ../app/widgets/widgets-enums.c:120
-#| msgid "Background color"
 msgctxt "color-pick-mode"
 msgid "Set background color"
 msgstr ""
@@ -15930,7 +15444,6 @@ msgid "Add to palette"
 msgstr ""
 
 #: ../app/widgets/widgets-enums.c:178
-#| msgid "_Clear History"
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr ""
@@ -15946,7 +15459,6 @@ msgid "Icon"
 msgstr "Таңбаша"
 
 #: ../app/widgets/widgets-enums.c:216
-#| msgid "Current"
 msgctxt "tab-style"
 msgid "Current status"
 msgstr ""
@@ -16044,7 +15556,6 @@ msgid "Error saving XCF file: %s"
 msgstr ""
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
-#| msgid "Background"
 msgid "round"
 msgstr ""
 

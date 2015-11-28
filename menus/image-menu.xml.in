@@ -260,6 +260,7 @@
         <menuitem action="view-zoom-in" />
         <menuitem action="view-zoom-fit-in" />
         <menuitem action="view-zoom-fill" />
+        <menuitem action="view-zoom-selection" />
         <separator />
         <menuitem action="view-zoom-16-1" />
         <menuitem action="view-zoom-8-1" />
@@ -275,6 +276,9 @@
       </menu>
       <menu action="view-rotate-menu" name="Rotate">
         <menuitem action="view-rotate-reset" />
+        <separator />
+	<menuitem action="view-flip-horizontally" />
+	<menuitem action="view-flip-vertically" />
         <separator />
         <menuitem action="view-rotate-15" />
         <menuitem action="view-rotate-345" />
@@ -333,18 +337,15 @@
 	<separator />
       </menu>
       <menu action="image-precision-menu" name="Precision">
-        <menuitem action="image-convert-u8-linear" />
-        <menuitem action="image-convert-u8-gamma" />
-        <menuitem action="image-convert-u16-linear" />
-        <menuitem action="image-convert-u16-gamma" />
-        <menuitem action="image-convert-u32-linear" />
-        <menuitem action="image-convert-u32-gamma" />
-        <menuitem action="image-convert-half-linear" />
-        <menuitem action="image-convert-half-gamma" />
-        <menuitem action="image-convert-float-linear" />
-        <menuitem action="image-convert-float-gamma" />
-        <menuitem action="image-convert-double-linear" />
-        <menuitem action="image-convert-double-gamma" />
+        <menuitem action="image-convert-u8" />
+        <menuitem action="image-convert-u16" />
+        <menuitem action="image-convert-u32" />
+        <menuitem action="image-convert-half" />
+        <menuitem action="image-convert-float" />
+        <menuitem action="image-convert-double" />
+        <separator />
+        <menuitem action="image-convert-gamma" />
+        <menuitem action="image-convert-linear" />
         <separator />
       </menu>
       <menu action="image-color-management-menu" name="Color Management">
@@ -552,6 +553,7 @@
       <menu action="colors-desaturate-menu" name="Desaturate">
 	<menuitem action="filters-mono-mixer" />
 	<menuitem action="filters-c2g" />
+	<menuitem action="filters-sepia" />
         <separator />
       </menu>
       <menu action="colors-map-menu" name="Map">
@@ -653,6 +655,7 @@
       <menu action="plug-in-blur-menu" name="Blur">
       	<menuitem action="filters-gaussian-blur" />
       	<menuitem action="filters-pixelize" />
+      	<menuitem action="filters-gaussian-blur-selective" />
 	<placeholder name="Motion">
 	  <menuitem action="filters-motion-blur-circular" />
 	  <menuitem action="filters-motion-blur-linear" />
@@ -802,7 +805,7 @@
       <menuitem action="dialogs-tips" />
       <menuitem action="dialogs-about" />
       <separator />
-      <menuitem action="help-action-search" />
+      <menuitem action="dialogs-action-search" />
       <separator />
       <placeholder name="Programming" />
       <separator />

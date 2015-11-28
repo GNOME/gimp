@@ -7,7 +7,7 @@ AC_DEFUN([GIMP_DETECT_CFLAGS],
   for flag in $2; do
     if test -z "[$]$1"; then
       $1_save_CFLAGS="$CFLAGS"
-      CFLAGS="$CFLAGS $flag"
+      CFLAGS="$CFLAGS -Werror $flag"
       AC_MSG_CHECKING([whether [$]CC understands [$]flag])
       AC_TRY_COMPILE([], [], [$1_works=yes], [$1_works=no])
       AC_MSG_RESULT([$]$1_works)

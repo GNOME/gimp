@@ -34,6 +34,8 @@
 #include "gimp-babl.h"
 #include "gimp-gegl-loops.h"
 
+#include "core/gimpprogress.h"
+
 
 void
 gimp_gegl_convolve (GeglBuffer          *src_buffer,
@@ -695,7 +697,8 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                  const GeglRectangle      *dest_rect,
                                  GimpColorProfile         *dest_profile,
                                  GimpColorRenderingIntent  intent,
-                                 gboolean                  bpc)
+                                 gboolean                  bpc,
+                                 GimpProgress             *progress)
 {
   const Babl       *src_format;
   const Babl       *dest_format;
@@ -737,7 +740,7 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
     {
       gimp_gegl_convert_color_transform (src_buffer,  src_rect,  src_format,
                                          dest_buffer, dest_rect, dest_format,
-                                         transform);
+                                         transform, progress);
 
       cmsDeleteTransform (transform);
     }
@@ -746,6 +749,9 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
       /* FIXME: no idea if this ever happens */
       gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
                         dest_buffer, dest_rect);
+
+      if (progress)
+        gimp_progress_set_value (progress, 1.0);
     }
 }
 
@@ -756,10 +762,23 @@ gimp_gegl_convert_color_transform (GeglBuffer          *src_buffer,
                                    GeglBuffer          *dest_buffer,
                                    const GeglRectangle *dest_rect,
                                    const Babl          *dest_format,
-                                   GimpColorTransform   transform)
+                                   GimpColorTransform   transform,
+                                   GimpProgress        *progress)
 {
   GeglBufferIterator *iter;
   gboolean            has_alpha;
+  gint                total_pixels;
+  gint                done_pixels = 0;
+
+  if (src_rect)
+    {
+      total_pixels = src_rect->width * src_rect->height;
+    }
+  else
+    {
+      total_pixels = (gegl_buffer_get_width  (src_buffer) *
+                      gegl_buffer_get_height (src_buffer));
+    }
 
   has_alpha = babl_format_has_alpha (dest_format);
 
@@ -787,5 +806,15 @@ gimp_gegl_convert_color_transform (GeglBuffer          *src_buffer,
     {
       cmsDoTransform (transform,
                       iter->data[0], iter->data[1], iter->length);
+
+      done_pixels += iter->roi[0].width * iter->roi[0].height;
+
+      if (progress)
+        gimp_progress_set_value (progress,
+                                 (gdouble) done_pixels /
+                                 (gdouble) total_pixels);
     }
+
+  if (progress)
+    gimp_progress_set_value (progress, 1.0);
 }

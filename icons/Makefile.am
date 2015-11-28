@@ -10,6 +10,10 @@ icons24dir = $(gimpdatadir)/icons/hicolor/24x24/apps
 icons32dir = $(gimpdatadir)/icons/hicolor/32x32/apps
 icons48dir = $(gimpdatadir)/icons/hicolor/48x48/apps
 icons64dir = $(gimpdatadir)/icons/hicolor/64x64/apps
+icons96dir = $(gimpdatadir)/icons/hicolor/96x96/apps
+icons128dir = $(gimpdatadir)/icons/hicolor/128x128/apps
+icons192dir = $(gimpdatadir)/icons/hicolor/192x192/apps
+icons256dir = $(gimpdatadir)/icons/hicolor/256x256/apps
 
 
 ## The icon theme images
@@ -460,7 +464,24 @@ icons64_DATA = \
 	64/gimp-user-manual.png		\
 	64/gimp-warning.png		\
 	64/gimp-wilber-eek.png		\
-	64/gimp-wilber.png
+	64/gimp-wilber.png		\
+	64/gimp-wilber-outline.png
+
+icons96_DATA = \
+	96/gimp-wilber.png		\
+	96/gimp-wilber-outline.png
+
+icons128_DATA = \
+	128/gimp-wilber.png		\
+	128/gimp-wilber-outline.png
+
+icons192_DATA = \
+	192/gimp-wilber.png		\
+	192/gimp-wilber-outline.png
+
+icons256_DATA = \
+	256/gimp-wilber.png		\
+	256/gimp-wilber-outline.png
 
 
 ## Compiled-in icons for both the core and libgimpwidgets
@@ -472,16 +493,20 @@ ICON_IMAGES = \
 	64/gimp-wilber-eek.png
 
 EXTRA_DIST = \
-	$(icons_DATA)	\
-	$(icons12_DATA)	\
-	$(icons16_DATA)	\
-	$(icons18_DATA)	\
-	$(icons20_DATA)	\
-	$(icons22_DATA)	\
-	$(icons24_DATA)	\
-	$(icons32_DATA)	\
-	$(icons48_DATA)	\
-	$(icons64_DATA)
+	$(icons_DATA)		\
+	$(icons12_DATA)		\
+	$(icons16_DATA)		\
+	$(icons18_DATA)		\
+	$(icons20_DATA)		\
+	$(icons22_DATA)		\
+	$(icons24_DATA)		\
+	$(icons32_DATA)		\
+	$(icons48_DATA)		\
+	$(icons64_DATA)		\
+	$(icons96_DATA)		\
+	$(icons128_DATA)	\
+	$(icons192_DATA)	\
+	$(icons256_DATA)
 
 noinst_DATA = \
 	gimp-core-pixbufs.c	\

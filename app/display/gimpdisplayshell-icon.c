@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -24,6 +26,8 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -72,19 +76,20 @@ gimp_display_shell_icon_update_stop (GimpDisplayShell *shell)
 static gboolean
 gimp_display_shell_icon_update_idle (gpointer data)
 {
-  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image  = gimp_display_get_image (shell->display);
-  GdkPixbuf        *pixbuf = NULL;
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *image = gimp_display_get_image (shell->display);
+  GdkPixbuf        *icon  = NULL;
 
   shell->icon_idle_id = 0;
 
   if (image)
     {
-      Gimp    *gimp   = gimp_display_get_gimp (shell->display);
-      gint     width;
-      gint     height;
-      gdouble  factor = ((gdouble) gimp_image_get_height (image) /
-                         (gdouble) gimp_image_get_width  (image));
+      Gimp      *gimp = gimp_display_get_gimp (shell->display);
+      GdkPixbuf *pixbuf;
+      gint       width;
+      gint       height;
+      gdouble    factor = ((gdouble) gimp_image_get_height (image) /
+                           (gdouble) gimp_image_get_width  (image));
 
       if (factor >= 1)
         {
@@ -100,9 +105,36 @@ gimp_display_shell_icon_update_idle (gpointer data)
       pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (image),
                                          gimp_get_user_context (gimp),
                                          width, height);
+
+      icon = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+                             shell->icon_size, shell->icon_size);
+
+      memset (gdk_pixbuf_get_pixels (icon), 0,
+              gdk_pixbuf_get_height (icon) *
+              gdk_pixbuf_get_rowstride (icon));
+
+      gdk_pixbuf_copy_area (pixbuf, 0, 0, width, height,
+                            icon,
+                            0, shell->icon_size - height);
+
+      pixbuf = gimp_widget_load_icon (GTK_WIDGET (shell), "gimp-wilber-outline",
+                                      shell->icon_size_small);
+
+      width  = gdk_pixbuf_get_width  (pixbuf);
+      height = gdk_pixbuf_get_height (pixbuf);
+
+      gdk_pixbuf_composite (pixbuf, icon,
+                            shell->icon_size - width, 0,
+                            width, height,
+                            shell->icon_size - width, 0.0, 1.0, 1.0,
+                            GDK_INTERP_NEAREST, 255);
+      g_object_unref (pixbuf);
     }
 
-  g_object_set (shell, "icon", pixbuf, NULL);
+  g_object_set (shell, "icon", icon, NULL);
+
+  if (icon)
+    g_object_unref (icon);
 
   return FALSE;
 }

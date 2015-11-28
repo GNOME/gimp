@@ -400,7 +400,7 @@ sanity_check_babl (void)
 
 #define BABL_REQUIRED_MAJOR 0
 #define BABL_REQUIRED_MINOR 1
-#define BABL_REQUIRED_MICRO 12
+#define BABL_REQUIRED_MICRO 14
 
   babl_get_version (&babl_major_version,
                     &babl_minor_version,
@@ -438,7 +438,7 @@ sanity_check_gegl (void)
 
 #define GEGL_REQUIRED_MAJOR 0
 #define GEGL_REQUIRED_MINOR 3
-#define GEGL_REQUIRED_MICRO 0
+#define GEGL_REQUIRED_MICRO 4
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
@@ -505,6 +505,7 @@ sanity_check_gegl_ops (void)
     "gegl:exposure",
     "gegl:fractal-trace",
     "gegl:gaussian-blur",
+    "gegl:gaussian-blur-selective",
     "gegl:grid",
     "gegl:illusion",
     "gegl:introspect",
@@ -543,6 +544,7 @@ sanity_check_gegl_ops (void)
     "gegl:ripple",
     "gegl:scale-ratio",
     "gegl:seamless-clone",
+    "gegl:sepia",
     "gegl:shift",
     "gegl:simplex-noise",
     "gegl:shift",

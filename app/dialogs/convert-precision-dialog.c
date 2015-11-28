@@ -47,16 +47,17 @@
 
 typedef struct
 {
-  GtkWidget     *dialog;
+  GtkWidget         *dialog;
 
-  GimpImage     *image;
-  GimpProgress  *progress;
+  GimpImage         *image;
+  GimpProgress      *progress;
 
-  GimpPrecision  precision;
-  gint           bits;
-  gint           layer_dither_type;
-  gint           text_layer_dither_type;
-  gint           mask_dither_type;
+  GimpComponentType  component_type;
+  gboolean           linear;
+  gint               bits;
+  gint               layer_dither_type;
+  gint               text_layer_dither_type;
+  gint               mask_dither_type;
 } ConvertDialog;
 
 
@@ -76,11 +77,11 @@ static gint   saved_mask_dither_type       = 0;
 /*  public functions  */
 
 GtkWidget *
-convert_precision_dialog_new (GimpImage     *image,
-                              GimpContext   *context,
-                              GtkWidget     *parent,
-                              GimpPrecision  precision,
-                              GimpProgress  *progress)
+convert_precision_dialog_new (GimpImage         *image,
+                              GimpContext       *context,
+                              GtkWidget         *parent,
+                              GimpComponentType  component_type,
+                              GimpProgress      *progress)
 {
   ConvertDialog *dialog;
   GtkWidget     *button;
@@ -96,6 +97,7 @@ convert_precision_dialog_new (GimpImage     *image,
   GType          dither_type;
   const Babl    *format;
   gint           bits;
+  gboolean       linear;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -105,14 +107,19 @@ convert_precision_dialog_new (GimpImage     *image,
   dialog = g_slice_new0 (ConvertDialog);
 
   /* a random format with precision */
-  format = gimp_babl_format (GIMP_RGB, precision, FALSE);
+  format = gimp_babl_format (GIMP_RGB, gimp_babl_precision (component_type,
+                                                            FALSE), FALSE);
   bits   = (babl_format_get_bytes_per_pixel (format) * 8 /
             babl_format_get_n_components (format));
 
-  dialog->image     = image;
-  dialog->progress  = progress;
-  dialog->precision = precision;
-  dialog->bits      = bits;
+  linear = gimp_babl_format_get_linear (gimp_image_get_layer_format (image,
+                                                                     FALSE));
+
+  dialog->image          = image;
+  dialog->progress       = progress;
+  dialog->component_type = component_type;
+  dialog->linear         = linear;
+  dialog->bits           = bits;
 
   /* gegl:color-reduction only does 16 bits */
   if (bits <= 16)
@@ -122,7 +129,7 @@ convert_precision_dialog_new (GimpImage     *image,
       dialog->mask_dither_type       = saved_mask_dither_type;
     }
 
-  gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
+  gimp_enum_get_value (GIMP_TYPE_COMPONENT_TYPE, component_type,
                        NULL, NULL, &enum_desc, NULL);
 
   blurb = g_strdup_printf (_("Convert Image to %s"), enum_desc);
@@ -260,6 +267,28 @@ convert_precision_dialog_new (GimpImage     *image,
 
   g_object_unref (size_group);
 
+  /*  gamma  */
+
+  frame = gimp_frame_new (_("Gamma"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  hbox = gimp_int_radio_group_new (FALSE, NULL,
+                                   G_CALLBACK (gimp_radio_button_update),
+                                   &dialog->linear,
+                                   linear,
+
+                                   _("Perceptual gamma (sRGB)"), FALSE, NULL,
+                                   _("Linear light"),            TRUE,  NULL,
+
+                                   NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   return dialog->dialog;
 }
 
@@ -273,13 +302,22 @@ convert_precision_dialog_response (GtkWidget     *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpProgress *progress;
+      GimpProgress  *progress;
+      GimpPrecision  precision;
+      const gchar   *enum_desc;
+
+      precision = gimp_babl_precision (dialog->component_type,
+                                       dialog->linear);
+
+      gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
+                           NULL, NULL, &enum_desc, NULL);
 
       progress = gimp_progress_start (dialog->progress, FALSE,
-                                      _("Converting to lower bit depth"));
+                                      _("Converting image to %s"),
+                                      enum_desc);
 
       gimp_image_convert_precision (dialog->image,
-                                    dialog->precision,
+                                    precision,
                                     dialog->layer_dither_type,
                                     dialog->text_layer_dither_type,
                                     dialog->mask_dither_type,

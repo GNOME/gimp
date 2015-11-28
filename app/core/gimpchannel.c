@@ -145,7 +145,8 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               gint               layer_dither_type,
                                               gint               mask_dither_type,
                                               gboolean           convert_profile,
-                                              gboolean           push_undo);
+                                              gboolean           push_undo,
+                                              GimpProgress      *progress);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
                                                 gboolean           *active);
@@ -570,7 +571,7 @@ gimp_channel_convert (GimpItem  *item,
       gimp_drawable_convert_type (drawable, dest_image, GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
                                   0, 0, FALSE,
-                                  FALSE);
+                                  FALSE, NULL);
     }
 
   if (gimp_drawable_has_alpha (drawable))
@@ -842,7 +843,7 @@ gimp_channel_stroke (GimpItem           *item,
 
   switch (gimp_stroke_options_get_method (stroke_options))
     {
-    case GIMP_STROKE_METHOD_LIBART:
+    case GIMP_STROKE_LINE:
       gimp_drawable_stroke_boundary (drawable,
                                      stroke_options,
                                      segs_in, n_segs_in,
@@ -851,7 +852,7 @@ gimp_channel_stroke (GimpItem           *item,
       retval = TRUE;
       break;
 
-    case GIMP_STROKE_METHOD_PAINT_CORE:
+    case GIMP_STROKE_PAINT_METHOD:
       {
         GimpPaintInfo    *paint_info;
         GimpPaintCore    *core;
@@ -913,7 +914,8 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
                            gint               layer_dither_type,
                            gint               mask_dither_type,
                            gboolean           convert_profile,
-                           gboolean           push_undo)
+                           gboolean           push_undo,
+                           GimpProgress      *progress)
 {
   GeglBuffer *dest_buffer;
 

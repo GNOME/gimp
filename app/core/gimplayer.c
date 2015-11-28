@@ -33,6 +33,7 @@
 
 #include "config/gimpcoreconfig.h" /* FIXME profile convert config */
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
@@ -46,6 +47,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimpimage-undo.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -172,7 +174,8 @@ static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  gint                layer_dither_type,
                                                  gint                mask_dither_type,
                                                  gboolean            convert_type,
-                                                 gboolean            push_undo);
+                                                 gboolean            push_undo,
+                                                 GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
@@ -820,7 +823,7 @@ gimp_layer_convert (GimpItem  *item,
                                   new_base_type, new_precision,
                                   0, 0,
                                   convert_profile,
-                                  FALSE);
+                                  FALSE, NULL);
     }
 
   if (layer->mask)
@@ -848,9 +851,9 @@ gimp_layer_rename (GimpItem     *item,
       if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			       _("Cannot create a new layer from the floating "
-				 "selection because it belongs to a layer mask "
-				 "or channel."));
+                               _("Cannot create a new layer from the floating "
+                                 "selection because it belongs to a layer mask "
+                                 "or channel."));
           return FALSE;
         }
 
@@ -1075,7 +1078,8 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          gint               layer_dither_type,
                          gint               mask_dither_type,
                          gboolean           convert_profile,
-                         gboolean           push_undo)
+                         gboolean           push_undo,
+                         GimpProgress      *progress)
 {
   GimpLayer        *layer = GIMP_LAYER (drawable);
   GeglBuffer       *src_buffer;
@@ -1113,11 +1117,55 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
 
   if (convert_profile)
     {
-      src_profile =
-        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+      GimpImage *src_image = gimp_item_get_image (GIMP_ITEM (layer));
 
-      dest_profile =
-        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
+      if (src_image != dest_image)
+        {
+          src_profile =
+            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+
+          dest_profile =
+            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
+          g_object_ref (dest_profile);
+        }
+      else if (gimp_image_get_color_profile (src_image))
+        {
+          const Babl *src_format = gimp_drawable_get_format (drawable);
+
+          /* when converting between linear and gamma, we create a new
+           * profile using the original profile's chromacities and
+           * whitepoint, but a linear/sRGB-gamma TRC.
+           * gimp_image_convert_precision() will use the same profile.
+           */
+          if (gimp_babl_format_get_linear (src_format) !=
+              gimp_babl_format_get_linear (new_format))
+            {
+              src_profile =
+                gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+
+              if (gimp_babl_format_get_linear (new_format))
+                {
+                  dest_profile =
+                    gimp_color_profile_new_linear_rgb_from_color_profile (src_profile);
+                }
+              else
+                {
+                  dest_profile =
+                    gimp_color_profile_new_srgb_gamma_from_color_profile (src_profile);
+                }
+
+              /* if a new profile cannot be be generated, convert to the
+               * builtin profile, which is better than leaving the user
+               * with broken colors
+               */
+              if (! dest_profile)
+                {
+                  dest_profile =
+                    gimp_image_get_builtin_color_profile (dest_image);
+                  g_object_ref (dest_profile);
+                }
+            }
+        }
     }
 
   if (src_profile && dest_profile)
@@ -1125,12 +1173,15 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
       gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                        dest_buffer, NULL, dest_profile,
                                        GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                       TRUE);
+                                       TRUE, progress);
     }
   else
     {
       gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
     }
+
+  if (dest_profile)
+    g_object_unref (dest_profile);
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
 
@@ -1144,7 +1195,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                                   GIMP_GRAY, new_precision,
                                   layer_dither_type, mask_dither_type,
                                   convert_profile,
-                                  push_undo);
+                                  push_undo, NULL);
     }
 }
 
@@ -1344,8 +1395,8 @@ gimp_layer_add_mask (GimpLayer      *layer,
   if (layer->mask)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Unable to add a layer mask since "
-			     "the layer already has one."));
+                           _("Unable to add a layer mask since "
+                             "the layer already has one."));
       return NULL;
     }
 
@@ -1355,8 +1406,8 @@ gimp_layer_add_mask (GimpLayer      *layer,
        gimp_item_get_height (GIMP_ITEM (mask))))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot add layer mask of different "
-			     "dimensions than specified layer."));
+                           _("Cannot add layer mask of different "
+                             "dimensions than specified layer."));
       return NULL;
     }
 

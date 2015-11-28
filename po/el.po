@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-07 05:35+0000\n"
-"PO-Revision-Date: 2015-09-07 14:00+0300\n"
+"POT-Creation-Date: 2015-11-25 07:09+0000\n"
+"PO-Revision-Date: 2015-11-25 12:15+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -118,19 +118,6 @@ msgstr ""
 "\n"
 "Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Δημόσιας Άδειας GNU μαζί "
 "με αυτό το πρόγραμμα. Αν όχι, δείτε στο  http://www.gnu.org/licenses/."
-
-#: ../app/batch.c:76
-#, c-format
-msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr ""
-"Δεν ορίστηκε διερμηνευτής δέσμης, θα χρησιμοποιηθεί ο προεπιλεγμένος '%s'.\n"
-
-#: ../app/batch.c:94 ../app/batch.c:112
-#, c-format
-msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr ""
-"Ο διερμηνευτής δέσμης '%s' δεν είναι διαθέσιμος. Η λειτουργία δέσμης "
-"απενεργοποιήθηκε."
 
 #: ../app/main.c:150
 msgid "Show version information and exit"
@@ -247,24 +234,24 @@ msgstr ""
 msgid "Another GIMP instance is already running."
 msgstr "Κάποιο άλλο στιγμιότυπο του GIMP εκτελείται ήδη."
 
-#: ../app/main.c:569
+#: ../app/main.c:572
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Έξοδος GIMP. Πληκτρολογήστε οποιοδήποτε χαρακτήρα για να κλείσετε το "
 "παράθυρο."
 
-#: ../app/main.c:570
+#: ../app/main.c:573
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Πληκτρολογήστε οποιοδήποτε χαρακτήρα για να κλείσετε το παράθυρο)\n"
 
-#: ../app/main.c:587
+#: ../app/main.c:590
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Έξοδος GIMP. Μπορείτε να ελαχιστοποιήσετε αυτό το παράθυρο, αλλά μην το "
 "κλείσετε."
 
-#: ../app/sanity.c:603
+#: ../app/sanity.c:604
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -276,7 +263,7 @@ msgstr ""
 "\n"
 "Παρακαλώ, ελέγξτε την τιμή της μεταβλητής περιβάλλοντος G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:622
+#: ../app/sanity.c:623
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -310,7 +297,7 @@ msgid "Brush Editor"
 msgstr "Επεξεργαστής πινέλων"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:112 ../app/core/gimp.c:1039
+#: ../app/actions/actions.c:112 ../app/core/gimp.c:1049
 #: ../app/dialogs/dialogs.c:326 ../app/dialogs/preferences-dialog.c:2690
 msgid "Brushes"
 msgstr "Πινέλα"
@@ -405,12 +392,12 @@ msgid "Gradient Editor"
 msgstr "Επεξεργαστής διαβαθμίσεων"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:172 ../app/core/gimp.c:1059
+#: ../app/actions/actions.c:172 ../app/core/gimp.c:1069
 #: ../app/dialogs/dialogs.c:330 ../app/dialogs/preferences-dialog.c:2706
 msgid "Gradients"
 msgstr "Διαβαθμίσεις"
 
-#: ../app/actions/actions.c:175 ../app/core/gimp.c:1074
+#: ../app/actions/actions.c:175 ../app/core/gimp.c:1084
 #: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:2714
 msgid "Tool Presets"
 msgstr "Προεπιλογές εργαλείων"
@@ -447,13 +434,13 @@ msgid "Palette Editor"
 msgstr "Επεξεργαστής παλετών"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:196 ../app/core/gimp.c:1054
+#: ../app/actions/actions.c:196 ../app/core/gimp.c:1064
 #: ../app/dialogs/dialogs.c:332 ../app/dialogs/preferences-dialog.c:2702
 msgid "Palettes"
 msgstr "Παλέτες"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:199 ../app/core/gimp.c:1049
+#: ../app/actions/actions.c:199 ../app/core/gimp.c:1059
 #: ../app/dialogs/dialogs.c:328 ../app/dialogs/preferences-dialog.c:2698
 msgid "Patterns"
 msgstr "Μοτίβα"
@@ -463,7 +450,7 @@ msgid "Plug-Ins"
 msgstr "Πρόσθετα"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:392
+#: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:393
 #: ../app/dialogs/preferences-dialog.c:1938
 msgid "Quick Mask"
 msgstr "Γρήγορη μάσκα"
@@ -478,7 +465,7 @@ msgid "Select"
 msgstr "Επιλογή"
 
 #. initialize the template list
-#: ../app/actions/actions.c:214 ../app/core/gimp.c:1080
+#: ../app/actions/actions.c:214 ../app/core/gimp.c:1090
 #: ../app/dialogs/dialogs.c:340
 msgid "Templates"
 msgstr "Πρότυπα"
@@ -801,8 +788,7 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Τομή αυτού του καναλιού με την τρέχουσα επιλογή"
 
-#: ../app/actions/channels-commands.c:85
-#: ../app/actions/channels-commands.c:402
+#: ../app/actions/channels-commands.c:85 ../app/actions/channels-commands.c:402
 msgid "Channel Attributes"
 msgstr "Γνωρίσματα καναλιού"
 
@@ -815,12 +801,11 @@ msgid "Edit Channel Color"
 msgstr "Επεξεργασία χρώματος καναλιού"
 
 #
-#: ../app/actions/channels-commands.c:91
-#: ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:91 ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
 msgstr "Αδιαφάνεια _γεμίσματος:"
 
-#: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:278
+#: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:279
 #: ../app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "Κανάλι"
@@ -1071,8 +1056,8 @@ msgid "Use the composite color of all visible layers"
 msgstr "Χρήση του σύνθετου χρώματος από όλες τις ορατές στρώσεις"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
-#: ../app/actions/file-commands.c:212 ../app/dialogs/file-open-dialog.c:212
-#: ../app/dialogs/file-open-dialog.c:253
+#: ../app/actions/file-commands.c:212 ../app/dialogs/file-open-dialog.c:213
+#: ../app/dialogs/file-open-dialog.c:254
 #: ../app/dialogs/file-open-location-dialog.c:218
 #: ../app/dialogs/file-open-location-dialog.c:228
 #: ../app/display/gimpdisplayshell-dnd.c:593
@@ -1088,17 +1073,16 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114
-#: ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1905
-#: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:208
+#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1902
+#: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:90
 msgid "Untitled"
 msgstr "Άτιτλο"
 
 #: ../app/actions/data-commands.c:213 ../app/actions/documents-commands.c:189
-#: ../app/actions/file-commands.c:538
+#: ../app/actions/file-commands.c:549
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Αδύνατη η εμφάνιση του αρχείου στον διαχειριστή αρχείων: %s"
@@ -1464,12 +1448,16 @@ msgid "_About"
 msgstr "Πε_ρί"
 
 #: ../app/actions/dialogs-actions.c:275
-msgctxt "help-action"
+#| msgctxt "help-action"
+#| msgid "_Search and Run a Command"
+msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "Ανα_ζήτηση και εκτέλεση εντολής"
 
 #: ../app/actions/dialogs-actions.c:276
-msgctxt "help-action"
+#| msgctxt "help-action"
+#| msgid "Search commands by keyword, and run them"
+msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Αναζήτηση εντολών κατά λέξη-κλειδί και εκτέλεσή τους"
 
@@ -2632,7 +2620,7 @@ msgstr "Αντικατάστασ_η του %s"
 msgid "Export"
 msgstr "Εξαγωγή"
 
-#: ../app/actions/file-commands.c:125 ../app/actions/file-commands.c:561
+#: ../app/actions/file-commands.c:125 ../app/actions/file-commands.c:572
 #: ../app/widgets/gimpopendialog.c:73
 msgid "Open Image"
 msgstr "Άνοιγμα εικόνας"
@@ -2641,7 +2629,7 @@ msgstr "Άνοιγμα εικόνας"
 msgid "Open Image as Layers"
 msgstr "Άνοιγμα εικόνας ως στρώσεις"
 
-#: ../app/actions/file-commands.c:276 ../app/widgets/gimpsavedialog.c:243
+#: ../app/actions/file-commands.c:285 ../app/widgets/gimpsavedialog.c:271
 #, c-format
 msgid ""
 "The image uses features from %s and cannot be saved for older GIMP versions."
@@ -2649,43 +2637,43 @@ msgstr ""
 "Η εικόνα χρησιμοποιεί χαρακτηριστικά από το %s και δεν μπορεί να αποθηκευτεί "
 "για παλιότερες εκδόσεις του GIMP."
 
-#: ../app/actions/file-commands.c:297
+#: ../app/actions/file-commands.c:308
 msgid "No changes need to be saved"
 msgstr "Δεν υπάρχουν αλλαγές για αποθήκευση"
 
-#: ../app/actions/file-commands.c:304 ../app/actions/file-commands.c:775
-#: ../app/widgets/gimpsavedialog.c:121
+#: ../app/actions/file-commands.c:315 ../app/actions/file-commands.c:786
+#: ../app/widgets/gimpsavedialog.c:146
 msgid "Save Image"
 msgstr "Αποθήκευση εικόνας"
 
-#: ../app/actions/file-commands.c:310
+#: ../app/actions/file-commands.c:321
 msgid "Save a Copy of the Image"
 msgstr "Αποθήκευση ενός αντιγράφου της εικόνας"
 
 #
-#: ../app/actions/file-commands.c:386
+#: ../app/actions/file-commands.c:397
 msgid "Create New Template"
 msgstr "Δημιουργία νέου προτύπου"
 
-#: ../app/actions/file-commands.c:390
+#: ../app/actions/file-commands.c:401
 msgid "Enter a name for this template"
 msgstr "Εισάγετε το όνομα του νέου προτύπου"
 
-#: ../app/actions/file-commands.c:420
+#: ../app/actions/file-commands.c:431
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Η επαναφορά απέτυχε. Δε βρέθηκε όνομα αρχείου συνδεμένου με αυτήν την εικόνα."
 
-#: ../app/actions/file-commands.c:430
+#: ../app/actions/file-commands.c:441
 msgid "Revert Image"
 msgstr "Επαναφορά εικόνας"
 
-#: ../app/actions/file-commands.c:454
+#: ../app/actions/file-commands.c:465
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Επαναφορά του '%s' σε '%s';"
 
-#: ../app/actions/file-commands.c:459
+#: ../app/actions/file-commands.c:470
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2693,11 +2681,11 @@ msgstr ""
 "Επαναφέροντας την εικόνα στην αποθηκευμένη κατάσταση στο δίσκο, θα χάσετε "
 "όλες τις αλλαγές σας, συμπεριλαμβανομένων των πληροφοριών αναιρέσεων."
 
-#: ../app/actions/file-commands.c:806
+#: ../app/actions/file-commands.c:817
 msgid "(Unnamed Template)"
 msgstr "(Ανώνυμο πρότυπο)"
 
-#: ../app/actions/file-commands.c:855
+#: ../app/actions/file-commands.c:866
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2734,9 +2722,11 @@ msgid "_Bump Map..."
 msgstr "Χάρτης ανά_γλυφου..."
 
 #: ../app/actions/filters-actions.c:68
+#| msgctxt "filters-action"
+#| msgid "Color to Gray..."
 msgctxt "filters-action"
-msgid "Color to Gray..."
-msgstr "Χρωματισμός σε γκρίζο..."
+msgid "_Color to Gray..."
+msgstr "_Χρωματισμός σε γκρίζο..."
 
 #: ../app/actions/filters-actions.c:73
 msgctxt "filters-action"
@@ -2891,15 +2881,16 @@ msgstr "Λάμψη φακών..."
 
 #
 #: ../app/actions/filters-actions.c:223
-#| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Λαβύρινθος..."
 
 #: ../app/actions/filters-actions.c:228
+#| msgctxt "filters-action"
+#| msgid "Mono Mixer..."
 msgctxt "filters-action"
-msgid "Mono Mixer..."
-msgstr "Μονός μείκτης..."
+msgid "_Mono Mixer..."
+msgstr "_Μονός μείκτης..."
 
 #: ../app/actions/filters-actions.c:233
 msgctxt "filters-action"
@@ -3027,86 +3018,93 @@ msgid "_Semi-Flatten..."
 msgstr "Ήμιι_σοπέδωση..."
 
 #: ../app/actions/filters-actions.c:358
+#| msgctxt "filters-action"
+#| msgid "_Super_nova..."
+msgctxt "filters-action"
+msgid "_Sepia..."
+msgstr "_Σέπια (σουπιά)..."
+
+#: ../app/actions/filters-actions.c:363
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "Μετατόπι_ση..."
 
-#: ../app/actions/filters-actions.c:363
+#: ../app/actions/filters-actions.c:368
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Ημίτονο..."
 
-#: ../app/actions/filters-actions.c:368
+#: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "Α_παλή λάμψη..."
 
-#: ../app/actions/filters-actions.c:373
+#: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "Επέκτα_ση αντίθεσης..."
 
-#: ../app/actions/filters-actions.c:378
+#: ../app/actions/filters-actions.c:383
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV..."
 msgstr "Επέκτα_ση αντίθεσης HSV..."
 
-#: ../app/actions/filters-actions.c:383
+#: ../app/actions/filters-actions.c:388
 msgctxt "filters-action"
 msgid "_Super_nova..."
 msgstr "Υπερκαι_νοφανής..."
 
-#: ../app/actions/filters-actions.c:388
+#: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "Κα_τώφλι άλφα..."
 
-#: ../app/actions/filters-actions.c:393
+#: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Παράθεση _γυαλιού..."
 
-#: ../app/actions/filters-actions.c:398
+#: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Πλακίδιο χαρτιού..."
 
-#: ../app/actions/filters-actions.c:403
+#: ../app/actions/filters-actions.c:408
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Παράθεση χωρίς ραφή..."
 
-#: ../app/actions/filters-actions.c:408
+#: ../app/actions/filters-actions.c:413
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "Από_ξυνση μάσκας..."
 
-#: ../app/actions/filters-actions.c:413
+#: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Διάδοση τιμής..."
 
-#: ../app/actions/filters-actions.c:418
+#: ../app/actions/filters-actions.c:423
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Υποβάθμιση _βίντεο..."
 
-#: ../app/actions/filters-actions.c:423
+#: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Βινιέτα..."
 
-#: ../app/actions/filters-actions.c:428
+#: ../app/actions/filters-actions.c:433
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Κύματα..."
 
-#: ../app/actions/filters-actions.c:433
+#: ../app/actions/filters-actions.c:438
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "Στροβιλισμός και πίεσ_η..."
 
-#: ../app/actions/filters-actions.c:438
+#: ../app/actions/filters-actions.c:443
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "Ά_νεμος..."
@@ -3599,179 +3597,179 @@ msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "Εμφάνιση της βοήθειας για συγκεκριμένο στοιχείο διεπαφής χρήστη"
 
-#: ../app/actions/image-actions.c:49 ../app/actions/image-actions.c:53
+#: ../app/actions/image-actions.c:51 ../app/actions/image-actions.c:55
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr "Μενού εικόνας"
 
-#: ../app/actions/image-actions.c:56
+#: ../app/actions/image-actions.c:58
 msgctxt "image-action"
 msgid "_Image"
 msgstr "Ε_ικόνα"
 
-#: ../app/actions/image-actions.c:57
+#: ../app/actions/image-actions.c:59
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Κατάσταση"
 
-#: ../app/actions/image-actions.c:58
+#: ../app/actions/image-actions.c:60
 msgctxt "image-action"
 msgid "_Precision"
 msgstr "Α_κρίβεια"
 
-#: ../app/actions/image-actions.c:60
+#: ../app/actions/image-actions.c:62
 msgctxt "image-action"
 msgid "_Color Management"
 msgstr "Διαχείριση _χρωμάτων"
 
-#: ../app/actions/image-actions.c:61
+#: ../app/actions/image-actions.c:63
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "Μετασ_χηματισμός"
 
-#: ../app/actions/image-actions.c:62
+#: ../app/actions/image-actions.c:64
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Οδηγοί"
 
-#: ../app/actions/image-actions.c:64
+#: ../app/actions/image-actions.c:66
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Χρώματα"
 
-#: ../app/actions/image-actions.c:65
+#: ../app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "Πληροφο_ρίες"
 
-#: ../app/actions/image-actions.c:66
+#: ../app/actions/image-actions.c:68
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Αυτόματα"
 
-#: ../app/actions/image-actions.c:67
+#: ../app/actions/image-actions.c:69
 msgctxt "image-action"
 msgid "_Map"
 msgstr "Χάρ_της"
 
-#: ../app/actions/image-actions.c:68
+#: ../app/actions/image-actions.c:70
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "Σ_υστατικά"
 
 #
-#: ../app/actions/image-actions.c:69
+#: ../app/actions/image-actions.c:71
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "Α_ποκορεσμός"
 
-#: ../app/actions/image-actions.c:72
+#: ../app/actions/image-actions.c:74
 msgctxt "image-action"
 msgid "_New..."
 msgstr "_Νέο..."
 
-#: ../app/actions/image-actions.c:73
+#: ../app/actions/image-actions.c:75
 msgctxt "image-action"
 msgid "Create a new image"
 msgstr "Δημιουργία νέας εικόνας"
 
-#: ../app/actions/image-actions.c:78
+#: ../app/actions/image-actions.c:80
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Απόδοση χρωματικής κατατομής..."
 
-#: ../app/actions/image-actions.c:79
+#: ../app/actions/image-actions.c:81
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Ορισμός χρωματικής κατατομής στην εικόνα"
 
-#: ../app/actions/image-actions.c:84
+#: ../app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
 msgstr "_Μετατροπή σε χρωματική κατατομή..."
 
-#: ../app/actions/image-actions.c:85
+#: ../app/actions/image-actions.c:87
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
 msgstr "Εφαρμογή χρωματικής κατατομής στην εικόνα"
 
-#: ../app/actions/image-actions.c:90
+#: ../app/actions/image-actions.c:92
 msgctxt "image-action"
 msgid "_Discard Color Profile"
 msgstr "Απόρρι_ψη χρωματικής κατατομής"
 
-#: ../app/actions/image-actions.c:91
+#: ../app/actions/image-actions.c:93
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Αφαίρεση χρωματικής κατατομής της εικόνας"
 
-#: ../app/actions/image-actions.c:96
+#: ../app/actions/image-actions.c:98
 msgctxt "image-action"
 msgid "Can_vas Size..."
 msgstr "Διαστάσεις καμ_βά..."
 
-#: ../app/actions/image-actions.c:97
+#: ../app/actions/image-actions.c:99
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "Ρύθμιση των διαστάσεων της εικόνας"
 
-#: ../app/actions/image-actions.c:102
+#: ../app/actions/image-actions.c:104
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
 msgstr "_Προσαρμογή καμβά στις στρώσεις"
 
-#: ../app/actions/image-actions.c:103
+#: ../app/actions/image-actions.c:105
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr ""
 "Αλλαγή των διαστάσεων της εικόνας ώστε να περικλείονται όλες οι στρώσεις"
 
-#: ../app/actions/image-actions.c:108
+#: ../app/actions/image-actions.c:110
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr "Προσαρμογή καμβά στην επι_λογή"
 
-#: ../app/actions/image-actions.c:109
+#: ../app/actions/image-actions.c:111
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "Αλλαγή μεγέθους της εικόνας στο μέγεθος της επιλογής"
 
-#: ../app/actions/image-actions.c:114
+#: ../app/actions/image-actions.c:116
 msgctxt "image-action"
 msgid "_Print Size..."
 msgstr "Μέ_γεθος εκτύπωσης..."
 
-#: ../app/actions/image-actions.c:115
+#: ../app/actions/image-actions.c:117
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "Ρύθμιση της ανάλυσης εκτύπωσης"
 
-#: ../app/actions/image-actions.c:120
+#: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr "Κλιμάκ_ωση εικόνας..."
 
-#: ../app/actions/image-actions.c:121
+#: ../app/actions/image-actions.c:123
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "Αυξομείωση του μεγέθους των περιεχομένων της εικόνας"
 
-#: ../app/actions/image-actions.c:126
+#: ../app/actions/image-actions.c:128
 msgctxt "image-action"
 msgid "_Crop to Selection"
 msgstr "Περικοπή στ_ην επιλογή"
 
-#: ../app/actions/image-actions.c:127
+#: ../app/actions/image-actions.c:129
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr "Περικοπή της εικόνας στα όρια της επιλογής"
 
-#: ../app/actions/image-actions.c:132
+#: ../app/actions/image-actions.c:134
 msgctxt "image-action"
 msgid "Crop to C_ontent"
 msgstr "Περικοπή στο περιε_χόμενο"
 
-#: ../app/actions/image-actions.c:133
+#: ../app/actions/image-actions.c:135
 msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
@@ -3780,310 +3778,295 @@ msgstr ""
 "Περικοπή της εικόνας στις εκτάσεις του περιεχομένου της (αφαίρεση κενών "
 "περιγραμμάτων από την εικόνα)"
 
-#: ../app/actions/image-actions.c:138
+#: ../app/actions/image-actions.c:140
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "_Διπλασιασμός"
 
-#: ../app/actions/image-actions.c:139
+#: ../app/actions/image-actions.c:141
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Δημιουργία ενός διπλότυπου αυτής της εικόνας"
 
-#: ../app/actions/image-actions.c:144
+#: ../app/actions/image-actions.c:146
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "Συγχώνευση ορατών _στρώσεων..."
 
-#: ../app/actions/image-actions.c:145
+#: ../app/actions/image-actions.c:147
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Συγχώνευση όλων των ορατών στρώσεων σε μία στρώση"
 
-#: ../app/actions/image-actions.c:150
+#: ../app/actions/image-actions.c:152
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "_Ισοπέδωση εικόνας"
 
-#: ../app/actions/image-actions.c:151
+#: ../app/actions/image-actions.c:153
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Συγχώνευση όλων των στρώσεων σε μία και αφαίρεση της διαφάνειας"
 
-#: ../app/actions/image-actions.c:156
+#: ../app/actions/image-actions.c:158
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "Ρύθμιση πλέγμ_ατος..."
 
-#: ../app/actions/image-actions.c:157
+#: ../app/actions/image-actions.c:159
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Ρύθμιση του πλέγματος για αυτή την εικόνα"
 
-#: ../app/actions/image-actions.c:162
+#: ../app/actions/image-actions.c:164
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "Ιδιό_τητες εικόνας"
 
-#: ../app/actions/image-actions.c:163
+#: ../app/actions/image-actions.c:165
 msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Εμφάνιση πληροφοριών για αυτή την εικόνα"
 
-#: ../app/actions/image-actions.c:171
+#: ../app/actions/image-actions.c:173
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../app/actions/image-actions.c:172
+#: ../app/actions/image-actions.c:174
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Μετατροπή της εικόνας σε χρωματικό χώρο RGB"
 
-#: ../app/actions/image-actions.c:176
+#: ../app/actions/image-actions.c:178
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Κλίμακα _γκρι"
 
-#: ../app/actions/image-actions.c:177
+#: ../app/actions/image-actions.c:179
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Μετατροπή της εικόνας σε κλίμακα του γκρι"
 
-#: ../app/actions/image-actions.c:181
+#: ../app/actions/image-actions.c:183
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "Από _ευρετήριο..."
 
-#: ../app/actions/image-actions.c:182
+#: ../app/actions/image-actions.c:184
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Μετατροπή των χρωμάτων σε χρώματα από ευρετήριο"
 
-#: ../app/actions/image-actions.c:189
-msgctxt "image-convert-action"
-msgid "8 bit integer (linear)"
-msgstr "Ακέραιος 8 δυαδικών (γραμμικός)"
-
 #: ../app/actions/image-actions.c:191
+#| msgctxt "component-type"
+#| msgid "8-bit integer"
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit linear integer"
-msgstr "Μετατροπή της εικόνας σε γραμμικό ακέραιο 8 δυαδικών"
+msgid "8 bit integer"
+msgstr "Ακέραιος 8 δυαδικών ψηφίων"
 
-#: ../app/actions/image-actions.c:195
+#: ../app/actions/image-actions.c:193
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 8 bit linear integer"
 msgctxt "image-convert-action"
-msgid "8 bit integer (gamma)"
-msgstr "Ακέραιος 8 δυαδικών (γάμα)"
+msgid "Convert the image to 8 bit integer"
+msgstr "Μετατροπή της εικόνας σε ακέραιο 8 δυαδικών ψηφίων"
 
 #: ../app/actions/image-actions.c:197
+#| msgctxt "component-type"
+#| msgid "16-bit integer"
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit gamma-corrected integer"
-msgstr "Μετατροπή της εικόνας σε διορθωμένο γάμα ακέραιο 8 δυαδικών"
+msgid "16 bit integer"
+msgstr "Ακέραιος 16 δυαδικών ψηφίων"
 
-#: ../app/actions/image-actions.c:201
+#: ../app/actions/image-actions.c:199
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 16 bit linear integer"
 msgctxt "image-convert-action"
-msgid "16 bit integer (linear)"
-msgstr "Ακέραιος 16 δυαδικών (γραμμικός)"
+msgid "Convert the image to 16 bit integer"
+msgstr "Μετατροπή της εικόνας σε ακέραιο 16 δυαδικών ψηφίων"
 
 #: ../app/actions/image-actions.c:203
+#| msgctxt "component-type"
+#| msgid "32-bit integer"
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit linear integer"
-msgstr "Μετατροπή της εικόνας σε γραμμικό ακέραιο 16 δυαδικών"
+msgid "32 bit integer"
+msgstr "Ακέραιος 32 δυαδικών ψηφίων"
 
-#: ../app/actions/image-actions.c:207
+#: ../app/actions/image-actions.c:205
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 32 bit linear integer"
 msgctxt "image-convert-action"
-msgid "16 bit integer (gamma)"
-msgstr "Ακέραιος 16 δυαδικών (γάμα)"
+msgid "Convert the image to 32 bit integer"
+msgstr "Μετατροπή της εικόνας σε ακέραιο 32 δυαδικών ψηφίων"
 
 #: ../app/actions/image-actions.c:209
+#| msgctxt "component-type"
+#| msgid "16-bit floating point"
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit gamma-corrected integer"
-msgstr "Μετατροπή της εικόνας σε διορθωμένο γάμα ακέραιο 16 δυαδικών"
+msgid "16 bit floating point"
+msgstr "Κινητή υποδιαστολή 16 δυαδικών ψηφίων"
 
-#: ../app/actions/image-actions.c:213
+#: ../app/actions/image-actions.c:211
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 16 bit linear floating point"
 msgctxt "image-convert-action"
-msgid "32 bit integer (linear)"
-msgstr "Ακέραιος 32 δυαδικών (γραμμικός)"
+msgid "Convert the image to 16 bit floating point"
+msgstr "Μετατροπή της εικόνας σε κινητή υποδιαστολή 16 δυαδικών ψηφίων"
 
 #: ../app/actions/image-actions.c:215
+#| msgctxt "component-type"
+#| msgid "32-bit floating point"
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit linear integer"
-msgstr "Μετατροπή της εικόνας σε γραμμικό ακέραιο 32 δυαδικών"
+msgid "32 bit floating point"
+msgstr "Κινητή υποδιαστολή 32 δυαδικών ψηφίων"
 
-#: ../app/actions/image-actions.c:219
+#: ../app/actions/image-actions.c:217
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 32 bit linear floating point"
 msgctxt "image-convert-action"
-msgid "32 bit integer (gamma)"
-msgstr "Ακέραιος 32 δυαδικών (γάμα)"
+msgid "Convert the image to 32 bit floating point"
+msgstr "Μετατροπή της εικόνας σε κινητή υποδιαστολή 32 δυαδικών ψηφίων"
 
 #: ../app/actions/image-actions.c:221
+#| msgctxt "component-type"
+#| msgid "64-bit floating point"
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit gamma-corrected integer"
-msgstr "Μετατροπή της εικόνας σε διορθωμένο γάμα ακέραιο 32 δυαδικών"
+msgid "64 bit floating point"
+msgstr "Κινητή υποδιαστολή 64 δυαδικών ψηφίων"
 
-#: ../app/actions/image-actions.c:225
+#: ../app/actions/image-actions.c:223
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 64 bit linear floating point"
 msgctxt "image-convert-action"
-msgid "16 bit floating point (linear)"
-msgstr "κινητή υποδιαστολή 16 δυαδικών (γραμμική)"
+msgid "Convert the image to 64 bit floating point"
+msgstr "Μετατροπή της εικόνας σε κινητή υποδιαστολή 64 δυαδικών ψηφίων"
 
-#: ../app/actions/image-actions.c:227
+#: ../app/actions/image-actions.c:230
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit linear floating point"
-msgstr "Μετατροπή της εικόνας σε γραμμικό κινητής υποδιαστολής 16 δυαδικών"
+msgid "Perceptual gamma (sRGB)"
+msgstr "Αντιληπτικό γάμα (sRGB)"
 
-#: ../app/actions/image-actions.c:231
+#: ../app/actions/image-actions.c:232
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to grayscale"
 msgctxt "image-convert-action"
-msgid "16 bit floating point (gamma)"
-msgstr "κινητή υποδιαστολή 16 δυαδικών (γάμα)"
+msgid "Convert the image to preceptual (sRGB) gamma"
+msgstr "Μετατροπή της εικόνας σε διαισθητική γάμα (sRGB)"
 
-#: ../app/actions/image-actions.c:233
+#: ../app/actions/image-actions.c:236
+#| msgctxt "layer-mode-effects"
+#| msgid "Hard light"
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit gamma-corrected floating point"
-msgstr ""
-"Μετατροπή της εικόνας σε διορθωμένο γάμα κινητής υποδιαστολής 16 δυαδικών"
+msgid "Linear light"
+msgstr "Γραμμικό φως"
 
-#: ../app/actions/image-actions.c:237
+#: ../app/actions/image-actions.c:238
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 8 bit linear integer"
 msgctxt "image-convert-action"
-msgid "32 bit floating point (linear)"
-msgstr "κινητή υποδιαστολή 32 δυαδικών (γραμμική)"
-
-#: ../app/actions/image-actions.c:239
-msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit linear floating point"
-msgstr "Μετατροπή της εικόνας σε γραμμικό κινητής υποδιαστολής 32 δυαδικών"
-
-#: ../app/actions/image-actions.c:243
-msgctxt "image-convert-action"
-msgid "32 bit floating point (gamma)"
-msgstr "κινητή υποδιαστολή 32 δυαδικών (γάμα)"
+msgid "Convert the image to linear light"
+msgstr "Μετατροπή της εικόνας σε γραμμικό φως"
 
 #: ../app/actions/image-actions.c:245
-msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit gamma-corrected floating point"
-msgstr ""
-"Μετατροπή της εικόνας σε διορθωμένο γάμα κινητής υποδιαστολής 32 δυαδικών"
-
-#: ../app/actions/image-actions.c:249
-msgctxt "image-convert-action"
-msgid "64 bit floating point (linear)"
-msgstr "κινητή υποδιαστολή 64 δυαδικών (γραμμική)"
-
-#: ../app/actions/image-actions.c:251
-msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit linear floating point"
-msgstr "Μετατροπή της εικόνας σε γραμμικό κινητής υποδιαστολής 64 δυαδικών"
-
-#: ../app/actions/image-actions.c:255
-msgctxt "image-convert-action"
-msgid "64 bit floating point (gamma)"
-msgstr "κινητή υποδιαστολή 64 δυαδικών (γάμα)"
-
-#: ../app/actions/image-actions.c:257
-msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit gamma-corrected floating point"
-msgstr ""
-"Μετατροπή της εικόνας σε διορθωμένο γάμα κινητής υποδιαστολής 64 δυαδικών"
-
-#: ../app/actions/image-actions.c:264
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "_Οριζόντια αναστροφή"
 
-#: ../app/actions/image-actions.c:265
+#: ../app/actions/image-actions.c:246
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Οριζόντια αναστροφή εικόνας"
 
-#: ../app/actions/image-actions.c:270
+#: ../app/actions/image-actions.c:251
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "_Κατακόρυφη αναστροφή"
 
-#: ../app/actions/image-actions.c:271
+#: ../app/actions/image-actions.c:252
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Κατακόρυφη αναστροφή εικόνας"
 
-#: ../app/actions/image-actions.c:279
+#: ../app/actions/image-actions.c:260
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Περιστροφή 90° _δεξιόστροφα"
 
-#: ../app/actions/image-actions.c:280
+#: ../app/actions/image-actions.c:261
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Περιστροφή της εικόνας 90 μοίρες δεξιά"
 
-#: ../app/actions/image-actions.c:285
+#: ../app/actions/image-actions.c:266
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "Περιστροφή _180°"
 
-#: ../app/actions/image-actions.c:286
+#: ../app/actions/image-actions.c:267
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Αναποδογύρισμα της εικόνας"
 
-#: ../app/actions/image-actions.c:291
+#: ../app/actions/image-actions.c:272
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Περιστροφή 90° α_ριστερόστροφα"
 
-#: ../app/actions/image-actions.c:292
+#: ../app/actions/image-actions.c:273
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Περιστροφή της εικόνας 90 μοίρες αριστερά"
 
-#: ../app/actions/image-commands.c:410
+#: ../app/actions/image-commands.c:424
 msgid "Set Image Canvas Size"
 msgstr "Ορισμός των διαστάσεων του καμβά εικόνας"
 
-#: ../app/actions/image-commands.c:439 ../app/actions/image-commands.c:463
-#: ../app/actions/image-commands.c:804
+#: ../app/actions/image-commands.c:453 ../app/actions/image-commands.c:477
+#: ../app/actions/image-commands.c:818
 msgid "Resizing"
 msgstr "Αλλαγή διαστάσεων"
 
-#: ../app/actions/image-commands.c:490
+#: ../app/actions/image-commands.c:504
 msgid "Set Image Print Resolution"
 msgstr "Ορισμός της ανάλυσης εκτύπωσης εικόνας"
 
-#: ../app/actions/image-commands.c:552
-#: ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:566 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Αναστροφή"
 
-#: ../app/actions/image-commands.c:576
-#: ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:590 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
 msgid "Rotating"
 msgstr "Περιστροφή"
 
-#: ../app/actions/image-commands.c:602 ../app/actions/layers-commands.c:702
+#: ../app/actions/image-commands.c:616 ../app/actions/layers-commands.c:702
 msgid "Cannot crop because the current selection is empty."
 msgstr "Δεν μπορεί να γίνει περικοπή, γιατί η τρέχουσα επιλογή είναι κενή."
 
-#: ../app/actions/image-commands.c:636
+#: ../app/actions/image-commands.c:650
 msgid "Cannot crop because the image has no content."
 msgstr "Αδύνατη η περικοπή επειδή η εικόνα δεν έχει περιεχόμενο."
 
-#: ../app/actions/image-commands.c:642
+#: ../app/actions/image-commands.c:656
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "Αδύνατη η περικοπή επειδή η εικόνα είναι ήδη περικομμένη στο περιεχόμενό της."
 
-#: ../app/actions/image-commands.c:852
+#: ../app/actions/image-commands.c:866
 msgid "Change Print Size"
 msgstr "Αλλαγή μεγέθους εκτύπωσης"
 
-#: ../app/actions/image-commands.c:893
+#: ../app/actions/image-commands.c:907
 msgid "Scale Image"
 msgstr "Κλιμάκωση εικόνας"
 
 #. Scaling
-#: ../app/actions/image-commands.c:904 ../app/actions/layers-commands.c:1197
+#: ../app/actions/image-commands.c:918 ../app/actions/layers-commands.c:1197
 #: ../app/dialogs/preferences-dialog.c:1814
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -4653,7 +4636,7 @@ msgstr "Γνωρίσματα στρώσης"
 msgid "Edit Layer Attributes"
 msgstr "Επεξεργασία γνωρισμάτων στρώσης"
 
-#: ../app/actions/layers-commands.c:257 ../app/core/gimplayer.c:319
+#: ../app/actions/layers-commands.c:257 ../app/core/gimplayer.c:323
 msgid "Layer"
 msgstr "Στρώση"
 
@@ -5667,78 +5650,88 @@ msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
 msgstr "Επεξεργασία ενεργών προεπιλογών εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:45
+#: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
 msgstr "Μενού προεπιλογών εργαλείων"
 
-#: ../app/actions/tool-presets-actions.c:49
+#: ../app/actions/tool-presets-actions.c:50
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
 msgstr "_Νέες προεπιλογές εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:50
+#: ../app/actions/tool-presets-actions.c:51
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
 msgstr "Δημιουργία νέων προεπιλογών εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:55
+#: ../app/actions/tool-presets-actions.c:56
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
 msgstr "Διπλότ_υπο προεπιλογών εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:56
+#: ../app/actions/tool-presets-actions.c:57
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
 msgstr "Διπλασιασμός αυτών των προεπιλογών εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:61
+#: ../app/actions/tool-presets-actions.c:62
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
 msgstr "Αντιγραφή _τοποθεσίας προεπιλογών εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:62
+#: ../app/actions/tool-presets-actions.c:63
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
 msgstr "Αντιγραφή της τοποθεσίας του αρχείου των προεπιλογών στο πρόχειρο"
 
-#: ../app/actions/tool-presets-actions.c:67
+#: ../app/actions/tool-presets-actions.c:68
 msgctxt "tool-presets-action"
 msgid "Show in _File Manager"
 msgstr "Εμφάνιση στον διαχειριστή αρ_χείων"
 
-#: ../app/actions/tool-presets-actions.c:68
+#: ../app/actions/tool-presets-actions.c:69
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
 msgstr ""
 "Εμφάνιση της θέσης αρχείου προκαθορισμένου εργαλείου στον διαχειριστή αρχείων"
 
-#: ../app/actions/tool-presets-actions.c:73
+#: ../app/actions/tool-presets-actions.c:74
+msgctxt "tool-presets-action"
+msgid "_Restore Tool Preset"
+msgstr "Επαναφο_ρά προεπιλογών εργαλείου"
+
+#: ../app/actions/tool-presets-actions.c:75
+msgctxt "tool-presets-action"
+msgid "Restore this tool preset"
+msgstr "Επαναφoρά των προεπιλογών αυτού του εργαλείου"
+
+#: ../app/actions/tool-presets-actions.c:80
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
 msgstr "_Διαγραφή προεπιλογών εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:74
+#: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
 msgstr "Διαγραφή αυτών των προεπιλογών εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:79
+#: ../app/actions/tool-presets-actions.c:86
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
 msgstr "_Ανανέωση προεπιλογών εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:80
+#: ../app/actions/tool-presets-actions.c:87
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
 msgstr "Ανανέωση των προεπιλογών του εργαλείου"
 
-#: ../app/actions/tool-presets-actions.c:88
+#: ../app/actions/tool-presets-actions.c:95
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
 msgstr "_Επεξεργασία προεπιλογών εργαλείου..."
 
-#: ../app/actions/tool-presets-actions.c:89
+#: ../app/actions/tool-presets-actions.c:96
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
 msgstr "Επεξεργασία αυτών των προεπιλογών του εργαλείου"
@@ -6068,8 +6061,8 @@ msgstr "_Εστίαση"
 
 #: ../app/actions/view-actions.c:71
 msgctxt "view-action"
-msgid "_Rotate"
-msgstr "_Περιστροφή"
+msgid "_Flip & Rotate"
+msgstr "Α_ναστροφή & περιστροφή"
 
 #: ../app/actions/view-actions.c:72
 msgctxt "view-action"
@@ -6123,484 +6116,521 @@ msgstr "Προσαρμογή του λόγου εστίασης ώστε να χ
 
 #: ../app/actions/view-actions.c:102
 msgctxt "view-action"
+msgid "Zoom to _Selection"
+msgstr "Εστίαση στ_ην επιλογή"
+
+#: ../app/actions/view-actions.c:103
+msgctxt "view-action"
+msgid "Adjust the zoom ratio so that the selection fills the window"
+msgstr ""
+"Προσαρμογή του λόγου εστίασης έτσι ώστε η επιλογή να γεμίζει το παράθυρο"
+
+#: ../app/actions/view-actions.c:108
+msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Επανα_φορά εστίασης"
 
-#: ../app/actions/view-actions.c:103
+#: ../app/actions/view-actions.c:109
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Επαναφορά του προηγούμενου επιπέδου εστίασης"
 
-#: ../app/actions/view-actions.c:108
+#: ../app/actions/view-actions.c:114
 msgctxt "view-action"
 msgid "Othe_r..."
 msgstr "Ά_λλη..."
 
-#: ../app/actions/view-actions.c:109
+#: ../app/actions/view-actions.c:115
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Ορισμός προσαρμοσμένης γωνίας περιστροφής"
 
-#: ../app/actions/view-actions.c:114
+#: ../app/actions/view-actions.c:120
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Παρά_θυρο περιήγησης"
 
-#: ../app/actions/view-actions.c:115
+#: ../app/actions/view-actions.c:121
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Προβολή ενός παραθύρου επισκόπησης αυτής της εικόνας"
 
-#: ../app/actions/view-actions.c:120
+#: ../app/actions/view-actions.c:126
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "Εμφάνιση _φίλτρων..."
 
-#: ../app/actions/view-actions.c:121
+#: ../app/actions/view-actions.c:127
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Επεξεργασία των εφαρμοσμένων φίλτρων σε αυτήν την προβολή"
 
-#: ../app/actions/view-actions.c:126
+#: ../app/actions/view-actions.c:132
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "Συρρίκνωση αναδίπλ_ωσης"
 
-#: ../app/actions/view-actions.c:127
+#: ../app/actions/view-actions.c:133
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Συρρίκνωση του παραθύρου εικόνας στο μέγεθος της εμφάνισης εικόνας"
 
-#: ../app/actions/view-actions.c:132
+#: ../app/actions/view-actions.c:138
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "Άν_οιγμα οθόνης..."
 
-#: ../app/actions/view-actions.c:133
+#: ../app/actions/view-actions.c:139
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Σύνδεση σε διαφορετική οθόνη"
 
-#: ../app/actions/view-actions.c:141
+#: ../app/actions/view-actions.c:147
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "Κο_υκκίδα για κουκκίδα"
 
-#: ../app/actions/view-actions.c:142
+#: ../app/actions/view-actions.c:148
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr ""
 "Ένα εικονοστοιχείο στην οθόνη αντιστοιχεί σε ένα εικονοστοιχείο της εικόνας"
 
-#: ../app/actions/view-actions.c:148
+#: ../app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Εμφάνισ_η επιλογής"
 
-#: ../app/actions/view-actions.c:149
+#: ../app/actions/view-actions.c:155
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Εμφάνιση του περιγράμματος επιλογής"
 
-#: ../app/actions/view-actions.c:155
+#: ../app/actions/view-actions.c:161
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Εμφάνιση ορίων _στρώσης"
 
-#: ../app/actions/view-actions.c:156
+#: ../app/actions/view-actions.c:162
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Εμφάνιση περιγράμματος γύρω από την ενεργή στρώση"
 
-#: ../app/actions/view-actions.c:162
+#: ../app/actions/view-actions.c:168
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "Εμφάνιση _οδηγών"
 
-#: ../app/actions/view-actions.c:163
+#: ../app/actions/view-actions.c:169
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Εμφάνιση των οδηγών της εικόνας"
 
-#: ../app/actions/view-actions.c:169
+#: ../app/actions/view-actions.c:175
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Εμφάνιση πλέ_γματος"
 
-#: ../app/actions/view-actions.c:170
+#: ../app/actions/view-actions.c:176
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Εμφάνιση του πλέγματος της εικόνας"
 
-#: ../app/actions/view-actions.c:176
+#: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Εμφάνιση σημείων δειγματοληψίας"
 
-#: ../app/actions/view-actions.c:177
+#: ../app/actions/view-actions.c:183
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Εμφάνιση των σημείων δειγματοληψίας χρώματος της εικόνας"
 
-#: ../app/actions/view-actions.c:183
+#: ../app/actions/view-actions.c:189
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "Προσκόλληση στους ο_δηγούς"
 
-#: ../app/actions/view-actions.c:184
+#: ../app/actions/view-actions.c:190
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Οι λειτουργίες εργαλείων προσκολλούνται στους οδηγούς"
 
-#: ../app/actions/view-actions.c:190
+#: ../app/actions/view-actions.c:196
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Προσ_κόλληση στο πλέγμα"
 
-#: ../app/actions/view-actions.c:191
+#: ../app/actions/view-actions.c:197
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Οι λειτουργίες των εργαλείων προσκολλούνται στο πλέγμα"
 
-#: ../app/actions/view-actions.c:197
+#: ../app/actions/view-actions.c:203
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Προσκόλληση στα όρια του καμ_βά"
 
-#: ../app/actions/view-actions.c:198
+#: ../app/actions/view-actions.c:204
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Οι λειτουργίες των εργαλείων προσκολλούνται στα όρια του καμβά"
 
-#: ../app/actions/view-actions.c:204
+#: ../app/actions/view-actions.c:210
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Προσκόλληση στο ενεργό μονοπάτ_ι"
 
-#: ../app/actions/view-actions.c:205
+#: ../app/actions/view-actions.c:211
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Οι λειτουργίες των εργαλείων προσκολλούνται στο ενεργό μονοπάτι"
 
-#: ../app/actions/view-actions.c:211
+#: ../app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Εμφάνιση γραμμής _μενού"
 
-#: ../app/actions/view-actions.c:212
+#: ../app/actions/view-actions.c:218
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Εμφάνιση αυτής της γραμμής μενού του παραθύρου"
 
-#: ../app/actions/view-actions.c:218
+#: ../app/actions/view-actions.c:224
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Εμφάνιση _χάρακα"
 
-#: ../app/actions/view-actions.c:219
+#: ../app/actions/view-actions.c:225
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Εμφάνιση χαράκων αυτού του παραθύρου"
 
-#: ../app/actions/view-actions.c:225
+#: ../app/actions/view-actions.c:231
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Εμφάνιση γραμμών κύ_λισης"
 
-#: ../app/actions/view-actions.c:226
+#: ../app/actions/view-actions.c:232
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Εμφάνιση γραμμών κύλισης αυτού του παραθύρου"
 
-#: ../app/actions/view-actions.c:232
+#: ../app/actions/view-actions.c:238
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Εμφάνιση γραμμής κα_τάστασης"
 
-#: ../app/actions/view-actions.c:233
+#: ../app/actions/view-actions.c:239
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Εμφάνιση της γραμμής κατάστασης αυτού του παραθύρου"
 
-#: ../app/actions/view-actions.c:239
+#: ../app/actions/view-actions.c:245
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "_Πλήρης οθόνη"
 
-#: ../app/actions/view-actions.c:240
+#: ../app/actions/view-actions.c:246
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Εναλλαγή προβολής πλήρους οθόνης"
 
-#: ../app/actions/view-actions.c:264
+#: ../app/actions/view-actions.c:270
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "_Σμίκρυνση"
 
-#: ../app/actions/view-actions.c:265 ../app/actions/view-actions.c:277
+#: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Σμίκρυνση"
 
-#: ../app/actions/view-actions.c:270
+#: ../app/actions/view-actions.c:276
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Μεγέθυνση"
 
-#: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
+#: ../app/actions/view-actions.c:277 ../app/actions/view-actions.c:289
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Μεγέθυνση"
 
-#: ../app/actions/view-actions.c:276
+#: ../app/actions/view-actions.c:282
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Σμίκρυνση"
 
-#: ../app/actions/view-actions.c:282
+#: ../app/actions/view-actions.c:288
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Μεγέθυνση"
 
-#: ../app/actions/view-actions.c:301 ../app/actions/view-actions.c:307
+#: ../app/actions/view-actions.c:307 ../app/actions/view-actions.c:313
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:302 ../app/actions/view-actions.c:308
+#: ../app/actions/view-actions.c:308 ../app/actions/view-actions.c:314
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Μεγέθυνση 16:1"
 
-#: ../app/actions/view-actions.c:313 ../app/actions/view-actions.c:319
+#: ../app/actions/view-actions.c:319 ../app/actions/view-actions.c:325
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:314 ../app/actions/view-actions.c:320
+#: ../app/actions/view-actions.c:320 ../app/actions/view-actions.c:326
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Μεγέθυνση 8:1"
 
-#: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:331
+#: ../app/actions/view-actions.c:331 ../app/actions/view-actions.c:337
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:326 ../app/actions/view-actions.c:332
+#: ../app/actions/view-actions.c:332 ../app/actions/view-actions.c:338
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Μεγέθυνση 4:1"
 
-#: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:343
+#: ../app/actions/view-actions.c:343 ../app/actions/view-actions.c:349
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:338 ../app/actions/view-actions.c:344
+#: ../app/actions/view-actions.c:344 ../app/actions/view-actions.c:350
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Μεγέθυνση 2:1"
 
-#: ../app/actions/view-actions.c:349 ../app/actions/view-actions.c:355
+#: ../app/actions/view-actions.c:355 ../app/actions/view-actions.c:361
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:350 ../app/actions/view-actions.c:356
+#: ../app/actions/view-actions.c:356 ../app/actions/view-actions.c:362
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Μεγέθυνση 1:1"
 
-#: ../app/actions/view-actions.c:361
+#: ../app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:362
+#: ../app/actions/view-actions.c:368
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Σμίκρυνση 1:2"
 
-#: ../app/actions/view-actions.c:367
+#: ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:368
+#: ../app/actions/view-actions.c:374
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Σμίκρυνση 1:4"
 
-#: ../app/actions/view-actions.c:373
+#: ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:374
+#: ../app/actions/view-actions.c:380
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Σμίκρυνση 1:8"
 
-#: ../app/actions/view-actions.c:379
+#: ../app/actions/view-actions.c:385
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:380
+#: ../app/actions/view-actions.c:386
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Σμίκρυνση 1:16"
 
-#: ../app/actions/view-actions.c:385
+#: ../app/actions/view-actions.c:391
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "Ά_λλη..."
 
-#: ../app/actions/view-actions.c:386
+#: ../app/actions/view-actions.c:392
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Ορισμός προσαρμοσμένου συντελεστή εστίασης"
 
-#: ../app/actions/view-actions.c:399
-msgctxt "view-action"
-msgid "_Reset to 0°"
-msgstr "Επανα_φορά σε 0°"
-
 #: ../app/actions/view-actions.c:400
 msgctxt "view-action"
-msgid "Reset the angle of rotation to 0°"
-msgstr "Επαναφορά της γωνίας περιστροφής σε 0°"
+msgid "Flip Horizontally"
+msgstr "Οριζόντια αναστροφή"
 
-#: ../app/actions/view-actions.c:408
+#: ../app/actions/view-actions.c:406
+msgctxt "view-action"
+msgid "Flip Vertically"
+msgstr "Κάθετη αναστροφή"
+
+#: ../app/actions/view-actions.c:420
+msgctxt "view-action"
+msgid "_Reset Flip & Rotate"
+msgstr "Ε_παναφορά αναστροφής & περιστροφής"
+
+#: ../app/actions/view-actions.c:422
+msgctxt "view-action"
+msgid "Reset flipping to unflipped and the angle of rotation to 0°"
+msgstr ""
+"Επαναφορά ανεστραμμένου σε μη ανεστραμμένο και της γωνίας περιστροφής σε 0°"
+
+#: ../app/actions/view-actions.c:430
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Περιστροφή 15° _δεξιόστροφα"
 
-#: ../app/actions/view-actions.c:409
+#: ../app/actions/view-actions.c:431
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
 msgstr "Περιστροφή 15 μοίρες προς τα δεξιά"
 
-#: ../app/actions/view-actions.c:414
+#: ../app/actions/view-actions.c:436
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Περιστροφή 90° _δεξιόστροφα"
 
-#: ../app/actions/view-actions.c:415
+#: ../app/actions/view-actions.c:437
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Περιστροφή 90 μοίρες προς τα δεξιά"
 
-#: ../app/actions/view-actions.c:420
+#: ../app/actions/view-actions.c:442
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Περιστροφή _180°"
 
-#: ../app/actions/view-actions.c:421
+#: ../app/actions/view-actions.c:443
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Αναποδογύρισμα"
 
-#: ../app/actions/view-actions.c:426
+#: ../app/actions/view-actions.c:448
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Περιστροφή 90° α_ριστερόστροφα"
 
-#: ../app/actions/view-actions.c:427
+#: ../app/actions/view-actions.c:449
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Περιστροφή 90 μοίρες προς τα αριστερά"
 
-#: ../app/actions/view-actions.c:432
+#: ../app/actions/view-actions.c:454
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Περιστροφή 15° α_ριστερόστροφα"
 
-#: ../app/actions/view-actions.c:433
+#: ../app/actions/view-actions.c:455
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
 msgstr "Περιστροφή 15 μοίρες προς τα αριστερά"
 
-#: ../app/actions/view-actions.c:441
+#: ../app/actions/view-actions.c:463
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Από _θέμα"
 
-#: ../app/actions/view-actions.c:442
+#: ../app/actions/view-actions.c:464
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Χρήση χρώματος παρασκηνίου του τρέχοντος θέματος"
 
-#: ../app/actions/view-actions.c:447
+#: ../app/actions/view-actions.c:469
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Ανοιχ_τό χρώμα σκακιέρας"
 
-#: ../app/actions/view-actions.c:448
+#: ../app/actions/view-actions.c:470
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Χρήση του ανοιχτού χρώματος σκακιέρας"
 
-#: ../app/actions/view-actions.c:453
+#: ../app/actions/view-actions.c:475
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Σ_κούρο χρώμα σκακιέρας"
 
-#: ../app/actions/view-actions.c:454
+#: ../app/actions/view-actions.c:476
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Χρήση του σκούρου χρώματος σκακιέρας"
 
-#: ../app/actions/view-actions.c:459
+#: ../app/actions/view-actions.c:481
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
 msgstr "Επιλογή _προσαρμοσμένου χρώματος..."
 
-#: ../app/actions/view-actions.c:460
+#: ../app/actions/view-actions.c:482
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Επιλογή οποιουδήποτε χρώματος"
 
-#: ../app/actions/view-actions.c:465
+#: ../app/actions/view-actions.c:487
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Όπως στις _προτιμήσεις"
 
-#: ../app/actions/view-actions.c:467
+#: ../app/actions/view-actions.c:489
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Επαναφορά χρώματος υπόβαθρου στο χρώμα στις προτιμήσεις"
 
-#: ../app/actions/view-actions.c:672
+#: ../app/actions/view-actions.c:703
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Επα_ναφορά εστίασης (%d%%)"
 
-#: ../app/actions/view-actions.c:680
+#: ../app/actions/view-actions.c:711
 msgid "Re_vert Zoom"
 msgstr "Επα_ναφορά εστίασης"
 
-#: ../app/actions/view-actions.c:839
+#: ../app/actions/view-actions.c:877
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Ά_λλη (%s)..."
 
-#: ../app/actions/view-actions.c:848
+#: ../app/actions/view-actions.c:886
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Εστίαση (%s)"
 
-#: ../app/actions/view-actions.c:864
-#, c-format
-msgid "_Rotate (%d°)"
-msgstr "_Περιστροφή (%d°)"
+#. please preserve the trailing space
+#: ../app/actions/view-actions.c:907
+msgid "(H+V) "
+msgstr "(H+V) "
 
-#: ../app/actions/view-commands.c:663
+#. please preserve the trailing space
+#: ../app/actions/view-actions.c:912
+msgid "(H) "
+msgstr "(H) "
+
+#. please preserve the trailing space
+#: ../app/actions/view-actions.c:917
+msgid "(V) "
+msgstr "(V) "
+
+#: ../app/actions/view-actions.c:924
+#, c-format
+msgid "_Flip %s& Rotate (%d°)"
+msgstr "Α_ναστροφή του %s & περιστροφή (%d°)"
+
+#: ../app/actions/view-commands.c:723
 msgid "Set Canvas Padding Color"
 msgstr "Ορισμός χρώματος καμβά υπόβαθρου"
 
-#: ../app/actions/view-commands.c:665
+#: ../app/actions/view-commands.c:725
 msgid "Set Custom Canvas Padding Color"
 msgstr "Ορισμός προσαρμοσμένου χρώματος υπόβαθρου καμβά"
 
@@ -7747,639 +7777,599 @@ msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Μοτίβο"
 
-#: ../app/core/core-enums.c:497
-msgctxt "stroke-method"
-msgid "Stroke line"
-msgstr "Γραμμή πινελιάς"
-
-#: ../app/core/core-enums.c:498
-msgctxt "stroke-method"
-msgid "Stroke with a paint tool"
-msgstr "Πινελιά με εργαλείο ζωγραφικής"
-
-#: ../app/core/core-enums.c:527
-msgctxt "join-style"
-msgid "Miter"
-msgstr "Μυτερό"
-
-#: ../app/core/core-enums.c:528
-msgctxt "join-style"
-msgid "Round"
-msgstr "Στρογγυλό"
-
-#: ../app/core/core-enums.c:529
-msgctxt "join-style"
-msgid "Bevel"
-msgstr "Λοξό"
-
-#: ../app/core/core-enums.c:558
-msgctxt "cap-style"
-msgid "Butt"
-msgstr "Κουτσουρεμένο"
-
-#: ../app/core/core-enums.c:559
-msgctxt "cap-style"
-msgid "Round"
-msgstr "Στρογγυλό"
-
-#: ../app/core/core-enums.c:560
-msgctxt "cap-style"
-msgid "Square"
-msgstr "Τετράγωνο"
-
-#: ../app/core/core-enums.c:597
+#: ../app/core/core-enums.c:506
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Προσαρμοσμένες"
 
-#: ../app/core/core-enums.c:598
+#: ../app/core/core-enums.c:507
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Γραμμή"
 
-#: ../app/core/core-enums.c:599
+#: ../app/core/core-enums.c:508
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Μεγάλες παύλες"
 
-#: ../app/core/core-enums.c:600
+#: ../app/core/core-enums.c:509
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Μεσαίες παύλες"
 
-#: ../app/core/core-enums.c:601
+#: ../app/core/core-enums.c:510
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Μικρές παύλες"
 
-#: ../app/core/core-enums.c:602
+#: ../app/core/core-enums.c:511
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Αραιές τελείες"
 
-#: ../app/core/core-enums.c:603
+#: ../app/core/core-enums.c:512
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Κανονικές τελείες"
 
-#: ../app/core/core-enums.c:604
+#: ../app/core/core-enums.c:513
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Πυκνές τελείες"
 
-#: ../app/core/core-enums.c:605
+#: ../app/core/core-enums.c:514
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Χωρίς στίγματα"
 
-#: ../app/core/core-enums.c:606
+#: ../app/core/core-enums.c:515
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Παύλα, τελεία"
 
-#: ../app/core/core-enums.c:607
+#: ../app/core/core-enums.c:516
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Παύλα, τελεία, τελεία"
 
-#: ../app/core/core-enums.c:638
+#: ../app/core/core-enums.c:547
 msgctxt "item-set"
 msgid "None"
 msgstr "Κανένα"
 
-#: ../app/core/core-enums.c:639
+#: ../app/core/core-enums.c:548
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Όλες οι στρώσεις"
 
-#: ../app/core/core-enums.c:640
+#: ../app/core/core-enums.c:549
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Στρώσεις στο μέγεθος της εικόνας"
 
-#: ../app/core/core-enums.c:641
+#: ../app/core/core-enums.c:550
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Όλες οι ορατές στρώσεις"
 
-#: ../app/core/core-enums.c:642
+#: ../app/core/core-enums.c:551
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Όλες οι συνδεδεμένες στρώσεις"
 
-#: ../app/core/core-enums.c:677
+#: ../app/core/core-enums.c:586
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Μικροσκοπικό"
 
-#: ../app/core/core-enums.c:678
+#: ../app/core/core-enums.c:587
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Πολύ μικρό"
 
-#: ../app/core/core-enums.c:679
+#: ../app/core/core-enums.c:588
 msgctxt "view-size"
 msgid "Small"
 msgstr "Μικρό"
 
-#: ../app/core/core-enums.c:680
+#: ../app/core/core-enums.c:589
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Μεσαίο"
 
-#: ../app/core/core-enums.c:681
+#: ../app/core/core-enums.c:590
 msgctxt "view-size"
 msgid "Large"
 msgstr "Μεγάλο"
 
-#: ../app/core/core-enums.c:682
+#: ../app/core/core-enums.c:591
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Πολύ μεγάλο"
 
-#: ../app/core/core-enums.c:683
+#: ../app/core/core-enums.c:592
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Πελώριο"
 
-#: ../app/core/core-enums.c:684
+#: ../app/core/core-enums.c:593
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Τεράστιο"
 
-#: ../app/core/core-enums.c:685
+#: ../app/core/core-enums.c:594
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Γιγαντιαίο"
 
-#: ../app/core/core-enums.c:713
+#: ../app/core/core-enums.c:622
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Προβολή ως λίστα"
 
-#: ../app/core/core-enums.c:714
+#: ../app/core/core-enums.c:623
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Προβολή ως πλέγμα"
 
-#: ../app/core/core-enums.c:743
+#: ../app/core/core-enums.c:652
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Χωρίς μικρογραφίες"
 
-#: ../app/core/core-enums.c:744
+#: ../app/core/core-enums.c:653
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Κανονικό (128x128)"
 
-#: ../app/core/core-enums.c:745
+#: ../app/core/core-enums.c:654
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Μεγάλο (256x256)"
 
-#: ../app/core/core-enums.c:927
+#: ../app/core/core-enums.c:836
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<άκυρο>>"
 
-#: ../app/core/core-enums.c:928
+#: ../app/core/core-enums.c:837
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Κλιμάκωση εικόνας"
 
-#: ../app/core/core-enums.c:929
+#: ../app/core/core-enums.c:838
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Αλλαγή μεγέθους εικόνας"
 
-#: ../app/core/core-enums.c:930
+#: ../app/core/core-enums.c:839
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Αναστροφή εικόνας"
 
-#: ../app/core/core-enums.c:931
+#: ../app/core/core-enums.c:840
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Περιστροφή εικόνας"
 
-#: ../app/core/core-enums.c:932
+#: ../app/core/core-enums.c:841
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Περικοπή εικόνας"
 
-#: ../app/core/core-enums.c:933
+#: ../app/core/core-enums.c:842
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Μετατροπή εικόνας"
 
-#: ../app/core/core-enums.c:934
+#: ../app/core/core-enums.c:843
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Αφαίρεση αντικειμένου"
 
-#: ../app/core/core-enums.c:935
+#: ../app/core/core-enums.c:844
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Συγχώνευση στρώσεων"
 
-#: ../app/core/core-enums.c:936
+#: ../app/core/core-enums.c:845
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Συγχώνευση μονοπατιών"
 
-#: ../app/core/core-enums.c:937
+#: ../app/core/core-enums.c:846
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Γρήγορη μάσκα"
 
-#: ../app/core/core-enums.c:938 ../app/core/core-enums.c:969
+#: ../app/core/core-enums.c:847 ../app/core/core-enums.c:878
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Πλέγμα"
 
-#: ../app/core/core-enums.c:939 ../app/core/core-enums.c:972
+#: ../app/core/core-enums.c:848 ../app/core/core-enums.c:881
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Οδηγός"
 
-#: ../app/core/core-enums.c:940 ../app/core/core-enums.c:973
+#: ../app/core/core-enums.c:849 ../app/core/core-enums.c:882
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Σημείο δειγματοληψίας"
 
-#: ../app/core/core-enums.c:941 ../app/core/core-enums.c:974
+#: ../app/core/core-enums.c:850 ../app/core/core-enums.c:883
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Στρώση/κανάλι"
 
-#: ../app/core/core-enums.c:942 ../app/core/core-enums.c:975
+#: ../app/core/core-enums.c:851 ../app/core/core-enums.c:884
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Τροποποίηση στρώσης/καναλιού"
 
-#: ../app/core/core-enums.c:943 ../app/core/core-enums.c:976
+#: ../app/core/core-enums.c:852 ../app/core/core-enums.c:885
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Μάσκα επιλογής"
 
-#: ../app/core/core-enums.c:944 ../app/core/core-enums.c:980
+#: ../app/core/core-enums.c:853 ../app/core/core-enums.c:889
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Ορατότητα στοιχείου"
 
-#: ../app/core/core-enums.c:945 ../app/core/core-enums.c:981
+#: ../app/core/core-enums.c:854 ../app/core/core-enums.c:890
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Σύνδεση/αποσύνδεση στοιχείου"
 
-#: ../app/core/core-enums.c:946
+#: ../app/core/core-enums.c:855
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Ιδιότητες στοιχείου"
 
-#: ../app/core/core-enums.c:947 ../app/core/core-enums.c:979
+#: ../app/core/core-enums.c:856 ../app/core/core-enums.c:888
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Μετακίνηση στοιχείου"
 
-#: ../app/core/core-enums.c:948
+#: ../app/core/core-enums.c:857
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Κλιμάκωση στοιχείου"
 
-#: ../app/core/core-enums.c:949
+#: ../app/core/core-enums.c:858
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Αλλαγή μεγέθους στοιχείου"
 
-#: ../app/core/core-enums.c:950
+#: ../app/core/core-enums.c:859
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Προσθήκη στρώσης"
 
-#: ../app/core/core-enums.c:951 ../app/core/core-enums.c:995
+#: ../app/core/core-enums.c:860 ../app/core/core-enums.c:904
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Προσθήκη μάσκας στρώσης"
 
-#: ../app/core/core-enums.c:952 ../app/core/core-enums.c:997
+#: ../app/core/core-enums.c:861 ../app/core/core-enums.c:906
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Εφαρμογή μάσκας στρώσης"
 
-#: ../app/core/core-enums.c:953 ../app/core/core-enums.c:1005
+#: ../app/core/core-enums.c:862 ../app/core/core-enums.c:914
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Αιωρούμενη επιλογή σε στρώση"
 
-#: ../app/core/core-enums.c:954
+#: ../app/core/core-enums.c:863
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Αιωρούμενη επιλογή"
 
-#: ../app/core/core-enums.c:955
+#: ../app/core/core-enums.c:864
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Αγκίστρωση αιωρούμενης επιλογής"
 
-#: ../app/core/core-enums.c:956 ../app/core/gimp-edit.c:286
+#: ../app/core/core-enums.c:865 ../app/core/gimp-edit.c:286
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Επικόλληση"
 
-#: ../app/core/core-enums.c:957 ../app/core/gimp-edit.c:595
+#: ../app/core/core-enums.c:866 ../app/core/gimp-edit.c:595
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Αποκοπή"
 
-#: ../app/core/core-enums.c:958
+#: ../app/core/core-enums.c:867
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Κείμενο"
 
-#: ../app/core/core-enums.c:959 ../app/core/core-enums.c:1006
+#: ../app/core/core-enums.c:868 ../app/core/core-enums.c:915
 #: ../app/core/gimpdrawable-transform.c:637
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Μετασχηματισμός"
 
-#: ../app/core/core-enums.c:960 ../app/core/core-enums.c:1007
+#: ../app/core/core-enums.c:869 ../app/core/core-enums.c:916
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Ζωγραφική"
 
-#: ../app/core/core-enums.c:961 ../app/core/core-enums.c:1010
+#: ../app/core/core-enums.c:870 ../app/core/core-enums.c:919
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Προσθήκη παρασίτου"
 
-#: ../app/core/core-enums.c:962 ../app/core/core-enums.c:1011
+#: ../app/core/core-enums.c:871 ../app/core/core-enums.c:920
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Αφαίρεση παρασίτου"
 
-#: ../app/core/core-enums.c:963
+#: ../app/core/core-enums.c:872
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Εισαγωγή μονοπατιών"
 
-#: ../app/core/core-enums.c:964
+#: ../app/core/core-enums.c:873
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Πρόσθετο"
 
-#: ../app/core/core-enums.c:965
+#: ../app/core/core-enums.c:874
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Τύπος εικόνας"
 
-#: ../app/core/core-enums.c:966
+#: ../app/core/core-enums.c:875
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Ακρίβεια εικόνας"
 
-#: ../app/core/core-enums.c:967
+#: ../app/core/core-enums.c:876
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Μέγεθος εικόνας"
 
-#: ../app/core/core-enums.c:968
+#: ../app/core/core-enums.c:877
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Αλλαγή ανάλυσης εικόνας"
 
-#: ../app/core/core-enums.c:970
+#: ../app/core/core-enums.c:879
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Αλλαγή μεταδεδομένων"
 
-#: ../app/core/core-enums.c:971
+#: ../app/core/core-enums.c:880
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Αλλαγή παλέτας από ευρετήριο"
 
-#: ../app/core/core-enums.c:977
+#: ../app/core/core-enums.c:886
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Επαναταξινόμηση στοιχείου"
 
-#: ../app/core/core-enums.c:978
+#: ../app/core/core-enums.c:887
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Μετονομασία στοιχείου"
 
-#: ../app/core/core-enums.c:982
+#: ../app/core/core-enums.c:891
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Κλείδωμα/ξεκλείδωμα περιεχομένου"
 
-#: ../app/core/core-enums.c:983
+#: ../app/core/core-enums.c:892
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Κλείδωμα/ξεκλείδωμα θέσης"
 
-#: ../app/core/core-enums.c:984
+#: ../app/core/core-enums.c:893
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Νέα στρώση"
 
-#: ../app/core/core-enums.c:985
+#: ../app/core/core-enums.c:894
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Διαγραφή στρώσης"
 
-#: ../app/core/core-enums.c:986
+#: ../app/core/core-enums.c:895
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Ορισμός κατάστασης στρώσης"
 
-#: ../app/core/core-enums.c:987
+#: ../app/core/core-enums.c:896
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Ορισμός αδιαφάνειας στρώσης"
 
-#: ../app/core/core-enums.c:988
+#: ../app/core/core-enums.c:897
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Κλείδωμα/ξεκλείδωμα καναλιού άλφα"
 
-#: ../app/core/core-enums.c:989
+#: ../app/core/core-enums.c:898
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Αναστολή αλλαγής μεγέθους ομάδας στρώσεων"
 
-#: ../app/core/core-enums.c:990
+#: ../app/core/core-enums.c:899
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Συνέχιση αλλαγής μεγέθους ομάδας στρώσεων"
 
-#: ../app/core/core-enums.c:991
+#: ../app/core/core-enums.c:900
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Μετατροπή ομάδας στρώσεων"
 
-#: ../app/core/core-enums.c:992
+#: ../app/core/core-enums.c:901
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Στρώση κειμένου"
 
-#: ../app/core/core-enums.c:993
+#: ../app/core/core-enums.c:902
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Τροποποίηση στρώσης κειμένου"
 
-#: ../app/core/core-enums.c:994
+#: ../app/core/core-enums.c:903
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Μετατροπή στρώσης κειμένου"
 
-#: ../app/core/core-enums.c:996
+#: ../app/core/core-enums.c:905
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Διαγραφή μάσκας στρώσης"
 
-#: ../app/core/core-enums.c:998
+#: ../app/core/core-enums.c:907
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Εμφάνιση μάσκας στρώσης"
 
-#: ../app/core/core-enums.c:999
+#: ../app/core/core-enums.c:908
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Νέο κανάλι"
 
-#: ../app/core/core-enums.c:1000
+#: ../app/core/core-enums.c:909
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Διαγραφή καναλιού"
 
-#: ../app/core/core-enums.c:1001
+#: ../app/core/core-enums.c:910
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Χρώμα καναλιού"
 
-#: ../app/core/core-enums.c:1002
+#: ../app/core/core-enums.c:911
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Νέο μονοπάτι"
 
-#: ../app/core/core-enums.c:1003
+#: ../app/core/core-enums.c:912
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Διαγραφή του μονοπατιού"
 
-#: ../app/core/core-enums.c:1004
+#: ../app/core/core-enums.c:913
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Τροποποίηση μονοπατιού"
 
-#: ../app/core/core-enums.c:1008
+#: ../app/core/core-enums.c:917
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Μελάνη"
 
-#: ../app/core/core-enums.c:1009
+#: ../app/core/core-enums.c:918
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Επιλογή προσκηνίου"
 
-#: ../app/core/core-enums.c:1012
+#: ../app/core/core-enums.c:921
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Μη αναιρέσιμο"
 
-#: ../app/core/core-enums.c:1125
+#: ../app/core/core-enums.c:1034
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Μήνυμα"
 
-#: ../app/core/core-enums.c:1126
+#: ../app/core/core-enums.c:1035
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
-#: ../app/core/core-enums.c:1127
+#: ../app/core/core-enums.c:1036
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Σφάλμα"
 
-#: ../app/core/core-enums.c:1156
+#: ../app/core/core-enums.c:1065
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Ερώτηση"
 
-#: ../app/core/core-enums.c:1157
+#: ../app/core/core-enums.c:1066
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Διατήρηση ενσωματωμένης κατατομής"
 
-#: ../app/core/core-enums.c:1158
+#: ../app/core/core-enums.c:1067
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Μετατροπή χώρου εργασίας σε RGB"
 
-#: ../app/core/core-enums.c:1195
+#: ../app/core/core-enums.c:1104
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Αδιαφάνεια"
 
-#: ../app/core/core-enums.c:1196
+#: ../app/core/core-enums.c:1105
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: ../app/core/core-enums.c:1197
+#: ../app/core/core-enums.c:1106
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Γωνία"
 
-#: ../app/core/core-enums.c:1198
+#: ../app/core/core-enums.c:1107
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Χρώμα"
 
-#: ../app/core/core-enums.c:1199
+#: ../app/core/core-enums.c:1108
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Σκληρότητα"
 
-#: ../app/core/core-enums.c:1200
+#: ../app/core/core-enums.c:1109
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Αναγκαστικά"
 
-#: ../app/core/core-enums.c:1201
+#: ../app/core/core-enums.c:1110
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Λόγος θέασης"
 
-#: ../app/core/core-enums.c:1202
+#: ../app/core/core-enums.c:1111
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Διάκενο"
 
-#: ../app/core/core-enums.c:1203
+#: ../app/core/core-enums.c:1112
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Ρυθμός"
 
-#: ../app/core/core-enums.c:1204
+#: ../app/core/core-enums.c:1113
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Ροή"
 
-#: ../app/core/core-enums.c:1205
+#: ../app/core/core-enums.c:1114
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Τρέμουλο"
 
-#: ../app/core/core-enums.c:1233
+#: ../app/core/core-enums.c:1142
 msgctxt "image-map-region"
 msgid "Use the selection as input"
 msgstr "Χρήση της επιλογής ως εισόδου"
 
-#: ../app/core/core-enums.c:1234
+#: ../app/core/core-enums.c:1143
 msgctxt "image-map-region"
 msgid "Use the entire layer as input"
 msgstr "Χρήση ολόκληρης της στρώσης ως εισόδου"
@@ -8394,34 +8384,47 @@ msgid "Internal Procedures"
 msgstr "Εσωτερικές διαδικασίες"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:1035
+#: ../app/core/gimp.c:1045
 msgid "Looking for data files"
 msgstr "Αναζήτηση αρχείων δεδομένων"
 
-#: ../app/core/gimp.c:1035
+#: ../app/core/gimp.c:1045
 msgid "Parasites"
 msgstr "Παράσιτα"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:1044 ../app/dialogs/preferences-dialog.c:2694
+#: ../app/core/gimp.c:1054 ../app/dialogs/preferences-dialog.c:2694
 #: ../app/tools/gimppaintoptions-gui.c:220
 msgid "Dynamics"
 msgstr "Δυναμικές"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:1064
+#: ../app/core/gimp.c:1074
 msgid "Fonts (this may take a while)"
 msgstr "Γραμματοσειρές (πιθανή καθυστέρηση)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:1084 ../app/dialogs/preferences-dialog.c:2732
+#: ../app/core/gimp.c:1094 ../app/dialogs/preferences-dialog.c:2732
 msgid "Modules"
 msgstr "Αρθρώματα"
 
 #. update tag cache
-#: ../app/core/gimp.c:1088
+#: ../app/core/gimp.c:1098
 msgid "Updating tag cache"
 msgstr "Ανανέωση μνήμης ετικετών"
+
+#: ../app/core/gimp-batch.c:75
+#, c-format
+msgid "No batch interpreter specified, using the default '%s'.\n"
+msgstr ""
+"Δεν ορίστηκε διερμηνευτής δέσμης, θα χρησιμοποιηθεί ο προεπιλεγμένος '%s'.\n"
+
+#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
+#, c-format
+msgid "The batch interpreter '%s' is not available. Batch mode disabled."
+msgstr ""
+"Ο διερμηνευτής δέσμης '%s' δεν είναι διαθέσιμος. Η λειτουργία δέσμης "
+"απενεργοποιήθηκε."
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimptooloptions.c:370
 #: ../app/gui/session.c:427 ../app/menus/menus.c:459
@@ -8627,7 +8630,7 @@ msgstr ""
 "Καίριο σφάλμα ανάλυσης στο αρχείο πινέλων: Αδύνατη η αποκωδικοποίηση μορφής "
 "abr έκδοσης %d."
 
-#: ../app/core/gimpbrush.c:149 ../app/paint/gimppaintoptions.c:212
+#: ../app/core/gimpbrush.c:149 ../app/paint/gimppaintoptions.c:215
 msgid "Brush Spacing"
 msgstr "Απόσταση πινελιών"
 
@@ -8663,15 +8666,15 @@ msgstr "Ακτίνα πινέλου"
 msgid "Brush Spikes"
 msgstr "Κορυφές πινέλου"
 
-#: ../app/core/gimpbrushgenerated.c:152 ../app/paint/gimppaintoptions.c:217
+#: ../app/core/gimpbrushgenerated.c:152 ../app/paint/gimppaintoptions.c:220
 msgid "Brush Hardness"
 msgstr "Σκληρότητα πινέλου"
 
-#: ../app/core/gimpbrushgenerated.c:160 ../app/paint/gimppaintoptions.c:202
+#: ../app/core/gimpbrushgenerated.c:160 ../app/paint/gimppaintoptions.c:205
 msgid "Brush Aspect Ratio"
 msgstr "Λόγος θέασης πινέλου"
 
-#: ../app/core/gimpbrushgenerated.c:167 ../app/paint/gimppaintoptions.c:207
+#: ../app/core/gimpbrushgenerated.c:167 ../app/paint/gimppaintoptions.c:210
 msgid "Brush Angle"
 msgstr "Γωνία πινέλου"
 
@@ -8697,7 +8700,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Στρογγυλεμένη ορθογώνια επιλογή"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:327
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:331
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Μετατροπή άλφα σε επιλογή"
@@ -8723,139 +8726,139 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Επιλογή κατά χρώμα από ευρετήριο"
 
-#: ../app/core/gimpchannel.c:279
+#: ../app/core/gimpchannel.c:280
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Μετονομασία καναλιού"
 
-#: ../app/core/gimpchannel.c:280
+#: ../app/core/gimpchannel.c:281
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Μετακίνηση καναλιού"
 
-#: ../app/core/gimpchannel.c:281
+#: ../app/core/gimpchannel.c:282
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Κλιμάκωση καναλιού"
 
-#: ../app/core/gimpchannel.c:282
+#: ../app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Αλλαγή μεγέθους καναλιού"
 
-#: ../app/core/gimpchannel.c:283
+#: ../app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Αναστροφή καναλιού"
 
-#: ../app/core/gimpchannel.c:284
+#: ../app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Περιστροφή καναλιού"
 
-#: ../app/core/gimpchannel.c:285 ../app/core/gimpdrawable-transform.c:953
+#: ../app/core/gimpchannel.c:286 ../app/core/gimpdrawable-transform.c:953
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Μετασχηματισμός καναλιού"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:287
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Χρωματισμός καναλιού"
 
-#: ../app/core/gimpchannel.c:287 ../app/core/gimpselection.c:599
+#: ../app/core/gimpchannel.c:288 ../app/core/gimpselection.c:602
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Μετατροπή καναλιού σε επιλογή"
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:289
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Επαναταξινόμηση καναλιού"
 
-#: ../app/core/gimpchannel.c:289
+#: ../app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Ανύψωση καναλιού"
 
-#: ../app/core/gimpchannel.c:290
+#: ../app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Ανύψωση καναλιού στην κορυφή"
 
-#: ../app/core/gimpchannel.c:291
+#: ../app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Βύθιση καναλιού"
 
-#: ../app/core/gimpchannel.c:292
+#: ../app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Βύθιση καναλιού στον πάτο"
 
-#: ../app/core/gimpchannel.c:293
+#: ../app/core/gimpchannel.c:294
 msgid "Channel cannot be raised higher."
 msgstr "Το κανάλι δεν μπορεί να ανυψωθεί άλλο."
 
-#: ../app/core/gimpchannel.c:294
+#: ../app/core/gimpchannel.c:295
 msgid "Channel cannot be lowered more."
 msgstr "Το κανάλι δεν μπορεί να βυθιστεί άλλο."
 
-#: ../app/core/gimpchannel.c:316
+#: ../app/core/gimpchannel.c:317
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Άμβλυνση καναλιού"
 
-#: ../app/core/gimpchannel.c:317
+#: ../app/core/gimpchannel.c:318
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Όξυνση καναλιού"
 
-#: ../app/core/gimpchannel.c:318
+#: ../app/core/gimpchannel.c:319
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Καθαρισμός καναλιού"
 
-#: ../app/core/gimpchannel.c:319
+#: ../app/core/gimpchannel.c:320
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Γέμισμα καναλιού"
 
-#: ../app/core/gimpchannel.c:320
+#: ../app/core/gimpchannel.c:321
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Αναστροφή καναλιού"
 
-#: ../app/core/gimpchannel.c:321
+#: ../app/core/gimpchannel.c:322
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Περίγραμμα καναλιού"
 
-#: ../app/core/gimpchannel.c:322
+#: ../app/core/gimpchannel.c:323
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Επέκταση καναλιού"
 
-#: ../app/core/gimpchannel.c:323
+#: ../app/core/gimpchannel.c:324
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Συρρίκνωση καναλιού"
 
-#: ../app/core/gimpchannel.c:823
+#: ../app/core/gimpchannel.c:824
 msgid "Cannot stroke empty channel."
 msgstr "Αδύνατος ο χρωματισμός κενού καναλιού."
 
-#: ../app/core/gimpchannel.c:1695
+#: ../app/core/gimpchannel.c:1697
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ορισμός χρώματος καναλιού"
 
-#: ../app/core/gimpchannel.c:1749
+#: ../app/core/gimpchannel.c:1751
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ορισμός αδιαφάνειας καναλιού"
 
-#: ../app/core/gimpchannel.c:1846 ../app/core/gimpselection.c:158
+#: ../app/core/gimpchannel.c:1848 ../app/core/gimpselection.c:159
 msgid "Selection Mask"
 msgstr "Μάσκα επιλογής"
 
@@ -8957,7 +8960,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:528
+#: ../app/core/gimpdrawable.c:529
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Κλιμάκωση"
@@ -8976,7 +8979,7 @@ msgstr "Υπολογισμός χάρτη απόστασης"
 msgid "Blending"
 msgstr "Ανάμειξη"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:245
+#: ../app/core/gimpdrawable-bucket-fill.c:249
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Κουβάς γεμίσματος"
@@ -9025,7 +9028,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Περιστροφή"
 
-#: ../app/core/gimpdrawable-transform.c:951 ../app/core/gimplayer.c:326
+#: ../app/core/gimpdrawable-transform.c:951 ../app/core/gimplayer.c:330
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Μετασχηματισμός στρώσης"
@@ -9116,54 +9119,54 @@ msgstr ""
 "Κάθετη αντιστάθμιση της πρώτης γραμμής του πλέγματος· επιτρέπονται και "
 "αρνητικοί αριθμοί."
 
-#: ../app/core/gimpgrouplayer.c:227
+#: ../app/core/gimpgrouplayer.c:228
 msgid "Layer Group"
 msgstr "Ομάδα στρώσεων"
 
-#: ../app/core/gimpgrouplayer.c:228
+#: ../app/core/gimpgrouplayer.c:229
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Μετονομασία ομάδας στρώσεων"
 
-#: ../app/core/gimpgrouplayer.c:229
+#: ../app/core/gimpgrouplayer.c:230
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Μετακίνηση ομάδας στρώσεων"
 
-#: ../app/core/gimpgrouplayer.c:230
+#: ../app/core/gimpgrouplayer.c:231
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Κλιμάκωση ομάδας στρώσεων"
 
-#: ../app/core/gimpgrouplayer.c:231
+#: ../app/core/gimpgrouplayer.c:232
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Κλιμάκωση ομάδας στρώσεων"
 
-#: ../app/core/gimpgrouplayer.c:232
+#: ../app/core/gimpgrouplayer.c:233
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Αναστροφή ομάδας στρώσεων"
 
-#: ../app/core/gimpgrouplayer.c:233
+#: ../app/core/gimpgrouplayer.c:234
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Περιστροφή ομάδας στρώσεων"
 
-#: ../app/core/gimpgrouplayer.c:234
+#: ../app/core/gimpgrouplayer.c:235
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Μετασχηματισμός ομάδας στρώσεων"
 
-#: ../app/core/gimpimage.c:2157
+#: ../app/core/gimpimage.c:2154
 msgid " (exported)"
 msgstr " (εξηγμένη)"
 
-#: ../app/core/gimpimage.c:2161
+#: ../app/core/gimpimage.c:2158
 msgid " (overwritten)"
 msgstr " (αντικαταστημένη)"
 
-#: ../app/core/gimpimage.c:2170
+#: ../app/core/gimpimage.c:2167
 msgid " (imported)"
 msgstr " (εισηγμένη)"
 
@@ -9227,13 +9230,13 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Διευθέτηση αντικειμένων"
 
-#: ../app/core/gimpimage-color-profile.c:86
+#: ../app/core/gimpimage-color-profile.c:88
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 "Αποτυχία επικύρωσης κατατομής ICC: Το όνομα του παρασίτου δεν είναι 'icc-"
 "profile'"
 
-#: ../app/core/gimpimage-color-profile.c:95
+#: ../app/core/gimpimage-color-profile.c:97
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -9241,29 +9244,29 @@ msgstr ""
 "Αποτυχία επικύρωσης κατατομής ICC: Οι σημαίες του παρασίτου δεν είναι "
 "(ΜΟΝΙΜΕΣ | ΑΝΑΙΡΕΣΙΜΕΣ) (PERSISTENT | UNDOABLE)"
 
-#: ../app/core/gimpimage-color-profile.c:152
+#: ../app/core/gimpimage-color-profile.c:154
 msgid "ICC profile validation failed: "
 msgstr "Αποτυχία επικύρωσης κατατομής ICC: "
 
-#: ../app/core/gimpimage-color-profile.c:248
+#: ../app/core/gimpimage-color-profile.c:250
 msgid ""
 "ICC profile validation failed: Cannot attach a color profile to a GRAY image"
 msgstr ""
 "Αποτυχία της επικύρωσης κατατομής ICC: Αδύνατη η προσάρτηση κατατομής "
 "χρώματος σε μια εικόνα ΓΚΡΙΖΟΥ"
 
-#: ../app/core/gimpimage-color-profile.c:256
+#: ../app/core/gimpimage-color-profile.c:258
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Αποτυχία επικύρωσης κατατομής ICC: Η κατατομή χρώματος δεν είναι για χώρο "
 "χρώματος RGB"
 
-#: ../app/core/gimpimage-color-profile.c:366
+#: ../app/core/gimpimage-color-profile.c:368
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Μετατροπή από '%s' σε '%s'"
 
-#: ../app/core/gimpimage-color-profile.c:371
+#: ../app/core/gimpimage-color-profile.c:373
 msgid "Color profile conversion"
 msgstr "Μετατροπή χρωματικής κατατομής"
 
@@ -9292,62 +9295,62 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Προσθήκη χρώματος στο χρωματολόγιο"
 
-#: ../app/core/gimpimage-convert-precision.c:69
+#: ../app/core/gimpimage-convert-precision.c:81
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit linear integer"
 msgstr "Μετατροπή της εικόνας σε γραμμικό ακέραιο 8 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:72
+#: ../app/core/gimpimage-convert-precision.c:84
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit gamma integer"
 msgstr "Μετατροπή της εικόνας σε ακέραιο γάμα 8 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:75
+#: ../app/core/gimpimage-convert-precision.c:87
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear integer"
 msgstr "Μετατροπή της εικόνας σε γραμμικό ακέραιο 16 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:78
+#: ../app/core/gimpimage-convert-precision.c:90
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma integer"
 msgstr "Μετατροπή της εικόνας σε ακέραιο γάμα 16 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:81
+#: ../app/core/gimpimage-convert-precision.c:93
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear integer"
 msgstr "Μετατροπή της εικόνας σε γραμμικό ακέραιο 32 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:84
+#: ../app/core/gimpimage-convert-precision.c:96
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma integer"
 msgstr "Μετατροπή της εικόνας σε ακέραιο γάμα 32 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:87
+#: ../app/core/gimpimage-convert-precision.c:99
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
 msgstr "Μετατροπή της εικόνας σε γραμμική κινητή υποδιαστολή 16 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:90
+#: ../app/core/gimpimage-convert-precision.c:102
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
 msgstr "Μετατροπή της εικόνας σε κινητή υποδιαστολή γάμα 16 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:93
+#: ../app/core/gimpimage-convert-precision.c:105
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
 msgstr "Μετατροπή της εικόνας σε γραμμική κινητή υποδιαστολή 32 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:96
+#: ../app/core/gimpimage-convert-precision.c:108
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
 msgstr "Μετατροπή της εικόνας σε κινητή υποδιαστολή γάμα 32 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:99
+#: ../app/core/gimpimage-convert-precision.c:111
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit linear floating point"
 msgstr "Μετατροπή της εικόνας σε γραμμική κινητή υποδιαστολή 64 δυαδικών"
 
-#: ../app/core/gimpimage-convert-precision.c:102
+#: ../app/core/gimpimage-convert-precision.c:114
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Μετατροπή της εικόνας σε κινητή υποδιαστολή γάμα 64 δυαδικών"
@@ -9597,7 +9600,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Αγκίστρωση αιωρούμενης επιλογής"
 
-#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:839
+#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:844
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -9610,76 +9613,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Μετατροπή αιωρούμενης επιλογής σε στρώση"
 
-#: ../app/core/gimplayer.c:320
+#: ../app/core/gimplayer.c:324
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Μετονομασία στρώσης"
 
-#: ../app/core/gimplayer.c:321
+#: ../app/core/gimplayer.c:325
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Μετακίνηση στρώσης"
 
-#: ../app/core/gimplayer.c:322
+#: ../app/core/gimplayer.c:326
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Κλιμάκωση στρώσης"
 
-#: ../app/core/gimplayer.c:323
+#: ../app/core/gimplayer.c:327
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Αλλαγή διαστάσεων στρώσης"
 
-#: ../app/core/gimplayer.c:324
+#: ../app/core/gimplayer.c:328
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Αναστροφή στρώσης"
 
-#: ../app/core/gimplayer.c:325
+#: ../app/core/gimplayer.c:329
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Περιστροφή στρώσης"
 
-#: ../app/core/gimplayer.c:328
+#: ../app/core/gimplayer.c:332
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Επαναταξινόμηση στρώσης"
 
-#: ../app/core/gimplayer.c:329
+#: ../app/core/gimplayer.c:333
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Ανύψωση στρώσης"
 
-#: ../app/core/gimplayer.c:330
+#: ../app/core/gimplayer.c:334
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Ανύψωση στρώσης στην κορυφή"
 
-#: ../app/core/gimplayer.c:331
+#: ../app/core/gimplayer.c:335
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Βύθιση στρώσης"
 
-#: ../app/core/gimplayer.c:332
+#: ../app/core/gimplayer.c:336
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Βύθιση στρώσης στον πάτο"
 
-#: ../app/core/gimplayer.c:333
+#: ../app/core/gimplayer.c:337
 msgid "Layer cannot be raised higher."
 msgstr "Η στρώση δεν μπορεί ανυψωθεί άλλο."
 
-#: ../app/core/gimplayer.c:334
+#: ../app/core/gimplayer.c:338
 msgid "Layer cannot be lowered more."
 msgstr "Η στρώση δεν μπορεί να βυθιστεί άλλο."
 
-#: ../app/core/gimplayer.c:561 ../app/core/gimplayer.c:1419
-#: ../app/core/gimplayermask.c:259
+#: ../app/core/gimplayer.c:566 ../app/core/gimplayer.c:1485
+#: ../app/core/gimplayermask.c:262
 #, c-format
 msgid "%s mask"
 msgstr "%s μάσκα"
 
-#: ../app/core/gimplayer.c:600
+#: ../app/core/gimplayer.c:605
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -9688,77 +9691,77 @@ msgstr ""
 "Αιωρούμενη επιλογή\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1322
+#: ../app/core/gimplayer.c:1388
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Αδυναμία προσθήκης μάσκας στρώσης αφού η στρώση διαθέτει ήδη μία."
 
-#: ../app/core/gimplayer.c:1333
+#: ../app/core/gimplayer.c:1399
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Αδυναμία προσθήκης μάσκας στρώσης με διαστάσεις διαφορετικές από αυτές της "
 "καθορισμένης στρώσης."
 
-#: ../app/core/gimplayer.c:1339
+#: ../app/core/gimplayer.c:1405
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Προσθήκη μάσκας στρώσης"
 
-#: ../app/core/gimplayer.c:1470
+#: ../app/core/gimplayer.c:1536
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Μεταφορά άλφα σε μάσκα"
 
-#: ../app/core/gimplayer.c:1621
+#: ../app/core/gimplayer.c:1687
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Εφαρμογή μάσκας στρώσης"
 
-#: ../app/core/gimplayer.c:1622
+#: ../app/core/gimplayer.c:1688
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Διαγραφή μάσκας στρώσης"
 
-#: ../app/core/gimplayer.c:1727
+#: ../app/core/gimplayer.c:1793
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Ενεργοποίηση μάσκας στρώσης"
 
-#: ../app/core/gimplayer.c:1728
+#: ../app/core/gimplayer.c:1794
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Απενεργοποίηση μάσκας στρώσης"
 
-#: ../app/core/gimplayer.c:1807
+#: ../app/core/gimplayer.c:1873
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Εμφάνιση μάσκας στρώσης"
 
-#: ../app/core/gimplayer.c:1883
+#: ../app/core/gimplayer.c:1949
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Προσθήκη καναλιού άλφα"
 
-#: ../app/core/gimplayer.c:1915
+#: ../app/core/gimplayer.c:1981
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Αφαίρεση καναλιού άλφα"
 
-#: ../app/core/gimplayer.c:1935
+#: ../app/core/gimplayer.c:2001
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Προσαρμογή στρώσης στο μέγεθος της εικόνας"
 
-#: ../app/core/gimplayermask.c:83
+#: ../app/core/gimplayermask.c:84
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Μετακίνηση μάσκας στρώσης"
 
-#: ../app/core/gimplayermask.c:84
+#: ../app/core/gimplayermask.c:85
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Μετατροπή μάσκας στρώσης σε επιλογή"
 
-#: ../app/core/gimplayermask.c:159
+#: ../app/core/gimplayermask.c:160
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Αδυναμία μετονομασίας των μασκών στρώσης."
@@ -9835,7 +9838,7 @@ msgstr "Αδύνατη η ανάγνωση της κεφαλίδας από αρ
 msgid "Premature end of file."
 msgstr "Πρόωρο τέλος αρχείου."
 
-#: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:246
+#: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:254
 msgid "History Color"
 msgstr "Χρώμα ιστορικού"
 
@@ -9877,74 +9880,74 @@ msgstr ""
 "Αδύνατη η εκτέλεση της επανάκλησης για %s. Το συγκεκριμένο πρόσθετο μπορεί "
 "να έχει καταρρεύσει."
 
-#: ../app/core/gimpselection.c:159
+#: ../app/core/gimpselection.c:160
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Μετακίνηση επιλογής"
 
-#: ../app/core/gimpselection.c:160
+#: ../app/core/gimpselection.c:161
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Βαφή επιλογής"
 
-#: ../app/core/gimpselection.c:176
+#: ../app/core/gimpselection.c:177
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Άμβλυνση επιλογής"
 
-#: ../app/core/gimpselection.c:177
+#: ../app/core/gimpselection.c:178
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Όξυνση επιλογής"
 
-#: ../app/core/gimpselection.c:178
+#: ../app/core/gimpselection.c:179
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Καμία επιλογή"
 
-#: ../app/core/gimpselection.c:179
+#: ../app/core/gimpselection.c:180
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Επιλογή όλων"
 
-#: ../app/core/gimpselection.c:180
+#: ../app/core/gimpselection.c:181
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Αντιστροφή επιλογής"
 
-#: ../app/core/gimpselection.c:181
+#: ../app/core/gimpselection.c:182
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Επιλογή περιγράμματος"
 
-#: ../app/core/gimpselection.c:182
+#: ../app/core/gimpselection.c:183
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Επέκταση επιλογής"
 
-#: ../app/core/gimpselection.c:183
+#: ../app/core/gimpselection.c:184
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Συρρίκνωση επιλογής"
 
-#: ../app/core/gimpselection.c:290
+#: ../app/core/gimpselection.c:291
 msgid "There is no selection to stroke."
 msgstr "Δεν υπάρχει επιλογή για βαφή."
 
-#: ../app/core/gimpselection.c:687
+#: ../app/core/gimpselection.c:690
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Αδυναμία αποκοπής ή αντιγραφής γιατί η επιλεγμένη περιοχή είναι κενή."
 
-#: ../app/core/gimpselection.c:816
+#: ../app/core/gimpselection.c:819
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Αδυναμία αιώρησης επιλογής γιατί η επιλεγμένη περιοχή είναι κενή."
 
-#: ../app/core/gimpselection.c:823
+#: ../app/core/gimpselection.c:826
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Αιωρούμενη επιλογή"
 
-#: ../app/core/gimpselection.c:839
+#: ../app/core/gimpselection.c:842
 msgid "Floated Layer"
 msgstr "Αιωρούμενη στρώση"
 
@@ -10181,47 +10184,64 @@ msgstr "Να μετατραπεί η εικόνα σε χρωματικό χώρ
 msgid "_Don't ask me again"
 msgstr "_Να μην ερωτηθώ ξανά"
 
-#: ../app/dialogs/convert-precision-dialog.c:128
+#: ../app/dialogs/convert-precision-dialog.c:135
 #, c-format
 msgid "Convert Image to %s"
 msgstr "Μετατροπή εικόνας σε %s"
 
-#: ../app/dialogs/convert-precision-dialog.c:132
+#: ../app/dialogs/convert-precision-dialog.c:139
 msgid "Precision Conversion"
 msgstr "Μετατροπή ακρίβειας"
 
-#: ../app/dialogs/convert-precision-dialog.c:147
+#: ../app/dialogs/convert-precision-dialog.c:154
 #: ../app/dialogs/convert-type-dialog.c:141
 msgid "C_onvert"
 msgstr "Μετατρ_οπή"
 
 #. dithering
-#: ../app/dialogs/convert-precision-dialog.c:178
-#: ../app/dialogs/convert-type-dialog.c:239
-#: ../app/tools/gimpblendoptions.c:248
+#: ../app/dialogs/convert-precision-dialog.c:185
+#: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:248
 msgid "Dithering"
 msgstr "Πρόσμειξη"
 
-#: ../app/dialogs/convert-precision-dialog.c:197
+#: ../app/dialogs/convert-precision-dialog.c:204
 msgid "_Layers:"
 msgstr "_Στρώσεις:"
 
-#: ../app/dialogs/convert-precision-dialog.c:219
+#: ../app/dialogs/convert-precision-dialog.c:226
 msgid "_Text Layers:"
 msgstr "Στρώσεις _κειμένου:"
 
-#: ../app/dialogs/convert-precision-dialog.c:236
+#: ../app/dialogs/convert-precision-dialog.c:243
 #: ../app/dialogs/convert-type-dialog.c:289
 msgid "Dithering text layers will make them uneditable"
 msgstr "Η πρόσμιξη στρώσεων κειμένου θα τις κάνει μη επεξεργάσιμες"
 
-#: ../app/dialogs/convert-precision-dialog.c:245
+#: ../app/dialogs/convert-precision-dialog.c:252
 msgid "_Channels and Masks:"
 msgstr "Κα_νάλια και μάσκες:"
 
-#: ../app/dialogs/convert-precision-dialog.c:279
-msgid "Converting to lower bit depth"
-msgstr "Μετατροπή σε χαμηλότερο βάθος δυαδικών"
+#. gamma
+#: ../app/dialogs/convert-precision-dialog.c:272
+#: ../app/operations/gimplevelsconfig.c:111 ../app/tools/gimplevelstool.c:482
+msgid "Gamma"
+msgstr "Γάμα"
+
+#: ../app/dialogs/convert-precision-dialog.c:285
+msgid "Perceptual gamma (sRGB)"
+msgstr "Αντιληπτικό γάμα (sRGB)"
+
+#: ../app/dialogs/convert-precision-dialog.c:286
+#| msgctxt "layer-mode-effects"
+#| msgid "Hard light"
+msgid "Linear light"
+msgstr "Γραμμικό φως"
+
+#: ../app/dialogs/convert-precision-dialog.c:316
+#, c-format
+#| msgid "Convert Image to %s"
+msgid "Converting image to %s"
+msgstr "Μετατροπή εικόνας σε %s"
 
 #: ../app/dialogs/convert-type-dialog.c:128
 msgid "Indexed Color Conversion"
@@ -10255,8 +10275,7 @@ msgstr "Ενεργοποίηση πρόσμειξης των στρώσεων κ
 msgid "Converting to indexed colors"
 msgstr "Μετατροπή σε χρώματα από ευρετήριο"
 
-#: ../app/dialogs/convert-type-dialog.c:439
-#: ../app/pdb/image-convert-cmds.c:162
+#: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/image-convert-cmds.c:162
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Δεν επιτρέπεται η μετατροπή σε παλέτα με περισσότερα από 256 χρώματα."
 
@@ -10363,7 +10382,7 @@ msgstr "_Κατάσταση:"
 msgid "_Opacity:"
 msgstr "_Αδιαφάνεια:"
 
-#: ../app/dialogs/file-open-dialog.c:244
+#: ../app/dialogs/file-open-dialog.c:245
 msgid "Open layers"
 msgstr "Άνοιγμα στρώσεων"
 
@@ -10386,11 +10405,11 @@ msgstr ""
 "αρχείου από την επέκτασή του. Παρακαλώ εισάγετε την κατάλληλη επέκταση "
 "αρχείου που ταιριάζει στο επιλεγμένο τύπο, ή μην εισάγετε καθόλου επέκταση."
 
-#: ../app/dialogs/file-save-dialog.c:596
+#: ../app/dialogs/file-save-dialog.c:597
 msgid "The given filename cannot be used for exporting"
 msgstr "Το δοσμένο όνομα αρχείου δεν μπορεί να χρησιμοποιηθεί για εξαγωγή"
 
-#: ../app/dialogs/file-save-dialog.c:597
+#: ../app/dialogs/file-save-dialog.c:598
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -10399,15 +10418,15 @@ msgstr ""
 "διαφόρων τύπων. Αν απλά θέλετε να αποθηκεύσετε την εικόνα ως αρχείο XCF του "
 "GIMP, πηγαίνετε αρχείο→αποθήκευση."
 
-#: ../app/dialogs/file-save-dialog.c:600
+#: ../app/dialogs/file-save-dialog.c:601
 msgid "Take me to the Save dialog"
 msgstr "Μετάβαση στον διάλογο αποθήκευσης"
 
-#: ../app/dialogs/file-save-dialog.c:604
+#: ../app/dialogs/file-save-dialog.c:605
 msgid "The given filename cannot be used for saving"
 msgstr "Το δοσμένο όνομα αρχείου δεν μπορεί να χρησιμοποιηθεί για αποθήκευση"
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:606
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -10415,15 +10434,15 @@ msgstr ""
 "Χρησιμοποιήστε αυτόν το διάλογο για να αποθηκεύσετε την εικόνα ως αρχείο XCF "
 "του GIMP. Για να εξάγετε σε άλλους τύπους αρχείων πηγαίνετε αρχείο→εξαγωγή."
 
-#: ../app/dialogs/file-save-dialog.c:607
+#: ../app/dialogs/file-save-dialog.c:608
 msgid "Take me to the Export dialog"
 msgstr "Μετάβαση στον διάλογο εξαγωγής"
 
-#: ../app/dialogs/file-save-dialog.c:610 ../app/dialogs/file-save-dialog.c:687
+#: ../app/dialogs/file-save-dialog.c:611 ../app/dialogs/file-save-dialog.c:688
 msgid "Extension Mismatch"
 msgstr "Ακατάλληλη επέκταση"
 
-#: ../app/dialogs/file-save-dialog.c:671
+#: ../app/dialogs/file-save-dialog.c:672
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -10432,20 +10451,20 @@ msgstr ""
 "μία γνωστή επέκταση αρχείου ή επιλέξτε έναν τύπο αρχείου από τη λίστα τύπων "
 "αρχείων."
 
-#: ../app/dialogs/file-save-dialog.c:703
+#: ../app/dialogs/file-save-dialog.c:704
 msgid "The given file extension does not match the chosen file type."
 msgstr ""
 "Η δοσμένη επέκταση αρχείου δεν αντιστοιχεί στον επιλεγμένο τύπο αρχείου."
 
-#: ../app/dialogs/file-save-dialog.c:707
+#: ../app/dialogs/file-save-dialog.c:708
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Σίγουρα θέλετε να αποθηκεύσετε την εικόνα οπωσδήποτε με αυτό το όνομα;"
 
-#: ../app/dialogs/file-save-dialog.c:772
+#: ../app/dialogs/file-save-dialog.c:773
 msgid "Saving canceled"
 msgstr "Ακύρωση αποθήκευσης"
 
-#: ../app/dialogs/file-save-dialog.c:778 ../app/widgets/gimpdnd-xds.c:189
+#: ../app/dialogs/file-save-dialog.c:779 ../app/widgets/gimpdnd-xds.c:189
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -10622,12 +10641,12 @@ msgstr "Ό_νομα στρώσης:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:142
-#: ../app/tools/gimpmeasuretool.c:1134
+#: ../app/tools/gimpmeasuretool.c:1137
 msgid "Width:"
 msgstr "Πλάτος:"
 
 #: ../app/dialogs/layer-options-dialog.c:148
-#: ../app/tools/gimpmeasuretool.c:1162
+#: ../app/tools/gimpmeasuretool.c:1165
 msgid "Height:"
 msgstr "Ύψος:"
 
@@ -10856,7 +10875,7 @@ msgstr "_Διάστημα:"
 #
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:361
-#: ../app/tools/gimpforegroundselecttool.c:1208
+#: ../app/tools/gimpforegroundselecttool.c:1209
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
@@ -11272,8 +11291,7 @@ msgstr "Ενεργοποιεί τη στρώση ή το μονοπάτι"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1870
-#: ../app/dialogs/preferences-dialog.c:2062
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2062 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Εμφάνιση"
 
@@ -11476,9 +11494,8 @@ msgstr "Ανάλυση οθόνης"
 
 #
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2257
-#: ../app/display/gimpcursorview.c:205 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2257 ../app/display/gimpcursorview.c:207
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
@@ -11893,8 +11910,7 @@ msgstr ""
 "Πατήστε %s για να απορρίψετε όλες τις αλλαγές και να κλείσετε όλες τις "
 "εικόνες."
 
-#: ../app/dialogs/quit-dialog.c:341
-#: ../app/display/gimpdisplayshell-close.c:179
+#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:179
 msgid "_Discard Changes"
 msgstr "Απόρ_ριψη αλλαγών"
 
@@ -12109,84 +12125,77 @@ msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Διάκενο"
 
-#: ../app/display/gimpcursorview.c:215 ../app/display/gimpcursorview.c:221
-#: ../app/display/gimpcursorview.c:240 ../app/display/gimpcursorview.c:246
-#: ../app/display/gimpcursorview.c:265 ../app/display/gimpcursorview.c:271
-#: ../app/display/gimpcursorview.c:287 ../app/display/gimpcursorview.c:294
-#: ../app/display/gimpcursorview.c:665 ../app/display/gimpcursorview.c:667
-#: ../app/display/gimpcursorview.c:669 ../app/display/gimpcursorview.c:671
-#: ../app/display/gimpcursorview.c:784 ../app/display/gimpcursorview.c:785
-#: ../app/display/gimpcursorview.c:786 ../app/display/gimpcursorview.c:787
+#: ../app/display/gimpcursorview.c:217 ../app/display/gimpcursorview.c:223
+#: ../app/display/gimpcursorview.c:242 ../app/display/gimpcursorview.c:248
+#: ../app/display/gimpcursorview.c:267 ../app/display/gimpcursorview.c:273
+#: ../app/display/gimpcursorview.c:289 ../app/display/gimpcursorview.c:296
+#: ../app/display/gimpcursorview.c:681 ../app/display/gimpcursorview.c:683
+#: ../app/display/gimpcursorview.c:685 ../app/display/gimpcursorview.c:687
+#: ../app/display/gimpcursorview.c:800 ../app/display/gimpcursorview.c:801
+#: ../app/display/gimpcursorview.c:802 ../app/display/gimpcursorview.c:803
 #: ../app/widgets/gimpcolorframe.c:702
 msgid "n/a"
 msgstr "μη διαθέσιμο"
 
-#: ../app/display/gimpcursorview.c:218 ../app/display/gimpcursorview.c:243
-#: ../app/display/gimpcursorview.c:268
+#: ../app/display/gimpcursorview.c:220 ../app/display/gimpcursorview.c:245
+#: ../app/display/gimpcursorview.c:270
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:224 ../app/display/gimpcursorview.c:249
-#: ../app/display/gimpcursorview.c:274
+#: ../app/display/gimpcursorview.c:226 ../app/display/gimpcursorview.c:251
+#: ../app/display/gimpcursorview.c:276
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 msgid "Y"
 msgstr "Y"
 
 #. Units
-#: ../app/display/gimpcursorview.c:230
+#: ../app/display/gimpcursorview.c:232
 msgid "Units"
 msgstr "Μονάδες"
 
 #. Selection Bounding Box
-#: ../app/display/gimpcursorview.c:255
+#: ../app/display/gimpcursorview.c:257
 msgid "Selection Bounding Box"
 msgstr "Οριακό πλαίσιο επιλογής"
 
 #. Width
-#: ../app/display/gimpcursorview.c:291
+#: ../app/display/gimpcursorview.c:293
 msgid "W"
 msgstr "Πλάτος"
 
 #. Height
-#: ../app/display/gimpcursorview.c:298
+#: ../app/display/gimpcursorview.c:300
 msgid "H"
 msgstr "Ύψος"
 
-#: ../app/display/gimpcursorview.c:327
+#: ../app/display/gimpcursorview.c:329
 msgid "_Sample Merged"
 msgstr "_Συγχωνευμένο δείγμα"
 
-#: ../app/display/gimpdisplayshell.c:537
+#: ../app/display/gimpdisplayshell.c:538
 msgid "Access the image menu"
 msgstr "Πρόσβαση στο μενού εικόνας"
 
-#: ../app/display/gimpdisplayshell.c:648
+#: ../app/display/gimpdisplayshell.c:649
 msgid "Zoom image when window size changes"
 msgstr "Εστίαση της εικόνας όταν το μέγεθος παραθύρου αλλάζει"
 
-#: ../app/display/gimpdisplayshell.c:677
+#: ../app/display/gimpdisplayshell.c:678
 msgid "Toggle Quick Mask"
 msgstr "Εναλλαγή της γρήγορης μάσκας"
 
-#: ../app/display/gimpdisplayshell.c:700
+#: ../app/display/gimpdisplayshell.c:701
 msgid "Navigate the image display"
 msgstr "Περιήγηση στην οθόνη της εικόνας"
 
-#: ../app/display/gimpdisplayshell.c:772
-#: ../app/display/gimpdisplayshell.c:1469 ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:773 ../app/display/gimpdisplayshell.c:1470
+#: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Σύρετε αρχεία εικόνας εδώ για να τα ανοίξετε"
 
 #: ../app/display/gimpdisplayshell-callbacks.c:532
 #, c-format
-#| msgid ""
-#| "<big>Unstable Development Version</big>\n"
-#| "\n"
-#| "<small>commit <tt>%s</tt></small>\n"
-#| "\n"
-#| "<small>Please build latest git master before\n"
-#| "reporting any bugs against this version.</small>"
 msgid ""
 "<big>Unstable Development Version</big>\n"
 "\n"
@@ -12346,7 +12355,7 @@ msgid "Select Rotation Angle"
 msgstr "Επιλογή γωνίας περιστροφής"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:1106
+#: ../app/tools/gimpmeasuretool.c:1109
 msgid "Angle:"
 msgstr "Γωνία:"
 
@@ -12398,21 +12407,21 @@ msgstr "Μη κανονικό αρχείο"
 msgid "Permission denied"
 msgstr "Άρνηση πρόσβασης"
 
-#: ../app/file/file-open.c:233
+#: ../app/file/file-open.c:231
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Το πρόσθετο %s επέστρεψε ΕΠΙΤΥΧΙΑ αλλά δεν επέστρεψε εικόνα"
 
-#: ../app/file/file-open.c:244
+#: ../app/file/file-open.c:242
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Το πρόσθετο %s δεν μπόρεσε να ανοίξει την εικόνα"
 
-#: ../app/file/file-open.c:634
+#: ../app/file/file-open.c:637
 msgid "Image doesn't contain any layers"
 msgstr "Η εικόνα δεν περιέχει στρώσεις"
 
-#: ../app/file/file-open.c:693
+#: ../app/file/file-open.c:696
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Το άνοιγμα του '%s' απέτυχε: %s"
@@ -12628,10 +12637,6 @@ msgstr "Κατάσταση αποκορεσμού"
 msgid "Overlap"
 msgstr "Επικάλυψη"
 
-#: ../app/operations/gimplevelsconfig.c:111 ../app/tools/gimplevelstool.c:482
-msgid "Gamma"
-msgstr "Γάμα"
-
 #: ../app/operations/gimplevelsconfig.c:116
 msgid "Low Input"
 msgstr "Χαμηλή είσοδος"
@@ -12751,7 +12756,7 @@ msgstr "Συνέλιξη"
 msgid "Dodge/Burn"
 msgstr "Ξάνοιγμα/Σκοτείνιασμα"
 
-#: ../app/paint/gimperaser.c:61 ../app/tools/gimperasertool.c:66
+#: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
 msgstr "Σβήστρα"
 
@@ -12764,7 +12769,7 @@ msgid "Healing does not operate on indexed layers."
 msgstr "Η επούλωση δεν λειτουργεί σε στρώσεις από ευρετήριο."
 
 #
-#: ../app/paint/gimpink.c:99 ../app/tools/gimpinktool.c:61
+#: ../app/paint/gimpink.c:100 ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Μελάνη"
 
@@ -12780,20 +12785,19 @@ msgstr "Λόγος θέασης σταγόνας μελανιού"
 msgid "Ink Blob Angle"
 msgstr "Γωνία σταγόνας μελανιού"
 
-#: ../app/paint/gimpmybrush.c:89
+#: ../app/paint/gimpmybrush.c:90
 msgid "Mybrush"
 msgstr "ΤοΠινέλοΜου"
 
 #: ../app/paint/gimpmybrushoptions.c:69 ../app/tools/gimpcoloroptions.c:158
 #: ../app/tools/gimpmybrushoptions-gui.c:166
 #: ../app/tools/gimprectangleselectoptions.c:164
-#: ../app/tools/gimpselectionoptions.c:278
-#: ../app/widgets/gimpbrusheditor.c:156
+#: ../app/tools/gimpselectionoptions.c:278 ../app/widgets/gimpbrusheditor.c:156
 msgid "Radius"
 msgstr "Ακτίνα"
 
 #
-#: ../app/paint/gimppaintbrush.c:65 ../app/tools/gimppaintbrushtool.c:51
+#: ../app/paint/gimppaintbrush.c:66 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Πινέλο"
 
@@ -12801,75 +12805,75 @@ msgstr "Πινέλο"
 msgid "Paint"
 msgstr "Ζωγραφική"
 
-#: ../app/paint/gimppaintoptions.c:192
+#: ../app/paint/gimppaintoptions.c:195
 msgid "Brush Size"
 msgstr "Μέγεθος πινέλου"
 
-#: ../app/paint/gimppaintoptions.c:197
+#: ../app/paint/gimppaintoptions.c:200
 msgid "Link brush size with canvas zoom"
 msgstr "Σύνδεση του μεγέθους πινέλου με την εστίαση του καμβά"
 
-#: ../app/paint/gimppaintoptions.c:222
+#: ../app/paint/gimppaintoptions.c:225
 msgid "Brush Force"
 msgstr "Δύναμη πινέλου"
 
-#: ../app/paint/gimppaintoptions.c:228
+#: ../app/paint/gimppaintoptions.c:231
 msgid "Link brush size to brush native"
 msgstr "Σύνδεση μεγέθους πινέλου με το εγγενές πινέλο"
 
-#: ../app/paint/gimppaintoptions.c:234
+#: ../app/paint/gimppaintoptions.c:237
 msgid "Link brush aspect ratio to brush native"
 msgstr "Σύνδεση αναλογίας διαστάσεων πινέλου με το εγγενές πινέλο"
 
-#: ../app/paint/gimppaintoptions.c:240
+#: ../app/paint/gimppaintoptions.c:243
 msgid "Link brush angle to brush native"
 msgstr "Σύνδεση γωνίας πινέλου με το εγγενές πινέλο"
 
-#: ../app/paint/gimppaintoptions.c:246
+#: ../app/paint/gimppaintoptions.c:249
 msgid "Link brush spacing to brush native"
 msgstr "Σύνδεση διάκενου πινέλου με το εγγενές πινέλο"
 
-#: ../app/paint/gimppaintoptions.c:252
+#: ../app/paint/gimppaintoptions.c:255
 msgid "Link brush hardness to brush native"
 msgstr "Σύνδεση σκληρότητας πινέλου με το εγγενές πινέλο"
 
-#: ../app/paint/gimppaintoptions.c:257
+#: ../app/paint/gimppaintoptions.c:260
 msgid "Every stamp has its own opacity"
 msgstr "Κάθε σφραγίδα έχει τη δική της αδιαφάνεια"
 
-#: ../app/paint/gimppaintoptions.c:263
+#: ../app/paint/gimppaintoptions.c:266
 msgid "Ignore fuzziness of the current brush"
 msgstr "Παράβλεψη θολώματος του τρέχοντος πινέλου"
 
-#: ../app/paint/gimppaintoptions.c:268
+#: ../app/paint/gimppaintoptions.c:271
 msgid "Scatter brush as you paint"
 msgstr "Διασκορπισμός πινέλου κατά τη ζωγραφική"
 
-#: ../app/paint/gimppaintoptions.c:272
+#: ../app/paint/gimppaintoptions.c:275
 msgid "Distance of scattering"
 msgstr "Απόσταση διασκορπισμού"
 
-#: ../app/paint/gimppaintoptions.c:282
+#: ../app/paint/gimppaintoptions.c:285
 msgid "Distance over which strokes fade out"
 msgstr "Η απόσταση στην οποία ξεθωριάζουν οι πινελιές"
 
-#: ../app/paint/gimppaintoptions.c:290
+#: ../app/paint/gimppaintoptions.c:293
 msgid "Reverse direction of fading"
 msgstr "Αντιστροφή κατεύθυνσης ξεθωριάσματος"
 
-#: ../app/paint/gimppaintoptions.c:294
+#: ../app/paint/gimppaintoptions.c:297
 msgid "How fade is repeated as you paint"
 msgstr "Πώς επαναλαμβάνεται το ξεθώριασμα καθώς ζωγραφίζετε"
 
-#: ../app/paint/gimppaintoptions.c:353
+#: ../app/paint/gimppaintoptions.c:356
 msgid "Paint smoother strokes"
 msgstr "Πιο ομαλές πινελιές"
 
-#: ../app/paint/gimppaintoptions.c:357
+#: ../app/paint/gimppaintoptions.c:360
 msgid "Depth of smoothing"
 msgstr "Βάθος εξομάλυνσης"
 
-#: ../app/paint/gimppaintoptions.c:361
+#: ../app/paint/gimppaintoptions.c:364
 msgid "Gravity of the pen"
 msgstr "Βαρύτητα πένας"
 
@@ -12966,7 +12970,7 @@ msgid "Hue-Saturation"
 msgstr "Απόχρωση-Κορεσμός"
 
 #: ../app/pdb/color-cmds.c:765 ../app/tools/gimpblendoptions.c:269
-#: ../app/tools/gimpbucketfilloptions.c:285
+#: ../app/tools/gimpbucketfilloptions.c:284
 #: ../app/tools/gimpregionselectoptions.c:232
 #: ../app/tools/gimpthresholdtool.c:88
 msgid "Threshold"
@@ -12976,7 +12980,7 @@ msgstr "Κατώφλι"
 msgid "Plug-In"
 msgstr "Πρόσθετα"
 
-#: ../app/pdb/drawable-cmds.c:959 ../app/tools/gimpforegroundselecttool.c:983
+#: ../app/pdb/drawable-cmds.c:962 ../app/tools/gimpforegroundselecttool.c:984
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Επιλογή προσκηνίου"
@@ -13288,7 +13292,7 @@ msgstr ""
 "Η διαδικασία '%s' κλήθηκε με λάθος τύπο για το όρισμα #%d. Αναμενόταν %s, "
 "αλλά ελήφθη %s."
 
-#: ../app/pdb/gimppdbcontext.c:89 ../app/tools/gimpselectionoptions.c:79
+#: ../app/pdb/gimppdbcontext.c:98 ../app/tools/gimpselectionoptions.c:79
 msgid "Smooth edges"
 msgstr "Εξομάλυνση άκρων"
 
@@ -13392,286 +13396,286 @@ msgctxt "undo-type"
 msgid "Displace"
 msgstr "Μετατόπιση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:346
+#: ../app/pdb/plug-in-compat-cmds.c:347
 msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr "Θόλωση Γκάους"
 
-#: ../app/pdb/plug-in-compat-cmds.c:411
+#: ../app/pdb/plug-in-compat-cmds.c:412
 msgctxt "undo-type"
 msgid "Alien Map"
 msgstr "Απεικόνιση παράξενου"
 
-#: ../app/pdb/plug-in-compat-cmds.c:448
+#: ../app/pdb/plug-in-compat-cmds.c:449
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "Εξομάλυνση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:491
+#: ../app/pdb/plug-in-compat-cmds.c:492
 msgctxt "undo-type"
 msgid "Apply Canvas"
 msgstr "Εφαρμογή καμβά"
 
-#: ../app/pdb/plug-in-compat-cmds.c:551
+#: ../app/pdb/plug-in-compat-cmds.c:552
 msgctxt "undo-type"
 msgid "Apply Lens"
 msgstr "Εφαρμογή φακού"
 
-#: ../app/pdb/plug-in-compat-cmds.c:598
+#: ../app/pdb/plug-in-compat-cmds.c:599
 msgid "Autocrop image"
 msgstr "Αυτόματη περικοπή εικόνας"
 
 # # FIX?  see above for "send to back"
-#: ../app/pdb/plug-in-compat-cmds.c:663
+#: ../app/pdb/plug-in-compat-cmds.c:664
 msgid "Autocrop layer"
 msgstr "Αυτόματη περικοπή στρώσης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:709
+#: ../app/pdb/plug-in-compat-cmds.c:710
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "Επέκταση αντίθεσης HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:863
+#: ../app/pdb/plug-in-compat-cmds.c:864
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Επέκταση αντίθεσης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:943
+#: ../app/pdb/plug-in-compat-cmds.c:944
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Μείκτης καναλιού"
 
-#: ../app/pdb/plug-in-compat-cmds.c:987
+#: ../app/pdb/plug-in-compat-cmds.c:988
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Χρώμα σε άλφα"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1033
+#: ../app/pdb/plug-in-compat-cmds.c:1034
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "Η διάταξη 'πίνακας' έχει μόνο %d μέλη, πρέπει να έχει 25"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1041
+#: ../app/pdb/plug-in-compat-cmds.c:1042
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "Η διάταξη 'κανάλια' έχει μόνο %d μέλη, πρέπει να έχει 5"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1113
+#: ../app/pdb/plug-in-compat-cmds.c:1114
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Πίνακας συνέλιξης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1175
+#: ../app/pdb/plug-in-compat-cmds.c:1176
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Κυβισμός"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1220
+#: ../app/pdb/plug-in-compat-cmds.c:1221
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Απόπλεξη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1299
+#: ../app/pdb/plug-in-compat-cmds.c:1300
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "Μοτίβα διάθλασης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1454
+#: ../app/pdb/plug-in-compat-cmds.c:1455
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Άκρη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1498
+#: ../app/pdb/plug-in-compat-cmds.c:1499
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Χάραξη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1571
+#: ../app/pdb/plug-in-compat-cmds.c:1572
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Ανταλλαγή χρώματος"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1619
+#: ../app/pdb/plug-in-compat-cmds.c:1620
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Λάμψη φακών"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1803
+#: ../app/pdb/plug-in-compat-cmds.c:1804
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Παράθεση γυαλιού"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1856
+#: ../app/pdb/plug-in-compat-cmds.c:1857
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Θόρυβος HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2120 ../app/pdb/plug-in-compat-cmds.c:2180
+#: ../app/pdb/plug-in-compat-cmds.c:2121 ../app/pdb/plug-in-compat-cmds.c:2181
 msgid "Set color profile"
 msgstr "Ορισμός χρωματικής κατατομής"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2235
+#: ../app/pdb/plug-in-compat-cmds.c:2236
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Aυταπάτη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2272
+#: ../app/pdb/plug-in-compat-cmds.c:2273
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Λαπλάς"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2348
+#: ../app/pdb/plug-in-compat-cmds.c:2349
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Παραμόρφωση φακών"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2388
+#: ../app/pdb/plug-in-compat-cmds.c:2389
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Παράθεση χωρίς ραφή"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2455
+#: ../app/pdb/plug-in-compat-cmds.c:2456
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Λαβύρινθος"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2538 ../app/pdb/plug-in-compat-cmds.c:2622
+#: ../app/pdb/plug-in-compat-cmds.c:2539 ../app/pdb/plug-in-compat-cmds.c:2623
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Θόλωση κίνησης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2723
+#: ../app/pdb/plug-in-compat-cmds.c:2724
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Μωσαϊκό"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2785
+#: ../app/pdb/plug-in-compat-cmds.c:2786
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Υπερκαινοφανής"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2875
+#: ../app/pdb/plug-in-compat-cmds.c:2876
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Πλακίδιο χαρτιού"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2916 ../app/pdb/plug-in-compat-cmds.c:2959
+#: ../app/pdb/plug-in-compat-cmds.c:2917 ../app/pdb/plug-in-compat-cmds.c:2960
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Εικονοστοιχείωση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3010
+#: ../app/pdb/plug-in-compat-cmds.c:3011
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Πλάσμα"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3064
+#: ../app/pdb/plug-in-compat-cmds.c:3065
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Πολικές συντεταγμένες"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3104
+#: ../app/pdb/plug-in-compat-cmds.c:3105
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Αφαίρεση κόκκινων ματιών"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3157
+#: ../app/pdb/plug-in-compat-cmds.c:3158
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Τυχαία εκπομπή"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3210
+#: ../app/pdb/plug-in-compat-cmds.c:3211
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Τυχαία επιλογή"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3263
+#: ../app/pdb/plug-in-compat-cmds.c:3264
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Τυχαία σύντηξη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3338
+#: ../app/pdb/plug-in-compat-cmds.c:3339
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Θόρυβος RGB"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3461
+#: ../app/pdb/plug-in-compat-cmds.c:3462
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Τυχαίος θόρυβος"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3505
+#: ../app/pdb/plug-in-compat-cmds.c:3506
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Ημιισοπέδωση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3548
+#: ../app/pdb/plug-in-compat-cmds.c:3549
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Μετατόπιση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3651
+#: ../app/pdb/plug-in-compat-cmds.c:3652
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Ημίτονο"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3699
+#: ../app/pdb/plug-in-compat-cmds.c:3700
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3760
+#: ../app/pdb/plug-in-compat-cmds.c:3761
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Συμπαγής θόρυβος"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3804
+#: ../app/pdb/plug-in-compat-cmds.c:3805
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Διασπορά"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3845
+#: ../app/pdb/plug-in-compat-cmds.c:3846
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Κατώφλι άλφα"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3891
+#: ../app/pdb/plug-in-compat-cmds.c:3892
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Βίντεο"
 
 #
-#: ../app/pdb/plug-in-compat-cmds.c:3928
+#: ../app/pdb/plug-in-compat-cmds.c:3929
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Αντιστροφή τιμής"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4032
+#: ../app/pdb/plug-in-compat-cmds.c:4033
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Διάδοση τιμής"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4079
+#: ../app/pdb/plug-in-compat-cmds.c:4080
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Διαστολή"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4126
+#: ../app/pdb/plug-in-compat-cmds.c:4127
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Διάβρωση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4189
+#: ../app/pdb/plug-in-compat-cmds.c:4190
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Κύματα"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4237
+#: ../app/pdb/plug-in-compat-cmds.c:4238
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Στροβιλισμός και πίεση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4289
+#: ../app/pdb/plug-in-compat-cmds.c:4290
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Άνεμος"
@@ -13872,52 +13876,52 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Προσθήκη στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:148
+#: ../app/text/gimptextlayer.c:149
 msgid "Text Layer"
 msgstr "Στρώση κειμένου"
 
-#: ../app/text/gimptextlayer.c:149
+#: ../app/text/gimptextlayer.c:150
 msgid "Rename Text Layer"
 msgstr "Μετονομασία στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:150
+#: ../app/text/gimptextlayer.c:151
 msgid "Move Text Layer"
 msgstr "Μετακίνηση στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:151
+#: ../app/text/gimptextlayer.c:152
 msgid "Scale Text Layer"
 msgstr "Κλιμάκωση στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:152
+#: ../app/text/gimptextlayer.c:153
 msgid "Resize Text Layer"
 msgstr "Αλλαγή διαστάσεων στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:153
+#: ../app/text/gimptextlayer.c:154
 msgid "Flip Text Layer"
 msgstr "Αναστροφή στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:154
+#: ../app/text/gimptextlayer.c:155
 msgid "Rotate Text Layer"
 msgstr "Περιστροφή στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:155
+#: ../app/text/gimptextlayer.c:156
 msgid "Transform Text Layer"
 msgstr "Μετασχηματισμός στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:564
+#: ../app/text/gimptextlayer.c:567
 msgid "Discard Text Information"
 msgstr "Απόρριψη στρώσης κειμένου"
 
-#: ../app/text/gimptextlayer.c:632
+#: ../app/text/gimptextlayer.c:635
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "Λόγω έλλειψης γραμματοσειρών, η λειτουργικότητα κειμένου δεν είναι διαθέσιμη."
 
-#: ../app/text/gimptextlayer.c:691
+#: ../app/text/gimptextlayer.c:694
 msgid "Empty Text Layer"
 msgstr "Κενή στρώση κειμένου"
 
-#: ../app/text/gimptextlayer.c:741
+#: ../app/text/gimptextlayer.c:744
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -14146,7 +14150,7 @@ msgid "Blen_d"
 msgstr "Ανάμει_ξη"
 
 #: ../app/tools/gimpblendtool.c:241 ../app/tools/gimpbucketfilltool.c:151
-#: ../app/tools/gimpforegroundselecttool.c:286
+#: ../app/tools/gimpforegroundselecttool.c:287
 #: ../app/tools/gimpimagemaptool.c:319 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1840
 msgid "The active layer is not visible."
@@ -14229,41 +14233,41 @@ msgid "Criterion used for determining color similarity"
 msgstr "Το χρησιμοποιούμενο κριτήριο για προσδιορισμό της ομοιότητας χρώματος"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:229
+#: ../app/tools/gimpbucketfilloptions.c:228
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Τύπος γεμίσματος  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:244
+#: ../app/tools/gimpbucketfilloptions.c:243
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Επηρεαζόμενη περιοχή  (%s)"
 
-#: ../app/tools/gimpbucketfilloptions.c:248
+#: ../app/tools/gimpbucketfilloptions.c:247
 msgid "Fill whole selection"
 msgstr "Γέμισμα όλης της επιλογής"
 
-#: ../app/tools/gimpbucketfilloptions.c:249
+#: ../app/tools/gimpbucketfilloptions.c:248
 msgid "Fill similar colors"
 msgstr "Γέμισμα παρόμοιων χρωμάτων"
 
-#: ../app/tools/gimpbucketfilloptions.c:258
+#: ../app/tools/gimpbucketfilloptions.c:257
 msgid "Finding Similar Colors"
 msgstr "Εύρεση παρόμοιων χρωμάτων"
 
-#: ../app/tools/gimpbucketfilloptions.c:273
+#: ../app/tools/gimpbucketfilloptions.c:272
 msgid "Fill transparent areas"
 msgstr "Γέμισμα διαφανών περιοχών"
 
-#: ../app/tools/gimpbucketfilloptions.c:279
+#: ../app/tools/gimpbucketfilloptions.c:278
 #: ../app/tools/gimpcloneoptions-gui.c:80
-#: ../app/tools/gimpcolorpickeroptions.c:159 ../app/tools/gimphealtool.c:99
+#: ../app/tools/gimpcolorpickeroptions.c:158 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:226
 msgid "Sample merged"
 msgstr "Δειγματοληψία συγχωνευμένων"
 
-#: ../app/tools/gimpbucketfilloptions.c:292
+#: ../app/tools/gimpbucketfilloptions.c:291
 msgid "Fill by"
 msgstr "Γέμισμα με"
 
@@ -14306,27 +14310,27 @@ msgstr ""
 "Γέμισμα της αρχικής τοποθεσίας\n"
 "του κλωβού με ένα χρώμα"
 
-#: ../app/tools/gimpcagetool.c:159 ../app/tools/gimpcagetool.c:1178
+#: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1179
 msgid "Cage Transform"
 msgstr "Μετασχηματισμός κλωβού"
 
-#: ../app/tools/gimpcagetool.c:160
+#: ../app/tools/gimpcagetool.c:161
 msgid "Cage Transform: Deform a selection with a cage"
 msgstr "Μετασχηματισμός κλωβού: Παραμορφώστε την επιλογή με κλωβό"
 
-#: ../app/tools/gimpcagetool.c:161
+#: ../app/tools/gimpcagetool.c:162
 msgid "_Cage Transform"
 msgstr "_Μετασχηματισμός κλωβού"
 
-#: ../app/tools/gimpcagetool.c:314 ../app/tools/gimpwarptool.c:313
+#: ../app/tools/gimpcagetool.c:315 ../app/tools/gimpwarptool.c:313
 msgid "Press ENTER to commit the transform"
 msgstr "Πατήστε ENTER για εφαρμογή του μετασχηματισμού"
 
-#: ../app/tools/gimpcagetool.c:1081
+#: ../app/tools/gimpcagetool.c:1082
 msgid "Computing Cage Coefficients"
 msgstr "Υπολογισμός συντελεστών κλωβού"
 
-#: ../app/tools/gimpcagetool.c:1229
+#: ../app/tools/gimpcagetool.c:1230
 msgid "Cage transform"
 msgstr "Μετασχηματισμός κλωβού"
 
@@ -14468,18 +14472,15 @@ msgstr "Ο χρωματισμός δεν λειτουργεί σε στρώσε�
 msgid "Select Color"
 msgstr "Επιλογή χρώματος"
 
-#: ../app/tools/gimpcolorizetool.c:174
-#: ../app/tools/gimphuesaturationtool.c:303
+#: ../app/tools/gimpcolorizetool.c:174 ../app/tools/gimphuesaturationtool.c:303
 msgid "_Hue"
 msgstr "_Απόχρωση"
 
-#: ../app/tools/gimpcolorizetool.c:181
-#: ../app/tools/gimphuesaturationtool.c:317
+#: ../app/tools/gimpcolorizetool.c:181 ../app/tools/gimphuesaturationtool.c:317
 msgid "_Saturation"
 msgstr "_Κορεσμός"
 
-#: ../app/tools/gimpcolorizetool.c:188
-#: ../app/tools/gimphuesaturationtool.c:310
+#: ../app/tools/gimpcolorizetool.c:188 ../app/tools/gimphuesaturationtool.c:310
 msgid "_Lightness"
 msgstr "_Φωτεινότητα"
 
@@ -14516,46 +14517,46 @@ msgstr ""
 "διάφορα χρωματικά πρότυπα"
 
 #. the pick FG/BG frame
-#: ../app/tools/gimpcolorpickeroptions.c:164
+#: ../app/tools/gimpcolorpickeroptions.c:163
 #, c-format
 msgid "Pick Mode  (%s)"
 msgstr "Κατάσταση επιλογής  (%s)"
 
 #. the use_info_window toggle button
-#: ../app/tools/gimpcolorpickeroptions.c:173
+#: ../app/tools/gimpcolorpickeroptions.c:172
 #, c-format
 msgid "Use info window  (%s)"
 msgstr "Χρήση παραθύρου πληροφοριών  (%s)"
 
-#: ../app/tools/gimpcolorpickertool.c:96
+#: ../app/tools/gimpcolorpickertool.c:98
 msgid "Color Picker"
 msgstr "Επιλογέας χρωμάτων"
 
-#: ../app/tools/gimpcolorpickertool.c:97
+#: ../app/tools/gimpcolorpickertool.c:99
 msgid "Color Picker Tool: Set colors from image pixels"
 msgstr "Επιλογέας χρωμάτων: Ορισμός χρωμάτων από εικονοστοιχεία εικόνας"
 
-#: ../app/tools/gimpcolorpickertool.c:98
+#: ../app/tools/gimpcolorpickertool.c:100
 msgid "C_olor Picker"
 msgstr "Επιλο_γέας χρωμάτων"
 
-#: ../app/tools/gimpcolorpickertool.c:234
+#: ../app/tools/gimpcolorpickertool.c:248
 msgid "Click in any image to view its color"
 msgstr "Πάτημα σε εικόνα για να δείτε το χρώμα της"
 
-#: ../app/tools/gimpcolorpickertool.c:241 ../app/tools/gimppainttool.c:497
+#: ../app/tools/gimpcolorpickertool.c:255 ../app/tools/gimppainttool.c:497
 msgid "Click in any image to pick the foreground color"
 msgstr "Πάτημα σε εικόνα για επιλογή νέου χρώματος προσκηνίου"
 
-#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:503
+#: ../app/tools/gimpcolorpickertool.c:263 ../app/tools/gimppainttool.c:503
 msgid "Click in any image to pick the background color"
 msgstr "Πάτημα σε εικόνα για επιλογή χρώματος παρασκηνίου"
 
-#: ../app/tools/gimpcolorpickertool.c:257
+#: ../app/tools/gimpcolorpickertool.c:271
 msgid "Click in any image to add the color to the palette"
 msgstr "Πάτημα σε εικόνα για προσθήκη χρώματος στην παλέτα"
 
-#: ../app/tools/gimpcolorpickertool.c:318
+#: ../app/tools/gimpcolorpickertool.c:336
 msgid "Color Picker Information"
 msgstr "Πληροφορίες επιλογέα χρωμάτων"
 
@@ -14587,39 +14588,39 @@ msgstr "Θόλωση / Όξυνση: Θολώστε ή ξεθολώστε επι
 msgid "Bl_ur / Sharpen"
 msgstr "_Θόλωση / Όξυνση"
 
-#: ../app/tools/gimpconvolvetool.c:182
+#: ../app/tools/gimpconvolvetool.c:181
 msgid "Click to blur"
 msgstr "Πάτημα για θόλωση"
 
-#: ../app/tools/gimpconvolvetool.c:183
+#: ../app/tools/gimpconvolvetool.c:182
 msgid "Click to blur the line"
 msgstr "Πάτημα για θόλωση της γραμμής"
 
-#: ../app/tools/gimpconvolvetool.c:184
+#: ../app/tools/gimpconvolvetool.c:183
 #, c-format
 msgid "%s to sharpen"
 msgstr "%s για όξυνση"
 
-#: ../app/tools/gimpconvolvetool.c:188
+#: ../app/tools/gimpconvolvetool.c:187
 msgid "Click to sharpen"
 msgstr "Πάτημα για όξυνση"
 
-#: ../app/tools/gimpconvolvetool.c:189
+#: ../app/tools/gimpconvolvetool.c:188
 msgid "Click to sharpen the line"
 msgstr "Πάτημα για όξυνση της γραμμής"
 
-#: ../app/tools/gimpconvolvetool.c:190
+#: ../app/tools/gimpconvolvetool.c:189
 #, c-format
 msgid "%s to blur"
 msgstr "%s για θόλωση"
 
 #. the type radio box
-#: ../app/tools/gimpconvolvetool.c:214
+#: ../app/tools/gimpconvolvetool.c:213
 #, c-format
 msgid "Convolve Type  (%s)"
 msgstr "Τύπος συνέλιξης (%s)"
 
-#: ../app/tools/gimpconvolvetool.c:226
+#: ../app/tools/gimpconvolvetool.c:225
 msgctxt "convolve-tool"
 msgid "Rate"
 msgstr "Ρυθμός"
@@ -14667,59 +14668,69 @@ msgstr "Πάτημα ή Enter για περικοπή"
 msgid "There is no active layer to crop."
 msgstr "Δεν υπάρχει ενεργή στρώση για περικοπή."
 
-#: ../app/tools/gimpcurvestool.c:141
+#: ../app/tools/gimpcurvestool.c:143
 msgid "Curves"
 msgstr "Καμπύλες"
 
-#: ../app/tools/gimpcurvestool.c:142
+#: ../app/tools/gimpcurvestool.c:144
 msgid "Curves Tool: Adjust color curves"
 msgstr "Καμπύλες: Ρυθμίστε τις καμπύλες χρωμάτων"
 
-#: ../app/tools/gimpcurvestool.c:143
+#: ../app/tools/gimpcurvestool.c:145
 msgid "_Curves..."
 msgstr "Καμ_πύλες..."
 
-#: ../app/tools/gimpcurvestool.c:166
+#: ../app/tools/gimpcurvestool.c:171
 msgid "Adjust Color Curves"
 msgstr "Ρύθμιση καμπυλών χρωμάτων"
 
-#: ../app/tools/gimpcurvestool.c:168
+#: ../app/tools/gimpcurvestool.c:173
 msgid "Import Curves"
 msgstr "Εισαγωγή καμπυλών"
 
-#: ../app/tools/gimpcurvestool.c:169
+#: ../app/tools/gimpcurvestool.c:174
 msgid "Export Curves"
 msgstr "Εξαγωγή καμπυλών"
 
-#: ../app/tools/gimpcurvestool.c:313
+#: ../app/tools/gimpcurvestool.c:327
 msgid "Click to add a control point"
 msgstr "Πάτημα για προσθήκη σημείου ελέγχου"
 
-#: ../app/tools/gimpcurvestool.c:318
+#: ../app/tools/gimpcurvestool.c:332
 msgid "Click to add control points to all channels"
 msgstr "Πάτημα για προσθήκη σημείων ελέγχου σε όλα τα κανάλια"
 
-#: ../app/tools/gimpcurvestool.c:323
-msgid "Click to locate on curve (try Shift, Ctrl)"
-msgstr "Πάτημα για εντοπισμό στην καμπύλη (δοκιμάστε με Shift, Ctrl)"
+#: ../app/tools/gimpcurvestool.c:337
+msgid "Click to locate on curve"
+msgstr "Πάτημα για εντοπισμό στην καμπύλη"
 
-#: ../app/tools/gimpcurvestool.c:417 ../app/tools/gimplevelstool.c:359
+#: ../app/tools/gimpcurvestool.c:339
+#, c-format
+msgid "%s: add control point"
+msgstr "%s: προσθήκη σημείου ελέγχου"
+
+#: ../app/tools/gimpcurvestool.c:340
+#, c-format
+msgid "%s: add control points to all channels"
+msgstr "%s: προσθήκη σημείων ελέγχου σε όλα τα κανάλια"
+
+#: ../app/tools/gimpcurvestool.c:437 ../app/tools/gimplevelstool.c:359
 msgid "Cha_nnel:"
 msgstr "Κα_νάλι:"
 
-#: ../app/tools/gimpcurvestool.c:443 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:463 ../app/tools/gimplevelstool.c:384
 msgid "R_eset Channel"
 msgstr "_Επαναφορά καναλιού"
 
-#: ../app/tools/gimpcurvestool.c:534 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:554 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Τύπος καμπύλης:"
 
-#: ../app/tools/gimpcurvestool.c:601 ../app/tools/gimplevelstool.c:652
+#: ../app/tools/gimpcurvestool.c:621 ../app/tools/gimplevelstool.c:652
 msgid "Could not read header: "
 msgstr "Αδύνατη η ανάγνωση κεφαλίδας: "
 
-#: ../app/tools/gimpcurvestool.c:641
+#: ../app/tools/gimpcurvestool.c:661
 msgid "Use _old curves file format"
 msgstr "Χρήση _παλαιού τύπου αρχείων καμπυλών"
 
@@ -14756,44 +14767,44 @@ msgstr ""
 msgid "Dod_ge / Burn"
 msgstr "_Ξάνοιγμα / Σκοτείνιασμα"
 
-#: ../app/tools/gimpdodgeburntool.c:189
+#: ../app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge"
 msgstr "Πάτημα για άμβλυνση"
 
-#: ../app/tools/gimpdodgeburntool.c:190
+#: ../app/tools/gimpdodgeburntool.c:189
 msgid "Click to dodge the line"
 msgstr "Πάτημα για άμβλυνση της γραμμής"
 
-#: ../app/tools/gimpdodgeburntool.c:191
+#: ../app/tools/gimpdodgeburntool.c:190
 #, c-format
 msgid "%s to burn"
 msgstr "%s για σκοτείνιασμα"
 
-#: ../app/tools/gimpdodgeburntool.c:195
+#: ../app/tools/gimpdodgeburntool.c:194
 msgid "Click to burn"
 msgstr "Πάτημα για σκοτείνιασμα"
 
-#: ../app/tools/gimpdodgeburntool.c:196
+#: ../app/tools/gimpdodgeburntool.c:195
 msgid "Click to burn the line"
 msgstr "Πάτημα για σκοτείνιασμα της γραμμής"
 
-#: ../app/tools/gimpdodgeburntool.c:197
+#: ../app/tools/gimpdodgeburntool.c:196
 #, c-format
 msgid "%s to dodge"
 msgstr "%s για ξάνοιγμα"
 
 #. the type (dodge or burn)
-#: ../app/tools/gimpdodgeburntool.c:221
+#: ../app/tools/gimpdodgeburntool.c:220
 #, c-format
 msgid "Type  (%s)"
 msgstr "Τύπος  (%s)"
 
 #. mode (highlights, midtones, or shadows)
-#: ../app/tools/gimpdodgeburntool.c:232
+#: ../app/tools/gimpdodgeburntool.c:231
 msgid "Range"
 msgstr "Περιοχή"
 
-#: ../app/tools/gimpdodgeburntool.c:238
+#: ../app/tools/gimpdodgeburntool.c:237
 msgid "Exposure"
 msgstr "Έκθεση"
 
@@ -14803,7 +14814,7 @@ msgid "Move: "
 msgstr "Μετακίνηση: "
 
 #: ../app/tools/gimpeditselectiontool.c:849
-#: ../app/tools/gimpeditselectiontool.c:1101
+#: ../app/tools/gimpeditselectiontool.c:1108
 msgid "Move Floating Selection"
 msgstr "Μετακίνηση αιωρούμενης επιλογής"
 
@@ -14954,60 +14965,60 @@ msgstr "Ενεργές στάθμες"
 msgid "Iterations"
 msgstr "Επαναλήψεις"
 
-#: ../app/tools/gimpforegroundselecttool.c:183
+#: ../app/tools/gimpforegroundselecttool.c:184
 msgid "Foreground Select"
 msgstr "Επιλογή προσκηνίου"
 
-#: ../app/tools/gimpforegroundselecttool.c:184
+#: ../app/tools/gimpforegroundselecttool.c:185
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
 "Επιλογή προσκηνίου: Επιλέξτε την περιοχή που περιέχει αντικείμενα προσκηνίου"
 
-#: ../app/tools/gimpforegroundselecttool.c:185
+#: ../app/tools/gimpforegroundselecttool.c:186
 msgid "F_oreground Select"
 msgstr "Επιλογή _προσκηνίου"
 
-#: ../app/tools/gimpforegroundselecttool.c:298
+#: ../app/tools/gimpforegroundselecttool.c:299
 msgid "Dialog for foreground select"
 msgstr "Διάλογος για την επιλογή προσκηνίου"
 
 #
-#: ../app/tools/gimpforegroundselecttool.c:313
+#: ../app/tools/gimpforegroundselecttool.c:314
 msgid "_Preview mask"
 msgstr "Μάσκα _προεπισκόπησης"
 
-#: ../app/tools/gimpforegroundselecttool.c:324
+#: ../app/tools/gimpforegroundselecttool.c:325
 msgid "Select foreground pixels"
 msgstr "Επιλογή εικονοστοιχείων προσκηνίου"
 
-#: ../app/tools/gimpforegroundselecttool.c:592
+#: ../app/tools/gimpforegroundselecttool.c:593
 msgid "Roughly outline the object to extract"
 msgstr "Πρόχειρο περιγράμμα του αντικειμένου που θα εξαχθεί"
 
-#: ../app/tools/gimpforegroundselecttool.c:605
+#: ../app/tools/gimpforegroundselecttool.c:606
 msgid "Selecting foreground,"
 msgstr "Επιλογή προσκηνίου,"
 
-#: ../app/tools/gimpforegroundselecttool.c:607
+#: ../app/tools/gimpforegroundselecttool.c:608
 msgid "Selecting background,"
 msgstr "Επιλογή παρασκηνίου,"
 
 #
-#: ../app/tools/gimpforegroundselecttool.c:609
+#: ../app/tools/gimpforegroundselecttool.c:610
 msgid "Selecting unknown,"
 msgstr "Άγνωστη επιλογή,"
 
-#: ../app/tools/gimpforegroundselecttool.c:612
+#: ../app/tools/gimpforegroundselecttool.c:613
 msgid "press Enter to preview."
 msgstr "πατήστε το πλήκτρο εισαγωγής για προεπισκόπηση."
 
-#: ../app/tools/gimpforegroundselecttool.c:614
+#: ../app/tools/gimpforegroundselecttool.c:615
 msgid "press Escape to exit preview or Enter to apply."
 msgstr ""
 "πατήστε το πλήκτρο διαφυγής για να βγείτε από την προεπισκόπηση ή εισαγωγή "
 "για εφαρμογή."
 
-#: ../app/tools/gimpforegroundselecttool.c:1204
+#: ../app/tools/gimpforegroundselecttool.c:1205
 msgid "Paint mask"
 msgstr "Μάσκα βαφής"
 
@@ -15022,27 +15033,27 @@ msgstr ""
 msgid "_Free Select"
 msgstr "Ε_λεύθερη επιλογή"
 
-#: ../app/tools/gimpfreeselecttool.c:1031
+#: ../app/tools/gimpfreeselecttool.c:950
 msgid "Click to complete selection"
 msgstr "Πάτημα για ολοκλήρωση της επιλογής"
 
-#: ../app/tools/gimpfreeselecttool.c:1035
+#: ../app/tools/gimpfreeselecttool.c:954
 msgid "Click-Drag to move segment vertex"
 msgstr "Πάτημα και μεταφορά για μετακίνηση της κορυφής τμήματος"
 
-#: ../app/tools/gimpfreeselecttool.c:1040
+#: ../app/tools/gimpfreeselecttool.c:959
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "Το Return καταχωρεί, το Escape ακυρώνει, το Backspace αφαιρεί το τελευταίο "
 "τμήμα"
 
-#: ../app/tools/gimpfreeselecttool.c:1044
+#: ../app/tools/gimpfreeselecttool.c:963
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Πάτημα και μεταφορά προσθέτει ένα ελεύθερο τμήμα, το πάτημα προσθέτει ένα "
 "πολυγωνικό τμήμα"
 
-#: ../app/tools/gimpfreeselecttool.c:1567
+#: ../app/tools/gimpfreeselecttool.c:1515
 msgctxt "command"
 msgid "Free Select"
 msgstr "Ελεύθερη επιλογή"
@@ -15078,7 +15089,7 @@ msgstr "GEGL: Χρησιμοποιήστε μία τυχαία λειτουργ�
 msgid "_GEGL Operation..."
 msgstr "_Λειτουργία GEGL..."
 
-#: ../app/tools/gimpgegltool.c:418
+#: ../app/tools/gimpgegltool.c:419
 msgid "Select an operation from the list above"
 msgstr "Επιλογή λειτουργίας από την παραπάνω λίστα"
 
@@ -15252,8 +15263,7 @@ msgstr "Προσαρμογή"
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: ../app/tools/gimpinkoptions-gui.c:72
-#: ../app/tools/gimppaintoptions-gui.c:186
+#: ../app/tools/gimpinkoptions-gui.c:72 ../app/tools/gimppaintoptions-gui.c:186
 #: ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Γωνία"
@@ -15263,8 +15273,7 @@ msgstr "Γωνία"
 msgid "Sensitivity"
 msgstr "Ευαισθησία"
 
-#: ../app/tools/gimpinkoptions-gui.c:95
-#: ../app/widgets/gimpdynamicseditor.c:145
+#: ../app/tools/gimpinkoptions-gui.c:95 ../app/widgets/gimpdynamicseditor.c:145
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Tilt"
 msgstr "Κλίση"
@@ -15301,45 +15310,45 @@ msgstr "Ψαλίδι: Επιλέξτε σχήματα με έξυπνο εντο
 msgid "Intelligent _Scissors"
 msgstr "Έξυπνο _ψαλίδι"
 
-#: ../app/tools/gimpiscissorstool.c:935
+#: ../app/tools/gimpiscissorstool.c:936
 msgid "Click to remove this point"
 msgstr "Πατήστε για να αφαιρέσετε αυτό το σημείο"
 
-#: ../app/tools/gimpiscissorstool.c:941 ../app/tools/gimpmeasuretool.c:606
+#: ../app/tools/gimpiscissorstool.c:942 ../app/tools/gimpmeasuretool.c:608
 msgid "Click-Drag to move this point"
 msgstr "Πάτημα και μεταφορά για μετακίνηση αυτού του σημείου"
 
-#: ../app/tools/gimpiscissorstool.c:943 ../app/tools/gimpiscissorstool.c:1011
+#: ../app/tools/gimpiscissorstool.c:944 ../app/tools/gimpiscissorstool.c:1013
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: απενεργοποίηση αυτόματης προσκόλλησης"
 
-#: ../app/tools/gimpiscissorstool.c:944
+#: ../app/tools/gimpiscissorstool.c:945
 #, c-format
 msgid "%s: remove this point"
 msgstr "%s: αφαίρεση αυτού του σημείου"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:965
 msgid "Click to close the curve"
 msgstr "Πάτημα για κλείσιμο της καμπύλης"
 
-#: ../app/tools/gimpiscissorstool.c:970
+#: ../app/tools/gimpiscissorstool.c:971
 msgid "Click to add a point on this segment"
 msgstr "Πάτημα για προσθήκη σημείου στο τμήμα"
 
-#: ../app/tools/gimpiscissorstool.c:983
+#: ../app/tools/gimpiscissorstool.c:984
 msgid "Click or press Enter to convert to a selection"
 msgstr "Πάτημα ή Enter για μετατροπή σε επιλογή"
 
-#: ../app/tools/gimpiscissorstool.c:993
+#: ../app/tools/gimpiscissorstool.c:994
 msgid "Press Enter to convert to a selection"
 msgstr "Enter για μετατροπή σε επιλογή"
 
-#: ../app/tools/gimpiscissorstool.c:1008
+#: ../app/tools/gimpiscissorstool.c:1010
 msgid "Click or Click-Drag to add a point"
 msgstr "Πάτημα ή πάτημα και μεταφορά για προσθήκη σημείου"
 
-#: ../app/tools/gimpiscissorstool.c:1131 ../app/tools/gimpiscissorstool.c:1143
+#: ../app/tools/gimpiscissorstool.c:1133 ../app/tools/gimpiscissorstool.c:1145
 msgid "Modify Scissors Curve"
 msgstr "Τροποποίηση της καμπύλης ψαλιδιού"
 
@@ -15360,32 +15369,26 @@ msgid "Export Levels"
 msgstr "Εξαγωγή σταθμών"
 
 #: ../app/tools/gimplevelstool.c:285
-#| msgid "Click to add control points to all channels"
 msgid "Pick black point for all channels"
 msgstr "Επιλογή μαύρου σημείου για όλα τα κανάλια"
 
 #: ../app/tools/gimplevelstool.c:287
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Pick black point for the selected channel"
 msgstr "Επιλογή μαύρου σημείου για το επιλεγμένο κανάλι"
 
 #: ../app/tools/gimplevelstool.c:294
-#| msgid "Click to add control points to all channels"
 msgid "Pick gray point for all channels"
 msgstr "Επιλογή γκρίζου σημείου για όλα τα κανάλια"
 
 #: ../app/tools/gimplevelstool.c:296
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Pick gray point for the selected channel"
 msgstr "Επιλογή γκρίζου σημείου για το επιλεγμένο κανάλι"
 
 #: ../app/tools/gimplevelstool.c:303
-#| msgid "Click to add control points to all channels"
 msgid "Pick white point for all channels"
 msgstr "Επιλογή λευκού σημείου για όλα τα κανάλια"
 
 #: ../app/tools/gimplevelstool.c:305
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Pick white point for the selected channel"
 msgstr "Επιλογή λευκού σημείου για το επιλεγμένο κανάλι"
 
@@ -15409,7 +15412,6 @@ msgid "_Auto"
 msgstr "_Αυτόματα"
 
 #: ../app/tools/gimplevelstool.c:590
-#| msgid "Adjust levels automatically"
 msgid "Adjust levels for all channels automatically"
 msgstr "Αυτόματη ρύθμιση σταθμών για όλα τα κανάλια"
 
@@ -15473,46 +15475,46 @@ msgstr "Μέτρηση: Μετρήστε αποστάσεις και γωνίε�
 msgid "_Measure"
 msgstr "Μέ_τρηση"
 
-#: ../app/tools/gimpmeasuretool.c:250
+#: ../app/tools/gimpmeasuretool.c:251
 msgid "Add Guides"
 msgstr "Προσθήκη οδηγών"
 
-#: ../app/tools/gimpmeasuretool.c:316
+#: ../app/tools/gimpmeasuretool.c:317
 msgid "Drag to create a line"
 msgstr "Κλικ για δημιουργία γραμμής"
 
-#: ../app/tools/gimpmeasuretool.c:561
+#: ../app/tools/gimpmeasuretool.c:563
 msgid "Click to place vertical and horizontal guides"
 msgstr "Πάτημα για τοποθέτηση κάθετων και οριζόντιων οδηγών"
 
-#: ../app/tools/gimpmeasuretool.c:569
+#: ../app/tools/gimpmeasuretool.c:571
 msgid "Click to place a horizontal guide"
 msgstr "Πάτημα για τοποθέτηση οριζόντιου οδηγού"
 
-#: ../app/tools/gimpmeasuretool.c:583
+#: ../app/tools/gimpmeasuretool.c:585
 msgid "Click to place a vertical guide"
 msgstr "Πάτημα για τοποθέτηση κάθετου οδηγού"
 
-#: ../app/tools/gimpmeasuretool.c:596
+#: ../app/tools/gimpmeasuretool.c:598
 msgid "Click-Drag to add a new point"
 msgstr "Πάτημα και μεταφορά για προσθήκη νέου σημείου"
 
-#: ../app/tools/gimpmeasuretool.c:625
+#: ../app/tools/gimpmeasuretool.c:627
 msgid "Click-Drag to move all points"
 msgstr "Πάτημα και μεταφορά για μετακίνηση όλων των σημείων"
 
 #
-#: ../app/tools/gimpmeasuretool.c:940 ../app/tools/gimpmeasuretool.c:1089
-#: ../app/tools/gimpmeasuretool.c:1145 ../app/tools/gimpmeasuretool.c:1173
+#: ../app/tools/gimpmeasuretool.c:943 ../app/tools/gimpmeasuretool.c:1092
+#: ../app/tools/gimpmeasuretool.c:1148 ../app/tools/gimpmeasuretool.c:1176
 #: ../app/tools/gimppainttool.c:664
 msgid "pixels"
 msgstr "εικονοστοιχεία"
 
-#: ../app/tools/gimpmeasuretool.c:1054
+#: ../app/tools/gimpmeasuretool.c:1057
 msgid "Measure Distances and Angles"
 msgstr "Μέτρηση αποστάσεων και γωνιών"
 
-#: ../app/tools/gimpmeasuretool.c:1078
+#: ../app/tools/gimpmeasuretool.c:1081
 msgid "Distance:"
 msgstr "Απόσταση:"
 
@@ -15540,8 +15542,7 @@ msgstr "Μετακίνηση ενεργού μονοπατιού"
 msgid "Move:"
 msgstr "Μετακίνηση:"
 
-#. tool toggle
-#: ../app/tools/gimpmoveoptions.c:188
+#: ../app/tools/gimpmoveoptions.c:189
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Εναλλαγή εργαλείου  (%s)"
@@ -15735,10 +15736,8 @@ msgid "Reset angle to zero"
 msgstr "Επαναφορά μηδενικής γωνίας"
 
 #
-#: ../app/tools/gimppaintoptions-gui.c:194
-#: ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/tools/gimppaintoptions-gui.c:194 ../app/widgets/gimpbrusheditor.c:211
+#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Διάκενο"
 
@@ -15783,8 +15782,7 @@ msgid "Fade length"
 msgstr "Μήκος ξεθωριάσματος"
 
 #
-#: ../app/tools/gimppaintoptions-gui.c:356
-#: ../app/widgets/gimpviewablebox.c:309
+#: ../app/tools/gimppaintoptions-gui.c:356 ../app/widgets/gimpviewablebox.c:309
 msgid "Reverse"
 msgstr "Αντιστροφή"
 
@@ -15854,7 +15852,7 @@ msgstr ""
 msgid "_Perspective Clone"
 msgstr "_Προοπτική κλωνοποίηση"
 
-#: ../app/tools/gimpperspectiveclonetool.c:673
+#: ../app/tools/gimpperspectiveclonetool.c:675
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl+πάτημα για ορισμό πηγής κλωνοποίησης"
 
@@ -16012,7 +16010,7 @@ msgstr "Ορθογώνια επιλογή: Επιλέξτε μία ορθογώ�
 msgid "_Rectangle Select"
 msgstr "_Ορθογώνια επιλογή"
 
-#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2016
+#: ../app/tools/gimprectangletool.c:1140 ../app/tools/gimprectangletool.c:2009
 msgid "Rectangle: "
 msgstr "Ορθογώνιο: "
 
@@ -16129,8 +16127,7 @@ msgstr "Επιτρέπει την άμβλυνση των ορίων της επ
 msgid "Radius of feathering"
 msgstr "Ακτίνα άμβλυνσης"
 
-#: ../app/tools/gimpselectionoptions.c:218
-#: ../app/widgets/gimpbrushselect.c:190
+#: ../app/tools/gimpselectionoptions.c:218 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Κατάσταση:"
 
@@ -16450,8 +16447,9 @@ msgstr "Οδηγοί"
 
 #: ../app/tools/gimptransformoptions.c:455
 #, c-format
-msgid "15 degrees  (%s)"
-msgstr "15 μοίρες  (%s)"
+#| msgid "15 degrees  (%s)"
+msgid "15 degrees (%s)"
+msgstr "15 μοίρες (%s)"
 
 #: ../app/tools/gimptransformoptions.c:456
 msgid "Limit rotation steps to 15 degrees"
@@ -16459,8 +16457,9 @@ msgstr "Περιορισμός βήματος περιστροφής σε 15 μ�
 
 #: ../app/tools/gimptransformoptions.c:461
 #, c-format
-msgid "Keep aspect  (%s)"
-msgstr "Διατήρηση όψης  (%s)"
+#| msgid "Keep aspect  (%s)"
+msgid "Keep aspect (%s)"
+msgstr "Διατήρηση όψης (%s)"
 
 #: ../app/tools/gimptransformoptions.c:462
 msgid "Keep the original aspect ratio"
@@ -16468,7 +16467,8 @@ msgstr "Διατήρηση του αρχικού λόγου θέασης"
 
 #: ../app/tools/gimptransformoptions.c:480
 #, c-format
-msgid "Constrain  (%s)"
+#| msgid "Constrain  (%s)"
+msgid "Constrain (%s)"
 msgstr "Περιορισμός (%s)"
 
 #: ../app/tools/gimptransformoptions.c:481
@@ -16477,30 +16477,35 @@ msgstr "Μετακίνηση"
 
 #: ../app/tools/gimptransformoptions.c:482
 #, c-format
-msgid "Constrain movement to 45 degree angles from center  (%s)"
+#| msgid "Constrain movement to 45 degree angles from center  (%s)"
+msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Περιορισμός κίνησης σε γωνίες 45 μοιρών από το κέντρο (%s)"
 
 #: ../app/tools/gimptransformoptions.c:484
 #, c-format
-msgid "Maintain aspect ratio when scaling  (%s)"
+#| msgid "Maintain aspect ratio when scaling  (%s)"
+msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Διατήρηση της αναλογίας διαστάσεων κατά την κλιμάκωση (%s)"
 
 #: ../app/tools/gimptransformoptions.c:486
 #, c-format
-msgid "Constrain rotation to 15 degree increments  (%s)"
+#| msgid "Constrain rotation to 15 degree increments  (%s)"
+msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Περιορισμός περιστροφής σε βήματα 15 μοιρών (%s)"
 
 #: ../app/tools/gimptransformoptions.c:488
 #, c-format
-msgid "Shear along edge direction only  (%s)"
-msgstr "Στρέβλωση κατά μήκος της κατεύθυνσης άκρης μόνο (%s)"
+#| msgid "Shear along edge direction only  (%s)"
+msgid "Shear along edge direction only (%s)"
+msgstr "Στρέβλωση μόνο κατά μήκος της κατεύθυνσης άκρης (%s)"
 
 #: ../app/tools/gimptransformoptions.c:490
 #, c-format
-msgid "Constrain perspective handles to move along edges and diagonal  (%s)"
+#| msgid "Constrain perspective handles to move along edges and diagonal  (%s)"
+msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
-"Περιορισμός λαβών προοπτικής για μετακίνηση κατά μήκος άκρων και διαγώνια "
-"(%s)"
+"Περιορισμός λαβών προοπτικής για τη μετακίνηση κατά μήκος άκρων και "
+"διαγωνίων (%s)"
 
 #: ../app/tools/gimptransformoptions.c:493
 #, c-format
@@ -16509,17 +16514,20 @@ msgstr "Από περιστροφή (%s)"
 
 #: ../app/tools/gimptransformoptions.c:495
 #, c-format
-msgid "Scale from pivot point  (%s)"
+#| msgid "Scale from pivot point  (%s)"
+msgid "Scale from pivot point (%s)"
 msgstr "Κλιμάκωση από το σημείο περιστροφής (%s)"
 
 #: ../app/tools/gimptransformoptions.c:497
 #, c-format
-msgid "Shear opposite edge by same amount  (%s)"
+#| msgid "Shear opposite edge by same amount  (%s)"
+msgid "Shear opposite edge by same amount (%s)"
 msgstr "Στρέβλωση αντίθετης άκρης κατά την ίδια ποσότητα (%s)"
 
 #: ../app/tools/gimptransformoptions.c:499
 #, c-format
-msgid "Maintain position of pivot while changing perspective  (%s)"
+#| msgid "Maintain position of pivot while changing perspective  (%s)"
+msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Διατήρηση της θέσης περιστροφής, ενώ μεταβάλλεται η προοπτική (%s)"
 
 #: ../app/tools/gimptransformoptions.c:502
@@ -16528,12 +16536,14 @@ msgstr "Περιστροφή"
 
 #: ../app/tools/gimptransformoptions.c:503
 #, c-format
-msgid "Snap  (%s)"
+#| msgid "Snap  (%s)"
+msgid "Snap (%s)"
 msgstr "Προσκόλληση (%s)"
 
 #: ../app/tools/gimptransformoptions.c:504
 #, c-format
-msgid "Snap pivot to corners and center  (%s)"
+#| msgid "Snap pivot to corners and center  (%s)"
+msgid "Snap pivot to corners and center (%s)"
 msgstr "Προσκόλληση περιστροφής στις γωνίες και το κέντρο (%s)"
 
 #: ../app/tools/gimptransformoptions.c:505
@@ -16595,11 +16605,11 @@ msgstr "_Ενιαίος μετασχηματισμός"
 msgid "Unified transform"
 msgstr "Ενιαίος μετασχηματισμός"
 
-#: ../app/tools/gimpunifiedtransformtool.c:757
+#: ../app/tools/gimpunifiedtransformtool.c:768
 msgid "Transform Matrix"
 msgstr "Πίνακας μετασχηματισμού"
 
-#: ../app/tools/gimpunifiedtransformtool.c:1319
+#: ../app/tools/gimpunifiedtransformtool.c:1330
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Ενιαίος μετασχηματισμός"
@@ -16698,19 +16708,19 @@ msgstr "Διαγραφή τμήματος"
 msgid "Move Anchors"
 msgstr "Μετακίνηση αγκυρών"
 
-#: ../app/tools/gimpvectortool.c:1207
+#: ../app/tools/gimpvectortool.c:1209
 msgid "Click to pick path to edit"
 msgstr "Πάτημα για επιλογή επεξεργάσιμου μονοπατιού"
 
-#: ../app/tools/gimpvectortool.c:1211
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click to create a new path"
 msgstr "Πάτημα για δημιουργία νέου μονοπατιού"
 
-#: ../app/tools/gimpvectortool.c:1215
+#: ../app/tools/gimpvectortool.c:1217
 msgid "Click to create a new component of the path"
 msgstr "Πάτημα για δημιουργία νέου συστατικού στο μονοπάτι"
 
-#: ../app/tools/gimpvectortool.c:1219
+#: ../app/tools/gimpvectortool.c:1221
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Πάτημα, ή πάτημα και μεταφορά για δημιουργία νέας άγκυρας"
 
@@ -17358,61 +17368,61 @@ msgstr "Επιλογή ενέργειας για το συμβάν '%s'"
 msgid "Select Controller Event Action"
 msgstr "Επιλογή ελεγκτή ενέργειας συμβάντος"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:68
-#: ../app/widgets/gimpcontrollerkeyboard.c:71
-#: ../app/widgets/gimpcontrollerkeyboard.c:74
-#: ../app/widgets/gimpcontrollerkeyboard.c:77
-#: ../app/widgets/gimpcontrollerkeyboard.c:80
-#: ../app/widgets/gimpcontrollerkeyboard.c:83
-#: ../app/widgets/gimpcontrollerkeyboard.c:86
-#: ../app/widgets/gimpcontrollerkeyboard.c:89
+#: ../app/widgets/gimpcontrollerkeyboard.c:70
+#: ../app/widgets/gimpcontrollerkeyboard.c:73
+#: ../app/widgets/gimpcontrollerkeyboard.c:76
+#: ../app/widgets/gimpcontrollerkeyboard.c:79
+#: ../app/widgets/gimpcontrollerkeyboard.c:82
+#: ../app/widgets/gimpcontrollerkeyboard.c:85
+#: ../app/widgets/gimpcontrollerkeyboard.c:88
+#: ../app/widgets/gimpcontrollerkeyboard.c:91
 msgid "Cursor Up"
 msgstr "Πάνω βέλος"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:93
-#: ../app/widgets/gimpcontrollerkeyboard.c:96
-#: ../app/widgets/gimpcontrollerkeyboard.c:99
-#: ../app/widgets/gimpcontrollerkeyboard.c:102
-#: ../app/widgets/gimpcontrollerkeyboard.c:105
-#: ../app/widgets/gimpcontrollerkeyboard.c:108
-#: ../app/widgets/gimpcontrollerkeyboard.c:111
-#: ../app/widgets/gimpcontrollerkeyboard.c:114
+#: ../app/widgets/gimpcontrollerkeyboard.c:95
+#: ../app/widgets/gimpcontrollerkeyboard.c:98
+#: ../app/widgets/gimpcontrollerkeyboard.c:101
+#: ../app/widgets/gimpcontrollerkeyboard.c:104
+#: ../app/widgets/gimpcontrollerkeyboard.c:107
+#: ../app/widgets/gimpcontrollerkeyboard.c:110
+#: ../app/widgets/gimpcontrollerkeyboard.c:113
+#: ../app/widgets/gimpcontrollerkeyboard.c:116
 msgid "Cursor Down"
 msgstr "Κάτω βέλος"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:118
-#: ../app/widgets/gimpcontrollerkeyboard.c:121
-#: ../app/widgets/gimpcontrollerkeyboard.c:124
-#: ../app/widgets/gimpcontrollerkeyboard.c:127
-#: ../app/widgets/gimpcontrollerkeyboard.c:130
-#: ../app/widgets/gimpcontrollerkeyboard.c:133
-#: ../app/widgets/gimpcontrollerkeyboard.c:136
-#: ../app/widgets/gimpcontrollerkeyboard.c:139
+#: ../app/widgets/gimpcontrollerkeyboard.c:120
+#: ../app/widgets/gimpcontrollerkeyboard.c:123
+#: ../app/widgets/gimpcontrollerkeyboard.c:126
+#: ../app/widgets/gimpcontrollerkeyboard.c:129
+#: ../app/widgets/gimpcontrollerkeyboard.c:132
+#: ../app/widgets/gimpcontrollerkeyboard.c:135
+#: ../app/widgets/gimpcontrollerkeyboard.c:138
+#: ../app/widgets/gimpcontrollerkeyboard.c:141
 msgid "Cursor Left"
 msgstr "Αριστερό βέλος"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:143
-#: ../app/widgets/gimpcontrollerkeyboard.c:146
-#: ../app/widgets/gimpcontrollerkeyboard.c:149
-#: ../app/widgets/gimpcontrollerkeyboard.c:152
-#: ../app/widgets/gimpcontrollerkeyboard.c:155
-#: ../app/widgets/gimpcontrollerkeyboard.c:158
-#: ../app/widgets/gimpcontrollerkeyboard.c:161
-#: ../app/widgets/gimpcontrollerkeyboard.c:164
+#: ../app/widgets/gimpcontrollerkeyboard.c:145
+#: ../app/widgets/gimpcontrollerkeyboard.c:148
+#: ../app/widgets/gimpcontrollerkeyboard.c:151
+#: ../app/widgets/gimpcontrollerkeyboard.c:154
+#: ../app/widgets/gimpcontrollerkeyboard.c:157
+#: ../app/widgets/gimpcontrollerkeyboard.c:160
+#: ../app/widgets/gimpcontrollerkeyboard.c:163
+#: ../app/widgets/gimpcontrollerkeyboard.c:166
 msgid "Cursor Right"
 msgstr "Δεξιό βέλος"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:176
+#: ../app/widgets/gimpcontrollerkeyboard.c:178
 msgid "Keyboard"
 msgstr "Πληκτρολόγιο"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:216
+#: ../app/widgets/gimpcontrollerkeyboard.c:230
 msgid "Keyboard Events"
 msgstr "Συμβάντα πληκτρολογίου"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:217
+#: ../app/widgets/gimpcontrollerkeyboard.c:231
 #: ../app/widgets/gimpcontrollermouse.c:245
-#: ../app/widgets/gimpcontrollerwheel.c:219
+#: ../app/widgets/gimpcontrollerwheel.c:230
 msgid "Ready"
 msgstr "Έτοιμο"
 
@@ -17574,55 +17584,55 @@ msgstr "Κουμπιά ποντικιού"
 msgid "Mouse Button Events"
 msgstr "Συμβάντα κουμπιών ποντικιού"
 
-#: ../app/widgets/gimpcontrollerwheel.c:70
-#: ../app/widgets/gimpcontrollerwheel.c:73
-#: ../app/widgets/gimpcontrollerwheel.c:76
-#: ../app/widgets/gimpcontrollerwheel.c:79
-#: ../app/widgets/gimpcontrollerwheel.c:82
-#: ../app/widgets/gimpcontrollerwheel.c:85
-#: ../app/widgets/gimpcontrollerwheel.c:88
-#: ../app/widgets/gimpcontrollerwheel.c:91
+#: ../app/widgets/gimpcontrollerwheel.c:69
+#: ../app/widgets/gimpcontrollerwheel.c:72
+#: ../app/widgets/gimpcontrollerwheel.c:75
+#: ../app/widgets/gimpcontrollerwheel.c:78
+#: ../app/widgets/gimpcontrollerwheel.c:81
+#: ../app/widgets/gimpcontrollerwheel.c:84
+#: ../app/widgets/gimpcontrollerwheel.c:87
+#: ../app/widgets/gimpcontrollerwheel.c:90
 msgid "Scroll Up"
 msgstr "Κύλιση πάνω"
 
-#: ../app/widgets/gimpcontrollerwheel.c:95
-#: ../app/widgets/gimpcontrollerwheel.c:98
-#: ../app/widgets/gimpcontrollerwheel.c:101
-#: ../app/widgets/gimpcontrollerwheel.c:104
-#: ../app/widgets/gimpcontrollerwheel.c:107
-#: ../app/widgets/gimpcontrollerwheel.c:110
-#: ../app/widgets/gimpcontrollerwheel.c:113
-#: ../app/widgets/gimpcontrollerwheel.c:116
+#: ../app/widgets/gimpcontrollerwheel.c:94
+#: ../app/widgets/gimpcontrollerwheel.c:97
+#: ../app/widgets/gimpcontrollerwheel.c:100
+#: ../app/widgets/gimpcontrollerwheel.c:103
+#: ../app/widgets/gimpcontrollerwheel.c:106
+#: ../app/widgets/gimpcontrollerwheel.c:109
+#: ../app/widgets/gimpcontrollerwheel.c:112
+#: ../app/widgets/gimpcontrollerwheel.c:115
 msgid "Scroll Down"
 msgstr "Κύλιση κάτω"
 
-#: ../app/widgets/gimpcontrollerwheel.c:120
-#: ../app/widgets/gimpcontrollerwheel.c:123
-#: ../app/widgets/gimpcontrollerwheel.c:126
-#: ../app/widgets/gimpcontrollerwheel.c:129
-#: ../app/widgets/gimpcontrollerwheel.c:132
-#: ../app/widgets/gimpcontrollerwheel.c:135
-#: ../app/widgets/gimpcontrollerwheel.c:138
-#: ../app/widgets/gimpcontrollerwheel.c:141
+#: ../app/widgets/gimpcontrollerwheel.c:119
+#: ../app/widgets/gimpcontrollerwheel.c:122
+#: ../app/widgets/gimpcontrollerwheel.c:125
+#: ../app/widgets/gimpcontrollerwheel.c:128
+#: ../app/widgets/gimpcontrollerwheel.c:131
+#: ../app/widgets/gimpcontrollerwheel.c:134
+#: ../app/widgets/gimpcontrollerwheel.c:137
+#: ../app/widgets/gimpcontrollerwheel.c:140
 msgid "Scroll Left"
 msgstr "Κύλιση αριστερά"
 
-#: ../app/widgets/gimpcontrollerwheel.c:145
-#: ../app/widgets/gimpcontrollerwheel.c:148
-#: ../app/widgets/gimpcontrollerwheel.c:151
-#: ../app/widgets/gimpcontrollerwheel.c:154
-#: ../app/widgets/gimpcontrollerwheel.c:157
-#: ../app/widgets/gimpcontrollerwheel.c:160
-#: ../app/widgets/gimpcontrollerwheel.c:163
-#: ../app/widgets/gimpcontrollerwheel.c:166
+#: ../app/widgets/gimpcontrollerwheel.c:144
+#: ../app/widgets/gimpcontrollerwheel.c:147
+#: ../app/widgets/gimpcontrollerwheel.c:150
+#: ../app/widgets/gimpcontrollerwheel.c:153
+#: ../app/widgets/gimpcontrollerwheel.c:156
+#: ../app/widgets/gimpcontrollerwheel.c:159
+#: ../app/widgets/gimpcontrollerwheel.c:162
+#: ../app/widgets/gimpcontrollerwheel.c:165
 msgid "Scroll Right"
 msgstr "Κύλιση δεξιά"
 
-#: ../app/widgets/gimpcontrollerwheel.c:178
+#: ../app/widgets/gimpcontrollerwheel.c:177
 msgid "Mouse Wheel"
 msgstr "Τροχός ποντικιού"
 
-#: ../app/widgets/gimpcontrollerwheel.c:218
+#: ../app/widgets/gimpcontrollerwheel.c:229
 msgid "Mouse Wheel Events"
 msgstr "Συμβάντα τροχού ποντικιού"
 
@@ -17845,7 +17855,7 @@ msgstr "Εξαγωγή εικόνας"
 msgid "_Export"
 msgstr "_Εξαγωγή"
 
-#: ../app/widgets/gimpexportdialog.c:83 ../app/widgets/gimpsavedialog.c:126
+#: ../app/widgets/gimpexportdialog.c:83 ../app/widgets/gimpsavedialog.c:151
 msgid "By Extension"
 msgstr "Κατ' επέκταση"
 
@@ -17853,15 +17863,15 @@ msgstr "Κατ' επέκταση"
 msgid "All export images"
 msgstr "Όλες οι εικόνες εξαγωγής"
 
-#: ../app/widgets/gimpfiledialog.c:644
+#: ../app/widgets/gimpfiledialog.c:724
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
-#: ../app/widgets/gimpfiledialog.c:649
+#: ../app/widgets/gimpfiledialog.c:729
 msgid "All images"
 msgstr "Όλες οι εικόνες"
 
-#: ../app/widgets/gimpfiledialog.c:836
+#: ../app/widgets/gimpfiledialog.c:924
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Επιλογή _τύπου αρχείου (%s)"
@@ -18357,18 +18367,18 @@ msgstr "7,500 K – D75"
 msgid "9,300 K"
 msgstr "9,300 K"
 
-#: ../app/widgets/gimpsavedialog.c:132
+#: ../app/widgets/gimpsavedialog.c:157
 msgid "All XCF images"
 msgstr "Όλες οι εικόνες XCF"
 
-#: ../app/widgets/gimpsavedialog.c:252
+#: ../app/widgets/gimpsavedialog.c:280
 #, c-format
 msgid "Disables compression to make the XCF file readable by %s and later."
 msgstr ""
 "Απενεργοποιεί τη συμπίεση για να κάνει το αρχείο XCF αναγνώσιμο από %s και "
 "αργότερα."
 
-#: ../app/widgets/gimpsavedialog.c:344
+#: ../app/widgets/gimpsavedialog.c:333
 msgid "Save this XCF file with maximum compatibility"
 msgstr "Αποθήκευση αυτού του αρχείου XCF με μέγιστη συμβατότητα"
 
@@ -18571,49 +18581,49 @@ msgstr "Αποτυχία εγγραφής αρχείου παλέτας '%s': %s
 msgid "_Use selected font"
 msgstr "_Χρήση επιλεγμένης γραμματοσειράς"
 
-#: ../app/widgets/gimptextstyleeditor.c:206
-#: ../app/widgets/gimptextstyleeditor.c:1315
+#: ../app/widgets/gimptextstyleeditor.c:207
+#: ../app/widgets/gimptextstyleeditor.c:1317
 msgid "Change font of selected text"
 msgstr "Αλλαγή της γραμματοσειράς του επιλεγμένου κειμένου"
 
-#: ../app/widgets/gimptextstyleeditor.c:217
+#: ../app/widgets/gimptextstyleeditor.c:218
 msgid "Change size of selected text"
 msgstr "Αλλαγή του μεγέθους του επιλεγμένου κειμένου"
 
-#: ../app/widgets/gimptextstyleeditor.c:236
+#: ../app/widgets/gimptextstyleeditor.c:237
 msgid "Clear style of selected text"
 msgstr "Καθαρισμός της τεχνοτροπίας του επιλεγμένου κειμένου"
 
-#: ../app/widgets/gimptextstyleeditor.c:247
-#: ../app/widgets/gimptextstyleeditor.c:256
+#: ../app/widgets/gimptextstyleeditor.c:248
+#: ../app/widgets/gimptextstyleeditor.c:258
 msgid "Change color of selected text"
 msgstr "Αλλαγή του χρώματος του επιλεγμένου κειμένου"
 
-#: ../app/widgets/gimptextstyleeditor.c:272
+#: ../app/widgets/gimptextstyleeditor.c:274
 msgid "Change kerning of selected text"
 msgstr "Αλλαγή πύκνωσης του επιλεγμένου κειμένου"
 
-#: ../app/widgets/gimptextstyleeditor.c:288
+#: ../app/widgets/gimptextstyleeditor.c:290
 msgid "Change baseline of selected text"
 msgstr "Αλλαγή της γραμμής βάσης του επιλεγμένου κειμένου"
 
-#: ../app/widgets/gimptextstyleeditor.c:327
+#: ../app/widgets/gimptextstyleeditor.c:329
 msgid "Bold"
 msgstr "Έντονα"
 
-#: ../app/widgets/gimptextstyleeditor.c:330
+#: ../app/widgets/gimptextstyleeditor.c:332
 msgid "Italic"
 msgstr "Πλάγια"
 
-#: ../app/widgets/gimptextstyleeditor.c:333
+#: ../app/widgets/gimptextstyleeditor.c:335
 msgid "Underline"
 msgstr "Υπογράμμιση"
 
-#: ../app/widgets/gimptextstyleeditor.c:336
+#: ../app/widgets/gimptextstyleeditor.c:338
 msgid "Strikethrough"
 msgstr "Διαγράμμιση"
 
-#: ../app/widgets/gimptextstyleeditor.c:1307
+#: ../app/widgets/gimptextstyleeditor.c:1309
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "Η γραμματοσειρά \"%s\" δεν είναι διαθέσιμη σε αυτό το σύστημα"
@@ -18828,22 +18838,22 @@ msgstr "Άνοιγμα του διαλόγου επιλογής παλέτας"
 msgid "Open the font selection dialog"
 msgstr "Άνοιγμα του διαλόγου επιλογής γραμματοσειράς"
 
-#: ../app/widgets/gimpwidgets-utils.c:645
+#: ../app/widgets/gimpwidgets-utils.c:646
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (δοκιμάστε με %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:645
+#: ../app/widgets/gimpwidgets-utils.c:646
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:649
+#: ../app/widgets/gimpwidgets-utils.c:650
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (δοκιμάστε με %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:653
+#: ../app/widgets/gimpwidgets-utils.c:654
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (δοκιμάστε με %s, %s, %s)"
@@ -19015,7 +19025,7 @@ msgstr ""
 "Βρέθηκε αλλοιωμένο παράσιτο 'gimp-metadata'.\n"
 "Τα δεδομένα XMP δεν μπόρεσαν να μεταφερθούν: %s"
 
-#: ../app/xcf/xcf-load.c:534
+#: ../app/xcf/xcf-load.c:535
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -19023,7 +19033,7 @@ msgstr ""
 "Αυτό το αρχείο XCF είναι κατεστραμμένο! Φορτώθηκε το έγκυρο μέρος του, αλλά "
 "το αρχείο παραμένει ατελές."
 
-#: ../app/xcf/xcf-load.c:545
+#: ../app/xcf/xcf-load.c:546
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -19031,7 +19041,7 @@ msgstr ""
 "Αυτό το αρχείο XCF είναι κατεστραμμένο! Δεν ήταν καν δυνατή η φόρτωση "
 "μερικών δεδομένων."
 
-#: ../app/xcf/xcf-load.c:637
+#: ../app/xcf/xcf-load.c:638
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -19062,6 +19072,123 @@ msgstr "στρογγυλή"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "θολή"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "8 bit integer (linear)"
+#~ msgstr "Ακέραιος 8 δυαδικών (γραμμικός)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "8 bit integer (gamma)"
+#~ msgstr "Ακέραιος 8 δυαδικών (γάμα)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 8 bit gamma-corrected integer"
+#~ msgstr "Μετατροπή της εικόνας σε διορθωμένο γάμα ακέραιο 8 δυαδικών"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "16 bit integer (linear)"
+#~ msgstr "Ακέραιος 16 δυαδικών (γραμμικός)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "16 bit integer (gamma)"
+#~ msgstr "Ακέραιος 16 δυαδικών (γάμα)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 16 bit gamma-corrected integer"
+#~ msgstr "Μετατροπή της εικόνας σε διορθωμένο γάμα ακέραιο 16 δυαδικών"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "32 bit integer (linear)"
+#~ msgstr "Ακέραιος 32 δυαδικών (γραμμικός)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "32 bit integer (gamma)"
+#~ msgstr "Ακέραιος 32 δυαδικών (γάμα)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 32 bit gamma-corrected integer"
+#~ msgstr "Μετατροπή της εικόνας σε διορθωμένο γάμα ακέραιο 32 δυαδικών"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "16 bit floating point (linear)"
+#~ msgstr "κινητή υποδιαστολή 16 δυαδικών (γραμμική)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "16 bit floating point (gamma)"
+#~ msgstr "κινητή υποδιαστολή 16 δυαδικών (γάμα)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 16 bit gamma-corrected floating point"
+#~ msgstr ""
+#~ "Μετατροπή της εικόνας σε διορθωμένο γάμα κινητής υποδιαστολής 16 δυαδικών"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "32 bit floating point (linear)"
+#~ msgstr "κινητή υποδιαστολή 32 δυαδικών (γραμμική)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "32 bit floating point (gamma)"
+#~ msgstr "κινητή υποδιαστολή 32 δυαδικών (γάμα)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 32 bit gamma-corrected floating point"
+#~ msgstr ""
+#~ "Μετατροπή της εικόνας σε διορθωμένο γάμα κινητής υποδιαστολής 32 δυαδικών"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "64 bit floating point (linear)"
+#~ msgstr "κινητή υποδιαστολή 64 δυαδικών (γραμμική)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "64 bit floating point (gamma)"
+#~ msgstr "κινητή υποδιαστολή 64 δυαδικών (γάμα)"
+
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 64 bit gamma-corrected floating point"
+#~ msgstr ""
+#~ "Μετατροπή της εικόνας σε διορθωμένο γάμα κινητής υποδιαστολής 64 δυαδικών"
+
+#~ msgid "Converting to lower bit depth"
+#~ msgstr "Μετατροπή σε χαμηλότερο βάθος δυαδικών"
+
+#~ msgctxt "view-action"
+#~ msgid "_Reset to 0°"
+#~ msgstr "Επανα_φορά σε 0°"
+
+#~ msgctxt "stroke-method"
+#~ msgid "Stroke line"
+#~ msgstr "Γραμμή πινελιάς"
+
+#~ msgctxt "stroke-method"
+#~ msgid "Stroke with a paint tool"
+#~ msgstr "Πινελιά με εργαλείο ζωγραφικής"
+
+#~ msgctxt "join-style"
+#~ msgid "Miter"
+#~ msgstr "Μυτερό"
+
+#~ msgctxt "join-style"
+#~ msgid "Round"
+#~ msgstr "Στρογγυλό"
+
+#~ msgctxt "join-style"
+#~ msgid "Bevel"
+#~ msgstr "Λοξό"
+
+#~ msgctxt "cap-style"
+#~ msgid "Butt"
+#~ msgstr "Κουτσουρεμένο"
+
+#~ msgctxt "cap-style"
+#~ msgid "Round"
+#~ msgstr "Στρογγυλό"
+
+#~ msgctxt "cap-style"
+#~ msgid "Square"
+#~ msgstr "Τετράγωνο"
+
+#~ msgid "Click to locate on curve (try Shift, Ctrl)"
+#~ msgstr "Πάτημα για εντοπισμό στην καμπύλη (δοκιμάστε με Shift, Ctrl)"
 
 #~ msgid "Pick black point"
 #~ msgstr "Επιλογή μαύρου σημείου"
@@ -19197,30 +19324,6 @@ msgstr "θολή"
 
 #~ msgid "Could not delete '%s': %s"
 #~ msgstr "Αδυναμία διαγραφής '%s': %s"
-
-#~ msgctxt "component-type"
-#~ msgid "8-bit integer"
-#~ msgstr "Ακέραιος 8 δυαδικών"
-
-#~ msgctxt "component-type"
-#~ msgid "16-bit integer"
-#~ msgstr "Ακέραιος 16 δυαδικών"
-
-#~ msgctxt "component-type"
-#~ msgid "32-bit integer"
-#~ msgstr "Ακέραιος 32 δυαδικών"
-
-#~ msgctxt "component-type"
-#~ msgid "16-bit floating point"
-#~ msgstr "Κινητή υποδιαστολή 16 δυαδικών"
-
-#~ msgctxt "component-type"
-#~ msgid "32-bit floating point"
-#~ msgstr "Κινητή υποδιαστολή 32 δυαδικών"
-
-#~ msgctxt "component-type"
-#~ msgid "64-bit floating point"
-#~ msgstr "Κινητή υποδιαστολή 64 δυαδικών"
 
 #~ msgctxt "convert-palette-type"
 #~ msgid "Generate optimum palette"

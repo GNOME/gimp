@@ -371,6 +371,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
   gtk_widget_show (picker_tool->color_frame2);
 
   frame = gtk_frame_new (NULL);
+  gimp_widget_set_fully_opaque (frame, TRUE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);

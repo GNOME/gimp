@@ -43,6 +43,13 @@ void     gimp_display_shell_scale                          (GimpDisplayShell *sh
                                                             GimpZoomType      zoom_type,
                                                             gdouble           scale,
                                                             GimpZoomFocus     zoom_focus);
+void     gimp_display_shell_scale_to_rectangle             (GimpDisplayShell *shell,
+                                                            GimpZoomType      zoom_type,
+                                                            gdouble           x,
+                                                            gdouble           y,
+                                                            gdouble           width,
+                                                            gdouble           height,
+                                                            gboolean          resize_window);
 void     gimp_display_shell_scale_fit_in                   (GimpDisplayShell *shell);
 gboolean gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
                                                             gboolean         *horizontally,

@@ -67,6 +67,8 @@ struct _GimpDisplayShell
   gdouble            scale_x;          /*  horizontal scale factor            */
   gdouble            scale_y;          /*  vertical scale factor              */
 
+  gboolean           flip_horizontally;
+  gboolean           flip_vertically;
   gdouble            rotate_angle;
   cairo_matrix_t    *rotate_transform;
   cairo_matrix_t    *rotate_untransform;
@@ -126,7 +128,8 @@ struct _GimpDisplayShell
   gchar             *title;            /*  current title                      */
   gchar             *status;           /*  current default statusbar content  */
 
-  gint               icon_size;        /*  size of the icon pixmap            */
+  gint               icon_size;        /*  size of the icon pixbuf            */
+  gint               icon_size_small;  /*  size of the icon's wilber pixbuf   */
   guint              icon_idle_id;     /*  ID of the idle-function            */
   GdkPixbuf         *icon;             /*  icon                               */
 

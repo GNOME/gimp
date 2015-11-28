@@ -69,6 +69,11 @@ GimpColorProfile * gimp_color_profile_new_linear_rgb        (void);
 
 GimpColorProfile * gimp_color_profile_new_adobe_rgb         (void);
 
+GimpColorProfile *
+       gimp_color_profile_new_srgb_gamma_from_color_profile (GimpColorProfile  *profile);
+GimpColorProfile *
+       gimp_color_profile_new_linear_rgb_from_color_profile (GimpColorProfile  *profile);
+
 GimpColorProfile * gimp_color_profile_new_from_file         (GFile             *file,
                                                              GError           **error);
 
@@ -94,6 +99,7 @@ gboolean           gimp_color_profile_is_equal              (GimpColorProfile  *
                                                              GimpColorProfile  *profile2);
 
 gboolean           gimp_color_profile_is_rgb                (GimpColorProfile  *profile);
+gboolean           gimp_color_profile_is_linear             (GimpColorProfile  *profile);
 gboolean           gimp_color_profile_is_cmyk               (GimpColorProfile  *profile);
 
 const Babl       * gimp_color_profile_get_format            (const Babl        *format,

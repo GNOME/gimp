@@ -63,6 +63,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_BUCKET_FILL_BG => '1',
 		       GIMP_BUCKET_FILL_PATTERN => '2' }
 	},
+    GimpCapStyle =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_CAP_BUTT GIMP_CAP_ROUND GIMP_CAP_SQUARE) ],
+	  mapping => { GIMP_CAP_BUTT => '0',
+		       GIMP_CAP_ROUND => '1',
+		       GIMP_CAP_SQUARE => '2' }
+	},
     GimpChannelOps =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -129,11 +137,12 @@ package Gimp::CodeGen::enums;
     GimpDesaturateMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_DESATURATE_LIGHTNESS
-			  GIMP_DESATURATE_LUMINOSITY GIMP_DESATURATE_AVERAGE) ],
+	  symbols => [ qw(GIMP_DESATURATE_LIGHTNESS GIMP_DESATURATE_LUMA
+			  GIMP_DESATURATE_AVERAGE GIMP_DESATURATE_LUMINANCE) ],
 	  mapping => { GIMP_DESATURATE_LIGHTNESS => '0',
-		       GIMP_DESATURATE_LUMINOSITY => '1',
-		       GIMP_DESATURATE_AVERAGE => '2' }
+		       GIMP_DESATURATE_LUMA => '1',
+		       GIMP_DESATURATE_AVERAGE => '2',
+		       GIMP_DESATURATE_LUMINANCE => '3' }
 	},
     GimpDodgeBurnType =>
 	{ contig => 1,
@@ -289,6 +298,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_INTERPOLATION_CUBIC => '2',
 		       GIMP_INTERPOLATION_NOHALO => '3',
 		       GIMP_INTERPOLATION_LOHALO => '4' }
+	},
+    GimpJoinStyle =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_JOIN_MITER GIMP_JOIN_ROUND GIMP_JOIN_BEVEL) ],
+	  mapping => { GIMP_JOIN_MITER => '0',
+		       GIMP_JOIN_ROUND => '1',
+		       GIMP_JOIN_BEVEL => '2' }
 	},
     GimpMaskApplyMode =>
 	{ contig => 1,
@@ -482,14 +499,16 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_SELECT_CRITERION_COMPOSITE
 			  GIMP_SELECT_CRITERION_R GIMP_SELECT_CRITERION_G
 			  GIMP_SELECT_CRITERION_B GIMP_SELECT_CRITERION_H
-			  GIMP_SELECT_CRITERION_S GIMP_SELECT_CRITERION_V) ],
+			  GIMP_SELECT_CRITERION_S GIMP_SELECT_CRITERION_V
+			  GIMP_SELECT_CRITERION_A) ],
 	  mapping => { GIMP_SELECT_CRITERION_COMPOSITE => '0',
 		       GIMP_SELECT_CRITERION_R => '1',
 		       GIMP_SELECT_CRITERION_G => '2',
 		       GIMP_SELECT_CRITERION_B => '3',
 		       GIMP_SELECT_CRITERION_H => '4',
 		       GIMP_SELECT_CRITERION_S => '5',
-		       GIMP_SELECT_CRITERION_V => '6' }
+		       GIMP_SELECT_CRITERION_V => '6',
+		       GIMP_SELECT_CRITERION_A => '7' }
 	},
     GimpSizeType =>
 	{ contig => 1,
@@ -506,6 +525,13 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_STACK_TRACE_NEVER => '0',
 		       GIMP_STACK_TRACE_QUERY => '1',
 		       GIMP_STACK_TRACE_ALWAYS => '2' }
+	},
+    GimpStrokeMethod =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_STROKE_LINE GIMP_STROKE_PAINT_METHOD) ],
+	  mapping => { GIMP_STROKE_LINE => '0',
+		       GIMP_STROKE_PAINT_METHOD => '1' }
 	},
     GimpTextDirection =>
 	{ contig => 1,

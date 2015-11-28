@@ -34,8 +34,10 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpdashpattern.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimpstrokeoptions.h"
 #include "paint/gimppaintoptions.h"
 #include "plug-in/gimpplugin-context.h"
 #include "plug-in/gimpplugin.h"
@@ -173,6 +175,57 @@ context_set_paint_method_invoker (GimpProcedure         *procedure,
         gimp_context_set_paint_info (context, paint_info);
       else
         success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_stroke_method_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  GimpValueArray *return_vals;
+  gint32 stroke_method = 0;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "method", &stroke_method,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), stroke_method);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_stroke_method_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 stroke_method;
+
+  stroke_method = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "method", stroke_method,
+                    NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -370,6 +423,377 @@ context_set_paint_mode_invoker (GimpProcedure         *procedure,
         paint_mode = GIMP_SOFTLIGHT_MODE;
 
       gimp_context_set_paint_mode (context, paint_mode);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_line_width_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  GimpValueArray *return_vals;
+  gdouble line_width = 0.0;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "width", &line_width,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (gimp_value_array_index (return_vals, 1), line_width);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_line_width_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  gdouble line_width;
+
+  line_width = g_value_get_double (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "width", line_width,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_line_width_unit_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  GimpValueArray *return_vals;
+  GimpUnit line_width_unit = 0;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "unit", &line_width_unit,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_int (gimp_value_array_index (return_vals, 1), line_width_unit);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_line_width_unit_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpUnit line_width_unit;
+
+  line_width_unit = g_value_get_int (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "unit", line_width_unit,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_line_cap_style_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  GimpValueArray *return_vals;
+  gint32 cap_style = 0;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "cap-style", &cap_style,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), cap_style);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_line_cap_style_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 cap_style;
+
+  cap_style = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "cap-style", cap_style,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_line_join_style_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  GimpValueArray *return_vals;
+  gint32 join_style = 0;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "join-style", &join_style,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), join_style);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_line_join_style_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 join_style;
+
+  join_style = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "join-style", join_style,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_line_miter_limit_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  GimpValueArray *return_vals;
+  gdouble miter_limit = 0.0;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "miter-limit", &miter_limit,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (gimp_value_array_index (return_vals, 1), miter_limit);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_line_miter_limit_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  gdouble miter_limit;
+
+  miter_limit = g_value_get_double (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "miter-limit", miter_limit,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_line_dash_offset_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  GimpValueArray *return_vals;
+  gdouble dash_offset = 0.0;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "dash-offset", &dash_offset,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (gimp_value_array_index (return_vals, 1), dash_offset);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_line_dash_offset_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  gdouble dash_offset;
+
+  dash_offset = g_value_get_double (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "dash-offset", dash_offset,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_line_dash_pattern_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  GimpValueArray *return_vals;
+  gint32 num_dashes = 0;
+  gdouble *dashes = NULL;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  GArray *pattern = gimp_stroke_options_get_dash_info (options);
+
+  dashes = gimp_dash_pattern_to_double_array (pattern, &num_dashes);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+
+  g_value_set_int (gimp_value_array_index (return_vals, 1), num_dashes);
+  gimp_value_take_floatarray (gimp_value_array_index (return_vals, 2), dashes, num_dashes);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_line_dash_pattern_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 num_dashes;
+  const gdouble *dashes;
+
+  num_dashes = g_value_get_int (gimp_value_array_index (args, 0));
+  dashes = gimp_value_get_floatarray (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      GArray *pattern = NULL;
+
+      if (num_dashes > 0)
+        {
+          pattern = gimp_dash_pattern_from_double_array (num_dashes, dashes);
+
+          if (! pattern)
+            success = FALSE;
+        }
+
+      if (success)
+        gimp_stroke_options_take_dash_pattern (options, GIMP_DASH_CUSTOM, pattern);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -2373,6 +2797,54 @@ register_context_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-context-get-stroke-method
+   */
+  procedure = gimp_procedure_new (context_get_stroke_method_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-stroke-method");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-stroke-method",
+                                     "Retrieve the currently active stroke method.",
+                                     "This procedure returns the currently active stroke method.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("stroke-method",
+                                                      "stroke method",
+                                                      "The active stroke method",
+                                                      GIMP_TYPE_STROKE_METHOD,
+                                                      GIMP_STROKE_LINE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-stroke-method
+   */
+  procedure = gimp_procedure_new (context_set_stroke_method_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-stroke-method");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-stroke-method",
+                                     "Set the specified stroke method as the active stroke method.",
+                                     "This procedure set the specified stroke method as the active stroke method. The new method will be used in all subsequent stroke operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("stroke-method",
+                                                  "stroke method",
+                                                  "The new stroke method",
+                                                  GIMP_TYPE_STROKE_METHOD,
+                                                  GIMP_STROKE_LINE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-context-get-foreground
    */
   procedure = gimp_procedure_new (context_get_foreground_invoker);
@@ -2593,6 +3065,355 @@ register_context_procs (GimpPDB *pdb)
                                                   GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-line-width
+   */
+  procedure = gimp_procedure_new (context_get_line_width_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-line-width");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-line-width",
+                                     "Get the line width setting.",
+                                     "This procedure returns the line width setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("line-width",
+                                                        "line width",
+                                                        "The line width setting",
+                                                        0.0, 2000.0, 0.0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-line-width
+   */
+  procedure = gimp_procedure_new (context_set_line_width_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-line-width");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-line-width",
+                                     "Set the line width setting.",
+                                     "This procedure modifies the line width setting for stroking lines.\n"
+                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("line-width",
+                                                    "line width",
+                                                    "The line width setting",
+                                                    0.0, 2000.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-line-width-unit
+   */
+  procedure = gimp_procedure_new (context_get_line_width_unit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-line-width-unit");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-line-width-unit",
+                                     "Get the line width unit setting.",
+                                     "This procedure returns the line width unit setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_unit ("line-width-unit",
+                                                         "line width unit",
+                                                         "The line width unit setting",
+                                                         TRUE,
+                                                         FALSE,
+                                                         GIMP_UNIT_PIXEL,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-line-width-unit
+   */
+  procedure = gimp_procedure_new (context_set_line_width_unit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-line-width-unit");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-line-width-unit",
+                                     "Set the line width unit setting.",
+                                     "This procedure modifies the line width unit setting for stroking lines.\n"
+                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_unit ("line-width-unit",
+                                                     "line width unit",
+                                                     "The line width setting unit",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-line-cap-style
+   */
+  procedure = gimp_procedure_new (context_get_line_cap_style_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-line-cap-style");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-line-cap-style",
+                                     "Get the line cap style setting.",
+                                     "This procedure returns the line cap style setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("cap-style",
+                                                      "cap style",
+                                                      "The line cap style setting",
+                                                      GIMP_TYPE_CAP_STYLE,
+                                                      GIMP_CAP_BUTT,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-line-cap-style
+   */
+  procedure = gimp_procedure_new (context_set_line_cap_style_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-line-cap-style");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-line-cap-style",
+                                     "Set the line cap style setting.",
+                                     "This procedure modifies the line cap style setting for stroking lines.\n"
+                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("cap-style",
+                                                  "cap style",
+                                                  "The line cap style setting",
+                                                  GIMP_TYPE_CAP_STYLE,
+                                                  GIMP_CAP_BUTT,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-line-join-style
+   */
+  procedure = gimp_procedure_new (context_get_line_join_style_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-line-join-style");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-line-join-style",
+                                     "Get the line join style setting.",
+                                     "This procedure returns the line join style setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("join-style",
+                                                      "join style",
+                                                      "The line join style setting",
+                                                      GIMP_TYPE_JOIN_STYLE,
+                                                      GIMP_JOIN_MITER,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-line-join-style
+   */
+  procedure = gimp_procedure_new (context_set_line_join_style_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-line-join-style");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-line-join-style",
+                                     "Set the line join style setting.",
+                                     "This procedure modifies the line join style setting for stroking lines.\n"
+                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("join-style",
+                                                  "join style",
+                                                  "The line join style setting",
+                                                  GIMP_TYPE_JOIN_STYLE,
+                                                  GIMP_JOIN_MITER,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-line-miter-limit
+   */
+  procedure = gimp_procedure_new (context_get_line_miter_limit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-line-miter-limit");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-line-miter-limit",
+                                     "Get the line miter limit setting.",
+                                     "This procedure returns the line miter limit setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("miter-limit",
+                                                        "miter limit",
+                                                        "The line miter limit setting",
+                                                        0.0, 100.0, 0.0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-line-miter-limit
+   */
+  procedure = gimp_procedure_new (context_set_line_miter_limit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-line-miter-limit");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-line-miter-limit",
+                                     "Set the line miter limit setting.",
+                                     "This procedure modifies the line miter limit setting for stroking lines.\n"
+                                     "A mitered join is converted to a bevelled join if the miter would extend to a distance of more than (miter-limit * line-width) from the actual join point.\n"
+                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("miter-limit",
+                                                    "miter limit",
+                                                    "The line miter limit setting",
+                                                    0.0, 100.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-line-dash-offset
+   */
+  procedure = gimp_procedure_new (context_get_line_dash_offset_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-line-dash-offset");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-line-dash-offset",
+                                     "Get the line dash offset setting.",
+                                     "This procedure returns the line dash offset setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("dash-offset",
+                                                        "dash offset",
+                                                        "The line dash offset setting",
+                                                        0.0, 2000.0, 0.0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-line-dash-offset
+   */
+  procedure = gimp_procedure_new (context_set_line_dash_offset_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-line-dash-offset");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-line-dash-offset",
+                                     "Set the line dash offset setting.",
+                                     "This procedure modifies the line dash offset setting for stroking lines.\n"
+                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("dash-offset",
+                                                    "dash offset",
+                                                    "The line dash offset setting",
+                                                    0.0, 100.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-line-dash-pattern
+   */
+  procedure = gimp_procedure_new (context_get_line_dash_pattern_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-line-dash-pattern");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-line-dash-pattern",
+                                     "Get the line dash pattern setting.",
+                                     "This procedure returns the line dash pattern setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-dashes",
+                                                          "num dashes",
+                                                          "The number of dashes in the dash_pattern array",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_float_array ("dashes",
+                                                                "dashes",
+                                                                "The line dash pattern setting",
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-line-dash-pattern
+   */
+  procedure = gimp_procedure_new (context_set_line_dash_pattern_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-line-dash-pattern");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-line-dash-pattern",
+                                     "Set the line dash pattern setting.",
+                                     "This procedure modifies the line dash pattern setting for stroking lines.\n"
+                                     "The unit of the dash pattern segments is the actual line width used for the stroke opertation, in other words a segment length of 1.0 results in a square segment shape (or gap shape).\n"
+                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-dashes",
+                                                      "num dashes",
+                                                      "The number of dashes in the dash_pattern array",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("dashes",
+                                                            "dashes",
+                                                            "The line dash pattern setting",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3244,7 +4065,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-antialias",
                                      "Set the antialias setting.",
                                      "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted.\n"
-                                     "This settings affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",

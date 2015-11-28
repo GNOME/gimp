@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 
 
@@ -236,6 +238,69 @@ gimp_context_set_paint_method (const gchar *name)
   return_vals = gimp_run_procedure ("gimp-context-set-paint-method",
                                     &nreturn_vals,
                                     GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_stroke_method:
+ *
+ * Retrieve the currently active stroke method.
+ *
+ * This procedure returns the currently active stroke method.
+ *
+ * Returns: The active stroke method.
+ *
+ * Since: 2.10
+ **/
+GimpStrokeMethod
+gimp_context_get_stroke_method (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpStrokeMethod stroke_method = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-stroke-method",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    stroke_method = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return stroke_method;
+}
+
+/**
+ * gimp_context_set_stroke_method:
+ * @stroke_method: The new stroke method.
+ *
+ * Set the specified stroke method as the active stroke method.
+ *
+ * This procedure set the specified stroke method as the active stroke
+ * method. The new method will be used in all subsequent stroke
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-stroke-method",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, stroke_method,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -561,6 +626,476 @@ gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
   return_vals = gimp_run_procedure ("gimp-context-set-paint-mode",
                                     &nreturn_vals,
                                     GIMP_PDB_INT32, paint_mode,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_line_width:
+ *
+ * Get the line width setting.
+ *
+ * This procedure returns the line width setting.
+ *
+ * Returns: The line width setting.
+ *
+ * Since: 2.10
+ **/
+gdouble
+gimp_context_get_line_width (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble line_width = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-line-width",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    line_width = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return line_width;
+}
+
+/**
+ * gimp_context_set_line_width:
+ * @line_width: The line width setting.
+ *
+ * Set the line width setting.
+ *
+ * This procedure modifies the line width setting for stroking lines.
+ * This setting affects the following procedures: gimp_edit_stroke(),
+ * gimp_edit_stroke_vectors().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_line_width (gdouble line_width)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-line-width",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, line_width,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_line_width_unit:
+ *
+ * Get the line width unit setting.
+ *
+ * This procedure returns the line width unit setting.
+ *
+ * Returns: The line width unit setting.
+ *
+ * Since: 2.10
+ **/
+GimpUnit
+gimp_context_get_line_width_unit (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpUnit line_width_unit = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-line-width-unit",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    line_width_unit = return_vals[1].data.d_unit;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return line_width_unit;
+}
+
+/**
+ * gimp_context_set_line_width_unit:
+ * @line_width_unit: The line width setting unit.
+ *
+ * Set the line width unit setting.
+ *
+ * This procedure modifies the line width unit setting for stroking
+ * lines.
+ * This setting affects the following procedures: gimp_edit_stroke(),
+ * gimp_edit_stroke_vectors().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_line_width_unit (GimpUnit line_width_unit)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-line-width-unit",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, line_width_unit,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_line_cap_style:
+ *
+ * Get the line cap style setting.
+ *
+ * This procedure returns the line cap style setting.
+ *
+ * Returns: The line cap style setting.
+ *
+ * Since: 2.10
+ **/
+GimpCapStyle
+gimp_context_get_line_cap_style (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpCapStyle cap_style = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-line-cap-style",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    cap_style = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return cap_style;
+}
+
+/**
+ * gimp_context_set_line_cap_style:
+ * @cap_style: The line cap style setting.
+ *
+ * Set the line cap style setting.
+ *
+ * This procedure modifies the line cap style setting for stroking
+ * lines.
+ * This setting affects the following procedures: gimp_edit_stroke(),
+ * gimp_edit_stroke_vectors().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_line_cap_style (GimpCapStyle cap_style)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-line-cap-style",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, cap_style,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_line_join_style:
+ *
+ * Get the line join style setting.
+ *
+ * This procedure returns the line join style setting.
+ *
+ * Returns: The line join style setting.
+ *
+ * Since: 2.10
+ **/
+GimpJoinStyle
+gimp_context_get_line_join_style (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpJoinStyle join_style = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-line-join-style",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    join_style = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return join_style;
+}
+
+/**
+ * gimp_context_set_line_join_style:
+ * @join_style: The line join style setting.
+ *
+ * Set the line join style setting.
+ *
+ * This procedure modifies the line join style setting for stroking
+ * lines.
+ * This setting affects the following procedures: gimp_edit_stroke(),
+ * gimp_edit_stroke_vectors().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_line_join_style (GimpJoinStyle join_style)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-line-join-style",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, join_style,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_line_miter_limit:
+ *
+ * Get the line miter limit setting.
+ *
+ * This procedure returns the line miter limit setting.
+ *
+ * Returns: The line miter limit setting.
+ *
+ * Since: 2.10
+ **/
+gdouble
+gimp_context_get_line_miter_limit (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble miter_limit = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-line-miter-limit",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    miter_limit = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return miter_limit;
+}
+
+/**
+ * gimp_context_set_line_miter_limit:
+ * @miter_limit: The line miter limit setting.
+ *
+ * Set the line miter limit setting.
+ *
+ * This procedure modifies the line miter limit setting for stroking
+ * lines.
+ * A mitered join is converted to a bevelled join if the miter would
+ * extend to a distance of more than (miter-limit * line-width) from
+ * the actual join point.
+ * This setting affects the following procedures: gimp_edit_stroke(),
+ * gimp_edit_stroke_vectors().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_line_miter_limit (gdouble miter_limit)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-line-miter-limit",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, miter_limit,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_line_dash_offset:
+ *
+ * Get the line dash offset setting.
+ *
+ * This procedure returns the line dash offset setting.
+ *
+ * Returns: The line dash offset setting.
+ *
+ * Since: 2.10
+ **/
+gdouble
+gimp_context_get_line_dash_offset (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble dash_offset = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-line-dash-offset",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    dash_offset = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return dash_offset;
+}
+
+/**
+ * gimp_context_set_line_dash_offset:
+ * @dash_offset: The line dash offset setting.
+ *
+ * Set the line dash offset setting.
+ *
+ * This procedure modifies the line dash offset setting for stroking
+ * lines.
+ * This setting affects the following procedures: gimp_edit_stroke(),
+ * gimp_edit_stroke_vectors().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_line_dash_offset (gdouble dash_offset)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-line-dash-offset",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, dash_offset,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_line_dash_pattern:
+ * @num_dashes: The number of dashes in the dash_pattern array.
+ * @dashes: The line dash pattern setting.
+ *
+ * Get the line dash pattern setting.
+ *
+ * This procedure returns the line dash pattern setting.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_get_line_dash_pattern (gint     *num_dashes,
+                                    gdouble **dashes)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-line-dash-pattern",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  *num_dashes = 0;
+  *dashes = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_dashes = return_vals[1].data.d_int32;
+      *dashes = g_new (gdouble, *num_dashes);
+      memcpy (*dashes,
+              return_vals[2].data.d_floatarray,
+              *num_dashes * sizeof (gdouble));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_line_dash_pattern:
+ * @num_dashes: The number of dashes in the dash_pattern array.
+ * @dashes: The line dash pattern setting.
+ *
+ * Set the line dash pattern setting.
+ *
+ * This procedure modifies the line dash pattern setting for stroking
+ * lines.
+ * The unit of the dash pattern segments is the actual line width used
+ * for the stroke opertation, in other words a segment length of 1.0
+ * results in a square segment shape (or gap shape).
+ * This setting affects the following procedures: gimp_edit_stroke(),
+ * gimp_edit_stroke_vectors().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_line_dash_pattern (gint           num_dashes,
+                                    const gdouble *dashes)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-line-dash-pattern",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, num_dashes,
+                                    GIMP_PDB_FLOATARRAY, dashes,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1469,7 +2004,7 @@ gimp_context_get_antialias (void)
  * values which give the appearance of a sharper, less pixelized edge.
  * This should be set as TRUE most of the time unless a binary-only
  * selection is wanted.
- * This settings affects the following procedures:
+ * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
  * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
  * gimp_image_select_polygon(), gimp_image_select_item().

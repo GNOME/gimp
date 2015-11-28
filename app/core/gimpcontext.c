@@ -1484,11 +1484,20 @@ gimp_context_parent_notify (GimpContext *parent,
                             GParamSpec  *pspec,
                             GimpContext *context)
 {
-  /*  copy from parent if the changed property is undefined  */
-  if (pspec->owner_type == GIMP_TYPE_CONTEXT &&
-      ! ((1 << pspec->param_id) & context->defined_props))
+  if (pspec->owner_type == GIMP_TYPE_CONTEXT)
     {
-      gimp_context_copy_property (parent, context, pspec->param_id);
+      GimpContextPropType prop = pspec->param_id;
+
+      /*  copy from parent if the changed property is undefined;
+       *  ignore properties that are not context properties, for
+       *  example notifications on the context's "gimp" property
+       */
+      if ((prop >= GIMP_CONTEXT_PROP_FIRST) &&
+          (prop <= GIMP_CONTEXT_PROP_LAST)  &&
+          ! ((1 << prop) & context->defined_props))
+        {
+          gimp_context_copy_property (parent, context, prop);
+        }
     }
 }
 

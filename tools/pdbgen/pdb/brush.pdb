@@ -17,8 +17,8 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub brush_new {
-    $blurb = "Creates a new brush";
-    $help  = "This procedure creates a new, uninitialized brush";
+    $blurb = "Creates a new brush.";
+    $help  = "This procedure creates a new, uninitialized brush.";
 
     &mitch_pdb_misc('2004', '2.2');
 
@@ -29,7 +29,7 @@ sub brush_new {
 
     @outargs = (
 	{ name => 'actual_name', type => 'string',
-	  desc => 'The actual new brush name' }
+	  desc => 'The actual new brush name. The returned value must be freed with g_free()' }
     );
 
     %invoke = (
@@ -48,8 +48,8 @@ CODE
 }
 
 sub brush_duplicate {
-    $blurb = "Duplicates a brush";
-    $help  = "This procedure creates an identical brush by a different name";
+    $blurb = "Duplicates a brush.";
+    $help  = "This procedure creates an identical brush by a different name.";
 
     &mitch_pdb_misc('2004', '2.2');
 
@@ -60,7 +60,7 @@ sub brush_duplicate {
 
     @outargs = (
 	{ name => 'copy_name', type => 'string',
-	  desc => "The name of the brush's copy" }
+	  desc => "The name of the brush's copy. The returned value must be freed with g_free()" }
     );
 
     %invoke = (
@@ -87,8 +87,8 @@ CODE
 }
 
 sub brush_is_generated {
-    $blurb = "Tests if brush is generated";
-    $help  = "Returns TRUE if this brush is parametric, FALSE for other types";
+    $blurb = "Tests if brush is generated.";
+    $help  = "Returns TRUE if this brush is parametric, FALSE for other types.";
 
     &bill_pdb_misc('2004', '2.4');
 
@@ -117,8 +117,8 @@ CODE
 }
 
 sub brush_is_editable {
-    $blurb = "Tests if brush can be edited";
-    $help  = "Returns TRUE if you have permission to change the brush";
+    $blurb = "Tests if brush can be edited.";
+    $help  = "Returns TRUE if you have permission to change the brush.";
 
     &bill_pdb_misc('2004', '2.4');
 
@@ -147,8 +147,8 @@ CODE
 }
 
 sub brush_rename {
-    $blurb = "Rename a brush";
-    $help  = "This procedure renames a brush";
+    $blurb = "Renames a brush.";
+    $help  = "This procedure renames a brush.";
 
     &mitch_pdb_misc('2004', '2.2');
 
@@ -161,7 +161,7 @@ sub brush_rename {
 
     @outargs = (
 	{ name => 'actual_name', type => 'string',
-	  desc => 'The actual new name of the brush' }
+	  desc => 'The actual new name of the brush. The returned value must be freed with g_free()' }
     );
 
     %invoke = (
@@ -182,8 +182,8 @@ CODE
 }
 
 sub brush_delete {
-    $blurb = "Deletes a brush";
-    $help  = "This procedure deletes a brush";
+    $blurb = "Deletes a brush.";
+    $help  = "This procedure deletes a brush.";
 
     &mitch_pdb_misc('2004', '2.2');
 
@@ -209,11 +209,11 @@ CODE
 }
 
 sub brush_get_info {
-    $blurb = "Retrieve information about the specified brush.";
+    $blurb = "Retrieves information about the specified brush.";
 
     $help = <<'HELP';
-This procedure retrieves information about the specified brush. This
-includes the brush name, and the brush extents (width and height).
+This procedure retrieves information about the specified brush:
+brush extents (width and height), color depth and mask depth.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
@@ -257,7 +257,7 @@ CODE
 }
 
 sub brush_get_pixels {
-    $blurb = 'Retrieve information about the specified brush.';
+    $blurb = 'Retrieves information about the specified brush.';
 
     $help = <<'HELP';
 This procedure retrieves information about the specified brush. This
@@ -324,7 +324,7 @@ CODE
 }
 
 sub brush_get_spacing {
-    $blurb = 'Get the brush spacing.';
+    $blurb = 'Gets the brush spacing.';
 
     $help = <<'HELP';
 This procedure returns the spacing setting for the specified brush.
@@ -359,7 +359,7 @@ CODE
 }
 
 sub brush_get_shape {
-    $blurb = 'Get the shape of a generated brush.';
+    $blurb = 'Gets the shape of a generated brush.';
 
     $help = <<'HELP';
 This procedure gets the shape value for a generated brush. If
@@ -397,7 +397,7 @@ CODE
 }
 
 sub brush_get_radius {
-    $blurb = 'Get the radius of a generated brush.';
+    $blurb = 'Gets the radius of a generated brush.';
 
     $help = <<'HELP';
 This procedure gets the radius value for a generated brush. If
@@ -431,7 +431,7 @@ CODE
 }
 
 sub brush_get_spikes {
-    $blurb = 'Get the number of spikes for a generated brush.';
+    $blurb = 'Gets the number of spikes for a generated brush.';
 
     $help = <<'HELP';
 This procedure gets the number of spikes for a generated brush.  
@@ -465,13 +465,14 @@ CODE
 }
 
 sub brush_get_hardness {
-    $blurb = 'Get the hardness of a generated brush.';
+    $blurb = 'Gets the hardness of a generated brush.';
 
     $help = <<'HELP';
 This procedure gets the hardness of a generated brush. The
 hardness of a brush is the amount its intensity fades at the
-outside edge. If called for any other type of brush, the function
-does not succeed.
+outside edge, as a float between 0.0 and 1.0.
+If called for any other type of brush, the function does not
+succeed.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
@@ -501,11 +502,12 @@ CODE
 }
 
 sub brush_get_aspect_ratio {
-    $blurb = 'Get the aspect ratio of a generated brush.';
+    $blurb = 'Gets the aspect ratio of a generated brush.';
 
     $help = <<'HELP';
 This procedure gets the aspect ratio of a generated brush. 
 If called for any other type of brush, it does not succeed.
+The return value is a float between 0.0 and 1000.0.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
@@ -535,7 +537,7 @@ CODE
 }
 
 sub brush_get_angle {
-    $blurb = 'Get the rotation angle of a generated brush.';
+    $blurb = 'Gets the rotation angle of a generated brush.';
 
     $help = <<'HELP';
 This procedure gets the angle of rotation for a generated brush. 
@@ -551,7 +553,7 @@ HELP
 
     @outargs = (
 	{ name => 'angle', type => 'float',
-          desc => 'The rotation angle of the brush.' }
+          desc => 'The rotation angle of the brush in degree.' }
     );
 
     %invoke = (
@@ -569,7 +571,7 @@ CODE
 }
 
 sub brush_set_spacing {
-    $blurb = 'Set the brush spacing.';
+    $blurb = 'Sets the brush spacing.';
 
     $help = <<'HELP';
 This procedure modifies the spacing setting for the specified brush.
@@ -600,7 +602,7 @@ CODE
 }
 
 sub brush_set_shape {
-    $blurb = 'Set the shape of a generated brush.';
+    $blurb = 'Sets the shape of a generated brush.';
 
     $help = <<'HELP';
 This procedure sets the shape value for a generated brush. If
@@ -644,7 +646,7 @@ CODE
 }
 
 sub brush_set_radius {
-    $blurb = 'Set the radius of a generated brush.';
+    $blurb = 'Sets the radius of a generated brush.';
 
     $help = <<'HELP';
 This procedure sets the radius for a generated brush. If
@@ -657,7 +659,7 @@ HELP
 	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'radius_in', type => 'float',
-          desc => 'The desired brush radius' }
+          desc => 'The desired brush radius in pixel' }
     );
 
     @outargs = (
@@ -684,7 +686,7 @@ CODE
 }
 
 sub brush_set_spikes {
-    $blurb = 'Set the number of spikes for a generated brush.';
+    $blurb = 'Sets the number of spikes for a generated brush.';
 
     $help = <<'HELP';
 This procedure sets the number of spikes for a generated brush. If
@@ -724,11 +726,12 @@ CODE
 }
 
 sub brush_set_hardness {
-    $blurb = 'Set the hardness of a generated brush.';
+    $blurb = 'Sets the hardness of a generated brush.';
 
     $help = <<'HELP';
 This procedure sets the hardness for a generated brush. If
 called for any other type of brush, it does not succeed.
+The value should be a float between 0.0 and 1.0.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
@@ -764,11 +767,12 @@ CODE
 }
 
 sub brush_set_aspect_ratio {
-    $blurb = 'Set the aspect ratio of a generated brush.';
+    $blurb = 'Sets the aspect ratio of a generated brush.';
 
     $help = <<'HELP';
-This procedure sets the aspect ratio for a generated brush. If
-called for any other type of brush, it does not succeed.
+This procedure sets the aspect ratio for a generated brush.
+If called for any other type of brush, it does not succeed.
+The value should be a float between 0.0 and 1000.0.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
@@ -804,7 +808,7 @@ CODE
 }
 
 sub brush_set_angle {
-    $blurb = 'Set the rotation angle of a generated brush.';
+    $blurb = 'Sets the rotation angle of a generated brush.';
 
     $help = <<'HELP';
 This procedure sets the rotation angle for a generated brush. If
@@ -817,7 +821,7 @@ HELP
 	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'angle_in', type => 'float',
-          desc => 'The desired brush rotation angle' }
+          desc => 'The desired brush rotation angle in degree' }
     );
 
     @outargs = (

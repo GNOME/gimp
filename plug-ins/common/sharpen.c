@@ -53,7 +53,8 @@ static void     sharpen        (GimpDrawable *drawable);
 
 static gboolean sharpen_dialog (GimpDrawable *drawable);
 
-static void     preview_update (GimpPreview  *preview);
+static void     preview_update (GimpPreview  *preview,
+                                GimpDrawable *drawable);
 
 typedef gint32 intneg;
 typedef gint32 intpos;
@@ -496,7 +497,7 @@ sharpen_dialog (GimpDrawable *drawable)
 
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (preview_update),
-                    NULL);
+                    drawable);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -526,9 +527,9 @@ sharpen_dialog (GimpDrawable *drawable)
 }
 
 static void
-preview_update (GimpPreview *preview)
+preview_update (GimpPreview  *preview,
+                GimpDrawable *drawable)
 {
-  GimpDrawable *drawable;
   GimpPixelRgn  src_rgn;        /* Source image region */
   guchar       *src_ptr;        /* Current source pixel */
   guchar       *dst_ptr;        /* Current destination pixel */
@@ -550,9 +551,6 @@ preview_update (GimpPreview *preview)
 
   gimp_preview_get_position (preview, &x1, &y1);
   gimp_preview_get_size (preview, &preview_width, &preview_height);
-
-  drawable =
-    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
 
   img_bpp = gimp_drawable_bpp (drawable->drawable_id);
 

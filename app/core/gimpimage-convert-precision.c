@@ -20,19 +20,24 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimp-babl.h"
 
 #include "gimpdrawable.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimpimage-convert-precision.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpprogress.h"
+#include "gimpsubprogress.h"
 
 #include "text/gimptextlayer.h"
 
@@ -47,10 +52,14 @@ gimp_image_convert_precision (GimpImage     *image,
                               gint           mask_dither_type,
                               GimpProgress  *progress)
 {
-  GList       *all_drawables;
-  GList       *list;
-  const gchar *undo_desc = NULL;
-  gint         nth_drawable, n_drawables;
+  GimpColorProfile *old_profile;
+  const Babl       *old_format;
+  const Babl       *new_format;
+  GList            *all_drawables;
+  GList            *list;
+  const gchar      *undo_desc    = NULL;
+  GimpProgress     *sub_progress = NULL;
+  gint              nth_drawable, n_drawables;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (precision != gimp_image_get_precision (image));
@@ -62,6 +71,9 @@ gimp_image_convert_precision (GimpImage     *image,
                                  gimp_image_get_channel_list (image));
 
   n_drawables = g_list_length (all_drawables) + 1 /* + selection */;
+
+  if (progress)
+    sub_progress = gimp_sub_progress_new (progress);
 
   switch (precision)
     {
@@ -114,8 +126,13 @@ gimp_image_convert_precision (GimpImage     *image,
   /*  Push the image precision to the stack  */
   gimp_image_undo_push_image_precision (image, NULL);
 
+  old_profile = gimp_image_get_color_profile (image);
+  old_format  = gimp_image_get_layer_format (image, FALSE);
+
   /*  Set the new precision  */
   g_object_set (image, "precision", precision, NULL);
+
+  new_format = gimp_image_get_layer_format (image, FALSE);
 
   for (list = all_drawables, nth_drawable = 0;
        list;
@@ -129,24 +146,55 @@ gimp_image_convert_precision (GimpImage     *image,
       else
         dither_type = layer_dither_type;
 
+      if (sub_progress)
+        gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                    nth_drawable, n_drawables);
+
       gimp_drawable_convert_type (drawable, image,
                                   gimp_drawable_get_base_type (drawable),
                                   precision,
                                   dither_type,
                                   mask_dither_type,
-                                  FALSE,
-                                  TRUE);
-
-      if (progress)
-        gimp_progress_set_value (progress,
-                                 (gdouble) nth_drawable / (gdouble) n_drawables);
+                                  old_profile != NULL,
+                                  TRUE, sub_progress);
     }
+
   g_list_free (all_drawables);
+
+  if (old_profile &&
+      gimp_babl_format_get_linear (old_format) !=
+      gimp_babl_format_get_linear (new_format))
+    {
+      GimpColorProfile *new_profile;
+
+      /* the comments in gimp_layer_convert_type() explain the logic
+       * here
+       */
+      if (gimp_babl_format_get_linear (new_format))
+        {
+          new_profile =
+            gimp_color_profile_new_linear_rgb_from_color_profile (old_profile);
+        }
+      else
+        {
+          new_profile =
+            gimp_color_profile_new_srgb_gamma_from_color_profile (old_profile);
+        }
+
+      gimp_image_set_color_profile (image, new_profile, NULL);
+
+      if (new_profile)
+        g_object_unref (new_profile);
+    }
 
   /*  convert the selection mask  */
   {
     GimpChannel *mask = gimp_image_get_mask (image);
     GeglBuffer  *buffer;
+
+    if (sub_progress)
+      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                  nth_drawable, n_drawables);
 
     gimp_image_undo_push_mask_precision (image, NULL, mask);
 
@@ -164,15 +212,17 @@ gimp_image_convert_precision (GimpImage     *image,
 
     nth_drawable++;
 
-    if (progress)
-      gimp_progress_set_value (progress,
-                               (gdouble) nth_drawable / (gdouble) n_drawables);
+    if (sub_progress)
+      gimp_progress_set_value (sub_progress, 1.0);
   }
 
   gimp_image_undo_group_end (image);
 
   gimp_image_precision_changed (image);
   g_object_thaw_notify (G_OBJECT (image));
+
+  if (sub_progress)
+    g_object_unref (sub_progress);
 
   if (progress)
     gimp_progress_end (progress);

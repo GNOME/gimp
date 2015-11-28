@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-29 18:29+0200\n"
-"PO-Revision-Date: 2015-08-29 18:30+0200\n"
+"POT-Creation-Date: 2015-11-23 00:20+0100\n"
+"PO-Revision-Date: 2015-11-23 00:22+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -2173,7 +2173,7 @@ msgstr "Rozmiar komórki (piksele)"
 #: ../plug-ins/script-fu/scripts/news-text.scm:87
 #: ../plug-ins/script-fu/scripts/speed-text.scm:95
 msgid "Density (%)"
-msgstr "Gęstość (%s)"
+msgstr "Gęstość (%)"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."

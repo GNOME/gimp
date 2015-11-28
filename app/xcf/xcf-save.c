@@ -418,8 +418,11 @@ xcf_save_image_props (XcfInfo    *info,
       gint gimp_version;
 
       /* Save the GIMP version we are trying to get compatible with.
-       * This specific information is unused as of now though. */
+       * This specific information is unused as of now though.
+       */
       gimp_image_get_xcf_version (image, FALSE, &gimp_version, NULL);
+      gimp_version = g_htonl (gimp_version);
+
       compat_parasite = gimp_parasite_new ("gimp-xcf-compatibility-mode",
                                            GIMP_PARASITE_PERSISTENT,
                                            sizeof (gimp_version),

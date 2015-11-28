@@ -110,6 +110,18 @@ typedef enum
 } GimpBucketFillMode;
 
 
+#define GIMP_TYPE_CAP_STYLE (gimp_cap_style_get_type ())
+
+GType gimp_cap_style_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CAP_BUTT,   /*< desc="Butt"   >*/
+  GIMP_CAP_ROUND,  /*< desc="Round"  >*/
+  GIMP_CAP_SQUARE  /*< desc="Square" >*/
+} GimpCapStyle;
+
+
 #define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
 
 GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
@@ -233,8 +245,13 @@ GType gimp_desaturate_mode_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_DESATURATE_LIGHTNESS,   /*< desc="Lightness"  >*/
-  GIMP_DESATURATE_LUMINOSITY,  /*< desc="Luminosity" >*/
-  GIMP_DESATURATE_AVERAGE      /*< desc="Average"    >*/
+  GIMP_DESATURATE_LUMA,        /*< desc="Luma"       >*/
+  GIMP_DESATURATE_AVERAGE,     /*< desc="Average"    >*/
+  GIMP_DESATURATE_LUMINANCE,   /*< desc="Luminance"  >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_DESATURATE_LUMINOSITY = GIMP_DESATURATE_LUMA /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpDesaturateMode;
 
 
@@ -434,6 +451,18 @@ typedef enum
   GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip, pdb-skip >*/
 #endif /* GIMP_DISABLE_DEPRECATED */
 } GimpInterpolationType;
+
+
+#define GIMP_TYPE_JOIN_STYLE (gimp_join_style_get_type ())
+
+GType gimp_join_style_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_JOIN_MITER,  /*< desc="Miter" >*/
+  GIMP_JOIN_ROUND,  /*< desc="Round" >*/
+  GIMP_JOIN_BEVEL   /*< desc="Bevel" >*/
+} GimpJoinStyle;
 
 
 #define GIMP_TYPE_MASK_APPLY_MODE (gimp_mask_apply_mode_get_type ())
@@ -667,7 +696,8 @@ typedef enum
   GIMP_SELECT_CRITERION_B,          /*< desc="Blue"       >*/
   GIMP_SELECT_CRITERION_H,          /*< desc="Hue"        >*/
   GIMP_SELECT_CRITERION_S,          /*< desc="Saturation" >*/
-  GIMP_SELECT_CRITERION_V           /*< desc="Value"      >*/
+  GIMP_SELECT_CRITERION_V,          /*< desc="Value"      >*/
+  GIMP_SELECT_CRITERION_A           /*< desc="Alpha"      >*/
 } GimpSelectCriterion;
 
 
@@ -692,6 +722,17 @@ typedef enum
   GIMP_STACK_TRACE_QUERY,
   GIMP_STACK_TRACE_ALWAYS
 } GimpStackTraceMode;
+
+
+#define GIMP_TYPE_STROKE_METHOD (gimp_stroke_method_get_type ())
+
+GType gimp_stroke_method_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_STROKE_LINE,         /*< desc="Stroke line"              >*/
+  GIMP_STROKE_PAINT_METHOD  /*< desc="Stroke with a paint tool" >*/
+} GimpStrokeMethod;
 
 
 #define GIMP_TYPE_TEXT_DIRECTION (gimp_text_direction_get_type ())

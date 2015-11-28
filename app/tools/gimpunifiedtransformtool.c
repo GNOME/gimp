@@ -148,6 +148,12 @@ transform_is_convex (GimpVector2 *pos)
                                            pos[3].x, pos[3].y);
 }
 
+static inline gboolean
+vectorisnull (GimpVector2 v)
+{
+  return ((v.x == 0.0) && (v.y == 0.0));
+}
+
 static inline gdouble
 dotprod (GimpVector2 a,
          GimpVector2 b)
@@ -210,7 +216,12 @@ calcangle (GimpVector2 a,
            GimpVector2 b)
 {
   gdouble angle, angle2;
-  gdouble length = norm (a) * norm (b);
+  gdouble length;
+
+  if (vectorisnull (a) || vectorisnull (b))
+    return 0.0;
+
+  length = norm (a) * norm (b);
 
   angle = acos (dotprod (a, b)/length);
   angle2 = b.y;

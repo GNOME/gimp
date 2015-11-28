@@ -328,7 +328,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   gimp_display_shell_items_init (shell);
 
-  shell->icon_size  = 64;
+  shell->icon_size       = 128;
+  shell->icon_size_small = 96;
 
   shell->cursor_handedness = GIMP_HANDEDNESS_RIGHT;
   shell->current_cursor    = (GimpCursorType) -1;
@@ -1471,7 +1472,9 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
 
-  shell->rotate_angle = 0.0;
+  shell->flip_horizontally = FALSE;
+  shell->flip_vertically   = FALSE;
+  shell->rotate_angle      = 0.0;
   gimp_display_shell_rotate_update_transform (shell);
 
   gimp_display_shell_expose_full (shell);

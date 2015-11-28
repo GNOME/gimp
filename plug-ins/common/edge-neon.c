@@ -65,7 +65,8 @@ static void      neon                (GimpDrawable     *drawable,
                                       GimpPreview      *preview);
 
 static gboolean  neon_dialog         (GimpDrawable     *drawable);
-static void      neon_preview_update (GimpPreview      *preview);
+static void      neon_preview_update (GimpPreview      *preview,
+                                      GimpDrawable     *drawable);
 
 /*
  * Gaussian operator helper functions
@@ -722,7 +723,7 @@ neon_dialog (GimpDrawable *drawable)
 
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (neon_preview_update),
-                    NULL);
+                    drawable);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -769,9 +770,10 @@ neon_dialog (GimpDrawable *drawable)
 }
 
 static void
-neon_preview_update (GimpPreview *preview)
+neon_preview_update (GimpPreview  *preview,
+                     GimpDrawable *drawable)
 {
-  neon (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
+  neon (drawable,
         evals.radius,
         evals.amount,
         preview);

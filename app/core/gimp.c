@@ -793,8 +793,18 @@ static gboolean
 gimp_real_exit (Gimp     *gimp,
                 gboolean  force)
 {
+  GList *image_iter;
+
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
+
+  /* get rid of images without display */
+  while ((image_iter = gimp_get_image_iter (gimp)))
+    {
+      GimpImage *image = image_iter->data;
+
+      g_object_unref (image);
+    }
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
   gimp_modules_unload (gimp);

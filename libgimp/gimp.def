@@ -92,6 +92,13 @@ EXPORTS
 	gimp_context_get_ink_speed_sensitivity
 	gimp_context_get_ink_tilt_sensitivity
 	gimp_context_get_interpolation
+	gimp_context_get_line_cap_style
+	gimp_context_get_line_dash_offset
+	gimp_context_get_line_dash_pattern
+	gimp_context_get_line_join_style
+	gimp_context_get_line_miter_limit
+	gimp_context_get_line_width
+	gimp_context_get_line_width_unit
 	gimp_context_get_opacity
 	gimp_context_get_paint_method
 	gimp_context_get_paint_mode
@@ -102,6 +109,7 @@ EXPORTS
 	gimp_context_get_sample_threshold
 	gimp_context_get_sample_threshold_int
 	gimp_context_get_sample_transparent
+	gimp_context_get_stroke_method
 	gimp_context_get_transform_direction
 	gimp_context_get_transform_recursion
 	gimp_context_get_transform_resize
@@ -137,6 +145,13 @@ EXPORTS
 	gimp_context_set_ink_speed_sensitivity
 	gimp_context_set_ink_tilt_sensitivity
 	gimp_context_set_interpolation
+	gimp_context_set_line_cap_style
+	gimp_context_set_line_dash_offset
+	gimp_context_set_line_dash_pattern
+	gimp_context_set_line_join_style
+	gimp_context_set_line_miter_limit
+	gimp_context_set_line_width
+	gimp_context_set_line_width_unit
 	gimp_context_set_opacity
 	gimp_context_set_paint_method
 	gimp_context_set_paint_mode
@@ -147,6 +162,7 @@ EXPORTS
 	gimp_context_set_sample_threshold
 	gimp_context_set_sample_threshold_int
 	gimp_context_set_sample_transparent
+	gimp_context_set_stroke_method
 	gimp_context_set_transform_direction
 	gimp_context_set_transform_recursion
 	gimp_context_set_transform_resize

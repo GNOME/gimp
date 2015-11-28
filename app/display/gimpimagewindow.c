@@ -121,8 +121,10 @@ struct _GimpImageWindowPrivate
 
 typedef struct
 {
-  gint             x;
-  gint             y;
+  gint canvas_x;
+  gint canvas_y;
+  gint window_x;
+  gint window_y;
 } PosCorrectionData;
 
 
@@ -1596,28 +1598,25 @@ gimp_image_window_get_default_dockbook (GimpImageWindow  *window)
 void
 gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
 {
-  GimpDisplayShell  *shell                 = gimp_image_window_get_active_shell (window);
-  gint               image_origin_shell_x  = -1;
-  gint               image_origin_shell_y  = -1;
-  gint               image_origin_window_x = -1;
-  gint               image_origin_window_y = -1;
+  GimpDisplayShell  *shell = gimp_image_window_get_active_shell (window);
+  gint               canvas_x;
+  gint               canvas_y;
+  gint               window_x;
+  gint               window_y;
 
-  gimp_display_shell_transform_xy (shell,
-                                   0.0, 0.0,
-                                   &image_origin_shell_x,
-                                   &image_origin_shell_y);
+  gimp_display_shell_transform_xy (shell, 0.0, 0.0, &canvas_x, &canvas_y);
 
   if (gtk_widget_translate_coordinates (GTK_WIDGET (shell->canvas),
                                         GTK_WIDGET (window),
-                                        image_origin_shell_x,
-                                        image_origin_shell_y,
-                                        &image_origin_window_x,
-                                        &image_origin_window_y))
+                                        canvas_x, canvas_y,
+                                        &window_x, &window_y))
     {
       PosCorrectionData *data = g_new0 (PosCorrectionData, 1);
 
-      data->x      = image_origin_window_x;
-      data->y      = image_origin_window_y;
+      data->canvas_x = canvas_x;
+      data->canvas_y = canvas_y;
+      data->window_x = window_x;
+      data->window_y = window_y;
 
       g_signal_connect_data (shell, "size-allocate",
                              G_CALLBACK (gimp_image_window_shell_size_allocate),
@@ -1794,23 +1793,18 @@ gimp_image_window_shell_size_allocate (GimpDisplayShell  *shell,
                                        GtkAllocation     *allocation,
                                        PosCorrectionData *data)
 {
-  GimpImageWindow *window               = gimp_display_shell_get_window (shell);
-  gint             image_origin_shell_x = -1;
-  gint             image_origin_shell_y = -1;
+  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+  gint             new_window_x;
+  gint             new_window_y;
 
-  if (gtk_widget_translate_coordinates (GTK_WIDGET (window),
-                                        GTK_WIDGET (shell->canvas),
-                                        data->x, data->y,
-                                        &image_origin_shell_x,
-                                        &image_origin_shell_y))
+  if (gtk_widget_translate_coordinates (GTK_WIDGET (shell->canvas),
+                                        GTK_WIDGET (window),
+                                        data->canvas_x, data->canvas_y,
+                                        &new_window_x, &new_window_y))
     {
-      /* Note that the shell offset isn't the offset of the image into the
-       * shell, but the offset of the shell relative to the image,
-       * therefore we need to negate
-       */
-      gimp_display_shell_scroll_set_offset (shell,
-                                            -image_origin_shell_x,
-                                            -image_origin_shell_y);
+      gimp_display_shell_scroll (shell,
+                                 new_window_x - data->window_x,
+                                 new_window_y - data->window_y);
     }
 
   g_signal_handlers_disconnect_by_func (shell,

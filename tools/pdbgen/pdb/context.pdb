@@ -97,6 +97,32 @@ CODE
     );
 }
 
+sub context_list_paint_methods {
+    $blurb = 'Lists the available paint methods.';
+
+    $help = <<'HELP';
+This procedure lists the names of the available paint methods. Any
+of the results can be used for gimp_context_set_paint_method().
+HELP
+
+    &simon_pdb_misc('2007', '2.4');
+
+    @outargs = (
+        { name => 'paint_methods', type => 'stringarray', void_ret => 1,
+          desc => 'The names of the available paint methods',
+          array => { desc => 'The number of the available paint methods' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
+                                                 &num_paint_methods);
+}
+CODE
+    );
+}
+
 sub context_get_paint_method {
     $blurb = 'Retrieve the currently active paint method.';
 
@@ -158,32 +184,63 @@ CODE
     );
 }
 
-sub context_list_paint_methods {
-    $blurb = 'Lists the available paint methods.';
+sub context_get_stroke_method {
+    $blurb = 'Retrieve the currently active stroke method.';
 
     $help = <<'HELP';
-This procedure lists the names of the available paint methods. Any
-of the results can be used for gimp_context_set_paint_method().
+This procedure returns the currently active stroke method.
 HELP
 
-    &simon_pdb_misc('2007', '2.4');
+    &mitch_pdb_misc('2015', '2.10');
 
     @outargs = (
-        { name => 'paint_methods', type => 'stringarray', void_ret => 1,
-          desc => 'The names of the available paint methods',
-          array => { desc => 'The number of the available paint methods' } }
+	{ name  => 'stroke_method', type  => 'enum GimpStrokeMethod',
+	  desc  => 'The active stroke method' }
     );
 
     %invoke = (
-        code => <<'CODE'
+	code => <<'CODE'
 {
-  paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
-                                                 &num_paint_methods);
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "method", &stroke_method,
+		NULL);
 }
 CODE
     );
 }
 
+sub context_set_stroke_method {
+    $blurb = 'Set the specified stroke method as the active stroke method.';
+
+    $help = <<'HELP';
+This procedure set the specified stroke method as the active stroke
+method. The new method will be used in all subsequent stroke
+operations.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'stroke_method', type => 'enum GimpStrokeMethod',
+          desc => 'The new stroke method' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "method", stroke_method,
+		NULL);
+}
+CODE
+    );
+}
 
 sub context_get_foreground {
     $blurb = "Get the current GIMP foreground color.";
@@ -423,6 +480,438 @@ HELP
     paint_mode = GIMP_SOFTLIGHT_MODE;
 
   gimp_context_set_paint_mode (context, paint_mode);
+}
+CODE
+    );
+}
+
+sub context_get_line_width {
+    $blurb = 'Get the line width setting.';
+
+    $help = <<'HELP';
+This procedure returns the line width setting.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+        { name => 'line_width', type => '0.0 <= float <= 2000.0',
+          desc => 'The line width setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "width", &line_width,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_line_width {
+    $blurb = 'Set the line width setting.';
+
+    $help = <<'HELP';
+This procedure modifies the line width setting for stroking lines.
+
+This setting affects the following procedures:
+gimp_edit_stroke(), gimp_edit_stroke_vectors().
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'line_width', type => '0.0 <= float <= 2000.0',
+          desc => 'The line width setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "width", line_width,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_line_width_unit {
+    $blurb = 'Get the line width unit setting.';
+
+    $help = <<'HELP';
+This procedure returns the line width unit setting.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+        { name => 'line_width_unit', type => 'unit',
+          desc => 'The line width unit setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "unit", &line_width_unit,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_line_width_unit {
+    $blurb = 'Set the line width unit setting.';
+
+    $help = <<'HELP';
+This procedure modifies the line width unit setting for stroking lines.
+
+This setting affects the following procedures:
+gimp_edit_stroke(), gimp_edit_stroke_vectors().
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'line_width_unit', type => 'unit',
+          desc => 'The line width setting unit' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "unit", line_width_unit,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_line_cap_style {
+    $blurb = 'Get the line cap style setting.';
+
+    $help = <<'HELP';
+This procedure returns the line cap style setting.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+        { name => 'cap_style', type => 'enum GimpCapStyle',
+          desc => 'The line cap style setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "cap-style", &cap_style,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_line_cap_style {
+    $blurb = 'Set the line cap style setting.';
+
+    $help = <<'HELP';
+This procedure modifies the line cap style setting for stroking lines.
+
+This setting affects the following procedures:
+gimp_edit_stroke(), gimp_edit_stroke_vectors().
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'cap_style', type => 'enum GimpCapStyle',
+          desc => 'The line cap style setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "cap-style", cap_style,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_line_join_style {
+    $blurb = 'Get the line join style setting.';
+
+    $help = <<'HELP';
+This procedure returns the line join style setting.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+        { name => 'join_style', type => 'enum GimpJoinStyle',
+          desc => 'The line join style setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "join-style", &join_style,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_line_join_style {
+    $blurb = 'Set the line join style setting.';
+
+    $help = <<'HELP';
+This procedure modifies the line join style setting for stroking lines.
+
+This setting affects the following procedures:
+gimp_edit_stroke(), gimp_edit_stroke_vectors().
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'join_style', type => 'enum GimpJoinStyle',
+          desc => 'The line join style setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "join-style", join_style,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_line_miter_limit {
+    $blurb = 'Get the line miter limit setting.';
+
+    $help = <<'HELP';
+This procedure returns the line miter limit setting.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+        { name => 'miter_limit', type => '0.0 <= float <= 100.0',
+          desc => 'The line miter limit setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "miter-limit", &miter_limit,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_line_miter_limit {
+    $blurb = 'Set the line miter limit setting.';
+
+    $help = <<'HELP';
+This procedure modifies the line miter limit setting for stroking lines.
+
+A mitered join is converted to a bevelled join if the miter would
+extend to a distance of more than (miter-limit * line-width) from the
+actual join point.
+
+This setting affects the following procedures:
+gimp_edit_stroke(), gimp_edit_stroke_vectors().
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'miter_limit', type => '0.0 <= float <= 100.0',
+          desc => 'The line miter limit setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "miter-limit", miter_limit,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_line_dash_offset {
+    $blurb = 'Get the line dash offset setting.';
+
+    $help = <<'HELP';
+This procedure returns the line dash offset setting.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+        { name => 'dash_offset', type => '0.0 <= float <= 2000.0',
+          desc => 'The line dash offset setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "dash-offset", &dash_offset,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_line_dash_offset {
+    $blurb = 'Set the line dash offset setting.';
+
+    $help = <<'HELP';
+This procedure modifies the line dash offset setting for stroking lines.
+
+This setting affects the following procedures:
+gimp_edit_stroke(), gimp_edit_stroke_vectors().
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'dash_offset', type => '0.0 <= float <= 100.0',
+          desc => 'The line dash offset setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "dash-offset", dash_offset,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_line_dash_pattern {
+    $blurb = 'Get the line dash pattern setting.';
+
+    $help = <<'HELP';
+This procedure returns the line dash pattern setting.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+        { name => 'dashes', type => 'floatarray', void_ret => 1,
+          desc => 'The line dash pattern setting',
+          array => { desc => 'The number of dashes in the dash_pattern array' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  GArray *pattern = gimp_stroke_options_get_dash_info (options);
+
+  dashes = gimp_dash_pattern_to_double_array (pattern, &num_dashes);
+}
+CODE
+    );
+}
+
+sub context_set_line_dash_pattern {
+    $blurb = 'Set the line dash pattern setting.';
+
+    $help = <<'HELP';
+This procedure modifies the line dash pattern setting for stroking lines.
+
+The unit of the dash pattern segments is the actual line width used
+for the stroke opertation, in other words a segment length of 1.0
+results in a square segment shape (or gap shape).
+
+This setting affects the following procedures:
+gimp_edit_stroke(), gimp_edit_stroke_vectors().
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'dashes', type => 'floatarray',
+          desc => 'The line dash pattern setting',
+          array => { desc => 'The number of dashes in the dash_pattern array' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  GArray *pattern = NULL;
+
+  if (num_dashes > 0)
+    {
+      pattern = gimp_dash_pattern_from_double_array (num_dashes, dashes);
+
+      if (! pattern)
+        success = FALSE;
+    }
+
+  if (success)
+    gimp_stroke_options_take_dash_pattern (options, GIMP_DASH_CUSTOM, pattern);
 }
 CODE
     );
@@ -1295,7 +1784,7 @@ values which give the appearance of a sharper, less pixelized edge.
 This should be set as TRUE most of the time unless a binary-only
 selection is wanted.
 
-This settings affects the following procedures:
+This setting affects the following procedures:
 gimp_image_select_color(), gimp_image_select_contiguous_color(),
 gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
 gimp_image_select_polygon(), gimp_image_select_item().
@@ -2418,7 +2907,9 @@ CODE
 
 @headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
+              "core/gimpdashpattern.h"
               "core/gimpdatafactory.h"
+              "core/gimpstrokeoptions.h"
               "paint/gimppaintoptions.h"
               "libgimpconfig/gimpconfig.h"
               "plug-in/gimpplugin.h"
@@ -2430,12 +2921,20 @@ CODE
 @procs = qw(context_push context_pop context_set_defaults
             context_list_paint_methods
             context_get_paint_method context_set_paint_method
+            context_get_stroke_method context_set_stroke_method
             context_get_foreground context_set_foreground
             context_get_background context_set_background
             context_set_default_colors
             context_swap_colors
             context_get_opacity context_set_opacity
             context_get_paint_mode context_set_paint_mode
+            context_get_line_width context_set_line_width
+            context_get_line_width_unit context_set_line_width_unit
+            context_get_line_cap_style context_set_line_cap_style
+            context_get_line_join_style context_set_line_join_style
+            context_get_line_miter_limit context_set_line_miter_limit
+            context_get_line_dash_offset context_set_line_dash_offset
+            context_get_line_dash_pattern context_set_line_dash_pattern
             context_get_brush context_set_brush
             context_get_brush_size
             context_set_brush_size context_set_brush_default_size

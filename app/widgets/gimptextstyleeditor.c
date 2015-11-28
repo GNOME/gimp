@@ -41,6 +41,7 @@
 #include "gimptextbuffer.h"
 #include "gimptextstyleeditor.h"
 #include "gimptexttag.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -247,6 +248,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   editor->color_button = gimp_color_panel_new (_("Change color of selected text"),
                                                &color,
                                                GIMP_COLOR_AREA_FLAT, 20, 20);
+  gimp_widget_set_fully_opaque (editor->color_button, TRUE);
 
   gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->color_button,
                     FALSE, FALSE, 0);

@@ -92,7 +92,8 @@ static void       gimp_text_layer_convert_type   (GimpDrawable      *drawable,
                                                   gint               layer_dither_type,
                                                   gint               mask_dither_type,
                                                   gboolean           convert_profile,
-                                                  gboolean           push_undo);
+                                                  gboolean           push_undo,
+                                                  GimpProgress      *progress);
 static void       gimp_text_layer_set_buffer     (GimpDrawable      *drawable,
                                                   gboolean           push_undo,
                                                   const gchar       *undo_desc,
@@ -320,7 +321,8 @@ gimp_text_layer_convert_type (GimpDrawable      *drawable,
                               gint               layer_dither_type,
                               gint               mask_dither_type,
                               gboolean           convert_profile,
-                              gboolean           push_undo)
+                              gboolean           push_undo,
+                              GimpProgress      *progress)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
@@ -334,7 +336,8 @@ gimp_text_layer_convert_type (GimpDrawable      *drawable,
                                                         layer_dither_type,
                                                         mask_dither_type,
                                                         convert_profile,
-                                                        push_undo);
+                                                        push_undo,
+                                                        progress);
     }
   else
     {

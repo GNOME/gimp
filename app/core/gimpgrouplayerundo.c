@@ -129,7 +129,7 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
                                     group_layer_undo->prev_type,
                                     group_layer_undo->prev_precision,
                                     0, 0, FALSE,
-                                    FALSE);
+                                    FALSE, NULL);
 
         group_layer_undo->prev_type      = type;
         group_layer_undo->prev_precision = precision;

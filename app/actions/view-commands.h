@@ -28,6 +28,8 @@ void   view_zoom_fit_in_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 void   view_zoom_fill_cmd_callback             (GtkAction *action,
                                                 gpointer   data);
+void   view_zoom_selection_cmd_callback        (GtkAction *action,
+                                                gpointer   data);
 void   view_zoom_revert_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 void   view_zoom_cmd_callback                  (GtkAction *action,
@@ -46,6 +48,11 @@ void   view_scroll_horizontal_cmd_callback     (GtkAction *action,
                                                 gpointer   data);
 void   view_scroll_vertical_cmd_callback       (GtkAction *action,
                                                 gint       value,
+                                                gpointer   data);
+
+void   view_flip_horizontally_cmd_callback     (GtkAction *action,
+                                                gpointer   data);
+void   view_flip_vertically_cmd_callback       (GtkAction *action,
                                                 gpointer   data);
 
 void   view_rotate_absolute_cmd_callback       (GtkAction *action,

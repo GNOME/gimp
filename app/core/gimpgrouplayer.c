@@ -144,7 +144,8 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
                                                       gint               layer_dither_type,
                                                       gint               mask_dither_type,
                                                       gboolean           convert_profile,
-                                                      gboolean           push_undo);
+                                                      gboolean           push_undo,
+                                                      GimpProgress      *progress);
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
@@ -883,7 +884,8 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                gint               layer_dither_type,
                                gint               mask_dither_type,
                                gboolean           convert_profile,
-                               gboolean           push_undo)
+                               gboolean           push_undo,
+                               GimpProgress      *progress)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
   GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
@@ -927,7 +929,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                   GIMP_GRAY, new_precision,
                                   layer_dither_type, mask_dither_type,
                                   convert_profile,
-                                  push_undo);
+                                  push_undo, progress);
     }
 }
 

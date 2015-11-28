@@ -34,6 +34,24 @@
 /*  public functions  */
 
 void
+gimp_display_shell_flip (GimpDisplayShell *shell,
+                         gboolean          flip_horizontally,
+                         gboolean          flip_vertically)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (flip_horizontally != shell->flip_horizontally ||
+      flip_vertically   != shell->flip_vertically)
+    {
+      shell->flip_horizontally = flip_horizontally ? TRUE : FALSE;
+      shell->flip_vertically   = flip_vertically   ? TRUE : FALSE;
+
+      gimp_display_shell_rotated (shell);
+      gimp_display_shell_expose_full (shell);
+    }
+}
+
+void
 gimp_display_shell_rotate (GimpDisplayShell *shell,
                            gdouble           delta)
 {
@@ -119,7 +137,10 @@ gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell)
   g_free (shell->rotate_transform);
   g_free (shell->rotate_untransform);
 
-  if (shell->rotate_angle != 0.0 && gimp_display_get_image (shell->display))
+  if ((shell->rotate_angle != 0.0 ||
+       shell->flip_horizontally   ||
+       shell->flip_vertically) &&
+      gimp_display_get_image (shell->display))
     {
       gint    image_width, image_height;
       gdouble cx, cy;
@@ -134,8 +155,17 @@ gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell)
       cy = -shell->offset_y + image_height / 2;
 
       cairo_matrix_init_translate (shell->rotate_transform, cx, cy);
-      cairo_matrix_rotate (shell->rotate_transform,
-                           shell->rotate_angle / 180.0 * G_PI);
+
+      if (shell->rotate_angle != 0.0)
+        cairo_matrix_rotate (shell->rotate_transform,
+                             shell->rotate_angle / 180.0 * G_PI);
+
+      if (shell->flip_horizontally)
+        cairo_matrix_scale (shell->rotate_transform, -1.0, 1.0);
+
+      if (shell->flip_vertically)
+        cairo_matrix_scale (shell->rotate_transform, 1.0, -1.0);
+
       cairo_matrix_translate (shell->rotate_transform, -cx, -cy);
 
       *shell->rotate_untransform = *shell->rotate_transform;

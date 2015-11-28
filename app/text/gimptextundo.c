@@ -274,7 +274,7 @@ gimp_text_undo_pop (GimpUndo            *undo,
                                     gimp_babl_format_get_base_type (text_undo->format),
                                     gimp_babl_format_get_precision (text_undo->format),
                                     0, 0, FALSE,
-                                    FALSE);
+                                    FALSE, NULL);
         text_undo->format = format;
       }
       break;
