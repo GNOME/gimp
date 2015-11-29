@@ -44,6 +44,7 @@
 #include "core/gimppickable.h"
 #include "core/gimpsettings.h"
 
+#include "widgets/gimpbuffersourcebox.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppickablebutton.h"
 #include "widgets/gimppropgui.h"
@@ -55,6 +56,15 @@
 #include "gimpoperationtool.h"
 
 #include "gimp-intl.h"
+
+
+typedef struct _AuxInput AuxInput;
+
+struct _AuxInput
+{
+  GeglNode  *node;
+  GtkWidget *box;
+};
 
 
 /*  local function prototypes  */
@@ -91,6 +101,13 @@ static void        gimp_operation_tool_color_picked    (GimpImageMapTool  *im_to
 
 static void        gimp_operation_tool_sync_op         (GimpOperationTool *op_tool,
                                                         GimpDrawable      *drawable);
+
+static AuxInput *  gimp_operation_tool_aux_input_new   (GimpOperationTool *tool,
+                                                        GeglNode          *operation,
+                                                        const gchar       *input_pad,
+                                                        const gchar       *label);
+static void        gimp_operation_tool_aux_input_clear (AuxInput          *input);
+static void        gimp_operation_tool_aux_input_free  (AuxInput          *input);
 
 
 G_DEFINE_TYPE (GimpOperationTool, gimp_operation_tool,
@@ -168,17 +185,9 @@ gimp_operation_tool_finalize (GObject *object)
       tool->icon_name = NULL;
     }
 
-  if (tool->aux_input)
-    {
-      g_object_unref (tool->aux_input);
-      tool->aux_input = NULL;
-    }
-
-  if (tool->aux2_input)
-    {
-      g_object_unref (tool->aux2_input);
-      tool->aux2_input = NULL;
-    }
+  g_list_free_full (tool->aux_inputs,
+                    (GDestroyNotify) gimp_operation_tool_aux_input_free);
+  tool->aux_inputs = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -218,12 +227,7 @@ gimp_operation_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      if (op_tool->aux_input_button)
-        gimp_pickable_button_set_pickable (GIMP_PICKABLE_BUTTON (op_tool->aux_input_button),
-                                           NULL);
-      if (op_tool->aux2_input_button)
-        gimp_pickable_button_set_pickable (GIMP_PICKABLE_BUTTON (op_tool->aux2_input_button),
-                                           NULL);
+      g_list_foreach (op_tool->aux_inputs, (GFunc) aux_input_clear, NULL);
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
@@ -270,6 +274,7 @@ gimp_operation_tool_dialog (GimpImageMapTool *im_tool)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
   GtkWidget         *main_vbox;
+  GList             *list;
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
 
@@ -279,18 +284,13 @@ gimp_operation_tool_dialog (GimpImageMapTool *im_tool)
                       FALSE, FALSE, 0);
   gtk_widget_show (tool->options_box);
 
-  if (tool->aux_input_box)
+  for (list = tool->aux_inputs; list; list = g_list_next (list))
     {
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_box,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (tool->aux_input_box);
-    }
+      AuxInput *input = list->data;
 
-  if (tool->aux2_input_box)
-    {
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux2_input_box,
+      gtk_box_pack_start (GTK_BOX (tool->options_box), input->box,
                           FALSE, FALSE, 0);
-      gtk_widget_show (tool->aux2_input_box);
+      gtk_widget_show (input->box);
     }
 
   if (tool->options_gui)
@@ -555,23 +555,66 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
   g_free (pspecs);
 }
 
-static gboolean
-gimp_operation_tool_aux_notify (GimpPickableButton *button,
-                                const GParamSpec   *pspec,
-                                GeglNode           *aux_input)
+
+/*  aux input utility functions  */
+
+static void
+aux_input_notify (GimpBufferSourceBox *box,
+                  const GParamSpec    *pspec,
+                  GimpOperationTool   *tool)
 {
-  GimpPickable *pickable = gimp_pickable_button_get_pickable (button);
-  GeglBuffer   *buffer   = NULL;
-
-  if (pickable)
-    buffer = gimp_pickable_get_buffer (pickable);
-
-  gegl_node_set (aux_input,
-                 "buffer", buffer,
-                 NULL);
-
-  return TRUE;
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }
+
+static AuxInput *
+aux_input_new (GimpOperationTool *tool,
+               GeglNode          *operation,
+               const gchar       *input_pad,
+               const gchar       *label)
+{
+  AuxInput    *input = g_slice_new (AuxInput);
+  GimpContext *context;
+
+  input->node = gegl_node_new_child (NULL,
+                                     "operation", "gegl:buffer-source",
+                                     NULL);
+
+  gegl_node_connect_to (input->node, "output",
+                        operation,   input_pad);
+
+  context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
+
+  input->box = gimp_buffer_source_box_new (context, input->node, label);
+
+  g_signal_connect (input->box, "notify::pickable",
+                    G_CALLBACK (aux_input_notify),
+                    tool);
+  g_signal_connect (input->box, "notify::enabled",
+                    G_CALLBACK (aux_input_notify),
+                    tool);
+
+  return input;
+}
+
+static void
+aux_input_clear (AuxInput *input)
+{
+  g_object_set (input->box,
+                "pickable", NULL,
+                NULL);
+}
+
+static void
+aux_input_free (AuxInput *input)
+{
+  g_object_unref (input->node);
+  gtk_widget_destroy (input->box);
+
+  g_slice_free (AuxInput, input);
+}
+
+
+/*  public functions  */
 
 void
 gimp_operation_tool_set_operation (GimpOperationTool *tool,
@@ -580,6 +623,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *icon_name)
 {
   GimpImageMapTool *im_tool;
+  gint              aux;
 
   g_return_if_fail (GIMP_IS_OPERATION_TOOL (tool));
   g_return_if_fail (operation != NULL);
@@ -599,17 +643,8 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   tool->undo_desc = g_strdup (undo_desc);
   tool->icon_name = g_strdup (icon_name);
 
-  if (tool->aux_input)
-    {
-      g_object_unref (tool->aux_input);
-      tool->aux_input = NULL;
-    }
-
-  if (tool->aux2_input)
-    {
-      g_object_unref (tool->aux2_input);
-      tool->aux2_input = NULL;
-    }
+  g_list_free_full (tool->aux_inputs, (GDestroyNotify) aux_input_free);
+  tool->aux_inputs = NULL;
 
   gimp_image_map_tool_get_operation (im_tool);
 
@@ -617,20 +652,6 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = "yes"; /* XXX hack */
   else
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
-
-  if (tool->aux_input_box)
-    {
-      gtk_widget_destroy (tool->aux_input_box);
-      tool->aux_input_button = NULL;
-      tool->aux_input_box    = NULL;
-    }
-
-  if (tool->aux2_input_box)
-    {
-      gtk_widget_destroy (tool->aux2_input_box);
-      tool->aux2_input_button = NULL;
-      tool->aux2_input_box    = NULL;
-    }
 
   if (tool->options_gui)
     {
@@ -644,88 +665,41 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
         }
     }
 
-  if (gegl_node_has_pad (im_tool->operation, "aux"))
+  for (aux = 1; ; aux++)
     {
-      GimpContext *context;
-      GtkWidget   *label;
+      gchar pad[32];
+      gchar label[32];
 
-      tool->aux_input = gegl_node_new_child (NULL,
-                                             "operation", "gegl:buffer-source",
-                                             NULL);
-
-      gegl_node_connect_to (tool->aux_input,    "output",
-                            im_tool->operation, "aux");
-
-      context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
-
-      tool->aux_input_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-
-      label = gtk_label_new_with_mnemonic (_("_Aux Input"));
-      gtk_box_pack_start (GTK_BOX (tool->aux_input_box), label,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      tool->aux_input_button =
-        gimp_pickable_button_new (context, GIMP_VIEW_SIZE_LARGE, 1);
-      gtk_box_pack_start (GTK_BOX (tool->aux_input_box),
-                          tool->aux_input_button, FALSE, FALSE, 0);
-      gtk_widget_show (tool->aux_input_button);
-
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-                                     tool->aux_input_button);
-
-      if (tool->options_box)
+      if (aux == 1)
         {
-          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_box,
-                              FALSE, FALSE, 0);
-          gtk_widget_show (tool->aux_input_box);
+          g_snprintf (pad,   sizeof (pad),   "aux");
+          g_snprintf (label, sizeof (label), _("Aux Input"));
+        }
+      else
+        {
+          g_snprintf (pad,   sizeof (pad),   "aux%d", aux);
+          g_snprintf (label, sizeof (label), _("Aux%d Input"), aux);
         }
 
-      g_signal_connect_object (tool->aux_input_button, "notify::pickable",
-                               G_CALLBACK (gimp_operation_tool_aux_notify),
-                               tool->aux_input, 0);
-    }
-
-  if (gegl_node_has_pad (im_tool->operation, "aux2"))
-    {
-      GimpContext *context;
-      GtkWidget   *label;
-
-      tool->aux2_input = gegl_node_new_child (NULL,
-                                             "operation", "gegl:buffer-source",
-                                             NULL);
-
-      gegl_node_connect_to (tool->aux2_input,   "output",
-                            im_tool->operation, "aux2");
-
-      context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
-
-      tool->aux2_input_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-
-      label = gtk_label_new_with_mnemonic (_("_Aux2 Input"));
-      gtk_box_pack_start (GTK_BOX (tool->aux2_input_box), label,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      tool->aux2_input_button =
-        gimp_pickable_button_new (context, GIMP_VIEW_SIZE_LARGE, 1);
-      gtk_box_pack_start (GTK_BOX (tool->aux2_input_box),
-                          tool->aux2_input_button, FALSE, FALSE, 0);
-      gtk_widget_show (tool->aux2_input_button);
-
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-                                     tool->aux2_input_button);
-
-      if (tool->options_box)
+      if (gegl_node_has_pad (im_tool->operation, pad))
         {
-          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux2_input_box,
-                              FALSE, FALSE, 0);
-          gtk_widget_show (tool->aux2_input_box);
-        }
+          AuxInput *input = aux_input_new (tool,
+                                           im_tool->operation, pad,
+                                           label);
 
-      g_signal_connect_object (tool->aux2_input_button, "notify::pickable",
-                               G_CALLBACK (gimp_operation_tool_aux_notify),
-                               tool->aux2_input, 0);
+          tool->aux_inputs = g_list_append (tool->aux_inputs, input);
+
+          if (tool->options_box)
+            {
+              gtk_box_pack_start (GTK_BOX (tool->options_box), input->box,
+                                  FALSE, FALSE, 0);
+              gtk_widget_show (input->box);
+            }
+        }
+      else
+        {
+          break;
+        }
     }
 
   if (im_tool->config)

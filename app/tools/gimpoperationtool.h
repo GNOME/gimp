@@ -41,16 +41,11 @@ struct _GimpOperationTool
   gchar            *undo_desc;
   gchar            *icon_name;
 
-  GeglNode         *aux_input;
-  GeglNode         *aux2_input;
+  GList            *aux_inputs;
 
   /* dialog */
   GtkWidget        *options_box;
   GtkWidget        *options_gui;
-  GtkWidget        *aux_input_box;
-  GtkWidget        *aux_input_button;
-  GtkWidget        *aux2_input_box;
-  GtkWidget        *aux2_input_button;
 };
 
 struct _GimpOperationToolClass
