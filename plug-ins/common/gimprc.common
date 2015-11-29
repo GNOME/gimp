@@ -3,7 +3,6 @@ animation_optimize_RC = animation-optimize.rc.o
 animation_play_RC = animation-play.rc.o
 blinds_RC = blinds.rc.o
 blur_RC = blur.rc.o
-blur_gauss_selective_RC = blur-gauss-selective.rc.o
 border_average_RC = border-average.rc.o
 cartoon_RC = cartoon.rc.o
 checkerboard_RC = checkerboard.rc.o

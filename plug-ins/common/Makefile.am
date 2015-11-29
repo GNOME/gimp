@@ -49,7 +49,6 @@ libexec_PROGRAMS = \
 	animation-play \
 	blinds \
 	blur \
-	blur-gauss-selective \
 	border-average \
 	cartoon \
 	checkerboard \
@@ -250,25 +249,6 @@ blur_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(blur_RC)
-
-blur_gauss_selective_CFLAGS = $(MMX_EXTRA_CFLAGS)
-
-blur_gauss_selective_SOURCES = \
-	blur-gauss-selective.c
-
-blur_gauss_selective_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(blur_gauss_selective_RC)
 
 border_average_SOURCES = \
 	border-average.c

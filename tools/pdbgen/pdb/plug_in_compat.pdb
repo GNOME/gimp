@@ -3543,6 +3543,60 @@ CODE
     );
 }
 
+sub plug_in_sel_gauss {
+    $blurb = 'Blur neighboring pixels, but only in low-contrast areas';
+
+    $help = <<'HELP';
+This filter functions similar to the regular gaussian blur filter
+except that neighbouring pixels that differ more than the given
+maxdelta parameter will not be blended with. This way with the correct
+parameters, an image can be smoothed out without losing
+details. However, this filter can be rather slow.
+HELP
+
+    &std_pdb_compat('gegl:gaussian-blur-selective');
+    $date = '2099';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'radius', type => '0.0 < float',
+          desc => 'Radius of gaussian blur (in pixels)' },
+        { name => 'max_delta', type => '0 <= int32 <= 255',
+          desc => 'Maximum delta' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",   "gegl:gaussian-blur-selective",
+                                  "blur-radius", radius,
+                                  "max-delta",   (gdouble) max_delta / 255.0,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Selective Gaussian Blur"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_semiflatten {
     $blurb = 'Replace partial transparency with the current background color';
 
@@ -4875,6 +4929,7 @@ CODE
             plug_in_rgb_noise
             plug_in_rotate
             plug_in_noisify
+            plug_in_sel_gauss
             plug_in_semiflatten
             plug_in_shift
             plug_in_sinus
