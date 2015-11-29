@@ -227,7 +227,8 @@ gimp_operation_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      g_list_foreach (op_tool->aux_inputs, (GFunc) aux_input_clear, NULL);
+      g_list_foreach (op_tool->aux_inputs,
+                      (GFunc) gimp_operation_tool_aux_input_clear, NULL);
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
@@ -559,18 +560,18 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
 /*  aux input utility functions  */
 
 static void
-aux_input_notify (GimpBufferSourceBox *box,
-                  const GParamSpec    *pspec,
-                  GimpOperationTool   *tool)
+gimp_operation_tool_aux_input_notify (GimpBufferSourceBox *box,
+                                      const GParamSpec    *pspec,
+                                      GimpOperationTool   *tool)
 {
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }
 
 static AuxInput *
-aux_input_new (GimpOperationTool *tool,
-               GeglNode          *operation,
-               const gchar       *input_pad,
-               const gchar       *label)
+gimp_operation_tool_aux_input_new (GimpOperationTool *tool,
+                                   GeglNode          *operation,
+                                   const gchar       *input_pad,
+                                   const gchar       *label)
 {
   AuxInput    *input = g_slice_new (AuxInput);
   GimpContext *context;
@@ -587,17 +588,17 @@ aux_input_new (GimpOperationTool *tool,
   input->box = gimp_buffer_source_box_new (context, input->node, label);
 
   g_signal_connect (input->box, "notify::pickable",
-                    G_CALLBACK (aux_input_notify),
+                    G_CALLBACK (gimp_operation_tool_aux_input_notify),
                     tool);
   g_signal_connect (input->box, "notify::enabled",
-                    G_CALLBACK (aux_input_notify),
+                    G_CALLBACK (gimp_operation_tool_aux_input_notify),
                     tool);
 
   return input;
 }
 
 static void
-aux_input_clear (AuxInput *input)
+gimp_operation_tool_aux_input_clear (AuxInput *input)
 {
   g_object_set (input->box,
                 "pickable", NULL,
@@ -605,7 +606,7 @@ aux_input_clear (AuxInput *input)
 }
 
 static void
-aux_input_free (AuxInput *input)
+gimp_operation_tool_aux_input_free (AuxInput *input)
 {
   g_object_unref (input->node);
   gtk_widget_destroy (input->box);
@@ -643,7 +644,8 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   tool->undo_desc = g_strdup (undo_desc);
   tool->icon_name = g_strdup (icon_name);
 
-  g_list_free_full (tool->aux_inputs, (GDestroyNotify) aux_input_free);
+  g_list_free_full (tool->aux_inputs,
+                    (GDestroyNotify) gimp_operation_tool_aux_input_free);
   tool->aux_inputs = NULL;
 
   gimp_image_map_tool_get_operation (im_tool);
@@ -683,9 +685,11 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
       if (gegl_node_has_pad (im_tool->operation, pad))
         {
-          AuxInput *input = aux_input_new (tool,
-                                           im_tool->operation, pad,
-                                           label);
+          AuxInput *input;
+
+          input = gimp_operation_tool_aux_input_new (tool,
+                                                     im_tool->operation, pad,
+                                                     label);
 
           tool->aux_inputs = g_list_append (tool->aux_inputs, input);
 
