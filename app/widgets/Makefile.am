@@ -38,6 +38,8 @@ libappwidgets_a_sources = \
 	gimpbrushfactoryview.h		\
 	gimpbrushselect.c		\
 	gimpbrushselect.h		\
+	gimpbuffersourcebox.c		\
+	gimpbuffersourcebox.h		\
 	gimpbufferview.c		\
 	gimpbufferview.h		\
 	gimpcairo-wilber.c		\

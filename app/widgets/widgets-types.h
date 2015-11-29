@@ -161,6 +161,7 @@ typedef struct _GimpPdbDialog                GimpPdbDialog;
 typedef struct _GimpActionEditor             GimpActionEditor;
 typedef struct _GimpActionView               GimpActionView;
 typedef struct _GimpBlobEditor               GimpBlobEditor;
+typedef struct _GimpBufferSourceBox          GimpBufferSourceBox;
 typedef struct _GimpCircle                   GimpCircle;
 typedef struct _GimpColorBar                 GimpColorBar;
 typedef struct _GimpColorDisplayEditor       GimpColorDisplayEditor;
