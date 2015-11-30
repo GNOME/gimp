@@ -441,6 +441,7 @@ app/widgets/gimpactionview.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbrushselect.c
+app/widgets/gimpbuffersourcebox.c
 app/widgets/gimpbufferview.c
 app/widgets/gimpchanneltreeview.c
 app/widgets/gimpclipboard.c

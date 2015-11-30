@@ -624,6 +624,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *icon_name)
 {
   GimpImageMapTool *im_tool;
+  GtkSizeGroup     *size_group = NULL;
   gint              aux;
 
   g_return_if_fail (GIMP_IS_OPERATION_TOOL (tool));
@@ -685,13 +686,20 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
       if (gegl_node_has_pad (im_tool->operation, pad))
         {
-          AuxInput *input;
+          AuxInput  *input;
+          GtkWidget *toggle;
+
+          if (! size_group)
+            size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
           input = gimp_operation_tool_aux_input_new (tool,
                                                      im_tool->operation, pad,
                                                      label);
 
           tool->aux_inputs = g_list_append (tool->aux_inputs, input);
+
+          toggle = gimp_buffer_source_box_get_toggle (GIMP_BUFFER_SOURCE_BOX (input->box));
+          gtk_size_group_add_widget (size_group, toggle);
 
           if (tool->options_box)
             {
@@ -705,6 +713,9 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
           break;
         }
     }
+
+  if (size_group)
+    g_object_unref (size_group);
 
   if (im_tool->config)
     {

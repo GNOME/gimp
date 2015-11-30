@@ -35,13 +35,15 @@
 #include "gimpbuffersourcebox.h"
 #include "gimppickablebutton.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
   PROP_0,
   PROP_CONTEXT,
   PROP_SOURCE_NODE,
-  PROP_LABEL,
+  PROP_NAME,
   PROP_PICKABLE,
   PROP_ENABLED
 };
@@ -50,12 +52,13 @@ struct _GimpBufferSourceBoxPrivate
 {
   GimpContext  *context;
   GeglNode     *source_node;
-  gchar        *label;
+  gchar        *name;
   GimpPickable *pickable;
   gboolean      enabled;
 
-  GtkWidget    *button;
   GtkWidget    *toggle;
+  GtkWidget    *button;
+  GtkWidget    *label;
 };
 
 
@@ -105,8 +108,8 @@ gimp_buffer_source_box_class_init (GimpBufferSourceBoxClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_LABEL,
-                                   g_param_spec_string ("label", NULL, NULL,
+  g_object_class_install_property (object_class, PROP_NAME,
+                                   g_param_spec_string ("name", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
@@ -135,17 +138,23 @@ gimp_buffer_source_box_init (GimpBufferSourceBox *box)
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_set_spacing (GTK_BOX (box), 2);
 }
 
 static void
 gimp_buffer_source_box_constructed (GObject *object)
 {
   GimpBufferSourceBox *box = GIMP_BUFFER_SOURCE_BOX (object);
+  GtkWidget           *alignment;
 
-  box->priv->toggle = gtk_check_button_new_with_mnemonic (box->priv->label);
+  alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (box), alignment, FALSE, FALSE, 0);
+  gtk_widget_show (alignment);
+
+  box->priv->toggle = gtk_check_button_new_with_mnemonic (box->priv->name);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (box->priv->toggle),
                                 box->priv->enabled);
-  gtk_box_pack_start (GTK_BOX (box), box->priv->toggle, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (alignment), box->priv->toggle);
   gtk_widget_show (box->priv->toggle);
 
   g_signal_connect_object (box->priv->toggle, "toggled",
@@ -158,6 +167,12 @@ gimp_buffer_source_box_constructed (GObject *object)
                                      box->priv->pickable);
   gtk_box_pack_start (GTK_BOX (box), box->priv->button, FALSE, FALSE, 0);
   gtk_widget_show (box->priv->button);
+
+  box->priv->label = gtk_label_new (_("(none)"));
+  gtk_misc_set_alignment (GTK_MISC (box->priv->label), 0.0, 0.5);
+  gtk_label_set_ellipsize (GTK_LABEL (box->priv->label), PANGO_ELLIPSIZE_END);
+  gtk_box_pack_start (GTK_BOX (box), box->priv->label, TRUE, TRUE, 0);
+  gtk_widget_show (box->priv->label);
 
   g_signal_connect_object (box->priv->button, "notify::pickable",
                            G_CALLBACK (gimp_buffer_source_box_notify_pickable),
@@ -183,10 +198,10 @@ gimp_buffer_source_box_finalize (GObject *object)
       box->priv->source_node = NULL;
     }
 
-  if (box->priv->label)
+  if (box->priv->name)
     {
-      g_free (box->priv->label);
-      box->priv->label = NULL;
+      g_free (box->priv->name);
+      box->priv->name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -210,8 +225,8 @@ gimp_buffer_source_box_set_property (GObject      *object,
       box->priv->source_node = g_value_dup_object (value);
       break;
 
-    case PROP_LABEL:
-      box->priv->label = g_value_dup_string (value);
+    case PROP_NAME:
+      box->priv->name = g_value_dup_string (value);
       break;
 
     case PROP_PICKABLE:
@@ -252,8 +267,8 @@ gimp_buffer_source_box_get_property (GObject    *object,
       g_value_set_object (value, box->priv->source_node);
       break;
 
-    case PROP_LABEL:
-      g_value_set_string (value, box->priv->label);
+    case PROP_NAME:
+      g_value_set_string (value, box->priv->name);
       break;
 
     case PROP_PICKABLE:
@@ -275,9 +290,23 @@ gimp_buffer_source_box_update_node (GimpBufferSourceBox *box)
 {
   GeglBuffer *buffer = NULL;
 
-  if (box->priv->pickable && box->priv->enabled)
+  if (box->priv->pickable)
     {
-      buffer = gimp_pickable_get_buffer (box->priv->pickable);
+      gchar *desc;
+
+      if (box->priv->enabled)
+        {
+          buffer = gimp_pickable_get_buffer (box->priv->pickable);
+        }
+
+      desc = gimp_viewable_get_description (GIMP_VIEWABLE (box->priv->pickable),
+                                            NULL);
+      gtk_label_set_text (GTK_LABEL (box->priv->label), desc);
+      g_free (desc);
+    }
+  else
+    {
+      gtk_label_set_text (GTK_LABEL (box->priv->label), _("(none)"));
     }
 
   gegl_node_set (box->priv->source_node,
@@ -314,15 +343,23 @@ gimp_buffer_source_box_enable_toggled (GtkToggleButton     *button,
 GtkWidget *
 gimp_buffer_source_box_new (GimpContext *context,
                             GeglNode    *source_node,
-                            const gchar *label)
+                            const gchar *name)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GEGL_IS_NODE (source_node), NULL);
-  g_return_val_if_fail (label != NULL, NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
   return g_object_new (GIMP_TYPE_BUFFER_SOURCE_BOX,
                        "context",     context,
                        "source-node", source_node,
-                       "label",       label,
+                       "name",        name,
                        NULL);
+}
+
+GtkWidget *
+gimp_buffer_source_box_get_toggle (GimpBufferSourceBox *box)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER_SOURCE_BOX (box), NULL);
+
+  return box->priv->toggle;
 }
