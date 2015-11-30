@@ -12,10 +12,10 @@ msgstr ""
 "Project-Id-Version: GIMP 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-11-30 22:23+0000\n"
-"PO-Revision-Date: 2015-12-01 00:03+0100\n"
+"POT-Creation-Date: 2015-11-30 23:10+0000\n"
+"PO-Revision-Date: 2015-12-01 00:13+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
-"Language-Team: српски <gnome-sr@googlegroups.org>\n"
+"Language-Team: српски <gnom@prevod.org>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1422,15 +1422,11 @@ msgid "_About"
 msgstr "_О програму"
 
 #: ../app/actions/dialogs-actions.c:275
-#| msgctxt "help-action"
-#| msgid "_Search and Run a Command"
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "Тражење и покретање _наредби"
 
 #: ../app/actions/dialogs-actions.c:276
-#| msgctxt "help-action"
-#| msgid "Search commands by keyword, and run them"
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Претражује наредбе на основу кључних речи и покреће их"
@@ -2676,8 +2672,6 @@ msgid "_Bump Map..."
 msgstr "Исп_упчење..."
 
 #: ../app/actions/filters-actions.c:68
-#| msgctxt "filters-action"
-#| msgid "Color to Gray..."
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "_Боја у сиво..."
@@ -2808,8 +2802,6 @@ msgid "_Gaussian Blur..."
 msgstr "_Гаузијаново замућење..."
 
 #: ../app/actions/filters-actions.c:198
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Селективно Гаузијаново замућење..."
@@ -2845,8 +2837,6 @@ msgid "_Maze..."
 msgstr "_Лавиринт..."
 
 #: ../app/actions/filters-actions.c:233
-#| msgctxt "filters-action"
-#| msgid "Mono Mixer..."
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Моно миксер..."
@@ -2977,8 +2967,6 @@ msgid "_Semi-Flatten..."
 msgstr "П_олу-изравнање..."
 
 #: ../app/actions/filters-actions.c:363
-#| msgctxt "filters-action"
-#| msgid "_Super_nova..."
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Сепија..."
@@ -3704,7 +3692,7 @@ msgstr "Прилагођава резолуцију штампе"
 #: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "_Промена размере слике..."
+msgstr "_Промени размеру слике..."
 
 #: ../app/actions/image-actions.c:123
 msgctxt "image-action"
@@ -3814,85 +3802,61 @@ msgid "Convert the image to indexed colors"
 msgstr "Претвара слику у индексиране боје"
 
 #: ../app/actions/image-actions.c:191
-#| msgctxt "image-convert-action"
-#| msgid "8 bit integer (gamma)"
 msgctxt "image-convert-action"
 msgid "8 bit integer"
 msgstr "8. битни цели број"
 
 #: ../app/actions/image-actions.c:193
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 8 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Претвара податке у слици у 8. битне целобројне вредности"
 
 #: ../app/actions/image-actions.c:197
-#| msgctxt "image-convert-action"
-#| msgid "16 bit integer (gamma)"
 msgctxt "image-convert-action"
 msgid "16 bit integer"
 msgstr "16. битни цели број"
 
 #: ../app/actions/image-actions.c:199
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Претвара податке у слици у 16. битне целобројне вредности"
 
 #: ../app/actions/image-actions.c:203
-#| msgctxt "image-convert-action"
-#| msgid "32 bit integer (gamma)"
 msgctxt "image-convert-action"
 msgid "32 bit integer"
 msgstr "32. битни цели број"
 
 #: ../app/actions/image-actions.c:205
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 32 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Претвара податке у слици у 32. битне целобројне вредности"
 
 #: ../app/actions/image-actions.c:209
-#| msgctxt "image-convert-action"
-#| msgid "16 bit floating point (gamma)"
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
 msgstr "16. битни децимални број"
 
 #: ../app/actions/image-actions.c:211
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit linear floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Претвара податке у слици у 16. битне целобројне вредности"
 
 #: ../app/actions/image-actions.c:215
-#| msgctxt "image-convert-action"
-#| msgid "32 bit floating point (gamma)"
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
 msgstr "32. битни децимални број"
 
 #: ../app/actions/image-actions.c:217
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 32 bit linear floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Претвара податке у слици у 32. битне целобројне вредности"
 
 #: ../app/actions/image-actions.c:221
-#| msgctxt "image-convert-action"
-#| msgid "64 bit floating point (gamma)"
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
 msgstr "64. битни децимални број"
 
 #: ../app/actions/image-actions.c:223
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 64 bit linear floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
 msgstr "Претвара податке у слици у 64. битне целобројне вредности"
@@ -3903,22 +3867,16 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Перцептуална гама (сРГБ)"
 
 #: ../app/actions/image-actions.c:232
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to grayscale"
 msgctxt "image-convert-action"
 msgid "Convert the image to preceptual (sRGB) gamma"
 msgstr "Претвара податке у слици у перцептуалну (сРГБ) гаму"
 
 #: ../app/actions/image-actions.c:236
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "image-convert-action"
 msgid "Linear light"
 msgstr "Линеарно светло"
 
 #: ../app/actions/image-actions.c:238
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 8 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
 msgstr "Претвара податке у слици у линеарно светло"
@@ -4094,7 +4052,7 @@ msgstr "_Провидност"
 #: ../app/actions/layers-actions.c:61
 msgctxt "layers-action"
 msgid "_Transform"
-msgstr "_Преображај"
+msgstr "_Преобрази"
 
 #: ../app/actions/layers-actions.c:63
 msgctxt "layers-action"
@@ -5992,8 +5950,6 @@ msgid "_Zoom"
 msgstr "_Увећање"
 
 #: ../app/actions/view-actions.c:71
-#| msgctxt "view-action"
-#| msgid "_Rotate"
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Извртање и ротација"
@@ -6049,15 +6005,11 @@ msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Прилагођава ниво увећања тако да се користи цео прозор"
 
 #: ../app/actions/view-actions.c:102
-#| msgctxt "image-action"
-#| msgid "_Crop to Selection"
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Уве_ћај на избор"
 
 #: ../app/actions/view-actions.c:103
-#| msgctxt "view-action"
-#| msgid "Adjust the zoom ratio so that the entire window is used"
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr "Прилагођава ниво увећања тако да се користи цео прозор"
@@ -6403,15 +6355,11 @@ msgid "Set a custom zoom factor"
 msgstr "Омогућава да подесите произвољан чинилац увећавања"
 
 #: ../app/actions/view-actions.c:400
-#| msgctxt "drawable-action"
-#| msgid "Flip _Horizontally"
 msgctxt "view-action"
 msgid "Flip Horizontally"
 msgstr "Изврни хоризонтално"
 
 #: ../app/actions/view-actions.c:406
-#| msgctxt "drawable-action"
-#| msgid "Flip _Vertically"
 msgctxt "view-action"
 msgid "Flip Vertically"
 msgstr "Изврни вертикално"
@@ -6422,8 +6370,6 @@ msgid "_Reset Flip & Rotate"
 msgstr "_Врати извртање и ротацију"
 
 #: ../app/actions/view-actions.c:422
-#| msgctxt "view-action"
-#| msgid "Reset the angle of rotation to 0°"
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "Враћа изврнуту слику на неизврнуту и поставља угао ротације на 0°"
@@ -6565,7 +6511,6 @@ msgstr "(В) "
 
 #: ../app/actions/view-actions.c:924
 #, c-format
-#| msgid "_Rotate (%d°)"
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Извртање %sи ротација (%d°)"
 
@@ -10112,14 +10057,11 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Перцептивна гама (сРГБ)"
 
 #: ../app/dialogs/convert-precision-dialog.c:286
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgid "Linear light"
 msgstr "Линеарно светло"
 
 #: ../app/dialogs/convert-precision-dialog.c:316
 #, c-format
-#| msgid "Convert Image to %s"
 msgid "Converting image to %s"
 msgstr "Претварам слику у %s"
 
@@ -13408,8 +13350,6 @@ msgid "Noisify"
 msgstr "Додавање шума"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3506
-#| msgctxt "undo-type"
-#| msgid "Gaussian Blur"
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Селективно Гаузијаново замућење"
@@ -14499,19 +14439,16 @@ msgid "Click to add control points to all channels"
 msgstr "Кликните да додате тачке управљања на свим каналима"
 
 #: ../app/tools/gimpcurvestool.c:337
-#| msgid "Click to close the curve"
 msgid "Click to locate on curve"
 msgstr "Кликните да би приказали на кривуљи"
 
 #: ../app/tools/gimpcurvestool.c:339
 #, c-format
-#| msgid "Click to add a control point"
 msgid "%s: add control point"
 msgstr "%s: додаје контролну тачку"
 
 #: ../app/tools/gimpcurvestool.c:340
 #, c-format
-#| msgid "Click to add control points to all channels"
 msgid "%s: add control points to all channels"
 msgstr "%s: додаје контролну тачку свим каналима"
 
@@ -15476,13 +15413,11 @@ msgstr "Извезите подешавања за „%s“"
 
 #: ../app/tools/gimpoperationtool.c:679
 #, c-format
-#| msgid "_Aux Input"
 msgid "Aux Input"
 msgstr "Аукс улаз"
 
 #: ../app/tools/gimpoperationtool.c:684
 #, c-format
-#| msgid "_Aux Input"
 msgid "Aux%d Input"
 msgstr "Аукс%d улаз"
 
@@ -16214,7 +16149,6 @@ msgstr "Вођице"
 
 #: ../app/tools/gimptransformoptions.c:455
 #, c-format
-#| msgid "15 degrees  (%s)"
 msgid "15 degrees (%s)"
 msgstr "15 степени (%s)"
 
@@ -16224,7 +16158,6 @@ msgstr "Ограничава кораке ротације на 15 степен�
 
 #: ../app/tools/gimptransformoptions.c:461
 #, c-format
-#| msgid "Keep aspect  (%s)"
 msgid "Keep aspect (%s)"
 msgstr "Задржи однос (%s)"
 
@@ -16234,7 +16167,6 @@ msgstr "Задржава изворну размеру слике"
 
 #: ../app/tools/gimptransformoptions.c:480
 #, c-format
-#| msgid "Constrain  (%s)"
 msgid "Constrain (%s)"
 msgstr "Ограничење (%s)"
 
@@ -16244,31 +16176,26 @@ msgstr "Премести"
 
 #: ../app/tools/gimptransformoptions.c:482
 #, c-format
-#| msgid "Constrain movement to 45 degree angles from center  (%s)"
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Ограничи померање на угао од 45 степени од центра (%s)"
 
 #: ../app/tools/gimptransformoptions.c:484
 #, c-format
-#| msgid "Maintain aspect ratio when scaling  (%s)"
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Очувај размеру приликом промене величине (%s)"
 
 #: ../app/tools/gimptransformoptions.c:486
 #, c-format
-#| msgid "Constrain rotation to 15 degree increments  (%s)"
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Ограничи окретање на помаке од по 15 степени (%s)"
 
 #: ../app/tools/gimptransformoptions.c:488
 #, c-format
-#| msgid "Shear along edge direction only  (%s)"
 msgid "Shear along edge direction only (%s)"
 msgstr "Острижи само уз смер ивице (%s)"
 
 #: ../app/tools/gimptransformoptions.c:490
 #, c-format
-#| msgid "Constrain perspective handles to move along edges and diagonal  (%s)"
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Ограничи ручице перспективе тако да иду само дуж ивица и дијагонале (%s)"
@@ -16280,19 +16207,16 @@ msgstr "Од окрета  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:495
 #, c-format
-#| msgid "Scale from pivot point  (%s)"
 msgid "Scale from pivot point (%s)"
 msgstr "Промени размеру од тачке окрета (%s)"
 
 #: ../app/tools/gimptransformoptions.c:497
 #, c-format
-#| msgid "Shear opposite edge by same amount  (%s)"
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Острижи наспрамну ивицу за исту вредност (%s)"
 
 #: ../app/tools/gimptransformoptions.c:499
 #, c-format
-#| msgid "Maintain position of pivot while changing perspective  (%s)"
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Задржи место окрета приликом промене перспективе (%s)"
 
@@ -16302,13 +16226,11 @@ msgstr "Окрет"
 
 #: ../app/tools/gimptransformoptions.c:503
 #, c-format
-#| msgid "Snap  (%s)"
 msgid "Snap (%s)"
 msgstr "Лепи (%s)"
 
 #: ../app/tools/gimptransformoptions.c:504
 #, c-format
-#| msgid "Snap pivot to corners and center  (%s)"
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Лепи окрет на ћошкове и средину (%s)"
 
