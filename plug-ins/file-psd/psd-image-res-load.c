@@ -196,6 +196,7 @@ static gint     load_resource_1033     (const PSDimageres     *res_a,
                                         GError               **error);
 
 static gint     load_resource_1039     (const PSDimageres     *res_a,
+                                        PSDimage              *img_a,
                                         gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
@@ -368,7 +369,7 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_ICC_PROFILE:
-            if (! load_resource_1039 (res_a, image_id, f, error))
+            if (! load_resource_1039 (res_a, img_a, image_id, f, error))
               *profile_loaded = TRUE;
             break;
 
@@ -1105,6 +1106,7 @@ load_resource_1033 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1039 (const PSDimageres  *res_a,
+                    PSDimage           *img_a,
                     gint32              image_id,
                     FILE               *f,
                     GError            **error)
@@ -1128,8 +1130,16 @@ load_resource_1039 (const PSDimageres  *res_a,
                                                      NULL);
   if (profile)
     {
-      gimp_image_set_color_profile (image_id, profile);
-      g_object_unref (profile);
+      if (img_a->color_mode == PSD_CMYK &&
+          gimp_color_profile_is_cmyk (profile))
+        {
+          img_a->cmyk_profile = profile;
+        }
+      else
+        {
+          gimp_image_set_color_profile (image_id, profile);
+          g_object_unref (profile);
+        }
     }
 
   g_free (icc_profile);

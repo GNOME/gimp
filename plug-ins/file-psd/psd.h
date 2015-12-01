@@ -673,6 +673,10 @@ typedef struct
   guint32              *alpha_id;               /* Alpha channel ids (tattoos) */
   guint16               alpha_id_count;         /* Number of alpha channel id items */
   guint16               quick_mask_id;          /* Channel number containing quick mask */
+
+  GimpColorProfile     *cmyk_profile;
+  gpointer              cmyk_transform;
+  gpointer              cmyk_transform_alpha;
 } PSDimage;
 
 /* Public functions */
