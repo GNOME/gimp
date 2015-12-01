@@ -175,12 +175,12 @@ static const GimpStringActionEntry filters_actions[] =
     NULL /* FIXME GIMP_HELP_FILTER_EMBOSS */ },
 
   { "filters-engrave", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_En_grave..."), NULL, NULL,
+    NC_("filters-action", "En_grave..."), NULL, NULL,
     "gegl:engrave",
     NULL /* FIXME GIMP_HELP_FILTER_ENGRAVE */ },
 
   { "filters-exposure", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_E_xposure..."), NULL, NULL,
+    NC_("filters-action", "E_xposure..."), NULL, NULL,
     "gegl:exposure",
     NULL /* FIXME GIMP_HELP_FILTER_EXPOSURE */ },
 
@@ -390,7 +390,7 @@ static const GimpStringActionEntry filters_actions[] =
     NULL /* FIXME GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV */ },
 
   { "filters-supernova", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Super_nova..."), NULL, NULL,
+    NC_("filters-action", "Super_nova..."), NULL, NULL,
     "gegl:supernova",
     NULL /* FIXME GIMP_HELP_FILTER_SUPERNOVA */ },
 
