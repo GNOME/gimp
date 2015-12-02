@@ -1223,10 +1223,8 @@ MIME_TYPES="image/bmp;image/g3fax;image/gif;image/x-fits;image/x-pcx;image/x-por
 # Check for libtiff
 ###################
 
-AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
-
 have_libtiff=no
-if test "x$with_libtiff" != xno && test -z "$TIFF_LIBS"; then
+if test -z "$TIFF_LIBS"; then
   have_libtiff=yes
   AC_CHECK_LIB(tiff, TIFFReadScanline,
     [AC_CHECK_HEADER(tiffio.h,
@@ -1243,18 +1241,12 @@ if test "x$with_libtiff" != xno && test -z "$TIFF_LIBS"; then
       [have_libtiff="no (TIFF library not found)"], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
 fi
 
-if test "x$with_libtiff" != xno && test -z "$TIFF_LIBS"; then
-  AC_MSG_ERROR([
-*** Checks for TIFF library failed. You can build without it by passing
-*** --without-libtiff to configure but you won't be able to use TIFFs then.])
+if test -z "$TIFF_LIBS"; then
+  AC_MSG_ERROR([Checks for TIFF library failed])
 fi
 
-if test "x$have_libtiff" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/tiff"
-fi
+MIME_TYPES="$MIME_TYPES;image/tiff"
 
-AC_SUBST(FILE_TIFF_LOAD)
-AC_SUBST(FILE_TIFF_SAVE)
 AC_SUBST(TIFF_LIBS)
 
 
@@ -2306,6 +2298,7 @@ plug-ins/file-ico/Makefile
 plug-ins/file-jpeg/Makefile
 plug-ins/file-psd/Makefile
 plug-ins/file-sgi/Makefile
+plug-ins/file-tiff/Makefile
 plug-ins/flame/Makefile
 plug-ins/fractal-explorer/Makefile
 plug-ins/fractal-explorer/examples/Makefile
@@ -2462,7 +2455,6 @@ Optional Plug-Ins:
   Python 2:            $enable_python
   Script-Fu:           $have_script_fu
   SVG:                 $have_librsvg
-  TIFF:                $have_libtiff
   TWAIN (MacOS X):     $mac_twain_ok
   TWAIN (Win32):       $os_win32
   Webpage:             $have_webkit

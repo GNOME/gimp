@@ -57,8 +57,6 @@ plug-ins/common/file-raw-data.c
 plug-ins/common/file-sunras.c
 plug-ins/common/file-svg.c
 plug-ins/common/file-tga.c
-plug-ins/common/file-tiff-load.c
-plug-ins/common/file-tiff-save.c
 plug-ins/common/file-wmf.c
 plug-ins/common/file-xbm.c
 plug-ins/common/file-xmc.c
@@ -119,6 +117,8 @@ plug-ins/file-psd/psd-thumb-load.c
 plug-ins/file-psd/psd-util.c
 plug-ins/file-psd/psd.c
 plug-ins/file-sgi/sgi.c
+plug-ins/file-tiff/file-tiff-load.c
+plug-ins/file-tiff/file-tiff-save.c
 plug-ins/flame/flame.c
 plug-ins/fractal-explorer/fractal-explorer-dialogs.c
 plug-ins/fractal-explorer/fractal-explorer.c

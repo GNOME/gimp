@@ -98,8 +98,6 @@ libexec_PROGRAMS = \
 	file-sunras \
 	$(FILE_SVG) \
 	file-tga \
-	$(FILE_TIFF_LOAD) \
-	$(FILE_TIFF_SAVE) \
 	$(FILE_WMF) \
 	file-xbm \
 	$(FILE_XMC) \
@@ -148,8 +146,6 @@ EXTRA_PROGRAMS = \
 	file-pdf-save \
 	file-ps \
 	file-svg \
-	file-tiff-load \
-	file-tiff-save \
 	file-wmf \
 	file-xmc \
 	file-xpm \
@@ -1125,44 +1121,6 @@ file_tga_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_tga_RC)
-
-file_tiff_load_SOURCES = \
-	file-tiff-load.c
-
-file_tiff_load_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
-	$(TIFF_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(file_tiff_load_RC)
-
-file_tiff_save_SOURCES = \
-	file-tiff-save.c
-
-file_tiff_save_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
-	$(TIFF_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(file_tiff_save_RC)
 
 file_wmf_CFLAGS = $(WMF_CFLAGS)
 

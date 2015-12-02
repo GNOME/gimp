@@ -110,10 +110,6 @@
 /file-svg.exe
 /file-tga
 /file-tga.exe
-/file-tiff-load
-/file-tiff-load.exe
-/file-tiff-save
-/file-tiff-save.exe
 /file-wmf
 /file-wmf.exe
 /file-xbm
