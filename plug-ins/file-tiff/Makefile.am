@@ -14,8 +14,7 @@ endif
 
 if HAVE_WINDRES
 include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
-file_tiff_load_RC = file-tiff-load.rc.o
-file_tiff_save_RC = file-tiff-save.rc.o
+file_tiff_RC = file-tiff.rc.o
 endif
 
 AM_LDFLAGS = $(mwindows)
@@ -31,15 +30,18 @@ AM_CPPFLAGS = \
 	$(GEXIV2_CFLAGS)	\
 	-I$(includedir)
 
-libexec_PROGRAMS = file-tiff-load file-tiff-save
+libexec_PROGRAMS = file-tiff
 
-file_tiff_load_SOURCES = \
-	file-tiff-load.c
+file_tiff_SOURCES = \
+	file-tiff.c		\
+	file-tiff-io.c		\
+	file-tiff-io.h		\
+	file-tiff-load.c	\
+	file-tiff-load.h	\
+	file-tiff-save.c	\
+	file-tiff-save.h
 
-file_tiff_save_SOURCES = \
-	file-tiff-save.c
-
-ldadd = \
+file_tiff_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\
@@ -51,12 +53,5 @@ ldadd = \
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-file_tiff_load_LDADD = \
-	$(ldadd)		\
-	$(file_tiff_load_RC)
-
-file_tiff_save_LDADD = \
-	$(ldadd)		\
-	$(file_tiff_load_RC)
+	$(INTLLIBS)		\
+	$(file_tiff_RC)

@@ -52,12 +52,12 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "file-tiff-load.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC      "file-tiff-load"
-#define PLUG_IN_BINARY "file-tiff-load"
-#define PLUG_IN_ROLE   "gimp-file-tiff-load"
+#define PLUG_IN_ROLE "gimp-file-tiff-load"
 
 
 typedef struct
@@ -76,77 +76,36 @@ typedef struct
   guchar     *pixel;
 } ChannelData;
 
-typedef struct
-{
-  gint  o_pages;
-  gint  n_pages;
-  gint *pages;
-} TiffSelectedPages;
 
+/* Declare some local functions */
 
-/* Declare some local functions.
- */
-static void               query            (void);
-static void               run              (const gchar        *name,
-                                            gint                nparams,
-                                            const GimpParam    *param,
-                                            gint               *nreturn_vals,
-                                            GimpParam         **return_vals);
+static GimpColorProfile * load_profile     (TIFF         *tif);
 
-static gboolean           load_dialog      (TIFF               *tif,
-                                            TiffSelectedPages  *pages);
-
-static gint32             load_image       (const gchar        *filename,
-                                            TIFF               *tif,
-                                            TiffSelectedPages  *pages,
-                                            gboolean           *resolution_loaded,
-                                            GError            **error);
-
-static GimpColorProfile * load_profile     (TIFF               *tif);
-
-static void               load_rgba        (TIFF               *tif,
-                                            ChannelData        *channel);
-static void               load_contiguous  (TIFF               *tif,
-                                            ChannelData        *channel,
-                                            const Babl         *type,
-                                            gushort             bps,
-                                            gushort             spp,
-                                            gboolean            is_bw,
-                                            gint                extra);
-static void               load_separate    (TIFF               *tif,
-                                            ChannelData        *channel,
-                                            const Babl         *type,
-                                            gushort             bps,
-                                            gushort             spp,
-                                            gboolean            is_bw,
-                                            gint                extra);
-static void               load_paths       (TIFF               *tif,
-                                            gint                image);
-
-static void               tiff_warning     (const gchar        *module,
-                                            const gchar        *fmt,
-                                            va_list             ap) G_GNUC_PRINTF (2, 0);
-static void               tiff_error       (const gchar        *module,
-                                            const gchar        *fmt,
-                                            va_list             ap) G_GNUC_PRINTF (2, 0);
-static TIFF             * tiff_open        (const gchar        *filename,
-                                            const gchar        *mode,
-                                            GError            **error);
+static void               load_rgba        (TIFF         *tif,
+                                            ChannelData  *channel);
+static void               load_contiguous  (TIFF         *tif,
+                                            ChannelData  *channel,
+                                            const Babl   *type,
+                                            gushort       bps,
+                                            gushort       spp,
+                                            gboolean      is_bw,
+                                            gint          extra);
+static void               load_separate    (TIFF         *tif,
+                                            ChannelData  *channel,
+                                            const Babl   *type,
+                                            gushort       bps,
+                                            gushort       spp,
+                                            gboolean      is_bw,
+                                            gint          extra);
+static void               load_paths       (TIFF         *tif,
+                                            gint          image);
 
 static void               fill_bit2byte    (void);
-static void               convert_bit2byte (const guchar       *src,
-                                            guchar             *dest,
-                                            gint                width,
-                                            gint                height);
+static void               convert_bit2byte (const guchar *src,
+                                            guchar       *dest,
+                                            gint          width,
+                                            gint          height);
 
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
 
 static TiffSaveVals tsvals =
 {
@@ -154,284 +113,6 @@ static TiffSaveVals tsvals =
   TRUE,                /*  alpha handling */
 };
 
-static GimpPageSelectorTarget target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
-
-
-MAIN ()
-
-static void
-query (void)
-{
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
-  };
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" }
-  };
-
-  gimp_install_procedure (LOAD_PROC,
-                          "loads files of the tiff file format",
-                          "FIXME: write help for tiff_load",
-                          "Spencer Kimball, Peter Mattis & Nick Lamb",
-                          "Nick Lamb <njl195@zepler.org.uk>",
-                          "1995-1996,1998-2003",
-                          N_("TIFF image"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PROC, "image/tiff");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "tif,tiff",
-                                    "",
-                                    "0,string,II*\\0,0,string,MM\\0*");
-}
-
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
-{
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GError            *error  = NULL;
-
-  INIT_I18N ();
-  gegl_init (NULL, NULL);
-
-  run_mode = param[0].data.d_int32;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  TIFFSetWarningHandler (tiff_warning);
-  TIFFSetErrorHandler (tiff_error);
-
-  if (strcmp (name, LOAD_PROC) == 0)
-    {
-      const gchar *filename = param[1].data.d_string;
-      TIFF        *tif;
-
-      tif = tiff_open (filename, "r", &error);
-
-      if (tif)
-        {
-          TiffSelectedPages pages;
-
-          gimp_get_data (LOAD_PROC, &target);
-
-          pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
-
-          if (pages.n_pages == 0)
-            {
-              g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("TIFF '%s' does not contain any directories"),
-                           gimp_filename_to_utf8 (filename));
-
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-          else
-            {
-              gboolean run_it = FALSE;
-              gint     i;
-
-              if (run_mode != GIMP_RUN_INTERACTIVE)
-                {
-                  pages.pages = g_new (gint, pages.n_pages);
-
-                  for (i = 0; i < pages.n_pages; i++)
-                    pages.pages[i] = i;
-
-                  run_it = TRUE;
-                }
-              else
-                {
-                  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-                }
-
-              if (pages.n_pages == 1)
-                {
-                  target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
-                  pages.pages = g_new0 (gint, pages.n_pages);
-
-                  run_it = TRUE;
-                }
-
-              if ((! run_it) && (run_mode == GIMP_RUN_INTERACTIVE))
-                run_it = load_dialog (tif, &pages);
-
-              if (run_it)
-                {
-                  gint32   image;
-                  gboolean resolution_loaded = FALSE;
-
-                  gimp_set_data (LOAD_PROC, &target, sizeof (target));
-
-                  image = load_image (param[1].data.d_string, tif, &pages,
-                                      &resolution_loaded,
-                                      &error);
-
-                  g_free (pages.pages);
-
-                  if (image > 0)
-                    {
-                      GFile        *file;
-                      GimpMetadata *metadata;
-
-                      file = g_file_new_for_path (param[1].data.d_string);
-
-                      metadata = gimp_image_metadata_load_prepare (image,
-                                                                   "image/tiff",
-                                                                   file, NULL);
-
-                      if (metadata)
-                        {
-                          GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
-
-                          if (resolution_loaded)
-                            flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
-
-                          gimp_image_metadata_load_finish (image, "image/tiff",
-                                                           metadata, flags,
-                                                           run_mode == GIMP_RUN_INTERACTIVE);
-
-                          g_object_unref (metadata);
-                        }
-
-                      g_object_unref (file);
-
-                      *nreturn_vals = 2;
-                      values[1].type         = GIMP_PDB_IMAGE;
-                      values[1].data.d_image = image;
-                    }
-                  else
-                    {
-                      status = GIMP_PDB_EXECUTION_ERROR;
-                    }
-                }
-              else
-                {
-                  status = GIMP_PDB_CANCEL;
-                }
-            }
-
-          TIFFClose (tif);
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
-
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
-
-  values[0].data.d_status = status;
-}
-
-static void
-tiff_warning (const gchar *module,
-              const gchar *fmt,
-              va_list      ap)
-{
-  int tag = 0;
-
-  if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered"))
-    {
-      va_list ap_test;
-
-      G_VA_COPY (ap_test, ap);
-
-      va_arg (ap_test, const char *); /* ignore first arg */
-
-      tag  = va_arg (ap_test, int);
-    }
-  /* for older versions of libtiff? */
-  else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
-    {
-      va_list ap_test;
-
-      G_VA_COPY (ap_test, ap);
-
-      tag = va_arg (ap_test, int);
-    }
-
-  /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975
-   * Ignore the warnings about unregistered private tags (>= 32768).
-   */
-  if (tag >= 32768)
-    return;
-
-  /* Other unknown fields are only reported to stderr. */
-  if (tag > 0)
-    {
-      gchar *msg = g_strdup_vprintf (fmt, ap);
-
-      g_printerr ("%s\n", msg);
-      g_free (msg);
-
-      return;
-    }
-
-  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
-}
-
-static void
-tiff_error (const gchar *module,
-            const gchar *fmt,
-            va_list      ap)
-{
-  /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=132297
-   * Ignore the errors related to random access and JPEG compression
-   */
-  if (! strcmp (fmt, "Compression algorithm does not support random access"))
-    return;
-
-  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
-}
-
-static TIFF *
-tiff_open (const gchar  *filename,
-           const gchar  *mode,
-           GError      **error)
-{
-#ifdef G_OS_WIN32
-  gunichar2 *utf16_filename = g_utf8_to_utf16 (filename, -1, NULL, NULL, error);
-
-  if (utf16_filename)
-    {
-      TIFF *tif = TIFFOpenW (utf16_filename, mode);
-
-      g_free (utf16_filename);
-
-      return tif;
-    }
-
-  return NULL;
-#else
-  return TIFFOpen (filename, mode);
-#endif
-}
 
 /* returns a pointer into the TIFF */
 static const gchar *
@@ -448,8 +129,9 @@ tiff_get_page_name (TIFF *tif)
   return NULL;
 }
 
-static gboolean
+gboolean
 load_dialog (TIFF              *tif,
+             const gchar       *help_id,
              TiffSelectedPages *pages)
 {
   GtkWidget  *dialog;
@@ -460,7 +142,7 @@ load_dialog (TIFF              *tif,
 
   dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, LOAD_PROC,
+                            gimp_standard_help_func, help_id,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             _("_Import"),     GTK_RESPONSE_OK,
@@ -487,7 +169,7 @@ load_dialog (TIFF              *tif,
 
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
                                   pages->n_pages);
-  gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), target);
+  gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), pages->target);
 
   for (i = 0; i < pages->n_pages; i++)
     {
@@ -513,26 +195,29 @@ load_dialog (TIFF              *tif,
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
-    target = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
-
-  pages->pages =
-    gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
-                                           &pages->n_pages);
-
-  /* select all if none selected */
-  if (pages->n_pages == 0)
     {
-      gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
+      pages->target =
+        gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
 
       pages->pages =
         gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
                                                &pages->n_pages);
+
+      /* select all if none selected */
+      if (pages->n_pages == 0)
+        {
+          gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
+
+          pages->pages =
+            gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
+                                                   &pages->n_pages);
+        }
     }
 
   return run;
 }
 
-static gint32
+gint32
 load_image (const gchar        *filename,
             TIFF               *tif,
             TiffSelectedPages  *pages,
@@ -991,7 +676,7 @@ load_image (const gchar        *filename,
             }
         }
 
-      if (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
+      if (pages->target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
         {
           if (li == 0)
             {
@@ -1003,7 +688,7 @@ load_image (const gchar        *filename,
             }
         }
 
-      if ((target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! image))
+      if ((pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! image))
         {
           image = gimp_image_new_with_precision (cols, rows, image_type,
                                                  image_precision);
@@ -1017,7 +702,7 @@ load_image (const gchar        *filename,
 
           gimp_image_undo_disable (image);
 
-          if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+          if (pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             {
               gchar *fname = g_strdup_printf ("%s-%d", filename, ilayer);
 
@@ -1367,7 +1052,7 @@ load_image (const gchar        *filename,
 
       gimp_image_insert_layer (image, layer, -1, -1);
 
-      if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+      if (pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
         {
           gimp_image_undo_enable (image);
           gimp_image_clean_all (image);
@@ -1376,7 +1061,7 @@ load_image (const gchar        *filename,
       gimp_progress_update (1.0);
     }
 
-  if (target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+  if (pages->target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
     {
       /* resize image to bounding box of all layers */
       gimp_image_resize (image,

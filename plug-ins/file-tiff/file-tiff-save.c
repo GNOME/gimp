@@ -52,469 +52,26 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "file-tiff-io.h"
+#include "file-tiff-save.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-tiff-save"
-#define SAVE2_PROC     "file-tiff-save2"
-#define PLUG_IN_BINARY "file-tiff-save"
-#define PLUG_IN_ROLE   "gimp-file-tiff-save"
+#define PLUG_IN_ROLE "gimp-file-tiff-save"
 
 
-typedef struct
-{
-  gint      compression;
-  gint      fillorder;
-  gboolean  save_transp_pixels;
-  gboolean  save_exif;
-  gboolean  save_xmp;
-  gboolean  save_iptc;
-  gboolean  save_thumbnail;
-} TiffSaveVals;
+static gboolean  save_paths             (TIFF          *tif,
+                                         gint32         image);
 
-typedef struct
-{
-  gint32        ID;
-  GimpDrawable *drawable;
-  GimpPixelRgn  pixel_rgn;
-  guchar       *pixels;
-  guchar       *pixel;
-} channel_data;
+static void      comment_entry_callback (GtkWidget     *widget,
+                                         gchar        **comment);
 
+static void      byte2bit               (const guchar  *byteline,
+                                         gint           width,
+                                         guchar        *bitline,
+                                         gboolean       invert);
 
-/* Declare some local functions.
- */
-static void      query                  (void);
-static void      run                    (const gchar      *name,
-                                         gint              nparams,
-                                         const GimpParam  *param,
-                                         gint             *nreturn_vals,
-                                         GimpParam       **return_vals);
-
-static gboolean  image_is_monochrome    (gint32            image);
-
-static gboolean  save_paths             (TIFF             *tif,
-                                         gint32            image);
-static gboolean  save_image             (const gchar      *filename,
-                                         gint32            image,
-                                         gint32            drawable,
-                                         gint32            orig_image,
-                                         gint             *saved_bpp,
-                                         GError          **error);
-
-static gboolean  save_dialog            (gboolean          has_alpha,
-                                         gboolean          is_monochrome,
-                                         gboolean          is_indexed);
-
-static void      comment_entry_callback (GtkWidget        *widget,
-                                         gpointer          data);
-
-static void      byte2bit               (const guchar     *byteline,
-                                         gint              width,
-                                         guchar           *bitline,
-                                         gboolean          invert);
-
-static void      tiff_warning           (const gchar      *module,
-                                         const gchar      *fmt,
-                                         va_list           ap) G_GNUC_PRINTF (2, 0);
-static void      tiff_error             (const gchar      *module,
-                                         const gchar      *fmt,
-                                         va_list           ap) G_GNUC_PRINTF (2, 0);
-static TIFF    * tiff_open              (const gchar      *filename,
-                                         const gchar      *mode,
-                                         GError          **error);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-static TiffSaveVals tsvals =
-{
-  COMPRESSION_NONE,    /*  compression         */
-  TRUE,                /*  alpha handling      */
-  TRUE,                /*  save transp. pixels */
-  TRUE,                /*  save exif           */
-  TRUE,                /*  save xmp            */
-  TRUE,                /*  save iptc           */
-  TRUE                 /*  save thumbnail      */
-};
-
-static gchar *image_comment = NULL;
-
-
-MAIN ()
-
-static void
-query (void)
-{
-#define COMMON_SAVE_ARGS \
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },\
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },\
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },\
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },\
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },\
-    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), CCITT G3 Fax (5), CCITT G4 Fax (6) }" }
-
-  static const GimpParamDef save_args_old[] =
-  {
-    COMMON_SAVE_ARGS
-  };
-
-  static const GimpParamDef save_args[] =
-  {
-    COMMON_SAVE_ARGS,
-    { GIMP_PDB_INT32, "save-transp-pixels", "Keep the color data masked by an alpha channel intact" }
-  };
-
-  gimp_install_procedure (SAVE_PROC,
-                          "saves files in the tiff file format",
-                          "Saves files in the Tagged Image File Format.  "
-                          "The value for the saved comment is taken "
-                          "from the 'gimp-comment' parasite.",
-                          "Spencer Kimball & Peter Mattis",
-                          "Spencer Kimball & Peter Mattis",
-                          "1995-1996,2000-2003",
-                          N_("TIFF image"),
-                          "RGB*, GRAY*, INDEXED",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args_old), 0,
-                          save_args_old, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "image/tiff");
-  gimp_register_save_handler (SAVE_PROC, "tif,tiff", "");
-
-  gimp_install_procedure (SAVE2_PROC,
-                          "saves files in the tiff file format",
-                          "Saves files in the Tagged Image File Format.  "
-                          "The value for the saved comment is taken "
-                          "from the 'gimp-comment' parasite.",
-                          "Spencer Kimball & Peter Mattis",
-                          "Spencer Kimball & Peter Mattis",
-                          "1995-1996,2000-2003",
-                          N_("TIFF image"),
-                          "RGB*, GRAY*, INDEXED",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-}
-
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
-{
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GError            *error  = NULL;
-
-  run_mode = param[0].data.d_int32;
-
-  INIT_I18N ();
-  gegl_init (NULL, NULL);
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  TIFFSetWarningHandler (tiff_warning);
-  TIFFSetErrorHandler (tiff_error);
-
-  if ((strcmp (name, SAVE_PROC)  == 0) ||
-      (strcmp (name, SAVE2_PROC) == 0))
-    {
-      /* Plug-in is either file_tiff_save or file_tiff_save2 */
-
-      GimpMetadata          *metadata;
-      GimpMetadataSaveFlags  metadata_flags;
-      GimpParasite          *parasite;
-      gint32                 image      = param[1].data.d_int32;
-      gint32                 drawable   = param[2].data.d_int32;
-      gint32                 orig_image = image;
-      GimpExportReturn       export     = GIMP_EXPORT_CANCEL;
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
-          export = gimp_export_image (&image, &drawable, "TIFF",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-          break;
-        default:
-          break;
-        }
-
-      metadata = gimp_image_metadata_save_prepare (orig_image,
-                                                   "image/tiff",
-                                                   &metadata_flags);
-
-      tsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
-      tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
-      tsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
-      tsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
-
-      parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
-      if (parasite)
-        {
-          image_comment = g_strndup (gimp_parasite_data (parasite),
-                                     gimp_parasite_data_size (parasite));
-          gimp_parasite_free (parasite);
-        }
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          /*  Possibly retrieve data  */
-          gimp_get_data (SAVE_PROC, &tsvals);
-
-          parasite = gimp_image_get_parasite (orig_image, "tiff-save-options");
-          if (parasite)
-            {
-              const TiffSaveVals *pvals = gimp_parasite_data (parasite);
-
-              if (pvals->compression == COMPRESSION_DEFLATE)
-                tsvals.compression = COMPRESSION_ADOBE_DEFLATE;
-              else
-                tsvals.compression = pvals->compression;
-
-              tsvals.save_transp_pixels = pvals->save_transp_pixels;
-            }
-          gimp_parasite_free (parasite);
-
-          /*  First acquire information with a dialog  */
-          if (! save_dialog (gimp_drawable_has_alpha (drawable),
-                             image_is_monochrome (image),
-                             gimp_image_base_type (image) == GIMP_INDEXED))
-            status = GIMP_PDB_CANCEL;
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there!  */
-          if (nparams == 6 || nparams == 7)
-            {
-              switch (param[5].data.d_int32)
-                {
-                case 0: tsvals.compression = COMPRESSION_NONE;          break;
-                case 1: tsvals.compression = COMPRESSION_LZW;           break;
-                case 2: tsvals.compression = COMPRESSION_PACKBITS;      break;
-                case 3: tsvals.compression = COMPRESSION_ADOBE_DEFLATE; break;
-                case 4: tsvals.compression = COMPRESSION_JPEG;          break;
-                case 5: tsvals.compression = COMPRESSION_CCITTFAX3;     break;
-                case 6: tsvals.compression = COMPRESSION_CCITTFAX4;     break;
-                default: status = GIMP_PDB_CALLING_ERROR; break;
-                }
-
-              if (nparams == 7)
-                tsvals.save_transp_pixels = param[6].data.d_int32;
-              else
-                tsvals.save_transp_pixels = TRUE;
-            }
-          else
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          /*  Possibly retrieve data  */
-          gimp_get_data (SAVE_PROC, &tsvals);
-
-          parasite = gimp_image_get_parasite (orig_image, "tiff-save-options");
-          if (parasite)
-            {
-              const TiffSaveVals *pvals = gimp_parasite_data (parasite);
-
-              tsvals.compression        = pvals->compression;
-              tsvals.save_transp_pixels = pvals->save_transp_pixels;
-            }
-          gimp_parasite_free (parasite);
-          break;
-
-        default:
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          gint saved_bpp;
-
-          if (save_image (param[3].data.d_string, image, drawable, orig_image,
-                          &saved_bpp, &error))
-            {
-              if (metadata)
-                {
-                  GFile *file;
-
-                  gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
-
-                  if (tsvals.save_exif)
-                    metadata_flags |= GIMP_METADATA_SAVE_EXIF;
-                  else
-                    metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
-
-                  if (tsvals.save_xmp)
-                    metadata_flags |= GIMP_METADATA_SAVE_XMP;
-                  else
-                    metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
-
-                  if (tsvals.save_iptc)
-                    metadata_flags |= GIMP_METADATA_SAVE_IPTC;
-                  else
-                    metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
-
-                  /* never save metadata thumbnails for TIFF, see bug #729952 */
-                  metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
-
-                  file = g_file_new_for_path (param[3].data.d_string);
-                  gimp_image_metadata_save_finish (image,
-                                                   "image/tiff",
-                                                   metadata, metadata_flags,
-                                                   file, NULL);
-                  g_object_unref (file);
-                }
-
-              /*  Store mvals data  */
-              gimp_set_data (SAVE_PROC, &tsvals, sizeof (TiffSaveVals));
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-        }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image);
-
-      if (metadata)
-        g_object_unref (metadata);
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
-
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
-
-  values[0].data.d_status = status;
-}
-
-static void
-tiff_warning (const gchar *module,
-              const gchar *fmt,
-              va_list      ap)
-{
-  va_list ap_test;
-
-  /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975 */
-  /* Ignore the warnings about unregistered private tags (>= 32768) */
-  if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered"))
-    {
-      G_VA_COPY (ap_test, ap);
-      if (va_arg (ap_test, char *));  /* ignore first argument */
-      if (va_arg (ap_test, int) >= 32768)
-        return;
-    }
-  /* for older versions of libtiff? */
-  else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
-    {
-      G_VA_COPY (ap_test, ap);
-      if (va_arg (ap_test, int) >= 32768)
-        return;
-    }
-
-  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
-}
-
-static void
-tiff_error (const gchar *module,
-            const gchar *fmt,
-            va_list      ap)
-{
-  /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=132297 */
-  /* Ignore the errors related to random access and JPEG compression */
-  if (! strcmp (fmt, "Compression algorithm does not support random access"))
-    return;
-  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
-}
-
-static TIFF *
-tiff_open (const gchar  *filename,
-           const gchar  *mode,
-           GError      **error)
-{
-#ifdef G_OS_WIN32
-  gunichar2 *utf16_filename = g_utf8_to_utf16 (filename, -1, NULL, NULL, error);
-
-  if (utf16_filename)
-    {
-      TIFF *tif = TIFFOpenW (utf16_filename, mode);
-
-      g_free (utf16_filename);
-
-      return tif;
-    }
-
-  return NULL;
-#else
-  return TIFFOpen (filename, mode);
-#endif
-}
-
-static gboolean
-image_is_monochrome (gint32 image)
-{
-  guchar   *colors;
-  gint      num_colors;
-  gboolean  monochrome = FALSE;
-
-  g_return_val_if_fail (image != -1, FALSE);
-
-  colors = gimp_image_get_colormap (image, &num_colors);
-
-  if (colors)
-    {
-      if (num_colors == 2 || num_colors == 1)
-        {
-          const guchar  bw_map[] = { 0, 0, 0, 255, 255, 255 };
-          const guchar  wb_map[] = { 255, 255, 255, 0, 0, 0 };
-
-          if (memcmp (colors, bw_map, 3 * num_colors) == 0 ||
-              memcmp (colors, wb_map, 3 * num_colors) == 0)
-            {
-              monochrome = TRUE;
-            }
-        }
-
-      g_free (colors);
-    }
-
-  return monochrome;
-}
 
 static void
 double_to_psd_fixed (gdouble  value,
@@ -697,11 +254,13 @@ save_paths (TIFF   *tif,
  * other special, indirect and consequential damages.
  */
 
-static gboolean
+gboolean
 save_image (const gchar  *filename,
+            TiffSaveVals *tsvals,
             gint32        image,
             gint32        layer,
             gint32        orig_image,  /* the export function might have */
+            const gchar  *image_comment,
             gint         *saved_bpp,
             GError      **error)       /* created a duplicate            */
 {
@@ -739,7 +298,7 @@ save_image (const gchar  *filename,
   gint           number_of_sub_IFDs = 1;
   toff_t         sub_IFDs_offsets[1] = { 0UL };
 
-  compression = tsvals.compression;
+  compression = tsvals->compression;
 
   /* Disabled because this isn't in older releases of libtiff, and it
      wasn't helping much anyway */
@@ -751,9 +310,6 @@ save_image (const gchar  *filename,
   predictor = 0;
   tile_height = gimp_tile_height ();
   rowsperstrip = tile_height;
-
-  TIFFSetWarningHandler (tiff_warning);
-  TIFFSetErrorHandler (tiff_error);
 
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -835,7 +391,7 @@ save_image (const gchar  *filename,
       samplesperpixel = 4;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = TRUE;
-      if (tsvals.save_transp_pixels)
+      if (tsvals->save_transp_pixels)
         {
           format = babl_format_new (babl_model ("R'G'B'A"),
                                     type,
@@ -861,7 +417,7 @@ save_image (const gchar  *filename,
       samplesperpixel = 2;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = TRUE;
-      if (tsvals.save_transp_pixels)
+      if (tsvals->save_transp_pixels)
         {
           format = babl_format_new (babl_model ("Y'A"),
                                     type,
@@ -986,7 +542,7 @@ save_image (const gchar  *filename,
 
   if (alpha)
     {
-      if (tsvals.save_transp_pixels)
+      if (tsvals->save_transp_pixels)
         extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
       else
         extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
@@ -1050,8 +606,6 @@ save_image (const gchar  *filename,
             {
               g_message (_("The TIFF format only supports comments in\n"
                            "7bit ASCII encoding. No comment is saved."));
-
-              g_free (image_comment);
               image_comment = NULL;
 
               break;
@@ -1168,7 +722,7 @@ save_image (const gchar  *filename,
    * Exif saves the thumbnail as a second page. To avoid this, the
    * thumbnail must be saved with the functions of libtiff.
    */
-  if (tsvals.save_thumbnail)
+  if (tsvals->save_thumbnail)
     {
       GdkPixbuf *thumb_pixbuf;
       guchar    *thumb_pixels;
@@ -1252,10 +806,13 @@ save_image (const gchar  *filename,
   return status;
 }
 
-static gboolean
-save_dialog (gboolean has_alpha,
-             gboolean is_monochrome,
-             gboolean is_indexed)
+gboolean
+save_dialog (TiffSaveVals  *tsvals,
+             const gchar   *help_id,
+             gboolean       has_alpha,
+             gboolean       is_monochrome,
+             gboolean       is_indexed,
+             gchar        **image_comment)
 {
   GError      *error = NULL;
   GtkWidget   *dialog;
@@ -1270,7 +827,7 @@ save_dialog (gboolean has_alpha,
   gchar       *ui_file;
   gboolean     run;
 
-  dialog = gimp_export_dialog_new (_("TIFF"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_export_dialog_new (_("TIFF"), PLUG_IN_ROLE, help_id);
 
   builder = gtk_builder_new ();
   ui_file = g_build_filename (gimp_data_directory (),
@@ -1298,7 +855,7 @@ save_dialog (gboolean has_alpha,
 
   frame = gimp_int_radio_group_new (TRUE, _("Compression"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &tsvals.compression, tsvals.compression,
+                                    &tsvals->compression, tsvals->compression,
 
                                     _("_None"),      COMPRESSION_NONE,          NULL,
                                     _("_LZW"),       COMPRESSION_LZW,           NULL,
@@ -1316,15 +873,15 @@ save_dialog (gboolean has_alpha,
 
   if (! is_monochrome)
     {
-      if (tsvals.compression == COMPRESSION_CCITTFAX3 ||
-          tsvals.compression == COMPRESSION_CCITTFAX4)
+      if (tsvals->compression == COMPRESSION_CCITTFAX3 ||
+          tsvals->compression == COMPRESSION_CCITTFAX4)
         {
           gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (cmp_g3),
                                            COMPRESSION_NONE);
         }
     }
 
-  if (is_indexed && tsvals.compression == COMPRESSION_JPEG)
+  if (is_indexed && tsvals->compression == COMPRESSION_JPEG)
     {
       gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (cmp_jpeg),
                                        COMPRESSION_NONE);
@@ -1335,46 +892,46 @@ save_dialog (gboolean has_alpha,
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_alpha"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                has_alpha && tsvals.save_transp_pixels);
+                                has_alpha && tsvals->save_transp_pixels);
   gtk_widget_set_sensitive (toggle, has_alpha);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &tsvals.save_transp_pixels);
+                    &tsvals->save_transp_pixels);
 
   entry = GTK_WIDGET (gtk_builder_get_object (builder, "commentfield"));
-  gtk_entry_set_text (GTK_ENTRY (entry), image_comment ? image_comment : "");
+  gtk_entry_set_text (GTK_ENTRY (entry), *image_comment ? *image_comment : "");
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (comment_entry_callback),
-                    NULL);
+                    image_comment);
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_exif"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                tsvals.save_exif);
+                                tsvals->save_exif);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &tsvals.save_exif);
+                    &tsvals->save_exif);
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_xmp"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                tsvals.save_xmp);
+                                tsvals->save_xmp);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &tsvals.save_xmp);
+                    &tsvals->save_xmp);
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_iptc"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                tsvals.save_iptc);
+                                tsvals->save_iptc);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &tsvals.save_iptc);
+                    &tsvals->save_iptc);
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_thumbnail"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                tsvals.save_thumbnail);
+                                tsvals->save_thumbnail);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &tsvals.save_thumbnail);
+                    &tsvals->save_thumbnail);
 
   gtk_widget_show (dialog);
 
@@ -1386,13 +943,13 @@ save_dialog (gboolean has_alpha,
 }
 
 static void
-comment_entry_callback (GtkWidget *widget,
-                        gpointer   data)
+comment_entry_callback (GtkWidget  *widget,
+                        gchar     **comment)
 {
   const gchar *text = gtk_entry_get_text (GTK_ENTRY (widget));
 
-  g_free (image_comment);
-  image_comment = g_strdup (text);
+  g_free (*comment);
+  *comment = g_strdup (text);
 }
 
 /* Convert n bytes of 0/1 to a line of bits */

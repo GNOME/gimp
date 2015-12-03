@@ -3,7 +3,5 @@
 /.deps
 /_libs
 /.libs
-/file-tiff-load
-/file-tiff-load.exe
-/file-tiff-save
-/file-tiff-save.exe
+/file-tiff
+/file-tiff.exe
