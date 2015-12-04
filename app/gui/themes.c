@@ -336,7 +336,7 @@ themes_apply_theme (Gimp        *gimp,
              "@import url(\"%s\");\n"
              "@import url(\"%s\");\n"
              "\n"
-             "# end of theme.css\n",
+             "/* end of theme.css */\n",
              gimp_file_get_utf8_name (css_user),
              esc_css_theme,
              esc_css_user) ||
