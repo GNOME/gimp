@@ -3,23 +3,23 @@
 # Copyright © 2001, 2002, 2003, 2004, 2008, gimp
 # Distributed under the same licence as the gimp package.
 # Pedro Barreira <almufado@gmail.com>, 2010.
-# Pedro Albuquerque <palbuquerque73o@gmail.com>, 2015.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
-"eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-11-26 10:21+0000\n"
-"PO-Revision-Date: 2015-11-28 10:04+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-12-04 19:10+0000\n"
+"PO-Revision-Date: 2015-12-05 07:00+0000\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
-"Language-Team: Pedro Albuquerque\n"
+"Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n\n"
+"X-Generator: Gtranslator 2.91.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
@@ -770,7 +770,8 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Intersetar este canal com a seleção atual"
 
-#: ../app/actions/channels-commands.c:85 ../app/actions/channels-commands.c:402
+#: ../app/actions/channels-commands.c:85
+#: ../app/actions/channels-commands.c:402
 msgid "Channel Attributes"
 msgstr "Atributos do canal"
 
@@ -782,7 +783,8 @@ msgstr "Editar atributos do canal"
 msgid "Edit Channel Color"
 msgstr "Editar cor do canal"
 
-#: ../app/actions/channels-commands.c:91 ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:91
+#: ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
 msgstr "_Opacidade do preenchimento:"
 
@@ -1050,7 +1052,8 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
+#: ../app/actions/data-commands.c:114
+#: ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1902
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
@@ -1430,8 +1433,6 @@ msgid "_Search and Run a Command"
 msgstr "_Procurar e executar um comando"
 
 #: ../app/actions/dialogs-actions.c:276
-#| msgctxt "help-action"
-#| msgid "Search commands by keyword, and run them"
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Procurar comandos por palavras chave e executá-los"
@@ -2796,14 +2797,18 @@ msgid "_Emboss..."
 msgstr "_Embutir..."
 
 #: ../app/actions/filters-actions.c:178
+#| msgctxt "filters-action"
+#| msgid "_En_grave..."
 msgctxt "filters-action"
-msgid "_En_grave..."
+msgid "En_grave..."
 msgstr "_Gravar..."
 
 #: ../app/actions/filters-actions.c:183
+#| msgctxt "filters-action"
+#| msgid "_E_xposure..."
 msgctxt "filters-action"
-msgid "_E_xposure..."
-msgstr "_Exposição..."
+msgid "E_xposure..."
+msgstr "E_Xposição..."
 
 #: ../app/actions/filters-actions.c:188
 msgctxt "filters-action"
@@ -2816,8 +2821,6 @@ msgid "_Gaussian Blur..."
 msgstr "Gaussiana desfocada..."
 
 #: ../app/actions/filters-actions.c:198
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "Desfoque gaussiano seletivo..."
@@ -3013,9 +3016,11 @@ msgid "_Stretch Contrast HSV..."
 msgstr "_Esticar contraste HSV..."
 
 #: ../app/actions/filters-actions.c:393
+#| msgctxt "filters-action"
+#| msgid "_Super_nova..."
 msgctxt "filters-action"
-msgid "_Super_nova..."
-msgstr "_Supernova..."
+msgid "Super_nova..."
+msgstr "Super_Nova..."
 
 #: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
@@ -3961,13 +3966,15 @@ msgstr "A redimensionar"
 msgid "Set Image Print Resolution"
 msgstr "Definir resolução de impressão da imagem"
 
-#: ../app/actions/image-commands.c:566 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:566
+#: ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "A inverter"
 
-#: ../app/actions/image-commands.c:590 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:590
+#: ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
@@ -8513,7 +8520,8 @@ msgstr ""
 "suportados."
 
 #: ../app/core/gimpbrush-load.c:785
-msgid "Fatal parse error in brush file : File appears truncated: "
+#| msgid "Fatal parse error in brush file : File appears truncated: "
+msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
 "Erro fatal de processamento no ficheiro de pincel: o ficheiro parece "
 "truncado: "
@@ -10102,7 +10110,8 @@ msgstr "C_Onverter"
 
 #. dithering
 #: ../app/dialogs/convert-precision-dialog.c:185
-#: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:248
+#: ../app/dialogs/convert-type-dialog.c:239
+#: ../app/tools/gimpblendoptions.c:248
 msgid "Dithering"
 msgstr "Pontilhado"
 
@@ -10174,7 +10183,8 @@ msgstr "Ativar pontilhado das camadas de texto"
 msgid "Converting to indexed colors"
 msgstr "A converter em cores indexadas"
 
-#: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/image-convert-cmds.c:162
+#: ../app/dialogs/convert-type-dialog.c:439
+#: ../app/pdb/image-convert-cmds.c:162
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Impossível converter para uma paleta com mais de 256 cores."
 
@@ -11158,7 +11168,8 @@ msgstr "Tornar ativa a camada ou caminho"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1870
-#: ../app/dialogs/preferences-dialog.c:2062 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2062
+#: ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Aparência"
 
@@ -11356,8 +11367,9 @@ msgid "Monitor Resolution"
 msgstr "Resolução do monitor"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2257 ../app/display/gimpcursorview.c:207
-#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2257
+#: ../app/display/gimpcursorview.c:207 ../app/widgets/gimpgrideditor.c:199
+#: ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Pixels"
 
@@ -11755,7 +11767,8 @@ msgstr "Clique em %s para descartar as alterações e sair."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Clique em %s para descartar as alterações e fechar as imagens."
 
-#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:179
+#: ../app/dialogs/quit-dialog.c:341
+#: ../app/display/gimpdisplayshell-close.c:179
 msgid "_Discard Changes"
 msgstr "_Descartar alterações"
 
@@ -12032,8 +12045,8 @@ msgstr "Alternar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar pela visualização da imagem"
 
-#: ../app/display/gimpdisplayshell.c:773 ../app/display/gimpdisplayshell.c:1470
-#: ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:773
+#: ../app/display/gimpdisplayshell.c:1470 ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Largue aqui os ficheiros para abri-los"
 
@@ -12226,6 +12239,8 @@ msgstr "(limpo)"
 #: ../app/display/gimpdisplayshell-title.c:340
 #: ../app/display/gimpdisplayshell-title.c:349
 #: ../app/widgets/gimpactiongroup.c:884
+#: ../app/widgets/gimpbuffersourcebox.c:171
+#: ../app/widgets/gimpbuffersourcebox.c:309
 msgid "(none)"
 msgstr "(nenhum)"
 
@@ -12624,7 +12639,8 @@ msgstr "Meu pincel"
 #: ../app/paint/gimpmybrushoptions.c:69 ../app/tools/gimpcoloroptions.c:158
 #: ../app/tools/gimpmybrushoptions-gui.c:166
 #: ../app/tools/gimprectangleselectoptions.c:164
-#: ../app/tools/gimpselectionoptions.c:278 ../app/widgets/gimpbrusheditor.c:156
+#: ../app/tools/gimpselectionoptions.c:278
+#: ../app/widgets/gimpbrusheditor.c:156
 msgid "Radius"
 msgstr "Raio"
 
@@ -13425,76 +13441,83 @@ msgid "Noisify"
 msgstr "Ruído visual"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3506
+#| msgctxt "filters-action"
+#| msgid "_Selective Gaussian Blur..."
+msgctxt "undo-type"
+msgid "Selective Gaussian Blur"
+msgstr "Desfoque gaussiano seletivo"
+
+#: ../app/pdb/plug-in-compat-cmds.c:3550
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semi-achatar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3549
+#: ../app/pdb/plug-in-compat-cmds.c:3593
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Deslocar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3652
+#: ../app/pdb/plug-in-compat-cmds.c:3696
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Seno"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3700
+#: ../app/pdb/plug-in-compat-cmds.c:3744
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3761
+#: ../app/pdb/plug-in-compat-cmds.c:3805
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Ruído sólido"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3805
+#: ../app/pdb/plug-in-compat-cmds.c:3849
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Espalhar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3846
+#: ../app/pdb/plug-in-compat-cmds.c:3890
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Tolerância alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3892
+#: ../app/pdb/plug-in-compat-cmds.c:3936
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Vídeo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3929
+#: ../app/pdb/plug-in-compat-cmds.c:3973
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Inverter valor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4033
+#: ../app/pdb/plug-in-compat-cmds.c:4077
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Propagar valor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4080
+#: ../app/pdb/plug-in-compat-cmds.c:4124
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Dilatar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4127
+#: ../app/pdb/plug-in-compat-cmds.c:4171
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erodir"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4190
+#: ../app/pdb/plug-in-compat-cmds.c:4234
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Ondas"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4238
+#: ../app/pdb/plug-in-compat-cmds.c:4282
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Remoinho e beliscão"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4290
+#: ../app/pdb/plug-in-compat-cmds.c:4334
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Vento"
@@ -14287,15 +14310,18 @@ msgstr "Colorir não opera em camadas em tons de cinzento."
 msgid "Select Color"
 msgstr "Selecionar cor"
 
-#: ../app/tools/gimpcolorizetool.c:174 ../app/tools/gimphuesaturationtool.c:303
+#: ../app/tools/gimpcolorizetool.c:174
+#: ../app/tools/gimphuesaturationtool.c:303
 msgid "_Hue"
 msgstr "_Matiz"
 
-#: ../app/tools/gimpcolorizetool.c:181 ../app/tools/gimphuesaturationtool.c:317
+#: ../app/tools/gimpcolorizetool.c:181
+#: ../app/tools/gimphuesaturationtool.c:317
 msgid "_Saturation"
 msgstr "_Saturação"
 
-#: ../app/tools/gimpcolorizetool.c:188 ../app/tools/gimphuesaturationtool.c:310
+#: ../app/tools/gimpcolorizetool.c:188
+#: ../app/tools/gimphuesaturationtool.c:310
 msgid "_Lightness"
 msgstr "_Luminosidade"
 
@@ -14876,7 +14902,8 @@ msgstr "Seleção difusa"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr "Ferramenta Seleção difusa: selecionar uma região contígua com base na sua cor"
+msgstr ""
+"Ferramenta Seleção difusa: selecionar uma região contígua com base na sua cor"
 
 #: ../app/tools/gimpfuzzyselecttool.c:68
 msgid "Fu_zzy Select"
@@ -14888,7 +14915,7 @@ msgid "Fuzzy Select"
 msgstr "Seleção difusa"
 
 #: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:85
-#: ../app/tools/gimpoperationtool.c:112 ../app/tools/gimpoperationtool.c:132
+#: ../app/tools/gimpoperationtool.c:129 ../app/tools/gimpoperationtool.c:149
 msgid "GEGL Operation"
 msgstr "Operação GEGL"
 
@@ -14896,7 +14923,7 @@ msgstr "Operação GEGL"
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "Ferramenta GEGL: usar uma operação GEGL à escolha"
 
-#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:114
+#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:131
 msgid "_GEGL Operation..."
 msgstr "Operação _GEGL..."
 
@@ -15070,7 +15097,8 @@ msgstr "Ajuste"
 msgid "Size"
 msgstr "Tamanho"
 
-#: ../app/tools/gimpinkoptions-gui.c:72 ../app/tools/gimppaintoptions-gui.c:186
+#: ../app/tools/gimpinkoptions-gui.c:72
+#: ../app/tools/gimppaintoptions-gui.c:186
 #: ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Ângulo"
@@ -15080,7 +15108,8 @@ msgstr "Ângulo"
 msgid "Sensitivity"
 msgstr "Sensibilidade"
 
-#: ../app/tools/gimpinkoptions-gui.c:95 ../app/widgets/gimpdynamicseditor.c:145
+#: ../app/tools/gimpinkoptions-gui.c:95
+#: ../app/widgets/gimpdynamicseditor.c:145
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Tilt"
 msgstr "Inclinação"
@@ -15487,27 +15516,31 @@ msgstr ""
 msgid "_N-Point Deformation"
 msgstr "_Deformação de ponto N"
 
-#: ../app/tools/gimpoperationtool.c:113
+#: ../app/tools/gimpoperationtool.c:130
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Ferramenta Operação: usar uma operação GEGL à escolha"
 
-#: ../app/tools/gimpoperationtool.c:351
+#: ../app/tools/gimpoperationtool.c:352
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importar definições \"%s\""
 
-#: ../app/tools/gimpoperationtool.c:352
+#: ../app/tools/gimpoperationtool.c:353
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportar definições \"%s\""
 
-#: ../app/tools/gimpoperationtool.c:663
-msgid "_Aux Input"
-msgstr "_Entrada auxiliar"
+#: ../app/tools/gimpoperationtool.c:679
+#, c-format
+#| msgid "_Aux Input"
+msgid "Aux Input"
+msgstr "Entrada auxiliar"
 
-#: ../app/tools/gimpoperationtool.c:705
-msgid "_Aux2 Input"
-msgstr "Entrada _Auxiliar 2"
+#: ../app/tools/gimpoperationtool.c:684
+#, c-format
+#| msgid "_Aux Input"
+msgid "Aux%d Input"
+msgstr "Entrada auxiliar%d"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -15538,8 +15571,10 @@ msgstr "Repor a proporção original do pincel"
 msgid "Reset angle to zero"
 msgstr "Repor ângulo em zero"
 
-#: ../app/tools/gimppaintoptions-gui.c:194 ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
+#: ../app/tools/gimppaintoptions-gui.c:194
+#: ../app/widgets/gimpbrusheditor.c:211
+#: ../app/widgets/gimpbrushfactoryview.c:81
+#: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaçamento"
 
@@ -15583,7 +15618,8 @@ msgstr "Opções de desvanecimento"
 msgid "Fade length"
 msgstr "Duração do desvanecimento"
 
-#: ../app/tools/gimppaintoptions-gui.c:356 ../app/widgets/gimpviewablebox.c:309
+#: ../app/tools/gimppaintoptions-gui.c:356
+#: ../app/widgets/gimpviewablebox.c:309
 msgid "Reverse"
 msgstr "Reverso"
 
@@ -15926,7 +15962,8 @@ msgstr "Ativar esbatimento das margens da seleção"
 msgid "Radius of feathering"
 msgstr "Raio de esbatimento"
 
-#: ../app/tools/gimpselectionoptions.c:218 ../app/widgets/gimpbrushselect.c:190
+#: ../app/tools/gimpselectionoptions.c:218
+#: ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Modo:"
 
@@ -16261,7 +16298,6 @@ msgstr "Manter as proporções originais"
 
 #: ../app/tools/gimptransformoptions.c:480
 #, c-format
-#| msgid "Constrain  (%s)"
 msgid "Constrain (%s)"
 msgstr "Restringir (%s)"
 
@@ -16286,15 +16322,14 @@ msgstr "Restringir rotação a incrementos de 15 graus (%s)"
 
 #: ../app/tools/gimptransformoptions.c:488
 #, c-format
-#| msgid "Shear along edge direction only  (%s)"
 msgid "Shear along edge direction only (%s)"
 msgstr "Aparar só ao longo da direção da margem (%s)"
 
 #: ../app/tools/gimptransformoptions.c:490
 #, c-format
-#| msgid "Constrain perspective handles to move along edges and diagonal  (%s)"
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
-msgstr "Restringir pegas de perspetiva para mover ao longo de margens e diagonal (%s)"
+msgstr ""
+"Restringir pegas de perspetiva para mover ao longo de margens e diagonal (%s)"
 
 #: ../app/tools/gimptransformoptions.c:493
 #, c-format
@@ -16308,13 +16343,11 @@ msgstr "Escalar a partir do ponto pivô (%s)"
 
 #: ../app/tools/gimptransformoptions.c:497
 #, c-format
-#| msgid "Shear opposite edge by same amount  (%s)"
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Aparar a margem oposta na mesma medida (%s)"
 
 #: ../app/tools/gimptransformoptions.c:499
 #, c-format
-#| msgid "Maintain position of pivot while changing perspective  (%s)"
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Manter a posição do pivô ao alterar a perspetiva (%s)"
 
@@ -16324,13 +16357,11 @@ msgstr "Pivô"
 
 #: ../app/tools/gimptransformoptions.c:503
 #, c-format
-#| msgid "Snap  (%s)"
 msgid "Snap (%s)"
 msgstr "Atrair (%s)"
 
 #: ../app/tools/gimptransformoptions.c:504
 #, c-format
-#| msgid "Snap pivot to corners and center  (%s)"
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Atrair pivô aos cantos e centrar (%s)"
 
@@ -18806,6 +18837,9 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difuso"
+
+#~ msgid "_Aux2 Input"
+#~ msgstr "Entrada _Auxiliar 2"
 
 #~ msgctxt "image-convert-action"
 #~ msgid "8 bit integer (linear)"
