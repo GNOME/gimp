@@ -318,8 +318,8 @@ create_color_profile_combo_box (void)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   combo = gimp_color_profile_combo_box_new (gtk_dialog_new (), NULL);
-  gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                    NULL, "sRGB");
+  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                         NULL, "sRGB");
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
   gtk_container_add (GTK_CONTAINER (align), combo);
   gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
