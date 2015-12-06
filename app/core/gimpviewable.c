@@ -449,20 +449,21 @@ gimp_viewable_serialize_property (GimpConfig       *config,
 
     case PROP_ICON_PIXBUF:
       {
-        GdkPixbuf *icon_pixbuf    = NULL;
-        gchar     *pixbuffer      = NULL;
-        gchar     *pixbuffer_enc  = NULL;
-        gsize      pixbuffer_size = 0;
-        GError    *error          = NULL;
+        GdkPixbuf *icon_pixbuf = g_value_get_object (value);
 
-        icon_pixbuf = g_value_get_object (value);
         if (icon_pixbuf)
           {
+            gchar  *pixbuffer;
+            gsize   pixbuffer_size;
+            GError *error = NULL;
+
             if (gdk_pixbuf_save_to_buffer (icon_pixbuf,
                                            &pixbuffer,
                                            &pixbuffer_size,
                                            "png", &error, NULL))
               {
+                gchar *pixbuffer_enc;
+
                 pixbuffer_enc = g_base64_encode ((guchar *)pixbuffer,
                                                  pixbuffer_size);
                 gimp_config_writer_open (writer, "icon-pixbuf");
@@ -495,37 +496,28 @@ gimp_viewable_deserialize_property (GimpConfig *config,
     {
     case PROP_ICON_PIXBUF:
       {
-        gchar     *encoded_image = NULL;
-        GdkPixbuf *icon_pixbuf   = NULL;
+        GdkPixbuf *icon_pixbuf = NULL;
+        gchar     *encoded_image;
 
         if (! gimp_scanner_parse_string (scanner, &encoded_image))
           {
             *expected = G_TOKEN_STRING;
-            break;
+            return TRUE;
           }
 
         if (encoded_image && strlen (encoded_image) > 0)
           {
-            gsize   out_len       = 0;
+            gsize   out_len;
             guchar *decoded_image = g_base64_decode (encoded_image, &out_len);
 
             if (decoded_image)
               {
-                GInputStream *decoded_image_stream = NULL;
-                GdkPixbuf    *pixbuf               = NULL;
+                GInputStream *stream;
 
-                decoded_image_stream =
-                  g_memory_input_stream_new_from_data (decoded_image,
-                                                       out_len, NULL);
-                pixbuf = gdk_pixbuf_new_from_stream (decoded_image_stream,
-                                                     NULL,
-                                                     NULL);
-                g_object_unref (decoded_image_stream);
-
-                if (pixbuf)
-                  {
-                    icon_pixbuf = pixbuf;
-                  }
+                stream = g_memory_input_stream_new_from_data (decoded_image,
+                                                              out_len, NULL);
+                icon_pixbuf = gdk_pixbuf_new_from_stream (stream, NULL, NULL);
+                g_object_unref (stream);
 
                 g_free (decoded_image);
               }
@@ -535,13 +527,13 @@ gimp_viewable_deserialize_property (GimpConfig *config,
 
         g_value_take_object (value, icon_pixbuf);
       }
-      break;
+      return TRUE;
 
     default:
-      return FALSE;
+      break;
     }
 
-  return TRUE;
+  return FALSE;
 }
 
 /**
