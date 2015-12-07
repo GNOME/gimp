@@ -13,10 +13,10 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-05 07:09+0000\n"
-"PO-Revision-Date: 2015-12-05 23:56+0000\n"
+"POT-Creation-Date: 2015-12-07 07:40+0000\n"
+"PO-Revision-Date: 2015-12-07 13:51+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <translation-team-is@lists.sourceforge.org>\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -213,7 +213,7 @@ msgstr "Skrifa raðaðan lista yfir úreld ferli í PDB (Procedural DataBase)"
 
 #: ../app/main.c:278
 msgid "Show a preferences page with experimental features"
-msgstr ""
+msgstr "Birta kjörstillingasíðu með tilraunaeiginleikum"
 
 #: ../app/main.c:447
 msgid "[FILE|URI...]"
@@ -850,56 +850,41 @@ msgid "Add current background color"
 msgstr "Bæta við núverandi bakgrunnslit"
 
 #: ../app/actions/colormap-actions.c:73
-#| msgid "Select Color"
 msgctxt "colormap-action"
 msgid "_Select this Color"
 msgstr "_Veldu þennan lit"
 
 #: ../app/actions/colormap-actions.c:74
-#| msgctxt "tools-action"
-#| msgid "Select regions with similar colors"
 msgctxt "colormap-action"
 msgid "Select all pixels with this color"
 msgstr "Velja alla mynddíla með þessum lit"
 
 #: ../app/actions/colormap-actions.c:79
-#| msgctxt "channels-action"
-#| msgid "_Add to Selection"
 msgctxt "colormap-action"
 msgid "_Add to Selection"
 msgstr "_Bæta við myndval"
 
 #: ../app/actions/colormap-actions.c:80
-#| msgctxt "channels-action"
-#| msgid "Add this channel to the current selection"
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
 msgstr "Bæta öllum mynddílum með þessum lit við núverandi myndval"
 
 #: ../app/actions/colormap-actions.c:85
-#| msgctxt "channels-action"
-#| msgid "_Subtract from Selection"
 msgctxt "colormap-action"
 msgid "_Subtract from Selection"
 msgstr "_Draga frá myndvali"
 
 #: ../app/actions/colormap-actions.c:86
-#| msgctxt "channels-action"
-#| msgid "Subtract this channel from the current selection"
 msgctxt "colormap-action"
 msgid "Subtract all pixels with this color from the current selection"
 msgstr "Draga alla mynddíla með þessum lit frá núverandi myndvali"
 
 #: ../app/actions/colormap-actions.c:91
-#| msgctxt "channels-action"
-#| msgid "_Intersect with Selection"
 msgctxt "colormap-action"
 msgid "_Intersect with Selection"
 msgstr "Skara við m_yndval"
 
 #: ../app/actions/colormap-actions.c:92
-#| msgctxt "channels-action"
-#| msgid "Intersect this channel with the current selection"
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
 msgstr "Skara alla mynddíla með þessum lit við núverandi myndval"
@@ -1442,12 +1427,12 @@ msgstr "_Um hugbúnaðinn"
 #: ../app/actions/dialogs-actions.c:275
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
-msgstr ""
+msgstr "_Leita að skipun og keyra"
 
 #: ../app/actions/dialogs-actions.c:276
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
-msgstr ""
+msgstr "Leita að skipunum eftir stikkorðum, og keyra þær síðan"
 
 #: ../app/actions/dialogs-actions.c:339
 #: ../app/dialogs/preferences-dialog.c:1859 ../app/widgets/gimptoolbox.c:533
@@ -2690,8 +2675,6 @@ msgid "_Bump Map..."
 msgstr "Ó_jöfnuvörpun..."
 
 #: ../app/actions/filters-actions.c:68
-#| msgctxt "filters-action"
-#| msgid "Color to Gray..."
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "Litur í _grátt..."
@@ -2802,15 +2785,11 @@ msgid "_Emboss..."
 msgstr "Upphleypa..."
 
 #: ../app/actions/filters-actions.c:178
-#| msgctxt "filters-action"
-#| msgid "_En_grave..."
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "Myn_drista..."
 
 #: ../app/actions/filters-actions.c:183
-#| msgctxt "filters-action"
-#| msgid "_E_xposure..."
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Lýsingartími..."
@@ -2826,8 +2805,6 @@ msgid "_Gaussian Blur..."
 msgstr "_Gaussísk afskerping..."
 
 #: ../app/actions/filters-actions.c:198
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Valkvæð Gaussísk afskerping..."
@@ -2858,14 +2835,11 @@ msgid "Lens Flare..."
 msgstr "Ljósglampi í linsu..."
 
 #: ../app/actions/filters-actions.c:228
-#| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Völundarhús..."
 
 #: ../app/actions/filters-actions.c:233
-#| msgctxt "filters-action"
-#| msgid "_Channel Mixer..."
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "Einlitar_blandari..."
@@ -2876,8 +2850,6 @@ msgid "_Mosaic..."
 msgstr "_Mósaík..."
 
 #: ../app/actions/filters-actions.c:243
-#| msgctxt "tools-action"
-#| msgid "_Arbitrary Rotation..."
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Hringlaga hreyfingarafskerping..."
@@ -2893,7 +2865,6 @@ msgid "_Zoom Motion Blur..."
 msgstr "Að_dráttur við hreyfingarafskerpingu..."
 
 #: ../app/actions/filters-actions.c:258
-#| msgid "Colori_ze..."
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Reitasuð..."
@@ -2914,8 +2885,6 @@ msgid "_Hurl..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:278
-#| msgctxt "image-action"
-#| msgid "_Print Size..."
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "_Perlin suð..."
@@ -2931,14 +2900,11 @@ msgid "_RGB Noise..."
 msgstr "_RGB suð..."
 
 #: ../app/actions/filters-actions.c:293
-#| msgid "No selection"
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Tru_flanasía..."
 
 #: ../app/actions/filters-actions.c:298
-#| msgctxt "dialogs-action"
-#| msgid "_Sample Points"
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Simplex suð..."
@@ -2999,8 +2965,6 @@ msgid "_Ripple..."
 msgstr "_Gárur..."
 
 #: ../app/actions/filters-actions.c:358
-#| msgctxt "patterns-action"
-#| msgid "_Edit Pattern..."
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Hálf-fletja..."
@@ -3026,7 +2990,6 @@ msgid "_Softglow..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:383
-#| msgid "B_rightness-Contrast..."
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Teygja birtuskil..."
@@ -3072,14 +3035,11 @@ msgid "_Value Propagate..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:428
-#| msgid "_GEGL Operation..."
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Skemm_d myndmerkis..."
 
 #: ../app/actions/filters-actions.c:433
-#| msgctxt "palettes-action"
-#| msgid "_Edit Palette..."
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "Hornsk_ygging..."
@@ -3670,7 +3630,7 @@ msgstr "Úthlut_a litasniði..."
 #: ../app/actions/image-actions.c:81
 msgctxt "image-action"
 msgid "Set a color profile on the image"
-msgstr "Setja litasniði fyrir myndina"
+msgstr "Setja litasnið fyrir myndina"
 
 #: ../app/actions/image-actions.c:86
 msgctxt "image-action"
@@ -3758,8 +3718,6 @@ msgid "Crop to C_ontent"
 msgstr "Utansníða að _innihaldi"
 
 #: ../app/actions/image-actions.c:135
-#| msgctxt "image-action"
-#| msgid "Crop the image to the extents of the selection"
 msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
@@ -3853,8 +3811,6 @@ msgid "8 bit integer"
 msgstr "8 bita heiltala"
 
 #: ../app/actions/image-actions.c:193
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Umbreyta myndinni í 8 bita heiltölu"
@@ -3865,8 +3821,6 @@ msgid "16 bit integer"
 msgstr "16 bita heiltala"
 
 #: ../app/actions/image-actions.c:199
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Umbreyta myndinni í 16 bita heiltölu"
@@ -3877,50 +3831,36 @@ msgid "32 bit integer"
 msgstr "32 bita heiltala"
 
 #: ../app/actions/image-actions.c:205
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Umbreyta myndinni í 32 bita heiltölu"
 
 #: ../app/actions/image-actions.c:209
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
 msgstr "16 bita fleytitala"
 
 #: ../app/actions/image-actions.c:211
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Umbreyta myndinni í 16 bita fleytitölu"
 
 #: ../app/actions/image-actions.c:215
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
 msgstr "32 bita fleytitala"
 
 #: ../app/actions/image-actions.c:217
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Umbreyta myndinni í 32 bita fleytitölu"
 
 #: ../app/actions/image-actions.c:221
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
 msgstr "64 bita fleytitala"
 
 #: ../app/actions/image-actions.c:223
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
 msgstr "Umbreyta myndinni í 64 bita fleytitölu"
@@ -3931,22 +3871,16 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Skynjanlegt litróf (sRGB)"
 
 #: ../app/actions/image-actions.c:232
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to grayscale"
 msgctxt "image-convert-action"
 msgid "Convert the image to preceptual (sRGB) gamma"
 msgstr "Umbreyta myndinni í skynjanlegt (sRGB) litróf"
 
 #: ../app/actions/image-actions.c:236
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "image-convert-action"
 msgid "Linear light"
 msgstr "Línuleg lýsing"
 
 #: ../app/actions/image-actions.c:238
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
 msgstr "Umbreyta myndinni í línulega lýsingu"
@@ -4385,8 +4319,6 @@ msgid "Crop to C_ontent"
 msgstr "Utansníða að _innihaldi"
 
 #: ../app/actions/layers-actions.c:217
-#| msgctxt "layers-action"
-#| msgid "Crop the layer to the extents of the selection"
 msgctxt "layers-action"
 msgid ""
 "Crop the layer to the extents of its content (remove empty borders from the "
@@ -5295,7 +5227,6 @@ msgstr "Minnka val um"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:211 ../app/actions/select-commands.c:295
-#| msgid "Select a single contiguous area"
 msgid "_Selected areas continue outside the image"
 msgstr "Valin _svæði halda áfram utan myndar"
 
@@ -5663,15 +5594,11 @@ msgid "Show tool preset file location in the file manager"
 msgstr "Birta staðsetningu forstillingaskrár í skráarstjóra"
 
 #: ../app/actions/tool-presets-actions.c:74
-#| msgctxt "tool-options-action"
-#| msgid "_Restore Tool Preset"
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
 msgstr "Endu_rheimta forstillingu verkfæris"
 
 #: ../app/actions/tool-presets-actions.c:75
-#| msgctxt "tool-presets-action"
-#| msgid "Delete this tool preset"
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
 msgstr "Endurheimta forstillingu þessa verkfæris"
@@ -6029,8 +5956,6 @@ msgid "_Zoom"
 msgstr "Aðdrá_ttur"
 
 #: ../app/actions/view-actions.c:71
-#| msgctxt "view-action"
-#| msgid "_Rotate"
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Fletta og snúa"
@@ -6086,15 +6011,11 @@ msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Aðlaga aðdrátt þannig að glugginn sé allur í notkun"
 
 #: ../app/actions/view-actions.c:102
-#| msgctxt "image-action"
-#| msgid "_Crop to Selection"
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Aðdráttur að _myndvali"
 
 #: ../app/actions/view-actions.c:103
-#| msgctxt "view-action"
-#| msgid "Adjust the zoom ratio so that the entire window is used"
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr "Aðlaga aðdrátt þannig að myndvalið fylli gluggann"
@@ -6440,15 +6361,11 @@ msgid "Set a custom zoom factor"
 msgstr "Stilla sérsniðinn aðdrátt"
 
 #: ../app/actions/view-actions.c:400
-#| msgctxt "drawable-action"
-#| msgid "Flip _Horizontally"
 msgctxt "view-action"
 msgid "Flip Horizontally"
 msgstr "Fletta lárétt"
 
 #: ../app/actions/view-actions.c:406
-#| msgctxt "drawable-action"
-#| msgid "Flip _Vertically"
 msgctxt "view-action"
 msgid "Flip Vertically"
 msgstr "Fletta lóðrétt"
@@ -6456,88 +6373,71 @@ msgstr "Fletta lóðrétt"
 #: ../app/actions/view-actions.c:420
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
-msgstr ""
+msgstr "F_rumstilla Fletta og snúa"
 
 #: ../app/actions/view-actions.c:422
-#, fuzzy
 #| msgid "Reset angle to zero"
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
-msgstr "Frumstilla horn á núll"
+msgstr "Frumstilla flettingu á óflett og snúningshorn á 0°"
 
 #: ../app/actions/view-actions.c:430
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Rotate 90° _clockwise"
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
-msgstr "Snúa 90° _réttsælis"
+msgstr "Snúa 15° _réttsælis"
 
 #: ../app/actions/view-actions.c:431
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Rotate 90 degrees to the right"
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
-msgstr "Snúa myndinni 90 gráður til hægri"
+msgstr "Snúa 15 gráður til hægri"
 
 #: ../app/actions/view-actions.c:436
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90° _clockwise"
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Snúa 90° _réttsælis"
 
 #: ../app/actions/view-actions.c:437
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90 degrees to the right"
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Snúa myndinni 90 gráður til hægri"
 
 #: ../app/actions/view-actions.c:442
-#| msgctxt "drawable-action"
-#| msgid "Rotate _180°"
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Snúa _180°"
 
 #: ../app/actions/view-actions.c:443
-#| msgctxt "drawable-action"
-#| msgid "Turn upside-down"
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Snúa myndinni á hvolf"
 
 #: ../app/actions/view-actions.c:448
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90° counter-clock_wise"
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Snúa 90° ran_gsælis"
 
 #: ../app/actions/view-actions.c:449
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
-msgstr "Snúa myndinni 90 gráður til vinstri"
+msgstr "Snúa 90 gráður til vinstri"
 
 #: ../app/actions/view-actions.c:454
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Rotate 90° counter-clock_wise"
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
-msgstr "Snúa 90° ran_gsælis"
+msgstr "Snúa 15° ran_gsælis"
 
 #: ../app/actions/view-actions.c:455
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Rotate 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
-msgstr "Snúa myndinni 90 gráður til vinstri"
+msgstr "Snúa 15 gráður til vinstri"
 
 #: ../app/actions/view-actions.c:463
 msgctxt "view-padding-color"
@@ -6611,25 +6511,23 @@ msgstr "_Aðdráttur (%s)"
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:907
 msgid "(H+V) "
-msgstr ""
+msgstr "(H+V) "
 
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:912
-#, fuzzy
 msgid "(H) "
-msgstr "H"
+msgstr "(H) "
 
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:917
-#, fuzzy
 msgid "(V) "
-msgstr "V"
+msgstr "(V) "
 
 #: ../app/actions/view-actions.c:924
-#, fuzzy, c-format
+#, c-format
 #| msgid "_Rotate"
 msgid "_Flip %s& Rotate (%d°)"
-msgstr "S_núa"
+msgstr "_Fletta %s& snúa (%d°)"
 
 #: ../app/actions/view-commands.c:723
 msgid "Set Canvas Padding Color"
@@ -6685,11 +6583,10 @@ msgid "Switch to the previous image"
 msgstr "Skipa yfir í fyrri mynd"
 
 #: ../app/actions/windows-actions.c:116
-#, fuzzy
 #| msgid "Position:"
 msgctxt "windows-action"
 msgid "_Tabs Position"
-msgstr "Staðsetning:"
+msgstr "S_taðsetning flipa"
 
 #: ../app/actions/windows-actions.c:122
 msgctxt "windows-action"
@@ -6697,7 +6594,6 @@ msgid "Hide Docks"
 msgstr "Fela spjöld"
 
 #: ../app/actions/windows-actions.c:123
-#, fuzzy
 #| msgctxt "windows-action"
 #| msgid ""
 #| "When enabled docks and other dialogs are hidden, leaving only image "
@@ -6715,7 +6611,6 @@ msgid "Single-Window Mode"
 msgstr "Eins-glugga-hamur"
 
 #: ../app/actions/windows-actions.c:130
-#, fuzzy
 #| msgctxt "windows-action"
 #| msgid "When enabled GIMP is in a single-window mode."
 msgctxt "windows-action"
@@ -6728,27 +6623,23 @@ msgid "_Top"
 msgstr "_Efst"
 
 #: ../app/actions/windows-actions.c:140
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Raise this path to the top"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
-msgstr "Setja þennan feril efst"
+msgstr "Setja flipana efst"
 
 #: ../app/actions/windows-actions.c:144
-#| msgctxt "layers-action"
-#| msgid "Layer to _Bottom"
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
 msgstr "_Neðst"
 
 #: ../app/actions/windows-actions.c:145
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Lower this path to the bottom"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
-msgstr "Setja þennan feril neðst"
+msgstr "Setja flipana neðst"
 
 #: ../app/actions/windows-actions.c:149
 msgctxt "windows-tabs-position-action"
@@ -6758,7 +6649,7 @@ msgstr "_Vinstri"
 #: ../app/actions/windows-actions.c:150
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
-msgstr ""
+msgstr "Setja flipana vinstra megin"
 
 #: ../app/actions/windows-actions.c:154
 msgctxt "windows-tabs-position-action"
@@ -6768,7 +6659,7 @@ msgstr "_Hægri"
 #: ../app/actions/windows-actions.c:155
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
-msgstr ""
+msgstr "Setja flipana hægra megin"
 
 #: ../app/actions/windows-commands.c:183
 msgid ""
@@ -7344,7 +7235,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:392
 msgid "Enable the MyPaint Brush tool."
-msgstr ""
+msgstr "Virkja MyPaint Brush málunarpensla."
 
 #: ../app/config/gimprc-blurbs.h:395
 msgid "Enable the Seamless Clone tool."
@@ -7482,10 +7373,9 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "þegar þetta er virkjað opnar F1-lykillinn hjálparvafrann."
 
 #: ../app/config/gimprc-blurbs.h:485
-#, fuzzy
 #| msgid "When enabled, menus can be torn off."
 msgid "When enabled, uses OpenCL for some operations."
-msgstr "Ef þetta er virkjað er hægt að slíta valmyndirnar lausar."
+msgstr "Ef þetta er virkjað, er OpenCL notað í nokkrum aðgerðum."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:135
 #: ../app/core/gimp-units.c:168 ../app/gui/session.c:292
@@ -7616,31 +7506,28 @@ msgstr "Einungis lýsa"
 #: ../app/core/core-enums.c:302
 msgctxt "layer-mode-effects"
 msgid "Hue (HSV)"
-msgstr ""
+msgstr "Litblær (HSV)"
 
 #: ../app/core/core-enums.c:303
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Saturation"
 msgctxt "layer-mode-effects"
 msgid "Saturation (HSV)"
-msgstr "Litmettun"
+msgstr "Litmettun (HSV)"
 
 #: ../app/core/core-enums.c:304
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color (HSV)"
-msgstr "Litur"
+msgstr "Litur (HSV)"
 
 #: ../app/core/core-enums.c:305
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Value"
 msgctxt "layer-mode-effects"
 msgid "Value (HSV)"
-msgstr "Gildi"
+msgstr "Litgildi (HSV)"
 
 #: ../app/core/core-enums.c:306
 msgctxt "layer-mode-effects"
@@ -7690,27 +7577,25 @@ msgstr "Yfirprentun"
 #: ../app/core/core-enums.c:315
 msgctxt "layer-mode-effects"
 msgid "Hue (LCH)"
-msgstr ""
+msgstr "Litblær (LCH)"
 
 #: ../app/core/core-enums.c:316
 msgctxt "layer-mode-effects"
 msgid "Chroma (LCH)"
-msgstr ""
+msgstr "Litróf (LCH)"
 
 #: ../app/core/core-enums.c:317
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color (LCH)"
-msgstr "Litur"
+msgstr "Litur (LCH)"
 
 #: ../app/core/core-enums.c:318
-#, fuzzy
 #| msgid "_Lightness:"
 msgctxt "layer-mode-effects"
 msgid "Lightness (LCH)"
-msgstr "_Ljósleiki:"
+msgstr "Ljósleiki (LCH)"
 
 #: ../app/core/core-enums.c:319
 msgctxt "layer-mode-effects"
@@ -8125,11 +8010,10 @@ msgid "Image type"
 msgstr "Tegund myndar"
 
 #: ../app/core/core-enums.c:875
-#, fuzzy
 #| msgid "Image Properties"
 msgctxt "undo-type"
 msgid "Image precision"
-msgstr "Eiginleikar myndar"
+msgstr "Nákvæmni myndar"
 
 #: ../app/core/core-enums.c:876
 msgctxt "undo-type"
@@ -8142,12 +8026,11 @@ msgid "Image resolution change"
 msgstr "Breyting á myndupplausn"
 
 #: ../app/core/core-enums.c:879
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Change Image Unit"
 msgctxt "undo-type"
 msgid "Change metadata"
-msgstr "Breyta einingum myndar"
+msgstr "Breyta lýsigögnum"
 
 #: ../app/core/core-enums.c:880
 msgctxt "undo-type"
@@ -8165,20 +8048,18 @@ msgid "Rename item"
 msgstr "Endurnefna hlut"
 
 #: ../app/core/core-enums.c:891
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
-msgstr "Læsa/Aflæsa alfa-gegnsæislitrás"
+msgstr "Læsa/Aflæsa innihaldi"
 
 #: ../app/core/core-enums.c:892
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
-msgstr "Læsa/Aflæsa alfa-gegnsæislitrás"
+msgstr "Læsa/Aflæsa staðsetningu"
 
 #: ../app/core/core-enums.c:893
 msgctxt "undo-type"
@@ -8231,12 +8112,11 @@ msgid "Text layer modification"
 msgstr "Breyting á textalagi"
 
 #: ../app/core/core-enums.c:903
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Convert group layer"
 msgctxt "undo-type"
 msgid "Convert text layer"
-msgstr "Umbreyta lagahóp"
+msgstr "Umbreyta textalagi"
 
 #: ../app/core/core-enums.c:905
 msgctxt "undo-type"
@@ -8677,15 +8557,15 @@ msgid "Brush Spacing"
 msgstr "Millibil pensils"
 
 #: ../app/core/gimpbrushgenerated-load.c:75
-#, fuzzy, c-format
+#, c-format
 #| msgid "not a GIMP Curves file"
 msgid "Not a GIMP brush file."
-msgstr "Ekki GIMP litferlaskrá (curves file)"
+msgstr "Ekki GIMP pensilskrá."
 
 #: ../app/core/gimpbrushgenerated-load.c:95
 #, c-format
 msgid "Unknown GIMP brush version."
-msgstr ""
+msgstr "Óþekkt útgáfa GIMP-pensils."
 
 #: ../app/core/gimpbrushgenerated-load.c:152
 #, c-format
@@ -9022,7 +8902,7 @@ msgstr "Blanda"
 
 #: ../app/core/gimpdrawable-blend.c:543
 msgid "Calculating distance map"
-msgstr ""
+msgstr "Reikna fjarlægðarvörpun"
 
 #: ../app/core/gimpdrawable-blend.c:872 ../app/pdb/edit-cmds.c:801
 #: ../app/tools/gimpblendtool.c:857
@@ -9041,7 +8921,7 @@ msgstr "Bitrujafna"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:65
 msgid "Computing alpha of unknown pixels"
-msgstr ""
+msgstr "Reikna út gegnsæi óþekktra mynddíla"
 
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:324
@@ -9092,10 +8972,10 @@ msgid "Output type"
 msgstr "Úttakstegund"
 
 #: ../app/core/gimpgradient-load.c:72
-#, fuzzy, c-format
+#, c-format
 #| msgid "not a GIMP Curves file"
 msgid "Not a GIMP gradient file."
-msgstr "Ekki GIMP litferlaskrá (curves file)"
+msgstr "Ekki GIMP litstigulskrá."
 
 #: ../app/core/gimpgradient-load.c:95
 #, c-format
@@ -9105,31 +8985,30 @@ msgstr "ógildur UTF-8-strengur í litstigulskrá '%s'."
 #: ../app/core/gimpgradient-load.c:121
 #, c-format
 msgid "File is corrupt."
-msgstr ""
+msgstr "Skráin er skemmd."
 
 #: ../app/core/gimpgradient-load.c:195 ../app/core/gimpgradient-load.c:203
 #, c-format
 msgid "Corrupt segment %d."
-msgstr ""
+msgstr "Skemmdur geiri %d."
 
 #: ../app/core/gimpgradient-load.c:214 ../app/core/gimpgradient-load.c:224
-#, fuzzy, c-format
+#, c-format
 #| msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgid "Segments do not span the range 0-1."
-msgstr ""
-"Litstigulskráin '%s' er skemmd: Litstigulgeirar spanna ekki sviðið 0-1."
+msgstr "Litstigulgeirar spanna ekki sviðið 0-1."
 
 #: ../app/core/gimpgradient-load.c:239
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid empty gradient name"
 msgid "In line %d of gradient file: "
-msgstr "Ógilt heiti á auðum litstigli"
+msgstr "Í línu %d í litstigulskrá: "
 
 #: ../app/core/gimpgradient-load.c:315
-#, fuzzy, c-format
+#, c-format
 #| msgid "No linear gradients found in '%s'"
 msgid "No linear gradients found."
-msgstr "Engir línulegir litstiglar fundust í '%s'"
+msgstr "Engir línulegir litstiglar fundust."
 
 #: ../app/core/gimpgradient-save.c:211
 #, fuzzy, c-format
@@ -9308,7 +9187,7 @@ msgstr "Prófun ICC litasniðs mistókst: Litasniðið er ekki fyrir RGB litrým
 #: ../app/core/gimpimage-color-profile.c:368
 #, c-format
 msgid "Converting from '%s' to '%s'"
-msgstr ""
+msgstr "Umbreyti úr '%s' í '%s'"
 
 #: ../app/core/gimpimage-color-profile.c:373
 msgid "Color profile conversion"
@@ -10163,70 +10042,54 @@ msgid "Initialize from _selection"
 msgstr "B_yrja frá myndvali"
 
 #: ../app/dialogs/color-profile-dialog.c:163
-#| msgctxt "image-action"
-#| msgid "_Convert to Color Profile..."
 msgid "Convert to ICC Color Profile"
 msgstr "Umbreyta í ICC litasnið"
 
 #: ../app/dialogs/color-profile-dialog.c:166
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Remove the image's color profile"
 msgid "Convert the image to a color profile"
-msgstr "Fjarlægja litasnið myndarinnar"
+msgstr "Umbreyta mynd í litasnið"
 
 #: ../app/dialogs/color-profile-dialog.c:180
-#| msgctxt "image-action"
-#| msgid "_Assign Color Profile..."
 msgid "Assign ICC Color Profile"
 msgstr "Úthluta ICC litasniði"
 
 #: ../app/dialogs/color-profile-dialog.c:183
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Apply a color profile to the image"
 msgid "Assign a color profile to the image"
-msgstr "Beita litasniði á myndina"
+msgstr "Úthluta litasniði á myndina"
 
 #: ../app/dialogs/color-profile-dialog.c:189
-#| msgctxt "vector-mode"
-#| msgid "Design"
 msgid "_Assign"
 msgstr "Úthlut_a"
 
 #: ../app/dialogs/color-profile-dialog.c:214
-#| msgid "Color Profile"
 msgid "Current Color Profile"
 msgstr "Núgildandi litasnið"
 
 #: ../app/dialogs/color-profile-dialog.c:224
-#| msgid "C_onvert"
 msgid "Convert to"
 msgstr "_Umbreyta í"
 
 #: ../app/dialogs/color-profile-dialog.c:224
-#| msgctxt "vector-mode"
-#| msgid "Design"
 msgid "Assign"
 msgstr "Úthluta"
 
 #: ../app/dialogs/color-profile-dialog.c:236
 msgid "Profile _details"
-msgstr ""
+msgstr "_Nánar um litasnið"
 
 #: ../app/dialogs/color-profile-dialog.c:265
-#| msgid "_Display rendering intent:"
 msgid "_Rendering Intent:"
 msgstr "Myndge_rðarmarkmið:"
 
 #: ../app/dialogs/color-profile-dialog.c:281
-#| msgid "Pointer Information"
 msgid "_Black Point Compensation"
 msgstr "_BPC svartgildisjöfnun"
 
 #: ../app/dialogs/color-profile-dialog.c:304
-#| msgctxt "layers-action"
-#| msgid "Select _Bottom Layer"
 msgid "Select destination profile"
 msgstr "Veldu úttakslitasnið"
 
@@ -10249,11 +10112,10 @@ msgid "Converting to '%s'"
 msgstr "Umbreyta mynd í RGB"
 
 #: ../app/dialogs/color-profile-dialog.c:413
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "_Assign Color Profile..."
 msgid "Assign color profile"
-msgstr "Úthlut_a litasniði..."
+msgstr "Úthluta litasniði"
 
 #: ../app/dialogs/color-profile-import-dialog.c:78
 #, fuzzy
@@ -10263,27 +10125,25 @@ msgid "Convert to RGB Working Space?"
 msgstr "Umbreyta í RGB litrýmd"
 
 #: ../app/dialogs/color-profile-import-dialog.c:81
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Remove the image's color profile"
 msgid "Import the image from a color profile"
-msgstr "Fjarlægja litasnið myndarinnar"
+msgstr "Flytja inn mynd úr litasniði"
 
 #: ../app/dialogs/color-profile-import-dialog.c:86
 msgid "Keep"
 msgstr "Halda"
 
 #: ../app/dialogs/color-profile-import-dialog.c:87
-#| msgid "C_onvert"
 msgid "Convert"
 msgstr "Umbreyta"
 
 #: ../app/dialogs/color-profile-import-dialog.c:104
-#, fuzzy, c-format
+#, c-format
 #| msgctxt "image-action"
 #| msgid "Remove the image's color profile"
 msgid "The image '%s' has an embedded color profile"
-msgstr "Fjarlægja litasnið myndarinnar"
+msgstr "Myndin '%s' er með ígrætt litasnið"
 
 #: ../app/dialogs/color-profile-import-dialog.c:115
 #, fuzzy
@@ -11261,10 +11121,9 @@ msgid "_Handle Transform tool"
 msgstr "Umbrey_tingarverkfæri"
 
 #: ../app/dialogs/preferences-dialog.c:1552
-#, fuzzy
 #| msgid "Paint tool:"
 msgid "_MyPaint Brush tool"
-msgstr "Málunarverkfæri:"
+msgstr "_MyPaint Brush málunarpensill"
 
 #: ../app/dialogs/preferences-dialog.c:1557
 msgid "_Seamless Clone tool"
@@ -11588,7 +11447,6 @@ msgid "Image Window Drawing Behavior"
 msgstr "Útlit myndaglugga"
 
 #: ../app/dialogs/preferences-dialog.c:2211 ../app/tools/gimpwarpoptions.c:76
-#| msgid "Edge Behavior"
 msgid "Behavior"
 msgstr "Hegðun"
 
@@ -11662,10 +11520,9 @@ msgid "Color Management"
 msgstr "Litastýring"
 
 #: ../app/dialogs/preferences-dialog.c:2377
-#, fuzzy
 #| msgid "_RGB profile:"
 msgid "Preferred _RGB profile:"
-msgstr "_RGB litasnið:"
+msgstr "Forgangs _RGB litasnið:"
 
 #: ../app/dialogs/preferences-dialog.c:2378
 msgid "Select RGB Color Profile"
@@ -11882,22 +11739,19 @@ msgid "Select Tool Preset Folders"
 msgstr "Velja möppur fyrir forstillingar verkfæra"
 
 #: ../app/dialogs/preferences-dialog.c:2719
-#, fuzzy
 #| msgid "Paintbrush"
 msgid "MyPaint Brushes"
-msgstr "Málunarpensill"
+msgstr "MyPaint málunarpenslar"
 
 #: ../app/dialogs/preferences-dialog.c:2719
-#, fuzzy
 #| msgid "Brush Folders"
 msgid "MyPaint Brush Folders"
-msgstr "Pensilmöppur"
+msgstr "Pensilmöppur fyrir MyPaint pensla"
 
 #: ../app/dialogs/preferences-dialog.c:2721
-#, fuzzy
 #| msgid "Select Brush Folders"
 msgid "Select MyPaint Brush Folders"
-msgstr "Velja pensilmöppur"
+msgstr "Veldu pensilmöppur fyrir MyPaint pensla"
 
 #: ../app/dialogs/preferences-dialog.c:2724
 msgid "Plug-In Folders"
@@ -12055,10 +11909,9 @@ msgid "Resize _layers:"
 msgstr "Breyta stærð _laga:"
 
 #: ../app/dialogs/resize-dialog.c:316
-#, fuzzy
 #| msgid "Resize Text Layer"
 msgid "Resize _text layers"
-msgstr "Breyta stærð textalags"
+msgstr "Breyta stærð _textalaga"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
@@ -12411,20 +12264,18 @@ msgstr "Mynddílar virka lagsins eru læstir."
 #: ../app/display/gimpdisplayshell-dnd.c:389
 #: ../app/widgets/gimpdrawabletreeview.c:242
 #: ../app/widgets/gimpdrawabletreeview.c:330
-#, fuzzy
 #| msgid "Drop New Layer"
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr "Sleppa nýju lagi"
+msgstr "Sleppa mynstri á lag"
 
 #: ../app/display/gimpdisplayshell-dnd.c:390
 #: ../app/widgets/gimpdrawabletreeview.c:266
 #: ../app/widgets/gimpdrawabletreeview.c:331
-#, fuzzy
 #| msgid "Drop layers"
 msgctxt "undo-type"
 msgid "Drop color to layer"
-msgstr "Sleppa lögum"
+msgstr "Sleppa lit á lag"
 
 #: ../app/display/gimpdisplayshell-dnd.c:548
 #: ../app/widgets/gimplayertreeview.c:729
@@ -12460,18 +12311,16 @@ msgid "Layer Select"
 msgstr "Velja lag"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:114
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Rotate image"
 msgid "Rotate View"
-msgstr "Snúa mynd"
+msgstr "Snúa sýn"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:116
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
 msgid "Select Rotation Angle"
-msgstr "Velja _neðsta lag"
+msgstr "Veldu snúningshorn"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
 #: ../app/tools/gimpmeasuretool.c:1109
@@ -12479,7 +12328,6 @@ msgid "Angle:"
 msgstr "Horn:"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:167
-#| msgid "15 degrees  (%s)"
 msgid "degrees"
 msgstr "gráður"
 
@@ -12553,14 +12401,13 @@ msgstr "Óþekkt skráategund"
 
 #: ../app/file/file-remote.c:113
 msgid "Mounting remote volume"
-msgstr ""
+msgstr "Tengi fjartengdan gagnamiðil"
 
 #: ../app/file/file-remote.c:289
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Open an image file"
 msgid "Opening remote file"
-msgstr "Opna myndskrá"
+msgstr "Opna fjartengda skrá"
 
 #: ../app/file/file-remote.c:357
 #, c-format
@@ -12620,8 +12467,6 @@ msgstr "RGB-alfa"
 #: ../app/gegl/gimp-babl.c:291 ../app/gegl/gimp-babl.c:292
 #: ../app/gegl/gimp-babl.c:293 ../app/gegl/gimp-babl.c:294
 #: ../app/gegl/gimp-babl.c:295 ../app/gegl/gimp-babl.c:296
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgid "Grayscale"
 msgstr "Grátóna"
 
@@ -12631,8 +12476,6 @@ msgstr "Grátóna"
 #: ../app/gegl/gimp-babl.c:304 ../app/gegl/gimp-babl.c:305
 #: ../app/gegl/gimp-babl.c:306 ../app/gegl/gimp-babl.c:307
 #: ../app/gegl/gimp-babl.c:308 ../app/gegl/gimp-babl.c:309
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgid "Grayscale-alpha"
 msgstr "Grátóna-alfa"
 
@@ -12642,11 +12485,10 @@ msgstr "Grátóna-alfa"
 #: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
 #: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
 #: ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "C_omponents"
 msgid "Red component"
-msgstr "_Einingar"
+msgstr "Rauður litþáttur"
 
 #: ../app/gegl/gimp-babl.c:324 ../app/gegl/gimp-babl.c:325
 #: ../app/gegl/gimp-babl.c:326 ../app/gegl/gimp-babl.c:327
@@ -12654,11 +12496,10 @@ msgstr "_Einingar"
 #: ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331
 #: ../app/gegl/gimp-babl.c:332 ../app/gegl/gimp-babl.c:333
 #: ../app/gegl/gimp-babl.c:334 ../app/gegl/gimp-babl.c:335
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "C_omponents"
 msgid "Green component"
-msgstr "_Einingar"
+msgstr "Grænn litþáttur"
 
 #: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338
 #: ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340
@@ -12666,20 +12507,18 @@ msgstr "_Einingar"
 #: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
 #: ../app/gegl/gimp-babl.c:345 ../app/gegl/gimp-babl.c:346
 #: ../app/gegl/gimp-babl.c:347 ../app/gegl/gimp-babl.c:348
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "C_omponents"
 msgid "Blue component"
-msgstr "_Einingar"
+msgstr "Blár litþáttur"
 
 #: ../app/gegl/gimp-babl.c:350 ../app/gegl/gimp-babl.c:351
 #: ../app/gegl/gimp-babl.c:352 ../app/gegl/gimp-babl.c:353
 #: ../app/gegl/gimp-babl.c:354 ../app/gegl/gimp-babl.c:355
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "C_omponents"
 msgid "Alpha component"
-msgstr "_Einingar"
+msgstr "Alfa gegnsæisþáttur"
 
 #: ../app/gegl/gimp-babl.c:383
 msgid "Indexed-alpha"
@@ -12695,53 +12534,48 @@ msgid "Create or adjust the cage"
 msgstr "Búa til eða aflaga kassann"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
-#, fuzzy
 #| msgctxt "cage-mode"
 #| msgid "Deform the cage to deform the image"
 msgctxt "cage-mode"
 msgid ""
 "Deform the cage\n"
 "to deform the image"
-msgstr "Aflagaðu kassann til að breyta lögun myndar"
+msgstr ""
+"Aflagaðu sjónarhornsrammann\n"
+"til að breyta lögun myndar"
 
 #: ../app/operations/gimpbrightnesscontrastconfig.c:82
-#| msgid "_Brightness:"
 msgid "Brightness"
 msgstr "Birtustig"
 
 #: ../app/operations/gimpbrightnesscontrastconfig.c:87
-#| msgid "Con_trast:"
 msgid "Contrast"
 msgstr "Birtuskil"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:96
 #: ../app/operations/gimphuesaturationconfig.c:94
 msgid "The affected range"
-msgstr ""
+msgstr "Svið sem kemur við sögu"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:102
-#, fuzzy
 #| msgid "Cyan"
 msgid "Cyan-Red"
-msgstr "Blágrænt-_Rautt:"
+msgstr "Blágrænt-Rautt"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:107
-#, fuzzy
 #| msgid "Magenta"
 msgid "Magenta-Green"
-msgstr "Blárautt-_Grænt:"
+msgstr "Blárautt-Grænt"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:112
-#, fuzzy
 #| msgid "Yellow"
 msgid "Yellow-Blue"
-msgstr "Gult-_Blátt:"
+msgstr "Gult-Blátt"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:117
-#, fuzzy
 #| msgid "Preserve _luminosity"
 msgid "Preserve Luminosity"
-msgstr "Varðveita skær_leika"
+msgstr "Varðveita skærleika"
 
 #: ../app/operations/gimpcolorizeconfig.c:85
 #: ../app/operations/gimphuesaturationconfig.c:100
@@ -12760,14 +12594,12 @@ msgstr "Ljósleiki"
 
 #: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:105
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Delete channel"
 msgid "The affected channel"
-msgstr "Eyða litrás"
+msgstr "Litrás sem kemur við sögu"
 
 #: ../app/operations/gimpcurvesconfig.c:110
-#| msgid "Curves"
 msgid "Curve"
 msgstr "Ferill"
 
@@ -12777,39 +12609,37 @@ msgstr "Ekki GIMP litferlaskrá (curves file)"
 
 #: ../app/operations/gimpcurvesconfig.c:555
 msgid "Parse error, didn't find 2 integers"
-msgstr ""
+msgstr "Þáttunarvilla, fann ekki 2 heiltölur"
 
 #: ../app/operations/gimpcurvesconfig.c:671
 msgid "Writing curves file failed: "
-msgstr ""
+msgstr "Skrifun í litferlaskrá mistókst: "
 
 #: ../app/operations/gimpdesaturateconfig.c:73
-#, fuzzy
 #| msgid "Desaturate"
 msgid "Desaturate mode"
-msgstr "Afmetta"
+msgstr "Afmettunarhamur"
 
 #: ../app/operations/gimphuesaturationconfig.c:115
-#, fuzzy
 #| msgid "_Overlap:"
 msgid "Overlap"
-msgstr "S_körun:"
+msgstr "Skörun"
 
 #: ../app/operations/gimplevelsconfig.c:116
 msgid "Low Input"
-msgstr ""
+msgstr "Lág-inntak"
 
 #: ../app/operations/gimplevelsconfig.c:121
 msgid "High Input"
-msgstr ""
+msgstr "Há-inntak"
 
 #: ../app/operations/gimplevelsconfig.c:126
 msgid "Low Output"
-msgstr ""
+msgstr "Lág-úttak"
 
 #: ../app/operations/gimplevelsconfig.c:131
 msgid "High Output"
-msgstr ""
+msgstr "Há-úttak"
 
 #: ../app/operations/gimplevelsconfig.c:769
 msgid "not a GIMP Levels file"
@@ -12821,7 +12651,7 @@ msgstr "þáttunarvilla"
 
 #: ../app/operations/gimplevelsconfig.c:872
 msgid "Writing levels file failed: "
-msgstr ""
+msgstr "Mistókst að skrifa litatíðniskrá: "
 
 #: ../app/operations/gimpoperationcagecoefcalc.c:69
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
@@ -12856,16 +12686,14 @@ msgid ""
 msgstr ""
 
 #: ../app/operations/gimpthresholdconfig.c:79
-#, fuzzy
 #| msgid "Threshold"
 msgid "Low threshold"
-msgstr "Litmörk"
+msgstr "Lág litmörk"
 
 #: ../app/operations/gimpthresholdconfig.c:84
-#, fuzzy
 #| msgid "Threshold"
 msgid "High threshold"
-msgstr "Litmörk"
+msgstr "Há litmörk"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -13101,7 +12929,6 @@ msgid "Brightness-Contrast"
 msgstr "Birtustig-Birtuskil"
 
 #: ../app/pdb/color-cmds.c:149 ../app/pdb/drawable-color-cmds.c:592
-#, fuzzy
 #| msgid "Levels"
 msgctxt "undo-type"
 msgid "Levels"
@@ -13153,32 +12980,27 @@ msgid "Foreground Select"
 msgstr "Val forgrunns"
 
 #: ../app/pdb/drawable-color-cmds.c:324
-#| msgid "Desaturate"
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Afmetta"
 
 #: ../app/pdb/drawable-color-cmds.c:500
-#| msgid "Hue-Saturation"
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Litblær-Litmettun"
 
 #: ../app/pdb/drawable-color-cmds.c:533
-#| msgid "Invert"
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Umhverfa"
 
 #: ../app/pdb/drawable-color-cmds.c:660
-#, fuzzy
 #| msgid "Posterize"
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Þrykkja"
 
 #: ../app/pdb/drawable-color-cmds.c:702
-#, fuzzy
 #| msgid "Threshold"
 msgctxt "undo-type"
 msgid "Threshold"
@@ -13229,10 +13051,10 @@ msgstr ""
 "myndval."
 
 #: ../app/pdb/gimppdb-query.c:139
-#, fuzzy, c-format
+#, c-format
 #| msgid "Opening '%s' failed: %s"
 msgid "Writing PDB file '%s' failed: %s"
-msgstr "Tókst ekki að opna '%s': %s"
+msgstr "Skrifun PDB-skrárinnar '%s' mistókst: %s"
 
 #: ../app/pdb/gimppdb-query.c:314 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:377
@@ -13578,7 +13400,6 @@ msgid "Alien Map"
 msgstr "Geimveru-gljái"
 
 #: ../app/pdb/plug-in-compat-cmds.c:449
-#| msgid "Antialiasing"
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "Afstöllun"
@@ -13696,10 +13517,9 @@ msgid "Noise HSV"
 msgstr "Trufla_nir"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2121 ../app/pdb/plug-in-compat-cmds.c:2181
-#, fuzzy
 #| msgid "Color Profile"
 msgid "Set color profile"
-msgstr "Litasnið"
+msgstr "Setja litasnið"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2236
 msgctxt "undo-type"
@@ -13742,7 +13562,7 @@ msgstr "Mósaík"
 #: ../app/pdb/plug-in-compat-cmds.c:2786
 msgctxt "undo-type"
 msgid "Supernova"
-msgstr ""
+msgstr "Sprengistjarna"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2876
 msgctxt "undo-type"
@@ -13787,33 +13607,29 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:3339
 msgctxt "undo-type"
 msgid "RGB Noise"
-msgstr ""
+msgstr "RGB suð"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3462
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
 msgctxt "undo-type"
 msgid "Noisify"
-msgstr "Trufla_nir"
+msgstr "Setja inn truflanir"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3506
-#| msgctxt "undo-type"
-#| msgid "Gaussian Blur"
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Valkvæð Gaussísk afskerping"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3550
-#, fuzzy
 msgctxt "undo-type"
 msgid "Semi-Flatten"
-msgstr "_Hálf-fletja mynd"
+msgstr "Hálf-fletja"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3593
 msgctxt "undo-type"
 msgid "Shift"
-msgstr "Shift"
+msgstr "Hnika"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3696
 msgctxt "undo-type"
@@ -13846,10 +13662,9 @@ msgid "Video"
 msgstr "Myndskeið"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3973
-#, fuzzy
 msgctxt "undo-type"
 msgid "Value Invert"
-msgstr "Snúa _við litgildum"
+msgstr "Snúa við litgildum"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4077
 msgctxt "undo-type"
@@ -14047,10 +13862,10 @@ msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Sleppi '%s': röng útgáfa GIMP samskiptamáta."
 
 #: ../app/plug-in/plug-in-rc.c:234
-#, fuzzy, c-format
+#, c-format
 #| msgid "Skipping '%s': wrong GIMP protocol version."
 msgid "Skipping '%s': wrong pluginrc file format version."
-msgstr "Sleppi '%s': röng útgáfa GIMP samskiptamáta."
+msgstr "Sleppi '%s': röng útgáfa pluginrc-skrár."
 
 #: ../app/plug-in/plug-in-rc.c:510
 #, c-format
@@ -14183,7 +13998,6 @@ msgid "Motion only"
 msgstr "Aðeins hreyfing"
 
 #: ../app/tools/gimpairbrushtool.c:92
-#| msgid "Rate"
 msgctxt "airbrush-tool"
 msgid "Rate"
 msgstr "Tíðni"
@@ -14209,10 +14023,9 @@ msgid "Align"
 msgstr "Jafna"
 
 #: ../app/tools/gimpalignoptions.c:288
-#, fuzzy
 #| msgid "Relative to:"
 msgid "Relative to"
-msgstr "Miðað við: "
+msgstr "Miðað við"
 
 #: ../app/tools/gimpalignoptions.c:299
 msgid "Align left edge of target"
@@ -14327,7 +14140,6 @@ msgid "Shape"
 msgstr "Lögun"
 
 #: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:350
-#, fuzzy
 #| msgid "Repeat:"
 msgid "Repeat"
 msgstr "Endurtaka"
@@ -14356,10 +14168,9 @@ msgstr "Blan_da"
 #: ../app/tools/gimpforegroundselecttool.c:287
 #: ../app/tools/gimpimagemaptool.c:319 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1840
-#, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "The active layer is not visible."
-msgstr "Mynddílar virka lagsins eru læstir."
+msgstr "Virka lagið er ekki sýnilegt."
 
 #: ../app/tools/gimpblendtool.c:248
 msgid "No gradient available for use with this tool."
@@ -14408,10 +14219,9 @@ msgid "_Brightness"
 msgstr "_Birtustig"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:261
-#, fuzzy
 #| msgid "Con_trast:"
 msgid "_Contrast"
-msgstr "Birtuskil"
+msgstr "_Birtuskil"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:268
 msgid "Edit these Settings as Levels"
@@ -14474,7 +14284,6 @@ msgid "Sample merged"
 msgstr "Sameinað sýni"
 
 #: ../app/tools/gimpbucketfilloptions.c:291
-#| msgid "Fill by:"
 msgid "Fill by"
 msgstr "Fylla eftir"
 
@@ -14508,12 +14317,13 @@ msgid "Select by Color"
 msgstr "Velja eftir lit"
 
 #: ../app/tools/gimpcageoptions.c:144
-#, fuzzy
 #| msgid "Fill the original position of the cage with a plain color"
 msgid ""
 "Fill the original position\n"
 "of the cage with a color"
-msgstr "Fylla upprunastöðu sjónarhornsrammans með hreinum lit"
+msgstr ""
+"Fylla upprunastöðu sjónarhorns-\n"
+"rammans með hreinum lit"
 
 #: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1179
 msgid "Cage Transform"
@@ -14544,7 +14354,6 @@ msgid "Source"
 msgstr "Uppruni"
 
 #: ../app/tools/gimpcloneoptions-gui.c:103 ../app/tools/gimphealtool.c:105
-#| msgid "Alignment:"
 msgid "Alignment"
 msgstr "Jöfnun"
 
@@ -14671,10 +14480,9 @@ msgid "Export Colorize Settings"
 msgstr "Flytja út litþrykkingastillingar"
 
 #: ../app/tools/gimpcolorizetool.c:126
-#, fuzzy
 #| msgid "Posterize does not operate on indexed layers."
 msgid "Colorize does not operate on grayscale layers."
-msgstr "Þrykking virkar ekki á litnúmeruð lög."
+msgstr "Litþrykking virkar ekki á grátóna lög."
 
 #: ../app/tools/gimpcolorizetool.c:164
 msgid "Select Color"
@@ -14689,22 +14497,19 @@ msgid "_Saturation"
 msgstr "Litmett_un"
 
 #: ../app/tools/gimpcolorizetool.c:188 ../app/tools/gimphuesaturationtool.c:310
-#, fuzzy
 #| msgid "_Lightness:"
 msgid "_Lightness"
-msgstr "Ljósleiki"
+msgstr "_Ljósleiki"
 
 #: ../app/tools/gimpcolorizetool.c:199
-#, fuzzy
 #| msgid "Colorize"
 msgid "Colorize Color"
-msgstr "Litþrykkja"
+msgstr "Litur til þrykkingar"
 
 #: ../app/tools/gimpcolorizetool.c:211
-#, fuzzy
 #| msgid "Color Picker Tool: Set colors from image pixels"
 msgid "Pick color from image"
-msgstr "Litaplokkari: stilla liti út frá mynddílum"
+msgstr "Plokkaðu lit úr myndinni"
 
 #: ../app/tools/gimpcoloroptions.c:78
 msgid "Color Picker Average Radius"
@@ -14834,7 +14639,6 @@ msgid "Convolve Type  (%s)"
 msgstr "Tegund samvindu %s"
 
 #: ../app/tools/gimpconvolvetool.c:225
-#| msgid "Rate"
 msgctxt "convolve-tool"
 msgid "Rate"
 msgstr "Tíðni"
@@ -14915,22 +14719,21 @@ msgid "Click to add control points to all channels"
 msgstr "Smelltu til að bæta við stýripunkti við allar litrásir"
 
 #: ../app/tools/gimpcurvestool.c:337
-#, fuzzy
 #| msgid "Click to close the curve"
 msgid "Click to locate on curve"
-msgstr "Smella til að loka kúrvunni"
+msgstr "Smella til staðsetja á litferli"
 
 #: ../app/tools/gimpcurvestool.c:339
-#, fuzzy, c-format
+#, c-format
 #| msgid "Click to add a control point"
 msgid "%s: add control point"
-msgstr "Smelltu til að bæta við stýripunkti"
+msgstr "%s: bæta við stýripunkti"
 
 #: ../app/tools/gimpcurvestool.c:340
-#, fuzzy, c-format
+#, c-format
 #| msgid "Click to add control points to all channels"
 msgid "%s: add control points to all channels"
-msgstr "Smelltu til að bæta við stýripunkti við allar litrásir"
+msgstr "%s: bæta stýripunkti við allar litrásir"
 
 #: ../app/tools/gimpcurvestool.c:437 ../app/tools/gimplevelstool.c:359
 msgid "Cha_nnel:"
@@ -14945,10 +14748,9 @@ msgid "Curve _type:"
 msgstr "_Tegund litferils:"
 
 #: ../app/tools/gimpcurvestool.c:621 ../app/tools/gimplevelstool.c:652
-#, fuzzy
 #| msgid "Could not read header from '%s': %s"
 msgid "Could not read header: "
-msgstr "Gat ekki lesið haus frá '%s': %s"
+msgstr "Gat ekki lesið haus: "
 
 #: ../app/tools/gimpcurvestool.c:661
 msgid "Use _old curves file format"
@@ -15158,13 +14960,11 @@ msgid "Number of iterations to perform"
 msgstr "_Fjöldi örgjörva sem nota á:"
 
 #: ../app/tools/gimpforegroundselectoptions.c:264
-#, fuzzy
 #| msgid "Paint Mode"
 msgid "Draw Mode"
-msgstr "Málunarhamur"
+msgstr "Teiknihamur"
 
 #: ../app/tools/gimpforegroundselectoptions.c:275
-#| msgid "Stroke Path"
 msgid "Stroke width"
 msgstr "Breidd útlínu"
 
@@ -15175,7 +14975,6 @@ msgid "Reset stroke width native size"
 msgstr "Endurstilla stærð í frumstærð pensils"
 
 #: ../app/tools/gimpforegroundselectoptions.c:299
-#, fuzzy
 #| msgid "Preview color:"
 msgid "Preview color"
 msgstr "Forskoðunarlitur"
@@ -15191,7 +14990,6 @@ msgid "Active levels"
 msgstr "Virkar síur"
 
 #: ../app/tools/gimpforegroundselectoptions.c:350
-#| msgid "Interpolation:"
 msgid "Iterations"
 msgstr "Ítranir"
 
@@ -15477,10 +15275,9 @@ msgid "Select Primary Color to Adjust"
 msgstr "Velja frumlit til að breyta"
 
 #: ../app/tools/gimphuesaturationtool.c:288
-#, fuzzy
 #| msgid "_Overlap:"
 msgid "_Overlap"
-msgstr "S_körun:"
+msgstr "S_körun"
 
 #: ../app/tools/gimphuesaturationtool.c:293
 msgid "Adjust Selected Color"
@@ -15561,10 +15358,9 @@ msgid "Intelligent _Scissors"
 msgstr "Gáfuð _skæri"
 
 #: ../app/tools/gimpiscissorstool.c:936
-#, fuzzy
 #| msgid "Click-Drag to move this point"
 msgid "Click to remove this point"
-msgstr "Smelltu-Dragðu til að færa þennan punkt"
+msgstr "Smelltu til að fjarlægja þennan punkt"
 
 #: ../app/tools/gimpiscissorstool.c:942 ../app/tools/gimpmeasuretool.c:608
 msgid "Click-Drag to move this point"
@@ -15576,10 +15372,10 @@ msgid "%s: disable auto-snap"
 msgstr "%s: afvirkja sjálfvirkt grip"
 
 #: ../app/tools/gimpiscissorstool.c:945
-#, fuzzy, c-format
+#, c-format
 #| msgid "Click-Drag to move this point"
 msgid "%s: remove this point"
-msgstr "Smelltu-Dragðu til að færa þennan punkt"
+msgstr "%s: fjarlægja þennan punkt"
 
 #: ../app/tools/gimpiscissorstool.c:965
 msgid "Click to close the curve"
@@ -15622,40 +15418,34 @@ msgid "Export Levels"
 msgstr "Flytja út litatíðnistig"
 
 #: ../app/tools/gimplevelstool.c:285
-#, fuzzy
 #| msgid "Click to add control points to all channels"
 msgid "Pick black point for all channels"
-msgstr "Smelltu til að bæta við stýripunkti við allar litrásir"
+msgstr "Veldu svartpunkt fyrir allar litrásir"
 
 #: ../app/tools/gimplevelstool.c:287
-#, fuzzy
 #| msgid "Click-Drag to move the selected pixels"
 msgid "Pick black point for the selected channel"
-msgstr "Smella-Draga til að færa valda mynddíla"
+msgstr "Veldu svartpunkt fyrir valda litrás"
 
 #: ../app/tools/gimplevelstool.c:294
-#, fuzzy
 #| msgid "Click to add control points to all channels"
 msgid "Pick gray point for all channels"
-msgstr "Smelltu til að bæta við stýripunkti við allar litrásir"
+msgstr "Veldu grápunkt fyrir allar litrásir"
 
 #: ../app/tools/gimplevelstool.c:296
-#, fuzzy
 #| msgid "Click-Drag to move the selected pixels"
 msgid "Pick gray point for the selected channel"
-msgstr "Smella-Draga til að færa valda mynddíla"
+msgstr "Veldu grápunkt fyrir valda litrás"
 
 #: ../app/tools/gimplevelstool.c:303
-#, fuzzy
 #| msgid "Click to add control points to all channels"
 msgid "Pick white point for all channels"
-msgstr "Smelltu til að bæta við stýripunkti við allar litrásir"
+msgstr "Veldu hvítpunkt fyrir allar litrásir"
 
 #: ../app/tools/gimplevelstool.c:305
-#, fuzzy
 #| msgid "Click-Drag to move the selected pixels"
 msgid "Pick white point for the selected channel"
-msgstr "Smella-Draga til að færa valda mynddíla"
+msgstr "Veldu hvítpunkt fyrir valda litrás"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:403
@@ -15677,10 +15467,9 @@ msgid "_Auto"
 msgstr "S_jálfvirkt"
 
 #: ../app/tools/gimplevelstool.c:590
-#, fuzzy
 #| msgid "Adjust levels automatically"
 msgid "Adjust levels for all channels automatically"
-msgstr "Breyta litatíðnistigum sjálfvirkt"
+msgstr "Breyta litatíðnistigum allra litrása sjálfvirkt"
 
 #: ../app/tools/gimplevelstool.c:614
 msgid "Edit these Settings as Curves"
@@ -15888,40 +15677,35 @@ msgid "Brush"
 msgstr "Pensill"
 
 #: ../app/tools/gimpmybrushtool.c:76
-#, fuzzy
 #| msgid "Paintbrush"
 msgid "MyPaint Brush"
-msgstr "Málunarpensill"
+msgstr "MyPaint málunarpensill"
 
 #: ../app/tools/gimpmybrushtool.c:77
-#, fuzzy
 #| msgid "Paintbrush Tool: Paint smooth strokes using a brush"
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
-msgstr "Málunarpensill: mála mjúkar strokur með pensli"
+msgstr "MyPaint málunarpensill: nota MyPaint pensla í GIMP"
 
 #: ../app/tools/gimpmybrushtool.c:78
-#, fuzzy
 #| msgid "_Paintbrush"
 msgid "M_yPaint Brush"
-msgstr "Málunar_pensill"
+msgstr "M_yPaint málunarpensill"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:76
 #: ../app/tools/gimpnpointdeformationoptions.c:204
-#| msgid "Sensitivity"
 msgid "Density"
 msgstr "Þéttleiki"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:81
 #: ../app/tools/gimpnpointdeformationoptions.c:212
 msgid "Rigidity"
-msgstr ""
+msgstr "Stífleiki"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:86
 #: ../app/tools/gimpnpointdeformationoptions.c:219
-#, fuzzy
 #| msgid "Interpolation method"
 msgid "Deformation mode"
-msgstr "Brúun (innskotsaðferð)"
+msgstr "Aflögunarhamur"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:91
 #: ../app/tools/gimpnpointdeformationoptions.c:227
@@ -16262,8 +16046,6 @@ msgid "Expand from center"
 msgstr "Þenja frá miðju"
 
 #: ../app/tools/gimprectangleoptions.c:871
-#| msgctxt "source-align-mode"
-#| msgid "Fixed"
 msgid "Fixed"
 msgstr "Fast"
 
@@ -16497,16 +16279,14 @@ msgid "S_hear"
 msgstr "S_kekkja"
 
 #: ../app/tools/gimpsheartool.c:135
-#, fuzzy
 #| msgid "Shear magnitude _X:"
 msgid "Shear magnitude _X"
-msgstr "Stærð skekkju X:"
+msgstr "Stærð skekkju _X"
 
 #: ../app/tools/gimpsheartool.c:146
-#, fuzzy
 #| msgid "Shear magnitude _Y:"
 msgid "Shear magnitude _Y"
-msgstr "Stærð skekkju Y:"
+msgstr "Stærð skekkju _Y"
 
 #: ../app/tools/gimpsheartool.c:258
 #, c-format
@@ -16544,7 +16324,6 @@ msgid "Click to smudge the line"
 msgstr "Smella til að káma línuna"
 
 #: ../app/tools/gimpsmudgetool.c:92
-#| msgid "Rate"
 msgctxt "smudge-tool"
 msgid "Rate"
 msgstr "Tíðni"
@@ -16737,16 +16516,14 @@ msgid "Direction"
 msgstr "Stefna"
 
 #: ../app/tools/gimptransformoptions.c:404
-#, fuzzy
 #| msgid "Interpolation:"
 msgid "Interpolation"
-msgstr "_Brúun:"
+msgstr "Brúun (interpolation)"
 
 #: ../app/tools/gimptransformoptions.c:411
-#, fuzzy
 #| msgid "Clipping:"
 msgid "Clipping"
-msgstr "Klemming:"
+msgstr "Afmörkun"
 
 #: ../app/tools/gimptransformoptions.c:418
 msgid "Image opacity"
@@ -16761,7 +16538,7 @@ msgid "Guides"
 msgstr "Stoðlínur"
 
 #: ../app/tools/gimptransformoptions.c:455
-#, fuzzy, c-format
+#, c-format
 #| msgid "15 degrees  (%s)"
 msgid "15 degrees (%s)"
 msgstr "15 gráður (%s)"
@@ -16771,7 +16548,7 @@ msgid "Limit rotation steps to 15 degrees"
 msgstr "Takmarka snúningsþrep við 15 gráður"
 
 #: ../app/tools/gimptransformoptions.c:461
-#, fuzzy, c-format
+#, c-format
 #| msgid "Keep aspect  (%s)"
 msgid "Keep aspect (%s)"
 msgstr "Halda hlutföllum (%s)"
@@ -16781,10 +16558,10 @@ msgid "Keep the original aspect ratio"
 msgstr "Halda upphaflegum stærðarhlutföllum"
 
 #: ../app/tools/gimptransformoptions.c:480
-#, fuzzy, c-format
+#, c-format
 #| msgid "Anti erase  (%s)"
 msgid "Constrain (%s)"
-msgstr "Afstroka (%s)"
+msgstr "Skorða við (%s)"
 
 #: ../app/tools/gimptransformoptions.c:481
 msgid "Move"
@@ -16837,37 +16614,36 @@ msgstr ""
 
 #: ../app/tools/gimptransformoptions.c:502
 msgid "Pivot"
-msgstr ""
+msgstr "Veltipunktur"
 
 #: ../app/tools/gimptransformoptions.c:503
-#, fuzzy, c-format
+#, c-format
 #| msgid "Type  (%s)"
 msgid "Snap (%s)"
-msgstr "Tegund  (%s)"
+msgstr "Grip  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:504
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
-msgstr ""
+msgstr "Láta veltipunkt grípa í horn og miðju (%s)"
 
 #: ../app/tools/gimptransformoptions.c:505
-#| msgid "Lock:"
 msgid "Lock"
 msgstr "Læsa"
 
 #: ../app/tools/gimptransformoptions.c:506
 msgid "Lock pivot position to canvas"
-msgstr ""
+msgstr "Festa staðsetningu veltipunkts við myndflöt"
 
 #: ../app/tools/gimptransformtool.c:239
 msgid "Transforming"
 msgstr "Umbreyting"
 
 #: ../app/tools/gimptransformtool.c:290
-#, fuzzy, c-format
+#, c-format
 #| msgid "The given file extension does not match the chosen file type."
 msgid "The selection does not intersect with the layer."
-msgstr "Uppgefið viðskeyti samsvarar ekki valinni skráartegund."
+msgstr "Myndvalið skarast ekki við lagið."
 
 #: ../app/tools/gimptransformtool.c:794 ../app/tools/gimptransformtool.c:807
 #, fuzzy
@@ -16881,16 +16657,14 @@ msgid "There is no layer to transform."
 msgstr "Það er ekkert lag sem hægt er að ummynda."
 
 #: ../app/tools/gimptransformtool.c:1835
-#, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "The active layer's position and size are locked."
-msgstr "Mynddílar virka lagsins eru læstir."
+msgstr "Stærð og staða virka lagsins eru læst."
 
 #: ../app/tools/gimptransformtool.c:1846
-#, fuzzy
 #| msgid "There is no selection to stroke."
 msgid "There is no selection to transform."
-msgstr "Það er ekkert myndval til að stroka."
+msgstr "Það er ekkert myndval til að umbreyta."
 
 #: ../app/tools/gimptransformtool.c:1856
 msgid "There is no path to transform."
@@ -17110,24 +16884,22 @@ msgstr "Það er ekkert virkt lag eða litrás sem hægt er að stroka á"
 
 #: ../app/tools/gimpwarpoptions.c:83
 msgid "Effect Strength"
-msgstr ""
+msgstr "Styrkur sjónbrellu"
 
 #: ../app/tools/gimpwarpoptions.c:89
 msgid "Effect Size"
-msgstr ""
+msgstr "Stærð sjónbrellu"
 
 #: ../app/tools/gimpwarpoptions.c:95
-#, fuzzy
 #| msgid "Hardness"
 msgid "Effect Hardness"
-msgstr "Harka"
+msgstr "Harka sjónbrellu"
 
 #: ../app/tools/gimpwarpoptions.c:101
-#, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Number of lines"
 msgid "Number of animation frames"
-msgstr "Fjöldi lína"
+msgstr "Fjöldi ramma fyrir hreyfingu"
 
 #: ../app/tools/gimpwarpoptions.c:192
 msgid "Strength"
@@ -17135,22 +16907,20 @@ msgstr "Styrkur"
 
 #. the animation frame
 #: ../app/tools/gimpwarpoptions.c:213
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "An_imation"
 msgid "Animate"
-msgstr "Sý_na hreyfingar"
+msgstr "Hreyfingar"
 
 #: ../app/tools/gimpwarpoptions.c:222
 msgid "Frames"
 msgstr "Rammar"
 
 #: ../app/tools/gimpwarpoptions.c:228
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "An_imation"
 msgid "Create Animation"
-msgstr "Hreyf_imyndir"
+msgstr "Búa til hreyfimynd"
 
 #: ../app/tools/gimpwarptool.c:142
 #, fuzzy
@@ -17185,7 +16955,7 @@ msgstr ""
 #: ../app/tools/gimpwarptool.c:860 ../app/tools/gimpwarptool.c:896
 #, c-format
 msgid "Rendering Frame %d"
-msgstr ""
+msgstr "Myndgeri ramma %d"
 
 #: ../app/tools/gimpwarptool.c:875 ../app/tools/gimpwarptool.c:904
 #, c-format
@@ -17197,15 +16967,13 @@ msgid "Frame"
 msgstr "Rammi"
 
 #: ../app/tools/tools-enums.c:89
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Transform"
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
-msgstr "Ummynda"
+msgstr "Bæta við / Ummynda"
 
 #: ../app/tools/tools-enums.c:90
-#, fuzzy
 #| msgctxt "tool"
 #| msgid "Move"
 msgctxt "transform-handle-mode"
@@ -17213,8 +16981,6 @@ msgid "Move"
 msgstr "Færa"
 
 #: ../app/tools/tools-enums.c:91
-#| msgctxt "undo-type"
-#| msgid "Remove item"
 msgctxt "transform-handle-mode"
 msgid "Remove"
 msgstr "Fjarlægja"
@@ -17285,64 +17051,56 @@ msgid "Move"
 msgstr "Færa"
 
 #: ../app/tools/tools-enums.c:339
-#, fuzzy
 #| msgid "Mark foreground"
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
-msgstr "Merkja forgrunn"
+msgstr "Teikna forgrunn"
 
 #: ../app/tools/tools-enums.c:340
-#| msgid "Mark background"
 msgctxt "matting-draw-mode"
 msgid "Draw background"
 msgstr "Teikna bakgrunn"
 
 #: ../app/tools/tools-enums.c:341
-#, fuzzy
 #| msgctxt "orientation-type"
 #| msgid "Unknown"
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
-msgstr "Óþekkt"
+msgstr "Teikna óþekkt"
 
 #: ../app/tools/tools-enums.c:374
-#, fuzzy
 #| msgid "Lock pixels"
 msgctxt "warp-behavior"
 msgid "Move pixels"
-msgstr "Læsa mynddílum"
+msgstr "Færa mynddíla"
 
 #: ../app/tools/tools-enums.c:375
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Grow Channel"
 msgctxt "warp-behavior"
 msgid "Grow area"
-msgstr "Víkka litrás"
+msgstr "Stækka flöt"
 
 #: ../app/tools/tools-enums.c:376
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Shrink _Wrap"
 msgctxt "warp-behavior"
 msgid "Shrink area"
-msgstr "Minn_ka að"
+msgstr "Minnka flöt"
 
 #: ../app/tools/tools-enums.c:377
-#, fuzzy
 #| msgctxt "gradient-editor-coloring"
 #| msgid "HSV (clockwise _hue)"
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
-msgstr "HSV (réttsælis litblær)"
+msgstr "Þyrla réttsælis"
 
 #: ../app/tools/tools-enums.c:378
-#, fuzzy
 #| msgctxt "gradient-editor-coloring"
 #| msgid "HSV (_counter-clockwise hue)"
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
-msgstr "HSV (rangsælis litblær)"
+msgstr "Þyrla rangsælis"
 
 #: ../app/tools/tools-enums.c:379
 #, fuzzy
@@ -17453,10 +17211,10 @@ msgid "Transform Path"
 msgstr "Umbreyta ferli"
 
 #: ../app/vectors/gimpvectors-export.c:87
-#, fuzzy, c-format
+#, c-format
 #| msgid "Opening '%s' failed: %s"
 msgid "Writing SVG file '%s' failed: %s"
-msgstr "Tókst ekki að opna '%s': %s"
+msgstr "Skrifun SVG-skrárinnar '%s' mistókst: %s"
 
 #: ../app/vectors/gimpvectors-import.c:331
 msgid "Import Paths"
@@ -17531,10 +17289,9 @@ msgid "Invalid shortcut."
 msgstr "Ógildur flýtilykill."
 
 #: ../app/widgets/gimpactionview.c:796 ../app/widgets/gimpactionview.c:889
-#, fuzzy
 #| msgid "Path cannot be lowered more."
 msgid "F1 cannot be remapped."
-msgstr "Ekki hægt að lækka feril frekar."
+msgstr "Ekki er hægt að endurúthluta F1."
 
 #: ../app/widgets/gimpactionview.c:897
 msgid "Removing shortcut failed."
@@ -18157,14 +17914,13 @@ msgid "Auto"
 msgstr "Sjálfvirkt"
 
 #: ../app/widgets/gimpdockwindow.c:394
-#, fuzzy
 #| msgid ""
 #| "When enabled the dialog automatically follows the image you are working "
 #| "on."
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
-"Þegar þetta er virkt fylgir samskiptaglugginn sjálfkrafa þeirri mynd sem þú "
+"Þegar þetta er virkt, fylgir samskiptaglugginn sjálfkrafa þeirri mynd sem þú "
 "ert að vinna með."
 
 #: ../app/widgets/gimpdrawabletreeview.c:121
@@ -18173,7 +17929,7 @@ msgstr "Læsa mynddílum"
 
 #: ../app/widgets/gimpdrawabletreeview.c:123
 msgid "Lock position and size"
-msgstr ""
+msgstr "Læsa stöðu og stærð"
 
 #: ../app/widgets/gimpdynamicseditor.c:136
 msgid "Mapping matrix"
@@ -18443,34 +18199,30 @@ msgid "Channel:"
 msgstr "Litrás:"
 
 #: ../app/widgets/gimpiconpicker.c:245
-#, fuzzy
 msgid "From File..."
 msgstr "Úr skrá…"
 
 #: ../app/widgets/gimpiconpicker.c:254
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "_Copy Named..."
 msgid "From Named Icons..."
-msgstr "A_frita í nefnt..."
+msgstr "Úr nefndum táknmyndum..."
 
 #: ../app/widgets/gimpiconpicker.c:263
-#, fuzzy
 #| msgctxt "documents-action"
 #| msgid "Copy image location to clipboard"
 msgid "Copy Icon to Clipboard"
-msgstr "Afrita staðsetningu myndar á klippispjaldið"
+msgstr "Afrita táknmynd á klippispjald"
 
 #: ../app/widgets/gimpiconpicker.c:272
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard"
 msgid "Paste Icon from Clipboard"
-msgstr "Líma inn innihald klippispjaldsins"
+msgstr "Líma táknmynd af klippispjaldi"
 
 #: ../app/widgets/gimpiconpicker.c:512
 msgid "Load Icon Image"
-msgstr ""
+msgstr "Hlaða inn táknmynd"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
@@ -18502,7 +18254,6 @@ msgid "Color space:"
 msgstr "Litrýmd:"
 
 #: ../app/widgets/gimpimagepropview.c:124
-#| msgid "Version:"
 msgid "Precision:"
 msgstr "Nákvæmni:"
 
@@ -18591,7 +18342,7 @@ msgstr "Fannst sjálfkrafa"
 
 #: ../app/widgets/gimpoverlaydialog.c:229
 msgid "Detach dialog from canvas"
-msgstr ""
+msgstr "Aftengja samskiptaglugga frá myndfleti"
 
 #: ../app/widgets/gimppaletteeditor.c:240
 #: ../app/widgets/gimppaletteeditor.c:717
@@ -18608,59 +18359,51 @@ msgstr "Þú getur sleppt tengjanlegum valmyndum hérna."
 
 #: ../app/widgets/gimppickablepopup.c:206
 #: ../app/widgets/gimppickablepopup.c:432
-#, fuzzy
 #| msgid "Select an operation from the list above"
 msgid "Select an image in the left pane"
-msgstr "Veldu aðgerð úr listanum hér að ofan"
+msgstr "Veldu mynd úr vinstra spjaldinu"
 
 #: ../app/widgets/gimpprogressdialog.c:223
 msgid "Progress"
 msgstr "Framvinda"
 
 #: ../app/widgets/gimppropgui-constructors.c:168
-#, fuzzy
 #| msgid "Pick a setting from the list"
 msgid "Pick coordinates from the image"
-msgstr "Veldu stillingu af listanum"
+msgstr "Veldu hnit úr myndinni"
 
 #: ../app/widgets/gimppropgui-constructors.c:301
 msgid "Clockwise"
 msgstr "Réttsælis"
 
 #: ../app/widgets/gimppropgui-constructors.c:387
-#, fuzzy
 #| msgid "Source"
 msgid "Source Range"
-msgstr "Uppruni"
+msgstr "Upprunasvið"
 
 #: ../app/widgets/gimppropgui-constructors.c:398
-#, fuzzy
 #| msgid "R_eset Range"
 msgid "Destination Range"
-msgstr "_Endurstilla svið"
+msgstr "Úttakssvið"
 
 #: ../app/widgets/gimppropgui-constructors.c:409
-#, fuzzy
 #| msgid "Drag Handle"
 msgid "Gray Handling"
-msgstr "Draga haldfang"
+msgstr "Meðhöndlun á gráu"
 
 #: ../app/widgets/gimppropgui-constructors.c:547
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "New channel"
 msgid "Red channel"
 msgstr "Rauð litrás"
 
 #: ../app/widgets/gimppropgui-constructors.c:571
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "New channel"
 msgid "Green channel"
 msgstr "Græn litrás"
 
 #: ../app/widgets/gimppropgui-constructors.c:595
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "New channel"
 msgid "Blue channel"
@@ -18671,78 +18414,77 @@ msgid "New Seed"
 msgstr "Ný sáðtala"
 
 #: ../app/widgets/gimppropgui.c:295
-#, fuzzy
 #| msgid "Colorize the Image"
 msgid "Pick color from the image"
-msgstr "Litþrykkja mynd"
+msgstr "Plokkaðu lit úr myndinni"
 
 #: ../app/widgets/gimppropgui.c:398
 msgid "This operation has no editable properties"
-msgstr ""
+msgstr "Þessi aðgerð hefur enga eiginleika sem hægt er að stilla"
 
 #: ../app/widgets/gimppropgui.c:468
 msgid "1,700 K – Match flame"
-msgstr ""
+msgstr "1,700 K – Eldspýtulogi"
 
 #: ../app/widgets/gimppropgui.c:469
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr ""
+msgstr "1,850 K – Kertalogi, sólarupprás/sólarlag"
 
 #: ../app/widgets/gimppropgui.c:470
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
-msgstr ""
+msgstr "3,000 K – Mjúk (eða heit) hvít flúrperulýsing"
 
 #: ../app/widgets/gimppropgui.c:471
 msgid "3,300 K – Incandescent lamps"
-msgstr ""
+msgstr "3,300 K – Glóperur"
 
 #: ../app/widgets/gimppropgui.c:472
 msgid "3,200 K – Studio lamps, photofloods, etc."
-msgstr ""
+msgstr "3,200 K – Stúdíólampar, flóðlýsing, o.s.frv."
 
 #: ../app/widgets/gimppropgui.c:473
 msgid "3,350 K – Studio \"CP\" light"
-msgstr ""
+msgstr "3,350 K – \"CP\" stúdíólampar"
 
 #: ../app/widgets/gimppropgui.c:474
 msgid "4,100 K – Moonlight"
-msgstr ""
+msgstr "4,100 K – Tunglsljós"
 
 #: ../app/widgets/gimppropgui.c:475
 msgid "5,000 K – D50"
-msgstr ""
+msgstr "5,000 K – D50"
 
 #: ../app/widgets/gimppropgui.c:476
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
-msgstr ""
+msgstr "5,000 K - Köld hvít/dagsljós flúrperulýsing"
 
 #: ../app/widgets/gimppropgui.c:477
 msgid "5,000 K – Horizon daylight"
-msgstr ""
+msgstr "5,000 K – Dagsbirta frá sjóndeildarhring"
 
 #: ../app/widgets/gimppropgui.c:478
 msgid "5,500 K – D55"
-msgstr ""
+msgstr "5,500 K – D55"
 
 #: ../app/widgets/gimppropgui.c:479
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr ""
+msgstr "5,500 K – Lóðrétt dagsljós, leifturljós"
 
 #: ../app/widgets/gimppropgui.c:480
 msgid "6,200 K – Xenon short-arc lamp"
-msgstr ""
+msgstr "6,200 K – Xenon stuttbogalampi"
 
 #: ../app/widgets/gimppropgui.c:481
 msgid "6,500 K – D65"
-msgstr ""
+msgstr "6,500 K – D65"
 
 #: ../app/widgets/gimppropgui.c:482
 msgid "6,500 K – Daylight, overcast"
-msgstr ""
+msgstr "6,500 K – Dagsljós, alskýjað"
 
 #: ../app/widgets/gimppropgui.c:483
 msgid "7,500 K – D75"
-msgstr ""
+msgstr "7,500 K – D75"
 
 #: ../app/widgets/gimppropgui.c:484
 msgid "9,300 K"
@@ -18892,7 +18634,6 @@ msgid "Color _space:"
 msgstr "Lit_rýmd:"
 
 #: ../app/widgets/gimptemplateeditor.c:393
-#| msgid "_X resolution:"
 msgid "_Precision:"
 msgstr "_Nákvæmni:"
 
@@ -18933,10 +18674,10 @@ msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Ysta stakið í textanum verður að vera <text_view_markup> og ekki <%s>"
 
 #: ../app/widgets/gimptextbuffer.c:1449
-#, fuzzy, c-format
+#, c-format
 #| msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgid "Input file '%s' appears truncated: %s"
-msgstr "Banvæn þáttunarvilla í mynsturskrá '%s'. Virðist vanta enda á skrána."
+msgstr "Það virðist vanta enda á '%s' inntaksskrána: %s"
 
 #: ../app/widgets/gimptextbuffer.c:1467
 #, c-format
@@ -18944,16 +18685,13 @@ msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ógild UTF-8 gögn í skrá '%s'."
 
 #: ../app/widgets/gimptextbuffer.c:1516
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Reverting to '%s' failed:\n"
 #| "\n"
 #| "%s"
 msgid "Writing palette file '%s' failed: %s"
-msgstr ""
-"Afturhvarf til '%s' mistókst:\n"
-"\n"
-"%s"
+msgstr "Skrifun í litaspjaldsskrána '%s' mistókst: %s"
 
 #: ../app/widgets/gimptexteditor.c:223
 msgid "_Use selected font"
@@ -19004,7 +18742,7 @@ msgstr "Yfirstrikun"
 #: ../app/widgets/gimptextstyleeditor.c:1309
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
-msgstr ""
+msgstr "Letrið \"%s\" er ekki tiltækt á þessu kerfi"
 
 #: ../app/widgets/gimpthumbbox.c:330
 #, c-format
@@ -19238,10 +18976,9 @@ msgid "Background"
 msgstr "Bakgrunnslitur"
 
 #: ../app/widgets/widgets-enums.c:52
-#, fuzzy
 msgctxt "circle-background"
 msgid "Plain"
-msgstr "PLAIN"
+msgstr "Einfalt"
 
 #: ../app/widgets/widgets-enums.c:53
 msgctxt "circle-background"
@@ -19373,10 +19110,10 @@ msgid "Error writing '%s': "
 msgstr "Villa við ritun '%s': "
 
 #: ../app/xcf/xcf.c:420
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading '%s': %s"
 msgid "Error creating '%s': "
-msgstr "Villa við lestur '%s': %s"
+msgstr "Villa við að búa til '%s': "
 
 #: ../app/xcf/xcf-load.c:302
 #, c-format
