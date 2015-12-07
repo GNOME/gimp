@@ -41,7 +41,6 @@
 
 
 static inline gboolean   is_script (const gchar *filename);
-static inline gboolean   is_hidden (const gchar *filename);
 
 
 /*  public functions  */
@@ -99,13 +98,11 @@ gimp_datafiles_read_directories (const gchar            *path_str,
               GFile     *file;
               GFileInfo *info;
 
-              if (is_hidden (dir_ent))
-                continue;
-
               filename = g_build_filename (dirname, dir_ent, NULL);
               file = g_file_new_for_path (filename);
 
               info = g_file_query_info (file,
+                                        G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
                                         G_FILE_ATTRIBUTE_STANDARD_TYPE      ","
                                         G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE ","
                                         "time::*",
@@ -133,11 +130,13 @@ gimp_datafiles_read_directories (const gchar            *path_str,
                     g_file_info_get_attribute_uint64 (info,
                                                       G_FILE_ATTRIBUTE_TIME_CREATED);
 
-                  file_type =
-                    g_file_info_get_attribute_uint32 (info,
-                                                      G_FILE_ATTRIBUTE_STANDARD_TYPE);
+                  file_type = g_file_info_get_file_type (info);
 
-                  if (flags & G_FILE_TEST_EXISTS)
+                  if (g_file_info_get_is_hidden (info))
+                    {
+                      /* do nothing */
+                    }
+                  else if (flags & G_FILE_TEST_EXISTS)
                     {
                       (* loader_func) (&file_data, user_data);
                     }
@@ -223,13 +222,4 @@ is_script (const gchar *filename)
 #endif /* G_OS_WIN32 */
 
   return FALSE;
-}
-
-static inline gboolean
-is_hidden (const gchar *filename)
-{
-  /*  skip files starting with '.' so we don't try to parse
-   *  stuff like .DS_Store or other metadata storage files
-   */
-  return (filename[0] == '.');
 }
