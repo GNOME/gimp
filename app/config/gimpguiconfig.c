@@ -40,6 +40,7 @@
 #endif
 
 #define DEFAULT_THEME          "Default"
+#define DEFAULT_ICON_THEME     "Default"
 
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
   "http://docs.gimp.org/" GIMP_APP_VERSION_STRING
@@ -69,6 +70,8 @@ enum
   PROP_TOOLBOX_WILBER,
   PROP_THEME_PATH,
   PROP_THEME,
+  PROP_ICON_THEME_PATH,
+  PROP_ICON_THEME,
   PROP_USE_HELP,
   PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
@@ -227,6 +230,17 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_THEME,
                                    "theme", THEME_BLURB,
                                    DEFAULT_THEME,
+                                   GIMP_PARAM_STATIC_STRINGS);
+  path = gimp_config_build_data_path ("icons");
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ICON_THEME_PATH,
+                                 "icon-theme-path", ICON_THEME_PATH_BLURB,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_ICON_THEME,
+                                   "icon-theme", ICON_THEME_BLURB,
+                                   DEFAULT_ICON_THEME,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                                     "use-help", USE_HELP_BLURB,
@@ -394,6 +408,8 @@ gimp_gui_config_finalize (GObject *object)
 
   g_free (gui_config->theme_path);
   g_free (gui_config->theme);
+  g_free (gui_config->icon_theme_path);
+  g_free (gui_config->icon_theme);
   g_free (gui_config->help_locales);
   g_free (gui_config->web_browser);
   g_free (gui_config->user_manual_online_uri);
@@ -475,6 +491,14 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_THEME:
       g_free (gui_config->theme);
       gui_config->theme = g_value_dup_string (value);
+      break;
+     case PROP_ICON_THEME_PATH:
+      g_free (gui_config->icon_theme_path);
+      gui_config->icon_theme_path = g_value_dup_string (value);
+      break;
+    case PROP_ICON_THEME:
+      g_free (gui_config->icon_theme);
+      gui_config->icon_theme = g_value_dup_string (value);
       break;
     case PROP_USE_HELP:
       gui_config->use_help = g_value_get_boolean (value);
@@ -624,6 +648,12 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_THEME:
       g_value_set_string (value, gui_config->theme);
+      break;
+    case PROP_ICON_THEME_PATH:
+      g_value_set_string (value, gui_config->icon_theme_path);
+      break;
+    case PROP_ICON_THEME:
+      g_value_set_string (value, gui_config->icon_theme);
       break;
     case PROP_USE_HELP:
       g_value_set_boolean (value, gui_config->use_help);

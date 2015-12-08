@@ -74,6 +74,7 @@
 #include "gui.h"
 #include "gui-unique.h"
 #include "gui-vtable.h"
+#include "icon-themes.h"
 #include "session.h"
 #include "splash.h"
 #include "themes.h"
@@ -233,6 +234,8 @@ gui_init (Gimp     *gimp,
   gimp_dnd_init (gimp);
 
   themes_init (gimp);
+
+  icon_themes_init (gimp);
 
   initial_monitor = gimp_get_monitor_at_pointer (&initial_screen);
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (initial_screen));

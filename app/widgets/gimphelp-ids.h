@@ -473,6 +473,7 @@
 #define GIMP_HELP_PREFS_INTERFACE                 "gimp-prefs-interface"
 #define GIMP_HELP_PREFS_HELP                      "gimp-prefs-help"
 #define GIMP_HELP_PREFS_THEME                     "gimp-prefs-theme"
+#define GIMP_HELP_PREFS_ICON_THEME                "gimp-prefs-icon-theme"
 #define GIMP_HELP_PREFS_TOOL_OPTIONS              "gimp-prefs-tool-options"
 #define GIMP_HELP_PREFS_TOOLBOX                   "gimp-prefs-toolbox"
 #define GIMP_HELP_PREFS_INPUT_DEVICES             "gimp-prefs-input-devices"
@@ -501,6 +502,7 @@
 #define GIMP_HELP_PREFS_FOLDERS_INTERPRETERS      "gimp-prefs-folders-interpreters"
 #define GIMP_HELP_PREFS_FOLDERS_ENVIRONMENT       "gimp-prefs-folders-environment"
 #define GIMP_HELP_PREFS_FOLDERS_THEMES            "gimp-prefs-folders-themes"
+#define GIMP_HELP_PREFS_FOLDERS_ICON_THEMES       "gimp-prefs-folders-icon-themes"
 
 #define GIMP_HELP_INPUT_DEVICES                   "gimp-help-input-devices"
 #define GIMP_HELP_KEYBOARD_SHORTCUTS              "gimp-help-keyboard-shortcuts"

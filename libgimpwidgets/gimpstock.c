@@ -361,6 +361,7 @@ gimp_stock_init (void)
 
   GdkPixbuf *pixbuf;
   GError    *error = NULL;
+  gchar     *icon_theme;
   gchar     *icons_dir;
   gint       i;
 
@@ -397,7 +398,11 @@ gimp_stock_init (void)
   gtk_stock_add_static (gimp_compat_stock_items,
                         G_N_ELEMENTS (gimp_compat_stock_items));
 
-  icons_dir = g_build_filename (gimp_data_directory (), "icons", NULL);
+  icon_theme = g_strdup ("Default"); /* FIXME */
+  icons_dir = g_build_filename (gimp_data_directory (), "icons", icon_theme,
+                                NULL);
+  g_free (icon_theme);
+
   gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default (),
                                       icons_dir);
   g_free (icons_dir);

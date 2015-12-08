@@ -1,19 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir   = $(gimpdatadir)/icons/hicolor
-icons12dir = $(gimpdatadir)/icons/hicolor/12x12/apps
-icons16dir = $(gimpdatadir)/icons/hicolor/16x16/apps
-icons18dir = $(gimpdatadir)/icons/hicolor/18x18/apps
-icons20dir = $(gimpdatadir)/icons/hicolor/20x20/apps
-icons22dir = $(gimpdatadir)/icons/hicolor/22x22/apps
-icons24dir = $(gimpdatadir)/icons/hicolor/24x24/apps
-icons32dir = $(gimpdatadir)/icons/hicolor/32x32/apps
-icons48dir = $(gimpdatadir)/icons/hicolor/48x48/apps
-icons64dir = $(gimpdatadir)/icons/hicolor/64x64/apps
-icons96dir = $(gimpdatadir)/icons/hicolor/96x96/apps
-icons128dir = $(gimpdatadir)/icons/hicolor/128x128/apps
-icons192dir = $(gimpdatadir)/icons/hicolor/192x192/apps
-icons256dir = $(gimpdatadir)/icons/hicolor/256x256/apps
+iconsdir   = $(gimpdatadir)/icons/Default/hicolor
+icons12dir = $(gimpdatadir)/icons/Default/hicolor/12x12/apps
+icons16dir = $(gimpdatadir)/icons/Default/hicolor/16x16/apps
+icons18dir = $(gimpdatadir)/icons/Default/hicolor/18x18/apps
+icons20dir = $(gimpdatadir)/icons/Default/hicolor/20x20/apps
+icons22dir = $(gimpdatadir)/icons/Default/hicolor/22x22/apps
+icons24dir = $(gimpdatadir)/icons/Default/hicolor/24x24/apps
+icons32dir = $(gimpdatadir)/icons/Default/hicolor/32x32/apps
+icons48dir = $(gimpdatadir)/icons/Default/hicolor/48x48/apps
+icons64dir = $(gimpdatadir)/icons/Default/hicolor/64x64/apps
+icons96dir = $(gimpdatadir)/icons/Default/hicolor/96x96/apps
+icons128dir = $(gimpdatadir)/icons/Default/hicolor/128x128/apps
+icons192dir = $(gimpdatadir)/icons/Default/hicolor/192x192/apps
+icons256dir = $(gimpdatadir)/icons/Default/hicolor/256x256/apps
 
 
 ## The icon theme images
@@ -132,6 +132,7 @@ icons16_DATA = \
 	16/gimp-prefs-image-windows.png			\
 	16/gimp-prefs-interface.png			\
 	16/gimp-prefs-theme.png				\
+	16/gimp-prefs-icon-theme.png			\
 	16/gimp-prefs-toolbox.png			\
 	16/gimp-prefs-window-management.png		\
 	16/gimp-print-resolution.png			\
@@ -271,6 +272,7 @@ icons22_DATA = \
 	22/gimp-prefs-playground.png		\
 	22/gimp-prefs-session.png		\
 	22/gimp-prefs-theme.png			\
+	22/gimp-prefs-icon-theme.png		\
 	22/gimp-prefs-tool-options.png		\
 	22/gimp-prefs-toolbox.png		\
 	22/gimp-prefs-window-management.png	\

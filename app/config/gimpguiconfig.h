@@ -58,6 +58,8 @@ struct _GimpGuiConfig
   gboolean             toolbox_wilber;
   gchar               *theme_path;
   gchar               *theme;
+  gchar               *icon_theme_path;
+  gchar               *icon_theme;
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;

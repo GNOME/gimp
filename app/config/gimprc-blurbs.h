@@ -431,6 +431,12 @@ _("Sets the folder for temporary storage. Files will appear here " \
 #define THEME_PATH_BLURB \
 "Sets the theme search path."
 
+#define ICON_THEME_BLURB \
+"The name of the icon theme to use."
+
+#define ICON_THEME_PATH_BLURB \
+"Sets the icon theme search path."
+
 #define THUMBNAIL_SIZE_BLURB \
 _("Sets the size of the thumbnail shown in the Open dialog.")
 

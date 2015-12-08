@@ -102,6 +102,7 @@ gimp_user_install_items[] =
   { "scripts",         USER_INSTALL_MKDIR },
   { "templates",       USER_INSTALL_MKDIR },
   { "themes",          USER_INSTALL_MKDIR },
+  { "icons",           USER_INSTALL_MKDIR },
   { "tmp",             USER_INSTALL_MKDIR },
   { "curves",          USER_INSTALL_MKDIR },
   { "levels",          USER_INSTALL_MKDIR },

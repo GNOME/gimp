@@ -60,6 +60,7 @@
 #include "tools/gimp-tools.h"
 
 #include "gui/session.h"
+#include "gui/icon-themes.h"
 #include "gui/themes.h"
 
 #include "preferences-dialog.h"
@@ -723,7 +724,7 @@ prefs_theme_select_callback (GtkTreeSelection *sel,
       GValue val = { 0, };
 
       gtk_tree_model_get_value (model, &iter, 0, &val);
-      g_object_set (gimp->config, "theme", g_value_get_string (&val), NULL);
+      g_object_set_property (G_OBJECT (gimp->config), "theme", &val);
       g_value_unset (&val);
     }
 }
@@ -733,6 +734,24 @@ prefs_theme_reload_callback (GtkWidget *button,
                              Gimp      *gimp)
 {
   g_object_notify (G_OBJECT (gimp->config), "theme");
+}
+
+static void
+prefs_icon_theme_select_callback (GtkTreeSelection *sel,
+                                  Gimp             *gimp)
+{
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+
+  if (gtk_tree_selection_get_selected (sel, &model, &iter))
+    {
+      GtkWidget *dialog;
+      GValue     val = { 0, };
+
+      gtk_tree_model_get_value (model, &iter, 0, &val);
+      g_object_set_property (G_OBJECT (gimp->config), "icon-theme", &val);
+      g_value_unset (&val);
+    }
 }
 
 static GtkWidget *
@@ -1659,6 +1678,97 @@ prefs_dialog_new (Gimp       *gimp,
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_theme_reload_callback),
                     gimp);
+
+
+  /****************/
+  /*  Icon Theme  */
+  /****************/
+  pixbuf = prefs_get_pixbufs (dialog, "icon-theme", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Icon Theme"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_ICON_THEME,
+                                  NULL,
+                                  &top_iter);
+
+  vbox2 = prefs_frame_new (_("Select an Icon Theme"), GTK_CONTAINER (vbox), TRUE);
+
+  {
+    GtkWidget         *scrolled_win;
+    GtkListStore      *list_store;
+    GtkWidget         *view;
+    GtkTreeSelection  *sel;
+    gchar            **icon_themes;
+    gint               n_icon_themes;
+    gint               i;
+
+    scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_size_request (scrolled_win, -1, 80);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                         GTK_SHADOW_IN);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                    GTK_POLICY_NEVER,
+                                    GTK_POLICY_AUTOMATIC);
+    gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
+    gtk_widget_show (scrolled_win);
+
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+
+    view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
+    gtk_container_add (GTK_CONTAINER (scrolled_win), view);
+    gtk_widget_show (view);
+
+    g_object_unref (list_store);
+
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 0,
+                                                 _("Icon Theme"),
+                                                 gtk_cell_renderer_text_new (),
+                                                 "text", 0,
+                                                 NULL);
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 1,
+                                                 _("Folder"),
+                                                 gtk_cell_renderer_text_new (),
+                                                 "text", 1,
+                                                 NULL);
+
+    sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+
+    icon_themes = icon_themes_list_themes (gimp, &n_icon_themes);
+
+    for (i = 0; i < n_icon_themes; i++)
+      {
+        GtkTreeIter  iter;
+        GFile       *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_themes[i]);
+
+        gtk_list_store_append (list_store, &iter);
+        gtk_list_store_set (list_store, &iter,
+                            0, icon_themes[i],
+                            1, gimp_file_get_utf8_name (icon_theme_dir),
+                            -1);
+
+        if (GIMP_GUI_CONFIG (object)->icon_theme &&
+            ! strcmp (GIMP_GUI_CONFIG (object)->icon_theme, icon_themes[i]))
+          {
+            GtkTreePath *path;
+
+            path = gtk_tree_model_get_path (GTK_TREE_MODEL (list_store), &iter);
+
+            gtk_tree_view_set_cursor (GTK_TREE_VIEW (view), path, NULL, FALSE);
+            gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (view), path,
+                                          NULL, FALSE, 0.0, 0.0);
+
+            gtk_tree_path_free (path);
+          }
+      }
+
+    g_strfreev (icon_themes);
+
+    g_signal_connect (sel, "changed",
+                      G_CALLBACK (prefs_icon_theme_select_callback),
+                      gimp);
+  }
 
 
   /*****************/
