@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-metadata.h"
 
 #include "file/file-utils.h"
 #include "file/gimp-file.h"
@@ -280,6 +281,16 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
       tooltip = g_strdup_printf (_("Disables compression to make the XCF "
                                    "file readable by %s and later."),
                                  version_string);
+      if (gimp_image_get_metadata (image))
+        {
+          gchar *temp_tooltip;
+
+          temp_tooltip = g_strconcat (tooltip, "\n",
+                                      _("Metadata won't be visible in GIMP "
+                                        "older than version 2.10."), NULL);
+          g_free (tooltip);
+          tooltip = temp_tooltip;
+        }
     }
 
   gimp_help_set_help_data (dialog->compat_toggle, tooltip, NULL);
