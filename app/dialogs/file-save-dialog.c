@@ -178,68 +178,78 @@ file_save_dialog_response (GtkWidget *dialog,
       break;
 
     case CHECK_URI_OK:
-      gimp_file_dialog_set_sensitive (file_dialog, FALSE);
+      {
+        gboolean xcf_compat = FALSE;
 
-      if (file_save_dialog_save_image (GIMP_PROGRESS (dialog),
-                                       gimp,
-                                       file_dialog->image,
-                                       file,
-                                       save_proc,
-                                       GIMP_RUN_INTERACTIVE,
-                                       GIMP_IS_SAVE_DIALOG (dialog) &&
-                                       ! GIMP_SAVE_DIALOG (dialog)->save_a_copy,
-                                       FALSE,
-                                       GIMP_IS_EXPORT_DIALOG (dialog),
-                                       GIMP_IS_SAVE_DIALOG (dialog) &&
-                                       GIMP_SAVE_DIALOG (dialog)->compat,
-                                       FALSE))
-        {
-          /* Save was successful, now store the URI in a couple of
-           * places that depend on it being the user that made a
-           * save. Lower-level URI management is handled in
-           * file_save()
-           */
-          if (GIMP_IS_SAVE_DIALOG (dialog))
-            {
-              if (GIMP_SAVE_DIALOG (dialog)->save_a_copy)
-                gimp_image_set_save_a_copy_file (file_dialog->image, file);
+        gimp_file_dialog_set_sensitive (file_dialog, FALSE);
 
-              g_object_set_data_full (G_OBJECT (file_dialog->image->gimp),
-                                      GIMP_FILE_SAVE_LAST_FILE_KEY,
-                                      g_object_ref (file),
-                                      (GDestroyNotify) g_object_unref);
-            }
-          else
-            {
-              g_object_set_data_full (G_OBJECT (file_dialog->image->gimp),
-                                      GIMP_FILE_EXPORT_LAST_FILE_KEY,
-                                      g_object_ref (file),
-                                      (GDestroyNotify) g_object_unref);
-            }
+        if (GIMP_IS_SAVE_DIALOG (dialog))
+          {
+            GimpSaveDialog* save_dialog = GIMP_SAVE_DIALOG (dialog);
 
-          /*  make sure the menus are updated with the keys we've just set  */
-          gimp_image_flush (file_dialog->image);
+            xcf_compat = save_dialog->compat &&
+              gtk_widget_get_sensitive (save_dialog->compat_toggle);
+          }
+        if (file_save_dialog_save_image (GIMP_PROGRESS (dialog),
+                                         gimp,
+                                         file_dialog->image,
+                                         file,
+                                         save_proc,
+                                         GIMP_RUN_INTERACTIVE,
+                                         GIMP_IS_SAVE_DIALOG (dialog) &&
+                                         ! GIMP_SAVE_DIALOG (dialog)->save_a_copy,
+                                         FALSE,
+                                         GIMP_IS_EXPORT_DIALOG (dialog),
+                                         xcf_compat,
+                                         FALSE))
+          {
+            /* Save was successful, now store the URI in a couple of
+             * places that depend on it being the user that made a
+             * save. Lower-level URI management is handled in
+             * file_save()
+             */
+            if (GIMP_IS_SAVE_DIALOG (dialog))
+              {
+                if (GIMP_SAVE_DIALOG (dialog)->save_a_copy)
+                  gimp_image_set_save_a_copy_file (file_dialog->image, file);
 
-          /* Handle close-after-saving */
-          if (GIMP_IS_SAVE_DIALOG (dialog)                  &&
-              GIMP_SAVE_DIALOG (dialog)->close_after_saving &&
-              GIMP_SAVE_DIALOG (dialog)->display_to_close)
-            {
-              GimpDisplay *display = GIMP_DISPLAY (GIMP_SAVE_DIALOG (dialog)->display_to_close);
+                g_object_set_data_full (G_OBJECT (file_dialog->image->gimp),
+                                        GIMP_FILE_SAVE_LAST_FILE_KEY,
+                                        g_object_ref (file),
+                                        (GDestroyNotify) g_object_unref);
+              }
+            else
+              {
+                g_object_set_data_full (G_OBJECT (file_dialog->image->gimp),
+                                        GIMP_FILE_EXPORT_LAST_FILE_KEY,
+                                        g_object_ref (file),
+                                        (GDestroyNotify) g_object_unref);
+              }
 
-              if (! gimp_image_is_dirty (gimp_display_get_image (display)))
-                {
-                  gimp_display_close (display);
-                }
-            }
+            /*  make sure the menus are updated with the keys we've just set  */
+            gimp_image_flush (file_dialog->image);
 
-          gtk_widget_destroy (dialog);
-        }
+            /* Handle close-after-saving */
+            if (GIMP_IS_SAVE_DIALOG (dialog)                  &&
+                GIMP_SAVE_DIALOG (dialog)->close_after_saving &&
+                GIMP_SAVE_DIALOG (dialog)->display_to_close)
+              {
+                GimpDisplay *display = GIMP_DISPLAY (GIMP_SAVE_DIALOG (dialog)->display_to_close);
 
-      g_object_unref (file);
-      g_free (basename);
+                if (! gimp_image_is_dirty (gimp_display_get_image (display)))
+                  {
+                    gimp_display_close (display);
+                  }
+              }
 
-      gimp_file_dialog_set_sensitive (file_dialog, TRUE);
+            gtk_widget_destroy (dialog);
+          }
+
+        g_object_unref (file);
+        g_free (basename);
+
+        gimp_file_dialog_set_sensitive (file_dialog, TRUE);
+      }
       break;
 
     case CHECK_URI_SWITCH_DIALOGS:
