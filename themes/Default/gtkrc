@@ -21,19 +21,19 @@ style "gimp-default-style"
 {
   stock["gtk-dialog-error"] =
     {
-      { "../../icons/hicolor/64x64/apps/gimp-error.png", *, *, "gtk-dialog" }
+      { "../../icons/Default/hicolor/64x64/apps/gimp-error.png", *, *, "gtk-dialog" }
     }
   stock["gtk-dialog-info"] =
     {
-      { "../../icons/hicolor/64x64/apps/gimp-info.png", *, *, "gtk-dialog" }
+      { "../../icons/Default/hicolor/64x64/apps/gimp-info.png", *, *, "gtk-dialog" }
     }
   stock["gtk-dialog-question"] =
     {
-      { "../../icons/hicolor/64x64/apps/gimp-question.png", *, *, "gtk-dialog" }
+      { "../../icons/Default/hicolor/64x64/apps/gimp-question.png", *, *, "gtk-dialog" }
     }
   stock["gtk-dialog-warning"] =
     {
-      { "../../icons/hicolor/64x64/apps/gimp-warning.png", *, *, "gtk-dialog" }
+      { "../../icons/Default/hicolor/64x64/apps/gimp-warning.png", *, *, "gtk-dialog" }
     }
 
   GtkPaned::handle-size             = 6
