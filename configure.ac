@@ -2359,6 +2359,8 @@ docs/Makefile
 menus/Makefile
 cursors/Makefile
 icons/Makefile
+icons/Default/Makefile
+icons/Symbolic/Makefile
 themes/Makefile
 themes/Default/Makefile
 themes/Small/Makefile
