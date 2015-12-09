@@ -204,8 +204,8 @@ icons_apply_theme (Gimp        *gimp,
                    const gchar *icon_theme_name)
 {
   GtkIconTheme  *icon_theme;
-  gchar        **paths;
-  gint           n_paths;
+  GFile         *icon_theme_dir;
+  gchar         *icon_theme_path;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -217,20 +217,11 @@ icons_apply_theme (Gimp        *gimp,
 
   icon_theme = gtk_icon_theme_get_default ();
 
-  gtk_icon_theme_get_search_path (icon_theme, &paths, &n_paths);
+  icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_theme_name);
+  icon_theme_path = g_file_get_path(icon_theme_dir);
 
-  if (paths)
-    {
-      GFile *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_theme_name);
-
-      g_free (paths[0]);
-      paths[0] = g_file_get_path (icon_theme_dir);
-
-      gtk_icon_theme_set_search_path (icon_theme,
-                                      (const gchar **) paths, n_paths);
-
-      g_strfreev (paths);
-    }
+  gtk_icon_theme_prepend_search_path (icon_theme, icon_theme_path);
+  g_free (icon_theme_path);
 }
 
 static void
