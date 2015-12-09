@@ -129,10 +129,10 @@ icons16_DATA = \
 	16/gimp-prefs-folders-tool-plug-ins.png		\
 	16/gimp-prefs-folders-tool-presets.png		\
 	16/gimp-prefs-folders-tools.png			\
+	16/gimp-prefs-icon-theme.png			\
 	16/gimp-prefs-image-windows.png			\
 	16/gimp-prefs-interface.png			\
 	16/gimp-prefs-theme.png				\
-	16/gimp-prefs-icon-theme.png			\
 	16/gimp-prefs-toolbox.png			\
 	16/gimp-prefs-window-management.png		\
 	16/gimp-print-resolution.png			\
@@ -264,6 +264,7 @@ icons22_DATA = \
 	22/gimp-prefs-folders-tools.png		\
 	22/gimp-prefs-folders.png		\
 	22/gimp-prefs-help-system.png		\
+	22/gimp-prefs-icon-theme.png		\
 	22/gimp-prefs-image-title.png		\
 	22/gimp-prefs-image-windows.png		\
 	22/gimp-prefs-input-devices.png		\
@@ -272,7 +273,6 @@ icons22_DATA = \
 	22/gimp-prefs-playground.png		\
 	22/gimp-prefs-session.png		\
 	22/gimp-prefs-theme.png			\
-	22/gimp-prefs-icon-theme.png		\
 	22/gimp-prefs-tool-options.png		\
 	22/gimp-prefs-toolbox.png		\
 	22/gimp-prefs-window-management.png	\
@@ -443,6 +443,7 @@ icons48_DATA = \
 	48/gimp-prefs-folders-tools.png		\
 	48/gimp-prefs-folders.png		\
 	48/gimp-prefs-help-system.png		\
+	48/gimp-prefs-icon-theme.png		\
 	48/gimp-prefs-image-title.png		\
 	48/gimp-prefs-image-windows.png		\
 	48/gimp-prefs-input-devices.png		\
