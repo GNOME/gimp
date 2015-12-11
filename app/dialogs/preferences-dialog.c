@@ -745,8 +745,7 @@ prefs_icon_theme_select_callback (GtkTreeSelection *sel,
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
-      GtkWidget *dialog;
-      GValue     val = { 0, };
+      GValue val = { 0, };
 
       gtk_tree_model_get_value (model, &iter, 0, &val);
       g_object_set_property (G_OBJECT (gimp->config), "icon-theme", &val);
@@ -1288,35 +1287,6 @@ prefs_message (GtkMessageType  type,
   gtk_widget_show (dialog);
 }
 
-static gboolean
-prefs_idle_unref (gpointer data)
-{
-  g_object_unref (data);
-
-  return FALSE;
-}
-
-static GdkPixbuf *
-prefs_get_pixbufs (GtkWidget    *widget,
-                   const gchar  *name,
-                   GdkPixbuf   **small_pixbuf)
-{
-  GdkPixbuf *pixbuf = NULL;
-  gchar     *icon_name;
-
-  icon_name = g_strconcat ("gimp-prefs-", name, NULL);
-
-  pixbuf = gimp_widget_load_icon (widget, icon_name, 48);
-  g_idle_add (prefs_idle_unref, pixbuf);
-
-  *small_pixbuf = gimp_widget_load_icon (widget, icon_name, 22);
-  g_idle_add (prefs_idle_unref, *small_pixbuf);
-
-  g_free (icon_name);
-
-  return pixbuf;
-}
-
 static GtkWidget *
 prefs_dialog_new (Gimp       *gimp,
                   GimpConfig *config)
@@ -1325,10 +1295,8 @@ prefs_dialog_new (Gimp       *gimp,
   GtkTreeIter        top_iter;
   GtkTreeIter        child_iter;
 
-  GtkSizeGroup      *size_group = NULL;
-  GdkPixbuf         *pixbuf;
-  GdkPixbuf         *small_pixbuf = NULL;
   GtkWidget         *prefs_box;
+  GtkSizeGroup      *size_group = NULL;
   GtkWidget         *vbox;
   GtkWidget         *hbox;
   GtkWidget         *vbox2;
@@ -1389,12 +1357,13 @@ prefs_dialog_new (Gimp       *gimp,
   /*****************/
   /*  Environment  */
   /*****************/
-  pixbuf = prefs_get_pixbufs (dialog, "environment", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-environment",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Environment"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-environment",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Environment"),
                                   GIMP_HELP_PREFS_ENVIRONMENT,
                                   NULL,
                                   &top_iter);
@@ -1464,12 +1433,13 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   /*  Interface  */
   /***************/
-  pixbuf = prefs_get_pixbufs (dialog, "interface", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-interface",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("User Interface"),
-                                  pixbuf,
+                                  "gimp-prefs-interface",
+                                  GTK_ICON_SIZE_BUTTON,
                                   _("Interface"),
-                                  small_pixbuf,
                                   GIMP_HELP_PREFS_INTERFACE,
                                   NULL,
                                   &top_iter);
@@ -1547,12 +1517,13 @@ prefs_dialog_new (Gimp       *gimp,
   /****************/
   if (gimp->show_playground)
     {
-      pixbuf = prefs_get_pixbufs (dialog, "playground", &small_pixbuf);
       vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                      "gimp-prefs-playground",
+                                      GTK_ICON_SIZE_DIALOG,
                                       _("Experimental Playground"),
-                                      pixbuf,
+                                      "gimp-prefs-playground",
+                                      GTK_ICON_SIZE_BUTTON,
                                       _("Playground"),
-                                      small_pixbuf,
                                       GIMP_HELP_PREFS_DIALOG,
                                       NULL,
                                       &top_iter);
@@ -1581,12 +1552,13 @@ prefs_dialog_new (Gimp       *gimp,
   /***********/
   /*  Theme  */
   /***********/
-  pixbuf = prefs_get_pixbufs (dialog, "theme", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-theme",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Theme"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-theme",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Theme"),
                                   GIMP_HELP_PREFS_THEME,
                                   NULL,
                                   &top_iter);
@@ -1683,12 +1655,13 @@ prefs_dialog_new (Gimp       *gimp,
   /****************/
   /*  Icon Theme  */
   /****************/
-  pixbuf = prefs_get_pixbufs (dialog, "icon-theme", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-icon-theme",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Icon Theme"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-icon-theme",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Icon Theme"),
                                   GIMP_HELP_PREFS_ICON_THEME,
                                   NULL,
                                   &top_iter);
@@ -1774,12 +1747,13 @@ prefs_dialog_new (Gimp       *gimp,
   /*****************/
   /*  Help System  */
   /*****************/
-  pixbuf = prefs_get_pixbufs (dialog, "help-system", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-help-system",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Help System"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-help-system",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Help System"),
                                   GIMP_HELP_PREFS_HELP,
                                   NULL,
                                   &top_iter);
@@ -1875,12 +1849,13 @@ prefs_dialog_new (Gimp       *gimp,
   /******************/
   /*  Tool Options  */
   /******************/
-  pixbuf = prefs_get_pixbufs (dialog, "tool-options", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-tool-options",
+                                  GTK_ICON_SIZE_DIALOG,
                                   C_("preferences", "Tool Options"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-tool-options",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  C_("preferences", "Tool Options"),
                                   GIMP_HELP_PREFS_TOOL_OPTIONS,
                                   NULL,
                                   &top_iter);
@@ -1964,12 +1939,13 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Toolbox  */
   /*************/
-  pixbuf = prefs_get_pixbufs (dialog, "toolbox", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-toolbox",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Toolbox"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-toolbox",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Toolbox"),
                                   GIMP_HELP_PREFS_TOOLBOX,
                                   NULL,
                                   &top_iter);
@@ -2010,12 +1986,13 @@ prefs_dialog_new (Gimp       *gimp,
   /***********************/
   /*  Default New Image  */
   /***********************/
-  pixbuf = prefs_get_pixbufs (dialog, "new-image", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-new-image",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Default New Image"),
-                                  pixbuf,
+                                  "gimp-prefs-new-image",
+                                  GTK_ICON_SIZE_BUTTON,
                                   _("Default Image"),
-                                  small_pixbuf,
                                   GIMP_HELP_PREFS_NEW_IMAGE,
                                   NULL,
                                   &top_iter);
@@ -2062,12 +2039,13 @@ prefs_dialog_new (Gimp       *gimp,
   /******************/
   /*  Default Grid  */
   /******************/
-  pixbuf = prefs_get_pixbufs (dialog, "default-grid", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-default-grid",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Default Image Grid"),
-                                  pixbuf,
+                                  "gimp-prefs-default-grid",
+                                  GTK_ICON_SIZE_BUTTON,
                                   _("Default Grid"),
-                                  small_pixbuf,
                                   GIMP_HELP_PREFS_DEFAULT_GRID,
                                   NULL,
                                   &top_iter);
@@ -2084,12 +2062,13 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Image Windows  */
   /*******************/
-  pixbuf = prefs_get_pixbufs (dialog, "image-windows", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-image-windows",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Image Windows"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-image-windows",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Image Windows"),
                                   GIMP_HELP_PREFS_IMAGE_WINDOW,
                                   NULL,
                                   &top_iter);
@@ -2165,12 +2144,13 @@ prefs_dialog_new (Gimp       *gimp,
   /********************************/
   /*  Image Windows / Appearance  */
   /********************************/
-  pixbuf = prefs_get_pixbufs (dialog, "image-windows", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-image-windows",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Image Window Appearance"),
-                                  pixbuf,
+                                  "gimp-prefs-image-windows",
+                                  GTK_ICON_SIZE_BUTTON,
                                   _("Appearance"),
-                                  small_pixbuf,
                                   GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
                                   &top_iter,
                                   &child_iter);
@@ -2189,12 +2169,13 @@ prefs_dialog_new (Gimp       *gimp,
   /****************************************************/
   /*  Image Windows / Image Title & Statusbar Format  */
   /****************************************************/
-  pixbuf = prefs_get_pixbufs (dialog, "image-title", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-image-title",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Image Title & Statusbar Format"),
-                                  pixbuf,
+                                  "gimp-prefs-image-title",
+                                  GTK_ICON_SIZE_BUTTON,
                                   _("Title & Status"),
-                                  small_pixbuf,
                                   GIMP_HELP_PREFS_IMAGE_WINDOW_TITLE,
                                   &top_iter,
                                   &child_iter);
@@ -2314,12 +2295,13 @@ prefs_dialog_new (Gimp       *gimp,
   /********************************/
   /*  Image Windows / Behavior  */
   /********************************/
-  pixbuf = prefs_get_pixbufs (dialog, "tool-options", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-tool-options",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Image Window Drawing Behavior"),
-                                  pixbuf,
+                                  "gimp-prefs-tool-options",
+                                  GTK_ICON_SIZE_BUTTON,
                                   _("Behavior"),
-                                  small_pixbuf,
                                   GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
                                   &top_iter,
                                   &child_iter);
@@ -2337,12 +2319,13 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Display  */
   /*************/
-  pixbuf = prefs_get_pixbufs (dialog, "display", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-display",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Display"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-display",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Display"),
                                   GIMP_HELP_PREFS_DISPLAY,
                                   NULL,
                                   &top_iter);
@@ -2463,12 +2446,13 @@ prefs_dialog_new (Gimp       *gimp,
   /**********************/
   /*  Color Management  */
   /**********************/
-  pixbuf = prefs_get_pixbufs (dialog, "color-management", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-color-management",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Color Management"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-color-management",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Color Management"),
                                   GIMP_HELP_PREFS_COLOR_MANAGEMENT,
                                   NULL,
                                   &top_iter);
@@ -2614,12 +2598,13 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Input Devices  */
   /*******************/
-  pixbuf = prefs_get_pixbufs (dialog, "input-devices", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-input-devices",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Input Devices"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-input-devices",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Input Devices"),
                                   GIMP_HELP_PREFS_INPUT_DEVICES,
                                   NULL,
                                   &top_iter);
@@ -2660,12 +2645,13 @@ prefs_dialog_new (Gimp       *gimp,
   /****************************/
   /*  Additional Controllers  */
   /****************************/
-  pixbuf = prefs_get_pixbufs (dialog, "controllers", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-controllers",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Additional Input Controllers"),
-                                  pixbuf,
+                                  "gimp-prefs-controllers",
+                                  GTK_ICON_SIZE_BUTTON,
                                   _("Input Controllers"),
-                                  small_pixbuf,
                                   GIMP_HELP_PREFS_INPUT_CONTROLLERS,
                                   &top_iter,
                                   &child_iter);
@@ -2678,12 +2664,13 @@ prefs_dialog_new (Gimp       *gimp,
   /***********************/
   /*  Window Management  */
   /***********************/
-  pixbuf = prefs_get_pixbufs (dialog, "window-management", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-window-management",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Window Management"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-window-management",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Window Management"),
                                   GIMP_HELP_PREFS_WINDOW_MANAGEMENT,
                                   NULL,
                                   &top_iter);
@@ -2735,12 +2722,13 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Folders  */
   /*************/
-  pixbuf = prefs_get_pixbufs (dialog, "folders", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-folders",
+                                  GTK_ICON_SIZE_DIALOG,
                                   _("Folders"),
-                                  pixbuf,
-                                  NULL,
-                                  small_pixbuf,
+                                  "gimp-prefs-folders",
+                                  GTK_ICON_SIZE_BUTTON,
+                                  _("Folders"),
                                   GIMP_HELP_PREFS_FOLDERS,
                                   NULL,
                                   &top_iter);
@@ -2860,6 +2848,7 @@ prefs_dialog_new (Gimp       *gimp,
     for (i = 0; i < G_N_ELEMENTS (paths); i++)
       {
         GtkWidget *editor;
+        gchar     *icon_name;
 
 #ifdef HAVE_LIBMYPAINT
         if (! gui_config->playground_mybrush_tool &&
@@ -2869,15 +2858,18 @@ prefs_dialog_new (Gimp       *gimp,
           }
 #endif
 
-        pixbuf = prefs_get_pixbufs (dialog, paths[i].icon, &small_pixbuf);
+        icon_name = g_strconcat ("gimp-prefs-", paths[i].icon, NULL);
         vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                        icon_name,
+                                        GTK_ICON_SIZE_DIALOG,
                                         gettext (paths[i].label),
-                                        pixbuf,
+                                        icon_name,
+                                        GTK_ICON_SIZE_BUTTON,
                                         gettext (paths[i].tree_label),
-                                        small_pixbuf,
                                         paths[i].help_data,
                                         &top_iter,
                                         &child_iter);
+        g_free (icon_name);
 
         editor = gimp_prop_path_editor_new (object,
                                             paths[i].path_property_name,

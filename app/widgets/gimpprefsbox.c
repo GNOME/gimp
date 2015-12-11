@@ -34,9 +34,11 @@
 
 enum
 {
-  COLUMN_TREE_PIXBUF,
+  COLUMN_TREE_ICON_NAME,
+  COLUMN_TREE_ICON_SIZE,
   COLUMN_TREE_LABEL,
-  COLUMN_NOTEBOOK_PIXBUF,
+  COLUMN_NOTEBOOK_ICON_NAME,
+  COLUMN_NOTEBOOK_ICON_SIZE,
   COLUMN_NOTEBOOK_LABEL,
   COLUMN_PAGE_INDEX
 };
@@ -105,10 +107,12 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  private->store = gtk_tree_store_new (5,
-                                       GDK_TYPE_PIXBUF,
+  private->store = gtk_tree_store_new (7,
                                        G_TYPE_STRING,
-                                       GDK_TYPE_PIXBUF,
+                                       G_TYPE_INT,
+                                       G_TYPE_STRING,
+                                       G_TYPE_STRING,
+                                       G_TYPE_INT,
                                        G_TYPE_STRING,
                                        G_TYPE_INT);
   private->tree_view =
@@ -121,13 +125,16 @@ gimp_prefs_box_init (GimpPrefsBox *box)
 
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell, "pixbuf",
-                                       COLUMN_TREE_PIXBUF, NULL);
+  gtk_tree_view_column_set_attributes (column, cell,
+                                       "icon-name",  COLUMN_TREE_ICON_NAME,
+                                       "stock-size", COLUMN_TREE_ICON_SIZE,
+                                       NULL);
 
   cell = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, cell, TRUE);
-  gtk_tree_view_column_set_attributes (column, cell, "text",
-                                       COLUMN_TREE_LABEL, NULL);
+  gtk_tree_view_column_set_attributes (column, cell,
+                                       "text", COLUMN_TREE_LABEL,
+                                       NULL);
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (private->tree_view), column);
 
@@ -187,31 +194,35 @@ gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
   GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkTreeModel        *model;
   GtkTreeIter          iter;
-  gchar               *text;
-  GdkPixbuf           *pixbuf;
-  gint                 index;
+  gchar               *notebook_text;
+  gchar               *notebook_icon_name;
+  gint                 notebook_icon_size;
+  gint                 notebook_index;
 
   if (! gtk_tree_selection_get_selected (sel, &model, &iter))
     return;
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_NOTEBOOK_LABEL,  &text,
-                      COLUMN_NOTEBOOK_PIXBUF, &pixbuf,
-                      COLUMN_PAGE_INDEX,      &index,
+                      COLUMN_NOTEBOOK_ICON_NAME, &notebook_icon_name,
+                      COLUMN_NOTEBOOK_ICON_SIZE, &notebook_icon_size,
+                      COLUMN_NOTEBOOK_LABEL,     &notebook_text,
+                      COLUMN_PAGE_INDEX,         &notebook_index,
                       -1);
 
-  gtk_label_set_text (GTK_LABEL (private->label), text);
-  g_free (text);
+  gtk_label_set_text (GTK_LABEL (private->label), notebook_text);
+  g_free (notebook_text);
 
-  gtk_image_set_from_pixbuf (GTK_IMAGE (private->image), pixbuf);
-  if (pixbuf)
-    g_object_unref (pixbuf);
+  gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
+                                notebook_icon_name,
+                                notebook_icon_size);
+  g_free (notebook_icon_name);
 
   g_signal_handlers_block_by_func (private->notebook,
                                    gimp_prefs_box_notebook_page_callback,
                                    sel);
 
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook), index);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
+                                 notebook_index);
 
   g_signal_handlers_unblock_by_func (private->notebook,
                                      gimp_prefs_box_notebook_page_callback,
@@ -290,14 +301,16 @@ gimp_prefs_box_new (void)
 }
 
 GtkWidget *
-gimp_prefs_box_add_page (GimpPrefsBox *box,
-                         const gchar  *notebook_label,
-                         GdkPixbuf    *notebook_icon,
-                         const gchar  *tree_label,
-                         GdkPixbuf    *tree_icon,
-                         const gchar  *help_id,
-                         GtkTreeIter  *parent,
-                         GtkTreeIter  *iter)
+gimp_prefs_box_add_page (GimpPrefsBox      *box,
+                         const gchar       *notebook_icon_name,
+                         const GtkIconSize  notebook_icon_size,
+                         const gchar       *notebook_label,
+                         const gchar       *tree_icon_name,
+                         const GtkIconSize  tree_icon_size,
+                         const gchar       *tree_label,
+                         const gchar       *help_id,
+                         GtkTreeIter       *parent,
+                         GtkTreeIter       *iter)
 {
   GimpPrefsBoxPrivate *private;
   GtkWidget           *event_box;
@@ -318,22 +331,15 @@ gimp_prefs_box_add_page (GimpPrefsBox *box,
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
 
-  if (! notebook_icon)
-    notebook_icon = tree_icon;
-
-  if (! tree_icon)
-    tree_icon = notebook_icon;
-
-  if (! tree_label)
-    tree_label = notebook_label;
-
   gtk_tree_store_append (private->store, iter, parent);
   gtk_tree_store_set (private->store, iter,
-                      COLUMN_TREE_PIXBUF,     tree_icon,
-                      COLUMN_TREE_LABEL,      tree_label,
-                      COLUMN_NOTEBOOK_PIXBUF, notebook_icon,
-                      COLUMN_NOTEBOOK_LABEL , notebook_label,
-                      COLUMN_PAGE_INDEX,      private->page_index++,
+                      COLUMN_TREE_ICON_NAME,     tree_icon_name,
+                      COLUMN_TREE_ICON_SIZE,     tree_icon_size,
+                      COLUMN_TREE_LABEL,         tree_label,
+                      COLUMN_NOTEBOOK_ICON_NAME, notebook_icon_name,
+                      COLUMN_NOTEBOOK_ICON_SIZE, notebook_icon_size,
+                      COLUMN_NOTEBOOK_LABEL ,    notebook_label,
+                      COLUMN_PAGE_INDEX,         private->page_index++,
                       -1);
 
   return vbox;
