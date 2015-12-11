@@ -596,6 +596,14 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
       g_list_free (children);
     }
 
+  /* force the toggle cells to recreate their icon */
+  g_object_set (view->priv->eye_cell,
+                "icon-name", GIMP_STOCK_VISIBLE,
+                NULL);
+  g_object_set (view->priv->chain_cell,
+                "icon-name", GIMP_STOCK_LINKED,
+                NULL);
+
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
