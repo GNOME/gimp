@@ -59,6 +59,8 @@ static void          gimp_container_tree_view_view_iface_init   (GimpContainerVi
 static void          gimp_container_tree_view_constructed       (GObject                     *object);
 static void          gimp_container_tree_view_finalize          (GObject                     *object);
 
+static void          gimp_container_tree_view_style_set         (GtkWidget                   *widget,
+                                                                 GtkStyle                    *prev_style);
 static void          gimp_container_tree_view_unmap             (GtkWidget                   *widget);
 static gboolean      gimp_container_tree_view_popup_menu        (GtkWidget                   *widget);
 
@@ -153,6 +155,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   object_class->constructed = gimp_container_tree_view_constructed;
   object_class->finalize    = gimp_container_tree_view_finalize;
 
+  widget_class->style_set   = gimp_container_tree_view_style_set;
   widget_class->unmap       = gimp_container_tree_view_unmap;
   widget_class->popup_menu  = gimp_container_tree_view_popup_menu;
 
@@ -347,6 +350,41 @@ gimp_container_tree_view_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gboolean
+gimp_container_tree_view_style_set_foreach (GtkTreeModel *model,
+                                            GtkTreePath  *path,
+                                            GtkTreeIter  *iter,
+                                            gpointer      data)
+{
+  GimpViewRenderer *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      -1);
+
+  if (renderer)
+    {
+      gimp_view_renderer_invalidate (renderer);
+      g_object_unref (renderer);
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_container_tree_view_style_set (GtkWidget *widget,
+                                    GtkStyle  *prev_style)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  if (tree_view->model)
+    gtk_tree_model_foreach (tree_view->model,
+                            gimp_container_tree_view_style_set_foreach,
+                            NULL);
 }
 
 static void
