@@ -39,6 +39,7 @@ struct _GimpMybrushOptions
   GimpPaintOptions  parent_instance;
 
   gdouble           radius;
+  gdouble           opaque;
   gdouble           hardness;
   gchar            *mybrush;
 };
@@ -51,6 +52,8 @@ struct _GimpMybrushOptionsClass
 
 GType   gimp_mybrush_options_get_type (void) G_GNUC_CONST;
 
+const gchar *
+gimp_mybrush_options_get_brush_data (GimpMybrushOptions *options);
 
 #endif  /*  __GIMP_MYBRUSH_OPTIONS_H__  */
 

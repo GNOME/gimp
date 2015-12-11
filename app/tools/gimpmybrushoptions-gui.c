@@ -168,6 +168,13 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
+  /* opaque */
+  scale = gimp_prop_spin_scale_new (config, "opaque",
+                                    _("Base Opacity"),
+                                    0.1, 1.0, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
   /* hardness */
   scale = gimp_prop_spin_scale_new (config, "hardness",
                                     _("Hardness"),

@@ -26,8 +26,10 @@
 #include <gegl.h>
 
 #include <mypaint-brush.h>
+#if 0
 #include <mypaint-tiled-surface.h>
 #include <mypaint-gegl-surface.h>
+#endif
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -45,6 +47,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimptempbuf.h"
 
+#include "gimpmybrushsurface.h"
 #include "gimpmybrushoptions.h"
 #include "gimpmybrush.h"
 
@@ -53,8 +56,13 @@
 
 struct _GimpMybrushPrivate
 {
+#if 0
   MyPaintGeglTiledSurface *surface;
+#else
+  GimpMybrushSurface      *surface;
+#endif
   MyPaintBrush            *brush;
+  gint64                   lastTime;
 };
 
 
@@ -119,7 +127,13 @@ gimp_mybrush_paint (GimpPaintCore    *paint_core,
 {
   GimpMybrush        *mybrush = GIMP_MYBRUSH (paint_core);
   GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
+  const gchar        *brush_data;
+#if 0
   GeglBuffer         *buffer;
+  GimpComponentMask   active_mask;
+#endif
+  GimpRGB             fg;
+  GimpHSV             hsv;
 
   switch (paint_state)
     {
@@ -132,6 +146,7 @@ gimp_mybrush_paint (GimpPaintCore    *paint_core,
           gimp_palettes_add_color_history (context->gimp,
                                            &foreground);
 
+#if 0
           mybrush->private->surface = mypaint_gegl_tiled_surface_new ();
 
           buffer = mypaint_gegl_tiled_surface_get_buffer (mybrush->private->surface);
@@ -144,26 +159,51 @@ gimp_mybrush_paint (GimpPaintCore    *paint_core,
                             buffer, NULL);
           mypaint_gegl_tiled_surface_set_buffer (mybrush->private->surface, buffer);
           g_object_unref (buffer);
+#else
+          mybrush->private->surface = gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawable),
+                                                                gimp_drawable_get_active_mask (drawable));
+#endif
 
           mybrush->private->brush = mypaint_brush_new ();
           mypaint_brush_from_defaults (mybrush->private->brush);
+          brush_data = gimp_mybrush_options_get_brush_data (options);
+          if (brush_data)
+            mypaint_brush_from_string (mybrush->private->brush, brush_data);
 
-          if (options->mybrush)
-            {
-              gchar *string;
-              gsize  length;
+#if 0
+          active_mask = gimp_drawable_get_active_mask (drawable);
 
-              if (g_file_get_contents (options->mybrush,
-                                       &string, &length, NULL))
-                {
-                  if (! mypaint_brush_from_string (mybrush->private->brush, string))
-                    g_printerr ("Failed to deserialize MyPaint brush\n");
+          mypaint_brush_set_base_value (mybrush->private->brush,
+                                        MYPAINT_BRUSH_SETTING_LOCK_ALPHA,
+                                        (active_mask & GIMP_COMPONENT_MASK_ALPHA) ?
+                                        FALSE : TRUE);
+#endif
 
-                  g_free (string);
-                }
-            }
+          gimp_context_get_foreground (context, &fg);
+          gimp_rgb_to_hsv (&fg, &hsv);
+
+          mypaint_brush_set_base_value (mybrush->private->brush,
+                                        MYPAINT_BRUSH_SETTING_COLOR_H,
+                                        hsv.h);
+          mypaint_brush_set_base_value (mybrush->private->brush,
+                                        MYPAINT_BRUSH_SETTING_COLOR_S,
+                                        hsv.s);
+          mypaint_brush_set_base_value (mybrush->private->brush,
+                                        MYPAINT_BRUSH_SETTING_COLOR_V,
+                                        hsv.v);
+
+          mypaint_brush_set_base_value (mybrush->private->brush,
+                                        MYPAINT_BRUSH_SETTING_RADIUS_LOGARITHMIC,
+                                        options->radius);
+          mypaint_brush_set_base_value (mybrush->private->brush,
+                                        MYPAINT_BRUSH_SETTING_OPAQUE,
+                                        options->opaque * gimp_context_get_opacity (context));
+          mypaint_brush_set_base_value (mybrush->private->brush,
+                                        MYPAINT_BRUSH_SETTING_HARDNESS,
+                                        options->hardness);
 
           mypaint_brush_new_stroke (mybrush->private->brush);
+          mybrush->private->lastTime = 0;
         }
       break;
 
@@ -189,44 +229,25 @@ gimp_mybrush_motion (GimpPaintCore    *paint_core,
                      guint32           time)
 {
   GimpMybrush        *mybrush = GIMP_MYBRUSH (paint_core);
-  GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
-  GimpContext        *context = GIMP_CONTEXT (paint_options);
-  GimpComponentMask   active_mask;
-  GimpRGB             fg;
-  GimpHSV             hsv;
   MyPaintRectangle    rect;
 
-  active_mask = gimp_drawable_get_active_mask (drawable);
-
-  mypaint_brush_set_base_value (mybrush->private->brush,
-                                MYPAINT_BRUSH_SETTING_LOCK_ALPHA,
-                                (active_mask & GIMP_COMPONENT_MASK_ALPHA) ?
-                                FALSE : TRUE);
-
-  gimp_context_get_foreground (context, &fg);
-  gimp_rgb_to_hsv (&fg, &hsv);
-
-  mypaint_brush_set_base_value (mybrush->private->brush,
-                                MYPAINT_BRUSH_SETTING_COLOR_H,
-                                hsv.h);
-  mypaint_brush_set_base_value (mybrush->private->brush,
-                                MYPAINT_BRUSH_SETTING_COLOR_S,
-                                hsv.s);
-  mypaint_brush_set_base_value (mybrush->private->brush,
-                                MYPAINT_BRUSH_SETTING_COLOR_V,
-                                hsv.v);
-
-  mypaint_brush_set_base_value (mybrush->private->brush,
-                                MYPAINT_BRUSH_SETTING_OPAQUE,
-                                gimp_context_get_opacity (context));
-  mypaint_brush_set_base_value (mybrush->private->brush,
-                                MYPAINT_BRUSH_SETTING_RADIUS_LOGARITHMIC,
-                                options->radius);
-  mypaint_brush_set_base_value (mybrush->private->brush,
-                                MYPAINT_BRUSH_SETTING_HARDNESS,
-                                options->hardness);
-
   mypaint_surface_begin_atomic ((MyPaintSurface *) mybrush->private->surface);
+
+
+  if (mybrush->private->lastTime == 0)
+    {
+      /* First motion, so we need a zero pressure event to start the stroke */
+      mybrush->private->lastTime = (gint64)time - 15;
+
+      mypaint_brush_stroke_to (mybrush->private->brush,
+                               (MyPaintSurface *) mybrush->private->surface,
+                               coords->x,
+                               coords->y,
+                               0.0f,
+                               coords->xtilt,
+                               coords->ytilt,
+                               1.0f /* Pretend the cursor hasn't moved in a while */);
+    }
 
   mypaint_brush_stroke_to (mybrush->private->brush,
                            (MyPaintSurface *) mybrush->private->surface,
@@ -235,16 +256,15 @@ gimp_mybrush_motion (GimpPaintCore    *paint_core,
                            coords->pressure,
                            coords->xtilt,
                            coords->ytilt,
-                           1);
+                           (time - mybrush->private->lastTime) * 0.001f);
+  mybrush->private->lastTime = time;
 
   mypaint_surface_end_atomic ((MyPaintSurface *) mybrush->private->surface,
                               &rect);
 
-  g_printerr ("painted rect: %d %d %d %d\n",
-              rect.x, rect.y, rect.width, rect.height);
-
   if (rect.width > 0 && rect.height > 0)
     {
+#if 0
       GeglBuffer *src;
 
       src = mypaint_gegl_tiled_surface_get_buffer (mybrush->private->surface);
@@ -254,7 +274,7 @@ gimp_mybrush_motion (GimpPaintCore    *paint_core,
                         GEGL_ABYSS_NONE,
                         gimp_drawable_get_buffer (drawable),
                         NULL);
-
+#endif
       paint_core->x1 = MIN (paint_core->x1, rect.x);
       paint_core->y1 = MIN (paint_core->y1, rect.y);
       paint_core->x2 = MAX (paint_core->x2, rect.x + rect.width);

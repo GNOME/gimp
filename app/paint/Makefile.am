@@ -56,6 +56,8 @@ libapppaint_a_sources = \
 	gimpmybrush.h			\
 	gimpmybrushoptions.c		\
 	gimpmybrushoptions.h		\
+	gimpmybrushsurface.c		\
+	gimpmybrushsurface.h		\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
 	gimppaintcore-loops.c		\
