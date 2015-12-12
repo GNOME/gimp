@@ -221,6 +221,11 @@ gui_init (Gimp     *gimp,
   gui_unique_init (gimp);
   gimp_language_store_parser_init ();
 
+  /*  initialize icon themes before gimp_widgets_init() so we avoid
+   *  setting the configured theme twice
+   */
+  icon_themes_init (gimp);
+
   gimp_widgets_init (gui_help_func,
                      gui_get_foreground_func,
                      gui_get_background_func,
@@ -234,8 +239,6 @@ gui_init (Gimp     *gimp,
   gimp_dnd_init (gimp);
 
   themes_init (gimp);
-
-  icon_themes_init (gimp);
 
   initial_monitor = gimp_get_monitor_at_pointer (&initial_screen);
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (initial_screen));

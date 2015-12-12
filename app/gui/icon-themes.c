@@ -208,10 +208,6 @@ static void
 icons_apply_theme (Gimp        *gimp,
                    const gchar *icon_theme_name)
 {
-  GtkIconTheme  *icon_theme;
-  gchar        **paths;
-  gint           n_paths;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (! icon_theme_name)
@@ -220,22 +216,7 @@ icons_apply_theme (Gimp        *gimp,
   if (gimp->be_verbose)
     g_print ("Loading icon theme '%s'\n", icon_theme_name);
 
-  icon_theme = gtk_icon_theme_get_default ();
-
-  gtk_icon_theme_get_search_path (icon_theme, &paths, &n_paths);
-
-  if (paths)
-    {
-      GFile *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_theme_name);
-
-      g_free (paths[0]);
-      paths[0] = g_file_get_path (icon_theme_dir);
-
-      gtk_icon_theme_set_search_path (icon_theme,
-                                      (const gchar **) paths, n_paths);
-
-      g_strfreev (paths);
-    }
+  gimp_stock_set_icon_theme (icon_themes_get_theme_dir (gimp, icon_theme_name));
 }
 
 static void

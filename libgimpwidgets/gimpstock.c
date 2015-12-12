@@ -346,6 +346,131 @@ register_bidi_stock_icon (GtkIconFactory *factory,
 }
 
 
+static GFile *icon_theme_path         = NULL;
+static GFile *default_icon_theme_path = NULL;
+
+
+static void
+gimp_stock_change_icon_theme (GFile *path)
+{
+  if (! default_icon_theme_path)
+    default_icon_theme_path = gimp_data_directory_file ("icons", "Default",
+                                                        NULL);
+
+  if (! g_file_equal (path, icon_theme_path))
+    {
+      GtkIconTheme *icon_theme = gtk_icon_theme_get_default ();
+
+      if (g_file_equal (icon_theme_path, default_icon_theme_path))
+        {
+          /*  if the current icon theme is the default theme, simply
+           *  prepend the new theme's path
+           */
+          gchar *path_str = g_file_get_path (path);
+
+          gtk_icon_theme_prepend_search_path (icon_theme, path_str);
+          g_free (path_str);
+        }
+      else
+        {
+          /*  if the current theme is not the default theme, we need
+           *  to deal with the search path's first element
+           */
+          gchar **paths;
+          gint    n_paths;
+
+          gtk_icon_theme_get_search_path (icon_theme, &paths, &n_paths);
+
+          if (g_file_equal (path, default_icon_theme_path))
+            {
+              /*  when switching to the default theme, remove the
+               *  first search path element, the default theme will
+               *  still be in the search path as fallback
+               */
+              gtk_icon_theme_set_search_path (icon_theme,
+                                              (const gchar **) paths + 1,
+                                              n_paths - 1);
+            }
+          else
+            {
+              /*  when switching between two non-default themes, replace
+               *  the first element of the search path with the new
+               *  theme's path
+               */
+              g_free (paths[0]);
+              paths[0] = g_file_get_path (path);
+
+              gtk_icon_theme_set_search_path (icon_theme,
+                                              (const gchar **) paths, n_paths);
+            }
+
+          g_strfreev (paths);
+        }
+
+      g_object_unref (icon_theme_path);
+      icon_theme_path = g_object_ref (path);
+    }
+}
+
+void
+gimp_stock_set_icon_theme (GFile *path)
+{
+  g_return_if_fail (path == NULL || G_IS_FILE (path));
+
+  if (path)
+    path = g_object_ref (path);
+  else
+    path = gimp_data_directory_file (gimp_data_directory (), "icons", "Default",
+                                     NULL);
+
+  if (! g_file_query_exists (path, NULL))
+    {
+      g_warning ("Icon theme path does not exist: %s",
+                 gimp_file_get_utf8_name (path));
+    }
+  else
+    {
+      GFile *hicolor = g_file_get_child (path, "hicolor");
+
+      if (! g_file_query_exists (hicolor, NULL))
+        {
+          g_warning ("Icon theme path has no 'hicolor' subdirectory: %s",
+                     gimp_file_get_utf8_name (path));
+        }
+      else
+        {
+          GFile *index = g_file_get_child (hicolor, "index.theme");
+
+          if (! g_file_query_exists (index, NULL))
+            {
+              g_warning ("Icon theme path has no 'hicolor/index.theme': %s",
+                         gimp_file_get_utf8_name (path));
+            }
+          else
+            {
+              /*  the path points to what looks like a valid icon theme  */
+
+              if (icon_theme_path)
+                {
+                  /*  this is an icon theme change  */
+                  gimp_stock_change_icon_theme (path);
+                }
+              else
+                {
+                  /*  this is the first call upon initialization  */
+                  icon_theme_path = g_object_ref (path);
+                }
+            }
+
+          g_object_unref (index);
+        }
+
+      g_object_unref (hicolor);
+    }
+
+  g_object_unref (path);
+}
+
 /**
  * gimp_stock_init:
  *
@@ -361,7 +486,6 @@ gimp_stock_init (void)
 
   GdkPixbuf *pixbuf;
   GError    *error = NULL;
-  gchar     *icon_theme;
   gchar     *icons_dir;
   gint       i;
 
@@ -398,14 +522,28 @@ gimp_stock_init (void)
   gtk_stock_add_static (gimp_compat_stock_items,
                         G_N_ELEMENTS (gimp_compat_stock_items));
 
-  icon_theme = g_strdup ("Default"); /* FIXME */
-  icons_dir = g_build_filename (gimp_data_directory (), "icons", icon_theme,
-                                NULL);
-  g_free (icon_theme);
+  /*  always prepend the default icon theme, it's never removed from
+   *  the path again and acts as fallback for missing icons in other
+   *  themes.
+   */
+  if (! default_icon_theme_path)
+    default_icon_theme_path = gimp_data_directory_file ("icons", "Default",
+                                                        NULL);
 
+  icons_dir = g_file_get_path (default_icon_theme_path);
   gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default (),
                                       icons_dir);
   g_free (icons_dir);
+
+  /*  if an icon theme was chosen before init(), change to it  */
+  if (icon_theme_path &&
+      ! g_file_equal (icon_theme_path, default_icon_theme_path))
+    {
+      icons_dir = g_file_get_path (icon_theme_path);
+      gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default (),
+                                          icons_dir);
+      g_free (icons_dir);
+    }
 
   pixbuf = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/gimp-wilber-eek.png",
                                          &error);

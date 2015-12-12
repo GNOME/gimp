@@ -296,7 +296,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CONVERT_PRECISION        GIMP_STOCK_CONVERT_RGB
 
 
-void   gimp_stock_init (void);
+void   gimp_stock_init           (void);
+
+void   gimp_stock_set_icon_theme (GFile *path);
 
 
 G_END_DECLS
