@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-04 00:47+1200\n"
-"PO-Revision-Date: 2014-05-12 21:16+0200\n"
+"PO-Revision-Date: 2015-12-12 23:16+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -1769,7 +1769,7 @@ msgstr "_Registro dei plug-in"
 #: ../plug-ins/script-fu/scripts/glossy.scm:196
 #: ../plug-ins/script-fu/scripts/glossy.scm:267
 msgid "Glo_ssy..."
-msgstr "L_ucida..."
+msgstr "L_ucido..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm:197
 msgid ""
