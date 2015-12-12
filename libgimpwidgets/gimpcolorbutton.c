@@ -36,7 +36,7 @@
 #include "gimpcolorselection.h"
 #include "gimpdialog.h"
 #include "gimphelpui.h"
-#include "gimpstock.h"
+#include "gimpicons.h"
 #include "gimpwidgets-private.h"
 #include "gimp3migration.h"
 

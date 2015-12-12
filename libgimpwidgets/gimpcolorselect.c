@@ -36,8 +36,8 @@
 #include "gimpcolorselector.h"
 #include "gimpcolorselect.h"
 #include "gimphelpui.h"
+#include "gimpicons.h"
 #include "gimppreviewarea.h"
-#include "gimpstock.h"
 #include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"

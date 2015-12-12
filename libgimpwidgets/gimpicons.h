@@ -1,8 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpstock.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * gimpicons.h
+ * Copyright (C) 2001-2015 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,8 +23,8 @@
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_STOCK_H__
-#define __GIMP_STOCK_H__
+#ifndef __GIMP_ICONS_H__
+#define __GIMP_ICONS_H__
 
 G_BEGIN_DECLS
 
@@ -296,11 +296,14 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CONVERT_PRECISION        GIMP_STOCK_CONVERT_RGB
 
 
+GIMP_DEPRECATED_FOR(gimp_icons_init)
 void   gimp_stock_init           (void);
 
-void   gimp_stock_set_icon_theme (GFile *path);
+void   gimp_icons_init           (void);
+
+void   gimp_icons_set_icon_theme (GFile *path);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_STOCK_H__ */
+#endif /* __GIMP_ICONS_H__ */

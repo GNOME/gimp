@@ -139,7 +139,7 @@ gimp_ui_init (const gchar *prog_name,
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
 
   icon_theme = g_file_new_for_path (gimp_get_icon_theme_dir ());
-  gimp_stock_set_icon_theme (icon_theme);
+  gimp_icons_set_icon_theme (icon_theme);
   g_object_unref (icon_theme);
 
   gimp_widgets_init (gimp_ui_help_func,

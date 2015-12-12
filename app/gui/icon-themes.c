@@ -216,7 +216,7 @@ icons_apply_theme (Gimp        *gimp,
   if (gimp->be_verbose)
     g_print ("Loading icon theme '%s'\n", icon_theme_name);
 
-  gimp_stock_set_icon_theme (icon_themes_get_theme_dir (gimp, icon_theme_name));
+  gimp_icons_set_icon_theme (icon_themes_get_theme_dir (gimp, icon_theme_name));
 }
 
 static void
@@ -233,7 +233,7 @@ icons_list_icons_foreach (gpointer key,
 
 static gint
 icons_name_compare (const void *p1,
-                     const void *p2)
+                    const void *p2)
 {
   return strcmp (* (char **) p1, * (char **) p2);
 }

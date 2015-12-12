@@ -29,9 +29,9 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpicons.h"
 #include "gimppageselector.h"
 #include "gimppropwidgets.h"
-#include "gimpstock.h"
 #include "gimpwidgets.h"
 #include "gimp3migration.h"
 

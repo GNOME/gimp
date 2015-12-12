@@ -125,6 +125,8 @@ libgimpwidgets_sources = \
 	gimphelpui.h			\
 	gimphintbox.c			\
 	gimphintbox.h			\
+	gimpicons.c			\
+	gimpicons.h			\
 	gimpintcombobox.c		\
 	gimpintcombobox.h		\
 	gimpintstore.c			\
@@ -161,8 +163,6 @@ libgimpwidgets_sources = \
 	gimpscrolledpreview.h		\
 	gimpsizeentry.c			\
 	gimpsizeentry.h			\
-	gimpstock.c			\
-	gimpstock.h			\
 	gimpstringcombobox.c		\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.c		\
@@ -229,6 +229,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpframe.h			\
 	gimphelpui.h			\
 	gimphintbox.h			\
+	gimpicons.h			\
 	gimpintcombobox.h		\
 	gimpintstore.h			\
 	gimpmemsizeentry.h		\
@@ -247,7 +248,6 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpscaleentry.h		\
 	gimpscrolledpreview.h		\
 	gimpsizeentry.h			\
-	gimpstock.h			\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.h		\
 	gimpunitmenu.h			\

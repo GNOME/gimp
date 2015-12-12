@@ -1,8 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpstock.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * gimpicons.c
+ * Copyright (C) 2001-2015 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "gimpstock.h"
+#include "gimpicons.h"
 
 #include "icons/Default/gimp-icon-pixbufs.c"
 
@@ -351,7 +351,7 @@ static GFile *default_icon_theme_path = NULL;
 
 
 static void
-gimp_stock_change_icon_theme (GFile *path)
+gimp_icons_change_icon_theme (GFile *path)
 {
   if (! default_icon_theme_path)
     default_icon_theme_path = gimp_data_directory_file ("icons", "Default",
@@ -413,7 +413,7 @@ gimp_stock_change_icon_theme (GFile *path)
 }
 
 void
-gimp_stock_set_icon_theme (GFile *path)
+gimp_icons_set_icon_theme (GFile *path)
 {
   g_return_if_fail (path == NULL || G_IS_FILE (path));
 
@@ -453,7 +453,7 @@ gimp_stock_set_icon_theme (GFile *path)
               if (icon_theme_path)
                 {
                   /*  this is an icon theme change  */
-                  gimp_stock_change_icon_theme (path);
+                  gimp_icons_change_icon_theme (path);
                 }
               else
                 {
@@ -478,9 +478,25 @@ gimp_stock_set_icon_theme (GFile *path)
  *
  * You don't need to call this function as gimp_ui_init() already does
  * this for you.
+ *
+ * Deprecated: 2.10: USe gimp_icons_init() instead.
  */
 void
 gimp_stock_init (void)
+{
+  gimp_icons_init ();
+}
+
+/**
+ * gimp_icons_init:
+ *
+ * Initializes the GIMP stock icon factory.
+ *
+ * You don't need to call this function as gimp_ui_init() already does
+ * this for you.
+ */
+void
+gimp_icons_init (void)
 {
   static gboolean initialized = FALSE;
 

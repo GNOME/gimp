@@ -26,9 +26,9 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpicons.h"
 #include "gimppreviewarea.h"
 #include "gimpscrolledpreview.h"
-#include "gimpstock.h"
 #include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"

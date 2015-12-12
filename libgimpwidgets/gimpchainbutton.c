@@ -26,7 +26,7 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpchainbutton.h"
-#include "gimpstock.h"
+#include "gimpicons.h"
 
 
 /**
