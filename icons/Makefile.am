@@ -1,3 +1,4 @@
 SUBDIRS = \
-       Default \
-       Symbolic
+	Default \
+	Symbolic \
+	Symbolic-Inverted
