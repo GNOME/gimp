@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 20:56+0100\n"
-"PO-Revision-Date: 2015-11-30 21:22+0100\n"
+"PO-Revision-Date: 2015-12-12 23:19+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -3964,7 +3964,7 @@ msgstr "Ruota l'immagine di 90 gradi a sinistra"
 
 #: ../app/actions/image-commands.c:424
 msgid "Set Image Canvas Size"
-msgstr "Configura la dimensione della superficie"
+msgstr "Imposta la dimensione della superficie"
 
 #: ../app/actions/image-commands.c:453 ../app/actions/image-commands.c:477
 #: ../app/actions/image-commands.c:818
