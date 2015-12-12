@@ -443,6 +443,7 @@ icons48_DATA = \
 	48/gimp-prefs-folders-tools.png		\
 	48/gimp-prefs-folders.png		\
 	48/gimp-prefs-help-system.png		\
+	48/gimp-prefs-icon-theme.png		\
 	48/gimp-prefs-image-title.png		\
 	48/gimp-prefs-image-windows.png		\
 	48/gimp-prefs-input-devices.png		\
