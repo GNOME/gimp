@@ -153,6 +153,14 @@ $ gtk-mac-bundler gimp-2.8-python.bundle
 for GIMP master:
 $ gtk-mac-bundler gimp-master-python.bundle
 
+4. Create DMG image. Create a directory "bundle/" that contains only the .app
+image. Run the following command in the directory above "bundle/".
+
+$ hdiutil create gimp-2.8.16-x86_64.dmg -volname "GIMP 2.8.16" \
+          -fs HFS+ -fsargs "-c c=64,a=16,e=16" \
+          -format UDBZ -srcfolder bundle/ \
+          -anyowners -nospotlight
+
 IV. Files
 ----------
 The following files and subdirectories are in this folder:
