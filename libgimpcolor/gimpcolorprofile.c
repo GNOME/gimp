@@ -634,52 +634,21 @@ gimp_color_profile_is_rgb (GimpColorProfile *profile)
   return (cmsGetColorSpace (profile->priv->lcms_profile) == cmsSigRgbData);
 }
 
-
 /**
- * gimp_color_profile_is_linear:
+ * gimp_color_profile_is_gray:
  * @profile: a #GimpColorProfile
  *
- * This function determines is the ICC profile represented by a GimpColorProfile
- * is a linear RGB profile or not, some profiles that are LUTs though linear
- * will also return FALSE;
- *
- * Return value: %TRUE if the profile is a matrix shaping profile with linear
- * TRCs, %FALSE otherwise.
+ * Return value: %TRUE if the profile's color space is grayscale, %FALSE
+ * otherwise.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_color_profile_is_linear (GimpColorProfile *profile)
+gimp_color_profile_is_gray (GimpColorProfile *profile)
 {
-  cmsHPROFILE prof;
-  cmsToneCurve *curve;
-
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
 
-  prof = profile->priv->lcms_profile;
-
-  if (! cmsIsMatrixShaper (prof))
-    return FALSE;
-
-  if (cmsIsCLUT (prof, INTENT_PERCEPTUAL, LCMS_USED_AS_INPUT))
-    return FALSE;
-
-  if (cmsIsCLUT (prof, INTENT_PERCEPTUAL, LCMS_USED_AS_OUTPUT))
-    return FALSE;
-
-  curve = cmsReadTag(prof, cmsSigRedTRCTag);
-  if (curve == NULL || ! cmsIsToneCurveLinear (curve))
-    return FALSE;
-
-  curve = cmsReadTag (prof, cmsSigGreenTRCTag);
-  if (curve == NULL || ! cmsIsToneCurveLinear (curve))
-    return FALSE;
-
-  curve = cmsReadTag (prof, cmsSigBlueTRCTag);
-  if (curve == NULL || ! cmsIsToneCurveLinear (curve))
-    return FALSE;
-
-  return TRUE;
+  return (cmsGetColorSpace (profile->priv->lcms_profile) == cmsSigGrayData);
 }
 
 /**
@@ -697,6 +666,67 @@ gimp_color_profile_is_cmyk (GimpColorProfile *profile)
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
 
   return (cmsGetColorSpace (profile->priv->lcms_profile) == cmsSigCmykData);
+}
+
+
+/**
+ * gimp_color_profile_is_linear:
+ * @profile: a #GimpColorProfile
+ *
+ * This function determines is the ICC profile represented by a GimpColorProfile
+ * is a linear RGB profile or not, some profiles that are LUTs though linear
+ * will also return FALSE;
+ *
+ * Return value: %TRUE if the profile is a matrix shaping profile with linear
+ * TRCs, %FALSE otherwise.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_profile_is_linear (GimpColorProfile *profile)
+{
+  cmsHPROFILE   prof;
+  cmsToneCurve *curve;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
+
+  prof = profile->priv->lcms_profile;
+
+  if (! cmsIsMatrixShaper (prof))
+    return FALSE;
+
+  if (cmsIsCLUT (prof, INTENT_PERCEPTUAL, LCMS_USED_AS_INPUT))
+    return FALSE;
+
+  if (cmsIsCLUT (prof, INTENT_PERCEPTUAL, LCMS_USED_AS_OUTPUT))
+    return FALSE;
+
+  if (gimp_color_profile_is_rgb (profile))
+    {
+      curve = cmsReadTag(prof, cmsSigRedTRCTag);
+      if (curve == NULL || ! cmsIsToneCurveLinear (curve))
+        return FALSE;
+
+      curve = cmsReadTag (prof, cmsSigGreenTRCTag);
+      if (curve == NULL || ! cmsIsToneCurveLinear (curve))
+        return FALSE;
+
+      curve = cmsReadTag (prof, cmsSigBlueTRCTag);
+      if (curve == NULL || ! cmsIsToneCurveLinear (curve))
+        return FALSE;
+    }
+  else if (gimp_color_profile_is_gray (profile))
+    {
+      curve = cmsReadTag(prof, cmsSigGrayTRCTag);
+      if (curve == NULL || ! cmsIsToneCurveLinear (curve))
+        return FALSE;
+    }
+  else
+    {
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static void
