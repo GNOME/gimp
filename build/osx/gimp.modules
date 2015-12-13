@@ -90,7 +90,7 @@
 		href="http://www.lysator.liu.se/~nisse/archive/" />
 
 	<repository type="tarball" name="gmp"
-		href="http://mirror.anl.gov/pub/gnu/gmp/" />
+		href="ftp://ftp.gnu.org/pub/gnu/gmp/" />
 
 	<repository type="tarball" name="libproxy"
 		href="http://mirrors.vbi.vt.edu/mirrors/linux/slackware/slackware-current/source/l/libproxy/" />
