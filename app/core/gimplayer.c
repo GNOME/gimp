@@ -1136,7 +1136,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
               if (gimp_babl_format_get_linear (new_format))
                 {
                   dest_profile =
-                    gimp_color_profile_new_linear_rgb_from_color_profile (src_profile);
+                    gimp_color_profile_new_linear_gamma_from_color_profile (src_profile);
                 }
               else
                 {
