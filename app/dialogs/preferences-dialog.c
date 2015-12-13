@@ -2842,7 +2842,11 @@ prefs_dialog_new (Gimp       *gimp,
       { N_("Themes"), N_("Theme Folders"), "folders-themes",
         GIMP_HELP_PREFS_FOLDERS_THEMES,
         N_("Select Theme Folders"),
-        "theme-path", NULL }
+        "theme-path", NULL },
+      { N_("Icon Themes"), N_("Icon Theme Folders"), "folders-icon-themes",
+        GIMP_HELP_PREFS_FOLDERS_ICON_THEMES,
+        N_("Select Icon Theme Folders"),
+        "icon-theme-path", NULL }
     };
 
     for (i = 0; i < G_N_ELEMENTS (paths); i++)
