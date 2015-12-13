@@ -42,7 +42,7 @@ environ_prepend("OBJCFLAGS", "-arch " + _architecture)
 environ_append("OBJCFLAGS", "-mmacosx-version-min=" + _gsdk)
 
 # Build with more than one core. Use # of cores +1.
-os.environ['MAKE'] = 'make -j3'
+makeargs = '-j3'
 
 skip.append("libiconv")
 

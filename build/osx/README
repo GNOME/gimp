@@ -67,23 +67,7 @@ This process requires some manual intervention, see the next steps.
 2. When the build fails on cmake, you can ignore this. GIMP and its dependencies
 don't need it.
 
-3. When the build fails on perl-xml-parser, it will tell you that it can neither make
-nor install.
-In this case choose option '4' to start a JHBuild subshell and complete the install:
-$ make -j3
-$ make -j3 install
-$ exit
-After finishing that change back into the first shell, choose option '2' to ignore 
-the error because you just fixed it. At the error during phase install enter '2' again.
-
-4. Do the same for the package perl-xml-simple:
-$ cd ~/gimp/10.6/source/XML-Simple-[simple version here]
-$ make -j3
-$ make -j3 install
-$ exit
-and choose option '2' two times.
-
-5. Get the patches for the GIMP build:
+3. Get the patches for the GIMP build:
 curl --create-dirs -o $HOME/gimp/directory/patches/gmi2-improve-internationalization-of-App-menu-and-other-s.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gmi2-improve-internationalization-of-App-menu-and-other-s.patch?h=gimp-2-8
 curl -o $HOME/gimp/directory/patches/gmi2-keep-separators-between-placeholders.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gmi2-keep-separators-between-placeholders.patch?h=gimp-2-8
 curl -o $HOME/gimp/directory/patches/gtk2-add-missing-information-to-po-translation-files.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-add-missing-information-to-po-translation-files.patch?h=gimp-2-8
@@ -98,14 +82,14 @@ If there are more patches, then download them with the according commands as abo
 It's important that the first curl download contains the --create-dirs parameter
 to initially create the patches directory.
 
-6. Now you can build GIMP.
+4. Now you can build GIMP.
 For GIMP 2.8 enter
 $ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-2.8
 
 For GIMP master enter
 $ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-master
 
-7. In order to run GIMP with D-Bus support (required for GVFS and GIO)
+5. In order to run GIMP with D-Bus support (required for GVFS and GIO)
 $ dbus-launch gimp-2.8
 
 This will generate a D-Bus session. If you repeatedly run GIMP using this method,
