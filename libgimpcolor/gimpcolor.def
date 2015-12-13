@@ -44,9 +44,11 @@ EXPORTS
 	gimp_color_profile_new_from_file
 	gimp_color_profile_new_from_icc_profile
 	gimp_color_profile_new_from_lcms_profile
+	gimp_color_profile_new_linear_gray
 	gimp_color_profile_new_linear_rgb
 	gimp_color_profile_new_linear_rgb_from_color_profile
 	gimp_color_profile_new_srgb
+	gimp_color_profile_new_srgb_gray
 	gimp_color_profile_new_srgb_gamma_from_color_profile
 	gimp_hsl_get_type
 	gimp_hsl_set

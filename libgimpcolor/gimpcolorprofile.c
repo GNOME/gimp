@@ -1028,34 +1028,6 @@ gimp_color_profile_new_srgb (void)
       profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
 
       cmsCloseProfile (lcms_profile);
-
-#if 0
-      /* for testing the code to get the colorants and make a new profile */
-      {
-        GimpMatrix3 matrix;
-
-        if (gimp_color_profile_get_rgb_matrix_colorants (profile, &matrix))
-          {
-            GimpColorProfile *test;
-
-            g_printerr ("Profile Red colorant XYZ: %1.8f, %1.8f, %1.8f \n",
-                        matrix.coeff[0][0],
-                        matrix.coeff[0][1],
-                        matrix.coeff[0][2]);
-            g_printerr ("Profile Green colorant XYZ: %1.8f, %1.8f, %1.8f \n",
-                        matrix.coeff[1][0],
-                        matrix.coeff[1][1],
-                        matrix.coeff[1][2]);
-            g_printerr ("Profile Blue colorant XYZ: %1.8f, %1.8f, %1.8f \n",
-                        matrix.coeff[2][0],
-                        matrix.coeff[2][1],
-                        matrix.coeff[2][2]);
-
-            test = gimp_color_profile_new_foobar (profile);
-            g_object_unref (test);
-          }
-      }
-#endif
     }
 
   data = gimp_color_profile_get_icc_profile (profile, &length);
@@ -1206,6 +1178,126 @@ gimp_color_profile_new_adobe_rgb (void)
   if (G_UNLIKELY (profile == NULL))
     {
       cmsHPROFILE lcms_profile = gimp_color_profile_new_adobe_rgb_internal ();
+
+      profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
+
+      cmsCloseProfile (lcms_profile);
+    }
+
+  data = gimp_color_profile_get_icc_profile (profile, &length);
+
+  return gimp_color_profile_new_from_icc_profile (data, length, NULL);
+}
+
+static cmsHPROFILE *
+gimp_color_profile_new_srgb_gray_internal (void)
+{
+  cmsHPROFILE profile;
+
+  /* white point is D65 from the sRGB specs */
+  cmsCIExyY whitepoint = { 0.3127, 0.3290, 1.0 };
+
+  cmsFloat64Number srgb_parameters[5] =
+    { 2.4, 1.0 / 1.055,  0.055 / 1.055, 1.0 / 12.92, 0.04045 };
+
+  cmsToneCurve *curve = cmsBuildParametricToneCurve (NULL, 4,
+                                                     srgb_parameters);
+
+  profile = cmsCreateGrayProfile (&whitepoint, curve);
+
+  cmsFreeToneCurve (curve);
+
+  gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                              "GIMP built-in sRGB-Gamma Grayscale");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
+                              "GIMP");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
+                              "sRGB-Gamma Grayscale");
+  gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
+                              "Public Domain");
+
+  return profile;
+}
+
+/**
+ * gimp_color_profile_new_srgb_gray
+ *
+ * This function creates a grayscale #GimpColorProfile with an
+ * sRGB TRC. See gimp_color_profile_new_srgb().
+ *
+ * Return value: the sRGB-gamma grayscale #GimpColorProfile.
+ *
+ * Since: 2.10
+ **/
+GimpColorProfile *
+gimp_color_profile_new_srgb_gray (void)
+{
+  static GimpColorProfile *profile = NULL;
+
+  const guint8 *data;
+  gsize         length;
+
+  if (G_UNLIKELY (profile == NULL))
+    {
+      cmsHPROFILE lcms_profile = gimp_color_profile_new_srgb_gray_internal ();
+
+      profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
+
+      cmsCloseProfile (lcms_profile);
+    }
+
+  data = gimp_color_profile_get_icc_profile (profile, &length);
+
+  return gimp_color_profile_new_from_icc_profile (data, length, NULL);
+}
+
+static cmsHPROFILE
+gimp_color_profile_new_linear_gray_internal (void)
+{
+  cmsHPROFILE profile;
+
+  /* white point is D65 from the sRGB specs */
+  cmsCIExyY whitepoint = { 0.3127, 0.3290, 1.0 };
+
+  cmsToneCurve *curve = cmsBuildGamma (NULL, 1.0);
+
+  profile = cmsCreateGrayProfile (&whitepoint, curve);
+
+  cmsFreeToneCurve (curve);
+
+  gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                              "GIMP built-in Linear Grayscale");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
+                              "GIMP");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
+                              "Linear Grayscale");
+  gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
+                              "Public Domain");
+
+  return profile;
+}
+
+/**
+ * gimp_color_profile_new_linear_gray:
+ *
+ * This function creates a profile for babl_model("Y"). Please
+ * somebody write someting smarter here.
+ *
+ * Return value: the linear grayscale #GimpColorProfile.
+ *
+ * Since: 2.10
+ **/
+GimpColorProfile *
+gimp_color_profile_new_linear_gray (void)
+{
+  static GimpColorProfile *profile = NULL;
+
+  const guint8 *data;
+  gsize         length;
+
+  if (G_UNLIKELY (profile == NULL))
+    {
+      cmsHPROFILE lcms_profile = gimp_color_profile_new_linear_gray_internal ();
 
       profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
 
