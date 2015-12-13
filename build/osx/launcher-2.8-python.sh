@@ -65,8 +65,10 @@ PYTHONPATH="$bundle_lib/pygtk/2.0:$PYTHONPATH"
 
 # Include gimp python modules
 PYTHONPATH="$bundle_lib/gimp/2.0/python:$PYTHONPATH"
-
 export PYTHONPATH
+
+# Set custom Poppler Data Directory
+export POPPLER_DATADIR="$bundle_data/poppler"
 
 # Specify Ghostscript directories
 # export GS_RESOURCE_DIR="$bundle_res/share/ghostscript/9.06/Resource"

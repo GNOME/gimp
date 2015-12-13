@@ -1,0 +1,14 @@
+diff -upr poppler-0.26.3.orig/poppler/GlobalParams.cc poppler-0.26.3/poppler/GlobalParams.cc
+--- poppler-0.26.3.orig/poppler/GlobalParams.cc	2014-04-26 17:37:22.000000000 +0200
++++ poppler-0.26.3/poppler/GlobalParams.cc	2015-12-13 21:09:47.000000000 +0100
+@@ -683,7 +683,9 @@ GlobalParams::GlobalParams(const char *c
+ void GlobalParams::scanEncodingDirs() {
+   GDir *dir;
+   GDirEntry *entry;
+-  const char *dataRoot = popplerDataDir ? popplerDataDir : POPPLER_DATADIR;
++  char *dataRootEnv = getenv("POPPLER_DATADIR");
++  const char *dataRoot = popplerDataDir ? popplerDataDir :
++                             (dataRootEnv ? dataRootEnv : POPPLER_DATADIR);
+   
+   // allocate buffer large enough to append "/nameToUnicode"
+   size_t bufSize = strlen(dataRoot) + strlen("/nameToUnicode") + 1;

@@ -198,6 +198,9 @@
 	<data>${prefix}/etc/fonts/conf.d/*</data>
 	<data>${prefix}/etc/fonts/fonts.conf</data>
 
+	<!-- Copy in poppler data -->
+	<data>${prefix}/share/poppler</data>
+
 	<!-- GIMP data -->
 	<data dest="${bundle}/Contents/Resources/share/gimp">
 		${prefix}/share/gimp

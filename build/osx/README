@@ -81,6 +81,7 @@ curl -o $HOME/gimp/directory/patches/gtk2-add-missing-information-to-po-translat
 curl -o $HOME/gimp/directory/patches/libffi-fix-wrong-variable-substitution-in-configure.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/libffi-fix-wrong-variable-substitution-in-configure.patch?h=gimp-2-8
 curl -o $HOME/gimp/directory/patches/libgcrypt-build-without-docs.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/libgcrypt-build-without-docs.patch?h=gimp-2-8
 curl -o $HOME/gimp/directory/patches/libsecret-fix-secret-dbus-generation.c.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/libsecret-fix-secret-dbus-generation.c.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/poppler-support-overriding-datadir-through-env-variable.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/poppler-support-overriding-datadir-through-env-variable.patch?h=gimp-2-8
 
 Check https://git.gnome.org/browse/gimp/tree/build/osx/patches?h=gimp-2-8:
 If there are less patches than listed above, then you don't need to try to

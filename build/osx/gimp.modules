@@ -679,7 +679,10 @@
 
 	<autotools id="poppler" autogen-sh="configure"
 		autogenargs="--enable-compile-warnings=no">
-		<branch module="poppler-0.26.3.tar.xz" version="0.26.3" repo="poppler" />
+		<branch module="poppler-0.26.3.tar.xz" version="0.26.3" repo="poppler">
+			<patch file="poppler-support-overriding-datadir-through-env-variable.patch"
+				strip="1" />
+		</branch>
 		<dependencies>
 			<dep package="lcms" />
 			<dep package="lcms2" />
