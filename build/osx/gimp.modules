@@ -741,7 +741,7 @@
 
 	<autotools id="dbus" autogen-sh="configure"
 		autogenargs="--disable-doxygen-docs --disable-xml-docs --disable-selinux --without-x --disable-tests --enable-verbose-mode --enable-asserts">
-		<branch module="dbus/dbus-1.8.6.tar.gz" version="1.8.6" repo="dbus">
+		<branch module="dbus/dbus-1.10.6.tar.gz" version="1.10.6" repo="dbus">
 		</branch>
 		<dependencies>
 		</dependencies>
