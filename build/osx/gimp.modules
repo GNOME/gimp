@@ -794,9 +794,9 @@
 
 	<!-- Python enabled GIMP -->
 	<autotools id="gimp-2.8" autogen-sh="autogen.sh"
-		autogenargs="--without-x --enable-gtk-doc=no --without-dbus --without-wmf --enable-binreloc --without-gs --without-gvfs --with-libcurl"
+		autogenargs="--without-x --disable-gtk-doc --without-dbus --without-wmf --enable-binreloc --without-gs --without-gvfs --with-libcurl"
 		skip-autogen="never">
-		<branch repo="git.gnome.org" module="gimp" revision="gimp-2-8"
+		<branch repo="git.gnome.org" module="gimp" revision="GIMP_2_8_16"
 			checkoutdir="gimp-2.8" />
 		<dependencies>
 			<dep package="libpng" />
