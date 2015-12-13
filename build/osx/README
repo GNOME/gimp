@@ -140,6 +140,8 @@ $ curl -o $HOME/gimp/directory/gimp-master-python.bundle https://git.gnome.org/b
 2. We also need to fix a few outstanding issues:
 $ cp $HOME/gimp/10.6/source/gettext-0.18.1.1/gettext-tools/intl/charset.alias ~/gimp/10.6/inst/lib
 $ chmod +w $HOME/gimp/10.6/inst/lib/libpython2.7.dylib
+$ mkdir $HOME/gimp/10.6/prefix/etc/dbus-1/session.d
+$ mkdir $HOME/gimp/10.6/prefix/etc/dbus-1/system.d
 
 3. Run the bundler:
 $ JHB=gimp GIMP_SDK=10.6 jhbuild shell
