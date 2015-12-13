@@ -48,11 +48,8 @@ GType       gimp_prefs_box_get_type      (void) G_GNUC_CONST;
 GtkWidget * gimp_prefs_box_new           (void);
 
 GtkWidget * gimp_prefs_box_add_page      (GimpPrefsBox      *box,
-                                          const gchar       *notebook_icon_name,
-                                          const GtkIconSize  notebook_icon_size,
+                                          const gchar       *icon_name,
                                           const gchar       *notebook_label,
-                                          const gchar       *tree_icon_name,
-                                          const GtkIconSize  tree_icon_size,
                                           const gchar       *tree_label,
                                           const gchar       *help_id,
                                           GtkTreeIter       *parent,

@@ -53,6 +53,9 @@ struct _GimpPrefsBoxPrivate
   GtkWidget    *label;
   GtkWidget    *image;
 
+  gint          tree_icon_size;
+  gint          notebook_icon_size;
+
   gint          page_index;
 };
 
@@ -91,6 +94,9 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   GtkWidget           *hbox;
   GtkWidget           *ebox;
   GtkWidget           *vbox;
+
+  private->tree_icon_size     = GTK_ICON_SIZE_BUTTON;
+  private->notebook_icon_size = GTK_ICON_SIZE_DIALOG;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
@@ -302,11 +308,8 @@ gimp_prefs_box_new (void)
 
 GtkWidget *
 gimp_prefs_box_add_page (GimpPrefsBox      *box,
-                         const gchar       *notebook_icon_name,
-                         const GtkIconSize  notebook_icon_size,
+                         const gchar       *icon_name,
                          const gchar       *notebook_label,
-                         const gchar       *tree_icon_name,
-                         const GtkIconSize  tree_icon_size,
                          const gchar       *tree_label,
                          const gchar       *help_id,
                          GtkTreeIter       *parent,
@@ -333,11 +336,11 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
 
   gtk_tree_store_append (private->store, iter, parent);
   gtk_tree_store_set (private->store, iter,
-                      COLUMN_TREE_ICON_NAME,     tree_icon_name,
-                      COLUMN_TREE_ICON_SIZE,     tree_icon_size,
+                      COLUMN_TREE_ICON_NAME,     icon_name,
+                      COLUMN_TREE_ICON_SIZE,     private->tree_icon_size,
                       COLUMN_TREE_LABEL,         tree_label,
-                      COLUMN_NOTEBOOK_ICON_NAME, notebook_icon_name,
-                      COLUMN_NOTEBOOK_ICON_SIZE, notebook_icon_size,
+                      COLUMN_NOTEBOOK_ICON_NAME, icon_name,
+                      COLUMN_NOTEBOOK_ICON_SIZE, private->notebook_icon_size,
                       COLUMN_NOTEBOOK_LABEL ,    notebook_label,
                       COLUMN_PAGE_INDEX,         private->page_index++,
                       -1);
