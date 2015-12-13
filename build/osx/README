@@ -25,7 +25,14 @@ $ if [ -f $HOME/.profile ]; \
    you are able to build for. If you have XCode 4.3 installed (OS X 10.7 and
    greater), then check /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs instead.
    Apple requires you to get an Apple Developer Id to get XCode for older
-   platforms if needed.  
+   platforms if needed.
+
+   For GIMP 2.8.x we build against the Mac OS X 10.6 SDK. If this is not
+   installed, you need to obtain XCode 4.3 (Apple Developer ID reqired).
+   The following steps install the 10.6 SDK from the XCode 4.3 image:
+   a) Mount the DMG.
+   b) $ cd /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
+   c) $ sudo rsync -a /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk .
 
 4. Most OS X installations come with preinstalled Git. If you do not have Git
    installed, then download a prebuilt binary from http://git-scm.com/download.
