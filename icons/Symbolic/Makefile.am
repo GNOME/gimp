@@ -215,7 +215,6 @@ icons22_DATA = \
 	22/gimp-prefs-controllers.png		\
 	22/gimp-prefs-default-grid.png		\
 	22/gimp-prefs-display.png		\
-	22/gimp-prefs-environment.png		\
 	22/gimp-prefs-folders-brushes.png	\
 	22/gimp-prefs-folders-dynamics.png	\
 	22/gimp-prefs-folders-environ.png	\
@@ -240,6 +239,7 @@ icons22_DATA = \
 	22/gimp-prefs-interface.png		\
 	22/gimp-prefs-new-image.png		\
 	22/gimp-prefs-session.png		\
+	22/gimp-prefs-system-resources.png	\
 	22/gimp-prefs-theme.png			\
 	22/gimp-prefs-tool-options.png		\
 	22/gimp-prefs-toolbox.png		\
@@ -384,7 +384,6 @@ icons48_DATA = \
 	48/gimp-prefs-default-comment.png	\
 	48/gimp-prefs-default-grid.png		\
 	48/gimp-prefs-display.png		\
-	48/gimp-prefs-environment.png		\
 	48/gimp-prefs-folders-brushes.png	\
 	48/gimp-prefs-folders-dynamics.png	\
 	48/gimp-prefs-folders-environ.png	\
@@ -409,6 +408,7 @@ icons48_DATA = \
 	48/gimp-prefs-interface.png		\
 	48/gimp-prefs-new-image.png		\
 	48/gimp-prefs-session.png		\
+	48/gimp-prefs-system-resources.png	\
 	48/gimp-prefs-theme.png			\
 	48/gimp-prefs-tool-options.png		\
 	48/gimp-prefs-toolbox.png		\

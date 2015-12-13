@@ -1358,13 +1358,13 @@ prefs_dialog_new (Gimp       *gimp,
   /*  System Resources  */
   /**********************/
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-environment",
+                                  "gimp-prefs-system-resources",
                                   GTK_ICON_SIZE_DIALOG,
                                   _("System Resources"),
-                                  "gimp-prefs-environment",
+                                  "gimp-prefs-system-resources",
                                   GTK_ICON_SIZE_BUTTON,
                                   _("System Resources"),
-                                  GIMP_HELP_PREFS_ENVIRONMENT,
+                                  GIMP_HELP_PREFS_SYSTEM_RESOURCES,
                                   NULL,
                                   &top_iter);
 
