@@ -58,12 +58,13 @@ struct _GimpColorConfig
   gboolean                    display_use_black_point_compensation;
   gboolean                    simulation_use_black_point_compensation;
 
+  gchar                      *gray_profile;
+
   /*< private >*/
   /* Padding for future expansion */
 #if (GLIB_SIZEOF_VOID_P == 8)
-  void (* _gimp_reserved2) (void);
-#endif
   void (* _gimp_reserved3) (void);
+#endif
   void (* _gimp_reserved4) (void);
   void (* _gimp_reserved5) (void);
   void (* _gimp_reserved6) (void);
@@ -80,6 +81,8 @@ struct _GimpColorConfigClass
 GType              gimp_color_config_get_type                  (void) G_GNUC_CONST;
 
 GimpColorProfile * gimp_color_config_get_rgb_color_profile     (GimpColorConfig  *config,
+                                                                GError          **error);
+GimpColorProfile * gimp_color_config_get_gray_color_profile    (GimpColorConfig  *config,
                                                                 GError          **error);
 GimpColorProfile * gimp_color_config_get_cmyk_color_profile    (GimpColorConfig  *config,
                                                                 GError          **error);
