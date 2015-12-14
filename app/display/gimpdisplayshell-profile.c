@@ -35,7 +35,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "core/gimpimage.h"
-#include "core/gimppickable.h"
+#include "core/gimpprojectable.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -91,9 +91,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   if (! src_profile)
     return;
 
-  src_format = gimp_babl_format (GIMP_RGB,
-                                 gimp_image_get_precision (image),
-                                 TRUE);
+  src_format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
 
   if (gimp_display_shell_has_filter (shell) ||
       ! gimp_display_shell_profile_can_convert_to_u8 (shell))
