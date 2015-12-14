@@ -1438,7 +1438,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   NULL,
                                   &top_iter);
 
-  table = prefs_table_new (10, GTK_CONTAINER (vbox));
+  table = prefs_table_new (11, GTK_CONTAINER (vbox));
 
   {
     static const struct
@@ -1451,6 +1451,8 @@ prefs_dialog_new (Gimp       *gimp,
     {
       { N_("Preferred _RGB profile:"),
         N_("Select RGB Color Profile"),     "rgb-profile"     },
+      { N_("Preferred _GRAY profile:"),
+        N_("Select GRAY Color Profile"),    "gray-profile"    },
       { N_("_CMYK profile:"),
         N_("Select CMYK Color Profile"),    "cmyk-profile"    },
       { N_("_Monitor profile:"),
@@ -1490,7 +1492,7 @@ prefs_dialog_new (Gimp       *gimp,
                                    button, 1, FALSE);
 
 
-        if (i == 2) /* display profile */
+        if (i == 3) /* display profile */
           {
             gtk_table_set_row_spacing (GTK_TABLE (table), row - 2, 12);
 
@@ -1523,7 +1525,7 @@ prefs_dialog_new (Gimp       *gimp,
             row++;
           }
 
-        if (i == 3) /* printer profile */
+        if (i == 4) /* printer profile */
           {
             prefs_enum_combo_box_add (color_config,
                                       "simulation-rendering-intent", 0, 0,
