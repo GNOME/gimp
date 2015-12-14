@@ -39,6 +39,23 @@
 #include "libgimp/libgimp-intl.h"
 
 
+#ifndef TYPE_RGBA_DBL
+#define TYPE_RGBA_DBL       (FLOAT_SH(1)|COLORSPACE_SH(PT_RGB)|EXTRA_SH(1)|CHANNELS_SH(3)|BYTES_SH(0))
+#endif
+
+#ifndef TYPE_GRAYA_HALF_FLT
+#define TYPE_GRAYA_HALF_FLT (FLOAT_SH(1)|COLORSPACE_SH(PT_GRAY)|EXTRA_SH(1)|CHANNELS_SH(1)|BYTES_SH(2))
+#endif
+
+#ifndef TYPE_GRAYA_FLT
+#define TYPE_GRAYA_FLT      (FLOAT_SH(1)|COLORSPACE_SH(PT_GRAY)|EXTRA_SH(1)|CHANNELS_SH(1)|BYTES_SH(4))
+#endif
+
+#ifndef TYPE_GRAYA_DBL
+#define TYPE_GRAYA_DBL      (FLOAT_SH(1)|COLORSPACE_SH(PT_GRAY)|EXTRA_SH(1)|CHANNELS_SH(1)|BYTES_SH(0))
+#endif
+
+
 /**
  * SECTION: gimpcolorprofile
  * @title: GimpColorProfile
@@ -1353,6 +1370,7 @@ gimp_color_profile_get_format (const Babl *format,
   const Babl *type;
   const Babl *model;
   gboolean    has_alpha;
+  gboolean    gray;
   gboolean    linear;
 
   g_return_val_if_fail (format != NULL, NULL);
@@ -1377,11 +1395,25 @@ gimp_color_profile_get_format (const Babl *format,
   else if (model == babl_model ("RGB") ||
            model == babl_model ("RGBA"))
     {
+      gray   = FALSE;
       linear = TRUE;
     }
   else if (model == babl_model ("R'G'B'") ||
            model == babl_model ("R'G'B'A"))
     {
+      gray   = FALSE;
+      linear = FALSE;
+    }
+  else if (model == babl_model ("Y") ||
+           model == babl_model ("YA"))
+    {
+      gray   = TRUE;
+      linear = TRUE;
+    }
+  else if (model == babl_model ("Y'") ||
+           model == babl_model ("Y'A"))
+    {
+      gray   = TRUE;
       linear = FALSE;
     }
   else
@@ -1402,36 +1434,76 @@ gimp_color_profile_get_format (const Babl *format,
   if (type == babl_type ("u8"))
     {
       if (has_alpha)
-        *lcms_format = TYPE_RGBA_8;
+        {
+          if (gray)
+            *lcms_format = TYPE_GRAYA_8;
+          else
+            *lcms_format = TYPE_RGBA_8;
+        }
       else
-        *lcms_format = TYPE_RGB_8;
+        {
+          if (gray)
+            *lcms_format = TYPE_GRAY_8;
+          else
+            *lcms_format = TYPE_RGB_8;
+        }
 
       output_format = format;
     }
   else if (type == babl_type ("u16"))
     {
       if (has_alpha)
-        *lcms_format = TYPE_RGBA_16;
+        {
+          if (gray)
+            *lcms_format = TYPE_GRAYA_16;
+          else
+            *lcms_format = TYPE_RGBA_16;
+        }
       else
-        *lcms_format = TYPE_RGB_16;
+        {
+          if (gray)
+            *lcms_format = TYPE_GRAY_16;
+          else
+            *lcms_format = TYPE_RGB_16;
+        }
 
       output_format = format;
     }
   else if (type == babl_type ("half")) /* 16-bit floating point (half) */
     {
       if (has_alpha)
-        *lcms_format = TYPE_RGBA_HALF_FLT;
+        {
+          if (gray)
+            *lcms_format = TYPE_GRAYA_HALF_FLT;
+          else
+            *lcms_format = TYPE_RGBA_HALF_FLT;
+        }
       else
-        *lcms_format = TYPE_RGB_HALF_FLT;
+        {
+          if (gray)
+            *lcms_format = TYPE_GRAY_HALF_FLT;
+          else
+            *lcms_format = TYPE_RGB_HALF_FLT;
+        }
 
       output_format = format;
     }
   else if (type == babl_type ("float"))
     {
       if (has_alpha)
-        *lcms_format = TYPE_RGBA_FLT;
+        {
+          if (gray)
+            *lcms_format = TYPE_GRAYA_FLT;
+          else
+            *lcms_format = TYPE_RGBA_FLT;
+        }
       else
-        *lcms_format = TYPE_RGB_FLT;
+        {
+          if (gray)
+            *lcms_format = TYPE_GRAY_FLT;
+          else
+            *lcms_format = TYPE_RGB_FLT;
+        }
 
       output_format = format;
     }
@@ -1439,17 +1511,20 @@ gimp_color_profile_get_format (const Babl *format,
     {
       if (has_alpha)
         {
-#ifdef TYPE_RGBA_DBL
-          /* RGBA double not implemented in lcms */
-          *lcms_format = TYPE_RGBA_DBL;
-          output_format = format;
-#endif /* TYPE_RGBA_DBL */
+          if (gray)
+            *lcms_format = TYPE_GRAYA_DBL;
+          else
+            *lcms_format = TYPE_RGBA_DBL;
         }
       else
         {
-          *lcms_format = TYPE_RGB_DBL;
-          output_format = format;
+          if (gray)
+            *lcms_format = TYPE_GRAY_DBL;
+          else
+            *lcms_format = TYPE_RGB_DBL;
         }
+
+      output_format = format;
     }
 
   if (*lcms_format == 0)
@@ -1460,21 +1535,45 @@ gimp_color_profile_get_format (const Babl *format,
 
       if (has_alpha)
         {
-          *lcms_format = TYPE_RGBA_FLT;
+          if (gray)
+            {
+              *lcms_format = TYPE_GRAYA_FLT;
 
-          if (linear)
-            output_format = babl_format ("RGBA float");
+              if (linear)
+                output_format = babl_format ("YA float");
+              else
+                output_format = babl_format ("Y'A float");
+            }
           else
-            output_format = babl_format ("R'G'B'A float");
+            {
+              *lcms_format = TYPE_RGBA_FLT;
+
+              if (linear)
+                output_format = babl_format ("RGBA float");
+              else
+                output_format = babl_format ("R'G'B'A float");
+            }
         }
       else
         {
-          *lcms_format = TYPE_RGB_FLT;
+          if (gray)
+            {
+             *lcms_format = TYPE_GRAY_FLT;
 
-          if (linear)
-            output_format = babl_format ("RGB float");
+              if (linear)
+                output_format = babl_format ("Y float");
+              else
+                output_format = babl_format ("Y' float");
+            }
           else
-            output_format = babl_format ("R'G'B' float");
+            {
+              *lcms_format = TYPE_RGB_FLT;
+
+              if (linear)
+                output_format = babl_format ("RGB float");
+              else
+                output_format = babl_format ("R'G'B' float");
+            }
         }
     }
 
