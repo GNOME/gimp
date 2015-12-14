@@ -1212,8 +1212,8 @@ gimp_color_profile_new_srgb_gray_internal (void)
 {
   cmsHPROFILE profile;
 
-  /* white point is D65 from the sRGB specs */
-  cmsCIExyY whitepoint = { 0.3127, 0.3290, 1.0 };
+  /* white point is D50 */
+  cmsCIExyY whitepoint = { 0.345702915, 0.358538597, 1.0 };
 
   cmsFloat64Number srgb_parameters[5] =
     { 2.4, 1.0 / 1.055,  0.055 / 1.055, 1.0 / 12.92, 0.04045 };
@@ -1274,8 +1274,8 @@ gimp_color_profile_new_linear_gray_internal (void)
 {
   cmsHPROFILE profile;
 
-  /* white point is D65 from the sRGB specs */
-  cmsCIExyY whitepoint = { 0.3127, 0.3290, 1.0 };
+  /* white point is D50 */
+  cmsCIExyY whitepoint = { 0.345702915, 0.358538597, 1.0 };
 
   cmsToneCurve *curve = cmsBuildGamma (NULL, 1.0);
 
