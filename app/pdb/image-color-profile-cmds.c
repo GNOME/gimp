@@ -112,8 +112,8 @@ image_get_effective_color_profile_invoker (GimpProcedure         *procedure,
 
       if (profile)
         {
-          const guint8     *data;
-          gsize             length;
+          const guint8 *data;
+          gsize         length;
 
           data = gimp_color_profile_get_icc_profile (profile, &length);
 
@@ -368,7 +368,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-effective-color-profile",
                                      "Returns the color profile that is used for the image",
-                                     "This procedure returns the color profile that is actually used for this image, which is the profile returned by 'gimp-image-get-color-profile' if the image has a profile assigned, or a generated default RGB profile. If the image is not RGB or INDEXED, NULL is returned.",
+                                     "This procedure returns the color profile that is actually used for this image, which is the profile returned by 'gimp-image-get-color-profile' if the image has a profile assigned, or a generated default RGB or GRAY profile, according to the image's type.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -466,7 +466,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-color-profile",
                                      "Convert the image's layers to a color profile",
-                                     "This procedure converts from the image's color profile (or the default RGB profile if none is set) to the given color profile. Only RGB color profiles are accepted.",
+                                     "This procedure converts from the image's color profile (or the default RGB or GRAY profile if none is set) to the given color profile. Only RGB and GRAY color profiles are accepted, according to the image's type.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -513,7 +513,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-color-profile-from-file",
                                      "Convert the image's layers to a color profile",
-                                     "This procedure converts from the image's color profile (or the default RGB profile if none is set) to an ICC profile precified by 'uri'. Only RGB color profiles are accepted.",
+                                     "This procedure converts from the image's color profile (or the default RGB or GRAY profile if none is set) to an ICC profile precified by 'uri'. Only RGB and GRAY color profiles are accepted, according to the image's type.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",

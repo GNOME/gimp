@@ -55,18 +55,18 @@
 
 /*  local function prototypes  */
 
-static void   gimp_image_convert_profile_rgb     (GimpImage                *image,
-                                                  GimpColorProfile         *src_profile,
-                                                  GimpColorProfile         *dest_profile,
-                                                  GimpColorRenderingIntent  intent,
-                                                  gboolean                  bpc,
-                                                  GimpProgress             *progress);
-static void   gimp_image_convert_profile_indexed (GimpImage                *image,
-                                                  GimpColorProfile         *src_profile,
-                                                  GimpColorProfile         *dest_profile,
-                                                  GimpColorRenderingIntent  intent,
-                                                  gboolean                  bpc,
-                                                  GimpProgress             *progress);
+static void   gimp_image_convert_profile_layers   (GimpImage                *image,
+                                                   GimpColorProfile         *src_profile,
+                                                   GimpColorProfile         *dest_profile,
+                                                   GimpColorRenderingIntent  intent,
+                                                   gboolean                  bpc,
+                                                   GimpProgress             *progress);
+static void   gimp_image_convert_profile_colormap (GimpImage                *image,
+                                                   GimpColorProfile         *src_profile,
+                                                   GimpColorProfile         *dest_profile,
+                                                   GimpColorRenderingIntent  intent,
+                                                   gboolean                  bpc,
+                                                   GimpProgress             *progress);
 
 
 /*  public functions  */
@@ -246,18 +246,23 @@ gimp_image_validate_color_profile (GimpImage        *image,
 
   if (gimp_image_get_base_type (image) == GIMP_GRAY)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("ICC profile validation failed: "
-                             "Cannot attach a color profile to a GRAY image"));
-      return FALSE;
+      if (! gimp_color_profile_is_gray (profile))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("ICC profile validation failed: "
+                                 "Color profile is not for GRAY color space"));
+          return FALSE;
+        }
     }
-
-  if (! gimp_color_profile_is_rgb (profile))
+  else
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("ICC profile validation failed: "
-                             "Color profile is not for RGB color space"));
-      return FALSE;
+      if (! gimp_color_profile_is_rgb (profile))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("ICC profile validation failed: "
+                                 "Color profile is not for RGB color space"));
+          return FALSE;
+        }
     }
 
   if (is_builtin)
@@ -302,41 +307,65 @@ gimp_image_set_color_profile (GimpImage         *image,
 GimpColorProfile *
 gimp_image_get_builtin_color_profile (GimpImage *image)
 {
-  static GimpColorProfile *srgb_profile       = NULL;
-  static GimpColorProfile *linear_rgb_profile = NULL;
+  static GimpColorProfile *srgb_profile        = NULL;
+  static GimpColorProfile *linear_rgb_profile  = NULL;
+  static GimpColorProfile *gray_profile        = NULL;
+  static GimpColorProfile *linear_gray_profile = NULL;
   const  Babl             *format;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  if (! srgb_profile)
-    {
-      srgb_profile       = gimp_color_profile_new_srgb ();
-      linear_rgb_profile = gimp_color_profile_new_linear_rgb ();
-    }
-
   format = gimp_image_get_layer_format (image, FALSE);
 
-  if (gimp_babl_format_get_linear (format))
+  if (gimp_image_get_base_type (image) == GIMP_GRAY)
     {
-      if (! srgb_profile)
+      if (gimp_babl_format_get_linear (format))
         {
-          srgb_profile = gimp_color_profile_new_srgb ();
-          g_object_add_weak_pointer (G_OBJECT (srgb_profile),
-                                     (gpointer) &srgb_profile);
-        }
+          if (! linear_gray_profile)
+            {
+              linear_gray_profile = gimp_color_profile_new_linear_gray ();
+              g_object_add_weak_pointer (G_OBJECT (linear_gray_profile),
+                                         (gpointer) &linear_gray_profile);
+            }
 
-      return linear_rgb_profile;
+          return linear_gray_profile;
+        }
+      else
+        {
+          if (! gray_profile)
+            {
+              gray_profile = gimp_color_profile_new_srgb_gray ();
+              g_object_add_weak_pointer (G_OBJECT (gray_profile),
+                                         (gpointer) &gray_profile);
+            }
+
+          return gray_profile;
+        }
     }
   else
     {
-      if (! linear_rgb_profile)
+      if (gimp_babl_format_get_linear (format))
         {
-          linear_rgb_profile = gimp_color_profile_new_linear_rgb ();
-          g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
-                                     (gpointer) &linear_rgb_profile);
-        }
+          if (! linear_rgb_profile)
+            {
+              linear_rgb_profile = gimp_color_profile_new_linear_rgb ();
+              g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
+                                         (gpointer) &linear_rgb_profile);
+            }
 
-      return srgb_profile;
+          return linear_rgb_profile;
+        }
+      else
+        {
+          if (! srgb_profile)
+            {
+              srgb_profile = gimp_color_profile_new_srgb ();
+              g_object_add_weak_pointer (G_OBJECT (srgb_profile),
+                                         (gpointer) &srgb_profile);
+            }
+
+          return srgb_profile;
+        }
     }
 }
 
@@ -375,20 +404,18 @@ gimp_image_convert_color_profile (GimpImage                *image,
   switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
-      gimp_image_convert_profile_rgb (image,
-                                      src_profile, dest_profile,
-                                      intent, bpc,
-                                      progress);
-      break;
-
     case GIMP_GRAY:
+      gimp_image_convert_profile_layers (image,
+                                         src_profile, dest_profile,
+                                         intent, bpc,
+                                         progress);
       break;
 
     case GIMP_INDEXED:
-      gimp_image_convert_profile_indexed (image,
-                                          src_profile, dest_profile,
-                                          intent, bpc,
-                                          progress);
+      gimp_image_convert_profile_colormap (image,
+                                           src_profile, dest_profile,
+                                           intent, bpc,
+                                           progress);
       break;
     }
 
@@ -417,9 +444,6 @@ gimp_image_import_color_profile (GimpImage    *image,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   config = image->gimp->config->color_management;
-
-  if (gimp_image_get_base_type (image) == GIMP_GRAY)
-    return;
 
   if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
     return;
@@ -480,12 +504,12 @@ gimp_image_import_color_profile (GimpImage    *image,
 /*  private functions  */
 
 static void
-gimp_image_convert_profile_rgb (GimpImage                *image,
-                                GimpColorProfile         *src_profile,
-                                GimpColorProfile         *dest_profile,
-                                GimpColorRenderingIntent  intent,
-                                gboolean                  bpc,
-                                GimpProgress             *progress)
+gimp_image_convert_profile_layers (GimpImage                *image,
+                                   GimpColorProfile         *src_profile,
+                                   GimpColorProfile         *dest_profile,
+                                   GimpColorRenderingIntent  intent,
+                                   gboolean                  bpc,
+                                   GimpProgress             *progress)
 {
   GList *layers;
   GList *list;
@@ -543,12 +567,12 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
 }
 
 static void
-gimp_image_convert_profile_indexed (GimpImage                *image,
-                                    GimpColorProfile         *src_profile,
-                                    GimpColorProfile         *dest_profile,
-                                    GimpColorRenderingIntent  intent,
-                                    gboolean                  bpc,
-                                    GimpProgress             *progress)
+gimp_image_convert_profile_colormap (GimpImage                *image,
+                                     GimpColorProfile         *src_profile,
+                                     GimpColorProfile         *dest_profile,
+                                     GimpColorRenderingIntent  intent,
+                                     gboolean                  bpc,
+                                     GimpProgress             *progress)
 {
   cmsHPROFILE         src_lcms;
   cmsHPROFILE         dest_lcms;

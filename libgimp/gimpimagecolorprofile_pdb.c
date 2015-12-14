@@ -90,8 +90,8 @@ _gimp_image_get_color_profile (gint32  image_ID,
  * This procedure returns the color profile that is actually used for
  * this image, which is the profile returned by
  * gimp_image_get_color_profile() if the image has a profile assigned,
- * or a generated default RGB profile. If the image is not RGB or
- * INDEXED, NULL is returned.
+ * or a generated default RGB or GRAY profile, according to the image's
+ * type.
  *
  * Returns: The image's serialized color profile. The returned value
  * must be freed with g_free().
@@ -213,8 +213,9 @@ gimp_image_set_color_profile_from_file (gint32       image_ID,
  * Convert the image's layers to a color profile
  *
  * This procedure converts from the image's color profile (or the
- * default RGB profile if none is set) to the given color profile. Only
- * RGB color profiles are accepted.
+ * default RGB or GRAY profile if none is set) to the given color
+ * profile. Only RGB and GRAY color profiles are accepted, according to
+ * the image's type.
  *
  * Returns: TRUE on success.
  *
@@ -257,8 +258,9 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
  * Convert the image's layers to a color profile
  *
  * This procedure converts from the image's color profile (or the
- * default RGB profile if none is set) to an ICC profile precified by
- * 'uri'. Only RGB color profiles are accepted.
+ * default RGB or GRAY profile if none is set) to an ICC profile
+ * precified by 'uri'. Only RGB and GRAY color profiles are accepted,
+ * according to the image's type.
  *
  * Returns: TRUE on success.
  *

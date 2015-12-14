@@ -62,6 +62,8 @@ color_profile_import_dialog_run (GimpImage         *image,
   GtkWidget              *toggle;
   GimpColorProfile       *src_profile;
   GimpColorProfilePolicy  policy;
+  const gchar            *title;
+  const gchar            *frame_title;
   gchar                  *text;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_COLOR_PROFILE_POLICY_KEEP);
@@ -73,9 +75,20 @@ color_profile_import_dialog_run (GimpImage         *image,
   src_profile   = gimp_image_get_color_profile (image);
   *dest_profile = gimp_image_get_builtin_color_profile (image);
 
+  if (gimp_image_get_base_type (image) == GIMP_GRAY)
+    {
+      title       = _("Convert to Grayscale Working Space?");
+      frame_title = _("Convert the image to the grayscale working space?");
+    }
+  else
+    {
+      title       = _("Convert to RGB Working Space?");
+      frame_title = _("Convert the image to the RGB working space?");
+    }
+
   dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
-                              _("Convert to RGB Working Space?"),
+                              title,
                               "gimp-image-color-profile-import",
                               NULL,
                               _("Import the image from a color profile"),
@@ -112,7 +125,7 @@ color_profile_import_dialog_run (GimpImage         *image,
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
-  frame = gimp_frame_new (_("Convert the image to the RGB working space?"));
+  frame = gimp_frame_new (frame_title);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

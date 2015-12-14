@@ -67,8 +67,7 @@ sub image_get_effective_color_profile {
 This procedure returns the color profile that is actually used for
 this image, which is the profile returned by
 gimp_image_get_color_profile() if the image has a profile assigned, or
-a generated default RGB profile. If the image is not RGB or INDEXED,
-NULL is returned.
+a generated default RGB or GRAY profile, according to the image's type.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -94,8 +93,8 @@ HELP
 
   if (profile)
     {
-      const guint8     *data;
-      gsize             length;
+      const guint8 *data;
+      gsize         length;
 
       data = gimp_color_profile_get_icc_profile (profile, &length);
 
@@ -206,8 +205,9 @@ sub image_convert_color_profile {
 
     $help = <<'HELP';
 This procedure converts from the image's color profile (or the default
-RGB profile if none is set) to the given color profile. Only RGB color
-profiles are accepted.
+RGB or GRAY profile if none is set) to the given color profile. Only
+RGB and GRAY color profiles are accepted, according to the image's
+type.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -258,8 +258,9 @@ sub image_convert_color_profile_from_file {
 
     $help = <<'HELP';
 This procedure converts from the image's color profile (or the default
-RGB profile if none is set) to an ICC profile precified by 'uri'.
-Only RGB color profiles are accepted.
+RGB or GRAY profile if none is set) to an ICC profile precified by
+'uri'.  Only RGB and GRAY color profiles are accepted, according to
+the image's type.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');

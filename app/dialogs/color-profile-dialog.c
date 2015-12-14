@@ -309,28 +309,44 @@ color_profile_combo_box_new (ProfileDialog *dialog)
 
   profile = gimp_image_get_builtin_color_profile (dialog->image);
 
-  label = g_strdup_printf (_("Built-in RGB (%s)"),
-                           gimp_color_profile_get_label (profile));
+  if (gimp_image_get_base_type (dialog->image) == GIMP_GRAY)
+    {
+      label = g_strdup_printf (_("Built-in GRAY (%s)"),
+                               gimp_color_profile_get_label (profile));
+
+      profile = gimp_color_config_get_gray_color_profile (dialog->config, &error);
+    }
+  else
+    {
+      label = g_strdup_printf (_("Built-in RGB (%s)"),
+                               gimp_color_profile_get_label (profile));
+
+      profile = gimp_color_config_get_rgb_color_profile (dialog->config, &error);
+    }
 
   gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                          NULL, label);
-
   g_free (label);
-
-  profile = gimp_color_config_get_rgb_color_profile (dialog->config, &error);
 
   if (profile)
     {
       GFile *file = g_file_new_for_path (dialog->config->rgb_profile);
 
-      label = g_strdup_printf (_("Preferred RGB (%s)"),
-                               gimp_color_profile_get_label (profile));
+      if (gimp_image_get_base_type (dialog->image) == GIMP_GRAY)
+        {
+          label = g_strdup_printf (_("Preferred GRAY (%s)"),
+                                   gimp_color_profile_get_label (profile));
+        }
+      else
+        {
+          label = g_strdup_printf (_("Preferred RGB (%s)"),
+                                   gimp_color_profile_get_label (profile));
+        }
 
       g_object_unref (profile);
 
       gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                              file, label);
-
       g_object_unref (file);
       g_free (label);
     }
