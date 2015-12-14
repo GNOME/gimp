@@ -63,6 +63,8 @@ static void        gimp_view_size_request         (GtkWidget        *widget,
                                                    GtkRequisition   *requisition);
 static void        gimp_view_size_allocate        (GtkWidget        *widget,
                                                    GtkAllocation    *allocation);
+static void        gimp_view_style_set            (GtkWidget        *widget,
+                                                   GtkStyle         *prev_style);
 static gboolean    gimp_view_expose_event         (GtkWidget        *widget,
                                                    GdkEventExpose   *event);
 static gboolean    gimp_view_button_press_event   (GtkWidget        *widget,
@@ -148,6 +150,7 @@ gimp_view_class_init (GimpViewClass *klass)
   widget_class->unmap                = gimp_view_unmap;
   widget_class->size_request         = gimp_view_size_request;
   widget_class->size_allocate        = gimp_view_size_allocate;
+  widget_class->style_set            = gimp_view_style_set;
   widget_class->expose_event         = gimp_view_expose_event;
   widget_class->button_press_event   = gimp_view_button_press_event;
   widget_class->button_release_event = gimp_view_button_release_event;
@@ -379,6 +382,17 @@ gimp_view_size_allocate (GtkWidget     *widget,
                             allocation->y,
                             allocation->width,
                             allocation->height);
+}
+
+static void
+gimp_view_style_set (GtkWidget *widget,
+                     GtkStyle  *prev_style)
+{
+  GimpView *view = GIMP_VIEW (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gimp_view_renderer_invalidate (view->renderer);
 }
 
 static gboolean
