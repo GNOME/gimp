@@ -107,7 +107,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
               "src_format:  %s\n"
               "dest_format: %s\n",
               gimp_color_profile_get_label (src_profile),
-              babl_get_name (dest_format),
+              babl_get_name (src_format),
               babl_get_name (dest_format));
 
   shell->profile_transform =
