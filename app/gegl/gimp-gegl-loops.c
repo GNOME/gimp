@@ -668,30 +668,30 @@ gimp_color_profile_can_gegl_copy (GimpColorProfile *src_profile,
                                   GimpColorProfile *dest_profile)
 {
   static GimpColorProfile *srgb_profile        = NULL;
-  static GimpColorProfile *linear_rgb_profile  = NULL;
+  static GimpColorProfile *srgb_linear_profile = NULL;
   static GimpColorProfile *gray_profile        = NULL;
-  static GimpColorProfile *linear_gray_profile = NULL;
+  static GimpColorProfile *gray_linear_profile = NULL;
 
   if (gimp_color_profile_is_equal (src_profile, dest_profile))
     return TRUE;
 
   if (! srgb_profile)
     {
-      srgb_profile        = gimp_color_profile_new_srgb ();
-      linear_rgb_profile  = gimp_color_profile_new_linear_rgb ();
-      gray_profile        = gimp_color_profile_new_srgb_gray ();
-      linear_gray_profile = gimp_color_profile_new_linear_gray ();
+      srgb_profile        = gimp_color_profile_new_rgb_srgb ();
+      srgb_linear_profile = gimp_color_profile_new_rgb_srgb_linear ();
+      gray_profile        = gimp_color_profile_new_gray_srgb ();
+      gray_linear_profile = gimp_color_profile_new_gray_srgb_linear ();
     }
 
-  if ((gimp_color_profile_is_equal (src_profile, srgb_profile)       ||
-       gimp_color_profile_is_equal (src_profile, linear_rgb_profile) ||
-       gimp_color_profile_is_equal (src_profile, gray_profile)       ||
-       gimp_color_profile_is_equal (src_profile, linear_gray_profile))
+  if ((gimp_color_profile_is_equal (src_profile, srgb_profile)        ||
+       gimp_color_profile_is_equal (src_profile, srgb_linear_profile) ||
+       gimp_color_profile_is_equal (src_profile, gray_profile)        ||
+       gimp_color_profile_is_equal (src_profile, gray_linear_profile))
       &&
-      (gimp_color_profile_is_equal (dest_profile, srgb_profile)       ||
-       gimp_color_profile_is_equal (dest_profile, linear_rgb_profile) ||
-       gimp_color_profile_is_equal (dest_profile, gray_profile)       ||
-       gimp_color_profile_is_equal (dest_profile, linear_gray_profile)))
+      (gimp_color_profile_is_equal (dest_profile, srgb_profile)        ||
+       gimp_color_profile_is_equal (dest_profile, srgb_linear_profile) ||
+       gimp_color_profile_is_equal (dest_profile, gray_profile)        ||
+       gimp_color_profile_is_equal (dest_profile, gray_linear_profile)))
     return TRUE;
 
   return FALSE;

@@ -206,7 +206,7 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
   if (! profile && gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB)
     {
-      profile = gimp_color_profile_new_srgb ();
+      profile = gimp_color_profile_new_rgb_srgb ();
     }
 
   gimp_layer_new_convert_buffer (layer, buffer, profile, NULL);

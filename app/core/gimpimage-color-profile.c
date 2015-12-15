@@ -323,7 +323,7 @@ gimp_image_get_builtin_color_profile (GimpImage *image)
         {
           if (! linear_gray_profile)
             {
-              linear_gray_profile = gimp_color_profile_new_linear_gray ();
+              linear_gray_profile = gimp_color_profile_new_gray_srgb_linear ();
               g_object_add_weak_pointer (G_OBJECT (linear_gray_profile),
                                          (gpointer) &linear_gray_profile);
             }
@@ -334,7 +334,7 @@ gimp_image_get_builtin_color_profile (GimpImage *image)
         {
           if (! gray_profile)
             {
-              gray_profile = gimp_color_profile_new_srgb_gray ();
+              gray_profile = gimp_color_profile_new_gray_srgb ();
               g_object_add_weak_pointer (G_OBJECT (gray_profile),
                                          (gpointer) &gray_profile);
             }
@@ -348,7 +348,7 @@ gimp_image_get_builtin_color_profile (GimpImage *image)
         {
           if (! linear_rgb_profile)
             {
-              linear_rgb_profile = gimp_color_profile_new_linear_rgb ();
+              linear_rgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
               g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
                                          (gpointer) &linear_rgb_profile);
             }
@@ -359,7 +359,7 @@ gimp_image_get_builtin_color_profile (GimpImage *image)
         {
           if (! srgb_profile)
             {
-              srgb_profile = gimp_color_profile_new_srgb ();
+              srgb_profile = gimp_color_profile_new_rgb_srgb ();
               g_object_add_weak_pointer (G_OBJECT (srgb_profile),
                                          (gpointer) &srgb_profile);
             }
@@ -696,7 +696,7 @@ _gimp_image_update_color_profile (GimpImage          *image,
           cmsUInt32Number   srgb_lcms_format;
           cmsUInt32Number   flags;
 
-          srgb_profile = gimp_color_profile_new_srgb ();
+          srgb_profile = gimp_color_profile_new_rgb_srgb ();
 
           image_lcms = gimp_color_profile_get_lcms_profile (private->color_profile);
           srgb_lcms  = gimp_color_profile_get_lcms_profile (srgb_profile);
