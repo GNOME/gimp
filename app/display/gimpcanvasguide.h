@@ -52,7 +52,9 @@ GType            gimp_canvas_guide_get_type (void) G_GNUC_CONST;
 GimpCanvasItem * gimp_canvas_guide_new      (GimpDisplayShell    *shell,
                                              GimpOrientationType  orientation,
                                              gint                 position,
-                                             gboolean             guide_style);
+                                             cairo_pattern_t     *normal_style,
+                                             cairo_pattern_t     *active_style,
+                                             gdouble              line_width);
 
 void             gimp_canvas_guide_set      (GimpCanvasItem      *guide,
                                              GimpOrientationType  orientation,

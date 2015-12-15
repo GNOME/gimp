@@ -583,14 +583,17 @@ GimpCanvasItem *
 gimp_draw_tool_add_guide (GimpDrawTool        *draw_tool,
                           GimpOrientationType  orientation,
                           gint                 position,
-                          gboolean             guide_style)
+                          cairo_pattern_t     *normal_style,
+                          cairo_pattern_t     *active_style,
+                          gdouble              line_width)
 {
   GimpCanvasItem *item;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_guide_new (gimp_display_get_shell (draw_tool->display),
-                                orientation, position, guide_style);
+                                orientation, position,
+                                normal_style, active_style, line_width);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -617,9 +620,11 @@ gimp_draw_tool_add_crosshair (GimpDrawTool *draw_tool,
 
   gimp_draw_tool_push_group (draw_tool, group);
   gimp_draw_tool_add_guide (draw_tool,
-                            GIMP_ORIENTATION_VERTICAL, position_x, FALSE);
+                            GIMP_ORIENTATION_VERTICAL, position_x,
+                            NULL, NULL, 1.0);
   gimp_draw_tool_add_guide (draw_tool,
-                            GIMP_ORIENTATION_HORIZONTAL, position_y, FALSE);
+                            GIMP_ORIENTATION_HORIZONTAL, position_y,
+                            NULL, NULL, 1.0);
   gimp_draw_tool_pop_group (draw_tool);
 
   return GIMP_CANVAS_ITEM (group);

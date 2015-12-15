@@ -115,7 +115,9 @@ GimpCanvasItem * gimp_draw_tool_add_line             (GimpDrawTool     *draw_too
 GimpCanvasItem * gimp_draw_tool_add_guide            (GimpDrawTool     *draw_tool,
                                                       GimpOrientationType  orientation,
                                                       gint              position,
-                                                      gboolean          guide_style);
+                                                      cairo_pattern_t  *normal_style,
+                                                      cairo_pattern_t  *active_style,
+                                                      gdouble           line_width);
 GimpCanvasItem * gimp_draw_tool_add_crosshair        (GimpDrawTool     *draw_tool,
                                                       gint              position_x,
                                                       gint              position_y);

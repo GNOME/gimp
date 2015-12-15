@@ -55,21 +55,36 @@ struct _GimpGuideClass
 };
 
 
-GType               gimp_guide_get_type        (void) G_GNUC_CONST;
+GType               gimp_guide_get_type         (void) G_GNUC_CONST;
 
-GimpGuide *         gimp_guide_new             (GimpOrientationType  orientation,
-                                                guint32              guide_ID);
+GimpGuide *         gimp_guide_new              (GimpOrientationType  orientation,
+                                                 guint32              guide_ID);
+GimpGuide *         gimp_guide_custom_new       (GimpOrientationType  orientation,
+                                                 guint32              guide_ID,
+                                                 GimpRGB             *normal_foreground,
+                                                 GimpRGB             *normal_background,
+                                                 GimpRGB             *active_foreground,
+                                                 GimpRGB             *active_background,
+                                                 gdouble              line_width);
 
-guint32             gimp_guide_get_ID          (GimpGuide           *guide);
+guint32             gimp_guide_get_ID           (GimpGuide           *guide);
 
-GimpOrientationType gimp_guide_get_orientation (GimpGuide           *guide);
-void                gimp_guide_set_orientation (GimpGuide           *guide,
-                                                GimpOrientationType  orientation);
+GimpOrientationType gimp_guide_get_orientation  (GimpGuide           *guide);
+void                gimp_guide_set_orientation  (GimpGuide           *guide,
+                                                 GimpOrientationType  orientation);
 
-gint                gimp_guide_get_position    (GimpGuide           *guide);
-void                gimp_guide_set_position    (GimpGuide           *guide,
-                                                gint                 position);
-void                gimp_guide_removed         (GimpGuide           *guide);
+gint                gimp_guide_get_position     (GimpGuide           *guide);
+void                gimp_guide_set_position     (GimpGuide           *guide,
+                                                 gint                 position);
+void                gimp_guide_removed          (GimpGuide           *guide);
 
+void                gimp_guide_get_normal_style (GimpGuide           *guide,
+                                                 GimpRGB             *foreground,
+                                                 GimpRGB             *background);
+void                gimp_guide_get_active_style (GimpGuide           *guide,
+                                                 GimpRGB             *foreground,
+                                                 GimpRGB             *background);
+gdouble             gimp_guide_get_line_width   (GimpGuide           *guide);
+gboolean            gimp_guide_is_custom        (GimpGuide           *guide);
 
 #endif /* __GIMP_GUIDE_H__ */
