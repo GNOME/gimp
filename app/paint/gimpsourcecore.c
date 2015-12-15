@@ -234,7 +234,7 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
       if (! source_core->src_drawable)
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			       _("Set a source image first."));
+                               _("Set a source image first."));
           return FALSE;
         }
 
