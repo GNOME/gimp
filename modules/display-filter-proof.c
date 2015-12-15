@@ -348,7 +348,7 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   if (! proof->profile)
     return;
 
-  rgb_profile = gimp_color_profile_new_srgb ();
+  rgb_profile = gimp_color_profile_new_rgb_srgb ();
 
   file = g_file_new_for_path (proof->profile);
   proof_profile = gimp_color_profile_new_from_file (file, NULL);
