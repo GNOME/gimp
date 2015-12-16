@@ -11,10 +11,10 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp.master.el.po\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-11-20 07:13+0000\n"
-"PO-Revision-Date: 2015-11-21 13:36+0300\n"
+"POT-Creation-Date: 2015-12-15 19:13+0000\n"
+"PO-Revision-Date: 2015-12-16 09:36+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: www.gnome.gr\n"
+"Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -500,7 +500,6 @@ msgid "Pattern fill"
 msgstr "Γέμισμα με μοτίβο"
 
 #: ../libgimpbase/gimpbaseenums.c:162
-#| msgid "Button 0"
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Κομμένο"
@@ -512,8 +511,6 @@ msgstr "Στρογγυλό"
 
 #
 #: ../libgimpbase/gimpbaseenums.c:164
-#| msgctxt "brush-generated-shape"
-#| msgid "Square"
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Τετράγωνο"
@@ -1131,7 +1128,6 @@ msgid "Points"
 msgstr "Στιγμές"
 
 #: ../libgimpbase/gimpbaseenums.c:1641
-#| msgid "_Stroke"
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Γραμμή πινελιάς"
@@ -1285,34 +1281,34 @@ msgstr "Η σύνδεση με το org.freedesktop.FileManager1 απέτυχε:
 msgid "Calling ShowItems failed: "
 msgstr "Η κλήση του ShowItems απέτυχε: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:234
+#: ../libgimpcolor/gimpcolorprofile.c:252
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "Το '%s' δεν φαίνεται να είναι μια χρωματική κατατομή ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:280
+#: ../libgimpcolor/gimpcolorprofile.c:298
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Τα δεδομένα δεν φαίνεται να είναι μια κατατομή χρωμάτων ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:337
+#: ../libgimpcolor/gimpcolorprofile.c:355
 msgid "Could not save color profile to memory"
 msgstr "Αδύνατη η αποθήκευση χρωματικής κατατομής στη μνήμη"
 
-#: ../libgimpcolor/gimpcolorprofile.c:524
+#: ../libgimpcolor/gimpcolorprofile.c:542
 msgid "(unnamed profile)"
 msgstr "(ανώνυμη κατατομή)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:566
+#: ../libgimpcolor/gimpcolorprofile.c:584
 #, c-format
 msgid "Model: %s"
 msgstr "Μοντέλο: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:575
+#: ../libgimpcolor/gimpcolorprofile.c:593
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Κατασκευαστής: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:584
+#: ../libgimpcolor/gimpcolorprofile.c:602
 #, c-format
 msgid "Copyright: %s"
 msgstr "Πνευματικά δικαιώματα: %s"
@@ -1351,11 +1347,23 @@ msgstr ""
 "ενσωματωμένη κατατομή RGB, όταν μια κατατομή χρώματος μπορεί να επιλεγεί."
 
 #: ../libgimpconfig/gimpcolorconfig.c:69
+#| msgid ""
+#| "The preferred RGB working space color profile. It will be offered next to "
+#| "the built-in RGB profile when a color profile can be chosen."
+msgid ""
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
+msgstr ""
+"Ο αγαπημένος χώρος εργασίας γκρίζας κλίμακας κατατομής χρώματος. Θα "
+"προσφερθεί δίπλα στην ενσωματωμένη κατατομή γκρίζας κλίμακας, όταν μια "
+"κατατομή χρώματος μπορεί να επιλεγεί."
+
+#: ../libgimpconfig/gimpcolorconfig.c:73
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr ""
 "Η χρησιμοποιούμενη χρωματική κατατομή CMYK για μετατροπή μεταξύ RGB και CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:76
 msgid ""
 "The color profile to use for soft proofing from your image's color space to "
 "some other color space, including soft proofing to a printer or other output "
@@ -1366,7 +1374,7 @@ msgstr ""
 "συμπεριλαμβανομένης της δοκιμασίας εκτύπωσης σε έναν εκτυπωτή ή σε κάποια "
 "άλλη κατατομή συσκευής εξόδου. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:77
+#: ../libgimpconfig/gimpcolorconfig.c:81
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1379,14 +1387,14 @@ msgstr ""
 "οθόνης είναι πίνακες), επιλέγοντας συγκεκριμένο στόχο σάς δίνει πραγματικά "
 "σχετική χρωματομετρία."
 
-#: ../libgimpconfig/gimpcolorconfig.c:84
+#: ../libgimpconfig/gimpcolorconfig.c:88
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to). "
 msgstr ""
 "Να χρησιμοποιήσετε αντιστάθμιση μαύρου σημείου (εκτός και ξέρετε ότι έχετε "
 "κάποιο λόγο να μην το κάνετε). "
 
-#: ../libgimpconfig/gimpcolorconfig.c:88
+#: ../libgimpconfig/gimpcolorconfig.c:92
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1396,14 +1404,14 @@ msgstr ""
 "συσκευή προσομοίωσης εξόδου (συνήθως την οθόνη σας). Δοκιμάστε όλα και "
 "επιλέξτε ποιο δείχνει καλύτερα. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:93
+#: ../libgimpconfig/gimpcolorconfig.c:97
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 "Δοκιμάστε με και χωρίς αντιστάθμιση μαύρου σημείου και επιλέξτε ποιο δείχνει "
 "καλύτερα. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:97
+#: ../libgimpconfig/gimpcolorconfig.c:101
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -1411,18 +1419,25 @@ msgstr ""
 "Όταν ενεργοποιηθεί, η προσομοίωση εκτύπωσης θα σημειώσει τα χρώματα που δεν "
 "αντιπροσωπεύονται στο στοχευόμενο χρωματικό χώρο."
 
-#: ../libgimpconfig/gimpcolorconfig.c:101
+#: ../libgimpconfig/gimpcolorconfig.c:105
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Το χρώμα με το οποίο σημειώνονται χρώματα εκτός φάσματος."
 
-#: ../libgimpconfig/gimpcolorconfig.c:408
-#: ../libgimpconfig/gimpcolorconfig.c:511
+#: ../libgimpconfig/gimpcolorconfig.c:431
+#: ../libgimpconfig/gimpcolorconfig.c:565
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Η χρωματική κατατομή '%s' δεν είναι για το χρωματικό χώρο RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:439
-#: ../libgimpconfig/gimpcolorconfig.c:552
+#: ../libgimpconfig/gimpcolorconfig.c:462
+#: ../libgimpconfig/gimpcolorconfig.c:606
+#, c-format
+#| msgid "Color profile '%s' is not for RGB color space."
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr "Η χρωματική κατατομή '%s' δεν είναι για τον χρωματικό χώρο GRAY."
+
+#: ../libgimpconfig/gimpcolorconfig.c:493
+#: ../libgimpconfig/gimpcolorconfig.c:647
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Η χρωματική κατατομή '%s' δεν είναι για τον χρωματικό χώρο CMYK."
@@ -1690,6 +1705,85 @@ msgstr "Επιλογή αρχείου"
 msgid "Press F1 for more help"
 msgstr "Πατήστε F1 για περισσότερη βοήθεια"
 
+#: ../libgimpwidgets/gimpicons.c:60
+msgid "Anchor"
+msgstr "Άγκυρα"
+
+#: ../libgimpwidgets/gimpicons.c:61
+msgid "C_enter"
+msgstr "_Κεντράρισμα"
+
+#: ../libgimpwidgets/gimpicons.c:62
+msgid "_Duplicate"
+msgstr "_Διπλασιασμός"
+
+#: ../libgimpwidgets/gimpicons.c:63
+msgid "_Edit"
+msgstr "_Επεξεργασία"
+
+#: ../libgimpwidgets/gimpicons.c:64
+msgid "Linked"
+msgstr "Συνδεμένο"
+
+#: ../libgimpwidgets/gimpicons.c:65
+msgid "Paste as New"
+msgstr "Επικόλληση ως νέο"
+
+#: ../libgimpwidgets/gimpicons.c:66
+msgid "Paste Into"
+msgstr "Επικόλληση σε"
+
+#: ../libgimpwidgets/gimpicons.c:67
+msgid "_Reset"
+msgstr "_Επαναφορά"
+
+#: ../libgimpwidgets/gimpicons.c:68
+msgid "Visible"
+msgstr "Ορατό"
+
+#: ../libgimpwidgets/gimpicons.c:107 ../libgimpwidgets/gimpicons.c:111
+msgid "_Stroke"
+msgstr "_Περίγραμμα"
+
+#: ../libgimpwidgets/gimpicons.c:123
+msgid "L_etter Spacing"
+msgstr "Διάκενο γ_ραμμάτων"
+
+#: ../libgimpwidgets/gimpicons.c:124
+msgid "L_ine Spacing"
+msgstr "Διάκενο _γραμμών"
+
+#: ../libgimpwidgets/gimpicons.c:140
+msgid "Re_size"
+msgstr "Αυ_ξομείωση"
+
+#: ../libgimpwidgets/gimpicons.c:141 ../libgimpwidgets/gimpicons.c:276
+msgid "_Scale"
+msgstr "Κ_λιμάκωση"
+
+#
+#: ../libgimpwidgets/gimpicons.c:248
+msgid "Cr_op"
+msgstr "_Περικοπή"
+
+#
+#: ../libgimpwidgets/gimpicons.c:256
+msgid "_Select"
+msgstr "_Επιλογή"
+
+#: ../libgimpwidgets/gimpicons.c:259 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimpwidgets/gimpicons.c:282
+msgid "_Transform"
+msgstr "_Μετασχηματισμός"
+
+#: ../libgimpwidgets/gimpicons.c:275
+msgid "_Rotate"
+msgstr "_Περιστροφή"
+
+#: ../libgimpwidgets/gimpicons.c:278
+msgid "_Shear"
+msgstr "_Στρέβλωση"
+
 #: ../libgimpwidgets/gimpmemsizeentry.c:223
 msgid "Kilobytes"
 msgstr "Kilobytes"
@@ -1771,85 +1865,6 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Αυτό το πεδίο εισαγωγής κειμένου περιορίζεται σε %d χαρακτήρα."
 msgstr[1] "Αυτό το πεδίο εισαγωγής κειμένου περιορίζεται σε %d χαρακτήρες."
-
-#: ../libgimpwidgets/gimpstock.c:60
-msgid "Anchor"
-msgstr "Άγκυρα"
-
-#: ../libgimpwidgets/gimpstock.c:61
-msgid "C_enter"
-msgstr "_Κεντράρισμα"
-
-#: ../libgimpwidgets/gimpstock.c:62
-msgid "_Duplicate"
-msgstr "_Διπλασιασμός"
-
-#: ../libgimpwidgets/gimpstock.c:63
-msgid "_Edit"
-msgstr "_Επεξεργασία"
-
-#: ../libgimpwidgets/gimpstock.c:64
-msgid "Linked"
-msgstr "Συνδεμένο"
-
-#: ../libgimpwidgets/gimpstock.c:65
-msgid "Paste as New"
-msgstr "Επικόλληση ως νέο"
-
-#: ../libgimpwidgets/gimpstock.c:66
-msgid "Paste Into"
-msgstr "Επικόλληση σε"
-
-#: ../libgimpwidgets/gimpstock.c:67
-msgid "_Reset"
-msgstr "_Επαναφορά"
-
-#: ../libgimpwidgets/gimpstock.c:68
-msgid "Visible"
-msgstr "Ορατό"
-
-#: ../libgimpwidgets/gimpstock.c:107 ../libgimpwidgets/gimpstock.c:111
-msgid "_Stroke"
-msgstr "_Περίγραμμα"
-
-#: ../libgimpwidgets/gimpstock.c:123
-msgid "L_etter Spacing"
-msgstr "Διάκενο γ_ραμμάτων"
-
-#: ../libgimpwidgets/gimpstock.c:124
-msgid "L_ine Spacing"
-msgstr "Διάκενο _γραμμών"
-
-#: ../libgimpwidgets/gimpstock.c:140
-msgid "Re_size"
-msgstr "Αυ_ξομείωση"
-
-#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:276
-msgid "_Scale"
-msgstr "Κ_λιμάκωση"
-
-#
-#: ../libgimpwidgets/gimpstock.c:248
-msgid "Cr_op"
-msgstr "_Περικοπή"
-
-#
-#: ../libgimpwidgets/gimpstock.c:256
-msgid "_Select"
-msgstr "_Επιλογή"
-
-#: ../libgimpwidgets/gimpstock.c:259 ../libgimpwidgets/gimpstock.c:271
-#: ../libgimpwidgets/gimpstock.c:282
-msgid "_Transform"
-msgstr "_Μετασχηματισμός"
-
-#: ../libgimpwidgets/gimpstock.c:275
-msgid "_Rotate"
-msgstr "_Περιστροφή"
-
-#: ../libgimpwidgets/gimpstock.c:278
-msgid "_Shear"
-msgstr "_Στρέβλωση"
 
 #
 #: ../libgimpwidgets/gimpunitmenu.c:265
