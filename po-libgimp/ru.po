@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-13 08:01+0300\n"
-"PO-Revision-Date: 2015-12-13 09:16+0300\n"
+"POT-Creation-Date: 2015-12-16 05:45+0300\n"
+"PO-Revision-Date: 2015-12-16 05:49+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -250,9 +250,8 @@ msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
 #: ../libgimp/gimpimagemetadata.c:605
-#, fuzzy
 msgid "Background"
-msgstr "Цвет _фона"
+msgstr ""
 
 #: ../libgimp/gimpimagemetadata.c:796
 #, c-format
@@ -503,10 +502,9 @@ msgid "Pattern fill"
 msgstr "Текстурой"
 
 #: ../libgimpbase/gimpbaseenums.c:162
-#, fuzzy
 msgctxt "cap-style"
 msgid "Butt"
-msgstr "Клавиша 0"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:163
 msgctxt "cap-style"
@@ -720,10 +718,9 @@ msgid "Foreground color"
 msgstr "Цвет переднего плана"
 
 #: ../libgimpbase/gimpbaseenums.c:535
-#, fuzzy
 msgctxt "fill-type"
 msgid "Background color"
-msgstr "Цвет _фона"
+msgstr "Цвет фона"
 
 #: ../libgimpbase/gimpbaseenums.c:536
 msgctxt "fill-type"
@@ -736,7 +733,6 @@ msgid "Transparency"
 msgstr "Прозрачность"
 
 #: ../libgimpbase/gimpbaseenums.c:538
-#, fuzzy
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Текстура"
@@ -1128,10 +1124,9 @@ msgid "Points"
 msgstr "Пунктов"
 
 #: ../libgimpbase/gimpbaseenums.c:1641
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "_Обвести"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:1642
 msgctxt "stroke-method"
@@ -1246,12 +1241,12 @@ msgstr ""
 #: ../libgimpbase/gimpmetadata.c:656
 #, c-format
 msgid "Parsing Exif data failed."
-msgstr ""
+msgstr "Не удалось разобрать данные Exif."
 
 #: ../libgimpbase/gimpmetadata.c:710
 #, c-format
 msgid "Parsing XMP data failed."
-msgstr ""
+msgstr "Не удалось разобрать данные XMP."
 
 #: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
 msgid "(invalid UTF-8 string)"
@@ -1282,36 +1277,34 @@ msgstr ""
 msgid "Calling ShowItems failed: "
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:235
+#: ../libgimpcolor/gimpcolorprofile.c:252
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' не похож на цветовой ICC-профиль"
 
-#: ../libgimpcolor/gimpcolorprofile.c:281
-#, fuzzy
+#: ../libgimpcolor/gimpcolorprofile.c:298
 msgid "Data does not appear to be an ICC color profile"
-msgstr "Фильтр настройки цветопередачи, использующий ICC-профиль"
+msgstr "Данные не похожи на ICC-профиль"
 
-#: ../libgimpcolor/gimpcolorprofile.c:338
+#: ../libgimpcolor/gimpcolorprofile.c:355
 msgid "Could not save color profile to memory"
 msgstr "Не удалось сохранить цветовой профиль в память"
 
-#: ../libgimpcolor/gimpcolorprofile.c:525
-#, fuzzy
+#: ../libgimpcolor/gimpcolorprofile.c:542
 msgid "(unnamed profile)"
-msgstr "Профиль изображения:"
+msgstr "(безымянный профиль)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:567
+#: ../libgimpcolor/gimpcolorprofile.c:584
 #, c-format
 msgid "Model: %s"
 msgstr "Модель: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:576
+#: ../libgimpcolor/gimpcolorprofile.c:593
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Производитель: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:585
+#: ../libgimpcolor/gimpcolorprofile.c:602
 #, c-format
 msgid "Copyright: %s"
 msgstr "Авторские права: %s"
@@ -1348,17 +1341,23 @@ msgid ""
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:69
+msgid ""
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:73
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK-профиль для преобразований между RGB и CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:76
 msgid ""
 "The color profile to use for soft proofing from your image's color space to "
 "some other color space, including soft proofing to a printer or other output "
 "device profile. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:77
+#: ../libgimpconfig/gimpcolorconfig.c:81
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1366,24 +1365,24 @@ msgid ""
 "intent really gives you relative colorimetric."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:84
+#: ../libgimpconfig/gimpcolorconfig.c:88
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to). "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:88
+#: ../libgimpconfig/gimpcolorconfig.c:92
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:93
+#: ../libgimpconfig/gimpcolorconfig.c:97
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:97
+#: ../libgimpconfig/gimpcolorconfig.c:101
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -1391,21 +1390,28 @@ msgstr ""
 "Если включено, при экранной цветопробе все цвета, не попадающие в цветовой "
 "охват, будут заменены на указанный здесь цвет."
 
-#: ../libgimpconfig/gimpcolorconfig.c:101
+#: ../libgimpconfig/gimpcolorconfig.c:105
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Цвет, используемый для пометки цветов вне цветового охвата."
 
-#: ../libgimpconfig/gimpcolorconfig.c:408
-#: ../libgimpconfig/gimpcolorconfig.c:511
-#, fuzzy, c-format
+#: ../libgimpconfig/gimpcolorconfig.c:431
+#: ../libgimpconfig/gimpcolorconfig.c:565
+#, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr "Фильтр настройки цветопередачи, использующий ICC-профиль"
+msgstr "Цветовой профиль '%s' не предназначен для пространства RGB"
 
-#: ../libgimpconfig/gimpcolorconfig.c:439
-#: ../libgimpconfig/gimpcolorconfig.c:552
-#, fuzzy, c-format
+#: ../libgimpconfig/gimpcolorconfig.c:462
+#: ../libgimpconfig/gimpcolorconfig.c:606
+#, c-format
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr ""
+"Цветовой профиль '%s' не предназначен для пространства в градациях серого."
+
+#: ../libgimpconfig/gimpcolorconfig.c:493
+#: ../libgimpconfig/gimpcolorconfig.c:647
+#, c-format
 msgid "Color profile '%s' is not for CMYK color space."
-msgstr "Фильтр настройки цветопередачи, использующий ICC-профиль"
+msgstr "Цветовой профиль '%s' не предназначен для пространства CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgctxt "color-management-mode"
@@ -1730,9 +1736,8 @@ msgid "Cr_op"
 msgstr "_Обрезать"
 
 #: ../libgimpwidgets/gimpicons.c:256
-#, fuzzy
 msgid "_Select"
-msgstr "_Выделение"
+msgstr ""
 
 #: ../libgimpwidgets/gimpicons.c:259 ../libgimpwidgets/gimpicons.c:271
 #: ../libgimpwidgets/gimpicons.c:282
