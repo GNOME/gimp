@@ -1649,15 +1649,6 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
-  /*  Snapping Distance  */
-  vbox2 = prefs_frame_new (_("Guide & Grid Snapping"),
-                           GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
-
-  prefs_spin_button_add (object, "snap-distance", 1.0, 5.0, 0,
-                         _("_Snap distance:"),
-                         GTK_TABLE (table), 0, size_group);
-
   /*  Scaling  */
   vbox2 = prefs_frame_new (_("Scaling"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
@@ -2071,7 +2062,7 @@ prefs_dialog_new (Gimp       *gimp,
   size_group = NULL;
 
   /* Tool Editor */
-  vbox2 = prefs_frame_new (_("Tools configuration"),
+  vbox2 = prefs_frame_new (_("Tools Configuration"),
                            GTK_CONTAINER (vbox), TRUE);
   tool_editor = gimp_tool_editor_new (gimp->tool_info_list, gimp->user_context,
                                       gimp_tools_get_default_order (gimp),
@@ -2595,13 +2586,22 @@ prefs_dialog_new (Gimp       *gimp,
                                   &child_iter);
 
   prefs_behavior_options_frame_add (gimp,
-                                   G_OBJECT (display_config->default_view),
-                                   _("Default Behavior in Normal Mode"),
-                                   GTK_CONTAINER (vbox));
+                                    G_OBJECT (display_config->default_view),
+                                    _("Default Behavior in Normal Mode"),
+                                    GTK_CONTAINER (vbox));
   prefs_behavior_options_frame_add (gimp,
-                                   G_OBJECT (display_config->default_fullscreen_view),
-                                   _("Default Behavior in Fullscreen Mode"),
-                                   GTK_CONTAINER (vbox));
+                                    G_OBJECT (display_config->default_fullscreen_view),
+                                    _("Default Behavior in Fullscreen Mode"),
+                                    GTK_CONTAINER (vbox));
+
+  /*  Snapping Distance  */
+  vbox2 = prefs_frame_new (_("General"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "snap-distance", 1.0, 5.0, 0,
+                         _("_Snapping distance:"),
+                         GTK_TABLE (table), 0, size_group);
 
 
   /*******************/
