@@ -203,7 +203,7 @@ gimp_mybrush_paint (GimpPaintCore    *paint_core,
                                         options->hardness);
 
           mypaint_brush_new_stroke (mybrush->private->brush);
-          mybrush->private->lastTime = 0;
+          mybrush->private->lastTime = -1;
         }
       break;
 
@@ -234,7 +234,7 @@ gimp_mybrush_motion (GimpPaintCore    *paint_core,
   mypaint_surface_begin_atomic ((MyPaintSurface *) mybrush->private->surface);
 
 
-  if (mybrush->private->lastTime == 0)
+  if (mybrush->private->lastTime < 0)
     {
       /* First motion, so we need a zero pressure event to start the stroke */
       mybrush->private->lastTime = (gint64)time - 15;
