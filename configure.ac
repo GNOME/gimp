@@ -2357,6 +2357,7 @@ icons/Symbolic-Inverted/Makefile
 themes/Makefile
 themes/Default/Makefile
 themes/Small/Makefile
+themes/The-Dark-Side-of-Gimp/Makefile
 data/Makefile
 data/brushes/Makefile
 data/brushes/Basic/Makefile
