@@ -373,14 +373,20 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                 rr = calculate_rr (ix, iy, x, y, aspect_ratio, sn, cs, one_over_radius2);
               alpha = calculate_alpha_for_rr (rr, hardness, segment1_slope, segment2_slope) * opaque;
               dst_alpha = pixel[ALPHA];
-              a = alpha * color_a + dst_alpha * (1.0f - alpha);
+              /* a = alpha * color_a + dst_alpha * (1.0f - alpha);
+               * which converts to: */
+              a = alpha * (color_a - dst_alpha) + dst_alpha;
 
               if (a > 0.0f)
                 {
-                  float a_term = dst_alpha * (1.0f - alpha);
-                  dst_pixel[RED]   = (color_r * alpha * color_a + pixel[RED] * a_term) / a;
-                  dst_pixel[GREEN] = (color_g * alpha * color_a + pixel[GREEN] * a_term) / a;
-                  dst_pixel[BLUE]  = (color_b * alpha * color_a + pixel[BLUE] * a_term) / a;
+                  /* By definition the ratio between each color[] and pixel[] component in a non-pre-multipled blend always sums to 1.0f.
+                   * Originaly this would have been "(color[n] * alpha * color_a + pixel[n] * dst_alpha * (1.0f - alpha)) / a",
+                   * instead we only calculate the cheaper term. */
+                  float src_term = (alpha * color_a) / a;
+                  float dst_term = 1.0f - src_term;
+                  dst_pixel[RED]   = color_r * src_term + pixel[RED] * dst_term;
+                  dst_pixel[GREEN] = color_g * src_term + pixel[GREEN] * dst_term;
+                  dst_pixel[BLUE]  = color_b * src_term + pixel[BLUE] * dst_term;
                 }
               dst_pixel[ALPHA] = a;
 
