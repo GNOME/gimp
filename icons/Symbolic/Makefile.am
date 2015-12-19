@@ -207,10 +207,12 @@ icons22_DATA = \
 	22/gimp-gegl.png			\
 	22/gimp-histogram.png			\
 	22/gimp-input-device.png		\
+	22/gimp-landscape.png			\
 	22/gimp-letter-spacing.png		\
 	22/gimp-line-spacing.png		\
 	22/gimp-path.png			\
 	22/gimp-paths.png			\
+	22/gimp-portrait.png			\
 	22/gimp-prefs-color-management.png	\
 	22/gimp-prefs-controllers.png		\
 	22/gimp-prefs-default-grid.png		\
