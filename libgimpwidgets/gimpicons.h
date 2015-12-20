@@ -133,7 +133,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_LEVELS              "gimp-tool-levels"
 #define GIMP_STOCK_TOOL_MEASURE             "gimp-tool-measure"
 #define GIMP_STOCK_TOOL_MOVE                "gimp-tool-move"
-#define GIMP_STOCK_TOOL_MYBRUSH             "gimp-tool-mybrush"
+#define GIMP_STOCK_TOOL_MYPAINT_BRUSH       "gimp-tool-mypaint-brush"
 #define GIMP_STOCK_TOOL_N_POINT_DEFORMATION "gimp-tool-n-point-deformation"
 #define GIMP_STOCK_TOOL_PAINTBRUSH          "gimp-tool-paintbrush"
 #define GIMP_STOCK_TOOL_PATH                "gimp-tool-path"
@@ -290,7 +290,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_DETACH                   GTK_STOCK_CONVERT
 #define GIMP_STOCK_FONT                     GTK_STOCK_SELECT_FONT
 #define GIMP_STOCK_GRADIENT                 GIMP_STOCK_TOOL_BLEND
-#define GIMP_STOCK_MYPAINT_BRUSH            GIMP_STOCK_TOOL_MYBRUSH
+#define GIMP_STOCK_MYPAINT_BRUSH            GIMP_STOCK_TOOL_MYPAINT_BRUSH
 #define GIMP_STOCK_PALETTE                  GTK_STOCK_SELECT_COLOR
 #define GIMP_STOCK_PATTERN                  GIMP_STOCK_TOOL_BUCKET_FILL
 #define GIMP_STOCK_CONTROLLER_MOUSE         GIMP_STOCK_CURSOR

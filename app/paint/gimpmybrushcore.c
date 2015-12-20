@@ -96,7 +96,7 @@ gimp_mybrush_core_register (Gimp                      *gimp,
                   GIMP_TYPE_MYBRUSH_OPTIONS,
                   "gimp-mybrush",
                   _("Mybrush"),
-                  "gimp-tool-mybrush");
+                  "gimp-tool-mypaint-brush");
 }
 
 static void

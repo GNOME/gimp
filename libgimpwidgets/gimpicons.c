@@ -263,7 +263,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOL_LEVELS,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_MEASURE,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_MOVE,                NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_MYBRUSH,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TOOL_MYPAINT_BRUSH,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_N_POINT_DEFORMATION, NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_PAINTBRUSH,          NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_PATH,                NULL,        0, 0, LIBGIMP_DOMAIN },

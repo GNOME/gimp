@@ -190,7 +190,7 @@ static const GimpEnumActionEntry tools_airbrush_flow_actions[] =
 #ifdef HAVE_LIBMYPAINT
 static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
 {
-  { "tools-mybrush-radius-set", GIMP_STOCK_TOOL_MYBRUSH,
+  { "tools-mybrush-radius-set", GIMP_STOCK_TOOL_MYPAINT_BRUSH,
     "Set MyPaint Brush Radius", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }

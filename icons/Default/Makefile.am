@@ -194,7 +194,7 @@ icons16_DATA = \
 	16/gimp-tool-levels.png				\
 	16/gimp-tool-measure.png			\
 	16/gimp-tool-move.png				\
-	16/gimp-tool-mybrush.png			\
+	16/gimp-tool-mypaint-brush.png			\
 	16/gimp-tool-n-point-deformation.png		\
 	16/gimp-tool-options.png			\
 	16/gimp-tool-paintbrush.png			\
@@ -308,7 +308,7 @@ icons22_DATA = \
 	22/gimp-tool-levels.png			\
 	22/gimp-tool-measure.png		\
 	22/gimp-tool-move.png			\
-	22/gimp-tool-mybrush.png		\
+	22/gimp-tool-mypaint-brush.png		\
 	22/gimp-tool-n-point-deformation.png	\
 	22/gimp-tool-paintbrush.png		\
 	22/gimp-tool-path.png			\

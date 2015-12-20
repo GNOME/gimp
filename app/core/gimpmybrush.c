@@ -81,7 +81,7 @@ gimp_mybrush_class_init (GimpMybrushClass *klass)
 
   gimp_object_class->get_memsize    = gimp_mybrush_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-tool-mybrush";
+  viewable_class->default_icon_name = "gimp-tool-mypaint-brush";
   viewable_class->get_description   = gimp_mybrush_get_description;
 
   data_class->dirty                 = gimp_mybrush_dirty;
