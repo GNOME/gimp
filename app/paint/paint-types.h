@@ -36,7 +36,7 @@ typedef struct _GimpDodgeBurn        GimpDodgeBurn;
 typedef struct _GimpEraser           GimpEraser;
 typedef struct _GimpHeal             GimpHeal;
 typedef struct _GimpInk              GimpInk;
-typedef struct _GimpMybrush          GimpMybrush;
+typedef struct _GimpMybrushCore      GimpMybrushCore;
 typedef struct _GimpPaintbrush       GimpPaintbrush;
 typedef struct _GimpPencil           GimpPencil;
 typedef struct _GimpPerspectiveClone GimpPerspectiveClone;

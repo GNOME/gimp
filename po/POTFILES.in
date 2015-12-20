@@ -274,7 +274,7 @@ app/paint/gimperaser.c
 app/paint/gimpheal.c
 app/paint/gimpink.c
 app/paint/gimpinkoptions.c
-app/paint/gimpmybrush.c
+app/paint/gimpmybrushcore.c
 app/paint/gimpmybrushoptions.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore-stroke.c
