@@ -92,6 +92,7 @@ icons16_DATA = \
 	16/gimp-paths.png				\
 	16/gimp-plugin.png				\
 	16/gimp-portrait.png				\
+	16/gimp-prefs-folders-icon-themes.png		\
 	16/gimp-print-resolution.png			\
 	16/gimp-reset.png				\
 	16/gimp-reshow-filter.png			\
@@ -204,6 +205,7 @@ icons22_DATA = \
 	22/gimp-prefs-folders-environ.png	\
 	22/gimp-prefs-folders-fonts.png		\
 	22/gimp-prefs-folders-gradients.png	\
+	22/gimp-prefs-folders-icon-themes.png	\
 	22/gimp-prefs-folders-interp.png	\
 	22/gimp-prefs-folders-modules.png	\
 	22/gimp-prefs-folders-palettes.png	\
@@ -373,6 +375,7 @@ icons48_DATA = \
 	48/gimp-prefs-folders-environ.png	\
 	48/gimp-prefs-folders-fonts.png		\
 	48/gimp-prefs-folders-gradients.png	\
+	48/gimp-prefs-folders-icon-themes.png	\
 	48/gimp-prefs-folders-interp.png	\
 	48/gimp-prefs-folders-modules.png	\
 	48/gimp-prefs-folders-palettes.png	\
