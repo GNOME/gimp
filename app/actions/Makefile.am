@@ -117,6 +117,8 @@ libappactions_a_SOURCES = \
 	layers-actions.h		\
 	layers-commands.c		\
 	layers-commands.h		\
+	mypaint-brushes-actions.c	\
+	mypaint-brushes-actions.h	\
 	palette-editor-actions.c	\
 	palette-editor-actions.h	\
 	palette-editor-commands.c	\

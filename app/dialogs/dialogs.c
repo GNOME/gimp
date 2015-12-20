@@ -160,13 +160,13 @@ GimpContainer *global_recent_docks = NULL;
     FALSE                  /* image_window     */, \
     FALSE                  /* dockable         */}
 
-#define LISTGRID(id, name, blurb, icon_name, help_id, view_size) \
+#define LISTGRID(id, new_func, name, blurb, icon_name, help_id, view_size) \
   { "gimp-"#id"-list"             /* identifier       */,  \
     name                          /* name             */,  \
     blurb                         /* blurb            */,  \
     icon_name                     /* icon_name        */,  \
     help_id                       /* help_id          */,  \
-    dialogs_##id##_list_view_new  /* new_func         */,  \
+    dialogs_##new_func##_list_view_new /* new_func         */,  \
     NULL                          /* restore_func     */,  \
     view_size                     /* view_size        */,  \
     FALSE                         /* singleton        */,  \
@@ -181,7 +181,7 @@ GimpContainer *global_recent_docks = NULL;
     blurb                         /* blurb            */,  \
     icon_name                     /* icon_name        */,  \
     help_id                       /* help_id          */,  \
-    dialogs_##id##_grid_view_new  /* new_func         */,  \
+    dialogs_##new_func##_grid_view_new /* new_func         */,  \
     NULL                          /* restore_func     */,  \
     view_size                     /* view_size        */,  \
     FALSE                         /* singleton        */,  \
@@ -321,29 +321,43 @@ static const GimpDialogFactoryEntry entries[] =
             dialogs_cursor_view_new, 0, TRUE),
 
   /*  list & grid views  */
-  LISTGRID (image, N_("Images"), NULL, GIMP_STOCK_IMAGES,
+  LISTGRID (image, image,
+            N_("Images"), NULL, GIMP_STOCK_IMAGES,
             GIMP_HELP_IMAGE_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LISTGRID (brush, N_("Brushes"), NULL, GIMP_STOCK_BRUSH,
+  LISTGRID (brush, brush,
+            N_("Brushes"), NULL, GIMP_STOCK_BRUSH,
             GIMP_HELP_BRUSH_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LISTGRID (pattern, N_("Patterns"), NULL, GIMP_STOCK_PATTERN,
+  LISTGRID (mypaint-brush, mypaint_brush,
+            N_("MyPaint Brushes"), NULL, GIMP_STOCK_MYPAINT_BRUSH,
+            GIMP_HELP_MYPAINT_BRUSH_DIALOG, GIMP_VIEW_SIZE_LARGE),
+  LISTGRID (pattern, pattern,
+            N_("Patterns"), NULL, GIMP_STOCK_PATTERN,
             GIMP_HELP_PATTERN_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LISTGRID (gradient, N_("Gradients"), NULL, GIMP_STOCK_GRADIENT,
+  LISTGRID (gradient, gradient,
+            N_("Gradients"), NULL, GIMP_STOCK_GRADIENT,
             GIMP_HELP_GRADIENT_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LISTGRID (palette, N_("Palettes"), NULL, GIMP_STOCK_PALETTE,
+  LISTGRID (palette, palette,
+            N_("Palettes"), NULL, GIMP_STOCK_PALETTE,
             GIMP_HELP_PALETTE_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LISTGRID (font, N_("Fonts"), NULL, GIMP_STOCK_FONT,
+  LISTGRID (font, font,
+            N_("Fonts"), NULL, GIMP_STOCK_FONT,
             GIMP_HELP_FONT_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LISTGRID (buffer, N_("Buffers"), NULL, GIMP_STOCK_BUFFER,
+  LISTGRID (buffer, buffer,
+            N_("Buffers"), NULL, GIMP_STOCK_BUFFER,
             GIMP_HELP_BUFFER_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LISTGRID (document, N_("History"), N_("Document History"), "document-open-recent",
+  LISTGRID (document, document,
+            N_("History"), N_("Document History"), "document-open-recent",
             GIMP_HELP_DOCUMENT_DIALOG, GIMP_VIEW_SIZE_LARGE),
-  LISTGRID (template, N_("Templates"), N_("Image Templates"), GIMP_STOCK_TEMPLATE,
+  LISTGRID (template, template,
+            N_("Templates"), N_("Image Templates"), GIMP_STOCK_TEMPLATE,
             GIMP_HELP_TEMPLATE_DIALOG, GIMP_VIEW_SIZE_SMALL),
 
   /* Some things do not have grids, so just list */
-  LIST (dynamics, dynamics, N_("Paint Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
+  LIST (dynamics, dynamics,
+        N_("Paint Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
         GIMP_HELP_DYNAMICS_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LIST (tool-preset, tool_preset, N_("Tool Presets"), NULL, GIMP_STOCK_TOOL_PRESET,
+  LIST (tool-preset, tool_preset,
+        N_("Tool Presets"), NULL, GIMP_STOCK_TOOL_PRESET,
         GIMP_HELP_TOOL_PRESET_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
 
   /*  image related  */

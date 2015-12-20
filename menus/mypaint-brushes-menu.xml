@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="mypaint-brushes-popup">
+    <menuitem action="mypaint-brushes-copy-location" />
+    <menuitem action="mypaint-brushes-show-in-file-manager" />
+    <menuitem action="mypaint-brushes-delete" />
+    <separator />
+    <menuitem action="mypaint-brushes-refresh" />
+    <separator />
+  </popup>
+</ui>

@@ -356,6 +356,15 @@
 #define GIMP_HELP_DYNAMICS_DELETE                 "gimp-dynamics-delete"
 #define GIMP_HELP_DYNAMICS_REFRESH                "gimp-dynamics-refresh"
 
+#define GIMP_HELP_MYPAINT_BRUSH_DIALOG            "gimp-mypaint-brush-dialog"
+#define GIMP_HELP_MYPAINT_BRUSH_EDIT              "gimp-mypaint-brush-edit"
+#define GIMP_HELP_MYPAINT_BRUSH_NEW               "gimp-mypaint-brush-new"
+#define GIMP_HELP_MYPAINT_BRUSH_DUPLICATE         "gimp-mypaint-brush-duplicate"
+#define GIMP_HELP_MYPAINT_BRUSH_COPY_LOCATION     "gimp-mypaint-brush-copy-location"
+#define GIMP_HELP_MYPAINT_BRUSH_SHOW_IN_FILE_MANAGER "gimp-mypaint-brush-show-in-file-manager"
+#define GIMP_HELP_MYPAINT_BRUSH_DELETE            "gimp-mypaint-brush-delete"
+#define GIMP_HELP_MYPAINT_BRUSH_REFRESH           "gimp-mypaint-brush-refresh"
+
 #define GIMP_HELP_PATTERN_DIALOG                  "gimp-pattern-dialog"
 #define GIMP_HELP_PATTERN_EDIT                    "gimp-pattern-edit"
 #define GIMP_HELP_PATTERN_OPEN_AS_IMAGE           "gimp-pattern-open-as-image"

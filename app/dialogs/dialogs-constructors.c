@@ -387,6 +387,22 @@ dialogs_dynamics_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_mypaint_brush_list_view_new (GimpDialogFactory *factory,
+                                     GimpContext       *context,
+                                     GimpUIManager     *ui_manager,
+                                     gint               view_size)
+{
+  return gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                     context->gimp->mybrush_factory,
+                                     context,
+                                     view_size, 1,
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<MyPaintBrushes>",
+                                     "/mypaint-brushes-popup",
+                                     "mypaint-brushes");
+}
+
+GtkWidget *
 dialogs_pattern_list_view_new (GimpDialogFactory *factory,
                                GimpContext       *context,
                                GimpUIManager     *ui_manager,
@@ -524,6 +540,22 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
                                       TRUE,
                                       view_size, 1,
                                       gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
+dialogs_mypaint_brush_grid_view_new (GimpDialogFactory *factory,
+                                     GimpContext       *context,
+                                     GimpUIManager     *ui_manager,
+                                     gint               view_size)
+{
+  return gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                     context->gimp->mybrush_factory,
+                                     context,
+                                     view_size, 1,
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<MyPaintBrushes>",
+                                     "/mypaint-brushes-popup",
+                                     "mypaint-brushes");
 }
 
 GtkWidget *
