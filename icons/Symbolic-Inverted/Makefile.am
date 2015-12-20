@@ -20,7 +20,8 @@ include $(top_srcdir)/icons/Symbolic/icon-list.mk
 
 %.png:
 	mkdir -p `dirname $@`;
-	gegl -x "<gegl> \
+	$(GEGL) -x \
+	"<gegl> \
 	  <node operation='gegl:invert-linear'></node> \
 	  <node operation='gegl:load'> \
 	    <params> \

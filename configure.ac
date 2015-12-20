@@ -628,6 +628,11 @@ else
 fi
 AC_MSG_RESULT($have_glib_2_43)
 
+AC_PATH_PROG(GEGL, gegl, no)
+if test "x$GEGL" = xno; then
+  AC_MSG_ERROR([Could not find gegl in your PATH])
+fi
+
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 gimp_save_LIBS=$LIBS
