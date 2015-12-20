@@ -48,6 +48,7 @@ struct _GimpToolPresetEditorPrivate
   GtkWidget      *fg_bg_toggle;
   GtkWidget      *brush_toggle;
   GtkWidget      *dynamics_toggle;
+  GtkWidget      *mybrush_toggle;
   GtkWidget      *gradient_toggle;
   GtkWidget      *pattern_toggle;
   GtkWidget      *palette_toggle;
@@ -169,6 +170,12 @@ gimp_tool_preset_editor_constructed (GObject *object)
   button = editor->priv->dynamics_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-dynamics",
                                 _("Apply stored dynamics"));
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = editor->priv->mybrush_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-mypaint-brush",
+                                _("Apply stored MyPaint brush"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -311,6 +318,9 @@ gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
   gtk_widget_set_sensitive (priv->dynamics_toggle,
                             (serialize_props &
                              GIMP_CONTEXT_PROP_MASK_DYNAMICS) != 0);
+  gtk_widget_set_sensitive (priv->mybrush_toggle,
+                            (serialize_props &
+                             GIMP_CONTEXT_PROP_MASK_MYBRUSH) != 0);
   gtk_widget_set_sensitive (priv->gradient_toggle,
                             (serialize_props &
                              GIMP_CONTEXT_PROP_MASK_GRADIENT) != 0);
