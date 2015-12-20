@@ -44,6 +44,7 @@ struct _GimpSaveDialog
   GimpObject          *display_to_close;
 
   GtkWidget           *compat_toggle;
+  GtkWidget           *compat_info;
   gboolean             compat;
 };
 

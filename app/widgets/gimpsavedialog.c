@@ -268,6 +268,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   if (rle_version == zlib_version)
     {
       gtk_widget_set_sensitive (dialog->compat_toggle, FALSE);
+      gtk_widget_set_sensitive (dialog->compat_info, FALSE);
 
       tooltip = g_strdup_printf (_("The image uses features from %s and "
                                    "cannot be saved for older GIMP "
@@ -277,6 +278,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   else
     {
       gtk_widget_set_sensitive (dialog->compat_toggle, TRUE);
+      gtk_widget_set_sensitive (dialog->compat_info, TRUE);
 
       tooltip = g_strdup_printf (_("Disables compression to make the XCF "
                                    "file readable by %s and later."),
@@ -293,10 +295,11 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
         }
     }
 
-  gimp_help_set_help_data (dialog->compat_toggle, tooltip, NULL);
+  gtk_label_set_text (GTK_LABEL (dialog->compat_info), tooltip);
   g_free (tooltip);
 
   gtk_widget_show (dialog->compat_toggle);
+  gtk_widget_show (dialog->compat_info);
 
   /* We set the compatibility mode by default either if the image was
   * previously saved with the compatibility mode, or if it has never been
@@ -341,11 +344,29 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 static void
 gimp_save_dialog_add_compat_toggle (GimpSaveDialog *dialog)
 {
+  GtkWidget *compat_frame;
+
+  compat_frame = gtk_frame_new (NULL);
+
+  /* The checkbox. */
   dialog->compat_toggle = gtk_check_button_new_with_label (_("Save this XCF file with maximum compatibility"));
+  gtk_frame_set_label_widget (GTK_FRAME (compat_frame),
+                              dialog->compat_toggle);
+
+  /* Additional information explaining what this mode does. */
+  dialog->compat_info   = gtk_label_new ("");
+  gtk_label_set_justify (GTK_LABEL (dialog->compat_info),
+                         GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (dialog->compat_info), 0, 0);
+  gimp_label_set_attributes (GTK_LABEL (dialog->compat_info),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_container_add (GTK_CONTAINER (compat_frame), dialog->compat_info);
 
   gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog),
-                                     dialog->compat_toggle,
+                                     compat_frame,
                                      FALSE, FALSE, 0);
+  gtk_widget_show (compat_frame);
 
   g_signal_connect (dialog->compat_toggle, "toggled",
                     G_CALLBACK (gimp_save_dialog_compat_toggled),
