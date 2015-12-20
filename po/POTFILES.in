@@ -54,6 +54,7 @@ app/actions/image-commands.c
 app/actions/images-actions.c
 app/actions/layers-actions.c
 app/actions/layers-commands.c
+app/actions/mypaint-brushes-actions.c
 app/actions/palette-editor-actions.c
 app/actions/palette-editor-commands.c
 app/actions/palettes-actions.c
