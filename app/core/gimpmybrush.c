@@ -21,9 +21,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#ifdef HAVE_LIBMYPAINT
 #include <mypaint-brush.h>
-#endif
 
 #include "core-types.h"
 
@@ -243,8 +241,6 @@ gimp_mybrush_get_standard (GimpContext *context)
 static void
 gimp_mybrush_load_json (GimpMybrush *brush)
 {
-#ifdef HAVE_LIBMYPAINT
-
   GFile        *file          = gimp_data_get_file (GIMP_DATA (brush));
   MyPaintBrush *mypaint_brush = mypaint_brush_new ();
 
@@ -283,8 +279,6 @@ gimp_mybrush_load_json (GimpMybrush *brush)
                                   MYPAINT_BRUSH_SETTING_HARDNESS);
 
   mypaint_brush_unref (mypaint_brush);
-
-#endif
 
   brush->priv->json_loaded = TRUE;
 }

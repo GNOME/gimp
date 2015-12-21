@@ -15,13 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_LIBMYPAINT
-
 #ifndef  __GIMP_MYBRUSH_SURFACE_H__
 #define  __GIMP_MYBRUSH_SURFACE_H__
 
-#include "paint-types.h"
-#include "core/gimpobject.h"
 
 typedef struct _GimpMybrushSurface GimpMybrushSurface;
 
@@ -31,5 +27,3 @@ gimp_mypaint_surface_new (GeglBuffer        *buffer,
 
 
 #endif  /*  __GIMP_MYBRUSH_SURFACE_H__  */
-
-#endif

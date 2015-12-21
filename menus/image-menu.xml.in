@@ -592,9 +592,7 @@
         <menuitem action="tools-eraser" />
         <menuitem action="tools-airbrush" />
         <menuitem action="tools-ink" />
-        <!-- Enable when the tool leaves the playground
         <menuitem action="tools-mybrush" />
-        -->
         <menuitem action="tools-clone" />
         <menuitem action="tools-heal" />
         <menuitem action="tools-perspective-clone" />

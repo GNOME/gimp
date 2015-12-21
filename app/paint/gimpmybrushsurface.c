@@ -15,15 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "config.h"
 
-#ifdef HAVE_LIBMYPAINT
-
 #include <gegl.h>
-#include "gimpmybrushsurface.h"
+
 #include <mypaint-surface.h>
-#include <math.h>
+
+#include "paint-types.h"
+
+#include "libgimpmath/gimpmath.h"
+
+#include "gimpmybrushsurface.h"
+
 
 struct _GimpMybrushSurface
 {
@@ -455,5 +458,3 @@ gimp_mypaint_surface_new (GeglBuffer        *buffer,
 
   return surface;
 }
-
-#endif

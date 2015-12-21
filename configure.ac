@@ -1475,25 +1475,12 @@ AC_SUBST(FILE_EXR)
 
 AM_CONDITIONAL(HAVE_OPENEXR, test "x$have_openexr" = xyes)
 
+
 ######################
 # Check for libmypaint
 ######################
 
-AC_ARG_WITH(libmypaint, [  --without-libmypaint    build without libmypaint support])
-
-have_libmypaint=no
-if test "x$with_libmypaint" != xno; then
-  PKG_CHECK_MODULES(LIBMYPAINTGEGL,
-    libmypaint-gegl >= libmypaint_required_version,
-    AC_DEFINE(HAVE_LIBMYPAINT, 1, [Define to 1 if libmypaint-gegl is available])
-    have_libmypaint=yes,
-    [have_libmypaint="no (libmypaint-gegl not found)"])
-fi
-
-AC_SUBST(LIBMYPAINTGEGL_CFLAGS)
-AC_SUBST(LIBMYPAINTGEGL_LIBS)
-
-AM_CONDITIONAL(HAVE_LIBMYPAINT, test "x$have_libmypaint" = xyes)
+PKG_CHECK_MODULES(LIBMYPAINTGEGL, libmypaint-gegl >= libmypaint_required_version)
 
 
 ##################
@@ -2448,7 +2435,6 @@ Extra Binaries:
 
 Optional Features:
   Language selection:  $have_iso_codes
-  MyPaint brushes:     $have_libmypaint
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa

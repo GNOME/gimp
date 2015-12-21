@@ -85,7 +85,6 @@ enum
 
   PROP_PLAYGROUND_NPD_TOOL,
   PROP_PLAYGROUND_HANDLE_TRANSFORM_TOOL,
-  PROP_PLAYGROUND_MYBRUSH_TOOL,
   PROP_PLAYGROUND_SEAMLESS_CLONE_TOOL,
 
   PROP_HIDE_DOCKS,
@@ -301,13 +300,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     PROP_PLAYGROUND_HANDLE_TRANSFORM_TOOL,
                                     "playground-handle-transform-tool",
                                     PLAYGROUND_HANDLE_TRANSFORM_TOOL_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
-                                    PROP_PLAYGROUND_MYBRUSH_TOOL,
-                                    "playground-mybrush-tool",
-                                    PLAYGROUND_MYBRUSH_TOOL_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_RESTART);
@@ -539,9 +531,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_PLAYGROUND_HANDLE_TRANSFORM_TOOL:
       gui_config->playground_handle_transform_tool = g_value_get_boolean (value);
       break;
-    case PROP_PLAYGROUND_MYBRUSH_TOOL:
-      gui_config->playground_mybrush_tool = g_value_get_boolean (value);
-      break;
     case PROP_PLAYGROUND_SEAMLESS_CLONE_TOOL:
       gui_config->playground_seamless_clone_tool = g_value_get_boolean (value);
       break;
@@ -691,9 +680,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_PLAYGROUND_HANDLE_TRANSFORM_TOOL:
       g_value_set_boolean (value, gui_config->playground_handle_transform_tool);
-      break;
-    case PROP_PLAYGROUND_MYBRUSH_TOOL:
-      g_value_set_boolean (value, gui_config->playground_mybrush_tool);
       break;
     case PROP_PLAYGROUND_SEAMLESS_CLONE_TOOL:
       g_value_set_boolean (value, gui_config->playground_seamless_clone_tool);

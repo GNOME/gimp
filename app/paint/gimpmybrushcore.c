@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#ifdef HAVE_LIBMYPAINT
-
 #include <string.h>
 
 #include <cairo.h>
@@ -37,8 +35,6 @@
 #include "paint-types.h"
 
 #include "gegl/gimp-gegl-utils.h"
-
-#include "config/gimpguiconfig.h" /* playground */
 
 #include "core/gimp.h"
 #include "core/gimp-palettes.h"
@@ -95,13 +91,12 @@ void
 gimp_mybrush_core_register (Gimp                      *gimp,
                             GimpPaintRegisterCallback  callback)
 {
-  if (GIMP_GUI_CONFIG (gimp->config)->playground_mybrush_tool)
-    (* callback) (gimp,
-                  GIMP_TYPE_MYBRUSH_CORE,
-                  GIMP_TYPE_MYBRUSH_OPTIONS,
-                  "gimp-mybrush",
-                  _("Mybrush"),
-                  "gimp-tool-mypaint-brush");
+  (* callback) (gimp,
+                GIMP_TYPE_MYBRUSH_CORE,
+                GIMP_TYPE_MYBRUSH_OPTIONS,
+                "gimp-mybrush",
+                _("Mybrush"),
+                "gimp-tool-mypaint-brush");
 }
 
 static void
@@ -305,5 +300,3 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
       gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
     }
 }
-
-#endif
