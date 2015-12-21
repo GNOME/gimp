@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_LIBMYPAINT
-
 #ifndef  __GIMP_MYBRUSH_OPTIONS_GUI_H__
 #define  __GIMP_MYBRUSH_OPTIONS_GUI_H__
 
@@ -25,5 +23,3 @@ GtkWidget * gimp_mybrush_options_gui (GimpToolOptions *tool_options);
 
 
 #endif  /*  __GIMP_MYBRUSH_OPTIONS_GUI_H__  */
-
-#endif

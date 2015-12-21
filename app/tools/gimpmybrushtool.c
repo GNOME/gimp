@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#ifdef HAVE_LIBMYPAINT
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -72,7 +70,7 @@ gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
                   GIMP_CONTEXT_PROP_MASK_BACKGROUND |
                   GIMP_CONTEXT_PROP_MASK_OPACITY    |
                   GIMP_CONTEXT_PROP_MASK_PAINT_MODE |
-                  GIMP_CONTEXT_PROP_MYBRUSH,
+                  GIMP_CONTEXT_PROP_MASK_MYBRUSH,
                   "gimp-mybrush-tool",
                   _("MyPaint Brush"),
                   _("MyPaint Brush Tool: Use MyPaint brushes in GIMP"),
@@ -133,5 +131,3 @@ gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
 
   return NULL;
 }
-
-#endif

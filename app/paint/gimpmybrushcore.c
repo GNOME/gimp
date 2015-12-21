@@ -43,9 +43,8 @@
 #include "core/gimp.h"
 #include "core/gimp-palettes.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimptempbuf.h"
+#include "core/gimperror.h"
+#include "core/gimpmybrush.h"
 
 #include "gimpmybrushcore.h"
 #include "gimpmybrushsurface.h"
@@ -56,6 +55,7 @@
 
 struct _GimpMybrushCorePrivate
 {
+  GimpMybrush             *mybrush;
 #if 0
   MyPaintGeglTiledSurface *surface;
 #else
@@ -68,17 +68,22 @@ struct _GimpMybrushCorePrivate
 
 /*  local function prototypes  */
 
-static void   gimp_mybrush_core_paint  (GimpPaintCore    *paint_core,
-                                        GimpDrawable     *drawable,
-                                        GimpPaintOptions *paint_options,
-                                        const GimpCoords *coords,
-                                        GimpPaintState    paint_state,
-                                        guint32           time);
-static void   gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
-                                        GimpDrawable     *drawable,
-                                        GimpPaintOptions *paint_options,
-                                        const GimpCoords *coords,
-                                        guint32           time);
+static gboolean  gimp_mybrush_core_start  (GimpPaintCore     *paint_core,
+                                           GimpDrawable      *drawable,
+                                           GimpPaintOptions  *paint_options,
+                                           const GimpCoords  *coords,
+                                           GError           **error);
+static void      gimp_mybrush_core_paint  (GimpPaintCore     *paint_core,
+                                           GimpDrawable      *drawable,
+                                           GimpPaintOptions  *paint_options,
+                                           const GimpCoords  *coords,
+                                           GimpPaintState     paint_state,
+                                           guint32            time);
+static void      gimp_mybrush_core_motion (GimpPaintCore     *paint_core,
+                                           GimpDrawable      *drawable,
+                                           GimpPaintOptions  *paint_options,
+                                           const GimpCoords  *coords,
+                                           guint32            time);
 
 
 G_DEFINE_TYPE (GimpMybrushCore, gimp_mybrush_core, GIMP_TYPE_PAINT_CORE)
@@ -104,6 +109,7 @@ gimp_mybrush_core_class_init (GimpMybrushCoreClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
+  paint_core_class->start = gimp_mybrush_core_start;
   paint_core_class->paint = gimp_mybrush_core_paint;
 
   g_type_class_add_private (klass, sizeof (GimpMybrushCorePrivate));
@@ -115,6 +121,28 @@ gimp_mybrush_core_init (GimpMybrushCore *mybrush)
   mybrush->private = G_TYPE_INSTANCE_GET_PRIVATE (mybrush,
                                                   GIMP_TYPE_MYBRUSH_CORE,
                                                   GimpMybrushCorePrivate);
+}
+
+static gboolean
+gimp_mybrush_core_start (GimpPaintCore     *paint_core,
+                         GimpDrawable      *drawable,
+                         GimpPaintOptions  *paint_options,
+                         const GimpCoords  *coords,
+                         GError           **error)
+{
+  GimpMybrushCore *core    = GIMP_MYBRUSH_CORE (paint_core);
+  GimpContext     *context = GIMP_CONTEXT (paint_options);
+
+  core->private->mybrush = gimp_context_get_mybrush (context);
+
+  if (! core->private->mybrush)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("No MyPaint brushes available for use with this tool."));
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static void
@@ -162,7 +190,7 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
 
       mybrush->private->brush = mypaint_brush_new ();
       mypaint_brush_from_defaults (mybrush->private->brush);
-      brush_data = gimp_mybrush_options_get_brush_data (options);
+      brush_data = gimp_mybrush_get_brush_json (mybrush->private->mybrush);
       if (brush_data)
         mypaint_brush_from_string (mybrush->private->brush, brush_data);
 

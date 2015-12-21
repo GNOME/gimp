@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_LIBMYPAINT
-
 #ifndef  __GIMP_MYBRUSH_TOOL_H__
 #define  __GIMP_MYBRUSH_TOOL_H__
 
@@ -55,5 +53,3 @@ GType   gimp_mybrush_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_MYBRUSH_TOOL_H__  */
-
-#endif

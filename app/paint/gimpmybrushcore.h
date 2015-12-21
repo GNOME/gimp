@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_LIBMYPAINT
-
 #ifndef  __GIMP_MYBRUSH_CORE_H__
 #define  __GIMP_MYBRUSH_CORE_H__
 
@@ -27,8 +25,8 @@
 #define GIMP_TYPE_MYBRUSH_CORE            (gimp_mybrush_core_get_type ())
 #define GIMP_MYBRUSH_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MYBRUSH_CORE, GimpMybrushCore))
 #define GIMP_MYBRUSH_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MYBRUSH_CORE, GimpMybrushCoreClass))
-#define GIMP_IS_MYBRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MYBRUSH_CORE))
-#define GIMP_IS_MYBRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MYBRUSH_CORE))
+#define GIMP_IS_MYBRUSH_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MYBRUSH_CORE))
+#define GIMP_IS_MYBRUSH_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MYBRUSH_CORE))
 #define GIMP_MYBRUSH_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MYBRUSH_CORE, GimpMybrushCoreClass))
 
 
@@ -55,5 +53,3 @@ GType   gimp_mybrush_core_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_MYBRUSH_CORE_H__  */
-
-#endif

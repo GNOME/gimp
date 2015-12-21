@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_LIBMYPAINT
-
 #ifndef  __GIMP_MYBRUSH_OPTIONS_H__
 #define  __GIMP_MYBRUSH_OPTIONS_H__
 
@@ -41,7 +39,6 @@ struct _GimpMybrushOptions
   gdouble           radius;
   gdouble           opaque;
   gdouble           hardness;
-  gchar            *mybrush;
 };
 
 struct _GimpMybrushOptionsClass
@@ -52,9 +49,5 @@ struct _GimpMybrushOptionsClass
 
 GType   gimp_mybrush_options_get_type (void) G_GNUC_CONST;
 
-const gchar *
-gimp_mybrush_options_get_brush_data (GimpMybrushOptions *options);
 
 #endif  /*  __GIMP_MYBRUSH_OPTIONS_H__  */
-
-#endif
