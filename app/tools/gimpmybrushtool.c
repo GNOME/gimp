@@ -65,7 +65,7 @@ gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_CONTEXT_PROP_MASK_OPACITY    |
                 GIMP_CONTEXT_PROP_MASK_PAINT_MODE |
                 GIMP_CONTEXT_PROP_MASK_MYBRUSH,
-                "gimp-mybrush-tool",
+                "gimp-mypaint-brush-tool",
                 _("MyPaint Brush"),
                 _("MyPaint Brush Tool: Use MyPaint brushes in GIMP"),
                 N_("M_yPaint Brush"), "Y",
@@ -92,7 +92,7 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_INK);
   gimp_tool_control_set_action_size (tool->control,
-                                     "tools/tools-mybrush-radius-set");
+                                     "tools/tools-mypaint-brush-radius-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);

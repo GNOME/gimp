@@ -592,7 +592,7 @@
         <menuitem action="tools-eraser" />
         <menuitem action="tools-airbrush" />
         <menuitem action="tools-ink" />
-        <menuitem action="tools-mybrush" />
+        <menuitem action="tools-mypaint-brush" />
         <menuitem action="tools-clone" />
         <menuitem action="tools-heal" />
         <menuitem action="tools-perspective-clone" />
