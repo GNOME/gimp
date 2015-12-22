@@ -30,8 +30,7 @@ include $(top_srcdir)/icons/Symbolic/icon-list.mk
 	  </node> \
 	</gegl>" -o $@
 
-EXTRA_DIST = \
-	$(icons_DATA)		\
+all_icons = \
 	$(icons12_DATA)		\
 	$(icons16_DATA)		\
 	$(icons18_DATA)		\
@@ -41,3 +40,10 @@ EXTRA_DIST = \
 	$(icons32_DATA)		\
 	$(icons48_DATA)		\
 	$(icons64_DATA)
+
+EXTRA_DIST = \
+	$(icons_DATA)		\
+	$(all_icons)
+
+DISTCLEANFILES = \
+	$(all_icons)
