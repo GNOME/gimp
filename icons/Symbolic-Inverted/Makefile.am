@@ -18,7 +18,7 @@ icons_DATA = \
 
 include $(top_srcdir)/icons/Symbolic/icon-list.mk
 
-%.png:
+%.png: $(top_srcdir)/icons/Symbolic/$@
 	mkdir -p `dirname $@`;
 	$(GEGL) -x \
 	"<gegl> \
