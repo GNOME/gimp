@@ -25,7 +25,7 @@
     <linearGradient
        id="linearGradient19282"
        osb:paint="solid"
-       gradientTransform="matrix(1.2509561,0,0,1.0722478,649.98056,1839.3669)">
+       gradientTransform="matrix(1.3291565,0,0,1.1392767,352.79581,1871.502)">
       <stop
          style="stop-color:#666666;stop-opacity:1;"
          offset="0"
@@ -39,9 +39,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="6.4547496"
-     inkscape:cy="11.16702"
+     inkscape:zoom="8"
+     inkscape:cx="17.544804"
+     inkscape:cy="-19.343345"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -74,7 +74,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
             <dc:title>Barbara Muraus</dc:title>
@@ -88,22 +88,11 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1036.3622)">
-    <g
-       transform="matrix(1.0625125,0,0,1.0625125,-337.81666,-82.848296)"
-       id="tool-tweak-16px">
-      <rect
-         y="1053.3621"
-         x="317"
-         height="16"
-         width="16"
-         id="rect19598"
-         style="color:#000000;fill:none" />
-      <path
-         sodipodi:nodetypes="ccccccccscc"
-         style="color:#000000;fill:url(#linearGradient19282);stroke-width:0.89168727"
-         d="m 327.38013,1054.488 c -0.78177,-0.032 -1.50243,0.086 -1.95599,0.3667 -3.91317,2.3901 -1.68815,8.2242 -7.43561,7.1412 l -0.0472,6.4249 15.01147,0 0.0472,-6.4249 c -3.91339,0.8653 -5.55703,0 -6.32487,-1.6942 -0.68077,-1.5022 -0.13789,-2.8371 0.7733,-2.998 1.80117,-0.3195 1.61395,0.8653 2.68384,1.1624 1.01703,0.282 1.32669,-0.6638 0.61408,-2.1424 -0.59821,-1.2406 -2.06322,-1.7767 -3.36622,-1.8357 z"
-         id="path19600"
-         inkscape:connector-curvature="0" />
-    </g>
+    <path
+       inkscape:connector-curvature="0"
+       id="path19600"
+       d="m 10.02882,1037.5584 c -0.83064,-0.034 -1.5963503,0.091 -2.0782634,0.3896 -4.1577921,2.5395 -1.7936805,8.7383 -7.90042862,7.5876 l -0.05015058837,6.8266 15.949874608375,0 0.05015,-6.8266 c -4.158025,0.9194 -5.904413,0 -6.7202529,-1.8001 -0.7233267,-1.5961 -0.1465099,-3.0144 0.8216409,-3.1854 1.913766,-0.3395 1.714842,0.9194 2.851614,1.2351 1.080607,0.2996 1.409624,-0.7053 0.652467,-2.2764 -0.635605,-1.3181 -2.192197,-1.8877 -3.576651,-1.9504 z"
+       style="color:#000000;fill:#505050;stroke-width:1.99999994;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;filter-blend-mode:normal;filter-gaussianBlur-deviation:0;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       sodipodi:nodetypes="ccccccccscc" />
   </g>
 </svg>
