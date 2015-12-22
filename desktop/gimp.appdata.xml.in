@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application>
-  <id type="desktop">gimp.desktop</id>
+<component type="desktop">
+  <id>gimp.desktop</id>
+
   <!--
-      The tag 'licence' means the licence of this file, not the whole
+      The tag 'metadata_license' means the licence of this file, not the whole
       product; see http://people.freedesktop.org/~hughsient/appdata/
       as of 20.09.2013. The CC0 licence is GPL compatible, see
       http://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses
       as of 20.09.2013
   -->
-  <licence>CC0</licence>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+ AND LGPL-3.0+</project_license>
+  <_name>GNU Image Manipulation Program</_name>
+  <_summary>Create images and edit photographs</_summary>
   <description>
     <_p>
       GIMP is an acronym for GNU Image Manipulation Program. It is a
@@ -30,9 +34,26 @@
       Microsoft Windows and OS X.
     </_p>
   </description>
+  <url type="bugtracker">https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=GIMP</url>
+  <url type="donation">http://www.gimp.org/donating/</url>
+  <url type="help">http://www.gimp.org/docs/</url>
   <url type="homepage">http://www.gimp.org/</url>
   <screenshots>
-    <screenshot type="default">http://www.gimp.org/screenshots/linux_mixer.jpg</screenshot>
+    <screenshot type="default">
+      <image>http://www.gimp.org/screenshots/linux_mixer.jpg</image>
+      <_caption>Screenshot showing channel mixing and layer editor</_caption>
+    </screenshot>
   </screenshots>
-  <updatecontact>gimp-developer-list_at_gnome.org</updatecontact>
-</application>
+  <update_contact>gimp-developer-list_at_gnome.org</update_contact>
+  <keywords>
+    <keyword>GIMP</keyword>
+    <keyword>Photoshop</keyword>
+  </keywords>
+  <kudos>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>HighContrast</kudo>
+    <kudo>ModernToolkit</kudo>
+    <kudo>UserDocs</kudo>
+  </kudos>
+  <project_group>GNOME</project_group>
+</component>
