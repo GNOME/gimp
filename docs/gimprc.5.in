@@ -60,7 +60,7 @@ Sets how many processors GIMP should try to use simultaneously.  This is an
 integer value.
 
 .TP
-(tile-cache-size 6119260k)
+(tile-cache-size 6119176k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -142,6 +142,17 @@ search.
 This is a colon-separated list of folders to search.
 
 .TP
+(mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:~/.mypaint/brushes")
+
+Sets the brush search path.  This is a colon-separated list of folders to
+search.
+
+.TP
+(mypaint-brush-path-writable "~/.mypaint/brushes")
+
+This is a colon-separated list of folders to search.
+
+.TP
 (pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
 
 Sets the pattern search path.  This is a colon-separated list of folders to
@@ -192,17 +203,6 @@ Where to look for fonts in addition to the system-wide installed fonts.  This
 is a colon-separated list of folders to search.
 
 .TP
-(mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:~/.mypaint/brushes")
-
-Sets the brush search path.  This is a colon-separated list of folders to
-search.
-
-.TP
-(mypaint-brush-path-writable "~/.mypaint/brushes")
-
-This is a colon-separated list of folders to search.
-
-.TP
 (default-brush "Round Fuzzy")
 
 Specify a default brush.  The brush is searched for in the specified brush
@@ -213,6 +213,11 @@ path.  This is a string value.
 
 Specify a default dynamics.  The dynamics is searched for in the specified
 dynamics path.  This is a string value.
+
+.TP
+(default-mypaint-brush "Fixme")
+
+Specify a default MyPaint brush.  This is a string value.
 
 .TP
 (default-pattern "Pine")
@@ -239,11 +244,6 @@ specified tool prests path.  This is a string value.
 (default-font "Sans-serif")
 
 Specify a default font.  This is a string value.
-
-.TP
-(default-mypaint-brush "Fixme")
-
-Specify a default MyPaint brush.  This is a string value.
 
 .TP
 (global-brush yes)
@@ -318,7 +318,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1529815k)
+(undo-size 1529794k)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -855,6 +855,17 @@ search.
 The name of the theme to use.  This is a string value.
 
 .TP
+(icon-theme-path "${gimp_dir}/icons:${gimp_data_dir}/icons")
+
+Sets the icon theme search path.  This is a colon-separated list of folders to
+search.
+
+.TP
+(icon-theme "Default")
+
+The name of the icon theme to use.  This is a string value.
+
+.TP
 (use-help yes)
 
 When enabled, pressing F1 will open the help browser.  Possible values are yes
@@ -926,11 +937,6 @@ Enable the N-Point Deformation tool.  Possible values are yes and no.
 (playground-handle-transform-tool no)
 
 Enable the Handle Transform tool.  Possible values are yes and no.
-
-.TP
-(playground-mybrush-tool no)
-
-Enable the MyPaint Brush tool.  Possible values are yes and no.
 
 .TP
 (playground-seamless-clone-tool no)
