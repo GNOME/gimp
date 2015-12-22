@@ -166,6 +166,7 @@ icons16_DATA = \
 	16/gimp-tool-smudge.png				\
 	16/gimp-tool-text.png				\
 	16/gimp-tool-threshold.png			\
+	16/gimp-tool-warp.png				\
 	16/gimp-tool-zoom.png				\
 	16/gimp-tools.png				\
 	16/gimp-transparency.png			\
@@ -275,6 +276,7 @@ icons22_DATA = \
 	22/gimp-tool-smudge.png			\
 	22/gimp-tool-text.png			\
 	22/gimp-tool-threshold.png		\
+	22/gimp-tool-warp.png			\
 	22/gimp-tool-zoom.png			\
 	22/gimp-wilber.png
 

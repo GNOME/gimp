@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg30001"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-tool-warp.svg"
+   inkscape:export-filename="/home/alex/soft/graphics/gimp/gimp-2015-12-21/icons/Symbolic/16/gimp-tool-warp.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs30003">
+    <linearGradient
+       id="linearGradient19282"
+       osb:paint="solid"
+       gradientTransform="matrix(1.2509561,0,0,1.0722478,649.98056,1839.3669)">
+      <stop
+         style="stop-color:#666666;stop-opacity:1;"
+         offset="0"
+         id="stop19284" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="6.4547496"
+     inkscape:cy="11.16702"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     inkscape:snap-page="true"
+     showborder="false"
+     inkscape:window-width="960"
+     inkscape:window-height="1136"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata30006">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Barbara Muraus</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1036.3622)">
+    <g
+       transform="matrix(1.0625125,0,0,1.0625125,-337.81666,-82.848296)"
+       id="tool-tweak-16px">
+      <rect
+         y="1053.3621"
+         x="317"
+         height="16"
+         width="16"
+         id="rect19598"
+         style="color:#000000;fill:none" />
+      <path
+         sodipodi:nodetypes="ccccccccscc"
+         style="color:#000000;fill:url(#linearGradient19282);stroke-width:0.89168727"
+         d="m 327.38013,1054.488 c -0.78177,-0.032 -1.50243,0.086 -1.95599,0.3667 -3.91317,2.3901 -1.68815,8.2242 -7.43561,7.1412 l -0.0472,6.4249 15.01147,0 0.0472,-6.4249 c -3.91339,0.8653 -5.55703,0 -6.32487,-1.6942 -0.68077,-1.5022 -0.13789,-2.8371 0.7733,-2.998 1.80117,-0.3195 1.61395,0.8653 2.68384,1.1624 1.01703,0.282 1.32669,-0.6638 0.61408,-2.1424 -0.59821,-1.2406 -2.06322,-1.7767 -3.36622,-1.8357 z"
+         id="path19600"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>
