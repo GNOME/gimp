@@ -166,6 +166,7 @@ typedef struct _GimpCircle                   GimpCircle;
 typedef struct _GimpColorBar                 GimpColorBar;
 typedef struct _GimpColorDisplayEditor       GimpColorDisplayEditor;
 typedef struct _GimpColorFrame               GimpColorFrame;
+typedef struct _GimpColorHistory             GimpColorHistory;
 typedef struct _GimpColorPanel               GimpColorPanel;
 typedef struct _GimpComboTagEntry            GimpComboTagEntry;
 typedef struct _GimpControllerEditor         GimpControllerEditor;

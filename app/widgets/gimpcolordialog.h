@@ -44,7 +44,6 @@ struct _GimpColorDialog
   gboolean             wants_updates;
 
   GtkWidget           *selection;
-  GtkWidget           *history[GIMP_COLOR_DIALOG_HISTORY_SIZE];
 };
 
 struct _GimpColorDialogClass
