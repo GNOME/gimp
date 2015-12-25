@@ -1092,7 +1092,10 @@ gimp_image_convert_type (GimpImage               *image,
       break;
     }
 
-  /* TODO: attach or remove the ICC profile */
+  /*  When converting to/from GRAY, remove the profile.
+   *  gimp_layer_convert_type() has converted the layers to
+   *  new_type's builtin profile.
+   */
   switch (new_type)
     {
     case GIMP_RGB:
@@ -1100,10 +1103,9 @@ gimp_image_convert_type (GimpImage               *image,
       if (old_type == GIMP_GRAY)
         gimp_image_set_color_profile (image, NULL, NULL);
       break;
+
     case GIMP_GRAY:
       gimp_image_set_color_profile (image, NULL, NULL);
-      break;
-    default:
       break;
     }
 
