@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-02 12:21+0400\n"
-"PO-Revision-Date: 2015-12-03 18:07+0400\n"
+"POT-Creation-Date: 2015-12-25 16:34+0400\n"
+"PO-Revision-Date: 2015-12-25 18:39+0400\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "Language: ar\n"
@@ -19,16 +19,25 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Virtaal 0.7.1\n"
 
-#: ../desktop/gimp.appdata.xml.in.h:1
+#: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
+#: ../app/about.h:26
+msgid "GNU Image Manipulation Program"
+msgstr "برنامج جنو لمعالجة الصور"
+
+#: ../desktop/gimp.appdata.xml.in.h:2 ../desktop/gimp.desktop.in.in.h:3
+msgid "Create images and edit photographs"
+msgstr "أنشئ صورا وحرّر لقطات"
+
+#: ../desktop/gimp.appdata.xml.in.h:3
 msgid ""
 "GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
 "distributed program for such tasks as photo retouching, image composition "
 "and image authoring."
 msgstr ""
-"جمب هو اختصار برنامج جنو لمعالجة الصور. هو برنامج حر لأمور مثل تعديل الصور و "
-"تركيبها و تحسينها."
+"جمب هو اختصار برنامج جنو لمعالجة الصور. هو برنامج حر لأمور مثل تعديل الصور "
+"و تركيبها و تحسينها."
 
-#: ../desktop/gimp.appdata.xml.in.h:2
+#: ../desktop/gimp.appdata.xml.in.h:4
 msgid ""
 "It has many capabilities. It can be used as a simple paint program, an "
 "expert quality photo retouching program, an online batch processing system, "
@@ -37,7 +46,7 @@ msgstr ""
 "له الكثير من الإمكانيات. يمكن استخدامه كبرنامج رسم بسيط، أو كبرنامج احترافي "
 "لتعديل الصور، أو كنظام لمعالجة الصور في دفعات، أو كمحول بين أنساق الصور، إلخ."
 
-#: ../desktop/gimp.appdata.xml.in.h:3
+#: ../desktop/gimp.appdata.xml.in.h:5
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -49,17 +58,13 @@ msgstr ""
 "المتقدمة تتيح كتابة برامج تفسيرية لعمل كل شيء من أبسط المهام إلى أعقد عمليات "
 "معالجة الصور. يتوفر جمب على لينكس و ويندوز و ماك."
 
-#: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
-msgid "GNU Image Manipulation Program"
-msgstr "برنامج جنو لمعالجة الصور"
+#: ../desktop/gimp.appdata.xml.in.h:6
+msgid "Screenshot showing channel mixing and layer editor"
+msgstr "لقطة شاشة تظهر خلط القنوات و محرر الطبقات"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "محرر صور"
-
-#: ../desktop/gimp.desktop.in.in.h:3
-msgid "Create images and edit photographs"
-msgstr "أنشئ صورا وحرّر لقطات"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -264,215 +269,219 @@ msgstr "يستخدم %s الإصدارة %s (مصرّفة مقابل الإصد�
 msgid "%s version %s"
 msgstr "‏%s إصدارة %s"
 
-#: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:397
+#: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:411
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "محرر الفُرَش"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:112 ../app/core/gimp.c:1049
-#: ../app/dialogs/dialogs.c:326 ../app/dialogs/preferences-dialog.c:2690
+#: ../app/actions/actions.c:113 ../app/core/gimp.c:1081
+#: ../app/dialogs/dialogs.c:328 ../app/dialogs/preferences-dialog.c:2722
 msgid "Brushes"
 msgstr "الفُرَش"
 
-#: ../app/actions/actions.c:115 ../app/dialogs/dialogs.c:336
+#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:346
 msgid "Buffers"
 msgstr "البراحات"
 
-#: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:355
+#: ../app/actions/actions.c:119 ../app/dialogs/dialogs.c:369
 #: ../app/widgets/gimppickablepopup.c:249
 msgid "Channels"
 msgstr "القنوات"
 
-#: ../app/actions/actions.c:121 ../app/dialogs/convert-type-dialog.c:177
-#: ../app/dialogs/dialogs.c:363
+#: ../app/actions/actions.c:122 ../app/dialogs/convert-type-dialog.c:177
+#: ../app/dialogs/dialogs.c:377
 msgid "Colormap"
 msgstr "مخطط الألوان"
 
-#: ../app/actions/actions.c:124
+#: ../app/actions/actions.c:125
 msgid "Context"
 msgstr "السياق"
 
-#: ../app/actions/actions.c:127 ../app/dialogs/dialogs.c:319
+#: ../app/actions/actions.c:128 ../app/dialogs/dialogs.c:319
 msgid "Pointer Information"
 msgstr "معلومات المؤشر"
 
-#: ../app/actions/actions.c:130
+#: ../app/actions/actions.c:131
 msgid "Debug"
 msgstr "التنقيح"
 
-#: ../app/actions/actions.c:133
+#: ../app/actions/actions.c:134
 msgid "Dialogs"
 msgstr "الحوارات"
 
-#: ../app/actions/actions.c:136
+#: ../app/actions/actions.c:137
 msgid "Dock"
 msgstr "رصيف"
 
-#: ../app/actions/actions.c:139
+#: ../app/actions/actions.c:140
 msgid "Dockable"
 msgstr "قابل للترصيف"
 
 #. Document History
-#: ../app/actions/actions.c:142 ../app/dialogs/dialogs.c:338
-#: ../app/dialogs/preferences-dialog.c:1438
+#: ../app/actions/actions.c:143 ../app/dialogs/dialogs.c:349
+#: ../app/dialogs/preferences-dialog.c:1421
 msgid "Document History"
 msgstr "تاريخ المستند"
 
-#: ../app/actions/actions.c:145
+#: ../app/actions/actions.c:146
 msgid "Drawable"
 msgstr "قابل للرسم"
 
-#. Some things do not have grids, so just list
-#: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:344
+#: ../app/actions/actions.c:149 ../app/dialogs/dialogs.c:357
 msgid "Paint Dynamics"
 msgstr "حركيات الرسم"
 
-#: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:401
+#: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:415
 #: ../app/widgets/gimpdynamicseditor.c:93
 msgid "Paint Dynamics Editor"
 msgstr "محرر حركيات الرسم"
 
-#: ../app/actions/actions.c:154
+#: ../app/actions/actions.c:155
 msgid "Edit"
 msgstr "حرّر"
 
-#: ../app/actions/actions.c:157 ../app/dialogs/dialogs.c:315
+#: ../app/actions/actions.c:158 ../app/dialogs/dialogs.c:315
 msgid "Error Console"
 msgstr "مِعراض الأخطاء"
 
-#: ../app/actions/actions.c:160
+#: ../app/actions/actions.c:161
 msgid "File"
 msgstr "ملف"
 
-#: ../app/actions/actions.c:163
+#: ../app/actions/actions.c:164
 msgid "Filters"
 msgstr "مرشّحات"
 
-#: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:334
-#: ../app/dialogs/preferences-dialog.c:2710
+#: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:343
+#: ../app/dialogs/preferences-dialog.c:2742
 msgid "Fonts"
 msgstr "الخطوط"
 
-#: ../app/actions/actions.c:169 ../app/dialogs/dialogs.c:405
+#: ../app/actions/actions.c:170 ../app/dialogs/dialogs.c:419
 #: ../app/widgets/gimpgradienteditor.c:271
 msgid "Gradient Editor"
 msgstr "محرر التدرجات"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:172 ../app/core/gimp.c:1069
-#: ../app/dialogs/dialogs.c:330 ../app/dialogs/preferences-dialog.c:2706
+#: ../app/actions/actions.c:173 ../app/core/gimp.c:1106
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2738
 msgid "Gradients"
 msgstr "التدرجات"
 
-#: ../app/actions/actions.c:175 ../app/core/gimp.c:1084
-#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:2714
+#: ../app/actions/actions.c:176 ../app/core/gimp.c:1121
+#: ../app/dialogs/dialogs.c:360 ../app/dialogs/preferences-dialog.c:2746
 msgid "Tool Presets"
 msgstr "محفوظات الخيارات"
 
-#: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:413
-#: ../app/widgets/gimptoolpreseteditor.c:93
+#: ../app/actions/actions.c:179 ../app/dialogs/dialogs.c:427
+#: ../app/widgets/gimptoolpreseteditor.c:94
 msgid "Tool Preset Editor"
 msgstr "محرر محفوظات الخيارات"
 
-#: ../app/actions/actions.c:181
+#: ../app/actions/actions.c:182
 msgid "Help"
 msgstr "مساعدة"
 
-#: ../app/actions/actions.c:184
+#: ../app/actions/actions.c:185
 msgid "Image"
 msgstr "الصورة"
 
-#. list & grid views
-#: ../app/actions/actions.c:187 ../app/dialogs/dialogs.c:324
+#: ../app/actions/actions.c:188 ../app/dialogs/dialogs.c:325
 #: ../app/widgets/gimppickablepopup.c:179
 msgid "Images"
 msgstr "الصور"
 
-#: ../app/actions/actions.c:190 ../app/dialogs/dialogs.c:351
+#: ../app/actions/actions.c:191 ../app/dialogs/dialogs.c:365
 #: ../app/dialogs/resize-dialog.c:289 ../app/widgets/gimppickablepopup.c:230
 msgid "Layers"
 msgstr "الطبقات"
 
-#: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:409
+#. initialize the list of mypaint brushes
+#: ../app/actions/actions.c:194 ../app/core/gimp.c:1091
+#: ../app/dialogs/dialogs.c:331 ../app/dialogs/preferences-dialog.c:2750
+msgid "MyPaint Brushes"
+msgstr "فرش ماي پينت"
+
+#: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:423
 #: ../app/widgets/gimppaletteeditor.c:149
 msgid "Palette Editor"
 msgstr "محرر لوحة الألوان"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:196 ../app/core/gimp.c:1064
-#: ../app/dialogs/dialogs.c:332 ../app/dialogs/preferences-dialog.c:2702
+#: ../app/actions/actions.c:200 ../app/core/gimp.c:1101
+#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2734
 msgid "Palettes"
 msgstr "ألواح الألوان"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:199 ../app/core/gimp.c:1059
-#: ../app/dialogs/dialogs.c:328 ../app/dialogs/preferences-dialog.c:2698
+#: ../app/actions/actions.c:203 ../app/core/gimp.c:1096
+#: ../app/dialogs/dialogs.c:334 ../app/dialogs/preferences-dialog.c:2730
 msgid "Patterns"
 msgstr "الأنماط"
 
-#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2724
+#: ../app/actions/actions.c:206 ../app/dialogs/preferences-dialog.c:2754
 msgid "Plug-Ins"
 msgstr "الامتدادات"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:393
-#: ../app/dialogs/preferences-dialog.c:1938
+#: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:393
+#: ../app/dialogs/preferences-dialog.c:1721
 msgid "Quick Mask"
 msgstr "قناع سريع"
 
-#: ../app/actions/actions.c:208 ../app/dialogs/dialogs.c:379
+#: ../app/actions/actions.c:212 ../app/dialogs/dialogs.c:393
 msgid "Sample Points"
 msgstr "عينات نقاط"
 
-#: ../app/actions/actions.c:211
+#: ../app/actions/actions.c:215
 msgid "Select"
 msgstr "اختر"
 
 #. initialize the template list
-#: ../app/actions/actions.c:214 ../app/core/gimp.c:1090
-#: ../app/dialogs/dialogs.c:340
+#: ../app/actions/actions.c:218 ../app/core/gimp.c:1127
+#: ../app/dialogs/dialogs.c:352
 msgid "Templates"
 msgstr "القوالب"
 
-#: ../app/actions/actions.c:217
+#: ../app/actions/actions.c:221
 msgid "Text Tool"
 msgstr "أداة النصوص"
 
-#: ../app/actions/actions.c:220
+#: ../app/actions/actions.c:224
 msgid "Text Editor"
 msgstr "محرر النصوص"
 
-#: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:307
-#: ../app/gui/gui.c:453
+#: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:307
+#: ../app/gui/gui.c:459
 msgid "Tool Options"
 msgstr "خيارات الأدوات"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:380
+#: ../app/actions/actions.c:230 ../app/widgets/gimptoolpalette.c:380
 msgid "Tools"
 msgstr "الأدوات"
 
-#: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:359
+#: ../app/actions/actions.c:233 ../app/dialogs/dialogs.c:373
 #: ../app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "المسارات"
 
-#: ../app/actions/actions.c:232
+#: ../app/actions/actions.c:236
 msgid "View"
 msgstr "عرض"
 
-#: ../app/actions/actions.c:235
+#: ../app/actions/actions.c:239
 msgid "Windows"
 msgstr "نوافذ"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:586
+#: ../app/actions/actions.c:590
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:612
+#: ../app/actions/actions.c:616
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -1223,213 +1232,224 @@ msgstr "افتح محرر حركيات الرسم"
 
 #: ../app/actions/dialogs-actions.c:155
 msgctxt "dialogs-action"
+msgid "_MyPaint Brushes"
+msgstr "فرش _ماي پينت"
+
+#: ../app/actions/dialogs-actions.c:156
+msgctxt "dialogs-action"
+msgid "Open the mypaint brushes dialog"
+msgstr "افتح حوار فُرش ماي پينت"
+
+#: ../app/actions/dialogs-actions.c:161
+msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "الأن_ماط"
 
-#: ../app/actions/dialogs-actions.c:156
+#: ../app/actions/dialogs-actions.c:162
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "افتح حوار الأنماط"
 
-#: ../app/actions/dialogs-actions.c:161
+#: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "ال_تدرجات"
 
-#: ../app/actions/dialogs-actions.c:162
+#: ../app/actions/dialogs-actions.c:168
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "افتح حوار التدرجات"
 
-#: ../app/actions/dialogs-actions.c:167
+#: ../app/actions/dialogs-actions.c:173
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "محرر التدرجات"
 
-#: ../app/actions/dialogs-actions.c:168
+#: ../app/actions/dialogs-actions.c:174
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "افتح محرر التدرجات"
 
-#: ../app/actions/dialogs-actions.c:173
+#: ../app/actions/dialogs-actions.c:179
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "أ_لواح الألوان"
 
-#: ../app/actions/dialogs-actions.c:174
+#: ../app/actions/dialogs-actions.c:180
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "افتح حوار ألواح الألوان"
 
-#: ../app/actions/dialogs-actions.c:179
+#: ../app/actions/dialogs-actions.c:185
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr "محرر لوحة الألوان"
 
-#: ../app/actions/dialogs-actions.c:180
+#: ../app/actions/dialogs-actions.c:186
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "افتح محرر لوحة الألوان"
 
-#: ../app/actions/dialogs-actions.c:185
+#: ../app/actions/dialogs-actions.c:191
 msgctxt "dialogs-action"
 msgid "Tool presets"
 msgstr "محفوظات الخيارات"
 
-#: ../app/actions/dialogs-actions.c:186
+#: ../app/actions/dialogs-actions.c:192
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "افتح حوار محفوظات الخيارات"
 
-#: ../app/actions/dialogs-actions.c:191
+#: ../app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "ال_خطوط"
 
-#: ../app/actions/dialogs-actions.c:192
+#: ../app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "افتح حوار الخطوط"
 
-#: ../app/actions/dialogs-actions.c:197
+#: ../app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "البرا_حات"
 
-#: ../app/actions/dialogs-actions.c:198
+#: ../app/actions/dialogs-actions.c:204
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "افتح حوار البراحات المسمّاة"
 
-#: ../app/actions/dialogs-actions.c:203
+#: ../app/actions/dialogs-actions.c:209
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "ال_صور"
 
-#: ../app/actions/dialogs-actions.c:204
+#: ../app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "افتح حوار الصور"
 
-#: ../app/actions/dialogs-actions.c:209
+#: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "_تأريخ المستند"
 
-#: ../app/actions/dialogs-actions.c:210
+#: ../app/actions/dialogs-actions.c:216
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "افتح حوار تأريخ المستند"
 
-#: ../app/actions/dialogs-actions.c:215
+#: ../app/actions/dialogs-actions.c:221
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "الق_والب"
 
-#: ../app/actions/dialogs-actions.c:216
+#: ../app/actions/dialogs-actions.c:222
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "افتح حوار قوالب الصور"
 
-#: ../app/actions/dialogs-actions.c:221
+#: ../app/actions/dialogs-actions.c:227
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "_مِعراض الأخطاء"
 
-#: ../app/actions/dialogs-actions.c:222
+#: ../app/actions/dialogs-actions.c:228
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "افتح مِعراض الأخطاء"
 
-#: ../app/actions/dialogs-actions.c:232
+#: ../app/actions/dialogs-actions.c:238
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "التف_ضيلات"
 
-#: ../app/actions/dialogs-actions.c:233
+#: ../app/actions/dialogs-actions.c:239
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "افتح حوار التفضيلات"
 
-#: ../app/actions/dialogs-actions.c:238
+#: ../app/actions/dialogs-actions.c:244
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "أجهزة الإ_دخال"
 
-#: ../app/actions/dialogs-actions.c:239
+#: ../app/actions/dialogs-actions.c:245
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "افتح محرر أجهزة الإدخال"
 
-#: ../app/actions/dialogs-actions.c:244
+#: ../app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "ا_ختصارات لوحة المفاتيح"
 
-#: ../app/actions/dialogs-actions.c:245
+#: ../app/actions/dialogs-actions.c:251
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "افتح محرر اختصارات لوحة المفاتيح"
 
-#: ../app/actions/dialogs-actions.c:250
+#: ../app/actions/dialogs-actions.c:256
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "ال_وحدات"
 
-#: ../app/actions/dialogs-actions.c:251
+#: ../app/actions/dialogs-actions.c:257
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "افتح حوار إدارة الوحدات"
 
-#: ../app/actions/dialogs-actions.c:256
+#: ../app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "_فائدة اليوم"
 
-#: ../app/actions/dialogs-actions.c:257
+#: ../app/actions/dialogs-actions.c:263
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "اعرض بعض التلميحات المفيدة حول استخدام جمب"
 
-#: ../app/actions/dialogs-actions.c:263 ../app/actions/dialogs-actions.c:270
+#: ../app/actions/dialogs-actions.c:269 ../app/actions/dialogs-actions.c:276
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "عن جمب"
 
-#: ../app/actions/dialogs-actions.c:265
+#: ../app/actions/dialogs-actions.c:271
 msgctxt "dialogs-action"
 msgid "About"
 msgstr "عن"
 
-#: ../app/actions/dialogs-actions.c:267
+#: ../app/actions/dialogs-actions.c:273
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_عن"
 
-#: ../app/actions/dialogs-actions.c:275
+#: ../app/actions/dialogs-actions.c:281
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "اب_حث و نفّذ أمرًا"
 
-#: ../app/actions/dialogs-actions.c:276
+#: ../app/actions/dialogs-actions.c:282
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "ابحث عن الأوامر بالكلمات المفتاحية و نفّذهم"
 
-#: ../app/actions/dialogs-actions.c:339
-#: ../app/dialogs/preferences-dialog.c:1859 ../app/widgets/gimptoolbox.c:533
+#: ../app/actions/dialogs-actions.c:345
+#: ../app/dialogs/preferences-dialog.c:2028
+#: ../app/dialogs/preferences-dialog.c:2029 ../app/widgets/gimptoolbox.c:533
 msgid "Toolbox"
 msgstr "صندوق الأدوات"
 
-#: ../app/actions/dialogs-actions.c:340
+#: ../app/actions/dialogs-actions.c:346
 msgid "Raise the toolbox"
 msgstr "ارفع صندوق الأدوات"
 
-#: ../app/actions/dialogs-actions.c:344
+#: ../app/actions/dialogs-actions.c:350
 msgid "New Toolbox"
 msgstr "صندوق أدوات جديد"
 
-#: ../app/actions/dialogs-actions.c:345
+#: ../app/actions/dialogs-actions.c:351
 msgid "Create a new toolbox"
 msgstr "أنشئ صندوق أدوات جديد"
 
@@ -2566,7 +2586,7 @@ msgstr "افتح صورة"
 msgid "Open Image as Layers"
 msgstr "افتح صورة كطبقات"
 
-#: ../app/actions/file-commands.c:285 ../app/widgets/gimpsavedialog.c:271
+#: ../app/actions/file-commands.c:285 ../app/widgets/gimpsavedialog.c:273
 #, c-format
 msgid ""
 "The image uses features from %s and cannot be saved for older GIMP versions."
@@ -2577,7 +2597,7 @@ msgid "No changes need to be saved"
 msgstr "لا توجد تغييرات لتُحفظ"
 
 #: ../app/actions/file-commands.c:315 ../app/actions/file-commands.c:786
-#: ../app/widgets/gimpsavedialog.c:146
+#: ../app/widgets/gimpsavedialog.c:147
 msgid "Save Image"
 msgstr "احفظ الصورة"
 
@@ -2737,7 +2757,7 @@ msgstr "أزِح..."
 #: ../app/actions/filters-actions.c:148
 msgctxt "filters-action"
 msgid "Distance Map..."
-msgstr ""
+msgstr "خريطة المسافات..."
 
 #: ../app/actions/filters-actions.c:153
 msgctxt "filters-action"
@@ -2802,7 +2822,7 @@ msgstr "و_هم..."
 #: ../app/actions/filters-actions.c:213
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
-msgstr ""
+msgstr "م_شكال..."
 
 #: ../app/actions/filters-actions.c:218
 msgctxt "filters-action"
@@ -3544,13 +3564,13 @@ msgstr "ال_طور"
 
 #: ../app/actions/image-actions.c:60
 msgctxt "image-action"
-msgid "_Precision"
+msgid "Pr_ecision"
 msgstr "الد_قة"
 
 #: ../app/actions/image-actions.c:62
 msgctxt "image-action"
-msgid "_Color Management"
-msgstr "إدارة الأ_لوان"
+msgid "Color Ma_nagement"
+msgstr "إ_دارة الألوان"
 
 #: ../app/actions/image-actions.c:63
 msgctxt "image-action"
@@ -3962,7 +3982,7 @@ msgstr "حجّم الصورة"
 
 #. Scaling
 #: ../app/actions/image-commands.c:918 ../app/actions/layers-commands.c:1197
-#: ../app/dialogs/preferences-dialog.c:1814
+#: ../app/dialogs/preferences-dialog.c:1645
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
@@ -4576,6 +4596,81 @@ msgstr "رجاء اختر قناة أولا"
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "أضِف قناع طبقة"
+
+#: ../app/actions/mypaint-brushes-actions.c:43
+msgctxt "mypaint-brushes-action"
+msgid "MyPaint Brushes Menu"
+msgstr "قائمة فرش ماي پينت"
+
+#: ../app/actions/mypaint-brushes-actions.c:47
+msgctxt "mypaint-brushes-action"
+msgid "_New MyPaint Brush"
+msgstr "فرشاة ماي پينت ج_ديدة"
+
+#: ../app/actions/mypaint-brushes-actions.c:48
+msgctxt "mypaint-brushes-action"
+msgid "Create a new MyPaint brush"
+msgstr "أنشئ فرشاة ماي پينت جديدة"
+
+#: ../app/actions/mypaint-brushes-actions.c:53
+msgctxt "mypaint-brushes-action"
+msgid "D_uplicate MyPaint Brush"
+msgstr "_كرر فرشاة ماي پينت"
+
+#: ../app/actions/mypaint-brushes-actions.c:54
+msgctxt "mypaint-brushes-action"
+msgid "Duplicate this MyPaint brush"
+msgstr "كرر فرشاة ماي پينت هذه"
+
+#: ../app/actions/mypaint-brushes-actions.c:59
+msgctxt "mypaint-brushes-action"
+msgid "Copy MyPaint Brush _Location"
+msgstr "ا_نسخ مكان فرشاة ماي پينت"
+
+#: ../app/actions/mypaint-brushes-actions.c:60
+msgctxt "mypaint-brushes-action"
+msgid "Copy MyPaint brush file location to clipboard"
+msgstr "انسخ مكان ملف فرشاة ماي پينت إلى الحافظة"
+
+#: ../app/actions/mypaint-brushes-actions.c:65
+msgctxt "mypaint-brushes-action"
+msgid "Show in _File Manager"
+msgstr "اعرض في مدير المل_فّات"
+
+#: ../app/actions/mypaint-brushes-actions.c:66
+msgctxt "mypaint-brushes-action"
+msgid "Show MyPaint brush file location in the file manager"
+msgstr "اعرض مكان ملف فرشاة ماي پينت في مدير الملفات"
+
+#: ../app/actions/mypaint-brushes-actions.c:71
+msgctxt "mypaint-brushes-action"
+msgid "_Delete MyPaint Brush"
+msgstr "اح_ذف فرشاة ماي پينت"
+
+#: ../app/actions/mypaint-brushes-actions.c:72
+msgctxt "mypaint-brushes-action"
+msgid "Delete this MyPaint brush"
+msgstr "احذف فرشاة ماي پينت هذه"
+
+#: ../app/actions/mypaint-brushes-actions.c:77
+msgctxt "mypaint-brushes-action"
+msgid "_Refresh MyPaint Brushes"
+msgstr "ح_دّث فُرَش ماي پينت"
+
+#: ../app/actions/mypaint-brushes-actions.c:78
+msgctxt "mypaint-brushes-action"
+msgid "Refresh MyPaint brushes"
+msgstr "حدّث فُرَش ماي پينت"
+
+#: ../app/actions/mypaint-brushes-actions.c:86
+msgctxt "mypaint-brushes-action"
+msgid "_Edit MyPaint Brush..."
+msgstr "_حرّر فرشاة ماي پينت..."
+
+#: ../app/actions/mypaint-brushes-actions.c:87
+msgctxt "mypaint-bruahes-action"
+msgid "Edit MyPaint brush"
+msgstr "حرّر فرشاة ماي پينت"
 
 #: ../app/actions/palette-editor-actions.c:44
 msgctxt "palette-editor-action"
@@ -5608,47 +5703,47 @@ msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
 msgstr "حرّر محفوظة الخيارات هذه"
 
-#: ../app/actions/tools-actions.c:48
+#: ../app/actions/tools-actions.c:46
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "أ_دوات"
 
-#: ../app/actions/tools-actions.c:49
+#: ../app/actions/tools-actions.c:47
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "أدوات ال_تحديد"
 
-#: ../app/actions/tools-actions.c:50
+#: ../app/actions/tools-actions.c:48
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "أدوات الت_لوين"
 
-#: ../app/actions/tools-actions.c:51
+#: ../app/actions/tools-actions.c:49
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "أدوات الت_حويل"
 
-#: ../app/actions/tools-actions.c:52
+#: ../app/actions/tools-actions.c:50
 msgctxt "tools-action"
 msgid "_Color Tools"
 msgstr "أدوات الألوا_ن"
 
-#: ../app/actions/tools-actions.c:58
+#: ../app/actions/tools-actions.c:56
 msgctxt "tools-action"
 msgid "_By Color"
 msgstr "با_للون"
 
-#: ../app/actions/tools-actions.c:59
+#: ../app/actions/tools-actions.c:57
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
 msgstr "حدّد المناطق ذات الألوان المتشابهة"
 
-#: ../app/actions/tools-actions.c:64
+#: ../app/actions/tools-actions.c:62
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
 msgstr "_تدوير محدد..."
 
-#: ../app/actions/tools-actions.c:65
+#: ../app/actions/tools-actions.c:63
 msgctxt "tools-action"
 msgid "Rotate by an arbitrary angle"
 msgstr "دوّر بزاوية محددة"
@@ -6561,7 +6656,8 @@ msgstr "أخف الأرصفة"
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
-msgstr "عند تفعيله ستكون الأرصفة و الحوارات الأخرى مخفية تاركة نوافذ الصور فقط."
+msgstr ""
+"عند تفعيله ستكون الأرصفة و الحوارات الأخرى مخفية تاركة نوافذ الصور فقط."
 
 #: ../app/actions/windows-actions.c:129
 msgctxt "windows-action"
@@ -7130,7 +7226,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:392
 msgid "Enable the MyPaint Brush tool."
-msgstr "فعّل أداة فرش MyPaint."
+msgstr "فعّل أداة فرش ماي پينت."
 
 #: ../app/config/gimprc-blurbs.h:395
 msgid "Enable the Seamless Clone tool."
@@ -7176,17 +7272,17 @@ msgid ""
 "shared by other users."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:435
+#: ../app/config/gimprc-blurbs.h:441
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "تحدد حجم المصغّرة المعروضة في حوار الفتح."
 
-#: ../app/config/gimprc-blurbs.h:438
+#: ../app/config/gimprc-blurbs.h:444
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:442
+#: ../app/config/gimprc-blurbs.h:448
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -7194,54 +7290,54 @@ msgid ""
 "you may want to set this to a higher value."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:448
+#: ../app/config/gimprc-blurbs.h:454
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "أظهر ألوان المُقدمة والخلفية الحالية في شريط الأدوات."
 
-#: ../app/config/gimprc-blurbs.h:451
+#: ../app/config/gimprc-blurbs.h:457
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "أظهر الفرشاة والنمط والتدرّج المختارة حاليا في صندوق الأدوات."
 
-#: ../app/config/gimprc-blurbs.h:454
+#: ../app/config/gimprc-blurbs.h:460
 msgid "Show the currently active image in the toolbox."
 msgstr "أظهر الصورة النشطة حاليا في شريط الأدوات."
 
-#: ../app/config/gimprc-blurbs.h:460
+#: ../app/config/gimprc-blurbs.h:466
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:463
+#: ../app/config/gimprc-blurbs.h:469
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:466
+#: ../app/config/gimprc-blurbs.h:472
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:470
+#: ../app/config/gimprc-blurbs.h:476
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:474
+#: ../app/config/gimprc-blurbs.h:480
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:479
+#: ../app/config/gimprc-blurbs.h:485
 msgid "Sets the size of the previews in the Undo History."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:482
+#: ../app/config/gimprc-blurbs.h:488
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "عند تفعيله سيُفتح متصفّح المساعدة عند ضغط F1."
 
-#: ../app/config/gimprc-blurbs.h:485
+#: ../app/config/gimprc-blurbs.h:491
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "عند تفعيله سيُستخدم OpenCL لبعض العمليات."
 
@@ -7474,12 +7570,12 @@ msgstr "مضاد للمحو"
 #: ../app/core/core-enums.c:349
 msgctxt "matting-engine"
 msgid "Matting Global"
-msgstr ""
+msgstr "استخراج عام"
 
 #: ../app/core/core-enums.c:350
 msgctxt "matting-engine"
 msgid "Matting Levin"
-msgstr ""
+msgstr "استخراج ليڤن"
 
 #: ../app/core/core-enums.c:435
 msgctxt "align-reference-type"
@@ -8118,42 +8214,42 @@ msgctxt "image-map-region"
 msgid "Use the entire layer as input"
 msgstr "استخدم كل الطبقة كمُدخلات"
 
-#: ../app/core/gimp.c:666
+#: ../app/core/gimp.c:686
 msgid "Initialization"
 msgstr "يجهّز"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:770
+#: ../app/core/gimp.c:801
 msgid "Internal Procedures"
 msgstr "عملية داخلية"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:1045
+#: ../app/core/gimp.c:1077
 msgid "Looking for data files"
 msgstr "يبحث عن ملفات البيانات"
 
-#: ../app/core/gimp.c:1045
+#: ../app/core/gimp.c:1077
 msgid "Parasites"
 msgstr "الطفيليات"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:1054 ../app/dialogs/preferences-dialog.c:2694
-#: ../app/tools/gimppaintoptions-gui.c:220
+#: ../app/core/gimp.c:1086 ../app/dialogs/preferences-dialog.c:2726
+#: ../app/tools/gimppaintoptions-gui.c:213
 msgid "Dynamics"
 msgstr "الحركيات"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:1074
+#: ../app/core/gimp.c:1111
 msgid "Fonts (this may take a while)"
 msgstr "الخطوط (قد تستغرق بعض الوقت)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:1094 ../app/dialogs/preferences-dialog.c:2732
+#: ../app/core/gimp.c:1131 ../app/dialogs/preferences-dialog.c:2762
 msgid "Modules"
 msgstr "الوحدات"
 
 #. update tag cache
-#: ../app/core/gimp.c:1098
+#: ../app/core/gimp.c:1135
 msgid "Updating tag cache"
 msgstr "يُحدّث خبيئة الوسوم"
 
@@ -8168,7 +8264,7 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "مفسر سطر الأوامر '%s' غير متاح. وضع سطر الأوامر سيُعطّل."
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimptooloptions.c:370
-#: ../app/gui/session.c:427 ../app/menus/menus.c:459
+#: ../app/gui/session.c:427 ../app/menus/menus.c:467
 #: ../app/widgets/gimpdevices.c:201
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -8246,14 +8342,14 @@ msgstr "امسح التأريخ"
 msgid "tags-locale:C"
 msgstr "tags-locale:ar"
 
-#: ../app/core/gimp-user-install.c:208
+#: ../app/core/gimp-user-install.c:209
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr "يبدو أنك استخدمت جمب %s من قبل. سيقوم جمب بنقل إعداداتك الآن إلى '%s'."
 
-#: ../app/core/gimp-user-install.c:213
+#: ../app/core/gimp-user-install.c:214
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -8262,17 +8358,17 @@ msgstr ""
 "يبدو أنك تستخدم جمب للمرة الأولى.  سينشئ جمب الآن مجلدا باسم '%s' وينسخ بعض "
 "الملفات إليه."
 
-#: ../app/core/gimp-user-install.c:412
+#: ../app/core/gimp-user-install.c:413
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "ينسخ الملف '%s' من '%s'..."
 
-#: ../app/core/gimp-user-install.c:427 ../app/core/gimp-user-install.c:453
+#: ../app/core/gimp-user-install.c:428 ../app/core/gimp-user-install.c:454
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "ينشئ المجلد '%s'..."
 
-#: ../app/core/gimp-user-install.c:438 ../app/core/gimp-user-install.c:464
+#: ../app/core/gimp-user-install.c:439 ../app/core/gimp-user-install.c:465
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "تعذّر إنشاء المجلد '%s'‏: %s"
@@ -8593,12 +8689,12 @@ msgstr "حدد إعتام القناة"
 msgid "Selection Mask"
 msgstr "قناع التحديد"
 
-#: ../app/core/gimpcontext.c:656 ../app/tools/gimppaintoptions-gui.c:131
+#: ../app/core/gimpcontext.c:683 ../app/tools/gimppaintoptions-gui.c:127
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:287
 msgid "Opacity"
 msgstr "الإعتام"
 
-#: ../app/core/gimpcontext.c:664
+#: ../app/core/gimpcontext.c:691
 msgid "Paint Mode"
 msgstr "نمط التلوين"
 
@@ -8697,7 +8793,7 @@ msgstr "امزج"
 
 #: ../app/core/gimpdrawable-blend.c:543
 msgid "Calculating distance map"
-msgstr "يحسب خريطة المسافة"
+msgstr "يحسب خريطة المسافات"
 
 #: ../app/core/gimpdrawable-blend.c:872 ../app/pdb/edit-cmds.c:801
 #: ../app/tools/gimpblendtool.c:857
@@ -8962,21 +9058,21 @@ msgstr ""
 msgid "ICC profile validation failed: "
 msgstr "تعذّر التحقق من صحة لاحة ICC:"
 
-#: ../app/core/gimpimage-color-profile.c:250
+#: ../app/core/gimpimage-color-profile.c:252
 msgid ""
-"ICC profile validation failed: Cannot attach a color profile to a GRAY image"
-msgstr "تعذّر التحقق من صحة لاحة ICC: لايمكن إرفاق لاحة لون بصورة رمادية"
+"ICC profile validation failed: Color profile is not for GRAY color space"
+msgstr "تعذّر التحقق من صحة لاحة ICC: لاحة اللون ليست في نطاق الألوان الرمادي"
 
-#: ../app/core/gimpimage-color-profile.c:258
+#: ../app/core/gimpimage-color-profile.c:262
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr "تعذّر التحقق من صحة لاحة ICC: لاحة اللون ليست في نطاق ألوان RGB"
 
-#: ../app/core/gimpimage-color-profile.c:368
+#: ../app/core/gimpimage-color-profile.c:397
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "أأحوّل من '%s' إلى '%s'؟"
 
-#: ../app/core/gimpimage-color-profile.c:373
+#: ../app/core/gimpimage-color-profile.c:402
 msgid "Color profile conversion"
 msgstr "تحويل لاحة الألوان"
 
@@ -9226,7 +9322,8 @@ msgstr "حجّم الصورة"
 msgid "Can't undo %s"
 msgstr "تعذّر التراجع عن %s"
 
-#: ../app/core/gimpimagefile.c:776 ../app/dialogs/preferences-dialog.c:1610
+#: ../app/core/gimpimagefile.c:776 ../app/dialogs/preferences-dialog.c:1880
+#: ../app/dialogs/preferences-dialog.c:1980
 msgid "Folder"
 msgstr "مجلد"
 
@@ -9835,51 +9932,69 @@ msgstr "تعويض النق_طة السوداء"
 msgid "Select destination profile"
 msgstr "اختر اللاحة الهدف"
 
-#: ../app/dialogs/color-profile-dialog.c:312
+#: ../app/dialogs/color-profile-dialog.c:314
+#, c-format
+msgid "Built-in GRAY (%s)"
+msgstr "رمادي مدمج (%s)"
+
+#: ../app/dialogs/color-profile-dialog.c:321
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "ح‌خ‌ز (RGB) مدمج (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:326
+#: ../app/dialogs/color-profile-dialog.c:337
+#, c-format
+msgid "Preferred GRAY (%s)"
+msgstr "رمادي مفضّل (%s)"
+
+#: ../app/dialogs/color-profile-dialog.c:342
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "ح‌خ‌ز (RGB) مفضّل (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:391
+#: ../app/dialogs/color-profile-dialog.c:407
 #, c-format
 msgid "Converting to '%s'"
 msgstr "حوّل إلى '%s'"
 
-#: ../app/dialogs/color-profile-dialog.c:413
+#: ../app/dialogs/color-profile-dialog.c:429
 msgid "Assign color profile"
 msgstr "حدد لاحة ألوان"
 
-#: ../app/dialogs/color-profile-import-dialog.c:78
+#: ../app/dialogs/color-profile-import-dialog.c:80
+msgid "Convert to Grayscale Working Space?"
+msgstr "أأحوّل إلى مساحة عمل تدرج رمادي؟"
+
+#: ../app/dialogs/color-profile-import-dialog.c:81
+msgid "Convert the image to the grayscale working space?"
+msgstr "أأحوّل الصورة إلى مساحة ألوان تدرج رمادي؟"
+
+#: ../app/dialogs/color-profile-import-dialog.c:85
 msgid "Convert to RGB Working Space?"
 msgstr "أأحوّل إلى مساحة عمل ح‌خ‌ز (RGB)؟"
 
-#: ../app/dialogs/color-profile-import-dialog.c:81
+#: ../app/dialogs/color-profile-import-dialog.c:86
+msgid "Convert the image to the RGB working space?"
+msgstr "أأحوّل الصورة إلى مساحة ألوان ح‌خ‌ز (RGB)؟"
+
+#: ../app/dialogs/color-profile-import-dialog.c:94
 msgid "Import the image from a color profile"
 msgstr "استورد الصورة من لاحة ألوان"
 
-#: ../app/dialogs/color-profile-import-dialog.c:86
+#: ../app/dialogs/color-profile-import-dialog.c:99
 msgid "Keep"
 msgstr "أبقِ"
 
-#: ../app/dialogs/color-profile-import-dialog.c:87
+#: ../app/dialogs/color-profile-import-dialog.c:100
 msgid "Convert"
 msgstr "حوّل"
 
-#: ../app/dialogs/color-profile-import-dialog.c:104
+#: ../app/dialogs/color-profile-import-dialog.c:117
 #, c-format
 msgid "The image '%s' has an embedded color profile"
 msgstr "تحتوي الصورة '%s' على لاحة ألوان مدمجة"
 
-#: ../app/dialogs/color-profile-import-dialog.c:115
-msgid "Convert the image to the RGB working space?"
-msgstr "أأحوّل الصورة إلى مساحة ألوان ح‌خ‌ز (RGB)؟"
-
-#: ../app/dialogs/color-profile-import-dialog.c:125
+#: ../app/dialogs/color-profile-import-dialog.c:138
 msgid "_Don't ask me again"
 msgstr "لا ت_سألني ثانية"
 
@@ -9990,7 +10105,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "أمتأكد أنك تريد إزالة '%s' من القائمة وحذفه من القرص؟"
 
-#: ../app/dialogs/dialogs-constructors.c:213 ../app/gui/gui.c:165
+#: ../app/dialogs/dialogs-constructors.c:213 ../app/gui/gui.c:166
 #: ../app/gui/gui-message.c:157
 msgid "GIMP Message"
 msgstr "رسالة جمب"
@@ -10011,47 +10126,47 @@ msgstr "الأخطاء"
 msgid "Pointer"
 msgstr "المؤشر"
 
-#: ../app/dialogs/dialogs.c:338
+#: ../app/dialogs/dialogs.c:349
 msgid "History"
 msgstr "التأريخ"
 
-#: ../app/dialogs/dialogs.c:340
+#: ../app/dialogs/dialogs.c:352
 msgid "Image Templates"
 msgstr "قوالب الصور"
 
-#: ../app/dialogs/dialogs.c:367
+#: ../app/dialogs/dialogs.c:381
 msgid "Histogram"
 msgstr "رسم بياني"
 
-#: ../app/dialogs/dialogs.c:371
+#: ../app/dialogs/dialogs.c:385
 msgid "Selection"
 msgstr "التحديد"
 
-#: ../app/dialogs/dialogs.c:371
+#: ../app/dialogs/dialogs.c:385
 msgid "Selection Editor"
 msgstr "محرر التحديد"
 
-#: ../app/dialogs/dialogs.c:375
+#: ../app/dialogs/dialogs.c:389
 msgid "Undo"
 msgstr "تراجع"
 
-#: ../app/dialogs/dialogs.c:375
+#: ../app/dialogs/dialogs.c:389
 msgid "Undo History"
 msgstr "تأريخ التراجع"
 
-#: ../app/dialogs/dialogs.c:385
+#: ../app/dialogs/dialogs.c:399
 msgid "Navigation"
 msgstr "إبحار"
 
-#: ../app/dialogs/dialogs.c:385
+#: ../app/dialogs/dialogs.c:399
 msgid "Display Navigation"
 msgstr "اعرض الإبحار"
 
-#: ../app/dialogs/dialogs.c:391
+#: ../app/dialogs/dialogs.c:405
 msgid "FG/BG"
 msgstr "المقدمة/الخلفية"
 
-#: ../app/dialogs/dialogs.c:391
+#: ../app/dialogs/dialogs.c:405
 msgid "FG/BG Color"
 msgstr "لون المقدمة/الخلفية"
 
@@ -10084,7 +10199,7 @@ msgstr "افتح مكانا"
 msgid "Enter location (URI):"
 msgstr "أدخل المكان:"
 
-#: ../app/dialogs/file-save-dialog.c:445
+#: ../app/dialogs/file-save-dialog.c:455
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -10093,11 +10208,11 @@ msgstr ""
 "حفظ الملفات عن بعد يحتاج إلى تحديد نسق الملف من امتداده. من فضلك أدخل امتداد "
 "ملف يطابق نسق الملف المختار أو لا تدخل أي امتداد."
 
-#: ../app/dialogs/file-save-dialog.c:597
+#: ../app/dialogs/file-save-dialog.c:607
 msgid "The given filename cannot be used for exporting"
 msgstr "لا يمكن استخدام اسم الملف المعطى للتصدير"
 
-#: ../app/dialogs/file-save-dialog.c:598
+#: ../app/dialogs/file-save-dialog.c:608
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -10105,15 +10220,15 @@ msgstr ""
 "يمكنك استخدام هذا الحوار للتصدير إلى أنساق الملفات المختلفة. إذا أردت حفظ "
 "الصورة بنسق جمب XCF فاختر ملف←احفظ بدلا من هذا."
 
-#: ../app/dialogs/file-save-dialog.c:601
+#: ../app/dialogs/file-save-dialog.c:611
 msgid "Take me to the Save dialog"
 msgstr "خذني إلى حوار الحفظ"
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:615
 msgid "The given filename cannot be used for saving"
 msgstr "لا يمكن استخدام اسم الملف المعطى للحفظ"
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:616
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -10121,15 +10236,15 @@ msgstr ""
 "يمكنك استخدام هذا الحوار للحفظ بنسق جمب XCF. استخدم ملف←صدّر للتصدير إلى "
 "أنساق الملفات الأخرى."
 
-#: ../app/dialogs/file-save-dialog.c:608
+#: ../app/dialogs/file-save-dialog.c:618
 msgid "Take me to the Export dialog"
 msgstr "خذني إلى حوار التصدير"
 
-#: ../app/dialogs/file-save-dialog.c:611 ../app/dialogs/file-save-dialog.c:688
+#: ../app/dialogs/file-save-dialog.c:621 ../app/dialogs/file-save-dialog.c:698
 msgid "Extension Mismatch"
 msgstr "الامتداد غير متطابق"
 
-#: ../app/dialogs/file-save-dialog.c:672
+#: ../app/dialogs/file-save-dialog.c:682
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -10137,19 +10252,19 @@ msgstr ""
 "الاسم المدخل لا يحتوي أي امتداد معروف. رجاءً أدخل امتداد ملف معروف أو اختر "
 "نسق ملف من قائمة أنساق الملفات."
 
-#: ../app/dialogs/file-save-dialog.c:704
+#: ../app/dialogs/file-save-dialog.c:714
 msgid "The given file extension does not match the chosen file type."
 msgstr "الامتداد المعطى لا يطابق نوع الملف المحدد."
 
-#: ../app/dialogs/file-save-dialog.c:708
+#: ../app/dialogs/file-save-dialog.c:718
 msgid "Do you want to save the image using this name anyway?"
 msgstr "هل تريد حفظ الصورة باستخدام هذا الاسم على كل حال؟"
 
-#: ../app/dialogs/file-save-dialog.c:773
+#: ../app/dialogs/file-save-dialog.c:783
 msgid "Saving canceled"
 msgstr "أُلغي الحفظ"
 
-#: ../app/dialogs/file-save-dialog.c:779 ../app/widgets/gimpdnd-xds.c:189
+#: ../app/dialogs/file-save-dialog.c:789 ../app/widgets/gimpdnd-xds.c:189
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -10213,7 +10328,7 @@ msgid "Create a New Image"
 msgstr "أنشئ صورة جديدة"
 
 #: ../app/dialogs/image-new-dialog.c:136
-#: ../app/dialogs/preferences-dialog.c:1922
+#: ../app/dialogs/preferences-dialog.c:1705
 msgid "_Template:"
 msgstr "_قالب:"
 
@@ -10489,7 +10604,7 @@ msgid "Select Source"
 msgstr "اختر المصدر"
 
 #: ../app/dialogs/palette-import-dialog.c:214
-#: ../app/dialogs/preferences-dialog.c:1838
+#: ../app/dialogs/preferences-dialog.c:1669
 msgid "_Gradient"
 msgstr "_تدرج"
 
@@ -10549,19 +10664,19 @@ msgstr "عاين"
 msgid "The selected source contains no colors."
 msgstr "المصدر المختار لا يحتوي على ألوان."
 
-#: ../app/dialogs/preferences-dialog.c:267
+#: ../app/dialogs/preferences-dialog.c:268
 msgid "Reset All Preferences"
 msgstr "صفّر كل التفضيلات"
 
-#: ../app/dialogs/preferences-dialog.c:285
+#: ../app/dialogs/preferences-dialog.c:286
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "هل تريد حقا إعادة ضبط كل التفضيلات إلى قيمها المبدئية؟"
 
-#: ../app/dialogs/preferences-dialog.c:355
+#: ../app/dialogs/preferences-dialog.c:356
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "عليك إعادة تشغيل جمب لتطبيق التغييرات التالية:"
 
-#: ../app/dialogs/preferences-dialog.c:541
+#: ../app/dialogs/preferences-dialog.c:542
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -10569,22 +10684,22 @@ msgstr ""
 "ستعاد اختصارات لوحة المفاتيح إلى قيمها المبدئية في المرة القادمة التي تشغل "
 "جمب فيها."
 
-#: ../app/dialogs/preferences-dialog.c:552
+#: ../app/dialogs/preferences-dialog.c:553
 msgid "Remove all Keyboard Shortcuts"
 msgstr "احذف كل اختصارات لوحة المفاتيح"
 
-#: ../app/dialogs/preferences-dialog.c:574
+#: ../app/dialogs/preferences-dialog.c:575
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "هل تريد حقا حذف جميع اختصارات لوحة المفاتيح من جميع القوائم؟"
 
-#: ../app/dialogs/preferences-dialog.c:615
+#: ../app/dialogs/preferences-dialog.c:616
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
 "سيُعاد إعداد نافذتك إلى قيمته المبدئية في المرة القادمة التي تشغل جمب فيها."
 
-#: ../app/dialogs/preferences-dialog.c:650
+#: ../app/dialogs/preferences-dialog.c:651
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -10592,877 +10707,909 @@ msgstr ""
 "ستعاد إعدادات أجهزة الإدخال إلى قيمها المبدئية في المرة القادمة التي تشغل "
 "جمب فيها."
 
-#: ../app/dialogs/preferences-dialog.c:692
+#: ../app/dialogs/preferences-dialog.c:693
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
 "ستعاد خيارات الأدوات إلى قيمها المبدئية في المرة القادمة التي تشغل جمب فيها."
 
-#: ../app/dialogs/preferences-dialog.c:1147
+#: ../app/dialogs/preferences-dialog.c:1165
 msgid "Show _menubar"
 msgstr "أظهر _شريط القوائم"
 
-#: ../app/dialogs/preferences-dialog.c:1151
+#: ../app/dialogs/preferences-dialog.c:1169
 msgid "Show _rulers"
 msgstr "أظهر المسا_طر"
 
-#: ../app/dialogs/preferences-dialog.c:1154
+#: ../app/dialogs/preferences-dialog.c:1172
 msgid "Show scroll_bars"
 msgstr "أظهر أشرطة ال_تمرير"
 
-#: ../app/dialogs/preferences-dialog.c:1157
+#: ../app/dialogs/preferences-dialog.c:1175
 msgid "Show s_tatusbar"
 msgstr "أظهر شريط ال_حالة"
 
-#: ../app/dialogs/preferences-dialog.c:1165
+#: ../app/dialogs/preferences-dialog.c:1183
 msgid "Show s_election"
 msgstr "أظهر التح_ديد"
 
-#: ../app/dialogs/preferences-dialog.c:1168
+#: ../app/dialogs/preferences-dialog.c:1186
 msgid "Show _layer boundary"
 msgstr "أظهر حدود الطب_قة"
 
-#: ../app/dialogs/preferences-dialog.c:1171
+#: ../app/dialogs/preferences-dialog.c:1189
 msgid "Show _guides"
 msgstr "أظهر الأد_لة"
 
-#: ../app/dialogs/preferences-dialog.c:1174
+#: ../app/dialogs/preferences-dialog.c:1192
 msgid "Show gri_d"
 msgstr "أظهر الشبك_ة"
 
-#: ../app/dialogs/preferences-dialog.c:1180
+#: ../app/dialogs/preferences-dialog.c:1198
 msgid "Canvas _padding mode:"
 msgstr "طور توسيد رق_عة الرسم:"
 
-#: ../app/dialogs/preferences-dialog.c:1185
+#: ../app/dialogs/preferences-dialog.c:1203
 msgid "Custom p_adding color:"
 msgstr "لون توسيد م_خصص:"
 
-#: ../app/dialogs/preferences-dialog.c:1186
+#: ../app/dialogs/preferences-dialog.c:1204
 msgid "Select Custom Canvas Padding Color"
 msgstr "اضبط لون مخصص لتوسيد رقعة الرسم"
 
-#: ../app/dialogs/preferences-dialog.c:1217
+#: ../app/dialogs/preferences-dialog.c:1235
 msgid "Snap to Guides"
 msgstr "اتبع الأدلة"
 
-#: ../app/dialogs/preferences-dialog.c:1220
+#: ../app/dialogs/preferences-dialog.c:1238
 msgid "Snap to Grid"
 msgstr "اتبع الشبكة"
 
-#: ../app/dialogs/preferences-dialog.c:1228
+#: ../app/dialogs/preferences-dialog.c:1246
 msgid "Snap to Canvas Edges"
 msgstr "اتبع حدود الرقعة"
 
-#: ../app/dialogs/preferences-dialog.c:1231
+#: ../app/dialogs/preferences-dialog.c:1249
 msgid "Snap to Active Path"
 msgstr "اتبع المسار النشط"
 
-#: ../app/dialogs/preferences-dialog.c:1339
+#: ../app/dialogs/preferences-dialog.c:1324
 msgid "Preferences"
 msgstr "التفضيلات"
 
-#: ../app/dialogs/preferences-dialog.c:1375
-#: ../app/dialogs/preferences-dialog.c:2740
-msgid "Environment"
-msgstr "البيئة"
+#: ../app/dialogs/preferences-dialog.c:1360
+#: ../app/dialogs/preferences-dialog.c:1361
+msgid "System Resources"
+msgstr "موارد النظام"
 
-#: ../app/dialogs/preferences-dialog.c:1385
+#: ../app/dialogs/preferences-dialog.c:1368
 msgid "Resource Consumption"
 msgstr "استهلاك الموارد"
 
-#: ../app/dialogs/preferences-dialog.c:1395
+#: ../app/dialogs/preferences-dialog.c:1378
 msgid "Minimal number of _undo levels:"
 msgstr "أقل عدد من مستويات ال_تراجع:"
 
-#: ../app/dialogs/preferences-dialog.c:1398
+#: ../app/dialogs/preferences-dialog.c:1381
 msgid "Maximum undo _memory:"
 msgstr "أعلى _ذاكرة تراجع:"
 
-#: ../app/dialogs/preferences-dialog.c:1401
+#: ../app/dialogs/preferences-dialog.c:1384
 msgid "Tile cache _size:"
 msgstr "_حجم مخبئية اللوح:"
 
-#: ../app/dialogs/preferences-dialog.c:1404
+#: ../app/dialogs/preferences-dialog.c:1387
 msgid "Maximum _new image size:"
 msgstr "أقصى حجم للصور ال_جديدة:"
 
-#: ../app/dialogs/preferences-dialog.c:1409
+#: ../app/dialogs/preferences-dialog.c:1392
 msgid "Number of _processors to use:"
 msgstr "عدد الم_عالجات المستخدمة:"
 
 #. Hardware Acceleration
-#: ../app/dialogs/preferences-dialog.c:1414
+#: ../app/dialogs/preferences-dialog.c:1397
 msgid "Hardware Acceleration"
 msgstr "تسريع العتاد"
 
-#: ../app/dialogs/preferences-dialog.c:1418
+#: ../app/dialogs/preferences-dialog.c:1401
 msgid "Use OpenCL"
 msgstr "استعمل OpenCL"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1422
+#: ../app/dialogs/preferences-dialog.c:1405
 msgid "Image Thumbnails"
 msgstr "مصغّرات الصور"
 
-#: ../app/dialogs/preferences-dialog.c:1427
+#: ../app/dialogs/preferences-dialog.c:1410
 msgid "Size of _thumbnails:"
 msgstr "حجم الم_صغّرات:"
 
-#: ../app/dialogs/preferences-dialog.c:1431
+#: ../app/dialogs/preferences-dialog.c:1414
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "أقصى حجم لملف المض_غرات:"
 
-#: ../app/dialogs/preferences-dialog.c:1441
+#: ../app/dialogs/preferences-dialog.c:1424
 msgid "Keep record of used files in the Recent Documents list"
 msgstr "احفظ سجلا بالملفات المستخدمة في قائمة أحدث المستندات"
 
+#: ../app/dialogs/preferences-dialog.c:1433
+#: ../app/dialogs/preferences-dialog.c:1434
+msgid "Color Management"
+msgstr "إدارة الألوان"
+
 #: ../app/dialogs/preferences-dialog.c:1450
-msgid "User Interface"
-msgstr "واجهة المستخدم"
+msgid "Preferred _RGB profile:"
+msgstr "لا_حة ح‌خ‌ز (RGB) المفضلة:"
+
+#: ../app/dialogs/preferences-dialog.c:1451
+msgid "Select RGB Color Profile"
+msgstr "اختر لاحة ألوان ح‌خ‌ز"
 
 #: ../app/dialogs/preferences-dialog.c:1452
-msgid "Interface"
-msgstr "الواجهة"
+msgid "Preferred _GRAY profile:"
+msgstr "لا_حة الرمادي المفضلة:"
 
-#: ../app/dialogs/preferences-dialog.c:1462
-msgid "Language"
-msgstr "اللغة"
+#: ../app/dialogs/preferences-dialog.c:1453
+msgid "Select GRAY Color Profile"
+msgstr "اختر لاحة الألوان الرمادية"
 
-#. Previews
-#: ../app/dialogs/preferences-dialog.c:1468
-msgid "Previews"
-msgstr "معاينات"
+#: ../app/dialogs/preferences-dialog.c:1454
+msgid "_CMYK profile:"
+msgstr "لاحة _زق‌ص‌س:"
 
-#: ../app/dialogs/preferences-dialog.c:1471
-msgid "_Enable layer & channel previews"
-msgstr "فعّل _معاينات الطبقات والقنوات"
+#: ../app/dialogs/preferences-dialog.c:1455
+msgid "Select CMYK Color Profile"
+msgstr "اختر لاحة ألوان زق‌ص‌س"
 
-#: ../app/dialogs/preferences-dialog.c:1477
-msgid "_Default layer & channel preview size:"
-msgstr "حجم معاينة الطبقات والقنوات الا_فتراضي:"
+#: ../app/dialogs/preferences-dialog.c:1456
+msgid "_Monitor profile:"
+msgstr "لاحة ال_شاشة:"
 
-#: ../app/dialogs/preferences-dialog.c:1480
-msgid "Na_vigation preview size:"
-msgstr "حجم معاينة الإب_حار:"
+#: ../app/dialogs/preferences-dialog.c:1457
+msgid "Select Monitor Color Profile"
+msgstr "اختر لاحة ألوان الشاشة"
 
-#. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1484
-msgid "Keyboard Shortcuts"
-msgstr "اختصارات لوحة المفاتيح"
+#: ../app/dialogs/preferences-dialog.c:1458
+msgid "_Print simulation profile:"
+msgstr "لاحة محاكاة ال_طبع:"
 
-#: ../app/dialogs/preferences-dialog.c:1488
-msgid "_Use dynamic keyboard shortcuts"
-msgstr "استخدم اختصارات لوحة مفاتيح _دينامية"
+#: ../app/dialogs/preferences-dialog.c:1459
+msgid "Select Printer Color Profile"
+msgstr "اختر لاحة ألوان الطابعة"
 
-#: ../app/dialogs/preferences-dialog.c:1492
-msgid "Configure _Keyboard Shortcuts..."
-msgstr "اضبط اختصارات لوحة الم_فاتيح..."
+#: ../app/dialogs/preferences-dialog.c:1470
+msgid "_Mode of operation:"
+msgstr "_طور العمل:"
 
-#: ../app/dialogs/preferences-dialog.c:1499
-msgid "_Save keyboard shortcuts on exit"
-msgstr "احفظ اختصارات لوحة المفاتيح عند الخروج"
-
-#: ../app/dialogs/preferences-dialog.c:1503
-msgid "Save Keyboard Shortcuts _Now"
-msgstr "احفظ اختصارات لوحة المفاتيح الآ_ن"
+#: ../app/dialogs/preferences-dialog.c:1500
+msgid "_Try to use the system monitor profile"
+msgstr "_جرب استخدام لاحة شاشة النظام"
 
 #: ../app/dialogs/preferences-dialog.c:1510
-msgid "_Reset Keyboard Shortcuts to Default Values"
-msgstr "_صفّر اختصارات لوحة المفاتيح إلى القيم المبدئية."
+msgid "_Display rendering intent:"
+msgstr "توزيع الألوان على ال_شاشة:"
 
-#: ../app/dialogs/preferences-dialog.c:1519
-msgid "Remove _All Keyboard Shortcuts"
-msgstr "أزل _كل اختصارات لوحة المفاتيح"
+#: ../app/dialogs/preferences-dialog.c:1516
+msgid "Use _black point compensation for the display"
+msgstr "استخدم تعويض النق_طة السوداء للعرض"
 
-#: ../app/dialogs/preferences-dialog.c:1533
+#: ../app/dialogs/preferences-dialog.c:1530
+msgid "_Softproof rendering intent:"
+msgstr "توزيع الألوان في م_حاكاة الطباعة:"
+
+#: ../app/dialogs/preferences-dialog.c:1536
+msgid "Use black _point compensation for softproofing"
+msgstr "استخدم تعويض النق_طة السوداء لمحاكاة الطباعة"
+
+#: ../app/dialogs/preferences-dialog.c:1554
+msgid "Mark out of gamut colors"
+msgstr ""
+
+#: ../app/dialogs/preferences-dialog.c:1559
+msgid "Select Warning Color"
+msgstr "اختر لون التحذير"
+
+#: ../app/dialogs/preferences-dialog.c:1572
+msgid "File Open behaviour:"
+msgstr "سلوك فتح الملفات:"
+
+#: ../app/dialogs/preferences-dialog.c:1586
 msgid "Experimental Playground"
 msgstr "ساحة التجارب"
 
-#: ../app/dialogs/preferences-dialog.c:1535
+#: ../app/dialogs/preferences-dialog.c:1587
 msgid "Playground"
 msgstr "ساحة التجارب"
 
-#: ../app/dialogs/preferences-dialog.c:1541
+#: ../app/dialogs/preferences-dialog.c:1592
 msgid "Insane Options"
 msgstr "خيارات مجنونة"
 
-#: ../app/dialogs/preferences-dialog.c:1545
+#: ../app/dialogs/preferences-dialog.c:1596
 msgid "_N-Point Deformation tool"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1548
+#: ../app/dialogs/preferences-dialog.c:1599
 msgid "_Handle Transform tool"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1552
-msgid "_MyPaint Brush tool"
-msgstr "أداة _فرش MyPaint"
-
-#: ../app/dialogs/preferences-dialog.c:1557
+#: ../app/dialogs/preferences-dialog.c:1602
 msgid "_Seamless Clone tool"
 msgstr "أداة الاستنساخ ال_سلس"
 
-#: ../app/dialogs/preferences-dialog.c:1567
-#: ../app/dialogs/preferences-dialog.c:1605
-msgid "Theme"
-msgstr "السمة"
-
-#: ../app/dialogs/preferences-dialog.c:1575
-msgid "Select Theme"
-msgstr "اختر سمة"
-
-#: ../app/dialogs/preferences-dialog.c:1657
-msgid "Reload C_urrent Theme"
-msgstr "أعد تحميل السمة ال_حالية"
-
-#: ../app/dialogs/preferences-dialog.c:1669
-msgid "Help System"
-msgstr "نظام المساعدة"
-
-#. General
-#: ../app/dialogs/preferences-dialog.c:1680
-#: ../app/dialogs/preferences-dialog.c:1781
-#: ../app/dialogs/preferences-dialog.c:1990
-#: ../app/widgets/gimpcontrollereditor.c:186
-msgid "General"
-msgstr "عام"
-
-#: ../app/dialogs/preferences-dialog.c:1683
-msgid "Show _tooltips"
-msgstr "اعرض تلمي_حات الأدوات"
-
-#: ../app/dialogs/preferences-dialog.c:1686
-msgid "Show help _buttons"
-msgstr "أظهر أزرار ال_مساعدة"
-
-#: ../app/dialogs/preferences-dialog.c:1699
-msgid "Use the online version"
-msgstr "استخدم نسخة الإنترنت"
-
-#: ../app/dialogs/preferences-dialog.c:1700
-msgid "Use a locally installed copy"
-msgstr "استخدم النسخة المثبتة محليا"
-
-#: ../app/dialogs/preferences-dialog.c:1701
-msgid "User manual:"
-msgstr "دليل المستخدم:"
-
-#: ../app/dialogs/preferences-dialog.c:1708
-msgid "There's a local installation of the user manual."
-msgstr "يوجد نسخة محلية من دليل المستخدم."
-
-#: ../app/dialogs/preferences-dialog.c:1713
-msgid "The user manual is not installed locally."
-msgstr "دليل المستخدم ليس مثبتا محليا."
-
-#. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1736
-msgid "Help Browser"
-msgstr "متصفح المساعدة"
-
-#: ../app/dialogs/preferences-dialog.c:1740
-msgid "H_elp browser to use:"
-msgstr "متصفح المساعدة الم_ستخدم:"
-
-#. Action Search
-#: ../app/dialogs/preferences-dialog.c:1744
-msgid "Action Search"
-msgstr "ابحث في الإجراءات"
-
-#: ../app/dialogs/preferences-dialog.c:1748
-msgid "Show _unavailable actions"
-msgstr "أظهر الإجراءات غير ال_متاحة"
-
-#: ../app/dialogs/preferences-dialog.c:1751
-msgid "Maximum History Size:"
-msgstr "أقصى حجم للتأريخ:"
-
-#: ../app/dialogs/preferences-dialog.c:1755
-msgid "Clear Action History"
-msgstr "امسح تأريخ الإجراءات"
-
-#: ../app/dialogs/preferences-dialog.c:1770
+#: ../app/dialogs/preferences-dialog.c:1612
+#: ../app/dialogs/preferences-dialog.c:1613
 msgctxt "preferences"
 msgid "Tool Options"
 msgstr "خيارات الأدوات"
 
-#: ../app/dialogs/preferences-dialog.c:1784
+#. General
+#. Snapping Distance
+#: ../app/dialogs/preferences-dialog.c:1621
+#: ../app/dialogs/preferences-dialog.c:2081
+#: ../app/dialogs/preferences-dialog.c:2359
+#: ../app/dialogs/preferences-dialog.c:2590
+#: ../app/widgets/gimpcontrollereditor.c:186
+msgid "General"
+msgstr "عام"
+
+#: ../app/dialogs/preferences-dialog.c:1624
 msgid "_Save tool options on exit"
 msgstr "ا_حفظ خيارات الأدوات عند الخروج"
 
-#: ../app/dialogs/preferences-dialog.c:1788
+#: ../app/dialogs/preferences-dialog.c:1628
 msgid "Save Tool Options _Now"
 msgstr "احفظ خيارات الأدوات ال_آن"
 
-#: ../app/dialogs/preferences-dialog.c:1795
+#: ../app/dialogs/preferences-dialog.c:1635
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_صفّر خيارات الأدوات إلى القيم المبدئية"
 
-#. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1805
-msgid "Guide & Grid Snapping"
-msgstr "اتباع الدليل والشبكة"
-
-#: ../app/dialogs/preferences-dialog.c:1810
-msgid "_Snap distance:"
-msgstr "_مسافة القفز:"
-
-#: ../app/dialogs/preferences-dialog.c:1818
+#: ../app/dialogs/preferences-dialog.c:1649
 msgid "Default _interpolation:"
 msgstr "الاستيفاء ال_مبدئي:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1825
+#: ../app/dialogs/preferences-dialog.c:1656
 msgid "Paint Options Shared Between Tools"
 msgstr "خيارات التلوين مشتركة بين الأدوات"
 
-#: ../app/dialogs/preferences-dialog.c:1829
+#: ../app/dialogs/preferences-dialog.c:1660
 msgid "_Brush"
 msgstr "ال_فرشاة"
 
-#: ../app/dialogs/preferences-dialog.c:1832
+#: ../app/dialogs/preferences-dialog.c:1663
 msgid "_Dynamics"
 msgstr "ال_حركيات"
 
-#: ../app/dialogs/preferences-dialog.c:1835
+#: ../app/dialogs/preferences-dialog.c:1666
 msgid "_Pattern"
 msgstr "ال_نمط"
 
 #. Move Tool
-#: ../app/dialogs/preferences-dialog.c:1842
+#: ../app/dialogs/preferences-dialog.c:1673
 msgid "Move Tool"
 msgstr "أداة النقل"
 
-#: ../app/dialogs/preferences-dialog.c:1846
+#: ../app/dialogs/preferences-dialog.c:1677
 msgid "Set layer or path as active"
 msgstr "اجعل الطبقة أو المسار نشطا"
 
+#: ../app/dialogs/preferences-dialog.c:1690
+msgid "Default New Image"
+msgstr "الصورة الجديدة المبدئية"
+
+#: ../app/dialogs/preferences-dialog.c:1691
+msgid "Default Image"
+msgstr "الصورة المبدئية"
+
+#: ../app/dialogs/preferences-dialog.c:1724
+msgid "Set the default Quick Mask color"
+msgstr "حدد اللون المبدئي للقناع السريع"
+
+#: ../app/dialogs/preferences-dialog.c:1730
+msgid "Quick Mask color:"
+msgstr "لون القناع السريع:"
+
+#: ../app/dialogs/preferences-dialog.c:1740
+msgid "Default Image Grid"
+msgstr "شبكة الصورة المبدئية"
+
+#: ../app/dialogs/preferences-dialog.c:1741
+msgid "Default Grid"
+msgstr "الشبكة المبدئية"
+
+#: ../app/dialogs/preferences-dialog.c:1760
+msgid "User Interface"
+msgstr "واجهة المستخدم"
+
+#: ../app/dialogs/preferences-dialog.c:1761
+msgid "Interface"
+msgstr "الواجهة"
+
+#: ../app/dialogs/preferences-dialog.c:1770
+msgid "Language"
+msgstr "اللغة"
+
+#. Previews
+#: ../app/dialogs/preferences-dialog.c:1776
+msgid "Previews"
+msgstr "معاينات"
+
+#: ../app/dialogs/preferences-dialog.c:1779
+msgid "_Enable layer & channel previews"
+msgstr "فعّل _معاينات الطبقات والقنوات"
+
+#: ../app/dialogs/preferences-dialog.c:1785
+msgid "_Default layer & channel preview size:"
+msgstr "حجم معاينة الطبقات والقنوات الا_فتراضي:"
+
+#: ../app/dialogs/preferences-dialog.c:1788
+msgid "Na_vigation preview size:"
+msgstr "حجم معاينة الإب_حار:"
+
+#. Keyboard Shortcuts
+#: ../app/dialogs/preferences-dialog.c:1792
+msgid "Keyboard Shortcuts"
+msgstr "اختصارات لوحة المفاتيح"
+
+#: ../app/dialogs/preferences-dialog.c:1796
+msgid "_Use dynamic keyboard shortcuts"
+msgstr "استخدم اختصارات لوحة مفاتيح _دينامية"
+
+#: ../app/dialogs/preferences-dialog.c:1800
+msgid "Configure _Keyboard Shortcuts..."
+msgstr "اضبط اختصارات لوحة الم_فاتيح..."
+
+#: ../app/dialogs/preferences-dialog.c:1807
+msgid "_Save keyboard shortcuts on exit"
+msgstr "احفظ اختصارات لوحة المفاتيح عند الخروج"
+
+#: ../app/dialogs/preferences-dialog.c:1811
+msgid "Save Keyboard Shortcuts _Now"
+msgstr "احفظ اختصارات لوحة المفاتيح الآ_ن"
+
+#: ../app/dialogs/preferences-dialog.c:1818
+msgid "_Reset Keyboard Shortcuts to Default Values"
+msgstr "_صفّر اختصارات لوحة المفاتيح إلى القيم المبدئية."
+
+#: ../app/dialogs/preferences-dialog.c:1827
+msgid "Remove _All Keyboard Shortcuts"
+msgstr "أزل _كل اختصارات لوحة المفاتيح"
+
+#: ../app/dialogs/preferences-dialog.c:1839
+#: ../app/dialogs/preferences-dialog.c:1840
+#: ../app/dialogs/preferences-dialog.c:1875
+msgid "Theme"
+msgstr "السمة"
+
+#: ../app/dialogs/preferences-dialog.c:1845
+msgid "Select Theme"
+msgstr "اختر سمة"
+
+#: ../app/dialogs/preferences-dialog.c:1927
+msgid "Reload C_urrent Theme"
+msgstr "أعد تحميل السمة ال_حالية"
+
+#: ../app/dialogs/preferences-dialog.c:1939
+#: ../app/dialogs/preferences-dialog.c:1940
+#: ../app/dialogs/preferences-dialog.c:1975
+msgid "Icon Theme"
+msgstr "سمة الأيقونات"
+
+#: ../app/dialogs/preferences-dialog.c:1945
+msgid "Select an Icon Theme"
+msgstr "اختر سمة الأيقونات"
+
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1870
-#: ../app/dialogs/preferences-dialog.c:2062 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2037
+#: ../app/dialogs/preferences-dialog.c:2430 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "المظهر"
 
-#: ../app/dialogs/preferences-dialog.c:1874
+#: ../app/dialogs/preferences-dialog.c:2041
 msgid "Show _foreground & background color"
 msgstr "أظهر لون المقدمة والخلفية"
 
-#: ../app/dialogs/preferences-dialog.c:1878
+#: ../app/dialogs/preferences-dialog.c:2045
 msgid "Show active _brush, pattern & gradient"
 msgstr "أظهر الفرشاة وال_نمط والتدرّج النشط"
 
-#: ../app/dialogs/preferences-dialog.c:1882
+#: ../app/dialogs/preferences-dialog.c:2049
 msgid "Show active _image"
 msgstr "أظهر ال_صورة النشطة"
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:1890
-msgid "Tools configuration"
+#: ../app/dialogs/preferences-dialog.c:2057
+msgid "Tools Configuration"
 msgstr "ضبط الأداة"
 
-#: ../app/dialogs/preferences-dialog.c:1905
-msgid "Default New Image"
-msgstr "الصورة الجديدة المبدئية"
-
-#: ../app/dialogs/preferences-dialog.c:1907
-msgid "Default Image"
-msgstr "الصورة المبدئية"
-
-#: ../app/dialogs/preferences-dialog.c:1941
-msgid "Set the default Quick Mask color"
-msgstr "حدد اللون المبدئي للقناع السريع"
-
-#: ../app/dialogs/preferences-dialog.c:1947
-msgid "Quick Mask color:"
-msgstr "لون القناع السريع:"
-
-#: ../app/dialogs/preferences-dialog.c:1957
-msgid "Default Image Grid"
-msgstr "شبكة الصورة المبدئية"
-
-#: ../app/dialogs/preferences-dialog.c:1959
-msgid "Default Grid"
-msgstr "الشبكة المبدئية"
-
-#: ../app/dialogs/preferences-dialog.c:1979
-msgid "Image Windows"
-msgstr "نوافذ الصور"
-
-#: ../app/dialogs/preferences-dialog.c:1993
-msgid "Use \"_Dot for dot\" by default"
-msgstr "استخدم \"نقطة لنقطة\" مبدئيا"
-
-#: ../app/dialogs/preferences-dialog.c:1999
-msgid "Marching _ants speed:"
-msgstr "سرعة ال_نمل الزاحف:"
-
-#. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2003
-msgid "Zoom & Resize Behavior"
-msgstr "سلوك التقريب والتحجيم"
-
-#: ../app/dialogs/preferences-dialog.c:2007
-msgid "Resize window on _zoom"
-msgstr "غيّر حجم النافذة عند الت_قريب"
-
-#: ../app/dialogs/preferences-dialog.c:2010
-msgid "Resize window on image _size change"
-msgstr "غيّر حجم النافذة عند تغيير _حجم الصورة"
-
-#: ../app/dialogs/preferences-dialog.c:2016
-msgid "Show entire image"
-msgstr "أظهر كل الصورة"
-
-#: ../app/dialogs/preferences-dialog.c:2018
-msgid "Initial zoom _ratio:"
-msgstr "نسبة التقريب الابتدائية:"
-
-#. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2022
-msgid "Space Bar"
-msgstr "مسطرة المسافات"
-
-#: ../app/dialogs/preferences-dialog.c:2028
-msgid "_While space bar is pressed:"
-msgstr "_بينما مسطرة المسافات مضغوطة:"
-
-#. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2032
-msgid "Mouse Pointers"
-msgstr "مؤشرات الفأرة"
-
-#: ../app/dialogs/preferences-dialog.c:2036
-msgid "Show _brush outline"
-msgstr "أظهر _حدود الفرشاة الخارجية"
-
-#: ../app/dialogs/preferences-dialog.c:2039
-msgid "Show pointer for paint _tools"
-msgstr "اعرض المؤشر لأ_داة الرسم"
-
-#: ../app/dialogs/preferences-dialog.c:2045
-msgid "Pointer _mode:"
-msgstr "_طور المؤشر:"
-
-#: ../app/dialogs/preferences-dialog.c:2048
-msgid "Pointer _handedness:"
-msgstr "اليد المستخدمة للمؤ_شر:"
-
-#: ../app/dialogs/preferences-dialog.c:2060
-msgid "Image Window Appearance"
-msgstr "مظهر نافذة الصورة"
-
-#: ../app/dialogs/preferences-dialog.c:2070
-msgid "Default Appearance in Normal Mode"
-msgstr "المظهر المبدئي في الطور العادي"
-
-#: ../app/dialogs/preferences-dialog.c:2075
-msgid "Default Appearance in Fullscreen Mode"
-msgstr "المظهر المبدئي في طور ملء الشاشة"
+#: ../app/dialogs/preferences-dialog.c:2072
+#: ../app/dialogs/preferences-dialog.c:2073
+msgid "Help System"
+msgstr "نظام المساعدة"
 
 #: ../app/dialogs/preferences-dialog.c:2084
-msgid "Image Title & Statusbar Format"
-msgstr "عنوان الصورة وصيغة شريط الحالة"
+msgid "Show _tooltips"
+msgstr "اعرض تلمي_حات الأدوات"
 
-#: ../app/dialogs/preferences-dialog.c:2086
-msgid "Title & Status"
-msgstr "العنوان والحالة"
+#: ../app/dialogs/preferences-dialog.c:2087
+msgid "Show help _buttons"
+msgstr "أظهر أزرار ال_مساعدة"
 
-#: ../app/dialogs/preferences-dialog.c:2105
-msgid "Current format"
-msgstr "النسق الحالي"
+#: ../app/dialogs/preferences-dialog.c:2100
+msgid "Use the online version"
+msgstr "استخدم نسخة الإنترنت"
 
-#: ../app/dialogs/preferences-dialog.c:2106
-msgid "Default format"
-msgstr "النسق المبدئي"
+#: ../app/dialogs/preferences-dialog.c:2101
+msgid "Use a locally installed copy"
+msgstr "استخدم النسخة المثبتة محليا"
 
-#: ../app/dialogs/preferences-dialog.c:2107
-msgid "Show zoom percentage"
-msgstr "أظهر نسبة التقريب المئوية"
-
-#: ../app/dialogs/preferences-dialog.c:2108
-msgid "Show zoom ratio"
-msgstr "أظهر نسبة التقريب"
+#: ../app/dialogs/preferences-dialog.c:2102
+msgid "User manual:"
+msgstr "دليل المستخدم:"
 
 #: ../app/dialogs/preferences-dialog.c:2109
-msgid "Show image size"
-msgstr "أظهر حجم الصورة"
+msgid "There's a local installation of the user manual."
+msgstr "يوجد نسخة محلية من دليل المستخدم."
 
-#: ../app/dialogs/preferences-dialog.c:2110
-msgid "Show drawable size"
-msgstr "أظهر حجم القابل للرسم"
+#: ../app/dialogs/preferences-dialog.c:2114
+msgid "The user manual is not installed locally."
+msgstr "دليل المستخدم ليس مثبتا محليا."
 
-#: ../app/dialogs/preferences-dialog.c:2123
-msgid "Image Title Format"
-msgstr "نسق عنوان الصورة"
+#. Help Browser
+#: ../app/dialogs/preferences-dialog.c:2137
+msgid "Help Browser"
+msgstr "متصفح المساعدة"
 
-#: ../app/dialogs/preferences-dialog.c:2125
-msgid "Image Statusbar Format"
-msgstr "نسق شريط حالة الصورة"
+#: ../app/dialogs/preferences-dialog.c:2141
+msgid "H_elp browser to use:"
+msgstr "متصفح المساعدة الم_ستخدم:"
 
-#: ../app/dialogs/preferences-dialog.c:2209
-msgid "Image Window Drawing Behavior"
-msgstr "سلوك رسم نافذة الصورة"
+#. Action Search
+#: ../app/dialogs/preferences-dialog.c:2145
+msgid "Action Search"
+msgstr "ابحث في الإجراءات"
 
-#: ../app/dialogs/preferences-dialog.c:2211 ../app/tools/gimpwarpoptions.c:76
-msgid "Behavior"
-msgstr "السلوك"
+#: ../app/dialogs/preferences-dialog.c:2149
+msgid "Show _unavailable actions"
+msgstr "أظهر الإجراءات غير ال_متاحة"
 
-#: ../app/dialogs/preferences-dialog.c:2219
-msgid "Default Behavior in Normal Mode"
-msgstr "السلوك المبدئي في الطور العادي"
+#: ../app/dialogs/preferences-dialog.c:2152
+msgid "Maximum History Size:"
+msgstr "أقصى حجم للتأريخ:"
 
-#: ../app/dialogs/preferences-dialog.c:2223
-msgid "Default Behavior in Fullscreen Mode"
-msgstr "السلوك المبدئي في طور ملء الشاشة"
+#: ../app/dialogs/preferences-dialog.c:2156
+msgid "Clear Action History"
+msgstr "امسح تأريخ الإجراءات"
 
-#: ../app/dialogs/preferences-dialog.c:2232
+#: ../app/dialogs/preferences-dialog.c:2171
+#: ../app/dialogs/preferences-dialog.c:2172
 msgid "Display"
 msgstr "العرض"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2243
+#: ../app/dialogs/preferences-dialog.c:2180
 msgid "Transparency"
 msgstr "الشفافية"
 
-#: ../app/dialogs/preferences-dialog.c:2247
+#: ../app/dialogs/preferences-dialog.c:2184
 msgid "_Check style:"
 msgstr "أسلوب المرب_عات:"
 
-#: ../app/dialogs/preferences-dialog.c:2250
+#: ../app/dialogs/preferences-dialog.c:2187
 msgid "Check _size:"
 msgstr "_حجم المربعات:"
 
-#: ../app/dialogs/preferences-dialog.c:2253
+#: ../app/dialogs/preferences-dialog.c:2190
 msgid "Monitor Resolution"
 msgstr "ميْز الشاشة"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2257 ../app/display/gimpcursorview.c:207
+#: ../app/dialogs/preferences-dialog.c:2194 ../app/display/gimpcursorview.c:207
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "بكسلات"
 
-#: ../app/dialogs/preferences-dialog.c:2275
+#: ../app/dialogs/preferences-dialog.c:2212
 msgid "Horizontal"
 msgstr "أفقي"
 
-#: ../app/dialogs/preferences-dialog.c:2277
+#: ../app/dialogs/preferences-dialog.c:2214
 msgid "Vertical"
 msgstr "رأسي"
 
-#: ../app/dialogs/preferences-dialog.c:2279
+#: ../app/dialogs/preferences-dialog.c:2216
 #: ../app/widgets/gimpimagepropview.c:460
 msgid "ppi"
 msgstr "نقطة في البوصة"
 
-#: ../app/dialogs/preferences-dialog.c:2297
+#: ../app/dialogs/preferences-dialog.c:2234
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "ا_كتشف آليا (حاليا %Id × %Id بكسل في البوصة)"
 
-#: ../app/dialogs/preferences-dialog.c:2315
+#: ../app/dialogs/preferences-dialog.c:2252
 msgid "_Enter manually"
 msgstr "أ_دخل يدويا"
 
-#: ../app/dialogs/preferences-dialog.c:2330
+#: ../app/dialogs/preferences-dialog.c:2267
 msgid "C_alibrate..."
 msgstr "عايِر..."
 
-#: ../app/dialogs/preferences-dialog.c:2358
-msgid "Color Management"
-msgstr "إدارة الألوان"
-
-#: ../app/dialogs/preferences-dialog.c:2377
-msgid "Preferred _RGB profile:"
-msgstr "لا_حة ح‌خ‌ز (RGB) المفضلة:"
-
-#: ../app/dialogs/preferences-dialog.c:2378
-msgid "Select RGB Color Profile"
-msgstr "اختر لاحة ألوان ح‌خ‌ز"
-
-#: ../app/dialogs/preferences-dialog.c:2379
-msgid "_CMYK profile:"
-msgstr "لاحة _زق‌ص‌س:"
-
-#: ../app/dialogs/preferences-dialog.c:2380
-msgid "Select CMYK Color Profile"
-msgstr "اختر لاحة ألوان زق‌ص‌س"
-
-#: ../app/dialogs/preferences-dialog.c:2381
-msgid "_Monitor profile:"
-msgstr "لاحة ال_شاشة:"
-
-#: ../app/dialogs/preferences-dialog.c:2382
-msgid "Select Monitor Color Profile"
-msgstr "اختر لاحة ألوان الشاشة"
-
-#: ../app/dialogs/preferences-dialog.c:2383
-msgid "_Print simulation profile:"
-msgstr "لاحة محاكاة ال_طبع:"
-
-#: ../app/dialogs/preferences-dialog.c:2384
-msgid "Select Printer Color Profile"
-msgstr "اختر لاحة ألوان الطابعة"
-
-#: ../app/dialogs/preferences-dialog.c:2395
-msgid "_Mode of operation:"
-msgstr "_طور العمل:"
-
-#: ../app/dialogs/preferences-dialog.c:2425
-msgid "_Try to use the system monitor profile"
-msgstr "_جرب استخدام لاحة شاشة النظام"
-
-#: ../app/dialogs/preferences-dialog.c:2435
-msgid "_Display rendering intent:"
-msgstr "توزيع الألوان على ال_شاشة:"
-
-#: ../app/dialogs/preferences-dialog.c:2441
-msgid "Use _black point compensation for the display"
-msgstr "استخدم تعويض النق_طة السوداء للعرض"
-
-#: ../app/dialogs/preferences-dialog.c:2455
-msgid "_Softproof rendering intent:"
-msgstr "توزيع الألوان في م_حاكاة الطباعة:"
-
-#: ../app/dialogs/preferences-dialog.c:2461
-msgid "Use black _point compensation for softproofing"
-msgstr "استخدم تعويض النق_طة السوداء لمحاكاة الطباعة"
-
-#: ../app/dialogs/preferences-dialog.c:2479
-msgid "Mark out of gamut colors"
-msgstr ""
-
-#: ../app/dialogs/preferences-dialog.c:2484
-msgid "Select Warning Color"
-msgstr "اختر لون التحذير"
-
-#: ../app/dialogs/preferences-dialog.c:2497
-msgid "File Open behaviour:"
-msgstr "سلوك فتح الملفات:"
-
-#: ../app/dialogs/preferences-dialog.c:2509
-msgid "Input Devices"
-msgstr "أجهزة الإدخال"
-
-#. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2518
-msgid "Extended Input Devices"
-msgstr "أجهزة إدخال ممتدة"
-
-#: ../app/dialogs/preferences-dialog.c:2522
-msgid "Configure E_xtended Input Devices..."
-msgstr "اضبط أجهزة الإدخال ال_ممتدة..."
-
-#: ../app/dialogs/preferences-dialog.c:2529
-msgid "_Save input device settings on exit"
-msgstr "ا_حفظ إعدادات جهاز الإدخال عند الخروج"
-
-#: ../app/dialogs/preferences-dialog.c:2533
-msgid "Save Input Device Settings _Now"
-msgstr "احفظ إعدادات جهاز الإدخال ال_آن"
-
-#: ../app/dialogs/preferences-dialog.c:2540
-msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "صفّر إعدادات جهاز الدخل المحفوظة إلى القيم المبدئية"
-
-#: ../app/dialogs/preferences-dialog.c:2555
-msgid "Additional Input Controllers"
-msgstr "متحكمات إدخال إضافية"
-
-#: ../app/dialogs/preferences-dialog.c:2557
-msgid "Input Controllers"
-msgstr "متحكمات الإدخال"
-
-#: ../app/dialogs/preferences-dialog.c:2573
+#: ../app/dialogs/preferences-dialog.c:2295
+#: ../app/dialogs/preferences-dialog.c:2296
 msgid "Window Management"
 msgstr "إدارة النوافذ"
 
-#: ../app/dialogs/preferences-dialog.c:2581
+#: ../app/dialogs/preferences-dialog.c:2301
 msgid "Window Manager Hints"
 msgstr "تلميحات مدير النوافذ"
 
-#: ../app/dialogs/preferences-dialog.c:2587
+#: ../app/dialogs/preferences-dialog.c:2307
 msgid "Hint for _docks and toolbox:"
 msgstr "تلميحة الأرصفة و _صندوق الأدوات:"
 
-#: ../app/dialogs/preferences-dialog.c:2590
+#: ../app/dialogs/preferences-dialog.c:2310
 msgid "Focus"
 msgstr "البؤرة"
 
-#: ../app/dialogs/preferences-dialog.c:2594
+#: ../app/dialogs/preferences-dialog.c:2314
 msgid "Activate the _focused image"
 msgstr "نشّط الصورة التي في ال_بؤرة"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2598
+#: ../app/dialogs/preferences-dialog.c:2318
 msgid "Window Positions"
 msgstr "مواضع النوافذ"
 
-#: ../app/dialogs/preferences-dialog.c:2601
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "_Save window positions on exit"
 msgstr "ا_حفظ مواضع النوافذ عند الخروج"
 
-#: ../app/dialogs/preferences-dialog.c:2604
+#: ../app/dialogs/preferences-dialog.c:2324
 msgid "Open windows on the same _monitor they were open before"
 msgstr "افتح ال_نوافذ في نفس الشاشة التي فتحوا فيها من قبل"
 
-#: ../app/dialogs/preferences-dialog.c:2608
+#: ../app/dialogs/preferences-dialog.c:2328
 msgid "Save Window Positions _Now"
 msgstr "احفظ مواضع النوافذ الآ_ن"
 
-#: ../app/dialogs/preferences-dialog.c:2615
+#: ../app/dialogs/preferences-dialog.c:2335
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "صفّر مواضع النوافذ المحفوظة إلى القيم المبدئية"
 
-#: ../app/dialogs/preferences-dialog.c:2630
+#: ../app/dialogs/preferences-dialog.c:2350
+#: ../app/dialogs/preferences-dialog.c:2351
+msgid "Image Windows"
+msgstr "نوافذ الصور"
+
+#: ../app/dialogs/preferences-dialog.c:2362
+msgid "Use \"_Dot for dot\" by default"
+msgstr "استخدم \"نقطة لنقطة\" مبدئيا"
+
+#: ../app/dialogs/preferences-dialog.c:2368
+msgid "Marching _ants speed:"
+msgstr "سرعة ال_نمل الزاحف:"
+
+#. Zoom & Resize Behavior
+#: ../app/dialogs/preferences-dialog.c:2372
+msgid "Zoom & Resize Behavior"
+msgstr "سلوك التقريب والتحجيم"
+
+#: ../app/dialogs/preferences-dialog.c:2376
+msgid "Resize window on _zoom"
+msgstr "غيّر حجم النافذة عند الت_قريب"
+
+#: ../app/dialogs/preferences-dialog.c:2379
+msgid "Resize window on image _size change"
+msgstr "غيّر حجم النافذة عند تغيير _حجم الصورة"
+
+#: ../app/dialogs/preferences-dialog.c:2385
+msgid "Show entire image"
+msgstr "أظهر كل الصورة"
+
+#: ../app/dialogs/preferences-dialog.c:2387
+msgid "Initial zoom _ratio:"
+msgstr "نسبة التقريب الابتدائية:"
+
+#. Space Bar
+#: ../app/dialogs/preferences-dialog.c:2391
+msgid "Space Bar"
+msgstr "مسطرة المسافات"
+
+#: ../app/dialogs/preferences-dialog.c:2397
+msgid "_While space bar is pressed:"
+msgstr "_بينما مسطرة المسافات مضغوطة:"
+
+#. Mouse Pointers
+#: ../app/dialogs/preferences-dialog.c:2401
+msgid "Mouse Pointers"
+msgstr "مؤشرات الفأرة"
+
+#: ../app/dialogs/preferences-dialog.c:2405
+msgid "Show _brush outline"
+msgstr "أظهر _حدود الفرشاة الخارجية"
+
+#: ../app/dialogs/preferences-dialog.c:2408
+msgid "Show pointer for paint _tools"
+msgstr "اعرض المؤشر لأ_داة الرسم"
+
+#: ../app/dialogs/preferences-dialog.c:2414
+msgid "Pointer _mode:"
+msgstr "_طور المؤشر:"
+
+#: ../app/dialogs/preferences-dialog.c:2417
+msgid "Pointer _handedness:"
+msgstr "اليد المستخدمة للمؤ_شر:"
+
+#: ../app/dialogs/preferences-dialog.c:2429
+msgid "Image Window Appearance"
+msgstr "مظهر نافذة الصورة"
+
+#: ../app/dialogs/preferences-dialog.c:2437
+msgid "Default Appearance in Normal Mode"
+msgstr "المظهر المبدئي في الطور العادي"
+
+#: ../app/dialogs/preferences-dialog.c:2442
+msgid "Default Appearance in Fullscreen Mode"
+msgstr "المظهر المبدئي في طور ملء الشاشة"
+
+#: ../app/dialogs/preferences-dialog.c:2451
+msgid "Image Title & Statusbar Format"
+msgstr "عنوان الصورة وصيغة شريط الحالة"
+
+#: ../app/dialogs/preferences-dialog.c:2452
+msgid "Title & Status"
+msgstr "العنوان والحالة"
+
+#: ../app/dialogs/preferences-dialog.c:2470
+msgid "Current format"
+msgstr "النسق الحالي"
+
+#: ../app/dialogs/preferences-dialog.c:2471
+msgid "Default format"
+msgstr "النسق المبدئي"
+
+#: ../app/dialogs/preferences-dialog.c:2472
+msgid "Show zoom percentage"
+msgstr "أظهر نسبة التقريب المئوية"
+
+#: ../app/dialogs/preferences-dialog.c:2473
+msgid "Show zoom ratio"
+msgstr "أظهر نسبة التقريب"
+
+#: ../app/dialogs/preferences-dialog.c:2474
+msgid "Show image size"
+msgstr "أظهر حجم الصورة"
+
+#: ../app/dialogs/preferences-dialog.c:2475
+msgid "Show drawable size"
+msgstr "أظهر حجم القابل للرسم"
+
+#: ../app/dialogs/preferences-dialog.c:2488
+msgid "Image Title Format"
+msgstr "نسق عنوان الصورة"
+
+#: ../app/dialogs/preferences-dialog.c:2490
+msgid "Image Statusbar Format"
+msgstr "نسق شريط حالة الصورة"
+
+#: ../app/dialogs/preferences-dialog.c:2574
+msgid "Image Window Snapping Behavior"
+msgstr "سلوك اتباع نافذة الصورة"
+
+#: ../app/dialogs/preferences-dialog.c:2575
+msgid "Snapping"
+msgstr "الاتباع"
+
+#: ../app/dialogs/preferences-dialog.c:2582
+msgid "Default Behavior in Normal Mode"
+msgstr "السلوك المبدئي في الطور العادي"
+
+#: ../app/dialogs/preferences-dialog.c:2586
+msgid "Default Behavior in Fullscreen Mode"
+msgstr "السلوك المبدئي في طور ملء الشاشة"
+
+#: ../app/dialogs/preferences-dialog.c:2595
+msgid "_Snapping distance:"
+msgstr "_مسافة الاتباع:"
+
+#: ../app/dialogs/preferences-dialog.c:2604
+#: ../app/dialogs/preferences-dialog.c:2605
+msgid "Input Devices"
+msgstr "أجهزة الإدخال"
+
+#. Extended Input Devices
+#: ../app/dialogs/preferences-dialog.c:2611
+msgid "Extended Input Devices"
+msgstr "أجهزة إدخال ممتدة"
+
+#: ../app/dialogs/preferences-dialog.c:2615
+msgid "Configure E_xtended Input Devices..."
+msgstr "اضبط أجهزة الإدخال ال_ممتدة..."
+
+#: ../app/dialogs/preferences-dialog.c:2622
+msgid "_Save input device settings on exit"
+msgstr "ا_حفظ إعدادات جهاز الإدخال عند الخروج"
+
+#: ../app/dialogs/preferences-dialog.c:2626
+msgid "Save Input Device Settings _Now"
+msgstr "احفظ إعدادات جهاز الإدخال ال_آن"
+
+#: ../app/dialogs/preferences-dialog.c:2633
+msgid "_Reset Saved Input Device Settings to Default Values"
+msgstr "صفّر إعدادات جهاز الدخل المحفوظة إلى القيم المبدئية"
+
+#: ../app/dialogs/preferences-dialog.c:2648
+msgid "Additional Input Controllers"
+msgstr "متحكمات إدخال إضافية"
+
+#: ../app/dialogs/preferences-dialog.c:2649
+msgid "Input Controllers"
+msgstr "متحكمات الإدخال"
+
+#: ../app/dialogs/preferences-dialog.c:2664
+#: ../app/dialogs/preferences-dialog.c:2665
 msgid "Folders"
 msgstr "المجلدات"
 
-#: ../app/dialogs/preferences-dialog.c:2649
+#: ../app/dialogs/preferences-dialog.c:2681
 msgid "Temporary folder:"
 msgstr "المجلد المؤقت:"
 
-#: ../app/dialogs/preferences-dialog.c:2650
+#: ../app/dialogs/preferences-dialog.c:2682
 msgid "Select Folder for Temporary Files"
 msgstr "اختر مجلدا للملفات المؤقتة"
 
-#: ../app/dialogs/preferences-dialog.c:2654
+#: ../app/dialogs/preferences-dialog.c:2686
 msgid "Swap folder:"
 msgstr "مجلد التبديل:"
 
-#: ../app/dialogs/preferences-dialog.c:2655
+#: ../app/dialogs/preferences-dialog.c:2687
 msgid "Select Swap Folder"
 msgstr "اختر مجلد التبديل:"
 
-#: ../app/dialogs/preferences-dialog.c:2690
+#: ../app/dialogs/preferences-dialog.c:2722
 msgid "Brush Folders"
 msgstr "مجلدات الفرش"
 
-#: ../app/dialogs/preferences-dialog.c:2692
+#: ../app/dialogs/preferences-dialog.c:2724
 msgid "Select Brush Folders"
 msgstr "اختر مجلدات الفرش"
 
-#: ../app/dialogs/preferences-dialog.c:2694
+#: ../app/dialogs/preferences-dialog.c:2726
 msgid "Dynamics Folders"
 msgstr "مجلدات الحركيات"
 
-#: ../app/dialogs/preferences-dialog.c:2696
+#: ../app/dialogs/preferences-dialog.c:2728
 msgid "Select Dynamics Folders"
 msgstr "اختر مجلدات الحركيات"
 
-#: ../app/dialogs/preferences-dialog.c:2698
+#: ../app/dialogs/preferences-dialog.c:2730
 msgid "Pattern Folders"
 msgstr "مجلدات الأنماط"
 
-#: ../app/dialogs/preferences-dialog.c:2700
+#: ../app/dialogs/preferences-dialog.c:2732
 msgid "Select Pattern Folders"
 msgstr "اختر مجلدات الأنماط"
 
-#: ../app/dialogs/preferences-dialog.c:2702
+#: ../app/dialogs/preferences-dialog.c:2734
 msgid "Palette Folders"
 msgstr "مجلدات ألواح الألوان"
 
-#: ../app/dialogs/preferences-dialog.c:2704
+#: ../app/dialogs/preferences-dialog.c:2736
 msgid "Select Palette Folders"
 msgstr "اختر مجلدات ألواح الألوان"
 
-#: ../app/dialogs/preferences-dialog.c:2706
+#: ../app/dialogs/preferences-dialog.c:2738
 msgid "Gradient Folders"
 msgstr "مجلدات التدرجات"
 
-#: ../app/dialogs/preferences-dialog.c:2708
+#: ../app/dialogs/preferences-dialog.c:2740
 msgid "Select Gradient Folders"
 msgstr "اختر مجلدات التدرجات"
 
-#: ../app/dialogs/preferences-dialog.c:2710
+#: ../app/dialogs/preferences-dialog.c:2742
 msgid "Font Folders"
 msgstr "مجلدات الخطوط"
 
-#: ../app/dialogs/preferences-dialog.c:2712
+#: ../app/dialogs/preferences-dialog.c:2744
 msgid "Select Font Folders"
 msgstr "اختر مجلدات الخطوط"
 
-#: ../app/dialogs/preferences-dialog.c:2714
+#: ../app/dialogs/preferences-dialog.c:2746
 msgid "Tool Preset Folders"
 msgstr "مجلد محفوظات الخيارات"
 
-#: ../app/dialogs/preferences-dialog.c:2716
+#: ../app/dialogs/preferences-dialog.c:2748
 msgid "Select Tool Preset Folders"
 msgstr "اختر مجلد محفوظات الخيارات"
 
-#: ../app/dialogs/preferences-dialog.c:2719
-msgid "MyPaint Brushes"
-msgstr "فرش MyPaint"
-
-#: ../app/dialogs/preferences-dialog.c:2719
+#: ../app/dialogs/preferences-dialog.c:2750
 msgid "MyPaint Brush Folders"
-msgstr "مجلدات فرش MyPaint"
+msgstr "مجلدات فرش ماي پينت"
 
-#: ../app/dialogs/preferences-dialog.c:2721
+#: ../app/dialogs/preferences-dialog.c:2752
 msgid "Select MyPaint Brush Folders"
-msgstr "اختر مجلدات فرش MyPaint"
+msgstr "اختر مجلدات فرش ماي پينت"
 
-#: ../app/dialogs/preferences-dialog.c:2724
+#: ../app/dialogs/preferences-dialog.c:2754
 msgid "Plug-In Folders"
 msgstr "مجلدات الملحقات"
 
-#: ../app/dialogs/preferences-dialog.c:2726
+#: ../app/dialogs/preferences-dialog.c:2756
 msgid "Select Plug-In Folders"
 msgstr "اختر مجلدات الملحقات"
 
-#: ../app/dialogs/preferences-dialog.c:2728
+#: ../app/dialogs/preferences-dialog.c:2758
 msgid "Scripts"
 msgstr "مخطوطات"
 
-#: ../app/dialogs/preferences-dialog.c:2728
+#: ../app/dialogs/preferences-dialog.c:2758
 msgid "Script-Fu Folders"
 msgstr "مجلدات المخطوطات"
 
-#: ../app/dialogs/preferences-dialog.c:2730
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Select Script-Fu Folders"
 msgstr "اختر مجلدات المخطوطات"
 
-#: ../app/dialogs/preferences-dialog.c:2732
+#: ../app/dialogs/preferences-dialog.c:2762
 msgid "Module Folders"
 msgstr "مجلدات الوحدات"
 
-#: ../app/dialogs/preferences-dialog.c:2734
+#: ../app/dialogs/preferences-dialog.c:2764
 msgid "Select Module Folders"
 msgstr "اختر مجلدات الوحدات"
 
-#: ../app/dialogs/preferences-dialog.c:2736
+#: ../app/dialogs/preferences-dialog.c:2766
 msgid "Interpreters"
 msgstr "المفسّرات"
 
-#: ../app/dialogs/preferences-dialog.c:2736
+#: ../app/dialogs/preferences-dialog.c:2766
 msgid "Interpreter Folders"
 msgstr "مجلدات المفسّرات"
 
-#: ../app/dialogs/preferences-dialog.c:2738
+#: ../app/dialogs/preferences-dialog.c:2768
 msgid "Select Interpreter Folders"
 msgstr "اختر مجلدات المفسّرات"
 
-#: ../app/dialogs/preferences-dialog.c:2740
+#: ../app/dialogs/preferences-dialog.c:2770
+msgid "Environment"
+msgstr "البيئة"
+
+#: ../app/dialogs/preferences-dialog.c:2770
 msgid "Environment Folders"
 msgstr "مجلدات البيئة"
 
-#: ../app/dialogs/preferences-dialog.c:2742
+#: ../app/dialogs/preferences-dialog.c:2772
 msgid "Select Environment Folders"
 msgstr "اختر مجلدات البيئة"
 
-#: ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/preferences-dialog.c:2774
 msgid "Themes"
 msgstr "السمات"
 
-#: ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/preferences-dialog.c:2774
 msgid "Theme Folders"
 msgstr "مجلدات السمات"
 
-#: ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/preferences-dialog.c:2776
 msgid "Select Theme Folders"
 msgstr "اختر مجلدات السمات"
+
+#: ../app/dialogs/preferences-dialog.c:2778
+msgid "Icon Themes"
+msgstr "سمات الأيقونات"
+
+#: ../app/dialogs/preferences-dialog.c:2778
+msgid "Icon Theme Folders"
+msgstr "مجلدات سمات الأيقونات"
+
+#: ../app/dialogs/preferences-dialog.c:2780
+msgid "Select Icon Theme Folders"
+msgstr "اختر مجلدات سمات الأيقونات"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
@@ -11588,7 +11735,7 @@ msgstr "رأ_سي:"
 msgid "Image Size"
 msgstr "حجم الصورة"
 
-#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:415
+#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:408
 msgid "Quality"
 msgstr "الجودة"
 
@@ -11919,6 +12066,7 @@ msgstr "تعذّر تعديل بكسلات مجموعات الطبقات."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:312 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1833
+#: ../app/tools/gimpwarptool.c:577
 msgid "The active layer's pixels are locked."
 msgstr "بكسلات الطبقة النشطة موصدة"
 
@@ -12329,14 +12477,14 @@ msgstr "العتبة القصوى"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:209
+#: ../app/gui/gui.c:210
 msgid "default:LTR"
 msgstr "default:RTL"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:497
+#: ../app/gui/gui.c:503
 msgid "Documents"
 msgstr "المستندات"
 
@@ -12400,16 +12548,25 @@ msgstr "نسبة ارتفاع نقطة الحبر"
 msgid "Ink Blob Angle"
 msgstr "زاوية نقطة الحبر"
 
-#: ../app/paint/gimpmybrush.c:90
+#: ../app/paint/gimpmybrushcore.c:98
 msgid "Mybrush"
 msgstr "Mybrush"
 
-#: ../app/paint/gimpmybrushoptions.c:69 ../app/tools/gimpcoloroptions.c:158
-#: ../app/tools/gimpmybrushoptions-gui.c:166
+#: ../app/paint/gimpmybrushcore.c:136
+msgid "No MyPaint brushes available for use with this tool."
+msgstr "لا فرش ماي پينت متاحة للاستخدام مع هذه الأداة."
+
+#: ../app/paint/gimpmybrushoptions.c:75 ../app/tools/gimpcoloroptions.c:158
+#: ../app/tools/gimpmybrushoptions-gui.c:52
 #: ../app/tools/gimprectangleselectoptions.c:164
 #: ../app/tools/gimpselectionoptions.c:278 ../app/widgets/gimpbrusheditor.c:156
 msgid "Radius"
 msgstr "نصف القطر"
+
+#: ../app/paint/gimpmybrushoptions.c:79
+#: ../app/tools/gimpmybrushoptions-gui.c:59
+msgid "Base Opacity"
+msgstr "إعتام الأساس"
 
 #: ../app/paint/gimppaintbrush.c:66 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
@@ -12425,7 +12582,7 @@ msgstr "حجم الفرشاة"
 
 #: ../app/paint/gimppaintoptions.c:200
 msgid "Link brush size with canvas zoom"
-msgstr ""
+msgstr "اربط حجم الفرشاة بحجم رقعة الرسم"
 
 #: ../app/paint/gimppaintoptions.c:225
 msgid "Brush Force"
@@ -12433,23 +12590,23 @@ msgstr "قوة الفرشاة"
 
 #: ../app/paint/gimppaintoptions.c:231
 msgid "Link brush size to brush native"
-msgstr ""
+msgstr "اربط حجم الفرشاة بحجمها الطبيعي"
 
 #: ../app/paint/gimppaintoptions.c:237
 msgid "Link brush aspect ratio to brush native"
-msgstr ""
+msgstr "اربط نسبة ارتفاع الفرشاة بنسبتها الطبيعية"
 
 #: ../app/paint/gimppaintoptions.c:243
 msgid "Link brush angle to brush native"
-msgstr ""
+msgstr "اربط زاوية الفرشاة بزاويتها الطبيعية"
 
 #: ../app/paint/gimppaintoptions.c:249
 msgid "Link brush spacing to brush native"
-msgstr ""
+msgstr "اربط تباعد الفرشاة بتباعدها الطبيعي"
 
 #: ../app/paint/gimppaintoptions.c:255
 msgid "Link brush hardness to brush native"
-msgstr ""
+msgstr "اربط صلابة الفرشاة بصلابتها الطبيعية"
 
 #: ../app/paint/gimppaintoptions.c:260
 msgid "Every stamp has its own opacity"
@@ -13525,7 +13682,7 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "ثابت"
 
-#: ../app/tools/gimp-tools.c:382
+#: ../app/tools/gimp-tools.c:380
 msgid ""
 "This tool has\n"
 "no options."
@@ -13674,7 +13831,7 @@ msgstr "انقر لأخذ هذا المسار كأول عنصر"
 msgid "Click to add this path to the list"
 msgstr "انقر لإضافة هذا المسار إلى القائمة"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:368
+#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:361
 msgid "Gradient"
 msgstr "تدرج"
 
@@ -13683,7 +13840,7 @@ msgstr "تدرج"
 msgid "Shape"
 msgstr "الشكل"
 
-#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:350
+#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:343
 msgid "Repeat"
 msgstr "كرّر"
 
@@ -13710,7 +13867,7 @@ msgstr "ا_مزج"
 #: ../app/tools/gimpblendtool.c:241 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:287
 #: ../app/tools/gimpimagemaptool.c:319 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1840
+#: ../app/tools/gimptransformtool.c:1840 ../app/tools/gimpwarptool.c:584
 msgid "The active layer is not visible."
 msgstr "الطبقة النشطة غير مرئية."
 
@@ -13877,7 +14034,7 @@ msgstr "تحويل القفص: شوّه التحديد باستخدام قفص"
 msgid "_Cage Transform"
 msgstr "تحويل ال_قفص"
 
-#: ../app/tools/gimpcagetool.c:315 ../app/tools/gimpwarptool.c:313
+#: ../app/tools/gimpcagetool.c:315 ../app/tools/gimpwarptool.c:317
 msgid "Press ENTER to commit the transform"
 msgstr "اضغط ENTER لتنفيذ التحويل"
 
@@ -14787,11 +14944,11 @@ msgid "Adjustment"
 msgstr "الضبط"
 
 #: ../app/tools/gimpinkoptions-gui.c:65 ../app/tools/gimpinkoptions-gui.c:88
-#: ../app/tools/gimppaintoptions-gui.c:170 ../app/tools/gimpwarpoptions.c:199
+#: ../app/tools/gimppaintoptions-gui.c:163 ../app/tools/gimpwarpoptions.c:199
 msgid "Size"
 msgstr "الحجم"
 
-#: ../app/tools/gimpinkoptions-gui.c:72 ../app/tools/gimppaintoptions-gui.c:186
+#: ../app/tools/gimpinkoptions-gui.c:72 ../app/tools/gimppaintoptions-gui.c:179
 #: ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "الزاوية"
@@ -15125,28 +15282,23 @@ msgstr "ألغِ الدليل"
 msgid "Add Guide: "
 msgstr "أضِف دليلا: "
 
-#: ../app/tools/gimpmybrushoptions-gui.c:173
-#: ../app/tools/gimppaintoptions-gui.c:202 ../app/tools/gimpwarpoptions.c:206
+#: ../app/tools/gimpmybrushoptions-gui.c:66
+#: ../app/tools/gimppaintoptions-gui.c:195 ../app/tools/gimpwarpoptions.c:206
 #: ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
 msgstr "الصلابة"
 
-#: ../app/tools/gimpmybrushoptions-gui.c:180
-#: ../app/tools/gimppaintoptions-gui.c:161
-msgid "Brush"
-msgstr "فرشاة"
-
-#: ../app/tools/gimpmybrushtool.c:76
+#: ../app/tools/gimpmybrushtool.c:69
 msgid "MyPaint Brush"
-msgstr "فرشاة MyPaint"
+msgstr "فرشاة ماي پينت"
 
-#: ../app/tools/gimpmybrushtool.c:77
+#: ../app/tools/gimpmybrushtool.c:70
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
-msgstr "أداة فرشاة MyPaint: استخدم فرش MyPaint في جمب"
+msgstr "أداة فرشاة ماي پينت: استخدم فرش ماي پينت في جمب"
 
-#: ../app/tools/gimpmybrushtool.c:78
+#: ../app/tools/gimpmybrushtool.c:71
 msgid "M_yPaint Brush"
-msgstr "فرشاة MyPaint_"
+msgstr "فرشاة ماي پينت_"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:76
 #: ../app/tools/gimpnpointdeformationoptions.c:204
@@ -15234,97 +15386,101 @@ msgstr "أداة فرشاة التلوين: ارسم ضربات ناعمة بف�
 msgid "_Paintbrush"
 msgstr "_فرشاة تلوين"
 
-#: ../app/tools/gimppaintoptions-gui.c:112
+#: ../app/tools/gimppaintoptions-gui.c:110
 #: ../app/widgets/gimplayertreeview.c:270
 msgid "Mode"
 msgstr "الوضع"
 
-#: ../app/tools/gimppaintoptions-gui.c:171
+#: ../app/tools/gimppaintoptions-gui.c:154
+msgid "Brush"
+msgstr "فرشاة"
+
+#: ../app/tools/gimppaintoptions-gui.c:164
 msgid "Reset size to brush's native size"
 msgstr "صفّر حجم الفرشاة لقيمته الطبيعية"
 
-#: ../app/tools/gimppaintoptions-gui.c:178
+#: ../app/tools/gimppaintoptions-gui.c:171
 msgid "Aspect Ratio"
 msgstr "نسبة الارتفاع"
 
-#: ../app/tools/gimppaintoptions-gui.c:179
+#: ../app/tools/gimppaintoptions-gui.c:172
 msgid "Reset aspect ratio to brush's native"
 msgstr "صفّر نسبة ارتفاع الفرشاة لقيمتها الطبيعية"
 
-#: ../app/tools/gimppaintoptions-gui.c:187
+#: ../app/tools/gimppaintoptions-gui.c:180
 msgid "Reset angle to zero"
 msgstr "صفّر الزاوية"
 
-#: ../app/tools/gimppaintoptions-gui.c:194 ../app/widgets/gimpbrusheditor.c:211
+#: ../app/tools/gimppaintoptions-gui.c:187 ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "المباعدة"
 
-#: ../app/tools/gimppaintoptions-gui.c:195
+#: ../app/tools/gimppaintoptions-gui.c:188
 msgid "Reset spacing to brush's native spacing"
 msgstr "صفّر مباعدة الفرشاة لقيمتها الطبيعية"
 
-#: ../app/tools/gimppaintoptions-gui.c:203
+#: ../app/tools/gimppaintoptions-gui.c:196
 msgid "Reset hardness to default"
 msgstr "استعد القيم المبدئية للصلابة"
 
-#: ../app/tools/gimppaintoptions-gui.c:210
+#: ../app/tools/gimppaintoptions-gui.c:203
 msgid "Force"
 msgstr "القوة"
 
-#: ../app/tools/gimppaintoptions-gui.c:211
+#: ../app/tools/gimppaintoptions-gui.c:204
 msgid "Reset force to default"
 msgstr "استعد القيم المبدئية للقوة"
 
-#: ../app/tools/gimppaintoptions-gui.c:253
+#: ../app/tools/gimppaintoptions-gui.c:246
 msgid "Lock brush size to zoom"
 msgstr "أوصد حجم الفرشاة لمستوى التقريب"
 
-#: ../app/tools/gimppaintoptions-gui.c:267
+#: ../app/tools/gimppaintoptions-gui.c:260
 msgid "Incremental"
 msgstr "تزايدي"
 
-#: ../app/tools/gimppaintoptions-gui.c:285
+#: ../app/tools/gimppaintoptions-gui.c:278
 msgid "Hard edge"
 msgstr "حافة قاسية"
 
-#: ../app/tools/gimppaintoptions-gui.c:313
+#: ../app/tools/gimppaintoptions-gui.c:306
 msgid "Dynamics Options"
 msgstr "خيارات الحركيات"
 
-#: ../app/tools/gimppaintoptions-gui.c:319
+#: ../app/tools/gimppaintoptions-gui.c:312
 msgid "Fade Options"
 msgstr "خيارات الإبهات"
 
-#: ../app/tools/gimppaintoptions-gui.c:333
+#: ../app/tools/gimppaintoptions-gui.c:326
 msgid "Fade length"
 msgstr "طول الإبهات"
 
-#: ../app/tools/gimppaintoptions-gui.c:356 ../app/widgets/gimpviewablebox.c:309
+#: ../app/tools/gimppaintoptions-gui.c:349 ../app/widgets/gimpviewablebox.c:309
 msgid "Reverse"
 msgstr "اعكس"
 
-#: ../app/tools/gimppaintoptions-gui.c:363
+#: ../app/tools/gimppaintoptions-gui.c:356
 msgid "Color Options"
 msgstr "خيارات الألوان"
 
-#: ../app/tools/gimppaintoptions-gui.c:389
+#: ../app/tools/gimppaintoptions-gui.c:382
 msgid "Amount"
 msgstr "المقدار"
 
-#: ../app/tools/gimppaintoptions-gui.c:393
+#: ../app/tools/gimppaintoptions-gui.c:386
 msgid "Apply Jitter"
 msgstr "طبّق النفّاض"
 
-#: ../app/tools/gimppaintoptions-gui.c:411
+#: ../app/tools/gimppaintoptions-gui.c:404
 msgid "Smooth stroke"
 msgstr "سماكة ناعمة"
 
-#: ../app/tools/gimppaintoptions-gui.c:421
+#: ../app/tools/gimppaintoptions-gui.c:414
 msgid "Weight"
 msgstr "الوزن"
 
-#: ../app/tools/gimppaintoptions-gui.c:560
+#: ../app/tools/gimppaintoptions-gui.c:553
 msgid "Link to brush default"
 msgstr "اربط الفرشاة بالمبدئيات"
 
@@ -16268,6 +16424,10 @@ msgstr "احذف المرابط"
 msgid "There is no active layer or channel to stroke to"
 msgstr "لا توجد طبقة أو قناة نشطة لرسم الحواف بها"
 
+#: ../app/tools/gimpwarpoptions.c:76
+msgid "Behavior"
+msgstr "السلوك"
+
 #: ../app/tools/gimpwarpoptions.c:83
 msgid "Effect Strength"
 msgstr "قوة التأثير"
@@ -16313,29 +16473,34 @@ msgstr ""
 msgid "_Warp Transform"
 msgstr ""
 
-#: ../app/tools/gimpwarptool.c:446 ../app/tools/gimpwarptool.c:458
+#: ../app/tools/gimpwarptool.c:462 ../app/tools/gimpwarptool.c:474
 msgid "Warp Tool Stroke"
 msgstr ""
 
-#: ../app/tools/gimpwarptool.c:710
+#: ../app/tools/gimpwarptool.c:570
+#, fuzzy
+msgid "Cannot warp layer groups."
+msgstr "لا يمكن الرسم على مجموعات الطبقات."
+
+#: ../app/tools/gimpwarptool.c:749
 msgid "Warp transform"
 msgstr ""
 
-#: ../app/tools/gimpwarptool.c:847
+#: ../app/tools/gimpwarptool.c:886
 msgid "Please add some warp strokes first."
 msgstr ""
 
-#: ../app/tools/gimpwarptool.c:860 ../app/tools/gimpwarptool.c:896
+#: ../app/tools/gimpwarptool.c:899 ../app/tools/gimpwarptool.c:935
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "يصيّر الإطار %d"
 
-#: ../app/tools/gimpwarptool.c:875 ../app/tools/gimpwarptool.c:904
+#: ../app/tools/gimpwarptool.c:914 ../app/tools/gimpwarptool.c:943
 #, c-format
 msgid "Frame %d"
 msgstr "إطار %d"
 
-#: ../app/tools/gimpwarptool.c:913
+#: ../app/tools/gimpwarptool.c:952
 msgid "Frame"
 msgstr "إطار"
 
@@ -16668,7 +16833,7 @@ msgstr "النسبة من عرض الفرشاة"
 msgid "(None)"
 msgstr "(لا شيء)"
 
-#: ../app/widgets/gimpcolordialog.c:150
+#: ../app/widgets/gimpcolordialog.c:153
 msgid "Add the current color to the color history"
 msgstr "أضِف اللون الحالي إلى تأريخ الألوان"
 
@@ -16706,7 +16871,7 @@ msgstr "احذف '%s' من قائمة المرشحات النشطة"
 msgid "No filter selected"
 msgstr "لم يحدد أي مرشح"
 
-#: ../app/widgets/gimpcoloreditor.c:261
+#: ../app/widgets/gimpcoloreditor.c:268
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -17302,7 +17467,7 @@ msgstr "صدّر الصورة"
 msgid "_Export"
 msgstr "_صدِّر"
 
-#: ../app/widgets/gimpexportdialog.c:83 ../app/widgets/gimpsavedialog.c:151
+#: ../app/widgets/gimpexportdialog.c:83 ../app/widgets/gimpsavedialog.c:152
 msgid "By Extension"
 msgstr "بالامتداد"
 
@@ -17638,7 +17803,7 @@ msgstr "‏%g × ‏%g ‏%s"
 msgid "colors"
 msgstr "الألوان"
 
-#: ../app/widgets/gimpitemtreeview.c:746
+#: ../app/widgets/gimpitemtreeview.c:754
 msgid "Lock:"
 msgstr "أوصِد:"
 
@@ -17803,16 +17968,21 @@ msgstr ""
 msgid "9,300 K"
 msgstr ""
 
-#: ../app/widgets/gimpsavedialog.c:157
+#: ../app/widgets/gimpsavedialog.c:158
 msgid "All XCF images"
 msgstr "كل صور XCF"
 
-#: ../app/widgets/gimpsavedialog.c:280
+#: ../app/widgets/gimpsavedialog.c:283
 #, c-format
 msgid "Disables compression to make the XCF file readable by %s and later."
 msgstr "عطّل الضغط لإبقاء ملف XCF مقروء في %s أو أحدث."
 
-#: ../app/widgets/gimpsavedialog.c:333
+#: ../app/widgets/gimpsavedialog.c:291
+msgid "Metadata won't be visible in GIMP older than version 2.10."
+msgstr ""
+
+#. The checkbox.
+#: ../app/widgets/gimpsavedialog.c:352
 msgid "Save this XCF file with maximum compatibility"
 msgstr "احفظ ملف XCF هذا بأعلى توافقية"
 
@@ -18164,39 +18334,43 @@ msgstr "استعد محفوظة الخيارات..."
 msgid "Delete Tool Preset..."
 msgstr "احذف محفوظة الخيارات..."
 
-#: ../app/widgets/gimptoolpreseteditor.c:148
+#: ../app/widgets/gimptoolpreseteditor.c:149
 msgid "Icon:"
 msgstr "الأيقونة:"
 
-#: ../app/widgets/gimptoolpreseteditor.c:159
+#: ../app/widgets/gimptoolpreseteditor.c:160
 msgid "Apply stored FG/BG"
 msgstr "طبق الخلفية أو الواجهة المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:165
+#: ../app/widgets/gimptoolpreseteditor.c:166
 msgid "Apply stored brush"
 msgstr "طبّق الفرشاة المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:171
+#: ../app/widgets/gimptoolpreseteditor.c:172
 msgid "Apply stored dynamics"
 msgstr "طبّق الحركيات المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:177
+#: ../app/widgets/gimptoolpreseteditor.c:178
+msgid "Apply stored MyPaint brush"
+msgstr "طبّق فرشاة ماي پينت المحفوظة"
+
+#: ../app/widgets/gimptoolpreseteditor.c:184
 msgid "Apply stored gradient"
 msgstr "طبّق التدرجات المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:183
+#: ../app/widgets/gimptoolpreseteditor.c:190
 msgid "Apply stored pattern"
 msgstr "طبّق الأنماط المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:189
+#: ../app/widgets/gimptoolpreseteditor.c:196
 msgid "Apply stored palette"
 msgstr "طبّق لوح الألوان المحفوظ"
 
-#: ../app/widgets/gimptoolpreseteditor.c:195
+#: ../app/widgets/gimptoolpreseteditor.c:202
 msgid "Apply stored font"
 msgstr "طبّق الخط المحفوظ"
 
-#: ../app/widgets/gimptoolpreseteditor.c:292
+#: ../app/widgets/gimptoolpreseteditor.c:299
 #, c-format
 msgid "%s Preset"
 msgstr "محفوظات %s"
@@ -18472,6 +18646,21 @@ msgstr "دائري"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ضبابي"
+
+#~ msgctxt "image-action"
+#~ msgid "_Color Management"
+#~ msgstr "إدارة الأ_لوان"
+
+#~ msgid ""
+#~ "ICC profile validation failed: Cannot attach a color profile to a GRAY "
+#~ "image"
+#~ msgstr "تعذّر التحقق من صحة لاحة ICC: لايمكن إرفاق لاحة لون بصورة رمادية"
+
+#~ msgid "_MyPaint Brush tool"
+#~ msgstr "أداة _فرش MyPaint"
+
+#~ msgid "Guide & Grid Snapping"
+#~ msgstr "اتباع الدليل والشبكة"
 
 #, fuzzy
 #~ msgctxt "image-convert-action"
@@ -19378,9 +19567,6 @@ msgstr "ضبابي"
 
 #~ msgid "Rescan font list"
 #~ msgstr "أعِد مسح قائمة الخطوط"
-
-#~ msgid "Set Opacity"
-#~ msgstr "حدد الإعتام"
 
 #~ msgid "Delete color"
 #~ msgstr "احذف اللون"
