@@ -181,9 +181,9 @@
 #define B_SHIFT  (BITS_IN_SAMPLE-PRECISION_B)
 
 /* we've stretched our non-cubic L*a*b* volume to touch the
-   faces of the logical cube we've allocated for it, so re-scale
-   again in inverse proportion to get back to linear proportions.
-*/
+ * faces of the logical cube we've allocated for it, so re-scale
+ * again in inverse proportion to get back to linear proportions.
+ */
 #define R_SCALE 13              /*  scale R (L*) distances by this much  */
 #define G_SCALE 24              /*  scale G (a*) distances by this much  */
 #define B_SCALE 26              /*  and B (b*) by this much              */
@@ -191,16 +191,18 @@
 
 typedef struct _Color Color;
 typedef struct _QuantizeObj QuantizeObj;
-typedef void (* Pass1_Func)   (QuantizeObj *quantize_obj);
-typedef void (* Pass2i_Func)  (QuantizeObj *quantize_obj);
-typedef void (* Pass2_Func)   (QuantizeObj *quantize_obj,
-                               GimpLayer   *layer,
-                               GeglBuffer  *new_buffer);
-typedef void (* Cleanup_Func) (QuantizeObj *quantize_obj);
-typedef unsigned long ColorFreq;
-typedef ColorFreq *CFHistogram;
 
-typedef enum {AXIS_UNDEF, AXIS_RED, AXIS_BLUE, AXIS_GREEN} axisType;
+typedef void (* Pass1Func)     (QuantizeObj *quantize_obj);
+typedef void (* Pass2InitFunc) (QuantizeObj *quantize_obj);
+typedef void (* Pass2Func)     (QuantizeObj *quantize_obj,
+                                GimpLayer   *layer,
+                                GeglBuffer  *new_buffer);
+typedef void (* CleanupFunc)   (QuantizeObj *quantize_obj);
+
+typedef gulong ColorFreq;
+typedef ColorFreq * CFHistogram;
+
+typedef enum { AXIS_UNDEF, AXIS_RED, AXIS_BLUE, AXIS_GREEN } AxisType;
 
 typedef double etype;
 
@@ -283,20 +285,20 @@ typedef double etype;
 /*
 #define HIST_LIN(hist_ptr,r,g,b) (&(hist_ptr)[REF_FUNC((r),(g),(b))])
 */
-static inline
-ColorFreq* HIST_LIN(ColorFreq *hist_ptr,
-                    const int r, const int g, const int b)
+static inline ColorFreq *
+HIST_LIN (ColorFreq  *hist_ptr,
+          const gint  r,
+          const gint  g,
+          const gint  b)
 {
-  return (&(hist_ptr)[
-                      REF_FUNC(r,g,b)
-  ]);
+  return (&(hist_ptr) [REF_FUNC (r, g, b)]);
 }
 
 
-#define LOWA (-86.181F)
-#define LOWB (-107.858F)
-#define HIGHA (98.237F)
-#define HIGHB (94.480F)
+#define LOWA   (-86.181F)
+#define LOWB  (-107.858F)
+#define HIGHA   (98.237F)
+#define HIGHB   (94.480F)
 
 #if 1
 #define LRAT (2.55F)
@@ -311,15 +313,17 @@ ColorFreq* HIST_LIN(ColorFreq *hist_ptr,
 static const Babl *rgb_to_lab_fish = NULL;
 static const Babl *lab_to_rgb_fish = NULL;
 
-static inline
-void rgb_to_unshifted_lin(const unsigned char r,
-                          const unsigned char g,
-                          const unsigned char b,
-                          int *hr, int *hg, int *hb)
+static inline void
+rgb_to_unshifted_lin (const guchar  r,
+                      const guchar  g,
+                      const guchar  b,
+                      gint         *hr,
+                      gint         *hg,
+                      gint         *hb)
 {
-  int or, og, ob;
-  float rgb[3] = {r/255.0, g/255.0, b/255.0};
-  float lab[3];
+  gint   or, og, ob;
+  gfloat rgb[3] = { r / 255.0, g / 255.0, b / 255.0 };
+  gfloat lab[3];
 
   babl_process (rgb_to_lab_fish, rgb, lab, 1);
 
@@ -337,13 +341,15 @@ void rgb_to_unshifted_lin(const unsigned char r,
 }
 
 
-static inline
-void rgb_to_lin(const unsigned char r,
-                const unsigned char g,
-                const unsigned char b,
-                int *hr, int *hg, int *hb)
+static inline void
+rgb_to_lin (const guchar  r,
+            const guchar  g,
+            const guchar  b,
+            gint         *hr,
+            gint         *hg,
+            gint         *hb)
 {
-  int or, og, ob;
+  gint or, og, ob;
 
   /*
   double sL, sa, sb;
@@ -379,8 +385,7 @@ void rgb_to_lin(const unsigned char r,
   }
   */
 
-  rgb_to_unshifted_lin (r,g,b,
-                        &or, &og, &ob);
+  rgb_to_unshifted_lin (r, g, b, &or, &og, &ob);
 
 #if 0
 #define RSDF(r) ((r) >= ((HIST_R_ELEMS-1) << R_SHIFT) ? HIST_R_ELEMS-1 : \
@@ -395,9 +400,9 @@ void rgb_to_lin(const unsigned char r,
 #define BSDF(b) ((b) >> B_SHIFT)
 #endif
 
-  or = RSDF(or);
-  og = GSDF(og);
-  ob = BSDF(ob);
+  or = RSDF (or);
+  og = GSDF (og);
+  ob = BSDF (ob);
 
   *hr = or;
   *hg = og;
@@ -405,32 +410,35 @@ void rgb_to_lin(const unsigned char r,
 }
 
 
-static inline
-ColorFreq* HIST_RGB(ColorFreq *hist_ptr,
-                    const int r, const int g, const int b)
+static inline ColorFreq *
+HIST_RGB (ColorFreq  *hist_ptr,
+          const gint  r,
+          const gint  g,
+          const gint  b)
 {
-  int hr, hg, hb;
+  gint hr, hg, hb;
 
-  rgb_to_lin(r, g, b,
-             &hr, &hg, &hb);
+  rgb_to_lin (r, g, b, &hr, &hg, &hb);
 
-  return (HIST_LIN(hist_ptr,hr,hg,hb));
+  return HIST_LIN (hist_ptr, hr, hg, hb);
 }
 
 
-static inline 
-void lin_to_rgb(const double hr, const double hg, const double hb,
-                unsigned char *r,
-                unsigned char *g,
-                unsigned char *b)
+static inline void
+lin_to_rgb (const gdouble  hr,
+            const gdouble  hg,
+            const gdouble  hb,
+            guchar        *r,
+            guchar        *g,
+            guchar        *b)
 {
-  float rgb[3];
-  float lab[3];
-  double ir,ig,ib;
+  gfloat  rgb[3];
+  gfloat  lab[3];
+  gdouble ir, ig, ib;
 
-  ir = ((double)(hr)) * 255.0F / (double)(HIST_R_ELEMS-1);
-  ig = ((double)(hg)) * 255.0F / (double)(HIST_G_ELEMS-1);
-  ib = ((double)(hb)) * 255.0F / (double)(HIST_B_ELEMS-1);
+  ir = ((gdouble) (hr)) * 255.0F / (gdouble) (HIST_R_ELEMS - 1);
+  ig = ((gdouble)( hg)) * 255.0F / (gdouble) (HIST_G_ELEMS - 1);
+  ib = ((gdouble)( hb)) * 255.0F / (gdouble) (HIST_B_ELEMS - 1);
 
   ir = ir / LRAT;
   ig = (ig / ARAT) + LOWA;
@@ -442,36 +450,38 @@ void lin_to_rgb(const double hr, const double hg, const double hb,
 
   babl_process (lab_to_rgb_fish, lab, rgb, 1);
 
-  *r = RINT(CLAMP(rgb[0]*255, 0.0F, 255.0F));
-  *g = RINT(CLAMP(rgb[1]*255, 0.0F, 255.0F));
-  *b = RINT(CLAMP(rgb[2]*255, 0.0F, 255.0F));
+  *r = RINT (CLAMP (rgb[0] * 255, 0.0F, 255.0F));
+  *g = RINT (CLAMP (rgb[1] * 255, 0.0F, 255.0F));
+  *b = RINT (CLAMP (rgb[2] * 255, 0.0F, 255.0F));
 }
 
 
 
 struct _Color
 {
-  int red;
-  int green;
-  int blue;
+  gint red;
+  gint green;
+  gint blue;
 };
 
 struct _QuantizeObj
 {
-  Pass1_Func   first_pass;          /* first pass over image data creates colormap  */
-  Pass2i_Func  second_pass_init;    /* Initialize data which persists over invocations */
-  Pass2_Func   second_pass;         /* second pass maps from image data to colormap */
-  Cleanup_Func delete_func;         /* function to clean up data associated with private */
+  Pass1Func     first_pass;       /* first pass over image data creates colormap  */
+  Pass2InitFunc second_pass_init; /* Initialize data which persists over invocations */
+  Pass2Func     second_pass;      /* second pass maps from image data to colormap */
+  CleanupFunc   delete_func;      /* function to clean up data associated with private */
 
-  int desired_number_of_colors;     /* Number of colors we will allow    */
-  int actual_number_of_colors;      /* Number of colors actually needed  */
-  Color cmap[256];                  /* colormap created by quantization  */
-  Color clin[256];                  /* .. converted back to linear space */
-  gulong index_used_count[256];     /* how many times an index was used */
-  CFHistogram histogram;            /* holds the histogram               */
+  GimpPalette  *custom_palette;           /* The custom palette, if any        */
 
-  gboolean want_alpha_dither;
-  int      error_freedom;           /* 0=much bleed, 1=controlled bleed */
+  gint          desired_number_of_colors; /* Number of colors we will allow    */
+  gint          actual_number_of_colors;  /* Number of colors actually needed  */
+  Color         cmap[256];                /* colormap created by quantization  */
+  Color         clin[256];                /* .. converted back to linear space */
+  gulong        index_used_count[256];    /* how many times an index was used  */
+  CFHistogram   histogram;                /* holds the histogram               */
+
+  gboolean      want_alpha_dither;
+  gint          error_freedom;            /* 0=much bleed, 1=controlled bleed */
 
   GimpProgress *progress;
   gint          nth_layer;
@@ -481,18 +491,18 @@ struct _QuantizeObj
 typedef struct
 {
   /*  The bounds of the box (inclusive); expressed as histogram indexes  */
-  int   Rmin, Rmax;
-  int   Rhalferror;
-  int   Gmin, Gmax;
-  int   Ghalferror;
-  int   Bmin, Bmax;
-  int   Bhalferror;
+  gint    Rmin, Rmax;
+  gint    Rhalferror;
+  gint    Gmin, Gmax;
+  gint    Ghalferror;
+  gint    Bmin, Bmax;
+  gint    Bhalferror;
 
   /*  The volume (actually 2-norm) of the box  */
-  int   volume;
+  gint    volume;
 
   /*  The number of nonzero histogram cells within this box  */
-  long  colorcount;
+  glong   colorcount;
 
   /* The sum of the weighted error within this box */
   guint64 error;
@@ -504,80 +514,80 @@ typedef struct
 } box, *boxptr;
 
 
-static void zero_histogram_gray     (CFHistogram   histogram);
-static void zero_histogram_rgb      (CFHistogram   histogram);
-static void generate_histogram_gray (CFHistogram   hostogram,
-                                     GimpLayer    *layer,
-                                     gboolean      alpha_dither);
-static void generate_histogram_rgb  (CFHistogram   histogram,
-                                     GimpLayer    *layer,
-                                     gint          col_limit,
-                                     gboolean      alpha_dither,
-                                     GimpProgress *progress,
-                                     gint          nth_layer,
-                                     gint          n_layers);
+static void          zero_histogram_gray     (CFHistogram   histogram);
+static void          zero_histogram_rgb      (CFHistogram   histogram);
+static void          generate_histogram_gray (CFHistogram   hostogram,
+                                              GimpLayer    *layer,
+                                              gboolean      alpha_dither);
+static void          generate_histogram_rgb  (CFHistogram   histogram,
+                                              GimpLayer    *layer,
+                                              gint          col_limit,
+                                              gboolean      alpha_dither,
+                                              GimpProgress *progress,
+                                              gint          nth_layer,
+                                              gint          n_layers);
 
-static QuantizeObj * initialize_median_cut (GimpImageBaseType      old_type,
-                                            gint                   num_cols,
-                                            GimpConvertDitherType  dither_type,
-                                            GimpConvertPaletteType palette_type,
-                                            gboolean               alpha_dither,
-                                            GimpProgress          *progress);
+static QuantizeObj * initialize_median_cut   (GimpImageBaseType      old_type,
+                                              gint                   num_cols,
+                                              GimpConvertDitherType  dither_type,
+                                              GimpConvertPaletteType palette_type,
+                                              GimpPalette           *custom_palette,
+                                              gboolean               alpha_dither,
+                                              GimpProgress          *progress);
 
-static void          compute_color_lin8    (QuantizeObj           *quantobj,
-                                            CFHistogram            histogram,
-                                            boxptr                 boxp,
-                                            const int              icolor);
+static void          compute_color_lin8      (QuantizeObj           *quantobj,
+                                              CFHistogram            histogram,
+                                              boxptr                 boxp,
+                                              const int              icolor);
 
 
 static guchar    found_cols[MAXNUMCOLORS][3];
 static gint      num_found_cols;
 static gboolean  needs_quantize;
 
-static GimpPalette *theCustomPalette = NULL;
-
 
 /**********************************************************/
 typedef struct
 {
-  signed long   used_count;
-  unsigned char initial_index;
-} palentryStruct;
+  glong  used_count;
+  guchar initial_index;
+} PalEntry;
 
 static int
 mapping_compare (const void *a,
                  const void *b)
 {
-  palentryStruct *m1 = (palentryStruct *) a;
-  palentryStruct *m2 = (palentryStruct *) b;
+  PalEntry *m1 = (PalEntry *) a;
+  PalEntry *m2 = (PalEntry *) b;
 
   return (m2->used_count - m1->used_count);
 }
 
 /* FWIW, the make_remap_table() and mapping_compare() function source
- * and palentryStruct may be re-used under the XFree86-style license.
+ * and PalEntry may be re-used under the XFree86-style license.
  * <adam@gimp.org>
  */
 static void
-make_remap_table (const unsigned char  old_palette[],
-                  unsigned char        new_palette[],
-                  const unsigned long  index_used_count[],
-                  unsigned char        remap_table[],
-                  int*                 num_entries)
+make_remap_table (const guchar  old_palette[],
+                  guchar        new_palette[],
+                  const gulong  index_used_count[],
+                  guchar        remap_table[],
+                  gint         *num_entries)
 {
-  int i,j,k;
-  unsigned char temppal[256 * 3];
-  unsigned long tempuse[256];
-  unsigned long transmap[256];
-  palentryStruct *palentries;
-  int used = 0;
+  gint      i, j, k;
+  guchar    temppal[256 * 3];
+  gulong    tempuse[256];
+  gulong    transmap[256];
+  PalEntry *palentries;
+  gint      used = 0;
 
   memset (temppal, 0, 256 * 3);
-  memset (tempuse, 0, 256 * sizeof (unsigned long));
-  memset (transmap, 255, 256 * sizeof (unsigned long));
+  memset (tempuse, 0, 256 * sizeof (gulong));
+  memset (transmap, 255, 256 * sizeof (gulong));
 
-  /* First pass - only collect entries which are marked as
-     being used at all in index_used_count. */
+  /* First pass - only collect entries which are marked as being used
+   * at all in index_used_count.
+   */
   for (i = 0; i < *num_entries; i++)
     {
       if (index_used_count[i])
@@ -609,8 +619,9 @@ make_remap_table (const unsigned char  old_palette[],
               /* zero one of them, deactivating its entry. */
               tempuse[j] = 0;
 
-              /* change all mappings from this dead index
-                 to the live one. */
+              /* change all mappings from this dead index to the live
+               * one.
+               */
               for (k = 0; k < *num_entries; k++)
                 {
                   if (index_used_count[k] && (transmap[k] == j))
@@ -621,8 +632,9 @@ make_remap_table (const unsigned char  old_palette[],
     }
 
   /* Third pass - rank all used indicies to the beginning of the
-     palette. */
-  palentries = g_new (palentryStruct, used);
+   * palette.
+   */
+  palentries = g_new (PalEntry, used);
 
   for (i = 0; i < used; i++)
     {
@@ -630,7 +642,7 @@ make_remap_table (const unsigned char  old_palette[],
       palentries[i].used_count    = tempuse[i];
     }
 
-  qsort (palentries, used, sizeof (palentryStruct), &mapping_compare);
+  qsort (palentries, used, sizeof (PalEntry), &mapping_compare);
 
   for (i = 0; i < *num_entries; i++)
     {
@@ -651,9 +663,9 @@ make_remap_table (const unsigned char  old_palette[],
     {
       if (index_used_count[i])
         {
-          new_palette[remap_table[i]*3 + 0] = old_palette[i*3 + 0];
-          new_palette[remap_table[i]*3 + 1] = old_palette[i*3 + 1];
-          new_palette[remap_table[i]*3 + 2] = old_palette[i*3 + 2];
+          new_palette[remap_table[i] * 3 + 0] = old_palette[i * 3 + 0];
+          new_palette[remap_table[i] * 3 + 1] = old_palette[i * 3 + 1];
+          new_palette[remap_table[i] * 3 + 2] = old_palette[i * 3 + 2];
         }
     }
 
@@ -716,15 +728,15 @@ remap_indexed_layer (GimpLayer    *layer,
     }
 }
 
-static int
+static gint
 color_quicksort (const void *c1,
                  const void *c2)
 {
   Color *color1 = (Color *) c1;
   Color *color2 = (Color *) c2;
 
-  double v1 = GIMP_RGB_LUMINANCE (color1->red, color1->green, color1->blue);
-  double v2 = GIMP_RGB_LUMINANCE (color2->red, color2->green, color2->blue);
+  gdouble v1 = GIMP_RGB_LUMINANCE (color1->red, color1->green, color1->blue);
+  gdouble v2 = GIMP_RGB_LUMINANCE (color2->red, color2->green, color2->blue);
 
   if (v1 < v2)
     return -1;
@@ -755,21 +767,21 @@ gimp_image_convert_type (GimpImage               *image,
   GList             *all_layers;
   GList             *list;
   const gchar       *undo_desc = NULL;
-  gint               nth_layer, n_layers;
+  gint               nth_layer;
+  gint               n_layers;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (new_type != gimp_image_get_base_type (image), FALSE);
+  g_return_val_if_fail (custom_palette == NULL ||
+                        GIMP_IS_PALETTE (custom_palette), FALSE);
+  g_return_val_if_fail (custom_palette == NULL ||
+                        gimp_palette_get_n_colors (custom_palette) <= 256,
+                        FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (palette_type == GIMP_CUSTOM_PALETTE)
     {
-      g_return_val_if_fail (custom_palette == NULL ||
-                            GIMP_IS_PALETTE (custom_palette), FALSE);
-      g_return_val_if_fail (custom_palette == NULL ||
-                            gimp_palette_get_n_colors (custom_palette) <= 256,
-                            FALSE);
-
       if (! custom_palette)
         palette_type = GIMP_MONO_PALETTE;
 
@@ -780,8 +792,6 @@ gimp_image_convert_type (GimpImage               *image,
           return FALSE;
         }
     }
-
-  theCustomPalette = custom_palette;
 
   gimp_set_busy (image->gimp);
 
@@ -840,7 +850,8 @@ gimp_image_convert_type (GimpImage               *image,
         }
 
       quantobj = initialize_median_cut (old_type, num_cols, dither,
-                                        palette_type, alpha_dither,
+                                        palette_type, custom_palette,
+                                        alpha_dither,
                                         progress);
 
       if (palette_type == GIMP_MAKE_PALETTE)
@@ -865,17 +876,20 @@ gimp_image_convert_type (GimpImage               *image,
               GimpLayer *layer = list->data;
 
               if (old_type == GIMP_GRAY)
-                generate_histogram_gray (quantobj->histogram,
-                                         layer, alpha_dither);
+                {
+                  generate_histogram_gray (quantobj->histogram,
+                                           layer, alpha_dither);
+                }
               else
-                generate_histogram_rgb (quantobj->histogram,
-                                        layer, num_cols, alpha_dither,
-                                        progress, nth_layer, n_layers);
-
-              /* Note: generate_histogram_rgb may set needs_quantize if
-               *  the image contains more colors than the limit specified
-               *  by the user.
-               */
+                {
+                  /* Note: generate_histogram_rgb may set
+                   * needs_quantize if the image contains more colors
+                   * than the limit specified by the user.
+                   */
+                  generate_histogram_rgb (quantobj->histogram,
+                                          layer, num_cols, alpha_dither,
+                                          progress, nth_layer, n_layers);
+                }
             }
         }
 
@@ -901,6 +915,7 @@ gimp_image_convert_type (GimpImage               *image,
           quantobj = initialize_median_cut (old_type, num_cols,
                                             GIMP_NODESTRUCT_DITHER,
                                             palette_type,
+                                            custom_palette,
                                             alpha_dither,
                                             progress);
           /* We can skip the first pass (palette creation) */
@@ -908,9 +923,9 @@ gimp_image_convert_type (GimpImage               *image,
           quantobj->actual_number_of_colors = num_found_cols;
           for (i = 0; i < num_found_cols; i++)
             {
-              quantobj->cmap[i].red = found_cols[i][0];
+              quantobj->cmap[i].red   = found_cols[i][0];
               quantobj->cmap[i].green = found_cols[i][1];
-              quantobj->cmap[i].blue = found_cols[i][2];
+              quantobj->cmap[i].blue  = found_cols[i][2];
             }
         }
       else
@@ -1345,8 +1360,8 @@ generate_histogram_rgb (CFHistogram   histogram,
 
                       if (num_found_cols > col_limit)
                         {
-                          /* There are more colors in the image
-                           *  than were allowed.  We switch to plain
+                          /* There are more colors in the image than
+                           *  were allowed.  We switch to plain
                            *  histogram calculation with a view to
                            *  quantizing at a later stage.
                            */
@@ -1390,15 +1405,15 @@ generate_histogram_rgb (CFHistogram   histogram,
 
 static boxptr
 find_split_candidate (const boxptr  boxlist,
-                      const int     numboxes,
-                      axisType     *which_axis,
-                      const int     desired_colors)
+                      const gint    numboxes,
+                      AxisType     *which_axis,
+                      const gint    desired_colors)
 {
-  boxptr boxp;
-  int    i;
-  etype  maxc = 0;
-  boxptr which = NULL;
-  double Lbias;
+  boxptr  boxp;
+  gint    i;
+  etype   maxc = 0;
+  boxptr  which = NULL;
+  gdouble Lbias;
 
   *which_axis = AXIS_UNDEF;
 
@@ -1410,10 +1425,11 @@ find_split_candidate (const boxptr  boxlist,
     {
 #define BIAS_FACTOR 2.66F
 #define BIAS_NUMBER 2 /* 0 */
+
       /* we bias towards splitting across L* for first few colors */
-      Lbias = (numboxes > BIAS_NUMBER) ? 1.0F : ((double)(BIAS_NUMBER+1) -
-                                                 ((double)numboxes)) /
-        ((double)BIAS_NUMBER / BIAS_FACTOR);
+      Lbias = (numboxes > BIAS_NUMBER) ? 1.0F : ((gdouble) (BIAS_NUMBER + 1) -
+                                                 ((gdouble) numboxes)) /
+        ((gdouble) BIAS_NUMBER / BIAS_FACTOR);
       /*Lbias = 1.0;
         fprintf(stderr, " [[%d]] ", numboxes);
         fprintf(stderr, "Using ramped L-split bias.\n");
@@ -1446,7 +1462,7 @@ find_split_candidate (const boxptr  boxlist,
               boxp->Rmin < boxp->Rmax)
             {
               which = boxp;
-              maxc = Lbias * rpe;
+              maxc  = Lbias * rpe;
               *which_axis = AXIS_RED;
             }
 
@@ -1454,7 +1470,7 @@ find_split_candidate (const boxptr  boxlist,
               boxp->Gmin < boxp->Gmax)
             {
               which = boxp;
-              maxc = gpe;
+              maxc  = gpe;
               *which_axis = AXIS_GREEN;
             }
 
@@ -1462,7 +1478,7 @@ find_split_candidate (const boxptr  boxlist,
               boxp->Bmin < boxp->Bmax)
             {
               which = boxp;
-              maxc = bpe;
+              maxc  = bpe;
               *which_axis = AXIS_BLUE;
             }
         }
@@ -1480,11 +1496,11 @@ find_split_candidate (const boxptr  boxlist,
  */
 static boxptr
 find_biggest_volume (const boxptr boxlist,
-                     const int    numboxes)
+                     const gint   numboxes)
 {
   boxptr boxp;
-  int    i;
-  int    maxv = 0;
+  gint   i;
+  gint   maxv = 0;
   boxptr which = NULL;
 
   for (i = 0, boxp = boxlist; i < numboxes; i++, boxp++)
@@ -1507,7 +1523,7 @@ static void
 update_box_gray (const CFHistogram histogram,
                  boxptr            boxp)
 {
-  int       i, min, max, dist;
+  gint      i, min, max, dist;
   ColorFreq ccount;
 
   min = boxp->Rmin;
@@ -1554,16 +1570,17 @@ update_box_gray (const CFHistogram histogram,
 }
 
 
+/* Shrink the min/max bounds of a box to enclose only nonzero
+ * elements, and recompute its volume, population and error
+ */
 static void
 update_box_rgb (const CFHistogram histogram,
                 boxptr            boxp,
-                const int         cells_remaining)
-/* Shrink the min/max bounds of a box to enclose only nonzero elements, */
-/* and recompute its volume, population and error */
+                const gint        cells_remaining)
 {
-  int       R, G, B;
-  int       Rmin, Rmax, Gmin, Gmax, Bmin, Bmax;
-  int       dist0, dist1, dist2;
+  gint      R, G, B;
+  gint      Rmin, Rmax, Gmin, Gmax, Bmin, Bmax;
+  gint      dist0, dist1, dist2;
   ColorFreq ccount;
   /*
   guint64 tempRerror;
@@ -1838,9 +1855,10 @@ update_box_rgb (const CFHistogram histogram,
 
   if (dist0 && dist1 && dist2)
     {
-      axisType longest_ax=AXIS_UNDEF;
-      int      longest_length=0, longest_length2=0;
-      int      ratio;
+      AxisType longest_ax      = AXIS_UNDEF;
+      gint     longest_length  = 0;
+      gint     longest_length2 = 0;
+      gint     ratio;
 
       /*
         fprintf(stderr, "[%d,%d,%d=%d,%d,%d] ",
@@ -1969,14 +1987,16 @@ update_box_rgb (const CFHistogram histogram,
 }
 
 
-static int
+/* Repeatedly select and split the largest box until we have enough
+ * boxes
+ */
+static gint
 median_cut_gray (CFHistogram histogram,
                  boxptr      boxlist,
-                 int         numboxes,
-                 int         desired_colors)
-/* Repeatedly select and split the largest box until we have enough boxes */
+                 gint        numboxes,
+                 gint        desired_colors)
 {
-  int    lb;
+  gint   lb;
   boxptr b1, b2;
 
   while (numboxes < desired_colors)
@@ -2013,17 +2033,19 @@ median_cut_gray (CFHistogram histogram,
   return numboxes;
 }
 
-static int
+/* Repeatedly select and split the largest box until we have enough
+ * boxes
+ */
+static gint
 median_cut_rgb (CFHistogram   histogram,
                 boxptr        boxlist,
-                int           numboxes,
-                int           desired_colors,
+                gint          numboxes,
+                gint          desired_colors,
                 GimpProgress *progress)
-/* Repeatedly select and split the largest box until we have enough boxes */
 {
-  int      lb;
+  gint     lb;
   boxptr   b1, b2;
-  axisType which_axis;
+  AxisType which_axis;
 
   while (numboxes < desired_colors)
     {
@@ -2081,14 +2103,15 @@ median_cut_rgb (CFHistogram   histogram,
 }
 
 
+/* Compute representative color for a box, put it in colormap[icolor]
+ */
 static void
 compute_color_gray (QuantizeObj *quantobj,
                     CFHistogram  histogram,
                     boxptr       boxp,
                     int          icolor)
-/* Compute representative color for a box, put it in colormap[icolor] */
 {
-  int     i, min, max;
+  gint    i, min, max;
   guint64 count;
   guint64 total;
   guint64 gtotal;
@@ -2111,36 +2134,38 @@ compute_color_gray (QuantizeObj *quantobj,
 
   if (total != 0)
     {
-      quantobj->cmap[icolor].red =
-        quantobj->cmap[icolor].green =
-        quantobj->cmap[icolor].blue = (gtotal + (total >> 1)) / total;
+      quantobj->cmap[icolor].red   =
+      quantobj->cmap[icolor].green =
+      quantobj->cmap[icolor].blue  = (gtotal + (total >> 1)) / total;
     }
-   else /* The only situation where total==0 is if the image was null or
-        *  all-transparent.  In that case we just put a dummy value in
-        *  the colormap.
-        */
+  else
     {
-      quantobj->cmap[icolor].red =
-        quantobj->cmap[icolor].green =
-        quantobj->cmap[icolor].blue = 0;
+      /* The only situation where total==0 is if the image was null or
+       *  all-transparent.  In that case we just put a dummy value in
+       *  the colormap.
+       */
+      quantobj->cmap[icolor].red   =
+      quantobj->cmap[icolor].green =
+      quantobj->cmap[icolor].blue  = 0;
     }
 }
 
 
+/* Compute representative color for a box, put it in colormap[icolor]
+ */
 static void
 compute_color_rgb (QuantizeObj *quantobj,
                    CFHistogram  histogram,
                    boxptr       boxp,
                    int          icolor)
-/* Compute representative color for a box, put it in colormap[icolor] */
 {
   /* Current algorithm: mean weighted by pixels (not colors) */
   /* Note it is important to get the rounding correct! */
-  int       R, G, B;
-  int       Rmin, Rmax;
-  int       Gmin, Gmax;
-  int       Bmin, Bmax;
-  ColorFreq total = 0;
+  gint      R, G, B;
+  gint      Rmin, Rmax;
+  gint      Gmin, Gmax;
+  gint      Bmin, Bmax;
+  ColorFreq total  = 0;
   ColorFreq Rtotal = 0;
   ColorFreq Gtotal = 0;
   ColorFreq Btotal = 0;
@@ -2168,7 +2193,7 @@ compute_color_rgb (QuantizeObj *quantobj,
 
   if (total > 0)
     {
-      unsigned char red, green, blue;
+      guchar red, green, blue;
 
       lin_to_rgb (/*(Rtotal + (total>>1)) / total,
                     (Gtotal + (total>>1)) / total,
@@ -2182,11 +2207,12 @@ compute_color_rgb (QuantizeObj *quantobj,
       quantobj->cmap[icolor].green = green;
       quantobj->cmap[icolor].blue  = blue;
     }
-  else /* The only situation where total==0 is if the image was null or
-        *  all-transparent.  In that case we just put a dummy value in
-        *  the colormap.
-        */
+  else
     {
+      /* The only situation where total==0 is if the image was null or
+       *  all-transparent.  In that case we just put a dummy value in
+       *  the colormap.
+       */
       quantobj->cmap[icolor].red   = 0;
       quantobj->cmap[icolor].green = 0;
       quantobj->cmap[icolor].blue  = 0;
@@ -2194,20 +2220,21 @@ compute_color_rgb (QuantizeObj *quantobj,
 }
 
 
+/* Compute representative color for a box, put it in colormap[icolor]
+ */
 static void
 compute_color_lin8 (QuantizeObj *quantobj,
                     CFHistogram  histogram,
                     boxptr       boxp,
-                    const int    icolor)
-/* Compute representative color for a box, put it in colormap[icolor] */
+                    const gint   icolor)
 {
   /* Current algorithm: mean weighted by pixels (not colors) */
   /* Note it is important to get the rounding correct! */
-  int       R, G, B;
-  int       Rmin, Rmax;
-  int       Gmin, Gmax;
-  int       Bmin, Bmax;
-  ColorFreq total = 0;
+  gint      R, G, B;
+  gint      Rmin, Rmax;
+  gint      Gmin, Gmax;
+  gint      Bmin, Bmax;
+  ColorFreq total  = 0;
   ColorFreq Rtotal = 0;
   ColorFreq Gtotal = 0;
   ColorFreq Btotal = 0;
@@ -2239,12 +2266,13 @@ compute_color_lin8 (QuantizeObj *quantobj,
       quantobj->cmap[icolor].green = ((Gtotal << G_SHIFT) + (total>>1)) / total;
       quantobj->cmap[icolor].blue  = ((Btotal << B_SHIFT) + (total>>1)) / total;
     }
-  else /* The only situation where total==0 is if the image was null or
-        *  all-transparent.  In that case we just put a dummy value in
-        *  the colormap.
-        */
+  else
     {
-      g_warning("eep.");
+      /* The only situation where total==0 is if the image was null or
+       *  all-transparent.  In that case we just put a dummy value in
+       *  the colormap.
+       */
+      g_warning ("eep.");
       quantobj->cmap[icolor].red   = 0;
       quantobj->cmap[icolor].green = 128;
       quantobj->cmap[icolor].blue  = 128;
@@ -2252,15 +2280,16 @@ compute_color_lin8 (QuantizeObj *quantobj,
 }
 
 
+/* Master routine for color selection
+ */
 static void
 select_colors_gray (QuantizeObj *quantobj,
                     CFHistogram  histogram)
-/* Master routine for color selection */
 {
   boxptr boxlist;
-  int    numboxes;
-  int    desired = quantobj->desired_number_of_colors;
-  int    i;
+  gint   numboxes;
+  gint   desired = quantobj->desired_number_of_colors;
+  gint   i;
 
   /* Allocate workspace for box list */
   boxlist = g_new (box, desired);
@@ -2281,15 +2310,16 @@ select_colors_gray (QuantizeObj *quantobj,
 }
 
 
+/* Master routine for color selection
+ */
 static void
 select_colors_rgb (QuantizeObj *quantobj,
                    CFHistogram  histogram)
-/* Master routine for color selection */
 {
   boxptr boxlist;
-  int    numboxes;
-  int    desired = quantobj->desired_number_of_colors;
-  int   i;
+  gint   numboxes;
+  gint   desired = quantobj->desired_number_of_colors;
+  gint  i;
 
   /* Allocate workspace for box list */
   boxlist = g_new (box, desired);
@@ -2393,27 +2423,28 @@ select_colors_rgb (QuantizeObj *quantobj,
 
 
 /*
- * The next three routines implement inverse colormap filling.  They could
- * all be folded into one big routine, but splitting them up this way saves
- * some stack space (the mindist[] and bestdist[] arrays need not coexist)
- * and may allow some compilers to produce better code by registerizing more
- * inner-loop variables.
+ * The next three routines implement inverse colormap filling.  They
+ * could all be folded into one big routine, but splitting them up
+ * this way saves some stack space (the mindist[] and bestdist[]
+ * arrays need not coexist) and may allow some compilers to produce
+ * better code by registerizing more inner-loop variables.
  */
 
-static int
+/* Locate the colormap entries close enough to an update box to be
+ * candidates for the nearest entry to some cell(s) in the update box.
+ * The update box is specified by the center coordinates of its first
+ * cell.  The number of candidate colormap entries is returned, and
+ * their colormap indexes are placed in colorlist[].
+ *
+ * This routine uses Heckbert's "locally sorted search" criterion to
+ * select the colors that need further consideration.
+ */
+static gint
 find_nearby_colors (QuantizeObj *quantobj,
                     int          minR,
                     int          minG,
                     int          minB,
                     int          colorlist[])
-/* Locate the colormap entries close enough to an update box to be candidates
- * for the nearest entry to some cell(s) in the update box.  The update box
- * is specified by the center coordinates of its first cell.  The number of
- * candidate colormap entries is returned, and their colormap indexes are
- * placed in colorlist[].
- * This routine uses Heckbert's "locally sorted search" criterion to select
- * the colors that need further consideration.
- */
 {
   int numcolors = quantobj->actual_number_of_colors;
   int maxR, maxG, maxB;
@@ -2559,33 +2590,34 @@ find_nearby_colors (QuantizeObj *quantobj,
 }
 
 
-static void
-find_best_colors (QuantizeObj *quantobj,
-                  int          minR,
-                  int          minG,
-                  int          minB,
-                  int          numcolors,
-                  int          colorlist[],
-                  int          bestcolor[])
 /* Find the closest colormap entry for each cell in the update box,
  * given the list of candidate colors prepared by find_nearby_colors.
  * Return the indexes of the closest entries in the bestcolor[] array.
- * This routine uses Thomas' incremental distance calculation method to
- * find the distance from a colormap entry to successive cells in the box.
+ * This routine uses Thomas' incremental distance calculation method
+ * to find the distance from a colormap entry to successive cells in
+ * the box.
  */
+static void
+find_best_colors (QuantizeObj *quantobj,
+                  gint         minR,
+                  gint         minG,
+                  gint         minB,
+                  gint         numcolors,
+                  gint         colorlist[],
+                  gint         bestcolor[])
 {
-  int  iR, iG, iB;
-  int  i, icolor;
-  int *bptr;           /* pointer into bestdist[] array */
-  int *cptr;           /* pointer into bestcolor[] array */
-  int  dist0, dist1;     /* initial distance values */
-  int  dist2;            /* current distance in inner loop */
-  int  xx0, xx1;         /* distance increments */
-  int  xx2;
-  int  inR, inG, inB;    /* initial values for increments */
+  gint  iR, iG, iB;
+  gint  i, icolor;
+  gint *bptr;           /* pointer into bestdist[] array */
+  gint *cptr;           /* pointer into bestcolor[] array */
+  gint  dist0, dist1;     /* initial distance values */
+  gint  dist2;            /* current distance in inner loop */
+  gint  xx0, xx1;         /* distance increments */
+  gint  xx2;
+  gint  inR, inG, inB;    /* initial values for increments */
 
   /* This array holds the distance to the nearest-so-far color for each cell */
-  int  bestdist[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
+  gint  bestdist[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
 
   /* Initialize best-distance for each cell of the update box */
   bptr = bestdist;
@@ -2659,32 +2691,30 @@ find_best_colors (QuantizeObj *quantobj,
 }
 
 
+/* Fill the inverse-colormap entries in the update box that contains
+ * histogram cell R/G/B.  (Only that one cell MUST be filled, but we
+ * can fill as many others as we wish.)
+ */
 static void
 fill_inverse_cmap_gray (QuantizeObj *quantobj,
                         CFHistogram  histogram,
-                        int          pixel)
-/* Fill the inverse-colormap entries in the update box that contains */
-/* histogram cell R/G/B.  (Only that one cell MUST be filled, but */
-/* we can fill as many others as we wish.) */
+                        gint         pixel)
 {
-  Color *cmap;
-  long   dist;
-  long   mindist;
-  int    mindisti;
-  int   i;
+  Color *cmap = quantobj->cmap;
+  glong  mindist;
+  gint   mindisti;
+  gint   i;
 
-  cmap = quantobj->cmap;
-
-  mindist = 65536;
+  mindist  = 65536;
   mindisti = -1;
 
   for (i = 0; i < quantobj->actual_number_of_colors; i++)
     {
-      dist = ABS(pixel - cmap[i].red);
+      glong dist = ABS (pixel - cmap[i].red);
 
       if (dist < mindist)
         {
-          mindist = dist;
+          mindist  = dist;
           mindisti = i;
         }
     }
@@ -2694,24 +2724,25 @@ fill_inverse_cmap_gray (QuantizeObj *quantobj,
 }
 
 
+/* Fill the inverse-colormap entries in the update box that contains
+ * histogram cell R/G/B.  (Only that one cell MUST be filled, but we
+ * can fill as many others as we wish.)
+ */
 static void
 fill_inverse_cmap_rgb (QuantizeObj *quantobj,
                        CFHistogram  histogram,
-                       int          R,
-                       int          G,
-                       int          B)
-/* Fill the inverse-colormap entries in the update box that contains */
-/* histogram cell R/G/B.  (Only that one cell MUST be filled, but */
-/* we can fill as many others as we wish.) */
+                       gint         R,
+                       gint         G,
+                       gint         B)
 {
-  int  minR, minG, minB; /* lower left corner of update box */
-  int  iR, iG, iB;
-  int *cptr;           /* pointer into bestcolor[] array */
+  gint  minR, minG, minB; /* lower left corner of update box */
+  gint  iR, iG, iB;
+  gint *cptr;           /* pointer into bestcolor[] array */
   /* This array lists the candidate colormap indexes. */
-  int  colorlist[MAXNUMCOLORS];
-  int  numcolors;                /* number of candidate colors */
+  gint  colorlist[MAXNUMCOLORS];
+  gint  numcolors;                /* number of candidate colors */
   /* This array holds the actually closest colormap index for each cell. */
-  int  bestcolor[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
+  gint  bestcolor[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
 
   /* Convert cell coordinates to update box id */
   R >>= BOX_R_LOG;
@@ -2807,7 +2838,7 @@ custompal_pass1 (QuantizeObj *quantobj)
              "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
              theCustomPalette->name, theCustomPalette->filename); */
 
-  for (i = 0, list = gimp_palette_get_colors (theCustomPalette);
+  for (i = 0, list = gimp_palette_get_colors (quantobj->custom_palette);
        list;
        i++, list = g_list_next (list))
     {
@@ -2877,13 +2908,13 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
           for (col = 0; col < src_roi->width; col++)
             {
-              gint pixel;
-
               /* get pixel value and index into the cache */
-              pixel = src[GRAY];
+              gint pixel = src[GRAY];
+
               cachep = &histogram[pixel];
-              /* If we have not seen this color before, find nearest colormap entry */
-              /* and update the cache */
+              /* If we have not seen this color before, find nearest
+               * colormap entry and update the cache
+               */
               if (*cachep == 0)
                 fill_inverse_cmap_gray (quantobj, histogram, pixel);
 
@@ -2983,16 +3014,18 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
           for (col = 0; col < src_roi->width; col++)
             {
-              gint      pixel;
-              const int dmval =
+              gint       pixel;
+              const gint dmval =
                 DM[(col + offsetx + src_roi->x) & DM_WIDTHMASK]
                 [(row + offsety + src_roi->y) & DM_HEIGHTMASK];
 
               /* get pixel value and index into the cache */
               pixel = src[GRAY];
+
               cachep = &histogram[pixel];
-              /* If we have not seen this color before, find nearest colormap entry */
-              /* and update the cache */
+              /* If we have not seen this color before, find nearest
+               * colormap entry and update the cache
+               */
               if (*cachep == 0)
                 fill_inverse_cmap_gray (quantobj, histogram, pixel);
 
@@ -3006,14 +3039,15 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
                   do
                     {
-                      const gint R = CLAMP0255(RV);
+                      const gint R = CLAMP0255 (RV);
+
                       cachep = &histogram[R];
-                      /* If we have not seen this color before, find nearest
-                         colormap entry and update the cache */
+                      /* If we have not seen this color before, find
+                       * nearest colormap entry and update the cache
+                       */
                       if (*cachep == 0)
-                        {
-                          fill_inverse_cmap_gray (quantobj, histogram, R);
-                        }
+                        fill_inverse_cmap_gray (quantobj, histogram, R);
+
                       pixval2 = *cachep - 1;
                       RV += re;
                     }
@@ -3048,6 +3082,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
               if (err1 || err2)
                 {
                   const int proportion2 = (256 * 255 * err2) / (err1 + err2);
+
                   if ((dmval * 256) > proportion2)
                     {
                       pixval1 = pixval2; /* use color2 instead of color1*/
@@ -3196,9 +3231,11 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
               /* get pixel value and index into the cache */
               rgb_to_lin (src[red_pix], src[green_pix], src[blue_pix],
                           &R, &G, &B);
-              cachep = HIST_LIN(histogram,R,G,B);
+
+              cachep = HIST_LIN (histogram, R, G, B);
               /* If we have not seen this color before, find nearest
-                 colormap entry and update the cache */
+               * colormap entry and update the cache
+               */
               if (*cachep == 0)
                 fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
 
@@ -3329,32 +3366,36 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                 }
 
               /* get pixel value and index into the cache */
-              rgb_to_lin(src[red_pix], src[green_pix], src[blue_pix],
-                         &R, &G, &B);
-              cachep = HIST_LIN(histogram,R,G,B);
+              rgb_to_lin (src[red_pix], src[green_pix], src[blue_pix],
+                          &R, &G, &B);
+
+              cachep = HIST_LIN (histogram, R, G, B);
               /* If we have not seen this color before, find nearest
-                 colormap entry and update the cache */
+               * colormap entry and update the cache
+               */
               if (*cachep == 0)
                 fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
 
-              /* We now try to find a color which, when mixed in some fashion
-                 with the closest match, yields something closer to the
-                 desired color.  We do this by repeatedly extrapolating the
-                 color vector from one to the other until we find another
-                 color cell.  Then we assess the distance of both mixer
-                 colors from the intended color to determine their relative
-                 probabilities of being chosen. */
+              /* We now try to find a color which, when mixed in some
+               * fashion with the closest match, yields something
+               * closer to the desired color.  We do this by
+               * repeatedly extrapolating the color vector from one to
+               * the other until we find another color cell.  Then we
+               * assess the distance of both mixer colors from the
+               * intended color to determine their relative
+               * probabilities of being chosen.
+               */
               pixval1 = *cachep - 1;
               color1 = &quantobj->cmap[pixval1];
 
               if (quantobj->actual_number_of_colors > 2)
                 {
-                  const int re = src[red_pix] - (int)color1->red;
-                  const int ge = src[green_pix] - (int)color1->green;
-                  const int be = src[blue_pix] - (int)color1->blue;
-                  int RV = src[red_pix] + re;
-                  int GV = src[green_pix] + ge;
-                  int BV = src[blue_pix] + be;
+                  const gint re = src[red_pix]   - (gint) color1->red;
+                  const gint ge = src[green_pix] - (gint) color1->green;
+                  const gint be = src[blue_pix]  - (gint) color1->blue;
+                  gint       RV = src[red_pix]   + re;
+                  gint       GV = src[green_pix] + ge;
+                  gint       BV = src[blue_pix]  + be;
 
                   do
                     {
@@ -3362,14 +3403,14 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                                   (CLAMP0255(GV)),
                                   (CLAMP0255(BV)),
                                   &R, &G, &B);
-                      cachep = HIST_LIN(histogram,R,G,B);
 
-                      /* If we have not seen this color before, find nearest
-                         colormap entry and update the cache */
+                      cachep = HIST_LIN (histogram, R, G, B);
+                      /* If we have not seen this color before, find
+                       * nearest colormap entry and update the cache
+                       */
                       if (*cachep == 0)
-                        {
-                          fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
-                        }
+                        fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
+
                       pixval2 = *cachep - 1;
                       RV += re;  GV += ge;  BV += be;
                     }
@@ -3408,8 +3449,8 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 #define LIN_DISTP(R1,G1,B1,R2,G2,B2,D) do { \
                 int spacer1, spaceg1, spaceb1; \
                 int spacer2, spaceg2, spaceb2; \
-                rgb_to_unshifted_lin(R1,G1,B1, &spacer1, &spaceg1, &spaceb1); \
-                rgb_to_unshifted_lin(R2,G2,B2, &spacer2, &spaceg2, &spaceb2); \
+                rgb_to_unshifted_lin (R1,G1,B1, &spacer1, &spaceg1, &spaceb1); \
+                rgb_to_unshifted_lin (R2,G2,B2, &spacer2, &spaceg2, &spaceb2); \
                 D = sqrt(R_SCALE * SQR((spacer1)-(spacer2)) +           \
                          G_SCALE * SQR((spaceg1)-(spaceg2)) + \
                          B_SCALE * SQR((spaceb1)-(spaceb2))); \
@@ -3770,8 +3811,9 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
           pixel = range_limiter[src[GRAY] + error_limiter[*pr]];
 
           cachep = &histogram[pixel];
-          /* If we have not seen this color before, find nearest colormap entry */
-          /* and update the cache */
+          /* If we have not seen this color before, find nearest
+           * colormap entry and update the cache
+           */
           if (*cachep == 0)
             fill_inverse_cmap_gray (quantobj, histogram, pixel);
 
@@ -3892,7 +3934,7 @@ median_cut_pass2_rgb_init (QuantizeObj *quantobj)
   zero_histogram_rgb (quantobj->histogram);
 
   /* Mark all indices as currently unused */
-  memset (quantobj->index_used_count, 0, 256 * sizeof (unsigned long));
+  memset (quantobj->index_used_count, 0, 256 * sizeof (gulong));
 
   /* Make a version of our discovered colormap in linear space */
   for (i = 0; i < quantobj->actual_number_of_colors; i++)
@@ -3912,7 +3954,7 @@ median_cut_pass2_gray_init (QuantizeObj *quantobj)
   zero_histogram_gray (quantobj->histogram);
 
   /* Mark all indices as currently unused */
-  memset (quantobj->index_used_count, 0, 256 * sizeof (unsigned long));
+  memset (quantobj->index_used_count, 0, 256 * sizeof (gulong));
 }
 
 static void
@@ -4152,17 +4194,18 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
           ge = range_limiter[ge + error_limiter[*gpr]];
           be = range_limiter[be + error_limiter[*bpr]];
 
-          cachep = HIST_LIN(histogram,
-                            RSDF(re),
-                            GSDF(ge),
-                            BSDF(be));
+          cachep = HIST_LIN (histogram,
+                             RSDF (re),
+                             GSDF (ge),
+                             BSDF (be));
           /* If we have not seen this color before, find nearest
-             colormap entry and update the cache */
+           * colormap entry and update the cache
+           */
           if (*cachep == 0)
             fill_inverse_cmap_rgb (quantobj, histogram,
-                                   RSDF(re),
-                                   GSDF(ge),
-                                   BSDF(be));
+                                   RSDF (re),
+                                   GSDF (ge),
+                                   BSDF (be));
 
           index = *cachep - 1;
           index_used_count[index]++;
@@ -4334,6 +4377,7 @@ initialize_median_cut (GimpImageBaseType       type,
                        gint                    num_colors,
                        GimpConvertDitherType   dither_type,
                        GimpConvertPaletteType  palette_type,
+                       GimpPalette            *custom_palette,
                        gboolean                want_alpha_dither,
                        GimpProgress           *progress)
 {
@@ -4348,6 +4392,7 @@ initialize_median_cut (GimpImageBaseType       type,
     quantobj->histogram = g_new (ColorFreq,
                                  HIST_R_ELEMS * HIST_G_ELEMS * HIST_B_ELEMS);
 
+  quantobj->custom_palette           = custom_palette;
   quantobj->desired_number_of_colors = num_colors;
   quantobj->want_alpha_dither        = want_alpha_dither;
   quantobj->progress                 = progress;
@@ -4365,7 +4410,7 @@ initialize_median_cut (GimpImageBaseType       type,
           break;
         case GIMP_CUSTOM_PALETTE:
           quantobj->first_pass = custompal_pass1;
-          needs_quantize=TRUE;
+          needs_quantize = TRUE;
           break;
         case GIMP_MONO_PALETTE:
         default:
@@ -4437,16 +4482,17 @@ initialize_median_cut (GimpImageBaseType       type,
           break;
         case GIMP_WEB_PALETTE:
           quantobj->first_pass = webpal_pass1;
-          needs_quantize=TRUE;
+          needs_quantize = TRUE;
           break;
         case GIMP_CUSTOM_PALETTE:
           quantobj->first_pass = custompal_pass1;
-          needs_quantize=TRUE;
+          needs_quantize = TRUE;
           break;
         case GIMP_MONO_PALETTE:
         default:
           quantobj->first_pass = monopal_pass1;
         }
+
       switch (dither_type)
         {
         case GIMP_NO_DITHER:
