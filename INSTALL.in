@@ -76,11 +76,15 @@ header files installed.
   8. For metadata access GIMP requires the gexiv2 library. It is hosted
      at https://wiki.gnome.org/Projects/gexiv2 .
 
-  9. libpng, libjpeg and lcms are hard dependencies that can not be
-     disabled.
+  9. libpng, libjpeg, libtiff and lcms are hard dependencies that can
+     not be disabled.
 
- 10. For optional mypaint brushes, you should install brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@,
-     compiled with GEGL support: `scons enable_gegl=true install`.
+ 10. For MyPaint brushes, brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@ is used,
+     compiled with GEGL support:
+
+     	`scons prefix=<your prefix> enable_gegl=true`
+     	`scons prefix=<your prefix> enable_gegl=true install`
+
      Brushlib repository is hosted at:
 
         https://github.com/mypaint/libmypaint
@@ -88,7 +92,7 @@ header files installed.
  11. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: libjasper,
-     libpoppler-glib, libtiff, webkit, libmng, librsvg, libwmf, libaa
+     libpoppler-glib, webkit, libmng, librsvg, libwmf, libaa
      and libgs (Ghostscript).
 
      Note that to be able to render CJK (Asian) and Cyrillic characters
@@ -118,23 +122,27 @@ header files installed.
 
  16. Summary of required packages and what version you need:
 
-     ATK: @ATK_REQUIRED_VERSION@
-     babl: @BABL_REQUIRED_VERSION@
+     Package Name	Version
+
+     ATK     		@ATK_REQUIRED_VERSION@
+     babl		@BABL_REQUIRED_VERSION@
      libbzip2
-     cairo: @CAIRO_REQUIRED_VERSION@
-     Fontconfig: @FONTCONFIG_REQUIRED_VERSION@
-     freetype2: @FREETYPE2_REQUIRED_VERSION@
-     GDK-PixBuf: @GDK_PIXBUF_REQUIRED_VERSION@
-     GEGL: @GEGL_REQUIRED_VERSION@
-     GLib: @GLIB_REQUIRED_VERSION@
-     GTK+: @GTK_REQUIRED_VERSION@
-     HarfBuzz: @HARFBUZZ_REQUIRED_VERSION@
+     cairo 		@CAIRO_REQUIRED_VERSION@
+     Fontconfig 	@FONTCONFIG_REQUIRED_VERSION@
+     freetype2 		@FREETYPE2_REQUIRED_VERSION@
+     GDK-PixBuf 	@GDK_PIXBUF_REQUIRED_VERSION@
+     GEGL 		@GEGL_REQUIRED_VERSION@
+     GLib 		@GLIB_REQUIRED_VERSION@
+     GTK+ 		@GTK_REQUIRED_VERSION@
+     HarfBuzz 		@HARFBUZZ_REQUIRED_VERSION@
      libbzip2
      libjpeg
-     libpng: @LIBPNG_REQUIRED_VERSION@
-     liblzma: @LIBLZMA_REQUIRED_VERSION@
-     Little CMS: @LCMS_REQUIRED_VERSION@
-     pangocairo: @PANGOCAIRO_REQUIRED_VERSION@
+     libpng 		@LIBPNG_REQUIRED_VERSION@
+     liblzma 		@LIBLZMA_REQUIRED_VERSION@
+     libmypaint 	@LIBMYPAINT_REQUIRED_VERSION@
+     libtiff
+     Little CMS 	@LCMS_REQUIRED_VERSION@
+     pangocairo 	@PANGOCAIRO_REQUIRED_VERSION@
      zlib
 
  17. Summary of optional packages:
@@ -152,11 +160,9 @@ header files installed.
      cairo-pdf		@CAIRO_PDF_REQUIRED_VERSION@		PDF export
      python 2		@PYTHON2_REQUIRED_VERSION@		Python plug-ins
      librsvg		@RSVG_REQUIRED_VERSION@		SVG
-     libtiff		-		TIFF
      libwmf		@WMF_REQUIRED_VERSION@		WMF
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
-     libmypaint		@LIBMYPAINT_REQUIRED_VERSION@		MyPaint brushes
 
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
