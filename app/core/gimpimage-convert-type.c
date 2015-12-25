@@ -1101,11 +1101,19 @@ gimp_image_convert_type (GimpImage               *image,
     case GIMP_RGB:
     case GIMP_INDEXED:
       if (old_type == GIMP_GRAY)
-        gimp_image_set_color_profile (image, NULL, NULL);
+        {
+          if (gimp_image_get_color_profile (image))
+            gimp_image_set_color_profile (image, NULL, NULL);
+          else
+            gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+        }
       break;
 
     case GIMP_GRAY:
-      gimp_image_set_color_profile (image, NULL, NULL);
+      if (gimp_image_get_color_profile (image))
+        gimp_image_set_color_profile (image, NULL, NULL);
+      else
+        gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
       break;
     }
 
