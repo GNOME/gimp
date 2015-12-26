@@ -18,7 +18,110 @@ icons_DATA = \
 
 include $(top_srcdir)/icons/Symbolic/icon-list.mk
 
-%.png: $(top_srcdir)/icons/Symbolic/$@
+# We are basically repeating the same rule for every subdirectory, which
+# is very dirty. But this is the only way we found to have a rule
+# dependency correctly tied to the image with same name in Symbolic/.
+# I would expect the following to match as a single rule:
+#     %.png: $(top_srcdir)/icons/Symbolic/%.png
+# But it doesn't. If someone knows how, feel free to fix it back into
+# a single rule.
+12/%.png: $(top_srcdir)/icons/Symbolic/12/%.png
+	mkdir -p `dirname $@`;
+	$(GEGL) -x \
+	"<gegl> \
+	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:load'> \
+	    <params> \
+	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	    </params> \
+	  </node> \
+	</gegl>" -o $@
+
+16/%.png: $(top_srcdir)/icons/Symbolic/16/%.png
+	mkdir -p `dirname $@`;
+	$(GEGL) -x \
+	"<gegl> \
+	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:load'> \
+	    <params> \
+	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	    </params> \
+	  </node> \
+	</gegl>" -o $@
+
+18/%.png: $(top_srcdir)/icons/Symbolic/18/%.png
+	mkdir -p `dirname $@`;
+	$(GEGL) -x \
+	"<gegl> \
+	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:load'> \
+	    <params> \
+	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	    </params> \
+	  </node> \
+	</gegl>" -o $@
+
+20/%.png: $(top_srcdir)/icons/Symbolic/20/%.png
+	mkdir -p `dirname $@`;
+	$(GEGL) -x \
+	"<gegl> \
+	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:load'> \
+	    <params> \
+	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	    </params> \
+	  </node> \
+	</gegl>" -o $@
+
+22/%.png: $(top_srcdir)/icons/Symbolic/22/%.png
+	mkdir -p `dirname $@`;
+	$(GEGL) -x \
+	"<gegl> \
+	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:load'> \
+	    <params> \
+	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	    </params> \
+	  </node> \
+	</gegl>" -o $@
+
+24/%.png: $(top_srcdir)/icons/Symbolic/24/%.png
+	mkdir -p `dirname $@`;
+	$(GEGL) -x \
+	"<gegl> \
+	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:load'> \
+	    <params> \
+	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	    </params> \
+	  </node> \
+	</gegl>" -o $@
+
+32/%.png: $(top_srcdir)/icons/Symbolic/32/%.png
+	mkdir -p `dirname $@`;
+	$(GEGL) -x \
+	"<gegl> \
+	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:load'> \
+	    <params> \
+	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	    </params> \
+	  </node> \
+	</gegl>" -o $@
+
+48/%.png: $(top_srcdir)/icons/Symbolic/48/%.png
+	mkdir -p `dirname $@`;
+	$(GEGL) -x \
+	"<gegl> \
+	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:load'> \
+	    <params> \
+	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	    </params> \
+	  </node> \
+	</gegl>" -o $@
+
+64/%.png: $(top_srcdir)/icons/Symbolic/64/%.png
 	mkdir -p `dirname $@`;
 	$(GEGL) -x \
 	"<gegl> \
