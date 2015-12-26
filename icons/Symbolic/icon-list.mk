@@ -143,6 +143,7 @@ icons16_DATA = \
 	16/gimp-tool-foreground-select.png		\
 	16/gimp-tool-free-select.png			\
 	16/gimp-tool-fuzzy-select.png			\
+	16/gimp-tool-handle-transform.png		\
 	16/gimp-tool-heal.png				\
 	16/gimp-tool-hue-saturation.png			\
 	16/gimp-tool-ink.png				\
@@ -151,6 +152,7 @@ icons16_DATA = \
 	16/gimp-tool-measure.png			\
 	16/gimp-tool-move.png				\
 	16/gimp-tool-mypaint-brush.png			\
+	16/gimp-tool-n-point-deformation.png		\
 	16/gimp-tool-options.png			\
 	16/gimp-tool-paintbrush.png			\
 	16/gimp-tool-path.png				\
@@ -162,10 +164,12 @@ icons16_DATA = \
 	16/gimp-tool-rect-select.png			\
 	16/gimp-tool-rotate.png				\
 	16/gimp-tool-scale.png				\
+	16/gimp-tool-seamless-clone.png			\
 	16/gimp-tool-shear.png				\
 	16/gimp-tool-smudge.png				\
 	16/gimp-tool-text.png				\
 	16/gimp-tool-threshold.png			\
+	16/gimp-tool-unified-transform.png		\
 	16/gimp-tool-warp.png				\
 	16/gimp-tool-zoom.png				\
 	16/gimp-tools.png				\
@@ -226,6 +230,7 @@ icons22_DATA = \
 	22/gimp-prefs-input-devices.png		\
 	22/gimp-prefs-interface.png		\
 	22/gimp-prefs-new-image.png		\
+	22/gimp-prefs-playground.png		\
 	22/gimp-prefs-session.png		\
 	22/gimp-prefs-system-resources.png	\
 	22/gimp-prefs-theme.png			\
@@ -254,6 +259,7 @@ icons22_DATA = \
 	22/gimp-tool-foreground-select.png	\
 	22/gimp-tool-free-select.png		\
 	22/gimp-tool-fuzzy-select.png		\
+	22/gimp-tool-handle-transform.png	\
 	22/gimp-tool-heal.png			\
 	22/gimp-tool-hue-saturation.png		\
 	22/gimp-tool-ink.png			\
@@ -262,6 +268,7 @@ icons22_DATA = \
 	22/gimp-tool-measure.png		\
 	22/gimp-tool-move.png			\
 	22/gimp-tool-mypaint-brush.png		\
+	22/gimp-tool-n-point-deformation.png	\
 	22/gimp-tool-paintbrush.png		\
 	22/gimp-tool-path.png			\
 	22/gimp-tool-pencil.png			\
@@ -272,10 +279,12 @@ icons22_DATA = \
 	22/gimp-tool-rect-select.png		\
 	22/gimp-tool-rotate.png			\
 	22/gimp-tool-scale.png			\
+	22/gimp-tool-seamless-clone.png		\
 	22/gimp-tool-shear.png			\
 	22/gimp-tool-smudge.png			\
 	22/gimp-tool-text.png			\
 	22/gimp-tool-threshold.png		\
+	22/gimp-tool-unified-transform.png	\
 	22/gimp-tool-warp.png			\
 	22/gimp-tool-zoom.png			\
 	22/gimp-wilber.png
@@ -316,6 +325,7 @@ icons24_DATA = \
 	24/gimp-hcenter.png			\
 	24/gimp-hchain-broken.png		\
 	24/gimp-hchain.png			\
+	24/gimp-hfill.png			\
 	24/gimp-image.png			\
 	24/gimp-images.png			\
 	24/gimp-info.png			\
@@ -338,6 +348,7 @@ icons24_DATA = \
 	24/gimp-vcenter.png			\
 	24/gimp-vchain-broken.png		\
 	24/gimp-vchain.png			\
+	24/gimp-vfill.png			\
 	24/gimp-video.png			\
 	24/gimp-warning.png			\
 	24/gimp-web.png
@@ -398,6 +409,7 @@ icons48_DATA = \
 	48/gimp-prefs-input-devices.png		\
 	48/gimp-prefs-interface.png		\
 	48/gimp-prefs-new-image.png		\
+	48/gimp-prefs-playground.png		\
 	48/gimp-prefs-session.png		\
 	48/gimp-prefs-system-resources.png	\
 	48/gimp-prefs-theme.png			\
