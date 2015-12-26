@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22"
+   height="22"
+   viewBox="0 0 22 22"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-tool-seamless-clone.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/16x16/apps/gimp-tool-seamless-clone.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs30573">
+    <linearGradient
+       id="linearGradient19282"
+       osb:paint="solid"
+       gradientTransform="matrix(1.2178615,0,0,1.043881,356.69172,1794.4958)">
+      <stop
+         style="stop-color:#666666;stop-opacity:1;"
+         offset="0"
+         id="stop19284" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="-303.14943"
+     inkscape:cy="99.677138"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="960"
+     inkscape:window-height="1136"
+     inkscape:window-x="960"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1030.3622)">
+    <g
+       id="g5224"
+       transform="matrix(0.04650603,0,0,0.04650603,-6.9360405,1012.6434)"
+       style="fill:#505050;fill-opacity:1"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         style="fill:#505050;fill-opacity:1;stroke:none"
+         d="m 149.14282,682.55888 0,59.16561 147.91402,0 -49.30477,-59.16561 -98.60925,0 z m 147.91402,59.16561 147.91402,0 0,-59.16561 -98.60925,0 -49.30477,59.16561 z"
+         id="path5582"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:#505050;fill-opacity:1;stroke:none"
+         d="m 198.44759,655.0167 c 0,0 78.88728,0 78.88728,-137.71328 19.72197,-27.54307 39.44394,0 39.44394,0 0,137.71328 78.88728,137.71328 78.88728,137.71328 l 0,27.54218 -197.2185,0 z"
+         id="path5584"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc" />
+      <ellipse
+         ry="59.165607"
+         rx="59.165531"
+         cy="534.64484"
+         cx="297.0567"
+         style="fill:#505050;fill-opacity:1;stroke:none"
+         id="path5586" />
+      <path
+         style="fill:#505050;fill-opacity:1;stroke:none"
+         d="m 326.37174,794.89065 0,59.16561 147.914,0 -49.3048,-59.16561 -98.6092,0 z m 147.914,59.16561 147.914,0 0,-59.16561 -98.6093,0 -49.3047,59.16561 z"
+         id="path5582-5"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:#505050;fill-opacity:1;stroke:none"
+         d="m 375.67644,767.34847 c 0,0 78.8873,0 78.8873,-137.71328 19.722,-27.54307 39.4439,0 39.4439,0 0,137.71328 78.8873,137.71328 78.8873,137.71328 l 0,27.54218 -197.2185,0 z"
+         id="path5584-5"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc" />
+      <ellipse
+         ry="59.165607"
+         rx="59.165531"
+         cy="646.97662"
+         cx="474.28561"
+         style="fill:#505050;fill-opacity:1;stroke:none"
+         id="path5586-0" />
+    </g>
+  </g>
+</svg>
