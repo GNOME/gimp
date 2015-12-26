@@ -1448,15 +1448,15 @@ prefs_dialog_new (Gimp       *gimp,
     profiles[] =
     {
       { N_("Preferred _RGB profile:"),
-        N_("Select RGB Color Profile"),     "rgb-profile"     },
-      { N_("Preferred _GRAY profile:"),
-        N_("Select GRAY Color Profile"),    "gray-profile"    },
+        N_("Select RGB Color Profile"),       "rgb-profile"     },
+      { N_("Preferred _grayscale profile:"),
+        N_("Select Grayscale Color Profile"), "gray-profile"    },
       { N_("_CMYK profile:"),
-        N_("Select CMYK Color Profile"),    "cmyk-profile"    },
+        N_("Select CMYK Color Profile"),      "cmyk-profile"    },
       { N_("_Monitor profile:"),
-        N_("Select Monitor Color Profile"), "display-profile" },
+        N_("Select Monitor Color Profile"),   "display-profile" },
       { N_("_Print simulation profile:"),
-        N_("Select Printer Color Profile"), "printer-profile" }
+        N_("Select Printer Color Profile"),   "printer-profile" }
     };
 
     GObject      *color_config;

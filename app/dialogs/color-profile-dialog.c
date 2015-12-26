@@ -311,7 +311,7 @@ color_profile_combo_box_new (ProfileDialog *dialog)
 
   if (gimp_image_get_base_type (dialog->image) == GIMP_GRAY)
     {
-      label = g_strdup_printf (_("Built-in GRAY (%s)"),
+      label = g_strdup_printf (_("Built-in grayscale (%s)"),
                                gimp_color_profile_get_label (profile));
 
       profile = gimp_color_config_get_gray_color_profile (dialog->config, &error);
@@ -334,7 +334,7 @@ color_profile_combo_box_new (ProfileDialog *dialog)
 
       if (gimp_image_get_base_type (dialog->image) == GIMP_GRAY)
         {
-          label = g_strdup_printf (_("Preferred GRAY (%s)"),
+          label = g_strdup_printf (_("Preferred grayscale (%s)"),
                                    gimp_color_profile_get_label (profile));
         }
       else
