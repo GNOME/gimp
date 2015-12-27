@@ -394,7 +394,7 @@ gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
             {
               for (b = 0; b < 3; b++)
                 dest[b] =
-                  bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]);
+                  bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]) / a;
 
               dest[3] = a;
             }
