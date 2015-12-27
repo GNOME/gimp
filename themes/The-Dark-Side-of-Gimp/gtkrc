@@ -115,7 +115,7 @@ style "tdsog-default-style"
   GtkScrollbar::has-forward-stepper = 0
   GtkScrollbar::min-slider-length = 32
   GtkScrolledWindow::scrollbar-spacing = 0
-  GtkScrolledWindow::scrollbars-within-bevel = 1
+  GtkScrolledWindow::scrollbars-within-bevel = 0
 
   GtkVScale::slider_length = 19
   GtkVScale::slider_width = 19
