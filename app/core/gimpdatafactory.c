@@ -99,7 +99,7 @@ static void    gimp_data_factory_load_data      (GimpDataFactory     *factory,
                                                  GHashTable          *cache,
                                                  gboolean             dir_writable,
                                                  GFile               *file,
-                                                 guint64              mtime,
+                                                 GFileInfo           *info,
                                                  GFile               *top_directory);
 
 
@@ -840,14 +840,9 @@ gimp_data_factory_load_directory (GimpDataFactory *factory,
             }
           else if (file_type == G_FILE_TYPE_REGULAR)
             {
-              guint64 mtime;
-
-              mtime = g_file_info_get_attribute_uint64 (info,
-                                                        G_FILE_ATTRIBUTE_TIME_MODIFIED);
-
               gimp_data_factory_load_data (factory, context, cache,
                                            dir_writable,
-                                           child, mtime,
+                                           child, info,
                                            top_directory);
             }
 
@@ -865,12 +860,13 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
                              GHashTable      *cache,
                              gboolean         dir_writable,
                              GFile           *file,
-                             guint64          mtime,
+                             GFileInfo       *info,
                              GFile           *top_directory)
 {
   const GimpDataFactoryLoaderEntry *loader    = NULL;
   GList                            *data_list = NULL;
   GInputStream                     *input;
+  guint64                           mtime;
   gint                              i;
   GError                           *error = NULL;
 
@@ -892,6 +888,9 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
   return;
 
  insert:
+  mtime = g_file_info_get_attribute_uint64 (info,
+                                            G_FILE_ATTRIBUTE_TIME_MODIFIED);
+
   if (cache)
     {
       GList *cached_data = g_hash_table_lookup (cache, file);
