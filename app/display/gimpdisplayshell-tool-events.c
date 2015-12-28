@@ -563,17 +563,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 gimp_motion_buffer_begin_stroke (shell->motion_buffer, time,
                                                  &last_motion);
 
-                last_motion.x        = image_coords.x;
-                last_motion.y        = image_coords.y;
-                last_motion.pressure = image_coords.pressure;
-                last_motion.xtilt    = image_coords.xtilt;
-                last_motion.ytilt    = image_coords.ytilt;
-                last_motion.wheel    = image_coords.wheel;
-                last_motion.xscale   = image_coords.xscale;
-                last_motion.yscale   = image_coords.yscale;
-
-                image_coords = last_motion;
-
                 tool_manager_button_press_active (gimp,
                                                   &image_coords,
                                                   time, state,
