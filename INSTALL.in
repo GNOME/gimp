@@ -79,11 +79,7 @@ header files installed.
   9. libpng, libjpeg, libtiff and lcms are hard dependencies that can
      not be disabled.
 
- 10. For MyPaint brushes, brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@ is used,
-     compiled with GEGL support:
-
-     	`scons prefix=<your prefix> enable_gegl=true`
-     	`scons prefix=<your prefix> enable_gegl=true install`
+ 10. For MyPaint brushes, brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@ is used.
 
      Brushlib repository is hosted at:
 
