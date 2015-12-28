@@ -9,7 +9,7 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GDK_PIXBUF_CFLAGS)			\
-	$(LIBMYPAINTGEGL_CFLAGS)		\
+	$(LIBMYPAINT_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = libapppaint.a

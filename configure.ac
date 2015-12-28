@@ -1480,7 +1480,7 @@ AM_CONDITIONAL(HAVE_OPENEXR, test "x$have_openexr" = xyes)
 # Check for libmypaint
 ######################
 
-PKG_CHECK_MODULES(LIBMYPAINTGEGL, libmypaint-gegl >= libmypaint_required_version)
+PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version)
 
 
 ##################

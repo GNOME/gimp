@@ -119,7 +119,7 @@ test_config_LDADD = \
 	$(GEXIV2_LIBS)				\
 	$(Z_LIBS)				\
 	$(JSON_C_LIBS)				\
-	$(LIBMYPAINTGEGL_LIBS)		\
+	$(LIBMYPAINT_LIBS)		\
 	$(libm)
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc

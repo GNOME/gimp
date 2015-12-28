@@ -162,7 +162,7 @@ gimpconsoleldadd = \
 	$(LCMS_LIBS)			\
 	$(Z_LIBS)			\
 	$(JSON_C_LIBS)			\
-	$(LIBMYPAINTGEGL_LIBS)		\
+	$(LIBMYPAINT_LIBS)		\
 	$(INTLLIBS)			\
 	$(RT_LIBS)			\
 	$(libm)
