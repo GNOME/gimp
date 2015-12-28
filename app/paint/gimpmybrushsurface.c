@@ -335,7 +335,6 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   float segment1_slope;
   float segment2_slope;
   float r_aa_start;
-  float mixbuf[4];
 
   hardness = CLAMP (hardness, 0.0f, 1.0f);
   segment1_slope = -(1.0f / hardness - 1.0f);
@@ -368,8 +367,7 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
         {
           for (ix = iter->roi[0].x; ix < iter->roi[0].x +  iter->roi[0].width; ix++)
             {
-              float rr, alpha, dst_alpha, a;
-              float *dst_pixel = (component_mask != GIMP_COMPONENT_MASK_ALL) ? mixbuf : pixel;
+              float rr, alpha, dst_alpha, r, g, b, a;
               if (radius < 3.0f)
                 rr = calculate_rr_antialiased (ix, iy, x, y, aspect_ratio, sn, cs, one_over_radius2, r_aa_start);
               else
@@ -379,6 +377,9 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
               /* a = alpha * color_a + dst_alpha * (1.0f - alpha);
                * which converts to: */
               a = alpha * (color_a - dst_alpha) + dst_alpha;
+              r = pixel[RED];
+              g = pixel[GREEN];
+              b = pixel[BLUE];
 
               if (a > 0.0f)
                 {
@@ -387,11 +388,10 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                    * instead we only calculate the cheaper term. */
                   float src_term = (alpha * color_a) / a;
                   float dst_term = 1.0f - src_term;
-                  dst_pixel[RED]   = color_r * src_term + pixel[RED] * dst_term;
-                  dst_pixel[GREEN] = color_g * src_term + pixel[GREEN] * dst_term;
-                  dst_pixel[BLUE]  = color_b * src_term + pixel[BLUE] * dst_term;
+                  r = color_r * src_term + r * dst_term;
+                  g = color_g * src_term + g * dst_term;
+                  b = color_b * src_term + b * dst_term;
                 }
-              dst_pixel[ALPHA] = a;
 
               /* FIXME: Implement mypaint style lock-alpha mode */
               /* FIXME: Implement colorize mode */
@@ -399,14 +399,22 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
               if (component_mask != GIMP_COMPONENT_MASK_ALL)
                 {
                   if (component_mask & GIMP_COMPONENT_MASK_RED)
-                    pixel[RED] = mixbuf[RED];
+                    pixel[RED]   = r;
                   if (component_mask & GIMP_COMPONENT_MASK_GREEN)
-                    pixel[GREEN] = mixbuf[GREEN];
+                    pixel[GREEN] = g;
                   if (component_mask & GIMP_COMPONENT_MASK_BLUE)
-                    pixel[BLUE] = mixbuf[BLUE];
+                    pixel[BLUE]  = b;
                   if (component_mask & GIMP_COMPONENT_MASK_ALPHA)
-                    pixel[ALPHA] = mixbuf[ALPHA];
+                    pixel[ALPHA] = a;
                 }
+              else
+                {
+                  pixel[RED]   = r;
+                  pixel[GREEN] = g;
+                  pixel[BLUE]  = b;
+                  pixel[ALPHA] = a;
+                }
+
               pixel += 4;
             }
         }
