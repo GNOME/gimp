@@ -25,6 +25,10 @@
 
 #include "libgimpmath/gimpmath.h"
 
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimpmybrushsurface.h"
 
 
@@ -332,6 +336,7 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   const double angle_rad = angle / 360 * 2 * M_PI;
   const float cs = cos(angle_rad);
   const float sn = sin(angle_rad);
+  float normal_mode;
   float segment1_slope;
   float segment2_slope;
   float r_aa_start;
@@ -344,6 +349,9 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   r_aa_start = radius - 1.0f;
   r_aa_start = MAX (r_aa_start, 0);
   r_aa_start = (r_aa_start * r_aa_start) / aspect_ratio;
+
+  normal_mode = opaque * (1.0f - colorize);
+  colorize = opaque * colorize;
 
   /* FIXME: This should use the real matrix values to trim aspect_ratio dabs */
   dabRect = calculate_dab_roi (x, y, radius);
@@ -367,12 +375,13 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
         {
           for (ix = iter->roi[0].x; ix < iter->roi[0].x +  iter->roi[0].width; ix++)
             {
-              float rr, alpha, dst_alpha, r, g, b, a;
+              float rr, base_alpha, alpha, dst_alpha, r, g, b, a;
               if (radius < 3.0f)
                 rr = calculate_rr_antialiased (ix, iy, x, y, aspect_ratio, sn, cs, one_over_radius2, r_aa_start);
               else
                 rr = calculate_rr (ix, iy, x, y, aspect_ratio, sn, cs, one_over_radius2);
-              alpha = calculate_alpha_for_rr (rr, hardness, segment1_slope, segment2_slope) * opaque;
+              base_alpha = calculate_alpha_for_rr (rr, hardness, segment1_slope, segment2_slope);
+              alpha = base_alpha * normal_mode;
               dst_alpha = pixel[ALPHA];
               /* a = alpha * color_a + dst_alpha * (1.0f - alpha);
                * which converts to: */
@@ -393,8 +402,30 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                   b = color_b * src_term + b * dst_term;
                 }
 
-              /* FIXME: Implement mypaint style lock-alpha mode */
-              /* FIXME: Implement colorize mode */
+              if (colorize > 0.0f && base_alpha > 0.0f)
+                {
+                  alpha = base_alpha * colorize;
+                  a = alpha + dst_alpha - alpha * dst_alpha;
+                  if (a > 0.0f)
+                    {
+                      GimpHSL pixel_hsl, out_hsl;
+                      GimpRGB pixel_rgb = {color_r, color_g, color_b};
+                      GimpRGB out_rgb   = {r, g, b};
+                      float src_term = alpha / a;
+                      float dst_term = 1.0f - src_term;
+
+                      gimp_rgb_to_hsl (&pixel_rgb, &pixel_hsl);
+                      gimp_rgb_to_hsl (&out_rgb, &out_hsl);
+
+                      out_hsl.h = pixel_hsl.h;
+                      out_hsl.s = pixel_hsl.s;
+                      gimp_hsl_to_rgb (&out_hsl, &out_rgb);
+
+                      r = (float)out_rgb.r * src_term + r * dst_term;
+                      g = (float)out_rgb.g * src_term + g * dst_term;
+                      b = (float)out_rgb.b * src_term + b * dst_term;
+                    }
+                }
 
               if (component_mask != GIMP_COMPONENT_MASK_ALL)
                 {
