@@ -286,21 +286,26 @@ gimp_curves_tool_button_release (GimpTool              *tool,
     }
   else if (state & gimp_get_toggle_behavior_mask ())
     {
-      gint i;
+      GimpHistogramChannel channel;
 
-      for (i = 0; i < 5; i++)
+      for (channel = GIMP_HISTOGRAM_VALUE;
+           channel <= GIMP_HISTOGRAM_ALPHA;
+           channel++)
         {
-          GimpCurve *curve = config->curve[i];
-          gdouble    value = c_tool->picked_color[i];
+          GimpCurve *curve = config->curve[channel];
+          gdouble    value = c_tool->picked_color[channel];
           gint       closest;
 
-          closest = gimp_curve_get_closest_point (curve, value);
+          if (value != -1)
+            {
+              closest = gimp_curve_get_closest_point (curve, value);
 
-          gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
-                                        closest);
+              gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
+                                            closest);
 
-          gimp_curve_set_point (curve, closest,
-                                value, gimp_curve_map_value (curve, value));
+              gimp_curve_set_point (curve, closest,
+                                    value, gimp_curve_map_value (curve, value));
+            }
         }
     }
 
@@ -377,6 +382,8 @@ gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
 
   if (gimp_drawable_has_alpha (drawable))
     tool->picked_color[GIMP_HISTOGRAM_ALPHA] = color->a;
+  else
+    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = -1;
 
   tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (color->r, color->g),
                                                   color->b);
