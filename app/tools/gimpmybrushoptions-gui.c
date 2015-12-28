@@ -33,6 +33,7 @@
 #include "paint/gimpmybrushoptions.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpviewablebox.h"
 
 #include "gimpmybrushoptions-gui.h"
 #include "gimppaintoptions-gui.h"
@@ -45,7 +46,15 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
+  GtkWidget *button;
   GtkWidget *scale;
+
+  /* the brush */
+  button = gimp_prop_mybrush_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                      _("Brush"), 2,
+                                      NULL, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /* radius */
   scale = gimp_prop_spin_scale_new (config, "radius",

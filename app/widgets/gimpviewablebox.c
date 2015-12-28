@@ -133,6 +133,7 @@ gimp_prop_brush_box_new (GimpContainer *container,
                              view_type_prop, view_size_prop);
 }
 
+
 /*  dynamics boxes  */
 
 static GtkWidget *
@@ -193,6 +194,69 @@ gimp_prop_dynamics_box_new (GimpContainer *container,
   return view_props_connect (dynamics_box_new (container, context, label,
                                                spacing, view_size,
                                                editor_id),
+                             context,
+                             view_type_prop, view_size_prop);
+}
+
+
+/*  brush boxes  */
+
+static GtkWidget *
+mybrush_box_new (GimpContainer *container,
+                 GimpContext   *context,
+                 const gchar   *label,
+                 gint           spacing,
+                 GimpViewType   view_type,
+                 GimpViewSize   view_size)
+{
+  if (! container)
+    container = gimp_data_factory_get_container (context->gimp->mybrush_factory);
+
+  return gimp_viewable_box_new (container, context, label, spacing,
+                                view_type, GIMP_VIEW_SIZE_LARGE, view_size,
+                                "gimp-mypaint-brush-grid|gimp-mypaint-brush-list",
+                                GIMP_STOCK_BRUSH,
+                                _("Open the MyPaint brush selection dialog"),
+                                NULL);
+}
+
+GtkWidget *
+gimp_mybrush_box_new (GimpContainer *container,
+                      GimpContext   *context,
+                      const gchar   *label,
+                      gint           spacing)
+{
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return mybrush_box_new (container, context, label, spacing,
+                          GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_LARGE);
+}
+
+GtkWidget *
+gimp_prop_mybrush_box_new (GimpContainer *container,
+                           GimpContext   *context,
+                           const gchar   *label,
+                           gint           spacing,
+                           const gchar   *view_type_prop,
+                           const gchar   *view_size_prop)
+{
+  GimpViewType view_type = GIMP_VIEW_TYPE_GRID;
+  GimpViewSize view_size = GIMP_VIEW_SIZE_LARGE;
+
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  if (view_type_prop && view_size_prop)
+    g_object_get (context,
+                  view_type_prop, &view_type,
+                  view_size_prop, &view_size,
+                  NULL);
+
+  return view_props_connect (mybrush_box_new (container, context, label, spacing,
+                                              view_type, view_size),
                              context,
                              view_type_prop, view_size_prop);
 }
@@ -614,10 +678,13 @@ view_props_connect (GtkWidget   *box,
 {
   GtkWidget *button = g_object_get_data (G_OBJECT (box), "viewable-button");
 
-  gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
-                            view_type_prop, "popup-view-type");
-  gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
-                            view_size_prop, "popup-view-size");
+  if (view_type_prop)
+    gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
+                              view_type_prop, "popup-view-type");
+
+  if (view_size_prop)
+    gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
+                              view_size_prop, "popup-view-size");
 
   return box;
 }
