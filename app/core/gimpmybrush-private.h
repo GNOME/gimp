@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmybrush-load.h
+ * gimpmybrush-private.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MYBRUSH_LOAD_H__
-#define __GIMP_MYBRUSH_LOAD_H__
+#ifndef __GIMP_MYBRUSH_PRIVATE_H__
+#define __GIMP_MYBRUSH_PRIVATE_H__
 
 
-#define GIMP_MYBRUSH_FILE_EXTENSION ".myb"
+struct _GimpMybrushPrivate
+{
+  gboolean  json_loaded;
+
+  gchar    *brush_json;
+  gdouble   radius;
+  gdouble   opaque;
+  gdouble   hardness;
+};
 
 
-GList * gimp_mybrush_load (GimpContext   *context,
-                           GFile         *file,
-                           GInputStream  *input,
-                           GError       **error);
-
-
-#endif /* __GIMP_MYBRUSH_LOAD_H__ */
+#endif /* __GIMP_MYBRUSH_PRIVATE_H__ */

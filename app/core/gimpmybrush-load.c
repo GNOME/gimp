@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrush-load.c
+ * gimpmybrush-load.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 
 #include "gimpmybrush.h"
 #include "gimpmybrush-load.h"
+#include "gimpmybrush-private.h"
 
 #include "gimp-intl.h"
 
@@ -58,7 +59,8 @@ gimp_mybrush_load (GimpContext   *context,
   g_free (basename);
 
   pixbuf = gdk_pixbuf_new_from_file_at_size (preview_filename,
-                                             48, 48, NULL);
+                                             48, 48, error);
+  g_free (preview_filename);
 
   if (pixbuf)
     {
@@ -73,8 +75,6 @@ gimp_mybrush_load (GimpContext   *context,
       g_free (basename);
       g_object_unref (pixbuf);
     }
-
-  g_free (preview_filename);
 
   if (! brush)
     return NULL;

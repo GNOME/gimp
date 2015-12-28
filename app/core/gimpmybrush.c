@@ -1,6 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpmybrush.c
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -27,20 +29,10 @@
 
 #include "gimpmybrush.h"
 #include "gimpmybrush-load.h"
+#include "gimpmybrush-private.h"
 #include "gimptagged.h"
 
 #include "gimp-intl.h"
-
-
-struct _GimpMybrushPrivate
-{
-  gboolean  json_loaded;
-
-  gchar    *brush_json;
-  gdouble   radius;
-  gdouble   opaque;
-  gdouble   hardness;
-};
 
 
 static void          gimp_mybrush_tagged_iface_init     (GimpTaggedInterface  *iface);

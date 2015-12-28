@@ -307,6 +307,7 @@ libappcore_a_sources = \
 	gimpmybrush.h				\
 	gimpmybrush-load.c			\
 	gimpmybrush-load.h			\
+	gimpmybrush-private.h			\
 	gimpobject.c				\
 	gimpobject.h				\
 	gimppaintinfo.c				\
