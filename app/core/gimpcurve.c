@@ -770,14 +770,10 @@ gimp_curve_set_point (GimpCurve *curve,
   if (curve->curve_type == GIMP_CURVE_FREE)
     return;
 
-  g_object_freeze_notify (G_OBJECT (curve));
-
   curve->points[point].x = x;
   curve->points[point].y = y;
 
   g_object_notify (G_OBJECT (curve), "points");
-
-  g_object_thaw_notify (G_OBJECT (curve));
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
@@ -794,13 +790,9 @@ gimp_curve_move_point (GimpCurve *curve,
   if (curve->curve_type == GIMP_CURVE_FREE)
     return;
 
-  g_object_freeze_notify (G_OBJECT (curve));
-
   curve->points[point].y = y;
 
   g_object_notify (G_OBJECT (curve), "points");
-
-  g_object_thaw_notify (G_OBJECT (curve));
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
@@ -866,13 +858,9 @@ gimp_curve_set_curve (GimpCurve *curve,
   if (curve->curve_type == GIMP_CURVE_SMOOTH)
     return;
 
-  g_object_freeze_notify (G_OBJECT (curve));
-
   curve->samples[ROUND (x * (gdouble) (curve->n_samples - 1))] = y;
 
   g_object_notify (G_OBJECT (curve), "samples");
-
-  g_object_thaw_notify (G_OBJECT (curve));
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
