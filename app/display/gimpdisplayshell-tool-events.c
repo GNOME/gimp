@@ -555,13 +555,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
                 GimpCoords last_motion;
 
-                /* Use the last evaluated dynamic axes instead of the
+                /* Use the last evaluated velocity&direction instead of the
                  * button_press event's ones because the click is
                  * usually at the same spot as the last motion event
-                 * which would give us bogus dynamics.
+                 * which would give us bogus derivate dynamics.
                  */
                 gimp_motion_buffer_begin_stroke (shell->motion_buffer, time,
                                                  &last_motion);
+
+                image_coords.velocity = last_motion.velocity;
+                image_coords.direction = last_motion.direction;
 
                 tool_manager_button_press_active (gimp,
                                                   &image_coords,
