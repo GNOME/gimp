@@ -126,4 +126,4 @@ themeui_DATA =	\
 	ui/toolbar.png	\
 	ui/transparent.png
 
-EXTRA_DIST = $(themedata_DATA) $(themeuidir)
+EXTRA_DIST = $(themedata_DATA) $(themeui_DATA)
