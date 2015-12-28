@@ -22,6 +22,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include <mypaint-brush.h>
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
@@ -41,15 +43,57 @@ gimp_mybrush_load (GimpContext   *context,
                    GInputStream  *input,
                    GError       **error)
 {
-  GimpBrush *brush = NULL;
-  GdkPixbuf *pixbuf;
-  gchar     *path;
-  gchar     *basename;
-  gchar     *preview_filename;
+  GimpMybrush  *brush = NULL;
+  MyPaintBrush *mypaint_brush;
+  GdkPixbuf    *pixbuf;
+  GFileInfo    *info;
+  guint64       size;
+  guchar       *buffer;
+  gchar        *path;
+  gchar        *basename;
+  gchar        *preview_filename;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                            G_FILE_QUERY_INFO_NONE,
+                            NULL, error);
+  if (! info)
+    return NULL;
+
+  size = g_file_info_get_attribute_uint64 (info,
+                                           G_FILE_ATTRIBUTE_STANDARD_SIZE);
+  g_object_unref (info);
+
+  if (size > 32768)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("MyPaint brush file is unreasonably large, skipping."));
+      return NULL;
+    }
+
+  buffer = g_new0 (guchar, size + 1);
+
+  if (! g_input_stream_read_all (input, buffer, size, NULL, NULL, error))
+    {
+      g_free (buffer);
+      return NULL;
+    }
+
+  mypaint_brush = mypaint_brush_new ();
+  mypaint_brush_from_defaults (mypaint_brush);
+
+  if (! mypaint_brush_from_string (mypaint_brush, (const gchar *) buffer))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Failed to deserialize MyPaint brush."));
+      mypaint_brush_unref (mypaint_brush);
+      g_free (buffer);
+      return NULL;
+    }
 
   path = g_file_get_path (file);
   basename = g_strndup (path, strlen (path) - 4);
@@ -62,22 +106,39 @@ gimp_mybrush_load (GimpContext   *context,
                                              48, 48, error);
   g_free (preview_filename);
 
-  if (pixbuf)
+  if (! pixbuf)
     {
-      basename = g_file_get_basename (file);
-
-      brush = g_object_new (GIMP_TYPE_MYBRUSH,
-                            "name",        gimp_filename_to_utf8 (basename),
-                            "mime-type",   "image/x-gimp-myb",
-                            "icon-pixbuf", pixbuf,
-                            NULL);
-
-      g_free (basename);
-      g_object_unref (pixbuf);
+      mypaint_brush_unref (mypaint_brush);
+      g_free (buffer);
+      return NULL;
     }
 
-  if (! brush)
-    return NULL;
+  basename = g_file_get_basename (file);
+
+  brush = g_object_new (GIMP_TYPE_MYBRUSH,
+                        "name",        gimp_filename_to_utf8 (basename),
+                        "mime-type",   "image/x-gimp-myb",
+                        "icon-pixbuf", pixbuf,
+                        NULL);
+
+  g_free (basename);
+  g_object_unref (pixbuf);
+
+  brush->priv->brush_json = (gchar *) buffer;
+
+  brush->priv->radius =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_RADIUS_LOGARITHMIC);
+
+  brush->priv->opaque =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_OPAQUE);
+
+  brush->priv->hardness =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_HARDNESS);
+
+  mypaint_brush_unref (mypaint_brush);
 
   return g_list_prepend (NULL, brush);
 }

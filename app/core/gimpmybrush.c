@@ -23,8 +23,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include <mypaint-brush.h>
-
 #include "core-types.h"
 
 #include "gimpmybrush.h"
@@ -230,58 +228,10 @@ gimp_mybrush_get_standard (GimpContext *context)
   return standard_mybrush;
 }
 
-static void
-gimp_mybrush_load_json (GimpMybrush *brush)
-{
-  GFile        *file          = gimp_data_get_file (GIMP_DATA (brush));
-  MyPaintBrush *mypaint_brush = mypaint_brush_new ();
-
-  mypaint_brush_from_defaults (mypaint_brush);
-
-  if (file)
-    {
-      gchar *path = g_file_get_path (file);
-
-      if (g_file_get_contents (path, &brush->priv->brush_json, NULL, NULL))
-        {
-          if (! mypaint_brush_from_string (mypaint_brush,
-                                           brush->priv->brush_json))
-            {
-              g_printerr ("Failed to deserialize MyPaint brush\n");
-              g_free (brush->priv->brush_json);
-              brush->priv->brush_json = NULL;
-            }
-        }
-      else
-        {
-          g_printerr ("Failed to load MyPaint brush\n");
-        }
-    }
-
-  brush->priv->radius =
-    mypaint_brush_get_base_value (mypaint_brush,
-                                  MYPAINT_BRUSH_SETTING_RADIUS_LOGARITHMIC);
-
-  brush->priv->opaque =
-    mypaint_brush_get_base_value (mypaint_brush,
-                                  MYPAINT_BRUSH_SETTING_OPAQUE);
-
-  brush->priv->hardness =
-    mypaint_brush_get_base_value (mypaint_brush,
-                                  MYPAINT_BRUSH_SETTING_HARDNESS);
-
-  mypaint_brush_unref (mypaint_brush);
-
-  brush->priv->json_loaded = TRUE;
-}
-
 const gchar *
 gimp_mybrush_get_brush_json (GimpMybrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), NULL);
-
-  if (! brush->priv->json_loaded)
-    gimp_mybrush_load_json (brush);
 
   return brush->priv->brush_json;
 }
@@ -291,9 +241,6 @@ gimp_mybrush_get_radius (GimpMybrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
 
-  if (! brush->priv->json_loaded)
-    gimp_mybrush_load_json (brush);
-
   return brush->priv->radius;
 }
 
@@ -302,9 +249,6 @@ gimp_mybrush_get_opaque (GimpMybrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
 
-  if (! brush->priv->json_loaded)
-    gimp_mybrush_load_json (brush);
-
   return brush->priv->opaque;
 }
 
@@ -312,9 +256,6 @@ gdouble
 gimp_mybrush_get_hardness (GimpMybrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
-
-  if (! brush->priv->json_loaded)
-    gimp_mybrush_load_json (brush);
 
   return brush->priv->hardness;
 }
