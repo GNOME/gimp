@@ -26,9 +26,8 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = pagecurl
 
 pagecurl_SOURCES = pagecurl.c
-nodist_pagecurl_SOURCES = pagecurl-icons.h
 
-BUILT_SOURCES = pagecurl-icons.h
+BUILT_SOURCES = pagecurl-icons.c
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
@@ -63,15 +62,20 @@ PAGECURL_IMAGES = \
 
 EXTRA_DIST = $(PAGECURL_IMAGES)
 
-CLEANFILES = $(BUILT_SOURCES) pagecurl-icons.list
+CLEANFILES = $(BUILT_SOURCES) pagecurl-icons.gresource.xml
 
-pagecurl-icons.list: $(PAGECURL_IMAGES) Makefile.am
-	( rm -f $@; \
-          for image in $(PAGECURL_IMAGES); do \
-            echo $$image | \
-              sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
-	    echo "  $(srcdir)/$$image" >> $@; \
-	  done )
+pagecurl-icons.gresource.xml: $(PAGECURL_IMAGES) Makefile.am
+	$(AM_V_GEN) ( rm -f $@; \
+	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
+	  echo '<gresources>' >> $@; \
+	  echo '  <gresource prefix="/org/gimp/pagecurl-icons">' >> $@; \
+	  for image in $(PAGECURL_IMAGES); do \
+	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
+	  done; \
+	  echo '  </gresource>' >> $@; \
+	  echo '</gresources>' >> $@ )
 
-$(srcdir)/pagecurl-icons.h: pagecurl-icons.list
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat pagecurl-icons.list` > $(@F)
+$(srcdir)/pagecurl-icons.c: pagecurl-icons.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ pagecurl-icons.gresource.xml

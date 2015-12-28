@@ -5,5 +5,5 @@
 /.libs
 /pagecurl
 /pagecurl.exe
-/pagecurl-icons.h
-/pagecurl-icons.list
+/pagecurl-icons.c
+/pagecurl-icons.gresource.xml

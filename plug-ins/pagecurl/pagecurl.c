@@ -47,7 +47,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "pagecurl-icons.h"
+#include "pagecurl-icons.c"
 
 
 #define PLUG_IN_PROC    "plug-in-pagecurl"
@@ -144,18 +144,6 @@ static CurlParams curl;
 
 static gint32        image_id;
 static GimpDrawable *curl_layer;
-
-static const guint8 *curl_pixbufs[] =
-{
-  curl0,
-  curl1,
-  curl2,
-  curl3,
-  curl4,
-  curl5,
-  curl6,
-  curl7
-};
 
 static GtkWidget *curl_image = NULL;
 
@@ -403,6 +391,7 @@ curl_pixbuf_update (void)
 {
   GdkPixbuf *pixbuf;
   gint       index;
+  gchar     *resource;
 
   switch (curl.edge)
     {
@@ -416,7 +405,11 @@ curl_pixbuf_update (void)
 
   index += curl.orientation * 4;
 
-  pixbuf = gdk_pixbuf_new_from_inline (-1, curl_pixbufs[index], FALSE, NULL);
+  resource = g_strdup_printf ("/org/gimp/pagecurl-icons/curl%c.png",
+                              '0' + index);
+  pixbuf = gdk_pixbuf_new_from_resource (resource, NULL);
+  g_free (resource);
+
   gtk_image_set_from_pixbuf (GTK_IMAGE (curl_image), pixbuf);
   g_object_unref (pixbuf);
 }
