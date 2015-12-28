@@ -59,6 +59,7 @@ const gchar * gimp_mybrush_get_brush_json (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_radius     (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_opaque     (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_hardness   (GimpMybrush *brush);
+gboolean      gimp_mybrush_get_is_eraser  (GimpMybrush *brush);
 
 
 #endif /* __GIMP_MYBRUSH_H__ */

@@ -39,7 +39,8 @@ enum
   PROP_0,
   PROP_RADIUS,
   PROP_OPAQUE,
-  PROP_HARDNESS
+  PROP_HARDNESS,
+  PROP_ERASER
 };
 
 
@@ -83,6 +84,10 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
                                    "hardness", NULL,
                                    0.0, 1.0, 1.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ERASER,
+                                   "eraser", NULL,
+                                   FALSE,
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -108,6 +113,9 @@ gimp_mybrush_options_set_property (GObject      *object,
       break;
     case PROP_OPAQUE:
       options->opaque = g_value_get_double (value);
+      break;
+    case PROP_ERASER:
+      options->eraser = g_value_get_boolean (value);
       break;
 
     default:
@@ -135,6 +143,9 @@ gimp_mybrush_options_get_property (GObject    *object,
     case PROP_HARDNESS:
       g_value_set_double (value, options->hardness);
       break;
+    case PROP_ERASER:
+      g_value_set_boolean (value, options->eraser);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -151,5 +162,6 @@ gimp_mybrush_options_mybrush_changed (GimpContext *context,
                   "radius",   gimp_mybrush_get_radius (brush),
                   "opaque",   gimp_mybrush_get_opaque (brush),
                   "hardness", gimp_mybrush_get_hardness (brush),
+                  "eraser",   gimp_mybrush_get_is_eraser (brush),
                   NULL);
 }

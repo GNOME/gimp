@@ -27,6 +27,7 @@ struct _GimpMybrushPrivate
   gdouble  radius;
   gdouble  opaque;
   gdouble  hardness;
+  gboolean eraser;
 };
 
 

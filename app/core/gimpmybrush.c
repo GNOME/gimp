@@ -103,6 +103,7 @@ gimp_mybrush_init (GimpMybrush *brush)
   brush->priv->radius   = 1.0;
   brush->priv->opaque   = 1.0;
   brush->priv->hardness = 1.0;
+  brush->priv->eraser   = FALSE;
 }
 
 static void
@@ -258,4 +259,12 @@ gimp_mybrush_get_hardness (GimpMybrush *brush)
   g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
 
   return brush->priv->hardness;
+}
+
+gboolean
+gimp_mybrush_get_is_eraser (GimpMybrush *brush)
+{
+  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), FALSE);
+
+  return brush->priv->eraser;
 }

@@ -219,6 +219,9 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
       mypaint_brush_set_base_value (mybrush->private->brush,
                                     MYPAINT_BRUSH_SETTING_HARDNESS,
                                     options->hardness);
+      mypaint_brush_set_base_value (mybrush->private->brush,
+                                    MYPAINT_BRUSH_SETTING_ERASER,
+                                    options->eraser ? 1.0f : 0.0f);
 
       mypaint_brush_new_stroke (mybrush->private->brush);
       mybrush->private->last_time = -1;

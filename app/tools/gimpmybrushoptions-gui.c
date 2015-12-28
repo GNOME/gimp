@@ -56,6 +56,12 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  /* erase mode */
+  scale = gimp_prop_check_button_new (config, "eraser",
+                                    _("Erase with this brush"));
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
   /* radius */
   scale = gimp_prop_spin_scale_new (config, "radius",
                                     _("Radius"),

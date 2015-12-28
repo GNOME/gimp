@@ -138,6 +138,10 @@ gimp_mybrush_load (GimpContext   *context,
     mypaint_brush_get_base_value (mypaint_brush,
                                   MYPAINT_BRUSH_SETTING_HARDNESS);
 
+  brush->priv->eraser =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_ERASER) > 0.5f;
+
   mypaint_brush_unref (mypaint_brush);
 
   return g_list_prepend (NULL, brush);
