@@ -81,7 +81,12 @@ header files installed.
 
  10. For MyPaint brushes, brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@ is used.
 
-     Brushlib repository is hosted at:
+     To build and install libmypaint:
+
+       `scons prefix=<your prefix>`
+       `scons prefix=<your prefix> install`
+
+     The libmypaint repository is hosted at:
 
         https://github.com/mypaint/libmypaint
 
