@@ -322,7 +322,7 @@ gimp_tools_restore (Gimp *gimp)
       GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
 
       /*  get default values from prefs (see bug #120832)  */
-      gimp_tool_options_reset (tool_info->tool_options);
+      gimp_config_reset (GIMP_CONFIG (tool_info->tool_options));
     }
 
   if (! gimp_contexts_load (gimp, &error))

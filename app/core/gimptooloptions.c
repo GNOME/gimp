@@ -53,8 +53,6 @@ static void   gimp_tool_options_get_property      (GObject         *object,
                                                    GValue          *value,
                                                    GParamSpec      *pspec);
 
-static void   gimp_tool_options_real_reset        (GimpToolOptions *tool_options);
-
 static void   gimp_tool_options_config_reset      (GimpConfig      *config);
 
 static void   gimp_tool_options_tool_notify       (GimpToolOptions *options,
@@ -76,8 +74,6 @@ gimp_tool_options_class_init (GimpToolOptionsClass *klass)
   object_class->dispose      = gimp_tool_options_dispose;
   object_class->set_property = gimp_tool_options_set_property;
   object_class->get_property = gimp_tool_options_get_property;
-
-  klass->reset               = gimp_tool_options_real_reset;
 
   g_object_class_override_property (object_class, PROP_TOOL, "tool");
 
@@ -240,12 +236,6 @@ gimp_tool_options_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_options_real_reset (GimpToolOptions *tool_options)
-{
-  gimp_config_reset (GIMP_CONFIG (tool_options));
-}
-
-static void
 gimp_tool_options_config_reset (GimpConfig *config)
 {
   gchar *name = g_strdup (gimp_object_get_name (config));
@@ -275,14 +265,6 @@ gimp_tool_options_tool_notify (GimpToolOptions *options,
 
 
 /*  public functions  */
-
-void
-gimp_tool_options_reset (GimpToolOptions *tool_options)
-{
-  g_return_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options));
-
-  GIMP_TOOL_OPTIONS_GET_CLASS (tool_options)->reset (tool_options);
-}
 
 gboolean
 gimp_tool_options_serialize (GimpToolOptions  *tool_options,

@@ -72,6 +72,8 @@ enum
 };
 
 
+static void  gimp_text_options_config_iface_init (GimpConfigInterface *config_iface);
+
 static void  gimp_text_options_finalize           (GObject         *object);
 static void  gimp_text_options_set_property       (GObject         *object,
                                                    guint            property_id,
@@ -82,7 +84,7 @@ static void  gimp_text_options_get_property       (GObject         *object,
                                                    GValue          *value,
                                                    GParamSpec      *pspec);
 
-static void  gimp_text_options_reset              (GimpToolOptions *tool_options);
+static void  gimp_text_options_reset              (GimpConfig      *config);
 
 static void  gimp_text_options_notify_font        (GimpContext     *context,
                                                    GParamSpec      *pspec,
@@ -100,23 +102,24 @@ static void  gimp_text_options_notify_text_color  (GimpText        *text,
 
 G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options,
                          GIMP_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_text_options_config_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
                                                 NULL))
 
 #define parent_class gimp_text_options_parent_class
 
+static GimpConfigInterface *parent_config_iface = NULL;
+
 
 static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
-
-  options_class->reset       = gimp_text_options_reset;
 
   /* The 'highlight' property is defined here because we want different
    * default values for the Crop, Text and the Rectangle Select tools.
@@ -212,6 +215,14 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                 GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
+}
+
+static void
+gimp_text_options_config_iface_init (GimpConfigInterface *config_iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  config_iface->reset = gimp_text_options_reset;
 }
 
 static void
@@ -358,9 +369,9 @@ gimp_text_options_set_property (GObject      *object,
 }
 
 static void
-gimp_text_options_reset (GimpToolOptions *tool_options)
+gimp_text_options_reset (GimpConfig *config)
 {
-  GObject *object = G_OBJECT (tool_options);
+  GObject *object = G_OBJECT (config);
 
   /*  implement reset() ourselves because the default impl would
    *  reset *all* properties, including all rectangle properties

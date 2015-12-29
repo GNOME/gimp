@@ -175,7 +175,7 @@ tool_options_reset_cmd_callback (GtkAction *action,
   GimpContext  *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
   GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
-  gimp_tool_options_reset (tool_info->tool_options);
+  gimp_config_reset (GIMP_CONFIG (tool_info->tool_options));
 }
 
 void
@@ -222,7 +222,7 @@ tool_options_reset_all_cmd_callback (GtkAction *action,
         {
           GimpToolInfo *tool_info = list->data;
 
-          gimp_tool_options_reset (tool_info->tool_options);
+          gimp_config_reset (GIMP_CONFIG (tool_info->tool_options));
         }
     }
 

@@ -57,7 +57,8 @@ static void   gimp_mybrush_options_get_property     (GObject      *object,
 static void    gimp_mybrush_options_mybrush_changed (GimpContext  *context,
                                                      GimpMybrush  *brush);
 
-static void    gimp_mybrush_options_config_reset    (GimpConfig *gimp_config);
+static void    gimp_mybrush_options_reset           (GimpConfig   *config);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpMybrushOptions, gimp_mybrush_options,
                          GIMP_TYPE_PAINT_OPTIONS,
@@ -65,6 +66,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpMybrushOptions, gimp_mybrush_options,
                                                 gimp_mybrush_options_config_iface_init))
 
 static GimpConfigInterface *parent_config_iface = NULL;
+
 
 static void
 gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
@@ -95,13 +97,12 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
-
 static void
 gimp_mybrush_options_config_iface_init (GimpConfigInterface *config_iface)
 {
   parent_config_iface = g_type_interface_peek_parent (config_iface);
 
-  config_iface->reset = gimp_mybrush_options_config_reset;
+  config_iface->reset = gimp_mybrush_options_reset;
 }
 
 static void
@@ -181,11 +182,12 @@ gimp_mybrush_options_mybrush_changed (GimpContext *context,
 }
 
 static void
-gimp_mybrush_options_config_reset (GimpConfig *gimp_config)
+gimp_mybrush_options_reset (GimpConfig *config)
 {
-  GimpContext *context = GIMP_CONTEXT (gimp_config);
+  GimpContext *context = GIMP_CONTEXT (config);
   GimpMybrush *brush   = gimp_context_get_mybrush (context);
 
-  parent_config_iface->reset (gimp_config);
+  parent_config_iface->reset (config);
+
   gimp_mybrush_options_mybrush_changed (context, brush);
 }

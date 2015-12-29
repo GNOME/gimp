@@ -67,6 +67,8 @@ enum
 };
 
 
+static void     gimp_transform_options_config_iface_init (GimpConfigInterface *config_iface);
+
 static void     gimp_transform_options_set_property (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
@@ -76,7 +78,7 @@ static void     gimp_transform_options_get_property (GObject         *object,
                                                      GValue          *value,
                                                      GParamSpec      *pspec);
 
-static void     gimp_transform_options_reset        (GimpToolOptions *tool_options);
+static void     gimp_transform_options_reset        (GimpConfig      *config);
 
 static gboolean gimp_transform_options_sync_grid    (GBinding        *binding,
                                                      const GValue    *source_value,
@@ -84,22 +86,23 @@ static gboolean gimp_transform_options_sync_grid    (GBinding        *binding,
                                                      gpointer         user_data);
 
 
-G_DEFINE_TYPE (GimpTransformOptions, gimp_transform_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE_WITH_CODE (GimpTransformOptions, gimp_transform_options,
+                         GIMP_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_transform_options_config_iface_init))
 
 #define parent_class gimp_transform_options_parent_class
+
+static GimpConfigInterface *parent_config_iface = NULL;
 
 
 static void
 gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = gimp_transform_options_set_property;
   object_class->get_property = gimp_transform_options_get_property;
-
-  options_class->reset       = gimp_transform_options_reset;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TYPE,
                                  "type", NULL,
@@ -196,6 +199,14 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+}
+
+static void
+gimp_transform_options_config_iface_init (GimpConfigInterface *config_iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  config_iface->reset = gimp_transform_options_reset;
 }
 
 static void
@@ -344,18 +355,19 @@ gimp_transform_options_get_property (GObject    *object,
 }
 
 static void
-gimp_transform_options_reset (GimpToolOptions *tool_options)
+gimp_transform_options_reset (GimpConfig *config)
 {
-  GParamSpec *pspec;
+  GimpToolOptions *tool_options = GIMP_TOOL_OPTIONS (config);
+  GParamSpec      *pspec;
 
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                         "interpolation");
 
   if (pspec)
     G_PARAM_SPEC_ENUM (pspec)->default_value =
       tool_options->tool_info->gimp->config->interpolation_type;
 
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+  parent_config_iface->reset (config);
 }
 
 /**

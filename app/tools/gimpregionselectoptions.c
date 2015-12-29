@@ -50,6 +50,8 @@ enum
 };
 
 
+static void   gimp_region_select_options_config_iface_init (GimpConfigInterface *config_iface);
+
 static void   gimp_region_select_options_set_property (GObject         *object,
                                                        guint            property_id,
                                                        const GValue    *value,
@@ -59,25 +61,26 @@ static void   gimp_region_select_options_get_property (GObject         *object,
                                                        GValue          *value,
                                                        GParamSpec      *pspec);
 
-static void   gimp_region_select_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_region_select_options_reset        (GimpConfig      *config);
 
 
-G_DEFINE_TYPE (GimpRegionSelectOptions, gimp_region_select_options,
-               GIMP_TYPE_SELECTION_OPTIONS)
+G_DEFINE_TYPE_WITH_CODE (GimpRegionSelectOptions, gimp_region_select_options,
+                         GIMP_TYPE_SELECTION_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_region_select_options_config_iface_init))
 
 #define parent_class gimp_region_select_options_parent_class
+
+static GimpConfigInterface *parent_config_iface = NULL;
 
 
 static void
 gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = gimp_region_select_options_set_property;
   object_class->get_property = gimp_region_select_options_get_property;
-
-  options_class->reset       = gimp_region_select_options_reset;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
                                     "select-transparent",
@@ -112,6 +115,14 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
                                                          FALSE,
                                                          G_PARAM_READWRITE |
                                                          GIMP_PARAM_STATIC_STRINGS));
+}
+
+static void
+gimp_region_select_options_config_iface_init (GimpConfigInterface *config_iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  config_iface->reset = gimp_region_select_options_reset;
 }
 
 static void
@@ -192,18 +203,19 @@ gimp_region_select_options_get_property (GObject    *object,
 }
 
 static void
-gimp_region_select_options_reset (GimpToolOptions *tool_options)
+gimp_region_select_options_reset (GimpConfig *config)
 {
-  GParamSpec *pspec;
+  GimpToolOptions *tool_options = GIMP_TOOL_OPTIONS (config);
+  GParamSpec      *pspec;
 
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                         "threshold");
 
   if (pspec)
     G_PARAM_SPEC_DOUBLE (pspec)->default_value =
       tool_options->tool_info->gimp->config->default_threshold;
 
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+  parent_config_iface->reset (config);
 }
 
 GtkWidget *
