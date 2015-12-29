@@ -45,6 +45,7 @@
 #include "config.h"
 
 #include <tiffio.h>
+#include <gexiv2/gexiv2.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -463,6 +464,13 @@ run (const gchar      *name,
               if (metadata)
                 {
                   GFile *file;
+
+                  /* See bug 758909: clear TIFFTAG_MIN/MAXSAMPLEVALUE because
+                   * exiv2 saves them with wrong type and the original values
+                   * could be invalid
+                   */
+                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.0x0118");
+                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.0x0119");
 
                   gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
 
