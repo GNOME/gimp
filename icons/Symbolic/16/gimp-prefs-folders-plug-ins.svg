@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22"
+   height="22"
+   viewBox="0 0 22 22"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-prefs-folders-plugins.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/16x16/apps/gimp-prefs-folder-patterns.png"
+   inkscape:export-xdpi="65.454544"
+   inkscape:export-ydpi="65.454544">
+  <defs
+     id="defs30573">
+    <linearGradient
+       id="linearGradient19282"
+       osb:paint="solid"
+       gradientTransform="matrix(1.2178615,0,0,1.043881,356.69172,1794.4958)">
+      <stop
+         style="stop-color:#666666;stop-opacity:1;"
+         offset="0"
+         id="stop19284" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.627417"
+     inkscape:cx="11.341956"
+     inkscape:cy="13.441852"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1030.3622)">
+    <rect
+       y="999.4873"
+       x="-65.730461"
+       height="21.999998"
+       width="21.999998"
+       id="rect7151"
+       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
+    <g
+       inkscape:label="preferences-folders-dynamics"
+       id="g7536"
+       transform="matrix(1.375,0,0,1.375,-75.625,1002.8622)">
+      <g
+         inkscape:label="preferences-folders"
+         id="g7539"
+         transform="translate(40,60)">
+        <rect
+           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
+           id="rect7543"
+           width="16"
+           height="16"
+           x="15"
+           y="-40" />
+      </g>
+    </g>
+    <rect
+       y="1030.3622"
+       x="0"
+       height="22"
+       width="22"
+       id="rect14414"
+       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
+    <g
+       transform="matrix(1.375,0,0,1.375,-130.625,1002.8622)"
+       id="g7626"
+       inkscape:label="preferences-folders-modules">
+      <rect
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
+         id="rect7601"
+         width="16"
+         height="16"
+         x="95"
+         y="20" />
+    </g>
+    <g
+       transform="matrix(1.375,0,0,1.375,-185.625,1085.3622)"
+       id="g29129"
+       inkscape:label="folders-plug-ins">
+      <g
+         transform="translate(120,0)"
+         id="g29114"
+         inkscape:label="preferences-folders">
+        <path
+           sodipodi:nodetypes="sssssssscsssssccsscssssscccssccccsscccss"
+           inkscape:connector-curvature="0"
+           id="path29116"
+           transform="translate(-120,0)"
+           d="M 135.53125,-40 C 135.24212,-40 135,-39.75788 135,-39.46875 l 0,14.9375 c 0,0.2985 0.23264,0.53125 0.53125,0.53125 l 14.9375,0 C 150.76735,-24 151,-24.23265 151,-24.53125 l 0,-9.9375 C 151,-34.75785 150.75788,-35 150.46875,-35 L 138,-35 l 0,8.5 c 0,0.277 -0.223,0.5 -0.5,0.5 -0.277,0 -0.5,-0.223 -0.5,-0.5 l 0,-9 c 0,-0.277 0.223,-0.5 0.5,-0.5 l 2.96875,0 8.53125,0 0,-1.40625 C 149,-37.73345 148.73334,-38 148.40625,-38 L 141,-38 l 0,-1.46875 C 141,-39.7579 140.75788,-40 140.46875,-40 Z M 145,-34 c 0.5,0 1,0.166667 1,0.5 l 0,1.5 2,0 0,2 -1.5,-0.0625 c -0.66609,-0.02775 -0.66609,1.972246 0,2 L 148,-28 l 0,2 -6,0 0,-2 -1.4375,0 c -0.66667,0 -0.66667,-2 0,-2 l 1.4375,0 0,-2 2,0 0,-1.5 c 0,-0.333333 0.5,-0.5 1,-0.5 z"
+           style="display:inline;fill:#505050;fill-opacity:1;stroke:none" />
+        <rect
+           y="-40"
+           x="15"
+           height="16"
+           width="16"
+           id="rect29118"
+           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
+      </g>
+    </g>
+  </g>
+</svg>
