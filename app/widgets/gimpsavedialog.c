@@ -346,18 +346,17 @@ gimp_save_dialog_add_compat_toggle (GimpSaveDialog *dialog)
 {
   GtkWidget *compat_frame;
 
-  compat_frame = gtk_frame_new (NULL);
+  compat_frame = gimp_frame_new (NULL);
 
   /* The checkbox. */
-  dialog->compat_toggle = gtk_check_button_new_with_label (_("Save this XCF file with maximum compatibility"));
+  dialog->compat_toggle =
+    gtk_check_button_new_with_label (_("Save this XCF file with maximum compatibility"));
   gtk_frame_set_label_widget (GTK_FRAME (compat_frame),
                               dialog->compat_toggle);
 
   /* Additional information explaining what this mode does. */
-  dialog->compat_info   = gtk_label_new ("");
-  gtk_label_set_justify (GTK_LABEL (dialog->compat_info),
-                         GTK_JUSTIFY_LEFT);
-  gtk_misc_set_alignment (GTK_MISC (dialog->compat_info), 0, 0);
+  dialog->compat_info = gtk_label_new ("");
+  gtk_misc_set_alignment (GTK_MISC (dialog->compat_info), 0.0, 0.0);
   gimp_label_set_attributes (GTK_LABEL (dialog->compat_info),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
