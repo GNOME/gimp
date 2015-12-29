@@ -92,7 +92,28 @@ icons16_DATA = \
 	16/gimp-paths.png				\
 	16/gimp-plugin.png				\
 	16/gimp-portrait.png				\
+	16/gimp-prefs-folders-brushes.png		\
+	16/gimp-prefs-folders-dynamics.png		\
+	16/gimp-prefs-folders-environ.png		\
+	16/gimp-prefs-folders-fonts.png			\
+	16/gimp-prefs-folders-gradients.png		\
 	16/gimp-prefs-folders-icon-themes.png		\
+	16/gimp-prefs-folders-interp.png		\
+	16/gimp-prefs-folders-modules.png		\
+	16/gimp-prefs-folders-palettes.png		\
+	16/gimp-prefs-folders-patterns.png		\
+	16/gimp-prefs-folders-plug-ins.png		\
+	16/gimp-prefs-folders-scripts.png		\
+	16/gimp-prefs-folders-themes.png		\
+	16/gimp-prefs-folders-tool-plug-ins.png		\
+	16/gimp-prefs-folders-tool-presets.png		\
+	16/gimp-prefs-folders-tools.png			\
+	16/gimp-prefs-icon-theme.png		\
+	16/gimp-prefs-image-windows.png			\
+	16/gimp-prefs-interface.png			\
+	16/gimp-prefs-theme.png				\
+	16/gimp-prefs-toolbox.png			\
+	16/gimp-prefs-window-management.png		\
 	16/gimp-print-resolution.png			\
 	16/gimp-reset.png				\
 	16/gimp-reshow-filter.png			\
@@ -366,7 +387,8 @@ icons32_DATA = \
 	32/gimp-layer-mask.png		\
 	32/gimp-layer.png		\
 	32/gimp-text-layer.png		\
-	32/gimp-user-manual.png
+	32/gimp-user-manual.png		\
+	32/gimp-wilber.png
 
 icons48_DATA = \
 	48/gimp-channel-alpha.png		\
@@ -416,7 +438,8 @@ icons48_DATA = \
 	48/gimp-prefs-tool-options.png		\
 	48/gimp-prefs-toolbox.png		\
 	48/gimp-prefs-window-management.png	\
-	48/gimp-text-layer.png
+	48/gimp-text-layer.png			\
+	48/gimp-wilber.png
 
 icons64_DATA = \
 	64/gimp-error.png		\
@@ -427,5 +450,21 @@ icons64_DATA = \
 	64/gimp-user-manual.png		\
 	64/gimp-warning.png		\
 	64/gimp-wilber-eek.png		\
-	64/gimp-wilber.png
+	64/gimp-wilber.png		\
+	64/gimp-wilber-outline.png
 
+icons96_DATA = \
+	96/gimp-wilber.png		\
+	96/gimp-wilber-outline.png
+
+icons128_DATA = \
+	128/gimp-wilber.png		\
+	128/gimp-wilber-outline.png
+
+icons192_DATA = \
+	192/gimp-wilber.png		\
+	192/gimp-wilber-outline.png
+
+icons256_DATA = \
+	256/gimp-wilber.png		\
+	256/gimp-wilber-outline.png
