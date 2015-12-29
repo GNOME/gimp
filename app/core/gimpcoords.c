@@ -197,8 +197,10 @@ gimp_coords_equal (const GimpCoords *a,
           a->wheel     == b->wheel    &&
           a->velocity  == b->velocity &&
           a->direction == b->direction);
-  /* Extended attribute was omitted from this comparison deliberately
-     - it describes the events origin, not it's value*/
+
+  /* Extended attribute was omitted from this comparison deliberately,
+   * it describes the events origin, not its value
+   */
 }
 
 /* helper for calculating direction of two gimpcoords. */

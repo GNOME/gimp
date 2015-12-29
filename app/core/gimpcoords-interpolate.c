@@ -265,7 +265,8 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
 
   for (n = 1; n <= num_points; n++)
     {
-      GimpCoords coords = past_coords; /*Make sure we carry over things we do not interpolate*/
+      GimpCoords coords = past_coords; /* Make sure we carry over things
+                                        * we do not interpolate */
       gdouble    velocity;
       gdouble    pressure;
       gdouble    p = (gdouble) n / num_points;
