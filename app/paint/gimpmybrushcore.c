@@ -50,28 +50,33 @@ struct _GimpMybrushCorePrivate
   GimpMybrush             *mybrush;
   GimpMybrushSurface      *surface;
   MyPaintBrush            *brush;
+  gboolean                 synthetic;
   gint64                   last_time;
 };
 
 
 /*  local function prototypes  */
 
-static gboolean  gimp_mybrush_core_start  (GimpPaintCore     *paint_core,
-                                           GimpDrawable      *drawable,
-                                           GimpPaintOptions  *paint_options,
-                                           const GimpCoords  *coords,
-                                           GError           **error);
-static void      gimp_mybrush_core_paint  (GimpPaintCore     *paint_core,
-                                           GimpDrawable      *drawable,
-                                           GimpPaintOptions  *paint_options,
-                                           const GimpCoords  *coords,
-                                           GimpPaintState     paint_state,
-                                           guint32            time);
-static void      gimp_mybrush_core_motion (GimpPaintCore     *paint_core,
-                                           GimpDrawable      *drawable,
-                                           GimpPaintOptions  *paint_options,
-                                           const GimpCoords  *coords,
-                                           guint32            time);
+static gboolean  gimp_mybrush_core_start       (GimpPaintCore     *paint_core,
+                                                GimpDrawable      *drawable,
+                                                GimpPaintOptions  *paint_options,
+                                                const GimpCoords  *coords,
+                                                GError           **error);
+static void      gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
+                                                GimpDrawable     *drawable,
+                                                GimpPaintOptions *paint_options,
+                                                guint32           time);
+static void      gimp_mybrush_core_paint       (GimpPaintCore     *paint_core,
+                                                GimpDrawable      *drawable,
+                                                GimpPaintOptions  *paint_options,
+                                                const GimpCoords  *coords,
+                                                GimpPaintState     paint_state,
+                                                guint32            time);
+static void      gimp_mybrush_core_motion      (GimpPaintCore     *paint_core,
+                                                GimpDrawable      *drawable,
+                                                GimpPaintOptions  *paint_options,
+                                                const GimpCoords  *coords,
+                                                guint32            time);
 
 
 G_DEFINE_TYPE (GimpMybrushCore, gimp_mybrush_core, GIMP_TYPE_PAINT_CORE)
@@ -96,8 +101,9 @@ gimp_mybrush_core_class_init (GimpMybrushCoreClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
-  paint_core_class->start = gimp_mybrush_core_start;
-  paint_core_class->paint = gimp_mybrush_core_paint;
+  paint_core_class->start       = gimp_mybrush_core_start;
+  paint_core_class->paint       = gimp_mybrush_core_paint;
+  paint_core_class->interpolate = gimp_mybrush_core_interpolate;
 
   g_type_class_add_private (klass, sizeof (GimpMybrushCorePrivate));
 }
@@ -130,6 +136,36 @@ gimp_mybrush_core_start (GimpPaintCore     *paint_core,
     }
 
   return TRUE;
+}
+
+static void
+gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
+                               GimpDrawable     *drawable,
+                               GimpPaintOptions *paint_options,
+                               guint32           time)
+{
+  GimpMybrushCore *mybrush = GIMP_MYBRUSH_CORE (paint_core);
+
+  /* If this is the first motion the brush has recived then
+   * we're being asked to draw a syntetic stroke in line mode
+   */
+  if (mybrush->private->last_time < 0)
+  {
+      GimpCoords saved_coords = paint_core->cur_coords;
+      paint_core->cur_coords = paint_core->last_coords;
+
+      mybrush->private->synthetic = TRUE;
+
+      gimp_paint_core_paint (paint_core, drawable, paint_options,
+                             GIMP_PAINT_STATE_MOTION, time);
+
+      paint_core->cur_coords = saved_coords;
+  }
+
+  gimp_paint_core_paint (paint_core, drawable, paint_options,
+                         GIMP_PAINT_STATE_MOTION, time);
+
+  paint_core->last_coords = paint_core->cur_coords;
 }
 
 static void
@@ -189,6 +225,7 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
 
       mypaint_brush_new_stroke (mybrush->private->brush);
       mybrush->private->last_time = -1;
+      mybrush->private->synthetic = FALSE;
       break;
 
     case GIMP_PAINT_STATE_MOTION:
@@ -216,14 +253,13 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
   GimpMybrushCore  *mybrush = GIMP_MYBRUSH_CORE (paint_core);
   MyPaintRectangle  rect;
   gdouble           pressure;
+  gdouble           dt = 0.0;
 
   mypaint_surface_begin_atomic ((MyPaintSurface *) mybrush->private->surface);
 
   if (mybrush->private->last_time < 0)
     {
       /* First motion, so we need a zero pressure event to start the stroke */
-      mybrush->private->last_time = (gint64) time - 15;
-
       mypaint_brush_stroke_to (mybrush->private->brush,
                                (MyPaintSurface *) mybrush->private->surface,
                                coords->x,
@@ -232,6 +268,17 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                                coords->xtilt,
                                coords->ytilt,
                                1.0f /* Pretend the cursor hasn't moved in a while */);
+      dt = 0.015;
+    }
+  else if (mybrush->private->synthetic)
+    {
+      /* Moves the brush at a rate of 1 pixel / 5 ms */
+      dt = 0.0005 * gimp_vector2_length_val ((GimpVector2){paint_core->cur_coords.x - paint_core->last_coords.x,
+                                                           paint_core->cur_coords.y - paint_core->last_coords.y});
+    }
+  else
+    {
+      dt = (time - mybrush->private->last_time) * 0.001;
     }
 
   pressure = coords->pressure;
@@ -247,7 +294,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                            pressure,
                            coords->xtilt,
                            coords->ytilt,
-                           (time - mybrush->private->last_time) * 0.001f);
+                           dt);
 
   mybrush->private->last_time = time;
 
