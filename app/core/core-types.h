@@ -248,16 +248,17 @@ typedef gint64   (* GimpMemsizeFunc)       (gpointer          instance,
 
 struct _GimpCoords
 {
-  gdouble x;
-  gdouble y;
-  gdouble pressure;
-  gdouble xtilt;
-  gdouble ytilt;
-  gdouble wheel;
-  gdouble velocity;
-  gdouble direction;
-  gdouble xscale; /* the view scale */
-  gdouble yscale;
+  gdouble  x;
+  gdouble  y;
+  gdouble  pressure;
+  gdouble  xtilt;
+  gdouble  ytilt;
+  gdouble  wheel;
+  gdouble  velocity;
+  gdouble  direction;
+  gdouble  xscale; /* the view scale */
+  gdouble  yscale;
+  gboolean extended;
 };
 
 /*  temp hack as replacement for GdkSegment  */

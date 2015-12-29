@@ -251,6 +251,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
 {
   GimpMybrushCore  *mybrush = GIMP_MYBRUSH_CORE (paint_core);
   MyPaintRectangle  rect;
+  gdouble pressure = coords->pressure;
 
   mypaint_surface_begin_atomic ((MyPaintSurface *) mybrush->private->surface);
 
@@ -269,14 +270,20 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                                1.0f /* Pretend the cursor hasn't moved in a while */);
     }
 
+  if (!coords->extended)
+    {
+      pressure = 0.5f; /* Mypaint expects non-extended devices to default to half pressure*/
+    }
+
   mypaint_brush_stroke_to (mybrush->private->brush,
                            (MyPaintSurface *) mybrush->private->surface,
                            coords->x,
                            coords->y,
-                           coords->pressure,
+                           pressure,
                            coords->xtilt,
                            coords->ytilt,
                            (time - mybrush->private->last_time) * 0.001f);
+
   mybrush->private->last_time = time;
 
   mypaint_surface_end_atomic ((MyPaintSurface *) mybrush->private->surface,
