@@ -52,6 +52,7 @@ file_tiff_LDADD = \
 	$(TIFF_LIBS)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
+	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_tiff_RC)
