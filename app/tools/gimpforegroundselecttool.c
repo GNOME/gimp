@@ -59,6 +59,9 @@
 #include "gimp-intl.h"
 
 
+#define FAR_OUTSIDE -10000
+
+
 typedef struct _StrokeUndo StrokeUndo;
 
 struct _StrokeUndo
@@ -598,7 +601,15 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
 
       gimp_draw_tool_pause (draw_tool);
 
-      fg_select->last_coords = *coords;
+      if (proximity)
+        {
+          fg_select->last_coords = *coords;
+        }
+      else
+        {
+          fg_select->last_coords.x = FAR_OUTSIDE;
+          fg_select->last_coords.y = FAR_OUTSIDE;
+        }
 
       gimp_draw_tool_resume (draw_tool);
 
@@ -864,10 +875,11 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
             }
         }
 
-      gimp_draw_tool_add_arc (draw_tool, FALSE,
-                              x - radius, y - radius,
-                              2 * radius, 2 * radius,
-                              0.0, 2.0 * G_PI);
+      if (x > FAR_OUTSIDE && y > FAR_OUTSIDE)
+        gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                x - radius, y - radius,
+                                2 * radius, 2 * radius,
+                                0.0, 2.0 * G_PI);
     }
 }
 
