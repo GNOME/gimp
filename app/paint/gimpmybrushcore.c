@@ -48,11 +48,7 @@
 struct _GimpMybrushCorePrivate
 {
   GimpMybrush             *mybrush;
-#if 0
-  MyPaintGeglTiledSurface *surface;
-#else
   GimpMybrushSurface      *surface;
-#endif
   MyPaintBrush            *brush;
   gint64                   last_time;
 };
