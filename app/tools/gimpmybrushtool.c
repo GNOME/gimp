@@ -38,6 +38,7 @@
 #include "gimpmybrushoptions-gui.h"
 #include "gimpmybrushtool.h"
 #include "gimptoolcontrol.h"
+#include "core/gimpmybrush.h"
 
 #include "gimp-intl.h"
 
@@ -122,10 +123,12 @@ gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
                                gdouble        y)
 {
   GimpMybrushOptions *options = GIMP_MYBRUSH_TOOL_GET_OPTIONS (paint_tool);
+  GimpMybrush        *brush   = gimp_context_get_mybrush (GIMP_CONTEXT (options));
   GimpCanvasItem     *item    = NULL;
   GimpDisplayShell   *shell   = gimp_display_get_shell (display);
 
-  gdouble radius = MAX (MAX (4 / shell->scale_x, 4 / shell->scale_y), exp (options->radius) + options->radius * 2);
+  gdouble radius = exp (options->radius) + 2 * options->radius * gimp_mybrush_get_offset_by_random (brush);
+  radius = MAX (MAX (4 / shell->scale_x, 4 / shell->scale_y), radius);
 
   item = gimp_mybrush_tool_create_cursor (paint_tool, display, x, y, radius);
 

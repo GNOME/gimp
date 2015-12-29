@@ -48,18 +48,19 @@ struct _GimpMybrushClass
 };
 
 
-GType         gimp_mybrush_get_type       (void) G_GNUC_CONST;
+GType         gimp_mybrush_get_type             (void) G_GNUC_CONST;
 
-GimpData    * gimp_mybrush_new            (GimpContext *context,
-                                           const gchar *name);
-GimpData    * gimp_mybrush_get_standard   (GimpContext *context);
+GimpData    * gimp_mybrush_new                  (GimpContext *context,
+                                                 const gchar *name);
+GimpData    * gimp_mybrush_get_standard         (GimpContext *context);
 
-const gchar * gimp_mybrush_get_brush_json (GimpMybrush *brush);
+const gchar * gimp_mybrush_get_brush_json       (GimpMybrush *brush);
 
-gdouble       gimp_mybrush_get_radius     (GimpMybrush *brush);
-gdouble       gimp_mybrush_get_opaque     (GimpMybrush *brush);
-gdouble       gimp_mybrush_get_hardness   (GimpMybrush *brush);
-gboolean      gimp_mybrush_get_is_eraser  (GimpMybrush *brush);
+gdouble       gimp_mybrush_get_radius           (GimpMybrush *brush);
+gdouble       gimp_mybrush_get_opaque           (GimpMybrush *brush);
+gdouble       gimp_mybrush_get_hardness         (GimpMybrush *brush);
+gdouble       gimp_mybrush_get_offset_by_random (GimpMybrush *brush);
+gboolean      gimp_mybrush_get_is_eraser        (GimpMybrush *brush);
 
 
 #endif /* __GIMP_MYBRUSH_H__ */

@@ -261,6 +261,14 @@ gimp_mybrush_get_hardness (GimpMybrush *brush)
   return brush->priv->hardness;
 }
 
+gdouble
+gimp_mybrush_get_offset_by_random (GimpMybrush *brush)
+{
+  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
+
+  return brush->priv->offset_by_random;
+}
+
 gboolean
 gimp_mybrush_get_is_eraser (GimpMybrush *brush)
 {

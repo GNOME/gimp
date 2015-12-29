@@ -142,6 +142,10 @@ gimp_mybrush_load (GimpContext   *context,
     mypaint_brush_get_base_value (mypaint_brush,
                                   MYPAINT_BRUSH_SETTING_ERASER) > 0.5f;
 
+  brush->priv->offset_by_random =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_OFFSET_BY_RANDOM);
+
   mypaint_brush_unref (mypaint_brush);
 
   return g_list_prepend (NULL, brush);
