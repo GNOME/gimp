@@ -177,5 +177,6 @@ gimp_mybrush_options_reset (GimpToolOptions *tool_options)
   GimpContext *context = GIMP_CONTEXT (tool_options);
   GimpMybrush *brush   = gimp_context_get_mybrush (context);
 
+  GIMP_TOOL_OPTIONS_CLASS (gimp_mybrush_options_parent_class)->reset (tool_options);
   gimp_mybrush_options_mybrush_changed (context, brush);
 }
