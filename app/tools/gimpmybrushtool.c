@@ -27,6 +27,10 @@
 
 #include "paint/gimpmybrushoptions.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpcanvasarc.h"
+
 #include "core/gimp.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -36,7 +40,6 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
-
 
 G_DEFINE_TYPE (GimpMybrushTool, gimp_mybrush_tool, GIMP_TYPE_PAINT_TOOL)
 
@@ -119,9 +122,43 @@ gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
                                gdouble        y)
 {
   GimpMybrushOptions *options = GIMP_MYBRUSH_TOOL_GET_OPTIONS (paint_tool);
+  GimpCanvasItem     *item    = NULL;
+  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
 
-  gimp_paint_tool_set_draw_circle (paint_tool, TRUE,
-                                   exp (options->radius));
+  gdouble radius = MAX (MAX (4 / shell->scale_x, 4 / shell->scale_y), exp (options->radius) + options->radius * 2);
+
+  item = gimp_mybrush_tool_create_cursor (paint_tool, display, x, y, radius);
+
+  if (! item)
+    {
+      gimp_paint_tool_set_draw_fallback (paint_tool,
+                                         TRUE, radius);
+    }
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_mybrush_tool_create_cursor (GimpPaintTool *paint_tool,
+                                 GimpDisplay   *display,
+                                 gdouble        x,
+                                 gdouble        y,
+                                 gdouble        radius)
+{
+
+  GimpDisplayShell     *shell;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_TOOL (paint_tool), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+
+  shell = gimp_display_get_shell (display);
+
+  /*  don't draw the boundary if it becomes too small  */
+  if (SCALEX (shell, radius) > 4 &&
+      SCALEY (shell, radius) > 4)
+    {
+      return gimp_canvas_arc_new(shell, x, y, radius, radius, 0.0, 2 * G_PI, FALSE);
+    }
 
   return NULL;
 }
