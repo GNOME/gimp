@@ -43,6 +43,7 @@ enum
   PROP_ERASER
 };
 
+static void   gimp_mybrush_options_config_iface_init (GimpConfigInterface *config_iface);
 
 static void   gimp_mybrush_options_set_property     (GObject      *object,
                                                      guint         property_id,
@@ -56,26 +57,25 @@ static void   gimp_mybrush_options_get_property     (GObject      *object,
 static void    gimp_mybrush_options_mybrush_changed (GimpContext  *context,
                                                      GimpMybrush  *brush);
 
-static void    gimp_mybrush_options_reset           (GimpToolOptions *tool_options);
+static void    gimp_mybrush_options_config_reset    (GimpConfig *gimp_config);
 
+G_DEFINE_TYPE_WITH_CODE (GimpMybrushOptions, gimp_mybrush_options,
+                         GIMP_TYPE_PAINT_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_mybrush_options_config_iface_init))
 
-G_DEFINE_TYPE (GimpMybrushOptions, gimp_mybrush_options,
-               GIMP_TYPE_PAINT_OPTIONS)
-
+static GimpConfigInterface *parent_config_iface = NULL;
 
 static void
 gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
-  GimpContextClass     *context_class = GIMP_CONTEXT_CLASS (klass);
-  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
+  GimpContextClass *context_class = GIMP_CONTEXT_CLASS (klass);
 
   object_class->set_property     = gimp_mybrush_options_set_property;
   object_class->get_property     = gimp_mybrush_options_get_property;
 
   context_class->mybrush_changed = gimp_mybrush_options_mybrush_changed;
-
-  options_class->reset           = gimp_mybrush_options_reset;
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RADIUS,
                                    "radius", _("Radius"),
@@ -93,6 +93,15 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
                                    "eraser", NULL,
                                    FALSE,
                                    GIMP_PARAM_STATIC_STRINGS);
+}
+
+
+static void
+gimp_mybrush_options_config_iface_init (GimpConfigInterface *config_iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  config_iface->reset = gimp_mybrush_options_config_reset;
 }
 
 static void
@@ -172,11 +181,11 @@ gimp_mybrush_options_mybrush_changed (GimpContext *context,
 }
 
 static void
-gimp_mybrush_options_reset (GimpToolOptions *tool_options)
+gimp_mybrush_options_config_reset (GimpConfig *gimp_config)
 {
-  GimpContext *context = GIMP_CONTEXT (tool_options);
+  GimpContext *context = GIMP_CONTEXT (gimp_config);
   GimpMybrush *brush   = gimp_context_get_mybrush (context);
 
-  GIMP_TOOL_OPTIONS_CLASS (gimp_mybrush_options_parent_class)->reset (tool_options);
+  parent_config_iface->reset (gimp_config);
   gimp_mybrush_options_mybrush_changed (context, brush);
 }
