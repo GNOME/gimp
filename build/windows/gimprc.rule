@@ -2,10 +2,12 @@
 
 GIMPAPPRC = $(top_builddir)/build/windows/gimp.rc
 
-%.rc.o: 
+# `windres` seems a very stupid tool and it breaks with double shlashes
+# in parameter paths. Strengthen the rule a little.
+%.rc.o:
 	$(WINDRES) --define ORIGINALFILENAME_STR="$*$(EXEEXT)" \
 		--define INTERNALNAME_STR="$*" \
-		--define TOP_SRCDIR="$(top_srcdir)" \
-		-I$(top_srcdir)/app \
-		-I$(top_builddir)/app \
+		--define TOP_SRCDIR="`echo $(top_srcdir) | sed 's*//*/*'`" \
+		-I"`echo $(top_srcdir)/app | sed 's%/\+%/%'`" \
+		-I"`echo $(top_builddir)/app | sed 's%/\+%/%'`"\
 		$(GIMPAPPRC) $@
