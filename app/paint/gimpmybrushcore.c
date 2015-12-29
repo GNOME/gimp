@@ -24,10 +24,6 @@
 #include <gegl.h>
 
 #include <mypaint-brush.h>
-#if 0
-#include <mypaint-tiled-surface.h>
-#include <mypaint-gegl-surface.h>
-#endif
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -152,10 +148,6 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
   GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
   GimpContext        *context = GIMP_CONTEXT (paint_options);
   const gchar        *brush_data;
-#if 0
-  GeglBuffer         *buffer;
-  GimpComponentMask   active_mask;
-#endif
   GimpRGB             fg;
   GimpHSV             hsv;
 
@@ -165,38 +157,14 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
       gimp_context_get_foreground (context, &fg);
       gimp_palettes_add_color_history (context->gimp, &fg);
 
-#if 0
-      mybrush->private->surface = mypaint_gegl_tiled_surface_new ();
-
-      buffer = mypaint_gegl_tiled_surface_get_buffer (mybrush->private->surface);
-      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                gimp_item_get_width (GIMP_ITEM (drawable)),
-                                                gimp_item_get_height (GIMP_ITEM (drawable))),
-                                gegl_buffer_get_format (buffer));
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                        GEGL_ABYSS_NONE,
-                        buffer, NULL);
-      mypaint_gegl_tiled_surface_set_buffer (mybrush->private->surface, buffer);
-      g_object_unref (buffer);
-#else
       mybrush->private->surface = gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawable),
                                                             gimp_drawable_get_active_mask (drawable));
-#endif
 
       mybrush->private->brush = mypaint_brush_new ();
       mypaint_brush_from_defaults (mybrush->private->brush);
       brush_data = gimp_mybrush_get_brush_json (mybrush->private->mybrush);
       if (brush_data)
         mypaint_brush_from_string (mybrush->private->brush, brush_data);
-
-#if 0
-      active_mask = gimp_drawable_get_active_mask (drawable);
-
-      mypaint_brush_set_base_value (mybrush->private->brush,
-                                    MYPAINT_BRUSH_SETTING_LOCK_ALPHA,
-                                    (active_mask & GIMP_COMPONENT_MASK_ALPHA) ?
-                                    FALSE : TRUE);
-#endif
 
       gimp_rgb_to_hsv (&fg, &hsv);
 
@@ -292,17 +260,6 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
 
   if (rect.width > 0 && rect.height > 0)
     {
-#if 0
-      GeglBuffer *src;
-
-      src = mypaint_gegl_tiled_surface_get_buffer (mybrush->private->surface);
-
-      gegl_buffer_copy (src,
-                        (GeglRectangle *) &rect,
-                        GEGL_ABYSS_NONE,
-                        gimp_drawable_get_buffer (drawable),
-                        NULL);
-#endif
       paint_core->x1 = MIN (paint_core->x1, rect.x);
       paint_core->y1 = MIN (paint_core->y1, rect.y);
       paint_core->x2 = MAX (paint_core->x2, rect.x + rect.width);
