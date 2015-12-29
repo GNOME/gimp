@@ -9,6 +9,7 @@ no_undefined = -no-undefined
 endif
 
 if PLATFORM_WIN32
+libgdi32 = -lgdi32
 else
 libm = -lm
 endif
@@ -274,7 +275,8 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(LCMS_LIBS)		\
-	$(libm)
+	$(libm)			\
+	$(libgdi32)
 
 
 EXTRA_DIST = \
