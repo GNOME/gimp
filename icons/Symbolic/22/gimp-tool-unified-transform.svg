@@ -16,10 +16,10 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-tool-unified-transforma.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/22x22/apps/gimp-tool-unified-transform.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   sodipodi:docname="gimp-tool-unified-transform.svg"
+   inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/gimp-tool-unified-transform.png"
+   inkscape:export-xdpi="65.449997"
+   inkscape:export-ydpi="65.449997">
   <defs
      id="defs30573">
     <linearGradient
@@ -39,9 +39,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.627417"
-     inkscape:cx="11.937019"
-     inkscape:cy="17.959573"
+     inkscape:zoom="8"
+     inkscape:cx="-3.5207599"
+     inkscape:cy="16.235944"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -60,12 +60,12 @@
      inkscape:snap-object-midpoints="true"
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
-     showborder="false"
-     inkscape:window-width="960"
-     inkscape:window-height="1136"
-     inkscape:window-x="960"
+     showborder="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0" />
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata30576">
     <rdf:RDF>
@@ -98,7 +98,7 @@
        transform="matrix(-0.14874993,-0.98887484,0.98887484,-0.14874993,0,0)" />
     <g
        id="g7167"
-       transform="matrix(1.3433884,0,0,1.3433884,9.7659187,-346.40376)">
+       transform="matrix(1.3433884,0,0,1.3433884,10.272316,-346.40376)">
       <g
          id="g7160">
         <g

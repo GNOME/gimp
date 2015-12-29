@@ -17,9 +17,9 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="gimp-tool-seamless-clone.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/16x16/apps/gimp-tool-seamless-clone.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/gimp-tool-seamless-clone.png"
+   inkscape:export-xdpi="65.449997"
+   inkscape:export-ydpi="65.449997">
   <defs
      id="defs30573">
     <linearGradient
@@ -39,9 +39,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="-303.14943"
-     inkscape:cy="99.677138"
+     inkscape:zoom="4"
+     inkscape:cx="22.733828"
+     inkscape:cy="28.045872"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -60,12 +60,12 @@
      inkscape:snap-object-midpoints="true"
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
-     showborder="false"
-     inkscape:window-width="960"
-     inkscape:window-height="1136"
-     inkscape:window-x="960"
+     showborder="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0" />
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata30576">
     <rdf:RDF>
@@ -74,7 +74,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -90,7 +90,7 @@
      transform="translate(0,-1030.3622)">
     <g
        id="g5224"
-       transform="matrix(0.04650603,0,0,0.04650603,-6.9360405,1012.6434)"
+       transform="matrix(0.04650603,0,0,0.04650603,-6.9360401,1010.4465)"
        style="fill:#505050;fill-opacity:1"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">

@@ -17,9 +17,9 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="gimp-prefs-playground.svg"
-   inkscape:export-filename="/home/alex/soft/graphics/gimp/gimp-2015-12-21/icons/Symbolic/22/gimp-tool-warp.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/48/gimp-prefs-playground.png"
+   inkscape:export-xdpi="196.36363"
+   inkscape:export-ydpi="196.36363">
   <defs
      id="defs30573">
     <linearGradient
@@ -50,8 +50,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.313708"
-     inkscape:cx="-36.035651"
-     inkscape:cy="16.357011"
+     inkscape:cx="0.46873819"
+     inkscape:cy="14.854409"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -70,9 +70,9 @@
      inkscape:snap-object-midpoints="true"
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
-     showborder="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
+     showborder="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1" />
@@ -84,7 +84,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -100,7 +100,7 @@
      transform="translate(0,-1030.3622)">
     <g
        id="g4400"
-       transform="matrix(0.45833292,0,0,0.45833292,127.95197,426.34251)">
+       transform="matrix(0.45833292,0,0,0.45833292,131.30301,426.34251)">
       <path
          id="path3897"
          style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;enable-background:accumulate"

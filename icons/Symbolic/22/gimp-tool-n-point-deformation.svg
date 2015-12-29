@@ -16,10 +16,10 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-tool-n-point-deformationa.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/22x22/apps/gimp-tool-n-point-deformation.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   sodipodi:docname="gimp-tool-n-point-deformation.svg"
+   inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/gimp-tool-n-point-deformation.png"
+   inkscape:export-xdpi="65.449997"
+   inkscape:export-ydpi="65.449997">
   <defs
      id="defs30573">
     <linearGradient
@@ -39,9 +39,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16"
-     inkscape:cx="-29.680081"
-     inkscape:cy="9.0218711"
+     inkscape:zoom="11.313709"
+     inkscape:cx="10.182326"
+     inkscape:cy="5.394445"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -60,12 +60,14 @@
      inkscape:snap-object-midpoints="true"
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
-     showborder="false"
-     inkscape:window-width="960"
-     inkscape:window-height="1136"
-     inkscape:window-x="960"
+     showborder="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0" />
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata30576">
     <rdf:RDF>
@@ -74,7 +76,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -89,7 +91,8 @@
      id="layer1"
      transform="translate(0,-1030.3622)">
     <g
-       id="g3350">
+       id="g3350"
+       transform="translate(2.4721202,4.0806202e-5)">
       <g
          id="g10355-0"
          transform="matrix(0.19651157,0,0,0.1824905,-234.45541,1385.1679)">
