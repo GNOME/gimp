@@ -81,7 +81,7 @@ struct _GimpCoreConfig
   gint                    levels_of_undo;
   guint64                 undo_size;
   GimpViewSize            undo_preview_size;
-  gint                    plug_in_history_size;
+  gint                    filter_history_size;
   gchar                  *plug_in_rc_path;
   gboolean                layer_previews;
   GimpViewSize            layer_preview_size;

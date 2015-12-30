@@ -23,5 +23,12 @@ void   filters_filter_cmd_callback (GtkAction   *action,
                                     const gchar *operation,
                                     gpointer     data);
 
+void   filters_repeat_cmd_callback  (GtkAction           *action,
+                                     gint                 value,
+                                     gpointer             data);
+void   filters_history_cmd_callback (GtkAction           *action,
+                                     GimpPlugInProcedure *proc,
+                                     gpointer             data);
+
 
 #endif /* __FILTERS_COMMANDS_H__ */

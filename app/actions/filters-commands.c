@@ -25,15 +25,19 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-filter-history.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
+
+#include "pdb/gimpprocedure.h" /* FIXME history */
 
 #include "tools/gimpoperationtool.h"
 #include "tools/tool_manager.h"
 
 #include "actions.h"
 #include "filters-commands.h"
+#include "plug-in-commands.h" /* FIXME history */
 
 #include "gimp-intl.h"
 
@@ -92,4 +96,64 @@ filters_filter_cmd_callback (GtkAction   *action,
 
       g_free (label);
     }
+}
+
+void
+filters_repeat_cmd_callback (GtkAction *action,
+                             gint       value,
+                             gpointer   data)
+{
+  GimpPlugInProcedure *procedure;
+  Gimp                *gimp;
+  GimpDisplay         *display;
+  GimpRunMode          run_mode;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  run_mode = (GimpRunMode) value;
+
+  procedure = gimp_filter_history_nth (gimp, 0);
+
+  if (procedure)
+    {
+      GimpValueArray *args;
+      gint            n_args;
+
+      args = gimp_procedure_get_arguments (GIMP_PROCEDURE (procedure));
+
+      g_value_set_int (gimp_value_array_index (args, 0), run_mode);
+
+      n_args = plug_in_collect_display_args (action, display,
+                                             GIMP_PROCEDURE (procedure)->args,
+                                             args, 1);
+
+      plug_in_procedure_execute (procedure, gimp, display, args, n_args);
+
+      gimp_value_array_unref (args);
+    }
+}
+
+void
+filters_history_cmd_callback (GtkAction           *action,
+                              GimpPlugInProcedure *procedure,
+                              gpointer             data)
+{
+  Gimp           *gimp;
+  GimpDisplay    *display;
+  GimpValueArray *args;
+  gint            n_args;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  args = gimp_procedure_get_arguments (GIMP_PROCEDURE (procedure));
+
+  g_value_set_int (gimp_value_array_index (args, 0), GIMP_RUN_INTERACTIVE);
+
+  n_args = plug_in_collect_display_args (action, display,
+                                         GIMP_PROCEDURE (procedure)->args,
+                                         args, 1);
+
+  plug_in_procedure_execute (procedure, gimp, display, args, n_args);
+
+  gimp_value_array_unref (args);
 }

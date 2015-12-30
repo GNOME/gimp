@@ -22,15 +22,21 @@
 void   plug_in_run_cmd_callback       (GtkAction           *action,
                                        GimpPlugInProcedure *proc,
                                        gpointer             data);
-void   plug_in_repeat_cmd_callback    (GtkAction           *action,
-                                       gint                 value,
-                                       gpointer             data);
-void   plug_in_history_cmd_callback   (GtkAction           *action,
-                                       GimpPlugInProcedure *proc,
-                                       gpointer             data);
 
 void   plug_in_reset_all_cmd_callback (GtkAction           *action,
                                        gpointer             data);
 
+
+/* FIXME history */
+void  plug_in_procedure_execute     (GimpPlugInProcedure *procedure,
+                                     Gimp                *gimp,
+                                     GimpDisplay         *display,
+                                     GimpValueArray      *args,
+                                     gint                 n_args);
+gint  plug_in_collect_display_args  (GtkAction       *action,
+                                     GimpDisplay     *display,
+                                     GParamSpec     **pspecs,
+                                     GimpValueArray  *args,
+                                     gint             n_args);
 
 #endif /* __PLUG_IN_COMMANDS_H__ */

@@ -642,15 +642,15 @@
       <menuitem action="context-colors-swap" />
     </menu>
 
-    <menu action="plug-in-menu" name="Filters">
-      <menuitem action="plug-in-repeat" />
-      <menuitem action="plug-in-reshow" />
-      <menu action="plug-in-recent-menu" name="Recently Used">
-        <placeholder name="Plug-Ins" />
+    <menu action="filters-menu" name="Filters">
+      <menuitem action="filters-repeat" />
+      <menuitem action="filters-reshow" />
+      <menu action="filters-recent-menu" name="Recently Used">
+        <placeholder name="Filters" />
       </menu>
       <menuitem action="plug-in-reset-all" />
       <separator />
-      <menu action="plug-in-blur-menu" name="Blur">
+      <menu action="filters-blur-menu" name="Blur">
       	<menuitem action="filters-gaussian-blur" />
       	<menuitem action="filters-pixelize" />
       	<menuitem action="filters-gaussian-blur-selective" />
@@ -660,14 +660,14 @@
 	  <menuitem action="filters-motion-blur-zoom" />
 	</placeholder>
       </menu>
-      <menu action="plug-in-enhance-menu" name="Enhance">
+      <menu action="filters-enhance-menu" name="Enhance">
         <menuitem action="filters-antialias" />
         <menuitem action="filters-deinterlace" />
         <menuitem action="filters-noise-reduction" />
         <menuitem action="filters-red-eye-removal" />
         <menuitem action="filters-unsharp-mask" />
       </menu>
-      <menu action="plug-in-distorts-menu" name="Distorts">
+      <menu action="filters-distorts-menu" name="Distorts">
       	<menuitem action="filters-apply-lens" />
       	<menuitem action="filters-emboss" />
       	<menuitem action="filters-engrave" />
@@ -683,7 +683,7 @@
         <menuitem action="filters-whirl-pinch" />
         <menuitem action="filters-wind" />
       </menu>
-      <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
+      <menu action="filters-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light">
 	  <menuitem action="filters-supernova" />
 	  <menuitem action="filters-lens-flare" />
@@ -696,7 +696,7 @@
         <separator />
         <placeholder name="Glass" />
       </menu>
-      <menu action="plug-in-noise-menu" name="Noise">
+      <menu action="filters-noise-menu" name="Noise">
         <menuitem action="filters-noise-cie-lch" />
         <menuitem action="filters-noise-hsv" />
         <menuitem action="filters-noise-hurl" />
@@ -705,20 +705,20 @@
         <menuitem action="filters-noise-slur" />
         <menuitem action="filters-noise-spread" />
       </menu>
-      <menu action="plug-in-edge-detect-menu" name="Edge-Detect">
+      <menu action="filters-edge-detect-menu" name="Edge-Detect">
         <menuitem action="filters-difference-of-gaussians" />
         <menuitem action="filters-edge" />
         <menuitem action="filters-edge-laplace" />
         <menuitem action="filters-edge-sobel" />
       </menu>
-      <menu action="plug-in-generic-menu" name="Generic">
+      <menu action="filters-generic-menu" name="Generic">
         <menuitem action="filters-convolution-matrix" />
         <menuitem action="filters-distance-map" />
         <menuitem action="drawable-dilate" />
         <menuitem action="drawable-erode" />
       </menu>
-      <menu action="plug-in-combine-menu" name="Combine" />
-      <menu action="plug-in-artistic-menu" name="Artistic">
+      <menu action="filters-combine-menu" name="Combine" />
+      <menu action="filters-artistic-menu" name="Artistic">
 	<menuitem action="filters-apply-canvas" />
 	<menuitem action="filters-cartoon" />
 	<menuitem action="filters-cubism" />
@@ -727,8 +727,8 @@
 	<menuitem action="filters-photocopy" />
 	<menuitem action="filters-softglow" />
       </menu>
-      <menu action="plug-in-decor-menu" name="Decor" />
-      <menu action="plug-in-map-menu" name="Map">
+      <menu action="filters-decor-menu" name="Decor" />
+      <menu action="filters-map-menu" name="Map">
         <menuitem action="filters-bump-map" />
         <menuitem action="filters-displace" />
         <menuitem action="filters-fractal-trace" />
@@ -737,18 +737,18 @@
         <menuitem action="filters-tile-paper" />
         <menuitem action="filters-tile-seamless" />
       </menu>
-      <menu action="plug-in-render-menu" name="Render">
-        <menu action="plug-in-render-clouds-menu" name="Clouds" />
-        <menu action="plug-in-render-fractals-menu" name="Fractals" />
-        <menu action="plug-in-render-nature-menu" name="Nature" />
-        <menu action="plug-in-render-noise-menu" name="Noise">
+      <menu action="filters-render-menu" name="Render">
+        <menu action="filters-render-clouds-menu" name="Clouds" />
+        <menu action="filters-render-fractals-menu" name="Fractals" />
+        <menu action="filters-render-nature-menu" name="Nature" />
+        <menu action="filters-render-noise-menu" name="Noise">
 	  <menuitem action="filters-noise-cell" />
 	  <menuitem action="filters-noise-perlin" />
 	  <menuitem action="filters-plasma" />
 	  <menuitem action="filters-noise-simplex" />
 	  <menuitem action="filters-noise-solid" />
 	</menu>
-        <menu action="plug-in-render-pattern-menu" name="Pattern">
+        <menu action="filters-render-pattern-menu" name="Pattern">
 	  <menuitem action="filters-checkerboard" />
 	  <menuitem action="filters-diffraction-patterns" />
 	  <menuitem action="filters-grid" />
@@ -757,10 +757,10 @@
 	</menu>
         <separator />
       </menu>
-      <menu action="plug-in-web-menu" name="Web">
+      <menu action="filters-web-menu" name="Web">
         <menuitem action="filters-semi-flatten" />
       </menu>
-      <menu action="plug-in-animation-menu" name="Animation" >
+      <menu action="filters-animation-menu" name="Animation" >
         <placeholder name="Animators" />
         <separator />
       </menu>

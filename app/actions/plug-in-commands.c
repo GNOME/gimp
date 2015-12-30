@@ -28,6 +28,7 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-filter-history.h"
 #include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -39,7 +40,6 @@
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-data.h"
-#include "plug-in/gimppluginmanager-history.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -63,11 +63,13 @@
 
 /*  local function prototypes  */
 
+#if 0
 static void  plug_in_procedure_execute     (GimpPlugInProcedure *procedure,
                                             Gimp                *gimp,
                                             GimpDisplay         *display,
                                             GimpValueArray      *args,
                                             gint                 n_args);
+#endif
 
 static gint  plug_in_collect_data_args     (GtkAction       *action,
                                             GimpObject      *object,
@@ -85,11 +87,13 @@ static gint  plug_in_collect_item_args     (GtkAction       *action,
                                             GParamSpec     **pspecs,
                                             GimpValueArray  *args,
                                             gint             n_args);
+#if 0
 static gint  plug_in_collect_display_args  (GtkAction       *action,
                                             GimpDisplay     *display,
                                             GParamSpec     **pspecs,
                                             GimpValueArray  *args,
                                             gint             n_args);
+#endif
 static void  plug_in_reset_all_response    (GtkWidget       *dialog,
                                             gint             response_id,
                                             Gimp            *gimp);
@@ -194,66 +198,6 @@ plug_in_run_cmd_callback (GtkAction           *action,
 }
 
 void
-plug_in_repeat_cmd_callback (GtkAction *action,
-                             gint       value,
-                             gpointer   data)
-{
-  GimpPlugInProcedure *procedure;
-  Gimp                *gimp;
-  GimpDisplay         *display;
-  GimpRunMode          run_mode;
-  return_if_no_gimp (gimp, data);
-  return_if_no_display (display, data);
-
-  run_mode = (GimpRunMode) value;
-
-  procedure = gimp_plug_in_manager_history_nth (gimp->plug_in_manager, 0);
-
-  if (procedure)
-    {
-      GimpValueArray *args;
-      gint            n_args;
-
-      args = gimp_procedure_get_arguments (GIMP_PROCEDURE (procedure));
-
-      g_value_set_int (gimp_value_array_index (args, 0), run_mode);
-
-      n_args = plug_in_collect_display_args (action, display,
-                                             GIMP_PROCEDURE (procedure)->args,
-                                             args, 1);
-
-      plug_in_procedure_execute (procedure, gimp, display, args, n_args);
-
-      gimp_value_array_unref (args);
-    }
-}
-
-void
-plug_in_history_cmd_callback (GtkAction           *action,
-                              GimpPlugInProcedure *procedure,
-                              gpointer             data)
-{
-  Gimp           *gimp;
-  GimpDisplay    *display;
-  GimpValueArray *args;
-  gint            n_args;
-  return_if_no_gimp (gimp, data);
-  return_if_no_display (display, data);
-
-  args = gimp_procedure_get_arguments (GIMP_PROCEDURE (procedure));
-
-  g_value_set_int (gimp_value_array_index (args, 0), GIMP_RUN_INTERACTIVE);
-
-  n_args = plug_in_collect_display_args (action, display,
-                                         GIMP_PROCEDURE (procedure)->args,
-                                         args, 1);
-
-  plug_in_procedure_execute (procedure, gimp, display, args, n_args);
-
-  gimp_value_array_unref (args);
-}
-
-void
 plug_in_reset_all_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
@@ -289,7 +233,8 @@ plug_in_reset_all_cmd_callback (GtkAction *action,
 
 /*  private functions  */
 
-static void
+/* FIXME history */
+void
 plug_in_procedure_execute (GimpPlugInProcedure *procedure,
                            Gimp                *gimp,
                            GimpDisplay         *display,
@@ -319,7 +264,7 @@ plug_in_procedure_execute (GimpPlugInProcedure *procedure,
       if (GIMP_PROCEDURE (procedure)->num_args  >= 2  &&
           GIMP_IS_PARAM_SPEC_IMAGE_ID (GIMP_PROCEDURE (procedure)->args[1]))
         {
-          gimp_plug_in_manager_history_add (gimp->plug_in_manager, procedure);
+          gimp_filter_history_add (gimp, procedure);
         }
     }
 }
@@ -414,7 +359,8 @@ plug_in_collect_item_args (GtkAction       *action,
   return n_args;
 }
 
-static gint
+/* FIXME history */
+gint
 plug_in_collect_display_args (GtkAction       *action,
                               GimpDisplay     *display,
                               GParamSpec     **pspecs,

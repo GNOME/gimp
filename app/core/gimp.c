@@ -44,6 +44,7 @@
 
 #include "gimp.h"
 #include "gimp-contexts.h"
+#include "gimp-filter-history.h"
 #include "gimp-gradients.h"
 #include "gimp-memsize.h"
 #include "gimp-modules.h"
@@ -93,6 +94,7 @@ enum
   RESTORE,
   EXIT,
   BUFFER_CHANGED,
+  FILTER_HISTORY_CHANGED,
   IMAGE_OPENED,
   LAST_SIGNAL
 };
@@ -182,6 +184,16 @@ gimp_class_init (GimpClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpClass, buffer_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  gimp_signals[FILTER_HISTORY_CHANGED] =
+    g_signal_new ("filter-history-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpClass,
+                                   filter_history_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -347,6 +359,8 @@ gimp_dispose (GObject *object)
 
   if (gimp->tool_preset_factory)
     gimp_data_factory_data_free (gimp->tool_preset_factory);
+
+  gimp_filter_history_clear (gimp);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -576,6 +590,11 @@ gimp_get_memsize (GimpObject *object,
   memsize += gimp_g_object_get_memsize (G_OBJECT (gimp->module_db));
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->plug_in_manager),
                                       gui_size);
+
+  memsize += gimp_g_list_get_memsize_foreach (gimp->filter_history,
+                                              (GimpMemsizeFunc)
+                                              gimp_object_get_memsize,
+                                              gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->image_table), 0);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->item_table),  0);
@@ -1434,6 +1453,14 @@ gimp_message_literal (Gimp                *gimp,
   g_return_if_fail (message != NULL);
 
   gimp_show_message (gimp, handler, severity, NULL, message);
+}
+
+void
+gimp_filter_history_changed (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_signal_emit (gimp, gimp_signals[FILTER_HISTORY_CHANGED], 0);
 }
 
 void

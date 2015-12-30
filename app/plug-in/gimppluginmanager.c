@@ -32,6 +32,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-filter-history.h"
 #include "core/gimp-memsize.h"
 #include "core/gimpmarshal.h"
 
@@ -45,7 +46,6 @@
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-data.h"
 #include "gimppluginmanager-help-domain.h"
-#include "gimppluginmanager-history.h"
 #include "gimppluginmanager-locale-domain.h"
 #include "gimppluginmanager-menu-branch.h"
 #include "gimppluginshm.h"
@@ -59,12 +59,10 @@ enum
   PLUG_IN_OPENED,
   PLUG_IN_CLOSED,
   MENU_BRANCH_ADDED,
-  HISTORY_CHANGED,
   LAST_SIGNAL
 };
 
 
-static void     gimp_plug_in_manager_dispose     (GObject    *object);
 static void     gimp_plug_in_manager_finalize    (GObject    *object);
 
 static gint64   gimp_plug_in_manager_get_memsize (GimpObject *object,
@@ -119,17 +117,6 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                   G_TYPE_STRING,
                   G_TYPE_STRING);
 
-  manager_signals[HISTORY_CHANGED] =
-    g_signal_new ("history-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpPlugInManagerClass,
-                                   history_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
-  object_class->dispose          = gimp_plug_in_manager_dispose;
   object_class->finalize         = gimp_plug_in_manager_finalize;
 
   gimp_object_class->get_memsize = gimp_plug_in_manager_get_memsize;
@@ -138,16 +125,6 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
 static void
 gimp_plug_in_manager_init (GimpPlugInManager *manager)
 {
-}
-
-static void
-gimp_plug_in_manager_dispose (GObject *object)
-{
-  GimpPlugInManager *manager = GIMP_PLUG_IN_MANAGER (object);
-
-  gimp_plug_in_manager_history_clear (manager);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -239,7 +216,6 @@ gimp_plug_in_manager_get_memsize (GimpObject *object,
                                                gimp_object_get_memsize,
                                                gui_size);
   memsize += gimp_g_slist_get_memsize (manager->plug_in_stack, 0);
-  memsize += gimp_g_slist_get_memsize (manager->history,       0);
 
   memsize += 0; /* FIXME manager->shm */
   memsize += gimp_object_get_memsize (GIMP_OBJECT (manager->interpreter_db),
@@ -361,7 +337,7 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
           manager->export_procs = g_slist_remove (manager->export_procs, tmp_proc);
 
           /* and from the history */
-          gimp_plug_in_manager_history_remove (manager, tmp_proc);
+          gimp_filter_history_remove (manager->gimp, tmp_proc);
 
           g_object_unref (tmp_proc);
 
@@ -396,8 +372,8 @@ gimp_plug_in_manager_remove_temp_proc (GimpPlugInManager      *manager,
   manager->plug_in_procedures = g_slist_remove (manager->plug_in_procedures,
                                                 procedure);
 
-  gimp_plug_in_manager_history_remove (manager,
-                                       GIMP_PLUG_IN_PROCEDURE (procedure));
+  gimp_filter_history_remove (manager->gimp,
+                              GIMP_PLUG_IN_PROCEDURE (procedure));
 
   gimp_pdb_unregister_procedure (manager->gimp->pdb,
                                  GIMP_PROCEDURE (procedure));
@@ -460,12 +436,4 @@ gimp_plug_in_manager_plug_in_pop (GimpPlugInManager *manager)
     manager->current_plug_in = manager->plug_in_stack->data;
   else
     manager->current_plug_in = NULL;
-}
-
-void
-gimp_plug_in_manager_history_changed (GimpPlugInManager *manager)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-
-  g_signal_emit (manager, manager_signals[HISTORY_CHANGED], 0);
 }

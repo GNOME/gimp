@@ -1,0 +1,137 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
+ *
+ * gimp-filter-history.c
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpbase/gimpbase.h"
+
+#include "core-types.h"
+
+#include "config/gimpcoreconfig.h"
+
+#include "gimp.h"
+#include "gimp-filter-history.h"
+
+#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
+
+
+guint
+gimp_filter_history_size (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+
+  return MAX (1, gimp->config->filter_history_size);
+}
+
+guint
+gimp_filter_history_length (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+
+  return g_list_length (gimp->filter_history);
+}
+
+GimpPlugInProcedure *
+gimp_filter_history_nth (Gimp  *gimp,
+                         gint   n)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_list_nth_data (gimp->filter_history, n);
+}
+
+void
+gimp_filter_history_add (Gimp                *gimp,
+                         GimpPlugInProcedure *procedure)
+{
+  GList *link;
+  gint   history_size;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure));
+
+  /* return early if the procedure is already at the top */
+  if (gimp->filter_history && gimp->filter_history->data == procedure)
+    return;
+
+  history_size = gimp_filter_history_size (gimp);
+
+  link = g_list_find (gimp->filter_history, procedure);
+
+  if (link)
+    {
+      gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
+      gimp->filter_history = g_list_prepend (gimp->filter_history, procedure);
+    }
+  else
+    {
+      gimp->filter_history = g_list_prepend (gimp->filter_history,
+                                             g_object_ref (procedure));
+    }
+
+  link = g_list_nth (gimp->filter_history, history_size);
+
+  if (link)
+    {
+      gimp->filter_history = g_list_remove_link (gimp->filter_history, link);
+      g_object_unref (link->data);
+      g_list_free (link);
+    }
+
+  gimp_filter_history_changed (gimp);
+}
+
+void
+gimp_filter_history_remove (Gimp                *gimp,
+                            GimpPlugInProcedure *procedure)
+{
+  GList *link;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure));
+
+  link = g_list_find (gimp->filter_history, procedure);
+
+  if (link)
+    {
+      gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
+      g_object_unref (procedure);
+
+      gimp_filter_history_changed (gimp);
+    }
+}
+
+void
+gimp_filter_history_clear (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->filter_history)
+    {
+      g_list_free_full (gimp->filter_history, (GDestroyNotify) g_object_unref);
+      gimp->filter_history = NULL;
+
+      gimp_filter_history_changed (gimp);
+    }
+}
+
+

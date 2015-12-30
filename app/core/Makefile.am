@@ -37,6 +37,8 @@ libappcore_a_sources = \
 	gimp-contexts.h				\
 	gimp-edit.c				\
 	gimp-edit.h				\
+	gimp-filter-history.c			\
+	gimp-filter-history.h			\
 	gimp-gradients.c			\
 	gimp-gradients.h			\
 	gimp-gui.c				\

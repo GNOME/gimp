@@ -76,6 +76,8 @@ struct _Gimp
 
   GimpPlugInManager      *plug_in_manager;
 
+  GList                  *filter_history;
+
   GimpContainer          *images;
   guint32                 next_guide_ID;
   guint32                 next_sample_point_ID;
@@ -128,99 +130,103 @@ struct _GimpClass
 {
   GimpObjectClass  parent_class;
 
-  void     (* initialize)     (Gimp               *gimp,
-                               GimpInitStatusFunc  status_callback);
-  void     (* restore)        (Gimp               *gimp,
-                               GimpInitStatusFunc  status_callback);
-  gboolean (* exit)           (Gimp               *gimp,
-                               gboolean            force);
+  void     (* initialize)             (Gimp               *gimp,
+                                       GimpInitStatusFunc  status_callback);
+  void     (* restore)                (Gimp               *gimp,
+                                       GimpInitStatusFunc  status_callback);
+  gboolean (* exit)                   (Gimp               *gimp,
+                                       gboolean            force);
 
-  void     (* buffer_changed) (Gimp               *gimp);
+  void     (* buffer_changed)         (Gimp               *gimp);
+
+  void     (* filter_history_changed) (Gimp               *gimp);
 
   /*  emitted if an image is loaded and opened with a display  */
-  void     (* image_opened)   (Gimp               *gimp,
-                               GFile              *file);
+  void     (* image_opened)           (Gimp               *gimp,
+                                       GFile              *file);
 };
 
 
-GType          gimp_get_type             (void) G_GNUC_CONST;
+GType          gimp_get_type               (void) G_GNUC_CONST;
 
-Gimp         * gimp_new                  (const gchar         *name,
-                                          const gchar         *session_name,
-                                          GFile               *default_folder,
-                                          gboolean             be_verbose,
-                                          gboolean             no_data,
-                                          gboolean             no_fonts,
-                                          gboolean             no_interface,
-                                          gboolean             use_shm,
-                                          gboolean             use_cpu_accel,
-                                          gboolean             console_messages,
-                                          gboolean             show_playground,
-                                          GimpStackTraceMode   stack_trace_mode,
-                                          GimpPDBCompatMode    pdb_compat_mode);
-void           gimp_set_show_gui         (Gimp                *gimp,
-                                          gboolean             show_gui);
-gboolean       gimp_get_show_gui         (Gimp                *gimp);
+Gimp         * gimp_new                    (const gchar         *name,
+                                            const gchar         *session_name,
+                                            GFile               *default_folder,
+                                            gboolean             be_verbose,
+                                            gboolean             no_data,
+                                            gboolean             no_fonts,
+                                            gboolean             no_interface,
+                                            gboolean             use_shm,
+                                            gboolean             use_cpu_accel,
+                                            gboolean             console_messages,
+                                            gboolean             show_playground,
+                                            GimpStackTraceMode   stack_trace_mode,
+                                            GimpPDBCompatMode    pdb_compat_mode);
+void           gimp_set_show_gui           (Gimp                *gimp,
+                                            gboolean             show_gui);
+gboolean       gimp_get_show_gui           (Gimp                *gimp);
 
-void           gimp_load_config          (Gimp                *gimp,
-                                          GFile               *alternate_system_gimprc,
-                                          GFile               *alternate_gimprc);
-void           gimp_initialize           (Gimp                *gimp,
-                                          GimpInitStatusFunc   status_callback);
-void           gimp_restore              (Gimp                *gimp,
-                                          GimpInitStatusFunc   status_callback);
-gboolean       gimp_is_restored          (Gimp                *gimp);
+void           gimp_load_config            (Gimp                *gimp,
+                                            GFile               *alternate_system_gimprc,
+                                            GFile               *alternate_gimprc);
+void           gimp_initialize             (Gimp                *gimp,
+                                            GimpInitStatusFunc   status_callback);
+void           gimp_restore                (Gimp                *gimp,
+                                            GimpInitStatusFunc   status_callback);
+gboolean       gimp_is_restored            (Gimp                *gimp);
 
-void           gimp_exit                 (Gimp                *gimp,
-                                          gboolean             force);
+void           gimp_exit                   (Gimp                *gimp,
+                                            gboolean             force);
 
-GList        * gimp_get_image_iter       (Gimp                *gimp);
-GList        * gimp_get_display_iter     (Gimp                *gimp);
-GList        * gimp_get_image_windows    (Gimp                *gimp);
-GList        * gimp_get_paint_info_iter  (Gimp                *gimp);
-GList        * gimp_get_tool_info_iter   (Gimp                *gimp);
+GList        * gimp_get_image_iter         (Gimp                *gimp);
+GList        * gimp_get_display_iter       (Gimp                *gimp);
+GList        * gimp_get_image_windows      (Gimp                *gimp);
+GList        * gimp_get_paint_info_iter    (Gimp                *gimp);
+GList        * gimp_get_tool_info_iter     (Gimp                *gimp);
 
-void           gimp_set_global_buffer    (Gimp                *gimp,
-                                          GimpBuffer          *buffer);
+void           gimp_set_global_buffer      (Gimp                *gimp,
+                                            GimpBuffer          *buffer);
 
-GimpImage    * gimp_create_image         (Gimp                *gimp,
-                                          gint                 width,
-                                          gint                 height,
-                                          GimpImageBaseType    type,
-                                          GimpPrecision        precision,
-                                          gboolean             attach_comment);
+GimpImage    * gimp_create_image           (Gimp                *gimp,
+                                            gint                 width,
+                                            gint                 height,
+                                            GimpImageBaseType    type,
+                                            GimpPrecision        precision,
+                                            gboolean             attach_comment);
 
-void           gimp_set_default_context  (Gimp                *gimp,
-                                          GimpContext         *context);
-GimpContext  * gimp_get_default_context  (Gimp                *gimp);
+void           gimp_set_default_context    (Gimp                *gimp,
+                                            GimpContext         *context);
+GimpContext  * gimp_get_default_context    (Gimp                *gimp);
 
-void           gimp_set_user_context     (Gimp                *gimp,
-                                          GimpContext         *context);
-GimpContext  * gimp_get_user_context     (Gimp                *gimp);
+void           gimp_set_user_context       (Gimp                *gimp,
+                                            GimpContext         *context);
+GimpContext  * gimp_get_user_context       (Gimp                *gimp);
 
-GimpToolInfo * gimp_get_tool_info        (Gimp                *gimp,
-                                          const gchar         *tool_name);
+GimpToolInfo * gimp_get_tool_info          (Gimp                *gimp,
+                                            const gchar         *tool_name);
 
-void           gimp_message              (Gimp                *gimp,
-                                          GObject             *handler,
-                                          GimpMessageSeverity  severity,
-                                          const gchar         *format,
-                                          ...) G_GNUC_PRINTF (4, 5);
-void           gimp_message_valist       (Gimp                *gimp,
-                                          GObject             *handler,
-                                          GimpMessageSeverity  severity,
-                                          const gchar         *format,
-                                          va_list              args) G_GNUC_PRINTF (4, 0);
-void           gimp_message_literal      (Gimp                *gimp,
-                                          GObject             *handler,
-                                          GimpMessageSeverity  severity,
-                                          const gchar         *message);
+void           gimp_message                (Gimp                *gimp,
+                                            GObject             *handler,
+                                            GimpMessageSeverity  severity,
+                                            const gchar         *format,
+                                            ...) G_GNUC_PRINTF (4, 5);
+void           gimp_message_valist         (Gimp                *gimp,
+                                            GObject             *handler,
+                                            GimpMessageSeverity  severity,
+                                            const gchar         *format,
+                                            va_list              args) G_GNUC_PRINTF (4, 0);
+void           gimp_message_literal        (Gimp                *gimp,
+                                            GObject             *handler,
+                                            GimpMessageSeverity  severity,
+                                            const gchar         *message);
 
-void           gimp_image_opened         (Gimp                *gimp,
-                                          GFile               *file);
+void           gimp_filter_history_changed (Gimp                *gimp);
 
-GFile        * gimp_get_temp_file        (Gimp                *gimp,
-                                          const gchar         *extension);
+void           gimp_image_opened           (Gimp                *gimp,
+                                            GFile               *file);
+
+GFile        * gimp_get_temp_file          (Gimp                *gimp,
+                                            const gchar         *extension);
 
 
 #endif  /* __GIMP_H__ */
