@@ -272,7 +272,6 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
     }
   else if (mybrush->private->synthetic)
     {
-      /* Moves the brush at a rate of 1 pixel / 5 ms */
       dt = 0.0005 * gimp_vector2_length_val ((GimpVector2){paint_core->cur_coords.x - paint_core->last_coords.x,
                                                            paint_core->cur_coords.y - paint_core->last_coords.y});
     }
