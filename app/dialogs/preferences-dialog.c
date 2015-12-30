@@ -747,7 +747,7 @@ prefs_icon_theme_select_callback (GtkTreeSelection *sel,
     {
       GValue val = { 0, };
 
-      gtk_tree_model_get_value (model, &iter, 0, &val);
+      gtk_tree_model_get_value (model, &iter, 1, &val);
       g_object_set_property (G_OBJECT (gimp->config), "icon-theme", &val);
       g_value_unset (&val);
     }
@@ -1963,7 +1963,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
     gtk_widget_show (scrolled_win);
 
-    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+    list_store = gtk_list_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
 
     view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
     gtk_container_add (GTK_CONTAINER (scrolled_win), view);
@@ -1972,14 +1972,19 @@ prefs_dialog_new (Gimp       *gimp,
     g_object_unref (list_store);
 
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 0,
-                                                 _("Icon Theme"),
-                                                 gtk_cell_renderer_text_new (),
-                                                 "text", 0,
+                                                 NULL,
+                                                 gtk_cell_renderer_pixbuf_new (),
+                                                 "pixbuf", 0,
                                                  NULL);
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 1,
-                                                 _("Folder"),
+                                                 _("Icon Theme"),
                                                  gtk_cell_renderer_text_new (),
                                                  "text", 1,
+                                                 NULL);
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 2,
+                                                 _("Folder"),
+                                                 gtk_cell_renderer_text_new (),
+                                                 "text", 2,
                                                  NULL);
 
     sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
@@ -1988,14 +1993,33 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < n_icon_themes; i++)
       {
-        GtkTreeIter  iter;
-        GFile       *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_themes[i]);
+        GtkTreeIter   iter;
+        GFile        *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_themes[i]);
+        GtkIconTheme *theme;
+        gchar        *example;
+        GdkPixbuf    *pixbuf;
+
+        theme = gtk_icon_theme_new ();
+        gtk_icon_theme_prepend_search_path (theme, gimp_file_get_utf8_name(icon_theme_dir));
+        example = gtk_icon_theme_get_example_icon_name (theme);
+        if (! example)
+          {
+            /* If the icon theme didn't explicitly specify an example
+             * icon, try "gimp-wilber".
+             */
+            example = g_strdup ("gimp-wilber");
+          }
+        pixbuf = gtk_icon_theme_load_icon (theme, example, 16, 0, NULL);
 
         gtk_list_store_append (list_store, &iter);
         gtk_list_store_set (list_store, &iter,
-                            0, icon_themes[i],
-                            1, gimp_file_get_utf8_name (icon_theme_dir),
+                            0, pixbuf,
+                            1, icon_themes[i],
+                            2, gimp_file_get_utf8_name (icon_theme_dir),
                             -1);
+        g_object_unref (theme);
+        g_object_unref (pixbuf);
+        g_free (example);
 
         if (GIMP_GUI_CONFIG (object)->icon_theme &&
             ! strcmp (GIMP_GUI_CONFIG (object)->icon_theme, icon_themes[i]))
