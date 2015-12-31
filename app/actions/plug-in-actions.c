@@ -284,11 +284,11 @@ static void
 plug_in_actions_add_proc (GimpActionGroup     *group,
                           GimpPlugInProcedure *proc)
 {
-  GimpPlugInActionEntry  entry;
-  const gchar           *locale_domain;
-  const gchar           *label;
-  gchar                 *path_original    = NULL;
-  gchar                 *path_translated  = NULL;
+  GimpProcedureActionEntry  entry;
+  const gchar              *locale_domain;
+  const gchar              *label;
+  gchar                    *path_original    = NULL;
+  gchar                    *path_translated  = NULL;
 
   locale_domain = gimp_plug_in_procedure_get_locale_domain (proc);
 
@@ -337,7 +337,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   entry.label       = label;
   entry.accelerator = NULL;
   entry.tooltip     = gimp_plug_in_procedure_get_blurb (proc);
-  entry.procedure   = proc;
+  entry.procedure   = GIMP_PROCEDURE (proc);
   entry.help_id     = gimp_plug_in_procedure_get_help_id (proc);
 
 #if 0
@@ -345,8 +345,8 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
            gimp_object_get_name (proc), label);
 #endif
 
-  gimp_action_group_add_plug_in_actions (group, &entry, 1,
-                                         G_CALLBACK (plug_in_run_cmd_callback));
+  gimp_action_group_add_procedure_actions (group, &entry, 1,
+                                           G_CALLBACK (plug_in_run_cmd_callback));
 
   g_free ((gchar *) entry.help_id);
 

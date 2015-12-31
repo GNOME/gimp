@@ -278,14 +278,14 @@ libappwidgets_a_sources = \
 	gimppickablepopup.h		\
 	gimppixbuf.c			\
 	gimppixbuf.h			\
-	gimppluginaction.c		\
-	gimppluginaction.h		\
 	gimppolar.c			\
 	gimppolar.h			\
 	gimppopup.c			\
 	gimppopup.h			\
 	gimpprefsbox.c			\
 	gimpprefsbox.h			\
+	gimpprocedureaction.c		\
+	gimpprocedureaction.h		\
 	gimpprogressbox.c		\
 	gimpprogressbox.h		\
 	gimpprogressdialog.c		\

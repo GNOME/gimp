@@ -125,7 +125,7 @@ typedef struct _GimpActionFactory            GimpActionFactory;
 typedef struct _GimpActionGroup              GimpActionGroup;
 typedef struct _GimpEnumAction               GimpEnumAction;
 typedef struct _GimpMenuFactory              GimpMenuFactory;
-typedef struct _GimpPlugInAction             GimpPlugInAction;
+typedef struct _GimpProcedureAction          GimpProcedureAction;
 typedef struct _GimpStringAction             GimpStringAction;
 typedef struct _GimpUIManager                GimpUIManager;
 
@@ -265,7 +265,7 @@ typedef struct _GimpSessionManaged           GimpSessionManaged;
 
 typedef struct _GimpActionEntry              GimpActionEntry;
 typedef struct _GimpEnumActionEntry          GimpEnumActionEntry;
-typedef struct _GimpPlugInActionEntry        GimpPlugInActionEntry;
+typedef struct _GimpProcedureActionEntry     GimpProcedureActionEntry;
 typedef struct _GimpRadioActionEntry         GimpRadioActionEntry;
 typedef struct _GimpStringActionEntry        GimpStringActionEntry;
 typedef struct _GimpToggleActionEntry        GimpToggleActionEntry;

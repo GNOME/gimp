@@ -528,9 +528,9 @@ static const GimpEnumActionEntry filters_repeat_actions[] =
 void
 filters_actions_setup (GimpActionGroup *group)
 {
-  GimpPlugInActionEntry *entries;
-  gint                   n_entries;
-  gint                   i;
+  GimpProcedureActionEntry *entries;
+  gint                      n_entries;
+  gint                      i;
 
   gimp_action_group_add_actions (group, "filters-action",
                                  filters_menu_actions,
@@ -560,7 +560,7 @@ filters_actions_setup (GimpActionGroup *group)
 
   n_entries = gimp_filter_history_size (group->gimp);
 
-  entries = g_new0 (GimpPlugInActionEntry, n_entries);
+  entries = g_new0 (GimpProcedureActionEntry, n_entries);
 
   for (i = 0; i < n_entries; i++)
     {
@@ -573,8 +573,8 @@ filters_actions_setup (GimpActionGroup *group)
       entries[i].help_id     = GIMP_HELP_FILTER_RESHOW;
     }
 
-  gimp_action_group_add_plug_in_actions (group, entries, n_entries,
-                                         G_CALLBACK (filters_history_cmd_callback));
+  gimp_action_group_add_procedure_actions (group, entries, n_entries,
+                                           G_CALLBACK (filters_history_cmd_callback));
 
   for (i = 0; i < n_entries; i++)
     {
@@ -713,10 +713,11 @@ filters_actions_update (GimpActionGroup *group,
 #undef SET_SENSITIVE
 
   {
-    GimpPlugInProcedure *proc = gimp_filter_history_nth (group->gimp, 0);
-    gint                 i;
+    GimpProcedure *proc = gimp_filter_history_nth (group->gimp, 0);
+    gint           i;
 
-    if (proc && gimp_plug_in_procedure_get_sensitive (proc, drawable))
+    /* FIXME history */
+    if (proc && gimp_plug_in_procedure_get_sensitive (GIMP_PLUG_IN_PROCEDURE (proc), drawable))
       {
         gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE);
         gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE);
@@ -734,7 +735,8 @@ filters_actions_update (GimpActionGroup *group,
 
         proc = gimp_filter_history_nth (group->gimp, i);
 
-        sensitive = gimp_plug_in_procedure_get_sensitive (proc, drawable);
+        /* FIXME history */
+        sensitive = gimp_plug_in_procedure_get_sensitive (GIMP_PLUG_IN_PROCEDURE (proc), drawable);
 
         gimp_action_group_set_action_sensitive (group, name, sensitive);
 
@@ -767,9 +769,9 @@ static void
 filters_actions_history_changed (Gimp            *gimp,
                                  GimpActionGroup *group)
 {
-  GimpPlugInProcedure *proc;
-  GimpActionGroup     *plug_in_group;
-  gint                 i;
+  GimpProcedure   *proc;
+  GimpActionGroup *plug_in_group;
+  gint             i;
 
   plug_in_group = filters_actions_get_plug_in_group (group);
 
@@ -782,7 +784,8 @@ filters_actions_history_changed (Gimp            *gimp,
       gchar       *reshow;
       gboolean     sensitive = FALSE;
 
-      label = gimp_plug_in_procedure_get_label (proc);
+      /* FIXME history */
+      label = gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc));
 
       /*  copy the sensitivity of the plug-in procedure's actual action
        *  instead of calling filters_actions_update() because doing the
@@ -836,14 +839,15 @@ filters_actions_history_changed (Gimp            *gimp,
 
       proc = gimp_filter_history_nth (gimp, i);
 
-      if (proc->menu_label)
+      /* FIXME history */
+      if (GIMP_PLUG_IN_PROCEDURE (proc)->menu_label)
         {
-          label = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                            proc->menu_label);
+          label = dgettext (gimp_plug_in_procedure_get_locale_domain (GIMP_PLUG_IN_PROCEDURE (proc)),
+                            GIMP_PLUG_IN_PROCEDURE (proc)->menu_label);
         }
       else
         {
-          label = gimp_plug_in_procedure_get_label (proc);
+          label = gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc));
         }
 
       /*  see comment above  */
@@ -861,8 +865,8 @@ filters_actions_history_changed (Gimp            *gimp,
                     "sensitive", sensitive,
                     "procedure", proc,
                     "label",     label,
-                    "icon-name", gimp_plug_in_procedure_get_icon_name (proc),
-                    "tooltip",   gimp_plug_in_procedure_get_blurb (proc),
+                    "icon-name", gimp_plug_in_procedure_get_icon_name (GIMP_PLUG_IN_PROCEDURE (proc)),
+                    "tooltip",   gimp_plug_in_procedure_get_blurb (GIMP_PLUG_IN_PROCEDURE (proc)),
                     NULL);
     }
 

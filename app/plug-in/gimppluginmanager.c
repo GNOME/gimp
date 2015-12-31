@@ -337,7 +337,7 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
           manager->export_procs = g_slist_remove (manager->export_procs, tmp_proc);
 
           /* and from the history */
-          gimp_filter_history_remove (manager->gimp, tmp_proc);
+          gimp_filter_history_remove (manager->gimp, GIMP_PROCEDURE (tmp_proc));
 
           g_object_unref (tmp_proc);
 
@@ -373,7 +373,7 @@ gimp_plug_in_manager_remove_temp_proc (GimpPlugInManager      *manager,
                                                 procedure);
 
   gimp_filter_history_remove (manager->gimp,
-                              GIMP_PLUG_IN_PROCEDURE (procedure));
+                              GIMP_PROCEDURE (procedure));
 
   gimp_pdb_unregister_procedure (manager->gimp->pdb,
                                  GIMP_PROCEDURE (procedure));

@@ -118,16 +118,16 @@ struct _GimpStringActionEntry
   const gchar *help_id;
 };
 
-struct _GimpPlugInActionEntry
+struct _GimpProcedureActionEntry
 {
-  const gchar         *name;
-  const gchar         *icon_name;
-  const gchar         *label;
-  const gchar         *accelerator;
-  const gchar         *tooltip;
-  GimpPlugInProcedure *procedure;
+  const gchar   *name;
+  const gchar   *icon_name;
+  const gchar   *label;
+  const gchar   *accelerator;
+  const gchar   *tooltip;
+  GimpProcedure *procedure;
 
-  const gchar         *help_id;
+  const gchar   *help_id;
 };
 
 
@@ -170,8 +170,8 @@ void   gimp_action_group_add_string_actions   (GimpActionGroup             *grou
                                                const GimpStringActionEntry *entries,
                                                guint                        n_entries,
                                                GCallback                    callback);
-void   gimp_action_group_add_plug_in_actions  (GimpActionGroup             *group,
-                                               const GimpPlugInActionEntry *entries,
+void   gimp_action_group_add_procedure_actions(GimpActionGroup             *group,
+                                               const GimpProcedureActionEntry *entries,
                                                guint                        n_entries,
                                                GCallback                    callback);
 

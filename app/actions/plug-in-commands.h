@@ -19,20 +19,20 @@
 #define __PLUG_IN_COMMANDS_H__
 
 
-void   plug_in_run_cmd_callback       (GtkAction           *action,
-                                       GimpPlugInProcedure *proc,
-                                       gpointer             data);
+void   plug_in_run_cmd_callback       (GtkAction     *action,
+                                       GimpProcedure *proc,
+                                       gpointer       data);
 
-void   plug_in_reset_all_cmd_callback (GtkAction           *action,
-                                       gpointer             data);
+void   plug_in_reset_all_cmd_callback (GtkAction     *action,
+                                       gpointer       data);
 
 
 /* FIXME history */
-void  plug_in_procedure_execute     (GimpPlugInProcedure *procedure,
-                                     Gimp                *gimp,
-                                     GimpDisplay         *display,
-                                     GimpValueArray      *args,
-                                     gint                 n_args);
+void  plug_in_procedure_execute     (GimpProcedure   *procedure,
+                                     Gimp            *gimp,
+                                     GimpDisplay     *display,
+                                     GimpValueArray  *args,
+                                     gint             n_args);
 gint  plug_in_collect_display_args  (GtkAction       *action,
                                      GimpDisplay     *display,
                                      GParamSpec     **pspecs,

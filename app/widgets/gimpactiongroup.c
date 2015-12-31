@@ -35,7 +35,7 @@
 #include "gimpactiongroup.h"
 #include "gimpaction.h"
 #include "gimpenumaction.h"
-#include "gimppluginaction.h"
+#include "gimpprocedureaction.h"
 #include "gimpradioaction.h"
 #include "gimpstringaction.h"
 #include "gimptoggleaction.h"
@@ -636,10 +636,10 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
 }
 
 void
-gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
-                                       const GimpPlugInActionEntry *entries,
-                                       guint                        n_entries,
-                                       GCallback                    callback)
+gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
+                                         const GimpProcedureActionEntry *entries,
+                                         guint                           n_entries,
+                                         GCallback                       callback)
 {
   gint i;
 
@@ -647,16 +647,16 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
 
   for (i = 0; i < n_entries; i++)
     {
-      GimpPlugInAction *action;
+      GimpProcedureAction *action;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
 
-      action = gimp_plug_in_action_new (entries[i].name,
-                                        entries[i].label,
-                                        entries[i].tooltip,
-                                        entries[i].icon_name,
-                                        entries[i].procedure);
+      action = gimp_procedure_action_new (entries[i].name,
+                                          entries[i].label,
+                                          entries[i].tooltip,
+                                          entries[i].icon_name,
+                                          entries[i].procedure);
 
       if (callback)
         g_signal_connect (action, "selected",

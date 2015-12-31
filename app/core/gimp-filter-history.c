@@ -30,11 +30,10 @@
 #include "gimp.h"
 #include "gimp-filter-history.h"
 
-#include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginprocedure.h"
+#include "pdb/gimpprocedure.h"
 
 
-guint
+gint
 gimp_filter_history_size (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
@@ -42,7 +41,7 @@ gimp_filter_history_size (Gimp *gimp)
   return MAX (1, gimp->config->filter_history_size);
 }
 
-guint
+gint
 gimp_filter_history_length (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
@@ -50,7 +49,7 @@ gimp_filter_history_length (Gimp *gimp)
   return g_list_length (gimp->filter_history);
 }
 
-GimpPlugInProcedure *
+GimpProcedure *
 gimp_filter_history_nth (Gimp  *gimp,
                          gint   n)
 {
@@ -60,14 +59,14 @@ gimp_filter_history_nth (Gimp  *gimp,
 }
 
 void
-gimp_filter_history_add (Gimp                *gimp,
-                         GimpPlugInProcedure *procedure)
+gimp_filter_history_add (Gimp          *gimp,
+                         GimpProcedure *procedure)
 {
   GList *link;
   gint   history_size;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure));
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   /* return early if the procedure is already at the top */
   if (gimp->filter_history && gimp->filter_history->data == procedure)
@@ -101,13 +100,13 @@ gimp_filter_history_add (Gimp                *gimp,
 }
 
 void
-gimp_filter_history_remove (Gimp                *gimp,
-                            GimpPlugInProcedure *procedure)
+gimp_filter_history_remove (Gimp          *gimp,
+                            GimpProcedure *procedure)
 {
   GList *link;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure));
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   link = g_list_find (gimp->filter_history, procedure);
 
@@ -133,5 +132,3 @@ gimp_filter_history_clear (Gimp *gimp)
       gimp_filter_history_changed (gimp);
     }
 }
-
-

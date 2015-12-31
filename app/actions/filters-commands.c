@@ -103,10 +103,10 @@ filters_repeat_cmd_callback (GtkAction *action,
                              gint       value,
                              gpointer   data)
 {
-  GimpPlugInProcedure *procedure;
-  Gimp                *gimp;
-  GimpDisplay         *display;
-  GimpRunMode          run_mode;
+  GimpProcedure *procedure;
+  Gimp          *gimp;
+  GimpDisplay   *display;
+  GimpRunMode    run_mode;
   return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
 
@@ -119,12 +119,12 @@ filters_repeat_cmd_callback (GtkAction *action,
       GimpValueArray *args;
       gint            n_args;
 
-      args = gimp_procedure_get_arguments (GIMP_PROCEDURE (procedure));
+      args = gimp_procedure_get_arguments (procedure);
 
       g_value_set_int (gimp_value_array_index (args, 0), run_mode);
 
       n_args = plug_in_collect_display_args (action, display,
-                                             GIMP_PROCEDURE (procedure)->args,
+                                             procedure->args,
                                              args, 1);
 
       plug_in_procedure_execute (procedure, gimp, display, args, n_args);
@@ -134,9 +134,9 @@ filters_repeat_cmd_callback (GtkAction *action,
 }
 
 void
-filters_history_cmd_callback (GtkAction           *action,
-                              GimpPlugInProcedure *procedure,
-                              gpointer             data)
+filters_history_cmd_callback (GtkAction     *action,
+                              GimpProcedure *procedure,
+                              gpointer       data)
 {
   Gimp           *gimp;
   GimpDisplay    *display;
@@ -145,12 +145,12 @@ filters_history_cmd_callback (GtkAction           *action,
   return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
 
-  args = gimp_procedure_get_arguments (GIMP_PROCEDURE (procedure));
+  args = gimp_procedure_get_arguments (procedure);
 
   g_value_set_int (gimp_value_array_index (args, 0), GIMP_RUN_INTERACTIVE);
 
   n_args = plug_in_collect_display_args (action, display,
-                                         GIMP_PROCEDURE (procedure)->args,
+                                         procedure->args,
                                          args, 1);
 
   plug_in_procedure_execute (procedure, gimp, display, args, n_args);

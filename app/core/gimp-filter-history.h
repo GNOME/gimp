@@ -21,15 +21,15 @@
 #define __GIMP_FILTER_HISTORY_H__
 
 
-guint                 gimp_filter_history_size   (Gimp                *gimp);
-guint                 gimp_filter_history_length (Gimp                *gimp);
-GimpPlugInProcedure * gimp_filter_history_nth    (Gimp                *gimp,
-                                                  gint                 n);
-void                  gimp_filter_history_add    (Gimp                *gimp,
-                                                  GimpPlugInProcedure *procedure);
-void                  gimp_filter_history_remove (Gimp                *gimp,
-                                                  GimpPlugInProcedure *procedure);
-void                  gimp_filter_history_clear  (Gimp                *gimp);
+gint            gimp_filter_history_size   (Gimp          *gimp);
+gint            gimp_filter_history_length (Gimp          *gimp);
+GimpProcedure * gimp_filter_history_nth    (Gimp          *gimp,
+                                            gint           n);
+void            gimp_filter_history_add    (Gimp          *gimp,
+                                            GimpProcedure *procedure);
+void            gimp_filter_history_remove (Gimp          *gimp,
+                                            GimpProcedure *procedure);
+void            gimp_filter_history_clear  (Gimp          *gimp);
 
 
 #endif /* __GIMP_FILTER_HISTORY_H__ */

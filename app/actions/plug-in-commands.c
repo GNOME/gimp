@@ -64,7 +64,7 @@
 /*  local function prototypes  */
 
 #if 0
-static void  plug_in_procedure_execute     (GimpPlugInProcedure *procedure,
+static void  plug_in_procedure_execute     (GimpProcedure       *procedure,
                                             Gimp                *gimp,
                                             GimpDisplay         *display,
                                             GimpValueArray      *args,
@@ -102,11 +102,10 @@ static void  plug_in_reset_all_response    (GtkWidget       *dialog,
 /*  public functions  */
 
 void
-plug_in_run_cmd_callback (GtkAction           *action,
-                          GimpPlugInProcedure *proc,
-                          gpointer             data)
+plug_in_run_cmd_callback (GtkAction     *action,
+                          GimpProcedure *procedure,
+                          gpointer       data)
 {
-  GimpProcedure  *procedure = GIMP_PROCEDURE (proc);
   Gimp           *gimp;
   GimpValueArray *args;
   gint            n_args    = 0;
@@ -192,7 +191,7 @@ plug_in_run_cmd_callback (GtkAction           *action,
     }
 
   if (n_args >= 1)
-    plug_in_procedure_execute (proc, gimp, display, args, n_args);
+    plug_in_procedure_execute (procedure, gimp, display, args, n_args);
 
   gimp_value_array_unref (args);
 }
@@ -235,18 +234,18 @@ plug_in_reset_all_cmd_callback (GtkAction *action,
 
 /* FIXME history */
 void
-plug_in_procedure_execute (GimpPlugInProcedure *procedure,
-                           Gimp                *gimp,
-                           GimpDisplay         *display,
-                           GimpValueArray      *args,
-                           gint                 n_args)
+plug_in_procedure_execute (GimpProcedure  *procedure,
+                           Gimp           *gimp,
+                           GimpDisplay    *display,
+                           GimpValueArray *args,
+                           gint            n_args)
 {
   GError *error = NULL;
 
   gimp_value_array_truncate (args, n_args);
 
   /* run the plug-in procedure */
-  gimp_procedure_execute_async (GIMP_PROCEDURE (procedure), gimp,
+  gimp_procedure_execute_async (procedure, gimp,
                                 gimp_get_user_context (gimp),
                                 GIMP_PROGRESS (display), args,
                                 GIMP_OBJECT (display), &error);
@@ -261,8 +260,8 @@ plug_in_procedure_execute (GimpPlugInProcedure *procedure,
   else
     {
       /* remember only image plug-ins */
-      if (GIMP_PROCEDURE (procedure)->num_args  >= 2  &&
-          GIMP_IS_PARAM_SPEC_IMAGE_ID (GIMP_PROCEDURE (procedure)->args[1]))
+      if (procedure->num_args  >= 2  &&
+          GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
         {
           gimp_filter_history_add (gimp, procedure);
         }
