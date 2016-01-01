@@ -309,13 +309,14 @@ file_save_dialog_check_file (GtkWidget            *dialog,
   GIMP_LOG (SAVE_DIALOG, "URI = %s", uri);
   GIMP_LOG (SAVE_DIALOG, "basename = %s", basename);
   GIMP_LOG (SAVE_DIALOG, "selected save_proc: %s",
-            save_proc && save_proc->menu_label ?
-            save_proc->menu_label : "NULL");
+            save_proc ?
+            gimp_procedure_get_label (GIMP_PROCEDURE (save_proc)) : "NULL");
   GIMP_LOG (SAVE_DIALOG, "URI save_proc: %s",
-            uri_proc ? uri_proc->menu_label : "NULL");
+            uri_proc ?
+            gimp_procedure_get_label (GIMP_PROCEDURE (uri_proc)) : "NULL");
   GIMP_LOG (SAVE_DIALOG, "basename save_proc: %s",
-            basename_proc && basename_proc->menu_label ?
-            basename_proc->menu_label : "NULL");
+            basename_proc ?
+            gimp_procedure_get_label (GIMP_PROCEDURE (basename_proc)) : "NULL");
 
   g_free (uri);
 
@@ -429,7 +430,7 @@ file_save_dialog_check_file (GtkWidget            *dialog,
         }
 
       GIMP_LOG (SAVE_DIALOG, "use URI's proc '%s' so indirect saving works",
-                uri_proc->menu_label ? uri_proc->menu_label : "<unnamed>");
+                gimp_procedure_get_label (GIMP_PROCEDURE (uri_proc)));
 
       /*  use the URI's proc if no save proc was selected  */
       save_proc = uri_proc;
@@ -437,12 +438,12 @@ file_save_dialog_check_file (GtkWidget            *dialog,
   else
     {
       GIMP_LOG (SAVE_DIALOG, "save_proc '%s' was selected from the list",
-                save_proc->menu_label ? save_proc->menu_label : "<unnamed>");
+                gimp_procedure_get_label (GIMP_PROCEDURE (save_proc)));
 
       if (save_proc != basename_proc)
         {
           GIMP_LOG (SAVE_DIALOG, "however the basename's proc is '%s'",
-                    basename_proc ? basename_proc->menu_label : "NULL");
+                    gimp_procedure_get_label (GIMP_PROCEDURE (basename_proc)));
 
           if (uri_proc != basename_proc)
             {
@@ -477,7 +478,7 @@ file_save_dialog_check_file (GtkWidget            *dialog,
         {
           GIMP_LOG (SAVE_DIALOG,
                     "use URI's proc '%s' so indirect saving works",
-                    uri_proc->menu_label ? uri_proc->menu_label : "<unnamed>");
+                    gimp_procedure_get_label (GIMP_PROCEDURE (uri_proc)));
 
           /*  need to use the URI's proc for saving because e.g.
            *  the GIF plug-in can't save a GIF to sftp://

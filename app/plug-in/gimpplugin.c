@@ -945,6 +945,7 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
 
       return FALSE;
     }
+
   if (! gimp_plug_in_procedure_add_menu_path (proc, menu_path, &error))
     {
       gimp_message_literal (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
