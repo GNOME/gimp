@@ -51,6 +51,8 @@ static gint64        gimp_procedure_get_memsize         (GimpObject      *object
 static const gchar * gimp_procedure_real_get_label      (GimpProcedure   *procedure);
 static const gchar * gimp_procedure_real_get_menu_label (GimpProcedure   *procedure);
 static const gchar * gimp_procedure_real_get_blurb      (GimpProcedure   *procedure);
+static gboolean      gimp_procedure_real_get_sensitive  (GimpProcedure   *procedure,
+                                                         GimpObject      *object);
 static GimpValueArray * gimp_procedure_real_execute     (GimpProcedure   *procedure,
                                                          Gimp            *gimp,
                                                          GimpContext     *context,
@@ -91,6 +93,7 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
   klass->get_label               = gimp_procedure_real_get_label;
   klass->get_menu_label          = gimp_procedure_real_get_menu_label;
   klass->get_blurb               = gimp_procedure_real_get_blurb;
+  klass->get_sensitive           = gimp_procedure_real_get_sensitive;
   klass->execute                 = gimp_procedure_real_execute;
   klass->execute_async           = gimp_procedure_real_execute_async;
 }
@@ -179,6 +182,13 @@ static const gchar *
 gimp_procedure_real_get_blurb (GimpProcedure *procedure)
 {
   return procedure->blurb;
+}
+
+static gboolean
+gimp_procedure_real_get_sensitive (GimpProcedure *procedure,
+                                   GimpObject    *object)
+{
+  return TRUE /* random fallback */;
 }
 
 static GimpValueArray *
@@ -341,6 +351,17 @@ gimp_procedure_get_blurb (GimpProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   return GIMP_PROCEDURE_GET_CLASS (procedure)->get_blurb (procedure);
+}
+
+gboolean
+gimp_procedure_get_sensitive (GimpProcedure *procedure,
+                              GimpObject    *object)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (object == NULL || GIMP_IS_OBJECT (object), FALSE);
+
+  return GIMP_PROCEDURE_GET_CLASS (procedure)->get_sensitive (procedure,
+                                                              object);
 }
 
 GimpValueArray *

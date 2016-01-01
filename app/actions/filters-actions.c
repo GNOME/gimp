@@ -28,7 +28,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayermask.h"
 
-#include "plug-in/gimppluginprocedure.h" /* FIXME history */
+#include "pdb/gimpprocedure.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -717,8 +717,7 @@ filters_actions_update (GimpActionGroup *group,
     GimpProcedure *proc = gimp_filter_history_nth (group->gimp, 0);
     gint           i;
 
-    /* FIXME history */
-    if (proc && gimp_plug_in_procedure_get_sensitive (GIMP_PLUG_IN_PROCEDURE (proc), drawable))
+    if (proc && gimp_procedure_get_sensitive (proc, GIMP_OBJECT (drawable)))
       {
         gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE);
         gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE);
@@ -736,8 +735,7 @@ filters_actions_update (GimpActionGroup *group,
 
         proc = gimp_filter_history_nth (group->gimp, i);
 
-        /* FIXME history */
-        sensitive = gimp_plug_in_procedure_get_sensitive (GIMP_PLUG_IN_PROCEDURE (proc), drawable);
+        sensitive = gimp_procedure_get_sensitive (proc, GIMP_OBJECT (drawable));
 
         gimp_action_group_set_action_sensitive (group, name, sensitive);
 

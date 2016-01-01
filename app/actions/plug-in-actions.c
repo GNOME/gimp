@@ -156,8 +156,9 @@ plug_in_actions_update (GimpActionGroup *group,
           ! proc->file_proc                      &&
           proc->image_types_val)
         {
-          gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc,
-                                                                     drawable);
+          gboolean sensitive =
+            gimp_procedure_get_sensitive (GIMP_PROCEDURE (proc),
+                                          GIMP_OBJECT (drawable));
 
           gimp_action_group_set_action_sensitive (group,
                                                   gimp_object_get_name (proc),
@@ -373,7 +374,8 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       if (image)
         drawable = gimp_image_get_active_drawable (image);
 
-      sensitive = gimp_plug_in_procedure_get_sensitive (proc, drawable);
+      sensitive = gimp_procedure_get_sensitive (GIMP_PROCEDURE (proc),
+                                                GIMP_OBJECT (drawable));
 
       gimp_action_group_set_action_sensitive (group,
                                               gimp_object_get_name (proc),

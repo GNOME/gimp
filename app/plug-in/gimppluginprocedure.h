@@ -112,9 +112,6 @@ void          gimp_plug_in_procedure_take_icon       (GimpPlugInProcedure       
 
 gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc);
 
-gboolean      gimp_plug_in_procedure_get_sensitive   (const GimpPlugInProcedure *proc,
-                                                      GimpDrawable              *drawable);
-
 void          gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure       *proc,
                                                       const gchar               *image_types);
 void          gimp_plug_in_procedure_set_file_proc   (GimpPlugInProcedure       *proc,

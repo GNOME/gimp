@@ -65,6 +65,8 @@ static const gchar * gimp_plug_in_procedure_get_label  (GimpProcedure  *procedur
 static const gchar * gimp_plug_in_procedure_get_menu_label
                                                        (GimpProcedure  *procedure);
 static const gchar * gimp_plug_in_procedure_get_blurb  (GimpProcedure  *procedure);
+static gboolean   gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
+                                                        GimpObject     *object);
 static GimpValueArray * gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
                                                         Gimp           *gimp,
                                                         GimpContext    *context,
@@ -117,6 +119,7 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
   proc_class->get_label             = gimp_plug_in_procedure_get_label;
   proc_class->get_menu_label        = gimp_plug_in_procedure_get_menu_label;
   proc_class->get_blurb             = gimp_plug_in_procedure_get_blurb;
+  proc_class->get_sensitive         = gimp_plug_in_procedure_get_sensitive;
   proc_class->execute               = gimp_plug_in_procedure_execute;
   proc_class->execute_async         = gimp_plug_in_procedure_execute_async;
 
@@ -300,6 +303,53 @@ gimp_plug_in_procedure_get_blurb (GimpProcedure *procedure)
                      procedure->blurb);
 
   return NULL;
+}
+
+static gboolean
+gimp_plug_in_procedure_get_sensitive (GimpProcedure *procedure,
+                                      GimpObject    *object)
+{
+  GimpPlugInProcedure *proc       = GIMP_PLUG_IN_PROCEDURE (procedure);
+  GimpDrawable        *drawable;
+  GimpImageType        image_type = -1;
+  gboolean             sensitive  = FALSE;
+
+  g_return_val_if_fail (object == NULL || GIMP_IS_DRAWABLE (object), FALSE);
+
+  drawable = GIMP_DRAWABLE (object);
+
+  if (drawable)
+    {
+      const Babl *format = gimp_drawable_get_format (drawable);
+
+      image_type = gimp_babl_format_get_image_type (format);
+    }
+
+  switch (image_type)
+    {
+    case GIMP_RGB_IMAGE:
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_RGB_IMAGE;
+      break;
+    case GIMP_RGBA_IMAGE:
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_RGBA_IMAGE;
+      break;
+    case GIMP_GRAY_IMAGE:
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAY_IMAGE;
+      break;
+    case GIMP_GRAYA_IMAGE:
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAYA_IMAGE;
+      break;
+    case GIMP_INDEXED_IMAGE:
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXED_IMAGE;
+      break;
+    case GIMP_INDEXEDA_IMAGE:
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXEDA_IMAGE;
+      break;
+    default:
+      break;
+    }
+
+  return sensitive ? TRUE : FALSE;
 }
 
 static GimpValueArray *
@@ -735,50 +785,6 @@ gimp_plug_in_procedure_get_help_id (const GimpPlugInProcedure *proc)
     return g_strconcat (domain, "?", gimp_object_get_name (proc), NULL);
 
   return g_strdup (gimp_object_get_name (proc));
-}
-
-gboolean
-gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
-                                      GimpDrawable              *drawable)
-{
-  GimpImageType image_type = -1;
-  gboolean      sensitive  = FALSE;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
-  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  if (drawable)
-    {
-      const Babl *format = gimp_drawable_get_format (drawable);
-
-      image_type = gimp_babl_format_get_image_type (format);
-    }
-
-  switch (image_type)
-    {
-    case GIMP_RGB_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_RGB_IMAGE;
-      break;
-    case GIMP_RGBA_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_RGBA_IMAGE;
-      break;
-    case GIMP_GRAY_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAY_IMAGE;
-      break;
-    case GIMP_GRAYA_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAYA_IMAGE;
-      break;
-    case GIMP_INDEXED_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXED_IMAGE;
-      break;
-    case GIMP_INDEXEDA_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXEDA_IMAGE;
-      break;
-    default:
-      break;
-    }
-
-  return sensitive ? TRUE : FALSE;
 }
 
 static GimpPlugInImageType
