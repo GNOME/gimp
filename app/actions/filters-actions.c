@@ -704,6 +704,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-tile-paper",              writable);
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
+  SET_SENSITIVE ("filters-value-propagate",         writable);
   SET_SENSITIVE ("filters-video-degradation",       writable);
   SET_SENSITIVE ("filters-vignette",                writable);
   SET_SENSITIVE ("filters-waves",                   writable);
