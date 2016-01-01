@@ -286,17 +286,12 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 {
   GimpProcedureActionEntry  entry;
   const gchar              *locale_domain;
-  const gchar              *label;
   gchar                    *path_original    = NULL;
   gchar                    *path_translated  = NULL;
 
   locale_domain = gimp_plug_in_procedure_get_locale_domain (proc);
 
-  if (proc->menu_label)
-    {
-      label = dgettext (locale_domain, proc->menu_label);
-    }
-  else
+  if (! proc->menu_label)
     {
       gchar *p1, *p2;
 
@@ -317,8 +312,6 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
         {
           *p1 = '\0';
           *p2 = '\0';
-
-          label = p2 + 1;
         }
       else
         {
@@ -334,16 +327,11 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 
   entry.name        = gimp_object_get_name (proc);
   entry.icon_name   = gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc));
-  entry.label       = label;
+  entry.label       = gimp_procedure_get_menu_label (GIMP_PROCEDURE (proc));
   entry.accelerator = NULL;
   entry.tooltip     = gimp_procedure_get_blurb (GIMP_PROCEDURE (proc));
   entry.procedure   = GIMP_PROCEDURE (proc);
   entry.help_id     = gimp_plug_in_procedure_get_help_id (proc);
-
-#if 0
-  g_print ("adding plug-in action '%s' (%s)\n",
-           gimp_object_get_name (proc), label);
-#endif
 
   gimp_action_group_add_procedure_actions (group, &entry, 1,
                                            G_CALLBACK (plug_in_run_cmd_callback));

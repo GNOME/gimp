@@ -61,8 +61,10 @@ static gint64   gimp_plug_in_procedure_get_memsize     (GimpObject     *object,
 static gchar  * gimp_plug_in_procedure_get_description (GimpViewable   *viewable,
                                                         gchar         **tooltip);
 
-static const gchar  * gimp_plug_in_procedure_get_label (GimpProcedure  *procedure);
-static const gchar  * gimp_plug_in_procedure_get_blurb (GimpProcedure  *procedure);
+static const gchar * gimp_plug_in_procedure_get_label  (GimpProcedure  *procedure);
+static const gchar * gimp_plug_in_procedure_get_menu_label
+                                                       (GimpProcedure  *procedure);
+static const gchar * gimp_plug_in_procedure_get_blurb  (GimpProcedure  *procedure);
 static GimpValueArray * gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
                                                         Gimp           *gimp,
                                                         GimpContext    *context,
@@ -113,6 +115,7 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
   viewable_class->get_description   = gimp_plug_in_procedure_get_description;
 
   proc_class->get_label             = gimp_plug_in_procedure_get_label;
+  proc_class->get_menu_label        = gimp_plug_in_procedure_get_menu_label;
   proc_class->get_blurb             = gimp_plug_in_procedure_get_blurb;
   proc_class->execute               = gimp_plug_in_procedure_execute;
   proc_class->execute_async         = gimp_plug_in_procedure_execute_async;
@@ -258,6 +261,32 @@ gimp_plug_in_procedure_get_label (GimpProcedure *procedure)
   proc->label = label;
 
   return proc->label;
+}
+
+static const gchar *
+gimp_plug_in_procedure_get_menu_label (GimpProcedure *procedure)
+{
+  GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+
+  if (proc->menu_label)
+    {
+      return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                       proc->menu_label);
+    }
+  else if (proc->menu_paths)
+    {
+      const gchar *translated;
+
+      translated = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                             proc->menu_paths->data);
+
+      translated = strrchr (translated, '/');
+
+      if (translated)
+        return translated + 1;
+    }
+
+  return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
 }
 
 static const gchar *

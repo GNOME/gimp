@@ -839,16 +839,7 @@ filters_actions_history_changed (Gimp            *gimp,
 
       proc = gimp_filter_history_nth (gimp, i);
 
-      /* FIXME history */
-      if (GIMP_PLUG_IN_PROCEDURE (proc)->menu_label)
-        {
-          label = dgettext (gimp_plug_in_procedure_get_locale_domain (GIMP_PLUG_IN_PROCEDURE (proc)),
-                            GIMP_PLUG_IN_PROCEDURE (proc)->menu_label);
-        }
-      else
-        {
-          label = gimp_procedure_get_label (proc);
-        }
+      label = gimp_procedure_get_menu_label (proc);
 
       /*  see comment above  */
       if (plug_in_group)

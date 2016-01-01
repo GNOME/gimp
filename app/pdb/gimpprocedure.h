@@ -69,21 +69,22 @@ struct _GimpProcedureClass
 {
   GimpViewableClass parent_class;
 
-  const gchar    * (* get_label)     (GimpProcedure   *procedure);
-  const gchar    * (* get_blurb)     (GimpProcedure   *procedure);
+  const gchar    * (* get_label)      (GimpProcedure   *procedure);
+  const gchar    * (* get_menu_label) (GimpProcedure   *procedure);
+  const gchar    * (* get_blurb)      (GimpProcedure   *procedure);
 
-  GimpValueArray * (* execute)       (GimpProcedure   *procedure,
-                                      Gimp            *gimp,
-                                      GimpContext     *context,
-                                      GimpProgress    *progress,
-                                      GimpValueArray  *args,
-                                      GError         **error);
-  void             (* execute_async) (GimpProcedure   *procedure,
-                                      Gimp            *gimp,
-                                      GimpContext     *context,
-                                      GimpProgress    *progress,
-                                      GimpValueArray  *args,
-                                      GimpObject      *display);
+  GimpValueArray * (* execute)        (GimpProcedure   *procedure,
+                                       Gimp            *gimp,
+                                       GimpContext     *context,
+                                       GimpProgress    *progress,
+                                       GimpValueArray  *args,
+                                       GError         **error);
+  void             (* execute_async)  (GimpProcedure   *procedure,
+                                       Gimp            *gimp,
+                                       GimpContext     *context,
+                                       GimpProgress    *progress,
+                                       GimpValueArray  *args,
+                                       GimpObject      *display);
 };
 
 
@@ -117,6 +118,7 @@ void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
                                                     gchar            *deprecated);
 
 const gchar    * gimp_procedure_get_label          (GimpProcedure    *procedure);
+const gchar    * gimp_procedure_get_menu_label     (GimpProcedure    *procedure);
 const gchar    * gimp_procedure_get_blurb          (GimpProcedure    *procedure);
 
 void             gimp_procedure_add_argument       (GimpProcedure    *procedure,
