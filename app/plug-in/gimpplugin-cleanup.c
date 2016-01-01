@@ -279,11 +279,9 @@ gimp_plug_in_cleanup_image (GimpPlugInProcFrame    *proc_frame,
 
   if (cleanup->undo_group_count != gimp_image_get_undo_group_count (image))
     {
-      GimpProcedure *proc = proc_frame->procedure;
-
       g_message ("Plug-In '%s' left image undo in inconsistent state, "
                  "closing open undo groups.",
-                 gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)));
+                 gimp_procedure_get_label (proc_frame->procedure));
 
       while (cleanup->undo_group_count < gimp_image_get_undo_group_count (image))
         {
@@ -335,12 +333,10 @@ gimp_plug_in_cleanup_item (GimpPlugInProcFrame   *proc_frame,
 
   if (cleanup->shadow_buffer)
     {
-      GimpProcedure *proc = proc_frame->procedure;
-
       GIMP_LOG (SHADOW_TILES,
                 "Freeing shadow buffer of drawable '%s' on behalf of '%s'.",
                 gimp_object_get_name (item),
-                gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)));
+                gimp_procedure_get_label (proc_frame->procedure));
 
       gimp_drawable_free_shadow_buffer (GIMP_DRAWABLE (item));
     }

@@ -859,15 +859,8 @@ gimp_plug_in_get_undo_desc (GimpPlugIn *plug_in)
 
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
 
-  if (proc_frame)
-    {
-      GimpPlugInProcedure *proc;
-
-      proc = GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure);
-
-      if (proc)
-        undo_desc = gimp_plug_in_procedure_get_label (proc);
-    }
+  if (proc_frame && proc_frame->procedure)
+    undo_desc = gimp_procedure_get_label (proc_frame->procedure);
 
   return undo_desc ? undo_desc : gimp_object_get_name (plug_in);
 }

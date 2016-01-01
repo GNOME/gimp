@@ -336,7 +336,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   entry.icon_name   = gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc));
   entry.label       = label;
   entry.accelerator = NULL;
-  entry.tooltip     = gimp_plug_in_procedure_get_blurb (proc);
+  entry.tooltip     = gimp_procedure_get_blurb (GIMP_PROCEDURE (proc));
   entry.procedure   = GIMP_PROCEDURE (proc);
   entry.help_id     = gimp_plug_in_procedure_get_help_id (proc);
 

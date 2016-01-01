@@ -138,7 +138,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
       if (! proc->prefixes_list) /*  skip URL loaders  */
         {
-          const gchar *label   = gimp_plug_in_procedure_get_label (proc);
+          const gchar *label   = gimp_procedure_get_label (GIMP_PROCEDURE (proc));
           gchar       *help_id = gimp_plug_in_procedure_get_help_id (proc);
           GSList      *list2;
 

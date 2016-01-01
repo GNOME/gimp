@@ -797,7 +797,7 @@ gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
     return;
 
   filter = gtk_file_filter_new ();
-  str    = g_string_new (gimp_plug_in_procedure_get_label (file_proc));
+  str    = g_string_new (gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
 
   /* Take ownership directly so we don't have to mess with a floating
    * ref

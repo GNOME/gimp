@@ -373,7 +373,8 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
     }
 
   gtk_label_set_text (GTK_LABEL (label),
-                      proc ? gimp_plug_in_procedure_get_label (proc) : NULL);
+                      proc ?
+                      gimp_procedure_get_label (GIMP_PROCEDURE (proc)) : NULL);
 }
 
 static void

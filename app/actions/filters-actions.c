@@ -785,8 +785,16 @@ filters_actions_history_changed (Gimp            *gimp,
       gchar       *reshow;
       gboolean     sensitive = FALSE;
 
-      /* FIXME history */
-      label = gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc));
+      label = gimp_procedure_get_label (proc);
+
+      repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
+      reshow = g_strdup_printf (_("R_e-Show \"%s\""), label);
+
+      gimp_action_group_set_action_label (group, "filters-repeat", repeat);
+      gimp_action_group_set_action_label (group, "filters-reshow", reshow);
+
+      g_free (repeat);
+      g_free (reshow);
 
       /*  copy the sensitivity of the plug-in procedure's actual action
        *  instead of calling filters_actions_update() because doing the
@@ -802,19 +810,10 @@ filters_actions_history_changed (Gimp            *gimp,
             sensitive = gtk_action_get_sensitive (actual_action);
         }
 
-      repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
-      reshow = g_strdup_printf (_("R_e-Show \"%s\""), label);
-
-      gimp_action_group_set_action_label (group, "filters-repeat", repeat);
-      gimp_action_group_set_action_label (group, "filters-reshow", reshow);
-
       gimp_action_group_set_action_sensitive (group, "filters-repeat",
                                               sensitive);
       gimp_action_group_set_action_sensitive (group, "filters-reshow",
                                               sensitive);
-
-      g_free (repeat);
-      g_free (reshow);
     }
   else
     {
@@ -848,7 +847,7 @@ filters_actions_history_changed (Gimp            *gimp,
         }
       else
         {
-          label = gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc));
+          label = gimp_procedure_get_label (proc);
         }
 
       /*  see comment above  */
@@ -867,7 +866,7 @@ filters_actions_history_changed (Gimp            *gimp,
                     "procedure", proc,
                     "label",     label,
                     "icon-name", gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc)),
-                    "tooltip",   gimp_plug_in_procedure_get_blurb (GIMP_PLUG_IN_PROCEDURE (proc)),
+                    "tooltip",   gimp_procedure_get_blurb (proc),
                     NULL);
     }
 

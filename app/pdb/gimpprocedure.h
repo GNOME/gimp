@@ -69,6 +69,9 @@ struct _GimpProcedureClass
 {
   GimpViewableClass parent_class;
 
+  const gchar    * (* get_label)     (GimpProcedure   *procedure);
+  const gchar    * (* get_blurb)     (GimpProcedure   *procedure);
+
   GimpValueArray * (* execute)       (GimpProcedure   *procedure,
                                       Gimp            *gimp,
                                       GimpContext     *context,
@@ -112,6 +115,9 @@ void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
                                                     gchar            *copyright,
                                                     gchar            *date,
                                                     gchar            *deprecated);
+
+const gchar    * gimp_procedure_get_label          (GimpProcedure    *procedure);
+const gchar    * gimp_procedure_get_blurb          (GimpProcedure    *procedure);
 
 void             gimp_procedure_add_argument       (GimpProcedure    *procedure,
                                                     GParamSpec       *pspec);

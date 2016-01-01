@@ -61,6 +61,8 @@ static gint64   gimp_plug_in_procedure_get_memsize     (GimpObject     *object,
 static gchar  * gimp_plug_in_procedure_get_description (GimpViewable   *viewable,
                                                         gchar         **tooltip);
 
+static const gchar  * gimp_plug_in_procedure_get_label (GimpProcedure  *procedure);
+static const gchar  * gimp_plug_in_procedure_get_blurb (GimpProcedure  *procedure);
 static GimpValueArray * gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
                                                         Gimp           *gimp,
                                                         GimpContext    *context,
@@ -110,6 +112,8 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
   viewable_class->default_icon_name = "system-run";
   viewable_class->get_description   = gimp_plug_in_procedure_get_description;
 
+  proc_class->get_label             = gimp_plug_in_procedure_get_label;
+  proc_class->get_blurb             = gimp_plug_in_procedure_get_blurb;
   proc_class->execute               = gimp_plug_in_procedure_execute;
   proc_class->execute_async         = gimp_plug_in_procedure_execute_async;
 
@@ -205,12 +209,68 @@ static gchar *
 gimp_plug_in_procedure_get_description (GimpViewable  *viewable,
                                         gchar        **tooltip)
 {
-  GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (viewable);
+  GimpProcedure *procedure = GIMP_PROCEDURE (viewable);
 
   if (tooltip)
-    *tooltip = g_strdup (gimp_plug_in_procedure_get_blurb (proc));
+    *tooltip = g_strdup (gimp_procedure_get_blurb (procedure));
 
-  return g_strdup (gimp_plug_in_procedure_get_label (proc));
+  return g_strdup (gimp_procedure_get_label (procedure));
+}
+
+static const gchar *
+gimp_plug_in_procedure_get_label (GimpProcedure *procedure)
+{
+  GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+  const gchar         *path;
+  gchar               *stripped;
+  gchar               *ellipsis;
+  gchar               *label;
+
+  if (proc->label)
+    return proc->label;
+
+  if (proc->menu_label)
+    path = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                     proc->menu_label);
+  else if (proc->menu_paths)
+    path = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                     proc->menu_paths->data);
+  else
+    return NULL;
+
+  stripped = gimp_strip_uline (path);
+
+  if (proc->menu_label)
+    label = g_strdup (stripped);
+  else
+    label = g_path_get_basename (stripped);
+
+  g_free (stripped);
+
+  ellipsis = strstr (label, "...");
+
+  if (! ellipsis)
+    ellipsis = strstr (label, "\342\200\246" /* U+2026 HORIZONTAL ELLIPSIS */);
+
+  if (ellipsis && ellipsis == (label + strlen (label) - 3))
+    *ellipsis = '\0';
+
+  proc->label = label;
+
+  return proc->label;
+}
+
+static const gchar *
+gimp_plug_in_procedure_get_blurb (GimpProcedure *procedure)
+{
+  GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+
+  /*  do not to pass the empty string to gettext()  */
+  if (procedure->blurb && strlen (procedure->blurb))
+    return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                     procedure->blurb);
+
+  return NULL;
 }
 
 static GimpValueArray *
@@ -539,67 +599,6 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   g_free (basename);
 
   return FALSE;
-}
-
-const gchar *
-gimp_plug_in_procedure_get_label (GimpPlugInProcedure *proc)
-{
-  const gchar *path;
-  gchar       *stripped;
-  gchar       *ellipsis;
-  gchar       *label;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
-
-  if (proc->label)
-    return proc->label;
-
-  if (proc->menu_label)
-    path = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     proc->menu_label);
-  else if (proc->menu_paths)
-    path = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     proc->menu_paths->data);
-  else
-    return NULL;
-
-  stripped = gimp_strip_uline (path);
-
-  if (proc->menu_label)
-    label = g_strdup (stripped);
-  else
-    label = g_path_get_basename (stripped);
-
-  g_free (stripped);
-
-  ellipsis = strstr (label, "...");
-
-  if (! ellipsis)
-    ellipsis = strstr (label, "\342\200\246" /* U+2026 HORIZONTAL ELLIPSIS */);
-
-  if (ellipsis && ellipsis == (label + strlen (label) - 3))
-    *ellipsis = '\0';
-
-  proc->label = label;
-
-  return proc->label;
-}
-
-const gchar *
-gimp_plug_in_procedure_get_blurb (const GimpPlugInProcedure *proc)
-{
-  GimpProcedure *procedure;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
-
-  procedure = GIMP_PROCEDURE (proc);
-
-  /*  do not to pass the empty string to gettext()  */
-  if (procedure->blurb && strlen (procedure->blurb))
-    return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     procedure->blurb);
-
-  return NULL;
 }
 
 void
@@ -1022,7 +1021,7 @@ gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *proc,
           gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                         _("Calling error for '%s':\n"
                           "%s"),
-                        gimp_plug_in_procedure_get_label (proc),
+                        gimp_procedure_get_label (GIMP_PROCEDURE (proc)),
                         g_value_get_string (gimp_value_array_index (return_vals, 1)));
         }
       break;
@@ -1034,7 +1033,7 @@ gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *proc,
           gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                         _("Execution error for '%s':\n"
                           "%s"),
-                        gimp_plug_in_procedure_get_label (proc),
+                        gimp_procedure_get_label (GIMP_PROCEDURE (proc)),
                         g_value_get_string (gimp_value_array_index (return_vals, 1)));
         }
       break;

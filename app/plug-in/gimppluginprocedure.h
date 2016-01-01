@@ -101,10 +101,6 @@ gboolean      gimp_plug_in_procedure_add_menu_path   (GimpPlugInProcedure       
                                                       const gchar               *menu_path,
                                                       GError                   **error);
 
-const gchar * gimp_plug_in_procedure_get_label       (GimpPlugInProcedure       *proc);
-
-const gchar * gimp_plug_in_procedure_get_blurb       (const GimpPlugInProcedure *proc);
-
 void          gimp_plug_in_procedure_set_icon        (GimpPlugInProcedure       *proc,
                                                       GimpIconType               type,
                                                       const guint8              *data,
