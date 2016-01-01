@@ -19,7 +19,7 @@
 #define __GIMP_PROCEDURE_H__
 
 
-#include "core/gimpobject.h"
+#include "core/gimpviewable.h"
 
 
 typedef GimpValueArray * (* GimpMarshalFunc) (GimpProcedure         *procedure,
@@ -42,7 +42,7 @@ typedef struct _GimpProcedureClass GimpProcedureClass;
 
 struct _GimpProcedure
 {
-  GimpObject        parent_instance;
+  GimpViewable      parent_instance;
 
   GimpPDBProcType   proc_type;      /* Type of procedure              */
 
@@ -67,7 +67,7 @@ struct _GimpProcedure
 
 struct _GimpProcedureClass
 {
-  GimpObjectClass parent_class;
+  GimpViewableClass parent_class;
 
   GimpValueArray * (* execute)       (GimpProcedure   *procedure,
                                       Gimp            *gimp,

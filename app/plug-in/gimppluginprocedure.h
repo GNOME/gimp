@@ -102,14 +102,17 @@ gboolean      gimp_plug_in_procedure_add_menu_path   (GimpPlugInProcedure       
                                                       GError                   **error);
 
 const gchar * gimp_plug_in_procedure_get_label       (GimpPlugInProcedure       *proc);
+
 const gchar * gimp_plug_in_procedure_get_blurb       (const GimpPlugInProcedure *proc);
 
 void          gimp_plug_in_procedure_set_icon        (GimpPlugInProcedure       *proc,
                                                       GimpIconType               type,
                                                       const guint8              *data,
                                                       gint                       data_length);
-const gchar * gimp_plug_in_procedure_get_icon_name   (const GimpPlugInProcedure *proc);
-GdkPixbuf   * gimp_plug_in_procedure_get_pixbuf      (const GimpPlugInProcedure *proc);
+void          gimp_plug_in_procedure_take_icon       (GimpPlugInProcedure       *proc,
+                                                      GimpIconType               type,
+                                                      guint8                    *data,
+                                                      gint                       data_length);
 
 gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc);
 

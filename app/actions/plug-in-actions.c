@@ -333,7 +333,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
     }
 
   entry.name        = gimp_object_get_name (proc);
-  entry.icon_name   = gimp_plug_in_procedure_get_icon_name (proc);
+  entry.icon_name   = gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc));
   entry.label       = label;
   entry.accelerator = NULL;
   entry.tooltip     = gimp_plug_in_procedure_get_blurb (proc);

@@ -21,12 +21,13 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <gegl.h>
 
 #include "widgets-types.h"
 
 #include "core/gimpmarshal.h"
 
-#include "plug-in/gimppluginprocedure.h" /* FIXME history */
+#include "pdb/gimpprocedure.h"
 
 #include "gimpprocedureaction.h"
 
@@ -52,7 +53,7 @@ static void   gimp_procedure_action_set_property  (GObject      *object,
 static void   gimp_procedure_action_get_property  (GObject      *object,
                                                    guint         prop_id,
                                                    GValue       *value,
-                                                 GParamSpec   *pspec);
+                                                   GParamSpec   *pspec);
 
 static void   gimp_procedure_action_activate      (GtkAction    *action);
 static void   gimp_procedure_action_connect_proxy (GtkAction    *action,
@@ -184,8 +185,9 @@ gimp_procedure_action_connect_proxy (GtkAction *action,
     {
       GdkPixbuf *pixbuf;
 
-      /* FIXME history */
-      pixbuf = gimp_plug_in_procedure_get_pixbuf (GIMP_PLUG_IN_PROCEDURE (procedure_action->procedure));
+      g_object_get (procedure_action->procedure,
+                    "icon-pixbuf", &pixbuf,
+                    NULL);
 
       if (pixbuf)
         {

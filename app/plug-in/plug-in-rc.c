@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
@@ -558,9 +559,8 @@ plug_in_icon_deserialize (GScanner            *scanner,
       break;
     }
 
-  proc->icon_type        = icon_type;
-  proc->icon_data_length = icon_data_length;
-  proc->icon_data        = icon_data;
+  gimp_plug_in_procedure_take_icon (proc, icon_type,
+                                    icon_data, icon_data_length);
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;

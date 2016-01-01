@@ -865,7 +865,7 @@ filters_actions_history_changed (Gimp            *gimp,
                     "sensitive", sensitive,
                     "procedure", proc,
                     "label",     label,
-                    "icon-name", gimp_plug_in_procedure_get_icon_name (GIMP_PLUG_IN_PROCEDURE (proc)),
+                    "icon-name", gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc)),
                     "tooltip",   gimp_plug_in_procedure_get_blurb (GIMP_PLUG_IN_PROCEDURE (proc)),
                     NULL);
     }

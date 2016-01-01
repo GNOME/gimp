@@ -53,25 +53,28 @@ enum
 };
 
 
-static void             gimp_plug_in_procedure_finalize    (GObject        *object);
+static void     gimp_plug_in_procedure_finalize        (GObject        *object);
 
-static gint64           gimp_plug_in_procedure_get_memsize (GimpObject     *object,
-                                                            gint64         *gui_size);
+static gint64   gimp_plug_in_procedure_get_memsize     (GimpObject     *object,
+                                                        gint64         *gui_size);
 
-static GimpValueArray * gimp_plug_in_procedure_execute     (GimpProcedure  *procedure,
-                                                            Gimp           *gimp,
-                                                            GimpContext    *context,
-                                                            GimpProgress   *progress,
-                                                            GimpValueArray *args,
-                                                            GError        **error);
-static void          gimp_plug_in_procedure_execute_async  (GimpProcedure  *procedure,
-                                                            Gimp           *gimp,
-                                                            GimpContext    *context,
-                                                            GimpProgress   *progress,
-                                                            GimpValueArray *args,
-                                                            GimpObject     *display);
+static gchar  * gimp_plug_in_procedure_get_description (GimpViewable   *viewable,
+                                                        gchar         **tooltip);
 
-GFile * gimp_plug_in_procedure_real_get_file (const GimpPlugInProcedure *procedure);
+static GimpValueArray * gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
+                                                        Gimp           *gimp,
+                                                        GimpContext    *context,
+                                                        GimpProgress   *progress,
+                                                        GimpValueArray *args,
+                                                        GError        **error);
+static void     gimp_plug_in_procedure_execute_async   (GimpProcedure  *procedure,
+                                                        Gimp           *gimp,
+                                                        GimpContext    *context,
+                                                        GimpProgress   *progress,
+                                                        GimpValueArray *args,
+                                                        GimpObject     *display);
+
+static GFile  * gimp_plug_in_procedure_real_get_file   (const GimpPlugInProcedure *procedure);
 
 
 G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
@@ -87,6 +90,7 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
 {
   GObjectClass       *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass  *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpProcedureClass *proc_class        = GIMP_PROCEDURE_CLASS (klass);
 
   gimp_plug_in_procedure_signals[MENU_PATH_ADDED] =
@@ -99,15 +103,18 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
-  object_class->finalize         = gimp_plug_in_procedure_finalize;
+  object_class->finalize            = gimp_plug_in_procedure_finalize;
 
-  gimp_object_class->get_memsize = gimp_plug_in_procedure_get_memsize;
+  gimp_object_class->get_memsize    = gimp_plug_in_procedure_get_memsize;
 
-  proc_class->execute            = gimp_plug_in_procedure_execute;
-  proc_class->execute_async      = gimp_plug_in_procedure_execute_async;
+  viewable_class->default_icon_name = "system-run";
+  viewable_class->get_description   = gimp_plug_in_procedure_get_description;
 
-  klass->get_file                = gimp_plug_in_procedure_real_get_file;
-  klass->menu_path_added         = NULL;
+  proc_class->execute               = gimp_plug_in_procedure_execute;
+  proc_class->execute_async         = gimp_plug_in_procedure_execute_async;
+
+  klass->get_file                   = gimp_plug_in_procedure_real_get_file;
+  klass->menu_path_added            = NULL;
 }
 
 static void
@@ -192,6 +199,18 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static gchar *
+gimp_plug_in_procedure_get_description (GimpViewable  *viewable,
+                                        gchar        **tooltip)
+{
+  GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (viewable);
+
+  if (tooltip)
+    *tooltip = g_strdup (gimp_plug_in_procedure_get_blurb (proc));
+
+  return g_strdup (gimp_plug_in_procedure_get_label (proc));
 }
 
 static GimpValueArray *
@@ -589,9 +608,43 @@ gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
                                  const guint8        *icon_data,
                                  gint                 icon_data_length)
 {
+  guint8 *data_copy = NULL;
+
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-  g_return_if_fail (icon_type == -1 || icon_data != NULL);
-  g_return_if_fail (icon_type == -1 || icon_data_length > 0);
+
+  switch (proc->icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+      data_copy = (guint8 *) g_strdup ((gchar *) icon_data);
+      break;
+
+    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+      data_copy = g_memdup (icon_data, icon_data_length);
+      break;
+
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      data_copy = (guint8 *) g_strdup ((gchar *) icon_data);
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
+
+  gimp_plug_in_procedure_take_icon (proc, icon_type,
+                                    data_copy, icon_data_length);
+}
+
+void
+gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
+                                  GimpIconType         icon_type,
+                                  guint8              *icon_data,
+                                  gint                 icon_data_length)
+{
+  const gchar *icon_name   = NULL;
+  GdkPixbuf   *icon_pixbuf = NULL;
+  GError      *error       = NULL;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   if (proc->icon_data)
     {
@@ -605,64 +658,40 @@ gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
   switch (proc->icon_type)
     {
     case GIMP_ICON_TYPE_ICON_NAME:
-    case GIMP_ICON_TYPE_IMAGE_FILE:
       proc->icon_data_length = -1;
-      proc->icon_data        = (guint8 *) g_strdup ((gchar *) icon_data);
+      proc->icon_data        = icon_data;
+
+      icon_name = (const gchar *) proc->icon_data;
       break;
 
     case GIMP_ICON_TYPE_INLINE_PIXBUF:
       proc->icon_data_length = icon_data_length;
-      proc->icon_data        = g_memdup (icon_data, icon_data_length);
-      break;
-    }
-}
+      proc->icon_data        = icon_data;
 
-const gchar *
-gimp_plug_in_procedure_get_icon_name (const GimpPlugInProcedure *proc)
-{
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
-
-  switch (proc->icon_type)
-    {
-    case GIMP_ICON_TYPE_ICON_NAME:
-      return (gchar *) proc->icon_data;
-
-    default:
-      return NULL;
-    }
-}
-
-GdkPixbuf *
-gimp_plug_in_procedure_get_pixbuf (const GimpPlugInProcedure *proc)
-{
-  GdkPixbuf *pixbuf = NULL;
-  GError    *error  = NULL;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
-
-  switch (proc->icon_type)
-    {
-    case GIMP_ICON_TYPE_INLINE_PIXBUF:
-      pixbuf = gdk_pixbuf_new_from_inline (proc->icon_data_length,
-                                           proc->icon_data, TRUE, &error);
+      icon_pixbuf = gdk_pixbuf_new_from_inline (proc->icon_data_length,
+                                                proc->icon_data, TRUE, &error);
       break;
 
     case GIMP_ICON_TYPE_IMAGE_FILE:
-      pixbuf = gdk_pixbuf_new_from_file ((gchar *) proc->icon_data,
-                                         &error);
-      break;
+      proc->icon_data_length = -1;
+      proc->icon_data        = icon_data;
 
-    default:
+      icon_pixbuf = gdk_pixbuf_new_from_file ((gchar *) proc->icon_data,
+                                              &error);
       break;
     }
 
-  if (! pixbuf && error)
+  if (! icon_pixbuf && error)
     {
       g_printerr ("%s\n", error->message);
       g_clear_error (&error);
     }
 
-  return pixbuf;
+  gimp_viewable_set_icon_name (GIMP_VIEWABLE (proc), icon_name);
+  g_object_set (proc, "icon-pixbuf", icon_pixbuf, NULL);
+
+  if (icon_pixbuf)
+    g_object_unref (icon_pixbuf);
 }
 
 gchar *

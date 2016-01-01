@@ -39,6 +39,8 @@
 
 #ifndef GIMP_CONSOLE_COMPILATION
 #include <gdk/gdk.h>
+#else
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #endif
 
 #include <babl/babl.h>
