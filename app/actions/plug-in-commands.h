@@ -28,11 +28,6 @@ void   plug_in_reset_all_cmd_callback (GtkAction     *action,
 
 
 /* FIXME history */
-void  plug_in_procedure_execute     (GimpProcedure   *procedure,
-                                     Gimp            *gimp,
-                                     GimpDisplay     *display,
-                                     GimpValueArray  *args,
-                                     gint             n_args);
 gint  plug_in_collect_display_args  (GtkAction       *action,
                                      GimpDisplay     *display,
                                      GParamSpec     **pspecs,

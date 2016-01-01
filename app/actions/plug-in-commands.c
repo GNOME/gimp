@@ -38,10 +38,10 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpprocedure.h"
+
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-data.h"
-
-#include "pdb/gimpprocedure.h"
 
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpcontainerview.h"
@@ -57,46 +57,16 @@
 
 #include "actions.h"
 #include "plug-in-commands.h"
+#include "procedure-commands.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-#if 0
-static void  plug_in_procedure_execute     (GimpProcedure       *procedure,
-                                            Gimp                *gimp,
-                                            GimpDisplay         *display,
-                                            GimpValueArray      *args,
-                                            gint                 n_args);
-#endif
-
-static gint  plug_in_collect_data_args     (GtkAction       *action,
-                                            GimpObject      *object,
-                                            GParamSpec     **pspecs,
-                                            GimpValueArray  *args,
-                                            gint             n_args);
-static gint  plug_in_collect_image_args    (GtkAction       *action,
-                                            GimpImage       *image,
-                                            GParamSpec     **pspecs,
-                                            GimpValueArray  *args,
-                                            gint             n_args);
-static gint  plug_in_collect_item_args     (GtkAction       *action,
-                                            GimpImage       *image,
-                                            GimpItem        *item,
-                                            GParamSpec     **pspecs,
-                                            GimpValueArray  *args,
-                                            gint             n_args);
-#if 0
-static gint  plug_in_collect_display_args  (GtkAction       *action,
-                                            GimpDisplay     *display,
-                                            GParamSpec     **pspecs,
-                                            GimpValueArray  *args,
-                                            gint             n_args);
-#endif
-static void  plug_in_reset_all_response    (GtkWidget       *dialog,
-                                            gint             response_id,
-                                            Gimp            *gimp);
+static void   plug_in_reset_all_response (GtkWidget *dialog,
+                                          gint       response_id,
+                                          Gimp      *gimp);
 
 
 /*  public functions  */
@@ -107,17 +77,9 @@ plug_in_run_cmd_callback (GtkAction     *action,
                           gpointer       data)
 {
   Gimp           *gimp;
-  GimpValueArray *args;
-  gint            n_args    = 0;
-  GimpDisplay    *display   = NULL;
+  GimpValueArray *args    = NULL;
+  GimpDisplay    *display = NULL;
   return_if_no_gimp (gimp, data);
-
-  args = gimp_procedure_get_arguments (procedure);
-
-  /* initialize the first argument  */
-  g_value_set_int (gimp_value_array_index (args, n_args),
-                   GIMP_RUN_INTERACTIVE);
-  n_args++;
 
   switch (procedure->proc_type)
     {
@@ -141,9 +103,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
           object = gimp_context_get_by_type (context,
                                              gimp_container_get_children_type (container));
 
-          n_args = plug_in_collect_data_args (action, object,
-                                              procedure->args,
-                                              args, n_args);
+          args = procedure_commands_get_data_args (procedure, object);
         }
       else if (GIMP_IS_IMAGE_EDITOR (data))
         {
@@ -152,9 +112,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
           image = gimp_image_editor_get_image (editor);
 
-          n_args = plug_in_collect_image_args (action, image,
-                                               procedure->args,
-                                               args, n_args);
+          args = procedure_commands_get_image_args (procedure, image);
         }
       else if (GIMP_IS_ITEM_TREE_VIEW (data))
         {
@@ -169,31 +127,52 @@ plug_in_run_cmd_callback (GtkAction     *action,
           else
             item = NULL;
 
-          n_args = plug_in_collect_item_args (action, image, item,
-                                              procedure->args,
-                                              args, n_args);
+          args = procedure_commands_get_item_args (procedure, image, item);
         }
       else
         {
           display = action_data_get_display (data);
 
-          n_args = plug_in_collect_display_args (action,
-                                                 display,
-                                                 procedure->args,
-                                                 args, n_args);
+          args = procedure_commands_get_display_args (procedure, display);
         }
       break;
 
     case GIMP_INTERNAL:
       g_warning ("Unhandled procedure type.");
-      n_args = -1;
       break;
     }
 
-  if (n_args >= 1)
-    plug_in_procedure_execute (procedure, gimp, display, args, n_args);
+  if (args)
+    {
+      GError *error = NULL;
 
-  gimp_value_array_unref (args);
+      g_value_set_int (gimp_value_array_index (args, 0),
+                       GIMP_RUN_INTERACTIVE);
+
+      gimp_procedure_execute_async (procedure, gimp,
+                                    gimp_get_user_context (gimp),
+                                    GIMP_PROGRESS (display), args,
+                                    GIMP_OBJECT (display), &error);
+
+      if (error)
+        {
+          gimp_message_literal (gimp,
+                                G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                                error->message);
+          g_error_free (error);
+        }
+      else
+        {
+          /* remember only image plug-ins */
+          if (procedure->num_args >= 2 &&
+              GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
+            {
+              gimp_filter_history_add (gimp, procedure);
+            }
+        }
+
+      gimp_value_array_unref (args);
+    }
 }
 
 void
@@ -227,193 +206,6 @@ plug_in_reset_all_cmd_callback (GtkAction *action,
                                        "filters to default values?"));
 
   gtk_widget_show (dialog);
-}
-
-
-/*  private functions  */
-
-/* FIXME history */
-void
-plug_in_procedure_execute (GimpProcedure  *procedure,
-                           Gimp           *gimp,
-                           GimpDisplay    *display,
-                           GimpValueArray *args,
-                           gint            n_args)
-{
-  GError *error = NULL;
-
-  gimp_value_array_truncate (args, n_args);
-
-  /* run the plug-in procedure */
-  gimp_procedure_execute_async (procedure, gimp,
-                                gimp_get_user_context (gimp),
-                                GIMP_PROGRESS (display), args,
-                                GIMP_OBJECT (display), &error);
-
-  if (error)
-    {
-      gimp_message_literal (gimp,
-                            G_OBJECT (display), GIMP_MESSAGE_ERROR,
-                            error->message);
-      g_error_free (error);
-    }
-  else
-    {
-      /* remember only image plug-ins */
-      if (procedure->num_args  >= 2  &&
-          GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
-        {
-          gimp_filter_history_add (gimp, procedure);
-        }
-    }
-}
-
-static gint
-plug_in_collect_data_args (GtkAction       *action,
-                           GimpObject      *object,
-                           GParamSpec     **pspecs,
-                           GimpValueArray  *args,
-                           gint             n_args)
-{
-  if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_STRING (pspecs[n_args]))
-    {
-      if (object)
-        {
-          g_value_set_string (gimp_value_array_index (args, n_args),
-                              gimp_object_get_name (object));
-          n_args++;
-        }
-      else
-        {
-          g_warning ("Uh-oh, no active data object for the plug-in!");
-          return -1;
-        }
-    }
-
-  return n_args;
-}
-
-static gint
-plug_in_collect_image_args (GtkAction       *action,
-                            GimpImage       *image,
-                            GParamSpec     **pspecs,
-                            GimpValueArray  *args,
-                            gint             n_args)
-{
-  if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (pspecs[n_args]))
-    {
-      if (image)
-        {
-          gimp_value_set_image (gimp_value_array_index (args, n_args), image);
-          n_args++;
-        }
-      else
-        {
-          g_warning ("Uh-oh, no active image for the plug-in!");
-          return -1;
-        }
-    }
-
-  return n_args;
-}
-
-static gint
-plug_in_collect_item_args (GtkAction       *action,
-                           GimpImage       *image,
-                           GimpItem        *item,
-                           GParamSpec     **pspecs,
-                           GimpValueArray  *args,
-                           gint             n_args)
-{
-  if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (pspecs[n_args]))
-    {
-      if (image)
-        {
-          gimp_value_set_image (gimp_value_array_index (args, n_args), image);
-          n_args++;
-
-          if (gimp_value_array_length (args) > n_args &&
-              GIMP_IS_PARAM_SPEC_ITEM_ID (pspecs[n_args]))
-            {
-              if (item &&
-                  g_type_is_a (G_TYPE_FROM_INSTANCE (item),
-                               GIMP_PARAM_SPEC_ITEM_ID (pspecs[n_args])->item_type))
-                {
-                  gimp_value_set_item (gimp_value_array_index (args, n_args),
-                                       item);
-                  n_args++;
-                }
-              else
-                {
-                  g_warning ("Uh-oh, no active item for the plug-in!");
-                  return -1;
-                }
-            }
-        }
-    }
-
-  return n_args;
-}
-
-/* FIXME history */
-gint
-plug_in_collect_display_args (GtkAction       *action,
-                              GimpDisplay     *display,
-                              GParamSpec     **pspecs,
-                              GimpValueArray  *args,
-                              gint             n_args)
-{
-  if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_DISPLAY_ID (pspecs[n_args]))
-    {
-      if (display)
-        {
-          gimp_value_set_display (gimp_value_array_index (args, n_args),
-                                  GIMP_OBJECT (display));
-          n_args++;
-        }
-      else
-        {
-          g_warning ("Uh-oh, no active display for the plug-in!");
-          return -1;
-        }
-    }
-
-  if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (pspecs[n_args]))
-    {
-      GimpImage *image = display ? gimp_display_get_image (display) : NULL;
-
-      if (image)
-        {
-          gimp_value_set_image (gimp_value_array_index (args, n_args),
-                                image);
-          n_args++;
-
-          if (gimp_value_array_length (args) > n_args &&
-              GIMP_IS_PARAM_SPEC_DRAWABLE_ID (pspecs[n_args]))
-            {
-              GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-
-              if (drawable)
-                {
-                  gimp_value_set_drawable (gimp_value_array_index (args, n_args),
-                                           drawable);
-                  n_args++;
-                }
-              else
-                {
-                  g_warning ("Uh-oh, no active drawable for the plug-in!");
-                  return -1;
-                }
-            }
-        }
-    }
-
-  return n_args;
 }
 
 static void

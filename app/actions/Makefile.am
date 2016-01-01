@@ -133,6 +133,8 @@ libappactions_a_SOURCES = \
 	plug-in-actions.h		\
 	plug-in-commands.c		\
 	plug-in-commands.h		\
+	procedure-commands.c		\
+	procedure-commands.h		\
 	quick-mask-actions.c		\
 	quick-mask-actions.h		\
 	quick-mask-commands.c		\

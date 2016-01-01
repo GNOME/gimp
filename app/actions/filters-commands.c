@@ -28,16 +28,17 @@
 #include "core/gimp-filter-history.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
-#include "pdb/gimpprocedure.h" /* FIXME history */
+#include "pdb/gimpprocedure.h"
 
 #include "tools/gimpoperationtool.h"
 #include "tools/tool_manager.h"
 
 #include "actions.h"
 #include "filters-commands.h"
-#include "plug-in-commands.h" /* FIXME history */
+#include "procedure-commands.h"
 
 #include "gimp-intl.h"
 
@@ -117,19 +118,34 @@ filters_repeat_cmd_callback (GtkAction *action,
   if (procedure)
     {
       GimpValueArray *args;
-      gint            n_args;
 
-      args = gimp_procedure_get_arguments (procedure);
+      args = procedure_commands_get_display_args (procedure, display);
 
-      g_value_set_int (gimp_value_array_index (args, 0), run_mode);
+      if (args)
+        {
+          GError *error = NULL;
 
-      n_args = plug_in_collect_display_args (action, display,
-                                             procedure->args,
-                                             args, 1);
+          g_value_set_int (gimp_value_array_index (args, 0), run_mode);
 
-      plug_in_procedure_execute (procedure, gimp, display, args, n_args);
+          gimp_procedure_execute_async (procedure, gimp,
+                                        gimp_get_user_context (gimp),
+                                        GIMP_PROGRESS (display), args,
+                                        GIMP_OBJECT (display), &error);
 
-      gimp_value_array_unref (args);
+          if (error)
+            {
+              gimp_message_literal (gimp,
+                                    G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                                    error->message);
+              g_clear_error (&error);
+            }
+          else
+            {
+              gimp_filter_history_add (gimp, procedure);
+            }
+
+          gimp_value_array_unref (args);
+        }
     }
 }
 
@@ -141,19 +157,34 @@ filters_history_cmd_callback (GtkAction     *action,
   Gimp           *gimp;
   GimpDisplay    *display;
   GimpValueArray *args;
-  gint            n_args;
   return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
 
-  args = gimp_procedure_get_arguments (procedure);
+  args = procedure_commands_get_display_args (procedure, display);
 
-  g_value_set_int (gimp_value_array_index (args, 0), GIMP_RUN_INTERACTIVE);
+  if (args)
+    {
+      GError *error = NULL;
 
-  n_args = plug_in_collect_display_args (action, display,
-                                         procedure->args,
-                                         args, 1);
+      g_value_set_int (gimp_value_array_index (args, 0), GIMP_RUN_INTERACTIVE);
 
-  plug_in_procedure_execute (procedure, gimp, display, args, n_args);
+      gimp_procedure_execute_async (procedure, gimp,
+                                    gimp_get_user_context (gimp),
+                                    GIMP_PROGRESS (display), args,
+                                    GIMP_OBJECT (display), &error);
 
-  gimp_value_array_unref (args);
+      if (error)
+        {
+          gimp_message_literal (gimp,
+                                G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                                error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          gimp_filter_history_add (gimp, procedure);
+        }
+
+      gimp_value_array_unref (args);
+    }
 }
