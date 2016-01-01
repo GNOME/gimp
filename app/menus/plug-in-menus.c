@@ -323,6 +323,11 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
           plug_in_menus_add_proc (manager, "/dynamics-popup",
                                   plug_in_proc, menu_path);
         }
+      else if (! strcmp (manager->name, "<MyPaintBrushes>"))
+        {
+          plug_in_menus_add_proc (manager, "/mypaint-brushes-popup",
+                                  plug_in_proc, menu_path);
+        }
       else if (! strcmp (manager->name, "<Gradients>"))
         {
           plug_in_menus_add_proc (manager, "/gradients-popup",
