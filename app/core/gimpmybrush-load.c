@@ -107,13 +107,6 @@ gimp_mybrush_load (GimpContext   *context,
                                              48, 48, error);
   g_free (preview_filename);
 
-  if (! pixbuf)
-    {
-      mypaint_brush_unref (mypaint_brush);
-      g_free (buffer);
-      return NULL;
-    }
-
   basename = g_path_get_basename (gimp_file_get_utf8_name (file));
 
   basename[strlen (basename) - 4] = '\0';
@@ -128,7 +121,9 @@ gimp_mybrush_load (GimpContext   *context,
                         NULL);
 
   g_free (basename);
-  g_object_unref (pixbuf);
+
+  if (pixbuf)
+    g_object_unref (pixbuf);
 
   brush->priv->brush_json = (gchar *) buffer;
 
