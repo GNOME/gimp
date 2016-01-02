@@ -86,6 +86,8 @@ gdouble                gimp_context_get_brush_force            (void);
 gboolean               gimp_context_set_brush_force            (gdouble                   force);
 gchar*                 gimp_context_get_dynamics               (void);
 gboolean               gimp_context_set_dynamics               (const gchar              *name);
+gchar*                 gimp_context_get_mypaint_brush          (void);
+gboolean               gimp_context_set_mypaint_brush          (const gchar              *name);
 gchar*                 gimp_context_get_pattern                (void);
 gboolean               gimp_context_set_pattern                (const gchar              *name);
 gchar*                 gimp_context_get_gradient               (void);

@@ -154,6 +154,41 @@ gimp_pdb_get_dynamics (Gimp         *gimp,
   return dynamics;
 }
 
+GimpMybrush *
+gimp_pdb_get_mybrush (Gimp         *gimp,
+                      const gchar  *name,
+                      gboolean      writable,
+                      GError      **error)
+{
+  GimpMybrush *brush;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (! name || ! strlen (name))
+    {
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+			   _("Invalid empty MyPaint brush name"));
+      return NULL;
+    }
+
+  brush = (GimpMybrush *) gimp_pdb_get_data_factory_item (gimp->mybrush_factory, name);
+
+  if (! brush)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("MyPaint brush '%s' not found"), name);
+    }
+  else if (writable && ! gimp_data_is_writable (GIMP_DATA (brush)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("MyPaint brush '%s' is not editable"), name);
+      return NULL;
+    }
+
+  return brush;
+}
+
 GimpPattern *
 gimp_pdb_get_pattern (Gimp         *gimp,
                       const gchar  *name,

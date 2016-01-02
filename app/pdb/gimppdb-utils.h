@@ -31,6 +31,10 @@ GimpDynamics  * gimp_pdb_get_dynamics           (Gimp               *gimp,
                                                  const gchar        *name,
                                                  gboolean            writable,
                                                  GError            **error);
+GimpMybrush   * gimp_pdb_get_mybrush            (Gimp               *gimp,
+                                                 const gchar        *name,
+                                                 gboolean            writable,
+                                                 GError            **error);
 GimpPattern   * gimp_pdb_get_pattern            (Gimp               *gimp,
                                                  const gchar        *name,
                                                  GError            **error);

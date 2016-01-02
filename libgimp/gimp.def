@@ -99,6 +99,7 @@ EXPORTS
 	gimp_context_get_line_miter_limit
 	gimp_context_get_line_width
 	gimp_context_get_line_width_unit
+	gimp_context_get_mypaint_brush
 	gimp_context_get_opacity
 	gimp_context_get_paint_method
 	gimp_context_get_paint_mode
@@ -152,6 +153,7 @@ EXPORTS
 	gimp_context_set_line_miter_limit
 	gimp_context_set_line_width
 	gimp_context_set_line_width_unit
+	gimp_context_set_mypaint_brush
 	gimp_context_set_opacity
 	gimp_context_set_paint_method
 	gimp_context_set_paint_mode

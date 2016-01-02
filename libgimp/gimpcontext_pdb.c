@@ -1699,6 +1699,73 @@ gimp_context_set_dynamics (const gchar *name)
 }
 
 /**
+ * gimp_context_get_mypaint_brush:
+ *
+ * Retrieve the currently active MyPaint brush.
+ *
+ * This procedure returns the name of the currently active MyPaint
+ * brush.
+ *
+ * Returns: The name of the active MyPaint brush.
+ *
+ * Since: 2.10
+ **/
+gchar *
+gimp_context_get_mypaint_brush (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-mypaint-brush",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_context_set_mypaint_brush:
+ * @name: The name of the MyPaint brush.
+ *
+ * Set the specified MyPaint brush as the active MyPaint brush.
+ *
+ * This procedure allows the active MyPaint brush to be set by
+ * specifying its name. The name is simply a string which corresponds
+ * to one of the names of the installed MyPaint brushes. If there is no
+ * matching MyPaint brush found, this procedure will return an error.
+ * Otherwise, the specified MyPaint brush becomes active and will be
+ * used in all subsequent MyPaint paint operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_mypaint_brush (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-mypaint-brush",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_pattern:
  *
  * Retrieve the currently active pattern.
