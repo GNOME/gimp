@@ -52,6 +52,7 @@ gimp_mybrush_load (GimpContext   *context,
   gchar        *path;
   gchar        *basename;
   gchar        *preview_filename;
+  gchar        *p;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
@@ -113,10 +114,15 @@ gimp_mybrush_load (GimpContext   *context,
       return NULL;
     }
 
-  basename = g_file_get_basename (file);
+  basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+
+  basename[strlen (basename) - 4] = '\0';
+  for (p = basename; *p; p++)
+    if (*p == '_' || *p == '-')
+      *p = ' ';
 
   brush = g_object_new (GIMP_TYPE_MYBRUSH,
-                        "name",        gimp_filename_to_utf8 (basename),
+                        "name",        basename,
                         "mime-type",   "image/x-gimp-myb",
                         "icon-pixbuf", pixbuf,
                         NULL);
