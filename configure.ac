@@ -2467,8 +2467,6 @@ sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-in
 sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile && touch po-script-fu/stamp-it
 sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile && touch po-tips/stamp-it])
 
-AC_OUTPUT
-
 # Print a summary of features enabled/disabled:
 optional_deps="
 Extra Binaries:
@@ -2507,6 +2505,7 @@ Tests:
 $have_recommended_xgettext $have_recommended_fontconfig"
 
 if test "x$required_deps" = "x"; then
+  AC_OUTPUT
   AC_MSG_RESULT([
 Building GIMP with prefix=$prefix, datarootdir=$datarootdir
 Desktop files install into $DESKTOP_DATADIR
