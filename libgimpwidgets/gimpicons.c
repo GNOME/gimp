@@ -425,8 +425,8 @@ gimp_icons_set_icon_theme (GFile *path)
 
   if (! g_file_query_exists (path, NULL))
     {
-      g_warning ("Icon theme path does not exist: %s",
-                 gimp_file_get_utf8_name (path));
+      g_printerr ("%s: Icon theme path does not exist: %s\n",
+                  G_STRFUNC, gimp_file_get_utf8_name (path));
     }
   else
     {
@@ -434,8 +434,8 @@ gimp_icons_set_icon_theme (GFile *path)
 
       if (! g_file_query_exists (hicolor, NULL))
         {
-          g_warning ("Icon theme path has no 'hicolor' subdirectory: %s",
-                     gimp_file_get_utf8_name (path));
+          g_printerr ("%s: Icon theme path has no 'hicolor' subdirectory: %s\n",
+                      G_STRFUNC, gimp_file_get_utf8_name (path));
         }
       else
         {
@@ -443,8 +443,8 @@ gimp_icons_set_icon_theme (GFile *path)
 
           if (! g_file_query_exists (index, NULL))
             {
-              g_warning ("Icon theme path has no 'hicolor/index.theme': %s",
-                         gimp_file_get_utf8_name (path));
+              g_printerr ("%s: Icon theme path has no 'hicolor/index.theme': %s\n",
+                          G_STRFUNC, gimp_file_get_utf8_name (path));
             }
           else
             {
