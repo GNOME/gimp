@@ -15,10 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
+
 #include <string.h>
 
 #include <gegl.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -47,11 +48,10 @@
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors.h"
 
-#include "file/file-open.h"
-#include "file/file-procedure.h"
-#include "file/file-save.h"
+#include "plug-in/gimppluginmanager-file.h"
 
-#include "plug-in/gimppluginmanager.h"
+#include "file/file-open.h"
+#include "file/file-save.h"
 
 #include "tests.h"
 
@@ -254,9 +254,10 @@ gimp_test_load_image (Gimp  *gimp,
   GimpImage           *image;
   GimpPDBStatusType    unused;
 
-  proc = file_procedure_find (gimp->plug_in_manager->load_procs,
-                              file,
-                              NULL /*error*/);
+  proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
+                                                   GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                   file,
+                                                   NULL /*error*/);
   image = file_open_image (gimp,
                            gimp_get_user_context (gimp),
                            NULL /*progress*/,
@@ -309,9 +310,10 @@ gimp_write_and_read_file (Gimp     *gimp,
   file = g_file_new_for_path (filename);
   g_free (filename);
 
-  proc = file_procedure_find (image->gimp->plug_in_manager->save_procs,
-                              file,
-                              NULL /*error*/);
+  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                   GIMP_FILE_PROCEDURE_GROUP_SAVE,
+                                                   file,
+                                                   NULL /*error*/);
   file_save (gimp,
              image,
              NULL /*progress*/,
@@ -807,7 +809,7 @@ gimp_assert_mainimage (GimpImage *image,
   g_assert (iter == NULL);
 
   /* Sample points, we rely on the same ordering as when we added
-   * them, although this ordering is not a necessaity
+   * them, although this ordering is not a necessity
    */
   iter = gimp_image_get_sample_points (image);
   g_assert (iter != NULL);

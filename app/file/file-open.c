@@ -46,27 +46,25 @@
 
 #include "pdb/gimppdb.h"
 
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "file-open.h"
-#include "file-procedure.h"
 #include "file-remote.h"
-#include "file-utils.h"
 #include "gimp-file.h"
 
 #include "gimp-intl.h"
 
 
-static void     file_open_sanitize_image       (GimpImage                 *image,
-                                                gboolean                   as_new);
-static void     file_open_convert_items        (GimpImage                 *dest_image,
-                                                const gchar               *basename,
-                                                GList                     *items);
-static GList *  file_open_get_layers           (const GimpImage           *image,
-                                                gboolean                   merge_visible,
-                                                gint                      *n_visible);
-static gboolean file_open_file_proc_is_import  (const GimpPlugInProcedure *file_proc);
+static void     file_open_sanitize_image       (GimpImage           *image,
+                                                gboolean             as_new);
+static void     file_open_convert_items        (GimpImage           *dest_image,
+                                                const gchar         *basename,
+                                                GList               *items);
+static GList *  file_open_get_layers           (const GimpImage     *image,
+                                                gboolean             merge_visible,
+                                                gint                *n_visible);
+static gboolean file_open_file_proc_is_import  (GimpPlugInProcedure *file_proc);
 
 
 /*  public functions  */
@@ -136,8 +134,9 @@ file_open_image (Gimp                *gimp,
     }
 
   if (! file_proc)
-    file_proc = file_procedure_find (gimp->plug_in_manager->load_procs, file,
-                                     error);
+    file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
+                                                          GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                          file, error);
 
   if (! file_proc)
     return NULL;
@@ -320,8 +319,9 @@ file_open_thumbnail (Gimp           *gimp,
   *format       = NULL;
   *num_layers   = -1;
 
-  file_proc = file_procedure_find (gimp->plug_in_manager->load_procs, file,
-                                   NULL);
+  file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
+                                                        GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                        file, NULL);
 
   if (! file_proc || ! file_proc->thumb_loader)
     return NULL;
@@ -791,7 +791,7 @@ file_open_get_layers (const GimpImage *image,
 }
 
 static gboolean
-file_open_file_proc_is_import (const GimpPlugInProcedure *file_proc)
+file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
 {
   return !(file_proc &&
            file_proc->mime_type &&

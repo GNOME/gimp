@@ -25,10 +25,6 @@ GFile     * file_utils_filename_to_file  (Gimp         *gimp,
                                           const gchar  *filename,
                                           GError      **error);
 
-GFile     * file_utils_file_with_new_ext (GFile        *file,
-                                          GFile        *ext_file);
-gchar     * file_utils_file_get_ext      (GFile        *file);
-
 GdkPixbuf * file_utils_load_thumbnail    (const gchar  *filename);
 gboolean    file_utils_save_thumbnail    (GimpImage    *image,
                                           const gchar  *filename);

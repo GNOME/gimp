@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -28,11 +30,18 @@
 
 #include "dialogs/dialogs-types.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-transform.h"
-#include "display/gimpimagewindow.h"
+#include "core/gimp.h"
+#include "core/gimpchannel.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimptoolinfo.h"
+#include "core/gimptooloptions.h"
+
+#include "plug-in/gimppluginmanager-file.h"
+
+#include "file/file-open.h"
+#include "file/file-save.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
@@ -47,20 +56,11 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "file/file-open.h"
-#include "file/file-procedure.h"
-#include "file/file-save.h"
-#include "file/file-utils.h"
-
-#include "plug-in/gimppluginmanager.h"
-
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scale.h"
+#include "display/gimpdisplayshell-transform.h"
+#include "display/gimpimagewindow.h"
 
 #include "tests.h"
 
@@ -218,9 +218,10 @@ saved_imported_file_files (gconstpointer data)
   g_object_unref (import_file);
 
   /* Save */
-  proc = file_procedure_find (image->gimp->plug_in_manager->save_procs,
-                              save_file,
-                              NULL /*error*/);
+  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                   GIMP_FILE_PROCEDURE_GROUP_SAVE,
+                                                   save_file,
+                                                   NULL /*error*/);
   file_save (gimp,
              image,
              NULL /*progress*/,
@@ -261,9 +262,10 @@ exported_file_files (gconstpointer data)
   save_file = g_file_new_for_path (save_filename);
   g_free (save_filename);
 
-  proc = file_procedure_find (image->gimp->plug_in_manager->export_procs,
-                              save_file,
-                              NULL /*error*/);
+  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                   GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+                                                   save_file,
+                                                   NULL /*error*/);
   file_save (gimp,
              image,
              NULL /*progress*/,
@@ -331,9 +333,10 @@ clear_import_file_after_export (gconstpointer data)
   save_file = g_file_new_for_path (save_filename);
   g_free (save_filename);
 
-  proc = file_procedure_find (image->gimp->plug_in_manager->export_procs,
-                              save_file,
-                              NULL /*error*/);
+  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                   GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+                                                   save_file,
+                                                   NULL /*error*/);
   file_save (gimp,
              image,
              NULL /*progress*/,

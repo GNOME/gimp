@@ -78,6 +78,39 @@ gimp_plug_in_call_mode_get_type (void)
   return type;
 }
 
+GType
+gimp_file_procedure_group_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_FILE_PROCEDURE_GROUP_ANY, "GIMP_FILE_PROCEDURE_GROUP_ANY", "any" },
+    { GIMP_FILE_PROCEDURE_GROUP_OPEN, "GIMP_FILE_PROCEDURE_GROUP_OPEN", "open" },
+    { GIMP_FILE_PROCEDURE_GROUP_SAVE, "GIMP_FILE_PROCEDURE_GROUP_SAVE", "save" },
+    { GIMP_FILE_PROCEDURE_GROUP_EXPORT, "GIMP_FILE_PROCEDURE_GROUP_EXPORT", "export" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_FILE_PROCEDURE_GROUP_ANY, "GIMP_FILE_PROCEDURE_GROUP_ANY", NULL },
+    { GIMP_FILE_PROCEDURE_GROUP_OPEN, "GIMP_FILE_PROCEDURE_GROUP_OPEN", NULL },
+    { GIMP_FILE_PROCEDURE_GROUP_SAVE, "GIMP_FILE_PROCEDURE_GROUP_SAVE", NULL },
+    { GIMP_FILE_PROCEDURE_GROUP_EXPORT, "GIMP_FILE_PROCEDURE_GROUP_EXPORT", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpFileProcedureGroup", values);
+      gimp_type_set_translation_context (type, "file-procedure-group");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

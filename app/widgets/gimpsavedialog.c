@@ -31,10 +31,10 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-metadata.h"
 
-#include "file/file-utils.h"
 #include "file/gimp-file.h"
 
 #include "pdb/gimppdb.h"
@@ -311,7 +311,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 
   if (ext_file)
     {
-      GFile *tmp_file = file_utils_file_with_new_ext (name_file, ext_file);
+      GFile *tmp_file = gimp_file_with_new_extension (name_file, ext_file);
       basename = g_path_get_basename (gimp_file_get_utf8_name (tmp_file));
       g_object_unref (tmp_file);
       g_object_unref (ext_file);

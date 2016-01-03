@@ -44,7 +44,6 @@
 
 #include "file-remote.h"
 #include "file-save.h"
-#include "file-utils.h"
 #include "gimp-file.h"
 
 #include "gimp-intl.h"

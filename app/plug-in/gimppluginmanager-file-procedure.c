@@ -2,7 +2,7 @@
  * Copyright (C) 1995, 1996, 1997 Spencer Kimball and Peter Mattis
  * Copyright (C) 1997 Josh MacDonald
  *
- * file-procedure.c
+ * gimppluginmanager-file-procedure.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,12 +28,12 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
+#include "plug-in-types.h"
 
-#include "plug-in/gimppluginprocedure.h"
+#include "core/gimp-utils.h"
 
-#include "file-procedure.h"
-#include "file-utils.h"
+#include "gimppluginmanager-file-procedure.h"
+#include "gimppluginprocedure.h"
 
 #include "gimp-intl.h"
 
@@ -252,40 +252,6 @@ file_procedure_find_by_mime_type (GSList      *procs,
   return NULL;
 }
 
-gboolean
-file_procedure_in_group (GimpPlugInProcedure *file_proc,
-                         FileProcedureGroup   group)
-{
-  const gchar *name        = gimp_object_get_name (file_proc);
-  gboolean     is_xcf_save = FALSE;
-  gboolean     is_filter   = FALSE;
-
-  is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
-
-  is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
-                 strcmp (name, "file-bz2-save") == 0 ||
-                 strcmp (name, "file-xz-save")  == 0);
-
-  switch (group)
-    {
-    case FILE_PROCEDURE_GROUP_SAVE:
-      /* Only .xcf shall pass */
-      return is_xcf_save || is_filter;
-
-    case FILE_PROCEDURE_GROUP_EXPORT:
-      /* Anything but .xcf shall pass */
-      return ! is_xcf_save;
-
-    case FILE_PROCEDURE_GROUP_OPEN:
-      /* No filter applied for Open */
-      return TRUE;
-
-    default:
-    case FILE_PROCEDURE_GROUP_ANY:
-      return TRUE;
-    }
-}
-
 
 /*  private functions  */
 
@@ -328,7 +294,7 @@ file_proc_find_by_extension (GSList   *procs,
                              gboolean  skip_magic,
                              gboolean  uri_procs_only)
 {
-  gchar *ext = file_utils_file_get_ext (file);
+  gchar *ext = gimp_file_get_extension (file);
 
   if (ext)
     {

@@ -41,8 +41,24 @@ gboolean   gimp_plug_in_manager_register_handles_uri  (GimpPlugInManager *manage
 gboolean   gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
                                                        const gchar       *load_proc,
                                                        const gchar       *thumb_proc);
-gboolean   gimp_plug_in_manager_file_has_exporter     (GimpPlugInManager *manager,
-                                                       GFile             *file);
+
+GimpPlugInProcedure *
+gimp_plug_in_manager_file_procedure_find              (GimpPlugInManager      *manager,
+                                                       GimpFileProcedureGroup  group,
+                                                       GFile                  *file,
+                                                       GError                **error);
+GimpPlugInProcedure *
+gimp_plug_in_manager_file_procedure_find_by_prefix    (GimpPlugInManager      *manager,
+                                                       GimpFileProcedureGroup  group,
+                                                       GFile                  *file);
+GimpPlugInProcedure *
+gimp_plug_in_manager_file_procedure_find_by_extension (GimpPlugInManager      *manager,
+                                                       GimpFileProcedureGroup  group,
+                                                       GFile                  *file);
+GimpPlugInProcedure *
+gimp_plug_in_manager_file_procedure_find_by_mime_type (GimpPlugInManager      *manager,
+                                                       GimpFileProcedureGroup  group,
+                                                       const gchar            *mime_type);
 
 
 #endif /* __GIMP_PLUG_IN_MANAGER_FILE_H__ */

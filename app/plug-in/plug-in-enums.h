@@ -47,4 +47,17 @@ typedef enum /*< pdb-skip >*/
 } GimpPlugInCallMode;
 
 
+#define GIMP_TYPE_FILE_PROCEDURE_GROUP (gimp_file_procedure_group_get_type ())
+
+GType gimp_file_procedure_group_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_FILE_PROCEDURE_GROUP_ANY,
+  GIMP_FILE_PROCEDURE_GROUP_OPEN,
+  GIMP_FILE_PROCEDURE_GROUP_SAVE,
+  GIMP_FILE_PROCEDURE_GROUP_EXPORT
+} GimpFileProcedureGroup;
+
+
 #endif /* __PLUG_IN_ENUMS_H__ */

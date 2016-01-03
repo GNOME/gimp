@@ -37,9 +37,7 @@
 #include "core/gimpundostack.h"
 #include "core/gimp-utils.h"
 
-#include "file/file-procedure.h"
-
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimpimagepropview.h"
@@ -356,20 +354,20 @@ static void
 gimp_image_prop_view_label_set_filetype (GtkWidget *label,
                                          GimpImage *image)
 {
-  GimpPlugInManager   *manager = image->gimp->plug_in_manager;
-  GimpPlugInProcedure *proc;
-
-  proc = gimp_image_get_save_proc (image);
+  GimpPlugInProcedure *proc = gimp_image_get_save_proc (image);
 
   if (! proc)
     proc = gimp_image_get_load_proc (image);
 
   if (! proc)
     {
-      GFile *file = gimp_image_get_file (image);
+      GimpPlugInManager *manager = image->gimp->plug_in_manager;
+      GFile             *file    = gimp_image_get_file (image);
 
       if (file)
-        proc = file_procedure_find (manager->load_procs, file, NULL);
+        proc = gimp_plug_in_manager_file_procedure_find (manager,
+                                                         GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                         file, NULL);
     }
 
   gtk_label_set_text (GTK_LABEL (label),

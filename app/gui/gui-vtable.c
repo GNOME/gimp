@@ -47,9 +47,7 @@
 
 #include "text/gimpfont.h"
 
-#include "plug-in/gimppluginmanager.h"
-
-#include "file/file-procedure.h"
+#include "plug-in/gimppluginmanager-file.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpbrushselect.h"
@@ -734,8 +732,9 @@ gui_recent_list_load (Gimp *gimp)
           const gchar *mime_type = gtk_recent_info_get_mime_type (info);
 
           if (mime_type &&
-              file_procedure_find_by_mime_type (gimp->plug_in_manager->load_procs,
-                                                mime_type))
+              gimp_plug_in_manager_file_procedure_find_by_mime_type (gimp->plug_in_manager,
+                                                                     GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                                     mime_type))
             {
               GimpImagefile *imagefile;
               GFile         *file;

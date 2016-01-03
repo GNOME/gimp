@@ -36,10 +36,9 @@
 #include "core/gimpprogress.h"
 #include "core/gimptemplate.h"
 
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-file.h"
 
 #include "file/file-open.h"
-#include "file/file-procedure.h"
 #include "file/file-save.h"
 #include "file/gimp-file.h"
 
@@ -258,8 +257,9 @@ file_save_cmd_callback (GtkAction *action,
           if (file && ! save_proc)
             {
               save_proc =
-                file_procedure_find (image->gimp->plug_in_manager->save_procs,
-                                     file, NULL);
+                gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                          GIMP_FILE_PROCEDURE_GROUP_SAVE,
+                                                          file, NULL);
             }
 
           if (file && save_proc)
@@ -357,8 +357,9 @@ file_save_cmd_callback (GtkAction *action,
         if (file && ! export_proc)
           {
             export_proc =
-              file_procedure_find (image->gimp->plug_in_manager->export_procs,
-                                   file, NULL);
+              gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                        GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+                                                        file, NULL);
           }
 
         if (file && export_proc)

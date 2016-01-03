@@ -284,8 +284,9 @@ file_actions_update (GimpActionGroup *group,
 
   show_overwrite =
     (source &&
-     gimp_plug_in_manager_file_has_exporter (gimp->plug_in_manager,
-                                             source));
+     gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
+                                               GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+                                               source, NULL));
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)

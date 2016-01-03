@@ -39,6 +39,7 @@
 #include "gimp.h"
 #include "gimp-memsize.h"
 #include "gimp-parasites.h"
+#include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpdrawablestack.h"
 #include "gimpgrid.h"
@@ -71,8 +72,6 @@
 #include "gimptempbuf.h"
 #include "gimptemplate.h"
 #include "gimpundostack.h"
-
-#include "file/file-utils.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -2168,7 +2167,7 @@ gimp_image_format_display_uri (GimpImage *image,
         }
 
       if (display_file)
-        display_file = file_utils_file_with_new_ext (display_file, NULL);
+        display_file = gimp_file_with_new_extension (display_file, NULL);
 
       uri_format = "[%s]";
     }

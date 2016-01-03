@@ -32,10 +32,9 @@
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginprocedure.h"
 
-#include "file/file-procedure.h"
 #include "file/file-save.h"
 #include "file/gimp-file.h"
 
@@ -78,8 +77,9 @@ static CheckUriResult file_save_dialog_check_file           (GtkWidget          
                                                              GimpPlugInProcedure **ret_save_proc);
 static gboolean  file_save_dialog_no_overwrite_confirmation (GimpFileDialog       *dialog,
                                                              Gimp                 *gimp);
-static GSList *  file_save_dialog_get_procs                 (GimpFileDialog       *dialog,
-                                                             Gimp                 *gimp);
+static GimpPlugInProcedure *
+                 file_save_dialog_find_procedure            (GimpFileDialog       *dialog,
+                                                             GFile                *file);
 static gboolean  file_save_dialog_switch_dialogs            (GimpFileDialog       *file_dialog,
                                                              Gimp                 *gimp,
                                                              const gchar          *basename);
@@ -295,12 +295,8 @@ file_save_dialog_check_file (GtkWidget            *dialog,
   basename_file = g_file_new_for_uri (basename);
 
   save_proc     = file_dialog->file_proc;
-  uri_proc      = file_procedure_find (file_save_dialog_get_procs (file_dialog,
-                                                                   gimp),
-                                       file, NULL);
-  basename_proc = file_procedure_find (file_save_dialog_get_procs (file_dialog,
-                                                                   gimp),
-                                       basename_file, NULL);
+  uri_proc      = file_save_dialog_find_procedure (file_dialog, file);
+  basename_proc = file_save_dialog_find_procedure (file_dialog, basename_file);
 
   g_object_unref (basename_file);
 
@@ -539,9 +535,7 @@ file_save_dialog_no_overwrite_confirmation (GimpFileDialog *file_dialog,
   basename_file = g_file_new_for_uri (basename);
 
   save_proc     = file_dialog->file_proc;
-  basename_proc = file_procedure_find (file_save_dialog_get_procs (file_dialog,
-                                                                   gimp),
-                                       basename_file, NULL);
+  basename_proc = file_save_dialog_find_procedure (file_dialog, basename_file);
 
   g_object_unref (basename_file);
 
@@ -558,13 +552,19 @@ file_save_dialog_no_overwrite_confirmation (GimpFileDialog *file_dialog,
   return uri_will_change || unknown_ext;
 }
 
-static GSList *
-file_save_dialog_get_procs (GimpFileDialog *file_dialog,
-                            Gimp           *gimp)
+static GimpPlugInProcedure *
+file_save_dialog_find_procedure (GimpFileDialog *file_dialog,
+                                 GFile          *file)
 {
-  return (GIMP_IS_SAVE_DIALOG (file_dialog) ?
-          gimp->plug_in_manager->save_procs :
-          gimp->plug_in_manager->export_procs);
+  GimpPlugInManager      *manager = file_dialog->gimp->plug_in_manager;
+  GimpFileProcedureGroup  group;
+
+  if (GIMP_IS_SAVE_DIALOG (file_dialog))
+    group = GIMP_FILE_PROCEDURE_GROUP_SAVE;
+  else
+    group = GIMP_FILE_PROCEDURE_GROUP_EXPORT;
+
+  return gimp_plug_in_manager_file_procedure_find (manager, group, file, NULL);
 }
 
 static gboolean
@@ -582,17 +582,21 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
                                  Gimp           *gimp,
                                  const gchar    *basename)
 {
-  GimpPlugInProcedure *proc_in_other_group;
-  GFile               *file;
-  gboolean             switch_dialogs = FALSE;
+  GimpPlugInProcedure    *proc_in_other_group;
+  GimpFileProcedureGroup  other_group;
+  GFile                  *file;
+  gboolean                switch_dialogs = FALSE;
 
   file = g_file_new_for_uri (basename);
 
+  if (GIMP_IS_EXPORT_DIALOG (file_dialog))
+    other_group = GIMP_FILE_PROCEDURE_GROUP_SAVE;
+  else
+    other_group = GIMP_FILE_PROCEDURE_GROUP_EXPORT;
+
   proc_in_other_group =
-    file_procedure_find (GIMP_IS_EXPORT_DIALOG (file_dialog) ?
-                         gimp->plug_in_manager->save_procs :
-                         gimp->plug_in_manager->export_procs,
-                         file, NULL);
+    gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
+                                              other_group, file, NULL);
 
   g_object_unref (file);
 

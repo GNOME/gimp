@@ -19,6 +19,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
@@ -27,13 +29,16 @@
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
-#include "file/file-procedure.h"
-
 #include "gimpplugin.h"
 #include "gimpplugindef.h"
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-file.h"
+#include "gimppluginmanager-file-procedure.h"
 #include "gimppluginprocedure.h"
+
+
+static gboolean   file_procedure_in_group (GimpPlugInProcedure    *file_proc,
+                                           GimpFileProcedureGroup  group);
 
 
 /*  public functions  */
@@ -137,13 +142,13 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
   gimp_plug_in_procedure_set_file_proc (file_proc,
                                         extensions, prefixes, NULL);
 
-  if (file_procedure_in_group (file_proc, FILE_PROCEDURE_GROUP_SAVE))
+  if (file_procedure_in_group (file_proc, GIMP_FILE_PROCEDURE_GROUP_SAVE))
     {
       if (! g_slist_find (manager->save_procs, file_proc))
         manager->save_procs = g_slist_prepend (manager->save_procs, file_proc);
     }
 
-  if (file_procedure_in_group (file_proc, FILE_PROCEDURE_GROUP_EXPORT))
+  if (file_procedure_in_group (file_proc, GIMP_FILE_PROCEDURE_GROUP_EXPORT))
     {
       if (! g_slist_find (manager->export_procs, file_proc))
         manager->export_procs = g_slist_prepend (manager->export_procs, file_proc);
@@ -231,9 +236,137 @@ gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
   return TRUE;
 }
 
-gboolean
-gimp_plug_in_manager_file_has_exporter (GimpPlugInManager *manager,
-                                        GFile             *file)
+GimpPlugInProcedure *
+gimp_plug_in_manager_file_procedure_find (GimpPlugInManager      *manager,
+                                          GimpFileProcedureGroup  group,
+                                          GFile                  *file,
+                                          GError                **error)
 {
-  return file_procedure_find (manager->export_procs, file, NULL) != NULL;
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  switch (group)
+    {
+    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+      return file_procedure_find (manager->load_procs, file, error);
+
+    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+      return file_procedure_find (manager->save_procs, file, error);
+
+    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+      return file_procedure_find (manager->export_procs, file, error);
+
+    default:
+      g_return_val_if_reached (NULL);
+    }
+}
+
+GimpPlugInProcedure *
+gimp_plug_in_manager_file_procedure_find_by_prefix (GimpPlugInManager      *manager,
+                                                    GimpFileProcedureGroup  group,
+                                                    GFile                  *file)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  switch (group)
+    {
+    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+      return file_procedure_find_by_prefix (manager->load_procs, file);
+
+    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+      return file_procedure_find_by_prefix (manager->save_procs, file);
+
+    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+      return file_procedure_find_by_prefix (manager->export_procs, file);
+
+    default:
+      g_return_val_if_reached (NULL);
+    }
+}
+
+GimpPlugInProcedure *
+gimp_plug_in_manager_file_procedure_find_by_extension (GimpPlugInManager      *manager,
+                                                       GimpFileProcedureGroup  group,
+                                                       GFile                  *file)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  switch (group)
+    {
+    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+      return file_procedure_find_by_extension (manager->load_procs, file);
+
+    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+      return file_procedure_find_by_extension (manager->save_procs, file);
+
+    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+      return file_procedure_find_by_extension (manager->export_procs, file);
+
+    default:
+      g_return_val_if_reached (NULL);
+    }
+}
+
+GimpPlugInProcedure *
+gimp_plug_in_manager_file_procedure_find_by_mime_type (GimpPlugInManager      *manager,
+                                                       GimpFileProcedureGroup  group,
+                                                       const gchar            *mime_type)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (mime_type != NULL, NULL);
+
+  switch (group)
+    {
+    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+      return file_procedure_find_by_mime_type (manager->load_procs, mime_type);
+
+    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+      return file_procedure_find_by_mime_type (manager->save_procs, mime_type);
+
+    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+      return file_procedure_find_by_mime_type (manager->export_procs, mime_type);
+
+    default:
+      g_return_val_if_reached (NULL);
+    }
+}
+
+
+/*  private functions  */
+
+gboolean
+file_procedure_in_group (GimpPlugInProcedure    *file_proc,
+                         GimpFileProcedureGroup  group)
+{
+  const gchar *name        = gimp_object_get_name (file_proc);
+  gboolean     is_xcf_save = FALSE;
+  gboolean     is_filter   = FALSE;
+
+  is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
+
+  is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
+                 strcmp (name, "file-bz2-save") == 0 ||
+                 strcmp (name, "file-xz-save")  == 0);
+
+  switch (group)
+    {
+    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+      /* Only .xcf shall pass */
+      return is_xcf_save || is_filter;
+
+    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+      /* Anything but .xcf shall pass */
+      return ! is_xcf_save;
+
+    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+      /* No filter applied for Open */
+      return TRUE;
+
+    default:
+    case GIMP_FILE_PROCEDURE_GROUP_ANY:
+      return TRUE;
+    }
 }
