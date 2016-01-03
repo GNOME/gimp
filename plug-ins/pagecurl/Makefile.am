@@ -75,7 +75,7 @@ pagecurl-icons.gresource.xml: $(PAGECURL_IMAGES) Makefile.am
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-$(srcdir)/pagecurl-icons.c: pagecurl-icons.gresource.xml
+pagecurl-icons.c: pagecurl-icons.gresource.xml
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ pagecurl-icons.gresource.xml
