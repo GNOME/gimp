@@ -31,10 +31,16 @@
 
 #include "core/gimp.h"
 #include "core/gimp-memsize.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable-operation.h"
+#include "core/gimpimage.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
+
+#include "gegl/gimp-gegl-config-proxy.h"
 
 #include "display/gimpdisplay.h"
 
@@ -42,6 +48,8 @@
 #include "tools/tool_manager.h"
 
 #include "gimpgeglprocedure.h"
+
+#include "gimp-intl.h"
 
 
 static void     gimp_gegl_procedure_finalize            (GObject        *object);
@@ -226,7 +234,56 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                                    GimpValueArray *args,
                                    GimpObject     *display)
 {
-  GimpTool *active_tool = tool_manager_get_active (gimp);
+  GimpRunMode  run_mode = g_value_get_int (gimp_value_array_index (args, 0));
+  GimpTool    *active_tool;
+
+  if (run_mode == GIMP_RUN_WITH_LAST_VALS)
+    {
+      GimpObject    *settings;
+      GimpContainer *container;
+
+      settings = gimp_gegl_get_config_proxy (procedure->original_name,
+                                             GIMP_TYPE_SETTINGS);
+
+      container = gimp_gegl_get_config_container (G_TYPE_FROM_INSTANCE (settings));
+
+      g_object_unref (settings);
+
+      settings = gimp_container_get_child_by_index (container, 0);
+
+      if (settings)
+        {
+          GimpImage    *image;
+          GimpDrawable *drawable;
+          GeglNode     *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation", procedure->original_name,
+                                      NULL);
+          gimp_gegl_config_proxy_sync (settings, node);
+
+          image = gimp_value_get_image (gimp_value_array_index (args, 1),
+                                        gimp);
+          drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2),
+                                              gimp);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         gimp_procedure_get_label (procedure),
+                                         node);
+          g_object_unref (node);
+
+          gimp_image_flush (image);
+          return;
+        }
+
+      gimp_message (gimp,
+                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                    _("There are no last settings for '%s', "
+                      "showing the filter dialog instead."),
+                    gimp_procedure_get_label (procedure));
+    }
+
+  active_tool = tool_manager_get_active (gimp);
 
   /*  do not use the passed context because we need to set the active
    *  tool on the global user context
