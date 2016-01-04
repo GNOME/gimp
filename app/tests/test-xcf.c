@@ -711,6 +711,8 @@ gimp_assert_mainimage (GimpImage *image,
   GList              *iter                   = NULL;
   GimpGuide          *guide                  = NULL;
   GimpSamplePoint    *sample_point           = NULL;
+  gint                sample_point_x         = 0;
+  gint                sample_point_y         = 0;
   gdouble             xres                   = 0.0;
   gdouble             yres                   = 0.0;
   GimpGrid           *grid                   = NULL;
@@ -783,25 +785,25 @@ gimp_assert_mainimage (GimpImage *image,
   /* Guides, note that we rely on internal ordering */
   iter = gimp_image_get_guides (image);
   g_assert (iter != NULL);
-  guide = GIMP_GUIDE (iter->data);
+  guide = iter->data;
   g_assert_cmpint (gimp_guide_get_position (guide),
                    ==,
                    GIMP_MAINIMAGE_VGUIDE1_POS);
   iter = g_list_next (iter);
   g_assert (iter != NULL);
-  guide = GIMP_GUIDE (iter->data);
+  guide = iter->data;
   g_assert_cmpint (gimp_guide_get_position (guide),
                    ==,
                    GIMP_MAINIMAGE_VGUIDE2_POS);
   iter = g_list_next (iter);
   g_assert (iter != NULL);
-  guide = GIMP_GUIDE (iter->data);
+  guide = iter->data;
   g_assert_cmpint (gimp_guide_get_position (guide),
                    ==,
                    GIMP_MAINIMAGE_HGUIDE1_POS);
   iter = g_list_next (iter);
   g_assert (iter != NULL);
-  guide = GIMP_GUIDE (iter->data);
+  guide = iter->data;
   g_assert_cmpint (gimp_guide_get_position (guide),
                    ==,
                    GIMP_MAINIMAGE_HGUIDE2_POS);
@@ -813,20 +815,24 @@ gimp_assert_mainimage (GimpImage *image,
    */
   iter = gimp_image_get_sample_points (image);
   g_assert (iter != NULL);
-  sample_point = (GimpSamplePoint *) iter->data;
-  g_assert_cmpint (sample_point->x,
+  sample_point = iter->data;
+  gimp_sample_point_get_position (sample_point,
+                                  &sample_point_x, &sample_point_y);
+  g_assert_cmpint (sample_point_x,
                    ==,
                    GIMP_MAINIMAGE_SAMPLEPOINT1_X);
-  g_assert_cmpint (sample_point->y,
+  g_assert_cmpint (sample_point_y,
                    ==,
                    GIMP_MAINIMAGE_SAMPLEPOINT1_Y);
   iter = g_list_next (iter);
   g_assert (iter != NULL);
-  sample_point = (GimpSamplePoint *) iter->data;
-  g_assert_cmpint (sample_point->x,
+  sample_point = iter->data;
+  gimp_sample_point_get_position (sample_point,
+                                  &sample_point_x, &sample_point_y);
+  g_assert_cmpint (sample_point_x,
                    ==,
                    GIMP_MAINIMAGE_SAMPLEPOINT2_X);
-  g_assert_cmpint (sample_point->y,
+  g_assert_cmpint (sample_point_y,
                    ==,
                    GIMP_MAINIMAGE_SAMPLEPOINT2_Y);
   iter = g_list_next (iter);

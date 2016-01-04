@@ -947,8 +947,7 @@ xcf_save_prop (XcfInfo    *info,
             GimpSamplePoint *sample_point = sample_points->data;
             gint32           x, y;
 
-            x = sample_point->x;
-            y = sample_point->y;
+            gimp_sample_point_get_position (sample_point, &x, &y);
 
             xcf_write_int32_check_error (info, (guint32 *) &x, 1);
             xcf_write_int32_check_error (info, (guint32 *) &y, 1);

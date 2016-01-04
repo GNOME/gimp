@@ -665,12 +665,13 @@ gimp_display_shell_sample_point_add_handler (GimpImage        *image,
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->sample_points);
   GimpCanvasItem       *item;
   GList                *list;
+  gint                  x;
+  gint                  y;
   gint                  i;
 
-  item = gimp_canvas_sample_point_new (shell,
-                                       sample_point->x,
-                                       sample_point->y,
-                                       0, TRUE);
+  gimp_sample_point_get_position (sample_point, &x, &y);
+
+  item = gimp_canvas_sample_point_new (shell, x, y, 0, TRUE);
 
   gimp_canvas_proxy_group_add_item (group, sample_point, item);
   g_object_unref (item);
@@ -724,10 +725,14 @@ gimp_display_shell_sample_point_move_handler (GimpImage        *image,
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->sample_points);
   GimpCanvasItem       *item;
+  gint                  x;
+  gint                  y;
 
   item = gimp_canvas_proxy_group_get_item (group, sample_point);
 
-  gimp_canvas_sample_point_set (item, sample_point->x, sample_point->y);
+  gimp_sample_point_get_position (sample_point, &x, &y);
+
+  gimp_canvas_sample_point_set (item, x, y);
 }
 
 static void

@@ -385,9 +385,13 @@ gimp_sample_point_editor_proj_update (GimpImage             *image,
        i++, list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
+      gint             sp_x;
+      gint             sp_y;
 
-      if (sample_point->x >= x && sample_point->x < (x + width) &&
-          sample_point->y >= y && sample_point->y < (y + height))
+      gimp_sample_point_get_position (sample_point, &sp_x, &sp_y);
+
+      if (sp_x >= x && sp_x < (x + width) &&
+          sp_y >= y && sp_y < (y + height))
         {
           gimp_sample_point_editor_dirty (editor, i);
         }
@@ -469,14 +473,17 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
           const Babl      *format;
           guchar           pixel[32];
           GimpRGB          color;
+          gint             x;
+          gint             y;
 
           editor->dirty[i] = FALSE;
 
           color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
 
+          gimp_sample_point_get_position (sample_point, &x, &y);
+
           if (gimp_image_pick_color (image_editor->image, NULL,
-                                     sample_point->x,
-                                     sample_point->y,
+                                     x, y,
                                      editor->sample_merged,
                                      FALSE, 0.0,
                                      &format,
