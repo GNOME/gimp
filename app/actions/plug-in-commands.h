@@ -27,11 +27,4 @@ void   plug_in_reset_all_cmd_callback (GtkAction     *action,
                                        gpointer       data);
 
 
-/* FIXME history */
-gint  plug_in_collect_display_args  (GtkAction       *action,
-                                     GimpDisplay     *display,
-                                     GParamSpec     **pspecs,
-                                     GimpValueArray  *args,
-                                     gint             n_args);
-
 #endif /* __PLUG_IN_COMMANDS_H__ */

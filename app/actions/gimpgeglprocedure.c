@@ -1,0 +1,313 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpgeglprocedure.c
+ * Copyright (C) 2016 Michael Natterer <mitch@gimp.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <string.h>
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
+#include "libgimpbase/gimpbase.h"
+
+#include "actions-types.h"
+
+#include "core/gimp.h"
+#include "core/gimp-memsize.h"
+#include "core/gimpcontext.h"
+#include "core/gimplayermask.h"
+#include "core/gimpparamspecs.h"
+#include "core/gimptoolinfo.h"
+
+#include "display/gimpdisplay.h"
+
+#include "tools/gimpoperationtool.h"
+#include "tools/tool_manager.h"
+
+#include "gimpgeglprocedure.h"
+
+
+static void     gimp_gegl_procedure_finalize            (GObject        *object);
+
+static gint64   gimp_gegl_procedure_get_memsize         (GimpObject     *object,
+                                                         gint64         *gui_size);
+
+static gchar  * gimp_gegl_procedure_get_description     (GimpViewable   *viewable,
+                                                         gchar         **tooltip);
+
+static const gchar * gimp_gegl_procedure_get_label      (GimpProcedure  *procedure);
+static const gchar * gimp_gegl_procedure_get_menu_label (GimpProcedure  *procedure);
+static gboolean      gimp_gegl_procedure_get_sensitive  (GimpProcedure  *procedure,
+                                                         GimpObject     *object);
+static GimpValueArray * gimp_gegl_procedure_execute     (GimpProcedure  *procedure,
+                                                         Gimp           *gimp,
+                                                         GimpContext    *context,
+                                                         GimpProgress   *progress,
+                                                         GimpValueArray *args,
+                                                         GError        **error);
+static void     gimp_gegl_procedure_execute_async       (GimpProcedure  *procedure,
+                                                         Gimp           *gimp,
+                                                         GimpContext    *context,
+                                                         GimpProgress   *progress,
+                                                         GimpValueArray *args,
+                                                         GimpObject     *display);
+
+
+G_DEFINE_TYPE (GimpGeglProcedure, gimp_gegl_procedure,
+               GIMP_TYPE_PROCEDURE)
+
+#define parent_class gimp_gegl_procedure_parent_class
+
+
+static void
+gimp_gegl_procedure_class_init (GimpGeglProcedureClass *klass)
+{
+  GObjectClass       *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass  *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpProcedureClass *proc_class        = GIMP_PROCEDURE_CLASS (klass);
+
+  object_class->finalize            = gimp_gegl_procedure_finalize;
+
+  gimp_object_class->get_memsize    = gimp_gegl_procedure_get_memsize;
+
+  viewable_class->default_icon_name = "gimp-gegl";
+  viewable_class->get_description   = gimp_gegl_procedure_get_description;
+
+  proc_class->get_label             = gimp_gegl_procedure_get_label;
+  proc_class->get_menu_label        = gimp_gegl_procedure_get_menu_label;
+  proc_class->get_sensitive         = gimp_gegl_procedure_get_sensitive;
+  proc_class->execute               = gimp_gegl_procedure_execute;
+  proc_class->execute_async         = gimp_gegl_procedure_execute_async;
+}
+
+static void
+gimp_gegl_procedure_init (GimpGeglProcedure *proc)
+{
+}
+
+static void
+gimp_gegl_procedure_finalize (GObject *object)
+{
+  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (object);
+
+  g_free (proc->menu_label);
+  g_free (proc->label);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gint64
+gimp_gegl_procedure_get_memsize (GimpObject *object,
+                                    gint64     *gui_size)
+{
+  GimpGeglProcedure *proc    = GIMP_GEGL_PROCEDURE (object);
+  gint64             memsize = 0;
+
+  memsize += gimp_string_get_memsize (proc->menu_label);
+  memsize += gimp_string_get_memsize (proc->label);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
+
+static gchar *
+gimp_gegl_procedure_get_description (GimpViewable  *viewable,
+                                        gchar        **tooltip)
+{
+  GimpProcedure *procedure = GIMP_PROCEDURE (viewable);
+
+  if (tooltip)
+    *tooltip = g_strdup (gimp_procedure_get_blurb (procedure));
+
+  return g_strdup (gimp_procedure_get_label (procedure));
+}
+
+static const gchar *
+gimp_gegl_procedure_get_label (GimpProcedure *procedure)
+{
+  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
+  gchar             *ellipsis;
+  gchar             *label;
+
+  if (proc->label)
+    return proc->label;
+
+  label = gimp_strip_uline (gimp_procedure_get_menu_label (procedure));
+
+  ellipsis = strstr (label, "...");
+
+  if (! ellipsis)
+    ellipsis = strstr (label, "\342\200\246" /* U+2026 HORIZONTAL ELLIPSIS */);
+
+  if (ellipsis && ellipsis == (label + strlen (label) - 3))
+    *ellipsis = '\0';
+
+  proc->label = label;
+
+  return proc->label;
+}
+
+static const gchar *
+gimp_gegl_procedure_get_menu_label (GimpProcedure *procedure)
+{
+  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
+
+  if (proc->menu_label)
+    return proc->menu_label;
+
+  return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
+}
+
+static gboolean
+gimp_gegl_procedure_get_sensitive (GimpProcedure *procedure,
+                                   GimpObject    *object)
+{
+  GimpDrawable *drawable;
+  gboolean      sensitive = FALSE;
+
+  g_return_val_if_fail (object == NULL || GIMP_IS_DRAWABLE (object), FALSE);
+
+  drawable = GIMP_DRAWABLE (object);
+
+  if (drawable)
+    {
+      GimpItem *item;
+
+      if (GIMP_IS_LAYER_MASK (drawable))
+        item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+      else
+        item = GIMP_ITEM (drawable);
+
+      sensitive = ! gimp_item_is_content_locked (item);
+
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        sensitive = FALSE;
+    }
+
+  return sensitive;
+}
+
+static GimpValueArray *
+gimp_gegl_procedure_execute (GimpProcedure  *procedure,
+                             Gimp           *gimp,
+                             GimpContext    *context,
+                             GimpProgress   *progress,
+                             GimpValueArray *args,
+                             GError        **error)
+{
+  return GIMP_PROCEDURE_CLASS (parent_class)->execute (procedure, gimp,
+                                                       context, progress,
+                                                       args, error);
+}
+
+static void
+gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
+                                   Gimp           *gimp,
+                                   GimpContext    *context,
+                                   GimpProgress   *progress,
+                                   GimpValueArray *args,
+                                   GimpObject     *display)
+{
+  GimpTool *active_tool = tool_manager_get_active (gimp);
+
+  /*  do not use the passed context because we need to set the active
+   *  tool on the global user context
+   */
+  context = gimp_get_user_context (gimp);
+
+  if (G_TYPE_FROM_INSTANCE (active_tool) != GIMP_TYPE_OPERATION_TOOL)
+    {
+      GimpToolInfo *tool_info = gimp_get_tool_info (gimp,
+                                                    "gimp-operation-tool");
+
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        gimp_context_set_tool (context, tool_info);
+    }
+  else
+    {
+      gimp_context_tool_changed (context);
+    }
+
+  active_tool = tool_manager_get_active (gimp);
+
+  if (GIMP_IS_OPERATION_TOOL (active_tool))
+    {
+      gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
+                                         procedure->original_name,
+                                         gimp_procedure_get_label (procedure),
+                                         gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)));
+
+      tool_manager_initialize_active (gimp, GIMP_DISPLAY (display));
+    }
+}
+
+
+/*  public functions  */
+
+GimpProcedure *
+gimp_gegl_procedure_new (Gimp        *gimp,
+                         const gchar *operation,
+                         const gchar *name,
+                         const gchar *menu_label,
+                         const gchar *icon_name,
+                         const gchar *tooltip)
+{
+  GimpProcedure *procedure;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (operation != NULL, NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (menu_label != NULL, NULL);
+
+  procedure = g_object_new (GIMP_TYPE_GEGL_PROCEDURE, NULL);
+
+  GIMP_GEGL_PROCEDURE (procedure)->menu_label = g_strdup (menu_label);
+
+  gimp_object_set_name (GIMP_OBJECT (procedure), name);
+  gimp_viewable_set_icon_name (GIMP_VIEWABLE (procedure), icon_name);
+  gimp_procedure_set_strings (procedure,
+                              operation,
+                              tooltip,
+                              "help",
+                              "author", "copyright", "date",
+                              NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("dummy-param",
+                                                      "Dummy Param",
+                                                      "Dummy parameter",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "Image",
+                                                         "Input image",
+                                                         gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "Drawable",
+                                                            "Input drawable",
+                                                            gimp, TRUE,
+                                                            GIMP_PARAM_READWRITE));
+
+  return procedure;
+}

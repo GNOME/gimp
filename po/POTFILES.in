@@ -42,7 +42,6 @@ app/actions/error-console-commands.c
 app/actions/file-actions.c
 app/actions/file-commands.c
 app/actions/filters-actions.c
-app/actions/filters-commands.c
 app/actions/fonts-actions.c
 app/actions/gradient-editor-actions.c
 app/actions/gradient-editor-commands.c

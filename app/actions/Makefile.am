@@ -17,6 +17,9 @@ libappactions_a_SOURCES = \
 	actions.c			\
 	actions.h			\
 	\
+	gimpgeglprocedure.c		\
+	gimpgeglprocedure.h		\
+	\
 	brush-editor-actions.c		\
 	brush-editor-actions.h		\
 	brushes-actions.c		\

@@ -24,8 +24,10 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimpprogress.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -222,3 +224,38 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
   return args;
 }
 
+gboolean
+procedure_commands_run_procedure (GimpProcedure  *procedure,
+                                  Gimp           *gimp,
+                                  GimpProgress   *progress,
+                                  GimpRunMode     run_mode,
+                                  GimpValueArray *args,
+                                  GimpDisplay    *display)
+{
+  GError *error = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (args != NULL, FALSE);
+
+  g_value_set_int (gimp_value_array_index (args, 0), run_mode);
+
+  gimp_procedure_execute_async (procedure, gimp,
+                                gimp_get_user_context (gimp),
+                                progress, args,
+                                GIMP_OBJECT (display), &error);
+
+  if (error)
+    {
+      gimp_message_literal (gimp,
+                            G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                            error->message);
+      g_clear_error (&error);
+
+      return FALSE;
+    }
+
+  return TRUE;
+}

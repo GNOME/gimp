@@ -778,6 +778,7 @@ filters_actions_history_changed (Gimp            *gimp,
 
   if (proc)
     {
+      GtkAction   *actual_action = NULL;
       const gchar *label;
       gchar       *repeat;
       gchar       *reshow;
@@ -794,19 +795,27 @@ filters_actions_history_changed (Gimp            *gimp,
       g_free (repeat);
       g_free (reshow);
 
-      /*  copy the sensitivity of the plug-in procedure's actual action
-       *  instead of calling filters_actions_update() because doing the
-       *  latter would set the sensitivity of this image's action on
-       *  all images' actions. See bug #517683.
-       */
-      if (plug_in_group)
+      if (g_str_has_prefix (gimp_object_get_name (proc), "filters-"))
         {
-          GtkAction *actual_action =
+          actual_action =
+            gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                         gimp_object_get_name (proc));
+        }
+      else if (plug_in_group)
+        {
+          /*  copy the sensitivity of the plug-in procedure's actual
+           *  action instead of calling filters_actions_update()
+           *  because doing the latter would set the sensitivity of
+           *  this image's action on all images' actions. See bug
+           *  #517683.
+           */
+          actual_action =
             gtk_action_group_get_action (GTK_ACTION_GROUP (plug_in_group),
                                          gimp_object_get_name (proc));
-          if (actual_action)
-            sensitive = gtk_action_get_sensitive (actual_action);
         }
+
+      if (actual_action)
+        sensitive = gtk_action_get_sensitive (actual_action);
 
       gimp_action_group_set_action_sensitive (group, "filters-repeat",
                                               sensitive);
@@ -827,6 +836,7 @@ filters_actions_history_changed (Gimp            *gimp,
   for (i = 0; i < gimp_filter_history_length (gimp); i++)
     {
       GtkAction   *action;
+      GtkAction   *actual_action = NULL;
       const gchar *label;
       gchar       *name;
       gboolean     sensitive = FALSE;
@@ -839,15 +849,22 @@ filters_actions_history_changed (Gimp            *gimp,
 
       label = gimp_procedure_get_menu_label (proc);
 
-      /*  see comment above  */
-      if (plug_in_group)
+      if (g_str_has_prefix (gimp_object_get_name (proc), "filters-"))
         {
-          GtkAction *actual_action =
+          actual_action =
+            gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                         gimp_object_get_name (proc));
+        }
+      else if (plug_in_group)
+        {
+          /*  see comment above  */
+          actual_action =
             gtk_action_group_get_action (GTK_ACTION_GROUP (plug_in_group),
                                          gimp_object_get_name (proc));
-          if (actual_action)
-            sensitive = gtk_action_get_sensitive (actual_action);
         }
+
+      if (actual_action)
+        sensitive = gtk_action_get_sensitive (actual_action);
 
       g_object_set (action,
                     "visible",   TRUE,

@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -29,10 +27,8 @@
 
 #include "core/gimp.h"
 #include "core/gimp-filter-history.h"
-#include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
@@ -52,8 +48,6 @@
 #include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
-
-#include "display/gimpdisplay.h"
 
 #include "actions.h"
 #include "plug-in-commands.h"
@@ -144,24 +138,10 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
   if (args)
     {
-      GError *error = NULL;
-
-      g_value_set_int (gimp_value_array_index (args, 0),
-                       GIMP_RUN_INTERACTIVE);
-
-      gimp_procedure_execute_async (procedure, gimp,
-                                    gimp_get_user_context (gimp),
-                                    GIMP_PROGRESS (display), args,
-                                    GIMP_OBJECT (display), &error);
-
-      if (error)
-        {
-          gimp_message_literal (gimp,
-                                G_OBJECT (display), GIMP_MESSAGE_ERROR,
-                                error->message);
-          g_error_free (error);
-        }
-      else
+      if (procedure_commands_run_procedure (procedure, gimp,
+                                            GIMP_PROGRESS (display),
+                                            GIMP_RUN_INTERACTIVE, args,
+                                            display))
         {
           /* remember only image plug-ins */
           if (procedure->num_args >= 2 &&

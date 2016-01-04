@@ -64,37 +64,35 @@ gimp_filter_history_add (Gimp          *gimp,
                          GimpProcedure *procedure)
 {
   GList *link;
-  gint   history_size;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   /* return early if the procedure is already at the top */
-  if (gimp->filter_history && gimp->filter_history->data == procedure)
+  if (gimp->filter_history &&
+      gimp_procedure_name_compare (gimp->filter_history->data, procedure) == 0)
     return;
 
-  history_size = gimp_filter_history_size (gimp);
+  /* ref new first then unref old, they might be the same */
+  g_object_ref (procedure);
 
-  link = g_list_find (gimp->filter_history, procedure);
-
-  if (link)
-    {
-      gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
-      gimp->filter_history = g_list_prepend (gimp->filter_history, procedure);
-    }
-  else
-    {
-      gimp->filter_history = g_list_prepend (gimp->filter_history,
-                                             g_object_ref (procedure));
-    }
-
-  link = g_list_nth (gimp->filter_history, history_size);
+  link = g_list_find_custom (gimp->filter_history, procedure,
+                             (GCompareFunc) gimp_procedure_name_compare);
 
   if (link)
     {
-      gimp->filter_history = g_list_remove_link (gimp->filter_history, link);
       g_object_unref (link->data);
-      g_list_free (link);
+      gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
+    }
+
+  gimp->filter_history = g_list_prepend (gimp->filter_history, procedure);
+
+  link = g_list_nth (gimp->filter_history, gimp_filter_history_size (gimp));
+
+  if (link)
+    {
+      g_object_unref (link->data);
+      gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
     }
 
   gimp_filter_history_changed (gimp);
@@ -109,12 +107,13 @@ gimp_filter_history_remove (Gimp          *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  link = g_list_find (gimp->filter_history, procedure);
+  link = g_list_find_custom (gimp->filter_history, procedure,
+                             (GCompareFunc) gimp_procedure_name_compare);
 
   if (link)
     {
+      g_object_unref (link->data);
       gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
-      g_object_unref (procedure);
 
       gimp_filter_history_changed (gimp);
     }
