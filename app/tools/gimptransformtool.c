@@ -171,6 +171,7 @@ static GimpItem *gimp_transform_tool_get_active_item        (GimpTransformTool  
                                                              GimpImage             *image);
 static GimpItem *gimp_transform_tool_check_active_item      (GimpTransformTool     *tr_tool,
                                                              GimpImage             *display,
+                                                             gboolean               invisible_layer_ok,
                                                              GError               **error);
 
 
@@ -270,7 +271,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  item = gimp_transform_tool_check_active_item (tr_tool, image, error);
+  item = gimp_transform_tool_check_active_item (tr_tool, image, FALSE, error);
 
   if (! item)
     return FALSE;
@@ -771,7 +772,7 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
                                                               &modifier);
     }
 
-  if (! gimp_transform_tool_check_active_item (tr_tool, image, NULL))
+  if (! gimp_transform_tool_check_active_item (tr_tool, image, TRUE, NULL))
     modifier = GIMP_CURSOR_MODIFIER_BAD;
 
   gimp_tool_control_set_cursor          (tool->control, cursor);
@@ -1348,7 +1349,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   gboolean              new_layer      = FALSE;
   GError               *error          = NULL;
 
-  active_item = gimp_transform_tool_check_active_item (tr_tool, image, &error);
+  active_item = gimp_transform_tool_check_active_item (tr_tool, image,
+                                                       TRUE, &error);
 
   if (! active_item)
     {
@@ -1815,6 +1817,7 @@ gimp_transform_tool_get_active_item (GimpTransformTool *tr_tool,
 static GimpItem *
 gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
                                        GimpImage          *image,
+                                       gboolean            invisible_layer_ok,
                                        GError            **error)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
@@ -1834,7 +1837,8 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
       else
         locked_message = _("The active layer's position and size are locked.");
 
-      if (item && ! gimp_item_is_visible (item))
+      /*  invisible_layer_ok is such a hack, see bug #759194 */
+      if (item && ! invisible_layer_ok && ! gimp_item_is_visible (item))
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                _("The active layer is not visible."));
