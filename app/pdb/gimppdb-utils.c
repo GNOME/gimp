@@ -31,6 +31,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimpitem.h"
 
 #include "text/gimptextlayer.h"
@@ -734,6 +735,29 @@ gimp_pdb_image_get_guide (GimpImage  *image,
                gimp_image_get_display_name (image),
                gimp_image_get_ID (image),
                guide_ID);
+  return NULL;
+}
+
+GimpSamplePoint *
+gimp_pdb_image_get_sample_point (GimpImage  *image,
+                                 gint        sample_point_ID,
+                                 GError    **error)
+{
+  GimpSamplePoint *sample_point;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  sample_point = gimp_image_get_sample_point (image, sample_point_ID);
+
+  if (sample_point)
+    return sample_point;
+
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+               _("Image '%s' (%d) does not contain sample point with ID %d"),
+               gimp_image_get_display_name (image),
+               gimp_image_get_ID (image),
+               sample_point_ID);
   return NULL;
 }
 

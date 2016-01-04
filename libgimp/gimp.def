@@ -391,6 +391,7 @@ EXPORTS
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer
+	gimp_image_add_sample_point
 	gimp_image_add_vectors
 	gimp_image_add_vguide
 	gimp_image_attach_new_parasite
@@ -407,9 +408,11 @@ EXPORTS
 	gimp_image_crop
 	gimp_image_delete
 	gimp_image_delete_guide
+	gimp_image_delete_sample_point
 	gimp_image_detach_parasite
 	gimp_image_duplicate
 	gimp_image_find_next_guide
+	gimp_image_find_next_sample_point
 	gimp_image_flatten
 	gimp_image_flip
 	gimp_image_floating_sel_attached_to
@@ -445,6 +448,7 @@ EXPORTS
 	gimp_image_get_parasite_list
 	gimp_image_get_precision
 	gimp_image_get_resolution
+	gimp_image_get_sample_point_position
 	gimp_image_get_selection
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail

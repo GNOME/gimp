@@ -33,10 +33,18 @@ struct _GimpSamplePoint
 
 GType             gimp_sample_point_get_type (void) G_GNUC_CONST;
 
-GimpSamplePoint * gimp_sample_point_new      (guint32          sample_point_ID);
+GimpSamplePoint * gimp_sample_point_new          (guint32          sample_point_ID);
 
-GimpSamplePoint * gimp_sample_point_ref      (GimpSamplePoint *sample_point);
-void              gimp_sample_point_unref    (GimpSamplePoint *sample_point);
+GimpSamplePoint * gimp_sample_point_ref          (GimpSamplePoint *sample_point);
+void              gimp_sample_point_unref        (GimpSamplePoint *sample_point);
 
+guint32           gimp_sample_point_get_ID       (GimpSamplePoint *sample_point);
+
+void              gimp_sample_point_get_position (GimpSamplePoint *sample_point,
+                                                  gint            *position_x,
+                                                  gint            *position_y);
+void              gimp_sample_point_set_position (GimpSamplePoint *sample_point,
+                                                  gint             position_x,
+                                                  gint             position_y);
 
 #endif /* __GIMP_SAMPLE_POINT_H__ */

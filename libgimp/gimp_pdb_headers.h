@@ -55,6 +55,7 @@
 #include <libgimp/gimpimageconvert_pdb.h>
 #include <libgimp/gimpimagegrid_pdb.h>
 #include <libgimp/gimpimageguides_pdb.h>
+#include <libgimp/gimpimagesamplepoints_pdb.h>
 #include <libgimp/gimpimageselect_pdb.h>
 #include <libgimp/gimpimagetransform_pdb.h>
 #include <libgimp/gimpimageundo_pdb.h>

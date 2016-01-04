@@ -75,8 +75,7 @@ gimp_image_add_sample_point (GimpImage       *image,
 
   private->sample_points = g_list_append (private->sample_points, sample_point);
 
-  sample_point->x = x;
-  sample_point->y = y;
+  gimp_sample_point_set_position (sample_point, x, y);
   gimp_sample_point_ref (sample_point);
 
   gimp_image_sample_point_added (image, sample_point);
@@ -103,8 +102,7 @@ gimp_image_remove_sample_point (GimpImage       *image,
 
   gimp_image_sample_point_removed (image, sample_point);
 
-  sample_point->x = -1;
-  sample_point->y = -1;
+  gimp_sample_point_set_position (sample_point, -1, -1);
   gimp_sample_point_unref (sample_point);
 }
 
@@ -127,8 +125,7 @@ gimp_image_move_sample_point (GimpImage       *image,
                                        C_("undo-type", "Move Sample Point"),
                                        sample_point);
 
-  sample_point->x = x;
-  sample_point->y = y;
+  gimp_sample_point_set_position (sample_point, x, y);
 
   gimp_image_sample_point_moved (image, sample_point);
 }
@@ -139,6 +136,58 @@ gimp_image_get_sample_points (GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
+}
+
+GimpSamplePoint *
+gimp_image_get_sample_point (GimpImage *image,
+                             guint32    id)
+{
+  GList *sample_points;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  for (sample_points = GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
+       sample_points;
+       sample_points = g_list_next (sample_points))
+    {
+      GimpSamplePoint *sample_point = sample_points->data;
+
+      if (gimp_sample_point_get_ID (sample_point) == id)
+        return sample_point;
+    }
+
+  return NULL;
+}
+
+GimpSamplePoint *
+gimp_image_get_next_sample_point (GimpImage *image,
+                                  guint32    id,
+                                  gboolean  *sample_point_found)
+{
+  GList *sample_points;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (sample_point_found != NULL, NULL);
+
+  if (id == 0)
+    *sample_point_found = TRUE;
+  else
+    *sample_point_found = FALSE;
+
+  for (sample_points = GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
+       sample_points;
+       sample_points = g_list_next (sample_points))
+    {
+      GimpSamplePoint *sample_point = sample_points->data;
+
+      if (*sample_point_found) /* this is the first guide after the found one */
+        return sample_point;
+
+      if (gimp_sample_point_get_ID (sample_point) == id) /* found it, next one will be returned */
+        *sample_point_found = TRUE;
+    }
+
+  return NULL;
 }
 
 GimpSamplePoint *
@@ -166,13 +215,17 @@ gimp_image_find_sample_point (GimpImage *image,
        list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
+      gint             sp_x;
+      gint             sp_y;
       gdouble          dist;
 
-      if (sample_point->x < 0 || sample_point->y < 0)
+      gimp_sample_point_get_position (sample_point, &sp_x, &sp_y);
+
+      if (sp_x < 0 || sp_y < 0)
         continue;
 
-      dist = hypot ((sample_point->x + 0.5) - x,
-                    (sample_point->y + 0.5) - y);
+      dist = hypot ((sp_x + 0.5) - x,
+                    (sp_y + 0.5) - y);
       if (dist < MIN (epsilon_y, mindist))
         {
           mindist = dist;

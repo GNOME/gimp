@@ -28,6 +28,7 @@
     image_convert
     image_grid
     image_guides
+    image_sample_points
     image_select
     image_transform
     image_undo

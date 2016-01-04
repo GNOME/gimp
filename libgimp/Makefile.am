@@ -107,6 +107,7 @@ PDB_WRAPPERS_C = \
 	gimpimageconvert_pdb.c		\
 	gimpimagegrid_pdb.c		\
 	gimpimageguides_pdb.c		\
+	gimpimagesamplepoints_pdb.c	\
 	gimpimageselect_pdb.c		\
 	gimpimagetransform_pdb.c	\
 	gimpimageundo_pdb.c		\
@@ -163,6 +164,7 @@ PDB_WRAPPERS_H = \
 	gimpimageconvert_pdb.h		\
 	gimpimagegrid_pdb.h		\
 	gimpimageguides_pdb.h		\
+	gimpimagesamplepoints_pdb.h	\
 	gimpimageselect_pdb.h		\
 	gimpimagetransform_pdb.h	\
 	gimpimageundo_pdb.h		\

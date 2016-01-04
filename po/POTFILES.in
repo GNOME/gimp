@@ -302,6 +302,7 @@ app/pdb/gimpprocedure.c
 app/pdb/image-cmds.c
 app/pdb/image-convert-cmds.c
 app/pdb/image-guides-cmds.c
+app/pdb/image-sample-points-cmds.c
 app/pdb/image-select-cmds.c
 app/pdb/image-transform-cmds.c
 app/pdb/image-undo-cmds.c

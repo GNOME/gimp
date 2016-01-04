@@ -227,6 +227,14 @@ package Gimp::CodeGen::pdb;
 		     get_value_func => '$var = g_value_get_uint ($value)',
 		     set_value_func => 'g_value_set_uint ($value, $var)' },
 
+   sample_point => { name           => 'INT32',
+		     type           => 'gint32 ',
+		     const_type     => 'gint32 ',
+		     id             => 1,
+		     init_value     => '0',
+		     get_value_func => '$var = g_value_get_uint ($value)',
+		     set_value_func => 'g_value_set_uint ($value, $var)' },
+
     unit        => { name           => 'INT32',
 		     type           => 'GimpUnit ',
 		     const_type     => 'GimpUnit ',
