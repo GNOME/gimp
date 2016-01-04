@@ -1323,7 +1323,7 @@ add_layers (const gint32  image_id,
                                          img_a->columns, img_a->rows,
                                          image_type, 0, GIMP_NORMAL_MODE);
               g_free (lyr_a[lidx]->name);
-              gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
+              gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
               drawable = gimp_drawable_get (layer_id);
               gimp_drawable_fill (drawable->drawable_id, GIMP_TRANSPARENT_FILL);
               gimp_item_set_visible (drawable->drawable_id, lyr_a[lidx]->layer_flags.visible);
@@ -1360,7 +1360,7 @@ add_layers (const gint32  image_id,
                                          layer_mode);
               IFDBG(3) g_debug ("Layer tattoo: %d", layer_id);
               g_free (lyr_a[lidx]->name);
-              gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
+              gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
               gimp_layer_set_offsets (layer_id, l_x, l_y);
               gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
               drawable = gimp_drawable_get (layer_id);
