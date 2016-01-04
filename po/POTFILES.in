@@ -43,7 +43,7 @@ app/actions/file-actions.c
 app/actions/file-commands.c
 app/actions/filters-actions.c
 app/actions/fonts-actions.c
-app/actions/gimpgeglprocedure.h
+app/actions/gimpgeglprocedure.c
 app/actions/gradient-editor-actions.c
 app/actions/gradient-editor-commands.c
 app/actions/gradients-actions.c
