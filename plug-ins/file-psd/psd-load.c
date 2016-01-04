@@ -96,7 +96,7 @@ static gint             read_channel_data          (PSDchannel     *channel,
                                                     guint16         compression,
                                                     const guint16  *rle_pack_len,
                                                     FILE           *f,
-                                                    guint16         comp_len,
+                                                    guint32         comp_len,
                                                     GError        **error);
 
 static void             convert_1_bit              (const gchar *src,
@@ -2000,7 +2000,7 @@ read_channel_data (PSDchannel     *channel,
                    guint16         compression,
                    const guint16  *rle_pack_len,
                    FILE           *f,
-                   guint16         comp_len,
+                   guint32         comp_len,
                    GError        **error)
 {
   gchar    *raw_data;
@@ -2090,7 +2090,8 @@ read_channel_data (PSDchannel     *channel,
             }
           else
             {
-              psd_set_error (feof (f), errno, error);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Failed to decompress data"));
               g_free (src);
               return -1;
             }
