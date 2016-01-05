@@ -88,10 +88,11 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 
   if (x_offset || y_offset)
     {
+      gimp_display_shell_scrolled (shell);
+
       gimp_overlay_box_scroll (GIMP_OVERLAY_BOX (shell->canvas),
                                -x_offset, -y_offset);
 
-      gimp_display_shell_scrolled (shell);
     }
 
   /* re-enable the active tool */
@@ -132,9 +133,9 @@ gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
 
   gimp_display_shell_scroll_clamp_and_update (shell);
 
-  gimp_display_shell_expose_full (shell);
-
   gimp_display_shell_scrolled (shell);
+
+  gimp_display_shell_expose_full (shell);
 
   /* re-enable the active tool */
   gimp_display_shell_resume (shell);
