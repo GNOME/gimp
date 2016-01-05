@@ -41,13 +41,13 @@
      inkscape:window-height="741"
      id="namedview88"
      showgrid="false"
-     inkscape:zoom="1.1393811"
-     inkscape:cx="-95.68665"
-     inkscape:cy="35.631354"
+     inkscape:zoom="4.5575244"
+     inkscape:cx="186.51844"
+     inkscape:cy="-146.34544"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="tools"
+     inkscape:current-layer="stock"
      showborder="false"
      inkscape:snap-nodes="true"
      inkscape:snap-bbox="true"
@@ -56,7 +56,7 @@
      inkscape:guide-bbox="true"
      inkscape:snap-to-guides="true"
      inkscape:snap-grids="true"
-     inkscape:snap-global="false"
+     inkscape:snap-global="true"
      inkscape:object-nodes="false"
      inkscape:snap-bbox-midpoints="false"
      inkscape:object-paths="false"
@@ -10836,53 +10836,6 @@
     <g
        transform="translate(-33.717785,-425.52363)"
        style="display:inline"
-       id="gimp-letter-spacing"
-       inkscape:label="gimp-letter-spacing">
-      <rect
-         transform="translate(241.0002,217)"
-         y="342"
-         x="-80"
-         height="16"
-         width="16"
-         id="rect13832"
-         style="fill:none;stroke:none" />
-      <path
-         sodipodi:nodetypes="ccccccccccccccccccsccccccccscccccccccccccccccccccccccccccccccc"
-         inkscape:connector-curvature="0"
-         id="rect13834"
-         transform="translate(241.0002,217)"
-         d="m -79,343 0,14 14,0 0,-14 z m 8,2 1,0 0,2 1.71875,0 c 0.0118,-10e-4 0.01965,8.8e-4 0.03125,0 1.63636,-0.12511 1.71219,4.0687 0.03125,4 l -2.28125,0 -0.46875,0 0,-0.4375 C -70.9992,347.60737 -71,350.11459 -71,345 Z m -5,1 1.8125,0 0.03125,0 c 0.31461,0.0321 0.63337,0.18475 0.84375,0.4375 0.21038,0.25275 0.3125,0.59829 0.3125,0.96875 l -0.03125,3.15625 0,0.4375 -0.4375,0 -2.3125,0 c -1.6559,0.0653 -1.57925,-3.02317 0.03125,-2.90625 l 0.03125,0 1.84375,0 0,-0.6875 c 0,-0.0153 5e-4,-0.017 0,-0.0313 -0.0066,-0.1883 -0.0759,-0.316 -0.125,-0.375 -0.05279,-0.0634 -0.12315,-0.112 -0.25,-0.125 l -1.75,0 z m 5.9375,1.90625 c 0.004,0.14697 -0.006,1.71194 0,2.1875 l 1.84375,0 0.03125,0 c 0.43459,0.0178 0.36781,-2.2257 0,-2.1875 l -0.03125,0 -0.03125,0 z m -5.75,1.0625 c -0.40144,-0.0403 -0.46799,1.17475 0,1.15625 l 0.03125,0 1.84375,0 0.03125,-1.15625 -1.84375,0 -0.03125,0 z M -76,352 l 1,0 0,2 6,0 0,-2 1,0 0,2 0,1 -1,0 -6,0 -1,0 0,-1 z"
-         style="fill:#bebebe;fill-opacity:1;stroke:none" />
-    </g>
-    <g
-       transform="translate(-33.717785,-425.52363)"
-       style="display:inline"
-       id="gimp-line-spacing"
-       inkscape:label="gimp-line-spacing">
-      <g
-         transform="matrix(0,-1,1,0,-377.9998,736.0002)"
-         id="g1563"
-         inkscape:label="gimp-letter-spacing">
-        <rect
-           transform="translate(241.0002,217)"
-           y="342"
-           x="-80"
-           height="16"
-           width="16"
-           id="rect13904"
-           style="fill:none;stroke:none" />
-        <path
-           sodipodi:nodetypes="ccccccccccccccccccccccc"
-           inkscape:connector-curvature="0"
-           id="path13906"
-           transform="matrix(0,1,-1,0,519.0002,619)"
-           d="m -58,345 8,0 0,3 -8,0 z m 9,1 2,0 1,0 0,1 0,6 0,1 -1,0 -2,0 0,-1 2,0 0,-6 -2,0 z m -9,6 8,0 0,3 -8,0 z"
-           style="fill:#bebebe;fill-opacity:1;stroke:none" />
-      </g>
-    </g>
-    <g
-       transform="translate(-33.717785,-425.52363)"
-       style="display:inline"
        id="gimp-channel"
        inkscape:label="gimp-channel">
       <rect
@@ -13049,6 +13002,167 @@
          transform="translate(241.0002,217)"
          d="m -176,405 c -1.108,0 -2,0.892 -2,2 l 0,6 c 0,1.108 0.892,2 2,2 l 8,0 c 1.108,0 2,-0.892 2,-2 l 0,-6 c 0,-1.108 -0.892,-2 -2,-2 l -8,0 z m 1,2 6,0 c 0.554,0 1,0.446 1,1 l 0,4 c 0,0.554 -0.446,1 -1,1 l -6,0 c -0.554,0 -1,-0.446 -1,-1 l 0,-4 c 0,-0.554 0.446,-1 1,-1 z"
          style="fill:#bebebe;fill-opacity:1;stroke:none" />
+    </g>
+    <g
+       id="gimp-letter-spacing"
+       transform="translate(-90.291178,-59.752481)"
+       inkscape:label="gimp-letter-spacing">
+      <rect
+         inkscape:transform-center-y="52.3259"
+         inkscape:transform-center-x="-94.752306"
+         y="193.22885"
+         x="217.57359"
+         height="16"
+         width="16"
+         id="rect6639-7"
+         style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         transform="matrix(0.72463181,0,0,0.72463181,217.60445,-555.14546)"
+         id="g4143"
+         style="display:inline">
+        <g
+           style="display:inline;fill:#505050"
+           id="g18493-9-8"
+           transform="matrix(-0.90910044,0,0,0.60603631,310.15095,651.25673)"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89">
+          <path
+             style="color:#000000;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1;enable-background:accumulate"
+             d="m 320.06,656 0,3 18,0 0,-3 -18,0 z"
+             id="path18497-9-8"
+             inkscape:connector-curvature="0" />
+        </g>
+        <path
+           style="color:#555753;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1;enable-background:accumulate"
+           sodipodi:nodetypes="ccccccccccccccc"
+           id="path17259-0-7-2-6"
+           d="m 15.55,1046.09 0,0.91 c 0,0.23 0.12,0.48 0.28,0.65 l 2.44,2.07 -2.44,2.07 c -0.17,0.17 -0.28,0.42 -0.28,0.65 l 0,0.91 0.38,0 0.53,0 c 0.28,0 0.5,-0.08 0.68,-0.26 1.29,-0.98 2.58,-2.41 3.86,-3.38 l -3.86,-3.38 c -0.18,-0.17 -0.4,-0.26 -0.68,-0.26 l -0.53,0 z"
+           inkscape:connector-curvature="0"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <path
+           style="color:#000000;display:inline;overflow:visible;fill:none;stroke:#bebebe;stroke-width:1.82000005;stroke-miterlimit:4;stroke-opacity:1;enable-background:accumulate"
+           sodipodi:nodetypes="ccccssc"
+           inkscape:connector-curvature="0"
+           id="path18616-0-4-7"
+           d="m 2.81,1036.08 3.64,0 c 0.96,0 1.82,0.9 1.82,1.82 l 0,5.45 -4.56,0 c -2.38,0 -2.44,-3.64 0,-3.64 l 4.56,0"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <path
+           style="color:#000000;display:inline;overflow:visible;fill:none;stroke:#bebebe;stroke-width:1.82000005;stroke-miterlimit:4;stroke-opacity:1;enable-background:accumulate"
+           d="m 13.73,1034.26 0,9.09 4.78,0 c 2.08,0 2.14,-4.55 0,-4.55 l -4.78,0"
+           id="path18618-3-4-3"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccssc"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <path
+           style="color:#555753;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1;enable-background:accumulate"
+           sodipodi:nodetypes="ccccccccccccccc"
+           id="path17259-0-7-2-6-9"
+           d="m 6.45,1046.08 0,0.91 c 0,0.23 -0.12,0.48 -0.28,0.65 l -2.44,2.07 2.44,2.07 c 0.17,0.17 0.28,0.42 0.28,0.65 l 0,0.91 -0.38,0 -0.53,0 c -0.28,0 -0.5,-0.08 -0.68,-0.26 -1.29,-0.98 -2.58,-2.41 -3.86,-3.38 l 3.86,-3.38 c 0.18,-0.17 0.4,-0.26 0.68,-0.26 l 0.53,0 z"
+           inkscape:connector-curvature="0"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+      </g>
+    </g>
+    <g
+       style="display:inline"
+       id="gimp-line-spacing"
+       transform="translate(-117.78424,-58.223017)"
+       inkscape:label="gimp-line-spacing">
+      <rect
+         inkscape:transform-center-y="52.3259"
+         inkscape:transform-center-x="-94.752306"
+         y="191.69939"
+         x="265.06665"
+         height="16"
+         width="16"
+         id="rect6639-0"
+         style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         transform="matrix(0.65939066,0,0,0.65939066,304.63498,-468.08532)"
+         id="g4159">
+        <rect
+           style="color:#555753;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1"
+           id="rect5996-2-1-0-7-8-0-9"
+           width="13.2"
+           height="2.2"
+           x="36.880001"
+           y="1019.87"
+           inkscape:label="a"
+           transform="scale(-1,1)"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <path
+           style="color:#555753;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1;enable-background:accumulate"
+           inkscape:connector-curvature="0"
+           d="m -52.27,1007.77 -1.1,0 c -0.28,0 -0.58,-0.14 -0.79,-0.34 l -1.41,-1.86 -1.41,1.86 c -0.21,0.2 -0.51,0.34 -0.79,0.34 l -1.1,0 0,-0.45 0,-0.65 c 0,-0.34 0.1,-0.61 0.31,-0.82 1.18,-1.56 1.81,-2.02 2.99,-3.57 l 2.99,3.58 c 0.21,0.22 0.31,0.48 0.31,0.83 l 0,0.65 z"
+           id="path4538-2-6-6-3-9"
+           sodipodi:nodetypes="ccccccccccccccc"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <path
+           style="color:#000000;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1;enable-background:accumulate"
+           d="m -56.67,1020.97 2.2,0 0,-16.5 -2.2,0 0,16.5 z"
+           id="path5322-17-0-5-9-9"
+           inkscape:connector-curvature="0"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <path
+           style="color:#555753;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1;enable-background:accumulate"
+           inkscape:connector-curvature="0"
+           d="m -58.87,1017.67 1.1,0 c 0.28,0 0.58,0.14 0.79,0.34 l 1.41,1.86 1.41,-1.86 c 0.21,-0.2 0.51,-0.34 0.79,-0.34 l 1.1,0 0,0.45 0,0.65 c 0,0.34 -0.1,0.61 -0.31,0.83 -1.18,1.56 -1.81,2.02 -2.99,3.58 l -2.99,-3.57 c -0.21,-0.22 -0.31,-0.48 -0.31,-0.82 l 0,-0.65 z"
+           id="path4538-2-6-3-3-1-9"
+           sodipodi:nodetypes="ccccccccccccccc"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <rect
+           style="color:#555753;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1"
+           id="rect5996-2-1-0-7-5-7-64"
+           width="13.2"
+           height="2.2"
+           x="36.880001"
+           y="1014.37"
+           inkscape:label="a"
+           transform="scale(-1,1)"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <rect
+           style="color:#555753;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1"
+           id="rect5996-2-1-0-4-1-0"
+           width="13.2"
+           height="2.2"
+           x="36.880001"
+           y="1008.87"
+           inkscape:label="a"
+           transform="scale(-1,1)"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+        <rect
+           style="color:#555753;display:inline;overflow:visible;fill:#bebebe;fill-opacity:1"
+           id="rect5996-2-1-0-4-1-0-9"
+           width="13.2"
+           height="2.2"
+           x="36.880001"
+           y="1003.37"
+           inkscape:label="a"
+           transform="scale(-1,1)"
+           inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89" />
+      </g>
     </g>
   </g>
   <text
