@@ -901,6 +901,9 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   if (! shell->display)
     return;
 
+  /* freeze the active tool */
+  gimp_display_shell_pause (shell);
+
   gimp_display_shell_untransform_xy_f (shell,
                                        viewport_x,
                                        viewport_y,
@@ -924,6 +927,9 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   gimp_display_shell_scroll (shell,
                              new_viewport_x - viewport_x,
                              new_viewport_y - viewport_y);
+
+  /* re-enable the active tool */
+  gimp_display_shell_resume (shell);
 }
 
 static gboolean
