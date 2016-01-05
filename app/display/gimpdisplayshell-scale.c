@@ -1022,9 +1022,8 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                              gdouble           viewport_x,
                              gdouble           viewport_y)
 {
-  gdouble scale_x, scale_y;
-  gdouble image_focus_x, image_focus_y;
-  gdouble target_offset_x, target_offset_y;
+  gdouble image_x, image_y;
+  gdouble new_viewport_x, new_viewport_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1034,22 +1033,26 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   gimp_display_shell_untransform_xy_f (shell,
                                        viewport_x,
                                        viewport_y,
-                                       &image_focus_x,
-                                       &image_focus_y);
+                                       &image_x,
+                                       &image_y);
 
-  gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
-
-  target_offset_x = scale_x * image_focus_x - viewport_x;
-  target_offset_y = scale_y * image_focus_y - viewport_y;
-
-  /* Note that we never come here if we need to
-   * resize_windows_on_zoom
+  /* Note that we never come here if we need to resize_windows_on_zoom
    */
   gimp_display_shell_scale_by_values (shell,
                                       scale,
-                                      target_offset_x,
-                                      target_offset_y,
+                                      shell->offset_x,
+                                      shell->offset_y,
                                       FALSE);
+
+  gimp_display_shell_transform_xy_f (shell,
+                                     image_x,
+                                     image_y,
+                                     &new_viewport_x,
+                                     &new_viewport_y);
+
+  gimp_display_shell_scroll (shell,
+                             new_viewport_x - viewport_x,
+                             new_viewport_y - viewport_y);
 }
 
 static gboolean
