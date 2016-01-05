@@ -28,10 +28,6 @@ void     gimp_display_shell_scale_set_dot_for_dot          (GimpDisplayShell *sh
 void     gimp_display_shell_scale_get_image_size           (GimpDisplayShell *shell,
                                                             gint             *w,
                                                             gint             *h);
-void     gimp_display_shell_scale_get_image_size_for_scale (GimpDisplayShell *shell,
-                                                            gdouble           scale,
-                                                            gint             *w,
-                                                            gint             *h);
 
 void     gimp_display_shell_scale                          (GimpDisplayShell *shell,
                                                             GimpZoomType      zoom_type,
