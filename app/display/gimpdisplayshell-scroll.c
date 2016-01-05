@@ -36,13 +36,14 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-rotate.h"
+#include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-scrollbars.h"
 #include "gimpdisplayshell-transform.h"
 
 
-#define OVERPAN_FACTOR      0.5
-#define MINIMUM_STEP_AMOUNT 1.0
+#define OVERPAN_FACTOR 0.5
 
 
 /**
@@ -231,8 +232,8 @@ gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
       shell->offset_y = 0;
     }
 
-  gimp_display_shell_scale_update_scrollbars (shell);
-  gimp_display_shell_scale_update_rulers (shell);
+  gimp_display_shell_scrollbars_update (shell);
+  gimp_display_shell_rulers_update (shell);
 }
 
 /**
@@ -465,90 +466,4 @@ gimp_display_shell_scroll_get_viewport (GimpDisplayShell *shell,
   *y = shell->offset_y    / shell->scale_y;
   *w = shell->disp_width  / shell->scale_x;
   *h = shell->disp_height / shell->scale_y;
-}
-
-/**
- * gimp_display_shell_scroll_setup_hscrollbar:
- * @shell:
- * @value:
- *
- * Setup the limits of the horizontal scrollbar
- **/
-void
-gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
-                                            gdouble           value)
-{
-  gint    sw;
-  gdouble lower;
-  gdouble upper;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (! shell->display ||
-      ! gimp_display_get_image (shell->display))
-    return;
-
-  gimp_display_shell_scale_get_image_size (shell, &sw, NULL);
-
-  if (shell->disp_width < sw)
-    {
-      lower = MIN (value, 0);
-      upper = MAX (value + shell->disp_width, sw);
-    }
-  else
-    {
-      lower = MIN (value, -(shell->disp_width - sw) / 2);
-      upper = MAX (value + shell->disp_width,
-                   sw + (shell->disp_width - sw) / 2);
-    }
-
-  g_object_set (shell->hsbdata,
-                "lower",          lower,
-                "upper",          upper,
-                "step-increment", (gdouble) MAX (shell->scale_x,
-                                                 MINIMUM_STEP_AMOUNT),
-                NULL);
-}
-
-/**
- * gimp_display_shell_scroll_setup_vscrollbar:
- * @shell:
- * @value:
- *
- * Setup the limits of the vertical scrollbar
- **/
-void
-gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
-                                            gdouble           value)
-{
-  gint    sh;
-  gdouble lower;
-  gdouble upper;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (! shell->display ||
-      ! gimp_display_get_image (shell->display))
-    return;
-
-  gimp_display_shell_scale_get_image_size (shell, NULL, &sh);
-
-  if (shell->disp_height < sh)
-    {
-      lower = MIN (value, 0);
-      upper = MAX (value + shell->disp_height, sh);
-    }
-  else
-    {
-      lower = MIN (value, -(shell->disp_height - sh) / 2);
-      upper = MAX (value + shell->disp_height,
-                   sh + (shell->disp_height - sh) / 2);
-    }
-
-  g_object_set (shell->vsbdata,
-                "lower",          lower,
-                "upper",          upper,
-                "step-increment", (gdouble) MAX (shell->scale_y,
-                                                 MINIMUM_STEP_AMOUNT),
-                NULL);
 }

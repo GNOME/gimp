@@ -56,10 +56,5 @@ void   gimp_display_shell_scroll_get_viewport        (GimpDisplayShell *shell,
                                                       gdouble          *w,
                                                       gdouble          *h);
 
-void   gimp_display_shell_scroll_setup_hscrollbar    (GimpDisplayShell *shell,
-                                                      gdouble           value);
-void   gimp_display_shell_scroll_setup_vscrollbar    (GimpDisplayShell *shell,
-                                                      gdouble           value);
-
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCROLL_H__  */

@@ -40,6 +40,7 @@
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-scrollbars.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayxfer.h"
@@ -374,7 +375,7 @@ gimp_display_shell_hscrollbar_change_value (GtkRange         *range,
 
   g_object_freeze_notify (G_OBJECT (shell->hsbdata));
 
-  gimp_display_shell_scroll_setup_hscrollbar (shell, value);
+  gimp_display_shell_scrollbars_setup_horizontal (shell, value);
 
   g_object_thaw_notify (G_OBJECT (shell->hsbdata)); /* emits "changed" */
 
@@ -397,7 +398,7 @@ gimp_display_shell_vscrollbar_change_value (GtkRange         *range,
 
   g_object_freeze_notify (G_OBJECT (shell->vsbdata));
 
-  gimp_display_shell_scroll_setup_vscrollbar (shell, value);
+  gimp_display_shell_scrollbars_setup_vertical (shell, value);
 
   g_object_thaw_notify (G_OBJECT (shell->vsbdata)); /* emits "changed" */
 

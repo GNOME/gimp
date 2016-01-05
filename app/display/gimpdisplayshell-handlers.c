@@ -59,6 +59,7 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-profile.h"
+#include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
@@ -568,7 +569,7 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *image,
     {
       if (shell->unit != GIMP_UNIT_PIXEL)
         {
-          gimp_display_shell_scale_update_rulers (shell);
+          gimp_display_shell_rulers_update (shell);
         }
 
       gimp_display_shell_scaled (shell);

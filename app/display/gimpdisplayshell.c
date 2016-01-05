@@ -70,6 +70,7 @@
 #include "gimpdisplayshell-progress.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-rotate.h"
+#include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
@@ -1643,7 +1644,7 @@ gimp_display_shell_set_unit (GimpDisplayShell *shell,
     {
       shell->unit = unit;
 
-      gimp_display_shell_scale_update_rulers (shell);
+      gimp_display_shell_rulers_update (shell);
 
       gimp_display_shell_scaled (shell);
 
