@@ -158,7 +158,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
       shell->dot_for_dot = dot_for_dot;
 
-      gimp_display_shell_scale_changed (shell);
+      gimp_display_shell_scale_update (shell);
 
       gimp_display_shell_scale_resize (shell,
                                        shell->display->config->resize_windows_on_zoom,
@@ -188,6 +188,34 @@ gimp_display_shell_scale_get_image_size (GimpDisplayShell *shell,
   gimp_display_shell_scale_get_image_size_for_scale (shell,
                                                      gimp_zoom_model_get_factor (shell->zoom),
                                                      w, h);
+}
+
+/* We used to calculate the scale factor in the SCALEFACTOR_X() and
+ * SCALEFACTOR_Y() macros. But since these are rather frequently
+ * called and the values rarely change, we now store them in the
+ * shell and call this function whenever they need to be recalculated.
+ */
+void
+gimp_display_shell_scale_update (GimpDisplayShell *shell)
+{
+  GimpImage *image;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      gimp_display_shell_calculate_scale_x_and_y (shell,
+                                                  gimp_zoom_model_get_factor (shell->zoom),
+                                                  &shell->scale_x,
+                                                  &shell->scale_y);
+    }
+  else
+    {
+      shell->scale_x = 1.0;
+      shell->scale_y = 1.0;
+    }
 }
 
 /**

@@ -29,6 +29,8 @@ void     gimp_display_shell_scale_get_image_size           (GimpDisplayShell *sh
                                                             gint             *w,
                                                             gint             *h);
 
+void     gimp_display_shell_scale_update                   (GimpDisplayShell *shell);
+
 void     gimp_display_shell_scale                          (GimpDisplayShell *shell,
                                                             GimpZoomType      zoom_type,
                                                             gdouble           scale,

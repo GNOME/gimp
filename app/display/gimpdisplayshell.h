@@ -261,8 +261,6 @@ void              gimp_display_shell_fill          (GimpDisplayShell   *shell,
                                                     GimpUnit            unit,
                                                     gdouble             scale);
 
-void              gimp_display_shell_scale_changed (GimpDisplayShell   *shell);
-
 void              gimp_display_shell_scaled        (GimpDisplayShell   *shell);
 void              gimp_display_shell_scrolled      (GimpDisplayShell   *shell);
 void              gimp_display_shell_rotated       (GimpDisplayShell   *shell);

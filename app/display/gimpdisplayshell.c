@@ -361,7 +361,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   /*  zoom model callback  */
   g_signal_connect_swapped (shell->zoom, "zoomed",
-                            G_CALLBACK (gimp_display_shell_scale_changed),
+                            G_CALLBACK (gimp_display_shell_scale_update),
                             shell);
 
   /*  active display callback  */
@@ -778,7 +778,7 @@ gimp_display_shell_constructed (GObject *object)
     }
 
   /* make sure the information is up-to-date */
-  gimp_display_shell_scale_changed (shell);
+  gimp_display_shell_scale_update (shell);
 }
 
 static void
@@ -1521,7 +1521,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
 
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
-  gimp_display_shell_scale_changed (shell);
+  gimp_display_shell_scale_update (shell);
 
   gimp_display_shell_sync_config (shell, shell->display->config);
 
@@ -1548,34 +1548,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
     g_idle_add_full (GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE,
                      (GSourceFunc) gimp_display_shell_fill_idle, shell,
                      NULL);
-}
-
-/* We used to calculate the scale factor in the SCALEFACTOR_X() and
- * SCALEFACTOR_Y() macros. But since these are rather frequently
- * called and the values rarely change, we now store them in the
- * shell and call this function whenever they need to be recalculated.
- */
-void
-gimp_display_shell_scale_changed (GimpDisplayShell *shell)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  image = gimp_display_get_image (shell->display);
-
-  if (image)
-    {
-      gimp_display_shell_calculate_scale_x_and_y (shell,
-                                                  gimp_zoom_model_get_factor (shell->zoom),
-                                                  &shell->scale_x,
-                                                  &shell->scale_y);
-    }
-  else
-    {
-      shell->scale_x = 1.0;
-      shell->scale_y = 1.0;
-    }
 }
 
 void
@@ -1847,7 +1819,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
       gimp_display_shell_title_update (shell);
 
       /* make sure the information is up-to-date */
-      gimp_display_shell_scale_changed (shell);
+      gimp_display_shell_scale_update (shell);
 
       gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                             gimp_image_get_active_layer (gimp_display_get_image (shell->display)));

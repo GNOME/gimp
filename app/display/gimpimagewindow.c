@@ -56,6 +56,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-tool-events.h"
 #include "gimpdisplayshell-transform.h"
@@ -777,7 +778,7 @@ gimp_image_window_monitor_changed (GimpWindow *window,
                              gtk_widget_get_screen (list->data));
 
       /*  make it fetch the new monitor's resolution  */
-      gimp_display_shell_scale_changed (GIMP_DISPLAY_SHELL (list->data));
+      gimp_display_shell_scale_update (GIMP_DISPLAY_SHELL (list->data));
 
       /*  make it fetch the right monitor profile  */
       gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (list->data));

@@ -563,7 +563,7 @@ static void
 gimp_display_shell_resolution_changed_handler (GimpImage        *image,
                                                GimpDisplayShell *shell)
 {
-  gimp_display_shell_scale_changed (shell);
+  gimp_display_shell_scale_update (shell);
 
   if (shell->dot_for_dot)
     {
@@ -990,7 +990,7 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
       shell->monitor_yres = GIMP_DISPLAY_CONFIG (config)->monitor_yres;
     }
 
-  gimp_display_shell_scale_changed (shell);
+  gimp_display_shell_scale_update (shell);
 
   if (! shell->dot_for_dot)
     {
