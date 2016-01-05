@@ -48,6 +48,18 @@
 static void   gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell);
 
 
+/**
+ * gimp_display_shell_scroll:
+ * @shell:
+ * @x_offset:
+ * @y_offset:
+ *
+ * This function scrolls the image in the shell's viewport. It does
+ * actual scrolling of the pixels, so only the newly scrolled-in parts
+ * are freshly redrawn.
+ *
+ * Use it for incremental actual panning.
+ **/
 void
 gimp_display_shell_scroll (GimpDisplayShell *shell,
                            gint              x_offset,
@@ -64,10 +76,13 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
   old_x = shell->offset_x;
   old_y = shell->offset_y;
 
+  /* freeze the active tool */
+  gimp_display_shell_pause (shell);
+
   shell->offset_x += x_offset;
   shell->offset_y += y_offset;
 
-  gimp_display_shell_scroll_clamp_offsets (shell);
+  gimp_display_shell_scroll_clamp_and_update (shell);
 
   /*  the actual changes in offset  */
   x_offset = (shell->offset_x - old_x);
@@ -75,31 +90,29 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 
   if (x_offset || y_offset)
     {
-      /*  reset the old values so that the tool can accurately redraw  */
-      shell->offset_x = old_x;
-      shell->offset_y = old_y;
-
-      gimp_display_shell_pause (shell);
-
-      /*  set the offsets back to the new values  */
-      shell->offset_x += x_offset;
-      shell->offset_y += y_offset;
-
-      gimp_display_shell_rotate_update_transform (shell);
-
       gimp_overlay_box_scroll (GIMP_OVERLAY_BOX (shell->canvas),
                                -x_offset, -y_offset);
 
-      /*  Update scrollbars and rulers  */
-      gimp_display_shell_scale_update_scrollbars (shell);
-      gimp_display_shell_scale_update_rulers (shell);
-
-      gimp_display_shell_resume (shell);
-
       gimp_display_shell_scrolled (shell);
     }
+
+  /* re-enable the active tool */
+  gimp_display_shell_resume (shell);
 }
 
+/**
+ * gimp_display_shell_scroll_set_offsets:
+ * @shell:
+ * @offset_x:
+ * @offset_y:
+ *
+ * This function scrolls the image in the shell's viewport. It redraws
+ * the entire canvas.
+ *
+ * Use it for setting the scroll offset on freshly scaled images or
+ * when the window is resized. For panning, use
+ * gimp_display_shell_scroll().
+ **/
 void
 gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
                                       gint              offset_x,
@@ -121,9 +134,9 @@ gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
 
   gimp_display_shell_scroll_clamp_and_update (shell);
 
-  gimp_display_shell_scrolled (shell);
-
   gimp_display_shell_expose_full (shell);
+
+  gimp_display_shell_scrolled (shell);
 
   /* re-enable the active tool */
   gimp_display_shell_resume (shell);
