@@ -59,10 +59,6 @@ void     gimp_display_shell_scale_shrink_wrap              (GimpDisplayShell *sh
 void     gimp_display_shell_scale_resize                   (GimpDisplayShell *shell,
                                                             gboolean          resize_window,
                                                             gboolean          grow_only);
-void     gimp_display_shell_calculate_scale_x_and_y        (GimpDisplayShell *shell,
-                                                            gdouble           scale,
-                                                            gdouble          *scale_x,
-                                                            gdouble          *scale_y);
 void     gimp_display_shell_set_initial_scale              (GimpDisplayShell *shell,
                                                             gdouble           scale,
                                                             gint             *display_width,

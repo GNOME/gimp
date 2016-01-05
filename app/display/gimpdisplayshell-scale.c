@@ -58,6 +58,11 @@ static void      gimp_display_shell_scale_get_image_size_for_scale
                                                           gdouble           scale,
                                                           gint             *w,
                                                           gint             *h);
+static void      gimp_display_shell_calculate_scale_x_and_y
+                                                         (GimpDisplayShell *shell,
+                                                          gdouble           scale,
+                                                          gdouble          *scale_x,
+                                                          gdouble          *scale_y);
 
   static void    gimp_display_shell_scale_to             (GimpDisplayShell *shell,
                                                           gdouble           scale,
@@ -693,40 +698,6 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp_display_shell_resume (shell);
 }
 
-/**
- * gimp_display_shell_calculate_scale_x_and_y:
- * @shell:
- * @scale:
- * @scale_x:
- * @scale_y:
- *
- **/
-void
-gimp_display_shell_calculate_scale_x_and_y (GimpDisplayShell *shell,
-                                            gdouble           scale,
-                                            gdouble          *scale_x,
-                                            gdouble          *scale_y)
-{
-  GimpImage *image;
-  gdouble    xres;
-  gdouble    yres;
-  gdouble    screen_xres;
-  gdouble    screen_yres;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  image = gimp_display_get_image (shell->display);
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  gimp_image_get_resolution (image, &xres, &yres);
-  gimp_display_shell_scale_get_screen_resolution (shell,
-                                                  &screen_xres, &screen_yres);
-
-  if (scale_x) *scale_x = scale * screen_xres / xres;
-  if (scale_y) *scale_y = scale * screen_yres / yres;
-}
-
 void
 gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
                                       gdouble           scale,
@@ -876,6 +847,34 @@ gimp_display_shell_scale_get_image_size_for_scale (GimpDisplayShell *shell,
 
   if (w) *w = scale_x * gimp_image_get_width  (image);
   if (h) *h = scale_y * gimp_image_get_height (image);
+}
+
+/**
+ * gimp_display_shell_calculate_scale_x_and_y:
+ * @shell:
+ * @scale:
+ * @scale_x:
+ * @scale_y:
+ *
+ **/
+static void
+gimp_display_shell_calculate_scale_x_and_y (GimpDisplayShell *shell,
+                                            gdouble           scale,
+                                            gdouble          *scale_x,
+                                            gdouble          *scale_y)
+{
+  GimpImage *image = gimp_display_get_image (shell->display);
+  gdouble    xres;
+  gdouble    yres;
+  gdouble    screen_xres;
+  gdouble    screen_yres;
+
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_display_shell_scale_get_screen_resolution (shell,
+                                                  &screen_xres, &screen_yres);
+
+  if (scale_x) *scale_x = scale * screen_xres / xres;
+  if (scale_y) *scale_y = scale * screen_yres / yres;
 }
 
 /**
