@@ -759,9 +759,8 @@ gimp_display_shell_constructed (GObject *object)
        * not even finnished creating the display shell, we can safely
        * assume we will get a size-allocate later.
        */
-      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
-                                                                    TRUE,
-                                                                    TRUE);
+      gimp_display_shell_scroll_center_image_on_size_allocate (shell,
+                                                               TRUE, TRUE);
     }
   else
     {
@@ -1536,9 +1535,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   /* A size-allocate will always occur because the scrollbars will
    * become visible forcing the canvas to become smaller
    */
-  gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
-                                                                TRUE,
-                                                                TRUE);
+  gimp_display_shell_scroll_center_image_on_size_allocate (shell, TRUE, TRUE);
 
   if (shell->blink_timeout_id)
     {

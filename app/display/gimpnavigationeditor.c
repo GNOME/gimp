@@ -526,8 +526,8 @@ gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
   if (editor->shell)
     {
       if (gimp_display_get_image (editor->shell->display))
-        gimp_display_shell_scroll_center_image_coordinate (editor->shell,
-                                                           center_x, center_y);
+        gimp_display_shell_scroll_center_image_xy (editor->shell,
+                                                   center_x, center_y);
     }
 }
 

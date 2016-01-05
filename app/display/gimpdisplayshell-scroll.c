@@ -45,39 +45,8 @@
 #define MINIMUM_STEP_AMOUNT 1.0
 
 
-typedef struct
-{
-  GimpDisplayShell *shell;
-  gboolean          vertically;
-  gboolean          horizontally;
-} SizeAllocateCallbackData;
+static void   gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell);
 
-
-/**
- * gimp_display_shell_scroll_center_image_coordinate:
- * @shell:
- * @image_x:
- * @image_y:
- *
- * Center the viewport around the passed image coordinate
- *
- **/
-void
-gimp_display_shell_scroll_center_image_coordinate (GimpDisplayShell *shell,
-                                                   gdouble           image_x,
-                                                   gdouble           image_y)
-{
-  gint viewport_x;
-  gint viewport_y;
-
-  gimp_display_shell_transform_xy (shell,
-                                   image_x, image_y,
-                                   &viewport_x, &viewport_y);
-
-  gimp_display_shell_scroll (shell,
-                             viewport_x - shell->disp_width  / 2,
-                             viewport_y - shell->disp_height / 2);
-}
 
 void
 gimp_display_shell_scroll (GimpDisplayShell *shell,
@@ -160,7 +129,7 @@ gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
   gimp_display_shell_resume (shell);
 }
 
-void
+static void
 gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
 {
   GimpImage *image;
@@ -273,7 +242,6 @@ gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
  * Takes a scroll offset and returns the offset that will not result
  * in a scroll beyond the image border. If the image is already
  * overscrolled, the return value is 0 for that given axis.
- *
  **/
 void
 gimp_display_shell_scroll_unoverscrollify (GimpDisplayShell *shell,
@@ -323,21 +291,48 @@ gimp_display_shell_scroll_unoverscrollify (GimpDisplayShell *shell,
 }
 
 /**
+ * gimp_display_shell_scroll_center_image_xy:
+ * @shell:
+ * @image_x:
+ * @image_y:
+ *
+ * Center the viewport around the passed image coordinate
+ **/
+void
+gimp_display_shell_scroll_center_image_xy (GimpDisplayShell *shell,
+                                           gdouble           image_x,
+                                           gdouble           image_y)
+{
+  gint viewport_x;
+  gint viewport_y;
+
+  gimp_display_shell_transform_xy (shell,
+                                   image_x, image_y,
+                                   &viewport_x, &viewport_y);
+
+  gimp_display_shell_scroll (shell,
+                             viewport_x - shell->disp_width  / 2,
+                             viewport_y - shell->disp_height / 2);
+}
+
+/**
  * gimp_display_shell_scroll_center_image:
  * @shell:
  * @horizontally:
  * @vertically:
  *
  * Centers the image in the display shell on the desired axes.
- *
  **/
 void
 gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
                                         gboolean          horizontally,
                                         gboolean          vertically)
 {
-  gint sw, sh;
-  gint target_offset_x, target_offset_y;
+  GimpImage *image;
+  gint       center_x;
+  gint       center_y;
+  gint       offset_x = 0;
+  gint       offset_y = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -346,44 +341,48 @@ gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
       (! vertically && ! horizontally))
     return;
 
-  target_offset_x = shell->offset_x;
-  target_offset_y = shell->offset_y;
+  image = gimp_display_get_image (shell->display);
 
-  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
+  gimp_display_shell_transform_xy (shell,
+                                   gimp_image_get_width  (image) / 2,
+                                   gimp_image_get_height (image) / 2,
+                                   &center_x,
+                                   &center_y);
 
   if (horizontally)
-    {
-      target_offset_x = (sw - shell->disp_width) / 2;
-    }
+    offset_x = center_x - shell->disp_width / 2;
 
   if (vertically)
-    {
-      target_offset_y = (sh - shell->disp_height) / 2;
-    }
+    offset_y = center_y - shell->disp_height / 2;
 
-  gimp_display_shell_scroll_set_offset (shell,
-                                        target_offset_x,
-                                        target_offset_y);
+  gimp_display_shell_scroll (shell, offset_x, offset_y);
 }
 
-static void
-gimp_display_shell_scroll_center_image_callback (GtkWidget                *canvas,
-                                                 GtkAllocation            *allocation,
-                                                 SizeAllocateCallbackData *data)
+typedef struct
 {
-  gimp_display_shell_scroll_center_image (data->shell,
-                                          data->horizontally,
-                                          data->vertically);
+  GimpDisplayShell *shell;
+  gboolean          vertically;
+  gboolean          horizontally;
+} CenterImageData;
 
+static void
+gimp_display_shell_scroll_center_image_callback (GtkWidget       *canvas,
+                                                 GtkAllocation   *allocation,
+                                                 CenterImageData *data)
+{
   g_signal_handlers_disconnect_by_func (canvas,
                                         gimp_display_shell_scroll_center_image_callback,
                                         data);
 
-  g_slice_free (SizeAllocateCallbackData, data);
+  gimp_display_shell_scroll_center_image (data->shell,
+                                          data->horizontally,
+                                          data->vertically);
+
+  g_slice_free (CenterImageData, data);
 }
 
 /**
- * gimp_display_shell_scroll_center_image_on_next_size_allocate:
+ * gimp_display_shell_scroll_center_image_on_size_allocate:
  * @shell:
  *
  * Centers the image in the display as soon as the canvas has got its
@@ -392,30 +391,25 @@ gimp_display_shell_scroll_center_image_callback (GtkWidget                *canva
  * Only call this if you are sure the canvas size will change.
  * (Otherwise the signal connection and centering will lurk until the
  * canvas size is changed e.g. by toggling the rulers.)
- *
  **/
 void
-gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *shell,
-                                                              gboolean          horizontally,
-                                                              gboolean          vertically)
+gimp_display_shell_scroll_center_image_on_size_allocate (GimpDisplayShell *shell,
+                                                         gboolean          horizontally,
+                                                         gboolean          vertically)
 {
-  SizeAllocateCallbackData *data;
+  CenterImageData *data;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  data = g_slice_new (SizeAllocateCallbackData);
+  data = g_slice_new (CenterImageData);
 
-  if (data)
-    {
-      data->shell        = shell;
-      data->horizontally = horizontally;
-      data->vertically   = vertically;
+  data->shell        = shell;
+  data->horizontally = horizontally;
+  data->vertically   = vertically;
 
-      g_signal_connect (shell->canvas, "size-allocate",
-                        G_CALLBACK (gimp_display_shell_scroll_center_image_callback),
-                        data);
-    }
-
+  g_signal_connect (shell->canvas, "size-allocate",
+                    G_CALLBACK (gimp_display_shell_scroll_center_image_callback),
+                    data);
 }
 
 /**
@@ -427,15 +421,14 @@ gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *
  * @h:
  *
  * Gets the viewport in screen coordinates, with origin at (0, 0) in
- * the image
- *
+ * the image.
  **/
 void
-gimp_display_shell_scroll_get_scaled_viewport (const GimpDisplayShell *shell,
-                                               gint                   *x,
-                                               gint                   *y,
-                                               gint                   *w,
-                                               gint                   *h)
+gimp_display_shell_scroll_get_scaled_viewport (GimpDisplayShell *shell,
+                                               gint             *x,
+                                               gint             *y,
+                                               gint             *w,
+                                               gint             *h)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -453,15 +446,14 @@ gimp_display_shell_scroll_get_scaled_viewport (const GimpDisplayShell *shell,
  * @w:
  * @h:
  *
- * Gets the viewport in image coordinates
- *
+ * Gets the viewport in image coordinates.
  **/
 void
-gimp_display_shell_scroll_get_viewport (const GimpDisplayShell *shell,
-                                        gdouble                *x,
-                                        gdouble                *y,
-                                        gdouble                *w,
-                                        gdouble                *h)
+gimp_display_shell_scroll_get_viewport (GimpDisplayShell *shell,
+                                        gdouble          *x,
+                                        gdouble          *y,
+                                        gdouble          *w,
+                                        gdouble          *h)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -477,7 +469,6 @@ gimp_display_shell_scroll_get_viewport (const GimpDisplayShell *shell,
  * @value:
  *
  * Setup the limits of the horizontal scrollbar
- *
  **/
 void
 gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
@@ -521,7 +512,6 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
  * @value:
  *
  * Setup the limits of the vertical scrollbar
- *
  **/
 void
 gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
