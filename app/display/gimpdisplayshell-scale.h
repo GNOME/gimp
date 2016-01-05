@@ -25,9 +25,6 @@ gboolean gimp_display_shell_scale_can_revert               (GimpDisplayShell *sh
 void     gimp_display_shell_scale_set_dot_for_dot          (GimpDisplayShell *shell,
                                                             gboolean          dot_for_dot);
 
-void     gimp_display_shell_get_screen_resolution          (GimpDisplayShell *shell,
-                                                            gdouble          *xres,
-                                                            gdouble          *yres);
 void     gimp_display_shell_scale_get_image_size           (GimpDisplayShell *shell,
                                                             gint             *w,
                                                             gint             *h);

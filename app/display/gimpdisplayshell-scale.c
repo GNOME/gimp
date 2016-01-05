@@ -49,6 +49,10 @@
 
 /*  local function prototypes  */
 
+static void      gimp_display_shell_scale_get_screen_resolution
+                                                         (GimpDisplayShell *shell,
+                                                          gdouble          *xres,
+                                                          gdouble          *yres);
 static void      gimp_display_shell_scale_to             (GimpDisplayShell *shell,
                                                           gdouble           scale,
                                                           gdouble           viewport_x,
@@ -157,30 +161,6 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
       /* re-enable the active tool */
       gimp_display_shell_resume (shell);
     }
-}
-
-void
-gimp_display_shell_get_screen_resolution (GimpDisplayShell *shell,
-                                          gdouble          *xres,
-                                          gdouble          *yres)
-{
-  gdouble x, y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (shell->dot_for_dot)
-    {
-      gimp_image_get_resolution (gimp_display_get_image (shell->display),
-                                 &x, &y);
-    }
-  else
-    {
-      x = shell->monitor_xres;
-      y = shell->monitor_yres;
-    }
-
-  if (xres) *xres = x;
-  if (yres) *yres = y;
 }
 
 /**
@@ -400,8 +380,8 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
   new_scale = current_scale * factor;
 
   gimp_image_get_resolution (image, &xres, &yres);
-  gimp_display_shell_get_screen_resolution (shell,
-                                            &screen_xres, &screen_yres);
+  gimp_display_shell_scale_get_screen_resolution (shell,
+                                                  &screen_xres, &screen_yres);
 
   switch (zoom_type)
     {
@@ -736,7 +716,8 @@ gimp_display_shell_calculate_scale_x_and_y (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   gimp_image_get_resolution (image, &xres, &yres);
-  gimp_display_shell_get_screen_resolution (shell, &screen_xres, &screen_yres);
+  gimp_display_shell_scale_get_screen_resolution (shell,
+                                                  &screen_xres, &screen_yres);
 
   if (scale_x) *scale_x = scale * screen_xres / xres;
   if (scale_y) *scale_y = scale * screen_yres / yres;
@@ -842,6 +823,31 @@ gimp_display_shell_push_zoom_focus_pointer_pos (GimpDisplayShell *shell,
 
   g_queue_push_head (shell->zoom_focus_pointer_queue,
                      point);
+}
+
+
+/*  private functions   */
+
+static void
+gimp_display_shell_scale_get_screen_resolution (GimpDisplayShell *shell,
+                                                gdouble          *xres,
+                                                gdouble          *yres)
+{
+  gdouble x, y;
+
+  if (shell->dot_for_dot)
+    {
+      gimp_image_get_resolution (gimp_display_get_image (shell->display),
+                                 &x, &y);
+    }
+  else
+    {
+      x = shell->monitor_xres;
+      y = shell->monitor_yres;
+    }
+
+  if (xres) *xres = x;
+  if (yres) *yres = y;
 }
 
 /**
