@@ -161,3 +161,44 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
                                                  MINIMUM_STEP_AMOUNT),
                 NULL);
 }
+
+/**
+ * gimp_display_shell_scrollbars_update_steppers:
+ * @shell:
+ * @min_offset_x:
+ * @max_offset_x:
+ * @min_offset_y:
+ * @max_offset_y:
+ *
+ * Sets the scrollbars' stepper sensitivity which is set differently
+ * from its adjustment limits because we support overscrolling.
+ **/
+void
+gimp_display_shell_scrollbars_update_steppers (GimpDisplayShell *shell,
+                                               gint              min_offset_x,
+                                               gint              max_offset_x,
+                                               gint              min_offset_y,
+                                               gint              max_offset_y)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->hsb),
+                                           min_offset_x < shell->offset_x ?
+                                           GTK_SENSITIVITY_ON :
+                                           GTK_SENSITIVITY_OFF);
+
+  gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->hsb),
+                                           max_offset_x > shell->offset_x ?
+                                           GTK_SENSITIVITY_ON :
+                                           GTK_SENSITIVITY_OFF);
+
+  gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->vsb),
+                                           min_offset_y < shell->offset_y ?
+                                           GTK_SENSITIVITY_ON :
+                                           GTK_SENSITIVITY_OFF);
+
+  gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->vsb),
+                                           max_offset_y > shell->offset_y ?
+                                           GTK_SENSITIVITY_ON :
+                                           GTK_SENSITIVITY_OFF);
+}

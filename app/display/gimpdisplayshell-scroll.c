@@ -35,7 +35,6 @@
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
-#include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
@@ -198,34 +197,18 @@ gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
           max_offset_y = sh + overpan_amount - shell->disp_height;
         }
 
-
-      /* Handle scrollbar stepper sensitiity */
-
-      gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->hsb),
-                                               min_offset_x < shell->offset_x ?
-                                               GTK_SENSITIVITY_ON :
-                                               GTK_SENSITIVITY_OFF);
-
-      gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->hsb),
-                                               max_offset_x > shell->offset_x ?
-                                               GTK_SENSITIVITY_ON :
-                                               GTK_SENSITIVITY_OFF);
-
-      gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->vsb),
-                                               min_offset_y < shell->offset_y ?
-                                               GTK_SENSITIVITY_ON :
-                                               GTK_SENSITIVITY_OFF);
-
-      gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->vsb),
-                                               max_offset_y > shell->offset_y ?
-                                               GTK_SENSITIVITY_ON :
-                                               GTK_SENSITIVITY_OFF);
-
-
       /* Clamp */
 
       shell->offset_x = CLAMP (shell->offset_x, min_offset_x, max_offset_x);
       shell->offset_y = CLAMP (shell->offset_y, min_offset_y, max_offset_y);
+
+      /* Set scrollbar stepper sensitiity */
+
+      gimp_display_shell_scrollbars_update_steppers (shell,
+                                                     min_offset_x,
+                                                     max_offset_x,
+                                                     min_offset_y,
+                                                     max_offset_y);
     }
   else
     {
