@@ -45,9 +45,6 @@
 #define MINIMUM_STEP_AMOUNT 1.0
 
 
-static void   gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell);
-
-
 /**
  * gimp_display_shell_scroll:
  * @shell:
@@ -142,8 +139,15 @@ gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
   gimp_display_shell_resume (shell);
 }
 
-static void
-gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
+/**
+ * gimp_display_shell_scroll_clamp_and_update:
+ * @shell:
+ *
+ * Helper function for calling two functions that are commonly called
+ * in pairs.
+ **/
+void
+gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
 {
   GimpImage *image;
 
@@ -226,19 +230,6 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
       shell->offset_x = 0;
       shell->offset_y = 0;
     }
-}
-
-/**
- * gimp_display_shell_scroll_clamp_and_update:
- * @shell:
- *
- * Helper function for calling two functions that are commonly called
- * in pairs.
- **/
-void
-gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
-{
-  gimp_display_shell_scroll_clamp_offsets (shell);
 
   gimp_display_shell_scale_update_scrollbars (shell);
   gimp_display_shell_scale_update_rulers (shell);
