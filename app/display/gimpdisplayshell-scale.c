@@ -142,6 +142,31 @@ gimp_display_shell_scale_can_revert (GimpDisplayShell *shell)
 }
 
 /**
+ * gimp_display_shell_scale_save_revert_values:
+ * @shell:
+ *
+ * Handle the updating of the Revert Zoom variables.
+ **/
+void
+gimp_display_shell_scale_save_revert_values (GimpDisplayShell *shell)
+{
+  guint now;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  now = time (NULL);
+
+  if (now - shell->last_scale_time >= SCALE_TIMEOUT)
+    {
+      shell->last_scale    = gimp_zoom_model_get_factor (shell->zoom);
+      shell->last_offset_x = shell->offset_x;
+      shell->last_offset_y = shell->offset_y;
+    }
+
+  shell->last_scale_time = now;
+}
+
+/**
  * gimp_display_shell_scale_set_dot_for_dot:
  * @shell:        the #GimpDisplayShell
  * @dot_for_dot:  whether "Dot for Dot" should be enabled
@@ -193,6 +218,39 @@ gimp_display_shell_scale_get_image_size (GimpDisplayShell *shell,
   gimp_display_shell_scale_get_image_size_for_scale (shell,
                                                      gimp_zoom_model_get_factor (shell->zoom),
                                                      w, h);
+}
+
+/**
+ * gimp_display_shell_scale_image_is_within_viewport:
+ * @shell:
+ *
+ * Returns: %TRUE if the (scaled) image is smaller than and within the
+ *          viewport.
+ **/
+gboolean
+gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
+                                                   gboolean         *horizontally,
+                                                   gboolean         *vertically)
+{
+  gint     sw, sh;
+  gboolean horizontally_dummy, vertically_dummy;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  if (! horizontally) horizontally = &horizontally_dummy;
+  if (! vertically)   vertically   = &vertically_dummy;
+
+  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
+
+  *horizontally = sw              <= shell->disp_width       &&
+                  shell->offset_x <= 0                       &&
+                  shell->offset_x >= sw - shell->disp_width;
+
+  *vertically   = sh              <= shell->disp_height      &&
+                  shell->offset_y <= 0                       &&
+                  shell->offset_y >= sh - shell->disp_height;
+
+  return *vertically && *horizontally;
 }
 
 /* We used to calculate the scale factor in the SCALEFACTOR_X() and
@@ -457,8 +515,8 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
  * gimp_display_shell_scale_fit_in:
  * @shell: the #GimpDisplayShell
  *
- * Sets the scale such that the entire image precisely fits in the display
- * area.
+ * Sets the scale such that the entire image precisely fits in the
+ * display area.
  **/
 void
 gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
@@ -497,44 +555,11 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_scale_image_is_within_viewport:
- * @shell:
- *
- * Returns: %TRUE if the (scaled) image is smaller than and within the
- *          viewport.
- **/
-gboolean
-gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
-                                                   gboolean         *horizontally,
-                                                   gboolean         *vertically)
-{
-  gint     sw, sh;
-  gboolean horizontally_dummy, vertically_dummy;
-
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-
-  if (! horizontally) horizontally = &horizontally_dummy;
-  if (! vertically)   vertically   = &vertically_dummy;
-
-  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
-
-  *horizontally = sw              <= shell->disp_width       &&
-                  shell->offset_x <= 0                       &&
-                  shell->offset_x >= sw - shell->disp_width;
-
-  *vertically   = sh              <= shell->disp_height      &&
-                  shell->offset_y <= 0                       &&
-                  shell->offset_y >= sh - shell->disp_height;
-
-  return *vertically && *horizontally;
-}
-
-/**
  * gimp_display_shell_scale_fill:
  * @shell: the #GimpDisplayShell
  *
- * Sets the scale such that the entire display area is precisely filled by the
- * image.
+ * Sets the scale such that the entire display area is precisely
+ * filled by the image.
  **/
 void
 gimp_display_shell_scale_fill (GimpDisplayShell *shell)
@@ -573,31 +598,6 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_scale_handle_zoom_revert:
- * @shell:
- *
- * Handle the updating of the Revert Zoom variables.
- **/
-void
-gimp_display_shell_scale_handle_zoom_revert (GimpDisplayShell *shell)
-{
-  guint now;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  now = time (NULL);
-
-  if (now - shell->last_scale_time >= SCALE_TIMEOUT)
-    {
-      shell->last_scale    = gimp_zoom_model_get_factor (shell->zoom);
-      shell->last_offset_x = shell->offset_x;
-      shell->last_offset_y = shell->offset_y;
-    }
-
-  shell->last_scale_time = now;
-}
-
-/**
  * gimp_display_shell_scale_by_values:
  * @shell:         the #GimpDisplayShell
  * @scale:         the new scale
@@ -626,7 +626,7 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
       shell->offset_y == offset_y)
     return;
 
-  gimp_display_shell_scale_handle_zoom_revert (shell);
+  gimp_display_shell_scale_save_revert_values (shell);
 
   /* freeze the active tool */
   gimp_display_shell_pause (shell);

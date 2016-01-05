@@ -122,7 +122,7 @@ gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
       shell->offset_y == offset_y)
     return;
 
-  gimp_display_shell_scale_handle_zoom_revert (shell);
+  gimp_display_shell_scale_save_revert_values (shell);
 
   /* freeze the active tool */
   gimp_display_shell_pause (shell);
