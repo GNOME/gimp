@@ -606,10 +606,16 @@ file_open_dialog_show (Gimp        *gimp,
                                   GIMP_FILE_OPEN_LAST_FILE_KEY);
 
       if (file)
-        gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog), file, NULL);
+        {
+          gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog), file, NULL);
+        }
       else if (gimp->default_folder)
-        gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
-                                                  gimp->default_folder, NULL);
+        {
+          gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                                    gimp->default_folder, NULL);
+        }
+
+      gtk_window_set_title (GTK_WINDOW (dialog), title);
 
       gimp_open_dialog_set_image (GIMP_OPEN_DIALOG (dialog),
                                   image, open_as_layers);
