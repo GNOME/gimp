@@ -188,40 +188,40 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_AUTOMATIC_HELP_ID,
                                    g_param_spec_string ("automatic-help-id",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_AUTOMATIC_LABEL,
                                    g_param_spec_string ("automatic-label",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_FILE_FILTER_LABEL,
                                    g_param_spec_string ("file-filter-label",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_FILE_PROCS,
                                    g_param_spec_pointer ("file-procs",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READABLE |
+                                                         GIMP_PARAM_WRITABLE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_FILE_PROCS_ALL_IMAGES,
                                    g_param_spec_pointer ("file-procs-all-images",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READABLE |
+                                                         GIMP_PARAM_WRITABLE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
