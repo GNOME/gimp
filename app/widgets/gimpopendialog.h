@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 #define GIMP_OPEN_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OPEN_DIALOG, GimpOpenDialogClass))
 
 
-typedef struct _GimpOpenDialogClass  GimpOpenDialogClass;
+typedef struct _GimpOpenDialogClass GimpOpenDialogClass;
 
 struct _GimpOpenDialog
 {
@@ -46,13 +46,13 @@ struct _GimpOpenDialogClass
 };
 
 
-GType       gimp_open_dialog_get_type       (void) G_GNUC_CONST;
+GType       gimp_open_dialog_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_open_dialog_new            (Gimp                 *gimp);
+GtkWidget * gimp_open_dialog_new        (Gimp           *gimp);
 
-void        gimp_open_dialog_set_image      (GimpOpenDialog       *dialog,
-                                             GimpImage            *image,
-                                             gboolean              open_as_layers);
+void        gimp_open_dialog_set_image  (GimpOpenDialog *dialog,
+                                         GimpImage      *image,
+                                         gboolean        open_as_layers);
 
 G_END_DECLS
 

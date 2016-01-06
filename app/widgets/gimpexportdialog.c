@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -35,8 +33,6 @@
 #include "core/gimpimage.h"
 
 #include "file/gimp-file.h"
-
-#include "pdb/gimppdb.h"
 
 #include "plug-in/gimppluginmanager.h"
 
@@ -96,7 +92,6 @@ gimp_export_dialog_new (Gimp *gimp)
 
 void
 gimp_export_dialog_set_image (GimpExportDialog *dialog,
-                              Gimp             *gimp,
                               GimpImage        *image)
 {
   GimpFileDialog *file_dialog;
@@ -114,8 +109,7 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
 
   gimp_file_dialog_set_file_proc (file_dialog, NULL);
 
-  /*
-   * Priority of default paths for Export:
+  /* Priority of default paths for Export:
    *
    *   1. Last Export path
    *   2. Path of import source
@@ -138,11 +132,11 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
     dir_file = gimp_image_get_file (image);
 
   if (! dir_file)
-    dir_file = g_object_get_data (G_OBJECT (gimp),
+    dir_file = g_object_get_data (G_OBJECT (file_dialog->gimp),
                                   GIMP_FILE_SAVE_LAST_FILE_KEY);
 
   if (! dir_file)
-    dir_file = g_object_get_data (G_OBJECT (gimp),
+    dir_file = g_object_get_data (G_OBJECT (file_dialog->gimp),
                                   GIMP_FILE_EXPORT_LAST_FILE_KEY);
 
   if (! dir_file)
@@ -175,13 +169,14 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
    *   3. Type of latest Export of any document
    *   4. .png
    */
+
   ext_file = gimp_image_get_exported_file (image);
 
   if (! ext_file)
     ext_file = gimp_image_get_imported_file (image);
 
   if (! ext_file)
-    ext_file = g_object_get_data (G_OBJECT (gimp),
+    ext_file = g_object_get_data (G_OBJECT (file_dialog->gimp),
                                   GIMP_FILE_EXPORT_LAST_FILE_KEY);
 
   if (ext_file)

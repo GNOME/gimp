@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 #define GIMP_SAVE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAVE_DIALOG, GimpSaveDialogClass))
 
 
-typedef struct _GimpSaveDialogClass  GimpSaveDialogClass;
+typedef struct _GimpSaveDialogClass GimpSaveDialogClass;
 
 struct _GimpSaveDialog
 {
@@ -54,16 +54,15 @@ struct _GimpSaveDialogClass
 };
 
 
-GType       gimp_save_dialog_get_type       (void) G_GNUC_CONST;
+GType       gimp_save_dialog_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_save_dialog_new            (Gimp                 *gimp);
+GtkWidget * gimp_save_dialog_new       (Gimp           *gimp);
 
-void        gimp_save_dialog_set_image      (GimpSaveDialog       *dialog,
-                                             Gimp                 *gimp,
-                                             GimpImage            *image,
-                                             gboolean              save_a_copy,
-                                             gboolean              close_after_saving,
-                                             GimpObject           *display);
+void        gimp_save_dialog_set_image (GimpSaveDialog *dialog,
+                                        GimpImage      *image,
+                                        gboolean        save_a_copy,
+                                        gboolean        close_after_saving,
+                                        GimpObject     *display);
 
 G_END_DECLS
 

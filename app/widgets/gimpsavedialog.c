@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -36,8 +34,6 @@
 #include "core/gimpimage-metadata.h"
 
 #include "file/gimp-file.h"
-
-#include "pdb/gimppdb.h"
 
 #include "plug-in/gimppluginmanager.h"
 
@@ -57,22 +53,22 @@ struct _GimpSaveDialogState
 };
 
 
-static void     gimp_save_dialog_constructed         (GObject             *object);
+static void     gimp_save_dialog_constructed       (GObject             *object);
 
-static void     gimp_save_dialog_save_state          (GimpFileDialog      *dialog,
-                                                      const gchar         *state_name);
-static void     gimp_save_dialog_load_state          (GimpFileDialog      *dialog,
-                                                      const gchar         *state_name);
+static void     gimp_save_dialog_save_state        (GimpFileDialog      *dialog,
+                                                    const gchar         *state_name);
+static void     gimp_save_dialog_load_state        (GimpFileDialog      *dialog,
+                                                    const gchar         *state_name);
 
-static void     gimp_save_dialog_add_compat_toggle   (GimpSaveDialog      *dialog);
-static void     gimp_save_dialog_compat_toggled      (GtkToggleButton     *button,
-                                                      GimpSaveDialog      *dialog);
+static void     gimp_save_dialog_add_compat_toggle (GimpSaveDialog      *dialog);
+static void     gimp_save_dialog_compat_toggled    (GtkToggleButton     *button,
+                                                    GimpSaveDialog      *dialog);
 
 static GimpSaveDialogState
-              * gimp_save_dialog_get_state           (GimpSaveDialog      *dialog);
-static void     gimp_save_dialog_set_state           (GimpSaveDialog      *dialog,
-                                                      GimpSaveDialogState *state);
-static void     gimp_save_dialog_state_destroy       (GimpSaveDialogState *state);
+              * gimp_save_dialog_get_state         (GimpSaveDialog      *dialog);
+static void     gimp_save_dialog_set_state         (GimpSaveDialog      *dialog,
+                                                    GimpSaveDialogState *state);
+static void     gimp_save_dialog_state_destroy     (GimpSaveDialogState *state);
 
 
 G_DEFINE_TYPE (GimpSaveDialog, gimp_save_dialog,
@@ -165,7 +161,6 @@ gimp_save_dialog_new (Gimp *gimp)
 
 void
 gimp_save_dialog_set_image (GimpSaveDialog *dialog,
-                            Gimp           *gimp,
                             GimpImage      *image,
                             gboolean        save_a_copy,
                             gboolean        close_after_saving,
@@ -218,7 +213,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
     dir_file = gimp_image_get_imported_file (image);
 
   if (! dir_file)
-    dir_file = g_object_get_data (G_OBJECT (gimp),
+    dir_file = g_object_get_data (G_OBJECT (file_dialog->gimp),
                                   GIMP_FILE_SAVE_LAST_FILE_KEY);
 
   if (! dir_file)
@@ -255,6 +250,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
    *   1. Type of last Save
    *   2. .xcf (which we don't explicitly append)
    */
+
   ext_file = gimp_image_get_file (image);
 
   if (ext_file)
@@ -302,8 +298,10 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   gtk_widget_show (dialog->compat_info);
 
   /* We set the compatibility mode by default either if the image was
-  * previously saved with the compatibility mode, or if it has never been
-  * saved and the last GimpSaveDialogState had compatibility mode ON. */
+   * previously saved with the compatibility mode, or if it has never
+   * been saved and the last GimpSaveDialogState had compatibility
+   * mode ON.
+   */
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compat_toggle),
                                 gtk_widget_get_sensitive (dialog->compat_toggle) &&
                                 (gimp_image_get_xcf_compat_mode (image) ||

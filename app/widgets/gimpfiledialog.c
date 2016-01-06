@@ -178,6 +178,7 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_HELP_ID,
                                    g_param_spec_string ("help-id", NULL, NULL,
                                                         NULL,
@@ -187,32 +188,41 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        GIMP_PARAM_READABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_AUTOMATIC_HELP_ID,
-                                   g_param_spec_string ("automatic-help-id", NULL, NULL,
+                                   g_param_spec_string ("automatic-help-id",
+                                                        NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        GIMP_PARAM_READABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_AUTOMATIC_LABEL,
-                                   g_param_spec_string ("automatic-label", NULL, NULL,
+                                   g_param_spec_string ("automatic-label",
+                                                        NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        GIMP_PARAM_READABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_FILE_FILTER_LABEL,
-                                   g_param_spec_string ("file-filter-label", NULL, NULL,
+                                   g_param_spec_string ("file-filter-label",
+                                                        NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        GIMP_PARAM_READABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_FILE_PROCS,
-                                   g_param_spec_pointer ("file-procs", NULL, NULL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_pointer ("file-procs",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READABLE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_FILE_PROCS_ALL_IMAGES,
-                                   g_param_spec_pointer ("file-procs-all-images", NULL, NULL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_pointer ("file-procs-all-images",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READABLE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -240,7 +250,7 @@ gimp_file_dialog_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpFileDialog        *dialog  = GIMP_FILE_DIALOG (object);
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (object);
 
   switch (property_id)
     {
@@ -281,7 +291,7 @@ gimp_file_dialog_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpFileDialog        *dialog  = GIMP_FILE_DIALOG (object);
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (object);
 
   switch (property_id)
     {
@@ -453,10 +463,12 @@ gimp_file_dialog_real_get_default_folder (GimpFileDialog *dialog)
           file = g_file_new_for_path (path);
           g_free (path);
 
-          g_object_set_data_full (G_OBJECT (dialog->gimp), "gimp-documents-folder",
+          g_object_set_data_full (G_OBJECT (dialog->gimp),
+                                  "gimp-documents-folder",
                                   file, (GDestroyNotify) g_object_unref);
         }
     }
+
   return file;
 }
 
@@ -881,7 +893,8 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
 
   gtk_widget_set_size_request (scrolled_window, -1, 200);
 
-  dialog->proc_view = gimp_file_proc_view_new (dialog->gimp, dialog->file_procs,
+  dialog->proc_view = gimp_file_proc_view_new (dialog->gimp,
+                                               dialog->file_procs,
                                                dialog->automatic_label,
                                                dialog->automatic_help_id);
   gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->proc_view);

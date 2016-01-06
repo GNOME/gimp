@@ -671,7 +671,7 @@ file_save_dialog_show (Gimp        *gimp,
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
       gimp_save_dialog_set_image (GIMP_SAVE_DIALOG (dialog),
-                                  gimp, image, save_a_copy,
+                                  image, save_a_copy,
                                   close_after_saving, GIMP_OBJECT (display));
 
       gtk_window_present (GTK_WINDOW (dialog));
@@ -758,8 +758,7 @@ file_export_dialog_show (Gimp      *gimp,
 
   if (dialog)
     {
-      gimp_export_dialog_set_image (GIMP_EXPORT_DIALOG (dialog),
-                                    gimp, image);
+      gimp_export_dialog_set_image (GIMP_EXPORT_DIALOG (dialog), image);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
