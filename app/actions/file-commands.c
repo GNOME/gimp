@@ -527,6 +527,8 @@ file_open_dialog_show (Gimp        *gimp,
       if (uri)
         gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
 
+      gtk_window_set_title (GTK_WINDOW (dialog), title);
+
       gimp_file_dialog_set_open_image (GIMP_FILE_DIALOG (dialog),
                                        image, open_as_layers);
 
