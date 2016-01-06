@@ -36,6 +36,8 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 
+#include "file/file-utils.h"
+
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "gimppluginmanager-call.h"
 
@@ -81,6 +83,11 @@ static void     gimp_plug_in_procedure_execute_async   (GimpProcedure  *procedur
                                                         GimpObject     *display);
 
 static GFile  * gimp_plug_in_procedure_real_get_file   (const GimpPlugInProcedure *procedure);
+
+static gboolean gimp_plug_in_procedure_validate_args   (GimpPlugInProcedure *proc,
+                                                        Gimp                *gimp,
+                                                        GimpValueArray      *args,
+                                                        GError             **error);
 
 
 G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
@@ -360,6 +367,21 @@ gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
                                 GimpValueArray *args,
                                 GError        **error)
 {
+  GimpPlugInProcedure *plug_in_procedure = GIMP_PLUG_IN_PROCEDURE (procedure);
+  GError              *pdb_error         = NULL;
+
+  if (! gimp_plug_in_procedure_validate_args (plug_in_procedure, gimp,
+                                              args, &pdb_error))
+    {
+      GimpValueArray *return_vals;
+
+      return_vals = gimp_procedure_get_return_values (procedure, FALSE,
+                                                      pdb_error);
+      g_propagate_error (error, pdb_error);
+
+      return return_vals;
+    }
+
   if (procedure->proc_type == GIMP_INTERNAL)
     return GIMP_PROCEDURE_CLASS (parent_class)->execute (procedure, gimp,
                                                          context, progress,
@@ -380,26 +402,90 @@ gimp_plug_in_procedure_execute_async (GimpProcedure  *procedure,
                                       GimpObject     *display)
 {
   GimpPlugInProcedure *plug_in_procedure = GIMP_PLUG_IN_PROCEDURE (procedure);
-  GimpValueArray      *return_vals;
+  GError              *error             = NULL;
 
-  return_vals = gimp_plug_in_manager_call_run (gimp->plug_in_manager,
-                                               context, progress,
-                                               plug_in_procedure,
-                                               args, FALSE, display);
-
-  if (return_vals)
+  if (gimp_plug_in_procedure_validate_args (plug_in_procedure, gimp,
+                                            args, &error))
     {
-      gimp_plug_in_procedure_handle_return_values (plug_in_procedure,
-                                                   gimp, progress,
-                                                   return_vals);
-      gimp_value_array_unref (return_vals);
+      GimpValueArray *return_vals;
+
+      return_vals = gimp_plug_in_manager_call_run (gimp->plug_in_manager,
+                                                   context, progress,
+                                                   plug_in_procedure,
+                                                   args, FALSE, display);
+
+      if (return_vals)
+        {
+          gimp_plug_in_procedure_handle_return_values (plug_in_procedure,
+                                                       gimp, progress,
+                                                       return_vals);
+          gimp_value_array_unref (return_vals);
+        }
+    }
+  else
+    {
+      gimp_message_literal (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                            error->message);
+      g_error_free (error);
     }
 }
 
-GFile *
+static GFile *
 gimp_plug_in_procedure_real_get_file (const GimpPlugInProcedure *procedure)
 {
   return procedure->file;
+}
+
+static gboolean
+gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
+                                      Gimp                *gimp,
+                                      GimpValueArray      *args,
+                                      GError             **error)
+{
+  if (proc->file_proc && proc->handles_uri)
+    {
+      /*  for file procedures that handle URIs, make sure that the
+       *  passed string actually is an URI, not just a file path
+       */
+      GimpProcedure *procedure = GIMP_PROCEDURE (proc);
+      GValue        *uri_value = NULL;
+
+      if ((procedure->num_args   >= 3)                     &&
+          (procedure->num_values >= 1)                     &&
+          GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) &&
+          G_IS_PARAM_SPEC_STRING      (procedure->args[1]) &&
+          G_IS_PARAM_SPEC_STRING      (procedure->args[2]) &&
+          GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
+        {
+          uri_value = gimp_value_array_index (args, 1);
+        }
+      else if ((procedure->num_args >= 5)                          &&
+               GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) &&
+               GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
+               GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) &&
+               G_IS_PARAM_SPEC_STRING         (procedure->args[3]) &&
+               G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
+        {
+          uri_value = gimp_value_array_index (args, 3);
+        }
+
+      if (uri_value)
+        {
+          GFile *file;
+
+          file = file_utils_filename_to_file (gimp,
+                                              g_value_get_string (uri_value),
+                                              error);
+
+          if (! file)
+            return FALSE;
+
+          g_value_take_string (uri_value, g_file_get_uri (file));
+          g_object_unref (file);
+        }
+    }
+
+  return TRUE;
 }
 
 
