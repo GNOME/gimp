@@ -51,6 +51,10 @@
 #include "gimp-intl.h"
 
 
+static void gimp_paint_options_gui_brush_changed
+                                               (GimpContext      *context,
+                                                GimpBrush        *brush);
+
 static void gimp_paint_options_gui_reset_size  (GtkWidget        *button,
                                                 GimpPaintOptions *paint_options);
 static void gimp_paint_options_gui_reset_aspect_ratio
@@ -224,6 +228,10 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       frame = jitter_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
+
+      g_signal_connect (options, "brush-changed",
+                        G_CALLBACK (gimp_paint_options_gui_brush_changed),
+                        NULL);
     }
 
   /*  the "smooth stroke" options  */
@@ -417,6 +425,35 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
   gtk_widget_show (scale);
 
   return frame;
+}
+
+static void
+gimp_paint_options_gui_brush_changed (GimpContext *context,
+                                      GimpBrush   *brush)
+{
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (context);
+
+  if (brush)
+    {
+      if (options->brush_link_size)
+        gimp_paint_options_set_default_brush_size (options, brush);
+
+      if (options->brush_link_aspect_ratio)
+        g_object_set (options,
+                      "brush-aspect-ratio", 0.0,
+                      NULL);
+
+      if (options->brush_link_angle)
+        g_object_set (options,
+                      "brush-angle", 0.0,
+                      NULL);
+
+      if (options->brush_link_spacing)
+        gimp_paint_options_set_default_brush_spacing (options, brush);
+
+      if (options->brush_link_hardness)
+        gimp_paint_options_set_default_brush_hardness (options, brush);
+    }
 }
 
 static void

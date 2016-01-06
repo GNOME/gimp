@@ -149,10 +149,6 @@ static gboolean     gimp_paint_options_copy              (GimpConfig   *src,
                                                           GimpConfig   *dest,
                                                           GParamFlags   flags);
 
-static void         gimp_paint_options_brush_changed     (GimpContext  *context,
-                                                          GimpBrush    *brush);
-
-
 
 G_DEFINE_TYPE_WITH_CODE (GimpPaintOptions, gimp_paint_options,
                          GIMP_TYPE_TOOL_OPTIONS,
@@ -167,15 +163,12 @@ static GimpConfigInterface *parent_config_iface = NULL;
 static void
 gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
-  GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
-  GimpContextClass *context_class = GIMP_CONTEXT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->dispose        = gimp_paint_options_dispose;
   object_class->finalize       = gimp_paint_options_finalize;
   object_class->set_property   = gimp_paint_options_set_property;
   object_class->get_property   = gimp_paint_options_get_property;
-
-  context_class->brush_changed = gimp_paint_options_brush_changed;
 
   g_object_class_install_property (object_class, PROP_PAINT_INFO,
                                    g_param_spec_object ("paint-info",
@@ -743,24 +736,7 @@ gimp_paint_options_get_property (GObject    *object,
 static GimpConfig *
 gimp_paint_options_duplicate (GimpConfig *config)
 {
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (config);
-  GimpPaintOptions *new_options;
-
-  new_options = GIMP_PAINT_OPTIONS (parent_config_iface->duplicate (config));
-
-  /*  after duplicating, copy those properties again which might have
-   *  changed by setting the brush on the copy, see
-   *  gimp_paint_options_brush_changed().
-   */
-  g_object_set (new_options,
-                "brush-size",         options->brush_size,
-                "brush-aspect-ratio", options->brush_aspect_ratio,
-                "brush-angle",        options->brush_angle,
-                "brush-spacing",      options->brush_spacing,
-                "brush-hardness",     options->brush_hardness,
-                NULL);
-
-  return GIMP_CONFIG (new_options);
+  return parent_config_iface->duplicate (config);
 }
 
 static gboolean
@@ -768,55 +744,7 @@ gimp_paint_options_copy (GimpConfig  *src,
                          GimpConfig  *dest,
                          GParamFlags  flags)
 {
-  if (parent_config_iface->copy (src, dest, flags))
-    {
-      GimpPaintOptions *options = GIMP_PAINT_OPTIONS (src);
-
-      /*  after copying, copy those properties again which might have
-       *  changed by setting the brush on dest, see
-       *  gimp_paint_options_brush_changed().
-       */
-      g_object_set (dest,
-                    "brush-size",         options->brush_size,
-                    "brush-aspect-ratio", options->brush_aspect_ratio,
-                    "brush-angle",        options->brush_angle,
-                    "brush-spacing",      options->brush_spacing,
-                    "brush-hardness",     options->brush_hardness,
-                    NULL);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static void
-gimp_paint_options_brush_changed (GimpContext *context,
-                                  GimpBrush   *brush)
-{
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (context);
-
-  if (GIMP_IS_BRUSH (brush))
-    {
-      if (options->brush_link_size)
-        gimp_paint_options_set_default_brush_size (options, brush);
-
-      if (options->brush_link_aspect_ratio)
-        g_object_set (options,
-                      "brush-aspect-ratio", 0.0,
-                      NULL);
-
-      if (options->brush_link_angle)
-        g_object_set (options,
-                      "brush-angle", 0.0,
-                      NULL);
-
-      if (options->brush_link_spacing)
-        gimp_paint_options_set_default_brush_spacing (options, brush);
-
-      if (options->brush_link_hardness)
-        gimp_paint_options_set_default_brush_hardness (options, brush);
-    }
+  return parent_config_iface->copy (src, dest, flags);
 }
 
 GimpPaintOptions *
