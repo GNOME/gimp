@@ -21,6 +21,8 @@
 #ifndef __GIMP_OPEN_DIALOG_H__
 #define __GIMP_OPEN_DIALOG_H__
 
+#include "gimpfiledialog.h"
+
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_OPEN_DIALOG            (gimp_open_dialog_get_type ())

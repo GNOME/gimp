@@ -236,6 +236,31 @@ gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
   return TRUE;
 }
 
+GSList *
+gimp_plug_in_manager_get_file_procedures (GimpPlugInManager      *manager,
+                                          GimpFileProcedureGroup  group)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+
+  switch (group)
+    {
+    case GIMP_FILE_PROCEDURE_GROUP_NONE:
+      return NULL;
+
+    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+      return manager->load_procs;
+
+    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+      return manager->save_procs;
+
+    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+      return manager->export_procs;
+
+    default:
+      g_return_val_if_reached (NULL);
+    }
+}
+
 GimpPlugInProcedure *
 gimp_plug_in_manager_file_procedure_find (GimpPlugInManager      *manager,
                                           GimpFileProcedureGroup  group,
@@ -337,7 +362,7 @@ gimp_plug_in_manager_file_procedure_find_by_mime_type (GimpPlugInManager      *m
 
 /*  private functions  */
 
-gboolean
+static gboolean
 file_procedure_in_group (GimpPlugInProcedure    *file_proc,
                          GimpFileProcedureGroup  group)
 {
@@ -353,6 +378,9 @@ file_procedure_in_group (GimpPlugInProcedure    *file_proc,
 
   switch (group)
     {
+    case GIMP_FILE_PROCEDURE_GROUP_NONE:
+      return FALSE;
+
     case GIMP_FILE_PROCEDURE_GROUP_SAVE:
       /* Only .xcf shall pass */
       return is_xcf_save || is_filter;

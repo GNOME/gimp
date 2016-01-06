@@ -35,9 +35,6 @@
 
 #include "file/gimp-file.h"
 
-#include "plug-in/gimppluginmanager.h"
-
-#include "gimpfiledialog.h"
 #include "gimphelp-ids.h"
 #include "gimpsavedialog.h"
 
@@ -134,29 +131,23 @@ gimp_save_dialog_load_state (GimpFileDialog *dialog,
 GtkWidget *
 gimp_save_dialog_new (Gimp *gimp)
 {
-  GimpSaveDialog *dialog;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  dialog = g_object_new (GIMP_TYPE_SAVE_DIALOG,
-                         "gimp",                      gimp,
-                         "title",                     _("Save Image"),
-                         "role",                      "gimp-file-save",
-                         "help-id",                   GIMP_HELP_FILE_SAVE,
-                         "stock-id",                  GTK_STOCK_SAVE,
+  return g_object_new (GIMP_TYPE_SAVE_DIALOG,
+                       "gimp",                  gimp,
+                       "title",                 _("Save Image"),
+                       "role",                  "gimp-file-save",
+                       "help-id",               GIMP_HELP_FILE_SAVE,
+                       "stock-id",              GTK_STOCK_SAVE,
 
-                         "automatic-label",           _("By Extension"),
-                         "automatic-help-id",         GIMP_HELP_FILE_SAVE_BY_EXTENSION,
+                       "automatic-label",       _("By Extension"),
+                       "automatic-help-id",     GIMP_HELP_FILE_SAVE_BY_EXTENSION,
 
-                         "action",                    GTK_FILE_CHOOSER_ACTION_SAVE,
-                         "file-procs",                gimp->plug_in_manager->save_procs,
-                         "file-procs-all-images",     gimp->plug_in_manager->export_procs,
-                         "file-filter-label",         _("All XCF images"),
-                         "local-only",                FALSE,
-                         "do-overwrite-confirmation", TRUE,
-                         NULL);
-
-  return GTK_WIDGET (dialog);
+                       "action",                GTK_FILE_CHOOSER_ACTION_SAVE,
+                       "file-procs",            GIMP_FILE_PROCEDURE_GROUP_SAVE,
+                       "file-procs-all-images", GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+                       "file-filter-label",     _("All XCF images"),
+                       NULL);
 }
 
 void

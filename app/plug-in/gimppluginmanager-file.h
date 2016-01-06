@@ -42,6 +42,9 @@ gboolean   gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manage
                                                        const gchar       *load_proc,
                                                        const gchar       *thumb_proc);
 
+GSList   * gimp_plug_in_manager_get_file_procedures   (GimpPlugInManager      *manager,
+                                                       GimpFileProcedureGroup  group);
+
 GimpPlugInProcedure *
 gimp_plug_in_manager_file_procedure_find              (GimpPlugInManager      *manager,
                                                        GimpFileProcedureGroup  group,

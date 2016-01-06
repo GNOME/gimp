@@ -53,6 +53,7 @@ GType gimp_file_procedure_group_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
+  GIMP_FILE_PROCEDURE_GROUP_NONE,
   GIMP_FILE_PROCEDURE_GROUP_ANY,
   GIMP_FILE_PROCEDURE_GROUP_OPEN,
   GIMP_FILE_PROCEDURE_GROUP_SAVE,

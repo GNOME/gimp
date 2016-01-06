@@ -39,6 +39,7 @@
 
 #include "pdb/gimppdb.h"
 
+#include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimpfiledialog.h"
@@ -213,22 +214,26 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_FILE_PROCS,
-                                   g_param_spec_pointer ("file-procs",
-                                                         NULL, NULL,
-                                                         GIMP_PARAM_WRITABLE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_enum ("file-procs",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_FILE_PROCEDURE_GROUP,
+                                                      GIMP_FILE_PROCEDURE_GROUP_NONE,
+                                                      GIMP_PARAM_WRITABLE |
+                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_FILE_PROCS_ALL_IMAGES,
-                                   g_param_spec_pointer ("file-procs-all-images",
-                                                         NULL, NULL,
-                                                         GIMP_PARAM_WRITABLE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_enum ("file-procs-all-images",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_FILE_PROCEDURE_GROUP,
+                                                      GIMP_FILE_PROCEDURE_GROUP_NONE,
+                                                      GIMP_PARAM_WRITABLE |
+                                                      G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_file_dialog_init (GimpFileDialog *dialog)
 {
-  dialog->stock_id = GTK_STOCK_OK;
+ dialog->stock_id = GTK_STOCK_OK;
 }
 
 static void
@@ -273,10 +278,14 @@ gimp_file_dialog_set_property (GObject      *object,
       dialog->file_filter_label = g_value_dup_string (value);
       break;
     case PROP_FILE_PROCS:
-      dialog->file_procs = g_value_get_pointer (value);
+      dialog->file_procs =
+        gimp_plug_in_manager_get_file_procedures (dialog->gimp->plug_in_manager,
+                                                  g_value_get_enum (value));
       break;
     case PROP_FILE_PROCS_ALL_IMAGES:
-      dialog->file_procs_all_images = g_value_get_pointer (value);
+      dialog->file_procs_all_images =
+        gimp_plug_in_manager_get_file_procedures (dialog->gimp->plug_in_manager,
+                                                  g_value_get_enum (value));
       break;
 
     default:
@@ -324,6 +333,10 @@ gimp_file_dialog_constructed (GObject *object)
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (object), FALSE);
+  gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (object),
+                                                  TRUE);
 
   if (dialog->help_id)
     {
