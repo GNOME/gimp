@@ -446,6 +446,7 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
     {
       /*  for file procedures that handle URIs, make sure that the
        *  passed string actually is an URI, not just a file path
+       *  (bug 758685)
        */
       GimpProcedure *procedure = GIMP_PROCEDURE (proc);
       GValue        *uri_value = NULL;
