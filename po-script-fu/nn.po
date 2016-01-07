@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
-"PO-Revision-Date: 2013-05-27 23:19+0100\n"
+"PO-Revision-Date: 2016-01-07 15:17+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
 "Language: nn_NO\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.8.3\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -210,7 +210,7 @@ msgstr "_Start tenaren"
 
 #: ../plug-ins/script-fu/script-fu-server.c:865
 msgid "Listen on IP:"
-msgstr ""
+msgstr "Lytt på IP:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:872
 msgid "Server port:"
@@ -225,10 +225,12 @@ msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
+"Lytting på ei IP-adresse anna enn 127.0.0.1 (spesielt 0.0.0.0) kan opna "
+"datamaskinen for køyring av vilkårleg kode utanfrå."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
-msgstr ""
+msgstr "Punktbilete"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:185
 msgid "Add B_evel..."
@@ -256,9 +258,8 @@ msgid "Keep bump layer"
 msgstr "Behald humplaget"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:108
-#, fuzzy
 msgid "Border Layer"
-msgstr "Kantbreidde"
+msgstr "Kantlag"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:160
 msgid "Add _Border..."
@@ -371,26 +372,23 @@ msgstr "Fart (pikslar/ramme)"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:168
 msgid "Carved Surface"
-msgstr ""
+msgstr "Utskoren overflate"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:169
-#, fuzzy
 msgid "Bevel Shadow"
-msgstr "Skygge"
+msgstr "Fasettskugge"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:170
-#, fuzzy
 msgid "Bevel Highlight"
-msgstr "Fasettbreidde"
+msgstr "Fasettutheving"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:171
-#, fuzzy
 msgid "Cast Shadow"
-msgstr "Lag skygge"
+msgstr "Slagskugge"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:172
 msgid "Inset"
-msgstr ""
+msgstr "Set inn"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:182
 msgid "Stencil C_arve..."
@@ -400,6 +398,8 @@ msgstr "_Skjer ut …"
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
+"Bruk det valde teikneobjektet som eit mønster for å skjere ut i det valde "
+"bildetet."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:190
 msgid "Image to carve"
@@ -410,37 +410,33 @@ msgid "Carve white areas"
 msgstr "Skjer ut kvite område"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:103
-#, fuzzy
 msgid "Background"
-msgstr "Bakgrunnsfarge"
+msgstr "Bakgrunn"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:104
 msgid "Layer 1"
-msgstr ""
+msgstr "Lag 1"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:105
 msgid "Layer 2"
-msgstr ""
+msgstr "Lag 2"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:106
 msgid "Layer 3"
-msgstr ""
+msgstr "Lag 3"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:107
-#, fuzzy
 msgid "Drop Shadow"
-msgstr "Slagskygge"
+msgstr "Slagskugge"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:201
-#, fuzzy
 msgid "Chrome"
-msgstr "_Krom …"
+msgstr "Krom"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:202
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:68
-#, fuzzy
 msgid "Highlight"
-msgstr "Farge på høglys"
+msgstr "Uthev"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:214
 msgid "Stencil C_hrome..."
@@ -483,9 +479,8 @@ msgid "Chrome white areas"
 msgstr "Krom kvite område"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:81
-#, fuzzy
 msgid "Effect layer"
-msgstr "Del laga"
+msgstr "Effektlag"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:134
 msgid "_Circuit..."
@@ -553,9 +548,8 @@ msgid "Depth"
 msgstr "Djupn"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:36
-#, fuzzy
 msgid "Stain"
-msgstr "Talet på flekkar:"
+msgstr "Flekkar"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:81
 msgid "_Coffee Stain..."
@@ -590,7 +584,6 @@ msgid "Distress the selection"
 msgstr "Fordrei utvalet med definerte parametrar"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:110
-#, fuzzy
 msgid "Threshold (bigger 1<-->254 smaller)"
 msgstr "Terskel (Høg 1<-->255 låg)"
 
@@ -896,9 +889,8 @@ msgid "New Guides from _Selection"
 msgstr "Nye hjelpelinjer frå _utvalet"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
-#, fuzzy
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Avrund hjørna i det aktive utvalet"
+msgstr "Lagar fire hjelpelinjer ved kantane til det gjeldande utvalet"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
@@ -984,12 +976,11 @@ msgid "Line _Nova..."
 msgstr "Line _Nova …"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:107
-#, fuzzy
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr ""
-"Fyller biletet med strålar som går utover frå sentrum. Farge frå "
+"Fyll eit lag med strålar som går utover frå sentrum. Farge frå "
 "forgrunnsfargen"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:114
@@ -1086,47 +1077,56 @@ msgstr "Flekklegg"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "Folder for the output file"
-msgstr ""
+msgstr "Mappe for ut-fila"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:236
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
+"Namnet på fila som skal lagast (dersom det finst ei fil med dette namnet frå "
+"før, vil ho bli byt ut)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:244
 msgid "The filename you entered is not a suitable name for a file."
-msgstr ""
+msgstr "Filnamnet du skreiv inn kan ikkje brukast for ei fil."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:246
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
 msgstr ""
+"Alle teikna i namnet er anten mellomrom eller teikn som er ulovlege i "
+"filnamn."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:274
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
+"Eksporter den aktive paletten som eit CSS-stilark med fargenamna som "
+"klassenamn og fargen som fargeeigenskap"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:300
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr ""
+msgstr "Eksporter den aktive paletten som ei PHP-ordliste (namn => farge)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:332
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr ""
+msgstr "Eksporter den aktive paletten som ei Python-ordliste (namn: farge)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:361
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
+"Skriv alle fargane i ein palett til ei tekstfil med ein heksadesimal verdi "
+"på kvar linje (ingen namn)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:408
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgstr ""
+"Eksporter den aktive paletten som ei java.util.Hashtable<Streng, Farge>"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
@@ -1508,9 +1508,8 @@ msgid "Gradient: Loop Triangle"
 msgstr "Fargeovergang: Sløyfe, triangel"
 
 #: ../plug-ins/script-fu/scripts/test-sphere.scm:267
-#, fuzzy
 msgid "_Sphere..."
-msgstr "_Krom …"
+msgstr "_Kule …"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
