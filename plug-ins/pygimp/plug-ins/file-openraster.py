@@ -271,11 +271,6 @@ def load_ora(filename, raw_filename):
             parent_groups.pop()
             continue
 
-        if not name:
-            # use the filename without extention as name
-            n = os.path.basename(path)
-            name = os.path.splitext(n)[0]
-
         if item.tag == 'stack':
             name, x, y, opac, visible, layer_mode = get_group_layer_attributes(item)
             gimp_layer = gimp.GroupLayer(img)
