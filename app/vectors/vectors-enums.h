@@ -21,13 +21,14 @@
 #ifndef __VECTORS_ENUMS_H__
 #define __VECTORS_ENUMS_H__
 
-typedef enum /*< pdb-skip, skip >*/
+
+typedef enum
 {
   GIMP_ANCHOR_ANCHOR,
   GIMP_ANCHOR_CONTROL
 } GimpAnchorType;
 
-typedef enum /*< pdb-skip, skip >*/
+typedef enum
 {
   GIMP_ANCHOR_FEATURE_NONE,
   GIMP_ANCHOR_FEATURE_EDGE,
@@ -35,10 +36,11 @@ typedef enum /*< pdb-skip, skip >*/
   GIMP_ANCHOR_FEATURE_SYMMETRIC
 } GimpAnchorFeatureType;
 
-typedef enum  /*< pdb-skip, skip >*/
+typedef enum
 {
   EXTEND_SIMPLE,
   EXTEND_EDITABLE
 } GimpVectorExtendMode;
+
 
 #endif /* __VECTORS_ENUMS_H__ */

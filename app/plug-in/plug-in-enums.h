@@ -23,7 +23,7 @@
 
 GType gimp_plug_in_image_type_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_PLUG_IN_RGB_IMAGE      = 1 << 0,
   GIMP_PLUG_IN_GRAY_IMAGE     = 1 << 1,
@@ -38,7 +38,7 @@ typedef enum /*< pdb-skip >*/
 
 GType gimp_plug_in_call_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_PLUG_IN_CALL_NONE,
   GIMP_PLUG_IN_CALL_RUN,
@@ -51,7 +51,7 @@ typedef enum /*< pdb-skip >*/
 
 GType gimp_file_procedure_group_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_FILE_PROCEDURE_GROUP_NONE,
   GIMP_FILE_PROCEDURE_GROUP_ANY,
