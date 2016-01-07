@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -36,8 +34,6 @@
 #include "core/gimpprogress.h"
 
 #include "config/gimpguiconfig.h"
-
-#include "pdb/gimppdb.h"
 
 #include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginprocedure.h"
