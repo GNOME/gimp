@@ -65,6 +65,7 @@ struct _GimpGuiConfig
   gchar               *theme;
   gchar               *icon_theme_path;
   gchar               *icon_theme;
+  GimpIconSize         icon_size;
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;

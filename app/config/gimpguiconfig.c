@@ -70,6 +70,7 @@ enum
   PROP_THEME,
   PROP_ICON_THEME_PATH,
   PROP_ICON_THEME,
+  PROP_ICON_SIZE,
   PROP_USE_HELP,
   PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
@@ -304,6 +305,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                            ICON_THEME_BLURB,
                            GIMP_CONFIG_DEFAULT_ICON_THEME,
                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ICON_SIZE,
+                         "icon-size",
+                         "icon-size",
+                         ICON_SIZE_BLURB,
+                         GIMP_TYPE_ICON_SIZE,
+                         GIMP_ICON_SIZE_DEFAULT,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                             "use-help",
@@ -610,6 +618,9 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->icon_theme);
       gui_config->icon_theme = g_value_dup_string (value);
       break;
+    case PROP_ICON_SIZE:
+      gui_config->icon_size = g_value_get_enum (value);
+      break;
     case PROP_USE_HELP:
       gui_config->use_help = g_value_get_boolean (value);
       break;
@@ -765,6 +776,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_ICON_THEME:
       g_value_set_string (value, gui_config->icon_theme);
+      break;
+    case PROP_ICON_SIZE:
+      g_value_set_enum (value, gui_config->icon_size);
       break;
     case PROP_USE_HELP:
       g_value_set_boolean (value, gui_config->use_help);

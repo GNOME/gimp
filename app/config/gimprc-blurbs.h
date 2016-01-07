@@ -433,6 +433,9 @@ _("Sets the folder for temporary storage. Files will appear here " \
 #define ICON_THEME_BLURB \
 "The name of the icon theme to use."
 
+#define ICON_SIZE_BLURB \
+"The size of the icons to use."
+
 #define ICON_THEME_PATH_BLURB \
 "Sets the icon theme search path."
 

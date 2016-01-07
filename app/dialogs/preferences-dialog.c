@@ -44,6 +44,7 @@
 #include "widgets/gimpgrideditor.h"
 #include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpiconsizescale.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpprefsbox.h"
@@ -122,7 +123,6 @@ static void   prefs_tool_options_save_callback    (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_tool_options_clear_callback   (GtkWidget  *widget,
                                                    Gimp       *gimp);
-
 
 /*  private variables  */
 
@@ -1684,6 +1684,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   {
     GtkWidget         *scrolled_win;
+    GtkWidget         *icon_size_scale;
     GtkListStore      *list_store;
     GtkWidget         *view;
     GtkTreeSelection  *sel;
@@ -1783,8 +1784,12 @@ prefs_dialog_new (Gimp       *gimp,
     g_signal_connect (sel, "changed",
                       G_CALLBACK (prefs_icon_theme_select_callback),
                       gimp);
-  }
 
+    icon_size_scale = gimp_icon_size_scale_new (gimp);
+
+    gtk_box_pack_start (GTK_BOX (vbox2), icon_size_scale, FALSE, FALSE, 0);
+    gtk_widget_show (icon_size_scale);
+  }
 
   /*************************/
   /*  Interface / Toolbox  */
