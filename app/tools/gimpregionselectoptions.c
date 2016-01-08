@@ -35,6 +35,7 @@
 
 #include "gimpregionselectoptions.h"
 #include "gimpregionselecttool.h"
+#include "gimpfuzzyselecttool.h"
 
 #include "gimp-intl.h"
 
@@ -44,6 +45,7 @@ enum
   PROP_0,
   PROP_SELECT_TRANSPARENT,
   PROP_SAMPLE_MERGED,
+  PROP_DIAGONAL_NEIGHBORS,
   PROP_THRESHOLD,
   PROP_SELECT_CRITERION,
   PROP_DRAW_MASK
@@ -92,6 +94,13 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged",
                                     _("Base selection on all visible layers"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+                                    "diagonal-neighbors",
+                                    _("Treat diagonally neighboring pixels as "
+                                      "connected"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
@@ -148,6 +157,10 @@ gimp_region_select_options_set_property (GObject      *object,
       options->sample_merged = g_value_get_boolean (value);
       break;
 
+    case PROP_DIAGONAL_NEIGHBORS:
+      options->diagonal_neighbors = g_value_get_boolean (value);
+      break;
+
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
@@ -182,6 +195,10 @@ gimp_region_select_options_get_property (GObject    *object,
 
     case PROP_SAMPLE_MERGED:
       g_value_set_boolean (value, options->sample_merged);
+      break;
+
+    case PROP_DIAGONAL_NEIGHBORS:
+      g_value_set_boolean (value, options->diagonal_neighbors);
       break;
 
     case PROP_THRESHOLD:
@@ -226,6 +243,9 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
   GtkWidget *scale;
   GtkWidget *combo;
+  GType      tool_type;
+
+  tool_type = tool_options->tool_info->tool_type;
 
   /*  the select transparent areas toggle  */
   button = gimp_prop_check_button_new (config, "select-transparent",
@@ -238,6 +258,15 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
                                        _("Sample merged"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  /*  the diagonal neighbors toggle  */
+  if (tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL)
+    {
+      button = gimp_prop_check_button_new (config, "diagonal-neighbors",
+                                           _("Diagonal neighbors"));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+    }
 
   /*  the threshold scale  */
   scale = gimp_prop_spin_scale_new (config, "threshold",

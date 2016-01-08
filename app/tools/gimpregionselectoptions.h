@@ -39,6 +39,7 @@ struct _GimpRegionSelectOptions
 
   gboolean              select_transparent;
   gboolean              sample_merged;
+  gboolean              diagonal_neighbors;
   gdouble               threshold;
   GimpSelectCriterion   select_criterion;
   gboolean              draw_mask;
