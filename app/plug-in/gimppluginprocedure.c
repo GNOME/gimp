@@ -779,7 +779,7 @@ gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
 
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
-  switch (proc->icon_type)
+  switch (icon_type)
     {
     case GIMP_ICON_TYPE_ICON_NAME:
       data_copy = (guint8 *) g_strdup ((gchar *) icon_data);
@@ -850,7 +850,7 @@ gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
 
   if (! icon_pixbuf && error)
     {
-      g_printerr ("%s\n", error->message);
+      g_printerr ("gimp_plug_in_procedure_take_icon: %s\n", error->message);
       g_clear_error (&error);
     }
 
