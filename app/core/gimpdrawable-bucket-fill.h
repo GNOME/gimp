@@ -28,6 +28,7 @@ gboolean   gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                                       GimpSelectCriterion   fill_criterion,
                                       gdouble               threshold,
                                       gboolean              sample_merged,
+                                      gboolean              diagonal_neighbors,
                                       gdouble               x,
                                       gdouble               y,
                                       GError              **error);

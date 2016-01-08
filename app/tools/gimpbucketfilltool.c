@@ -221,6 +221,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                                options->fill_criterion,
                                                options->threshold / 255.0,
                                                options->sample_merged,
+                                               options->diagonal_neighbors,
                                                x, y, &error);
         }
 

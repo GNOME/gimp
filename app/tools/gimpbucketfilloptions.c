@@ -50,6 +50,7 @@ enum
   PROP_FILL_SELECTION,
   PROP_FILL_TRANSPARENT,
   PROP_SAMPLE_MERGED,
+  PROP_DIAGONAL_NEIGHBORS,
   PROP_THRESHOLD,
   PROP_FILL_CRITERION
 };
@@ -109,6 +110,12 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                                       "layers"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+                                    "diagonal-neighbors",
+                                    _("Treat diagonally neighboring pixels as "
+                                      "connected"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                                    "threshold",
                                    _("Maximum color difference"),
@@ -157,6 +164,9 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_SAMPLE_MERGED:
       options->sample_merged = g_value_get_boolean (value);
       break;
+    case PROP_DIAGONAL_NEIGHBORS:
+      options->diagonal_neighbors = g_value_get_boolean (value);
+      break;
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
@@ -191,6 +201,9 @@ gimp_bucket_fill_options_get_property (GObject    *object,
       break;
     case PROP_SAMPLE_MERGED:
       g_value_set_boolean (value, options->sample_merged);
+      break;
+    case PROP_DIAGONAL_NEIGHBORS:
+      g_value_set_boolean (value, options->diagonal_neighbors);
       break;
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
@@ -288,6 +301,12 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   /*  the sample merged toggle  */
   button = gimp_prop_check_button_new (config, "sample-merged",
                                        _("Sample merged"));
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /*  the diagonal neighbors toggle  */
+  button = gimp_prop_check_button_new (config, "diagonal-neighbors",
+                                       _("Diagonal neighbors"));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

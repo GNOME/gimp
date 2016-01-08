@@ -671,8 +671,10 @@ HELP
                                                paint_mode, opacity / 100.0,
                                                FALSE /* don't fill transparent */,
                                                GIMP_SELECT_CRITERION_COMPOSITE,
-	                                       threshold / 255.0,
-                                               sample_merged, x, y,
+                                               threshold / 255.0,
+                                               sample_merged,
+                                               FALSE /* no diagonal neighbors */,
+                                               x, y,
                                                error);
         }
     }
@@ -784,7 +786,9 @@ HELP
                                                fill_transparent,
                                                select_criterion,
                                                threshold / 255.0,
-                                               sample_merged, x, y,
+                                               sample_merged,
+                                               FALSE /* no diagonal neighbors */,
+                                               x, y,
                                                error);
         }
     }
