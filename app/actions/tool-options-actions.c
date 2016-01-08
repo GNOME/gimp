@@ -206,11 +206,14 @@ tool_options_actions_update_presets (GimpActionGroup *group,
            list = g_list_next (list), i++)
         {
           GimpObject *preset = list->data;
+          GdkPixbuf  *pixbuf = NULL;
 
           entry.name      = g_strdup_printf ("%s-%03d", action_prefix, i);
           entry.label     = gimp_object_get_name (preset);
           entry.icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (preset));
           entry.value     = i;
+
+          g_object_get (preset, "icon-pixbuf", &pixbuf, NULL);
 
           gimp_action_group_add_enum_actions (group, NULL, &entry, 1, callback);
 
@@ -221,6 +224,9 @@ tool_options_actions_update_presets (GimpActionGroup *group,
           if (need_deletable)
             SET_SENSITIVE (entry.name,
                            gimp_data_is_deletable (GIMP_DATA (preset)));
+
+          if (pixbuf)
+            gimp_action_group_set_action_pixbuf (group, entry.name, pixbuf);
 
           g_free ((gchar *) entry.name);
         }
