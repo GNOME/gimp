@@ -74,6 +74,7 @@ static void     find_contiguous_region    (GeglBuffer          *src_buffer,
                                            GimpSelectCriterion  select_criterion,
                                            gboolean             antialias,
                                            gfloat               threshold,
+                                           gboolean             diagonal_neighbors,
                                            gint                 x,
                                            gint                 y,
                                            const gfloat        *col);
@@ -87,6 +88,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
                                          GimpSelectCriterion  select_criterion,
+                                         gboolean             diagonal_neighbors,
                                          gint                 x,
                                          gint                 y)
 {
@@ -138,7 +140,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       find_contiguous_region (src_buffer, mask_buffer,
                               format, n_components, has_alpha,
                               select_transparent, select_criterion,
-                              antialias, threshold,
+                              antialias, threshold, diagonal_neighbors,
                               x, y, start_col);
 
       GIMP_TIMER_END("foo");
@@ -496,6 +498,7 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                         GimpSelectCriterion  select_criterion,
                         gboolean             antialias,
                         gfloat               threshold,
+                        gboolean             diagonal_neighbors,
                         gint                 x,
                         gint                 y,
                         const gfloat        *col)
@@ -546,6 +549,15 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                                          &new_start, &new_end,
                                          row))
             continue;
+
+          if (diagonal_neighbors)
+            {
+              if (new_start >= 0)
+                new_start--;
+
+              if (new_end < gegl_buffer_get_width (src_buffer))
+                new_end++;
+            }
 
           if (y + 1 < gegl_buffer_get_height (src_buffer))
             {

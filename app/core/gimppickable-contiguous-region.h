@@ -24,6 +24,7 @@ GeglBuffer * gimp_pickable_contiguous_region_by_seed  (GimpPickable           *p
                                                        gfloat               threshold,
                                                        gboolean             select_transparent,
                                                        GimpSelectCriterion  select_criterion,
+                                                       gboolean             diagonal_neighbors,
                                                        gint                 x,
                                                        gint                 y);
 

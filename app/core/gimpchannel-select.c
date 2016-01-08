@@ -519,6 +519,7 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
                                                     threshold,
                                                     select_transparent,
                                                     select_criterion,
+                                                    FALSE /* no diagonal neighbors */,
                                                     x, y);
 
   if (! sample_merged)

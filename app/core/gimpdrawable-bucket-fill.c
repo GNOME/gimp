@@ -158,6 +158,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                                                          threshold,
                                                          fill_transparent,
                                                          fill_criterion,
+                                                         FALSE /* no diagonal neighbors */,
                                                          (gint) x,
                                                          (gint) y);
 

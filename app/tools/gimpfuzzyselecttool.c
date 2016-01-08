@@ -127,5 +127,6 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                                   options->threshold / 255.0,
                                                   options->select_transparent,
                                                   options->select_criterion,
+                                                  FALSE /* no diagonal neighbors */,
                                                   x, y);
 }
