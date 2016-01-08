@@ -932,7 +932,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
                                           dockable,
                                           position);
 
-  gimp_dockbook_update_auto_tab_style (dockbook);  
+  gimp_dockbook_update_auto_tab_style (dockbook);
 
   /* Create the new tab widget, it will get the correct tab style now */
   tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
@@ -1671,5 +1671,5 @@ static const gchar *
 gimp_dockbook_get_tab_style_name (GimpTabStyle tab_style)
 {
   return g_enum_get_value (g_type_class_peek (GIMP_TYPE_TAB_STYLE),
-                           tab_style)->value_name;  
+                           tab_style)->value_name;
 }
