@@ -1,4 +1,4 @@
-                   ------------------------------ 
+                   ------------------------------
                    GNU Image Manipulation Program
                        2.9 Development Branch
                    ------------------------------
@@ -12,7 +12,7 @@ GIMP 2.9 replaces earlier GIMP 2.x versions. It is advised that you
 uninstall them before installing GIMP 2.9. If you want to keep your
 older GIMP 2.x installation in parallel to GIMP 2.9, you have to
 choose a separate prefix which is not in your default library search
-path. Otherwise your prevoius GIMP installation will start to use the
+path. Otherwise your previous GIMP installation will start to use the
 new libraries. You have been warned.
 
 If you think you found a bug in this version, please make sure that it
@@ -57,9 +57,12 @@ Links to several archives of the mailing lists are included in that page.
 
 Gimp-user-list is a mailing list dedicated to user problems, hints and
 tips, discussion of cool effects, etc.  Gimp-developer-list is oriented
-to GIMP core and plug-in developers.  Most people will only want to be
-subscribed to gimp-user-list. If you want to help develop GIMP, the
-gimp-developer mailing list is a good starting point.
+to GIMP core and plug-in developers.  Gimp-gui-list is for discussing
+about GIMP interface to improve user experience. Most people will only
+want to be subscribed to gimp-user-list. If you want to help develop
+GIMP, the gimp-developer mailing list is a good starting point; if you
+want to help with GUI design, the gimp-gui list is where you want to
+subscribe.
 
 
 3. IRC
