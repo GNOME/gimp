@@ -1,6 +1,7 @@
 ############################################################################
 #
 # The Dark Side of GIMP Theme
+# Version 0.1.2
 #
 # Copyright 2015, Benoit Touchette
 #
@@ -33,13 +34,34 @@
 # gap information from new CS6 II theme, Medhi Abhollahi
 #
 ############################################################################
+#
+# KDE:
+#
+# * For this theme to work under KDE users will need to disable either
+#   "Apply colors to non-QT applications" or "Apply KDE Colours to Non-KDE
+#   apps" depending on the version.
+#
+# Miscellaneous:
+#
+# * Fonts can be overridden by uncommenting the two font lines below
+#
+############################################################################
 
+gtk-menu-images = 1
+gtk-button-images = 0
 gtk-auto-mnemonics = 1
-gtk-primary-button-warps-slider = 1
+#gtk-primary-button-warps-slider = 1
+gtk-toolbar-style = GTK_TOOLBAR_ICONS
+gtk-application-prefer-dark-theme = true
+
+#gtk-font-name = "Sans 11"
+
+# KDE hack to match gtk/gnome defaults
+gtk-button-images = 0
 
 style "tdsog-default-style"
 {
-  font_name = "Sans 11"
+#  font_name = "Sans 11"
 
   color["clr1"] = "#EEEEEE"
   color["clr2"] = "#DDDDDD"
@@ -81,7 +103,7 @@ style "tdsog-default-style"
   GtkScrollbar::has_secondary_backward_stepper = 0
   GtkScrollbar::has_secondary_forward_stepper = 0
 
-  GtkPaned::handle-size = 0
+  GtkPaned::handle-size = 2
   GimpDockWindow::default-height = 240
   GimpDock::font-scale = 0.8333
   GimpMenuDock::minimal-width = 200
@@ -104,23 +126,31 @@ style "tdsog-default-style"
   GtkDialog::action-area-border = 12
   GimpUnitComboBox::appears-as-list = 0
   GtkComboBox::appears-as-list = 0
+  GtkButton::focus-line_width = 0
+  GtkButton::focus-padding = 0
 
-  GtkScrollbar::trough-border = 0
   GtkRange::trough-border = 0
   GtkRange::slider-width = 15
   GtkRange::stepper-size = 0
 
+  GtkScale::slider-length = 14
+  GtkScale::slider-width  = 14
+  GtkScale::trough-border = 0
+  GtkScale::trough-side-details = 1
+
+  GtkVScale::slider_length = 14
+  GtkVScale::slider_width = 14
+
+  GtkHScale::slider_length = 14
+  GtkHScale::slider_width = 14
+
+  GtkScrollbar::trough-border = 0
   GtkScrollbar::activate-slider = 1
   GtkScrollbar::has-backward-stepper = 0
   GtkScrollbar::has-forward-stepper = 0
   GtkScrollbar::min-slider-length = 32
   GtkScrolledWindow::scrollbar-spacing = 0
   GtkScrolledWindow::scrollbars-within-bevel = 0
-
-  GtkVScale::slider_length = 19
-  GtkVScale::slider_width = 19
-  GtkHScale::slider_length = 19
-  GtkHScale::slider_width = 19
 
   GtkTreeView::expander-size = 13
   GtkExpander::expander-size = 13
@@ -138,7 +168,10 @@ style "tdsog-default-style"
 
   GtkWidget::tooltip-radius = 2
   GtkWidget::tooltip-alpha = 235
-  GtkWidget::new-tooltip-style = 1 #for compatibility
+  GtkWidget::new-tooltip-style = 1
+
+  GtkWindow::resize-grip-height = 0
+  GtkWindow::resize-grip-width = 0
 
   engine "pixmap"
     {
@@ -172,18 +205,8 @@ style "tdsog-default-style"
 
       image
         {
-          function = RESIZE_GRIP
-          state = NORMAL
-          detail = "statusbar"
-          overlay_file = "ui/null.png"
-          overlay_border = { 0,0,0,0 }
-          overlay_stretch = FALSE
-        }
-
-      image
-        {
           function = SHADOW_GAP
-          file = "ui/null.png"
+          file = "ui/shadow-null.png"
           border = { 4, 4, 4, 4 }
           stretch = TRUE
         }
@@ -400,7 +423,7 @@ style "tdsog-tooltips-style" = "tdsog-default-style"
   fg[NORMAL] = "#CBCBCB"
 }
 
-widget "gtk-tooltip" style "tdsog-tooltips-style"
+widget "gtk-tooltip*" style "tdsog-tooltips-style"
 
 ###########################################################
 
@@ -424,6 +447,42 @@ style "tdsog-treeview" = "tdsog-default-style"
 
   engine  "pixmap"
     {
+      image
+        {
+          function = FLAT_BOX
+          state = ACTIVE
+          file = "ui/null.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = FLAT_BOX
+          state = PRELIGHT
+          file = "ui/null.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = FLAT_BOX
+          state = NORMAL
+          file = "ui/null.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = FLAT_BOX
+          state = INSENSITIVE
+          file = "ui/null.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+
       image
         {
           function = FLAT_BOX
@@ -721,7 +780,7 @@ style "tdsog-menu-bar" = "tdsog-default-style"
   xthickness = 4
   ythickness = 2
 
-  fg[NORMAL] = "#CBCBCB"
+  fg[NORMAL] = "#EEEEEE"
 
   engine "pixmap"
     {
@@ -748,10 +807,10 @@ style "menu_item"
 
   bg[NORMAL] = "#484848"
 
-  fg[NORMAL] = "#CBCBCB"
-  fg[PRELIGHT] = "#CBCBCB"
-  fg[ACTIVE] = "#CBCBCB"
-  fg[SELECTED] = "#FFFFFF"
+  fg[NORMAL] = "#FFF"
+  fg[PRELIGHT] = "#FFF"
+  fg[ACTIVE] = "#FFF"
+  fg[SELECTED] = "#FFF"
   fg[INSENSITIVE] = "#C1C1C1"
 
   engine "pixmap"
@@ -835,10 +894,10 @@ style "tdsog-item"
 
   bg[NORMAL] = "#484848"
 
-  fg[NORMAL] = "#CBCBCB"
-  fg[PRELIGHT] = "#CBCBCB"
-  fg[ACTIVE] = "#CBCBCB"
-  fg[SELECTED] = "#FFFFFF"
+  fg[NORMAL] = "#FFF"
+  fg[PRELIGHT] = "#FFF"
+  fg[ACTIVE] = "#FFF"
+  fg[SELECTED] = "#FFF"
   fg[INSENSITIVE] = "#C1C1C1"
 
   engine "pixmap"
@@ -909,7 +968,7 @@ style "tdsog-entry" = "tdsog-default-style"
         {
           function = SHADOW
           detail = "entry"
-          file = "ui/null.png"
+          file = "ui/shadow-null.png"
           border = { 4, 4, 4, 4 }
           stretch = TRUE
         }
@@ -1110,7 +1169,7 @@ style "tdsog-scroll-bar"
         {
           function = BOX
           recolorable = TRUE
-          file = "ui/transparent.png"
+          file = "ui/null.png"
           border = {0,0,0,0}
           stretch = TRUE
         }
@@ -1739,7 +1798,7 @@ style "tdsog-range-style"
       image
         {
           function = BOX
-          file = "ui/null.png"
+          file = "ui/transparent.png"
           border = { 3, 3, 3, 3 }
           stretch = TRUE
         }
@@ -1999,6 +2058,16 @@ style "tdsog-toolbar-style"
 
       image
         {
+          function = BOX_GAP
+          recolorable = TRUE
+          detail = "handlebox_bin"
+          file = "ui/gimp-handle-h.png"
+          border = { 4, 3, 4, 3 }
+          stretch = FALSE
+        }
+
+      image
+        {
           function = HANDLE
           overlay_file = "ui/gimp-handle-h.png"
           overlay_stretch = FALSE
@@ -2034,7 +2103,7 @@ style "tdsog-toolbar-style"
 }
 
 class "GtkToolbar" style "tdsog-toolbar-style"
-class "*HandleBox" style "tdsog-toolbar-style"
+class "*HandleBox*" style "tdsog-toolbar-style"
 
 ###########################################################
 
@@ -2163,6 +2232,8 @@ style "tdsog-combobox-style"
 
 widget_class "*<GtkComboBox>" style "tdsog-combobox-style"
 
+###########################################################
+
 style "tdsog-combobox-style1"
 {
   xthickness = 0
@@ -2192,7 +2263,253 @@ style "tdsog-button-style"
   fg[INSENSITIVE] = "#CBCBCB"
 }
 
-widget_class "*GtkButton*" style "tdsog-button-style"
+widget_class "*<GtkButton>*" style "tdsog-button-style"
+
+###########################################################
+
+style "kde_hack_1"
+{
+  color["clr1"] = "#EEEEEE"
+  color["clr2"] = "#DDDDDD"
+  color["clr3"] = "#C1C1C1"
+  color["clr4"] = "#222222"
+  color["clr5"] = "#111111"
+  color["clr6"] = "#828282"
+  color["clr7"] = "#3b3b3b"
+  color["clr8"] = "#222222"
+  color["clr9"] = "#4D4D4D"
+
+  fg[NORMAL] = @clr1
+  fg[PRELIGHT] = @clr1
+  fg[ACTIVE] = @clr1
+  fg[SELECTED] = @clr2
+  fg[INSENSITIVE] = @clr3
+
+  bg[NORMAL] = @clr4
+
+  base[NORMAL] = @clr6
+  base[PRELIGHT] = @clr7
+  base[ACTIVE] = @clr7
+  base[SELECTED] = @clr7
+  base[INSENSITIVE] = @clr8
+
+  text[NORMAL] = @clr1
+  text[PRELIGHT] = @clr1
+  text[ACTIVE] = @clr1
+  text[SELECTED] = @clr1
+  text[INSENSITIVE] = @clr9
+}
+
+widget_class "*<GtkNotebook>*" style "kde_hack_1"
+
+###########################################################
+
+style "kde_hack_2"
+{
+  bg[NORMAL] = "#222" #Sets canvas BG
+}
+
+widget "*GimpDisplayShell.*" style "kde_hack_2"
+
+###########################################################
+
+style "kde_hack_3"
+{
+  bg[NORMAL] = "#222"
+}
+
+class "GtkFrame" style "kde_hack_3"
+widget_class "*<GimpDisplay>*" style "kde_hack_3"
+
+###########################################################
+
+style "kde_hack_4"
+{
+  engine "pixmap"
+    {
+      image
+        {
+          function = OPTION
+          shadow = OUT
+          recolorable = TRUE
+          overlay_file = "ui/option1.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = OPTION
+          shadow = IN
+          recolorable = TRUE
+          overlay_file = "ui/option2.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = OPTION
+          shadow = ETCHED_IN
+          recolorable = TRUE
+          overlay_file = "ui/option3.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = CHECK
+          shadow = OUT
+          recolorable = TRUE
+          overlay_file = "ui/check1.png"
+          overlay_border = { 0, 0, 0, 0 }
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = CHECK
+          shadow = IN
+          recolorable = TRUE
+          overlay_file = "ui/check2.png"
+          overlay_border = { 0, 0, 0, 0 }
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = CHECK
+          shadow = ETCHED_IN
+          recolorable = TRUE
+          overlay_file = "ui/check3.png"
+          overlay_border = { 0, 0, 0, 0 }
+          overlay_stretch = FALSE
+        }
+    }
+}
+
+widget_class "*<GtkWidget>*" style "kde_hack_4"
+
+###########################################################
+
+# KDE Hack 5
+widget_class "*<GtkToolbar>*" style "tdsog-toolbar-style"
+
+###########################################################
+
+style "kde_hack_6"
+{
+  engine "pixmap"
+    {
+      # This image is used to draw the headers of columns
+      # in list views when they are not selected.
+      image
+        {
+          function = BOX
+          recolorable = TRUE
+          state = NORMAL
+          file = "ui/list_header.png"
+          border = { 2, 2, 2, 2 }
+          stretch = TRUE
+        }
+
+      # This image is used to draw the column headers in
+      # list views when they are clicked.
+      image
+        {
+          function = BOX
+          recolorable = TRUE
+          state = PRELIGHT
+          file = "ui/list_header.png"
+          border = { 2, 2, 2, 2 }
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = BOX
+          recolorable = TRUE
+          state = ACTIVE
+          file = "ui/list_header-pressed.png"
+          border = { 2, 2, 2, 2}
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = BOX
+          recolorable = TRUE
+          state = SELECTED
+          file = "ui/list_header.png"
+          border = { 2, 2, 2, 2 }
+          stretch = TRUE
+        }
+    }
+}
+
+widget_class "*<GtkTreeView>*<GtkButton>*" style "kde_hack_6"
+
+###########################################################
+
+# KDE & oxygen-gtk fix for BG
+style "tdsog-oxygen-default-style" = "tdsog-default-style"
+{
+}
+
+class "*" style "tdsog-oxygen-default-style"
+
+###########################################################
+
+style "tdsog-gtkscale-style"
+{
+  engine "pixmap"
+    {
+      image
+        {
+          function = SLIDER
+          recolorable = TRUE
+          file = "ui/bar-h.png"
+          border = { 2,2,2,2 }
+          stretch = TRUE
+          orientation = HORIZONTAL
+        }
+
+      image
+        {
+          function = SLIDER
+          recolorable = TRUE
+          file = "ui/bar-v.png"
+          border = { 2,2,2,2 }
+          stretch = TRUE
+          orientation = VERTICAL
+        }
+
+      image
+        {
+          function = BOX
+          recolorable = TRUE
+          file = "ui/slider-h.png"
+          border = {0,0,0,0}
+          stretch = TRUE
+          orientation = HORIZONTAL
+        }
+
+      image
+        {
+          function = BOX
+          recolorable = TRUE
+          file = "ui/slider-v.png"
+          border = {0,0,0,0}
+          stretch = TRUE
+          orientation = VERTICAL
+        }
+    }
+}
+
+class "GtkScale" style "tdsog-gtkscale-style"
+class "GtkVScale" style "tdsog-gtkscale-style"
+class "GtkHScale" style "tdsog-gtkscale-style"
+widget_class "*<GtkScale>*" style "tdsog-gtkscale-style"
+widget_class "*<GtkVScale>*" style "tdsog-gtkscale-style"
+widget_class "*<GtkHScale>*" style "tdsog-gtkscale-style"
 
 ###########################################################
 
