@@ -5,14 +5,14 @@
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2011.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009, 2015.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-16 05:45+0300\n"
-"PO-Revision-Date: 2015-12-16 05:49+0300\n"
+"PO-Revision-Date: 2016-01-10 06:08+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -256,7 +256,7 @@ msgstr ""
 #: ../libgimp/gimpimagemetadata.c:796
 #, c-format
 msgid "Rotate %s?"
-msgstr ""
+msgstr "Повернуть %s?"
 
 #: ../libgimp/gimpimagemetadata.c:802
 msgid "_Keep Original"
@@ -690,7 +690,7 @@ msgstr "Освещенность"
 #: ../libgimpbase/gimpbaseenums.c:470
 msgctxt "desaturate-mode"
 msgid "Luma"
-msgstr ""
+msgstr "Яркость"
 
 #: ../libgimpbase/gimpbaseenums.c:471
 msgctxt "desaturate-mode"
@@ -700,7 +700,7 @@ msgstr "Среднее"
 #: ../libgimpbase/gimpbaseenums.c:472
 msgctxt "desaturate-mode"
 msgid "Luminance"
-msgstr ""
+msgstr "Светимость"
 
 #: ../libgimpbase/gimpbaseenums.c:501
 msgctxt "dodge-burn-type"
@@ -1076,7 +1076,7 @@ msgstr "Запустить с последними введёнными знач
 #: ../libgimpbase/gimpbaseenums.c:1543
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr ""
+msgstr "Композитный цвет"
 
 #: ../libgimpbase/gimpbaseenums.c:1544
 msgctxt "select-criterion"
@@ -1648,7 +1648,7 @@ msgstr "HTML-р_азметка:"
 
 #: ../libgimpwidgets/gimpfileentry.c:150
 msgid "Show file location in the file manager"
-msgstr ""
+msgstr "Показать расположение файла в файловом менеджере"
 
 #: ../libgimpwidgets/gimpfileentry.c:227
 msgid "Open a file selector to browse your folders"
@@ -1737,7 +1737,7 @@ msgstr "_Обрезать"
 
 #: ../libgimpwidgets/gimpicons.c:256
 msgid "_Select"
-msgstr ""
+msgstr "В_ыбрать"
 
 #: ../libgimpwidgets/gimpicons.c:259 ../libgimpwidgets/gimpicons.c:271
 #: ../libgimpwidgets/gimpicons.c:282
