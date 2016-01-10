@@ -323,18 +323,12 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
       if (resize_window)
         {
-          GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
           /* If the window is resized on zoom, simply do the zoom and
            * get things rolling
            */
           gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
-          gimp_display_shell_scaled (shell);
 
-          if (window && gimp_image_window_get_active_shell (window) == shell)
-            {
-              gimp_image_window_shrink_wrap (window, FALSE);
-            }
+          gimp_display_shell_scale_resize (shell, TRUE, FALSE);
         }
       else
         {
