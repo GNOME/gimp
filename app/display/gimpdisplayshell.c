@@ -776,9 +776,6 @@ gimp_display_shell_constructed (GObject *object)
 
       gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
     }
-
-  /* make sure the information is up-to-date */
-  gimp_display_shell_scale_update (shell);
 }
 
 static void
@@ -1521,7 +1518,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
 
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
-  gimp_display_shell_scale_update (shell);
 
   gimp_display_shell_sync_config (shell, shell->display->config);
 
@@ -1817,9 +1813,6 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
       GimpContext     *context;
 
       gimp_display_shell_title_update (shell);
-
-      /* make sure the information is up-to-date */
-      gimp_display_shell_scale_update (shell);
 
       gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                             gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
