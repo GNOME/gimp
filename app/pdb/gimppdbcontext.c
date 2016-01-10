@@ -431,6 +431,10 @@ gimp_pdb_context_new (Gimp        *gimp,
                               GIMP_OBJECT (options));
           g_object_unref (options);
         }
+
+      gimp_config_copy (GIMP_CONFIG (GIMP_PDB_CONTEXT (parent)->stroke_options),
+                        GIMP_CONFIG (context->stroke_options),
+                        0);
     }
 
   return GIMP_CONTEXT (context);
