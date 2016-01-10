@@ -186,6 +186,12 @@ gimp_pdb_context_constructed (GObject *object)
                                                      GIMP_CONTEXT (context),
                                                      TRUE);
 
+  /* keep the stroke options in sync with the context */
+  gimp_context_define_properties (GIMP_CONTEXT (context->stroke_options),
+                                  GIMP_CONTEXT_PROP_MASK_ALL, FALSE);
+  gimp_context_set_parent (GIMP_CONTEXT (context->stroke_options),
+                           GIMP_CONTEXT (context));
+
   /* preserve the traditional PDB default */
   g_object_set (context->stroke_options,
                 "method", GIMP_STROKE_PAINT_METHOD,
@@ -401,8 +407,6 @@ gimp_pdb_context_new (Gimp        *gimp,
                           "name", "PDB Context",
                           NULL);
 
-  gimp_config_sync (G_OBJECT (parent), G_OBJECT (context), 0);
-
   if (set_parent)
     {
       gimp_context_define_properties (GIMP_CONTEXT (context),
@@ -436,6 +440,12 @@ gimp_pdb_context_new (Gimp        *gimp,
                         GIMP_CONFIG (context->stroke_options),
                         0);
     }
+
+  /*  copy the context properties last, they might have been
+   *  overwritten by the above copying of stroke options, which have
+   *  the pdb context as parent
+   */
+  gimp_config_sync (G_OBJECT (parent), G_OBJECT (context), 0);
 
   return GIMP_CONTEXT (context);
 }
