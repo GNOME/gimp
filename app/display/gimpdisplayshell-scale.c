@@ -26,7 +26,7 @@
 
 #include "display-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
@@ -183,6 +183,13 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
   if (dot_for_dot != shell->dot_for_dot)
     {
+      GimpDisplayConfig *config = shell->display->config;
+      gboolean           resize_window;
+
+      /* Resize windows only in multi-window mode */
+      resize_window = (config->resize_windows_on_zoom &&
+                       ! GIMP_GUI_CONFIG (config)->single_window_mode);
+
       /* freeze the active tool */
       gimp_display_shell_pause (shell);
 
@@ -190,9 +197,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
       gimp_display_shell_scale_update (shell);
 
-      gimp_display_shell_scale_resize (shell,
-                                       shell->display->config->resize_windows_on_zoom,
-                                       FALSE);
+      gimp_display_shell_scale_resize (shell, resize_window, FALSE);
 
       /* re-enable the active tool */
       gimp_display_shell_resume (shell);
@@ -309,7 +314,14 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
   if (! SCALE_EQUALS (new_scale, current_scale))
     {
-      if (shell->display->config->resize_windows_on_zoom)
+      GimpDisplayConfig *config = shell->display->config;
+      gboolean           resize_window;
+
+      /* Resize windows only in multi-window mode */
+      resize_window = (config->resize_windows_on_zoom &&
+                       ! GIMP_GUI_CONFIG (config)->single_window_mode);
+
+      if (resize_window)
         {
           GimpImageWindow *window = gimp_display_shell_get_window (shell);
 

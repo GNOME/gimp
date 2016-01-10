@@ -27,8 +27,8 @@
 
 #include "display-types.h"
 
-#include "config/gimpdisplayconfig.h"
 #include "config/gimpdisplayoptions.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpguide.h"
@@ -580,9 +580,15 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *image,
        * a display shell point of view. Force a redraw of the display
        * so that we don't get any display garbage.
        */
-      gimp_display_shell_scale_resize (shell,
-                                       shell->display->config->resize_windows_on_resize,
-                                       FALSE);
+
+      GimpDisplayConfig *config = shell->display->config;
+      gboolean           resize_window;
+
+      /* Resize windows only in multi-window mode */
+      resize_window = (config->resize_windows_on_resize &&
+                       ! GIMP_GUI_CONFIG (config)->single_window_mode);
+
+      gimp_display_shell_scale_resize (shell, resize_window, FALSE);
     }
 }
 
@@ -744,7 +750,14 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
                                                   gint              previous_height,
                                                   GimpDisplayShell *shell)
 {
-  if (shell->display->config->resize_windows_on_resize)
+  GimpDisplayConfig *config = shell->display->config;
+  gboolean           resize_window;
+
+  /* Resize windows only in multi-window mode */
+  resize_window = (config->resize_windows_on_resize &&
+                   ! GIMP_GUI_CONFIG (config)->single_window_mode);
+
+  if (resize_window)
     {
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
 

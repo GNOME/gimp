@@ -293,11 +293,13 @@ _("Sets the default quick mask color.")
 
 #define RESIZE_WINDOWS_ON_RESIZE_BLURB \
 _("When enabled, the image window will automatically resize itself " \
-  "whenever the physical image size changes.")
+  "whenever the physical image size changes. This setting only takes " \
+  "effect in multi-window mode.")
 
 #define RESIZE_WINDOWS_ON_ZOOM_BLURB \
 _("When enabled, the image window will automatically resize itself " \
-  "when zooming into and out of images.")
+  "when zooming into and out of images. This setting only takes " \
+  "effect in multi-window mode.")
 
 #define RESTORE_SESSION_BLURB \
 _("Let GIMP try to restore your last saved session on each startup.")

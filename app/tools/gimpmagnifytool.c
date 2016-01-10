@@ -25,6 +25,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -183,18 +185,23 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
 
     case GIMP_BUTTON_RELEASE_NORMAL:
       {
-        gdouble x, y;
-        gdouble width, height;
+        gdouble  x, y;
+        gdouble  width, height;
+        gboolean resize_window;
 
         x      = (magnify->w < 0) ?  magnify->x + magnify->w : magnify->x;
         y      = (magnify->h < 0) ?  magnify->y + magnify->h : magnify->y;
         width  = (magnify->w < 0) ? -magnify->w : magnify->w;
         height = (magnify->h < 0) ? -magnify->h : magnify->h;
 
+        /* Resize windows only in multi-window mode */
+        resize_window = (options->auto_resize &&
+                         ! GIMP_GUI_CONFIG (display->config)->single_window_mode);
+
         gimp_display_shell_scale_to_rectangle (shell,
                                                options->zoom_type,
                                                x, y, width, height,
-                                               options->auto_resize);
+                                               resize_window);
       }
       break;
 
