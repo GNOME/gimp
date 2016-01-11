@@ -59,8 +59,8 @@ themeui_DATA =	\
 	ui/entry-border-disabled-notebook.png	\
 	ui/entry-border-fill-active.png	\
 	ui/entry-border-fill.png	\
-	ui/entry-border-notebook.png	\
 	ui/entry-border-notebook-null.png	\
+	ui/entry-border-notebook.png	\
 	ui/ext-bottom.png	\
 	ui/extension-bottom.png	\
 	ui/extension-left.png	\
@@ -112,6 +112,7 @@ themeui_DATA =	\
 	ui/progressbar-trough.png	\
 	ui/shadow-in-alt.png	\
 	ui/shadow-in.png	\
+	ui/shadow-null.png	\
 	ui/shadow-out.png	\
 	ui/slider-h.png	\
 	ui/slider-v.png	\
