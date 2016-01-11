@@ -202,13 +202,13 @@ gimp_operation_normal_mode_process_pixels_core (gfloat              *in,
 
       if (out[ALPHA])
         {
-          gfloat in_weight       = in[ALPHA] * (1.0f - aux_alpha);
-          gfloat recip_out_alpha = 1.0f / out[ALPHA];
+          gfloat aux_weight = aux_alpha / out[ALPHA];
+          gfloat in_weight  = 1.0f - aux_weight;
           gint   b;
 
           for (b = RED; b < ALPHA; b++)
             {
-              out[b] = (aux[b] * aux_alpha + in[b] * in_weight) * recip_out_alpha;
+              out[b] = aux[b] * aux_weight + in[b] * in_weight;
             }
         }
       else
