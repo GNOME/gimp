@@ -190,7 +190,7 @@ themes_get_theme_dir (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (! theme_name)
-    theme_name = "Default";
+    theme_name = GIMP_CONFIG_DEFAULT_THEME;
 
   return g_hash_table_lookup (themes_hash, theme_name);
 }

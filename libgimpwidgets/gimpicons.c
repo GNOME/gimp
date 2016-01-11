@@ -48,8 +48,9 @@
  **/
 
 
-#define LIBGIMP_DOMAIN     GETTEXT_PACKAGE "-libgimp"
-#define GIMP_TOILET_PAPER  "gimp-toilet-paper"
+#define LIBGIMP_DOMAIN          GETTEXT_PACKAGE "-libgimp"
+#define GIMP_TOILET_PAPER       "gimp-toilet-paper"
+#define GIMP_DEFAULT_ICON_THEME "Default"
 
 
 static GtkIconFactory *gimp_stock_factory = NULL;
@@ -354,7 +355,8 @@ static void
 gimp_icons_change_icon_theme (GFile *path)
 {
   if (! default_icon_theme_path)
-    default_icon_theme_path = gimp_data_directory_file ("icons", "Default",
+    default_icon_theme_path = gimp_data_directory_file ("icons",
+                                                        GIMP_DEFAULT_ICON_THEME,
                                                         NULL);
 
   if (! g_file_equal (path, icon_theme_path))
@@ -420,7 +422,8 @@ gimp_icons_set_icon_theme (GFile *path)
   if (path)
     path = g_object_ref (path);
   else
-    path = gimp_data_directory_file (gimp_data_directory (), "icons", "Default",
+    path = gimp_data_directory_file (gimp_data_directory (),
+                                     "icons", GIMP_DEFAULT_ICON_THEME,
                                      NULL);
 
   if (! g_file_query_exists (path, NULL))
@@ -543,7 +546,8 @@ gimp_icons_init (void)
    *  themes.
    */
   if (! default_icon_theme_path)
-    default_icon_theme_path = gimp_data_directory_file ("icons", "Default",
+    default_icon_theme_path = gimp_data_directory_file ("icons",
+                                                        GIMP_DEFAULT_ICON_THEME,
                                                         NULL);
 
   icons_dir = g_file_get_path (default_icon_theme_path);

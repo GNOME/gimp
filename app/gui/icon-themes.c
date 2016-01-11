@@ -199,7 +199,7 @@ icon_themes_get_theme_dir (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (! icon_theme_name)
-    icon_theme_name = "Default";
+    icon_theme_name = GIMP_CONFIG_DEFAULT_ICON_THEME;
 
   return g_hash_table_lookup (icon_themes_hash, icon_theme_name);
 }
@@ -211,7 +211,7 @@ icons_apply_theme (Gimp        *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (! icon_theme_name)
-    icon_theme_name = "Default";
+    icon_theme_name = GIMP_CONFIG_DEFAULT_ICON_THEME;
 
   if (gimp->be_verbose)
     g_print ("Loading icon theme '%s'\n", icon_theme_name);

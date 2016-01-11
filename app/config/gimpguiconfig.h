@@ -24,6 +24,10 @@
 #include "config/gimpdisplayconfig.h"
 
 
+#define GIMP_CONFIG_DEFAULT_THEME          "Default"
+#define GIMP_CONFIG_DEFAULT_ICON_THEME     "Default"
+
+
 #define GIMP_TYPE_GUI_CONFIG            (gimp_gui_config_get_type ())
 #define GIMP_GUI_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GUI_CONFIG, GimpGuiConfig))
 #define GIMP_GUI_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GUI_CONFIG, GimpGuiConfigClass))

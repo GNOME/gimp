@@ -39,9 +39,6 @@
 #define DEFAULT_HELP_BROWSER   GIMP_HELP_BROWSER_WEB_BROWSER
 #endif
 
-#define DEFAULT_THEME          "Default"
-#define DEFAULT_ICON_THEME     "Default"
-
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
   "http://docs.gimp.org/" GIMP_APP_VERSION_STRING
 
@@ -228,7 +225,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   g_free (path);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_THEME,
                                    "theme", THEME_BLURB,
-                                   DEFAULT_THEME,
+                                   GIMP_CONFIG_DEFAULT_THEME,
                                    GIMP_PARAM_STATIC_STRINGS);
   path = gimp_config_build_data_path ("icons");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ICON_THEME_PATH,
@@ -239,7 +236,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   g_free (path);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_ICON_THEME,
                                    "icon-theme", ICON_THEME_BLURB,
-                                   DEFAULT_ICON_THEME,
+                                   GIMP_CONFIG_DEFAULT_ICON_THEME,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                                     "use-help", USE_HELP_BLURB,
