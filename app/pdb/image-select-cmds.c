@@ -129,7 +129,7 @@ image_select_contiguous_color_invoker (GimpProcedure         *procedure,
                                      pdb_context->sample_threshold,
                                      pdb_context->sample_transparent,
                                      pdb_context->sample_criterion,
-                                     FALSE /* no diagonal neighnors */,
+                                     pdb_context->diagonal_neighbors,
                                      operation,
                                      pdb_context->antialias,
                                      pdb_context->feather,
@@ -411,7 +411,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      "gimp-image-select-contiguous-color",
                                      "Create a selection by selecting all pixels around specified coordinates with the same (or similar) color to that at the coordinates.",
                                      "This tool creates a contiguous selection over the specified image. A contiguous color selection is determined by a seed fill under the constraints of the current context settings. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold and criterion context settings). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary.\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent'.\n"
+                                     "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent', 'gimp-context-set-diagonal-neighbors'.\n"
                                      "In the case of a merged sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
                                      "David Gowers",
                                      "David Gowers",

@@ -116,7 +116,8 @@ gimp_image_select_color (gint32          image_ID,
  * gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
  * gimp_context_set_sample_criterion(),
  * gimp_context_set_sample_threshold(),
- * gimp_context_set_sample_transparent().
+ * gimp_context_set_sample_transparent(),
+ * gimp_context_set_diagonal_neighbors().
  * In the case of a merged sampling, the supplied drawable is ignored.
  * If the sample is merged, the specified coordinates are relative to
  * the image origin; otherwise, they are relative to the drawable's

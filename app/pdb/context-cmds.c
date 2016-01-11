@@ -4601,7 +4601,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-diagonal-neighbors",
                                      "Set the diagonal neighbors setting.",
-                                     "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighors of each pixel are considered.",
+                                     "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighors of each pixel are considered.\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-contiguous-color'.",
                                      "Ell",
                                      "Ell",
                                      "2016",

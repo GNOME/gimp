@@ -103,7 +103,7 @@ This procedure is affected by the following context setters:
 gimp_context_set_antialias(), gimp_context_set_feather(),
 gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
 gimp_context_set_sample_criterion(), gimp_context_set_sample_threshold(),
-gimp_context_set_sample_transparent().
+gimp_context_set_sample_transparent(), gimp_context_set_diagonal_neighbors().
 
 In the case of a merged sampling, the supplied drawable is ignored.
 If the sample is merged, the specified coordinates are relative to the
@@ -143,7 +143,7 @@ HELP
                                  pdb_context->sample_threshold,
                                  pdb_context->sample_transparent,
                                  pdb_context->sample_criterion,
-                                 FALSE /* no diagonal neighnors */,
+                                 pdb_context->diagonal_neighbors,
                                  operation,
                                  pdb_context->antialias,
                                  pdb_context->feather,
