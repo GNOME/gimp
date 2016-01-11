@@ -1519,9 +1519,17 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
 
+  /* center the image so subsequent stuff only moves it a little in
+   * the center
+   */
+  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
+
   gimp_display_shell_sync_config (shell, shell->display->config);
 
+  gimp_image_window_suspend_keep_pos (window);
   gimp_display_shell_appearance_update (shell);
+  gimp_image_window_resume_keep_pos (window);
+
   gimp_image_window_update_tabs (window);
 #if 0
   gimp_help_set_help_data (shell->canvas, NULL, NULL);
