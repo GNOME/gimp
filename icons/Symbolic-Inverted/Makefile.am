@@ -22,6 +22,11 @@ icons_DATA = \
 
 include $(top_srcdir)/icons/Symbolic/icon-list.mk
 
+# As an exception, we do not want to invert gimp-default-colors.
+# Just use it as-is.
+12/gimp-default-colors.png: $(top_srcdir)/icons/Symbolic/12/gimp-default-colors.png
+	$(LN_S) $< $@
+
 # We are basically repeating the same rule for every subdirectory, which
 # is very dirty. But this is the only way we found to have a rule
 # dependency correctly tied to the image with same name in Symbolic/.
