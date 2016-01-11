@@ -25,7 +25,7 @@
 
 
 #define GIMP_CONFIG_DEFAULT_THEME          "Default"
-#define GIMP_CONFIG_DEFAULT_ICON_THEME     "Default"
+#define GIMP_CONFIG_DEFAULT_ICON_THEME     "Color"
 
 
 #define GIMP_TYPE_GUI_CONFIG            (gimp_gui_config_get_type ())

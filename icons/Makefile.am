@@ -1,4 +1,4 @@
 SUBDIRS = \
-	Default \
+	Color \
 	Symbolic \
 	Symbolic-Inverted

@@ -1,19 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir   = $(gimpdatadir)/icons/Default/hicolor
-icons12dir = $(gimpdatadir)/icons/Default/hicolor/12x12/apps
-icons16dir = $(gimpdatadir)/icons/Default/hicolor/16x16/apps
-icons18dir = $(gimpdatadir)/icons/Default/hicolor/18x18/apps
-icons20dir = $(gimpdatadir)/icons/Default/hicolor/20x20/apps
-icons22dir = $(gimpdatadir)/icons/Default/hicolor/22x22/apps
-icons24dir = $(gimpdatadir)/icons/Default/hicolor/24x24/apps
-icons32dir = $(gimpdatadir)/icons/Default/hicolor/32x32/apps
-icons48dir = $(gimpdatadir)/icons/Default/hicolor/48x48/apps
-icons64dir = $(gimpdatadir)/icons/Default/hicolor/64x64/apps
-icons96dir = $(gimpdatadir)/icons/Default/hicolor/96x96/apps
-icons128dir = $(gimpdatadir)/icons/Default/hicolor/128x128/apps
-icons192dir = $(gimpdatadir)/icons/Default/hicolor/192x192/apps
-icons256dir = $(gimpdatadir)/icons/Default/hicolor/256x256/apps
+iconsdir   = $(gimpdatadir)/icons/Color/hicolor
+icons12dir = $(gimpdatadir)/icons/Color/hicolor/12x12/apps
+icons16dir = $(gimpdatadir)/icons/Color/hicolor/16x16/apps
+icons18dir = $(gimpdatadir)/icons/Color/hicolor/18x18/apps
+icons20dir = $(gimpdatadir)/icons/Color/hicolor/20x20/apps
+icons22dir = $(gimpdatadir)/icons/Color/hicolor/22x22/apps
+icons24dir = $(gimpdatadir)/icons/Color/hicolor/24x24/apps
+icons32dir = $(gimpdatadir)/icons/Color/hicolor/32x32/apps
+icons48dir = $(gimpdatadir)/icons/Color/hicolor/48x48/apps
+icons64dir = $(gimpdatadir)/icons/Color/hicolor/64x64/apps
+icons96dir = $(gimpdatadir)/icons/Color/hicolor/96x96/apps
+icons128dir = $(gimpdatadir)/icons/Color/hicolor/128x128/apps
+icons192dir = $(gimpdatadir)/icons/Color/hicolor/192x192/apps
+icons256dir = $(gimpdatadir)/icons/Color/hicolor/256x256/apps
 
 
 ## The icon theme images

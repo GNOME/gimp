@@ -50,7 +50,7 @@
 
 #define LIBGIMP_DOMAIN          GETTEXT_PACKAGE "-libgimp"
 #define GIMP_TOILET_PAPER       "gimp-toilet-paper"
-#define GIMP_DEFAULT_ICON_THEME "Default"
+#define GIMP_DEFAULT_ICON_THEME "Color"
 
 
 static GtkIconFactory *gimp_stock_factory = NULL;
