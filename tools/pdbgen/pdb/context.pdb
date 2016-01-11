@@ -2271,6 +2271,67 @@ CODE
     );
 }
 
+sub context_get_diagonal_neighbors {
+    $blurb = 'Get the diagonal neighbors setting.';
+
+    $help = <<'HELP';
+This procedure returns the diagonal neighbors setting.
+HELP
+
+    $author = 'Ell';
+    $copyright = 'Ell';
+    $date = '2016';
+    $since = '2.10';
+
+    @outargs = (
+        { name => 'diagonal_neighbors', type => 'boolean',
+          desc => 'The diagonal neighbors setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "diagonal-neighbors", &diagonal_neighbors,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_diagonal_neighbors {
+    $blurb = 'Set the diagonal neighbors setting.';
+
+    $help = <<'HELP';
+This procedure modifies the diagonal neighbors setting. If the affected
+region of an operation is based on a seed point, like when doing a seed
+fill, then, when this setting is TRUE, all eight neighbors of each pixel
+are considered when calculating the affected region; in contrast, when
+this setting is FALSE, only the four orthogonal neighors of each pixel
+are considered.
+HELP
+
+    $author = 'Ell';
+    $copyright = 'Ell';
+    $date = '2016';
+    $since = '2.10';
+
+    @inargs = (
+        { name => 'diagonal_neighbors', type => 'boolean',
+          desc => 'The diagonal neighbors setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "diagonal-neighbors", diagonal_neighbors,
+                NULL);
+}
+CODE
+    );
+}
+
 sub context_get_interpolation {
     $blurb = 'Get the interpolation type.';
 
@@ -3021,6 +3082,7 @@ CODE
             context_get_sample_threshold context_set_sample_threshold
             context_get_sample_threshold_int context_set_sample_threshold_int
             context_get_sample_transparent context_set_sample_transparent
+            context_get_diagonal_neighbors context_set_diagonal_neighbors
             context_get_interpolation context_set_interpolation
             context_get_transform_direction context_set_transform_direction
             context_get_transform_resize context_set_transform_resize

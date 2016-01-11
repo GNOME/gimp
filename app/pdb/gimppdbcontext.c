@@ -52,6 +52,7 @@ enum
   PROP_SAMPLE_CRITERION,
   PROP_SAMPLE_THRESHOLD,
   PROP_SAMPLE_TRANSPARENT,
+  PROP_DIAGONAL_NEIGHBORS,
   PROP_INTERPOLATION,
   PROP_TRANSFORM_DIRECTION,
   PROP_TRANSFORM_RESIZE
@@ -132,6 +133,11 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_TRANSPARENT,
                                     "sample-transparent", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+                                    "diagonal-neighbors", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
@@ -288,6 +294,10 @@ gimp_pdb_context_set_property (GObject      *object,
       options->sample_transparent = g_value_get_boolean (value);
       break;
 
+    case PROP_DIAGONAL_NEIGHBORS:
+      options->diagonal_neighbors = g_value_get_boolean (value);
+      break;
+
     case PROP_INTERPOLATION:
       options->interpolation = g_value_get_enum (value);
       break;
@@ -346,6 +356,10 @@ gimp_pdb_context_get_property (GObject    *object,
 
     case PROP_SAMPLE_TRANSPARENT:
       g_value_set_boolean (value, options->sample_transparent);
+      break;
+
+    case PROP_DIAGONAL_NEIGHBORS:
+      g_value_set_boolean (value, options->diagonal_neighbors);
       break;
 
     case PROP_INTERPOLATION:

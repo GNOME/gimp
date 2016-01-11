@@ -110,6 +110,7 @@ EXPORTS
 	gimp_context_get_sample_threshold
 	gimp_context_get_sample_threshold_int
 	gimp_context_get_sample_transparent
+	gimp_context_get_diagonal_neighbors
 	gimp_context_get_stroke_method
 	gimp_context_get_transform_direction
 	gimp_context_get_transform_recursion
@@ -164,6 +165,7 @@ EXPORTS
 	gimp_context_set_sample_threshold
 	gimp_context_set_sample_threshold_int
 	gimp_context_set_sample_transparent
+	gimp_context_set_diagonal_neighbors
 	gimp_context_set_stroke_method
 	gimp_context_set_transform_direction
 	gimp_context_set_transform_recursion
