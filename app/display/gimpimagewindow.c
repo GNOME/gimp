@@ -676,7 +676,9 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
         gtk_widget_set_name (private->menubar,
                              fullscreen ? "gimp-menubar-fullscreen" : NULL);
 
+      gimp_image_window_suspend_keep_pos (window);
       gimp_display_shell_appearance_update (shell);
+      gimp_image_window_resume_keep_pos (window);
     }
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
