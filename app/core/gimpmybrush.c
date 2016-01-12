@@ -126,8 +126,6 @@ gimp_mybrush_set_property (GObject      *object,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpMybrush *brush = GIMP_MYBRUSH (object);
-
   switch (property_id)
     {
     default:
@@ -142,8 +140,6 @@ gimp_mybrush_get_property (GObject    *object,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpMybrush *brush = GIMP_MYBRUSH (object);
-
   switch (property_id)
     {
     default:
@@ -176,8 +172,6 @@ gimp_mybrush_get_description (GimpViewable  *viewable,
 static void
 gimp_mybrush_dirty (GimpData *data)
 {
-  GimpMybrush *brush = GIMP_MYBRUSH (data);
-
   GIMP_DATA_CLASS (parent_class)->dirty (data);
 }
 
