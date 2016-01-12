@@ -1709,6 +1709,7 @@ style "tlsog-combobox-entry-button-style"
 
 widget_class "*<GtkComboBoxEntry>*<GtkEntry>" style "tlsog-combobox-entry-button-style"
 widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkComboBoxEntry>*<GtkEntry>" style "tlsog-combobox-entry-button-style"
+widget_class "*<GtkComboBoxEntry>*<GtkButton>" style "tlsog-combobox-entry-button-style"
 
 ###########################################################
 
@@ -2119,102 +2120,6 @@ style "tlsog-combobox-separator-style"
 }
 
 widget_class "*<GtkComboBox>*<GtkSeparator>" style "tlsog-combobox-separator-style"
-
-###########################################################
-
-style "tlsog-combobox-entry-button-style"
-{
-  xthickness = 6
-
-  fg[ACTIVE] = "#343434"
-
-  engine "pixmap"
-    {
-      # LTR version
-      image
-        {
-          function = BOX
-          state = NORMAL
-          file = "ui/combo-entry-button.png"
-          border = { 4, 4, 5, 4 }
-          stretch = TRUE
-          direction = LTR
-        }
-
-      image
-        {
-          function = BOX
-          state = PRELIGHT
-          file = "ui/combo-entry-button.png"
-          border = { 4, 4, 5, 4 }
-          stretch = TRUE
-          direction = LTR
-        }
-
-      image
-        {
-          function = BOX
-          state = INSENSITIVE
-          file = "ui/combo-entry-button-disabled.png"
-          border = { 4, 4, 5, 4 }
-          stretch = TRUE
-          direction = LTR
-        }
-
-      image
-        {
-          function = BOX
-          state = ACTIVE
-          file = "ui/combo-entry-button-active.png"
-          border = { 4, 4, 5, 4 }
-          stretch = TRUE
-          direction = LTR
-        }
-
-      # RTL version
-      image
-        {
-          function = BOX
-          state = NORMAL
-          file = "ui/combo-entry-button-rtl.png"
-          border = { 4, 4, 5, 4 }
-          stretch = TRUE
-          direction = RTL
-        }
-
-      image
-        {
-          function = BOX
-          state = PRELIGHT
-          file = "ui/combo-entry-button-rtl.png"
-          border = { 4, 4, 5, 4 }
-          stretch = TRUE
-          direction = RTL
-        }
-
-      image
-        {
-          function = BOX
-          state = INSENSITIVE
-          file = "ui/combo-entry-button-disabled-rtl.png"
-          border = { 4, 4, 5, 4 }
-          stretch = TRUE
-          direction = RTL
-        }
-
-      image
-        {
-          function = BOX
-          state = ACTIVE
-          file = "ui/combo-entry-button-active-rtl.png"
-          border = { 4, 4, 5, 4 }
-          stretch = TRUE
-          direction = RTL
-        }
-    }
-}
-
-widget_class "*<GtkComboBoxEntry>*<GtkButton>" style "tlsog-combobox-entry-button-style"
 
 ###########################################################
 
