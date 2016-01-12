@@ -25,6 +25,7 @@ include $(top_srcdir)/icons/Symbolic/icon-list.mk
 # As an exception, we do not want to invert gimp-default-colors.
 # Just use it as-is.
 12/gimp-default-colors.png: $(top_srcdir)/icons/Symbolic/12/gimp-default-colors.png
+	mkdir -p `dirname $<`
 	cp -f $< $@
 
 # We are basically repeating the same rule for every subdirectory, which
