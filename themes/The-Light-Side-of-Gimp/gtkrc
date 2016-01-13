@@ -2,7 +2,7 @@
 #
 # The Light Side of GIMP Theme
 #
-# Version 0.1.2
+# Version 0.1.3
 #
 # Copyright 2015, Benoit Touchette
 #
@@ -45,6 +45,9 @@
 # Miscellaneous:
 #
 # * Fonts can be overridden by uncommenting the two font lines below
+#
+# * Uncomment the gtk-primary-button-warps-slider line to enable warping
+#   scroll bars.
 #
 ############################################################################
 
@@ -127,6 +130,8 @@ style "tlsog-default-style"
   GtkDialog::action-area-border = 12
   GimpUnitComboBox::appears-as-list = 0
   GtkComboBox::appears-as-list = 0
+  GtkComboBoxEntry::appears-as-list = 0
+  GtkComboBoxText::appears-as-list = 0
   GtkButton::focus-line_width = 0
   GtkButton::focus-padding = 0
 
@@ -164,6 +169,7 @@ style "tlsog-default-style"
   GtkCList::shadow_type = GTK_SHADOW_NONE
   GtkComboBox::shadow_type = GTK_SHADOW_NONE
   GtkComboBoxEntry::shadow_type = GTK_SHADOW_NONE
+  GtkScrolledWindow::shadow-type = GTK_SHADOW_NONE
   GtkVScale::shadow_type = GTK_SHADOW_NONE
   GtkHScale::shadow_type = GTK_SHADOW_NONE
 
@@ -917,7 +923,7 @@ style "tlsog-item"
           function = ARROW
           recolorable = TRUE
           state = PRELIGHT
-          overlay_file = "ui/gimp-arrow-right-prelight.png"
+          overlay_file = "ui/gimp-arrow-right.png"
           overlay_stretch = FALSE
           arrow_direction = RIGHT
         }
@@ -2178,6 +2184,10 @@ widget_class "*GtkButton*" style "tlsog-button-style"
 
 style "kde_hack_1"
 {
+  GtkComboBox::appears-as-list = 0
+  GtkComboBoxEntry::appears-as-list = 0
+  GtkComboBoxText::appears-as-list = 0
+
   color["clr1"] = "#343434"
   color["clr2"] = "#222222"
   color["clr3"] = "#3E3E3E"
@@ -2194,8 +2204,6 @@ style "kde_hack_1"
   fg[SELECTED] = @clr2
   fg[INSENSITIVE] = @clr3
 
-  bg[NORMAL] = @clr4
-
   base[NORMAL] = @clr6
   base[PRELIGHT] = @clr7
   base[ACTIVE] = @clr7
@@ -2209,7 +2217,7 @@ style "kde_hack_1"
   text[INSENSITIVE] = @clr9
 }
 
-widget_class "*<GtkNotebook>*" style "kde_hack_1"
+widget_class "*" style "kde_hack_1"
 
 ###########################################################
 
@@ -2361,6 +2369,9 @@ widget_class "*<GtkTreeView>*<GtkButton>*" style "kde_hack_6"
 # KDE & oxygen-gtk fix for BG
 style "tlsog-oxygen-default-style" = "tlsog-default-style"
 {
+  GtkComboBox::appears-as-list = 0
+  GtkComboBoxEntry::appears-as-list = 0
+  GtkComboBoxText::appears-as-list = 0
 }
 
 class "*" style "tlsog-oxygen-default-style"
@@ -2416,9 +2427,48 @@ style "tlsog-gtkscale-style"
 class "GtkScale" style "tlsog-gtkscale-style"
 class "GtkVScale" style "tlsog-gtkscale-style"
 class "GtkHScale" style "tlsog-gtkscale-style"
-widget_class "*<GtkScale>*" style "tlsog-gtkscale-style"
-widget_class "*<GtkVScale>*" style "tlsog-gtkscale-style"
-widget_class "*<GtkHScale>*" style "tlsog-gtkscale-style"
+widget_class "*GtkScale*" style "tlsog-gtkscale-style"
+widget_class "*GtkVScale*" style "tlsog-gtkscale-style"
+widget_class "*GtkHScale*" style "tlsog-gtkscale-style"
+
+###########################################################
+
+style "tlsog-overlay-scrollbar"
+{
+  bg[SELECTED] = "#555"
+  bg[INSENSITIVE] = "#777"
+  bg[ACTIVE] = "#333"
+  bg[NORMAL] = "#CCC"
+  bg[PRELIGHT] = "#CCC"
+
+  fg[NORMAL] = "#333"
+}
+
+widget_class "*<OsScrollbar>" style "tlsog-overlay-scrollbar"
+widget_class "*<OsThumb>" style "tlsog-overlay-scrollbar"
+
+###########################################################
+
+# Fix for GMIC/plugins
+style "tlsog-plugin-scrolled-window-style"
+{
+  xthickness = 1
+  ythickness = 1
+
+  engine "pixmap"
+    {
+      image
+        {
+          function = SHADOW
+          file = "ui/frame.png"
+          border = { 1, 1, 1, 1 }
+          stretch = TRUE
+          shadow = IN
+        }
+    }
+}
+
+widget_class "*<GtkScrolledWindow>*<GtkViewport>" style "tlsog-plugin-scrolled-window-style"
 
 ###########################################################
 
