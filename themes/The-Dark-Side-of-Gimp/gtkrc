@@ -1,7 +1,7 @@
 ############################################################################
 #
 # The Dark Side of GIMP Theme
-# Version 0.1.2
+# Version 0.1.3
 #
 # Copyright 2015, Benoit Touchette
 #
@@ -45,6 +45,9 @@
 #
 # * Fonts can be overridden by uncommenting the two font lines below
 #
+# * Uncomment the gtk-primary-button-warps-slider line to enable warping
+#   scroll bars.
+#
 ############################################################################
 
 gtk-menu-images = 1
@@ -82,7 +85,7 @@ style "tdsog-default-style"
   bg[NORMAL] = @clr4
   bg[PRELIGHT] = @clr4
   bg[ACTIVE] = @clr4
-  bg[SELECTED] = @clr5
+  bg[SELECTED] = @clr9
   bg[INSENSITIVE] = @clr5
 
   base[NORMAL] = @clr6
@@ -126,6 +129,8 @@ style "tdsog-default-style"
   GtkDialog::action-area-border = 12
   GimpUnitComboBox::appears-as-list = 0
   GtkComboBox::appears-as-list = 0
+  GtkComboBoxEntry::appears-as-list = 0
+  GtkComboBoxText::appears-as-list = 0
   GtkButton::focus-line_width = 0
   GtkButton::focus-padding = 0
 
@@ -163,6 +168,7 @@ style "tdsog-default-style"
   GtkCList::shadow_type = GTK_SHADOW_NONE
   GtkComboBox::shadow_type = GTK_SHADOW_NONE
   GtkComboBoxEntry::shadow_type = GTK_SHADOW_NONE
+  GtkComboBoxText::shadow_type = GTK_SHADOW_NONE
   GtkVScale::shadow_type = GTK_SHADOW_NONE
   GtkHScale::shadow_type = GTK_SHADOW_NONE
 
@@ -1705,7 +1711,6 @@ style "tdsog-combobox-entry-button-style"
 
 widget_class "*<GtkComboBoxEntry>*<GtkEntry>" style "tdsog-combobox-entry-button-style"
 widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkComboBoxEntry>*<GtkEntry>" style "tdsog-combobox-entry-button-style"
-widget_class "*<GtkComboBoxEntry>*<GtkButton>" style "tdsog-combobox-entry-button-style"
 
 ###########################################################
 
@@ -2119,6 +2124,102 @@ widget_class "*<GtkComboBox>*<GtkSeparator>" style "tdsog-combobox-separator-sty
 
 ###########################################################
 
+style "tdsog-combobox-entry-button-style"
+{
+  xthickness = 6
+
+  fg[ACTIVE] = "#CBCBCB"
+
+  engine "pixmap"
+    {
+      # LTR version
+      image
+        {
+          function = BOX
+          state = NORMAL
+          file = "ui/combo-entry-button.png"
+          border = { 4, 4, 5, 4 }
+          stretch = TRUE
+          direction = LTR
+        }
+
+      image
+        {
+          function = BOX
+          state = PRELIGHT
+          file = "ui/combo-entry-button.png"
+          border = { 4, 4, 5, 4 }
+          stretch = TRUE
+          direction = LTR
+        }
+
+      image
+        {
+          function = BOX
+          state = INSENSITIVE
+          file = "ui/combo-entry-button-disabled.png"
+          border = { 4, 4, 5, 4 }
+          stretch = TRUE
+          direction = LTR
+        }
+
+      image
+        {
+          function = BOX
+          state = ACTIVE
+          file = "ui/combo-entry-button-active.png"
+          border = { 4, 4, 5, 4 }
+          stretch = TRUE
+          direction = LTR
+        }
+
+      # RTL version
+      image
+        {
+          function = BOX
+          state = NORMAL
+          file = "ui/combo-entry-button-rtl.png"
+          border = { 4, 4, 5, 4 }
+          stretch = TRUE
+          direction = RTL
+        }
+
+      image
+        {
+          function = BOX
+          state = PRELIGHT
+          file = "ui/combo-entry-button-rtl.png"
+          border = { 4, 4, 5, 4 }
+          stretch = TRUE
+          direction = RTL
+        }
+
+      image
+        {
+          function = BOX
+          state = INSENSITIVE
+          file = "ui/combo-entry-button-disabled-rtl.png"
+          border = { 4, 4, 5, 4 }
+          stretch = TRUE
+          direction = RTL
+        }
+
+      image
+        {
+          function = BOX
+          state = ACTIVE
+          file = "ui/combo-entry-button-active-rtl.png"
+          border = { 4, 4, 5, 4 }
+          stretch = TRUE
+          direction = RTL
+        }
+    }
+}
+
+widget_class "*<GtkComboBoxEntry>*<GtkButton>" style "tdsog-combobox-entry-button-style"
+
+###########################################################
+
 style "tdsog-combobox-button-style"
 {
   xthickness = 3
@@ -2174,6 +2275,10 @@ widget_class "*<GtkButton>*" style "tdsog-button-style"
 
 style "kde_hack_1"
 {
+  GtkComboBox::appears-as-list = 0
+  GtkComboBoxEntry::appears-as-list = 0
+  GtkComboBoxText::appears-as-list = 0
+
   color["clr1"] = "#EEEEEE"
   color["clr2"] = "#DDDDDD"
   color["clr3"] = "#C1C1C1"
@@ -2205,7 +2310,7 @@ style "kde_hack_1"
   text[INSENSITIVE] = @clr9
 }
 
-widget_class "*<GtkNotebook>*" style "kde_hack_1"
+widget_class "*" style "kde_hack_1"
 
 ###########################################################
 
@@ -2357,6 +2462,9 @@ widget_class "*<GtkTreeView>*<GtkButton>*" style "kde_hack_6"
 # KDE & oxygen-gtk fix for BG
 style "tdsog-oxygen-default-style" = "tdsog-default-style"
 {
+  GtkComboBox::appears-as-list = 0
+  GtkComboBoxEntry::appears-as-list = 0
+  GtkComboBoxText::appears-as-list = 0
 }
 
 class "*" style "tdsog-oxygen-default-style"
@@ -2412,9 +2520,25 @@ style "tdsog-gtkscale-style"
 class "GtkScale" style "tdsog-gtkscale-style"
 class "GtkVScale" style "tdsog-gtkscale-style"
 class "GtkHScale" style "tdsog-gtkscale-style"
-widget_class "*<GtkScale>*" style "tdsog-gtkscale-style"
-widget_class "*<GtkVScale>*" style "tdsog-gtkscale-style"
-widget_class "*<GtkHScale>*" style "tdsog-gtkscale-style"
+widget_class "*GtkScale*" style "tdsog-gtkscale-style"
+widget_class "*GtkVScale*" style "tdsog-gtkscale-style"
+widget_class "*GtkHScale*" style "tdsog-gtkscale-style"
+
+###########################################################
+
+style "tdsog-overlay-scrollbar"
+{
+  bg[SELECTED] = "#CCC"
+  bg[INSENSITIVE] = "#AAA"
+  bg[ACTIVE] = "#EEE"
+  bg[NORMAL] = "#666"
+  bg[PRELIGHT] = "#666"
+
+  fg[NORMAL] = "#EEE"
+}
+
+widget_class "*<OsScrollbar>" style "tdsog-overlay-scrollbar"
+widget_class "*<OsThumb>" style "tdsog-overlay-scrollbar"
 
 ###########################################################
 
