@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-06 16:49+0000\n"
-"PO-Revision-Date: 2013-05-27 23:14+0100\n"
+"POT-Creation-Date: 2016-01-14 20:03+0100\n"
+"PO-Revision-Date: 2016-01-14 20:03+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
+"Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.8.3\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
@@ -30,24 +31,24 @@ msgstr "Det oppstod ein feil under køyringa av %s"
 msgid "_More Information"
 msgstr "_Meir informasjon"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
+#: ../plug-ins/pygimp/gimpfu.py:545
 msgid "No"
 msgstr "Nei"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu filutval"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pygimp/gimpfu.py:644
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu mappeutval"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pygimp/gimpfu.py:733
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ugyldig inndata for «%s»"
@@ -104,6 +105,50 @@ msgstr "Fargeovergang som skal brukast"
 msgid "File Name"
 msgstr "Filnamn"
 
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "Eksporter bilethistogrammet til ei tekstfil (CSV)"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+msgid "_Export histogram..."
+msgstr "_Eksporter histogram …"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+msgid "_Image"
+msgstr "_Bilete"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+msgid "_Drawable"
+msgstr "Teikneobjekt"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+msgid "Histogram _File"
+msgstr "Histogram_fil"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+msgid "_Bucket Size"
+msgstr "_Bøttestorleik:"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+msgid "Sample _Average"
+msgstr "_Gjennomsnitt"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+msgid "Output format"
+msgstr "Utformat"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+msgid "Pixel count"
+msgstr "Pikselteljing"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+msgid "Normalized"
+msgstr "Normalisert"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+msgid "Percent"
+msgstr "Prosent"
+
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
 msgstr "Legg til eit tåkelag"
@@ -141,7 +186,7 @@ msgid "_Offset Palette..."
 msgstr "_Forskyv paletten …"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -151,45 +196,126 @@ msgstr "Palett"
 msgid "Off_set"
 msgstr "_Forskyv"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Red"
+msgstr "Raud"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Green"
+msgstr "Grøn"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Blue"
+msgstr "Blå"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+msgid "Luma (Y)"
+msgstr "Luma (Y)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Hue"
+msgstr "Kulør"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Saturation"
+msgstr "Metning"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Value"
+msgstr "Lysverdi"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+msgid "Saturation (HSL)"
+msgstr "Metning (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+msgid "Lightness (HSL)"
+msgstr "Lysverdi (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
+msgid "Index"
+msgstr "Indeks"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
+msgid "Random"
+msgstr "Tilfeldig"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
+msgid "Lightness (LAB)"
+msgstr "Lysverdi (LAB)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+msgid "A-color"
+msgstr "A-farge"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+msgid "B-color"
+msgstr "B-farge"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
+msgid "Chroma (LCHab)"
+msgstr "Kroma (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
+msgid "Hue (LCHab)"
+msgstr "Kulør (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
 msgid "Sort the colors in a palette"
 msgstr "Sorter fargane i paletten"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
 msgid "_Sort Palette..."
 msgstr "_Sorter paletten …"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "Farge_modell"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+msgid "Se_lections"
+msgstr "_Utval"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "All"
+msgstr "Alle"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "Slice / Array"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "Autoslice (fg->bg)"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+msgid "Partitioned"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+msgid "Slice _expression"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
 msgstr "Kanal som skal _sorterast"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "Raud eller kulør"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "Grøn eller metning"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "Blå eller verdi"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
 msgid "_Ascending"
 msgstr "_Aukande"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+msgid "Secondary Channel to s_ort"
+msgstr "Sekundærkanal som skal s_orterast"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+msgid "_Quantization"
+msgstr "Kvantisering"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+msgid "_Partitioning channel"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+msgid "Partition q_uantization"
+msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -293,15 +419,15 @@ msgstr "_Konsollen"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Legg slagskygge og eventuelt slagskygge til laget"
+msgstr "Legg slagskugge og eventuelt fasettkant til laget"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Slagskygge og fasettkant"
+msgstr "_Slagskugge og fasettkant"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
-msgstr "_Sløring av skyggen"
+msgstr "_Sløring av skuggen"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
@@ -309,32 +435,42 @@ msgstr "_Fasettkant"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
-msgstr "_Slagskygge"
+msgstr "_Slagskugge"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
-msgstr "_X-lengde for slagskyggen"
+msgstr "_X-lengd for slagskuggen"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
-msgstr "_Y-lengde for slagskyggen"
+msgstr "_Y-lengd for slagskuggen"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
-msgid "Create a new brush with characters from a text sequence"
-msgstr "Lag ein ny pensel med teikna frå ein tekstsekvens"
+#~ msgid "Color _model"
+#~ msgstr "Farge_modell"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
-msgid "New Brush from _Text..."
-msgstr "Ny pensel frå _tekst …"
+#~ msgid "RGB"
+#~ msgstr "RGB"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "Skrifttypar"
+#~ msgid "HSV"
+#~ msgstr "HSV"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "Pikselstorleik"
+#~ msgid "Red or Hue"
+#~ msgstr "Raud eller kulør"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-msgid "Text"
-msgstr "Tekst"
+#~ msgid "Blue or Value"
+#~ msgstr "Blå eller verdi"
+
+#~ msgid "Create a new brush with characters from a text sequence"
+#~ msgstr "Lag ein ny pensel med teikna frå ein tekstsekvens"
+
+#~ msgid "New Brush from _Text..."
+#~ msgstr "Ny pensel frå _tekst …"
+
+#~ msgid "Font"
+#~ msgstr "Skrifttypar"
+
+#~ msgid "Pixel Size"
+#~ msgstr "Pikselstorleik"
+
+#~ msgid "Text"
+#~ msgstr "Tekst"

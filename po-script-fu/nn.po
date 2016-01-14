@@ -6,9 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-03 22:00+1200\n"
-"PO-Revision-Date: 2016-01-07 15:17+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-01-14 20:04+0100\n"
+"PO-Revision-Date: 2016-01-14 20:05+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
 "Language: nn_NO\n"
@@ -34,63 +35,63 @@ msgstr "Tenar for fjernoperering av Script-Fu"
 msgid "_Start Server..."
 msgstr "_Start tenaren …"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_GIMP Online"
 msgstr "_GIMP på Internett"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_User Manual"
 msgstr "_Handboka"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Buttons"
 msgstr "_Knappar"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Logos"
 msgstr "_Logoar"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Patterns"
 msgstr "_Mønsterelement"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Web Page Themes"
 msgstr "Tema for _nettside"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Alien Glow"
 msgstr "Alien Glow"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "_Beveled Pattern"
 msgstr "_Fasettert mønster"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:332
+#: ../plug-ins/script-fu/script-fu.c:331
 msgid "Alpha to _Logo"
 msgstr "Alfa til _logo"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Les alle dei tilgjengelege Script-Fu-skripta inn på nytt"
 
-#: ../plug-ins/script-fu/script-fu.c:340
+#: ../plug-ins/script-fu/script-fu.c:339
 msgid "_Refresh Scripts"
 msgstr "_Oppdater skript"
 
-#: ../plug-ins/script-fu/script-fu.c:363
+#: ../plug-ins/script-fu/script-fu.c:362
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -98,33 +99,33 @@ msgstr ""
 "Du kan ikkje bruka «oppdater skript» når du har eit ope Script-Fu "
 "dialogvindauge. Lukk alle Script-Fu-vindauge og prøv igjen."
 
-#: ../plug-ins/script-fu/script-fu-console.c:130
-#: ../plug-ins/script-fu/script-fu-console.c:197
+#: ../plug-ins/script-fu/script-fu-console.c:127
+#: ../plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsoll"
 
-#: ../plug-ins/script-fu/script-fu-console.c:193
+#: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
 msgstr "Velkommen til TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:199
+#: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Interactive Scheme Development"
 msgstr "Interaktiv Scheme-utvikling"
 
-#: ../plug-ins/script-fu/script-fu-console.c:235
+#: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
 msgstr "_Bla gjennom …"
 
-#: ../plug-ins/script-fu/script-fu-console.c:293
+#: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
 msgstr "Lagra utdata frå Script-Fu konsollen"
 
-#: ../plug-ins/script-fu/script-fu-console.c:340
+#: ../plug-ins/script-fu/script-fu-console.c:335
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kan ikkje opna «%s» for skriving: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:369
+#: ../plug-ins/script-fu/script-fu-console.c:364
 msgid "Script-Fu Procedure Browser"
 msgstr "Prosedyrelesaren for Script-Fu"
 
@@ -149,12 +150,12 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:290
+#: ../plug-ins/script-fu/script-fu-interface.c:289
 #, c-format
 msgid "%s:"
 msgstr "%s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:337
+#: ../plug-ins/script-fu/script-fu-interface.c:336
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu fargeval"
 
@@ -186,16 +187,16 @@ msgstr "Script-Fu fargeovergangsval"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu penselval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:840
+#: ../plug-ins/script-fu/script-fu-interface.c:857
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Feil under utføringa av %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:146
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "For få argument i oppkallet til «script-fu-register»"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:605
+#: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Feil ved lastinga av %s:"
@@ -220,7 +221,7 @@ msgstr "Tenarport:"
 msgid "Server logfile:"
 msgstr "Loggfil for tenar:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:890
+#: ../plug-ins/script-fu/script-fu-server.c:891
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -478,41 +479,41 @@ msgstr "Krombalanse"
 msgid "Chrome white areas"
 msgstr "Krom kvite område"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:81
+#: ../plug-ins/script-fu/scripts/circuit.scm:74
 msgid "Effect layer"
 msgstr "Effektlag"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:134
+#: ../plug-ins/script-fu/scripts/circuit.scm:127
 msgid "_Circuit..."
 msgstr "_Kretskort …"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#: ../plug-ins/script-fu/scripts/circuit.scm:128
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 "Fyller det valde området (eller alfa) med mønster som minner om eit "
 "printbrett"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:142
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
 msgid "Oilify mask size"
 msgstr "Maskestorleik"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:143
+#: ../plug-ins/script-fu/scripts/circuit.scm:136
 msgid "Circuit seed"
 msgstr "Startverdi"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:144
+#: ../plug-ins/script-fu/scripts/circuit.scm:137
 msgid "No background (only for separate layer)"
 msgstr "Ingen bakgrunn (bare for delte lag)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:145
+#: ../plug-ins/script-fu/scripts/circuit.scm:138
 #: ../plug-ins/script-fu/scripts/lava.scm:129
 #: ../plug-ins/script-fu/scripts/predator.scm:132
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Behald utvalet"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:146
+#: ../plug-ins/script-fu/scripts/circuit.scm:139
 #: ../plug-ins/script-fu/scripts/lava.scm:130
 #: ../plug-ins/script-fu/scripts/predator.scm:133
 msgid "Separate layer"
@@ -575,35 +576,35 @@ msgstr "Differenseskyer …"
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Legg til massiv støy med lagmodus «differanse»"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:102
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
-msgstr "_Forvrengning …"
+msgstr "_Forvreng …"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:103
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
-msgstr "Fordrei utvalet med definerte parametrar"
+msgstr "Forvreng utvalet"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:110
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Threshold (bigger 1<-->254 smaller)"
 msgstr "Terskel (Høg 1<-->255 låg)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:111
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
 msgid "Spread"
 msgstr "Spreiing"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:112
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
 msgid "Granularity (1 is low)"
 msgstr "Korning (1 er låg)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
 msgid "Smooth"
 msgstr "Utglatting"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
 msgid "Smooth horizontally"
 msgstr "Glatt ut horisontalt"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
 msgid "Smooth vertically"
 msgstr "Glatt ut vertikalt"
 
@@ -971,11 +972,11 @@ msgstr "Fargeovergang"
 msgid "Use current gradient"
 msgstr "Bruk gjeldande fargeovergang"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:106
+#: ../plug-ins/script-fu/scripts/line-nova.scm:108
 msgid "Line _Nova..."
 msgstr "Line _Nova …"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:107
+#: ../plug-ins/script-fu/scripts/line-nova.scm:109
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -983,19 +984,19 @@ msgstr ""
 "Fyll eit lag med strålar som går utover frå sentrum. Farge frå "
 "forgrunnsfargen"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:114
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
 msgid "Number of lines"
 msgstr "Talet på strålar"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:115
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Sharpness (degrees)"
 msgstr "Mellomrom (grader)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+#: ../plug-ins/script-fu/scripts/line-nova.scm:118
 msgid "Offset radius"
 msgstr "Forskyvingsradius"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+#: ../plug-ins/script-fu/scripts/line-nova.scm:119
 msgid "Randomness"
 msgstr "Slump"
 
@@ -1075,11 +1076,11 @@ msgstr "Bruntone (sepia)"
 msgid "Mottle"
 msgstr "Flekklegg"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
 msgstr "Mappe for ut-fila"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
@@ -1087,11 +1088,11 @@ msgstr ""
 "Namnet på fila som skal lagast (dersom det finst ei fil med dette namnet frå "
 "før, vil ho bli byt ut)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Filnamnet du skreiv inn kan ikkje brukast for ei fil."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1099,7 +1100,7 @@ msgstr ""
 "Alle teikna i namnet er anten mellomrom eller teikn som er ulovlege i "
 "filnamn."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1107,15 +1108,15 @@ msgstr ""
 "Eksporter den aktive paletten som eit CSS-stilark med fargenamna som "
 "klassenamn og fargen som fargeeigenskap"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Eksporter den aktive paletten som ei PHP-ordliste (namn => farge)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Eksporter den aktive paletten som ei Python-ordliste (namn: farge)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1123,7 +1124,7 @@ msgstr ""
 "Skriv alle fargane i ein palett til ei tekstfil med ein heksadesimal verdi "
 "på kvar linje (ingen namn)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:408
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgstr ""
 "Eksporter den aktive paletten som ei java.util.Hashtable<Streng, Farge>"
@@ -1218,39 +1219,39 @@ msgstr "Reverser rekkefølgja for laga"
 msgid "Reverse the order of layers in the image"
 msgstr "Reverser rekkefølgja for biletlaga"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:119
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:67
 msgid "_Rippling..."
 msgstr "_Krusning …"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:120
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
 msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
+"Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
-"Oppretter eit bilete med fleire lag ved å legge ein krusningseffekt til i "
-"biletet"
+"Oppretter eit bilete med fleire lag ved å legge ein krusningseffekt til det "
+"aktive laget"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:127
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
 msgid "Rippling strength"
 msgstr "Krusningsstyrke"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:128
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:76
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:105
 msgid "Number of frames"
 msgstr "Talet på rammer"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Edge behavior"
 msgstr "Kanthandtering"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Wrap"
 msgstr "Bryt"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Smear"
 msgstr "Smør ut"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Black"
 msgstr "Svart"
 
