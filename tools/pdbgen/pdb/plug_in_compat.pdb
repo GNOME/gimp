@@ -1199,7 +1199,7 @@ sub plug_in_edge {
     $help = <<'HELP';
 Perform edge detection on the contents of the specified drawable.
 AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in
-(useful for tilable image). EDGEMODE sets the kind of matrix transform
+(useful for tileable image). EDGEMODE sets the kind of matrix transform
 applied to the pixels, SOBEL was the method used in older versions.
 HELP
 
@@ -2395,7 +2395,7 @@ HELP
                                    "x",              width,
                                    "y",              height,
                                    "algorithm-type", algorithm,
-                                   "tilable",        tileable,
+                                   "tileable",       tileable,
                                    "seed",           seed,
                                    "fg-color",       fg_color,
                                    "bg-color",       bg_color,
@@ -3881,8 +3881,8 @@ HELP
 	  desc => 'Input image (unused)' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
-        { name => 'tilable', type => 'boolean',
-          desc => 'Create a tilable output' },
+        { name => 'tileable', type => 'boolean',
+          desc => 'Create a tileable output' },
         { name => 'turbulent', type => 'boolean',
           desc => 'Make a turbulent noise' },
         { name => 'seed', type => 'int32',
@@ -3912,7 +3912,7 @@ HELP
                                   "x-size",    xsize,
                                   "y-size",    ysize,
                                   "detail",    detail,
-                                  "tilable",   tilable,
+                                  "tileable",  tileable,
                                   "turbulent", turbulent,
                                   "seed",      seed,
                                   "width",     width,
