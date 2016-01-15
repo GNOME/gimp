@@ -2443,7 +2443,7 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
                                        "x",              width,
                                        "y",              height,
                                        "algorithm-type", algorithm,
-                                       "tilable",        tileable,
+                                       "tileable",       tileable,
                                        "seed",           seed,
                                        "fg-color",       fg_color,
                                        "bg-color",       bg_color,
@@ -3763,7 +3763,7 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gboolean tilable;
+  gboolean tileable;
   gboolean turbulent;
   gint32 seed;
   gint32 detail;
@@ -3771,7 +3771,7 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
   gdouble ysize;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  tilable = g_value_get_boolean (gimp_value_array_index (args, 3));
+  tileable = g_value_get_boolean (gimp_value_array_index (args, 3));
   turbulent = g_value_get_boolean (gimp_value_array_index (args, 4));
   seed = g_value_get_int (gimp_value_array_index (args, 5));
   detail = g_value_get_int (gimp_value_array_index (args, 6));
@@ -3794,7 +3794,7 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
                                       "x-size",    xsize,
                                       "y-size",    ysize,
                                       "detail",    detail,
-                                      "tilable",   tilable,
+                                      "tileable",  tileable,
                                       "turbulent", turbulent,
                                       "seed",      seed,
                                       "width",     width,
@@ -5526,7 +5526,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "plug-in-edge",
                                      "Several simple methods for detecting edges",
-                                     "Perform edge detection on the contents of the specified drawable. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image). EDGEMODE sets the kind of matrix transform applied to the pixels, SOBEL was the method used in older versions.",
+                                     "Perform edge detection on the contents of the specified drawable. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tileable image). EDGEMODE sets the kind of matrix transform applied to the pixels, SOBEL was the method used in older versions.",
                                      "Compatibility procedure. Please see 'gegl:edge' for credits.",
                                      "Compatibility procedure. Please see 'gegl:edge' for credits.",
                                      "2015",
@@ -7988,9 +7988,9 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("tilable",
-                                                     "tilable",
-                                                     "Create a tilable output",
+                               g_param_spec_boolean ("tileable",
+                                                     "tileable",
+                                                     "Create a tileable output",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
