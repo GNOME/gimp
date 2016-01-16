@@ -44,7 +44,6 @@
 #include "operations/gimpdesaturateconfig.h"
 #include "operations/gimphuesaturationconfig.h"
 #include "operations/gimplevelsconfig.h"
-#include "operations/gimpposterizeconfig.h"
 #include "operations/gimpthresholdconfig.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
@@ -238,15 +237,16 @@ posterize_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GObject *config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG,
-                                          "levels", levels,
-                                          NULL);
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:posterize",
+                                 "levels",    levels,
+                                 NULL);
 
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Posterize"),
-                                                 "gimp:posterize",
-                                                 config);
-          g_object_unref (config);
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Posterize"),
+                                         node);
+          g_object_unref (node);
         }
       else
         success = FALSE;

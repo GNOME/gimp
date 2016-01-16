@@ -402,6 +402,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:polar-coordinates",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
+  { "filters-posterize", GIMP_STOCK_TOOL_POSTERIZE,
+    NC_("filters-action", "_Posterize..."), NULL, NULL,
+    "gimp:posterize",
+    GIMP_HELP_TOOL_POSTERIZE },
+
   { "filters-red-eye-removal", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Red Eye Removal..."), NULL, NULL,
     "gegl:red-eye-removal",
@@ -415,7 +420,7 @@ static const GimpStringActionEntry filters_actions[] =
   { "filters-semi-flatten", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Semi-Flatten..."), NULL, NULL,
     "gimp:semi-flatten",
-    NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
+    NULL /* FIXME GIMP_HELP_FILTER_SEMI_FLATTEN */ },
 
   { "filters-sepia", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Sepia..."), NULL, NULL,
@@ -689,6 +694,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-pixelize",                writable);
   SET_SENSITIVE ("filters-plasma",                  writable);
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
+  SET_SENSITIVE ("filters-posterize",               writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);

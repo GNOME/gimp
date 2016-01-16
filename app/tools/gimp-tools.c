@@ -77,7 +77,6 @@
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
 #include "gimpperspectivetool.h"
-#include "gimpposterizetool.h"
 #include "gimpthresholdtool.h"
 #include "gimprectangleselecttool.h"
 #include "gimprotatetool.h"
@@ -127,7 +126,6 @@ gimp_tools_init (Gimp *gimp)
     /*  color tools  */
     gimp_operation_tool_register,
     gimp_gegl_tool_register,
-    gimp_posterize_tool_register,
     gimp_curves_tool_register,
     gimp_levels_tool_register,
     gimp_threshold_tool_register,

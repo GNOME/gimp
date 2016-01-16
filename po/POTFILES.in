@@ -254,6 +254,7 @@ app/operations/gimphuesaturationconfig.c
 app/operations/gimplevelsconfig.c
 app/operations/gimpoperationcagecoefcalc.c
 app/operations/gimpoperationcagetransform.c
+app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
 app/operations/gimpoperationthresholdalpha.c
 app/operations/gimpthresholdconfig.c
@@ -405,7 +406,6 @@ app/tools/gimppainttool.c
 app/tools/gimppenciltool.c
 app/tools/gimpperspectiveclonetool.c
 app/tools/gimpperspectivetool.c
-app/tools/gimpposterizetool.c
 app/tools/gimprectangleoptions.c
 app/tools/gimprectangleselectoptions.c
 app/tools/gimprectangleselecttool.c

@@ -39,6 +39,8 @@ typedef struct _GimpOperationPosterizeClass GimpOperationPosterizeClass;
 struct _GimpOperationPosterize
 {
   GimpOperationPointFilter  parent_instance;
+
+  gint                      levels;
 };
 
 struct _GimpOperationPosterizeClass
