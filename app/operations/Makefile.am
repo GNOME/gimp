@@ -33,8 +33,6 @@ libappoperations_generic_a_sources = \
 	gimpcolorizeconfig.h			\
 	gimpcurvesconfig.c			\
 	gimpcurvesconfig.h			\
-	gimpdesaturateconfig.c			\
-	gimpdesaturateconfig.h			\
 	gimphuesaturationconfig.c		\
 	gimphuesaturationconfig.h		\
 	gimplevelsconfig.c			\

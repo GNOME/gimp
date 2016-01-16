@@ -41,7 +41,6 @@
 #include "operations/gimpcolorbalanceconfig.h"
 #include "operations/gimpcolorizeconfig.h"
 #include "operations/gimpcurvesconfig.h"
-#include "operations/gimpdesaturateconfig.h"
 #include "operations/gimphuesaturationconfig.h"
 #include "operations/gimplevelsconfig.h"
 #include "operations/gimpthresholdconfig.h"
@@ -276,15 +275,16 @@ desaturate_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           gimp_drawable_is_rgb (drawable))
         {
-          GObject *config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
-                                          "mode", GIMP_DESATURATE_LIGHTNESS,
-                                          NULL);
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:desaturate",
+                                 "mode",      GIMP_DESATURATE_LIGHTNESS,
+                                 NULL);
 
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Desaturate"),
-                                                 "gimp:desaturate",
-                                                 config);
-          g_object_unref (config);
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Desaturate"),
+                                         node);
+          g_object_unref (node);
         }
       else
         success = FALSE;
@@ -316,15 +316,16 @@ desaturate_full_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           gimp_drawable_is_rgb (drawable))
         {
-          GObject *config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
-                                          "mode", desaturate_mode,
-                                          NULL);
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:desaturate",
+                                 "mode",      desaturate_mode,
+                                 NULL);
 
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Desaturate"),
-                                                 "gimp:desaturate",
-                                                 config);
-          g_object_unref (config);
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Desaturate"),
+                                         node);
+          g_object_unref (node);
         }
       else
         success = FALSE;

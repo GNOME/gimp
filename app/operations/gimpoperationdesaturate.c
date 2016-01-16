@@ -25,20 +25,38 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "operations-types.h"
 
 #include "gimpoperationdesaturate.h"
-#include "gimpdesaturateconfig.h"
+
+#include "gimp-intl.h"
 
 
-static void      gimp_operation_desaturate_prepare (GeglOperation       *operation);
-static gboolean  gimp_operation_desaturate_process (GeglOperation       *operation,
-                                                    void                *in_buf,
-                                                    void                *out_buf,
-                                                    glong                samples,
-                                                    const GeglRectangle *roi,
-                                                    gint                 level);
+enum
+{
+  PROP_0,
+  PROP_MODE
+};
+
+
+static void     gimp_operation_desaturate_get_property (GObject             *object,
+                                                        guint                property_id,
+                                                        GValue              *value,
+                                                        GParamSpec          *pspec);
+static void     gimp_operation_desaturate_set_property (GObject             *object,
+                                                        guint                property_id,
+                                                        const GValue        *value,
+                                                        GParamSpec          *pspec);
+
+static void     gimp_operation_desaturate_prepare      (GeglOperation       *operation);
+static gboolean gimp_operation_desaturate_process      (GeglOperation       *operation,
+                                                        void                *in_buf,
+                                                        void                *out_buf,
+                                                        glong                samples,
+                                                        const GeglRectangle *roi,
+                                                        gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationDesaturate, gimp_operation_desaturate,
@@ -54,27 +72,24 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property   = gimp_operation_point_filter_set_property;
-  object_class->get_property   = gimp_operation_point_filter_get_property;
+  object_class->set_property = gimp_operation_desaturate_set_property;
+  object_class->get_property = gimp_operation_desaturate_get_property;
+
+  operation_class->prepare   = gimp_operation_desaturate_prepare;
+
+  point_class->process       = gimp_operation_desaturate_process;
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:desaturate",
                                  "categories",  "color",
-                                 "description", "GIMP Desaturate operation",
+                                 "description", _("Turn colors into shades of gray"),
                                  NULL);
 
-  operation_class->prepare = gimp_operation_desaturate_prepare;
-
-  point_class->process     = gimp_operation_desaturate_process;
-
-  g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
-                                   g_param_spec_object ("config",
-                                                        "Config",
-                                                        "The config object",
-                                                        GIMP_TYPE_DESATURATE_CONFIG,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE,
+                                 "mode",
+                                 _("Choose shade of gray based on"),
+                                 GIMP_TYPE_DESATURATE_MODE,
+                                 GIMP_DESATURATE_LIGHTNESS, 0);
 }
 
 static void
@@ -83,13 +98,52 @@ gimp_operation_desaturate_init (GimpOperationDesaturate *self)
 }
 
 static void
+gimp_operation_desaturate_get_property (GObject    *object,
+                                        guint       property_id,
+                                        GValue     *value,
+                                        GParamSpec *pspec)
+{
+  GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (object);
+
+  switch (property_id)
+    {
+    case PROP_MODE:
+      g_value_set_enum (value, desaturate->mode);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_operation_desaturate_set_property (GObject      *object,
+                                        guint         property_id,
+                                        const GValue *value,
+                                        GParamSpec   *pspec)
+{
+  GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (object);
+
+  switch (property_id)
+    {
+    case PROP_MODE:
+      desaturate->mode = g_value_get_enum (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
 gimp_operation_desaturate_prepare (GeglOperation *operation)
 {
-  GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
-  GimpDesaturateConfig     *config = GIMP_DESATURATE_CONFIG (point->config);
-  const Babl               *format;
+  GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (operation);
+  const Babl              *format;
 
-  if (config->mode == GIMP_DESATURATE_LUMINANCE)
+  if (desaturate->mode == GIMP_DESATURATE_LUMINANCE)
     {
       format = babl_format ("RGBA float");
     }
@@ -110,15 +164,11 @@ gimp_operation_desaturate_process (GeglOperation       *operation,
                                    const GeglRectangle *roi,
                                    gint                 level)
 {
-  GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
-  GimpDesaturateConfig     *config = GIMP_DESATURATE_CONFIG (point->config);
-  gfloat                   *src    = in_buf;
-  gfloat                   *dest   = out_buf;
+  GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (operation);
+  gfloat                  *src        = in_buf;
+  gfloat                  *dest       = out_buf;
 
-  if (! config)
-    return FALSE;
-
-  switch (config->mode)
+  switch (desaturate->mode)
     {
     case GIMP_DESATURATE_LIGHTNESS:
       while (samples--)

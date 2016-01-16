@@ -249,11 +249,11 @@ app/operations/gimpbrightnesscontrastconfig.c
 app/operations/gimpcolorbalanceconfig.c
 app/operations/gimpcolorizeconfig.c
 app/operations/gimpcurvesconfig.c
-app/operations/gimpdesaturateconfig.c
 app/operations/gimphuesaturationconfig.c
 app/operations/gimplevelsconfig.c
 app/operations/gimpoperationcagecoefcalc.c
 app/operations/gimpoperationcagetransform.c
+app/operations/gimpoperationdesaturate.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
 app/operations/gimpoperationthresholdalpha.c
@@ -365,7 +365,6 @@ app/tools/gimpconvolvetool.c
 app/tools/gimpcropoptions.c
 app/tools/gimpcroptool.c
 app/tools/gimpcurvestool.c
-app/tools/gimpdesaturatetool.c
 app/tools/gimpdodgeburntool.c
 app/tools/gimpeditselectiontool.c
 app/tools/gimpellipseselecttool.c

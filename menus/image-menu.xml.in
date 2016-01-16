@@ -533,7 +533,7 @@
       <menuitem action="tools-levels" />
       <menuitem action="tools-curves" />
       <menuitem action="filters-posterize" />
-      <menuitem action="tools-desaturate" />
+      <menuitem action="filters-desaturate" />
       <separator />
       <placeholder name="Invert">
         <menuitem action="drawable-invert" />
@@ -627,7 +627,6 @@
         <menuitem action="tools-threshold" />
         <menuitem action="tools-levels" />
         <menuitem action="tools-curves" />
-        <menuitem action="tools-desaturate" />
       </menu>
       <menuitem action="tools-vector" />
       <menuitem action="tools-color-picker" />

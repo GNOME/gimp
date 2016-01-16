@@ -187,6 +187,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:deinterlace",
     NULL /* FIXME GIMP_HELP_FILTER_DEINTERLACE */ },
 
+  { "filters-desaturate", GIMP_STOCK_TOOL_DESATURATE,
+    NC_("filters-action", "_Desaturate..."), NULL, NULL,
+    "gimp:desaturate",
+    GIMP_HELP_TOOL_DESATURATE },
+
   { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
     NC_("filters-action", "Difference of Gaussians..."), NULL, NULL,
     "gegl:difference-of-gaussians",
@@ -651,6 +656,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-convolution-matrix",      writable);
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
+  SET_SENSITIVE ("filters-desaturate",              writable && !gray);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-diffraction-patterns",    writable);
   SET_SENSITIVE ("filters-displace",                writable);
