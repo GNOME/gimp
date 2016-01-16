@@ -2324,7 +2324,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
   g_list_free (layers);
 
   /* need version 6 for new metadata */
-  if (gimp_image_get_metadata (image))
+  if (gimp_image_get_attributes (image))
     version = MAX (6, version);
 
   /* need version 7 for high bit depth images */
