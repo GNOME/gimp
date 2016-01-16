@@ -2178,7 +2178,7 @@ style "tlsog-button-style"
   fg[INSENSITIVE] = "#343434"
 }
 
-widget_class "*GtkButton*" style "tlsog-button-style"
+widget_class "*<GtkButton>*" style "tlsog-button-style"
 
 ###########################################################
 
