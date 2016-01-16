@@ -93,10 +93,11 @@ void
 gimp_ui_init (const gchar *prog_name,
               gboolean     preview)
 {
-  GdkScreen   *screen;
-  const gchar *display_name;
-  gchar       *themerc;
-  GFile       *icon_theme;
+  GdkScreen    *screen;
+  const gchar  *display_name;
+  gchar        *themerc;
+  GFileMonitor *rc_monitor;
+  GFile        *file;
 
   g_return_if_fail (prog_name != NULL);
 
@@ -130,17 +131,26 @@ gimp_ui_init (const gchar *prog_name,
   gtk_init (NULL, NULL);
 
   themerc = gimp_personal_rc_file ("themerc");
-  gtk_rc_add_default_file (themerc);
+  gtk_rc_parse (themerc);
+
+  file = g_file_new_for_path (themerc);
   g_free (themerc);
+
+  rc_monitor = g_file_monitor (file, G_FILE_MONITOR_NONE, NULL, NULL);
+  g_object_unref (file);
+
+  g_signal_connect (rc_monitor, "changed",
+                    G_CALLBACK (gtk_rc_reparse_all),
+                    NULL);
 
   gdk_set_program_class (gimp_wm_class ());
 
   screen = gdk_screen_get_default ();
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
 
-  icon_theme = g_file_new_for_path (gimp_get_icon_theme_dir ());
-  gimp_icons_set_icon_theme (icon_theme);
-  g_object_unref (icon_theme);
+  file = g_file_new_for_path (gimp_get_icon_theme_dir ());
+  gimp_icons_set_icon_theme (file);
+  g_object_unref (file);
 
   gimp_widgets_init (gimp_ui_help_func,
                      gimp_context_get_foreground,
