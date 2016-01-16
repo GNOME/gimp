@@ -20,6 +20,7 @@
 
 
 GimpObject    * gimp_gegl_get_config_proxy     (const gchar *operation,
+                                                const gchar *icon_name,
                                                 GType        parent_type);
 GimpContainer * gimp_gegl_get_config_container (GType        config_type);
 

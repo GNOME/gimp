@@ -30,6 +30,7 @@
 
 #include "core/gimplist.h"
 #include "core/gimpparamspecs-duplicate.h"
+#include "core/gimpviewable.h"
 
 #include "gimp-gegl-config-proxy.h"
 #include "gimp-gegl-utils.h"
@@ -192,11 +193,13 @@ gimp_gegl_config_config_iface_init (GimpConfigInterface *iface)
 
 GimpObject *
 gimp_gegl_get_config_proxy (const gchar *operation,
+                            const gchar *icon_name,
                             GType        parent_type)
 {
   GType config_type;
 
   g_return_val_if_fail (operation != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), NULL);
 
   if (! config_types)
@@ -247,6 +250,15 @@ gimp_gegl_get_config_proxy (const gchar *operation,
 
         g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
                                      &config_info);
+
+        if (g_type_is_a (config_type, GIMP_TYPE_VIEWABLE))
+          {
+            GimpViewableClass *viewable_class = g_type_class_ref (config_type);
+
+            viewable_class->default_icon_name = g_strdup (icon_name);
+
+            g_type_class_unref (viewable_class);
+          }
 
         g_hash_table_insert (config_types,
                              g_strdup (operation),

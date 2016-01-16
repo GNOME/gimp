@@ -247,6 +247,7 @@ gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
 
   if (tool->operation)
     *config = G_OBJECT (gimp_gegl_get_config_proxy (tool->operation,
+                                                    tool->icon_name,
                                                     GIMP_TYPE_SETTINGS));
 
   if (tool->undo_desc)

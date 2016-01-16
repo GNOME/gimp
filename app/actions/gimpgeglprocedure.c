@@ -243,6 +243,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
       GimpContainer *container;
 
       settings = gimp_gegl_get_config_proxy (procedure->original_name,
+                                             gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
                                              GIMP_TYPE_SETTINGS);
 
       container = gimp_gegl_get_config_container (G_TYPE_FROM_INSTANCE (settings));
