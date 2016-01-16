@@ -326,11 +326,14 @@ selection_zoom_segs (Selection          *selection,
 
   for (i = 0; i < n_segs; i++)
     {
-      dest_segs[i].x1 = CLAMP (dest_segs[i].x1, -1, xclamp);
-      dest_segs[i].y1 = CLAMP (dest_segs[i].y1, -1, yclamp);
+      if (! selection->shell->rotate_transform)
+        {
+          dest_segs[i].x1 = CLAMP (dest_segs[i].x1, -1, xclamp);
+          dest_segs[i].y1 = CLAMP (dest_segs[i].y1, -1, yclamp);
 
-      dest_segs[i].x2 = CLAMP (dest_segs[i].x2, -1, xclamp);
-      dest_segs[i].y2 = CLAMP (dest_segs[i].y2, -1, yclamp);
+          dest_segs[i].x2 = CLAMP (dest_segs[i].x2, -1, xclamp);
+          dest_segs[i].y2 = CLAMP (dest_segs[i].y2, -1, yclamp);
+        }
 
       /*  If this segment is a closing segment && the segments lie inside
        *  the region, OR if this is an opening segment and the segments
