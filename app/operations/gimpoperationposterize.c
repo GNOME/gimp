@@ -82,10 +82,12 @@ gimp_operation_posterize_class_init (GimpOperationPosterizeClass *klass)
                                  "description", _("Reduce to a limited set of colors"),
                                  NULL);
 
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LEVELS,
-                                "levels",
-                                _("Posterize levels"),
-                                2, 256, 3, 0);
+  g_object_class_install_property (object_class, PROP_LEVELS,
+                                   g_param_spec_int ("levels",
+                                                     _("Posterize levels"),
+                                                     NULL,
+                                                     2, 256, 3,
+                                                     GIMP_CONFIG_PARAM_FLAGS));
 }
 
 static void
