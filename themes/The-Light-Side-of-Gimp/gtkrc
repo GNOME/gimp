@@ -170,6 +170,7 @@ style "tlsog-default-style"
   GtkComboBox::shadow_type = GTK_SHADOW_NONE
   GtkComboBoxEntry::shadow_type = GTK_SHADOW_NONE
   GtkScrolledWindow::shadow-type = GTK_SHADOW_NONE
+  GtkComboBoxText::shadow_type = GTK_SHADOW_NONE
   GtkVScale::shadow_type = GTK_SHADOW_NONE
   GtkHScale::shadow_type = GTK_SHADOW_NONE
 
