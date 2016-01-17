@@ -39,7 +39,7 @@ include $(top_srcdir)/icons/Symbolic/icon-list.mk
 MAKE_ICON = mkdir -p `dirname $@`; \
 	$(GEGL) -x \
 	"<gegl> \
-	  <node operation='gegl:invert-linear'></node> \
+	  <node operation='gegl:invert-gamma'></node> \
 	  <node operation='gegl:load'> \
 	    <params> \
 	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
