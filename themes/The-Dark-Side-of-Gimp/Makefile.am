@@ -100,6 +100,7 @@ themeui_DATA =	\
 	ui/menu-arrow-prelight.png	\
 	ui/menubar.png	\
 	ui/menuitem.png	\
+	ui/menuitem-prelight.png	\
 	ui/menu.png	\
 	ui/minus.png	\
 	ui/notebook.png	\

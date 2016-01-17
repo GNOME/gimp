@@ -57,7 +57,6 @@ themeui_DATA =	\
 	ui/entry-border-active-notebook.png	\
 	ui/entry-border-disabled-bg.png	\
 	ui/entry-border-disabled-notebook.png	\
-	ui/entry-border-fill-active-item.png	\
 	ui/entry-border-fill-active.png	\
 	ui/entry-border-fill.png	\
 	ui/entry-border-notebook-null.png	\
@@ -83,7 +82,6 @@ themeui_DATA =	\
 	ui/gimp-arrow-left.png	\
 	ui/gimp-arrow-right-dark.png	\
 	ui/gimp-arrow-right.png	\
-	ui/gimp-arrow-right-prelight.png	\
 	ui/gimp-arrow-up.png	\
 	ui/gimp-button-default.png	\
 	ui/gimp-button-insensitive.png	\
@@ -102,6 +100,7 @@ themeui_DATA =	\
 	ui/menu-arrow-prelight.png	\
 	ui/menubar.png	\
 	ui/menuitem.png	\
+	ui/menuitem-prelight.png	\
 	ui/menu.png	\
 	ui/minus.png	\
 	ui/notebook.png	\
