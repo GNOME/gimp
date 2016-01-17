@@ -570,9 +570,9 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       if (tilt_x == 0.0)
         {
           if (tilt_y >= 0.0)
-            tilt = 0.5;
+            tilt = 0.25;
           else if (tilt_y < 0.0)
-            tilt = 0.0;
+            tilt = 0.75;
           else
             tilt = -1.0;
         }
