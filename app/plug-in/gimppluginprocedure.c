@@ -67,6 +67,7 @@ static const gchar * gimp_plug_in_procedure_get_label  (GimpProcedure  *procedur
 static const gchar * gimp_plug_in_procedure_get_menu_label
                                                        (GimpProcedure  *procedure);
 static const gchar * gimp_plug_in_procedure_get_blurb  (GimpProcedure  *procedure);
+static const gchar * gimp_plug_in_procedure_get_help_id(GimpProcedure  *procedure);
 static gboolean   gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
                                                         GimpObject     *object);
 static GimpValueArray * gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
@@ -126,6 +127,7 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
   proc_class->get_label             = gimp_plug_in_procedure_get_label;
   proc_class->get_menu_label        = gimp_plug_in_procedure_get_menu_label;
   proc_class->get_blurb             = gimp_plug_in_procedure_get_blurb;
+  proc_class->get_help_id           = gimp_plug_in_procedure_get_help_id;
   proc_class->get_sensitive         = gimp_plug_in_procedure_get_sensitive;
   proc_class->execute               = gimp_plug_in_procedure_execute;
   proc_class->execute_async         = gimp_plug_in_procedure_execute_async;
@@ -139,7 +141,6 @@ gimp_plug_in_procedure_init (GimpPlugInProcedure *proc)
 {
   GIMP_PROCEDURE (proc)->proc_type = GIMP_PLUGIN;
 
-  proc->label            = NULL;
   proc->icon_data_length = -1;
 }
 
@@ -154,6 +155,7 @@ gimp_plug_in_procedure_finalize (GObject *object)
   g_list_free_full (proc->menu_paths, (GDestroyNotify) g_free);
 
   g_free (proc->label);
+  g_free (proc->help_id);
 
   g_free (proc->icon_data);
   g_free (proc->image_types);
@@ -310,6 +312,25 @@ gimp_plug_in_procedure_get_blurb (GimpProcedure *procedure)
                      procedure->blurb);
 
   return NULL;
+}
+
+static const gchar *
+gimp_plug_in_procedure_get_help_id (GimpProcedure *procedure)
+{
+  GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+  const gchar         *domain;
+
+  if (proc->help_id)
+    return proc->help_id;
+
+  domain = gimp_plug_in_procedure_get_help_domain (proc);
+
+  if (domain)
+    proc->help_id = g_strconcat (domain, "?", gimp_object_get_name (proc), NULL);
+  else
+    proc->help_id = g_strdup (gimp_object_get_name (proc));
+
+  return proc->help_id;
 }
 
 static gboolean
@@ -859,21 +880,6 @@ gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
 
   if (icon_pixbuf)
     g_object_unref (icon_pixbuf);
-}
-
-gchar *
-gimp_plug_in_procedure_get_help_id (const GimpPlugInProcedure *proc)
-{
-  const gchar *domain;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
-
-  domain = gimp_plug_in_procedure_get_help_domain (proc);
-
-  if (domain)
-    return g_strconcat (domain, "?", gimp_object_get_name (proc), NULL);
-
-  return g_strdup (gimp_object_get_name (proc));
 }
 
 static GimpPlugInImageType

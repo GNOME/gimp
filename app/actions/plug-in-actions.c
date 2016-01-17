@@ -332,12 +332,10 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   entry.accelerator = NULL;
   entry.tooltip     = gimp_procedure_get_blurb (GIMP_PROCEDURE (proc));
   entry.procedure   = GIMP_PROCEDURE (proc);
-  entry.help_id     = gimp_plug_in_procedure_get_help_id (proc);
+  entry.help_id     = gimp_procedure_get_help_id (GIMP_PROCEDURE (proc));
 
   gimp_action_group_add_procedure_actions (group, &entry, 1,
                                            G_CALLBACK (plug_in_run_cmd_callback));
-
-  g_free ((gchar *) entry.help_id);
 
   if (proc->menu_label)
     {

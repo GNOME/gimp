@@ -45,6 +45,7 @@ struct _GimpPlugInProcedure
   gchar               *menu_label;
   GList               *menu_paths;
   gchar               *label;
+  gchar               *help_id;
   GimpIconType         icon_type;
   gint                 icon_data_length;
   guint8              *icon_data;
@@ -109,8 +110,6 @@ void          gimp_plug_in_procedure_take_icon       (GimpPlugInProcedure       
                                                       GimpIconType               type,
                                                       guint8                    *data,
                                                       gint                       data_length);
-
-gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc);
 
 void          gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure       *proc,
                                                       const gchar               *image_types);
