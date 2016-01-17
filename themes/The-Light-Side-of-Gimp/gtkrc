@@ -827,7 +827,7 @@ style "menu_item"
         {
           function = BOX
           state = PRELIGHT
-          file = "ui/entry-border-fill-active-item.png"
+          file = "ui/menuitem-prelight.png"
           border = { 1, 0, 1, 0 }
           stretch = TRUE
         }
