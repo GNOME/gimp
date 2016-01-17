@@ -42,6 +42,7 @@ struct _GimpGeglProcedure
 
   gchar         *menu_label;
   gchar         *label;
+  gchar         *help_id;
 };
 
 struct _GimpGeglProcedureClass
@@ -56,8 +57,9 @@ GimpProcedure * gimp_gegl_procedure_new      (Gimp        *gimp,
                                               const gchar *operation,
                                               const gchar *name,
                                               const gchar *menu_label,
+                                              const gchar *tooltip,
                                               const gchar *icon_name,
-                                              const gchar *tooltip);
+                                              const gchar *help_id);
 
 
 #endif /* __GIMP_GEGL_PROCEDURE_H__ */

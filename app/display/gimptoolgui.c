@@ -63,8 +63,10 @@ typedef struct _GimpToolGuiPrivate GimpToolGuiPrivate;
 struct _GimpToolGuiPrivate
 {
   GimpToolInfo     *tool_info;
+  gchar            *title;
   gchar            *description;
   gchar            *icon_name;
+  gchar            *help_id;
   GList            *response_entries;
   gint              default_response;
   gboolean          focus_on_map;
@@ -189,6 +191,12 @@ gimp_tool_gui_finalize (GObject *object)
 {
   GimpToolGuiPrivate *private = GET_PRIVATE (object);
 
+  if (private->title)
+    {
+      g_free (private->title);
+      private->title = NULL;
+    }
+
   if (private->description)
     {
       g_free (private->description);
@@ -199,6 +207,12 @@ gimp_tool_gui_finalize (GObject *object)
     {
       g_free (private->icon_name);
       private->icon_name = NULL;
+    }
+
+  if (private->help_id)
+    {
+      g_free (private->help_id);
+      private->help_id = NULL;
     }
 
   if (private->response_entries)
@@ -245,7 +259,10 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
   private = GET_PRIVATE (gui);
 
   private->tool_info   = g_object_ref (tool_info);
+  private->title       = g_strdup (tool_info->blurb);
   private->description = g_strdup (description);
+  private->icon_name   = g_strdup (gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)));
+  private->help_id     = g_strdup (tool_info->help_id);
   private->overlay     = overlay;
 
   va_start (args, overlay);
@@ -266,6 +283,28 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
   gimp_tool_gui_create_dialog (gui, screen, monitor);
 
   return gui;
+}
+
+void
+gimp_tool_gui_set_title (GimpToolGui *gui,
+                         const gchar *title)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (title == private->title)
+    return;
+
+  g_free (private->title);
+  private->title = g_strdup (title);
+
+  if (! title)
+    title = private->tool_info->blurb;
+
+  g_object_set (private->dialog, "title", title, NULL);
 }
 
 void
@@ -317,6 +356,35 @@ gimp_tool_gui_set_icon_name (GimpToolGui *gui,
     icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (private->tool_info));
 
   g_object_set (private->dialog, "icon-name", icon_name, NULL);
+}
+
+void
+gimp_tool_gui_set_help_id (GimpToolGui *gui,
+                           const gchar *help_id)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (help_id == private->help_id)
+    return;
+
+  g_free (private->help_id);
+  private->help_id = g_strdup (help_id);
+
+  if (! help_id)
+    help_id = private->tool_info->help_id;
+
+  if (private->overlay)
+    {
+      /* TODO */
+    }
+  else
+    {
+      g_object_set (private->dialog, "help-id", help_id, NULL);
+    }
 }
 
 void
@@ -708,7 +776,10 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui,
     {
       private->dialog = gimp_tool_dialog_new (private->tool_info,
                                               screen, monitor,
+                                              private->title,
                                               private->description,
+                                              private->icon_name,
+                                              private->help_id,
                                               NULL);
 
       for (list = private->response_entries; list; list = g_list_next (list))

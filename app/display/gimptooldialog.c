@@ -56,6 +56,7 @@ static void   gimp_tool_dialog_shell_unmap (GimpDisplayShell *shell,
 
 G_DEFINE_TYPE (GimpToolDialog, gimp_tool_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
 
+
 static void
 gimp_tool_dialog_class_init (GimpToolDialogClass *klass)
 {
@@ -105,28 +106,40 @@ GtkWidget *
 gimp_tool_dialog_new (GimpToolInfo *tool_info,
                       GdkScreen    *screen,
                       gint          monitor,
-                      const gchar  *desc,
+                      const gchar  *title,
+                      const gchar  *description,
+                      const gchar  *icon_name,
+                      const gchar  *help_id,
                       ...)
 {
-  GtkWidget   *dialog;
-  const gchar *icon_name;
-  gchar       *identifier;
-  va_list      args;
+  GtkWidget *dialog;
+  gchar     *identifier;
+  va_list    args;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
-  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
+  if (! title)
+    title = tool_info->blurb;
+
+  if (! description)
+    description = tool_info->help;
+
+  if (! help_id)
+    help_id = tool_info->help_id;
+
+  if (! icon_name)
+    icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
   dialog = g_object_new (GIMP_TYPE_TOOL_DIALOG,
-                         "title",        tool_info->blurb,
+                         "title",        title,
                          "role",         gimp_object_get_name (tool_info),
-                         "help-func",    gimp_standard_help_func,
-                         "help-id",      tool_info->help_id,
+                         "description",  description,
                          "icon-name",    icon_name,
-                         "description",  desc ? desc : tool_info->help,
+                         "help-func",    gimp_standard_help_func,
+                         "help-id",      help_id,
                          NULL);
 
-  va_start (args, desc);
+  va_start (args, help_id);
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
   va_end (args);
 

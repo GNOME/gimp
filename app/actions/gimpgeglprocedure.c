@@ -62,6 +62,7 @@ static gchar  * gimp_gegl_procedure_get_description     (GimpViewable   *viewabl
 
 static const gchar * gimp_gegl_procedure_get_label      (GimpProcedure  *procedure);
 static const gchar * gimp_gegl_procedure_get_menu_label (GimpProcedure  *procedure);
+static const gchar * gimp_gegl_procedure_get_help_id    (GimpProcedure  *procedure);
 static gboolean      gimp_gegl_procedure_get_sensitive  (GimpProcedure  *procedure,
                                                          GimpObject     *object);
 static GimpValueArray * gimp_gegl_procedure_execute     (GimpProcedure  *procedure,
@@ -101,6 +102,7 @@ gimp_gegl_procedure_class_init (GimpGeglProcedureClass *klass)
 
   proc_class->get_label             = gimp_gegl_procedure_get_label;
   proc_class->get_menu_label        = gimp_gegl_procedure_get_menu_label;
+  proc_class->get_help_id           = gimp_gegl_procedure_get_help_id;
   proc_class->get_sensitive         = gimp_gegl_procedure_get_sensitive;
   proc_class->execute               = gimp_gegl_procedure_execute;
   proc_class->execute_async         = gimp_gegl_procedure_execute_async;
@@ -118,6 +120,7 @@ gimp_gegl_procedure_finalize (GObject *object)
 
   g_free (proc->menu_label);
   g_free (proc->label);
+  g_free (proc->help_id);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -184,6 +187,14 @@ gimp_gegl_procedure_get_menu_label (GimpProcedure *procedure)
   return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
 }
 
+static const gchar *
+gimp_gegl_procedure_get_help_id (GimpProcedure *procedure)
+{
+  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
+
+  return proc->help_id;
+}
+
 static gboolean
 gimp_gegl_procedure_get_sensitive (GimpProcedure *procedure,
                                    GimpObject    *object)
@@ -214,12 +225,12 @@ gimp_gegl_procedure_get_sensitive (GimpProcedure *procedure,
 }
 
 static GimpValueArray *
-gimp_gegl_procedure_execute (GimpProcedure  *procedure,
-                             Gimp           *gimp,
-                             GimpContext    *context,
-                             GimpProgress   *progress,
-                             GimpValueArray *args,
-                             GError        **error)
+gimp_gegl_procedure_execute (GimpProcedure   *procedure,
+                             Gimp            *gimp,
+                             GimpContext     *context,
+                             GimpProgress    *progress,
+                             GimpValueArray  *args,
+                             GError         **error)
 {
   return GIMP_PROCEDURE_CLASS (parent_class)->execute (procedure, gimp,
                                                        context, progress,
@@ -311,7 +322,9 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
                                          procedure->original_name,
                                          gimp_procedure_get_label (procedure),
-                                         gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)));
+                                         gimp_procedure_get_label (procedure),
+                                         gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
+                                         gimp_procedure_get_help_id (procedure));
 
       tool_manager_initialize_active (gimp, GIMP_DISPLAY (display));
     }
@@ -325,8 +338,9 @@ gimp_gegl_procedure_new (Gimp        *gimp,
                          const gchar *operation,
                          const gchar *name,
                          const gchar *menu_label,
+                         const gchar *tooltip,
                          const gchar *icon_name,
-                         const gchar *tooltip)
+                         const gchar *help_id)
 {
   GimpProcedure *procedure;
 
@@ -338,13 +352,14 @@ gimp_gegl_procedure_new (Gimp        *gimp,
   procedure = g_object_new (GIMP_TYPE_GEGL_PROCEDURE, NULL);
 
   GIMP_GEGL_PROCEDURE (procedure)->menu_label = g_strdup (menu_label);
+  GIMP_GEGL_PROCEDURE (procedure)->help_id    = g_strdup (help_id);
 
   gimp_object_set_name (GIMP_OBJECT (procedure), name);
   gimp_viewable_set_icon_name (GIMP_VIEWABLE (procedure), icon_name);
   gimp_procedure_set_strings (procedure,
                               operation,
                               tooltip,
-                              "help",
+                              tooltip,
                               "author", "copyright", "date",
                               NULL);
 

@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
 
@@ -49,8 +50,10 @@ filters_filter_cmd_callback (GtkAction   *action,
                                        operation,
                                        gtk_action_get_name (action),
                                        gtk_action_get_label (action),
+                                       gtk_action_get_tooltip (action),
                                        gtk_action_get_icon_name (action),
-                                       gtk_action_get_tooltip (action));
+                                       g_object_get_qdata (G_OBJECT (action),
+                                                           GIMP_HELP_ID));
 
   gimp_filter_history_add (action_data_get_gimp (data), procedure);
   filters_history_cmd_callback (NULL, procedure, data);
