@@ -3,7 +3,7 @@
 themedatadir = $(gimpdatadir)/themes/The-Dark-Side-of-Gimp
 themeuidir   = $(gimpdatadir)/themes/The-Dark-Side-of-Gimp/ui
 
-themedata_DATA = gtkrc
+themedata_DATA = gtkrc colorrc
 
 themeui_DATA =	\
 	ui/arrow-down-insens.png	\

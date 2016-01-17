@@ -1,0 +1,135 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+#
+# The Dark Side of GIMP Theme
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+style "default-style"
+{
+  color["fg-normal"]   = "#EEEEEE"
+  color["fg-selected"] = "#DDDDDD"
+  color["fg-insensitive"] = "#C1C1C1"
+
+  color["bg-normal"] = "#222222"
+  color["bg-selected"] = "#4D4D4D"
+  color["bg-insensitive"] = "#111111"
+
+  color["base-normal"] = "#828282"
+  color["base-prelight"] = "#3b3b3b"
+  color["base-insensitive"] = "#222222"
+
+  color["text-insensitive"] = @bg-selected
+}
+
+style "tooltips-style" = "default-style"
+{
+  color["tooltip-bg-normal"]   = "#383838"
+  color["tooltip-bg-selected"] = "#828282"
+  color["tooltip-fg-normal"]   = "#CBCBCB"
+}
+
+
+style "treeview" = "default-style"
+{
+  color["treeview-row"] = "#828282"
+}
+
+style "list-header-style"
+{
+  color["treeview-row"] = "#828282"
+}
+
+style "menu" = "default-style"
+{
+  color["menu-bg-normal"]      = "#484848"
+
+  color["menu-fg-normal"]      = "#CBCBCB"
+  color["menu-fg-prelight"]    = "#FFFFFF"
+  color["menu-fg-insensitive"] = "#C1C1C1"
+}
+
+style "menu_item"
+{
+  color["menu-item-bg-normal"]      = "#484848"
+
+  color["menu-item-fg-normal"]      = "#FFF"
+  color["menu-item-fg-prelight"]    = "#FFF"
+  color["menu-item-fg-active"]      = "#FFF"
+  color["menu-item-fg-selected"]    = "#FFF"
+  color["menu-item-fg-insensitive"] = "#C1C1C1"
+}
+
+style "item"
+{
+  color["item-bg-normal"]      = "#484848"
+
+  color["item-fg-normal"]      = "#FFF"
+  color["item-fg-prelight"]    = "#FFF"
+  color["item-fg-active"]      = "#FFF"
+  color["item-fg-selected"]    = "#FFF"
+  color["item-fg-insensitive"] = "#C1C1C1"
+}
+
+style "combobox-entry-button-style"
+{
+  color["combobox-entry-fg-active"] = "#CBCBCB"
+}
+
+style "spin-scale-style"
+{
+  color["spin-scale-bg-normal"] = "#828282"
+}
+
+style "button-style"
+{
+  fg[PRELIGHT] = "#FBFBFB"
+  fg[ACTIVE] = "#9B9B9B"
+  fg[NORMAL] = "#CBCBCB"
+  fg[INSENSITIVE] = "#CBCBCB"
+}
+
+style "kde_hack_1"
+{
+  color["fg-normal"]        = "#EEEEEE"
+  color["fg-selected"]      = "#DDDDDD"
+  color["fg-insensitive"]   = "#C1C1C1"
+
+  color["base-normal"]      = "#828282"
+  color["base-prelight"]    = "#3b3b3b"
+  color["base-insensitive"] = "#222222"
+
+  color["text-insensitive"] = "#4D4D4D"
+}
+
+style "kde_hack_2"
+{
+  bg[NORMAL] = "#222" #Sets canvas BG
+}
+
+style "kde_hack_3"
+{
+  bg[NORMAL] = "#222"
+}
+
+style "overlay-scrollbar"
+{
+  bg[SELECTED] = "#CCC"
+  bg[INSENSITIVE] = "#AAA"
+  bg[ACTIVE] = "#EEE"
+  bg[NORMAL] = "#666"
+  bg[PRELIGHT] = "#666"
+
+  fg[NORMAL] = "#EEE"
+}
