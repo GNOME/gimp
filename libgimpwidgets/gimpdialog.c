@@ -129,8 +129,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   g_object_class_install_property (object_class, PROP_HELP_ID,
                                    g_param_spec_string ("help-id", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                                        GIMP_PARAM_READWRITE));
 
   /**
    * GimpDialog:parent:
@@ -234,7 +233,9 @@ gimp_dialog_set_property (GObject      *object,
       break;
 
     case PROP_HELP_ID:
+      g_free (private->help_id);
       private->help_id = g_value_dup_string (value);
+      gimp_help_set_help_data (GTK_WIDGET (object), NULL, private->help_id);
       break;
 
     case PROP_PARENT:
