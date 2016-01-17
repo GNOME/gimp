@@ -77,7 +77,7 @@ EXPORTS
 	gimp_context_get_brush_hardness
 	gimp_context_get_brush_size
 	gimp_context_get_brush_spacing
-	gimp_context_set_diagonal_neighbors
+	gimp_context_get_diagonal_neighbors
 	gimp_context_get_dynamics
 	gimp_context_get_feather
 	gimp_context_get_feather_radius
