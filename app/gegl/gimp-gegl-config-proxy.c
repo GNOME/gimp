@@ -199,7 +199,6 @@ gimp_gegl_get_config_proxy (const gchar *operation,
   GType config_type;
 
   g_return_val_if_fail (operation != NULL, NULL);
-  g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), NULL);
 
   if (! config_types)
@@ -251,7 +250,7 @@ gimp_gegl_get_config_proxy (const gchar *operation,
         g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
                                      &config_info);
 
-        if (g_type_is_a (config_type, GIMP_TYPE_VIEWABLE))
+        if (icon_name && g_type_is_a (config_type, GIMP_TYPE_VIEWABLE))
           {
             GimpViewableClass *viewable_class = g_type_class_ref (config_type);
 
