@@ -912,38 +912,37 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-           GeglNode *node = NULL;
-           if ((gboolean) monochrome)
-             {
-                node =
-                   gegl_node_new_child (NULL,
-                                        "operation", "gegl:mono-mixer",
-                                        "red", (gdouble) rr_gain,
-                                        "green", (gdouble) rg_gain,
-                                        "blue", (gdouble) rb_gain,
-                                        NULL);
-              }
-            else
-              {
-                 node =
-                   gegl_node_new_child (NULL,
-                                        "operation", "gegl:channel-mixer",
-                                        "rr-gain", (gdouble) rr_gain,
-                                        "rg-gain", (gdouble) rg_gain,
-                                        "rb-gain", (gdouble) rb_gain,
-                                        "gr-gain", (gdouble) gr_gain,
-                                        "gg-gain", (gdouble) gg_gain,
-                                        "gb-gain", (gdouble) gb_gain,
-                                        "br-gain", (gdouble) br_gain,
-                                        "bg-gain", (gdouble) bg_gain,
-                                        "bb-gain", (gdouble) bb_gain,
-                                         NULL);
-               }
+          GeglNode *node = NULL;
 
-          gimp_drawable_apply_operation (drawable, progress,
-                                         C_("undo-type", "Channel Mixer"),
-                                         node);
-          g_object_unref (node);
+          if (monochrome)
+            {
+              node = gegl_node_new_child (NULL,
+                                          "operation", "gegl:mono-mixer",
+                                          "red",       rr_gain,
+                                          "green",     rg_gain,
+                                          "blue",      rb_gain,
+                                          NULL);
+             }
+           else
+             {
+               node = gegl_node_new_child (NULL,
+                                           "operation", "gegl:channel-mixer",
+                                           "rr-gain",   rr_gain,
+                                           "rg-gain",   rg_gain,
+                                           "rb-gain",   rb_gain,
+                                           "gr-gain",   gr_gain,
+                                           "gg-gain",   gg_gain,
+                                           "gb-gain",   gb_gain,
+                                           "br-gain",   br_gain,
+                                           "bg-gain",   bg_gain,
+                                           "bb-gain",   bb_gain,
+                                            NULL);
+             }
+
+           gimp_drawable_apply_operation (drawable, progress,
+                                          C_("undo-type", "Channel Mixer"),
+                                          node);
+           g_object_unref (node);
         }
       else
         success = FALSE;
