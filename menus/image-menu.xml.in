@@ -548,6 +548,7 @@
       </menu>
       <menu action="colors-components-menu" name="Components">
 	<menuitem action="filters-channel-mixer" />
+	<menuitem action="filters-mono-mixer" />
       </menu>
       <menu action="colors-desaturate-menu" name="Desaturate">
 	<menuitem action="filters-c2g" />
