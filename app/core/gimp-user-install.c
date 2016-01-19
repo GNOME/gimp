@@ -741,8 +741,9 @@ user_install_migrate_files (GimpUserInstall *install)
       else if (g_file_test (source, G_FILE_TEST_IS_DIR))
         {
           /*  skip these directories for all old versions  */
-          if (strcmp (basename, "tmp") == 0 ||
-              strcmp (basename, "tool-options") == 0)
+          if (strcmp (basename, "tmp") == 0          ||
+              strcmp (basename, "tool-options") == 0 ||
+              strcmp (basename, "themes") == 0)
             {
               goto next_file;
             }
