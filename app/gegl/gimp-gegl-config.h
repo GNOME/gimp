@@ -19,6 +19,9 @@
 #define __GIMP_GEGL_CONFIG_H__
 
 
+void            gimp_gegl_config_register      (const gchar *operation,
+                                                GType        config_type);
+
 GimpObject    * gimp_gegl_config_new           (const gchar *operation,
                                                 const gchar *icon_name,
                                                 GType        parent_type);

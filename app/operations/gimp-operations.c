@@ -19,12 +19,14 @@
 
 #include "config.h"
 
-#include <gio/gio.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "operations-types.h"
 
 #include "core/gimp.h"
+
+#include "gegl/gimp-gegl-config.h"
 
 #include "gimp-operations.h"
 
@@ -52,6 +54,14 @@
 #include "gimpoperationlevels.h"
 #include "gimpoperationposterize.h"
 #include "gimpoperationthreshold.h"
+
+#include "gimpbrightnesscontrastconfig.h"
+#include "gimpcolorbalanceconfig.h"
+#include "gimpcolorizeconfig.h"
+#include "gimpcurvesconfig.h"
+#include "gimphuesaturationconfig.h"
+#include "gimplevelsconfig.h"
+#include "gimpthresholdconfig.h"
 
 #include "gimpoperationpointlayermode.h"
 #include "gimpoperationnormalmode.h"
@@ -145,4 +155,19 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_ERASE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE_MODE);
+
+  gimp_gegl_config_register ("gimp:brightness-contrast",
+                             GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG);
+  gimp_gegl_config_register ("gimp:color-balance",
+                             GIMP_TYPE_COLOR_BALANCE_CONFIG);
+  gimp_gegl_config_register ("gimp:colorize",
+                             GIMP_TYPE_COLORIZE_CONFIG);
+  gimp_gegl_config_register ("gimp:curves",
+                             GIMP_TYPE_CURVES_CONFIG);
+  gimp_gegl_config_register ("gimp:hue-saturation",
+                             GIMP_TYPE_HUE_SATURATION_CONFIG);
+  gimp_gegl_config_register ("gimp:levels",
+                             GIMP_TYPE_LEVELS_CONFIG);
+  gimp_gegl_config_register ("gimp:threshold",
+                             GIMP_TYPE_THRESHOLD_CONFIG);
 }
