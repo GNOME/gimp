@@ -15,17 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_CONFIG_PROXY_H__
-#define __GIMP_GEGL_CONFIG_PROXY_H__
+#ifndef __GIMP_GEGL_CONFIG_H__
+#define __GIMP_GEGL_CONFIG_H__
 
 
-GimpObject    * gimp_gegl_get_config_proxy     (const gchar *operation,
+GimpObject    * gimp_gegl_config_new           (const gchar *operation,
                                                 const gchar *icon_name,
                                                 GType        parent_type);
-GimpContainer * gimp_gegl_get_config_container (GType        config_type);
+GimpContainer * gimp_gegl_config_get_container (GType        config_type);
 
-void            gimp_gegl_config_proxy_sync    (GimpObject  *proxy,
+void            gimp_gegl_config_sync_node     (GimpObject  *config,
                                                 GeglNode    *node);
 
 
-#endif /* __GIMP_GEGL_CONFIG_PROXY_H__ */
+#endif /* __GIMP_GEGL_CONFIG_H__ */

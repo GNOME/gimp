@@ -32,7 +32,7 @@
 #include "core/gimpparamspecs-duplicate.h"
 #include "core/gimpviewable.h"
 
-#include "gimp-gegl-config-proxy.h"
+#include "gimp-gegl-config.h"
 #include "gimp-gegl-utils.h"
 
 
@@ -192,9 +192,9 @@ gimp_gegl_config_config_iface_init (GimpConfigInterface *iface)
 }
 
 GimpObject *
-gimp_gegl_get_config_proxy (const gchar *operation,
-                            const gchar *icon_name,
-                            GType        parent_type)
+gimp_gegl_config_new (const gchar *operation,
+                      const gchar *icon_name,
+                      GType        parent_type)
 {
   GType config_type;
 
@@ -269,7 +269,7 @@ gimp_gegl_get_config_proxy (const gchar *operation,
 }
 
 GimpContainer *
-gimp_gegl_get_config_container (GType config_type)
+gimp_gegl_config_get_container (GType config_type)
 {
   GimpContainer *container;
 
@@ -295,8 +295,8 @@ gimp_gegl_get_config_container (GType config_type)
 }
 
 void
-gimp_gegl_config_proxy_sync (GimpObject  *proxy,
-                             GeglNode    *node)
+gimp_gegl_config_sync_node (GimpObject  *proxy,
+                            GeglNode    *node)
 {
   GParamSpec **pspecs;
   gchar       *operation;

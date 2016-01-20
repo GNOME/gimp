@@ -29,7 +29,7 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimp-gegl-config-proxy.h"
+#include "gegl/gimp-gegl-config.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpchannel.h"
@@ -258,9 +258,9 @@ gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
 
   if (tool->operation)
-    *config = G_OBJECT (gimp_gegl_get_config_proxy (tool->operation,
-                                                    tool->icon_name,
-                                                    GIMP_TYPE_SETTINGS));
+    *config = G_OBJECT (gimp_gegl_config_new (tool->operation,
+                                              tool->icon_name,
+                                              GIMP_TYPE_SETTINGS));
 
   if (tool->undo_desc)
     *undo_desc = g_strdup (tool->undo_desc);
@@ -279,8 +279,8 @@ static void
 gimp_operation_tool_map (GimpImageMapTool *im_tool)
 {
   if (im_tool->config)
-    gimp_gegl_config_proxy_sync (GIMP_OBJECT (im_tool->config),
-                                 im_tool->operation);
+    gimp_gegl_config_sync_node (GIMP_OBJECT (im_tool->config),
+                                im_tool->operation);
 }
 
 static void
@@ -356,7 +356,7 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *im_tool,
   gchar             *import_title;
   gchar             *export_title;
 
-  settings = gimp_gegl_get_config_container (type);
+  settings = gimp_gegl_config_get_container (type);
   if (! gimp_list_get_sort_func (GIMP_LIST (settings)))
     gimp_list_set_sort_func (GIMP_LIST (settings),
                              (GCompareFunc) gimp_settings_compare);
