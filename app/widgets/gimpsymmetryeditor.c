@@ -274,7 +274,7 @@ gimp_symmetry_editor_image_changed (GimpContext        *context,
           gtk_list_store_set (store, &iter,
                               GIMP_INT_STORE_LABEL,
                               klass->label,
-                              GIMP_INT_STORE_VALUE,
+                              GIMP_INT_STORE_USER_DATA,
                               sym_iter->data,
                               -1);
           g_type_class_unref (klass);
@@ -284,11 +284,11 @@ gimp_symmetry_editor_image_changed (GimpContext        *context,
       gtk_list_store_prepend (store, &iter);
       gtk_list_store_set (store, &iter,
                           GIMP_INT_STORE_LABEL, _("None"),
-                          GIMP_INT_STORE_VALUE, G_TYPE_NONE,
+                          GIMP_INT_STORE_USER_DATA, GIMP_TYPE_SYMMETRY,
                           -1);
-      editor->p->menu = gimp_prop_int_combo_box_new (G_OBJECT (image),
-                                                     "symmetry",
-                                                     GIMP_INT_STORE (store));
+      editor->p->menu = gimp_prop_pointer_combo_box_new (G_OBJECT (image),
+                                                         "symmetry",
+                                                         GIMP_INT_STORE (store));
       g_object_unref (store);
 
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (editor->p->menu),

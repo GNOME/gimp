@@ -628,10 +628,11 @@ gimp_image_class_init (GimpImageClass *klass)
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
   g_object_class_install_property (object_class, PROP_SYMMETRY,
-                                   g_param_spec_int ("symmetry",
-                                                     NULL, _("Symmetry"),
-                                                     G_TYPE_NONE, G_MAXINT, G_TYPE_NONE,
-                                                     GIMP_PARAM_READWRITE));
+                                   g_param_spec_gtype ("symmetry",
+                                                       NULL, _("Symmetry"),
+                                                       GIMP_TYPE_SYMMETRY,
+                                                       GIMP_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
   g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
 
@@ -873,7 +874,8 @@ gimp_image_set_property (GObject      *object,
       break;
     case PROP_SYMMETRY:
       {
-        GType type = g_value_get_int (value);
+        GList *iter;
+        GType  type = g_value_get_gtype (value);
 
         if (private->selected_symmetry)
           g_object_set (private->selected_symmetry,
@@ -881,29 +883,25 @@ gimp_image_set_property (GObject      *object,
                         NULL);
         private->selected_symmetry = NULL;
 
-        if (type != G_TYPE_NONE)
+
+        for (iter = private->symmetries; iter; iter = g_list_next (iter))
           {
-            GList *iter;
-
-            for (iter = private->symmetries; iter; iter = g_list_next (iter))
-              {
-                GimpSymmetry *sym = iter->data;
-                if (g_type_is_a (sym->type, type))
-                  private->selected_symmetry = iter->data;
-              }
-
-            if (private->selected_symmetry == NULL)
-              {
-                GimpSymmetry *sym;
-
-                sym = gimp_image_symmetry_new (image, type);
-                gimp_image_symmetry_add (image, sym);
-                private->selected_symmetry = sym;
-              }
-            g_object_set (private->selected_symmetry,
-                          "active", TRUE,
-                          NULL);
+            GimpSymmetry *sym = iter->data;
+            if (type == sym->type)
+              private->selected_symmetry = iter->data;
           }
+
+        if (private->selected_symmetry == NULL)
+          {
+            GimpSymmetry *sym;
+
+            sym = gimp_image_symmetry_new (image, type);
+            gimp_image_symmetry_add (image, sym);
+            private->selected_symmetry = sym;
+          }
+        g_object_set (private->selected_symmetry,
+                      "active", TRUE,
+                      NULL);
       }
       break;
     default:
@@ -948,9 +946,9 @@ gimp_image_get_property (GObject    *object,
       g_value_set_object (value, gimp_image_get_buffer (GIMP_PICKABLE (image)));
       break;
     case PROP_SYMMETRY:
-      g_value_set_int (value,
-                       private->selected_symmetry ?
-                       private->selected_symmetry->type : G_TYPE_NONE);
+      g_value_set_gtype (value,
+                         private->selected_symmetry ?
+                         private->selected_symmetry->type : GIMP_TYPE_SYMMETRY);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

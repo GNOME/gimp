@@ -337,11 +337,17 @@ gimp_prop_enum_check_button_notify (GObject    *config,
 /*  int/enum combo box   */
 /*************************/
 
-static void   gimp_prop_int_combo_box_callback (GtkWidget   *widget,
-                                                GObject     *config);
-static void   gimp_prop_int_combo_box_notify   (GObject     *config,
-                                                GParamSpec  *param_spec,
-                                                GtkWidget   *widget);
+static void gimp_prop_int_combo_box_callback     (GtkWidget  *widget,
+                                                  GObject    *config);
+static void gimp_prop_int_combo_box_notify       (GObject    *config,
+                                                  GParamSpec *param_spec,
+                                                  GtkWidget  *widget);
+
+static void gimp_prop_pointer_combo_box_callback (GtkWidget  *widget,
+                                                  GObject    *config);
+static void gimp_prop_pointer_combo_box_notify   (GObject    *config,
+                                                  GParamSpec *param_spec,
+                                                  GtkWidget  *combo_box);
 
 /**
  * gimp_prop_int_combo_box_new:
@@ -392,6 +398,72 @@ gimp_prop_int_combo_box_new (GObject      *config,
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_int_combo_box_notify),
+                  combo_box);
+
+  return combo_box;
+}
+
+/**
+ * gimp_prop_pointer_combo_box_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of GType/gpointer property controlled by combo box.
+ * @store:         #GimpIntStore holding list of labels, values, etc.
+ *
+ * Creates a #GimpIntComboBox widget to display and set the specified
+ * property.  The contents of the widget are determined by @store,
+ * which should be created using gimp_int_store_new().
+ * Values are GType/gpointer data, and therefore must be stored in the
+ * "user-data" column, instead of the usual "value" column.
+ *
+ * Return value: The newly created #GimpIntComboBox widget.
+ *
+ * Since GIMP 2.10
+ */
+GtkWidget *
+gimp_prop_pointer_combo_box_new (GObject      *config,
+                                 const gchar  *property_name,
+                                 GimpIntStore *store)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo_box;
+  gpointer    property_value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_GTYPE, G_STRFUNC);
+  if (! param_spec)
+    {
+      param_spec = check_param_spec_w (config, property_name,
+                                       G_TYPE_PARAM_POINTER, G_STRFUNC);
+      if (! param_spec)
+        return NULL;
+    }
+
+  g_object_get (config,
+                property_name, &property_value,
+                NULL);
+
+  /* We use a GimpIntComboBox but we cannot store gpointer in the
+   * "value" column, because gpointer is not a subset of gint. Instead
+   * we store the value in the "user-data" column which is a gpointer.
+   */
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "model", store,
+                            NULL);
+
+  gimp_int_combo_box_set_active_by_user_data (GIMP_INT_COMBO_BOX (combo_box),
+                                              property_value);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_prop_pointer_combo_box_callback),
+                    config);
+
+  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_pointer_combo_box_notify),
                   combo_box);
 
   return combo_box;
@@ -510,6 +582,48 @@ gimp_prop_int_combo_box_notify (GObject    *config,
                                      config);
 }
 
+static void
+gimp_prop_pointer_combo_box_callback (GtkWidget *widget,
+                                      GObject   *config)
+{
+  GParamSpec *param_spec;
+  gpointer    value;
+
+  param_spec = get_param_spec (G_OBJECT (widget));
+  if (! param_spec)
+    return;
+
+  if (gimp_int_combo_box_get_active_user_data (GIMP_INT_COMBO_BOX (widget),
+                                               &value))
+    {
+      g_object_set (config,
+                    param_spec->name, value,
+                    NULL);
+    }
+}
+
+static void
+gimp_prop_pointer_combo_box_notify (GObject    *config,
+                                    GParamSpec *param_spec,
+                                    GtkWidget  *combo_box)
+{
+  gpointer value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (combo_box,
+                                   gimp_prop_pointer_combo_box_callback,
+                                   config);
+
+  gimp_int_combo_box_set_active_by_user_data (GIMP_INT_COMBO_BOX (combo_box),
+                                              value);
+
+  g_signal_handlers_unblock_by_func (combo_box,
+                                     gimp_prop_pointer_combo_box_callback,
+                                     config);
+}
 
 /************************/
 /*  boolean combo box   */

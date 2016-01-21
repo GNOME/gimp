@@ -55,6 +55,9 @@ gimp_image_symmetry_list (void)
  * @type:  the #GType of the symmetry
  *
  * Creates a new #GimpSymmetry of @type attached to @image.
+ * @type must be a subtype of `GIMP_TYPE_SYMMETRY`.
+ * Note that using the base @type `GIMP_TYPE_SYMMETRY` creates an
+ * identity transformation.
  *
  * Returns: the new #GimpSymmetry.
  **/
@@ -63,6 +66,7 @@ gimp_image_symmetry_new (GimpImage *image,
                          GType      type)
 {
   GimpSymmetry *sym = NULL;
+  g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_SYMMETRY), NULL);
 
   if (type != G_TYPE_NONE)
     {
@@ -176,21 +180,11 @@ gimp_image_symmetry_select (GimpImage *image,
 GimpSymmetry *
 gimp_image_symmetry_selected (GimpImage *image)
 {
-  static GimpImage    *last_image = NULL;
-  static GimpSymmetry *identity = NULL;
-  GimpImagePrivate    *private;
+  GimpImagePrivate *private;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  if (last_image != image)
-    {
-      if (identity)
-        g_object_unref (identity);
-      identity = gimp_image_symmetry_new (image,
-                                          GIMP_TYPE_SYMMETRY);
-    }
-
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return private->selected_symmetry ? private->selected_symmetry : identity;
+  return private->selected_symmetry;
 }

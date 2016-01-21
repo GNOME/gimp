@@ -92,6 +92,9 @@ GtkListStore * gimp_int_store_new             (void);
 gboolean       gimp_int_store_lookup_by_value (GtkTreeModel  *model,
                                                gint           value,
                                                GtkTreeIter   *iter);
+gboolean   gimp_int_store_lookup_by_user_data (GtkTreeModel  *model,
+                                               gpointer       user_data,
+                                               GtkTreeIter   *iter);
 
 
 G_END_DECLS
