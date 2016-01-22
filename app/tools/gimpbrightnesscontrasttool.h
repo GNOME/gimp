@@ -35,16 +35,14 @@ typedef struct _GimpBrightnessContrastToolClass GimpBrightnessContrastToolClass;
 
 struct _GimpBrightnessContrastTool
 {
-  GimpImageMapTool              parent_instance;
+  GimpImageMapTool  parent_instance;
 
-  GimpBrightnessContrastConfig *config;
-
-  gdouble                       x, y;
-  gdouble                       dx, dy;
+  gdouble           x, y;
+  gdouble           dx, dy;
 
   /* dialog */
-  GtkWidget                    *brightness_scale;
-  GtkWidget                    *contrast_scale;
+  GtkWidget        *brightness_scale;
+  GtkWidget        *contrast_scale;
 };
 
 struct _GimpBrightnessContrastToolClass

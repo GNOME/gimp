@@ -51,14 +51,17 @@ static gboolean   gimp_color_balance_tool_initialize    (GimpTool         *tool,
                                                          GimpDisplay      *display,
                                                          GError          **error);
 
-static GeglNode * gimp_color_balance_tool_get_operation (GimpImageMapTool *im_tool,
-                                                         GObject         **config,
-                                                         gchar           **undo_desc);
+static gchar    * gimp_color_balance_tool_get_operation (GimpImageMapTool *im_tool,
+                                                         gchar           **title,
+                                                         gchar           **description,
+                                                         gchar           **undo_desc,
+                                                         gchar           **icon_name,
+                                                         gchar           **help_id);
 static void       gimp_color_balance_tool_dialog        (GimpImageMapTool *im_tool);
 static void       gimp_color_balance_tool_reset         (GimpImageMapTool *im_tool);
 
-static void      color_balance_range_reset_callback (GtkWidget            *widget,
-                                                     GimpColorBalanceTool *cb_tool);
+static void       color_balance_range_reset_callback    (GtkWidget        *widget,
+                                                         GimpImageMapTool *im_tool);
 
 
 G_DEFINE_TYPE (GimpColorBalanceTool, gimp_color_balance_tool,
@@ -91,7 +94,6 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 
   tool_class->initialize             = gimp_color_balance_tool_initialize;
 
-  im_tool_class->dialog_desc         = _("Adjust Color Balance");
   im_tool_class->settings_name       = "color-balance";
   im_tool_class->import_dialog_title = _("Import Color Balance Settings");
   im_tool_class->export_dialog_title = _("Export Color Balance Settings");
@@ -127,21 +129,17 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
   return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 }
 
-static GeglNode *
+static gchar *
 gimp_color_balance_tool_get_operation (GimpImageMapTool  *im_tool,
-                                       GObject          **config,
-                                       gchar            **undo_desc)
+                                       gchar            **title,
+                                       gchar            **description,
+                                       gchar            **undo_desc,
+                                       gchar            **icon_name,
+                                       gchar            **help_id)
 {
-  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
+  *description = g_strdup (_("Adjust Color Balance"));
 
-  cb_tool->config = g_object_new (GIMP_TYPE_COLOR_BALANCE_CONFIG, NULL);
-
-  *config = G_OBJECT (cb_tool->config);
-
-  return gegl_node_new_child (NULL,
-                              "operation", "gimp:color-balance",
-                              "config",    cb_tool->config,
-                              NULL);
+  return g_strdup ("gimp:color-balance");
 }
 
 
@@ -248,19 +246,22 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_color_balance_tool_reset (GimpImageMapTool *im_tool)
 {
-  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
-  GimpTransferMode      range   = cb_tool->config->range;
+  GimpTransferMode range;
+
+  g_object_get (im_tool->config,
+                "range", &range,
+                NULL);
 
   GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (im_tool);
 
-  g_object_set (cb_tool->config,
+  g_object_set (im_tool->config,
                 "range", range,
                 NULL);
 }
 
 static void
-color_balance_range_reset_callback (GtkWidget            *widget,
-                                    GimpColorBalanceTool *cb_tool)
+color_balance_range_reset_callback (GtkWidget        *widget,
+                                    GimpImageMapTool *im_tool)
 {
-  gimp_color_balance_config_reset_range (cb_tool->config);
+  gimp_color_balance_config_reset_range (GIMP_COLOR_BALANCE_CONFIG (im_tool->config));
 }

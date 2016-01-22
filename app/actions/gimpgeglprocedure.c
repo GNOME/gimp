@@ -323,6 +323,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                                          procedure->original_name,
                                          gimp_procedure_get_label (procedure),
                                          gimp_procedure_get_label (procedure),
+                                         gimp_procedure_get_label (procedure),
                                          gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
                                          gimp_procedure_get_help_id (procedure));
 

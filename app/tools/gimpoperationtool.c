@@ -78,10 +78,12 @@ static void        gimp_operation_tool_control         (GimpTool          *tool,
                                                         GimpToolAction     action,
                                                         GimpDisplay       *display);
 
-static GeglNode  * gimp_operation_tool_get_operation   (GimpImageMapTool  *im_tool,
-                                                        GObject          **config,
-                                                        gchar            **undo_desc);
-static void        gimp_operation_tool_map             (GimpImageMapTool  *im_tool);
+static gchar     * gimp_operation_tool_get_operation   (GimpImageMapTool  *im_tool,
+                                                        gchar            **title,
+                                                        gchar            **description,
+                                                        gchar            **undo_desc,
+                                                        gchar            **icon_name,
+                                                        gchar            **help_id);
 static void        gimp_operation_tool_dialog          (GimpImageMapTool  *im_tool);
 static void        gimp_operation_tool_reset           (GimpImageMapTool  *im_tool);
 static GtkWidget * gimp_operation_tool_get_settings_ui (GimpImageMapTool  *im_tool,
@@ -146,10 +148,7 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
   tool_class->initialize         = gimp_operation_tool_initialize;
   tool_class->control            = gimp_operation_tool_control;
 
-  im_tool_class->dialog_desc     = _("GEGL Operation");
-
   im_tool_class->get_operation   = gimp_operation_tool_get_operation;
-  im_tool_class->map             = gimp_operation_tool_map;
   im_tool_class->dialog          = gimp_operation_tool_dialog;
   im_tool_class->reset           = gimp_operation_tool_reset;
   im_tool_class->get_settings_ui = gimp_operation_tool_get_settings_ui;
@@ -177,6 +176,12 @@ gimp_operation_tool_finalize (GObject *object)
     {
       g_free (tool->title);
       tool->title = NULL;
+    }
+
+  if (tool->description)
+    {
+      g_free (tool->description);
+      tool->description = NULL;
     }
 
   if (tool->undo_desc)
@@ -250,37 +255,23 @@ gimp_operation_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
-static GeglNode *
+static gchar *
 gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
-                                   GObject          **config,
-                                   gchar            **undo_desc)
+                                   gchar            **title,
+                                   gchar            **description,
+                                   gchar            **undo_desc,
+                                   gchar            **icon_name,
+                                   gchar            **help_id)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
 
-  if (tool->operation)
-    *config = G_OBJECT (gimp_gegl_config_new (tool->operation,
-                                              tool->icon_name,
-                                              GIMP_TYPE_SETTINGS));
+  *title       = g_strdup (tool->title);
+  *description = g_strdup (tool->description);
+  *undo_desc   = g_strdup (tool->undo_desc);
+  *icon_name   = g_strdup (tool->icon_name);
+  *help_id     = g_strdup (tool->help_id);
 
-  if (tool->undo_desc)
-    *undo_desc = g_strdup (tool->undo_desc);
-
-  if (tool->operation)
-    return gegl_node_new_child (NULL,
-                                "operation", tool->operation,
-                                NULL);
-
-  return gegl_node_new_child (NULL,
-                              "operation", "gegl:nop",
-                              NULL);
-}
-
-static void
-gimp_operation_tool_map (GimpImageMapTool *im_tool)
-{
-  if (im_tool->config)
-    gimp_gegl_config_sync_node (GIMP_OBJECT (im_tool->config),
-                                im_tool->operation);
+  return g_strdup (tool->operation);
 }
 
 static void
@@ -313,18 +304,6 @@ gimp_operation_tool_dialog (GimpImageMapTool *im_tool)
                           FALSE, FALSE, 0);
       gtk_widget_show (tool->options_gui);
     }
-
-  if (tool->title)
-    gimp_tool_gui_set_title (im_tool->gui, tool->title);
-
-  if (tool->undo_desc)
-    gimp_tool_gui_set_description (im_tool->gui, tool->undo_desc);
-
-  if (tool->icon_name)
-    gimp_tool_gui_set_icon_name (im_tool->gui, tool->icon_name);
-
-  if (tool->help_id)
-    gimp_tool_gui_set_help_id (im_tool->gui, tool->help_id);
 }
 
 static void
@@ -366,8 +345,8 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *im_tool,
   file = gimp_directory_file ("filters", basename, NULL);
   g_free (basename);
 
-  import_title = g_strdup_printf (_("Import '%s' Settings"), tool->undo_desc);
-  export_title = g_strdup_printf (_("Export '%s' Settings"), tool->undo_desc);
+  import_title = g_strdup_printf (_("Import '%s' Settings"), tool->title);
+  export_title = g_strdup_printf (_("Export '%s' Settings"), tool->title);
 
   widget =
     GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_settings_ui (im_tool,
@@ -638,6 +617,7 @@ void
 gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *operation,
                                    const gchar       *title,
+                                   const gchar       *description,
                                    const gchar       *undo_desc,
                                    const gchar       *icon_name,
                                    const gchar       *help_id)
@@ -657,6 +637,9 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   if (tool->title)
     g_free (tool->title);
 
+  if (tool->description)
+    g_free (tool->description);
+
   if (tool->undo_desc)
     g_free (tool->undo_desc);
 
@@ -666,11 +649,12 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   if (tool->help_id)
     g_free (tool->help_id);
 
-  tool->operation = g_strdup (operation);
-  tool->title     = g_strdup (title);
-  tool->undo_desc = g_strdup (undo_desc);
-  tool->icon_name = g_strdup (icon_name);
-  tool->help_id   = g_strdup (help_id);
+  tool->operation   = g_strdup (operation);
+  tool->title       = g_strdup (title);
+  tool->description = g_strdup (description);
+  tool->undo_desc   = g_strdup (undo_desc);
+  tool->icon_name   = g_strdup (icon_name);
+  tool->help_id     = g_strdup (help_id);
 
   g_list_free_full (tool->aux_inputs,
                     (GDestroyNotify) gimp_operation_tool_aux_input_free);
@@ -759,21 +743,6 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                               FALSE, FALSE, 0);
           gtk_widget_show (tool->options_gui);
         }
-    }
-
-  if (im_tool->gui)
-    {
-      if (title)
-        gimp_tool_gui_set_title (im_tool->gui, title);
-
-      if (undo_desc)
-        gimp_tool_gui_set_description (im_tool->gui, undo_desc);
-
-      if (icon_name)
-        gimp_tool_gui_set_icon_name (im_tool->gui, icon_name);
-
-      if (help_id)
-        gimp_tool_gui_set_help_id (im_tool->gui, help_id);
     }
 
   if (GIMP_TOOL (tool)->drawable)
