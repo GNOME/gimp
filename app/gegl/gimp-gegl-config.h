@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_CONFIG_H__
-#define __GIMP_GEGL_CONFIG_H__
+#ifndef __GIMP_GEGL_CONFIG_ARGH_H__
+#define __GIMP_GEGL_CONFIG_ARGH_H__
 
 
 void            gimp_gegl_config_register      (const gchar *operation,
@@ -31,4 +31,4 @@ void            gimp_gegl_config_sync_node     (GimpObject  *config,
                                                 GeglNode    *node);
 
 
-#endif /* __GIMP_GEGL_CONFIG_H__ */
+#endif /* __GIMP_GEGL_CONFIG_ARGH_H__ */
