@@ -299,7 +299,9 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
     {
       fg_select->gui =
         gimp_tool_gui_new (tool->tool_info,
+                           NULL,
                            _("Dialog for foreground select"),
+                           NULL, NULL,
                            gtk_widget_get_screen (GTK_WIDGET (shell)),
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            TRUE,

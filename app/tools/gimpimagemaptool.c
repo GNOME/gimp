@@ -366,7 +366,10 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
       im_tool->gui =
         gimp_tool_gui_new (tool_info,
+                           im_tool->title,
                            im_tool->description,
+                           im_tool->icon_name,
+                           im_tool->help_id,
                            gtk_widget_get_screen (GTK_WIDGET (shell)),
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            im_tool->overlay,
@@ -458,15 +461,11 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
     }
   else
     {
+      gimp_tool_gui_set_title (im_tool->gui, im_tool->title);
       gimp_tool_gui_set_description (im_tool->gui, im_tool->description);
+      gimp_tool_gui_set_icon_name (im_tool->gui, im_tool->icon_name);
+      gimp_tool_gui_set_help_id (im_tool->gui, im_tool->help_id);
     }
-
-  /* FIXME move these into the block above once gimp_tool_gui_new()
-   * got more arguments
-   */
-  gimp_tool_gui_set_title (im_tool->gui, im_tool->title);
-  gimp_tool_gui_set_icon_name (im_tool->gui, im_tool->icon_name);
-  gimp_tool_gui_set_help_id (im_tool->gui, im_tool->help_id);
 
   gimp_tool_gui_set_shell (im_tool->gui, shell);
   gimp_tool_gui_set_viewable (im_tool->gui, GIMP_VIEWABLE (drawable));

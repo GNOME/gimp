@@ -241,7 +241,10 @@ gimp_tool_gui_finalize (GObject *object)
  **/
 GimpToolGui *
 gimp_tool_gui_new (GimpToolInfo *tool_info,
+                   const gchar  *title,
                    const gchar  *description,
+                   const gchar  *icon_name,
+                   const gchar  *help_id,
                    GdkScreen    *screen,
                    gint          monitor,
                    gboolean      overlay,
@@ -258,11 +261,23 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
 
   private = GET_PRIVATE (gui);
 
+  if (! title)
+    title = tool_info->blurb;
+
+  if (! description)
+    description = tool_info->blurb;
+
+  if (! icon_name)
+    icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
+
+  if (! help_id)
+    help_id = tool_info->help_id;
+
   private->tool_info   = g_object_ref (tool_info);
-  private->title       = g_strdup (tool_info->blurb);
+  private->title       = g_strdup (title);
   private->description = g_strdup (description);
-  private->icon_name   = g_strdup (gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)));
-  private->help_id     = g_strdup (tool_info->help_id);
+  private->icon_name   = g_strdup (icon_name);
+  private->help_id     = g_strdup (help_id);
   private->overlay     = overlay;
 
   va_start (args, overlay);
