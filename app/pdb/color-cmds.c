@@ -43,7 +43,6 @@
 #include "operations/gimpcurvesconfig.h"
 #include "operations/gimphuesaturationconfig.h"
 #include "operations/gimplevelsconfig.h"
-#include "operations/gimpthresholdconfig.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
@@ -757,16 +756,17 @@ threshold_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GObject *config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG,
-                                          "low",  low_threshold  / 255.0,
-                                          "high", high_threshold / 255.0,
-                                          NULL);
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:threshold",
+                                 "low",       low_threshold  / 255.0,
+                                 "high",      high_threshold / 255.0,
+                                 NULL);
 
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Threshold"),
-                                                 "gimp:threshold",
-                                                 config);
-          g_object_unref (config);
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Threshold"),
+                                         node);
+          g_object_unref (node);
         }
       else
         success = FALSE;

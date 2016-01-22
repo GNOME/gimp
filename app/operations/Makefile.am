@@ -37,8 +37,6 @@ libappoperations_generic_a_sources = \
 	gimphuesaturationconfig.h		\
 	gimplevelsconfig.c			\
 	gimplevelsconfig.h			\
-	gimpthresholdconfig.c			\
-	gimpthresholdconfig.h			\
 	\
 	gimpoperationblend.c			\
 	gimpoperationblend.h			\

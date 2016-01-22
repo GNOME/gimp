@@ -39,6 +39,9 @@ typedef struct _GimpOperationThresholdClass GimpOperationThresholdClass;
 struct _GimpOperationThreshold
 {
   GimpOperationPointFilter  parent_instance;
+
+  gdouble                   low;
+  gdouble                   high;
 };
 
 struct _GimpOperationThresholdClass

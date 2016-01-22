@@ -61,7 +61,6 @@
 #include "gimpcurvesconfig.h"
 #include "gimphuesaturationconfig.h"
 #include "gimplevelsconfig.h"
-#include "gimpthresholdconfig.h"
 
 #include "gimpoperationpointlayermode.h"
 #include "gimpoperationnormalmode.h"
@@ -168,6 +167,4 @@ gimp_operations_init (void)
                              GIMP_TYPE_HUE_SATURATION_CONFIG);
   gimp_gegl_config_register ("gimp:levels",
                              GIMP_TYPE_LEVELS_CONFIG);
-  gimp_gegl_config_register ("gimp:threshold",
-                             GIMP_TYPE_THRESHOLD_CONFIG);
 }

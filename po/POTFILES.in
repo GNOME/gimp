@@ -256,8 +256,8 @@ app/operations/gimpoperationcagetransform.c
 app/operations/gimpoperationdesaturate.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
+app/operations/gimpoperationthreshold.c
 app/operations/gimpoperationthresholdalpha.c
-app/operations/gimpthresholdconfig.c
 
 app/gui/gui.c
 app/gui/gui-message.c
