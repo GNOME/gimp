@@ -33,11 +33,15 @@
 #define GIMP_CANVAS_GROUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_GROUP, GimpCanvasGroupClass))
 
 
-typedef struct _GimpCanvasGroupClass GimpCanvasGroupClass;
+typedef struct _GimpCanvasGroupPrivate GimpCanvasGroupPrivate;
+typedef struct _GimpCanvasGroupClass   GimpCanvasGroupClass;
 
 struct _GimpCanvasGroup
 {
-  GimpCanvasItem  parent_instance;
+  GimpCanvasItem          parent_instance;
+
+  GimpCanvasGroupPrivate *priv;
+
 };
 
 struct _GimpCanvasGroupClass
