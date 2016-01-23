@@ -1054,7 +1054,9 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   shell = gimp_display_get_shell (tool->display);
 
   gui = gimp_tool_gui_new (tool->tool_info,
+                           NULL,
                            _("Measure Distances and Angles"),
+                           NULL, NULL,
                            gtk_widget_get_screen (GTK_WIDGET (shell)),
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            TRUE,

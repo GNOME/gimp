@@ -105,7 +105,7 @@ style "default-style"
   GimpDock::font-scale = 0.8333
   GimpMenuDock::minimal-width = 200
   GimpDockWindow::menu-preview-size = small-toolbar
-  GimpToolPalette::tool-icon-size = menu
+  GimpToolPalette::tool-icon-size = large-toolbar
   GimpToolPalette::button-relief = none
   GimpDockbook::tab-border = 0
   GimpDockbook::tab-icon-size = menu

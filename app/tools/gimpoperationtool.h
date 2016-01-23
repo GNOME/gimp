@@ -39,6 +39,7 @@ struct _GimpOperationTool
 
   gchar            *operation;
   gchar            *title;
+  gchar            *description;
   gchar            *undo_desc;
   gchar            *icon_name;
   gchar            *help_id;
@@ -64,6 +65,7 @@ GType   gimp_operation_tool_get_type      (void) G_GNUC_CONST;
 void    gimp_operation_tool_set_operation (GimpOperationTool        *tool,
                                            const gchar              *operation,
                                            const gchar              *title,
+                                           const gchar              *description,
                                            const gchar              *undo_desc,
                                            const gchar              *icon_name,
                                            const gchar              *help_id);

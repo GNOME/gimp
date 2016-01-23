@@ -32,13 +32,37 @@
 #include "core/gimpparamspecs-duplicate.h"
 #include "core/gimpviewable.h"
 
-#include "gimp-gegl-config-proxy.h"
+#include "gimp-gegl-config.h"
 #include "gimp-gegl-utils.h"
 
 
-static GHashTable *config_types      = NULL;
-static GHashTable *config_containers = NULL;
+static GHashTable *
+gimp_gegl_config_get_type_table (void)
+{
+  static GHashTable *config_types = NULL;
 
+  if (! config_types)
+    config_types = g_hash_table_new_full (g_str_hash,
+                                          g_str_equal,
+                                          (GDestroyNotify) g_free,
+                                          NULL);
+
+  return config_types;
+}
+
+static GHashTable *
+gimp_gegl_config_get_container_table (void)
+{
+  static GHashTable *config_containers = NULL;
+
+  if (! config_containers)
+    config_containers = g_hash_table_new_full (g_direct_hash,
+                                               g_direct_equal,
+                                               NULL,
+                                               (GDestroyNotify) g_object_unref);
+
+  return config_containers;
+}
 
 static GValue *
 gimp_gegl_config_value_new (GParamSpec *pspec)
@@ -191,21 +215,37 @@ gimp_gegl_config_config_iface_init (GimpConfigInterface *iface)
   iface->equal = gimp_gegl_config_equal;
 }
 
-GimpObject *
-gimp_gegl_get_config_proxy (const gchar *operation,
-                            const gchar *icon_name,
-                            GType        parent_type)
+
+/*  public functions  */
+
+void
+gimp_gegl_config_register (const gchar *operation,
+                           GType        config_type)
 {
-  GType config_type;
+  GHashTable *config_types;
+
+  g_return_if_fail (operation != NULL);
+  g_return_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT));
+
+  config_types = gimp_gegl_config_get_type_table ();
+
+  g_hash_table_insert (config_types,
+                       g_strdup (operation),
+                       (gpointer) config_type);
+ }
+
+GimpObject *
+gimp_gegl_config_new (const gchar *operation,
+                      const gchar *icon_name,
+                      GType        parent_type)
+{
+  GHashTable *config_types;
+  GType       config_type;
 
   g_return_val_if_fail (operation != NULL, NULL);
   g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), NULL);
 
-  if (! config_types)
-    config_types = g_hash_table_new_full (g_str_hash,
-                                          g_str_equal,
-                                          (GDestroyNotify) g_free,
-                                          NULL);
+  config_types = gimp_gegl_config_get_type_table ();
 
   config_type = (GType) g_hash_table_lookup (config_types, operation);
 
@@ -269,17 +309,14 @@ gimp_gegl_get_config_proxy (const gchar *operation,
 }
 
 GimpContainer *
-gimp_gegl_get_config_container (GType config_type)
+gimp_gegl_config_get_container (GType config_type)
 {
+  GHashTable    *config_containers;
   GimpContainer *container;
 
   g_return_val_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT), NULL);
 
-  if (! config_containers)
-    config_containers = g_hash_table_new_full (g_direct_hash,
-                                               g_direct_equal,
-                                               NULL,
-                                               (GDestroyNotify) g_object_unref);
+  config_containers = gimp_gegl_config_get_container_table ();
 
   container = g_hash_table_lookup (config_containers, (gpointer) config_type);
 
@@ -295,15 +332,15 @@ gimp_gegl_get_config_container (GType config_type)
 }
 
 void
-gimp_gegl_config_proxy_sync (GimpObject  *proxy,
-                             GeglNode    *node)
+gimp_gegl_config_sync_node (GimpObject *config,
+                            GeglNode   *node)
 {
   GParamSpec **pspecs;
   gchar       *operation;
   guint        n_pspecs;
   gint         i;
 
-  g_return_if_fail (GIMP_IS_OBJECT (proxy));
+  g_return_if_fail (GIMP_IS_OBJECT (config));
   g_return_if_fail (GEGL_IS_NODE (node));
 
   gegl_node_get (node,
@@ -317,8 +354,26 @@ gimp_gegl_config_proxy_sync (GimpObject  *proxy,
 
   for (i = 0; i < n_pspecs; i++)
     {
+      GParamSpec *pspec = pspecs[i];
+
+      /*  if the operation has an object property of the config's
+       *  type, set it and done
+       */
+      if (G_IS_PARAM_SPEC_OBJECT (pspec) &&
+          pspec->value_type == G_TYPE_FROM_INSTANCE (config))
+        {
+          gegl_node_set (node,
+                         pspec->name, config,
+                         NULL);
+          g_free (pspecs);
+          return;
+        }
+    }
+
+  for (i = 0; i < n_pspecs; i++)
+    {
       GParamSpec *gegl_pspec = pspecs[i];
-      GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (proxy),
+      GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                              gegl_pspec->name);
 
       if (gimp_pspec)
@@ -327,7 +382,7 @@ gimp_gegl_config_proxy_sync (GimpObject  *proxy,
 
           g_value_init (&value, gimp_pspec->value_type);
 
-          g_object_get_property (G_OBJECT (proxy), gimp_pspec->name,
+          g_object_get_property (G_OBJECT (config), gimp_pspec->name,
                                  &value);
 
           if (GEGL_IS_PARAM_SPEC_COLOR (gegl_pspec))

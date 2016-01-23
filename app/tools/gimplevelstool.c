@@ -65,15 +65,19 @@
 
 /*  local function prototypes  */
 
+static void       gimp_levels_tool_constructed    (GObject           *object);
 static void       gimp_levels_tool_finalize       (GObject           *object);
 
 static gboolean   gimp_levels_tool_initialize     (GimpTool          *tool,
                                                    GimpDisplay       *display,
                                                    GError           **error);
 
-static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
-                                                   GObject          **config,
-                                                   gchar            **undo_desc);
+static gchar    * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
+                                                   gchar            **title,
+                                                   gchar            **description,
+                                                   gchar            **undo_desc,
+                                                   gchar            **icon_name,
+                                                   gchar            **help_id);
 static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
 static void       gimp_levels_tool_reset          (GimpImageMapTool  *im_tool);
 static gboolean   gimp_levels_tool_settings_import(GimpImageMapTool  *im_tool,
@@ -100,9 +104,9 @@ static void       gimp_levels_tool_config_notify  (GObject           *object,
 static void       levels_update_input_bar         (GimpLevelsTool    *tool);
 
 static void       levels_channel_callback         (GtkWidget         *widget,
-                                                   GimpLevelsTool    *tool);
+                                                   GimpImageMapTool  *im_tool);
 static void       levels_channel_reset_callback   (GtkWidget         *widget,
-                                                   GimpLevelsTool    *tool);
+                                                   GimpImageMapTool  *im_tool);
 
 static gboolean   levels_menu_sensitivity         (gint               value,
                                                    gpointer           data);
@@ -113,7 +117,7 @@ static void       levels_linear_gamma_changed     (GtkAdjustment     *adjustment
                                                    GimpLevelsTool    *tool);
 
 static void       levels_to_curves_callback       (GtkWidget         *widget,
-                                                   GimpLevelsTool    *tool);
+                                                   GimpImageMapTool  *im_tool);
 
 
 G_DEFINE_TYPE (GimpLevelsTool, gimp_levels_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
@@ -145,11 +149,11 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
+  object_class->constructed          = gimp_levels_tool_constructed;
   object_class->finalize             = gimp_levels_tool_finalize;
 
   tool_class->initialize             = gimp_levels_tool_initialize;
 
-  im_tool_class->dialog_desc         = _("Adjust Color Levels");
   im_tool_class->settings_name       = "levels";
   im_tool_class->import_dialog_title = _("Import Levels");
   im_tool_class->export_dialog_title = _("Export Levels");
@@ -166,6 +170,16 @@ static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
   tool->histogram = gimp_histogram_new (TRUE);
+}
+
+static void
+gimp_levels_tool_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_signal_connect_object (GIMP_IMAGE_MAP_TOOL (object)->config, "notify",
+                           G_CALLBACK (gimp_levels_tool_config_notify),
+                           object, 0);
 }
 
 static void
@@ -242,25 +256,17 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   return TRUE;
 }
 
-static GeglNode *
+static gchar *
 gimp_levels_tool_get_operation (GimpImageMapTool  *im_tool,
-                                GObject          **config,
-                                gchar            **undo_desc)
+                                gchar            **title,
+                                gchar            **description,
+                                gchar            **undo_desc,
+                                gchar            **icon_name,
+                                gchar            **help_id)
 {
-  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (im_tool);
+  *description = g_strdup (_("Adjust Color Levels"));
 
-  tool->config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
-
-  g_signal_connect_object (tool->config, "notify",
-                           G_CALLBACK (gimp_levels_tool_config_notify),
-                           G_OBJECT (tool), 0);
-
-  *config = G_OBJECT (tool->config);
-
-  return gegl_node_new_child (NULL,
-                              "operation", "gimp:levels",
-                              "config",    tool->config,
-                              NULL);
+  return g_strdup ("gimp:levels");
 }
 
 
@@ -316,11 +322,11 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 }
 
 static void
-gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
+gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
 {
-  GimpLevelsTool   *tool         = GIMP_LEVELS_TOOL (image_map_tool);
-  GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
-  GimpLevelsConfig *config       = tool->config;
+  GimpLevelsTool   *tool         = GIMP_LEVELS_TOOL (im_tool);
+  GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (im_tool);
+  GimpLevelsConfig *config       = GIMP_LEVELS_CONFIG (im_tool->config);
   GtkListStore     *store;
   GtkWidget        *main_vbox;
   GtkWidget        *frame_vbox;
@@ -341,11 +347,11 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *handle_bar;
   gint              border;
 
-  g_signal_connect (image_map_tool->settings_box, "file-dialog-setup",
+  g_signal_connect (im_tool->settings_box, "file-dialog-setup",
                     G_CALLBACK (gimp_levels_tool_export_setup),
-                    image_map_tool);
+                    im_tool);
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
 
   /*  The option menu for selecting channels  */
   main_frame = gimp_frame_new (NULL);
@@ -466,7 +472,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (button);
 
   tool->low_input_spinbutton = spinbutton =
-    gimp_prop_spin_button_new (image_map_tool->config, "low-input",
+    gimp_prop_spin_button_new (im_tool->config, "low-input",
                                0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -476,7 +482,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                                   tool->low_input);
 
   /*  input gamma spin  */
-  spinbutton = gimp_prop_spin_button_new (image_map_tool->config, "gamma",
+  spinbutton = gimp_prop_spin_button_new (im_tool->config, "gamma",
                                           0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
@@ -503,7 +509,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  spinbutton = gimp_prop_spin_button_new (image_map_tool->config, "high-input",
+  spinbutton = gimp_prop_spin_button_new (im_tool->config, "high-input",
                                           0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -552,7 +558,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  low output spin  */
   tool->low_output_spinbutton = spinbutton =
-    gimp_prop_spin_button_new (image_map_tool->config, "low-output",
+    gimp_prop_spin_button_new (im_tool->config, "low-output",
                                0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -562,7 +568,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  high output spin  */
   tool->high_output_spinbutton = spinbutton =
-    gimp_prop_spin_button_new (image_map_tool->config, "high-output",
+    gimp_prop_spin_button_new (im_tool->config, "high-output",
                                0.01, 0.1, 1);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -624,26 +630,29 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 }
 
 static void
-gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
+gimp_levels_tool_reset (GimpImageMapTool *im_tool)
 {
-  GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (image_map_tool);
-  GimpHistogramChannel  channel = tool->config->channel;
+  GimpHistogramChannel channel;
 
-  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (image_map_tool);
+  g_object_get (im_tool->config,
+                "channel", &channel,
+                NULL);
 
-  g_object_set (tool->config,
+  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (im_tool);
+
+  g_object_set (im_tool->config,
                 "channel", channel,
                 NULL);
 }
 
 static gboolean
-gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
+gimp_levels_tool_settings_import (GimpImageMapTool  *im_tool,
                                   GInputStream      *input,
                                   GError           **error)
 {
-  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  gchar           header[64];
-  gsize           bytes_read;
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (im_tool->config);
+  gchar             header[64];
+  gsize             bytes_read;
 
   if (! g_input_stream_read_all (input, header, sizeof (header),
                                  &bytes_read, NULL, error) ||
@@ -656,24 +665,25 @@ gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
   g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
 
   if (g_str_has_prefix (header, "# GIMP Levels File\n"))
-    return gimp_levels_config_load_cruft (tool->config, input, error);
+    return gimp_levels_config_load_cruft (config, input, error);
 
-  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (image_map_tool,
+  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (im_tool,
                                                                     input,
                                                                     error);
 }
 
 static gboolean
-gimp_levels_tool_settings_export (GimpImageMapTool  *image_map_tool,
+gimp_levels_tool_settings_export (GimpImageMapTool  *im_tool,
                                   GOutputStream     *output,
                                   GError           **error)
 {
-  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpLevelsTool   *tool   = GIMP_LEVELS_TOOL (im_tool);
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (im_tool->config);
 
   if (tool->export_old_format)
-    return gimp_levels_config_save_cruft (tool->config, output, error);
+    return gimp_levels_config_save_cruft (config, output, error);
 
-  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (image_map_tool,
+  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (im_tool,
                                                                     output,
                                                                     error);
 }
@@ -708,8 +718,9 @@ gimp_levels_tool_color_picked (GimpImageMapTool *color_tool,
                                const Babl       *sample_format,
                                const GimpRGB    *color)
 {
-  GimpLevelsTool *tool  = GIMP_LEVELS_TOOL (color_tool);
-  guint           value = GPOINTER_TO_UINT (identifier);
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (color_tool);
+  GimpLevelsConfig *config  = GIMP_LEVELS_CONFIG (im_tool->config);
+  guint             value   = GPOINTER_TO_UINT (identifier);
 
   if (value & PICK_ALL_CHANNELS &&
       gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)
@@ -720,13 +731,13 @@ gimp_levels_tool_color_picked (GimpImageMapTool *color_tool,
       switch (value & 0xF)
         {
         case PICK_LOW_INPUT:
-          tool->config->low_input[GIMP_HISTOGRAM_VALUE] = 0.0;
+          config->low_input[GIMP_HISTOGRAM_VALUE] = 0.0;
           break;
         case PICK_GAMMA:
-          tool->config->gamma[GIMP_HISTOGRAM_VALUE] = 1.0;
+          config->gamma[GIMP_HISTOGRAM_VALUE] = 1.0;
           break;
         case PICK_HIGH_INPUT:
-          tool->config->high_input[GIMP_HISTOGRAM_VALUE] = 1.0;
+          config->high_input[GIMP_HISTOGRAM_VALUE] = 1.0;
           break;
         default:
           break;
@@ -737,14 +748,12 @@ gimp_levels_tool_color_picked (GimpImageMapTool *color_tool,
            channel <= GIMP_HISTOGRAM_BLUE;
            channel++)
         {
-          levels_input_adjust_by_color (tool->config,
-                                        value, channel, color);
+          levels_input_adjust_by_color (config, value, channel, color);
         }
     }
   else
     {
-      levels_input_adjust_by_color (tool->config,
-                                    value, tool->config->channel, color);
+      levels_input_adjust_by_color (config, value, config->channel, color);
     }
 }
 
@@ -807,7 +816,7 @@ gimp_levels_tool_config_notify (GObject        *object,
 
       delta = (high - low) / 2.0;
       mid   = low + delta;
-      tmp   = log10 (1.0 / tool->config->gamma[tool->config->channel]);
+      tmp   = log10 (1.0 / config->gamma[config->channel]);
       value = mid + delta * tmp;
 
       gtk_adjustment_set_value (tool->gamma_linear, value);
@@ -817,7 +826,8 @@ gimp_levels_tool_config_notify (GObject        *object,
 static void
 levels_update_input_bar (GimpLevelsTool *tool)
 {
-  GimpLevelsConfig *config = tool->config;
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+  GimpLevelsConfig *config  = GIMP_LEVELS_CONFIG (im_tool->config);
 
   switch (config->channel)
     {
@@ -878,25 +888,26 @@ levels_update_input_bar (GimpLevelsTool *tool)
 }
 
 static void
-levels_channel_callback (GtkWidget      *widget,
-                         GimpLevelsTool *tool)
+levels_channel_callback (GtkWidget        *widget,
+                         GimpImageMapTool *im_tool)
 {
-  gint value;
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (im_tool->config);
+  gint              value;
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value) &&
-      tool->config->channel != value)
+      config->channel != value)
     {
-      g_object_set (tool->config,
+      g_object_set (config,
                     "channel", value,
                     NULL);
     }
 }
 
 static void
-levels_channel_reset_callback (GtkWidget      *widget,
-                               GimpLevelsTool *tool)
+levels_channel_reset_callback (GtkWidget        *widget,
+                               GimpImageMapTool *im_tool)
 {
-  gimp_levels_config_reset_channel (tool->config);
+  gimp_levels_config_reset_channel (GIMP_LEVELS_CONFIG (im_tool->config));
 }
 
 static gboolean
@@ -930,10 +941,11 @@ static void
 levels_stretch_callback (GtkWidget      *widget,
                          GimpLevelsTool *tool)
 {
-  GimpDrawable *drawable = GIMP_IMAGE_MAP_TOOL (tool)->drawable;
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
-  gimp_levels_config_stretch (tool->config, tool->histogram,
-                              gimp_drawable_is_rgb (drawable));
+  gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (im_tool->config),
+                              tool->histogram,
+                              gimp_drawable_is_rgb (im_tool->drawable));
 }
 
 static void
@@ -960,14 +972,15 @@ levels_linear_gamma_changed (GtkAdjustment  *adjustment,
 }
 
 static void
-levels_to_curves_callback (GtkWidget      *widget,
-                           GimpLevelsTool *tool)
+levels_to_curves_callback (GtkWidget        *widget,
+                           GimpImageMapTool *im_tool)
 {
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (im_tool->config);
   GimpCurvesConfig *curves;
 
-  curves = gimp_levels_config_to_curves_config (tool->config);
+  curves = gimp_levels_config_to_curves_config (config);
 
-  gimp_image_map_tool_edit_as (GIMP_IMAGE_MAP_TOOL (tool),
+  gimp_image_map_tool_edit_as (im_tool,
                                "gimp-curves-tool",
                                GIMP_CONFIG (curves));
 

@@ -53,7 +53,10 @@ struct _GimpToolGuiClass
 GType         gimp_tool_gui_get_type               (void) G_GNUC_CONST;
 
 GimpToolGui * gimp_tool_gui_new                    (GimpToolInfo     *tool_info,
+                                                    const gchar      *title,
                                                     const gchar      *description,
+                                                    const gchar      *icon_name,
+                                                    const gchar      *help_id,
                                                     GdkScreen        *screen,
                                                     gint              monitor,
                                                     gboolean          overlay,

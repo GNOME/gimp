@@ -1649,7 +1649,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
   tr_tool->gui = gimp_tool_gui_new (tool_info,
-                                    tool_info->blurb,
+                                    NULL, NULL, NULL, NULL,
                                     gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                     TRUE,

@@ -146,8 +146,8 @@ gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
 {
   GimpMybrushCore *mybrush = GIMP_MYBRUSH_CORE (paint_core);
 
-  /* If this is the first motion the brush has recived then
-   * we're being asked to draw a syntetic stroke in line mode
+  /* If this is the first motion the brush has received then
+   * we're being asked to draw a synthetic stroke in line mode
    */
   if (mybrush->private->last_time < 0)
   {

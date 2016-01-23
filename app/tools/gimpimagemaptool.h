@@ -43,7 +43,12 @@ struct _GimpImageMapTool
   GeglNode              *operation;
   GObject               *config;
   GObject               *default_config;
+
+  gchar                 *title;
+  gchar                 *description;
   gchar                 *undo_desc;
+  gchar                 *icon_name;
+  gchar                 *help_id;
 
   GimpImageMap          *image_map;
 
@@ -60,7 +65,6 @@ struct _GimpImageMapToolClass
 {
   GimpColorToolClass  parent_class;
 
-  const gchar        *dialog_desc;
   const gchar        *settings_name;
   const gchar        *import_dialog_title;
   const gchar        *export_dialog_title;
@@ -68,10 +72,12 @@ struct _GimpImageMapToolClass
   GimpContainer      *recent_settings;
 
   /* virtual functions */
-  GeglNode  * (* get_operation)   (GimpImageMapTool  *image_map_tool,
-                                   GObject          **config,
-                                   gchar            **undo_desc);
-  void        (* map)             (GimpImageMapTool  *image_map_tool);
+  gchar     * (* get_operation)   (GimpImageMapTool  *image_map_tool,
+                                   gchar            **title,
+                                   gchar            **description,
+                                   gchar            **undo_desc,
+                                   gchar            **icon_name,
+                                   gchar            **help_id);
   void        (* dialog)          (GimpImageMapTool  *image_map_tool);
   void        (* reset)           (GimpImageMapTool  *image_map_tool);
 

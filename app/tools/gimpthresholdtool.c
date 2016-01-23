@@ -25,8 +25,6 @@
 
 #include "tools-types.h"
 
-#include "operations/gimpthresholdconfig.h"
-
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimperror.h"
@@ -47,15 +45,19 @@
 
 /*  local function prototypes  */
 
+static void       gimp_threshold_tool_constructed     (GObject           *object);
 static void       gimp_threshold_tool_finalize        (GObject           *object);
 
 static gboolean   gimp_threshold_tool_initialize      (GimpTool          *tool,
                                                        GimpDisplay       *display,
                                                        GError           **error);
 
-static GeglNode * gimp_threshold_tool_get_operation   (GimpImageMapTool  *im_tool,
-                                                       GObject          **config,
-                                                       gchar            **undo_desc);
+static gchar    * gimp_threshold_tool_get_operation   (GimpImageMapTool  *im_tool,
+                                                       gchar            **title,
+                                                       gchar            **description,
+                                                       gchar            **undo_desc,
+                                                       gchar            **icon_name,
+                                                       gchar            **help_id);
 static void       gimp_threshold_tool_dialog          (GimpImageMapTool  *im_tool);
 
 static void       gimp_threshold_tool_config_notify   (GObject           *object,
@@ -100,11 +102,11 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
+  object_class->constructed          = gimp_threshold_tool_constructed;
   object_class->finalize             = gimp_threshold_tool_finalize;
 
   tool_class->initialize             = gimp_threshold_tool_initialize;
 
-  im_tool_class->dialog_desc         = _("Apply Threshold");
   im_tool_class->settings_name       = "threshold";
   im_tool_class->import_dialog_title = _("Import Threshold Settings");
   im_tool_class->export_dialog_title = _("Export Threshold Settings");
@@ -117,6 +119,16 @@ static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
   t_tool->histogram = gimp_histogram_new (TRUE);
+}
+
+static void
+gimp_threshold_tool_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_signal_connect_object (GIMP_IMAGE_MAP_TOOL (object)->config, "notify",
+                           G_CALLBACK (gimp_threshold_tool_config_notify),
+                           object, 0);
 }
 
 static void
@@ -154,25 +166,17 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
   return TRUE;
 }
 
-static GeglNode *
-gimp_threshold_tool_get_operation (GimpImageMapTool  *image_map_tool,
-                                   GObject          **config,
-                                   gchar            **undo_desc)
+static gchar *
+gimp_threshold_tool_get_operation (GimpImageMapTool  *im_tool,
+                                   gchar            **title,
+                                   gchar            **description,
+                                   gchar            **undo_desc,
+                                   gchar            **icon_name,
+                                   gchar            **help_id)
 {
-  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
+  *description = g_strdup (_("Apply Threshold"));
 
-  t_tool->config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG, NULL);
-
-  g_signal_connect_object (t_tool->config, "notify",
-                           G_CALLBACK (gimp_threshold_tool_config_notify),
-                           G_OBJECT (t_tool), 0);
-
-  *config = G_OBJECT (t_tool->config);
-
-  return gegl_node_new_child (NULL,
-                              "operation", "gimp:threshold",
-                              "config",    t_tool->config,
-                              NULL);
+  return g_strdup ("gimp:threshold");
 }
 
 
@@ -181,19 +185,20 @@ gimp_threshold_tool_get_operation (GimpImageMapTool  *image_map_tool,
 /**********************/
 
 static void
-gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
+gimp_threshold_tool_dialog (GimpImageMapTool *im_tool)
 {
-  GimpThresholdTool   *t_tool       = GIMP_THRESHOLD_TOOL (image_map_tool);
-  GimpToolOptions     *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
-  GimpThresholdConfig *config       = t_tool->config;
-  GtkWidget           *main_vbox;
-  GtkWidget           *hbox;
-  GtkWidget           *menu;
-  GtkWidget           *box;
-  GtkWidget           *button;
-  gint                 n_bins;
+  GimpThresholdTool *t_tool       = GIMP_THRESHOLD_TOOL (im_tool);
+  GimpToolOptions   *tool_options = GIMP_TOOL_GET_OPTIONS (im_tool);
+  GtkWidget         *main_vbox;
+  GtkWidget         *hbox;
+  GtkWidget         *menu;
+  GtkWidget         *box;
+  GtkWidget         *button;
+  gdouble            low;
+  gdouble            high;
+  gint               n_bins;
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -211,11 +216,16 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
 
+  g_object_get (im_tool->config,
+                "low",  &low,
+                "high", &high,
+                NULL);
+
   n_bins = gimp_histogram_n_bins (t_tool->histogram);
 
   gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 config->low  * (n_bins - 0.0001),
-                                 config->high * (n_bins - 0.0001));
+                                 low  * (n_bins - 0.0001),
+                                 high * (n_bins - 0.0001));
 
   g_signal_connect (t_tool->histogram_box->view, "range-changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
@@ -244,17 +254,23 @@ gimp_threshold_tool_config_notify (GObject           *object,
                                    GParamSpec        *pspec,
                                    GimpThresholdTool *t_tool)
 {
-  GimpThresholdConfig *config = GIMP_THRESHOLD_CONFIG (object);
-  gint                 n_bins;
+  gdouble low;
+  gdouble high;
+  gint    n_bins;
 
   if (! t_tool->histogram_box)
     return;
 
+  g_object_get (object,
+                "low",  &low,
+                "high", &high,
+                NULL);
+
   n_bins = gimp_histogram_n_bins (t_tool->histogram);
 
   gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 config->low  * (n_bins - 0.0001),
-                                 config->high * (n_bins - 0.0001));
+                                 low  * (n_bins - 0.0001),
+                                 high * (n_bins - 0.0001));
 }
 
 static void
@@ -263,14 +279,22 @@ gimp_threshold_tool_histogram_range (GimpHistogramView *widget,
                                      gint               end,
                                      GimpThresholdTool *t_tool)
 {
-  gint    n_bins = gimp_histogram_n_bins (t_tool->histogram);
-  gdouble low    = (gdouble) start / (n_bins - 1);
-  gdouble high   = (gdouble) end   / (n_bins - 1);
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
+  gint              n_bins  = gimp_histogram_n_bins (t_tool->histogram);
+  gdouble           low     = (gdouble) start / (n_bins - 1);
+  gdouble           high    = (gdouble) end   / (n_bins - 1);
+  gdouble           config_low;
+  gdouble           config_high;
 
-  if (low  != t_tool->config->low ||
-      high != t_tool->config->high)
+  g_object_get (im_tool->config,
+                "low",  &config_low,
+                "high", &config_high,
+                NULL);
+
+  if (low  != config_low ||
+      high != config_high)
     {
-      g_object_set (t_tool->config,
+      g_object_set (im_tool->config,
                     "low",  low,
                     "high", high,
                     NULL);

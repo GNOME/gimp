@@ -41,7 +41,7 @@
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
-#include "gegl/gimp-gegl-config-proxy.h"
+#include "gegl/gimp-gegl-config.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -801,7 +801,8 @@ gimp_blend_tool_start_preview (GimpBlendTool *blend_tool,
       gimp_blend_tool_create_image_map (blend_tool, drawable);
 
       /* Initially sync all of the properties */
-      gimp_gegl_config_proxy_sync (GIMP_OBJECT (options), blend_tool->render_node);
+      gimp_gegl_config_sync_node (GIMP_OBJECT (options),
+                                  blend_tool->render_node);
 
       /* Connect signal handlers for the gradient */
       gimp_blend_tool_set_gradient (blend_tool, context->gradient);

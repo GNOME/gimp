@@ -36,9 +36,7 @@ typedef struct _GimpColorBalanceToolClass GimpColorBalanceToolClass;
 
 struct _GimpColorBalanceTool
 {
-  GimpImageMapTool        parent_instance;
-
-  GimpColorBalanceConfig *config;
+  GimpImageMapTool  parent_instance;
 };
 
 struct _GimpColorBalanceToolClass
