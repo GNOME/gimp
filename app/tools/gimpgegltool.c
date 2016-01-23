@@ -339,12 +339,12 @@ gimp_gegl_tool_get_operation (GimpImageMapTool  *im_tool,
 {
   gchar *operation;
 
-  operation = GIMP_IMAGE_MAP_TOOL_GET_CLASS (im_tool)->get_operation (im_tool,
-                                                                      title,
-                                                                      description,
-                                                                      undo_desc,
-                                                                      icon_name,
-                                                                      help_id);
+  operation = GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_operation (im_tool,
+                                                                       title,
+                                                                       description,
+                                                                       undo_desc,
+                                                                       icon_name,
+                                                                       help_id);
 
   if (*description)
     g_free (*description);
