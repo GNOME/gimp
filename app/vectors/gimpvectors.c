@@ -254,6 +254,7 @@ gimp_vectors_init (GimpVectors *vectors)
   gimp_item_set_visible (GIMP_ITEM (vectors), FALSE, FALSE);
 
   vectors->strokes        = NULL;
+  vectors->stroke_to_list = g_hash_table_new (g_direct_hash, g_direct_equal);
   vectors->last_stroke_ID = 0;
   vectors->freeze_count   = 0;
   vectors->precision      = 0.2;
@@ -277,6 +278,12 @@ gimp_vectors_finalize (GObject *object)
     {
       g_list_free_full (vectors->strokes, (GDestroyNotify) g_object_unref);
       vectors->strokes = NULL;
+    }
+
+  if (vectors->stroke_to_list)
+    {
+      g_hash_table_destroy (vectors->stroke_to_list);
+      vectors->stroke_to_list = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -773,6 +780,8 @@ gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
     }
 
   dest_vectors->strokes = NULL;
+  g_hash_table_remove_all (dest_vectors->stroke_to_list);
+
   dest_vectors->last_stroke_ID = 0;
 
   gimp_vectors_add_strokes (src_vectors, dest_vectors);
@@ -785,7 +794,7 @@ void
 gimp_vectors_add_strokes (const GimpVectors *src_vectors,
                           GimpVectors       *dest_vectors)
 {
-  GList *current_lstroke;
+  GList *stroke;
   GList *strokes_copy;
 
   g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
@@ -794,15 +803,16 @@ gimp_vectors_add_strokes (const GimpVectors *src_vectors,
   gimp_vectors_freeze (dest_vectors);
 
   strokes_copy = g_list_copy (src_vectors->strokes);
-  current_lstroke = strokes_copy;
-
-  while (current_lstroke)
+  for (stroke = strokes_copy; stroke != NULL; stroke = g_list_next (stroke))
     {
-      current_lstroke->data = gimp_stroke_duplicate (current_lstroke->data);
+      stroke->data = gimp_stroke_duplicate (stroke->data);
       dest_vectors->last_stroke_ID ++;
-      gimp_stroke_set_ID (current_lstroke->data,
+      gimp_stroke_set_ID (stroke->data,
                           dest_vectors->last_stroke_ID);
-      current_lstroke = g_list_next (current_lstroke);
+
+      /* Also add to {stroke: GList node} map */
+      g_assert (stroke->data != NULL);
+      g_hash_table_insert (dest_vectors->stroke_to_list, stroke->data, stroke);
     }
 
   dest_vectors->strokes = g_list_concat (dest_vectors->strokes, strokes_copy);
@@ -829,9 +839,16 @@ static void
 gimp_vectors_real_stroke_add (GimpVectors *vectors,
                               GimpStroke  *stroke)
 {
-  /*  Don't g_list_prepend() here.  See ChangeLog 2003-05-21 --Mitch  */
+  GList *newnode;
 
-  vectors->strokes = g_list_append (vectors->strokes, stroke);
+  newnode = g_list_prepend (NULL, stroke);
+  /*
+   * Don't prepend into vector->strokes.  See ChangeLog 2003-05-21
+   * --Mitch
+   */
+  vectors->strokes = g_list_concat (vectors->strokes, newnode);
+  /* Also add to {stroke: GList node} map */
+  g_hash_table_insert (vectors->stroke_to_list, stroke, newnode);
   vectors->last_stroke_ID ++;
   gimp_stroke_set_ID (stroke, vectors->last_stroke_ID);
   g_object_ref (stroke);
@@ -857,11 +874,12 @@ gimp_vectors_real_stroke_remove (GimpVectors *vectors,
 {
   GList *list;
 
-  list = g_list_find (vectors->strokes, stroke);
+  list = g_hash_table_lookup (vectors->stroke_to_list, stroke);
 
   if (list)
     {
       vectors->strokes = g_list_delete_link (vectors->strokes, list);
+      g_hash_table_remove (vectors->stroke_to_list, stroke);
       g_object_unref (stroke);
     }
 }
@@ -952,7 +970,7 @@ gimp_vectors_real_stroke_get_next (const GimpVectors *vectors,
     {
       GList *stroke;
 
-      stroke = g_list_find (vectors->strokes, prev);
+      stroke = g_hash_table_lookup (vectors->stroke_to_list, prev);
 
       g_return_val_if_fail (stroke != NULL, NULL);
 
