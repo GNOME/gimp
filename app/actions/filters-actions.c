@@ -430,7 +430,7 @@ static const GimpStringActionEntry filters_actions[] =
   { "filters-saturation", GIMP_STOCK_GEGL,
     NC_("filters-action", "Sat_uration..."), NULL, NULL,
     "gegl:saturation",
-    NULL /* FIXME GIMP_HELP_FILTER_SEPIA */ },
+    NULL /* FIXME GIMP_HELP_FILTER_SATURATION */ },
 
   { "filters-semi-flatten", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Semi-Flatten..."), NULL, NULL,
