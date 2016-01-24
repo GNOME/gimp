@@ -419,12 +419,13 @@ gimp_curves_tool_dialog (GimpImageMapTool *im_tool)
   GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (im_tool);
   GimpCurvesConfig *config       = GIMP_CURVES_CONFIG (im_tool->config);
   GtkListStore     *store;
-  GtkSizeGroup     *label_group;
   GtkWidget        *main_vbox;
+  GtkWidget        *frame_vbox;
   GtkWidget        *vbox;
   GtkWidget        *hbox;
   GtkWidget        *hbox2;
   GtkWidget        *label;
+  GtkWidget        *main_frame;
   GtkWidget        *frame;
   GtkWidget        *table;
   GtkWidget        *button;
@@ -435,19 +436,23 @@ gimp_curves_tool_dialog (GimpImageMapTool *im_tool)
                     G_CALLBACK (gimp_curves_tool_export_setup),
                     im_tool);
 
-  main_vbox   = gimp_image_map_tool_dialog_get_vbox (im_tool);
-  label_group = gimp_image_map_tool_dialog_get_label_group (im_tool);
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
 
   /*  The combo box for selecting channels  */
+  main_frame = gimp_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, TRUE, TRUE, 0);
+  gtk_widget_show (main_frame);
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (main_frame), hbox);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("Cha_nnel:"));
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  gtk_size_group_add_widget (label_group, label);
 
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
@@ -484,11 +489,15 @@ gimp_curves_tool_dialog (GimpImageMapTool *im_tool)
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
+  frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
+  gtk_widget_show (frame_vbox);
+
   /*  The table for the color bars and the graph  */
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (frame_vbox), table, TRUE, TRUE, 0);
 
   /*  The left color bar  */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -557,7 +566,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *im_tool)
   gtk_widget_show (table);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_end (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("Curve _type:"));
