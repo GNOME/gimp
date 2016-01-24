@@ -336,10 +336,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
   GtkWidget        *hbox;
   GtkWidget        *hbox2;
   GtkWidget        *label;
-  GtkWidget        *menu;
   GtkWidget        *main_frame;
   GtkWidget        *frame;
-  GtkWidget        *hbbox;
   GtkWidget        *button;
   GtkWidget        *spinbutton;
   GtkAdjustment    *adjustment;
@@ -353,7 +351,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
 
-  /*  The option menu for selecting channels  */
+  /*  The combo box for selecting channels  */
   main_frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, TRUE, TRUE, 0);
   gtk_widget_show (main_frame);
@@ -372,20 +370,20 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
                                           GIMP_HISTOGRAM_ALPHA);
-  menu = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+  tool->channel_menu =
+    gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
   g_object_unref (store);
 
-  g_signal_connect (menu, "changed",
+  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (tool->channel_menu),
+                                       "gimp-channel");
+  gtk_box_pack_start (GTK_BOX (hbox), tool->channel_menu, FALSE, FALSE, 0);
+  gtk_widget_show (tool->channel_menu);
+
+  g_signal_connect (tool->channel_menu, "changed",
                     G_CALLBACK (levels_channel_callback),
                     tool);
-  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (menu),
-                                       "gimp-channel");
-  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
 
-  tool->channel_menu = menu;
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), menu);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), tool->channel_menu);
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -395,13 +393,13 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
                     G_CALLBACK (levels_channel_reset_callback),
                     tool);
 
-  menu = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
-                                      "histogram-scale", "gimp-histogram",
-                                      0, 0);
-  gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
+  hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
+                                       "histogram-scale", "gimp-histogram",
+                                       0, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
 
-  frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
   gtk_widget_show (frame_vbox);
 
@@ -582,16 +580,16 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, FALSE, FALSE, 0);
   gtk_widget_show (main_frame);
 
+  frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
+  gtk_widget_show (frame_vbox);
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_add (GTK_CONTAINER (main_frame), hbox);
+  gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  hbbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_end (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  button = gtk_button_new_with_mnemonic (_("_Auto"));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  button = gtk_button_new_with_mnemonic (_("_Auto Input Levels"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gimp_help_set_help_data (button,
                            _("Adjust levels for all channels automatically"),
                            NULL);
@@ -602,18 +600,21 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
                     tool);
 
   button = gimp_levels_tool_color_picker_new (tool,
-                                              PICK_LOW_INPUT | PICK_ALL_CHANNELS);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+                                              PICK_HIGH_INPUT |
+                                              PICK_ALL_CHANNELS);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_levels_tool_color_picker_new (tool,
-                                              PICK_GAMMA | PICK_ALL_CHANNELS);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+                                              PICK_GAMMA |
+                                              PICK_ALL_CHANNELS);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_levels_tool_color_picker_new (tool,
-                                              PICK_HIGH_INPUT | PICK_ALL_CHANNELS);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+                                              PICK_LOW_INPUT |
+                                              PICK_ALL_CHANNELS);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_icon_button_new (GIMP_STOCK_TOOL_CURVES,
