@@ -267,6 +267,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:grid",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_GRID */ },
 
+  { "filters-high-pass", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_High Pass..."), NULL, NULL,
+    "gegl:high-pass",
+    NULL /* FIXME GIMP_HELP_FILTER_HIGH_PASS */ },
+
   { "filters-illusion", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Illusion..."), NULL, NULL,
     "gegl:illusion",
@@ -677,6 +682,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-gaussian-blur-selective", writable);
   SET_SENSITIVE ("filters-grid",                    writable);
+  SET_SENSITIVE ("filters-high-pass",               writable);
   SET_SENSITIVE ("filters-illusion",                writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);

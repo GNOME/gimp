@@ -663,6 +663,7 @@
       <menu action="filters-enhance-menu" name="Enhance">
         <menuitem action="filters-antialias" />
         <menuitem action="filters-deinterlace" />
+        <menuitem action="filters-high-pass" />
         <menuitem action="filters-noise-reduction" />
         <menuitem action="filters-red-eye-removal" />
         <menuitem action="filters-unsharp-mask" />

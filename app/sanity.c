@@ -507,6 +507,7 @@ sanity_check_gegl_ops (void)
     "gegl:gaussian-blur",
     "gegl:gaussian-blur-selective",
     "gegl:grid",
+    "gegl:high-pass",
     "gegl:illusion",
     "gegl:introspect",
     "gegl:invert-gamma",
