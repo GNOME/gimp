@@ -224,6 +224,8 @@ static void       gimp_channel_real_shrink   (GimpChannel         *channel,
                                               gint                 radius_y,
                                               gboolean             edge_lock,
                                               gboolean             push_undo);
+static void       gimp_channel_real_flood    (GimpChannel    *channel,
+                                              gboolean             push_undo);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE,
@@ -313,6 +315,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   klass->border         = gimp_channel_real_border;
   klass->grow           = gimp_channel_real_grow;
   klass->shrink         = gimp_channel_real_shrink;
+  klass->flood          = gimp_channel_real_flood;
 
   klass->feather_desc   = C_("undo-type", "Feather Channel");
   klass->sharpen_desc   = C_("undo-type", "Sharpen Channel");
@@ -322,6 +325,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   klass->border_desc    = C_("undo-type", "Border Channel");
   klass->grow_desc      = C_("undo-type", "Grow Channel");
   klass->shrink_desc    = C_("undo-type", "Shrink Channel");
+  klass->flood_desc     = C_("undo-type", "Flood Channel");
 }
 
 static void
@@ -1544,6 +1548,33 @@ gimp_channel_real_shrink (GimpChannel *channel,
                         gimp_item_get_height (GIMP_ITEM (channel)));
 }
 
+static void
+gimp_channel_real_flood (GimpChannel *channel,
+                         gboolean     push_undo)
+{
+  gint x1, y1, x2, y2;
+
+  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
+    return;
+
+  x2 += x1;
+  y2 += y1;
+
+  if (gimp_channel_is_empty (channel))
+    return;
+
+  if (push_undo)
+    gimp_channel_push_undo (channel,
+                            GIMP_CHANNEL_GET_CLASS (channel)->flood_desc);
+
+  gimp_gegl_apply_flood (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                         NULL, NULL,
+                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                         GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+
+  gimp_drawable_update (GIMP_DRAWABLE (channel), x1, y1, x2 - x1, y2 - y1);
+}
+
 
 /*  public functions  */
 
@@ -2002,4 +2033,16 @@ gimp_channel_shrink (GimpChannel  *channel,
 
   GIMP_CHANNEL_GET_CLASS (channel)->shrink (channel, radius_x, radius_y,
                                             edge_lock, push_undo);
+}
+
+void
+gimp_channel_flood (GimpChannel *channel,
+                    gboolean     push_undo)
+{
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
+
+  GIMP_CHANNEL_GET_CLASS (channel)->flood (channel, push_undo);
 }

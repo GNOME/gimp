@@ -102,6 +102,8 @@ struct _GimpChannelClass
                               gint                 radius_y,
                               gboolean             edge_lock,
                               gboolean             push_undo);
+  void     (* flood)         (GimpChannel         *channel,
+                              gboolean             push_undo);
 
   const gchar *feather_desc;
   const gchar *sharpen_desc;
@@ -111,6 +113,7 @@ struct _GimpChannelClass
   const gchar *border_desc;
   const gchar *grow_desc;
   const gchar *shrink_desc;
+  const gchar *flood_desc;
 };
 
 
@@ -203,6 +206,8 @@ void          gimp_channel_shrink             (GimpChannel         *mask,
                                                gint                 radius_x,
                                                gint                 radius_y,
                                                gboolean             edge_lock,
+                                               gboolean             push_undo);
+void          gimp_channel_flood              (GimpChannel         *mask,
                                                gboolean             push_undo);
 
 

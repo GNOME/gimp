@@ -77,6 +77,7 @@ EXPORTS
 	gimp_channel_bounds
 	gimp_channel_clear
 	gimp_channel_feather
+	gimp_channel_flood
 	gimp_channel_get_type
 	gimp_channel_grow
 	gimp_channel_invert
