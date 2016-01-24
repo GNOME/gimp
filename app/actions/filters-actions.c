@@ -422,6 +422,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:ripple",
     NULL /* FIXME GIMP_HELP_FILTER_RIPPLE */ },
 
+  { "filters-saturation", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Sat_uration..."), NULL, NULL,
+    "gegl:saturation",
+    NULL /* FIXME GIMP_HELP_FILTER_SEPIA */ },
+
   { "filters-semi-flatten", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Semi-Flatten..."), NULL, NULL,
     "gimp:semi-flatten",
@@ -703,6 +708,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-posterize",               writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
   SET_SENSITIVE ("filters-ripple",                  writable);
+  SET_SENSITIVE ("filters-saturation",              writable && !gray);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-sepia",                   writable && !gray);
   SET_SENSITIVE ("filters-shift",                   writable);

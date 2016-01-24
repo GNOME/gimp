@@ -542,6 +542,7 @@ sanity_check_gegl_ops (void)
     "gegl:polar-coordinates",
     "gegl:red-eye-removal",
     "gegl:ripple",
+    "gegl:saturation",
     "gegl:scale-ratio",
     "gegl:seamless-clone",
     "gegl:sepia",
