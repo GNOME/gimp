@@ -37,6 +37,8 @@ void   select_border_cmd_callback           (GtkAction *action,
                                              gpointer   data);
 void   select_grow_cmd_callback             (GtkAction *action,
                                              gpointer   data);
+void   select_flood_cmd_callback            (GtkAction *action,
+                                             gpointer   data);
 void   select_save_cmd_callback             (GtkAction *action,
                                              gpointer   data);
 void   select_stroke_cmd_callback           (GtkAction *action,

@@ -15,6 +15,7 @@
       <menuitem action="select-shrink" />
       <menuitem action="select-grow" />
       <menuitem action="select-border" />
+      <menuitem action="select-flood" />
     </placeholder>
     <separator />
     <menuitem action="select-save" />

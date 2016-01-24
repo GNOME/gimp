@@ -74,6 +74,7 @@
 #define GIMP_HELP_SELECTION_SHRINK                "gimp-selection-shrink"
 #define GIMP_HELP_SELECTION_GROW                  "gimp-selection-grow"
 #define GIMP_HELP_SELECTION_BORDER                "gimp-selection-border"
+#define GIMP_HELP_SELECTION_FLOOD                 "gimp-selection-flood"
 #define GIMP_HELP_SELECTION_STROKE                "gimp-selection-stroke"
 #define GIMP_HELP_SELECTION_TO_CHANNEL            "gimp-selection-to-channel"
 #define GIMP_HELP_SELECTION_TO_PATH               "gimp-selection-to-path"

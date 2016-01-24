@@ -308,6 +308,17 @@ select_border_cmd_callback (GtkAction *action,
 }
 
 void
+select_flood_cmd_callback (GtkAction *action,
+                           gpointer   data)
+{
+  GimpImage *image;
+  return_if_no_image (image, data);
+
+  gimp_channel_flood (gimp_image_get_mask (image), TRUE);
+  gimp_image_flush (image);
+}
+
+void
 select_save_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
