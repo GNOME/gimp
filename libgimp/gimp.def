@@ -773,6 +773,7 @@ EXPORTS
 	gimp_selection_combine
 	gimp_selection_feather
 	gimp_selection_float
+	gimp_selection_flood
 	gimp_selection_grow
 	gimp_selection_invert
 	gimp_selection_is_empty

@@ -500,6 +500,40 @@ gimp_selection_shrink (gint32 image_ID,
 }
 
 /**
+ * gimp_selection_flood:
+ * @image_ID: The image.
+ *
+ * Flood the image's selection
+ *
+ * This procedure floods the selection. Flooding assigns to each pixel
+ * of the selection mask the minimum of the maxima of all paths from
+ * that pixel to the outside, as if the selection mask were a height
+ * map of a terrain flooded with water.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_selection_flood (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-selection-flood",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_selection_layer_alpha:
  * @layer_ID: Layer with alpha.
  *
