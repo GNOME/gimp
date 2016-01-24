@@ -202,9 +202,9 @@ gimp_image_map_tool_base_init (GimpImageMapToolClass *klass)
 }
 
 static void
-gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
+gimp_image_map_tool_init (GimpImageMapTool *im_tool)
 {
-  GimpTool *tool = GIMP_TOOL (image_map_tool);
+  GimpTool *tool = GIMP_TOOL (im_tool);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
@@ -219,77 +219,71 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
 static void
 gimp_image_map_tool_constructed (GObject *object)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (object);
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_image_map_tool_get_operation (image_map_tool);
+  gimp_image_map_tool_get_operation (im_tool);
 }
 
 static void
 gimp_image_map_tool_finalize (GObject *object)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (object);
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (object);
 
-  if (image_map_tool->operation)
+  if (im_tool->operation)
     {
-      g_object_unref (image_map_tool->operation);
-      image_map_tool->operation = NULL;
+      g_object_unref (im_tool->operation);
+      im_tool->operation = NULL;
     }
 
-  if (image_map_tool->config)
+  if (im_tool->config)
     {
-      g_object_unref (image_map_tool->config);
-      image_map_tool->config = NULL;
+      g_object_unref (im_tool->config);
+      im_tool->config = NULL;
     }
 
-  if (image_map_tool->default_config)
+  if (im_tool->default_config)
     {
-      g_object_unref (image_map_tool->default_config);
-      image_map_tool->default_config = NULL;
+      g_object_unref (im_tool->default_config);
+      im_tool->default_config = NULL;
     }
 
-  if (image_map_tool->title)
+  if (im_tool->title)
     {
-      g_free (image_map_tool->title);
-      image_map_tool->title = NULL;
+      g_free (im_tool->title);
+      im_tool->title = NULL;
     }
 
-  if (image_map_tool->description)
+  if (im_tool->description)
     {
-      g_free (image_map_tool->description);
-      image_map_tool->description = NULL;
+      g_free (im_tool->description);
+      im_tool->description = NULL;
     }
 
-  if (image_map_tool->undo_desc)
+  if (im_tool->undo_desc)
     {
-      g_free (image_map_tool->undo_desc);
-      image_map_tool->undo_desc = NULL;
+      g_free (im_tool->undo_desc);
+      im_tool->undo_desc = NULL;
     }
 
-  if (image_map_tool->icon_name)
+  if (im_tool->icon_name)
     {
-      g_free (image_map_tool->icon_name);
-      image_map_tool->icon_name = NULL;
+      g_free (im_tool->icon_name);
+      im_tool->icon_name = NULL;
     }
 
-  if (image_map_tool->help_id)
+  if (im_tool->help_id)
     {
-      g_free (image_map_tool->help_id);
-      image_map_tool->help_id = NULL;
+      g_free (im_tool->help_id);
+      im_tool->help_id = NULL;
     }
 
-  if (image_map_tool->label_group)
+  if (im_tool->gui)
     {
-      g_object_unref (image_map_tool->label_group);
-      image_map_tool->label_group = NULL;
-    }
-
-  if (image_map_tool->gui)
-    {
-      g_object_unref (image_map_tool->gui);
-      image_map_tool->gui          = NULL;
-      image_map_tool->settings_box = NULL;
+      g_object_unref (im_tool->gui);
+      im_tool->gui          = NULL;
+      im_tool->settings_box = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -297,13 +291,13 @@ gimp_image_map_tool_finalize (GObject *object)
 
 static void
 gamma_hack (GtkToggleButton  *button,
-            GimpImageMapTool *image_map_tool)
+            GimpImageMapTool *im_tool)
 {
-  if (image_map_tool->image_map)
+  if (im_tool->image_map)
     {
-      gimp_image_map_set_gamma_hack (image_map_tool->image_map,
+      gimp_image_map_set_gamma_hack (im_tool->image_map,
                                      gtk_toggle_button_get_active (button));
-      gimp_image_map_tool_preview (image_map_tool);
+      gimp_image_map_tool_preview (im_tool);
     }
 }
 
@@ -1001,51 +995,40 @@ gimp_image_map_tool_edit_as (GimpImageMapTool *im_tool,
 }
 
 GtkWidget *
-gimp_image_map_tool_dialog_get_vbox (GimpImageMapTool *tool)
+gimp_image_map_tool_dialog_get_vbox (GimpImageMapTool *im_tool)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (im_tool), NULL);
 
-  return gimp_tool_gui_get_vbox (tool->gui);
-}
-
-GtkSizeGroup *
-gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
-
-  if (! tool->label_group)
-    tool->label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-  return tool->label_group;
+  return gimp_tool_gui_get_vbox (im_tool->gui);
 }
 
 static void
 gimp_image_map_tool_color_picker_toggled (GtkWidget        *widget,
-                                          GimpImageMapTool *tool)
+                                          GimpImageMapTool *im_tool)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
-      if (tool->active_picker == widget)
+      if (im_tool->active_picker == widget)
         return;
 
-      if (tool->active_picker)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker),
+      if (im_tool->active_picker)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (im_tool->active_picker),
                                       FALSE);
 
-      tool->active_picker = widget;
+      im_tool->active_picker = widget;
 
-      gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                              GIMP_COLOR_TOOL_GET_OPTIONS (tool));
+      gimp_color_tool_enable (GIMP_COLOR_TOOL (im_tool),
+                              GIMP_COLOR_TOOL_GET_OPTIONS (im_tool));
     }
-  else if (tool->active_picker == widget)
+  else if (im_tool->active_picker == widget)
     {
-      tool->active_picker = NULL;
-      gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
+      im_tool->active_picker = NULL;
+      gimp_color_tool_disable (GIMP_COLOR_TOOL (im_tool));
     }
 }
 
 GtkWidget *
-gimp_image_map_tool_add_color_picker (GimpImageMapTool *tool,
+gimp_image_map_tool_add_color_picker (GimpImageMapTool *im_tool,
                                       gpointer          identifier,
                                       const gchar      *icon_name,
                                       const gchar      *tooltip)
@@ -1053,7 +1036,7 @@ gimp_image_map_tool_add_color_picker (GimpImageMapTool *tool,
   GtkWidget *button;
   GtkWidget *image;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (im_tool), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
 
   button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
@@ -1072,7 +1055,7 @@ gimp_image_map_tool_add_color_picker (GimpImageMapTool *tool,
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_image_map_tool_color_picker_toggled),
-                    tool);
+                    im_tool);
 
   return button;
 }

@@ -57,7 +57,6 @@ struct _GimpImageMapTool
   GimpToolGui           *gui;
   GtkWidget             *settings_box;
   GtkWidget             *region_combo;
-  GtkSizeGroup          *label_group;
   GtkWidget             *active_picker;
 };
 
@@ -72,7 +71,7 @@ struct _GimpImageMapToolClass
   GimpContainer      *recent_settings;
 
   /* virtual functions */
-  gchar     * (* get_operation)   (GimpImageMapTool  *image_map_tool,
+  gchar     * (* get_operation)   (GimpImageMapTool  *im_tool,
                                    gchar            **title,
                                    gchar            **description,
                                    gchar            **undo_desc,
@@ -81,7 +80,7 @@ struct _GimpImageMapToolClass
   void        (* dialog)          (GimpImageMapTool  *image_map_tool);
   void        (* reset)           (GimpImageMapTool  *image_map_tool);
 
-  GtkWidget * (* get_settings_ui) (GimpImageMapTool  *image_map_tool,
+  GtkWidget * (* get_settings_ui) (GimpImageMapTool  *im_tool,
                                    GimpContainer     *settings,
                                    GFile             *settings_file,
                                    const gchar       *import_dialog_title,
@@ -90,14 +89,14 @@ struct _GimpImageMapToolClass
                                    GFile             *default_folder,
                                    GtkWidget        **settings_box);
 
-  gboolean    (* settings_import) (GimpImageMapTool  *image_map_tool,
+  gboolean    (* settings_import) (GimpImageMapTool  *im_tool,
                                    GInputStream      *input,
                                    GError           **error);
-  gboolean    (* settings_export) (GimpImageMapTool  *image_map_tool,
+  gboolean    (* settings_export) (GimpImageMapTool  *im_tool,
                                    GOutputStream     *output,
                                    GError           **error);
 
-  void        (* color_picked)    (GimpImageMapTool  *image_map_tool,
+  void        (* color_picked)    (GimpImageMapTool  *im_tool,
                                    gpointer           identifier,
                                    gdouble            x,
                                    gdouble            y,
@@ -106,24 +105,23 @@ struct _GimpImageMapToolClass
 };
 
 
-GType   gimp_image_map_tool_get_type      (void) G_GNUC_CONST;
+GType       gimp_image_map_tool_get_type         (void) G_GNUC_CONST;
 
-void    gimp_image_map_tool_preview       (GimpImageMapTool *image_map_tool);
+void        gimp_image_map_tool_preview          (GimpImageMapTool *im_tool);
 
-void    gimp_image_map_tool_get_operation (GimpImageMapTool *image_map_tool);
+void        gimp_image_map_tool_get_operation    (GimpImageMapTool *im_tool);
 
-void    gimp_image_map_tool_edit_as       (GimpImageMapTool *image_map_tool,
-                                           const gchar      *new_tool_id,
-                                           GimpConfig       *config);
+void        gimp_image_map_tool_edit_as          (GimpImageMapTool *im_tool,
+                                                  const gchar      *new_tool_id,
+                                                  GimpConfig       *config);
 
 /* accessors for derived classes */
-GtkWidget    * gimp_image_map_tool_dialog_get_vbox        (GimpImageMapTool *tool);
-GtkSizeGroup * gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool);
+GtkWidget * gimp_image_map_tool_dialog_get_vbox  (GimpImageMapTool *im_tool);
 
-GtkWidget    * gimp_image_map_tool_add_color_picker       (GimpImageMapTool *tool,
-                                                           gpointer          identifier,
-                                                           const gchar      *icon_name,
-                                                           const gchar      *tooltip);
+GtkWidget * gimp_image_map_tool_add_color_picker (GimpImageMapTool *im_tool,
+                                                  gpointer          identifier,
+                                                  const gchar      *icon_name,
+                                                  const gchar      *tooltip);
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */
