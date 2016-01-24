@@ -35,6 +35,7 @@
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationequalize.h"
+#include "gimpoperationflood.h"
 #include "gimpoperationgrow.h"
 #include "gimpoperationhistogramsink.h"
 #include "gimpoperationmaskcomponents.h"
@@ -103,6 +104,7 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_FLOOD);
   g_type_class_ref (GIMP_TYPE_OPERATION_GROW);
   g_type_class_ref (GIMP_TYPE_OPERATION_HISTOGRAM_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_MASK_COMPONENTS);

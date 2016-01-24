@@ -48,6 +48,8 @@ libappoperations_generic_a_sources = \
 	gimpoperationcagetransform.h		\
 	gimpoperationequalize.c			\
 	gimpoperationequalize.h			\
+	gimpoperationflood.c			\
+	gimpoperationflood.h			\
 	gimpoperationgrow.c			\
 	gimpoperationgrow.h			\
 	gimpoperationhistogramsink.c		\
