@@ -646,6 +646,13 @@ tool_manager_tool_changed (GimpContext     *user_context,
   if (! tool_info)
     return;
 
+  if (! g_type_is_a (tool_info->tool_type, GIMP_TYPE_TOOL))
+    {
+      g_warning ("%s: tool_info->tool_type is no GimpTool subclass",
+                 G_STRFUNC);
+      return;
+    }
+
   /* FIXME: gimp_busy HACK */
   if (user_context->gimp->busy)
     {
@@ -688,32 +695,16 @@ tool_manager_tool_changed (GimpContext     *user_context,
       if (display)
         tool_manager_control_active (user_context->gimp, GIMP_TOOL_ACTION_COMMIT,
                                      display);
-    }
-
-  if (g_type_is_a (tool_info->tool_type, GIMP_TYPE_TOOL))
-    {
-      new_tool = g_object_new (tool_info->tool_type,
-                               "tool-info", tool_info,
-                               NULL);
-    }
-  else
-    {
-      g_warning ("%s: tool_info->tool_type is no GimpTool subclass",
-                 G_STRFUNC);
-      return;
-    }
-
-  if (tool_manager->active_tool)
-    {
-      GimpTool *active_tool = tool_manager->active_tool;
 
       /*  disconnect the old tool's context  */
       if (active_tool->tool_info)
-        {
-          tool_manager_disconnect_options (tool_manager, user_context,
-                                           active_tool->tool_info);
-        }
+        tool_manager_disconnect_options (tool_manager, user_context,
+                                         active_tool->tool_info);
     }
+
+  new_tool = g_object_new (tool_info->tool_type,
+                           "tool-info", tool_info,
+                           NULL);
 
   /*  connect the new tool's context  */
   tool_manager_connect_options (tool_manager, user_context, tool_info);
