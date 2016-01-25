@@ -673,6 +673,23 @@ tool_manager_tool_changed (GimpContext     *user_context,
       return;
     }
 
+  if (tool_manager->active_tool)
+    {
+      GimpTool    *active_tool = tool_manager->active_tool;
+      GimpDisplay *display;
+
+      /*  NULL image returns any display (if there is any)  */
+      display = gimp_tool_has_image (active_tool, NULL);
+
+      /*  commit the old tool's operation before creating the new tool
+       *  because creating a tool might mess with the old tool's
+       *  options (old and new tool might be the same)
+       */
+      if (display)
+        tool_manager_control_active (user_context->gimp, GIMP_TOOL_ACTION_COMMIT,
+                                     display);
+    }
+
   if (g_type_is_a (tool_info->tool_type, GIMP_TYPE_TOOL))
     {
       new_tool = g_object_new (tool_info->tool_type,
@@ -688,16 +705,7 @@ tool_manager_tool_changed (GimpContext     *user_context,
 
   if (tool_manager->active_tool)
     {
-      GimpTool    *active_tool = tool_manager->active_tool;
-      GimpDisplay *display;
-
-      /*  NULL image returns any display (if there is any)  */
-      display = gimp_tool_has_image (active_tool, NULL);
-
-      /*  commit the old tool's operation  */
-      if (display)
-        tool_manager_control_active (user_context->gimp, GIMP_TOOL_ACTION_COMMIT,
-                                     display);
+      GimpTool *active_tool = tool_manager->active_tool;
 
       /*  disconnect the old tool's context  */
       if (active_tool->tool_info)
