@@ -81,17 +81,6 @@ static gboolean  select_border_edge_lock  = FALSE;
 /*  public functions  */
 
 void
-select_invert_cmd_callback (GtkAction *action,
-                            gpointer   data)
-{
-  GimpImage *image;
-  return_if_no_image (image, data);
-
-  gimp_channel_invert (gimp_image_get_mask (image), TRUE);
-  gimp_image_flush (image);
-}
-
-void
 select_all_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
@@ -110,6 +99,17 @@ select_none_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
 
   gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+  gimp_image_flush (image);
+}
+
+void
+select_invert_cmd_callback (GtkAction *action,
+                            gpointer   data)
+{
+  GimpImage *image;
+  return_if_no_image (image, data);
+
+  gimp_channel_invert (gimp_image_get_mask (image), TRUE);
   gimp_image_flush (image);
 }
 
