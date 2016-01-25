@@ -1941,7 +1941,7 @@ xcf_save_vectors (XcfInfo    *info,
       tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));
       parasites     = gimp_item_get_parasites (GIMP_ITEM (vectors));
       num_parasites = gimp_parasite_list_persistent_length (parasites);
-      num_strokes   = g_list_length (vectors->strokes);
+      num_strokes   = g_queue_get_length (vectors->strokes);
 
       xcf_write_string_check_error (info, (gchar **) &name, 1);
       xcf_write_int32_check_error  (info, &tattoo,          1);
@@ -1952,7 +1952,7 @@ xcf_save_vectors (XcfInfo    *info,
 
       xcf_check_error (xcf_save_parasite_list (info, parasites, error));
 
-      for (stroke_list = g_list_first (vectors->strokes);
+      for (stroke_list = g_list_first (vectors->strokes->head);
            stroke_list;
            stroke_list = g_list_next (stroke_list))
         {

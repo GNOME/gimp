@@ -142,7 +142,9 @@ gimp_vectors_compat_is_compatible (GimpImage *image)
       if (gimp_item_get_visible (GIMP_ITEM (vectors)))
         return FALSE;
 
-      for (strokes = vectors->strokes; strokes; strokes = g_list_next (strokes))
+      for (strokes = vectors->strokes->head;
+           strokes;
+           strokes = g_list_next (strokes))
         {
            GimpStroke *stroke = GIMP_STROKE (strokes->data);
 
@@ -181,7 +183,9 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
 
   open_count = 0;
 
-  for (strokes = vectors->strokes; strokes; strokes = g_list_next (strokes))
+  for (strokes = vectors->strokes->head;
+       strokes;
+       strokes = g_list_next (strokes))
     {
       GimpStroke *stroke = strokes->data;
       gint        n_anchors;
@@ -212,7 +216,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
 
   i = 0;
 
-  for (strokes = vectors->strokes;
+  for (strokes = vectors->strokes->head;
        strokes || postponed;
        strokes = g_list_next (strokes))
     {

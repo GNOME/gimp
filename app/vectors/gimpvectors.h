@@ -37,7 +37,7 @@ struct _GimpVectors
 {
   GimpItem        parent_instance;
 
-  GList          *strokes;        /* The List of GimpStrokes      */
+  GQueue         *strokes;        /* Queue of GimpStrokes         */
   GHashTable     *stroke_to_list; /* Map from GimpStroke to strokes listnode */
   gint            last_stroke_ID;
 
