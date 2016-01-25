@@ -697,68 +697,68 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
 }
 
 static void
-gimp_image_map_tool_map (GimpImageMapTool *tool)
+gimp_image_map_tool_map (GimpImageMapTool *im_tool)
 {
-  gimp_gegl_config_sync_node (GIMP_OBJECT (tool->config),
-                              tool->operation);
+  gimp_gegl_config_sync_node (GIMP_OBJECT (im_tool->config),
+                              im_tool->operation);
 
-  gimp_image_map_apply (tool->image_map, NULL);
+  gimp_image_map_apply (im_tool->image_map, NULL);
 }
 
 static void
-gimp_image_map_tool_dialog (GimpImageMapTool *tool)
+gimp_image_map_tool_dialog (GimpImageMapTool *im_tool)
 {
-  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->dialog (tool);
+  GIMP_IMAGE_MAP_TOOL_GET_CLASS (im_tool)->dialog (im_tool);
 
-  g_signal_connect (gimp_tool_gui_get_dialog (tool->gui), "unmap",
+  g_signal_connect (gimp_tool_gui_get_dialog (im_tool->gui), "unmap",
                     G_CALLBACK (gimp_image_map_tool_dialog_unmap),
-                    tool);
+                    im_tool);
 }
 
 static void
 gimp_image_map_tool_dialog_unmap (GtkWidget        *dialog,
-                                  GimpImageMapTool *tool)
+                                  GimpImageMapTool *im_tool)
 {
-  if (tool->active_picker)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker),
+  if (im_tool->active_picker)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (im_tool->active_picker),
                                   FALSE);
 }
 
 static void
-gimp_image_map_tool_reset (GimpImageMapTool *tool)
+gimp_image_map_tool_reset (GimpImageMapTool *im_tool)
 {
-  if (tool->config)
-    g_object_freeze_notify (tool->config);
+  if (im_tool->config)
+    g_object_freeze_notify (im_tool->config);
 
-  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->reset (tool);
+  GIMP_IMAGE_MAP_TOOL_GET_CLASS (im_tool)->reset (im_tool);
 
-  if (tool->config)
-    g_object_thaw_notify (tool->config);
+  if (im_tool->config)
+    g_object_thaw_notify (im_tool->config);
 }
 
 static void
-gimp_image_map_tool_create_map (GimpImageMapTool *tool)
+gimp_image_map_tool_create_map (GimpImageMapTool *im_tool)
 {
-  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (im_tool);
 
-  if (tool->image_map)
+  if (im_tool->image_map)
     {
-      gimp_image_map_abort (tool->image_map);
-      g_object_unref (tool->image_map);
+      gimp_image_map_abort (im_tool->image_map);
+      g_object_unref (im_tool->image_map);
     }
 
-  g_assert (tool->operation);
+  g_assert (im_tool->operation);
 
-  tool->image_map = gimp_image_map_new (tool->drawable,
-                                        tool->undo_desc,
-                                        tool->operation,
-                                        tool->icon_name);
+  im_tool->image_map = gimp_image_map_new (im_tool->drawable,
+                                           im_tool->undo_desc,
+                                           im_tool->operation,
+                                           im_tool->icon_name);
 
-  gimp_image_map_set_region (tool->image_map, options->region);
+  gimp_image_map_set_region (im_tool->image_map, options->region);
 
-  g_signal_connect (tool->image_map, "flush",
+  g_signal_connect (im_tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
-                    tool);
+                    im_tool);
 }
 
 static void
