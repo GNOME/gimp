@@ -224,7 +224,7 @@ static void       gimp_channel_real_shrink   (GimpChannel         *channel,
                                               gint                 radius_y,
                                               gboolean             edge_lock,
                                               gboolean             push_undo);
-static void       gimp_channel_real_flood    (GimpChannel    *channel,
+static void       gimp_channel_real_flood    (GimpChannel         *channel,
                                               gboolean             push_undo);
 
 
