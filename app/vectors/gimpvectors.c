@@ -791,27 +791,29 @@ gimp_vectors_add_strokes (const GimpVectors *src_vectors,
                           GimpVectors       *dest_vectors)
 {
   GList *stroke;
-  GList *strokes_copy;
 
   g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
   g_return_if_fail (GIMP_IS_VECTORS (dest_vectors));
 
   gimp_vectors_freeze (dest_vectors);
 
-  strokes_copy = g_list_copy (src_vectors->strokes->head);
-  for (stroke = strokes_copy; stroke != NULL; stroke = g_list_next (stroke))
+  for (stroke = src_vectors->strokes->head;
+       stroke != NULL;
+       stroke = g_list_next (stroke))
     {
-      stroke->data = gimp_stroke_duplicate (stroke->data);
+      GimpStroke *newstroke;
+
+      newstroke = gimp_stroke_duplicate (stroke->data);
       dest_vectors->last_stroke_ID ++;
-      gimp_stroke_set_ID (stroke->data,
+      gimp_stroke_set_ID (newstroke,
                           dest_vectors->last_stroke_ID);
 
+      g_queue_push_tail (dest_vectors->strokes, newstroke);
       /* Also add to {stroke: GList node} map */
-      g_assert (stroke->data != NULL);
-      g_hash_table_insert (dest_vectors->stroke_to_list, stroke->data, stroke);
+      g_hash_table_insert (dest_vectors->stroke_to_list,
+                           newstroke,
+                           g_queue_peek_tail_link (dest_vectors->strokes));
     }
-
-  g_queue_push_tail_link (dest_vectors->strokes, strokes_copy);
 
   gimp_vectors_thaw (dest_vectors);
 }
