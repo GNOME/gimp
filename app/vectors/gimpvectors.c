@@ -801,18 +801,18 @@ gimp_vectors_add_strokes (const GimpVectors *src_vectors,
        stroke != NULL;
        stroke = g_list_next (stroke))
     {
-      GimpStroke *newstroke;
-
-      newstroke = gimp_stroke_duplicate (stroke->data);
-      dest_vectors->last_stroke_ID ++;
-      gimp_stroke_set_ID (newstroke,
-                          dest_vectors->last_stroke_ID);
+      GimpStroke *newstroke = gimp_stroke_duplicate (stroke->data);
 
       g_queue_push_tail (dest_vectors->strokes, newstroke);
+
       /* Also add to {stroke: GList node} map */
       g_hash_table_insert (dest_vectors->stroke_to_list,
                            newstroke,
                            g_queue_peek_tail_link (dest_vectors->strokes));
+
+      dest_vectors->last_stroke_ID++;
+      gimp_stroke_set_ID (newstroke,
+                          dest_vectors->last_stroke_ID);
     }
 
   gimp_vectors_thaw (dest_vectors);
@@ -841,15 +841,15 @@ gimp_vectors_real_stroke_add (GimpVectors *vectors,
    * Don't prepend into vector->strokes.  See ChangeLog 2003-05-21
    * --Mitch
    */
-  g_queue_push_tail (vectors->strokes, stroke);
+  g_queue_push_tail (vectors->strokes, g_object_ref (stroke));
+
   /* Also add to {stroke: GList node} map */
   g_hash_table_insert (vectors->stroke_to_list,
                        stroke,
                        g_queue_peek_tail_link (vectors->strokes));
-  
-  vectors->last_stroke_ID ++;
+
+  vectors->last_stroke_ID++;
   gimp_stroke_set_ID (stroke, vectors->last_stroke_ID);
-  g_object_ref (stroke);
 }
 
 void
@@ -870,13 +870,11 @@ static void
 gimp_vectors_real_stroke_remove (GimpVectors *vectors,
                                  GimpStroke  *stroke)
 {
-  GList *list;
-
-  list = g_hash_table_lookup (vectors->stroke_to_list, stroke);
+  GList *list = g_hash_table_lookup (vectors->stroke_to_list, stroke);
 
   if (list)
     {
-      g_queue_unlink (vectors->strokes, list);
+      g_queue_delete_link (vectors->strokes, list);
       g_hash_table_remove (vectors->stroke_to_list, stroke);
       g_object_unref (stroke);
     }
@@ -962,17 +960,15 @@ gimp_vectors_real_stroke_get_next (const GimpVectors *vectors,
 {
   if (! prev)
     {
-      return vectors->strokes->head ? vectors->strokes->head->data : NULL;
+      return g_queue_peek_head (vectors->strokes);
     }
   else
     {
-      GList *stroke;
-
-      stroke = g_hash_table_lookup (vectors->stroke_to_list, prev);
+      GList *stroke = g_hash_table_lookup (vectors->stroke_to_list, prev);
 
       g_return_val_if_fail (stroke != NULL, NULL);
 
-      return stroke->next ? GIMP_STROKE (stroke->next->data) : NULL;
+      return stroke->next ? stroke->next->data : NULL;
     }
 }
 
