@@ -48,13 +48,13 @@
      inkscape:window-height="428"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="1.3280869"
-     inkscape:cx="116.1142"
-     inkscape:cy="290.67681"
+     inkscape:zoom="2.6561738"
+     inkscape:cx="622.90396"
+     inkscape:cy="350.05738"
      inkscape:window-x="696"
      inkscape:window-y="369"
      inkscape:window-maximized="0"
-     inkscape:current-layer="tools"
+     inkscape:current-layer="preferences"
      showborder="false"
      inkscape:snap-nodes="true"
      inkscape:snap-bbox="true"
@@ -6177,8 +6177,8 @@
        id="gimp-prefs-default-grid"
        inkscape:label="gimp-prefs-default-grid"
        transform="translate(164.03761,-46.768919)"
-       inkscape:export-xdpi="270"
-       inkscape:export-ydpi="270">
+       inkscape:export-xdpi="123.75"
+       inkscape:export-ydpi="123.75">
       <g
          inkscape:label="gimp-grid"
          id="g6196"
@@ -7903,6 +7903,13 @@
          d="m 15.6673,1043.0452 c 0.105534,-0.072 0.191959,-0.225 0.191959,-0.3407 l 0,-4.0364 0,-0.4209 0,-0.3715 c 0,-0.1158 -0.104616,-0.2397 -0.232234,-0.2755 l -0.419169,-0.1173 c -0.127831,-0.036 -0.33685,-0.095 -0.464539,-0.1302 l -1.922378,-0.4032 c -0.12776,-0.036 -0.05427,-0.051 -0.09659,0.059 l 0.191589,0.3694 c -0.935353,0.3045 -0.07727,0.411 0.05043,0.4467 l 1.776961,0.3204 c 0.12776,0.036 0.232234,0.1598 0.232234,0.2756 l 0,3.943 c 0,0.1157 -0.08534,0.2709 -0.19295,0.3396 l -2.194521,1.4022 c -0.106173,0.071 0.879013,-0.258 0.962608,-0.1674 l -0.944408,-0.052 c 0.08359,0.091 -0.426704,1.4542 -0.321199,1.3829 l 3.382014,-2.2243 z"
          id="path237-3" />
     </g>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:0.5;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect5825"
+       width="4.796123"
+       height="4.9103165"
+       x="264.5817"
+       y="-61.368332" />
   </g>
   <g
      inkscape:groupmode="layer"
