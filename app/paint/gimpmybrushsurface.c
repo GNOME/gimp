@@ -36,6 +36,9 @@ struct _GimpMybrushSurface
 {
   MyPaintSurface surface;
   GeglBuffer *buffer;
+  GeglBuffer *paint_mask;
+  gint        paint_mask_x;
+  gint        paint_mask_y;
   GeglRectangle dirty;
   GimpComponentMask component_mask;
 };
@@ -262,10 +265,26 @@ gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
                                                          babl_format ("R'aG'aB'aA float"),
                                                          GEGL_BUFFER_READ,
                                                          GEGL_ABYSS_CLAMP);
+    if (surface->paint_mask)
+      {
+        GeglRectangle mask_roi = dabRect;
+        mask_roi.x -= surface->paint_mask_x;
+        mask_roi.y -= surface->paint_mask_y;
+        gegl_buffer_iterator_add (iter, surface->paint_mask, &mask_roi, 0,
+                                  babl_format ("Y float"),
+                                  GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+      }
+
     while (gegl_buffer_iterator_next (iter))
       {
         float *pixel = (float *)iter->data[0];
+        float *mask;
         int iy, ix;
+
+        if (surface->paint_mask)
+          mask = iter->data[1];
+        else
+          mask = NULL;
 
         for (iy = iter->roi[0].y; iy < iter->roi[0].y + iter->roi[0].height; iy++)
           {
@@ -278,6 +297,8 @@ gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
                 float pixel_weight = 0.0f;
                 if (rr <= 1.0f)
                   pixel_weight = 1.0f - rr;
+                if (mask)
+                  pixel_weight *= *mask;
 
                 sum_r += pixel_weight * pixel[RED];
                 sum_g += pixel_weight * pixel[GREEN];
@@ -286,6 +307,8 @@ gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
                 sum_weight += pixel_weight;
 
                 pixel += 4;
+                if (mask)
+                  mask += 1;
               }
           }
       }
@@ -366,11 +389,27 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                                    babl_format ("R'G'B'A float"),
                                    GEGL_BUFFER_READWRITE,
                                    GEGL_ABYSS_NONE);
+  if (surface->paint_mask)
+    {
+      GeglRectangle mask_roi = dabRect;
+      mask_roi.x -= surface->paint_mask_x;
+      mask_roi.y -= surface->paint_mask_y;
+      gegl_buffer_iterator_add (iter, surface->paint_mask, &mask_roi, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+    }
 
   while (gegl_buffer_iterator_next (iter))
     {
       float *pixel = (float *)iter->data[0];
+      float *mask;
       int iy, ix;
+
+      if (surface->paint_mask)
+        mask = iter->data[1];
+      else
+        mask = NULL;
+
       for (iy = iter->roi[0].y; iy < iter->roi[0].y + iter->roi[0].height; iy++)
         {
           for (ix = iter->roi[0].x; ix < iter->roi[0].x +  iter->roi[0].width; ix++)
@@ -382,6 +421,8 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                 rr = calculate_rr (ix, iy, x, y, aspect_ratio, sn, cs, one_over_radius2);
               base_alpha = calculate_alpha_for_rr (rr, hardness, segment1_slope, segment2_slope);
               alpha = base_alpha * normal_mode;
+              if (mask)
+                alpha *= *mask;
               dst_alpha = pixel[ALPHA];
               /* a = alpha * color_a + dst_alpha * (1.0f - alpha);
                * which converts to: */
@@ -447,6 +488,8 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                 }
 
               pixel += 4;
+              if (mask)
+                mask += 1;
             }
         }
     }
@@ -478,11 +521,17 @@ gimp_mypaint_surface_destroy (MyPaintSurface *base_surface)
   GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
   g_object_unref (surface->buffer);
   surface->buffer = NULL;
+  if (surface->paint_mask)
+    g_object_unref (surface->paint_mask);
+  surface->paint_mask = NULL;
 }
 
 GimpMybrushSurface *
 gimp_mypaint_surface_new (GeglBuffer        *buffer,
-                          GimpComponentMask  component_mask)
+                          GimpComponentMask  component_mask,
+                          GeglBuffer        *paint_mask,
+                          gint               paint_mask_x,
+                          gint               paint_mask_y)
 {
   GimpMybrushSurface *surface = g_malloc0 (sizeof (GimpMybrushSurface));
   mypaint_surface_init ((MyPaintSurface *)surface);
@@ -493,6 +542,12 @@ gimp_mypaint_surface_new (GeglBuffer        *buffer,
   surface->surface.destroy = gimp_mypaint_surface_destroy;
   surface->component_mask = component_mask;
   surface->buffer = g_object_ref (buffer);
+  if (paint_mask)
+    surface->paint_mask = g_object_ref (paint_mask);
+  else
+    surface->paint_mask = NULL;
+  surface->paint_mask_x = paint_mask_x;
+  surface->paint_mask_y = paint_mask_y;
   surface->dirty = *GEGL_RECTANGLE (0, 0, 0, 0);
 
   return surface;

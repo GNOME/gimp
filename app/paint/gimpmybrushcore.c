@@ -190,7 +190,10 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
       gimp_palettes_add_color_history (context->gimp, &fg);
 
       mybrush->private->surface = gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawable),
-                                                            gimp_drawable_get_active_mask (drawable));
+                                                            gimp_drawable_get_active_mask (drawable),
+                                                            paint_core->mask_buffer,
+                                                            paint_core->mask_x_offset,
+                                                            paint_core->mask_y_offset);
 
       mybrush->private->brush = mypaint_brush_new ();
       mypaint_brush_from_defaults (mybrush->private->brush);

@@ -23,7 +23,10 @@ typedef struct _GimpMybrushSurface GimpMybrushSurface;
 
 GimpMybrushSurface *
 gimp_mypaint_surface_new (GeglBuffer        *buffer,
-                          GimpComponentMask  component_mask);
+                          GimpComponentMask  component_mask,
+                          GeglBuffer        *paint_mask,
+                          gint               paint_mask_x,
+                          gint               paint_mask_y);
 
 
 #endif  /*  __GIMP_MYBRUSH_SURFACE_H__  */
