@@ -158,6 +158,41 @@ gimp_g_list_get_memsize_foreach (GList           *list,
 }
 
 gint64
+gimp_g_queue_get_memsize (GQueue *queue,
+                          gint64  data_size)
+{
+  if (queue)
+    {
+      return sizeof (GQueue) +
+             g_queue_get_length (queue) * (data_size + sizeof (GList));
+    }
+
+  return 0;
+}
+
+gint64
+gimp_g_queue_get_memsize_foreach (GQueue          *queue,
+                                  GimpMemsizeFunc  func,
+                                  gint64          *gui_size)
+{
+  gint64 memsize = 0;
+
+  g_return_val_if_fail (func != NULL, 0);
+
+  if (queue)
+    {
+      GList *l;
+
+      memsize = sizeof (GQueue);
+
+      for (l = queue->head; l; l = g_list_next (l))
+        memsize += sizeof (GList) + func (l->data, gui_size);
+    }
+
+  return memsize;
+}
+
+gint64
 gimp_g_value_get_memsize (GValue *value)
 {
   gint64 memsize = 0;
