@@ -45,11 +45,13 @@
 #include "core/gimpimage-metadata.h"
 #include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
+#include "core/gimpimage-symmetry.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
 #include "core/gimpprogress.h"
 #include "core/gimpsamplepoint.h"
+#include "core/gimpsymmetry.h"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
@@ -358,6 +360,8 @@ xcf_save_image_props (XcfInfo    *info,
   GimpImagePrivate *private       = GIMP_IMAGE_GET_PRIVATE (image);
   GimpParasite     *grid_parasite = NULL;
   GimpParasite     *meta_parasite = NULL;
+  GList            *symmetry_parasites = NULL;
+  GList            *iter;
   GimpUnit          unit          = gimp_image_get_unit (image);
   gdouble           xres;
   gdouble           yres;
@@ -428,6 +432,23 @@ xcf_save_image_props (XcfInfo    *info,
         }
     }
 
+  if (g_list_length (gimp_image_symmetry_get (image)))
+    {
+      GimpParasite *parasite  = NULL;
+      GimpSymmetry *symmetry;
+
+      for (iter = gimp_image_symmetry_get (image); iter; iter = g_list_next (iter))
+        {
+          symmetry = GIMP_SYMMETRY (iter->data);
+          if (G_TYPE_FROM_INSTANCE (symmetry) == GIMP_TYPE_SYMMETRY)
+            /* Do not save the identity symmetry. */
+            continue;
+          parasite = gimp_symmetry_to_parasite (GIMP_SYMMETRY (iter->data));
+          gimp_parasite_list_add (private->parasites, parasite);
+          symmetry_parasites = g_list_prepend (symmetry_parasites, parasite);
+        }
+    }
+
   if (gimp_parasite_list_length (private->parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
@@ -447,6 +468,16 @@ xcf_save_image_props (XcfInfo    *info,
                                  gimp_parasite_name (meta_parasite));
       gimp_parasite_free (meta_parasite);
     }
+
+  for (iter = symmetry_parasites; iter; iter = g_list_next (iter))
+    {
+      GimpParasite *parasite = iter->data;
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (parasite));
+    }
+  g_list_free_full (symmetry_parasites,
+                    (GDestroyNotify) gimp_parasite_free);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
 

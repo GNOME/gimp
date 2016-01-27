@@ -45,6 +45,7 @@
 #include "core/gimpimage-metadata.h"
 #include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
+#include "core/gimpimage-symmetry.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemstack.h"
 #include "core/gimplayer-floating-selection.h"
@@ -53,6 +54,7 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimpprogress.h"
 #include "core/gimpselection.h"
+#include "core/gimpsymmetry.h"
 #include "core/gimptemplate.h"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
@@ -160,6 +162,8 @@ xcf_load_image (Gimp     *gimp,
   gint                image_type;
   GimpPrecision       precision = GIMP_PRECISION_U8_GAMMA;
   gint                num_successful_elements = 0;
+  GList              *syms;
+  GList              *iter;
 
   /* read in the image width, height and type */
   xcf_read_int32 (info, (guint32 *) &width, 1);
@@ -271,6 +275,39 @@ xcf_load_image (Gimp     *gimp,
       gimp_parasite_list_remove (private->parasites,
                                  gimp_parasite_name (parasite));
     }
+
+  /* check for symmetry parasites */
+  syms = gimp_image_symmetry_list ();
+  for (iter = syms; iter; iter = g_list_next (iter))
+    {
+      GType  type = (GType) iter->data;
+      gchar *parasite_name = gimp_symmetry_parasite_name (type);
+
+      parasite = gimp_image_parasite_find (image,
+                                           parasite_name);
+      g_free (parasite_name);
+      if (parasite)
+        {
+          GimpSymmetry *sym = gimp_symmetry_from_parasite (parasite,
+                                                           image,
+                                                           type);
+
+          if (sym)
+            {
+              GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+              gimp_parasite_list_remove (private->parasites,
+                                         gimp_parasite_name (parasite));
+
+              gimp_image_symmetry_add (image, sym);
+
+              g_signal_emit_by_name (sym, "active-changed", NULL);
+              if (sym->active)
+                gimp_image_set_active_symmetry (image, type);
+            }
+        }
+    }
+  g_list_free (syms);
 
   /* migrate the old "exif-data" parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
