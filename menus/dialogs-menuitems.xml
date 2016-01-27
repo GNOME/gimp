@@ -14,6 +14,7 @@
   <menuitem action="dialogs-undo-history" />
   <menuitem action="dialogs-cursor" />
   <menuitem action="dialogs-sample-points" />
+  <menuitem action="dialogs-symmetry"/>
   <separator />
   <menuitem action="dialogs-colors" />
   <menuitem action="dialogs-brushes" />

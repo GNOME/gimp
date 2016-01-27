@@ -56,6 +56,7 @@
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
 #include "gimpimage-quick-mask.h"
+#include "gimpimage-symmetry.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitemtree.h"
@@ -69,6 +70,7 @@
 #include "gimpprojection.h"
 #include "gimpsamplepoint.h"
 #include "gimpselection.h"
+#include "gimpsymmetry.h"
 #include "gimptempbuf.h"
 #include "gimptemplate.h"
 #include "gimpundostack.h"
@@ -130,7 +132,8 @@ enum
   PROP_BASE_TYPE,
   PROP_PRECISION,
   PROP_METADATA,
-  PROP_BUFFER
+  PROP_BUFFER,
+  PROP_SYMMETRY
 };
 
 
@@ -624,6 +627,11 @@ gimp_image_class_init (GimpImageClass *klass)
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
+  g_object_class_install_property (object_class, PROP_SYMMETRY,
+                                   g_param_spec_int ("symmetry",
+                                                     NULL, _("Symmetry"),
+                                                     G_TYPE_NONE, G_MAXINT, G_TYPE_NONE,
+                                                     GIMP_PARAM_READWRITE));
   g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
 
@@ -695,6 +703,9 @@ gimp_image_init (GimpImage *image)
   private->tattoo_state        = 0;
 
   private->projection          = gimp_projection_new (GIMP_PROJECTABLE (image));
+
+  private->symmetries          = NULL;
+  private->selected_symmetry   = NULL;
 
   private->guides              = NULL;
   private->grid                = NULL;
@@ -859,6 +870,42 @@ gimp_image_set_property (GObject      *object,
       break;
     case PROP_METADATA:
     case PROP_BUFFER:
+      break;
+    case PROP_SYMMETRY:
+      {
+        GType type = g_value_get_int (value);
+
+        if (private->selected_symmetry)
+          g_object_set (private->selected_symmetry,
+                        "active", FALSE,
+                        NULL);
+        private->selected_symmetry = NULL;
+
+        if (type != G_TYPE_NONE)
+          {
+            GList *iter;
+
+            for (iter = private->symmetries; iter; iter = g_list_next (iter))
+              {
+                GimpSymmetry *sym = iter->data;
+                if (g_type_is_a (sym->type, type))
+                  private->selected_symmetry = iter->data;
+              }
+
+            if (private->selected_symmetry == NULL)
+              {
+                GimpSymmetry *sym;
+
+                sym = gimp_image_symmetry_new (image, type);
+                gimp_image_symmetry_add (image, sym);
+                private->selected_symmetry = sym;
+              }
+            g_object_set (private->selected_symmetry,
+                          "active", TRUE,
+                          NULL);
+          }
+      }
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -899,6 +946,11 @@ gimp_image_get_property (GObject    *object,
       break;
     case PROP_BUFFER:
       g_value_set_object (value, gimp_image_get_buffer (GIMP_PICKABLE (image)));
+      break;
+    case PROP_SYMMETRY:
+      g_value_set_int (value,
+                       private->selected_symmetry ?
+                       private->selected_symmetry->type : G_TYPE_NONE);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1048,6 +1100,12 @@ gimp_image_finalize (GObject *object)
     {
       g_list_free_full (private->guides, (GDestroyNotify) g_object_unref);
       private->guides = NULL;
+    }
+
+  if (private->symmetries)
+    {
+      g_list_free_full (private->symmetries, g_object_unref);
+      private->symmetries = NULL;
     }
 
   if (private->grid)

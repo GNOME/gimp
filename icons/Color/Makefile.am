@@ -161,6 +161,7 @@ icons16_DATA = \
 	16/gimp-shape-circle.png			\
 	16/gimp-shape-diamond.png			\
 	16/gimp-shape-square.png			\
+	16/gimp-symmetry.png			\
 	16/gimp-template.png				\
 	16/gimp-text-layer.png				\
 	16/gimp-toilet-paper.png			\
@@ -376,6 +377,7 @@ icons24_DATA = \
 	24/gimp-move-to-screen.png		\
 	24/gimp-print-resolution.png		\
 	24/gimp-sample-point.png		\
+	24/gimp-symmetry.png			\
 	24/gimp-template.png			\
 	24/gimp-text-dir-ltr.png		\
 	24/gimp-text-dir-rtl.png		\

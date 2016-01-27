@@ -39,14 +39,20 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
   GeglRectangle roi;
   GeglBufferIterator *iter;
 
-  const gint mask_stride       = gimp_temp_buf_get_width (paint_mask);
-  const gint mask_start_offset = mask_y_offset * mask_stride + mask_x_offset;
-  const Babl *mask_format      = gimp_temp_buf_get_format (paint_mask);
+  const gint   mask_stride       = gimp_temp_buf_get_width (paint_mask);
+  const gint   mask_start_offset = mask_y_offset * mask_stride + mask_x_offset;
+  const Babl  *mask_format       = gimp_temp_buf_get_format (paint_mask);
+  GimpTempBuf *modified_mask     = gimp_temp_buf_copy (paint_mask);
+  gint         width;
+  gint         height;
+
+  width  = gimp_temp_buf_get_width (modified_mask);
+  height = gimp_temp_buf_get_height (modified_mask);
 
   roi.x = x_offset;
   roi.y = y_offset;
-  roi.width  = gimp_temp_buf_get_width (paint_mask) - mask_x_offset;
-  roi.height = gimp_temp_buf_get_height (paint_mask) - mask_y_offset;
+  roi.width  = width - mask_x_offset;
+  roi.height = height - mask_y_offset;
 
   iter = gegl_buffer_iterator_new (canvas_buffer, &roi, 0,
                                    babl_format ("Y float"),
@@ -56,7 +62,7 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
     {
       if (mask_format == babl_format ("Y u8"))
         {
-          const guint8 *mask_data = (const guint8 *) gimp_temp_buf_get_data (paint_mask);
+          const guint8 *mask_data = (const guint8 *) gimp_temp_buf_get_data (modified_mask);
           mask_data += mask_start_offset;
 
           while (gegl_buffer_iterator_next (iter))
@@ -81,7 +87,7 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
         }
       else if (mask_format == babl_format ("Y float"))
         {
-          const gfloat *mask_data = (const gfloat *) gimp_temp_buf_get_data (paint_mask);
+          const gfloat *mask_data = (const gfloat *) gimp_temp_buf_get_data (modified_mask);
           mask_data += mask_start_offset;
 
           while (gegl_buffer_iterator_next (iter))
@@ -113,7 +119,7 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
     {
       if (mask_format == babl_format ("Y u8"))
         {
-          const guint8 *mask_data = (const guint8 *) gimp_temp_buf_get_data (paint_mask);
+          const guint8 *mask_data = (const guint8 *) gimp_temp_buf_get_data (modified_mask);
           mask_data += mask_start_offset;
 
           while (gegl_buffer_iterator_next (iter))
@@ -139,7 +145,7 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
         }
       else if (mask_format == babl_format ("Y float"))
         {
-          const gfloat *mask_data = (const gfloat *) gimp_temp_buf_get_data (paint_mask);
+          const gfloat *mask_data = (const gfloat *) gimp_temp_buf_get_data (modified_mask);
           mask_data += mask_start_offset;
 
           while (gegl_buffer_iterator_next (iter))
@@ -168,6 +174,7 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
           g_warning("Mask format not supported: %s", babl_get_name (mask_format));
         }
     }
+  gimp_temp_buf_unref (modified_mask);
 }
 
 void

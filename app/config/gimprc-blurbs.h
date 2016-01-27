@@ -390,6 +390,9 @@ _("Enable the N-Point Deformation tool.")
 #define PLAYGROUND_HANDLE_TRANSFORM_TOOL_BLURB \
 _("Enable the Handle Transform tool.")
 
+#define PLAYGROUND_SYMMETRY_BLURB \
+_("Enable symmetry on painting.")
+
 #define PLAYGROUND_MYBRUSH_TOOL_BLURB \
 _("Enable the MyPaint Brush tool.")
 

@@ -84,7 +84,9 @@ static GeglBuffer * gimp_brush_core_get_paint_buffer(GimpPaintCore    *paint_cor
                                                      GimpPaintOptions *paint_options,
                                                      const GimpCoords *coords,
                                                      gint             *paint_buffer_x,
-                                                     gint             *paint_buffer_y);
+                                                     gint             *paint_buffer_y,
+                                                     gint             *paint_width,
+                                                     gint             *paint_height);
 
 static void      gimp_brush_core_real_set_brush     (GimpBrushCore    *core,
                                                      GimpBrush        *brush);
@@ -109,10 +111,12 @@ static const GimpTempBuf *
                                                      gdouble            y);
 static const GimpTempBuf *
                  gimp_brush_core_transform_mask     (GimpBrushCore     *core,
-                                                     GimpBrush         *brush);
+                                                     GimpBrush         *brush,
+                                                     GeglNode          *op);
 static const GimpTempBuf *
                  gimp_brush_core_transform_pixmap   (GimpBrushCore     *core,
-                                                     GimpBrush         *brush);
+                                                     GimpBrush         *brush,
+                                                     GeglNode          *op);
 
 static void      gimp_brush_core_invalidate_cache   (GimpBrush         *brush,
                                                      GimpBrushCore     *core);
@@ -811,7 +815,9 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
                                   GimpPaintOptions *paint_options,
                                   const GimpCoords *coords,
                                   gint             *paint_buffer_x,
-                                  gint             *paint_buffer_y)
+                                  gint             *paint_buffer_y,
+                                  gint             *paint_width,
+                                  gint             *paint_height)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   gint           x, y;
@@ -819,17 +825,14 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   gint           drawable_width, drawable_height;
   gint           brush_width, brush_height;
 
-  if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
-    {
-      gimp_brush_core_eval_transform_dynamics (core,
-                                               drawable,
-                                               paint_options,
-                                               coords);
-    }
-
   gimp_brush_transform_size (core->brush,
                              core->scale, core->aspect_ratio, core->angle,
                              &brush_width, &brush_height);
+
+  if (paint_width)
+    *paint_width  = brush_width;
+  if (paint_height)
+    *paint_height = brush_height;
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   x = (gint) floor (coords->x) - (brush_width  / 2);
@@ -960,11 +963,12 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               GimpLayerModeEffects      paint_mode,
                               GimpBrushApplicationMode  brush_hardness,
                               gdouble                   dynamic_force,
-                              GimpPaintApplicationMode  mode)
+                              GimpPaintApplicationMode  mode,
+                              GeglNode                 *op)
 {
   const GimpTempBuf *brush_mask;
 
-  brush_mask = gimp_brush_core_get_brush_mask (core, coords,
+  brush_mask = gimp_brush_core_get_brush_mask (core, coords, op,
                                                brush_hardness,
                                                dynamic_force);
 
@@ -1003,11 +1007,12 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                 gdouble                   image_opacity,
                                 GimpBrushApplicationMode  brush_hardness,
                                 gdouble                   dynamic_force,
-                                GimpPaintApplicationMode  mode)
+                                GimpPaintApplicationMode  mode,
+                                GeglNode                 *op)
 {
   const GimpTempBuf *brush_mask;
 
-  brush_mask = gimp_brush_core_get_brush_mask (core, coords,
+  brush_mask = gimp_brush_core_get_brush_mask (core, coords, op,
                                                brush_hardness,
                                                dynamic_force);
 
@@ -1407,7 +1412,8 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
 
 static const GimpTempBuf *
 gimp_brush_core_transform_mask (GimpBrushCore *core,
-                                GimpBrush     *brush)
+                                GimpBrush     *brush,
+                                GeglNode      *op)
 {
   const GimpTempBuf *mask;
 
@@ -1415,6 +1421,7 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
     return NULL;
 
   mask = gimp_brush_transform_mask (brush,
+                                    op,
                                     core->scale,
                                     core->aspect_ratio,
                                     core->angle,
@@ -1432,7 +1439,8 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
 
 static const GimpTempBuf *
 gimp_brush_core_transform_pixmap (GimpBrushCore *core,
-                                  GimpBrush     *brush)
+                                  GimpBrush     *brush,
+                                  GeglNode      *op)
 {
   const GimpTempBuf *pixmap;
 
@@ -1440,6 +1448,7 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
     return NULL;
 
   pixmap = gimp_brush_transform_pixmap (brush,
+                                        op,
                                         core->scale,
                                         core->aspect_ratio,
                                         core->angle,
@@ -1457,12 +1466,13 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
 const GimpTempBuf *
 gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
                                 const GimpCoords         *coords,
+                                GeglNode                 *op,
                                 GimpBrushApplicationMode  brush_hardness,
                                 gdouble                   dynamic_force)
 {
   const GimpTempBuf *mask;
 
-  mask = gimp_brush_core_transform_mask (core, core->brush);
+  mask = gimp_brush_core_transform_mask (core, core->brush, op);
 
   if (! mask)
     return NULL;
@@ -1591,6 +1601,7 @@ void
 gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
                                         const GimpCoords         *coords,
+                                        GeglNode                 *op,
                                         GeglBuffer               *area,
                                         gint                      area_x,
                                         gint                      area_y,
@@ -1609,13 +1620,13 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   g_return_if_fail (gimp_brush_get_pixmap (core->brush) != NULL);
 
   /*  scale the brushes  */
-  pixmap_mask = gimp_brush_core_transform_pixmap (core, core->brush);
+  pixmap_mask = gimp_brush_core_transform_pixmap (core, core->brush, op);
 
   if (! pixmap_mask)
     return;
 
   if (mode != GIMP_BRUSH_HARD)
-    brush_mask = gimp_brush_core_transform_mask (core, core->brush);
+    brush_mask = gimp_brush_core_transform_mask (core, core->brush, op);
   else
     brush_mask = NULL;
 

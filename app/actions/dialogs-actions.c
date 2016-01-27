@@ -61,6 +61,12 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-device-status",
     GIMP_HELP_DEVICE_STATUS_DIALOG },
 
+  { "dialogs-symmetry", GIMP_STOCK_SYMMETRY,
+    NC_("dialogs-action", "_Symmetry painting"), NULL,
+    NC_("dialogs-action", "Open the symmetry dialog"),
+    "gimp-symmetry-editor",
+    GIMP_HELP_SYMMETRY_DIALOG },
+
   { "dialogs-layers", GIMP_STOCK_LAYERS,
     NC_("dialogs-action", "_Layers"), "<primary>L",
     NC_("dialogs-action", "Open the layers dialog"),

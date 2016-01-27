@@ -74,6 +74,7 @@ static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options,
                                                   const GimpCoords *coords,
+                                                  GeglNode         *op,
                                                   gdouble           opacity,
                                                   GimpPickable     *src_pickable,
                                                   GeglBuffer       *src_buffer,
@@ -461,6 +462,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   GimpDrawable     *drawable,
                   GimpPaintOptions *paint_options,
                   const GimpCoords *coords,
+                  GeglNode         *op,
                   gdouble           opacity,
                   GimpPickable     *src_pickable,
                   GeglBuffer       *src_buffer,
@@ -500,7 +502,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
     force = paint_options->brush_force;
 
   mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
-                                             coords,
+                                             coords, op,
                                              GIMP_BRUSH_HARD,
                                              force);
 
@@ -549,6 +551,27 @@ gimp_heal_motion (GimpSourceCore   *source_core,
     mask_off_y = (y < 0) ? -y : 0;
   }
 
+  if (op)
+    {
+      GeglNode    *graph, *source, *target;
+
+      graph    = gegl_node_new ();
+      source   = gegl_node_new_child (graph,
+                                      "operation", "gegl:buffer-source",
+                                      "buffer", src_copy,
+                                      NULL);
+      gegl_node_add_child (graph, op);
+      target  = gegl_node_new_child (graph,
+                                     "operation", "gegl:write-buffer",
+                                     "buffer", src_copy,
+                                     NULL);
+
+      gegl_node_link_many (source, op, target, NULL);
+      gegl_node_process (target);
+
+      g_object_unref (graph);
+    }
+
   gimp_heal (src_copy,
              GEGL_RECTANGLE (0, 0,
                              gegl_buffer_get_width  (src_copy),
@@ -573,5 +596,5 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
                                   force,
-                                  GIMP_PAINT_INCREMENTAL);
+                                  GIMP_PAINT_INCREMENTAL, NULL);
 }

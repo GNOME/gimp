@@ -337,6 +337,8 @@ libappwidgets_a_sources = \
 	gimpstringaction.h		\
 	gimpstrokeeditor.c		\
 	gimpstrokeeditor.h		\
+	gimpsymmetryeditor.c		\
+	gimpsymmetryeditor.h		\
 	gimptagentry.c			\
 	gimptagentry.h			\
 	gimptagpopup.c			\

@@ -175,6 +175,11 @@ typedef struct _GimpUndoStack         GimpUndoStack;
 typedef struct _GimpUndoAccumulator   GimpUndoAccumulator;
 
 
+/* Symmetry transformations */
+
+typedef struct _GimpSymmetry        GimpSymmetry;
+typedef struct _GimpMirror          GimpMirror;
+
 /*  misc objects  */
 
 typedef struct _GimpBuffer          GimpBuffer;

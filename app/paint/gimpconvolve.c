@@ -30,6 +30,7 @@
 #include "core/gimpdynamics.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
+#include "core/gimpsymmetry.h"
 #include "core/gimptempbuf.h"
 
 #include "gimpconvolve.h"
@@ -48,13 +49,13 @@
 static void    gimp_convolve_paint            (GimpPaintCore    *paint_core,
                                                GimpDrawable     *drawable,
                                                GimpPaintOptions *paint_options,
-                                               const GimpCoords *coords,
+                                               GimpSymmetry     *sym,
                                                GimpPaintState    paint_state,
                                                guint32           time);
 static void    gimp_convolve_motion           (GimpPaintCore    *paint_core,
                                                GimpDrawable     *drawable,
                                                GimpPaintOptions *paint_options,
-                                               const GimpCoords *coords);
+                                               GimpSymmetry     *sym);
 
 static void    gimp_convolve_calculate_matrix (GimpConvolve     *convolve,
                                                GimpConvolveType  type,
@@ -102,14 +103,14 @@ static void
 gimp_convolve_paint (GimpPaintCore    *paint_core,
                      GimpDrawable     *drawable,
                      GimpPaintOptions *paint_options,
-                     const GimpCoords *coords,
+                     GimpSymmetry     *sym,
                      GimpPaintState    paint_state,
                      guint32           time)
 {
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_MOTION:
-      gimp_convolve_motion (paint_core, drawable, paint_options, coords);
+      gimp_convolve_motion (paint_core, drawable, paint_options, sym);
       break;
 
     default:
@@ -121,7 +122,7 @@ static void
 gimp_convolve_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
                       GimpPaintOptions *paint_options,
-                      const GimpCoords *coords)
+                      GimpSymmetry     *sym)
 {
   GimpConvolve        *convolve   = GIMP_CONVOLVE (paint_core);
   GimpBrushCore       *brush_core = GIMP_BRUSH_CORE (paint_core);
@@ -137,10 +138,16 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   gdouble              fade_point;
   gdouble              opacity;
   gdouble              rate;
+  const GimpCoords    *coords;
+  GeglNode            *op;
+  gint                 paint_width, paint_height;
+  gint                 n_strokes;
+  gint                 i;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
+  coords = gimp_symmetry_get_origin (sym);
   opacity = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_OPACITY,
                                             coords,
@@ -149,61 +156,77 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                   paint_options, coords,
-                                                   &paint_buffer_x,
-                                                   &paint_buffer_y);
-  if (! paint_buffer)
-    return;
+  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+                                           drawable,
+                                           paint_options,
+                                           coords);
+  n_strokes = gimp_symmetry_get_size (sym);
+  for (i = 0; i < n_strokes; i++)
+    {
+      coords = gimp_symmetry_get_coords (sym, i);
 
-  rate = (options->rate *
-          gimp_dynamics_get_linear_value (dynamics,
-                                          GIMP_DYNAMICS_OUTPUT_RATE,
-                                          coords,
-                                          paint_options,
-                                          fade_point));
+      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                       paint_options, coords,
+                                                       &paint_buffer_x,
+                                                       &paint_buffer_y,
+                                                       &paint_width,
+                                                       &paint_height);
+      if (! paint_buffer)
+        continue;
 
-  gimp_convolve_calculate_matrix (convolve, options->type,
-                                  gimp_brush_get_width  (brush_core->brush) / 2,
-                                  gimp_brush_get_height (brush_core->brush) / 2,
-                                  rate);
+      op = gimp_symmetry_get_operation (sym, i,
+                                        paint_width,
+                                        paint_height);
 
-  /*  need a linear buffer for gimp_gegl_convolve()  */
-  temp_buf = gimp_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
-                                gegl_buffer_get_height (paint_buffer),
-                                gegl_buffer_get_format (paint_buffer));
-  convolve_buffer = gimp_temp_buf_create_buffer (temp_buf);
-  gimp_temp_buf_unref (temp_buf);
+      rate = (options->rate *
+              gimp_dynamics_get_linear_value (dynamics,
+                                              GIMP_DYNAMICS_OUTPUT_RATE,
+                                              coords,
+                                              paint_options,
+                                              fade_point));
 
-  gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                    GEGL_RECTANGLE (paint_buffer_x,
-                                    paint_buffer_y,
-                                    gegl_buffer_get_width  (paint_buffer),
-                                    gegl_buffer_get_height (paint_buffer)),
-                    GEGL_ABYSS_NONE,
-                    convolve_buffer,
-                    GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_convolve_calculate_matrix (convolve, options->type,
+                                      gimp_brush_get_width  (brush_core->brush) / 2,
+                                      gimp_brush_get_height (brush_core->brush) / 2,
+                                      rate);
 
-  gimp_gegl_convolve (convolve_buffer,
-                      GEGL_RECTANGLE (0, 0,
-                                      gegl_buffer_get_width  (convolve_buffer),
-                                      gegl_buffer_get_height (convolve_buffer)),
-                      paint_buffer,
-                      GEGL_RECTANGLE (0, 0,
-                                      gegl_buffer_get_width  (paint_buffer),
-                                      gegl_buffer_get_height (paint_buffer)),
-                      convolve->matrix, 3, convolve->matrix_divisor,
-                      GIMP_NORMAL_CONVOL, TRUE);
+      /*  need a linear buffer for gimp_gegl_convolve()  */
+      temp_buf = gimp_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
+                                    gegl_buffer_get_height (paint_buffer),
+                                    gegl_buffer_get_format (paint_buffer));
+      convolve_buffer = gimp_temp_buf_create_buffer (temp_buf);
+      gimp_temp_buf_unref (temp_buf);
 
-  g_object_unref (convolve_buffer);
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                        GEGL_RECTANGLE (paint_buffer_x,
+                                        paint_buffer_y,
+                                        gegl_buffer_get_width  (paint_buffer),
+                                        gegl_buffer_get_height (paint_buffer)),
+                        GEGL_ABYSS_NONE,
+                        convolve_buffer,
+                        GEGL_RECTANGLE (0, 0, 0, 0));
 
-  gimp_brush_core_replace_canvas (brush_core, drawable,
-                                  coords,
-                                  MIN (opacity, GIMP_OPACITY_OPAQUE),
-                                  gimp_context_get_opacity (context),
-                                  gimp_paint_options_get_brush_mode (paint_options),
-                                  1.0,
-                                  GIMP_PAINT_INCREMENTAL);
+      gimp_gegl_convolve (convolve_buffer,
+                          GEGL_RECTANGLE (0, 0,
+                                          gegl_buffer_get_width  (convolve_buffer),
+                                          gegl_buffer_get_height (convolve_buffer)),
+                          paint_buffer,
+                          GEGL_RECTANGLE (0, 0,
+                                          gegl_buffer_get_width  (paint_buffer),
+                                          gegl_buffer_get_height (paint_buffer)),
+                          convolve->matrix, 3, convolve->matrix_divisor,
+                          GIMP_NORMAL_CONVOL, TRUE);
+
+      g_object_unref (convolve_buffer);
+
+      gimp_brush_core_replace_canvas (brush_core, drawable,
+                                      coords,
+                                      MIN (opacity, GIMP_OPACITY_OPAQUE),
+                                      gimp_context_get_opacity (context),
+                                      gimp_paint_options_get_brush_mode (paint_options),
+                                      1.0,
+                                      GIMP_PAINT_INCREMENTAL, op);
+    }
 }
 
 static void

@@ -244,6 +244,10 @@ GtkWidget * dialogs_selection_editor_new        (GimpDialogFactory *factory,
                                                  GimpContext       *context,
                                                  GimpUIManager     *ui_manager,
                                                  gint               view_size);
+GtkWidget * dialogs_symmetry_editor_new         (GimpDialogFactory *factory,
+                                                 GimpContext       *context,
+                                                 GimpUIManager     *ui_manager,
+                                                 gint               view_size);
 GtkWidget * dialogs_undo_editor_new             (GimpDialogFactory *factory,
                                                  GimpContext       *context,
                                                  GimpUIManager     *ui_manager,

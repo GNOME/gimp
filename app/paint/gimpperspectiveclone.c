@@ -38,6 +38,7 @@
 #include "core/gimpimage.h"
 #include "core/gimppattern.h"
 #include "core/gimppickable.h"
+#include "core/gimpsymmetry.h"
 
 #include "gimpperspectiveclone.h"
 #include "gimpperspectivecloneoptions.h"
@@ -48,7 +49,7 @@
 static void         gimp_perspective_clone_paint      (GimpPaintCore     *paint_core,
                                                        GimpDrawable      *drawable,
                                                        GimpPaintOptions  *paint_options,
-                                                       const GimpCoords  *coords,
+                                                       GimpSymmetry      *sym,
                                                        GimpPaintState     paint_state,
                                                        guint32            time);
 
@@ -120,7 +121,7 @@ static void
 gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                               GimpDrawable     *drawable,
                               GimpPaintOptions *paint_options,
-                              const GimpCoords *coords,
+                              GimpSymmetry     *sym,
                               GimpPaintState    paint_state,
                               guint32           time)
 {
@@ -129,6 +130,10 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
   GimpContext          *context       = GIMP_CONTEXT (paint_options);
   GimpCloneOptions     *clone_options = GIMP_CLONE_OPTIONS (paint_options);
   GimpSourceOptions    *options       = GIMP_SOURCE_OPTIONS (paint_options);
+  const GimpCoords     *coords;
+
+  /* The source is based on the original stroke */
+  coords = gimp_symmetry_get_origin (sym);
 
   switch (paint_state)
     {
@@ -284,36 +289,44 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 
           gint dest_x;
           gint dest_y;
+          gint n_strokes;
+          gint i;
 
-          dest_x = coords->x;
-          dest_y = coords->y;
-
-          if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED)
+          n_strokes = gimp_symmetry_get_size (sym);
+          for (i = 0; i < n_strokes; i++)
             {
-              source_core->offset_x = 0;
-              source_core->offset_y = 0;
-            }
-          else if (options->align_mode == GIMP_SOURCE_ALIGN_FIXED)
-            {
-              source_core->offset_x = source_core->src_x - dest_x;
-              source_core->offset_y = source_core->src_y - dest_y;
-            }
-          else if (source_core->first_stroke)
-            {
-              source_core->offset_x = source_core->src_x - dest_x;
-              source_core->offset_y = source_core->src_y - dest_y;
+              coords = gimp_symmetry_get_coords (sym, i);
 
-              /* get destination coordinates in front view perspective */
-              gimp_matrix3_transform_point (&clone->transform_inv,
-                                            dest_x,
-                                            dest_y,
-                                            &clone->dest_x_fv,
-                                            &clone->dest_y_fv);
+              dest_x = coords->x;
+              dest_y = coords->y;
 
-              source_core->first_stroke = FALSE;
+              if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED)
+                {
+                  source_core->offset_x = 0;
+                  source_core->offset_y = 0;
+                }
+              else if (options->align_mode == GIMP_SOURCE_ALIGN_FIXED)
+                {
+                  source_core->offset_x = source_core->src_x - dest_x;
+                  source_core->offset_y = source_core->src_y - dest_y;
+                }
+              else if (source_core->first_stroke)
+                {
+                  source_core->offset_x = source_core->src_x - dest_x;
+                  source_core->offset_y = source_core->src_y - dest_y;
+
+                  /* get destination coordinates in front view perspective */
+                  gimp_matrix3_transform_point (&clone->transform_inv,
+                                                dest_x,
+                                                dest_y,
+                                                &clone->dest_x_fv,
+                                                &clone->dest_y_fv);
+
+                  source_core->first_stroke = FALSE;
+                }
             }
 
-          gimp_source_core_motion (source_core, drawable, paint_options, coords);
+          gimp_source_core_motion (source_core, drawable, paint_options, sym);
         }
       break;
 

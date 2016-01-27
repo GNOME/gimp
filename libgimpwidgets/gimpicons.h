@@ -232,6 +232,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_INPUT_DEVICE             "gimp-input-device"
 #define GIMP_STOCK_CURSOR                   "gimp-cursor"
 #define GIMP_STOCK_SAMPLE_POINT             "gimp-sample-point"
+#define GIMP_STOCK_SYMMETRY                 "gimp-symmetry"
 #define GIMP_STOCK_DYNAMICS                 "gimp-dynamics"
 #define GIMP_STOCK_TOOL_PRESET              "gimp-tool-preset"
 

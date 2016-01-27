@@ -34,6 +34,7 @@
 #include "core/gimpimage.h"
 #include "core/gimppattern.h"
 #include "core/gimppickable.h"
+#include "core/gimpsymmetry.h"
 
 #include "gimpclone.h"
 #include "gimpcloneoptions.h"
@@ -51,6 +52,7 @@ static void       gimp_clone_motion     (GimpSourceCore    *source_core,
                                          GimpDrawable      *drawable,
                                          GimpPaintOptions  *paint_options,
                                          const GimpCoords  *coords,
+                                         GeglNode          *op,
                                          gdouble            opacity,
                                          GimpPickable      *src_pickable,
                                          GeglBuffer        *src_buffer,
@@ -137,6 +139,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                    GimpDrawable     *drawable,
                    GimpPaintOptions *paint_options,
                    const GimpCoords *coords,
+                   GeglNode         *op,
                    gdouble           opacity,
                    GimpPickable     *src_pickable,
                    GeglBuffer       *src_buffer,
@@ -173,6 +176,26 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                         GEGL_RECTANGLE (paint_area_offset_x,
                                         paint_area_offset_y,
                                         0, 0));
+      if (op)
+        {
+          GeglNode    *graph, *source, *target;
+
+          graph    = gegl_node_new ();
+          source   = gegl_node_new_child (graph,
+                                          "operation", "gegl:buffer-source",
+                                          "buffer", paint_buffer,
+                                          NULL);
+          gegl_node_add_child (graph, op);
+          target  = gegl_node_new_child (graph,
+                                         "operation", "gegl:write-buffer",
+                                         "buffer", paint_buffer,
+                                         NULL);
+
+          gegl_node_link_many (source, op, target, NULL);
+          gegl_node_process (target);
+
+          g_object_unref (graph);
+        }
     }
   else if (options->clone_type == GIMP_CLONE_PATTERN)
     {
@@ -223,7 +246,8 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                                  */
                                 source_options->align_mode ==
                                 GIMP_SOURCE_ALIGN_FIXED ?
-                                GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
+                                GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT,
+                                NULL);
 }
 
 static gboolean

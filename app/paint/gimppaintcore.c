@@ -37,9 +37,12 @@
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
+#include "core/gimpimage-symmetry.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojection.h"
+#include "core/gimpsymmetry.h"
 #include "core/gimptempbuf.h"
 
 #include "gimppaintcore.h"
@@ -86,7 +89,7 @@ static gboolean  gimp_paint_core_real_pre_paint      (GimpPaintCore    *core,
 static void      gimp_paint_core_real_paint          (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
-                                                      const GimpCoords *coords,
+                                                      GimpSymmetry     *sym,
                                                       GimpPaintState    paint_state,
                                                       guint32           time);
 static void      gimp_paint_core_real_post_paint     (GimpPaintCore    *core,
@@ -104,7 +107,9 @@ static GeglBuffer *
                                                       GimpPaintOptions *options,
                                                       const GimpCoords *coords,
                                                       gint             *paint_buffer_x,
-                                                      gint             *paint_buffer_y);
+                                                      gint             *paint_buffer_y,
+                                                      gint             *paint_width,
+                                                      gint             *paint_height);
 static GimpUndo* gimp_paint_core_real_push_undo      (GimpPaintCore    *core,
                                                       GimpImage        *image,
                                                       const gchar      *undo_desc);
@@ -231,7 +236,7 @@ static void
 gimp_paint_core_real_paint (GimpPaintCore    *core,
                             GimpDrawable     *drawable,
                             GimpPaintOptions *paint_options,
-                            const GimpCoords *coords,
+                            GimpSymmetry     *sym,
                             GimpPaintState    paint_state,
                             guint32           time)
 {
@@ -264,7 +269,9 @@ gimp_paint_core_real_get_paint_buffer (GimpPaintCore    *core,
                                        GimpPaintOptions *paint_options,
                                        const GimpCoords *coords,
                                        gint             *paint_buffer_x,
-                                       gint             *paint_buffer_y)
+                                       gint             *paint_buffer_y,
+                                       gint             *paint_width,
+                                       gint             *paint_height)
 {
   return NULL;
 }
@@ -304,6 +311,12 @@ gimp_paint_core_paint (GimpPaintCore    *core,
                              paint_options,
                              paint_state, time))
     {
+      GimpSymmetry *sym;
+      GimpImage    *image;
+      GimpItem     *item;
+
+      item  = GIMP_ITEM (drawable);
+      image = gimp_item_get_image (item);
 
       if (paint_state == GIMP_PAINT_STATE_MOTION)
         {
@@ -312,10 +325,13 @@ gimp_paint_core_paint (GimpPaintCore    *core,
           core->last_paint.y = core->cur_coords.y;
         }
 
+      sym = g_object_ref (gimp_image_symmetry_selected (image));
+      gimp_symmetry_set_origin (sym, drawable, &core->cur_coords);
+
       core_class->paint (core, drawable,
                          paint_options,
-                         &core->cur_coords,
-                         paint_state, time);
+                         sym, paint_state, time);
+      g_object_unref (sym);
 
       core_class->post_paint (core, drawable,
                               paint_options,
@@ -749,7 +765,9 @@ gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
                                   GimpPaintOptions *paint_options,
                                   const GimpCoords *coords,
                                   gint             *paint_buffer_x,
-                                  gint             *paint_buffer_y)
+                                  gint             *paint_buffer_y,
+                                  gint             *paint_width,
+                                  gint             *paint_height)
 {
   GeglBuffer *paint_buffer;
 
@@ -766,7 +784,9 @@ gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
                                                         paint_options,
                                                         coords,
                                                         paint_buffer_x,
-                                                        paint_buffer_y);
+                                                        paint_buffer_y,
+                                                        paint_width,
+                                                        paint_height);
 
   core->paint_buffer_x = *paint_buffer_x;
   core->paint_buffer_y = *paint_buffer_y;
@@ -818,8 +838,9 @@ gimp_paint_core_paste (GimpPaintCore            *core,
            */
           if (paint_mask != NULL)
             {
-              GeglBuffer *paint_mask_buffer =
-                gimp_temp_buf_create_buffer ((GimpTempBuf *) paint_mask);
+              GimpTempBuf *modified_mask     = gimp_temp_buf_copy (paint_mask);
+              GeglBuffer  *paint_mask_buffer =
+                gimp_temp_buf_create_buffer ((GimpTempBuf *) modified_mask);
 
               gimp_gegl_combine_mask_weird (paint_mask_buffer,
                                             GEGL_RECTANGLE (paint_mask_offset_x,
@@ -833,6 +854,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                             GIMP_IS_AIRBRUSH (core));
 
               g_object_unref (paint_mask_buffer);
+              gimp_temp_buf_unref (modified_mask);
             }
 
           gimp_gegl_apply_mask (core->canvas_buffer,

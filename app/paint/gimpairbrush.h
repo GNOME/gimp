@@ -37,6 +37,8 @@ struct _GimpAirbrush
   GimpPaintbrush    parent_instance;
 
   guint             timeout_id;
+
+  GimpSymmetry     *sym;
   GimpDrawable     *drawable;
   GimpPaintOptions *paint_options;
 };

@@ -39,7 +39,7 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
 {
   const GimpTempBuf *mask;
 
-  mask = gimp_brush_transform_mask (brush,
+  mask = gimp_brush_transform_mask (brush, NULL,
                                     scale, aspect_ratio, angle, hardness);
 
   if (mask)

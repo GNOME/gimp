@@ -76,6 +76,7 @@ typedef struct _GimpHistogramEditor          GimpHistogramEditor;
 typedef struct _GimpImageEditor              GimpImageEditor;
 typedef struct _GimpSamplePointEditor        GimpSamplePointEditor;
 typedef struct _GimpSelectionEditor          GimpSelectionEditor;
+typedef struct _GimpSymmetryEditor           GimpSymmetryEditor;
 typedef struct _GimpUndoEditor               GimpUndoEditor;
 
 

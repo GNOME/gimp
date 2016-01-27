@@ -53,6 +53,7 @@
 #include "widgets/gimppatternfactoryview.h"
 #include "widgets/gimpsamplepointeditor.h"
 #include "widgets/gimpselectioneditor.h"
+#include "widgets/gimpsymmetryeditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptooloptionseditor.h"
@@ -734,6 +735,17 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
                               gint               view_size)
 {
   return gimp_selection_editor_new (gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
+dialogs_symmetry_editor_new (GimpDialogFactory *factory,
+                             GimpContext       *context,
+                             GimpUIManager     *ui_manager,
+                             gint               view_size)
+{
+  return gimp_symmetry_editor_new (context->gimp,
+                                   gimp_context_get_image (context),
+                                   gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *

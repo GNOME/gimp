@@ -32,6 +32,7 @@
 #include "core/gimpdynamics.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
+#include "core/gimpsymmetry.h"
 #include "core/gimptempbuf.h"
 
 #include "gimpsmudge.h"
@@ -45,20 +46,21 @@ static void       gimp_smudge_finalize     (GObject          *object);
 static void       gimp_smudge_paint        (GimpPaintCore    *paint_core,
                                             GimpDrawable     *drawable,
                                             GimpPaintOptions *paint_options,
-                                            const GimpCoords *coords,
+                                            GimpSymmetry     *sym,
                                             GimpPaintState    paint_state,
                                             guint32           time);
 static gboolean   gimp_smudge_start        (GimpPaintCore    *paint_core,
                                             GimpDrawable     *drawable,
                                             GimpPaintOptions *paint_options,
-                                            const GimpCoords *coords);
+                                            GimpSymmetry     *sym);
 static void       gimp_smudge_motion       (GimpPaintCore    *paint_core,
                                             GimpDrawable     *drawable,
                                             GimpPaintOptions *paint_options,
-                                            const GimpCoords *coords);
+                                            GimpSymmetry     *sym);
 
 static void       gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
                                                   const GimpCoords *coords,
+                                                  gint              stroke,
                                                   gint             *x,
                                                   gint             *y);
 
@@ -110,10 +112,16 @@ gimp_smudge_finalize (GObject *object)
 {
   GimpSmudge *smudge = GIMP_SMUDGE (object);
 
-  if (smudge->accum_buffer)
+  if (smudge->accum_buffers)
     {
-      g_object_unref (smudge->accum_buffer);
-      smudge->accum_buffer = NULL;
+      GList *iter;
+
+      for (iter = smudge->accum_buffers; iter; iter = g_list_next (iter))
+        {
+          if (iter->data)
+            g_object_unref (iter->data);
+          smudge->accum_buffers = NULL;
+        }
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -123,7 +131,7 @@ static void
 gimp_smudge_paint (GimpPaintCore    *paint_core,
                    GimpDrawable     *drawable,
                    GimpPaintOptions *paint_options,
-                   const GimpCoords *coords,
+                   GimpSymmetry     *sym,
                    GimpPaintState    paint_state,
                    guint32           time)
 {
@@ -135,17 +143,23 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
       /* initialization fails if the user starts outside the drawable */
       if (! smudge->initialized)
         smudge->initialized = gimp_smudge_start (paint_core, drawable,
-                                                 paint_options, coords);
+                                                 paint_options, sym);
 
       if (smudge->initialized)
-        gimp_smudge_motion (paint_core, drawable, paint_options, coords);
+        gimp_smudge_motion (paint_core, drawable, paint_options, sym);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
-      if (smudge->accum_buffer)
+      if (smudge->accum_buffers)
         {
-          g_object_unref (smudge->accum_buffer);
-          smudge->accum_buffer = NULL;
+          GList *iter;
+
+          for  (iter = smudge->accum_buffers; iter; iter = g_list_next (iter))
+            {
+              if (iter->data)
+                g_object_unref (iter->data);
+              smudge->accum_buffers = NULL;
+            }
         }
       smudge->initialized = FALSE;
       break;
@@ -159,71 +173,90 @@ static gboolean
 gimp_smudge_start (GimpPaintCore    *paint_core,
                    GimpDrawable     *drawable,
                    GimpPaintOptions *paint_options,
-                   const GimpCoords *coords)
+                   GimpSymmetry     *sym)
 {
   GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
   GeglBuffer *paint_buffer;
+  GimpCoords *coords;
   gint        paint_buffer_x;
   gint        paint_buffer_y;
   gint        accum_size;
+  gint        n_strokes;
+  gint        i;
   gint        x, y;
 
-  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                   paint_options, coords,
-                                                   &paint_buffer_x,
-                                                   &paint_buffer_y);
-  if (! paint_buffer)
-    return FALSE;
+  coords = gimp_symmetry_get_origin (sym);
+  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+                                           drawable,
+                                           paint_options,
+                                           coords);
 
-  gimp_smudge_accumulator_size (paint_options, coords, &accum_size);
-
-  /*  Allocate the accumulation buffer */
-  smudge->accum_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                          accum_size,
-                                                          accum_size),
-                                          babl_format ("RGBA float"));
-
-  /*  adjust the x and y coordinates to the upper left corner of the
-   *  accumulator
-   */
-  gimp_smudge_accumulator_coords (paint_core, coords, &x, &y);
-
-  /*  If clipped, prefill the smudge buffer with the color at the
-   *  brush position.
-   */
-  if (x != paint_buffer_x ||
-      y != paint_buffer_y ||
-      accum_size != gegl_buffer_get_width  (paint_buffer) ||
-      accum_size != gegl_buffer_get_height (paint_buffer))
+  n_strokes = gimp_symmetry_get_size (sym);
+  for (i = 0; i < n_strokes; i++)
     {
-      GimpRGB    pixel;
-      GeglColor *color;
+      GeglBuffer *accum_buffer;
 
-      gimp_pickable_get_color_at (GIMP_PICKABLE (drawable),
-                                  CLAMP ((gint) coords->x,
-                                         0,
-                                         gimp_item_get_width (GIMP_ITEM (drawable)) - 1),
-                                  CLAMP ((gint) coords->y,
-                                         0,
-                                         gimp_item_get_height (GIMP_ITEM (drawable)) - 1),
-                                  &pixel);
+      coords = gimp_symmetry_get_coords (sym, i);
+      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                       paint_options, coords,
+                                                       &paint_buffer_x,
+                                                       &paint_buffer_y,
+                                                       NULL, NULL);
+      if (! paint_buffer)
+        return FALSE;
 
-      color = gimp_gegl_color_new (&pixel);
-      gegl_buffer_set_color (smudge->accum_buffer, NULL, color);
-      g_object_unref (color);
+      gimp_smudge_accumulator_size (paint_options, coords, &accum_size);
+
+      /*  Allocate the accumulation buffer */
+      accum_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                      accum_size,
+                                                      accum_size),
+                                      babl_format ("RGBA float"));
+      smudge->accum_buffers = g_list_prepend (smudge->accum_buffers,
+                                              accum_buffer);
+
+      /*  adjust the x and y coordinates to the upper left corner of the
+       *  accumulator
+       */
+      gimp_smudge_accumulator_coords (paint_core, coords, i, &x, &y);
+
+      /*  If clipped, prefill the smudge buffer with the color at the
+       *  brush position.
+       */
+      if (x != paint_buffer_x ||
+          y != paint_buffer_y ||
+          accum_size != gegl_buffer_get_width  (paint_buffer) ||
+          accum_size != gegl_buffer_get_height (paint_buffer))
+        {
+          GimpRGB    pixel;
+          GeglColor *color;
+
+          gimp_pickable_get_color_at (GIMP_PICKABLE (drawable),
+                                      CLAMP ((gint) coords->x,
+                                             0,
+                                             gimp_item_get_width (GIMP_ITEM (drawable)) - 1),
+                                      CLAMP ((gint) coords->y,
+                                             0,
+                                             gimp_item_get_height (GIMP_ITEM (drawable)) - 1),
+                                      &pixel);
+
+          color = gimp_gegl_color_new (&pixel);
+          gegl_buffer_set_color (accum_buffer, NULL, color);
+          g_object_unref (color);
+        }
+
+      /* copy the region under the original painthit. */
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                        GEGL_RECTANGLE (paint_buffer_x,
+                                        paint_buffer_y,
+                                        gegl_buffer_get_width  (paint_buffer),
+                                        gegl_buffer_get_height (paint_buffer)),
+                        GEGL_ABYSS_NONE,
+                        accum_buffer,
+                        GEGL_RECTANGLE (paint_buffer_x - x,
+                                        paint_buffer_y - y,
+                                        0, 0));
     }
-
-  /* copy the region under the original painthit. */
-  gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                    GEGL_RECTANGLE (paint_buffer_x,
-                                    paint_buffer_y,
-                                    gegl_buffer_get_width  (paint_buffer),
-                                    gegl_buffer_get_height (paint_buffer)),
-                    GEGL_ABYSS_NONE,
-                    smudge->accum_buffer,
-                    GEGL_RECTANGLE (paint_buffer_x - x,
-                                    paint_buffer_y - y,
-                                    0, 0));
 
   return TRUE;
 }
@@ -232,28 +265,35 @@ static void
 gimp_smudge_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
                     GimpPaintOptions *paint_options,
-                    const GimpCoords *coords)
+                    GimpSymmetry     *sym)
 {
-  GimpSmudge        *smudge   = GIMP_SMUDGE (paint_core);
-  GimpSmudgeOptions *options  = GIMP_SMUDGE_OPTIONS (paint_options);
-  GimpContext       *context  = GIMP_CONTEXT (paint_options);
-  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-  GeglBuffer        *paint_buffer;
-  gint               paint_buffer_x;
-  gint               paint_buffer_y;
-  gint               paint_buffer_width;
-  gint               paint_buffer_height;
-  gdouble            fade_point;
-  gdouble            opacity;
-  gdouble            rate;
-  gdouble            dynamic_rate;
-  gint               x, y;
-  gdouble            force;
+  GimpSmudge         *smudge   = GIMP_SMUDGE (paint_core);
+  GimpSmudgeOptions  *options  = GIMP_SMUDGE_OPTIONS (paint_options);
+  GimpContext        *context  = GIMP_CONTEXT (paint_options);
+  GimpDynamics       *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage          *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  GeglBuffer         *paint_buffer;
+  gint                paint_buffer_x;
+  gint                paint_buffer_y;
+  gint                paint_buffer_width;
+  gint                paint_buffer_height;
+  gdouble             fade_point;
+  gdouble             opacity;
+  gdouble             rate;
+  gdouble             dynamic_rate;
+  gint                x, y;
+  gdouble             force;
+  GeglBuffer         *accum_buffer;
+  GimpCoords         *coords;
+  GeglNode           *op;
+  gint                paint_width, paint_height;
+  gint                n_strokes;
+  gint                i;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
+  coords = gimp_symmetry_get_origin (sym);
   opacity = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_OPACITY,
                                             coords,
@@ -262,90 +302,111 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                   paint_options, coords,
-                                                   &paint_buffer_x,
-                                                   &paint_buffer_y);
-  if (! paint_buffer)
-    return;
+  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+                                           drawable,
+                                           paint_options,
+                                           coords);
 
-  paint_buffer_width  = gegl_buffer_get_width  (paint_buffer);
-  paint_buffer_height = gegl_buffer_get_height (paint_buffer);
+  n_strokes = gimp_symmetry_get_size (sym);
+  for (i = 0; i < n_strokes; i++)
+    {
+      coords = gimp_symmetry_get_coords (sym, i);
 
-  /*  Get the unclipped acumulator coordinates  */
-  gimp_smudge_accumulator_coords (paint_core, coords, &x, &y);
+      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                       paint_options, coords,
+                                                       &paint_buffer_x,
+                                                       &paint_buffer_y,
+                                                       &paint_width,
+                                                       &paint_height);
+      if (! paint_buffer)
+        continue;
 
-  /* Enable dynamic rate */
-  dynamic_rate = gimp_dynamics_get_linear_value (dynamics,
-                                                 GIMP_DYNAMICS_OUTPUT_RATE,
-                                                 coords,
-                                                 paint_options,
-                                                 fade_point);
+      op = gimp_symmetry_get_operation (sym, i,
+                                        paint_width,
+                                        paint_height);
 
-  rate = (options->rate / 100.0) * dynamic_rate;
+      paint_buffer_width  = gegl_buffer_get_width  (paint_buffer);
+      paint_buffer_height = gegl_buffer_get_height (paint_buffer);
 
-  /*  Smudge uses the buffer Accum.
-   *  For each successive painthit Accum is built like this
-   *    Accum =  rate*Accum  + (1-rate)*I.
-   *  where I is the pixels under the current painthit.
-   *  Then the paint area (paint_area) is built as
-   *    (Accum,1) (if no alpha),
-   */
+      /*  Get the unclipped acumulator coordinates  */
+      gimp_smudge_accumulator_coords (paint_core, coords, i, &x, &y);
 
-  gimp_gegl_smudge_blend (smudge->accum_buffer,
-                          GEGL_RECTANGLE (paint_buffer_x - x,
-                                          paint_buffer_y - y,
-                                          paint_buffer_width,
-                                          paint_buffer_height),
-                          gimp_drawable_get_buffer (drawable),
-                          GEGL_RECTANGLE (paint_buffer_x,
-                                          paint_buffer_y,
-                                          paint_buffer_width,
-                                          paint_buffer_height),
-                          smudge->accum_buffer,
-                          GEGL_RECTANGLE (paint_buffer_x - x,
-                                          paint_buffer_y - y,
-                                          paint_buffer_width,
-                                          paint_buffer_height),
-                          rate);
+      /* Enable dynamic rate */
+      dynamic_rate = gimp_dynamics_get_linear_value (dynamics,
+                                                     GIMP_DYNAMICS_OUTPUT_RATE,
+                                                     coords,
+                                                     paint_options,
+                                                     fade_point);
 
-  gegl_buffer_copy (smudge->accum_buffer,
-                    GEGL_RECTANGLE (paint_buffer_x - x,
-                                    paint_buffer_y - y,
-                                    paint_buffer_width,
-                                    paint_buffer_height),
-                    GEGL_ABYSS_NONE,
-                    paint_buffer,
-                    GEGL_RECTANGLE (0, 0, 0, 0));
+      rate = (options->rate / 100.0) * dynamic_rate;
 
-  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
-    force = gimp_dynamics_get_linear_value (dynamics,
-                                            GIMP_DYNAMICS_OUTPUT_FORCE,
-                                            coords,
-                                            paint_options,
-                                            fade_point);
-  else
-    force = paint_options->brush_force;
+      /*  Smudge uses the buffer Accum.
+       *  For each successive painthit Accum is built like this
+       *    Accum =  rate*Accum  + (1-rate)*I.
+       *  where I is the pixels under the current painthit.
+       *  Then the paint area (paint_area) is built as
+       *    (Accum,1) (if no alpha),
+       */
 
-  gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
-                                  coords,
-                                  MIN (opacity, GIMP_OPACITY_OPAQUE),
-                                  gimp_context_get_opacity (context),
-                                  gimp_paint_options_get_brush_mode (paint_options),
-                                  force,
-                                  GIMP_PAINT_INCREMENTAL);
+      accum_buffer = g_list_nth_data (smudge->accum_buffers, i);
+      gimp_gegl_smudge_blend (accum_buffer,
+                              GEGL_RECTANGLE (paint_buffer_x - x,
+                                              paint_buffer_y - y,
+                                              paint_buffer_width,
+                                              paint_buffer_height),
+                              gimp_drawable_get_buffer (drawable),
+                              GEGL_RECTANGLE (paint_buffer_x,
+                                              paint_buffer_y,
+                                              paint_buffer_width,
+                                              paint_buffer_height),
+                              accum_buffer,
+                              GEGL_RECTANGLE (paint_buffer_x - x,
+                                              paint_buffer_y - y,
+                                              paint_buffer_width,
+                                              paint_buffer_height),
+                              rate);
+
+      gegl_buffer_copy (accum_buffer,
+                        GEGL_RECTANGLE (paint_buffer_x - x,
+                                        paint_buffer_y - y,
+                                        paint_buffer_width,
+                                        paint_buffer_height),
+                        GEGL_ABYSS_NONE,
+                        paint_buffer,
+                        GEGL_RECTANGLE (0, 0, 0, 0));
+
+      if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
+        force = gimp_dynamics_get_linear_value (dynamics,
+                                                GIMP_DYNAMICS_OUTPUT_FORCE,
+                                                coords,
+                                                paint_options,
+                                                fade_point);
+      else
+        force = paint_options->brush_force;
+
+      gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
+                                      coords,
+                                      MIN (opacity, GIMP_OPACITY_OPAQUE),
+                                      gimp_context_get_opacity (context),
+                                      gimp_paint_options_get_brush_mode (paint_options),
+                                      force,
+                                      GIMP_PAINT_INCREMENTAL, op);
+    }
 }
 
 static void
 gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
                                 const GimpCoords *coords,
+                                gint              stroke,
                                 gint             *x,
                                 gint             *y)
 {
   GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
+  GeglBuffer *accum_buffer;
 
-  *x = (gint) coords->x - gegl_buffer_get_width  (smudge->accum_buffer) / 2;
-  *y = (gint) coords->y - gegl_buffer_get_height (smudge->accum_buffer) / 2;
+  accum_buffer = g_list_nth_data (smudge->accum_buffers, stroke);
+  *x = (gint) coords->x - gegl_buffer_get_width  (accum_buffer) / 2;
+  *y = (gint) coords->y - gegl_buffer_get_height (accum_buffer) / 2;
 }
 
 static void

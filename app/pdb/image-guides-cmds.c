@@ -27,6 +27,7 @@
 
 #include "pdb-types.h"
 
+#include "cairo.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo-push.h"

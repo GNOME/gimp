@@ -259,6 +259,8 @@ libappcore_a_sources = \
 	gimpimage-scale.h			\
 	gimpimage-snap.c			\
 	gimpimage-snap.h			\
+	gimpimage-symmetry.c			\
+	gimpimage-symmetry.h			\
 	gimpimage-undo.c			\
 	gimpimage-undo.h			\
 	gimpimage-undo-push.c			\
@@ -367,6 +369,10 @@ libappcore_a_sources = \
 	gimpstrokeoptions.h			\
 	gimpsubprogress.c			\
 	gimpsubprogress.h			\
+	gimpsymmetry.c			\
+	gimpsymmetry.h			\
+	gimpsymmetry-mirror.c		\
+	gimpsymmetry-mirror.h	\
 	gimptag.c				\
 	gimptag.h				\
 	gimptagcache.c				\

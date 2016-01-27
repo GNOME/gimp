@@ -93,7 +93,7 @@ struct _GimpPaintCoreClass
   void         (* paint)            (GimpPaintCore    *core,
                                      GimpDrawable     *drawable,
                                      GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords,
+                                     GimpSymmetry     *sym,
                                      GimpPaintState    paint_state,
                                      guint32           time);
   void         (* post_paint)       (GimpPaintCore    *core,
@@ -112,7 +112,9 @@ struct _GimpPaintCoreClass
                                      GimpPaintOptions *paint_options,
                                      const GimpCoords *coords,
                                      gint             *paint_buffer_x,
-                                     gint             *paint_buffer_y);
+                                     gint             *paint_buffer_y,
+                                     gint             *paint_width,
+                                     gint             *paint_height);
 
   GimpUndo   * (* push_undo)        (GimpPaintCore    *core,
                                      GimpImage        *image,
@@ -168,7 +170,9 @@ GeglBuffer * gimp_paint_core_get_paint_buffer       (GimpPaintCore    *core,
                                                      GimpPaintOptions *options,
                                                      const GimpCoords *coords,
                                                      gint             *paint_buffer_x,
-                                                     gint             *paint_buffer_y);
+                                                     gint             *paint_buffer_y,
+                                                     gint             *paint_width,
+                                                     gint             *paint_height);
 
 GeglBuffer * gimp_paint_core_get_orig_image         (GimpPaintCore    *core);
 GeglBuffer * gimp_paint_core_get_orig_proj          (GimpPaintCore    *core);
