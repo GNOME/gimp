@@ -204,7 +204,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
             }
         }
 
-      n_anchors = g_list_length (stroke->anchors);
+      n_anchors = g_queue_get_length (stroke->anchors);
 
       if (! stroke->closed)
         n_anchors--;
@@ -237,7 +237,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
           postponed = NULL;
         }
 
-      for (anchors = stroke->anchors;
+      for (anchors = stroke->anchors->head;
            anchors;
            anchors = g_list_next (anchors))
         {
@@ -250,7 +250,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
           switch (anchor->type)
             {
             case GIMP_ANCHOR_ANCHOR:
-              if (anchors->prev == stroke->anchors && ! first_stroke)
+              if (anchors->prev == stroke->anchors->head && ! first_stroke)
                 points[i].type = GIMP_VECTORS_COMPAT_NEW_STROKE;
               else
                 points[i].type = GIMP_VECTORS_COMPAT_ANCHOR;
@@ -269,7 +269,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
           /*  write the skipped control point  */
           if (! anchors->next && stroke->closed)
             {
-              anchor = GIMP_ANCHOR (stroke->anchors->data);
+              anchor = g_queue_peek_head (stroke->anchors);
 
               points[i].type = GIMP_VECTORS_COMPAT_CONTROL;
               points[i].x    = anchor->position.x;

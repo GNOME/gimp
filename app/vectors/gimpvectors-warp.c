@@ -141,7 +141,7 @@ gimp_vectors_warp_stroke (const GimpVectors *vectors,
 {
   GList *list;
 
-  for (list = stroke->anchors; list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       GimpAnchor *anchor = list->data;
 

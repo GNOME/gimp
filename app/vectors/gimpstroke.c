@@ -264,9 +264,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 static void
 gimp_stroke_init (GimpStroke *stroke)
 {
-  stroke->ID      = 0;
-  stroke->anchors = NULL;
-  stroke->closed  = FALSE;
+  stroke->anchors = g_queue_new ();
 }
 
 static void
@@ -287,7 +285,7 @@ gimp_stroke_set_property (GObject      *object,
       break;
 
     case PROP_CONTROL_POINTS:
-      g_return_if_fail (stroke->anchors == NULL);
+      g_return_if_fail (g_queue_is_empty (stroke->anchors));
       g_return_if_fail (value != NULL);
 
       val_array = g_value_get_boxed (value);
@@ -302,8 +300,7 @@ gimp_stroke_set_property (GObject      *object,
           GValue *item = gimp_value_array_index (val_array, i);
 
           g_return_if_fail (G_VALUE_HOLDS (item, GIMP_TYPE_ANCHOR));
-          stroke->anchors = g_list_append (stroke->anchors,
-                                           g_value_dup_boxed (item));
+          g_queue_push_tail (stroke->anchors, g_value_dup_boxed (item));
         }
 
       break;
@@ -339,11 +336,8 @@ gimp_stroke_finalize (GObject *object)
 {
   GimpStroke *stroke = GIMP_STROKE (object);
 
-  if (stroke->anchors)
-    {
-      g_list_free_full (stroke->anchors, (GDestroyNotify) gimp_anchor_free);
-      stroke->anchors = NULL;
-    }
+  g_queue_free_full (stroke->anchors, (GDestroyNotify) gimp_anchor_free);
+  stroke->anchors = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -355,7 +349,7 @@ gimp_stroke_get_memsize (GimpObject *object,
   GimpStroke *stroke  = GIMP_STROKE (object);
   gint64      memsize = 0;
 
-  memsize += gimp_g_list_get_memsize (stroke->anchors, sizeof (GimpAnchor));
+  memsize += gimp_g_queue_get_memsize (stroke->anchors, sizeof (GimpAnchor));
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -528,13 +522,13 @@ gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
 
   if (prev)
     {
-      list = g_list_find (stroke->anchors, prev);
+      list = g_queue_find (stroke->anchors, prev);
       if (list)
         list = g_list_next (list);
     }
   else
     {
-      list = stroke->anchors;
+      list = stroke->anchors->head;
     }
 
   if (list)
@@ -562,9 +556,7 @@ gimp_stroke_real_anchor_select (GimpStroke *stroke,
                                 gboolean    selected,
                                 gboolean    exclusive)
 {
-  GList *list;
-
-  list = stroke->anchors;
+  GList *list = stroke->anchors->head;
 
   if (exclusive)
     {
@@ -575,7 +567,7 @@ gimp_stroke_real_anchor_select (GimpStroke *stroke,
         }
     }
 
-  list = g_list_find (stroke->anchors, anchor);
+  list = g_queue_find (stroke->anchors, anchor);
 
   if (list)
     GIMP_ANCHOR (list->data)->selected = selected;
@@ -590,7 +582,7 @@ gimp_stroke_anchor_move_relative (GimpStroke            *stroke,
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
   g_return_if_fail (anchor != NULL);
-  g_return_if_fail (g_list_find (stroke->anchors, anchor));
+  g_return_if_fail (g_queue_find (stroke->anchors, anchor));
 
   GIMP_STROKE_GET_CLASS (stroke)->anchor_move_relative (stroke, anchor,
                                                         delta, feature);
@@ -615,7 +607,7 @@ gimp_stroke_anchor_move_absolute (GimpStroke            *stroke,
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
   g_return_if_fail (anchor != NULL);
-  g_return_if_fail (g_list_find (stroke->anchors, anchor));
+  g_return_if_fail (g_queue_find (stroke->anchors, anchor));
 
   GIMP_STROKE_GET_CLASS (stroke)->anchor_move_absolute (stroke, anchor,
                                                         coord, feature);
@@ -707,7 +699,7 @@ void
 gimp_stroke_close (GimpStroke *stroke)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
-  g_return_if_fail (stroke->anchors != NULL);
+  g_return_if_fail (g_queue_is_empty (stroke->anchors) == FALSE);
 
   GIMP_STROKE_GET_CLASS (stroke)->close (stroke);
 }
@@ -896,7 +888,7 @@ gimp_stroke_is_empty (const GimpStroke *stroke)
 static gboolean
 gimp_stroke_real_is_empty (const GimpStroke *stroke)
 {
-  return stroke->anchors == NULL;
+  return g_queue_is_empty (stroke->anchors);
 }
 
 
@@ -918,7 +910,7 @@ gimp_stroke_real_get_length (const GimpStroke *stroke,
   gdouble     length;
   GimpCoords  difference;
 
-  if (!stroke->anchors)
+  if (g_queue_is_empty (stroke->anchors))
     return -1;
 
   points = gimp_stroke_interpolate (stroke, precision, NULL);
@@ -999,9 +991,9 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
                              "name", gimp_object_get_name (stroke),
                              NULL);
 
-  new_stroke->anchors = g_list_copy (stroke->anchors);
+  new_stroke->anchors = g_queue_copy (stroke->anchors);
 
-  for (list = new_stroke->anchors; list; list = g_list_next (list))
+  for (list = new_stroke->anchors->head; list; list = g_list_next (list))
     {
       list->data = gimp_anchor_copy (GIMP_ANCHOR (list->data));
     }
@@ -1047,7 +1039,7 @@ gimp_stroke_real_translate (GimpStroke *stroke,
 {
   GList *list;
 
-  for (list = stroke->anchors; list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       GimpAnchor *anchor = list->data;
 
@@ -1074,7 +1066,7 @@ gimp_stroke_real_scale (GimpStroke *stroke,
 {
   GList *list;
 
-  for (list = stroke->anchors; list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       GimpAnchor *anchor = list->data;
 
@@ -1174,7 +1166,7 @@ gimp_stroke_real_transform (GimpStroke        *stroke,
 {
   GList *list;
 
-  for (list = stroke->anchors; list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       GimpAnchor *anchor = list->data;
 
@@ -1201,7 +1193,7 @@ gimp_stroke_real_get_draw_anchors (const GimpStroke  *stroke)
   GList *list;
   GList *ret_list = NULL;
 
-  for (list = stroke->anchors; list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       if (GIMP_ANCHOR (list->data)->type == GIMP_ANCHOR_ANCHOR)
         ret_list = g_list_prepend (ret_list, list->data);
@@ -1225,7 +1217,7 @@ gimp_stroke_real_get_draw_controls (const GimpStroke  *stroke)
   GList *list;
   GList *ret_list = NULL;
 
-  for (list = stroke->anchors; list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       GimpAnchor *anchor = list->data;
 
@@ -1238,7 +1230,8 @@ gimp_stroke_real_get_draw_controls (const GimpStroke  *stroke)
             {
               /* Ok, this is a hack.
                * The idea is to give control points at the end of a
-               * stroke a higher priority for the interactive tool. */
+               * stroke a higher priority for the interactive tool.
+               */
               if (prev)
                 ret_list = g_list_prepend (ret_list, anchor);
               else
@@ -1274,7 +1267,7 @@ gimp_stroke_real_get_draw_lines (const GimpStroke  *stroke)
   GArray *ret_lines = NULL;
   gint    count = 0;
 
-  for (list = stroke->anchors; list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       GimpAnchor *anchor = list->data;
 
@@ -1327,11 +1320,11 @@ gimp_stroke_real_control_points_get (const GimpStroke *stroke,
   GArray *ret_array;
   GList *list;
 
-  num_anchors = g_list_length (stroke->anchors);
+  num_anchors = g_queue_get_length (stroke->anchors);
   ret_array = g_array_sized_new (FALSE, FALSE,
                                  sizeof (GimpAnchor), num_anchors);
 
-  for (list = g_list_first (stroke->anchors); list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       g_array_append_vals (ret_array, list->data, 1);
     }

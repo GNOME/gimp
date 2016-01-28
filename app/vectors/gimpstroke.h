@@ -39,7 +39,7 @@ struct _GimpStroke
   GimpObject  parent_instance;
   gint        ID;
 
-  GList      *anchors;
+  GQueue     *anchors;
 
   gboolean    closed;
 };
