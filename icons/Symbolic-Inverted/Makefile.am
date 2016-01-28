@@ -1,19 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
 iconsdir    = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor
-icons12dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/12x12/apps
-icons16dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/16x16/apps
-icons18dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/18x18/apps
-icons20dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/20x20/apps
-icons22dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/22x22/apps
-icons24dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/24x24/apps
-icons32dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/32x32/apps
-icons48dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/48x48/apps
-icons64dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/64x64/apps
-icons96dir  = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/96x96/apps
-icons128dir = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/128x128/apps
-icons192dir = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/192x192/apps
-icons256dir = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor/256x256/apps
 
 ## The icon theme images
 

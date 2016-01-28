@@ -1,3 +1,16 @@
+icons12dir  = $(iconsdir)/12x12/apps
+icons16dir  = $(iconsdir)/16x16/apps
+icons18dir  = $(iconsdir)/18x18/apps
+icons20dir  = $(iconsdir)/20x20/apps
+icons22dir  = $(iconsdir)/22x22/apps
+icons24dir  = $(iconsdir)/24x24/apps
+icons32dir  = $(iconsdir)/32x32/apps
+icons48dir  = $(iconsdir)/48x48/apps
+icons64dir  = $(iconsdir)/64x64/apps
+icons96dir  = $(iconsdir)/96x96/apps
+icons128dir = $(iconsdir)/128x128/apps
+icons192dir = $(iconsdir)/192x192/apps
+icons256dir = $(iconsdir)/256x256/apps
 
 icons12_DATA = \
 	12/gimp-close.png			\
@@ -149,7 +162,7 @@ icons16_DATA = \
 	16/gimp-tool-brightness-contrast.png		\
 	16/gimp-tool-bucket-fill.png			\
 	16/gimp-tool-by-color-select.png		\
-	16/gimp-tool-cage.png 				\
+	16/gimp-tool-cage.png				\
 	16/gimp-tool-clone.png				\
 	16/gimp-tool-color-balance.png			\
 	16/gimp-tool-color-picker.png			\
