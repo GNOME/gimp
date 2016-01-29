@@ -48,8 +48,8 @@
      inkscape:window-height="1016"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="2.3754368"
-     inkscape:cx="367.95106"
+     inkscape:zoom="7.979983"
+     inkscape:cx="334.86828"
      inkscape:cy="193.87169"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -5618,52 +5618,26 @@
       </g>
     </g>
     <g
-       id="g6743"
-       transform="matrix(1,0,0,0.99777549,0,0.73499649)"
-       inkscape:export-xdpi="90.000259"
-       inkscape:export-ydpi="90.000259">
-      <g
-         inkscape:export-ydpi="123.75"
-         inkscape:export-xdpi="123.75"
-         transform="translate(102.34037,137.39021)"
-         inkscape:label="gimp-tool-path"
-         id="g6644"
-         style="display:inline">
-        <rect
-           style="fill:none;fill-opacity:1;stroke:none"
-           id="rect74975"
-           width="16"
-           height="16"
-           x="-140"
-           y="-40"
-           transform="translate(241.0002,217)" />
-      </g>
-      <g
-         id="g4033"
-         style="fill:#888a85"
-         transform="matrix(0.99130362,0,0,1.1542269,204.60508,311.95724)" />
-    </g>
-    <rect
-       rx="0.60829699"
-       ry="0.83402514"
-       y="315.36487"
-       x="214.86012"
-       height="3.5777535"
-       width="1.5886871"
-       id="rect14212"
-       style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:#bebebe;stroke-width:0.77472347;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
-    <path
-       sodipodi:nodetypes="ccccc"
-       id="path5211"
-       d="m 213.73586,321.37068 0.0771,-1.50334 3.81253,-1e-5 -0.0486,1.50335 z"
-       style="fill:#bebebd;fill-opacity:1;fill-rule:evenodd"
-       inkscape:connector-curvature="0" />
-    <g
        id="gimp-tool-path"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <g
          id="gimp-tool-paths">
+        <path
+           sodipodi:nodetypes="ccccc"
+           id="path5211"
+           d="m 213.73586,321.37068 0.0771,-1.50334 3.81253,-1e-5 -0.0486,1.50335 z"
+           style="fill:#bebebd;fill-opacity:1;fill-rule:evenodd"
+           inkscape:connector-curvature="0" />
+        <rect
+           rx="0.60829699"
+           ry="0.83402514"
+           y="315.36487"
+           x="214.86012"
+           height="3.5777535"
+           width="1.5886871"
+           id="rect14212"
+           style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:#bebebe;stroke-width:0.77472347;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
         <g
            transform="matrix(1.0084838,0,1.1488585e-8,1,99.468025,137.39025)"
            style="display:inline;fill:#bebebd;fill-opacity:1"
