@@ -48,9 +48,9 @@
      inkscape:window-height="1016"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="7.979983"
-     inkscape:cx="334.86828"
-     inkscape:cy="193.87169"
+     inkscape:zoom="6.7019389"
+     inkscape:cx="291.67723"
+     inkscape:cy="181.93485"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -1985,7 +1985,7 @@
        style="display:inline"
        id="gimp-tool-move"
        inkscape:label="gimp-tool-move"
-       transform="translate(80.02932,117.3902)"
+       transform="translate(81.908745,118.33981)"
        inkscape:export-xdpi="123.75"
        inkscape:export-ydpi="123.75">
       <rect
@@ -2165,7 +2165,7 @@
        style="display:inline"
        id="gimp-tool-crop"
        inkscape:label="gimp-tool-crop"
-       transform="translate(-24.59284,117.39021)"
+       transform="translate(-23.966375,118.33982)"
        inkscape:export-xdpi="123.75"
        inkscape:export-ydpi="123.75">
       <rect
@@ -2219,7 +2219,7 @@
        style="display:inline"
        id="gimp-tool-color-picker"
        inkscape:label="gimp-tool-color-picker"
-       transform="matrix(1,0,0,0.99724574,-66.90395,137.87771)"
+       transform="matrix(1,0,0,0.99724574,-66.90395,138.82732)"
        inkscape:export-xdpi="123.40916"
        inkscape:export-ydpi="123.40916">
       <rect
@@ -2389,7 +2389,7 @@
        style="display:inline"
        id="gimp-tool-measure"
        inkscape:label="gimp-tool-measure"
-       transform="translate(97.71822,77.39021)"
+       transform="translate(98.97118,78.33982)"
        inkscape:export-xdpi="123.75"
        inkscape:export-ydpi="123.75">
       <rect
@@ -5620,7 +5620,8 @@
     <g
        id="gimp-tool-path"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
+       inkscape:export-ydpi="90"
+       transform="translate(2.6376953,0.94957012)">
       <g
          id="gimp-tool-paths">
         <path
