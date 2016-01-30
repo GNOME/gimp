@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "actions-types.h"
 
@@ -245,24 +246,24 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                                    GimpValueArray *args,
                                    GimpObject     *display)
 {
-  GimpRunMode  run_mode = g_value_get_int (gimp_value_array_index (args, 0));
-  GimpTool    *active_tool;
+  GimpRunMode    run_mode = g_value_get_int (gimp_value_array_index (args, 0));
+  GimpObject    *settings;
+  GimpContainer *container;
+  GimpTool      *active_tool;
+
+  settings = gimp_gegl_config_new (procedure->original_name,
+                                   gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
+                                   GIMP_TYPE_SETTINGS);
+
+  container = gimp_gegl_config_get_container (G_TYPE_FROM_INSTANCE (settings));
+
+  g_object_unref (settings);
+
+  /*  the last used settings  */
+  settings = gimp_container_get_child_by_index (container, 0);
 
   if (run_mode == GIMP_RUN_WITH_LAST_VALS)
     {
-      GimpObject    *settings;
-      GimpContainer *container;
-
-      settings = gimp_gegl_config_new (procedure->original_name,
-                                       gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
-                                       GIMP_TYPE_SETTINGS);
-
-      container = gimp_gegl_config_get_container (G_TYPE_FROM_INSTANCE (settings));
-
-      g_object_unref (settings);
-
-      settings = gimp_container_get_child_by_index (container, 0);
-
       if (settings)
         {
           GimpImage    *image;
@@ -328,6 +329,17 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                                          gimp_procedure_get_help_id (procedure));
 
       tool_manager_initialize_active (gimp, GIMP_DISPLAY (display));
+
+      if (settings)
+        {
+          GObject *tool_config = GIMP_IMAGE_MAP_TOOL (active_tool)->config;
+
+          gimp_config_copy (GIMP_CONFIG (settings),
+                            GIMP_CONFIG (tool_config), 0);
+
+          /* see comment in gimp_settings_box_setting_selected() */
+          g_object_set (tool_config, "time", 0, NULL);
+        }
     }
 }
 
