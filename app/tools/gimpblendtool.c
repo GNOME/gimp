@@ -56,20 +56,23 @@
 
 #include "gimp-intl.h"
 
-#define SHOW_LINE TRUE
-#define HANDLE_CROSS_DIAMETER 18
-#define HANDLE_DIAMETER 40
 
-#define POINT_GRAB_THRESHOLD_SQ (SQR (HANDLE_DIAMETER / 2))
-#define FULL_HANDLE_THRESHOLD_SQ (POINT_GRAB_THRESHOLD_SQ * 9)
+#define SHOW_LINE             TRUE
+#define HANDLE_CROSS_DIAMETER 18
+#define HANDLE_DIAMETER       40
+
+#define POINT_GRAB_THRESHOLD_SQ     (SQR (HANDLE_DIAMETER / 2))
+#define FULL_HANDLE_THRESHOLD_SQ    (POINT_GRAB_THRESHOLD_SQ * 9)
 #define PARTIAL_HANDLE_THRESHOLD_SQ (FULL_HANDLE_THRESHOLD_SQ * 5)
 
+
 /*  local function prototypes  */
+
+static void   gimp_blend_tool_dispose             (GObject               *object);
 
 static gboolean gimp_blend_tool_initialize        (GimpTool              *tool,
                                                    GimpDisplay           *display,
                                                    GError               **error);
-static void   gimp_blend_tool_dispose             (GObject               *object);
 static void   gimp_blend_tool_control             (GimpTool              *tool,
                                                    GimpToolAction         action,
                                                    GimpDisplay           *display);
@@ -109,16 +112,20 @@ static void   gimp_blend_tool_cursor_update       (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
+static void   gimp_blend_tool_options_notify      (GimpTool              *tool,
+                                                   GimpToolOptions       *options,
+                                                   const GParamSpec      *pspec);
 
 static void   gimp_blend_tool_draw                (GimpDrawTool          *draw_tool);
 static void   gimp_blend_tool_update_items        (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_update_item_hilight (GimpBlendTool         *blend_tool);
 
-static GimpBlendToolPoint gimp_blend_tool_get_point_under_cursor (GimpBlendTool *blend_tool);
+static GimpBlendToolPoint
+           gimp_blend_tool_get_point_under_cursor (GimpBlendTool         *blend_tool);
 
-static void   gimp_blend_tool_start_preview       (GimpBlendTool         *bt,
+static void   gimp_blend_tool_start               (GimpBlendTool         *bt,
                                                    GimpDisplay           *display);
-static void   gimp_blend_tool_halt_preview        (GimpBlendTool         *bt);
+static void   gimp_blend_tool_halt                (GimpBlendTool         *bt);
 static void   gimp_blend_tool_commit              (GimpBlendTool         *bt);
 
 static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_tool,
@@ -132,9 +139,6 @@ static void   gimp_blend_tool_update_preview_coords (GimpBlendTool       *blend_
 static void   gimp_blend_tool_gradient_dirty      (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_set_gradient        (GimpBlendTool         *blend_tool,
                                                    GimpGradient          *gradient);
-static void   gimp_blend_tool_options_notify      (GimpTool              *tool,
-                                                   GimpToolOptions       *options,
-                                                   const GParamSpec      *pspec);
 static gboolean gimp_blend_tool_is_shapeburst     (GimpBlendTool         *blend_tool);
 
 static void   gimp_blend_tool_create_image_map    (GimpBlendTool         *blend_tool,
@@ -198,6 +202,7 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
   gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
+  gimp_tool_control_set_wants_click     (tool->control, TRUE);
   gimp_tool_control_set_precision       (tool->control,
                                          GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor     (tool->control,
@@ -206,6 +211,16 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
                                          "context/context-opacity-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-gradient-select-set");
+}
+
+static void
+gimp_blend_tool_dispose (GObject *object)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (object);
+
+  gimp_blend_tool_set_gradient (blend_tool, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static gboolean
@@ -254,15 +269,6 @@ gimp_blend_tool_initialize (GimpTool     *tool,
 }
 
 static void
-gimp_blend_tool_dispose (GObject *object)
-{
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (object);
-  gimp_blend_tool_set_gradient (blend_tool, NULL);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
 gimp_blend_tool_control (GimpTool       *tool,
                          GimpToolAction  action,
                          GimpDisplay    *display)
@@ -276,7 +282,7 @@ gimp_blend_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_blend_tool_halt_preview (blend_tool);
+      gimp_blend_tool_halt (blend_tool);
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
@@ -312,38 +318,33 @@ gimp_blend_tool_button_press (GimpTool            *tool,
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
-  blend_tool->mouse_x = coords->x;
-  blend_tool->mouse_y = coords->y;
-
   if (tool->display && display != tool->display)
     {
       gimp_tool_pop_status (tool, tool->display);
-      gimp_blend_tool_halt_preview (blend_tool);
+      gimp_blend_tool_halt (blend_tool);
     }
 
   blend_tool->grabbed_point = gimp_blend_tool_get_point_under_cursor (blend_tool);
 
-  if (blend_tool->grabbed_point == POINT_NONE)
+  if (blend_tool->grabbed_point == POINT_NONE &&
+      ! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     {
-      if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
-        {
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-        }
-      else if (gimp_blend_tool_is_shapeburst (blend_tool))
+      blend_tool->start_x = coords->x;
+      blend_tool->start_y = coords->y;
+
+      if (gimp_blend_tool_is_shapeburst (blend_tool))
         {
           blend_tool->grabbed_point = POINT_FILL_MODE;
-
-          blend_tool->start_x = coords->x;/*XXX*/
-          blend_tool->start_y = coords->y;
         }
       else
         {
           blend_tool->grabbed_point = POINT_INIT_MODE;
-
-          blend_tool->start_x = coords->x;
-          blend_tool->start_y = coords->y;
         }
+    }
+  else if ((state & GDK_MOD1_MASK) &&
+           gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+    {
+      blend_tool->grabbed_point = POINT_BOTH;
     }
 
   gimp_blend_tool_point_motion (blend_tool,
@@ -379,21 +380,34 @@ gimp_blend_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  /* XXX: handle cancel properly */
-  /* if (release_type == GIMP_BUTTON_RELEASE_CANCEL) */
-
-  if (blend_tool->grabbed_point == POINT_INIT_MODE)
+  switch (release_type)
     {
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-    }
+    case GIMP_BUTTON_RELEASE_NORMAL:
+      break;
 
-  if (blend_tool->grabbed_point == POINT_FILL_MODE)
-    {
-      /* XXX: Temporary, until the handles are working properly for shapebursts */
-      /*gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);*/
-      gimp_blend_tool_precalc_shapeburst (blend_tool);
-      gimp_blend_tool_start_preview (blend_tool, display);
+    case GIMP_BUTTON_RELEASE_CANCEL:
+      /* XXX: handle cancel properly */
+      break;
+
+    case GIMP_BUTTON_RELEASE_CLICK:
+    case GIMP_BUTTON_RELEASE_NO_MOTION:
+      if (blend_tool->grabbed_point == POINT_NONE)
+        {
+          if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
+            {
+              gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+              gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+            }
+        }
+      else if (blend_tool->grabbed_point == POINT_FILL_MODE)
+        {
+          /* XXX: Temporary, until the handles are working properly
+           * for shapebursts
+           */
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+        }
+      break;
     }
 
   blend_tool->grabbed_point = POINT_NONE;
@@ -415,14 +429,15 @@ gimp_blend_tool_motion (GimpTool         *tool,
   blend_tool->mouse_x = coords->x;
   blend_tool->mouse_y = coords->y;
 
-  if (blend_tool->grabbed_point == POINT_INIT_MODE)
+  if (blend_tool->grabbed_point == POINT_FILL_MODE ||
+      blend_tool->grabbed_point == POINT_INIT_MODE)
     {
       blend_tool->grabbed_point = POINT_END;
-      gimp_blend_tool_start_preview (blend_tool, display);
+      gimp_blend_tool_start (blend_tool, display);
     }
 
   /* Move the whole line if alt is pressed */
-  if (state & GDK_MOD1_MASK)
+  if (blend_tool->grabbed_point == POINT_BOTH)
     {
       gdouble dx = last_x - coords->x;
       gdouble dy = last_y - coords->y;
@@ -550,9 +565,6 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
   GimpDrawable       *drawable   = gimp_image_get_active_drawable (image);
   GimpCursorModifier  modifier   = GIMP_CURSOR_MODIFIER_NONE;
 
-  blend_tool->mouse_x = coords->x;
-  blend_tool->mouse_y = coords->y;
-
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
       gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
       ! gimp_item_is_visible (GIMP_ITEM (drawable)))
@@ -563,7 +575,8 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
     {
       modifier = GIMP_CURSOR_MODIFIER_PLUS;
     }
-  else if (gimp_blend_tool_get_point_under_cursor (blend_tool))
+  else if (gimp_blend_tool_get_point_under_cursor (blend_tool) ||
+           (state & GDK_MOD1_MASK))
     {
       modifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
@@ -574,9 +587,58 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
 }
 
 static void
+gimp_blend_tool_options_notify (GimpTool         *tool,
+                                GimpToolOptions  *options,
+                                const GParamSpec *pspec)
+{
+  GimpContext   *context    = GIMP_CONTEXT (options);
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+
+  if (! strcmp (pspec->name, "gradient"))
+    {
+      gimp_blend_tool_set_gradient (blend_tool, context->gradient);
+
+      if (blend_tool->image_map)
+        gimp_image_map_apply (blend_tool->image_map, NULL);
+    }
+  else if (blend_tool->render_node &&
+           gegl_node_find_property (blend_tool->render_node, pspec->name))
+    {
+      /* Sync any property changes on the config object that match the op */
+      GValue value = G_VALUE_INIT;
+      g_value_init (&value, pspec->value_type);
+
+      g_object_get_property (G_OBJECT (options), pspec->name, &value);
+      gegl_node_set_property (blend_tool->render_node, pspec->name, &value);
+
+      g_value_unset (&value);
+
+      if (! strcmp (pspec->name, "gradient-type"))
+        {
+          if (gimp_blend_tool_is_shapeburst (blend_tool))
+            gimp_blend_tool_precalc_shapeburst (blend_tool);
+
+          gimp_blend_tool_update_preview_coords (blend_tool);
+        }
+
+      gimp_image_map_apply (blend_tool->image_map, NULL);
+    }
+  else if (blend_tool->image_map &&
+           (! strcmp (pspec->name, "opacity") ||
+            ! strcmp (pspec->name, "paint-mode")))
+    {
+      gimp_image_map_set_mode (blend_tool->image_map,
+                               gimp_context_get_opacity (context),
+                               gimp_context_get_paint_mode (context));
+
+      gimp_image_map_apply (blend_tool->image_map, NULL);
+    }
+}
+
+static void
 gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpBlendTool   *blend_tool = GIMP_BLEND_TOOL (draw_tool);
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
   blend_tool->line =
     gimp_draw_tool_add_line (draw_tool,
@@ -674,6 +736,7 @@ static void
 gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
 {
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (blend_tool);
+
   if (gimp_draw_tool_is_active (draw_tool))
     {
       GimpBlendToolPoint hilight_point;
@@ -688,7 +751,8 @@ gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
         }
       else
         {
-          gdouble            dist;
+          gdouble dist;
+
           dist = gimp_draw_tool_calc_distance_square (draw_tool,
                                                       draw_tool->display,
                                                       blend_tool->mouse_x,
@@ -725,7 +789,7 @@ gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
         {
           gimp_canvas_item_begin_change (blend_tool->start_handle_circle);
           g_object_set (blend_tool->start_handle_circle,
-                        "width", start_diameter,
+                        "width",  start_diameter,
                         "height", start_diameter,
                         NULL);
           gimp_canvas_item_end_change (blend_tool->start_handle_circle);
@@ -735,7 +799,7 @@ gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
         {
           gimp_canvas_item_begin_change (blend_tool->end_handle_circle);
           g_object_set (blend_tool->end_handle_circle,
-                        "width", end_diameter,
+                        "width",  end_diameter,
                         "height", end_diameter,
                         NULL);
           gimp_canvas_item_end_change (blend_tool->end_handle_circle);
@@ -759,7 +823,7 @@ gimp_blend_tool_get_point_under_cursor (GimpBlendTool *blend_tool)
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (blend_tool);
   gdouble       dist;
 
-  if (!draw_tool->display)
+  if (! gimp_draw_tool_is_active (draw_tool))
     return POINT_NONE;
 
   /* Check the points in the reverse order of drawing */
@@ -789,8 +853,8 @@ gimp_blend_tool_get_point_under_cursor (GimpBlendTool *blend_tool)
 }
 
 static void
-gimp_blend_tool_start_preview (GimpBlendTool *blend_tool,
-                               GimpDisplay   *display)
+gimp_blend_tool_start (GimpBlendTool *blend_tool,
+                       GimpDisplay   *display)
 {
   GimpTool         *tool     = GIMP_TOOL (blend_tool);
   GimpImage        *image    = gimp_display_get_image (display);
@@ -809,12 +873,15 @@ gimp_blend_tool_start_preview (GimpBlendTool *blend_tool,
   /* Connect signal handlers for the gradient */
   gimp_blend_tool_set_gradient (blend_tool, context->gradient);
 
+  if (gimp_blend_tool_is_shapeburst (blend_tool))
+    gimp_blend_tool_precalc_shapeburst (blend_tool);
+
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
 }
 
 static void
-gimp_blend_tool_halt_preview (GimpBlendTool *blend_tool)
+gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
@@ -824,8 +891,10 @@ gimp_blend_tool_halt_preview (GimpBlendTool *blend_tool)
       blend_tool->graph = NULL;
 
       blend_tool->render_node    = NULL;
+#if 0
       blend_tool->subtract_node  = NULL;
       blend_tool->divide_node    = NULL;
+#endif
       blend_tool->dist_node      = NULL;
     }
 
@@ -854,8 +923,7 @@ gimp_blend_tool_halt_preview (GimpBlendTool *blend_tool)
 static void
 gimp_blend_tool_commit (GimpBlendTool *blend_tool)
 {
-  GimpTool *tool = GIMP_TOOL (blend_tool);
-
+  GimpTool         *tool          = GIMP_TOOL (blend_tool);
   GimpBlendOptions *options       = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (options);
   GimpContext      *context       = GIMP_CONTEXT (options);
@@ -925,30 +993,32 @@ gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
 static void
 gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
 {
-  GimpTool     *tool     = GIMP_TOOL (blend_tool);
-  GimpImage    *image    = gimp_display_get_image (tool->display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-  GeglBuffer   *buf      = NULL;
+  GimpTool *tool = GIMP_TOOL (blend_tool);
+  gint      x, y, width, height;
 
-  gint x, y, width, height;
-
-  if (blend_tool->dist_buffer)
+  if (blend_tool->dist_buffer || ! tool->drawable)
     return;
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (tool->drawable),
+                                  &x, &y, &width, &height))
     return;
 
-  buf = gimp_drawable_blend_shapeburst_distmap (drawable, FALSE,
-                                                GEGL_RECTANGLE (x, y, width, height),
-                                                GIMP_PROGRESS (blend_tool));
+  gimp_progress_start (GIMP_PROGRESS (blend_tool), FALSE,
+                       _("Calculating distance map"));
 
-  blend_tool->dist_buffer = buf;
+  blend_tool->dist_buffer =
+    gimp_drawable_blend_shapeburst_distmap (tool->drawable, TRUE,
+                                            GEGL_RECTANGLE (x, y, width, height),
+                                            GIMP_PROGRESS (blend_tool));
 
   if (blend_tool->dist_node)
     gegl_node_set (blend_tool->dist_node,
                    "buffer", blend_tool->dist_buffer,
                    NULL);
+
+  gimp_progress_end (GIMP_PROGRESS (blend_tool));
 }
+
 
 /* gegl graph stuff */
 
@@ -957,34 +1027,47 @@ gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
 {
   GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
   GimpContext      *context = GIMP_CONTEXT (options);
-  GeglNode         *graph, *output, *render, *shapeburst, *subtract, *divide;
+  GeglNode         *output;
 
   /* render_node is not supposed to be recreated */
   g_return_if_fail (blend_tool->graph == NULL);
 
-  graph = gegl_node_new ();
+  blend_tool->graph = gegl_node_new ();
 
-  output = gegl_node_get_output_proxy (graph, "output");
+  blend_tool->dist_node =
+    gegl_node_new_child (blend_tool->graph,
+                         "operation", "gegl:buffer-source",
+                         "buffer",    blend_tool->dist_buffer,
+                         NULL);
 
+#if 0
+  blend_tool->subtract_node =
+    gegl_node_new_child (blend_tool->graph,
+                         "operation", "gegl:subtract",
+                         NULL);
 
-  render = gegl_node_new_child (graph,
-                                "operation", "gimp:blend",
-                                "context", context,
-                                NULL);
+  blend_tool->divide_node =
+    gegl_node_new_child (blend_tool->graph,
+                         "operation", "gegl:divide",
+                         NULL);
+#endif
 
-  subtract = gegl_node_new_child (graph, "operation", "gegl:subtract", NULL);
-  divide = gegl_node_new_child (graph, "operation", "gegl:divide", NULL);
+  blend_tool->render_node =
+    gegl_node_new_child (blend_tool->graph,
+                         "operation", "gimp:blend",
+                         "context", context,
+                         NULL);
 
-  shapeburst = gegl_node_new_child (graph, "operation", "gegl:buffer-source",
-                                    "buffer", blend_tool->dist_buffer, NULL);
+  output = gegl_node_get_output_proxy (blend_tool->graph, "output");
 
-  gegl_node_link_many (shapeburst, subtract, divide, render, output, NULL);
-
-  blend_tool->graph          = graph;
-  blend_tool->render_node    = render;
-  blend_tool->subtract_node  = subtract;
-  blend_tool->divide_node    = divide;
-  blend_tool->dist_node      = shapeburst;
+  gegl_node_link_many (blend_tool->dist_node,
+#if 0
+                       blend_tool->subtract_node,
+                       blend_tool->divide_node,
+#endif
+                       blend_tool->render_node,
+                       output,
+                       NULL);
 
   gimp_blend_tool_update_preview_coords (blend_tool);
 }
@@ -993,10 +1076,11 @@ static void
 gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
+  gint      off_x, off_y;
 
-  gint off_x, off_y;
   gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
+#if 0
   if (gimp_blend_tool_is_shapeburst (blend_tool))
     {
       gfloat start, end;
@@ -1015,16 +1099,18 @@ gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
                        1.0, babl_format("Y float"), &end,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      if (start != end) {
-        gegl_node_set (blend_tool->subtract_node,
-                       "value", (gdouble) start,
-                       NULL);
-        gegl_node_set (blend_tool->divide_node,
-                       "value", (gdouble) (end - start),
-                       NULL);
-      }
+      if (start != end)
+        {
+          gegl_node_set (blend_tool->subtract_node,
+                         "value", (gdouble) start,
+                         NULL);
+          gegl_node_set (blend_tool->divide_node,
+                         "value", (gdouble) (end - start),
+                         NULL);
+        }
     }
   else
+#endif
     {
       gegl_node_set (blend_tool->render_node,
                      "start_x", blend_tool->start_x - off_x,
@@ -1038,7 +1124,7 @@ gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
 static void
 gimp_blend_tool_gradient_dirty (GimpBlendTool *blend_tool)
 {
-  if (!blend_tool->image_map)
+  if (! blend_tool->image_map)
     return;
 
   /* Set a property on the node. Otherwise it will cache and refuse to update */
@@ -1065,13 +1151,16 @@ gimp_blend_tool_set_gradient (GimpBlendTool *blend_tool,
       g_signal_handlers_disconnect_by_func (context,
                                             G_CALLBACK (gimp_blend_tool_gradient_dirty),
                                             blend_tool);
+
       g_object_unref (blend_tool->gradient);
-      blend_tool->gradient = NULL;
     }
 
-  if (gradient)
+  blend_tool->gradient = gradient;
+
+  if (blend_tool->gradient)
     {
-      blend_tool->gradient = g_object_ref (gradient);
+      g_object_ref (gradient);
+
       g_signal_connect_swapped (blend_tool->gradient, "dirty",
                                 G_CALLBACK (gimp_blend_tool_gradient_dirty),
                                 blend_tool);
@@ -1093,55 +1182,6 @@ gimp_blend_tool_set_gradient (GimpBlendTool *blend_tool,
     }
 }
 
-static void
-gimp_blend_tool_options_notify (GimpTool         *tool,
-                                GimpToolOptions  *options,
-                                const GParamSpec *pspec)
-{
-  GimpContext   *context    = GIMP_CONTEXT (options);
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-
-  if (! strcmp (pspec->name, "gradient"))
-    {
-      gimp_blend_tool_set_gradient (blend_tool, context->gradient);
-
-      if (blend_tool->image_map)
-        gimp_image_map_apply (blend_tool->image_map, NULL);
-    }
-  else if (blend_tool->render_node &&
-           gegl_node_find_property (blend_tool->render_node, pspec->name))
-    {
-      /* Sync any property changes on the config object that match the op */
-      GValue value = G_VALUE_INIT;
-      g_value_init (&value, pspec->value_type);
-
-      g_object_get_property (G_OBJECT (options), pspec->name, &value);
-      gegl_node_set_property (blend_tool->render_node, pspec->name, &value);
-
-      g_value_unset (&value);
-
-      if (! strcmp (pspec->name, "gradient-type"))
-        {
-          if (gimp_blend_tool_is_shapeburst (blend_tool))
-            gimp_blend_tool_precalc_shapeburst (blend_tool);
-
-          gimp_blend_tool_update_preview_coords (blend_tool);
-        }
-
-      gimp_image_map_apply (blend_tool->image_map, NULL);
-    }
-  else if (blend_tool->image_map &&
-           (! strcmp (pspec->name, "opacity") ||
-            ! strcmp (pspec->name, "paint-mode")))
-    {
-      gimp_image_map_set_mode (blend_tool->image_map,
-                               gimp_context_get_opacity (context),
-                               gimp_context_get_paint_mode (context));
-
-      gimp_image_map_apply (blend_tool->image_map, NULL);
-    }
-}
-
 static gboolean
 gimp_blend_tool_is_shapeburst (GimpBlendTool *blend_tool)
 {
@@ -1151,7 +1191,8 @@ gimp_blend_tool_is_shapeburst (GimpBlendTool *blend_tool)
          options->gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED;
 }
 
-/* Image map stuff */
+
+/* image map stuff */
 
 static void
 gimp_blend_tool_create_image_map (GimpBlendTool *blend_tool,

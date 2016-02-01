@@ -21,15 +21,18 @@
 
 #include "gimpdrawtool.h"
 
+
 typedef enum
 {
   /* POINT_NONE evaluates to FALSE */
   POINT_NONE = 0,
   POINT_START,
   POINT_END,
+  POINT_BOTH,
   POINT_INIT_MODE,
   POINT_FILL_MODE
 } GimpBlendToolPoint;
+
 
 #define GIMP_TYPE_BLEND_TOOL            (gimp_blend_tool_get_type ())
 #define GIMP_BLEND_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BLEND_TOOL, GimpBlendTool))
@@ -46,33 +49,36 @@ typedef struct _GimpBlendToolClass GimpBlendToolClass;
 
 struct _GimpBlendTool
 {
-  GimpDrawTool    parent_instance;
+  GimpDrawTool        parent_instance;
 
-  GimpBlendToolPoint grabbed_point;
 
-  GimpGradient   *gradient;
+  GimpGradient       *gradient;
 
-  gdouble         start_x;    /*  starting x coord  */
-  gdouble         start_y;    /*  starting y coord  */
-  gdouble         end_x;      /*  ending x coord    */
-  gdouble         end_y;      /*  ending y coord    */
+  gdouble             mouse_x;    /*  pointer x coord   */
+  gdouble             mouse_y;    /*  pointer y coord   */
 
-  gdouble         mouse_x;    /*  pointer x coord   */
-  gdouble         mouse_y;    /*  pointer y coord   */
+  GimpBlendToolPoint  grabbed_point;
 
-  GimpCanvasItem *line;
-  GimpCanvasItem *start_handle_circle;
-  GimpCanvasItem *start_handle_cross;
-  GimpCanvasItem *end_handle_circle;
-  GimpCanvasItem *end_handle_cross;
+  gdouble             start_x;    /*  starting x coord  */
+  gdouble             start_y;    /*  starting y coord  */
+  gdouble             end_x;      /*  ending x coord    */
+  gdouble             end_y;      /*  ending y coord    */
 
-  GeglNode       *graph;
-  GeglNode       *render_node;
-  GeglNode       *subtract_node;
-  GeglNode       *divide_node;
-  GeglNode       *dist_node;
-  GeglBuffer     *dist_buffer;
-  GimpImageMap   *image_map;
+  GimpCanvasItem     *line;
+  GimpCanvasItem     *start_handle_circle;
+  GimpCanvasItem     *start_handle_cross;
+  GimpCanvasItem     *end_handle_circle;
+  GimpCanvasItem     *end_handle_cross;
+
+  GeglNode           *graph;
+  GeglNode           *render_node;
+#if 0
+  GeglNode           *subtract_node;
+  GeglNode           *divide_node;
+#endif
+  GeglNode           *dist_node;
+  GeglBuffer         *dist_buffer;
+  GimpImageMap       *image_map;
 };
 
 struct _GimpBlendToolClass
