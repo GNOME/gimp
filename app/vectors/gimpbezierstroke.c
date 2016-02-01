@@ -1687,10 +1687,10 @@ gimp_bezier_stroke_conicto (GimpStroke       *stroke,
                      gimp_anchor_new (GIMP_ANCHOR_CONTROL,
                                       &coords));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
                                       end));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
                                       end));
 }
 
@@ -1710,10 +1710,10 @@ gimp_bezier_stroke_cubicto (GimpStroke       *stroke,
                      gimp_anchor_new (GIMP_ANCHOR_CONTROL,
                                       control2));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
                                       end));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
                                       end));
 }
 
