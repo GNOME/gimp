@@ -95,7 +95,7 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SUPERSAMPLE_DEPTH,
                                 "supersample-depth", NULL,
-                                0, 6, 3,
+                                1, 9, 3,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SUPERSAMPLE_THRESHOLD,
                                    "supersample-threshold", NULL,
