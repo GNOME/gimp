@@ -1,6 +1,7 @@
 ############################################################################
 #
-# The Dark Side of GIMP Theme
+# The Light Side of GIMP Theme
+#
 # Version 0.1.3
 #
 # Copyright 2015, Benoit Touchette
@@ -62,19 +63,19 @@ gtk-application-prefer-dark-theme = true
 # KDE hack to match gtk/gnome defaults
 gtk-button-images = 0
 
-style "tdsog-default-style"
+style "tlsog-default-style"
 {
 #  font_name = "Sans 11"
 
-  color["clr1"] = "#EEEEEE"
-  color["clr2"] = "#DDDDDD"
-  color["clr3"] = "#C1C1C1"
-  color["clr4"] = "#222222"
-  color["clr5"] = "#111111"
-  color["clr6"] = "#828282"
+  color["clr1"] = "#343434"
+  color["clr2"] = "#222222"
+  color["clr3"] = "#3E3E3E"
+  color["clr4"] = "#DDDDDD"
+  color["clr5"] = "#EEEEEE"
+  color["clr6"] = "#BDBDBD"
   color["clr7"] = "#3b3b3b"
-  color["clr8"] = "#222222"
-  color["clr9"] = "#4D4D4D"
+  color["clr8"] = "#DDDDDD"
+  color["clr9"] = "#B2B2B2"
 
   fg[NORMAL] = @clr1
   fg[PRELIGHT] = @clr1
@@ -85,13 +86,13 @@ style "tdsog-default-style"
   bg[NORMAL] = @clr4
   bg[PRELIGHT] = @clr4
   bg[ACTIVE] = @clr4
-  bg[SELECTED] = @clr9
+  bg[SELECTED] = @clr5
   bg[INSENSITIVE] = @clr5
 
   base[NORMAL] = @clr6
-  base[PRELIGHT] = @clr7
-  base[ACTIVE] = @clr7
-  base[SELECTED] = @clr7
+  base[PRELIGHT] = @clr8
+  base[ACTIVE] = @clr8
+  base[SELECTED] = @clr8
   base[INSENSITIVE] = @clr8
 
   text[NORMAL] = @clr1
@@ -111,7 +112,7 @@ style "tdsog-default-style"
   GimpDock::font-scale = 0.8333
   GimpMenuDock::minimal-width = 200
   GimpDockWindow::menu-preview-size = small-toolbar
-  GimpToolPalette::tool-icon-size = large-toolbar
+  GimpToolPalette::tool-icon-size = menu
   GimpToolPalette::button-relief = none
   GimpDockbook::tab-border = 0
   GimpDockbook::tab-icon-size = menu
@@ -304,40 +305,40 @@ style "tdsog-default-style"
     }
 }
 
-class "GtkWidget" style "tdsog-default-style"
+class "GtkWidget" style "tlsog-default-style"
 
 ###########################################################
 
-style "tdsog-tool-dialog-style" = "tdsog-default-style"
+style "tlsog-tool-dialog-style" = "tlsog-default-style"
 {
   GtkDialog::action-area-border = 6
 }
 
-class "GimpToolDialog" style "tdsog-tool-dialog-style"
+class "GimpToolDialog" style "tlsog-tool-dialog-style"
 
 ###########################################################
 
-style "tdsog-grid-view-style" = "tdsog-default-style"
+style "tlsog-grid-view-style" = "tlsog-default-style"
 {
   bg[NORMAL] = { 1.0, 1.0, 1.0 }
 }
 
-widget "*GimpContainerGridView*GtkViewport*" style "tdsog-grid-view-style"
+widget "*GimpContainerGridView*GtkViewport*" style "tlsog-grid-view-style"
 
 ###########################################################
 
-style "tdsog-dockable-style" = "tdsog-default-style"
+style "tlsog-dockable-style" = "tlsog-default-style"
 {
   GimpFrame::label-bold = 0
   GtkButton::focus-line_width = 1
   GtkButton::focus-padding = 0
 }
 
-widget "*GimpDockable.*" style "tdsog-dockable-style"
+widget "*GimpDockable.*" style "tlsog-dockable-style"
 
 ###########################################################
 
-style "tdsog-display-style" = "tdsog-default-style"
+style "tlsog-display-style" = "tlsog-default-style"
 {
   GimpRuler::font-scale = 0.6444
   GimpUnitComboBox::label-scale = 0.8333
@@ -348,20 +349,20 @@ style "tdsog-display-style" = "tdsog-default-style"
   GtkButton::focus-padding = 0
 }
 
-widget "*GimpDisplayShell.*" style "tdsog-display-style"
+widget "*GimpDisplayShell.*" style "tlsog-display-style"
 
 ###########################################################
 
-style "tdsog-overlay-style" = "gimp-display-style"
+style "tlsog-overlay-style" = "gimp-display-style"
 {
   GtkButton::focus-line_width = 1
 }
 
-widget_class "*<GimpOverlayFrame>*" style "tdsog-overlay-style"
+widget_class "*<GimpOverlayFrame>*" style "tlsog-overlay-style"
 
 ###########################################################
 
-style "tdsog-gtkbutton-style" = "tdsog-default-style"
+style "tlsog-gtkbutton-style" = "tlsog-default-style"
 {
   xthickness = 3
   ythickness = 3
@@ -416,31 +417,31 @@ style "tdsog-gtkbutton-style" = "tdsog-default-style"
     }
 }
 
-class "GtkButton" style "tdsog-gtkbutton-style"
+class "GtkButton" style "tlsog-gtkbutton-style"
 
 ###########################################################
 
-style "tdsog-tooltips-style" = "tdsog-default-style"
+style "tlsog-tooltips-style" = "tlsog-default-style"
 {
   xthickness = 4
   ythickness = 4
 
-  bg[NORMAL] = "#383838"
-  bg[SELECTED] = "#828282"
-  fg[NORMAL] = "#CBCBCB"
+  bg[NORMAL] = "#C7C7C7"
+  bg[SELECTED] = "#BDBDBD"
+  fg[NORMAL] = "#343434"
 }
 
-widget "gtk-tooltip*" style "tdsog-tooltips-style"
+widget "gtk-tooltip*" style "tlsog-tooltips-style"
 
 ###########################################################
 
-style "tdsog-treeview" = "tdsog-default-style"
+style "tlsog-treeview" = "tlsog-default-style"
 {
   xthickness = 2
   ythickness = 0
 
-  GtkTreeView::odd_row_color = "#828282"
-  GtkTreeView::even_row_color = "#828282"
+  GtkTreeView::odd_row_color = "#BDBDBD"
+  GtkTreeView::even_row_color = "#BDBDBD"
 
   #
   # set custom text color here
@@ -501,17 +502,17 @@ style "tdsog-treeview" = "tdsog-default-style"
     }
 }
 
-class "GtkTreeView" style "tdsog-treeview"
+class "GtkTreeView" style "tlsog-treeview"
 
 ###########################################################
 
-style "tdsog-list-header-style"
+style "tlsog-list-header-style"
 {
   #Comment out the ythickness setting below for thicker column headers.
   #ythickness = 0
 
-  GtkTreeView::odd_row_color = "#828282"
-  GtkTreeView::even_row_color = "#828282"
+  GtkTreeView::odd_row_color = "#BDBDBD"
+  GtkTreeView::even_row_color = "#BDBDBD"
 
   #
   # set custom header text color here
@@ -581,13 +582,13 @@ style "tdsog-list-header-style"
     }
 }
 
-widget_class "*List" style "tdsog-list-header-style"
-widget_class "*GtkTree*" style "tdsog-list-header-style"
-widget_class "*GtkCList" style "tdsog-list-header-style"
+widget_class "*List" style "tlsog-list-header-style"
+widget_class "*GtkTree*" style "tlsog-list-header-style"
+widget_class "*GtkCList" style "tlsog-list-header-style"
 
 ###########################################################
 
-style "tdsog-notebook-style" = "tdsog-default-style"
+style "tlsog-notebook-style" = "tlsog-default-style"
 {
   engine "pixmap"
     {
@@ -743,17 +744,17 @@ style "tdsog-notebook-style" = "tdsog-default-style"
     }
 }
 
-class "GtkNotebook" style "tdsog-notebook-style"
+class "GtkNotebook" style "tlsog-notebook-style"
 
 ###########################################################
 
-style "tdsog-menu" = "tdsog-default-style"
+style "tlsog-menu" = "tlsog-default-style"
 {
-  bg[NORMAL] = "#484848"
+  bg[NORMAL] = "#B7B7B7"
 
-  fg[NORMAL] = "#CBCBCB"
-  fg[PRELIGHT] = "#FFFFFF"
-  fg[INSENSITIVE] = "#C1C1C1"
+  fg[NORMAL] = "#343434"
+  fg[PRELIGHT] = "#000000"
+  fg[INSENSITIVE] = "#3E3E3E"
 
   engine "pixmap"
     {
@@ -777,17 +778,17 @@ style "tdsog-menu" = "tdsog-default-style"
     }
 }
 
-class "GtkMenu" style "tdsog-menu"
-widget_class "*<GtkMenu>*" style "tdsog-menu"
+class "GtkMenu" style "tlsog-menu"
+widget_class "*<GtkMenu>*" style "tlsog-menu"
 
 ###########################################################
 
-style "tdsog-menu-bar" = "tdsog-default-style"
+style "tlsog-menu-bar" = "tlsog-default-style"
 {
   xthickness = 4
   ythickness = 2
 
-  fg[NORMAL] = "#EEEEEE"
+  fg[NORMAL] = "#343434"
 
   engine "pixmap"
     {
@@ -801,9 +802,9 @@ style "tdsog-menu-bar" = "tdsog-default-style"
     }
 }
 
-class "GtkMenuBar" style "tdsog-menu-bar"
-widget_class "*<GtkMenuBar>*" style "tdsog-menu-bar"
-widget_class "*<GtkMenuBar>.<GtkMenuItem>*" style "tdsog-menu-bar"
+class "GtkMenuBar" style "tlsog-menu-bar"
+widget_class "*<GtkMenuBar>*" style "tlsog-menu-bar"
+widget_class "*<GtkMenuBar>.<GtkMenuItem>*" style "tlsog-menu-bar"
 
 ###########################################################
 
@@ -812,13 +813,13 @@ style "menu_item"
   xthickness = 2
   ythickness = 4
 
-  bg[NORMAL] = "#484848"
+  bg[NORMAL] = "#B7B7B7"
 
-  fg[NORMAL] = "#FFF"
-  fg[PRELIGHT] = "#FFF"
-  fg[ACTIVE] = "#FFF"
-  fg[SELECTED] = "#FFF"
-  fg[INSENSITIVE] = "#C1C1C1"
+  fg[NORMAL] = "#343434"
+  fg[PRELIGHT] = "#DFDFDF"
+  fg[ACTIVE] = "#343434"
+  fg[SELECTED] = "#000000"
+  fg[INSENSITIVE] = "#3E3E3E"
 
   engine "pixmap"
     {
@@ -895,17 +896,17 @@ widget_class "*<GtkMenuItem>*" style "menu_item"
 
 ###########################################################
 
-style "tdsog-item"
+style "tlsog-item"
 {
   xthickness = 4
 
-  bg[NORMAL] = "#484848"
+  bg[NORMAL] = "#B7B7B7"
 
-  fg[NORMAL] = "#FFF"
-  fg[PRELIGHT] = "#FFF"
-  fg[ACTIVE] = "#FFF"
-  fg[SELECTED] = "#FFF"
-  fg[INSENSITIVE] = "#C1C1C1"
+  fg[NORMAL] = "#343434"
+  fg[PRELIGHT] = "#DFDFDF"
+  fg[ACTIVE] = "#343434"
+  fg[SELECTED] = "#000000"
+  fg[INSENSITIVE] = "#3E3E3E"
 
   engine "pixmap"
     {
@@ -940,14 +941,17 @@ style "tdsog-item"
     }
 }
 
-class "GtkItem" style "tdsog-item"
+class "GtkItem" style "tlsog-item"
 
 ###########################################################
 
 
-style "tdsog-entry" = "tdsog-default-style"
+style "tlsog-entry" = "tlsog-default-style"
 {
   GtkWidget::interior_focus = 1
+
+  #text[ACTIVE] = "#CBCBCB"
+  #text[SELECTED] = "#CBCBCB"
 
   engine "pixmap"
     {
@@ -992,13 +996,13 @@ style "tdsog-entry" = "tdsog-default-style"
     }
 }
 
-class "GtkEntry" style "tdsog-entry"
-class "GtkOldEditable" style "tdsog-entry"
+class "GtkEntry" style "tlsog-entry"
+class "GtkOldEditable" style "tlsog-entry"
 
 ###########################################################
 
 
-style "tdsog-spin-button" = "tdsog-entry"
+style "tlsog-spin-button" = "tlsog-entry"
 {
   engine "pixmap"
     {
@@ -1113,11 +1117,11 @@ style "tdsog-spin-button" = "tdsog-entry"
     }
 }
 
-class "GtkSpinButton" style "tdsog-spin-button"
+class "GtkSpinButton" style "tlsog-spin-button"
 
 ###########################################################
 
-style "tdsog-scroll-bar"
+style "tlsog-scroll-bar"
 {
   GtkRange::trough_border = 0
   GtkVScale::slider_length = 16
@@ -1359,11 +1363,11 @@ style "tdsog-scroll-bar"
     }
 }
 
-class "GtkScrollbar" style "tdsog-scroll-bar"
+class "GtkScrollbar" style "tlsog-scroll-bar"
 
 ###########################################################
 
-style "tdsog-radio-button" = "tdsog-default-style"
+style "tlsog-radio-button" = "tlsog-default-style"
 {
   engine "pixmap"
     {
@@ -1396,12 +1400,12 @@ style "tdsog-radio-button" = "tdsog-default-style"
     }
 }
 
-class "GtkRadioButton"   style "tdsog-radio-button"
-class "GtkRadioMenuItem"  style "tdsog-radio-button"
+class "GtkRadioButton"   style "tlsog-radio-button"
+class "GtkRadioMenuItem"  style "tlsog-radio-button"
 
 ###########################################################
 
-style "tdsog-check-button" = "tdsog-default-style"
+style "tlsog-check-button" = "tlsog-default-style"
 {
   engine "pixmap"
     {
@@ -1437,12 +1441,12 @@ style "tdsog-check-button" = "tdsog-default-style"
     }
 }
 
-class "GtkCheckButton"   style "tdsog-check-button"
-class "GtkCheckMenuItem"   style "tdsog-check-button"
+class "GtkCheckButton"   style "tlsog-check-button"
+class "GtkCheckMenuItem"   style "tlsog-check-button"
 
 ###########################################################
 
-style "tdsog-progress-bar" = "tdsog-default-style"
+style "tlsog-progress-bar" = "tlsog-default-style"
 {
   xthickness = 1
   ythickness = 1
@@ -1472,11 +1476,11 @@ style "tdsog-progress-bar" = "tdsog-default-style"
     }
 }
 
-class "GtkProgressBar" style "tdsog-progress-bar"
+class "GtkProgressBar" style "tlsog-progress-bar"
 
 ###########################################################
 
-style "tdsog-separator-menu-item"
+style "tlsog-separator-menu-item"
 {
   engine "pixmap"
     {
@@ -1490,11 +1494,11 @@ style "tdsog-separator-menu-item"
     }
 }
 
-class "GtkSeparatorMenuItem" style "tdsog-separator-menu-item"
+class "GtkSeparatorMenuItem" style "tlsog-separator-menu-item"
 
 ###########################################################
 
-style "tdsog-notebook-entry-style"
+style "tlsog-notebook-entry-style"
 {
   engine "pixmap"
     {
@@ -1532,11 +1536,11 @@ style "tdsog-notebook-entry-style"
     }
 }
 
-widget_class "*<GtkNotebook>*<GtkEntry>" style "tdsog-notebook-entry-style"
+widget_class "*<GtkNotebook>*<GtkEntry>" style "tlsog-notebook-entry-style"
 
 ###########################################################
 
-style "tdsog-notebook-combobox-entry-style"
+style "tlsog-notebook-combobox-entry-style"
 {
   engine "pixmap"
     {
@@ -1614,15 +1618,15 @@ style "tdsog-notebook-combobox-entry-style"
     }
 }
 
-widget_class "*<GtkNotebook>*<GtkComboBoxEntry>*<GtkEntry>" style "tdsog-notebook-combobox-entry-style"
+widget_class "*<GtkNotebook>*<GtkComboBoxEntry>*<GtkEntry>" style "tlsog-notebook-combobox-entry-style"
 
 ###########################################################
 
-style "tdsog-combobox-entry-button-style"
+style "tlsog-combobox-entry-button-style"
 {
   xthickness = 6
 
-  fg[ACTIVE] = "#CBCBCB"
+  fg[ACTIVE] = "#343434"
 
   engine "pixmap"
     {
@@ -1710,13 +1714,13 @@ style "tdsog-combobox-entry-button-style"
     }
 }
 
-widget_class "*<GtkComboBoxEntry>*<GtkEntry>" style "tdsog-combobox-entry-button-style"
-widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkComboBoxEntry>*<GtkEntry>" style "tdsog-combobox-entry-button-style"
-widget_class "*<GtkComboBoxEntry>*<GtkButton>" style "tdsog-combobox-entry-button-style"
+widget_class "*<GtkComboBoxEntry>*<GtkEntry>" style "tlsog-combobox-entry-button-style"
+widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkComboBoxEntry>*<GtkEntry>" style "tlsog-combobox-entry-button-style"
+widget_class "*<GtkComboBoxEntry>*<GtkButton>" style "tlsog-combobox-entry-button-style"
 
 ###########################################################
 
-style "tdsog-range-style"
+style "tlsog-range-style"
 {
   engine "pixmap"
     {
@@ -1813,13 +1817,13 @@ style "tdsog-range-style"
     }
 }
 
-class "GtkRange" style "tdsog-range-style"
+class "GtkRange" style "tlsog-range-style"
 
 ###########################################################
 
-style "tdsog-spin-scale-style"
+style "tlsog-spin-scale-style"
 {
-  bg[NORMAL] = "#828282"
+  bg[NORMAL] = "#BDBDBD"
 
   engine "pixmap"
     {
@@ -1911,11 +1915,11 @@ style "tdsog-spin-scale-style"
     }
 }
 
-class "GimpSpinScale" style "tdsog-spin-scale-style"
+class "GimpSpinScale" style "tlsog-spin-scale-style"
 
 ###########################################################
 
-style "tdsog-scrolled-window-style"
+style "tlsog-scrolled-window-style"
 {
   xthickness = 1
   ythickness = 1
@@ -1932,11 +1936,11 @@ style "tdsog-scrolled-window-style"
     }
 }
 
-class "GtkScrolledWindow" style "tdsog-scrolled-window-style"
+class "GtkScrolledWindow" style "tlsog-scrolled-window-style"
 
 ###########################################################
 
-style "tdsog-frame-style"
+style "tlsog-frame-style"
 {
   xthickness = 1
   ythickness = 1
@@ -2033,11 +2037,11 @@ style "tdsog-frame-style"
     }
 }
 
-class "GtkFrame" style "tdsog-frame-style"
+class "GtkFrame" style "tlsog-frame-style"
 
 ###########################################################
 
-style "tdsog-toolbox-frame-style"
+style "tlsog-toolbox-frame-style"
 {
   engine "pixmap"
     {
@@ -2048,11 +2052,11 @@ style "tdsog-toolbox-frame-style"
     }
 }
 
-widget_class "*<GimpToolbox>*<GtkFrame>" style "tdsog-toolbox-frame-style"
+widget_class "*<GimpToolbox>*<GtkFrame>" style "tlsog-toolbox-frame-style"
 
 ###########################################################
 
-style "tdsog-toolbar-style"
+style "tlsog-toolbar-style"
 {
   engine "pixmap"
     {
@@ -2110,43 +2114,43 @@ style "tdsog-toolbar-style"
     }
 }
 
-class "GtkToolbar" style "tdsog-toolbar-style"
-class "*HandleBox*" style "tdsog-toolbar-style"
+class "GtkToolbar" style "tlsog-toolbar-style"
+class "*HandleBox*" style "tlsog-toolbar-style"
 
 ###########################################################
 
-style "tdsog-combobox-separator-style"
+style "tlsog-combobox-separator-style"
 {
   xthickness = 0
   ythickness = 0
   GtkWidget::wide-separators = 1
 }
 
-widget_class "*<GtkComboBox>*<GtkSeparator>" style "tdsog-combobox-separator-style"
+widget_class "*<GtkComboBox>*<GtkSeparator>" style "tlsog-combobox-separator-style"
 
 ###########################################################
 
-style "tdsog-combobox-button-style"
+style "tlsog-combobox-button-style"
 {
   xthickness = 3
   ythickness = 3
 }
 
-widget_class "*<GtkComboBox>*<GtkButton>" style "tdsog-combobox-button-style"
+widget_class "*<GtkComboBox>*<GtkButton>" style "tlsog-combobox-button-style"
 
 ###########################################################
 
-style "tdsog-combobox-style"
+style "tlsog-combobox-style"
 {
   xthickness = 0
   ythickness = 0
 }
 
-widget_class "*<GtkComboBox>" style "tdsog-combobox-style"
+widget_class "*<GtkComboBox>" style "tlsog-combobox-style"
 
 ###########################################################
 
-style "tdsog-combobox-style1"
+style "tlsog-combobox-style1"
 {
   xthickness = 0
   ythickness = 0
@@ -2163,19 +2167,19 @@ style "tdsog-combobox-style1"
     }
 }
 
-widget_class "*<GtkEntry>*<GtkButton>*" style "tdsog-combobox-style1"
+widget_class "*<GtkEntry>*<GtkButton>*" style "tlsog-combobox-style1"
 
 ###########################################################
 
-style "tdsog-button-style"
+style "tlsog-button-style"
 {
-  fg[PRELIGHT] = "#FBFBFB"
-  fg[ACTIVE] = "#9B9B9B"
-  fg[NORMAL] = "#CBCBCB"
-  fg[INSENSITIVE] = "#CBCBCB"
+  fg[PRELIGHT] = "#040404"
+  fg[ACTIVE] = "#646464"
+  fg[NORMAL] = "#343434"
+  fg[INSENSITIVE] = "#343434"
 }
 
-widget_class "*<GtkButton>*" style "tdsog-button-style"
+widget_class "*<GtkButton>*" style "tlsog-button-style"
 
 ###########################################################
 
@@ -2185,15 +2189,15 @@ style "kde_hack_1"
   GtkComboBoxEntry::appears-as-list = 0
   GtkComboBoxText::appears-as-list = 0
 
-  color["clr1"] = "#EEEEEE"
-  color["clr2"] = "#DDDDDD"
-  color["clr3"] = "#C1C1C1"
-  color["clr4"] = "#222222"
-  color["clr5"] = "#111111"
-  color["clr6"] = "#828282"
+  color["clr1"] = "#343434"
+  color["clr2"] = "#222222"
+  color["clr3"] = "#3E3E3E"
+  color["clr4"] = "#DDDDDD"
+  color["clr5"] = "#EEEEEE"
+  color["clr6"] = "#BDBDBD"
   color["clr7"] = "#3b3b3b"
-  color["clr8"] = "#222222"
-  color["clr9"] = "#4D4D4D"
+  color["clr8"] = "#DDDDDD"
+  color["clr9"] = "#B2B2B2"
 
   fg[NORMAL] = @clr1
   fg[PRELIGHT] = @clr1
@@ -2220,7 +2224,7 @@ widget_class "*" style "kde_hack_1"
 
 style "kde_hack_2"
 {
-  bg[NORMAL] = "#222" #Sets canvas BG
+  bg[NORMAL] = "#DDDDDD" #Sets canvas BG
 }
 
 widget "*GimpDisplayShell.*" style "kde_hack_2"
@@ -2229,7 +2233,7 @@ widget "*GimpDisplayShell.*" style "kde_hack_2"
 
 style "kde_hack_3"
 {
-  bg[NORMAL] = "#222"
+  bg[NORMAL] = "#DDDDDD"
 }
 
 class "GtkFrame" style "kde_hack_3"
@@ -2305,7 +2309,7 @@ widget_class "*<GtkWidget>*" style "kde_hack_4"
 ###########################################################
 
 # KDE Hack 5
-widget_class "*<GtkToolbar>*" style "tdsog-toolbar-style"
+widget_class "*<GtkToolbar>*" style "tlsog-toolbar-style"
 
 ###########################################################
 
@@ -2364,18 +2368,18 @@ widget_class "*<GtkTreeView>*<GtkButton>*" style "kde_hack_6"
 ###########################################################
 
 # KDE & oxygen-gtk fix for BG
-style "tdsog-oxygen-default-style" = "tdsog-default-style"
+style "tlsog-oxygen-default-style" = "tlsog-default-style"
 {
   GtkComboBox::appears-as-list = 0
   GtkComboBoxEntry::appears-as-list = 0
   GtkComboBoxText::appears-as-list = 0
 }
 
-class "*" style "tdsog-oxygen-default-style"
+class "*" style "tlsog-oxygen-default-style"
 
 ###########################################################
 
-style "tdsog-gtkscale-style"
+style "tlsog-gtkscale-style"
 {
   engine "pixmap"
     {
@@ -2421,28 +2425,28 @@ style "tdsog-gtkscale-style"
     }
 }
 
-class "GtkScale" style "tdsog-gtkscale-style"
-class "GtkVScale" style "tdsog-gtkscale-style"
-class "GtkHScale" style "tdsog-gtkscale-style"
-widget_class "*GtkScale*" style "tdsog-gtkscale-style"
-widget_class "*GtkVScale*" style "tdsog-gtkscale-style"
-widget_class "*GtkHScale*" style "tdsog-gtkscale-style"
+class "GtkScale" style "tlsog-gtkscale-style"
+class "GtkVScale" style "tlsog-gtkscale-style"
+class "GtkHScale" style "tlsog-gtkscale-style"
+widget_class "*GtkScale*" style "tlsog-gtkscale-style"
+widget_class "*GtkVScale*" style "tlsog-gtkscale-style"
+widget_class "*GtkHScale*" style "tlsog-gtkscale-style"
 
 ###########################################################
 
-style "tdsog-overlay-scrollbar"
+style "tlsog-overlay-scrollbar"
 {
-  bg[SELECTED] = "#CCC"
-  bg[INSENSITIVE] = "#AAA"
-  bg[ACTIVE] = "#EEE"
-  bg[NORMAL] = "#666"
-  bg[PRELIGHT] = "#666"
+  bg[SELECTED] = "#555"
+  bg[INSENSITIVE] = "#777"
+  bg[ACTIVE] = "#333"
+  bg[NORMAL] = "#CCC"
+  bg[PRELIGHT] = "#CCC"
 
-  fg[NORMAL] = "#EEE"
+  fg[NORMAL] = "#333"
 }
 
-widget_class "*<OsScrollbar>" style "tdsog-overlay-scrollbar"
-widget_class "*<OsThumb>" style "tdsog-overlay-scrollbar"
+widget_class "*<OsScrollbar>" style "tlsog-overlay-scrollbar"
+widget_class "*<OsThumb>" style "tlsog-overlay-scrollbar"
 
 ###########################################################
 
