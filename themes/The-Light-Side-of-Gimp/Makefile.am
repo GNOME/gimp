@@ -3,11 +3,7 @@
 themedatadir = $(gimpdatadir)/themes/The-Light-Side-of-Gimp
 themeuidir   = $(gimpdatadir)/themes/The-Light-Side-of-Gimp/ui
 
-themedata_DATA = gtkrc colorrc
-
-# We use a single base gtkrc for all themes.
-gtkrc: $(top_srcdir)/themes/The-Dark-Side-of-Gimp/gtkrc
-	cp -f $< $@
+themedata_DATA = gtkrc
 
 themeui_DATA =	\
 	ui/arrow-down-insens.png	\
