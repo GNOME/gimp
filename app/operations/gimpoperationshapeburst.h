@@ -41,7 +41,6 @@ struct _GimpOperationShapeburst
   GeglOperationFilter  parent_instance;
 
   gboolean             normalize;
-  gdouble              progress;
 };
 
 struct _GimpOperationShapeburstClass

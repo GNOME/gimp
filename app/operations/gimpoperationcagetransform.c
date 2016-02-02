@@ -28,6 +28,7 @@
 
 #include "operations-types.h"
 
+#include "core/gimpmarshal.h"
 #include "gimpoperationcagetransform.h"
 #include "gimpcageconfig.h"
 
@@ -38,7 +39,12 @@ enum
   PROP_0,
   PROP_CONFIG,
   PROP_FILL,
-  PROP_PROGRESS
+};
+
+enum
+{
+  PROGRESS,
+  LAST_SIGNAL
 };
 
 
@@ -88,6 +94,8 @@ G_DEFINE_TYPE (GimpOperationCageTransform, gimp_operation_cage_transform,
 
 #define parent_class gimp_operation_cage_transform_parent_class
 
+static guint cage_transform_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass)
@@ -95,6 +103,15 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
   GObjectClass               *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass         *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationComposerClass *filter_class    = GEGL_OPERATION_COMPOSER_CLASS (klass);
+
+  cage_transform_signals[PROGRESS] =
+    g_signal_new ("progress",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  gimp_marshal_VOID__DOUBLE,
+                  G_TYPE_NONE, 0);
 
   object_class->get_property               = gimp_operation_cage_transform_get_property;
   object_class->set_property               = gimp_operation_cage_transform_set_property;
@@ -129,13 +146,6 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
                                                          _("Fill the original position of the cage with a plain color"),
                                                          FALSE,
                                                          G_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_PROGRESS,
-                                   g_param_spec_double ("progress",
-                                                        "Progress",
-                                                        "Progress indicator, and a bad hack",
-                                                        0.0, 1.0, 0.0,
-                                                        G_PARAM_READABLE));
 }
 
 static void
@@ -173,9 +183,6 @@ gimp_operation_cage_transform_get_property (GObject    *object,
       break;
     case PROP_FILL:
       g_value_set_boolean (value, self->fill_plain_color);
-      break;
-    case PROP_PROGRESS:
-      g_value_set_double (value, self->progress);
       break;
 
     default:
@@ -220,6 +227,13 @@ gimp_operation_cage_transform_prepare (GeglOperation *operation)
                                             2 * gimp_cage_config_get_n_points (config)));
   gegl_operation_set_format (operation, "output",
                              babl_format_n (babl_type ("float"), 2));
+}
+
+static void
+gimp_operation_cage_transform_notify_progress (gpointer instance,
+                                               gdouble  progress)
+{
+  g_signal_emit (instance, cage_transform_signals[PROGRESS], 0, progress);
 }
 
 static gboolean
@@ -299,8 +313,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
         }
     }
 
-  oct->progress = 0.0;
-  g_object_notify (G_OBJECT (oct), "progress");
+  gimp_operation_cage_transform_notify_progress (oct, 0.0);
 
   /* pre-allocate memory outside of the loop */
   coords      = g_slice_alloc (2 * sizeof (gfloat));
@@ -365,8 +378,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
           /*  0.0 and 1.0 indicate progress start/end, so avoid them  */
           if (fraction > 0.0 && fraction < 1.0)
             {
-              oct->progress = fraction;
-              g_object_notify (G_OBJECT (oct), "progress");
+              gimp_operation_cage_transform_notify_progress (oct, fraction);
             }
         }
     }
@@ -374,8 +386,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   g_free (coef);
   g_slice_free1 (2 * sizeof (gfloat), coords);
 
-  oct->progress = 1.0;
-  g_object_notify (G_OBJECT (oct), "progress");
+  gimp_operation_cage_transform_notify_progress (oct, 1.0);
 
   return TRUE;
 }
