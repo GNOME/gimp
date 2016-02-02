@@ -925,44 +925,16 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 static void
 gimp_blend_tool_commit (GimpBlendTool *blend_tool)
 {
-  GimpTool         *tool          = GIMP_TOOL (blend_tool);
-  GimpBlendOptions *options       = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
-  GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (options);
-  GimpContext      *context       = GIMP_CONTEXT (options);
-  GimpImage        *image         = gimp_display_get_image (tool->display);
-  GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
-  GimpProgress     *progress;
-  gint              off_x;
-  gint              off_y;
+  GimpTool *tool = GIMP_TOOL (blend_tool);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
-                                  _("Blending"));
+  if (blend_tool->image_map)
+    {
+      gimp_image_map_commit (blend_tool->image_map, GIMP_PROGRESS (tool), FALSE);
+      g_object_unref (blend_tool->image_map);
+      blend_tool->image_map = NULL;
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-  gimp_drawable_blend (drawable,
-                       context,
-                       gimp_context_get_gradient (context),
-                       gimp_context_get_paint_mode (context),
-                       options->gradient_type,
-                       gimp_context_get_opacity (context),
-                       options->offset,
-                       paint_options->gradient_options->gradient_repeat,
-                       paint_options->gradient_options->gradient_reverse,
-                       options->supersample,
-                       options->supersample_depth,
-                       options->supersample_threshold,
-                       options->dither,
-                       blend_tool->start_x - off_x,
-                       blend_tool->start_y - off_y,
-                       blend_tool->end_x - off_x,
-                       blend_tool->end_y - off_y,
-                       progress);
-
-  if (progress)
-    gimp_progress_end (progress);
-
-  gimp_image_flush (image);
+      gimp_image_flush (gimp_display_get_image (tool->display));
+    }
 }
 
 static void
