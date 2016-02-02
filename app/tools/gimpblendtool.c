@@ -135,10 +135,12 @@ static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_
 static void   gimp_blend_tool_precalc_shapeburst  (GimpBlendTool         *blend_tool);
 
 static void   gimp_blend_tool_create_graph        (GimpBlendTool         *blend_tool);
-static void   gimp_blend_tool_update_preview_coords (GimpBlendTool       *blend_tool);
+static void   gimp_blend_tool_update_graph        (GimpBlendTool       *blend_tool);
+
 static void   gimp_blend_tool_gradient_dirty      (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_set_gradient        (GimpBlendTool         *blend_tool,
                                                    GimpGradient          *gradient);
+
 static gboolean gimp_blend_tool_is_shapeburst     (GimpBlendTool         *blend_tool);
 
 static void   gimp_blend_tool_create_image_map    (GimpBlendTool         *blend_tool,
@@ -356,7 +358,7 @@ gimp_blend_tool_button_press (GimpTool            *tool,
   if (blend_tool->grabbed_point != POINT_FILL_MODE &&
       blend_tool->grabbed_point != POINT_INIT_MODE)
     {
-      gimp_blend_tool_update_preview_coords (blend_tool);
+      gimp_blend_tool_update_graph (blend_tool);
       gimp_image_map_apply (blend_tool->image_map, NULL);
     }
 
@@ -459,7 +461,7 @@ gimp_blend_tool_motion (GimpTool         *tool,
 
   gimp_blend_tool_update_items (blend_tool);
 
-  gimp_blend_tool_update_preview_coords (blend_tool);
+  gimp_blend_tool_update_graph (blend_tool);
   gimp_image_map_apply (blend_tool->image_map, NULL);
 }
 
@@ -544,7 +546,7 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
 
       gimp_blend_tool_update_items (blend_tool);
 
-      gimp_blend_tool_update_preview_coords (blend_tool);
+      gimp_blend_tool_update_graph (blend_tool);
       gimp_image_map_apply (blend_tool->image_map, NULL);
     }
   else if (key == GDK_MOD1_MASK)
@@ -618,7 +620,7 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
           if (gimp_blend_tool_is_shapeburst (blend_tool))
             gimp_blend_tool_precalc_shapeburst (blend_tool);
 
-          gimp_blend_tool_update_preview_coords (blend_tool);
+          gimp_blend_tool_update_graph (blend_tool);
         }
 
       gimp_image_map_apply (blend_tool->image_map, NULL);
@@ -1069,11 +1071,11 @@ gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
                        output,
                        NULL);
 
-  gimp_blend_tool_update_preview_coords (blend_tool);
+  gimp_blend_tool_update_graph (blend_tool);
 }
 
 static void
-gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
+gimp_blend_tool_update_graph (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
   gint      off_x, off_y;
