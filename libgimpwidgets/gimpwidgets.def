@@ -187,6 +187,7 @@ EXPORTS
 	gimp_int_combo_box_append
 	gimp_int_combo_box_connect
 	gimp_int_combo_box_get_active
+	gimp_int_combo_box_get_active_user_data
 	gimp_int_combo_box_get_label
 	gimp_int_combo_box_get_type
 	gimp_int_combo_box_new
@@ -194,6 +195,7 @@ EXPORTS
 	gimp_int_combo_box_new_valist
 	gimp_int_combo_box_prepend
 	gimp_int_combo_box_set_active
+	gimp_int_combo_box_set_active_by_user_data
 	gimp_int_combo_box_set_label
 	gimp_int_combo_box_set_sensitivity
 	gimp_int_option_menu_new
@@ -202,6 +204,7 @@ EXPORTS
 	gimp_int_radio_group_new
 	gimp_int_radio_group_set_active
 	gimp_int_store_get_type
+	gimp_int_store_lookup_by_user_data
 	gimp_int_store_lookup_by_value
 	gimp_int_store_new
 	gimp_label_set_attributes
@@ -314,6 +317,7 @@ EXPORTS
 	gimp_prop_memsize_entry_new
 	gimp_prop_opacity_entry_new
 	gimp_prop_path_editor_new
+	gimp_prop_pointer_combo_box_new
 	gimp_prop_scale_entry_new
 	gimp_prop_size_entry_new
 	gimp_prop_spin_button_new
