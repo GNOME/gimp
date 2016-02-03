@@ -102,8 +102,8 @@ static const GimpActionEntry select_actions[] =
     GIMP_HELP_SELECTION_BORDER },
 
   { "select-flood", NULL,
-    NC_("select-action", "F_lood"), NULL,
-    NC_("select-action", "Level the selection's interior"),
+    NC_("select-action", "Re_move holes"), NULL,
+    NC_("select-action", "Remove holes from the selection"),
     G_CALLBACK (select_flood_cmd_callback),
     GIMP_HELP_SELECTION_FLOOD },
 

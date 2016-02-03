@@ -193,7 +193,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   channel_class->border_desc          = C_("undo-type", "Border Selection");
   channel_class->grow_desc            = C_("undo-type", "Grow Selection");
   channel_class->shrink_desc          = C_("undo-type", "Shrink Selection");
-  channel_class->flood_desc           = C_("undo-type", "Flood Selection");
+  channel_class->flood_desc           = C_("undo-type", "Remove Holes");
 }
 
 static void
