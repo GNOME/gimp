@@ -394,24 +394,18 @@ static void
 gimp_mirror_add_guide (GimpMirror          *mirror,
                        GimpOrientationType  orientation)
 {
-  static GimpRGB  normal_fg = { 1.0, 1.0, 1.0, 1.0 };
-  static GimpRGB  normal_bg = { 0.0, 1.0, 0.0, 1.0 };
-  static GimpRGB  active_fg = { 0.0, 1.0, 0.0, 1.0 };
-  static GimpRGB  active_bg = { 1.0, 0.0, 0.0, 1.0 };
-  GimpSymmetry   *sym = GIMP_SYMMETRY (mirror);
-  GimpImage      *image;
-  Gimp           *gimp;
-  GimpGuide      *guide;
-  gint            position;
+  GimpSymmetry *sym = GIMP_SYMMETRY (mirror);
+  GimpImage    *image;
+  Gimp         *gimp;
+  GimpGuide    *guide;
+  gint          position;
 
   image = sym->image;
   gimp  = image->gimp;
 
   guide = gimp_guide_custom_new (orientation,
                                  gimp->next_guide_ID++,
-                                 &normal_fg, &normal_bg,
-                                 &active_fg, &active_bg,
-                                 1.0);
+                                 GIMP_GUIDE_STYLE_MIRROR);
 
   if (orientation == GIMP_ORIENTATION_HORIZONTAL)
     {

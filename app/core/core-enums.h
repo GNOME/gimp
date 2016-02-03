@@ -118,6 +118,19 @@ typedef enum  /*< pdb-skip >*/
 } GimpGravityType;
 
 
+#define GIMP_TYPE_GUIDE_STYLE (gimp_guide_style_get_type ())
+
+GType gimp_guide_style_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_GUIDE_STYLE_NONE,
+  GIMP_GUIDE_STYLE_NORMAL,
+  GIMP_GUIDE_STYLE_MIRROR,
+  GIMP_GUIDE_STYLE_MANDALA
+} GimpGuideStyle;
+
+
 #define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
 
 GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;

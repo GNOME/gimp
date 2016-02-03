@@ -34,7 +34,23 @@
 
 #include "gimpcanvas-style.h"
 
+/* Styles for common and custom guides. */
+static const GimpRGB guide_normal_fg         = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB guide_normal_bg         = { 0.0, 0.5, 1.0, 1.0 };
+static const GimpRGB guide_active_fg         = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB guide_active_bg         = { 1.0, 0.0, 0.0, 1.0 };
 
+static const GimpRGB guide_mirror_normal_fg  = { 1.0, 1.0, 1.0, 1.0 };
+static const GimpRGB guide_mirror_normal_bg  = { 0.0, 1.0, 0.0, 1.0 };
+static const GimpRGB guide_mirror_active_fg  = { 0.0, 1.0, 0.0, 1.0 };
+static const GimpRGB guide_mirror_active_bg  = { 1.0, 0.0, 0.0, 1.0 };
+
+static const GimpRGB guide_mandala_normal_fg = { 1.0, 1.0, 1.0, 1.0 };
+static const GimpRGB guide_mandala_normal_bg = { 0.0, 1.0, 1.0, 1.0 };
+static const GimpRGB guide_mandala_active_fg = { 0.0, 1.0, 1.0, 1.0 };
+static const GimpRGB guide_mandala_active_bg = { 1.0, 0.0, 0.0, 1.0 };
+
+/* Styles for other canvas items. */
 static const GimpRGB sample_point_normal = { 0.0, 0.5, 1.0, 1.0 };
 static const GimpRGB sample_point_active = { 1.0, 0.0, 0.0, 1.0 };
 
@@ -70,6 +86,65 @@ static const GimpRGB tool_fg_highlight   = { 1.0, 0.8, 0.2, 0.8 };
 
 
 /*  public functions  */
+
+void
+gimp_canvas_set_guide_style (GtkWidget      *canvas,
+                             cairo_t        *cr,
+                             GimpGuideStyle  style,
+                             gboolean        active)
+{
+  cairo_pattern_t *pattern;
+  GimpRGB          normal_fg;
+  GimpRGB          normal_bg;
+  GimpRGB          active_fg;
+  GimpRGB          active_bg;
+  gdouble          line_width;
+
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
+  g_return_if_fail (cr != NULL);
+
+  switch (style)
+    {
+    case GIMP_GUIDE_STYLE_NORMAL:
+      normal_fg  = guide_normal_fg;
+      normal_bg  = guide_normal_bg;
+      active_fg  = guide_active_fg;
+      active_bg  = guide_active_bg;
+      line_width = 1.0;
+      break;
+    case GIMP_GUIDE_STYLE_MIRROR:
+      normal_fg  = guide_mirror_normal_fg;
+      normal_bg  = guide_mirror_normal_bg;
+      active_fg  = guide_mirror_active_fg;
+      active_bg  = guide_mirror_active_bg;
+      line_width = 1.0;
+      break;
+    case GIMP_GUIDE_STYLE_MANDALA:
+      normal_fg  = guide_mandala_normal_fg;
+      normal_bg  = guide_mandala_normal_bg;
+      active_fg  = guide_mandala_active_fg;
+      active_bg  = guide_mandala_active_bg;
+      line_width = 1.0;
+      break;
+    default: /* GIMP_GUIDE_STYLE_NONE */
+      /* This should not happen. */
+      g_return_if_reached ();
+    }
+
+  cairo_set_line_width (cr, line_width);
+
+  if (active)
+    pattern = gimp_cairo_stipple_pattern_create (&active_fg,
+                                                 &active_bg,
+                                                 0);
+  else
+    pattern = gimp_cairo_stipple_pattern_create (&normal_fg,
+                                                 &normal_bg,
+                                                 0);
+
+  cairo_set_source (cr, pattern);
+  cairo_pattern_destroy (pattern);
+}
 
 void
 gimp_canvas_set_sample_point_style (GtkWidget *canvas,

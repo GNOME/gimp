@@ -31,18 +31,6 @@ typedef enum
 } GimpCursorPrecision;
 
 
-#define GIMP_TYPE_GUIDE_STYLE (gimp_guide_style_get_type ())
-
-GType gimp_guide_style_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_GUIDE_STYLE_NONE,
-  GIMP_GUIDE_STYLE_NORMAL,
-  GIMP_GUIDE_STYLE_MIRROR
-} GimpGuideStyle;
-
-
 #define GIMP_TYPE_GUIDES_TYPE (gimp_guides_type_get_type ())
 
 GType gimp_guides_type_get_type (void) G_GNUC_CONST;

@@ -61,11 +61,7 @@ GimpGuide *         gimp_guide_new              (GimpOrientationType  orientatio
                                                  guint32              guide_ID);
 GimpGuide *         gimp_guide_custom_new       (GimpOrientationType  orientation,
                                                  guint32              guide_ID,
-                                                 GimpRGB             *normal_foreground,
-                                                 GimpRGB             *normal_background,
-                                                 GimpRGB             *active_foreground,
-                                                 GimpRGB             *active_background,
-                                                 gdouble              line_width);
+                                                 GimpGuideStyle       guide_style);
 
 guint32             gimp_guide_get_ID           (GimpGuide           *guide);
 
@@ -78,13 +74,7 @@ void                gimp_guide_set_position     (GimpGuide           *guide,
                                                  gint                 position);
 void                gimp_guide_removed          (GimpGuide           *guide);
 
-void                gimp_guide_get_normal_style (GimpGuide           *guide,
-                                                 GimpRGB             *foreground,
-                                                 GimpRGB             *background);
-void                gimp_guide_get_active_style (GimpGuide           *guide,
-                                                 GimpRGB             *foreground,
-                                                 GimpRGB             *background);
-gdouble             gimp_guide_get_line_width   (GimpGuide           *guide);
+GimpGuideStyle      gimp_guide_get_style        (GimpGuide           *guide);
 gboolean            gimp_guide_is_custom        (GimpGuide           *guide);
 
 

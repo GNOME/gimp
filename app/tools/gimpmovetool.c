@@ -835,32 +835,15 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
 
   if (move->guide)
     {
-      GimpCanvasItem  *item;
-      cairo_pattern_t *normal_style;
-      cairo_pattern_t *active_style;
-      GimpRGB          normal_foreground;
-      GimpRGB          normal_background;
-      GimpRGB          active_foreground;
-      GimpRGB          active_background;
+      GimpCanvasItem *item;
+      GimpGuideStyle  style;
 
-      gimp_guide_get_normal_style (move->guide,
-                                   &normal_foreground,
-                                   &normal_background);
-      gimp_guide_get_active_style (move->guide,
-                                   &active_foreground,
-                                   &active_background);
-      normal_style = gimp_cairo_stipple_pattern_create (&normal_foreground,
-                                                        &normal_background,
-                                                        0);
-      active_style = gimp_cairo_stipple_pattern_create (&active_foreground,
-                                                        &active_background,
-                                                        0);
+      style = gimp_guide_get_style (move->guide);
 
       item = gimp_draw_tool_add_guide (draw_tool,
                                        gimp_guide_get_orientation (move->guide),
                                        gimp_guide_get_position (move->guide),
-                                       normal_style, active_style,
-                                       gimp_guide_get_line_width (move->guide));
+                                       style);
       gimp_canvas_item_set_highlight (item, TRUE);
     }
 
@@ -870,7 +853,7 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_add_guide (draw_tool,
                                 move->guide_orientation,
                                 move->guide_position,
-                                NULL, NULL, 1.0);
+                                GIMP_GUIDE_STYLE_NONE);
     }
 }
 

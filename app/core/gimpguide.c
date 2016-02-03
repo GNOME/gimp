@@ -47,11 +47,7 @@ enum
   PROP_ID,
   PROP_ORIENTATION,
   PROP_POSITION,
-  PROP_NORMAL_FOREGROUND,
-  PROP_NORMAL_BACKGROUND,
-  PROP_ACTIVE_FOREGROUND,
-  PROP_ACTIVE_BACKGROUND,
-  PROP_LINE_WIDTH
+  PROP_STYLE
 };
 
 
@@ -61,12 +57,7 @@ struct _GimpGuidePrivate
   GimpOrientationType  orientation;
   gint                 position;
 
-  GimpRGB              normal_foreground;
-  GimpRGB              normal_background;
-  GimpRGB              active_foreground;
-  GimpRGB              active_background;
-  gdouble              line_width;
-  gboolean             custom;
+  GimpGuideStyle       style;
 };
 
 
@@ -123,32 +114,11 @@ gimp_guide_class_init (GimpGuideClass *klass)
                                 GIMP_GUIDE_POSITION_UNDEFINED,
                                 0);
 
-  g_object_class_install_property (object_class, PROP_NORMAL_FOREGROUND,
-                                   g_param_spec_boxed ("normal-foreground", NULL, NULL,
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_NORMAL_BACKGROUND,
-                                   g_param_spec_boxed ("normal-background", NULL, NULL,
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_ACTIVE_FOREGROUND,
-                                   g_param_spec_boxed ("active-foreground", NULL, NULL,
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_ACTIVE_BACKGROUND,
-                                   g_param_spec_boxed ("active-background", NULL, NULL,
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_LINE_WIDTH,
-                                   g_param_spec_double ("line-width", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE,
-                                                        1.0,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
+                                 "style", NULL,
+                                 GIMP_TYPE_GUIDE_STYLE,
+                                 GIMP_GUIDE_STYLE_NONE,
+                                 0);
 
   g_type_class_add_private (klass, sizeof (GimpGuidePrivate));
 }
@@ -179,20 +149,8 @@ gimp_guide_get_property (GObject      *object,
     case PROP_POSITION:
       g_value_set_int (value, guide->priv->position);
       break;
-    case PROP_NORMAL_FOREGROUND:
-      g_value_set_boxed (value, &guide->priv->normal_foreground);
-      break;
-    case PROP_NORMAL_BACKGROUND:
-      g_value_set_boxed (value, &guide->priv->normal_background);
-      break;
-    case PROP_ACTIVE_FOREGROUND:
-      g_value_set_boxed (value, &guide->priv->active_foreground);
-      break;
-    case PROP_ACTIVE_BACKGROUND:
-      g_value_set_boxed (value, &guide->priv->active_background);
-      break;
-    case PROP_LINE_WIDTH:
-      g_value_set_double (value, guide->priv->line_width);
+    case PROP_STYLE:
+      g_value_set_enum (value, guide->priv->style);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -219,38 +177,8 @@ gimp_guide_set_property (GObject      *object,
     case PROP_POSITION:
       guide->priv->position = g_value_get_int (value);
       break;
-    case PROP_NORMAL_FOREGROUND:
-        {
-          GimpRGB *color = g_value_get_boxed (value);
-
-          guide->priv->normal_foreground = *color;
-        }
-      break;
-    case PROP_NORMAL_BACKGROUND:
-        {
-          GimpRGB *color = g_value_get_boxed (value);
-
-          guide->priv->normal_background = *color;
-        }
-      break;
-    case PROP_ACTIVE_FOREGROUND:
-        {
-          GimpRGB *color = g_value_get_boxed (value);
-
-          guide->priv->active_foreground = *color;
-        }
-      break;
-    case PROP_ACTIVE_BACKGROUND:
-        {
-          GimpRGB *color = g_value_get_boxed (value);
-
-          guide->priv->active_background = *color;
-        }
-      break;
-    case PROP_LINE_WIDTH:
-      guide->priv->line_width = g_value_get_double (value);
-      if (guide->priv->line_width != 1.0)
-        guide->priv->custom = TRUE;
+    case PROP_STYLE:
+      guide->priv->style = g_value_get_enum (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -262,19 +190,10 @@ GimpGuide *
 gimp_guide_new (GimpOrientationType  orientation,
                 guint32              guide_ID)
 {
-  const GimpRGB normal_fg = { 0.0, 0.0, 0.0, 1.0 };
-  const GimpRGB normal_bg = { 0.0, 0.5, 1.0, 1.0 };
-  const GimpRGB active_fg = { 0.0, 0.0, 0.0, 1.0 };
-  const GimpRGB active_bg = { 1.0, 0.0, 0.0, 1.0 };
-
   return g_object_new (GIMP_TYPE_GUIDE,
-                       "id",                 guide_ID,
-                       "orientation",        orientation,
-                       "normal-foreground", &normal_fg,
-                       "normal-background", &normal_bg,
-                       "active-foreground", &active_fg,
-                       "active-background", &active_bg,
-                       "line-width",         1.0,
+                       "id",          guide_ID,
+                       "orientation", orientation,
+                       "style",       GIMP_GUIDE_STYLE_NORMAL,
                        NULL);
 }
 
@@ -282,11 +201,7 @@ gimp_guide_new (GimpOrientationType  orientation,
  * gimp_guide_custom_new:
  * @orientation:       the #GimpOrientationType
  * @guide_ID:          the unique guide ID
- * @normal_foreground: foreground color for normal state
- * @normal_background: background color for normal state
- * @active_foreground: foreground color for active state
- * @active_background: background color for active state
- * @line_width:        the width of the guide line
+ * @guide_style:       the #GimpGuideStyle
  *
  * This function returns a new guide and will flag it as "custom".
  * Custom guides are used for purpose "other" than the basic guides
@@ -300,24 +215,15 @@ gimp_guide_new (GimpOrientationType  orientation,
 GimpGuide *
 gimp_guide_custom_new (GimpOrientationType  orientation,
                        guint32              guide_ID,
-                       GimpRGB             *normal_foreground,
-                       GimpRGB             *normal_background,
-                       GimpRGB             *active_foreground,
-                       GimpRGB             *active_background,
-                       gdouble              line_width)
+                       GimpGuideStyle       guide_style)
 {
   GimpGuide *guide;
 
   guide = g_object_new (GIMP_TYPE_GUIDE,
                         "id",                guide_ID,
                         "orientation",       orientation,
-                        "normal-foreground", normal_foreground,
-                        "normal-background", normal_background,
-                        "active-foreground", active_foreground,
-                        "active-background", active_background,
-                        "line-width",        line_width,
+                        "style",             guide_style,
                         NULL);
-  guide->priv->custom = TRUE;
 
   return guide;
 }
@@ -376,32 +282,15 @@ gimp_guide_removed (GimpGuide *guide)
   g_signal_emit (guide, gimp_guide_signals[REMOVED], 0);
 }
 
-void
-gimp_guide_get_normal_style (GimpGuide *guide,
-                             GimpRGB   *foreground,
-                             GimpRGB   *background)
-{
-  *foreground = guide->priv->normal_foreground;
-  *background = guide->priv->normal_background;
-}
 
-void
-gimp_guide_get_active_style (GimpGuide *guide,
-                             GimpRGB   *foreground,
-                             GimpRGB   *background)
+GimpGuideStyle
+gimp_guide_get_style (GimpGuide *guide)
 {
-  *foreground = guide->priv->active_foreground;
-  *background = guide->priv->active_background;
-}
-
-gdouble
-gimp_guide_get_line_width (GimpGuide *guide)
-{
-  return guide->priv->line_width;
+  return guide->priv->style;
 }
 
 gboolean
 gimp_guide_is_custom (GimpGuide *guide)
 {
-  return guide->priv->custom;
+  return (guide->priv->style != GIMP_GUIDE_STYLE_NORMAL);
 }

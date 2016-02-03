@@ -630,26 +630,13 @@ gimp_display_shell_guide_add_handler (GimpImage        *image,
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->guides);
   GimpCanvasItem       *item;
-  cairo_pattern_t      *normal_style;
-  cairo_pattern_t      *active_style;
-  GimpRGB               normal_foreground;
-  GimpRGB               normal_background;
-  GimpRGB               active_foreground;
-  GimpRGB               active_background;
+  GimpGuideStyle        style;
 
-  gimp_guide_get_normal_style (guide, &normal_foreground, &normal_background);
-  gimp_guide_get_active_style (guide, &active_foreground, &active_background);
-  normal_style = gimp_cairo_stipple_pattern_create (&normal_foreground,
-                                                    &normal_background,
-                                                    0);
-  active_style = gimp_cairo_stipple_pattern_create (&active_foreground,
-                                                    &active_background,
-                                                    0);
+  style = gimp_guide_get_style (guide);
   item = gimp_canvas_guide_new (shell,
                                 gimp_guide_get_orientation (guide),
                                 gimp_guide_get_position (guide),
-                                normal_style, active_style,
-                                gimp_guide_get_line_width (guide));
+                                style);
 
   gimp_canvas_proxy_group_add_item (group, guide, item);
   g_object_unref (item);
