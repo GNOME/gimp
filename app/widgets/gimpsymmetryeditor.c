@@ -47,7 +47,7 @@
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_GIMP
 };
 
 
@@ -308,7 +308,7 @@ gimp_symmetry_editor_image_changed (GimpContext        *context,
                         editor);
 
       /* Update the symmetry options. */
-      symmetry = gimp_image_symmetry_selected (image);
+      symmetry = gimp_image_get_active_symmetry (image);
       gimp_symmetry_editor_set_options (editor, symmetry);
       editor->p->image = g_object_ref (image);
     }
@@ -339,7 +339,7 @@ gimp_symmetry_editor_symmetry_notify (GimpImage           *image,
   GimpSymmetry *symmetry = NULL;
 
   if (image &&
-      (symmetry = gimp_image_symmetry_selected (image)))
+      (symmetry = gimp_image_get_active_symmetry (image)))
     {
       g_signal_connect (symmetry, "update-ui",
                         G_CALLBACK (gimp_symmetry_editor_symmetry_updated),
@@ -360,7 +360,7 @@ gimp_symmetry_editor_symmetry_updated (GimpSymmetry       *symmetry,
 
   context = gimp_get_user_context (editor->p->gimp);
   if (image != context->image ||
-      symmetry != gimp_image_symmetry_selected (image))
+      symmetry != gimp_image_get_active_symmetry (image))
     {
       g_signal_handlers_disconnect_by_func (symmetry,
                                             gimp_symmetry_editor_symmetry_updated,

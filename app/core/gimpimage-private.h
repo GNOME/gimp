@@ -88,7 +88,7 @@ struct _GimpImagePrivate
   GeglNode          *visible_mask;          /*  component visibility node    */
 
   GList             *symmetries;            /*  Painting symmetries          */
-  GimpSymmetry      *selected_symmetry;     /*  Selected symmetry            */
+  GimpSymmetry      *active_symmetry;       /*  Active symmetry              */
 
   GList             *guides;                /*  guides                       */
   GimpGrid          *grid;                  /*  grid                         */

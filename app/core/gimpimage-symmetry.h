@@ -22,19 +22,19 @@
 #define __GIMP_IMAGE_SYMMETRY_H__
 
 
-GList        * gimp_image_symmetry_list      (void);
+GList        * gimp_image_symmetry_list       (void);
 
-GimpSymmetry * gimp_image_symmetry_new       (GimpImage    *image,
-                                              GType         type);
-void           gimp_image_symmetry_add       (GimpImage    *image,
-                                              GimpSymmetry *sym);
-void           gimp_image_symmetry_remove    (GimpImage    *image,
-                                              GimpSymmetry *sym);
-GList        * gimp_image_symmetry_get       (GimpImage    *image);
+GimpSymmetry * gimp_image_symmetry_new        (GimpImage    *image,
+                                               GType         type);
+void           gimp_image_symmetry_add        (GimpImage    *image,
+                                               GimpSymmetry *sym);
+void           gimp_image_symmetry_remove     (GimpImage    *image,
+                                               GimpSymmetry *sym);
+GList        * gimp_image_symmetry_get        (GimpImage    *image);
 
-gboolean       gimp_image_symmetry_select    (GimpImage    *image,
-                                              GType         type);
-GimpSymmetry * gimp_image_symmetry_selected  (GimpImage    *image);
+gboolean       gimp_image_set_active_symmetry (GimpImage    *image,
+                                               GType         type);
+GimpSymmetry * gimp_image_get_active_symmetry (GimpImage    *image);
 
 
 #endif  /*  __GIMP_IMAGE_SYMMETRY_H__  */

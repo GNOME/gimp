@@ -707,7 +707,7 @@ gimp_image_init (GimpImage *image)
   private->projection          = gimp_projection_new (GIMP_PROJECTABLE (image));
 
   private->symmetries          = NULL;
-  private->selected_symmetry   = NULL;
+  private->active_symmetry     = NULL;
 
   private->guides              = NULL;
   private->grid                = NULL;
@@ -878,30 +878,33 @@ gimp_image_set_property (GObject      *object,
         GList *iter;
         GType  type = g_value_get_gtype (value);
 
-        if (private->selected_symmetry)
-          g_object_set (private->selected_symmetry,
+        if (private->active_symmetry)
+          g_object_set (private->active_symmetry,
                         "active", FALSE,
                         NULL);
-        private->selected_symmetry = NULL;
+        private->active_symmetry = NULL;
 
         for (iter = private->symmetries; iter; iter = g_list_next (iter))
           {
             GimpSymmetry *sym = iter->data;
+
             if (type == G_TYPE_FROM_INSTANCE (sym))
-              private->selected_symmetry = iter->data;
+              private->active_symmetry = iter->data;
           }
 
-        if (private->selected_symmetry == NULL)
+        if (! private->active_symmetry &&
+            g_type_is_a (type, GIMP_TYPE_SYMMETRY))
           {
             GimpSymmetry *sym = gimp_image_symmetry_new (image, type);
 
             gimp_image_symmetry_add (image, sym);
-            private->selected_symmetry = sym;
+            private->active_symmetry = sym;
           }
 
-        g_object_set (private->selected_symmetry,
-                      "active", TRUE,
-                      NULL);
+        if (private->active_symmetry)
+          g_object_set (private->active_symmetry,
+                        "active", TRUE,
+                        NULL);
       }
       break;
     default:
@@ -947,8 +950,9 @@ gimp_image_get_property (GObject    *object,
       break;
     case PROP_SYMMETRY:
       g_value_set_gtype (value,
-                         private->selected_symmetry ?
-                         G_TYPE_FROM_INSTANCE (private->selected_symmetry) : GIMP_TYPE_SYMMETRY);
+                         private->active_symmetry ?
+                         G_TYPE_FROM_INSTANCE (private->active_symmetry) :
+                         G_TYPE_NONE);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

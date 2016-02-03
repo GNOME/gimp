@@ -325,12 +325,13 @@ gimp_paint_core_paint (GimpPaintCore    *core,
           core->last_paint.y = core->cur_coords.y;
         }
 
-      sym = g_object_ref (gimp_image_symmetry_selected (image));
+      sym = g_object_ref (gimp_image_get_active_symmetry (image));
       gimp_symmetry_set_origin (sym, drawable, &core->cur_coords);
 
       core_class->paint (core, drawable,
                          paint_options,
                          sym, paint_state, time);
+
       g_object_unref (sym);
 
       core_class->post_paint (core, drawable,

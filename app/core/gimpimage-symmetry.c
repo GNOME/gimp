@@ -84,7 +84,7 @@ gimp_image_symmetry_new (GimpImage *image,
  * @type:  the #GType of the symmetry
  *
  * Add a symmetry of type @type to @image and make it the
- * selected transformation.
+ * active transformation.
  **/
 void
 gimp_image_symmetry_add (GimpImage    *image,
@@ -107,7 +107,7 @@ gimp_image_symmetry_add (GimpImage    *image,
  * @sym: the #GimpSymmetry
  *
  * Remove @sym from the list of symmetries of @image.
- * If it was the selected transformation, unselect it first.
+ * If it was the active transformation, unselect it first.
  **/
 void
 gimp_image_symmetry_remove (GimpImage    *image,
@@ -120,8 +120,8 @@ gimp_image_symmetry_remove (GimpImage    *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->selected_symmetry == sym)
-    gimp_image_symmetry_select (image, G_TYPE_NONE);
+  if (private->active_symmetry == sym)
+    gimp_image_set_active_symmetry (image, G_TYPE_NONE);
 
   private->symmetries = g_list_remove (private->symmetries,
                                        sym);
@@ -148,7 +148,7 @@ gimp_image_symmetry_get (GimpImage *image)
 }
 
 /**
- * gimp_image_symmetry_select:
+ * gimp_image_set_active_symmetry:
  * @image: the #GimpImage
  * @type:  the #GType of the symmetry
  *
@@ -159,8 +159,8 @@ gimp_image_symmetry_get (GimpImage *image)
  * Returns TRUE on success, FALSE if no such symmetry was found.
  **/
 gboolean
-gimp_image_symmetry_select (GimpImage *image,
-                            GType      type)
+gimp_image_set_active_symmetry (GimpImage *image,
+                                GType      type)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
@@ -172,13 +172,13 @@ gimp_image_symmetry_select (GimpImage *image,
 }
 
 /**
- * gimp_image_symmetry_selected:
+ * gimp_image_get_active_symmetry:
  * @image: the #GimpImage
  *
- * Returns the #GimpSymmetry transformation selected on @image.
+ * Returns the #GimpSymmetry transformation active on @image.
  **/
 GimpSymmetry *
-gimp_image_symmetry_selected (GimpImage *image)
+gimp_image_get_active_symmetry (GimpImage *image)
 {
   GimpImagePrivate *private;
 
@@ -186,5 +186,5 @@ gimp_image_symmetry_selected (GimpImage *image)
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return private->selected_symmetry;
+  return private->active_symmetry;
 }
