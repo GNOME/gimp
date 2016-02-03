@@ -156,7 +156,6 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
 static void
 gimp_symmetry_init (GimpSymmetry *sym)
 {
-  sym->type     = G_TYPE_NONE;
 }
 
 static void
@@ -405,7 +404,7 @@ gimp_symmetry_to_parasite (const GimpSymmetry *sym)
   str = gimp_config_serialize_to_string (GIMP_CONFIG (sym), NULL);
   g_return_val_if_fail (str != NULL, NULL);
 
-  parasite_name = gimp_symmetry_parasite_name (sym->type);
+  parasite_name = gimp_symmetry_parasite_name (G_TYPE_FROM_INSTANCE (sym));
   parasite = gimp_parasite_new (parasite_name,
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (str) + 1, str);

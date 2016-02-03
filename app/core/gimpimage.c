@@ -887,7 +887,7 @@ gimp_image_set_property (GObject      *object,
         for (iter = private->symmetries; iter; iter = g_list_next (iter))
           {
             GimpSymmetry *sym = iter->data;
-            if (type == sym->type)
+            if (type == G_TYPE_FROM_INSTANCE (sym))
               private->selected_symmetry = iter->data;
           }
 
@@ -948,7 +948,7 @@ gimp_image_get_property (GObject    *object,
     case PROP_SYMMETRY:
       g_value_set_gtype (value,
                          private->selected_symmetry ?
-                         private->selected_symmetry->type : GIMP_TYPE_SYMMETRY);
+                         G_TYPE_FROM_INSTANCE (private->selected_symmetry) : GIMP_TYPE_SYMMETRY);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

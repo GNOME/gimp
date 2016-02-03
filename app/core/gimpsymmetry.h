@@ -45,8 +45,6 @@ struct _GimpSymmetry
   gboolean      active;
 
   GList        *strokes;
-
-  GType         type;
 };
 
 struct _GimpSymmetryClass

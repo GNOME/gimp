@@ -74,7 +74,6 @@ gimp_image_symmetry_new (GimpImage *image,
   sym = g_object_new (type,
                       "image", image,
                       NULL);
-  sym->type = type;
 
   return sym;
 }

@@ -389,10 +389,10 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
   gtk_container_foreach (GTK_CONTAINER (frame),
                          (GtkCallback) gtk_widget_destroy, NULL);
 
-  if (! symmetry || symmetry->type == GIMP_TYPE_SYMMETRY)
+  if (! symmetry || G_TYPE_FROM_INSTANCE (symmetry) == GIMP_TYPE_SYMMETRY)
     return;
 
-  klass = g_type_class_ref (symmetry->type);
+  klass = g_type_class_ref (G_TYPE_FROM_INSTANCE (symmetry));
   gtk_frame_set_label (GTK_FRAME (frame),
                        klass->label);
   g_type_class_unref (klass);
