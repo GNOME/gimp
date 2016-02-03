@@ -34,6 +34,7 @@
 #include "gimpguide.h"
 #include "gimpmarshal.h"
 
+
 enum
 {
   REMOVED,

@@ -32,6 +32,7 @@
 #define GIMP_IS_SYMMETRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SYMMETRY))
 #define GIMP_SYMMETRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SYMMETRY, GimpSymmetryClass))
 
+
 typedef struct _GimpSymmetryClass   GimpSymmetryClass;
 
 struct _GimpSymmetry
@@ -86,9 +87,11 @@ GeglNode     * gimp_symmetry_get_operation  (GimpSymmetry       *symmetry,
 GParamSpec  ** gimp_symmetry_get_settings   (GimpSymmetry       *symmetry,
                                              gint               *n_properties);
 
-gchar        * gimp_symmetry_parasite_name  (GType type);
+gchar        * gimp_symmetry_parasite_name  (GType               type);
 GimpParasite * gimp_symmetry_to_parasite    (const GimpSymmetry *symmetry);
 GimpSymmetry * gimp_symmetry_from_parasite  (const GimpParasite *parasite,
                                              GimpImage          *image,
                                              GType               type);
+
+
 #endif  /*  __GIMP_SYMMETRY_H__  */

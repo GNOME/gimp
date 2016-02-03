@@ -31,6 +31,8 @@
 
 #include "tools-types.h"
 
+#include "gegl/gimp-gegl-config.h"
+
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-blend.h"
@@ -40,8 +42,6 @@
 #include "core/gimpimagemap.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
-
-#include "gegl/gimp-gegl-config.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"

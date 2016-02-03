@@ -21,6 +21,7 @@
 #ifndef __GIMP_IMAGE_SYMMETRY_H__
 #define __GIMP_IMAGE_SYMMETRY_H__
 
+
 GList        * gimp_image_symmetry_list      (void);
 
 GimpSymmetry * gimp_image_symmetry_new       (GimpImage    *image,
@@ -34,5 +35,6 @@ GList        * gimp_image_symmetry_get       (GimpImage    *image);
 gboolean       gimp_image_symmetry_select    (GimpImage    *image,
                                               GType         type);
 GimpSymmetry * gimp_image_symmetry_selected  (GimpImage    *image);
+
 
 #endif  /*  __GIMP_IMAGE_SYMMETRY_H__  */

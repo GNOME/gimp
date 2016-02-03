@@ -38,6 +38,7 @@
 
 #include "gimp-intl.h"
 
+
 enum
 {
   STROKES_UPDATED,
@@ -52,6 +53,7 @@ enum
   PROP_IMAGE,
   PROP_ACTIVE,
 };
+
 
 /* Local function prototypes */
 
@@ -78,21 +80,23 @@ static GParamSpec **
           gimp_symmetry_real_get_settings (GimpSymmetry *sym,
                                            gint         *n_properties);
 
+
 G_DEFINE_TYPE_WITH_CODE (GimpSymmetry, gimp_symmetry, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
-
 
 #define parent_class gimp_symmetry_parent_class
 
 static guint gimp_symmetry_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_symmetry_class_init (GimpSymmetryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  /* This signal should likely be emitted at the end of update_strokes()
-   * if stroke coordinates were changed. */
+  /* This signal should likely be emitted at the end of
+   * update_strokes() if stroke coordinates were changed.
+   */
   gimp_symmetry_signals[STROKES_UPDATED] =
     g_signal_new ("strokes-updated",
                   G_TYPE_FROM_CLASS (klass),
@@ -102,9 +106,11 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
                   NULL,
                   G_TYPE_NONE,
                   1, GIMP_TYPE_IMAGE);
-  /* This signal should be emitted when you request a change in
-   * the settings UI. For instance adding some settings (therefore having a
-   * dynamic UI), or changing scale min/max extremes, etc. */
+
+  /* This signal should be emitted when you request a change in the
+   * settings UI. For instance adding some settings (therefore having
+   * a dynamic UI), or changing scale min/max extremes, etc.
+   */
   gimp_symmetry_signals[UPDATE_UI] =
     g_signal_new ("update-ui",
                   G_TYPE_FROM_CLASS (klass),
@@ -146,7 +152,6 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }
-
 
 static void
 gimp_symmetry_init (GimpSymmetry *sym)
@@ -282,9 +287,7 @@ gimp_symmetry_set_origin (GimpSymmetry *sym,
   g_list_free_full (sym->strokes, g_free);
   sym->strokes = NULL;
 
-  GIMP_SYMMETRY_GET_CLASS (sym)->update_strokes (sym,
-                                                 drawable,
-                                                 origin);
+  GIMP_SYMMETRY_GET_CLASS (sym)->update_strokes (sym, drawable, origin);
 }
 
 /**
@@ -385,9 +388,7 @@ gimp_symmetry_get_settings (GimpSymmetry *sym,
 gchar *
 gimp_symmetry_parasite_name (GType type)
 {
-  GimpSymmetryClass *klass;
-
-  klass = g_type_class_ref (type);
+  GimpSymmetryClass *klass = g_type_class_ref (type);
 
   return g_strconcat ("gimp-image-symmetry:", klass->label, NULL);
 }

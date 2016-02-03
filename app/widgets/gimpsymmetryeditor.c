@@ -43,24 +43,26 @@
 
 #include "gimp-intl.h"
 
+
 enum
 {
   PROP_0,
   PROP_GIMP,
 };
 
+
 struct _GimpSymmetryEditorPrivate
 {
-  Gimp            *gimp;
-  GimpImage       *image;
+  Gimp       *gimp;
+  GimpImage  *image;
 
-  GtkWidget       *menu;
-  GtkWidget       *options_frame;
+  GtkWidget  *menu;
+  GtkWidget  *options_frame;
 };
+
 
 static void        gimp_symmetry_editor_docked_iface_init (GimpDockedInterface   *iface);
 
-/* Signal handlers on the GObject. */
 static void        gimp_symmetry_editor_constructed       (GObject               *object);
 static void        gimp_symmetry_editor_dispose           (GObject               *object);
 static void        gimp_symmetry_editor_set_property      (GObject               *object,
@@ -157,7 +159,7 @@ static void
 gimp_symmetry_editor_constructed (GObject *object)
 {
   GimpSymmetryEditor *editor = GIMP_SYMMETRY_EDITOR (object);
-  GimpContext           *user_context;
+  GimpContext        *user_context;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -360,7 +362,7 @@ gimp_symmetry_editor_symmetry_updated (GimpSymmetry       *symmetry,
   if (image != context->image ||
       symmetry != gimp_image_symmetry_selected (image))
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (symmetry),
+      g_signal_handlers_disconnect_by_func (symmetry,
                                             gimp_symmetry_editor_symmetry_updated,
                                             editor);
       return;
@@ -368,8 +370,6 @@ gimp_symmetry_editor_symmetry_updated (GimpSymmetry       *symmetry,
 
   gimp_symmetry_editor_set_options (editor, symmetry);
 }
-
-/*  private functions  */
 
 static void
 gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
@@ -427,50 +427,48 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
       switch (spec->value_type)
         {
         case G_TYPE_BOOLEAN:
-            {
-              GtkWidget *checkbox;
+          {
+            GtkWidget *checkbox;
 
-              checkbox = gimp_prop_check_button_new (G_OBJECT (symmetry),
-                                                     name,
-                                                     blurb);
-              gtk_box_pack_start (GTK_BOX (vbox), checkbox,
-                                  FALSE, FALSE, 0);
-              gtk_widget_show (checkbox);
-            }
+            checkbox = gimp_prop_check_button_new (G_OBJECT (symmetry),
+                                                   name, blurb);
+            gtk_box_pack_start (GTK_BOX (vbox), checkbox, FALSE, FALSE, 0);
+            gtk_widget_show (checkbox);
+          }
           break;
         case G_TYPE_DOUBLE:
         case G_TYPE_INT:
         case G_TYPE_UINT:
-            {
-              GtkWidget *scale;
-              gdouble    minimum;
-              gdouble    maximum;
+          {
+            GtkWidget *scale;
+            gdouble    minimum;
+            gdouble    maximum;
 
-              if (spec->value_type == G_TYPE_DOUBLE)
-                {
-                  minimum = G_PARAM_SPEC_DOUBLE (spec)->minimum;
-                  maximum = G_PARAM_SPEC_DOUBLE (spec)->maximum;
-                }
-              else if (spec->value_type == G_TYPE_INT)
-                {
-                  minimum = G_PARAM_SPEC_INT (spec)->minimum;
-                  maximum = G_PARAM_SPEC_INT (spec)->maximum;
-                }
-              else
-                {
-                  minimum = G_PARAM_SPEC_UINT (spec)->minimum;
-                  maximum = G_PARAM_SPEC_UINT (spec)->maximum;
-                }
+            if (spec->value_type == G_TYPE_DOUBLE)
+              {
+                minimum = G_PARAM_SPEC_DOUBLE (spec)->minimum;
+                maximum = G_PARAM_SPEC_DOUBLE (spec)->maximum;
+              }
+            else if (spec->value_type == G_TYPE_INT)
+              {
+                minimum = G_PARAM_SPEC_INT (spec)->minimum;
+                maximum = G_PARAM_SPEC_INT (spec)->maximum;
+              }
+            else
+              {
+                minimum = G_PARAM_SPEC_UINT (spec)->minimum;
+                maximum = G_PARAM_SPEC_UINT (spec)->maximum;
+              }
 
-              scale = gimp_prop_spin_scale_new (G_OBJECT (symmetry),
-                                                name, blurb,
-                                                1.0, 10.0, 1);
-              gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
-                                                minimum,
-                                                maximum);
-              gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
-              gtk_widget_show (scale);
-            }
+            scale = gimp_prop_spin_scale_new (G_OBJECT (symmetry),
+                                              name, blurb,
+                                              1.0, 10.0, 1);
+            gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
+                                              minimum,
+                                              maximum);
+            gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+            gtk_widget_show (scale);
+          }
           break;
         default:
           /* Type of parameter we haven't handled yet. */
@@ -484,6 +482,7 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
   gtk_widget_show (frame);
 }
 
+
 /*  public functions  */
 
 GtkWidget *
@@ -491,16 +490,12 @@ gimp_symmetry_editor_new (Gimp            *gimp,
                           GimpImage       *image,
                           GimpMenuFactory *menu_factory)
 {
-  GimpSymmetryEditor *editor;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
 
-  editor = g_object_new (GIMP_TYPE_SYMMETRY_EDITOR,
-                         "gimp",            gimp,
-                         "menu-factory",    menu_factory,
-                         NULL);
-
-  return GTK_WIDGET (editor);
+  return g_object_new (GIMP_TYPE_SYMMETRY_EDITOR,
+                       "gimp",            gimp,
+                       "menu-factory",    menu_factory,
+                       NULL);
 }

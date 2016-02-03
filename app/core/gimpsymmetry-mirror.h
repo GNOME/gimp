@@ -32,6 +32,7 @@
 #define GIMP_IS_MIRROR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MIRROR))
 #define GIMP_MIRROR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MIRROR, GimpMirrorClass))
 
+
 typedef struct _GimpMirrorClass GimpMirrorClass;
 
 struct _GimpMirror
@@ -62,6 +63,7 @@ struct _GimpMirrorClass
 };
 
 
-GType        gimp_mirror_get_type                (void) G_GNUC_CONST;
+GType   gimp_mirror_get_type (void) G_GNUC_CONST;
+
 
 #endif  /*  __GIMP_MIRROR_H__  */

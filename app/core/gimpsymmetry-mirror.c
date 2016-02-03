@@ -42,10 +42,10 @@
 
 #include "gimp-intl.h"
 
+
 enum
 {
   PROP_0,
-
   PROP_HORIZONTAL_SYMMETRY,
   PROP_VERTICAL_SYMMETRY,
   PROP_POINT_SYMMETRY,
@@ -53,6 +53,7 @@ enum
   PROP_HORIZONTAL_POSITION,
   PROP_VERTICAL_POSITION
 };
+
 
 /* Local function prototypes */
 
@@ -96,9 +97,11 @@ static void       gimp_mirror_set_vertical_symmetry   (GimpMirror          *mirr
 static void       gimp_mirror_set_point_symmetry      (GimpMirror          *mirror,
                                                        gboolean             active);
 
+
 G_DEFINE_TYPE (GimpMirror, gimp_mirror, GIMP_TYPE_SYMMETRY)
 
 #define parent_class gimp_mirror_parent_class
+
 
 static void
 gimp_mirror_class_init (GimpMirrorClass *klass)
@@ -266,8 +269,8 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
                             GimpDrawable *drawable,
                             GimpCoords   *origin)
 {
-  GList      *strokes = NULL;
   GimpMirror *mirror  = GIMP_MIRROR (sym);
+  GList      *strokes = NULL;
   GimpCoords *coords;
 
   g_list_free_full (sym->strokes, g_free);
@@ -280,12 +283,14 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
       coords->y = 2.0 * mirror->horizontal_position - origin->y;
       strokes = g_list_prepend (strokes, coords);
     }
+
   if (mirror->vertical_mirror)
     {
       coords = g_memdup (origin, sizeof (GimpCoords));
       coords->x = 2.0 * mirror->vertical_position - origin->x;
       strokes = g_list_prepend (strokes, coords);
     }
+
   if (mirror->point_symmetry)
     {
       coords = g_memdup (origin, sizeof (GimpCoords));
@@ -293,6 +298,7 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
       coords->y = 2.0 * mirror->horizontal_position - origin->y;
       strokes = g_list_prepend (strokes, coords);
     }
+
   sym->strokes = g_list_reverse (strokes);
 
   g_signal_emit_by_name (sym, "strokes-updated", sym->image);
@@ -314,13 +320,10 @@ static void gimp_mirror_prepare_operations (GimpMirror *mirror,
 
   mirror->horizontal_op = gegl_node_new_child (NULL,
                                                "operation", "gegl:reflect",
-                                               "origin-x", 0.0,
-                                               "origin-y",
-                                               (gdouble) paint_height / 2.0,
-                                               "x",
-                                               1.0,
-                                               "y",
-                                               0.0,
+                                               "origin-x",  0.0,
+                                               "origin-y",  paint_height / 2.0,
+                                               "x",         1.0,
+                                               "y",         0.0,
                                                NULL);
 
   if (mirror->vertical_op)
@@ -328,13 +331,10 @@ static void gimp_mirror_prepare_operations (GimpMirror *mirror,
 
   mirror->vertical_op = gegl_node_new_child (NULL,
                                              "operation", "gegl:reflect",
-                                             "origin-x",
-                                             (gdouble) paint_width / 2.0,
-                                             "origin-y", 0.0,
-                                             "x",
-                                             0.0,
-                                             "y",
-                                             1.0,
+                                             "origin-x",  paint_width / 2.0,
+                                             "origin-y",  0.0,
+                                             "x",         0.0,
+                                             "y",         1.0,
                                              NULL);
 
   if (mirror->central_op)
@@ -342,12 +342,9 @@ static void gimp_mirror_prepare_operations (GimpMirror *mirror,
 
   mirror->central_op = gegl_node_new_child (NULL,
                                             "operation", "gegl:rotate",
-                                            "origin-x",
-                                            (gdouble) paint_width / 2.0,
-                                            "origin-y",
-                                            (gdouble) paint_height / 2.0,
-                                            "degrees",
-                                            180.0,
+                                            "origin-x",  paint_width / 2.0,
+                                            "origin-y",  paint_height / 2.0,
+                                            "degrees",   180.0,
                                             NULL);
 }
 
@@ -357,7 +354,7 @@ gimp_mirror_get_operation (GimpSymmetry *sym,
                            gint          paint_width,
                            gint          paint_height)
 {
-  GimpMirror *mirror  = GIMP_MIRROR (sym);
+  GimpMirror *mirror = GIMP_MIRROR (sym);
   GeglNode   *op;
 
   g_return_val_if_fail (stroke >= 0 &&
@@ -384,11 +381,7 @@ gimp_mirror_get_operation (GimpSymmetry *sym,
 static void
 gimp_mirror_reset (GimpMirror *mirror)
 {
-  GimpSymmetry *sym;
-
-  g_return_if_fail (GIMP_IS_MIRROR (mirror));
-
-  sym = GIMP_SYMMETRY (mirror);
+  GimpSymmetry *sym = GIMP_SYMMETRY (mirror);
 
   if (sym->origin)
     {
@@ -405,17 +398,14 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
   static GimpRGB  normal_bg = { 0.0, 1.0, 0.0, 1.0 };
   static GimpRGB  active_fg = { 0.0, 1.0, 0.0, 1.0 };
   static GimpRGB  active_bg = { 1.0, 0.0, 0.0, 1.0 };
-  GimpSymmetry   *sym;
+  GimpSymmetry   *sym = GIMP_SYMMETRY (mirror);
   GimpImage      *image;
   Gimp           *gimp;
   GimpGuide      *guide;
   gint            position;
 
-  g_return_if_fail (GIMP_IS_MIRROR (mirror));
-
-  sym   = GIMP_SYMMETRY (mirror);
   image = sym->image;
-  gimp  = GIMP (image->gimp);
+  gimp  = image->gimp;
 
   guide = gimp_guide_custom_new (orientation,
                                  gimp->next_guide_ID++,
@@ -429,8 +419,8 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
 
       /* Mirror guide position at first activation is at canvas middle. */
       if (mirror->horizontal_position < 1.0)
-        mirror->horizontal_position = (gdouble) gimp_image_get_height (image) / 2.0;
-      position = (gint) mirror->horizontal_position;
+        mirror->horizontal_position = gimp_image_get_height (image) / 2.0;
+      position = mirror->horizontal_position;
     }
   else
     {
@@ -438,17 +428,17 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
 
       /* Mirror guide position at first activation is at canvas middle. */
       if (mirror->vertical_position < 1.0)
-        mirror->vertical_position = (gdouble) gimp_image_get_width (image) / 2.0;
-      position = (gint) mirror->vertical_position;
+        mirror->vertical_position = gimp_image_get_width (image) / 2.0;
+      position = mirror->vertical_position;
     }
-  g_signal_connect (G_OBJECT (guide), "removed",
+
+  g_signal_connect (guide, "removed",
                     G_CALLBACK (gimp_mirror_guide_removed_cb),
                     mirror);
 
-  gimp_image_add_guide (image, guide,
-                        (gint) position);
+  gimp_image_add_guide (image, guide, position);
 
-  g_signal_connect (G_OBJECT (guide), "notify::position",
+  g_signal_connect (guide, "notify::position",
                     G_CALLBACK (gimp_mirror_guide_position_cb),
                     mirror);
 }
@@ -457,13 +447,10 @@ static void
 gimp_mirror_remove_guide (GimpMirror          *mirror,
                           GimpOrientationType  orientation)
 {
-  GimpSymmetry *sym;
+  GimpSymmetry *sym = GIMP_SYMMETRY (mirror);
   GimpImage    *image;
   GimpGuide    *guide;
 
-  g_return_if_fail (GIMP_IS_MIRROR (mirror));
-
-  sym   = GIMP_SYMMETRY (mirror);
   image = sym->image;
   guide = (orientation == GIMP_ORIENTATION_HORIZONTAL) ?
     mirror->horizontal_guide : mirror->vertical_guide;
@@ -495,6 +482,7 @@ gimp_mirror_guide_removed_cb (GObject    *object,
   g_signal_handlers_disconnect_by_func (object,
                                         gimp_mirror_guide_position_cb,
                                         mirror);
+
   if (GIMP_GUIDE (object) == mirror->horizontal_guide)
     {
       g_object_unref (mirror->horizontal_guide);
@@ -563,9 +551,7 @@ gimp_mirror_guide_position_cb (GObject    *object,
                                GParamSpec *pspec,
                                GimpMirror *mirror)
 {
-  GimpGuide *guide;
-
-  guide = GIMP_GUIDE (object);
+  GimpGuide *guide = GIMP_GUIDE (object);
 
   if (guide == mirror->horizontal_guide)
     {
@@ -626,8 +612,6 @@ static void
 gimp_mirror_set_horizontal_symmetry (GimpMirror *mirror,
                                      gboolean    active)
 {
-  g_return_if_fail (GIMP_IS_MIRROR (mirror));
-
   if (active == mirror->horizontal_mirror)
     return;
 
@@ -648,8 +632,6 @@ static void
 gimp_mirror_set_vertical_symmetry (GimpMirror *mirror,
                                    gboolean    active)
 {
-  g_return_if_fail (GIMP_IS_MIRROR (mirror));
-
   if (active == mirror->vertical_mirror)
     return;
 
@@ -670,8 +652,6 @@ static void
 gimp_mirror_set_point_symmetry (GimpMirror *mirror,
                                 gboolean    active)
 {
-  g_return_if_fail (GIMP_IS_MIRROR (mirror));
-
   if (active == mirror->point_symmetry)
     return;
 

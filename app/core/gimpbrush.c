@@ -652,19 +652,19 @@ gimp_brush_transform_mask (GimpBrush *brush,
 
       if (op)
         {
-          GeglNode    *graph, *source, *target;
-          GeglBuffer  *buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) mask);
+          GeglNode   *graph, *source, *target;
+          GeglBuffer *buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) mask);
 
-          graph    = gegl_node_new ();
-          source   = gegl_node_new_child (graph,
-                                          "operation", "gegl:buffer-source",
-                                          "buffer", buffer,
-                                          NULL);
+          graph  = gegl_node_new ();
+          source = gegl_node_new_child (graph,
+                                        "operation", "gegl:buffer-source",
+                                        "buffer", buffer,
+                                        NULL);
           gegl_node_add_child (graph, op);
-          target  = gegl_node_new_child (graph,
-                                         "operation", "gegl:write-buffer",
-                                         "buffer", buffer,
-                                         NULL);
+          target = gegl_node_new_child (graph,
+                                        "operation", "gegl:write-buffer",
+                                        "buffer", buffer,
+                                        NULL);
 
           gegl_node_link_many (source, op, target, NULL);
           gegl_node_process (target);
@@ -672,6 +672,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
           g_object_unref (graph);
           g_object_unref (buffer);
         }
+
       gimp_brush_cache_add (brush->priv->mask_cache,
                             (gpointer) mask,
                             op, width, height,
@@ -725,19 +726,19 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
 
       if (op)
         {
-          GeglNode    *graph, *source, *target;
-          GeglBuffer  *buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) pixmap);
+          GeglNode   *graph, *source, *target;
+          GeglBuffer *buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) pixmap);
 
-          graph    = gegl_node_new ();
-          source   = gegl_node_new_child (graph,
-                                          "operation", "gegl:buffer-source",
-                                          "buffer", buffer,
-                                          NULL);
+          graph  = gegl_node_new ();
+          source = gegl_node_new_child (graph,
+                                        "operation", "gegl:buffer-source",
+                                        "buffer", buffer,
+                                        NULL);
           gegl_node_add_child (graph, op);
-          target  = gegl_node_new_child (graph,
-                                         "operation", "gegl:write-buffer",
-                                         "buffer", buffer,
-                                         NULL);
+          target = gegl_node_new_child (graph,
+                                        "operation", "gegl:write-buffer",
+                                        "buffer", buffer,
+                                        NULL);
 
           gegl_node_link_many (source, op, target, NULL);
           gegl_node_process (target);
@@ -745,6 +746,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
           g_object_unref (graph);
           g_object_unref (buffer);
         }
+
       gimp_brush_cache_add (brush->priv->pixmap_cache,
                             (gpointer) pixmap,
                             op, width, height,

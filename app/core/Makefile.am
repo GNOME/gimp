@@ -369,14 +369,14 @@ libappcore_a_sources = \
 	gimpstrokeoptions.h			\
 	gimpsubprogress.c			\
 	gimpsubprogress.h			\
-	gimpsymmetry.c			\
-	gimpsymmetry.h			\
-	gimpsymmetry-mandala.c		\
-	gimpsymmetry-mandala.h		\
-	gimpsymmetry-mirror.c		\
-	gimpsymmetry-mirror.h	\
-	gimpsymmetry-tiling.c		\
-	gimpsymmetry-tiling.h	\
+	gimpsymmetry.c				\
+	gimpsymmetry.h				\
+	gimpsymmetry-mandala.c			\
+	gimpsymmetry-mandala.h			\
+	gimpsymmetry-mirror.c			\
+	gimpsymmetry-mirror.h			\
+	gimpsymmetry-tiling.c			\
+	gimpsymmetry-tiling.h			\
 	gimptag.c				\
 	gimptag.h				\
 	gimptagcache.c				\

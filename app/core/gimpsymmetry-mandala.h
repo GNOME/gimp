@@ -32,6 +32,7 @@
 #define GIMP_IS_MANDALA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MANDALA))
 #define GIMP_MANDALA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MANDALA, GimpMandalaClass))
 
+
 typedef struct _GimpMandalaClass GimpMandalaClass;
 
 struct _GimpMandala
@@ -57,6 +58,8 @@ struct _GimpMandalaClass
   GimpSymmetryClass  parent_class;
 };
 
-GType        gimp_mandala_get_type                (void) G_GNUC_CONST;
+
+GType   gimp_mandala_get_type (void) G_GNUC_CONST;
+
 
 #endif  /*  __GIMP_MANDALA_H__  */

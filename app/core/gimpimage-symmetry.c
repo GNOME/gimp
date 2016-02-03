@@ -33,6 +33,7 @@
 #include "gimpsymmetry-mirror.h"
 #include "gimpsymmetry-tiling.h"
 
+
 /**
  * gimp_image_symmetry_list:
  *
@@ -46,6 +47,7 @@ gimp_image_symmetry_list (void)
   list = g_list_prepend (list, GINT_TO_POINTER (GIMP_TYPE_MIRROR));
   list = g_list_prepend (list, GINT_TO_POINTER (GIMP_TYPE_TILING));
   list = g_list_prepend (list, GINT_TO_POINTER (GIMP_TYPE_MANDALA));
+
   return list;
 }
 
@@ -66,15 +68,13 @@ gimp_image_symmetry_new (GimpImage *image,
                          GType      type)
 {
   GimpSymmetry *sym = NULL;
+
   g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_SYMMETRY), NULL);
 
-  if (type != G_TYPE_NONE)
-    {
-      sym = g_object_new (type,
-                          "image", image,
-                          NULL);
-      sym->type = type;
-    }
+  sym = g_object_new (type,
+                      "image", image,
+                      NULL);
+  sym->type = type;
 
   return sym;
 }
@@ -123,6 +123,7 @@ gimp_image_symmetry_remove (GimpImage    *image,
 
   if (private->selected_symmetry == sym)
     gimp_image_symmetry_select (image, G_TYPE_NONE);
+
   private->symmetries = g_list_remove (private->symmetries,
                                        sym);
   g_object_unref (sym);

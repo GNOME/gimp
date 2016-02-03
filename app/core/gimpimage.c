@@ -633,6 +633,7 @@ gimp_image_class_init (GimpImageClass *klass)
                                                        GIMP_TYPE_SYMMETRY,
                                                        GIMP_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
+
   g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
 
@@ -883,7 +884,6 @@ gimp_image_set_property (GObject      *object,
                         NULL);
         private->selected_symmetry = NULL;
 
-
         for (iter = private->symmetries; iter; iter = g_list_next (iter))
           {
             GimpSymmetry *sym = iter->data;
@@ -893,12 +893,12 @@ gimp_image_set_property (GObject      *object,
 
         if (private->selected_symmetry == NULL)
           {
-            GimpSymmetry *sym;
+            GimpSymmetry *sym = gimp_image_symmetry_new (image, type);
 
-            sym = gimp_image_symmetry_new (image, type);
             gimp_image_symmetry_add (image, sym);
             private->selected_symmetry = sym;
           }
+
         g_object_set (private->selected_symmetry,
                       "active", TRUE,
                       NULL);

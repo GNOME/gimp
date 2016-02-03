@@ -32,6 +32,7 @@
 #define GIMP_IS_TILING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TILING))
 #define GIMP_TILING_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TILING, GimpTilingClass))
 
+
 typedef struct _GimpTilingClass GimpTilingClass;
 
 struct _GimpTiling
@@ -50,6 +51,8 @@ struct _GimpTilingClass
   GimpSymmetryClass  parent_class;
 };
 
-GType        gimp_tiling_get_type                (void) G_GNUC_CONST;
+
+GType   gimp_tiling_get_type (void) G_GNUC_CONST;
+
 
 #endif  /*  __GIMP_TILING_H__  */

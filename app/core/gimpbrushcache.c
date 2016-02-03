@@ -29,7 +29,9 @@
 #include "gimp-log.h"
 #include "gimp-intl.h"
 
+
 #define MAX_CACHED_DATA 20
+
 
 enum
 {
@@ -37,20 +39,22 @@ enum
   PROP_DATA_DESTROY
 };
 
+
 typedef struct _GimpBrushCacheUnit GimpBrushCacheUnit;
 
 struct _GimpBrushCacheUnit
 {
-  gpointer        data;
+  gpointer  data;
 
-  gint            width;
-  gint            height;
-  gdouble         scale;
-  gdouble         aspect_ratio;
-  gdouble         angle;
-  gdouble         hardness;
-  GeglNode       *op;
+  gint      width;
+  gint      height;
+  gdouble   scale;
+  gdouble   aspect_ratio;
+  gdouble   angle;
+  gdouble   hardness;
+  GeglNode *op;
 };
+
 
 static void   gimp_brush_cache_constructed  (GObject      *object);
 static void   gimp_brush_cache_finalize     (GObject      *object);
@@ -106,19 +110,7 @@ gimp_brush_cache_finalize (GObject *object)
 {
   GimpBrushCache *cache = GIMP_BRUSH_CACHE (object);
 
-  if (cache->cached_units)
-    {
-      GList *iter;
-
-      for (iter = cache->cached_units; iter; iter = g_list_next (iter))
-        {
-          GimpBrushCacheUnit *unit = iter->data;
-
-          cache->data_destroy (unit->data);
-        }
-      g_list_free_full (cache->cached_units, g_free);
-      cache->cached_units = NULL;
-    }
+  gimp_brush_cache_clear (cache);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -200,6 +192,7 @@ gimp_brush_cache_clear (GimpBrushCache *cache)
 
           cache->data_destroy (unit->data);
         }
+
       g_list_free_full (cache->cached_units, g_free);
       cache->cached_units = NULL;
     }
@@ -241,6 +234,7 @@ gimp_brush_cache_get (GimpBrushCache *cache,
           if (cache->cached_units)
             cache->cached_units->prev = iter;
           cache->cached_units = iter;
+
           return (gconstpointer) unit->data;
         }
     }
@@ -262,7 +256,7 @@ gimp_brush_cache_add (GimpBrushCache *cache,
                       gdouble         angle,
                       gdouble         hardness)
 {
-  GList *iter;
+  GList              *iter;
   GimpBrushCacheUnit *unit;
 
   g_return_if_fail (GIMP_IS_BRUSH_CACHE (cache));
@@ -271,6 +265,7 @@ gimp_brush_cache_add (GimpBrushCache *cache,
   for (iter = cache->cached_units; iter; iter = g_list_next (iter))
     {
       unit = iter->data;
+
       if (data == unit->data)
         return;
     }
@@ -284,16 +279,16 @@ gimp_brush_cache_add (GimpBrushCache *cache,
       cache->cached_units = g_list_delete_link (cache->cached_units, iter);
     }
 
-  unit = g_new (GimpBrushCacheUnit, 1);
+  unit = g_new0 (GimpBrushCacheUnit, 1);
 
-  unit->data          = data;
-  unit->width         = width;
-  unit->height        = height;
-  unit->scale         = scale;
-  unit->aspect_ratio  = aspect_ratio;
-  unit->angle         = angle;
-  unit->hardness      = hardness;
-  unit->op            = op;
+  unit->data         = data;
+  unit->width        = width;
+  unit->height       = height;
+  unit->scale        = scale;
+  unit->aspect_ratio = aspect_ratio;
+  unit->angle        = angle;
+  unit->hardness     = hardness;
+  unit->op           = op;
 
   cache->cached_units = g_list_prepend (cache->cached_units, unit);
 }

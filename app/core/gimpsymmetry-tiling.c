@@ -37,6 +37,7 @@
 
 #include "gimp-intl.h"
 
+
 /* Using same epsilon as in GLIB. */
 #define G_DOUBLE_EPSILON        (1e-90)
 
@@ -50,6 +51,7 @@ enum
   PROP_X_MAX,
   PROP_Y_MAX
 };
+
 
 /* Local function prototypes */
 
@@ -81,9 +83,11 @@ static void
                                                   gint          previous_height,
                                                   GimpSymmetry *sym);
 
+
 G_DEFINE_TYPE (GimpTiling, gimp_tiling, GIMP_TYPE_SYMMETRY)
 
 #define parent_class gimp_tiling_parent_class
+
 
 static void
 gimp_tiling_class_init (GimpTilingClass *klass)
@@ -131,12 +135,9 @@ gimp_tiling_init (GimpTiling *tiling)
 static void
 gimp_tiling_constructed (GObject *object)
 {
-  GimpSymmetry     *sym;
-  GimpTiling       *tiling;
+  GimpSymmetry     *sym    = GIMP_SYMMETRY (object);
+  GimpTiling       *tiling = GIMP_TILING (object);
   GParamSpecDouble *dspec;
-
-  sym    = GIMP_SYMMETRY (object);
-  tiling = GIMP_TILING (object);
 
   /* Update property values to actual image size. */
   dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
@@ -173,7 +174,7 @@ gimp_tiling_set_property (GObject      *object,
                           GParamSpec   *pspec)
 {
   GimpTiling   *tiling = GIMP_TILING (object);
-  GimpSymmetry *sym = GIMP_SYMMETRY (tiling);
+  GimpSymmetry *sym    = GIMP_SYMMETRY (tiling);
 
   switch (property_id)
     {
@@ -285,8 +286,8 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
                             GimpDrawable *drawable,
                             GimpCoords   *origin)
 {
-  GList      *strokes = NULL;
   GimpTiling *tiling  = GIMP_TILING (sym);
+  GList      *strokes = NULL;
   GimpCoords *coords;
   gint        width;
   gint        height;
@@ -296,9 +297,6 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
   gint        y;
   gint        x_count;
   gint        y_count;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
 
   g_list_free_full (sym->strokes, g_free);
   sym->strokes = NULL;
@@ -335,6 +333,7 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
       if (tiling->interval_y < 1.0)
         break;
     }
+
   sym->strokes = strokes;
 
   g_signal_emit_by_name (sym, "strokes-updated", sym->image);

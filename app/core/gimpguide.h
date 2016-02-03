@@ -87,4 +87,5 @@ void                gimp_guide_get_active_style (GimpGuide           *guide,
 gdouble             gimp_guide_get_line_width   (GimpGuide           *guide);
 gboolean            gimp_guide_is_custom        (GimpGuide           *guide);
 
+
 #endif /* __GIMP_GUIDE_H__ */
