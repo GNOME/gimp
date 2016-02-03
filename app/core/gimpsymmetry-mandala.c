@@ -116,7 +116,7 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
   symmetry_class->active_changed    = gimp_mandala_active_changed;
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_X,
-                                   "center-x", _("Center absisce"),
+                                   "center-x", _("Center abscisse"),
                                    0.0, 10000.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_Y,
