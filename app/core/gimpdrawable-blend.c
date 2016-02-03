@@ -17,16 +17,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -34,7 +27,6 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
-#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-blend.h"
@@ -96,6 +88,8 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 {
   GimpImage  *image;
   GeglBuffer *buffer;
+  GeglBuffer *shapeburst = NULL;
+  GeglNode   *render;
   gint        x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -115,46 +109,41 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   buffer = gegl_buffer_new (GEGL_RECTANGLE (x, y, width, height),
                             gimp_drawable_get_format_with_alpha (drawable));
 
-  {
-    GeglBuffer  *shapeburst = NULL;
-    GeglNode    *render;
+  if (gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
+      gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
+    {
+      shapeburst =
+        gimp_drawable_blend_shapeburst_distmap (drawable, TRUE,
+                                                GEGL_RECTANGLE (x, y, width, height),
+                                                progress);
+    }
 
-    if (gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
-        gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
-      {
-        shapeburst = gimp_drawable_blend_shapeburst_distmap (drawable, TRUE,
-                                                             GEGL_RECTANGLE (x, y, width, height),
-                                                             progress);
-      }
+  render = gegl_node_new_child (NULL,
+                                "operation",             "gimp:blend",
+                                "context",               context,
+                                "gradient",              gradient,
+                                "start-x",               startx,
+                                "start-y",               starty,
+                                "end-x",                 endx,
+                                "end-y",                 endy,
+                                "gradient-type",         gradient_type,
+                                "gradient-repeat",       repeat,
+                                "offset",                offset,
+                                "gradient-reverse",      reverse,
+                                "supersample",           supersample,
+                                "supersample-depth",     max_depth,
+                                "supersample-threshold", threshold,
+                                "dither",                dither,
+                                NULL);
 
-    render = gegl_node_new_child (NULL,
-                                  "operation",             "gimp:blend",
-                                  "context",               context,
-                                  "gradient",              gradient,
-                                  "start-x",               startx,
-                                  "start-y",               starty,
-                                  "end-x",                 endx,
-                                  "end-y",                 endy,
-                                  "gradient-type",         gradient_type,
-                                  "gradient-repeat",       repeat,
-                                  "offset",                offset,
-                                  "gradient-reverse",      reverse,
-                                  "supersample",           supersample,
-                                  "supersample-depth",     max_depth,
-                                  "supersample-threshold", threshold,
-                                  "dither",                dither,
-                                  NULL);
+  gimp_gegl_apply_operation (shapeburst, progress, NULL,
+                             render,
+                             buffer, GEGL_RECTANGLE (x, y, width, height));
 
-    gimp_gegl_apply_operation (shapeburst, progress, NULL,
-                               render,
-                               buffer, GEGL_RECTANGLE (x, y, width, height));
+  g_object_unref (render);
 
-    g_object_unref (render);
-
-    if (shapeburst)
-      g_object_unref (shapeburst);
-  }
-
+  if (shapeburst)
+    g_object_unref (shapeburst);
 
   gimp_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (x, y, width, height),
@@ -162,10 +151,8 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                               opacity, paint_mode,
                               NULL, x, y);
 
-  /*  update the image  */
   gimp_drawable_update (drawable, x, y, width, height);
 
-  /*  free the temporary buffer  */
   g_object_unref (buffer);
 
   gimp_unset_busy (image->gimp);
@@ -195,8 +182,7 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
   /*  allocate the distance map  */
   dist_buffer = gegl_buffer_new (region, babl_format ("Y float"));
 
-  /*  allocate the selection mask copy
-   */
+  /*  allocate the selection mask copy  */
   temp_buffer = gegl_buffer_new (region, babl_format ("Y float"));
 
   mask = gimp_image_get_mask (image);
