@@ -22,7 +22,7 @@
 #define __GIMP_SYMMETRY_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include "gimpimageeditor.h"
 
 
 #define GIMP_TYPE_SYMMETRY_EDITOR            (gimp_symmetry_editor_get_type ())
@@ -38,21 +38,20 @@ typedef struct _GimpSymmetryEditorClass    GimpSymmetryEditorClass;
 
 struct _GimpSymmetryEditor
 {
-  GimpEditor                 parent_instance;
+  GimpImageEditor            parent_instance;
 
   GimpSymmetryEditorPrivate *p;
 };
 
 struct _GimpSymmetryEditorClass
 {
-  GimpEditorClass  parent_class;
+  GimpImageEditorClass  parent_class;
 };
 
 
 GType       gimp_symmetry_editor_get_type (void) G_GNUC_CONST;
-GtkWidget * gimp_symmetry_editor_new      (Gimp               *gimp,
-                                           GimpImage          *image,
-                                           GimpMenuFactory    *menu_factory);
+GtkWidget * gimp_symmetry_editor_new      (GimpImage       *image,
+                                           GimpMenuFactory *menu_factory);
 
 
 #endif  /*  __GIMP_SYMMETRY_EDITOR_H__  */
