@@ -387,8 +387,6 @@ gimp_symmetry_get_settings (GimpSymmetry *sym,
 gchar *
 gimp_symmetry_parasite_name (GType type)
 {
-  GimpSymmetryClass *klass = g_type_class_ref (type);
-
   return g_strconcat ("gimp-image-symmetry:", g_type_name (type), NULL);
 }
 
