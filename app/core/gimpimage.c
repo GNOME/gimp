@@ -898,6 +898,8 @@ gimp_image_set_property (GObject      *object,
             GimpSymmetry *sym = gimp_image_symmetry_new (image, type);
 
             gimp_image_symmetry_add (image, sym);
+            g_object_unref (sym);
+
             private->active_symmetry = sym;
           }
 

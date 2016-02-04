@@ -98,7 +98,7 @@ gimp_image_symmetry_add (GimpImage    *image,
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   private->symmetries = g_list_prepend (private->symmetries,
-                                        sym);
+                                        g_object_ref (sym));
 }
 
 /**
@@ -123,8 +123,7 @@ gimp_image_symmetry_remove (GimpImage    *image,
   if (private->active_symmetry == sym)
     gimp_image_set_active_symmetry (image, G_TYPE_NONE);
 
-  private->symmetries = g_list_remove (private->symmetries,
-                                       sym);
+  private->symmetries = g_list_remove (private->symmetries, sym);
   g_object_unref (sym);
 }
 
