@@ -743,8 +743,7 @@ dialogs_symmetry_editor_new (GimpDialogFactory *factory,
                              GimpUIManager     *ui_manager,
                              gint               view_size)
 {
-  return gimp_symmetry_editor_new (gimp_context_get_image (context),
-                                   gimp_dialog_factory_get_menu_factory (factory));
+  return gimp_symmetry_editor_new (gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *

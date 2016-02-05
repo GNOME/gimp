@@ -35,7 +35,6 @@
 #include "core/gimpimage-symmetry.h"
 #include "core/gimpsymmetry.h"
 
-#include "gimpdocked.h"
 #include "gimpmenufactory.h"
 #include "gimppropwidgets.h"
 #include "gimpspinscale.h"
@@ -49,43 +48,33 @@ struct _GimpSymmetryEditorPrivate
   GimpContext *context;
 
   GtkWidget   *menu;
-  GtkWidget   *options_frame;
+  GtkWidget   *options_vbox;
 };
 
 
-static void        gimp_symmetry_editor_docked_iface_init (GimpDockedInterface   *iface);
-
-/* GimpDockedInterface handlers. */
-static void        gimp_symmetry_editor_set_context       (GimpDocked            *docked,
-                                                           GimpContext           *context);
-
-/* GimpImageEditor handlers. */
-static void        gimp_symmetry_editor_set_image         (GimpImageEditor       *editor,
-                                                           GimpImage             *image);
+static void   gimp_symmetry_editor_set_image        (GimpImageEditor    *editor,
+                                                     GimpImage          *image);
 
 /* Signal handlers on the contextual image. */
-static void        gimp_symmetry_editor_symmetry_notify   (GimpImage             *image,
-                                                           GParamSpec            *pspec,
-                                                           GimpSymmetryEditor    *editor);
+static void   gimp_symmetry_editor_symmetry_notify  (GimpImage          *image,
+                                                     GParamSpec         *pspec,
+                                                     GimpSymmetryEditor *editor);
 
 /* Signal handlers on the symmetry. */
-static void        gimp_symmetry_editor_symmetry_updated  (GimpSymmetry          *symmetry,
-                                                           GimpImage             *image,
-                                                           GimpSymmetryEditor    *editor);
+static void   gimp_symmetry_editor_symmetry_updated (GimpSymmetry       *symmetry,
+                                                     GimpImage          *image,
+                                                     GimpSymmetryEditor *editor);
 
 /* Private functions. */
-static void        gimp_symmetry_editor_set_options       (GimpSymmetryEditor    *editor,
-                                                           GimpSymmetry          *symmetry);
+static void   gimp_symmetry_editor_set_options      (GimpSymmetryEditor *editor,
+                                                     GimpSymmetry       *symmetry);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpSymmetryEditor, gimp_symmetry_editor,
-                         GIMP_TYPE_IMAGE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_symmetry_editor_docked_iface_init))
+G_DEFINE_TYPE (GimpSymmetryEditor, gimp_symmetry_editor,
+               GIMP_TYPE_IMAGE_EDITOR)
 
 #define parent_class gimp_symmetry_editor_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
 
 static void
 gimp_symmetry_editor_class_init (GimpSymmetryEditorClass *klass)
@@ -98,20 +87,9 @@ gimp_symmetry_editor_class_init (GimpSymmetryEditorClass *klass)
 }
 
 static void
-gimp_symmetry_editor_docked_iface_init (GimpDockedInterface *docked_iface)
-{
-  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
-
-  if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
-
-  docked_iface->set_context = gimp_symmetry_editor_set_context;
-}
-
-static void
 gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
 {
-  GtkScrolledWindow *scrolled_window;
+  GtkWidget *scrolled_window;
 
   editor->p = G_TYPE_INSTANCE_GET_PRIVATE (editor,
                                            GIMP_TYPE_SYMMETRY_EDITOR,
@@ -120,38 +98,19 @@ gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
   gtk_widget_set_size_request (GTK_WIDGET (editor), -1, 200);
 
   /* Scrolled window to keep the dock size reasonable. */
-  scrolled_window = GTK_SCROLLED_WINDOW (gtk_scrolled_window_new (NULL, NULL));
-
-  gtk_scrolled_window_set_policy (scrolled_window,
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
+  gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 0);
+  gtk_widget_show (scrolled_window);
 
-  gtk_box_pack_start (GTK_BOX (editor),
-                      GTK_WIDGET (scrolled_window),
-                      TRUE, TRUE, 0);
-  gtk_widget_show (GTK_WIDGET (scrolled_window));
-
-  /* A frame to hold the symmetry options. */
-  editor->p->options_frame = gimp_frame_new ("");
-  gtk_scrolled_window_add_with_viewport (scrolled_window,
-                                         editor->p->options_frame);
-}
-
-static void
-gimp_symmetry_editor_set_context (GimpDocked  *docked,
-                                  GimpContext *context)
-{
-  GimpSymmetryEditor *editor = GIMP_SYMMETRY_EDITOR (docked);
-
-  if (editor->p->context)
-    g_object_unref (editor->p->context);
-
-  editor->p->context = context;
-
-  if (editor->p->context)
-    g_object_ref (editor->p->context);
-
-  parent_docked_iface->set_context (docked, context);
+  /* A vbox to hold the symmetry options. */
+  editor->p->options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (editor->p->options_vbox), 2);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
+                                         editor->p->options_vbox);
+  gtk_widget_show (editor->p->options_vbox);
 }
 
 static void
@@ -161,9 +120,8 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
   GimpSymmetryEditor *editor = GIMP_SYMMETRY_EDITOR (image_editor);
   GimpGuiConfig      *guiconfig;
 
-  guiconfig = GIMP_GUI_CONFIG (editor->p->context->gimp->config);
+  guiconfig = GIMP_GUI_CONFIG (image_editor->context->gimp->config);
 
-  /* Disconnect and unref the previous image. */
   if (image_editor->image)
     {
       g_signal_handlers_disconnect_by_func (image_editor->image,
@@ -175,8 +133,10 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
 
   /* Destroy the previous menu. */
   if (editor->p->menu)
-    gtk_widget_destroy (editor->p->menu);
-  editor->p->menu = NULL;
+    {
+      gtk_widget_destroy (editor->p->menu);
+      editor->p->menu = NULL;
+    }
 
   if (image_editor->image && guiconfig->playground_symmetry)
     {
@@ -214,9 +174,10 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
                           GIMP_INT_STORE_LABEL, _("None"),
                           GIMP_INT_STORE_USER_DATA, GIMP_TYPE_SYMMETRY,
                           -1);
-      editor->p->menu = gimp_prop_pointer_combo_box_new (G_OBJECT (image_editor->image),
-                                                         "symmetry",
-                                                         GIMP_INT_STORE (store));
+      editor->p->menu =
+        gimp_prop_pointer_combo_box_new (G_OBJECT (image_editor->image),
+                                         "symmetry",
+                                         GIMP_INT_STORE (store));
       g_object_unref (store);
 
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (editor->p->menu),
@@ -250,25 +211,26 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
       gimp_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                                  -1);
-      gtk_container_add (GTK_CONTAINER (editor->p->options_frame), label);
+      gtk_container_add (GTK_CONTAINER (editor->p->options_vbox), label);
       gtk_widget_show (label);
-      gtk_widget_show (editor->p->options_frame);
     }
 }
 
 static void
-gimp_symmetry_editor_symmetry_notify (GimpImage           *image,
-                                      GParamSpec          *pspec,
-                                      GimpSymmetryEditor  *editor)
+gimp_symmetry_editor_symmetry_notify (GimpImage          *image,
+                                      GParamSpec         *pspec,
+                                      GimpSymmetryEditor *editor)
 {
   GimpSymmetry *symmetry = NULL;
 
-  if (image &&
-      (symmetry = gimp_image_get_active_symmetry (image)))
+  if (image)
     {
-      g_signal_connect (symmetry, "update-ui",
-                        G_CALLBACK (gimp_symmetry_editor_symmetry_updated),
-                        editor);
+      symmetry = gimp_image_get_active_symmetry (image);
+
+      if (symmetry)
+        g_signal_connect (symmetry, "update-ui",
+                          G_CALLBACK (gimp_symmetry_editor_symmetry_updated),
+                          editor);
     }
 
   gimp_symmetry_editor_set_options (editor, symmetry);
@@ -279,9 +241,7 @@ gimp_symmetry_editor_symmetry_updated (GimpSymmetry       *symmetry,
                                        GimpImage          *image,
                                        GimpSymmetryEditor *editor)
 {
-  g_return_if_fail (GIMP_IS_SYMMETRY (symmetry));
-
-  if (image    != editor->p->context->image ||
+  if (image    != gimp_image_editor_get_image (GIMP_IMAGE_EDITOR (editor)) ||
       symmetry != gimp_image_get_active_symmetry (image))
     {
       g_signal_handlers_disconnect_by_func (symmetry,
@@ -297,53 +257,36 @@ static void
 gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
                                   GimpSymmetry       *symmetry)
 {
-  GimpSymmetryClass  *klass;
-  GtkWidget          *frame;
-  GtkWidget          *vbox;
-  GParamSpec        **specs;
-  gint                n_properties;
-  gint                i;
+  GtkWidget   *vbox = editor->p->options_vbox;
+  GParamSpec **specs;
+  gint         n_properties;
+  gint         i;
 
-  frame = editor->p->options_frame;
-
-  /* Clean the old frame */
-  gtk_widget_hide (frame);
-  gtk_container_foreach (GTK_CONTAINER (frame),
+  gtk_container_foreach (GTK_CONTAINER (vbox),
                          (GtkCallback) gtk_widget_destroy, NULL);
 
   if (! symmetry || G_TYPE_FROM_INSTANCE (symmetry) == GIMP_TYPE_SYMMETRY)
     return;
 
-  klass = g_type_class_ref (G_TYPE_FROM_INSTANCE (symmetry));
-  gtk_frame_set_label (GTK_FRAME (frame),
-                       klass->label);
-  g_type_class_unref (klass);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
   specs = gimp_symmetry_get_settings (symmetry, &n_properties);
 
   for (i = 0; i < n_properties; i++)
     {
-      GParamSpec  *spec;
+      GParamSpec  *spec = G_PARAM_SPEC (specs[i]);
       const gchar *name;
       const gchar *blurb;
 
-      if (specs[i] == NULL)
+      if (spec == NULL)
         {
           GtkWidget *separator;
 
           separator = gtk_hseparator_new ();
-          gtk_box_pack_start (GTK_BOX (vbox), separator,
-                              FALSE, FALSE, 0);
+          gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
           gtk_widget_show (separator);
           continue;
         }
-      spec = G_PARAM_SPEC (specs[i]);
 
-      name = g_param_spec_get_name (spec);
+      name  = g_param_spec_get_name (spec);
       blurb = g_param_spec_get_blurb (spec);
 
       switch (spec->value_type)
@@ -358,6 +301,7 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
             gtk_widget_show (checkbox);
           }
           break;
+
         case G_TYPE_DOUBLE:
         case G_TYPE_INT:
         case G_TYPE_UINT:
@@ -388,10 +332,11 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
             gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
                                               minimum,
                                               maximum);
-            gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+            gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
             gtk_widget_show (scale);
           }
           break;
+
         default:
           /* Type of parameter we haven't handled yet. */
           continue;
@@ -399,20 +344,15 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
     }
 
   g_free (specs);
-
-  /* Finally show the frame. */
-  gtk_widget_show (frame);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_symmetry_editor_new (GimpImage       *image,
-                          GimpMenuFactory *menu_factory)
+gimp_symmetry_editor_new (GimpMenuFactory *menu_factory)
 {
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
-  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
 
   return g_object_new (GIMP_TYPE_SYMMETRY_EDITOR,
                        "menu-factory",    menu_factory,
