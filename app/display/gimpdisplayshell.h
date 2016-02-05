@@ -202,6 +202,8 @@ struct _GimpDisplayShell
   gpointer           scroll_info;
 
   GeglBuffer        *mask;
+  gint               mask_offset_x;
+  gint               mask_offset_y;
   GimpRGB            mask_color;
   gboolean           mask_inverted;
 
@@ -292,6 +294,8 @@ void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
                                                     const GdkRectangle *highlight);
 void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     GeglBuffer         *mask,
+                                                    gint                offset_x,
+                                                    gint                offset_y,
                                                     const GimpRGB      *color,
                                                     gboolean            inverted);
 

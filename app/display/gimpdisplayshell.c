@@ -1936,12 +1936,15 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  * @color: the color to use for drawing the mask
  * @inverted: #TRUE if the mask should be drawn inverted
  *
- * Previews an image-sized mask. Depending on @inverted, pixels that
- * are selected or not selected are tinted with the given color.
+ * Previews a mask originating at offset_x, offset_x. Depending on
+ * @inverted, pixels that are selected or not selected are tinted with
+ * the given color.
  **/
 void
 gimp_display_shell_set_mask (GimpDisplayShell *shell,
                              GeglBuffer       *mask,
+                             gint              offset_x,
+                             gint              offset_y,
                              const GimpRGB    *color,
                              gboolean          inverted)
 {
@@ -1956,6 +1959,9 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
     g_object_unref (shell->mask);
 
   shell->mask = mask;
+
+  shell->mask_offset_x = offset_x;
+  shell->mask_offset_y = offset_y;
 
   if (mask)
     shell->mask_color = *color;

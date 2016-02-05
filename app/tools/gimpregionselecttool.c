@@ -187,7 +187,7 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
 
   if (options->draw_mask)
     gimp_display_shell_set_mask (gimp_display_get_shell (display),
-                                 NULL, NULL, FALSE);
+                                 NULL, 0, 0, NULL, FALSE);
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
@@ -381,13 +381,23 @@ gimp_region_select_tool_get_mask (GimpRegionSelectTool *region_sel,
       if (region_sel->region_mask)
         {
           GimpRGB color = { 1.0, 0.0, 1.0, 1.0 };
+          gint    off_x = 0;
+          gint    off_y = 0;
+
+          if (! options->sample_merged)
+            {
+              GimpImage    *image    = gimp_display_get_image (display);
+              GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+            }
 
           gimp_display_shell_set_mask (shell, region_sel->region_mask,
-                                       &color, FALSE);
+                                       off_x, off_y, &color, FALSE);
         }
       else
         {
-          gimp_display_shell_set_mask (shell, NULL, NULL, FALSE);
+          gimp_display_shell_set_mask (shell, NULL, 0, 0, NULL, FALSE);
         }
     }
 
