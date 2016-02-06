@@ -85,10 +85,7 @@ static GeglNode * gimp_mandala_get_operation      (GimpSymmetry *mandala,
                                                    gint          stroke,
                                                    gint          paint_width,
                                                    gint          paint_height);
-static GParamSpec ** gimp_mandala_get_settings    (GimpSymmetry *sym,
-                                                   gint         *n_settings);
-static void
-               gimp_mandala_image_size_changed_cb (GimpImage    *image ,
+static void    gimp_mandala_image_size_changed_cb (GimpImage    *image ,
                                                    gint          previous_origin_x,
                                                    gint          previous_origin_y,
                                                    gint          previous_width,
@@ -115,26 +112,35 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
   symmetry_class->label             = _("Mandala");
   symmetry_class->update_strokes    = gimp_mandala_update_strokes;
   symmetry_class->get_operation     = gimp_mandala_get_operation;
-  symmetry_class->get_settings      = gimp_mandala_get_settings;
   symmetry_class->active_changed    = gimp_mandala_active_changed;
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_X,
                                    "center-x", _("Center abscisse"),
                                    0.0, 10000.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_Y,
                                    "center-y", _("Center ordinate"),
                                    0.0, 10000.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SIZE,
-                                "size", _("Number of points"),
-                                1, 100, 6.0,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISABLE_TRANSFORMATION,
-                                    "disable-transformation",
-                                    _("Disable Brush Transformation (faster)"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_SIZE,
+                                   g_param_spec_int ("size",
+                                                     _("Number of points"),
+                                                     _("Number of points"),
+                                                     1, 100, 6.0,
+                                                     GIMP_CONFIG_PARAM_FLAGS |
+                                                     GIMP_PARAM_STATIC_STRINGS |
+                                                     GIMP_SYMMETRY_PARAM_GUI));
+
+  g_object_class_install_property (object_class, PROP_DISABLE_TRANSFORMATION,
+                                   g_param_spec_boolean ("disable-transformation",
+                                                         _("Disable brush transform"),
+                                                         _("Disable brush transformation (faster)"),
+                                                         FALSE,
+                                                         GIMP_CONFIG_PARAM_FLAGS |
+                                                         GIMP_PARAM_STATIC_STRINGS |
+                                                         GIMP_SYMMETRY_PARAM_GUI));
 }
 
 static void
@@ -504,24 +510,6 @@ gimp_mandala_get_operation (GimpSymmetry *sym,
     }
 
   return op;
-}
-
-static GParamSpec **
-gimp_mandala_get_settings (GimpSymmetry *sym,
-                           gint         *n_settings)
-{
-  GParamSpec **pspecs;
-
-  *n_settings = 3;
-  pspecs = g_new (GParamSpec*, 3);
-
-  pspecs[0] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                            "size");
-  pspecs[1] = NULL;
-  pspecs[2] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                            "disable-transformation");
-
-  return pspecs;
 }
 
 static void

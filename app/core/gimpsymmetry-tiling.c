@@ -73,10 +73,7 @@ static GeglNode * gimp_tiling_get_operation      (GimpSymmetry *tiling,
                                                   gint          stroke,
                                                   gint          paint_width,
                                                   gint          paint_height);
-static GParamSpec ** gimp_tiling_get_settings    (GimpSymmetry *sym,
-                                                  gint         *n_settings);
-static void
-               gimp_tiling_image_size_changed_cb (GimpImage    *image ,
+static void    gimp_tiling_image_size_changed_cb (GimpImage    *image,
                                                   gint          previous_origin_x,
                                                   gint          previous_origin_y,
                                                   gint          previous_width,
@@ -103,28 +100,51 @@ gimp_tiling_class_init (GimpTilingClass *klass)
   symmetry_class->label           = _("Tiling");
   symmetry_class->update_strokes  = gimp_tiling_update_strokes;
   symmetry_class->get_operation   = gimp_tiling_get_operation;
-  symmetry_class->get_settings    = gimp_tiling_get_settings;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_X_INTERVAL,
-                                   "x-interval", _("Intervals on x-axis (pixels)"),
-                                   0.0, 10000.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_Y_INTERVAL,
-                                   "y-interval", _("Intervals on y-axis (pixels)"),
-                                   0.0, 10000.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SHIFT,
-                                   "shift", _("X-shift between lines (pixels)"),
-                                   0.0, 10000.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_X_MAX,
-                                "x-max", _("Max strokes on x-axis"),
-                                0, 100, 0,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_Y_MAX,
-                                "y-max", _("Max strokes on y-axis"),
-                                0, 100, 0,
-                                GIMP_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_X_INTERVAL,
+                                   g_param_spec_double ("x-interval",
+                                                        _("Interval X"),
+                                                        _("Interval on the X axis (pixels)"),
+                                                        0.0, 10000.0, 0.0,
+                                                        GIMP_CONFIG_PARAM_FLAGS |
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        GIMP_SYMMETRY_PARAM_GUI));
+
+  g_object_class_install_property (object_class, PROP_Y_INTERVAL,
+                                   g_param_spec_double ("y-interval",
+                                                        _("Interval Y"),
+                                                        _("Interval on the Y axis (pixels)"),
+                                                        0.0, 10000.0, 0.0,
+                                                        GIMP_CONFIG_PARAM_FLAGS |
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        GIMP_SYMMETRY_PARAM_GUI));
+
+  g_object_class_install_property (object_class, PROP_SHIFT,
+                                   g_param_spec_double ("shift",
+                                                        _("Shift"),
+                                                        _("X-shift between lines (pixels)"),
+                                                        0.0, 10000.0, 0.0,
+                                                        GIMP_CONFIG_PARAM_FLAGS |
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        GIMP_SYMMETRY_PARAM_GUI));
+
+  g_object_class_install_property (object_class, PROP_X_MAX,
+                                   g_param_spec_int ("x-max",
+                                                     _("Max strokes X"),
+                                                     _("Maximum number of strokes on the X axis"),
+                                                     0, 100, 0,
+                                                     GIMP_CONFIG_PARAM_FLAGS |
+                                                     GIMP_PARAM_STATIC_STRINGS |
+                                                     GIMP_SYMMETRY_PARAM_GUI));
+
+  g_object_class_install_property (object_class, PROP_Y_MAX,
+                                   g_param_spec_int ("y-max",
+                                                     _("Max strokes Y"),
+                                                     _("Maximum number of strokes on the Y axis"),
+                                                     0, 100, 0,
+                                                     GIMP_CONFIG_PARAM_FLAGS |
+                                                     GIMP_PARAM_STATIC_STRINGS |
+                                                     GIMP_SYMMETRY_PARAM_GUI));
 }
 
 static void
@@ -347,30 +367,6 @@ gimp_tiling_get_operation (GimpSymmetry *sym,
 {
   /* No buffer transformation happens for tiling. */
   return NULL;
-}
-
-static GParamSpec **
-gimp_tiling_get_settings (GimpSymmetry *sym,
-                          gint         *n_settings)
-{
-  GParamSpec **pspecs;
-
-  *n_settings = 6;
-  pspecs = g_new (GParamSpec*, 6);
-
-  pspecs[0] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                            "x-interval");
-  pspecs[1] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                            "y-interval");
-  pspecs[2] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                            "shift");
-  pspecs[3] = NULL;
-  pspecs[4] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                            "x-max");
-  pspecs[5] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                            "y-max");
-
-  return pspecs;
 }
 
 static void

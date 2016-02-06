@@ -57,28 +57,23 @@ enum
 
 /* Local function prototypes */
 
-static void gimp_symmetry_finalize        (GObject      *object);
-static void gimp_symmetry_set_property    (GObject      *object,
-                                           guint         property_id,
-                                           const GValue *value,
-                                           GParamSpec   *pspec);
-static void gimp_symmetry_get_property    (GObject      *object,
-                                           guint         property_id,
-                                           GValue       *value,
-                                           GParamSpec   *pspec);
+static void       gimp_symmetry_finalize            (GObject      *object);
+static void       gimp_symmetry_set_property        (GObject      *object,
+                                                     guint         property_id,
+                                                     const GValue *value,
+                                                     GParamSpec   *pspec);
+static void       gimp_symmetry_get_property        (GObject      *object,
+                                                     guint         property_id,
+                                                     GValue       *value,
+                                                     GParamSpec   *pspec);
 
-static void
-        gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
-                                           GimpDrawable *drawable,
-                                           GimpCoords   *origin);
-static GeglNode *
-            gimp_symmetry_real_get_op     (GimpSymmetry *sym,
-                                           gint          stroke,
-                                           gint          paint_width,
-                                           gint          paint_height);
-static GParamSpec **
-          gimp_symmetry_real_get_settings (GimpSymmetry *sym,
-                                           gint         *n_properties);
+static void       gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
+                                                     GimpDrawable *drawable,
+                                                     GimpCoords   *origin);
+static GeglNode * gimp_symmetry_real_get_op         (GimpSymmetry *sym,
+                                                     gint          stroke,
+                                                     gint          paint_width,
+                                                     gint          paint_height);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSymmetry, gimp_symmetry, GIMP_TYPE_OBJECT,
@@ -137,7 +132,6 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
   klass->label               = _("None");
   klass->update_strokes      = gimp_symmetry_real_update_strokes;
   klass->get_operation       = gimp_symmetry_real_get_op;
-  klass->get_settings        = gimp_symmetry_real_get_settings;
   klass->active_changed      = NULL;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
@@ -242,14 +236,6 @@ gimp_symmetry_real_get_op (GimpSymmetry *sym,
   return NULL;
 }
 
-static GParamSpec **
-gimp_symmetry_real_get_settings (GimpSymmetry *sym,
-                                 gint         *n_properties)
-{
-  *n_properties = 0;
-
-  return NULL;
-}
 
 /***** Public Functions *****/
 
@@ -357,25 +343,6 @@ gimp_symmetry_get_operation (GimpSymmetry *sym,
                                                        stroke,
                                                        paint_width,
                                                        paint_height);
-}
-
-/**
- * gimp_symmetry_get_settings:
- * @sym:     the #GimpSymmetry
- * @n_properties: the number of properties in the returned array
- *
- * Returns: an array of the symmetry properties which are supposed to
- * be settable by the user.
- * The returned array must be freed by the caller.
- **/
-GParamSpec **
-gimp_symmetry_get_settings (GimpSymmetry *sym,
-                            gint         *n_properties)
-{
-  g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), NULL);
-
-  return GIMP_SYMMETRY_GET_CLASS (sym)->get_settings (sym,
-                                                      n_properties);
 }
 
 /*

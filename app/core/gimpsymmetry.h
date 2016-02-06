@@ -25,6 +25,10 @@
 #include "gimpobject.h"
 
 
+/* shift one more than GIMP_CONFIG_PARAM_IGNORE */
+#define GIMP_SYMMETRY_PARAM_GUI (1 << (6 + G_PARAM_USER_SHIFT))
+
+
 #define GIMP_TYPE_SYMMETRY            (gimp_symmetry_get_type ())
 #define GIMP_SYMMETRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SYMMETRY, GimpSymmetry))
 #define GIMP_SYMMETRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SYMMETRY, GimpSymmetryClass))
@@ -61,9 +65,6 @@ struct _GimpSymmetryClass
                                              gint                stroke,
                                              gint                paint_width,
                                              gint                paint_height);
-  GParamSpec **
-             (* get_settings)               (GimpSymmetry       *symmetry,
-                                             gint               *n_properties);
   void       (* active_changed)             (GimpSymmetry       *symmetry);
 };
 
@@ -82,8 +83,6 @@ GeglNode     * gimp_symmetry_get_operation  (GimpSymmetry       *symmetry,
                                              gint                stroke,
                                              gint                paint_width,
                                              gint                paint_height);
-GParamSpec  ** gimp_symmetry_get_settings   (GimpSymmetry       *symmetry,
-                                             gint               *n_properties);
 
 gchar        * gimp_symmetry_parasite_name  (GType               type);
 GimpParasite * gimp_symmetry_to_parasite    (const GimpSymmetry *symmetry);

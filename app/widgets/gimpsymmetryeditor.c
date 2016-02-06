@@ -36,7 +36,7 @@
 #include "core/gimpsymmetry.h"
 
 #include "gimpmenufactory.h"
-#include "gimppropwidgets.h"
+#include "gimppropgui.h"
 #include "gimpspinscale.h"
 #include "gimpsymmetryeditor.h"
 
@@ -257,93 +257,22 @@ static void
 gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
                                   GimpSymmetry       *symmetry)
 {
-  GtkWidget   *vbox = editor->p->options_vbox;
-  GParamSpec **specs;
-  gint         n_properties;
-  gint         i;
-
-  gtk_container_foreach (GTK_CONTAINER (vbox),
+  gtk_container_foreach (GTK_CONTAINER (editor->p->options_vbox),
                          (GtkCallback) gtk_widget_destroy, NULL);
 
-  if (! symmetry || G_TYPE_FROM_INSTANCE (symmetry) == GIMP_TYPE_SYMMETRY)
-    return;
-
-  specs = gimp_symmetry_get_settings (symmetry, &n_properties);
-
-  for (i = 0; i < n_properties; i++)
+  if (symmetry && G_TYPE_FROM_INSTANCE (symmetry) != GIMP_TYPE_SYMMETRY)
     {
-      GParamSpec  *spec = G_PARAM_SPEC (specs[i]);
-      const gchar *name;
-      const gchar *blurb;
+      GtkWidget *gui;
 
-      if (spec == NULL)
-        {
-          GtkWidget *separator;
-
-          separator = gtk_hseparator_new ();
-          gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
-          gtk_widget_show (separator);
-          continue;
-        }
-
-      name  = g_param_spec_get_name (spec);
-      blurb = g_param_spec_get_blurb (spec);
-
-      switch (spec->value_type)
-        {
-        case G_TYPE_BOOLEAN:
-          {
-            GtkWidget *checkbox;
-
-            checkbox = gimp_prop_check_button_new (G_OBJECT (symmetry),
-                                                   name, blurb);
-            gtk_box_pack_start (GTK_BOX (vbox), checkbox, FALSE, FALSE, 0);
-            gtk_widget_show (checkbox);
-          }
-          break;
-
-        case G_TYPE_DOUBLE:
-        case G_TYPE_INT:
-        case G_TYPE_UINT:
-          {
-            GtkWidget *scale;
-            gdouble    minimum;
-            gdouble    maximum;
-
-            if (spec->value_type == G_TYPE_DOUBLE)
-              {
-                minimum = G_PARAM_SPEC_DOUBLE (spec)->minimum;
-                maximum = G_PARAM_SPEC_DOUBLE (spec)->maximum;
-              }
-            else if (spec->value_type == G_TYPE_INT)
-              {
-                minimum = G_PARAM_SPEC_INT (spec)->minimum;
-                maximum = G_PARAM_SPEC_INT (spec)->maximum;
-              }
-            else
-              {
-                minimum = G_PARAM_SPEC_UINT (spec)->minimum;
-                maximum = G_PARAM_SPEC_UINT (spec)->maximum;
-              }
-
-            scale = gimp_prop_spin_scale_new (G_OBJECT (symmetry),
-                                              name, blurb,
-                                              1.0, 10.0, 1);
-            gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
-                                              minimum,
-                                              maximum);
-            gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-            gtk_widget_show (scale);
-          }
-          break;
-
-        default:
-          /* Type of parameter we haven't handled yet. */
-          continue;
-        }
+      gui = gimp_prop_gui_new (G_OBJECT (symmetry),
+                               GIMP_TYPE_SYMMETRY,
+                               GIMP_SYMMETRY_PARAM_GUI,
+                               GIMP_IMAGE_EDITOR (editor)->context,
+                               NULL, NULL);
+      gtk_box_pack_start (GTK_BOX (editor->p->options_vbox), gui,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (gui);
     }
-
-  g_free (specs);
 }
 
 
