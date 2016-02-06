@@ -732,7 +732,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     {
       tool->options_gui =
         gimp_prop_gui_new (G_OBJECT (im_tool->config),
-                           G_TYPE_FROM_INSTANCE (im_tool->config),
+                           G_TYPE_FROM_INSTANCE (im_tool->config), 0,
                            GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)),
                            (GimpCreatePickerFunc) gimp_image_map_tool_add_color_picker,
                            tool);

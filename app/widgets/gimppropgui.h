@@ -43,6 +43,7 @@ GtkWidget * gimp_prop_widget_new_from_pspec (GObject              *config,
                                              const gchar         **label);
 GtkWidget * gimp_prop_gui_new               (GObject              *config,
                                              GType                 owner_type,
+                                             GParamFlags           flags,
                                              GimpContext          *context,
                                              GimpCreatePickerFunc  create_picker,
                                              gpointer              picker_creator);
