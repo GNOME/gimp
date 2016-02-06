@@ -83,7 +83,6 @@ struct _GimpGuiConfig
   gboolean             playground_npd_tool;
   gboolean             playground_handle_transform_tool;
   gboolean             playground_seamless_clone_tool;
-  gboolean             playground_symmetry;
 
   /* saved in sessionrc */
   gboolean             hide_docks;

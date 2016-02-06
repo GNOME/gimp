@@ -27,17 +27,12 @@
 
 #include "widgets-types.h"
 
-#include "config/gimpguiconfig.h"
-
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-symmetry.h"
 #include "core/gimpsymmetry.h"
 
 #include "gimpmenufactory.h"
 #include "gimppropgui.h"
-#include "gimpspinscale.h"
 #include "gimpsymmetryeditor.h"
 
 #include "gimp-intl.h"
@@ -118,9 +113,6 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
                                 GimpImage       *image)
 {
   GimpSymmetryEditor *editor = GIMP_SYMMETRY_EDITOR (image_editor);
-  GimpGuiConfig      *guiconfig;
-
-  guiconfig = GIMP_GUI_CONFIG (image_editor->context->gimp->config);
 
   if (image_editor->image)
     {
@@ -138,7 +130,7 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
       editor->p->menu = NULL;
     }
 
-  if (image_editor->image && guiconfig->playground_symmetry)
+  if (image_editor->image)
     {
       GtkListStore *store;
       GtkTreeIter   iter;
@@ -197,22 +189,6 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
       /* Update the symmetry options. */
       symmetry = gimp_image_get_active_symmetry (image_editor->image);
       gimp_symmetry_editor_set_options (editor, symmetry);
-    }
-  else if (! guiconfig->playground_symmetry)
-    {
-      GtkWidget *label;
-
-      /* Display a text when the feature is disabled. */
-      label = gtk_label_new (_("Symmetry Painting is disabled.\n"
-                               "You can enable the feature in the "
-                               "\"Experimental Playground\" section of \"Preferences\"."));
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-      gimp_label_set_attributes (GTK_LABEL (label),
-                                 PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                                 -1);
-      gtk_container_add (GTK_CONTAINER (editor->p->options_vbox), label);
-      gtk_widget_show (label);
     }
 }
 
