@@ -215,7 +215,7 @@ gimp_tiling_set_property (GObject      *object,
                   g_value_set_double (&val, 0.0);
                   g_object_set_property (G_OBJECT (object), "shift", &val);
                 }
-              else if (sym->drawable)
+              if (sym->drawable)
                 gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
             }
         }
@@ -236,7 +236,7 @@ gimp_tiling_set_property (GObject      *object,
                   g_value_set_double (&val, 0.0);
                   g_object_set_property (G_OBJECT (object), "shift", &val);
                 }
-              else if (sym->drawable)
+              if (sym->drawable)
                 gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
             }
         }
