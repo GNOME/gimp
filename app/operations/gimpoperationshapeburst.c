@@ -92,7 +92,8 @@ gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
                   0,
                   NULL, NULL,
                   gimp_marshal_VOID__DOUBLE,
-                  G_TYPE_NONE, 0);
+                  G_TYPE_NONE, 1,
+                  G_TYPE_DOUBLE);
 
   object_class->set_property   = gimp_operation_shapeburst_set_property;
   object_class->get_property   = gimp_operation_shapeburst_get_property;

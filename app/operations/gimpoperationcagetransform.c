@@ -111,7 +111,8 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
                   0,
                   NULL, NULL,
                   gimp_marshal_VOID__DOUBLE,
-                  G_TYPE_NONE, 0);
+                  G_TYPE_NONE, 1,
+                  G_TYPE_DOUBLE);
 
   object_class->get_property               = gimp_operation_cage_transform_get_property;
   object_class->set_property               = gimp_operation_cage_transform_set_property;
