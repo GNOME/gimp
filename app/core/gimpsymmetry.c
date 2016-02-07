@@ -222,7 +222,7 @@ gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
 {
   /* The basic symmetry just uses the origin as is. */
   sym->strokes = g_list_prepend (sym->strokes,
-                                     g_memdup (origin, sizeof (GimpCoords)));
+                                 g_memdup (origin, sizeof (GimpCoords)));
 }
 
 static GeglNode *
