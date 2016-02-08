@@ -7,16 +7,16 @@
 # Helgi Þormar Þorbjörnsson  <helgi@trance.is>, 2004.
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
 # Sveinn í Felli <sveinki@nett.is>, 2009.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-05 07:05+0000\n"
-"PO-Revision-Date: 2015-12-05 15:18+0000\n"
+"POT-Creation-Date: 2016-02-07 19:08+0000\n"
+"PO-Revision-Date: 2016-02-08 12:46+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <translation-team-is@lists.sourceforge.org>\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2422,7 +2422,7 @@ msgstr "Opna mynd sem lög"
 msgid "No changes need to be saved"
 msgstr "Engar breytingar þarf að vista"
 
-#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:701
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:703
 #: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Vista mynd"
@@ -2460,11 +2460,11 @@ msgstr ""
 "Með því að endurlesa aftur það sem er geymt á diski, munt þú missa út allar "
 "breytingar, þar með taldar allar ferilupplýsingar."
 
-#: ../app/actions/file-commands.c:731
+#: ../app/actions/file-commands.c:733
 msgid "(Unnamed Template)"
 msgstr "(ónefnt sniðmát)"
 
-#: ../app/actions/file-commands.c:782
+#: ../app/actions/file-commands.c:784
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2967,7 +2967,7 @@ msgstr "Ha_mur"
 #: ../app/actions/image-actions.c:57
 msgctxt "image-action"
 msgid "_Transform"
-msgstr "_Ummynda"
+msgstr "_Ummyndun"
 
 #: ../app/actions/image-actions.c:58
 msgctxt "image-action"
@@ -3311,7 +3311,7 @@ msgstr "G_egnsæi"
 #: ../app/actions/layers-actions.c:61
 msgctxt "layers-action"
 msgid "_Transform"
-msgstr "_Umbreyting"
+msgstr "_Ummyndun"
 
 #: ../app/actions/layers-actions.c:63
 msgctxt "layers-action"
@@ -3526,7 +3526,7 @@ msgstr "Texti eftir _ferli"
 #: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
-msgstr "Varpa textanum á þessu lagi eftir núverandi ferli"
+msgstr "Beygla textanum á þessu lagi eftir núverandi ferli"
 
 #: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
@@ -4267,7 +4267,7 @@ msgstr "Ógeg_nsæi hulu:"
 #: ../app/actions/sample-points-actions.c:39
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
-msgstr "Valmynd safnpunkta"
+msgstr "Valmynd sýnatökupunkta"
 
 #: ../app/actions/sample-points-actions.c:46
 msgctxt "sample-points-action"
@@ -4597,7 +4597,7 @@ msgstr "Opna textaskjal (UTF-8)"
 #: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
 #: ../app/core/gimppalette-load.c:320 ../app/core/gimppalette-load.c:377
 #: ../app/core/gimppalette-load.c:467 ../app/core/gimppalette-load.c:634
-#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpcurvestool.c:651
+#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpcurvestool.c:658
 #: ../app/tools/gimplevelstool.c:747 ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -4831,7 +4831,7 @@ msgstr "_Málunarverkfæri"
 #: ../app/actions/tools-actions.c:48
 msgctxt "tools-action"
 msgid "_Transform Tools"
-msgstr "Umbrey_tingarverkfæri"
+msgstr "Ummyndunarver_kfæri"
 
 #: ../app/actions/tools-actions.c:49
 msgctxt "tools-action"
@@ -5283,7 +5283,7 @@ msgstr "Birta hnitanet myndarinnar"
 #: ../app/actions/view-actions.c:168
 msgctxt "view-action"
 msgid "Show Sample Points"
-msgstr "Birta safnpunkta"
+msgstr "Birta sýnatökupunkta"
 
 #: ../app/actions/view-actions.c:169
 msgctxt "view-action"
@@ -5960,7 +5960,7 @@ msgstr "Rétthent"
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:62
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:704
+#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:711
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
 #: ../app/xcf/xcf.c:452
 #, c-format
@@ -6243,8 +6243,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:295
 msgid "Let GIMP try to restore your last saved session on each startup."
-msgstr ""
-"Láta GIMP reyna að endurheimta síðustu vistuðu lotu þegar hann er ræstur."
+msgstr "Láta GIMP reyna að endurheimta síðustu vistuðu lotu þegar það er ræst."
 
 #: ../app/config/gimprc-blurbs.h:298
 msgid ""
@@ -6362,8 +6361,8 @@ msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Þegar þetta er virkt eru safnpunktar sjálfgefið sýnilegir. Hægt er að víxla "
-"þessu með því að fara í \"Skoða->Sýna safnpunkta\" skipunina."
+"Þegar þetta er virkt eru sýnatökupunktar sjálfgefið sýnilegir. Hægt er að "
+"víxla þessu með því að fara í \"Skoða->Birta sýnatökupunkta\" skipunina."
 
 #: ../app/config/gimprc-blurbs.h:364
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -6918,7 +6917,7 @@ msgstr "Stoðlína"
 #: ../app/core/core-enums.c:846 ../app/core/core-enums.c:877
 msgctxt "undo-type"
 msgid "Sample Point"
-msgstr "Safnpunktur"
+msgstr "Sýnatökupunktur"
 
 #: ../app/core/core-enums.c:847 ../app/core/core-enums.c:878
 msgctxt "undo-type"
@@ -7014,7 +7013,7 @@ msgstr "Texti"
 #: ../app/core/gimpdrawable-transform.c:589
 msgctxt "undo-type"
 msgid "Transform"
-msgstr "Ummynda"
+msgstr "Ummyndun"
 
 #: ../app/core/core-enums.c:866 ../app/core/core-enums.c:908
 msgctxt "undo-type"
@@ -7239,7 +7238,7 @@ msgstr "Halda ígræddu litasniði"
 #: ../app/core/core-enums.c:1255
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
-msgstr "Umbreyta í RGB litrýmd"
+msgstr "Umbreyta í RGB litarýmd"
 
 #: ../app/core/core-enums.c:1292
 msgctxt "dynamics-output-type"
@@ -7369,7 +7368,7 @@ msgstr "FG til gegnsæis"
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr "tags-locale:C"
+msgstr "tags-locale:is"
 
 #: ../app/core/gimp-user-install.c:203
 #, c-format
@@ -7575,7 +7574,7 @@ msgstr "Villa við ritun '%s': %s"
 
 #: ../app/core/gimpbrushgenerated.c:129
 msgid "Brush Shape"
-msgstr "Pensilform"
+msgstr "Pensillögun"
 
 #: ../app/core/gimpbrushgenerated.c:137
 msgid "Brush Radius"
@@ -7671,7 +7670,7 @@ msgstr "Snúa litrás"
 #: ../app/core/gimpchannel.c:279 ../app/core/gimpdrawable-transform.c:904
 msgctxt "undo-type"
 msgid "Transform Channel"
-msgstr "Umbreyta litrás"
+msgstr "Ummynda litrás"
 
 #: ../app/core/gimpchannel.c:280
 msgctxt "undo-type"
@@ -7964,11 +7963,11 @@ msgstr "Snúa"
 #: ../app/core/gimpdrawable-transform.c:902 ../app/core/gimplayer.c:274
 msgctxt "undo-type"
 msgid "Transform Layer"
-msgstr "Umbreyta lagi"
+msgstr "Ummynda lagi"
 
 #: ../app/core/gimpdrawable-transform.c:915
 msgid "Transformation"
-msgstr "Umbreyting"
+msgstr "Ummyndun"
 
 #: ../app/core/gimpdrawable.c:494
 msgctxt "undo-type"
@@ -8091,7 +8090,7 @@ msgstr "Snúa lagahóp"
 #: ../app/core/gimpgrouplayer.c:226
 msgctxt "undo-type"
 msgid "Transform Layer Group"
-msgstr "Umbreyta lagahóp"
+msgstr "Ummynda lagahóp"
 
 #: ../app/core/gimpimage-arrange.c:142
 msgctxt "undo-type"
@@ -8198,7 +8197,7 @@ msgstr "Snúa hlutum"
 #: ../app/core/gimpimage-item-list.c:140
 msgctxt "undo-type"
 msgid "Transform Items"
-msgstr "Umbreyta hlutum"
+msgstr "Ummynda hluti"
 
 #: ../app/core/gimpimage-merge.c:132
 msgctxt "undo-type"
@@ -8263,17 +8262,17 @@ msgstr "Gera flýtihulu óvirka"
 #: ../app/core/gimpimage-sample-points.c:53
 msgctxt "undo-type"
 msgid "Add Sample Point"
-msgstr "Bæta við safnpunkti"
+msgstr "Bæta við sýnatökupunkti"
 
 #: ../app/core/gimpimage-sample-points.c:98
 msgctxt "undo-type"
 msgid "Remove Sample Point"
-msgstr "Fjarlægja safnpunkt"
+msgstr "Fjarlægja sýnatökupunkt"
 
 #: ../app/core/gimpimage-sample-points.c:126
 msgctxt "undo-type"
 msgid "Move Sample Point"
-msgstr "Færa safnpunkt"
+msgstr "Færa sýnatökupunkt"
 
 #: ../app/core/gimpimage-scale.c:88
 msgctxt "undo-type"
@@ -8877,8 +8876,7 @@ msgstr ""
 "Áki G. Karlsson aki@akademia.is, 2004.\n"
 "Helgi Þormar Þorbjörnsson  helgi@trance.is, 2004.\n"
 "Anna Jonna Ármansdóttir annajonna@gmail.com, 2008.\n"
-"Sveinn í Felli sveinki@nett.is, 2009.\n"
-"Sveinn í Felli sv1@fellsnet.is, 2015."
+"Sveinn í Felli sv1@fellsnet.is, 2009-2016."
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
@@ -11102,14 +11100,14 @@ msgstr "Skekking"
 #: ../app/pdb/drawable-transform-cmds.c:1138
 #: ../app/pdb/item-transform-cmds.c:709 ../app/pdb/transform-tools-cmds.c:507
 msgid "2D Transform"
-msgstr "2D umbreyta"
+msgstr "2D ummyndun"
 
 #: ../app/pdb/drawable-transform-cmds.c:1234
 #: ../app/pdb/drawable-transform-cmds.c:1338
 #: ../app/pdb/drawable-transform-cmds.c:1442
 #: ../app/pdb/item-transform-cmds.c:815
 msgid "2D Transforming"
-msgstr "2D umbreyting"
+msgstr "2D ummyndun"
 
 #: ../app/pdb/edit-cmds.c:728 ../app/tools/gimpblendtool.c:249
 msgid "Blending"
@@ -12293,19 +12291,19 @@ msgstr "Upplýsingar um litaplokkara"
 
 #: ../app/tools/gimpcolortool.c:230 ../app/tools/gimpcolortool.c:403
 msgid "Move Sample Point: "
-msgstr "Færa safnpunkt: "
+msgstr "Færa sýnatökupunkt: "
 
 #: ../app/tools/gimpcolortool.c:395
 msgid "Remove Sample Point"
-msgstr "Fjarlægja safnpunkt"
+msgstr "Fjarlægja sýnatökupunkt"
 
 #: ../app/tools/gimpcolortool.c:396
 msgid "Cancel Sample Point"
-msgstr "Hætta við safnpunkt"
+msgstr "Hætta við sýnatökupunkt"
 
 #: ../app/tools/gimpcolortool.c:404
 msgid "Add Sample Point: "
-msgstr "Bæta við safnpunkti "
+msgstr "Bæta við sýnatökupunkti: "
 
 #: ../app/tools/gimpconvolvetool.c:73
 msgid "Blur / Sharpen"
@@ -12423,36 +12421,36 @@ msgstr "Flytja út litferla"
 msgid "Curves does not operate on indexed layers."
 msgstr "Litferlar virka ekki á litnúmeruðum lögum."
 
-#: ../app/tools/gimpcurvestool.c:343
+#: ../app/tools/gimpcurvestool.c:348
 msgid "Click to add a control point"
 msgstr "Smelltu til að bæta við stýripunkti"
 
-#: ../app/tools/gimpcurvestool.c:348
+#: ../app/tools/gimpcurvestool.c:353
 msgid "Click to add control points to all channels"
 msgstr "Smelltu til að bæta við stýripunkti við allar litrásir"
 
-#: ../app/tools/gimpcurvestool.c:353
+#: ../app/tools/gimpcurvestool.c:358
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr "Smelltu til að staðsetja á litferli (prófaðu Shift, Ctrl)"
 
-#: ../app/tools/gimpcurvestool.c:466 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:473 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
 msgstr "L_itrás"
 
-#: ../app/tools/gimpcurvestool.c:492 ../app/tools/gimplevelstool.c:408
+#: ../app/tools/gimpcurvestool.c:499 ../app/tools/gimplevelstool.c:408
 msgid "R_eset Channel"
 msgstr "_Núllstilla litrás"
 
-#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:590 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Tegund litferils:"
 
-#: ../app/tools/gimpcurvestool.c:660 ../app/tools/gimplevelstool.c:756
+#: ../app/tools/gimpcurvestool.c:667 ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Gat ekki lesið haus frá '%s': %s"
 
-#: ../app/tools/gimpcurvestool.c:733
+#: ../app/tools/gimpcurvestool.c:740
 msgid "Use _old curves file format"
 msgstr "N_ota gamla skráasniðið fyrir litferla"
 
@@ -13937,7 +13935,6 @@ msgstr "Umbreyting"
 
 #: ../app/tools/gimptransformtool.c:269
 #, c-format
-#| msgid "The given file extension does not match the chosen file type."
 msgid "The selection does not intersect with the layer."
 msgstr "Myndvalið skarast ekki við lagið."
 
@@ -15292,7 +15289,7 @@ msgstr "Upplausn:"
 
 #: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
-msgstr "Litrýmd:"
+msgstr "Litarýmd:"
 
 #: ../app/widgets/gimpimagepropview.c:127
 msgid "File Name:"
@@ -15518,7 +15515,7 @@ msgstr "_Nánari stillingar"
 
 #: ../app/widgets/gimptemplateeditor.c:387
 msgid "Color _space:"
-msgstr "Lit_rýmd:"
+msgstr "Lita_rýmd:"
 
 #: ../app/widgets/gimptemplateeditor.c:395
 msgid "_Fill with:"
@@ -15959,8 +15956,8 @@ msgid ""
 "Substituting grayscale map."
 msgstr ""
 "XCF-aðvörun: útgáfa 0 af XCF skráarsniðinu\n"
-"lagret ikke indekserte fargekart riktig.\n"
-"Erstatter grÃÂ¥tonekart."
+"vistaði litaskrá ekki rétt.\n"
+"Skipti yfir í grátónaskrá."
 
 #: ../app/xcf/xcf-read.c:174
 msgid "Invalid UTF-8 string in XCF file"
