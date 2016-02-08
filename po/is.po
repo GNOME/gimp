@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-02-07 19:13+0000\n"
-"PO-Revision-Date: 2016-02-08 12:55+0000\n"
+"PO-Revision-Date: 2016-02-08 13:20+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -71,7 +71,7 @@ msgstr ""
 
 #: ../desktop/gimp.appdata.xml.in.h:6
 msgid "Screenshot showing channel mixing and layer editor"
-msgstr ""
+msgstr "Skjámynd sem sýnir litrásablöndun og lagskiptingaglugga"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -3147,7 +3147,6 @@ msgid "P_olar Coordinates..."
 msgstr "Pól_hnit..."
 
 #: ../app/actions/filters-actions.c:416
-#, fuzzy
 #| msgid "_Posterize..."
 msgctxt "filters-action"
 msgid "_Posterize..."
@@ -7005,7 +7004,7 @@ msgstr "Gat ekki opnað '%s' fyrir ritun: %s"
 #: ../app/config/gimpconfig-file.c:116
 #, c-format
 msgid "Error parsing '%%s': line longer than %s characters."
-msgstr ""
+msgstr "Villa við að þátta '%%s': lína er lengri en %s stafir."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
 #: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:324
@@ -10532,7 +10531,7 @@ msgstr "_Textalög:"
 #: ../app/dialogs/convert-precision-dialog.c:243
 #: ../app/dialogs/convert-type-dialog.c:289
 msgid "Dithering text layers will make them uneditable"
-msgstr ""
+msgstr "Punktdreifing í textalögum gerir þau óritanleg"
 
 #: ../app/dialogs/convert-precision-dialog.c:252
 #| msgid "Channel _name:"
@@ -10658,7 +10657,7 @@ msgstr "Myndvalsritill"
 
 #: ../app/dialogs/dialogs.c:389
 msgid "Symmetry Painting"
-msgstr ""
+msgstr "Samhverf málun"
 
 #: ../app/dialogs/dialogs.c:393
 msgid "Undo"
@@ -11315,7 +11314,7 @@ msgstr "Kjörstillingar"
 #: ../app/dialogs/preferences-dialog.c:1360
 #: ../app/dialogs/preferences-dialog.c:1361
 msgid "System Resources"
-msgstr ""
+msgstr "Kerfistilföng"
 
 #: ../app/dialogs/preferences-dialog.c:1368
 msgid "Resource Consumption"
@@ -12535,6 +12534,12 @@ msgid ""
 "<small>Please test bugs against latest git master branch\n"
 "before reporting them.</small>"
 msgstr ""
+"<big>Óstöðug þróunarútgáfa</big>\n"
+"\n"
+"<small>send inn <tt>%s</tt></small>\n"
+"\n"
+"<small>Endilega prófa villur á móti aðalgrein git\n"
+"áður en tilkynnt er um þær.</small>"
 
 #: ../app/display/gimpdisplayshell-close.c:168
 #: ../app/display/gimpdisplayshell-close.c:268
@@ -13120,10 +13125,9 @@ msgid "Ink Blob Angle"
 msgstr "Horn blekdropa"
 
 #: ../app/paint/gimpmybrushcore.c:98
-#, fuzzy
 #| msgid "Airbrush"
 msgid "Mybrush"
-msgstr "Sprauta"
+msgstr "MyPensill"
 
 #: ../app/paint/gimpmybrushcore.c:155
 #| msgid "No brushes available for use with this tool."
@@ -14424,7 +14428,7 @@ msgstr "Dreifa hægri jöðrum markhluta"
 
 #: ../app/tools/gimpalignoptions.c:351
 msgid "Distribute targets evenly in the horizontal"
-msgstr ""
+msgstr "Dreifa markhlutum jafnt lárétt"
 
 #: ../app/tools/gimpalignoptions.c:359
 msgid "Distribute top edges of targets"
@@ -14440,7 +14444,7 @@ msgstr "Dreifa neðri jöðrum markhluta"
 
 #: ../app/tools/gimpalignoptions.c:371
 msgid "Distribute targets evenly in the vertical"
-msgstr ""
+msgstr "Dreifa markhlutum jafnt lóðrétt"
 
 #: ../app/tools/gimpalignoptions.c:377
 msgid "Offset:"
@@ -14600,7 +14604,7 @@ msgstr "Byggja fyllt svæði á öllum sýnilegum lögum"
 #: ../app/tools/gimpbucketfilloptions.c:115
 #: ../app/tools/gimpregionselectoptions.c:102
 msgid "Treat diagonally neighboring pixels as connected"
-msgstr ""
+msgstr "Meðhöndla skáliggjandi mynddíla sem tengda"
 
 #: ../app/tools/gimpbucketfilloptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:109
@@ -15464,7 +15468,7 @@ msgstr "Veldu aðgerð úr listanum hér að ofan"
 #: ../app/tools/gimphandletransformoptions.c:73
 #: ../app/tools/gimphandletransformoptions.c:142
 msgid "Handle mode"
-msgstr ""
+msgstr "Haldfangahamur"
 
 #: ../app/tools/gimphandletransformoptions.c:166
 msgid "Add handles and transform the image"
@@ -15721,7 +15725,7 @@ msgstr "Smella-Draga til að bæta við punkti"
 
 #: ../app/tools/gimpiscissorstool.c:1133 ../app/tools/gimpiscissorstool.c:1145
 msgid "Modify Scissors Curve"
-msgstr ""
+msgstr "Breyta ferli skæra"
 
 #: ../app/tools/gimplevelstool.c:138
 msgid "Levels Tool: Adjust color levels"
@@ -16045,7 +16049,7 @@ msgstr "Kvarða"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:221
 msgid "Rigid (Rubber)"
-msgstr ""
+msgstr "Stíft (gúmmí)"
 
 #: ../app/tools/gimpnpointdeformationtool.c:158
 #: ../app/tools/gimpnpointdeformationtool.c:1014
@@ -16057,6 +16061,7 @@ msgstr "N-punkta aflögun"
 #: ../app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
 msgstr ""
+"N-punkta aflögunarverkfæri: teygja mynd til ein og gúmmí með hjálp punkta"
 
 #: ../app/tools/gimpnpointdeformationtool.c:161
 #| msgid "Pointer Information"
@@ -16069,26 +16074,26 @@ msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Aðgerðaverkfæri: nota einhverja GEGL aðgerð"
 
 #: ../app/tools/gimpoperationtool.c:348
-#, fuzzy, c-format
+#, c-format
 #| msgid "Import Threshold Settings"
 msgid "Import '%s' Settings"
-msgstr "Flytja inn litmarkastillingar"
+msgstr "Flytja inn stillingar '%s'"
 
 #: ../app/tools/gimpoperationtool.c:349
-#, fuzzy, c-format
+#, c-format
 #| msgid "Export Threshold Settings"
 msgid "Export '%s' Settings"
-msgstr "Flytja út litmarkastillingar"
+msgstr "Flytja út stillingar '%s'"
 
 #: ../app/tools/gimpoperationtool.c:690
 #, c-format
 msgid "Aux Input"
-msgstr ""
+msgstr "Aukainntak"
 
 #: ../app/tools/gimpoperationtool.c:695
 #, c-format
 msgid "Aux%d Input"
-msgstr ""
+msgstr "Auka%d inntak"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -16120,35 +16125,31 @@ msgid "Spacing"
 msgstr "Millibil"
 
 #: ../app/tools/gimppaintoptions-gui.c:192
-#, fuzzy
 #| msgid "Reset size to brush's native size"
 msgid "Reset spacing to brush's native spacing"
-msgstr "Endurstilla stærð í frumstærð pensils"
+msgstr "Endurstilla millibil á frumbil pensils"
 
 #: ../app/tools/gimppaintoptions-gui.c:200
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgid "Reset hardness to default"
-msgstr "Frumstilla í sjálfgefin gildi"
+msgstr "Frumstilla hörku í sjálfgefin gildi"
 
 #: ../app/tools/gimppaintoptions-gui.c:207
-#, fuzzy
 #| msgctxt "dynamics-output-type"
 #| msgid "Force"
 msgid "Force"
-msgstr "Framfylgja"
+msgstr "Kraftur"
 
 #: ../app/tools/gimppaintoptions-gui.c:208
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgid "Reset force to default"
-msgstr "Frumstilla í sjálfgefin gildi"
+msgstr "Frumstilla kraft í sjálfgefin gildi"
 
 #: ../app/tools/gimppaintoptions-gui.c:254
 msgid "Lock brush size to zoom"
-msgstr ""
+msgstr "Læsa pensilstærð við aðdrátt"
 
 #: ../app/tools/gimppaintoptions-gui.c:268
 msgid "Incremental"
@@ -16196,7 +16197,7 @@ msgstr "Þykkt"
 
 #: ../app/tools/gimppaintoptions-gui.c:590
 msgid "Link to brush default"
-msgstr ""
+msgstr "Tengja í sjálfgefið fyrir pensil"
 
 #: ../app/tools/gimppainttool.c:156
 msgid "Click to paint"
@@ -16405,7 +16406,6 @@ msgid "Select transparent areas"
 msgstr "Velja gegnsæ svæði"
 
 #: ../app/tools/gimpregionselectoptions.c:280
-#, fuzzy
 #| msgid "Select by:"
 msgid "Select by"
 msgstr "Velja eftir"
@@ -16487,11 +16487,10 @@ msgid "_Seamless Clone"
 msgstr "_Saumlaus klónun"
 
 #: ../app/tools/gimpseamlessclonetool.c:801
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Fill the selection using the foreground color"
 msgid "Cloning the foreground object"
-msgstr "Fylla myndvalið með bakgrunnslit"
+msgstr "Klóna forgrunnshlutinn"
 
 #: ../app/tools/gimpselectionoptions.c:85
 msgid "Enable feathering of selection edges"
@@ -16876,12 +16875,12 @@ msgstr ""
 #: ../app/tools/gimptransformoptions.c:505
 #, c-format
 msgid "From pivot  (%s)"
-msgstr ""
+msgstr "Frá veltipunkti  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:507
 #, c-format
 msgid "Scale from pivot point (%s)"
-msgstr ""
+msgstr "Kvarða frá veltipunkti (%s)"
 
 #: ../app/tools/gimptransformoptions.c:509
 #, c-format
@@ -16891,7 +16890,7 @@ msgstr ""
 #: ../app/tools/gimptransformoptions.c:511
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
-msgstr ""
+msgstr "Viðhalda veltipunkti á meðan sjónarhorni er breytt (%s)"
 
 #: ../app/tools/gimptransformoptions.c:514
 msgid "Pivot"
@@ -18725,15 +18724,15 @@ msgstr "Allar XFC myndir"
 #: ../app/widgets/gimpsavedialog.c:270
 #, c-format
 msgid "Disables compression to make the XCF file readable by %s and later."
-msgstr ""
+msgstr "Gerir þjöppun óvirka svo að XCF-skrá sé lesanleg með %s og síðari."
 
 #: ../app/widgets/gimpsavedialog.c:278
 msgid "Metadata won't be visible in GIMP older than version 2.10."
-msgstr ""
+msgstr "Lýsigögn verða ekki sýnileg í GIMP-útgáfum eldri en 2.10."
 
 #: ../app/widgets/gimpsavedialog.c:342
 msgid "Save this XCF file with maximum compatibility"
-msgstr ""
+msgstr "Vista þessa XCF-skrá með hámarks samhæfni"
 
 #: ../app/widgets/gimpselectiondata.c:248
 #, c-format
