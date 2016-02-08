@@ -114,15 +114,23 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
   symmetry_class->get_operation     = gimp_mandala_get_operation;
   symmetry_class->active_changed    = gimp_mandala_active_changed;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_X,
-                                   "center-x", _("Center abscisse"),
-                                   0.0, 10000.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_CENTER_X,
+                                   g_param_spec_double ("center-x",
+                                                        _("Center abscisse"),
+                                                        _("Center abscisse"),
+                                                        0.0, 10000.0, 0.0,
+                                                        GIMP_CONFIG_PARAM_FLAGS |
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        GIMP_SYMMETRY_PARAM_GUI));
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_Y,
-                                   "center-y", _("Center ordinate"),
-                                   0.0, 10000.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_CENTER_Y,
+                                   g_param_spec_double ("center-y",
+                                                        _("Center ordinate"),
+                                                        _("Center ordinate"),
+                                                        0.0, 10000.0, 0.0,
+                                                        GIMP_CONFIG_PARAM_FLAGS |
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        GIMP_SYMMETRY_PARAM_GUI));
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_SIZE,
                         "size",
@@ -199,25 +207,44 @@ gimp_mandala_finalize (GObject *object)
 
 static void
 gimp_mandala_set_property (GObject      *object,
-                          guint         property_id,
-                          const GValue *value,
-                          GParamSpec   *pspec)
+                           guint         property_id,
+                           const GValue *value,
+                           GParamSpec   *pspec)
 {
   GimpMandala *mandala = GIMP_MANDALA (object);
+  GimpImage   *image   = GIMP_SYMMETRY (mandala)->image;
 
   switch (property_id)
     {
     case PROP_CENTER_X:
       mandala->center_x = g_value_get_double (value);
       if (mandala->vertical_guide)
-        gimp_guide_set_position (mandala->vertical_guide,
-                                 mandala->center_x);
+        {
+          g_signal_handlers_block_by_func (mandala->vertical_guide,
+                                           gimp_mandala_guide_position_cb,
+                                           mandala);
+          gimp_image_move_guide (image, mandala->vertical_guide,
+                                 mandala->center_x,
+                                 FALSE);
+          g_signal_handlers_unblock_by_func (mandala->vertical_guide,
+                                             gimp_mandala_guide_position_cb,
+                                             mandala);
+        }
       break;
     case PROP_CENTER_Y:
       mandala->center_y = g_value_get_double (value);
       if (mandala->horizontal_guide)
-        gimp_guide_set_position (mandala->horizontal_guide,
-                                 mandala->center_y);
+        {
+          g_signal_handlers_block_by_func (mandala->horizontal_guide,
+                                           gimp_mandala_guide_position_cb,
+                                           mandala);
+          gimp_image_move_guide (image, mandala->horizontal_guide,
+                                 mandala->center_y,
+                                 FALSE);
+          g_signal_handlers_unblock_by_func (mandala->horizontal_guide,
+                                             gimp_mandala_guide_position_cb,
+                                             mandala);
+        }
       break;
     case PROP_SIZE:
       mandala->size = g_value_get_int (value);
@@ -397,11 +424,15 @@ gimp_mandala_guide_position_cb (GObject     *object,
 
   if (guide == mandala->horizontal_guide)
     {
-      mandala->center_y = (gdouble) gimp_guide_get_position (guide);
+      g_object_set (G_OBJECT (mandala),
+                    "center-y", (gdouble) gimp_guide_get_position (guide),
+                    NULL);
     }
   else if (guide == mandala->vertical_guide)
     {
-      mandala->center_x = (gdouble) gimp_guide_get_position (guide);
+      g_object_set (G_OBJECT (mandala),
+                    "center-x", (gdouble) gimp_guide_get_position (guide),
+                    NULL);
     }
 }
 
