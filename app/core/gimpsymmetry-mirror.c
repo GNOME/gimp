@@ -150,16 +150,22 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
                             GIMP_SYMMETRY_PARAM_GUI);
 
   /* Properties for XCF serialization only */
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HORIZONTAL_POSITION,
-                                   "horizontal-position",
-                                   _("Horizontal guide position"),
-                                   0.0, G_MAXDOUBLE, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_VERTICAL_POSITION,
-                                   "vertical-position",
-                                   _("Vertical guide position"),
-                                   0.0, G_MAXDOUBLE, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_HORIZONTAL_POSITION,
+                                   g_param_spec_double ("horizontal-position",
+                                                        _("Horizontal guide position"),
+                                                        _("Horizontal guide position"),
+                                                        0.0, G_MAXDOUBLE, 0.0,
+                                                        GIMP_CONFIG_PARAM_FLAGS |
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        GIMP_SYMMETRY_PARAM_GUI));
+  g_object_class_install_property (object_class, PROP_VERTICAL_POSITION,
+                                   g_param_spec_double ("vertical-position",
+                                                        _("Vertical guide position"),
+                                                        _("Vertical guide position"),
+                                                        0.0, G_MAXDOUBLE, 0.0,
+                                                        GIMP_CONFIG_PARAM_FLAGS |
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        GIMP_SYMMETRY_PARAM_GUI));
 }
 
 static void
@@ -202,6 +208,7 @@ gimp_mirror_set_property (GObject      *object,
                           GParamSpec   *pspec)
 {
   GimpMirror *mirror = GIMP_MIRROR (object);
+  GimpImage  *image  = GIMP_SYMMETRY (mirror)->image;
 
   switch (property_id)
     {
@@ -223,14 +230,32 @@ gimp_mirror_set_property (GObject      *object,
     case PROP_HORIZONTAL_POSITION:
       mirror->horizontal_position = g_value_get_double (value);
       if (mirror->horizontal_guide)
-        gimp_guide_set_position (mirror->horizontal_guide,
-                                 mirror->horizontal_position);
+        {
+          g_signal_handlers_block_by_func (mirror->horizontal_guide,
+                                           gimp_mirror_guide_position_cb,
+                                           mirror);
+          gimp_image_move_guide (image, mirror->horizontal_guide,
+                                 mirror->horizontal_position,
+                                 FALSE);
+          g_signal_handlers_unblock_by_func (mirror->horizontal_guide,
+                                             gimp_mirror_guide_position_cb,
+                                             mirror);
+        }
       break;
     case PROP_VERTICAL_POSITION:
       mirror->vertical_position = g_value_get_double (value);
       if (mirror->vertical_guide)
-        gimp_guide_set_position (mirror->vertical_guide,
-                                 mirror->vertical_position);
+        {
+          g_signal_handlers_block_by_func (mirror->vertical_guide,
+                                           gimp_mirror_guide_position_cb,
+                                           mirror);
+          gimp_image_move_guide (image, mirror->vertical_guide,
+                                 mirror->vertical_position,
+                                 FALSE);
+          g_signal_handlers_unblock_by_func (mirror->vertical_guide,
+                                             gimp_mirror_guide_position_cb,
+                                             mirror);
+        }
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -406,7 +431,7 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
   GimpImage    *image;
   Gimp         *gimp;
   GimpGuide    *guide;
-  gint          position;
+  gdouble       position;
 
   image = sym->image;
   gimp  = image->gimp;
@@ -417,28 +442,38 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
 
   if (orientation == GIMP_ORIENTATION_HORIZONTAL)
     {
-      mirror->horizontal_guide = guide;
-
       /* Mirror guide position at first activation is at canvas middle. */
       if (mirror->horizontal_position < 1.0)
-        mirror->horizontal_position = gimp_image_get_height (image) / 2.0;
-      position = mirror->horizontal_position;
+        position = gimp_image_get_height (image) / 2.0;
+      else
+        position = mirror->horizontal_position;
+
+      g_object_set (mirror,
+                    "horizontal-position", position,
+                    NULL);
+
+      mirror->horizontal_guide = guide;
     }
   else
     {
-      mirror->vertical_guide = guide;
-
       /* Mirror guide position at first activation is at canvas middle. */
       if (mirror->vertical_position < 1.0)
-        mirror->vertical_position = gimp_image_get_width (image) / 2.0;
-      position = mirror->vertical_position;
+        position = gimp_image_get_width (image) / 2.0;
+      else
+        position = mirror->vertical_position;
+
+      g_object_set (mirror,
+                    "vertical-position", position,
+                    NULL);
+
+      mirror->vertical_guide = guide;
     }
 
   g_signal_connect (guide, "removed",
                     G_CALLBACK (gimp_mirror_guide_removed_cb),
                     mirror);
 
-  gimp_image_add_guide (image, guide, position);
+  gimp_image_add_guide (image, guide, (gint) position);
 
   g_signal_connect (guide, "notify::position",
                     G_CALLBACK (gimp_mirror_guide_position_cb),
@@ -492,7 +527,9 @@ gimp_mirror_guide_removed_cb (GObject    *object,
 
       mirror->horizontal_mirror   = FALSE;
       mirror->point_symmetry      = FALSE;
-      mirror->horizontal_position = 0.0;
+      g_object_set (mirror,
+                    "horizontal-position", 0.0,
+                    NULL);
 
       if (mirror->vertical_guide &&
           ! mirror->vertical_mirror)
@@ -516,7 +553,9 @@ gimp_mirror_guide_removed_cb (GObject    *object,
 
       mirror->vertical_mirror   = FALSE;
       mirror->point_symmetry    = FALSE;
-      mirror->vertical_position = 0.0;
+      g_object_set (mirror,
+                    "vertical-position", 0.0,
+                    NULL);
 
       if (mirror->horizontal_guide &&
           ! mirror->horizontal_mirror)
@@ -557,11 +596,15 @@ gimp_mirror_guide_position_cb (GObject    *object,
 
   if (guide == mirror->horizontal_guide)
     {
-      mirror->horizontal_position = (gdouble) gimp_guide_get_position (guide);
+      g_object_set (mirror,
+                    "horizontal-position", (gdouble) gimp_guide_get_position (guide),
+                    NULL);
     }
   else if (guide == mirror->vertical_guide)
     {
-      mirror->vertical_position = (gdouble) gimp_guide_get_position (guide);
+      g_object_set (mirror,
+                    "vertical-position", (gdouble) gimp_guide_get_position (guide),
+                    NULL);
     }
 }
 
