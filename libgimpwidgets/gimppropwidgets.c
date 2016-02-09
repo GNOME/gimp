@@ -125,6 +125,9 @@ gimp_prop_check_button_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
+
   g_object_get (config,
                 property_name, &value,
                 NULL);
@@ -231,6 +234,9 @@ gimp_prop_enum_check_button_new (GObject     *config,
                                    G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,
@@ -783,6 +789,9 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
+  if (! title)
+    title = g_param_spec_get_nick (param_spec);
+
   g_object_get (config,
                 property_name, &value,
                 NULL);
@@ -986,6 +995,9 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
                                    G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! title)
+    title = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,
@@ -1340,6 +1352,9 @@ gimp_prop_scale_entry_new (GObject     *config,
   if (! get_numeric_values (config,
                             param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
+
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
 
   tooltip = g_param_spec_get_blurb (param_spec);
 
@@ -3974,6 +3989,9 @@ gimp_prop_expander_new (GObject     *config,
                                    G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,

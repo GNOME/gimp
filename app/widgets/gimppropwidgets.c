@@ -92,13 +92,18 @@ gimp_prop_expanding_frame_new (GObject      *config,
                                GtkWidget    *child,
                                GtkWidget   **button)
 {
-  GtkWidget *frame;
-  GtkWidget *toggle;
-  gboolean   value;
+  GParamSpec *param_spec;
+  GtkWidget  *frame;
+  GtkWidget  *toggle;
+  gboolean    value;
 
-  if (! check_param_spec_w (config, property_name,
-                            G_TYPE_PARAM_BOOLEAN, G_STRFUNC))
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  if (! param_spec)
     return NULL;
+
+  if (! button_label)
+    button_label = g_param_spec_get_nick (param_spec);
 
   frame = gimp_frame_new (NULL);
 
@@ -271,6 +276,9 @@ gimp_prop_color_button_new (GObject           *config,
                                    GIMP_TYPE_PARAM_RGB, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! title)
+    title = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,
@@ -494,11 +502,11 @@ gimp_prop_spin_scale_new (GObject     *config,
                                                G_STRFUNC))
     return NULL;
 
-  if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
-    digits = 0;
-
   if (! label)
     label = g_param_spec_get_nick (param_spec);
+
+  if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    digits = 0;
 
   adjustment = (GtkAdjustment *)
     gtk_adjustment_new (value, lower, upper,
