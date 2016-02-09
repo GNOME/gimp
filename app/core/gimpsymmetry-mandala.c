@@ -124,23 +124,21 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
                                    0.0, 10000.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (object_class, PROP_SIZE,
-                                   g_param_spec_int ("size",
-                                                     _("Number of points"),
-                                                     _("Number of points"),
-                                                     1, 100, 6.0,
-                                                     GIMP_CONFIG_PARAM_FLAGS |
-                                                     GIMP_PARAM_STATIC_STRINGS |
-                                                     GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_INT (object_class, PROP_SIZE,
+                        "size",
+                        _("Number of points"),
+                        _("Number of points"),
+                        1, 100, 6.0,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_DISABLE_TRANSFORMATION,
-                                   g_param_spec_boolean ("disable-transformation",
-                                                         _("Disable brush transform"),
-                                                         _("Disable brush transformation (faster)"),
-                                                         FALSE,
-                                                         GIMP_CONFIG_PARAM_FLAGS |
-                                                         GIMP_PARAM_STATIC_STRINGS |
-                                                         GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DISABLE_TRANSFORMATION,
+                            "disable-transformation",
+                            _("Disable brush transform"),
+                            _("Disable brush transformation (faster)"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_SYMMETRY_PARAM_GUI);
 }
 
 static void

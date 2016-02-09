@@ -117,41 +117,37 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
   symmetry_class->active_changed    = gimp_mirror_active_changed;
 
   /* Properties for user settings */
-  g_object_class_install_property (object_class, PROP_HORIZONTAL_SYMMETRY,
-                                   g_param_spec_boolean ("horizontal-symmetry",
-                                                         _("Horizontal Mirror"),
-                                                         NULL,
-                                                         FALSE,
-                                                         GIMP_CONFIG_PARAM_FLAGS |
-                                                         GIMP_PARAM_STATIC_STRINGS |
-                                                         GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HORIZONTAL_SYMMETRY,
+                            "horizontal-symmetry",
+                            _("Horizontal Mirror"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_VERTICAL_SYMMETRY,
-                                   g_param_spec_boolean ("vertical-symmetry",
-                                                         _("Vertical Mirror"),
-                                                         NULL,
-                                                         FALSE,
-                                                         GIMP_CONFIG_PARAM_FLAGS |
-                                                         GIMP_PARAM_STATIC_STRINGS |
-                                                         GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VERTICAL_SYMMETRY,
+                            "vertical-symmetry",
+                            _("Vertical Mirror"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_POINT_SYMMETRY,
-                                   g_param_spec_boolean ("point-symmetry",
-                                                         _("Central Symmetry"),
-                                                         NULL,
-                                                         FALSE,
-                                                         GIMP_CONFIG_PARAM_FLAGS |
-                                                         GIMP_PARAM_STATIC_STRINGS |
-                                                         GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_POINT_SYMMETRY,
+                            "point-symmetry",
+                            _("Central Symmetry"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_DISABLE_TRANSFORMATION,
-                                   g_param_spec_boolean ("disable-transformation",
-                                                         _("Disable brush transform"),
-                                                         _("Disable brush transformation (faster)"),
-                                                         FALSE,
-                                                         GIMP_CONFIG_PARAM_FLAGS |
-                                                         GIMP_PARAM_STATIC_STRINGS |
-                                                         GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DISABLE_TRANSFORMATION,
+                            "disable-transformation",
+                            _("Disable brush transform"),
+                            _("Disable brush transformation (faster)"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_SYMMETRY_PARAM_GUI);
 
   /* Properties for XCF serialization only */
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HORIZONTAL_POSITION,

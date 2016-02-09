@@ -82,19 +82,19 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass *klass)
                                  "description", "GIMP Threshold operation",
                                  NULL);
 
-  g_object_class_install_property (object_class, PROP_LOW,
-                                   g_param_spec_double ("low",
-                                                        _("Low threshold"),
-                                                        NULL,
-                                                        0.0, 1.0, 0.5,
-                                                        GIMP_CONFIG_PARAM_FLAGS));
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LOW,
+                           "low",
+                           _("Low threshold"),
+                           NULL,
+                           0.0, 1.0, 0.5,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (object_class, PROP_HIGH,
-                                   g_param_spec_double ("high",
-                                                        _("High threshold"),
-                                                        NULL,
-                                                        0.0, 1.0, 1.0,
-                                                        GIMP_CONFIG_PARAM_FLAGS));
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HIGH,
+                           "high",
+                           _("High threshold"),
+                           NULL,
+                           0.0, 1.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

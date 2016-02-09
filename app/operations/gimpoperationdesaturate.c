@@ -85,13 +85,13 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
                                  "description", _("Turn colors into shades of gray"),
                                  NULL);
 
-  g_object_class_install_property (object_class, PROP_MODE,
-                                   g_param_spec_enum ("mode",
-                                                      _("Mode"),
-                                                      _("Choose shade of gray based on"),
-                                                      GIMP_TYPE_DESATURATE_MODE,
-                                                      GIMP_DESATURATE_LIGHTNESS,
-                                                      GIMP_CONFIG_PARAM_FLAGS));
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MODE,
+                         "mode",
+                         _("Mode"),
+                         _("Choose shade of gray based on"),
+                         GIMP_TYPE_DESATURATE_MODE,
+                         GIMP_DESATURATE_LIGHTNESS,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

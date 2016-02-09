@@ -101,50 +101,45 @@ gimp_tiling_class_init (GimpTilingClass *klass)
   symmetry_class->update_strokes  = gimp_tiling_update_strokes;
   symmetry_class->get_operation   = gimp_tiling_get_operation;
 
-  g_object_class_install_property (object_class, PROP_X_INTERVAL,
-                                   g_param_spec_double ("x-interval",
-                                                        _("Interval X"),
-                                                        _("Interval on the X axis (pixels)"),
-                                                        0.0, 10000.0, 0.0,
-                                                        GIMP_CONFIG_PARAM_FLAGS |
-                                                        GIMP_PARAM_STATIC_STRINGS |
-                                                        GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_X_INTERVAL,
+                           "x-interval",
+                           _("Interval X"),
+                           _("Interval on the X axis (pixels)"),
+                           0.0, 10000.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_Y_INTERVAL,
-                                   g_param_spec_double ("y-interval",
-                                                        _("Interval Y"),
-                                                        _("Interval on the Y axis (pixels)"),
-                                                        0.0, 10000.0, 0.0,
-                                                        GIMP_CONFIG_PARAM_FLAGS |
-                                                        GIMP_PARAM_STATIC_STRINGS |
-                                                        GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_Y_INTERVAL,
+                           "y-interval",
+                           _("Interval Y"),
+                           _("Interval on the Y axis (pixels)"),
+                           0.0, 10000.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_SHIFT,
-                                   g_param_spec_double ("shift",
-                                                        _("Shift"),
-                                                        _("X-shift between lines (pixels)"),
-                                                        0.0, 10000.0, 0.0,
-                                                        GIMP_CONFIG_PARAM_FLAGS |
-                                                        GIMP_PARAM_STATIC_STRINGS |
-                                                        GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SHIFT,
+                           "shift",
+                           _("Shift"),
+                           _("X-shift between lines (pixels)"),
+                           0.0, 10000.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_X_MAX,
-                                   g_param_spec_int ("x-max",
-                                                     _("Max strokes X"),
-                                                     _("Maximum number of strokes on the X axis"),
-                                                     0, 100, 0,
-                                                     GIMP_CONFIG_PARAM_FLAGS |
-                                                     GIMP_PARAM_STATIC_STRINGS |
-                                                     GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_INT (object_class, PROP_X_MAX,
+                        "x-max",
+                        _("Max strokes X"),
+                        _("Maximum number of strokes on the X axis"),
+                        0, 100, 0,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_Y_MAX,
-                                   g_param_spec_int ("y-max",
-                                                     _("Max strokes Y"),
-                                                     _("Maximum number of strokes on the Y axis"),
-                                                     0, 100, 0,
-                                                     GIMP_CONFIG_PARAM_FLAGS |
-                                                     GIMP_PARAM_STATIC_STRINGS |
-                                                     GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_INT (object_class, PROP_Y_MAX,
+                        "y-max",
+                        _("Max strokes Y"),
+                        _("Maximum number of strokes on the Y axis"),
+                        0, 100, 0,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_SYMMETRY_PARAM_GUI);
 }
 
 static void
