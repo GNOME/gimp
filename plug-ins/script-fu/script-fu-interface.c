@@ -24,6 +24,8 @@
 
 #ifdef GDK_WINDOWING_QUARTZ
 #import <Cocoa/Cocoa.h>
+#elif defined (G_OS_WIN32)
+#include <windows.h>
 #endif
 
 #include "tinyscheme/scheme-private.h"
@@ -584,11 +586,20 @@ script_fu_interface (SFScript  *script,
   gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_label,
                       FALSE, FALSE, 0);
   gtk_widget_show (sf_interface->progress_label);
+#ifdef G_OS_WIN32
+    {
+      HWND foreground = GetForegroundWindow ();
+#endif
 
   gtk_widget_show (dialog);
 
   gtk_main ();
 
+#ifdef G_OS_WIN32
+      if (! GetForegroundWindow ())
+        SetForegroundWindow (foreground);
+    }
+#endif
   return sf_status;
 }
 

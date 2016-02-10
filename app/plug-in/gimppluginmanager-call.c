@@ -21,6 +21,10 @@
 
 #include <glib-object.h>
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
@@ -51,6 +55,14 @@
 
 #include "gimp-intl.h"
 
+
+static void
+gimp_allow_set_foreground_window (GimpPlugIn *plug_in)
+{
+#ifdef G_OS_WIN32
+  AllowSetForegroundWindow (GetProcessId (plug_in->pid));
+#endif
+}
 
 /*  public functions  */
 
@@ -330,6 +342,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
 
           return return_vals;
         }
+      gimp_allow_set_foreground_window (plug_in);
 
       g_free (proc_run.params);
 
