@@ -228,33 +228,41 @@ gimp_mirror_set_property (GObject      *object,
       mirror->disable_transformation = g_value_get_boolean (value);
       break;
     case PROP_HORIZONTAL_POSITION:
-      mirror->horizontal_position = g_value_get_double (value);
-      if (mirror->horizontal_guide)
+      if (g_value_get_double (value) > 0.0 &&
+          g_value_get_double (value) < (gdouble) gimp_image_get_height (image))
         {
-          g_signal_handlers_block_by_func (mirror->horizontal_guide,
-                                           gimp_mirror_guide_position_cb,
-                                           mirror);
-          gimp_image_move_guide (image, mirror->horizontal_guide,
-                                 mirror->horizontal_position,
-                                 FALSE);
-          g_signal_handlers_unblock_by_func (mirror->horizontal_guide,
-                                             gimp_mirror_guide_position_cb,
-                                             mirror);
+          mirror->horizontal_position = g_value_get_double (value);
+          if (mirror->horizontal_guide)
+            {
+              g_signal_handlers_block_by_func (mirror->horizontal_guide,
+                                               gimp_mirror_guide_position_cb,
+                                               mirror);
+              gimp_image_move_guide (image, mirror->horizontal_guide,
+                                     mirror->horizontal_position,
+                                     FALSE);
+              g_signal_handlers_unblock_by_func (mirror->horizontal_guide,
+                                                 gimp_mirror_guide_position_cb,
+                                                 mirror);
+            }
         }
       break;
     case PROP_VERTICAL_POSITION:
-      mirror->vertical_position = g_value_get_double (value);
-      if (mirror->vertical_guide)
+      if (g_value_get_double (value) > 0.0 &&
+          g_value_get_double (value) < (gdouble) gimp_image_get_width (image))
         {
-          g_signal_handlers_block_by_func (mirror->vertical_guide,
-                                           gimp_mirror_guide_position_cb,
-                                           mirror);
-          gimp_image_move_guide (image, mirror->vertical_guide,
-                                 mirror->vertical_position,
-                                 FALSE);
-          g_signal_handlers_unblock_by_func (mirror->vertical_guide,
-                                             gimp_mirror_guide_position_cb,
-                                             mirror);
+          mirror->vertical_position = g_value_get_double (value);
+          if (mirror->vertical_guide)
+            {
+              g_signal_handlers_block_by_func (mirror->vertical_guide,
+                                               gimp_mirror_guide_position_cb,
+                                               mirror);
+              gimp_image_move_guide (image, mirror->vertical_guide,
+                                     mirror->vertical_position,
+                                     FALSE);
+              g_signal_handlers_unblock_by_func (mirror->vertical_guide,
+                                                 gimp_mirror_guide_position_cb,
+                                                 mirror);
+            }
         }
       break;
     default:
