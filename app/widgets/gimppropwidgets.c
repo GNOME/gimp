@@ -85,6 +85,25 @@ static void         connect_notify     (GObject     *config,
 /*  expanding frame  */
 /*********************/
 
+/**
+ * gimp_prop_expanding_frame_new:
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of boolean property.
+ * @button_label:  Toggle widget title appearing as a frame title.
+ * @child:         Child #GtkWidget of the returned frame.
+ * @button:        Pointer to the #GtkCheckButton used as frame title
+ *                 if not #NULL.
+ *
+ * Creates a #GimpFrame containing @child, using a #GtkCheckButton as a
+ * title whose value is tied to the boolean @property_name.
+ * @child will be visible when @property_name is #TRUE, hidden otherwise.
+ * If @button_label is #NULL, the @property_name's nick will be used as
+ * label of the #GtkCheckButton title.
+ *
+ * Return value:  A new #GimpFrame widget.
+ *
+ * Since GIMP 2.4
+ */
 GtkWidget *
 gimp_prop_expanding_frame_new (GObject      *config,
                                const gchar  *property_name,
@@ -255,6 +274,8 @@ static void   gimp_prop_color_button_notify   (GObject    *config,
  *
  * Creates a #GimpColorPanel to set and display the value of a #GimpRGB
  * property.  Pressing the button brings up a color selector dialog.
+ * If @title is #NULL, the @property_name's nick will be used as label
+ * of the returned widget.
  *
  * Return value:  A new #GimpColorPanel widget.
  *
@@ -470,9 +491,15 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  * gimp_prop_spin_scale_new:
  * @config:        #GimpConfig object to which property is attached.
  * @property_name: Name of gdouble property
+ * @label:         Label of the created #GimpSpinScale.
+ * @step_increment:
+ * @page_increment:
+ * @digits:
  *
  * Creates a #GimpSpinScale to set and display the value of a
  * gdouble property in a very space-efficient way.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned widget.
  *
  * Return value:  A new #GimpSpinScale widget.
  *

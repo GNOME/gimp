@@ -103,6 +103,8 @@ static void   gimp_prop_check_button_notify   (GObject    *config,
  *
  * Creates a #GtkCheckButton that displays and sets the specified
  * boolean property.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned button.
  *
  * Return value: The newly created #GtkCheckButton widget.
  *
@@ -211,6 +213,8 @@ static void   gimp_prop_enum_check_button_notify   (GObject    *config,
  * property of type Enum.  Note that this widget only allows two values
  * for the enum, one corresponding to the "checked" state and the
  * other to the "unchecked" state.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned button.
  *
  * Return value: The newly created #GtkCheckButton widget.
  *
@@ -764,6 +768,8 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
  * the specified enum property.  The @minimum and @maximum arguments
  * allow only a subset of the enum to be used.  If the two arguments
  * are equal (e.g., 0, 0), then the full range of the enum will be used.
+ * If @title is #NULL, the @property_name's nick will be used as label
+ * of the returned frame.
  *
  * Return value: A #GimpFrame containing the radio buttons.
  *
@@ -971,6 +977,8 @@ gimp_prop_enum_label_notify (GObject    *config,
  *
  * Creates a pair of radio buttons which function to set and display
  * the specified boolean property.
+ * If @title is #NULL, the @property_name's nick will be used as label
+ * of the returned frame.
  *
  * Return value: A #GimpFrame containing the radio buttons.
  *
@@ -1316,6 +1324,8 @@ gimp_prop_hscale_new (GObject     *config,
  * Creates a #libgimpwidgets-gimpscaleentry (slider and spin button)
  * to set and display the value of the specified double property.  See
  * gimp_scale_entry_new() for more information.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned object.
  *
  * Note that the @scale_limits boolean is the inverse of
  * gimp_scale_entry_new()'s "constrain" parameter.
@@ -3971,6 +3981,8 @@ static void   gimp_prop_expander_notify (GObject     *config,
  * Creates a #GtkExpander controlled by the specified boolean property.
  * A value of %TRUE for the property corresponds to the expanded state
  * for the widget.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned widget.
  *
  * Return value:  A new #GtkExpander widget.
  *
