@@ -374,6 +374,10 @@ gradient_box_new (GimpContainer *container,
 
       image = gtk_image_new_from_icon_name (GIMP_STOCK_FLIP_HORIZONTAL,
                                             GTK_ICON_SIZE_MENU);
+      /* gimp_prop_check_button_new() adds the property nick as label of
+       * the button by default. */
+      gtk_container_remove (GTK_CONTAINER (toggle),
+                            gtk_bin_get_child (GTK_BIN (toggle)));
       gtk_container_add (GTK_CONTAINER (toggle), image);
       gtk_widget_show (image);
 
