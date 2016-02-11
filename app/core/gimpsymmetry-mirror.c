@@ -152,16 +152,16 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
   /* Properties for XCF serialization only */
   g_object_class_install_property (object_class, PROP_HORIZONTAL_POSITION,
                                    g_param_spec_double ("horizontal-position",
-                                                        _("Horizontal guide position"),
-                                                        _("Horizontal guide position"),
+                                                        _("Horizontal axis position"),
+                                                        _("Horizontal axis position"),
                                                         0.0, G_MAXDOUBLE, 0.0,
                                                         GIMP_CONFIG_PARAM_FLAGS |
                                                         GIMP_PARAM_STATIC_STRINGS |
                                                         GIMP_SYMMETRY_PARAM_GUI));
   g_object_class_install_property (object_class, PROP_VERTICAL_POSITION,
                                    g_param_spec_double ("vertical-position",
-                                                        _("Vertical guide position"),
-                                                        _("Vertical guide position"),
+                                                        _("Vertical axis position"),
+                                                        _("Vertical axis position"),
                                                         0.0, G_MAXDOUBLE, 0.0,
                                                         GIMP_CONFIG_PARAM_FLAGS |
                                                         GIMP_PARAM_STATIC_STRINGS |
