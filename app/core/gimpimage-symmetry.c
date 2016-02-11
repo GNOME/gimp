@@ -121,7 +121,7 @@ gimp_image_symmetry_remove (GimpImage    *image,
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (private->active_symmetry == sym)
-    gimp_image_set_active_symmetry (image, G_TYPE_NONE);
+    gimp_image_set_active_symmetry (image, GIMP_TYPE_SYMMETRY);
 
   private->symmetries = g_list_remove (private->symmetries, sym);
   g_object_unref (sym);
