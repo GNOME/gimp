@@ -104,101 +104,126 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
   object_class->set_property = gimp_transform_options_set_property;
   object_class->get_property = gimp_transform_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TYPE,
-                                 "type", NULL,
-                                 GIMP_TYPE_TRANSFORM_TYPE,
-                                 GIMP_TRANSFORM_TYPE_LAYER,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DIRECTION,
-                                 "direction",
-                                 _("Direction of transformation"),
-                                 GIMP_TYPE_TRANSFORM_DIRECTION,
-                                 GIMP_TRANSFORM_FORWARD,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
-                                 "interpolation",
-                                 _("Interpolation method"),
-                                 GIMP_TYPE_INTERPOLATION_TYPE,
-                                 GIMP_INTERPOLATION_LINEAR,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLIP,
-                                 "clip",
-                                 _("How to clip"),
-                                 GIMP_TYPE_TRANSFORM_RESIZE,
-                                 GIMP_TRANSFORM_RESIZE_ADJUST,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_PREVIEW,
-                                    "show-preview",
-                                    _("Show a preview of the transformed image"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PREVIEW_OPACITY,
-                                   "preview-opacity",
-                                   _("Opacity of the preview image"),
-                                   0.0, 1.0, 1.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
-                                 "grid-type",
-                                 _("Composition guides such as rule of thirds"),
-                                 GIMP_TYPE_GUIDES_TYPE,
-                                 GIMP_GUIDES_N_LINES,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRID_SIZE,
-                                "grid-size",
-                                _("Size of a grid cell for variable number "
-                                  "of composition guides"),
-                                1, 128, 15,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_MOVE,
-                                    "constrain-move",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_SCALE,
-                                    "constrain-scale",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_ROTATE,
-                                    "constrain-rotate",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_SHEAR,
-                                    "constrain-shear",
-                                    NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_PERSPECTIVE,
-                                    "constrain-perspective",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FROMPIVOT_SCALE,
-                                    "frompivot-scale",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FROMPIVOT_SHEAR,
-                                    "frompivot-shear",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FROMPIVOT_PERSPECTIVE,
-                                    "frompivot-perspective",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CORNERSNAP,
-                                    "cornersnap",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FIXEDPIVOT,
-                                    "fixedpivot",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TYPE,
+                         "type",
+                         NULL, NULL,
+                         GIMP_TYPE_TRANSFORM_TYPE,
+                         GIMP_TRANSFORM_TYPE_LAYER,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DIRECTION,
+                         "direction",
+                         _("Direction"),
+                         _("Direction of transformation"),
+                         GIMP_TYPE_TRANSFORM_DIRECTION,
+                         GIMP_TRANSFORM_FORWARD,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
+                         "interpolation",
+                         _("Interpolation"),
+                         _("Interpolation method"),
+                         GIMP_TYPE_INTERPOLATION_TYPE,
+                         GIMP_INTERPOLATION_LINEAR,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CLIP,
+                         "clip",
+                         _("Clipping"),
+                         _("How to clip"),
+                         GIMP_TYPE_TRANSFORM_RESIZE,
+                         GIMP_TRANSFORM_RESIZE_ADJUST,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_PREVIEW,
+                            "show-preview",
+                            _("Show image preview"),
+                            _("Show a preview of the transformed image"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PREVIEW_OPACITY,
+                           "preview-opacity",
+                           _("Image opacity"),
+                           _("Opacity of the preview image"),
+                           0.0, 1.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRID_TYPE,
+                         "grid-type",
+                         _("Guides"),
+                         _("Composition guides such as rule of thirds"),
+                         GIMP_TYPE_GUIDES_TYPE,
+                         GIMP_GUIDES_N_LINES,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_GRID_SIZE,
+                        "grid-size",
+                        NULL,
+                        _("Size of a grid cell for variable number "
+                          "of composition guides"),
+                        1, 128, 15,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_MOVE,
+                            "constrain-move",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_SCALE,
+                            "constrain-scale",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_ROTATE,
+                            "constrain-rotate",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_SHEAR,
+                            "constrain-shear",
+                            NULL, NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_PERSPECTIVE,
+                            "constrain-perspective",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FROMPIVOT_SCALE,
+                            "frompivot-scale",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FROMPIVOT_SHEAR,
+                            "frompivot-shear",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FROMPIVOT_PERSPECTIVE,
+                            "frompivot-perspective",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CORNERSNAP,
+                            "cornersnap",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FIXEDPIVOT,
+                            "fixedpivot",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -406,8 +431,8 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
-  frame = gimp_prop_enum_radio_frame_new (config, "direction",
-                                          _("Direction"), 0, 0);
+  frame = gimp_prop_enum_radio_frame_new (config, "direction", NULL,
+                                          0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -426,12 +451,10 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /*  the preview frame  */
-  scale = gimp_prop_spin_scale_new (config, "preview-opacity",
-                                    _("Image opacity"),
+  scale = gimp_prop_spin_scale_new (config, "preview-opacity", NULL,
                                     0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
-  frame = gimp_prop_expanding_frame_new (config, "show-preview",
-                                         _("Show image preview"),
+  frame = gimp_prop_expanding_frame_new (config, "show-preview", NULL,
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

@@ -119,10 +119,11 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
   data_class->save                          = gimp_tool_preset_save;
   data_class->get_extension                 = gimp_tool_preset_get_extension;
 
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_NAME,
-                                   "name", NULL,
-                                   "Unnamed",
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_NAME,
+                           "name",
+                           NULL, NULL,
+                           "Unnamed",
+                           GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -131,43 +132,67 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TOOL_OPTIONS,
-                                   "tool-options", NULL,
-                                   GIMP_TYPE_TOOL_OPTIONS,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_TOOL_OPTIONS,
+                           "tool-options",
+                           NULL, NULL,
+                           GIMP_TYPE_TOOL_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FG_BG,
-                                    "use-fg-bg", NULL,
-                                    DEFAULT_USE_FG_BG,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_BRUSH,
-                                    "use-brush", NULL,
-                                    DEFAULT_USE_BRUSH,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_DYNAMICS,
-                                    "use-dynamics", NULL,
-                                    DEFAULT_USE_DYNAMICS,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_MYBRUSH,
-                                    "use-mypaint-brush", NULL,
-                                    DEFAULT_USE_MYBRUSH,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_PATTERN,
-                                    "use-pattern", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_PALETTE,
-                                    "use-palette", NULL,
-                                    DEFAULT_USE_PALETTE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
-                                    "use-gradient", NULL,
-                                    DEFAULT_USE_GRADIENT,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FONT,
-                                    "use-font", NULL,
-                                    DEFAULT_USE_FONT,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_FG_BG,
+                            "use-fg-bg",
+                            _("Apply stored FG/BG"),
+                            NULL,
+                            DEFAULT_USE_FG_BG,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_BRUSH,
+                            "use-brush",
+                            _("Apply stored brush"),
+                            NULL,
+                            DEFAULT_USE_BRUSH,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_DYNAMICS,
+                            "use-dynamics",
+                            _("Apply stored dynamics"),
+                            NULL,
+                            DEFAULT_USE_DYNAMICS,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_MYBRUSH,
+                            "use-mypaint-brush",
+                            _("Apply stored MyPaint brush"),
+                            NULL,
+                            DEFAULT_USE_MYBRUSH,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_PATTERN,
+                            "use-pattern",
+                            _("Apply stored pattern"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_PALETTE,
+                            "use-palette",
+                            _("Apply stored palette"),
+                            NULL,
+                            DEFAULT_USE_PALETTE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
+                            "use-gradient",
+                            _("Apply stored gradient"),
+                            NULL,
+                            DEFAULT_USE_GRADIENT,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_FONT,
+                            "use-font",
+                            _("Apply stored font"),
+                            NULL,
+                            DEFAULT_USE_FONT,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

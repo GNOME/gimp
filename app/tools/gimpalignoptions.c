@@ -87,24 +87,27 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_ALIGNMENT_TYPE);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_REFERENCE,
-                                 "align-reference",
-                                 _("Reference image object a layer will be aligned on"),
-                                 GIMP_TYPE_ALIGN_REFERENCE_TYPE,
-                                 GIMP_ALIGN_REFERENCE_FIRST,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ALIGN_REFERENCE,
+                         "align-reference",
+                         _("Relative to"),
+                         _("Reference image object a layer will be aligned on"),
+                         GIMP_TYPE_ALIGN_REFERENCE_TYPE,
+                         GIMP_ALIGN_REFERENCE_FIRST,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_X,
-                                   "offset-x",
-                                   _("Horizontal offset for distribution"),
-                                   -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET_X,
+                           "offset-x",
+                           _("Offset"),
+                           _("Horizontal offset for distribution"),
+                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
-                                   "offset-y",
-                                   _("Vertical offset for distribution"),
-                                   -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
+                           "offset-y",
+                           _("Offset"),
+                           _("Vertical offset for distribution"),
+                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

@@ -72,24 +72,27 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
   /* The 'highlight' property is defined here because we want different
    * default values for the Crop and the Rectangle Select tools.
    */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
-                                    "highlight",
-                                    _("Dim everything outside selection"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+                            "highlight",
+                            _("Highlight"),
+                            _("Dim everything outside selection"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ROUND_CORNERS,
-                                    "round-corners",
-                                    _("Round corners of selection"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ROUND_CORNERS,
+                            "round-corners",
+                            _("Rounded corners"),
+                            _("Round corners of selection"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CORNER_RADIUS,
-                                   "corner-radius",
-                                   _("Radius of rounding in pixels"),
-                                   0.0, 100.0, 5.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CORNER_RADIUS,
+                           "corner-radius",
+                           _("Radius"),
+                           _("Radius of rounding in pixels"),
+                           0.0, 100.0, 5.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
 }
@@ -160,12 +163,10 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
       GtkWidget *scale;
       GtkWidget *toggle;
 
-      scale = gimp_prop_spin_scale_new (config, "corner-radius",
-                                        _("Radius"),
+      scale = gimp_prop_spin_scale_new (config, "corner-radius", NULL,
                                         1.0, 10.0, 1);
 
-      frame = gimp_prop_expanding_frame_new (config, "round-corners",
-                                             _("Rounded corners"),
+      frame = gimp_prop_expanding_frame_new (config, "round-corners", NULL,
                                              scale, NULL);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);

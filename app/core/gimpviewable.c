@@ -184,19 +184,22 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->get_expanded            = NULL;
 
   /* compat property */
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
-                                   NULL, NULL,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
+                           NULL, NULL,
+                           NULL,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_ICON_NAME, "icon-name",
-                                   NULL, NULL,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_ICON_NAME, "icon-name",
+                           NULL, NULL,
+                           NULL,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_ICON_PIXBUF,
-                                   "icon-pixbuf", NULL,
-                                   GDK_TYPE_PIXBUF,
-                                   G_PARAM_CONSTRUCT |
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_ICON_PIXBUF,
+                           "icon-pixbuf",
+                           NULL, NULL,
+                           GDK_TYPE_PIXBUF,
+                           G_PARAM_CONSTRUCT |
+                           GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_FROZEN,
                                    g_param_spec_boolean ("frozen",

@@ -26,6 +26,8 @@
 
 #include "gimpsourceoptions.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -56,16 +58,20 @@ gimp_source_options_class_init (GimpSourceOptionsClass *klass)
   object_class->set_property = gimp_source_options_set_property;
   object_class->get_property = gimp_source_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_MODE,
-                                 "align-mode", NULL,
-                                 GIMP_TYPE_SOURCE_ALIGN_MODE,
-                                 GIMP_SOURCE_ALIGN_NO,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ALIGN_MODE,
+                         "align-mode",
+                         _("Alignment"),
+                         NULL,
+                         GIMP_TYPE_SOURCE_ALIGN_MODE,
+                         GIMP_SOURCE_ALIGN_NO,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                            "sample-merged",
+                            _("Sample merged"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

@@ -65,16 +65,20 @@ gimp_cage_options_class_init (GimpCageOptionsClass *klass)
   object_class->set_property = gimp_cage_options_set_property;
   object_class->get_property = gimp_cage_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CAGE_MODE,
-                                 "cage-mode", NULL,
-                                 GIMP_TYPE_CAGE_MODE,
-                                 GIMP_CAGE_MODE_CAGE_CHANGE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CAGE_MODE,
+                         "cage-mode",
+                         NULL, NULL,
+                         GIMP_TYPE_CAGE_MODE,
+                         GIMP_CAGE_MODE_CAGE_CHANGE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_PLAIN_COLOR,
-                                    "fill-plain-color", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_PLAIN_COLOR,
+                            "fill-plain-color",
+                            _("Fill the original position\n"
+                              "of the cage with a color"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -140,9 +144,7 @@ gimp_cage_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
   gtk_widget_show (mode);
 
-  button = gimp_prop_check_button_new (config, "fill-plain-color",
-                                       _("Fill the original position\n"
-                                         "of the cage with a color"));
+  button = gimp_prop_check_button_new (config, "fill-plain-color", NULL);
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

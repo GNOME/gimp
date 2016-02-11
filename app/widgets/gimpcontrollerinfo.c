@@ -107,22 +107,33 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
 
   viewable_class->default_icon_name = GIMP_STOCK_CONTROLLER;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ENABLED,
-                                    "enabled", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEBUG_EVENTS,
-                                    "debug-events", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CONTROLLER,
-                                   "controller", NULL,
-                                   GIMP_TYPE_CONTROLLER,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOXED (object_class, PROP_MAPPING,
-                                  "mapping", NULL,
-                                  G_TYPE_HASH_TABLE,
-                                  GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLED,
+                            "enabled",
+                            _("Enabled"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEBUG_EVENTS,
+                            "debug-events",
+                            _("Debug events"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_CONTROLLER,
+                           "controller",
+                           "Controller",
+                           NULL,
+                           GIMP_TYPE_CONTROLLER,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOXED (object_class, PROP_MAPPING,
+                          "mapping",
+                          "Mapping",
+                          NULL,
+                          G_TYPE_HASH_TABLE,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   info_signals[EVENT_MAPPED] =
     g_signal_new ("event-mapped",

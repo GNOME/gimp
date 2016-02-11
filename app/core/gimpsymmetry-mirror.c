@@ -116,7 +116,6 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
   symmetry_class->get_operation     = gimp_mirror_get_operation;
   symmetry_class->active_changed    = gimp_mirror_active_changed;
 
-  /* Properties for user settings */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HORIZONTAL_SYMMETRY,
                             "horizontal-symmetry",
                             _("Horizontal Mirror"),
@@ -149,23 +148,21 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_SYMMETRY_PARAM_GUI);
 
-  /* Properties for XCF serialization only */
-  g_object_class_install_property (object_class, PROP_HORIZONTAL_POSITION,
-                                   g_param_spec_double ("horizontal-position",
-                                                        _("Horizontal axis position"),
-                                                        _("Horizontal axis position"),
-                                                        0.0, G_MAXDOUBLE, 0.0,
-                                                        GIMP_CONFIG_PARAM_FLAGS |
-                                                        GIMP_PARAM_STATIC_STRINGS |
-                                                        GIMP_SYMMETRY_PARAM_GUI));
-  g_object_class_install_property (object_class, PROP_VERTICAL_POSITION,
-                                   g_param_spec_double ("vertical-position",
-                                                        _("Vertical axis position"),
-                                                        _("Vertical axis position"),
-                                                        0.0, G_MAXDOUBLE, 0.0,
-                                                        GIMP_CONFIG_PARAM_FLAGS |
-                                                        GIMP_PARAM_STATIC_STRINGS |
-                                                        GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HORIZONTAL_POSITION,
+                           "horizontal-position",
+                           _("Horizontal axis position"),
+                           NULL,
+                           0.0, G_MAXDOUBLE, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_SYMMETRY_PARAM_GUI);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_VERTICAL_POSITION,
+                           "vertical-position",
+                           _("Vertical axis position"),
+                           NULL,
+                           0.0, G_MAXDOUBLE, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_SYMMETRY_PARAM_GUI);
 }
 
 static void

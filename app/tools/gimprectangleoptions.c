@@ -110,9 +110,9 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
 
       g_object_interface_install_property (iface,
                                            g_param_spec_boolean ("shrink-merged",
-                                                                 NULL,
-                                                                 N_("Use all visible layers when shrinking "
-                                                                    "the selection"),
+                                                                 _("Shrink merged"),
+                                                                 _("Use all visible layers when shrinking "
+                                                                   "the selection"),
                                                                  FALSE,
                                                                  GIMP_CONFIG_PARAM_FLAGS |
                                                                  GIMP_PARAM_STATIC_STRINGS));
@@ -314,8 +314,8 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
 
       g_object_interface_install_property (iface,
                                            g_param_spec_boolean ("fixed-center",
-                                                                 NULL,
-                                                                 N_("Expand selection from center outwards"),
+                                                                 _("Expand from center"),
+                                                                 _("Expand selection from center outwards"),
                                                                  FALSE,
                                                                  GIMP_CONFIG_PARAM_FLAGS |
                                                                  GIMP_PARAM_STATIC_STRINGS));
@@ -836,8 +836,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
 
   /* Fixed Center */
-  button = gimp_prop_check_button_new (config, "fixed-center",
-                                       _("Expand from center"));
+  button = gimp_prop_check_button_new (config, "fixed-center", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -860,6 +859,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_widget_show (hbox);
 
     button = gimp_prop_check_button_new (config, "fixed-rule-active", NULL);
+    gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button)));
     gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
     gtk_widget_show (button);
 
@@ -1026,8 +1026,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /*  Highlight  */
-  button = gimp_prop_check_button_new (config, "highlight",
-                                       _("Highlight"));
+  button = gimp_prop_check_button_new (config, "highlight", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -1048,8 +1047,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   g_object_add_weak_pointer (G_OBJECT (private->auto_shrink_button),
                              (gpointer) &private->auto_shrink_button);
 
-  button = gimp_prop_check_button_new (config, "shrink-merged",
-                                       _("Shrink merged"));
+  button = gimp_prop_check_button_new (config, "shrink-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

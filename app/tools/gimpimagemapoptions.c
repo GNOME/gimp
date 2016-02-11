@@ -26,6 +26,8 @@
 
 #include "gimpimagemapoptions.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -62,10 +64,12 @@ gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
   object_class->set_property = gimp_image_map_options_set_property;
   object_class->get_property = gimp_image_map_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PREVIEW,
-                                    "preview", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREVIEW,
+                            "preview",
+                            _("_Preview"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_REGION,
                                    g_param_spec_enum ("region",

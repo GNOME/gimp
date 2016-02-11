@@ -84,18 +84,16 @@ gimp_airbrush_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
   GtkWidget *scale;
 
-  button = gimp_prop_check_button_new (config, "motion-only", _("Motion only"));
+  button = gimp_prop_check_button_new (config, "motion-only", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  scale = gimp_prop_spin_scale_new (config, "rate",
-                                    C_("airbrush-tool", "Rate"),
+  scale = gimp_prop_spin_scale_new (config, "rate", NULL,
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_spin_scale_new (config, "flow",
-                                    _("Flow"),
+  scale = gimp_prop_spin_scale_new (config, "flow", NULL,
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);

@@ -74,38 +74,52 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
   object_class->set_property = gimp_blend_options_set_property;
   object_class->get_property = gimp_blend_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET,
-                                   "offset", NULL,
-                                   0.0, 100.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
-                                 "gradient-type", NULL,
-                                 GIMP_TYPE_GRADIENT_TYPE,
-                                 GIMP_GRADIENT_LINEAR,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
-                                 "gradient-repeat", NULL,
-                                 GIMP_TYPE_REPEAT_MODE,
-                                 GIMP_REPEAT_NONE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET,
+                           "offset",
+                           _("Offset"),
+                           NULL,
+                           0.0, 100.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
+                         "gradient-type",
+                         _("Shape"),
+                         NULL,
+                         GIMP_TYPE_GRADIENT_TYPE,
+                         GIMP_GRADIENT_LINEAR,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
+                         "gradient-repeat",
+                         _("Repeat"),
+                         NULL,
+                         GIMP_TYPE_REPEAT_MODE,
+                         GIMP_REPEAT_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
-                                    "supersample", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SUPERSAMPLE_DEPTH,
-                                "supersample-depth", NULL,
-                                1, 9, 3,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SUPERSAMPLE_THRESHOLD,
-                                   "supersample-threshold", NULL,
-                                   0.0, 4.0, 0.2,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
+                            "supersample",
+                            _("Adaptive Supersampling"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_SUPERSAMPLE_DEPTH,
+                        "supersample-depth",
+                        _("Max depth"),
+                        NULL,
+                        1, 9, 3,
+                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SUPERSAMPLE_THRESHOLD,
+                           "supersample-threshold",
+                           _("Threshold"),
+                           NULL,
+                           0.0, 4.0, 0.2,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DITHER,
-                                    "dither", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DITHER,
+                            "dither",
+                            _("Dithering"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -237,36 +251,31 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                     combo);
 
   /*  the offset scale  */
-  scale = gimp_prop_spin_scale_new (config, "offset",
-                                    _("Offset"),
+  scale = gimp_prop_spin_scale_new (config, "offset", NULL,
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  the dither toggle  */
-  button = gimp_prop_check_button_new (config, "dither",
-                                       _("Dithering"));
+  button = gimp_prop_check_button_new (config, "dither", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  supersampling options  */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  frame = gimp_prop_expanding_frame_new (config, "supersample",
-                                         _("Adaptive supersampling"),
+  frame = gimp_prop_expanding_frame_new (config, "supersample", NULL,
                                          vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  max depth scale  */
-  scale = gimp_prop_spin_scale_new (config, "supersample-depth",
-                                    _("Max depth"),
+  scale = gimp_prop_spin_scale_new (config, "supersample-depth", NULL,
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "supersample-threshold",
-                                    _("Threshold"),
+  scale = gimp_prop_spin_scale_new (config, "supersample-threshold", NULL,
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);

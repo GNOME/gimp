@@ -94,70 +94,93 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
   object_class->set_property = gimp_pdb_context_set_property;
   object_class->get_property = gimp_pdb_context_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
-                                    "antialias",
-                                    N_("Smooth edges"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                            "antialias",
+                            _("Antialiasing"),
+                            _("Smooth edges"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FEATHER,
-                                    "feather", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FEATHER,
+                            "feather",
+                            _("Feather"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_X,
-                                   "feather-radius-x", NULL,
-                                   0.0, 1000.0, 10.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_X,
+                           "feather-radius-x",
+                           _("Feather radius X"),
+                           NULL,
+                           0.0, 1000.0, 10.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_Y,
-                                   "feather-radius-y", NULL,
-                                   0.0, 1000.0, 10.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_Y,
+                           "feather-radius-y",
+                           _("Feather radius Y"),
+                           NULL,
+                           0.0, 1000.0, 10.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                            "sample-merged",
+                            _("Sample merged"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
-                                 "sample-criterion", NULL,
-                                 GIMP_TYPE_SELECT_CRITERION,
-                                 GIMP_SELECT_CRITERION_COMPOSITE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
+                         "sample-criterion",
+                         _("Sample criterion"),
+                         NULL,
+                         GIMP_TYPE_SELECT_CRITERION,
+                         GIMP_SELECT_CRITERION_COMPOSITE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SAMPLE_THRESHOLD,
-                                   "sample-threshold", NULL,
-                                   0.0, 1.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SAMPLE_THRESHOLD,
+                           "sample-threshold",
+                           _("Sample threshold"),
+                           NULL,
+                           0.0, 1.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_TRANSPARENT,
-                                    "sample-transparent", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_TRANSPARENT,
+                            "sample-transparent",
+                            _("Sample transparent"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
-                                    "diagonal-neighbors", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+                            "diagonal-neighbors",
+                            _("Diagonal neighbors"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
-                                 "interpolation", NULL,
-                                 GIMP_TYPE_INTERPOLATION_TYPE,
-                                 GIMP_INTERPOLATION_CUBIC,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
+                         "interpolation",
+                         _("Interpolation"),
+                         NULL,
+                         GIMP_TYPE_INTERPOLATION_TYPE,
+                         GIMP_INTERPOLATION_CUBIC,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSFORM_DIRECTION,
-                                 "transform-direction", NULL,
-                                 GIMP_TYPE_TRANSFORM_DIRECTION,
-                                 GIMP_TRANSFORM_FORWARD,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSFORM_DIRECTION,
+                         "transform-direction",
+                         _("Transform direction"),
+                         NULL,
+                         GIMP_TYPE_TRANSFORM_DIRECTION,
+                         GIMP_TRANSFORM_FORWARD,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSFORM_RESIZE,
-                                 "transform-resize", NULL,
-                                 GIMP_TYPE_TRANSFORM_RESIZE,
-                                 GIMP_TRANSFORM_RESIZE_ADJUST,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSFORM_RESIZE,
+                         "transform-resize",
+                         _("Transform resize"),
+                         NULL,
+                         GIMP_TYPE_TRANSFORM_RESIZE,
+                         GIMP_TRANSFORM_RESIZE_ADJUST,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

@@ -84,42 +84,47 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
   object_class->set_property = gimp_region_select_options_set_property;
   object_class->get_property = gimp_region_select_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
-                                    "select-transparent",
-                                    _("Allow completely transparent regions "
-                                      "to be selected"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
+                            "select-transparent",
+                            _("Select transparent areas"),
+                            _("Allow completely transparent regions "
+                              "to be selected"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged",
-                                    _("Base selection on all visible layers"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                            "sample-merged",
+                            _("Sample merged"),
+                            _("Base selection on all visible layers"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
-                                    "diagonal-neighbors",
-                                    _("Treat diagonally neighboring pixels as "
-                                      "connected"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+                            "diagonal-neighbors",
+                            _("Diagonal neighbors"),
+                            _("Treat diagonally neighboring pixels as "
+                              "connected"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
-                                   "threshold",
-                                   _("Maximum color difference"),
-                                   0.0, 255.0, 15.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_THRESHOLD,
+                           "threshold",
+                           _("Threshold"),
+                           _("Maximum color difference"),
+                           0.0, 255.0, 15.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SELECT_CRITERION,
-                                 "select-criterion",
-                                 _("Selection criterion"),
-                                 GIMP_TYPE_SELECT_CRITERION,
-                                 GIMP_SELECT_CRITERION_COMPOSITE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SELECT_CRITERION,
+                         "select-criterion",
+                         _("Select by"),
+                         _("Selection criterion"),
+                         GIMP_TYPE_SELECT_CRITERION,
+                         GIMP_SELECT_CRITERION_COMPOSITE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_DRAW_MASK,
                                    g_param_spec_boolean ("draw-mask",
-                                                         "Draw mask",
+                                                         _("Draw mask"),
                                                          _("Draw the selected region's mask"),
                                                          FALSE,
                                                          G_PARAM_READWRITE |
@@ -248,29 +253,25 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   tool_type = tool_options->tool_info->tool_type;
 
   /*  the select transparent areas toggle  */
-  button = gimp_prop_check_button_new (config, "select-transparent",
-                                       _("Select transparent areas"));
+  button = gimp_prop_check_button_new (config, "select-transparent", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the sample merged toggle  */
-  button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample merged"));
+  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the diagonal neighbors toggle  */
   if (tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL)
     {
-      button = gimp_prop_check_button_new (config, "diagonal-neighbors",
-                                           _("Diagonal neighbors"));
+      button = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
     }
 
   /*  the threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "threshold",
-                                    _("Threshold"),
+  scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -282,8 +283,7 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /*  the show mask toggle  */
-  button = gimp_prop_check_button_new (config, "draw-mask",
-                                       _("Draw Mask"));
+  button = gimp_prop_check_button_new (config, "draw-mask", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

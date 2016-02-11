@@ -352,6 +352,7 @@ dynamics_check_button_new (GObject     *config,
   GtkWidget *button;
 
   button = gimp_prop_check_button_new (config, property_name, NULL);
+  gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button)));
   gtk_table_attach (table, button, column, column + 1, row, row + 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (button);

@@ -100,36 +100,42 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-levels";
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CHANNEL,
-                                 "channel",
-                                 _("The affected channel"),
-                                 GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                 GIMP_HISTOGRAM_VALUE, 0);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
+                         "channel",
+                         _("Channel"),
+                         _("The affected channel"),
+                         GIMP_TYPE_HISTOGRAM_CHANNEL,
+                         GIMP_HISTOGRAM_VALUE, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA,
-                                   "gamma",
-                                   _("Gamma"),
-                                   0.1, 10.0, 1.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_GAMMA,
+                           "gamma",
+                           _("Gamma"),
+                           _("Gamma"),
+                           0.1, 10.0, 1.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LOW_INPUT,
-                                   "low-input",
-                                   _("Low Input"),
-                                   0.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LOW_INPUT,
+                           "low-input",
+                           _("Low Input"),
+                           _("Low Input"),
+                           0.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HIGH_INPUT,
-                                   "high-input",
-                                   _("High Input"),
-                                   0.0, 1.0, 1.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HIGH_INPUT,
+                           "high-input",
+                           _("High Input"),
+                           _("High Input"),
+                           0.0, 1.0, 1.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LOW_OUTPUT,
-                                   "low-output",
-                                   _("Low Output"),
-                                   0.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LOW_OUTPUT,
+                           "low-output",
+                           _("Low Output"),
+                           _("Low Output"),
+                           0.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HIGH_OUTPUT,
-                                   "high-output",
-                                   _("High Output"),
-                                   0.0, 1.0, 1.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HIGH_OUTPUT,
+                           "high-output",
+                           _("High Output"),
+                           _("High Output"),
+                           0.0, 1.0, 1.0, 0);
 }
 
 static void

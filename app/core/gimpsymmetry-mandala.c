@@ -114,28 +114,26 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
   symmetry_class->get_operation     = gimp_mandala_get_operation;
   symmetry_class->active_changed    = gimp_mandala_active_changed;
 
-  g_object_class_install_property (object_class, PROP_CENTER_X,
-                                   g_param_spec_double ("center-x",
-                                                        _("Center abscisse"),
-                                                        _("Center abscisse"),
-                                                        0.0, 10000.0, 0.0,
-                                                        GIMP_CONFIG_PARAM_FLAGS |
-                                                        GIMP_PARAM_STATIC_STRINGS |
-                                                        GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CENTER_X,
+                           "center-x",
+                           _("Center abscisse"),
+                           NULL,
+                           0.0, 10000.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_SYMMETRY_PARAM_GUI);
 
-  g_object_class_install_property (object_class, PROP_CENTER_Y,
-                                   g_param_spec_double ("center-y",
-                                                        _("Center ordinate"),
-                                                        _("Center ordinate"),
-                                                        0.0, 10000.0, 0.0,
-                                                        GIMP_CONFIG_PARAM_FLAGS |
-                                                        GIMP_PARAM_STATIC_STRINGS |
-                                                        GIMP_SYMMETRY_PARAM_GUI));
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CENTER_Y,
+                           "center-y",
+                           _("Center ordinate"),
+                           NULL,
+                           0.0, 10000.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_SYMMETRY_PARAM_GUI);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_SIZE,
                         "size",
                         _("Number of points"),
-                        _("Number of points"),
+                        NULL,
                         1, 100, 6.0,
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_SYMMETRY_PARAM_GUI);

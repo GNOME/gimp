@@ -179,188 +179,240 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   g_object_class_install_property (object_class, PROP_USE_APPLICATOR,
                                    g_param_spec_boolean ("use-applicator",
-                                                         NULL, NULL,
+                                                         "Use GimpApplicator",
+                                                         NULL,
                                                          FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
-                                   "brush-size", _("Brush Size"),
-                                   1.0, GIMP_BRUSH_MAX_SIZE, DEFAULT_BRUSH_SIZE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
+                           "brush-size",
+                           _("Size"),
+                           _("Brush Size"),
+                           1.0, GIMP_BRUSH_MAX_SIZE, DEFAULT_BRUSH_SIZE,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_ZOOM,
-                                    "brush-zoom", _("Link brush size with canvas zoom"),
-                                    DEFAULT_BRUSH_ZOOM,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_ZOOM,
+                            "brush-zoom",
+                            _("Brush Zoom"),
+                            _("Link brush size with canvas zoom"),
+                            DEFAULT_BRUSH_ZOOM,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
-                                   "brush-aspect-ratio", _("Brush Aspect Ratio"),
-                                   -20.0, 20.0, DEFAULT_BRUSH_ASPECT_RATIO,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
+                           "brush-aspect-ratio",
+                           _("Aspect Ratio"),
+                           _("Brush Aspect Ratio"),
+                           -20.0, 20.0, DEFAULT_BRUSH_ASPECT_RATIO,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
-                                   "brush-angle", _("Brush Angle"),
-                                   -180.0, 180.0, DEFAULT_BRUSH_ANGLE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
+                           "brush-angle",
+                           _("Angle"),
+                           _("Brush Angle"),
+                           -180.0, 180.0, DEFAULT_BRUSH_ANGLE,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
-                                   "brush-spacing", _("Brush Spacing"),
-                                   0.01, 50.0, DEFAULT_BRUSH_SPACING,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
+                           "brush-spacing",
+                           _("Spacing"),
+                           _("Brush Spacing"),
+                           0.01, 50.0, DEFAULT_BRUSH_SPACING,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_HARDNESS,
-                                   "brush-hardness", _("Brush Hardness"),
-                                   0.0, 1.0, DEFAULT_BRUSH_HARDNESS,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_HARDNESS,
+                           "brush-hardness",
+                           _("Hardness"),
+                           _("Brush Hardness"),
+                           0.0, 1.0, DEFAULT_BRUSH_HARDNESS,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_FORCE,
-                                   "brush-force", _("Brush Force"),
-                                   0.0, 1.0, DEFAULT_BRUSH_FORCE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_FORCE,
+                           "brush-force",
+                           _("Force"),
+                           _("Brush Force"),
+                           0.0, 1.0, DEFAULT_BRUSH_FORCE,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SIZE,
-                                    "brush-link-size",
-                                    _("Link brush size to brush native"),
-                                    DEFAULT_BRUSH_LINK_SIZE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SIZE,
+                            "brush-link-size",
+                            _("Link Size"),
+                            _("Link brush size to brush native"),
+                            DEFAULT_BRUSH_LINK_SIZE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ASPECT_RATIO,
-                                    "brush-link-aspect-ratio",
-                                    _("Link brush aspect ratio to brush native"),
-                                    DEFAULT_BRUSH_LINK_ASPECT_RATIO,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ASPECT_RATIO,
+                            "brush-link-aspect-ratio",
+                            _("Link Aspect Ratio"),
+                            _("Link brush aspect ratio to brush native"),
+                            DEFAULT_BRUSH_LINK_ASPECT_RATIO,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ANGLE,
-                                    "brush-link-angle",
-                                    _("Link brush angle to brush native"),
-                                    DEFAULT_BRUSH_LINK_ANGLE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ANGLE,
+                            "brush-link-angle",
+                            _("Link Angle"),
+                            _("Link brush angle to brush native"),
+                            DEFAULT_BRUSH_LINK_ANGLE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SPACING,
-                                    "brush-link-spacing",
-                                    _("Link brush spacing to brush native"),
-                                    DEFAULT_BRUSH_LINK_SPACING,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SPACING,
+                            "brush-link-spacing",
+                            _("Link Spacing"),
+                            _("Link brush spacing to brush native"),
+                            DEFAULT_BRUSH_LINK_SPACING,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_HARDNESS,
-                                    "brush-link-hardness",
-                                    _("Link brush hardness to brush native"),
-                                    DEFAULT_BRUSH_LINK_HARDNESS,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_HARDNESS,
+                            "brush-link-hardness",
+                            _("Link Hardness"),
+                            _("Link brush hardness to brush native"),
+                            DEFAULT_BRUSH_LINK_HARDNESS,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
-                                 "application-mode", _("Every stamp has its own opacity"),
-                                 GIMP_TYPE_PAINT_APPLICATION_MODE,
-                                 DEFAULT_APPLICATION_MODE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
+                         "application-mode",
+                         _("Incremental"),
+                         _("Every stamp has its own opacity"),
+                         GIMP_TYPE_PAINT_APPLICATION_MODE,
+                         DEFAULT_APPLICATION_MODE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HARD,
-                                    "hard", _("Ignore fuzziness of the current brush"),
-                                    DEFAULT_HARD,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HARD,
+                            "hard",
+                            _("Hard edge"),
+                            _("Ignore fuzziness of the current brush"),
+                            DEFAULT_HARD,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
-                                    "use-jitter", _("Scatter brush as you paint"),
-                                    DEFAULT_USE_JITTER,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_JITTER_AMOUNT,
-                                   "jitter-amount", _("Distance of scattering"),
-                                   0.0, 50.0, DEFAULT_JITTER_AMOUNT,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
+                            "use-jitter",
+                            _("Apply Jitter"),
+                            _("Scatter brush as you paint"),
+                            DEFAULT_USE_JITTER,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_JITTER_AMOUNT,
+                           "jitter-amount",
+                           _("Amount"),
+                           _("Distance of scattering"),
+                           0.0, 50.0, DEFAULT_JITTER_AMOUNT,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DYNAMICS_EXPANDED,
-                                     "dynamics-expanded", NULL,
-                                    DEFAULT_DYNAMICS_EXPANDED,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DYNAMICS_EXPANDED,
+                            "dynamics-expanded",
+                            _("Dynamics Options"),
+                            NULL,
+                            DEFAULT_DYNAMICS_EXPANDED,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
-                                   "fade-length", _("Distance over which strokes fade out"),
-                                   0.0, 32767.0, DEFAULT_FADE_LENGTH,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FADE_UNIT,
-                                 "fade-unit", NULL,
-                                 TRUE, TRUE, DEFAULT_FADE_UNIT,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADE_REVERSE,
-                                    "fade-reverse", _("Reverse direction of fading"),
-                                    DEFAULT_FADE_REVERSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FADE_REPEAT,
-                                 "fade-repeat", _("How fade is repeated as you paint"),
-                                 GIMP_TYPE_REPEAT_MODE,
-                                 DEFAULT_FADE_REPEAT,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
+                           "fade-length",
+                           _("Fade length"),
+                           _("Distance over which strokes fade out"),
+                           0.0, 32767.0, DEFAULT_FADE_LENGTH,
+                           GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_UNIT (object_class, PROP_FADE_UNIT,
+                         "fade-unit",
+                         NULL, NULL,
+                         TRUE, TRUE, DEFAULT_FADE_UNIT,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FADE_REVERSE,
+                            "fade-reverse",
+                            _("Reverse"),
+                            _("Reverse direction of fading"),
+                            DEFAULT_FADE_REVERSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FADE_REPEAT,
+                         "fade-repeat",
+                         _("Repeat"),
+                         _("How fade is repeated as you paint"),
+                         GIMP_TYPE_REPEAT_MODE,
+                         DEFAULT_FADE_REPEAT,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GRADIENT_REVERSE,
-                                    "gradient-reverse", NULL,
-                                    DEFAULT_GRADIENT_REVERSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GRADIENT_REVERSE,
+                            "gradient-reverse",
+                            NULL, NULL,
+                            DEFAULT_GRADIENT_REVERSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
-                                 "brush-view-type", NULL,
-                                 GIMP_TYPE_VIEW_TYPE,
-                                 GIMP_VIEW_TYPE_GRID,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_BRUSH_VIEW_SIZE,
-                                "brush-view-size", NULL,
-                                GIMP_VIEW_SIZE_TINY,
-                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                                GIMP_VIEW_SIZE_SMALL,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
+                         "brush-view-type",
+                         NULL, NULL,
+                         GIMP_TYPE_VIEW_TYPE,
+                         GIMP_VIEW_TYPE_GRID,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_BRUSH_VIEW_SIZE,
+                        "brush-view-size",
+                        NULL, NULL,
+                        GIMP_VIEW_SIZE_TINY,
+                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                        GIMP_VIEW_SIZE_SMALL,
+                        GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DYNAMICS_VIEW_TYPE,
-                                  "dynamics-view-type", NULL,
-                                 GIMP_TYPE_VIEW_TYPE,
-                                 GIMP_VIEW_TYPE_LIST,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DYNAMICS_VIEW_SIZE,
-                                "dynamics-view-size", NULL,
-                                GIMP_VIEW_SIZE_TINY,
-                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                                GIMP_VIEW_SIZE_SMALL,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DYNAMICS_VIEW_TYPE,
+                         "dynamics-view-type",
+                         NULL, NULL,
+                         GIMP_TYPE_VIEW_TYPE,
+                         GIMP_VIEW_TYPE_LIST,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_DYNAMICS_VIEW_SIZE,
+                        "dynamics-view-size",
+                        NULL, NULL,
+                        GIMP_VIEW_SIZE_TINY,
+                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                        GIMP_VIEW_SIZE_SMALL,
+                        GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PATTERN_VIEW_TYPE,
-                                 "pattern-view-type", NULL,
-                                 GIMP_TYPE_VIEW_TYPE,
-                                 GIMP_VIEW_TYPE_GRID,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_PATTERN_VIEW_SIZE,
-                                "pattern-view-size", NULL,
-                                GIMP_VIEW_SIZE_TINY,
-                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                                GIMP_VIEW_SIZE_SMALL,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PATTERN_VIEW_TYPE,
+                         "pattern-view-type",
+                         NULL, NULL,
+                         GIMP_TYPE_VIEW_TYPE,
+                         GIMP_VIEW_TYPE_GRID,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_PATTERN_VIEW_SIZE,
+                        "pattern-view-size",
+                        NULL, NULL,
+                        GIMP_VIEW_SIZE_TINY,
+                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                        GIMP_VIEW_SIZE_SMALL,
+                        GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_VIEW_TYPE,
-                                 "gradient-view-type", NULL,
-                                 GIMP_TYPE_VIEW_TYPE,
-                                 GIMP_VIEW_TYPE_LIST,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRADIENT_VIEW_SIZE,
-                                "gradient-view-size", NULL,
-                                GIMP_VIEW_SIZE_TINY,
-                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                                GIMP_VIEW_SIZE_LARGE,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_VIEW_TYPE,
+                         "gradient-view-type",
+                         NULL, NULL,
+                         GIMP_TYPE_VIEW_TYPE,
+                         GIMP_VIEW_TYPE_LIST,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_GRADIENT_VIEW_SIZE,
+                        "gradient-view-size",
+                        NULL, NULL,
+                        GIMP_VIEW_SIZE_TINY,
+                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                        GIMP_VIEW_SIZE_LARGE,
+                        GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_SMOOTHING,
-                                    "use-smoothing", _("Paint smoother strokes"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHING_QUALITY,
-                                "smoothing-quality", _("Depth of smoothing"),
-                                1, 100, DEFAULT_SMOOTHING_QUALITY,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SMOOTHING_FACTOR,
-                                   "smoothing-factor", _("Gravity of the pen"),
-                                   3.0, 1000.0, DEFAULT_SMOOTHING_FACTOR,
-                                   /* Max velocity is set at 3.
-                                    * Allowing for smoothing factor to be
-                                    * less than velcoty results in numeric
-                                    * instablility */
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_SMOOTHING,
+                            "use-smoothing",
+                            _("Smooth stroke"),
+                            _("Paint smoother strokes"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_SMOOTHING_QUALITY,
+                        "smoothing-quality",
+                        _("Quality"),
+                        _("Depth of smoothing"),
+                        1, 100, DEFAULT_SMOOTHING_QUALITY,
+                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SMOOTHING_FACTOR,
+                           "smoothing-factor",
+                           _("Weight"),
+                           _("Gravity of the pen"),
+                           /* Max velocity is set to 3; allowing for
+                            * smoothing factor to be less than velcoty
+                            * results in numeric instablility
+                            */
+                           3.0, 1000.0, DEFAULT_SMOOTHING_FACTOR,
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

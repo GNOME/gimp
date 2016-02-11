@@ -78,19 +78,21 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
   object_class->set_property = gimp_magnify_options_set_property;
   object_class->get_property = gimp_magnify_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
-                                    "auto-resize",
-                                    _("Resize image window to accommodate "
-                                      "new zoom level"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
+                            "auto-resize",
+                            _("Auto-resize window"),
+                            _("Resize image window to accommodate "
+                              "new zoom level"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
-                                 "zoom-type",
-                                 _("Direction of magnification"),
-                                 GIMP_TYPE_ZOOM_TYPE,
-                                 GIMP_ZOOM_IN,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
+                         "zoom-type",
+                         _("Direction"),
+                         _("Direction of magnification"),
+                         GIMP_TYPE_ZOOM_TYPE,
+                         GIMP_ZOOM_IN,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -181,8 +183,7 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
   toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  the auto_resize toggle button  */
-  button = gimp_prop_check_button_new (config, "auto-resize",
-                                       _("Auto-resize window"));
+  button = gimp_prop_check_button_new (config, "auto-resize", NULL);
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

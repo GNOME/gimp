@@ -35,6 +35,8 @@
 #include "gimptooloptions.h"
 #include "gimptoolpreset.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -75,9 +77,12 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
 
   viewable_class->get_description = gimp_tool_info_get_description;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VISIBLE, "visible",
-                                    NULL, TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VISIBLE,
+                            "visible",
+                            _("Visible"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

@@ -91,31 +91,36 @@ gimp_color_balance_config_class_init (GimpColorBalanceConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-color-balance";
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_RANGE,
-                                 "range",
-                                 _("The affected range"),
-                                 GIMP_TYPE_TRANSFER_MODE,
-                                 GIMP_TRANSFER_MIDTONES, 0);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_RANGE,
+                         "range",
+                         _("Range"),
+                         _("The affected range"),
+                         GIMP_TYPE_TRANSFER_MODE,
+                         GIMP_TRANSFER_MIDTONES, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CYAN_RED,
-                                   "cyan-red",
-                                   _("Cyan-Red"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CYAN_RED,
+                           "cyan-red",
+                           _("Cyan-Red"),
+                           _("Cyan-Red"),
+                           -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MAGENTA_GREEN,
-                                   "magenta-green",
-                                   _("Magenta-Green"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_MAGENTA_GREEN,
+                           "magenta-green",
+                           _("Magenta-Green"),
+                           _("Magenta-Green"),
+                           -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YELLOW_BLUE,
-                                   "yellow-blue",
-                                   _("Yellow-Blue"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_YELLOW_BLUE,
+                           "yellow-blue",
+                           _("Yellow-Blue"),
+                           _("Yellow-Blue"),
+                           -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESERVE_LUMINOSITY,
-                                    "preserve-luminosity",
-                                    _("Preserve Luminosity"),
-                                    TRUE, 0);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PRESERVE_LUMINOSITY,
+                            "preserve-luminosity",
+                            _("Preserve Luminosity"),
+                            _("Preserve Luminosity"),
+                            TRUE, 0);
 }
 
 static void

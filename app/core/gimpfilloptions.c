@@ -32,6 +32,8 @@
 #include "gimpfilloptions.h"
 #include "gimpviewable.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -82,16 +84,20 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
   object_class->set_property = gimp_fill_options_set_property;
   object_class->get_property = gimp_fill_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
-                                 "style", NULL,
-                                 GIMP_TYPE_FILL_STYLE,
-                                 GIMP_FILL_STYLE_SOLID,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
+                         "style",
+                         _("Style"),
+                         NULL,
+                         GIMP_TYPE_FILL_STYLE,
+                         GIMP_FILL_STYLE_SOLID,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
-                                    "antialias", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                            "antialias",
+                            _("Antialiasing"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_PATTERN_VIEW_TYPE,
                                    g_param_spec_enum ("pattern-view-type",

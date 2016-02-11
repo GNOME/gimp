@@ -26,6 +26,8 @@
 
 #include "gimpairbrushoptions.h"
 
+#include "gimp-intl.h"
+
 
 #define AIRBRUSH_DEFAULT_RATE        80.0
 #define AIRBRUSH_DEFAULT_FLOW        10.0
@@ -63,27 +65,34 @@ gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
   object_class->set_property = gimp_airbrush_options_set_property;
   object_class->get_property = gimp_airbrush_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RATE,
-                                   "rate", NULL,
-                                   0.0, 150.0, AIRBRUSH_DEFAULT_RATE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RATE,
+                           "rate",
+                           C_("airbrush-tool", "Rate"),
+                           NULL,
+                           0.0, 150.0, AIRBRUSH_DEFAULT_RATE,
+                           GIMP_PARAM_STATIC_STRINGS);
 
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MOTION_ONLY,
-                                    "motion-only", NULL,
-                                    AIRBRUSH_DEFAULT_MOTION_ONLY,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MOTION_ONLY,
+                            "motion-only",
+                            _("Motion only"),
+                            NULL,
+                            AIRBRUSH_DEFAULT_MOTION_ONLY,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FLOW,
-                                   "flow", NULL,
-                                   0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FLOW,
+                           "flow",
+                           _("Flow"),
+                           NULL,
+                           0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  /*backwads-compadibility prop for flow fomerly known as pressure*/
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PRESSURE,
-                                   "pressure", NULL,
-                                   0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
-                                   GIMP_CONFIG_PARAM_IGNORE);
+  /* backwads-compadibility prop for flow fomerly known as pressure */
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PRESSURE,
+                           "pressure",
+                           NULL, NULL,
+                           0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
+                           GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void

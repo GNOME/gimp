@@ -88,45 +88,52 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
   object_class->set_property = gimp_bucket_fill_options_set_property;
   object_class->get_property = gimp_bucket_fill_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_MODE,
-                                 "fill-mode", NULL,
-                                 GIMP_TYPE_BUCKET_FILL_MODE,
-                                 GIMP_BUCKET_FILL_FG,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
-                                    "fill-selection",
-                                    _("Which area will be filled"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
-                                    "fill-transparent",
-                                    _("Allow completely transparent regions "
-                                      "to be filled"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged",
-                                    _("Base filled area on all visible "
-                                      "layers"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
-                                    "diagonal-neighbors",
-                                    _("Treat diagonally neighboring pixels as "
-                                      "connected"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
-                                   "threshold",
-                                   _("Maximum color difference"),
-                                   0.0, 255.0, 15.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_CRITERION,
-                                 "fill-criterion",
-                                 _("Criterion used for determining color similarity"),
-                                 GIMP_TYPE_SELECT_CRITERION,
-                                 GIMP_SELECT_CRITERION_COMPOSITE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_MODE,
+                         "fill-mode",
+                         _("Fill type"),
+                         NULL,
+                         GIMP_TYPE_BUCKET_FILL_MODE,
+                         GIMP_BUCKET_FILL_FG,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
+                            "fill-selection",
+                            _("Fill selection"),
+                            _("Which area will be filled"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
+                            "fill-transparent",
+                            _("Fill transparent areas"),
+                            _("Allow completely transparent regions "
+                              "to be filled"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                            "sample-merged",
+                            _("Sample merged"),
+                            _("Base filled area on all visible layers"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+                            "diagonal-neighbors",
+                            _("Diagonal neighbors"),
+                            _("Treat diagonally neighboring pixels as "
+                              "connected"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_THRESHOLD,
+                           "threshold",
+                           _("Threshold"),
+                           _("Maximum color difference"),
+                           0.0, 255.0, 15.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_CRITERION,
+                         "fill-criterion",
+                         _("Fill by"),
+                         _("Criterion used for determining color similarity"),
+                         GIMP_TYPE_SELECT_CRITERION,
+                         GIMP_SELECT_CRITERION_COMPOSITE,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -293,26 +300,22 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (vbox2);
 
   /*  the fill transparent areas toggle  */
-  button = gimp_prop_check_button_new (config, "fill-transparent",
-                                       _("Fill transparent areas"));
+  button = gimp_prop_check_button_new (config, "fill-transparent", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the sample merged toggle  */
-  button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample merged"));
+  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the diagonal neighbors toggle  */
-  button = gimp_prop_check_button_new (config, "diagonal-neighbors",
-                                       _("Diagonal neighbors"));
+  button = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "threshold",
-                                    _("Threshold"),
+  scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);

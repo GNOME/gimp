@@ -26,6 +26,8 @@
 
 #include "gimpsmudgeoptions.h"
 
+#include "gimp-intl.h"
+
 
 #define SMUDGE_DEFAULT_RATE 50.0
 
@@ -59,10 +61,12 @@ gimp_smudge_options_class_init (GimpSmudgeOptionsClass *klass)
   object_class->set_property = gimp_smudge_options_set_property;
   object_class->get_property = gimp_smudge_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RATE,
-                                   "rate", NULL,
-                                   0.0, 100.0, SMUDGE_DEFAULT_RATE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RATE,
+                           "rate",
+                           C_("smudge-tool", "Rate"),
+                           NULL,
+                           0.0, 100.0, SMUDGE_DEFAULT_RATE,
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

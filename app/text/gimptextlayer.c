@@ -159,20 +159,23 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   drawable_class->set_buffer        = gimp_text_layer_set_buffer;
   drawable_class->push_undo         = gimp_text_layer_push_undo;
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TEXT,
-                                   "text", NULL,
-                                   GIMP_TYPE_TEXT,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_TEXT,
+                           "text",
+                           NULL, NULL,
+                           GIMP_TYPE_TEXT,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RENAME,
-                                    "auto-rename", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RENAME,
+                            "auto-rename",
+                            NULL, NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MODIFIED,
-                                    "modified", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFIED,
+                            "modified",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

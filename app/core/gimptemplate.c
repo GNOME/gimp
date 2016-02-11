@@ -40,8 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_RESOLUTION    72.0
-
+#define DEFAULT_RESOLUTION 72.0
 
 enum
 {
@@ -121,68 +120,87 @@ gimp_template_class_init (GimpTemplateClass *klass)
 
   viewable_class->default_icon_name = "gimp-template";
 
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_WIDTH, "width",
-                                NULL,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                                GIMP_DEFAULT_IMAGE_WIDTH,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_HEIGHT, "height",
-                                NULL,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                                GIMP_DEFAULT_IMAGE_HEIGHT,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
-                                 _("The unit used for coordinate display "
-                                   "when not in dot-for-dot mode."),
-                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_WIDTH,
+                        "width",
+                        _("Width"),
+                        NULL,
+                        GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                        GIMP_DEFAULT_IMAGE_WIDTH,
+                        GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
-                                       "xresolution",
-                                       _("The horizontal image resolution."),
-                                       DEFAULT_RESOLUTION,
-                                       GIMP_PARAM_STATIC_STRINGS |
-                                       GIMP_TEMPLATE_PARAM_COPY_FIRST);
-  GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
-                                       "yresolution",
-                                       _("The vertical image resolution."),
-                                       DEFAULT_RESOLUTION,
-                                       GIMP_PARAM_STATIC_STRINGS |
-                                       GIMP_TEMPLATE_PARAM_COPY_FIRST);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
-                                 "resolution-unit",
-                                 NULL,
-                                 FALSE, FALSE, GIMP_UNIT_INCH,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_HEIGHT,
+                        "height",
+                        _("Height"),
+                        NULL,
+                        GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                        GIMP_DEFAULT_IMAGE_HEIGHT,
+                        GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_TYPE,
-                                 "image-type", /* serialized name */
-                                 NULL,
-                                 GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PRECISION,
-                                 "precision",
-                                 NULL,
-                                 GIMP_TYPE_PRECISION, GIMP_PRECISION_U8_GAMMA,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
+                         "unit",
+                         _("Unit"),
+                         _("The unit used for coordinate display "
+                           "when not in dot-for-dot mode."),
+                         TRUE, FALSE, GIMP_UNIT_PIXEL,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_TYPE,
-                                 "fill-type",
-                                 NULL,
-                                 GIMP_TYPE_FILL_TYPE, GIMP_FILL_BACKGROUND,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
+                               "xresolution",
+                               _("Resolution X"),
+                               _("The horizontal image resolution."),
+                               DEFAULT_RESOLUTION,
+                               GIMP_PARAM_STATIC_STRINGS |
+                               GIMP_TEMPLATE_PARAM_COPY_FIRST);
 
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_COMMENT,
-                                   "comment",
-                                   NULL,
-                                   NULL,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
+                               "yresolution",
+                               _("Resolution X"),
+                               _("The vertical image resolution."),
+                               DEFAULT_RESOLUTION,
+                               GIMP_PARAM_STATIC_STRINGS |
+                               GIMP_TEMPLATE_PARAM_COPY_FIRST);
 
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FILENAME,
-                                   "filename",
-                                   NULL,
-                                   NULL,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
+                         "resolution-unit",
+                         _("Resolution unit"),
+                         NULL,
+                         FALSE, FALSE, GIMP_UNIT_INCH,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BASE_TYPE,
+                         "image-type", /* serialized name */
+                         _("Image type"),
+                         NULL,
+                         GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PRECISION,
+                         "precision",
+                         _("Precision"),
+                         NULL,
+                         GIMP_TYPE_PRECISION, GIMP_PRECISION_U8_GAMMA,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_TYPE,
+                         "fill-type",
+                         _("Fill type"),
+                         NULL,
+                         GIMP_TYPE_FILL_TYPE, GIMP_FILL_BACKGROUND,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_COMMENT,
+                           "comment",
+                           _("Comment"),
+                           NULL,
+                           NULL,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_FILENAME,
+                           "filename",
+                           _("Filename"),
+                           NULL,
+                           NULL,
+                           GIMP_PARAM_STATIC_STRINGS);
 
   g_type_class_add_private (klass, sizeof (GimpTemplatePrivate));
 }

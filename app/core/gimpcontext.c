@@ -656,90 +656,104 @@ gimp_context_class_init (GimpContextClass *klass)
                                                         GIMP_TYPE_OBJECT,
                                                         GIMP_PARAM_READWRITE));
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL], NULL,
-                                   GIMP_TYPE_TOOL_INFO,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL],
+                           NULL, NULL,
+                           GIMP_TYPE_TOOL_INFO,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PAINT_INFO,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_INFO], NULL,
-                                   GIMP_TYPE_PAINT_INFO,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PAINT_INFO,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_INFO],
+                           NULL, NULL,
+                           GIMP_TYPE_PAINT_INFO,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
-                                gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
-                                NULL,
-                                FALSE, &black,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_RGB (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
+                        gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
+                        _("Foreground"),
+                        _("Foreground color"),
+                         FALSE, &black,
+                        GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, GIMP_CONTEXT_PROP_BACKGROUND,
-                                gimp_context_prop_names[GIMP_CONTEXT_PROP_BACKGROUND],
-                                NULL,
-                                FALSE, &white,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_RGB (object_class, GIMP_CONTEXT_PROP_BACKGROUND,
+                        gimp_context_prop_names[GIMP_CONTEXT_PROP_BACKGROUND],
+                        _("Background"),
+                        _("Background color"),
+                        FALSE, &white,
+                        GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, GIMP_CONTEXT_PROP_OPACITY,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_OPACITY],
-                                   _("Opacity"),
-                                   GIMP_OPACITY_TRANSPARENT,
-                                   GIMP_OPACITY_OPAQUE,
-                                   GIMP_OPACITY_OPAQUE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, GIMP_CONTEXT_PROP_OPACITY,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_OPACITY],
+                           _("Opacity"),
+                           _("Opacity"),
+                           GIMP_OPACITY_TRANSPARENT,
+                           GIMP_OPACITY_OPAQUE,
+                           GIMP_OPACITY_OPAQUE,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, GIMP_CONTEXT_PROP_PAINT_MODE,
-                                 gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_MODE],
-                                 _("Paint Mode"),
-                                 GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                 GIMP_NORMAL_MODE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, GIMP_CONTEXT_PROP_PAINT_MODE,
+                         gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_MODE],
+                         _("Paint Mode"),
+                         _("Paint Mode"),
+                         GIMP_TYPE_LAYER_MODE_EFFECTS,
+                         GIMP_NORMAL_MODE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_BRUSH,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_BRUSH],
-                                   NULL,
-                                   GIMP_TYPE_BRUSH,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_BRUSH,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_BRUSH],
+                           _("Brush"),
+                           _("Brush"),
+                           GIMP_TYPE_BRUSH,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_DYNAMICS,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_DYNAMICS],
-                                   NULL,
-                                   GIMP_TYPE_DYNAMICS,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_DYNAMICS,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_DYNAMICS],
+                           _("Dynamics"),
+                           _("Paint dynamics"),
+                           GIMP_TYPE_DYNAMICS,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_MYBRUSH,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_MYBRUSH],
-                                   NULL,
-                                   GIMP_TYPE_MYBRUSH,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_MYBRUSH,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_MYBRUSH],
+                           _("MyPaint Brush"),
+                           _("MyPaint Brush"),
+                           GIMP_TYPE_MYBRUSH,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PATTERN,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_PATTERN],
-                                   NULL,
-                                   GIMP_TYPE_PATTERN,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PATTERN,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_PATTERN],
+                           _("Pattern"),
+                           _("Pattern"),
+                           GIMP_TYPE_PATTERN,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_GRADIENT,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_GRADIENT],
-                                   NULL,
-                                   GIMP_TYPE_GRADIENT,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_GRADIENT,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_GRADIENT],
+                           _("Gradient"),
+                           _("Gradient"),
+                           GIMP_TYPE_GRADIENT,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PALETTE,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_PALETTE],
-                                   NULL,
-                                   GIMP_TYPE_PALETTE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PALETTE,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_PALETTE],
+                           _("Palette"),
+                           _("Palette"),
+                           GIMP_TYPE_PALETTE,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL_PRESET,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL_PRESET],
-                                   NULL,
-                                   GIMP_TYPE_TOOL_PRESET,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL_PRESET,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL_PRESET],
+                           _("Tool Preset"),
+                           _("Tool Preset"),
+                           GIMP_TYPE_TOOL_PRESET,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_FONT,
-                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_FONT],
-                                   NULL,
-                                   GIMP_TYPE_FONT,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_FONT,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_FONT],
+                           _("Font"),
+                           _("Font"),
+                           GIMP_TYPE_FONT,
+                           GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_BUFFER,
                                    g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_BUFFER],

@@ -140,11 +140,12 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
                                                         GIMP_TYPE_IMAGE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ACTIVE,
-                                    "active",
-                                    _("Activate symmetry painting"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ACTIVE,
+                            "active",
+                            _("Active"),
+                            _("Activate symmetry painting"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

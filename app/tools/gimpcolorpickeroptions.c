@@ -64,24 +64,29 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
   object_class->get_property = gimp_color_picker_options_get_property;
 
   /* override a GimpColorOptions property to get a different default value */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
-                                    "sample-average",
-                                    _("Use accumulated color value from "
-                                      "all composited visible layers"),
-                                    FALSE,
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
+                            "sample-average",
+                            _("Sample average"),
+                            _("Use accumulated color value from "
+                              "all composited visible layers"),
+                            FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PICK_MODE,
-                                 "pick-mode",
-                                 _("Choose what color picker will do"),
-                                 GIMP_TYPE_COLOR_PICK_MODE,
-                                 GIMP_COLOR_PICK_MODE_FOREGROUND,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
-                                    "use-info-window",
-                                    _("Open a floating dialog to view picked "
-                                      "color values in various color models"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PICK_MODE,
+                         "pick-mode",
+                         _("Pick Mode"),
+                         _("Choose what color picker will do"),
+                         GIMP_TYPE_COLOR_PICK_MODE,
+                         GIMP_COLOR_PICK_MODE_FOREGROUND,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
+                            "use-info-window",
+                            _("Use info window"),
+                            _("Open a floating dialog to view picked "
+                              "color values in various color models"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -154,8 +159,7 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  the sample merged toggle button  */
-  button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample merged"));
+  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

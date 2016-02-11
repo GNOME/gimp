@@ -59,10 +59,11 @@ gimp_pencil_options_class_init (GimpPencilOptionsClass *klass)
   object_class->set_property = gimp_pencil_options_set_property;
   object_class->get_property = gimp_pencil_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HARD,
-                                    "hard", NULL,
-                                    PENCIL_DEFAULT_HARD,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HARD,
+                            "hard",
+                            NULL, NULL,
+                            PENCIL_DEFAULT_HARD,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

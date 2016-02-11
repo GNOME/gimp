@@ -76,8 +76,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), source_vbox);
   gtk_widget_show (source_vbox);
 
-  button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample merged"));
+  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
   gtk_box_pack_start (GTK_BOX (source_vbox), button, FALSE, FALSE, 0);
 
   g_object_bind_property_full (config, "clone-type",

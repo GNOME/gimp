@@ -99,17 +99,19 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-curves";
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CHANNEL,
-                                 "channel",
-                                 _("The affected channel"),
-                                 GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                 GIMP_HISTOGRAM_VALUE, 0);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
+                         "channel",
+                         _("Channel"),
+                         _("The affected channel"),
+                         GIMP_TYPE_HISTOGRAM_CHANNEL,
+                         GIMP_HISTOGRAM_VALUE, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CURVE,
-                                   "curve",
-                                   _("Curve"),
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_CURVE,
+                           "curve",
+                           _("Curve"),
+                           _("Curve"),
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void

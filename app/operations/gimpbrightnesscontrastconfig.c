@@ -77,15 +77,17 @@ gimp_brightness_contrast_config_class_init (GimpBrightnessContrastConfigClass *k
 
   viewable_class->default_icon_name = "gimp-tool-brightness-contrast";
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRIGHTNESS,
-                                   "brightness",
-                                   _("Brightness"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRIGHTNESS,
+                           "brightness",
+                           _("Brightness"),
+                           _("Brightness"),
+                           -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CONTRAST,
-                                   "contrast",
-                                   _("Contrast"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CONTRAST,
+                           "contrast",
+                           _("Contrast"),
+                           _("Contrast"),
+                           -1.0, 1.0, 0.0, 0);
 }
 
 static void

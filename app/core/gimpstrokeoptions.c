@@ -151,45 +151,58 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DASH_PRESET);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_METHOD,
-                                 "method", NULL,
-                                 GIMP_TYPE_STROKE_METHOD,
-                                 GIMP_STROKE_LINE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_METHOD,
+                         "method",
+                         _("Method"),
+                         NULL,
+                         GIMP_TYPE_STROKE_METHOD,
+                         GIMP_STROKE_LINE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
-                                   "width", NULL,
-                                   0.0, 2000.0, 6.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_WIDTH,
+                           "width",
+                           _("Line width"),
+                           NULL,
+                           0.0, 2000.0, 6.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
-                                 "unit", NULL,
-                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
+                         "unit",
+                         _("Unit"),
+                         NULL,
+                         TRUE, FALSE, GIMP_UNIT_PIXEL,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CAP_STYLE,
-                                 "cap-style", NULL,
-                                 GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CAP_STYLE,
+                         "cap-style",
+                         _("Cap style"),
+                         NULL,
+                         GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JOIN_STYLE,
-                                 "join-style", NULL,
-                                 GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_JOIN_STYLE,
+                         "join-style",
+                         _("Join style"),
+                         NULL,
+                         GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MITER_LIMIT,
-                                   "miter-limit",
-                                   _("Convert a mitered join to a bevelled "
-                                     "join if the miter would extend to a "
-                                     "distance of more than miter-limit * "
-                                     "line-width from the actual join point."),
-                                   0.0, 100.0, 10.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_MITER_LIMIT,
+                           "miter-limit",
+                           _("Miter limit"),
+                           _("Convert a mitered join to a bevelled "
+                             "join if the miter would extend to a "
+                             "distance of more than miter-limit * "
+                             "line-width from the actual join point."),
+                           0.0, 100.0, 10.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DASH_OFFSET,
-                                   "dash-offset", NULL,
-                                   0.0, 2000.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_DASH_OFFSET,
+                           "dash-offset",
+                           _("Dash offset"),
+                           NULL,
+                           0.0, 2000.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
   array_spec = g_param_spec_double ("dash-length", NULL, NULL,
                                     0.0, 2000.0, 1.0, GIMP_PARAM_READWRITE);
@@ -200,15 +213,18 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                                                 GIMP_PARAM_STATIC_STRINGS |
                                                                 GIMP_CONFIG_PARAM_FLAGS));
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PAINT_OPTIONS,
-                                   "paint-options", NULL,
-                                   GIMP_TYPE_PAINT_OPTIONS,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_PAINT_OPTIONS,
+                           "paint-options",
+                           NULL, NULL,
+                           GIMP_TYPE_PAINT_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_EMULATE_DYNAMICS,
-                                    "emulate-brush-dynamics", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EMULATE_DYNAMICS,
+                            "emulate-brush-dynamics",
+                            _("Emulate brush dynamics"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   g_type_class_add_private (klass, sizeof (GimpStrokeOptionsPrivate));
 }

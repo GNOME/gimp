@@ -89,31 +89,36 @@ gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-hue-saturation";
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_RANGE,
-                                 "range",
-                                 _("The affected range"),
-                                 GIMP_TYPE_HUE_RANGE,
-                                 GIMP_ALL_HUES, 0);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_RANGE,
+                         "range",
+                         _("Range"),
+                         _("The affected range"),
+                         GIMP_TYPE_HUE_RANGE,
+                         GIMP_ALL_HUES, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HUE,
-                                   "hue",
-                                   _("Hue"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HUE,
+                           "hue",
+                           _("Hue"),
+                           _("Hue"),
+                           -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SATURATION,
-                                   "saturation",
-                                   _("Saturation"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SATURATION,
+                           "saturation",
+                           _("Saturation"),
+                           _("Saturation"),
+                           -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
-                                   "lightness",
-                                   _("Lightness"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
+                           "lightness",
+                           _("Lightness"),
+                           _("Lightness"),
+                           -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OVERLAP,
-                                   "overlap",
-                                   _("Overlap"),
-                                   0.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OVERLAP,
+                           "overlap",
+                           _("Overlap"),
+                           _("Overlap"),
+                           0.0, 1.0, 0.0, 0);
 }
 
 static void

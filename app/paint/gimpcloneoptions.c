@@ -28,6 +28,8 @@
 
 #include "gimpcloneoptions.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -59,11 +61,13 @@ gimp_clone_options_class_init (GimpCloneOptionsClass *klass)
   object_class->set_property = gimp_clone_options_set_property;
   object_class->get_property = gimp_clone_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLONE_TYPE,
-                                 "clone-type", NULL,
-                                 GIMP_TYPE_CLONE_TYPE,
-                                 GIMP_CLONE_IMAGE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CLONE_TYPE,
+                         "clone-type",
+                         _("Source"),
+                         NULL,
+                         GIMP_TYPE_CLONE_TYPE,
+                         GIMP_CLONE_IMAGE,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

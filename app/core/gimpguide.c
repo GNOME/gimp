@@ -102,23 +102,27 @@ gimp_guide_class_init (GimpGuideClass *klass)
                                                       G_PARAM_CONSTRUCT_ONLY |
                                                       GIMP_PARAM_READWRITE));
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ORIENTATION,
-                                 "orientation", NULL,
-                                 GIMP_TYPE_ORIENTATION_TYPE,
-                                 GIMP_ORIENTATION_UNKNOWN,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_POSITION,
-                                "position", NULL,
-                                GIMP_GUIDE_POSITION_UNDEFINED,
-                                GIMP_MAX_IMAGE_SIZE,
-                                GIMP_GUIDE_POSITION_UNDEFINED,
-                                0);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
+                         "orientation",
+                         NULL, NULL,
+                         GIMP_TYPE_ORIENTATION_TYPE,
+                         GIMP_ORIENTATION_UNKNOWN,
+                         0);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
-                                 "style", NULL,
-                                 GIMP_TYPE_GUIDE_STYLE,
-                                 GIMP_GUIDE_STYLE_NONE,
-                                 0);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_POSITION,
+                        "position",
+                        NULL, NULL,
+                        GIMP_GUIDE_POSITION_UNDEFINED,
+                        GIMP_MAX_IMAGE_SIZE,
+                        GIMP_GUIDE_POSITION_UNDEFINED,
+                        0);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
+                         "style",
+                         NULL, NULL,
+                         GIMP_TYPE_GUIDE_STYLE,
+                         GIMP_GUIDE_STYLE_NONE,
+                         0);
 
   g_type_class_add_private (klass, sizeof (GimpGuidePrivate));
 }

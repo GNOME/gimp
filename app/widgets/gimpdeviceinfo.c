@@ -41,6 +41,8 @@
 
 #include "gimpdeviceinfo.h"
 
+#include "gimp-intl.h"
+
 
 #define GIMP_DEVICE_INFO_DATA_KEY "gimp-device-info"
 
@@ -125,10 +127,13 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE, "mode", NULL,
-                                 GDK_TYPE_INPUT_MODE,
-                                 GDK_MODE_DISABLED,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MODE,
+                         "mode",
+                         _("Mode"),
+                         NULL,
+                         GDK_TYPE_INPUT_MODE,
+                         GDK_MODE_DISABLED,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   param_spec = g_param_spec_enum ("axis",
                                   NULL, NULL,
@@ -153,10 +158,12 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                                                 GIMP_PARAM_STATIC_STRINGS |
                                                                 GIMP_CONFIG_PARAM_FLAGS));
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
-                                   "pressure-curve", NULL,
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
+                           "pressure-curve",
+                           _("Pressure curve"),
+                           NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void

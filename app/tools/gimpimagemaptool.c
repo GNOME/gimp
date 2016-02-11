@@ -425,8 +425,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
       /*  The preview toggle  */
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
-                                           "preview",
-                                           _("_Preview"));
+                                           "preview", NULL);
       gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 

@@ -43,6 +43,7 @@ enum
   PROP_ERASER
 };
 
+
 static void   gimp_mybrush_options_config_iface_init (GimpConfigInterface *config_iface);
 
 static void   gimp_mybrush_options_set_property     (GObject      *object,
@@ -79,22 +80,33 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
 
   context_class->mybrush_changed = gimp_mybrush_options_mybrush_changed;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RADIUS,
-                                   "radius", _("Radius"),
-                                   -2.0, 6.0, 1.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OPAQUE,
-                                   "opaque", _("Base Opacity"),
-                                   0.0, 2.0, 1.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HARDNESS,
-                                   "hardness", NULL,
-                                   0.0, 1.0, 1.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ERASER,
-                                   "eraser", NULL,
-                                   FALSE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RADIUS,
+                           "radius",
+                           _("Radius"),
+                           NULL,
+                           -2.0, 6.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OPAQUE,
+                           "opaque",
+                           _("Base Opacity"),
+                           NULL,
+                           0.0, 2.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HARDNESS,
+                           "hardness",
+                           _("Hardness"),
+                           NULL,
+                           0.0, 1.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ERASER,
+                            "eraser",
+                            _("Erase with this brush"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

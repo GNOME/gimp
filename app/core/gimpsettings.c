@@ -62,10 +62,11 @@ gimp_settings_class_init (GimpSettingsClass *klass)
   object_class->set_property = gimp_settings_set_property;
   object_class->get_property = gimp_settings_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_TIME,
-                                 "time",
-                                 "Time of settings creation",
-                                 0, G_MAXUINT, 0, 0);
+  GIMP_CONFIG_PROP_UINT (object_class, PROP_TIME,
+                         "time",
+                         "Time",
+                         "Time of settings creation",
+                         0, G_MAXUINT, 0, 0);
 }
 
 static void

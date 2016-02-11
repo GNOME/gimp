@@ -68,12 +68,13 @@ gimp_handle_transform_options_class_init (GimpHandleTransformOptionsClass *klass
   object_class->set_property = gimp_handle_transform_options_set_property;
   object_class->get_property = gimp_handle_transform_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HANDLE_MODE,
-                                 "handle-mode",
-                                 N_("Handle mode"),
-                                 GIMP_TYPE_TRANSFORM_HANDLE_MODE,
-                                 GIMP_HANDLE_MODE_ADD_TRANSFORM,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_HANDLE_MODE,
+                         "handle-mode",
+                         _("Handle mode"),
+                         _("Handle mode"),
+                         GIMP_TYPE_TRANSFORM_HANDLE_MODE,
+                         GIMP_HANDLE_MODE_ADD_TRANSFORM,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -138,8 +139,8 @@ gimp_handle_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
   gint       i;
 
-  frame = gimp_prop_enum_radio_frame_new (config, "handle-mode",
-                                          _("Handle mode"), 0, 0);
+  frame = gimp_prop_enum_radio_frame_new (config, "handle-mode", NULL,
+                                          0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
