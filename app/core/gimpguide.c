@@ -209,6 +209,7 @@ gimp_guide_new (GimpOrientationType  orientation,
  * drive GEGL ops, etc.
  * They are not saved in the XCF file. If an op, a symmetry or a plugin
  * wishes to save its state, it has to do it internally.
+ * Moreover they don't follow guide snapping settings and never snap.
  *
  * Returns: the custom #GimpGuide.
  **/
