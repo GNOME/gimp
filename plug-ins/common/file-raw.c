@@ -105,7 +105,7 @@ static gboolean          raw_load_palette  (RawGimpData      *data,
                                             const gchar      *palette_filename);
 
 /* support functions */
-static gint32            get_file_info     (const gchar      *filename);
+static goffset           get_file_info     (const gchar      *filename);
 static void              raw_read_row      (FILE             *fp,
                                             guchar           *buf,
                                             gint32            offset,
@@ -361,14 +361,28 @@ run (const gchar      *name,
 
 
 /* get file size from a filename */
-static gint32
+static goffset
 get_file_info (const gchar *filename)
 {
-  struct stat status;
+  GFile     *file = g_file_new_for_path (filename);
+  GFileInfo *info;
+  goffset    size = 0;
 
-  g_stat (filename, &status);
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                            G_FILE_QUERY_INFO_NONE,
+                            NULL, NULL);
 
-  return status.st_size;
+  if (info)
+    {
+      size = g_file_info_get_size (info);
+
+      g_object_unref (info);
+    }
+
+  g_object_unref (file);
+
+  return size;
 }
 
 /* new image handle functions */
@@ -702,7 +716,7 @@ load_image (const gchar  *filename,
   gint32             layer_id = -1;
   GimpImageType      ltype    = GIMP_RGB;
   GimpImageBaseType  itype    = GIMP_RGB_IMAGE;
-  gint32             size;
+  goffset            size;
   gint               bpp = 0;
 
   data = g_new0 (RawGimpData, 1);
@@ -1049,7 +1063,7 @@ load_dialog (const gchar *filename)
   GtkWidget *combo;
   GtkWidget *button;
   GtkObject *adj;
-  gint32     file_size;
+  goffset    file_size;
   gboolean   run;
 
   file_size = get_file_info (filename);
