@@ -35,13 +35,17 @@
 #include "gimp-intl.h"
 
 
+/*  The defaults are "everything except color", which is problematic
+ *  with gradients, which is why we special case the blend tool in
+ *  gimp_tool_preset_set_options().
+ */
 #define DEFAULT_USE_FG_BG    FALSE
 #define DEFAULT_USE_BRUSH    TRUE
 #define DEFAULT_USE_DYNAMICS TRUE
 #define DEFAULT_USE_MYBRUSH  TRUE
-#define DEFAULT_USE_GRADIENT TRUE
+#define DEFAULT_USE_GRADIENT FALSE
 #define DEFAULT_USE_PATTERN  TRUE
-#define DEFAULT_USE_PALETTE  TRUE
+#define DEFAULT_USE_PALETTE  FALSE
 #define DEFAULT_USE_FONT     TRUE
 
 enum
@@ -535,6 +539,11 @@ gimp_tool_preset_set_options (GimpToolPreset  *preset,
 
       if (! (serialize_props & GIMP_CONTEXT_PROP_MASK_FONT))
         g_object_set (preset, "use-font", FALSE, NULL);
+
+      /*  see comment above the DEFAULT defines at the top of the file  */
+      if (! g_strcmp0 ("gimp-blend-tool",
+                       gimp_object_get_name (preset->tool_options->tool_info)))
+        g_object_set (preset, "use-gradient", TRUE, NULL);
 
       g_signal_connect (preset->tool_options, "notify",
                         G_CALLBACK (gimp_tool_preset_options_notify),
