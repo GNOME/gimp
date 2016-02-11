@@ -83,6 +83,9 @@ gimp_image_snap_x (GimpImage *image,
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
 
+          if (gimp_guide_is_custom (guide))
+            continue;
+
           if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_VERTICAL)
             {
               snapped |= gimp_image_snap_distance (x, position,
@@ -164,6 +167,9 @@ gimp_image_snap_y (GimpImage *image,
         {
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
+
+          if (gimp_guide_is_custom (guide))
+            continue;
 
           if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_HORIZONTAL)
             {
@@ -256,6 +262,9 @@ gimp_image_snap_point (GimpImage *image,
         {
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
+
+          if (gimp_guide_is_custom (guide))
+            continue;
 
           switch (gimp_guide_get_orientation (guide))
             {
