@@ -16,7 +16,7 @@
    inkscape:export-xdpi="90"
    inkscape:export-filename="/home/klaus/Bilder/icons/gimp-icons/source/color-scalable.svg.png"
    sodipodi:docname="color-scalable.svg"
-   inkscape:version="0.91+devel r"
+   inkscape:version="0.91 r13725"
    id="svg2"
    height="458.76025"
    width="927.39636"
@@ -60,17 +60,17 @@
      inkscape:snap-bbox="true"
      inkscape:snap-nodes="true"
      showborder="false"
-     inkscape:current-layer="preferences"
+     inkscape:current-layer="stock"
      inkscape:window-maximized="0"
-     inkscape:window-y="241"
-     inkscape:window-x="316"
-     inkscape:cy="343.91697"
-     inkscape:cx="178.11744"
-     inkscape:zoom="1.324112"
+     inkscape:window-y="27"
+     inkscape:window-x="0"
+     inkscape:cy="233.31764"
+     inkscape:cx="479.31078"
+     inkscape:zoom="1.8725771"
      showgrid="false"
      id="namedview88"
-     inkscape:window-height="752"
-     inkscape:window-width="1440"
+     inkscape:window-height="704"
+     inkscape:window-width="1366"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
      guidetolerance="10"
@@ -26568,7 +26568,7 @@
     </g>
     <g
        transform="translate(108.69626,-915.07582)"
-       id="gimp-tool-presets">
+       id="gimp-tool-preset">
       <g
          inkscape:r_cy="true"
          inkscape:r_cx="true"
