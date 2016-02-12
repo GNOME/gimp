@@ -447,20 +447,27 @@ gimp_file_dialog_real_get_default_folder (GimpFileDialog *dialog)
     }
   else
     {
-      /* The default folder is "Documents" for all file dialogs.
-       * Children can reimplement this. */
       file = g_object_get_data (G_OBJECT (dialog->gimp),
-                                "gimp-documents-folder");
+                                "gimp-default-folder");
 
       if (! file)
         {
           gchar *path;
 
-          /* Make sure it ends in '/' */
+          /* Make sure the paths end with G_DIR_SEPARATOR_S */
+
+#ifdef PLATFORM_OSX
+          /* See bug 753683, "Desktop" is expected on OS X */
+          path = g_build_path (G_DIR_SEPARATOR_S,
+                               g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP),
+                               G_DIR_SEPARATOR_S,
+                               NULL);
+#else
           path = g_build_path (G_DIR_SEPARATOR_S,
                                g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
                                G_DIR_SEPARATOR_S,
                                NULL);
+#endif
 
           /* Paranoia fallback, see bug #722400 */
           if (! path)
@@ -473,7 +480,7 @@ gimp_file_dialog_real_get_default_folder (GimpFileDialog *dialog)
           g_free (path);
 
           g_object_set_data_full (G_OBJECT (dialog->gimp),
-                                  "gimp-documents-folder",
+                                  "gimp-default-folder",
                                   file, (GDestroyNotify) g_object_unref);
         }
     }
