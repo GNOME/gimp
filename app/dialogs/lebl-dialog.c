@@ -13,10 +13,6 @@
 
 #include "gimp-intl.h"
 
-static const guint8 goatpb2[];
-static const guint8 goatpb[];
-static const guint8 wanda[];
-
 /* phish code */
 #define PHSHFRAMES 8
 #define PHSHORIGWIDTH 288

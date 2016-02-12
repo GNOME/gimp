@@ -182,9 +182,9 @@ gimp_shear_tool_motion (GimpTransformTool *tr_tool)
 
   if (tr_tool->trans_info[HORZ_OR_VERT] == GIMP_ORIENTATION_UNKNOWN)
     {
-      if (abs (diffx) > MIN_MOVE || abs (diffy) > MIN_MOVE)
+      if (ABS (diffx) > MIN_MOVE || ABS (diffy) > MIN_MOVE)
         {
-          if (abs (diffx) > abs (diffy))
+          if (ABS (diffx) > ABS (diffy))
             {
               tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_HORIZONTAL;
               tr_tool->trans_info[XSHEAR] = 0.0;

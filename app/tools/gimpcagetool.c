@@ -688,8 +688,8 @@ gimp_cage_tool_button_release (GimpTool              *tool,
           {
             GeglRectangle area = { MIN (ct->selection_start_x, coords->x) - ct->offset_x,
                                    MIN (ct->selection_start_y, coords->y) - ct->offset_y,
-                                   abs (ct->selection_start_x - coords->x),
-                                   abs (ct->selection_start_y - coords->y) };
+                                   ABS (ct->selection_start_x - coords->x),
+                                   ABS (ct->selection_start_y - coords->y) };
 
             if (state & gimp_get_extend_selection_mask ())
               {
@@ -718,8 +718,8 @@ gimp_cage_tool_button_release (GimpTool              *tool,
           {
             GeglRectangle area = { MIN (ct->selection_start_x, coords->x) - ct->offset_x,
                                    MIN (ct->selection_start_y, coords->y) - ct->offset_y,
-                                   abs (ct->selection_start_x - coords->x),
-                                   abs (ct->selection_start_y - coords->y) };
+                                   ABS (ct->selection_start_x - coords->x),
+                                   ABS (ct->selection_start_y - coords->y) };
 
             if (state & gimp_get_extend_selection_mask ())
               {
@@ -884,8 +884,8 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                     FALSE,
                                     MIN (ct->selection_start_x, ct->cursor_x),
                                     MIN (ct->selection_start_y, ct->cursor_y),
-                                    abs (ct->selection_start_x - ct->cursor_x),
-                                    abs (ct->selection_start_y - ct->cursor_y));
+                                    ABS (ct->selection_start_x - ct->cursor_x),
+                                    ABS (ct->selection_start_y - ct->cursor_y));
     }
 }
 
@@ -1035,7 +1035,7 @@ gimp_cage_tool_is_on_edge (GimpCageTool *ct,
       lEB = lAB / 2 + (SQR (lBC) - SQR (lAC)) / (2 * lAB);
       lEC = sqrt (SQR (lBC) - SQR (lEB));
 
-      if ((lEC < handle_size / 2) && (abs (SQR (lBC) - SQR (lAC)) <= SQR (lAB)))
+      if ((lEC < handle_size / 2) && (ABS (SQR (lBC) - SQR (lAC)) <= SQR (lAB)))
         return i;
 
       A = B;

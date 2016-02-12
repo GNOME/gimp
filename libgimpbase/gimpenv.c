@@ -773,7 +773,7 @@ gimp_plug_in_directory_file (const gchar *first_element,
 const gchar *
 gimp_user_directory (GimpUserDirectory type)
 {
-  return g_get_user_special_dir (type);
+  return g_get_user_special_dir ((GUserDirectory) type);
 }
 
 /**

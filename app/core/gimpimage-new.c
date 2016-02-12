@@ -332,7 +332,7 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
   GimpImage         *new_image;
   GimpLayer         *layer;
   GimpImageBaseType  base_type;
-  gboolean           has_alpha;
+  gboolean           has_alpha = FALSE;
   guint8            *icc_data;
   gsize              icc_len;
 

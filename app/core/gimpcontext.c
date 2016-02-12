@@ -1917,8 +1917,10 @@ gimp_context_get_by_type (GimpContext *context,
   GimpObject          *object = NULL;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail ((prop = gimp_context_type_to_property (type)) != -1,
-                        NULL);
+
+  prop = gimp_context_type_to_property (type);
+
+  g_return_val_if_fail (prop != -1, NULL);
 
   g_object_get (context,
                 gimp_context_prop_names[prop], &object,
@@ -1941,7 +1943,10 @@ gimp_context_set_by_type (GimpContext *context,
   GimpContextPropType prop;
 
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail ((prop = gimp_context_type_to_property (type)) != -1);
+
+  prop = gimp_context_type_to_property (type);
+
+  g_return_if_fail (prop != -1);
 
   g_object_set (context,
                 gimp_context_prop_names[prop], object,
@@ -1956,7 +1961,10 @@ gimp_context_changed_by_type (GimpContext *context,
   GimpObject          *object;
 
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail ((prop = gimp_context_type_to_property (type)) != -1);
+
+  prop = gimp_context_type_to_property (type);
+
+  g_return_if_fail (prop != -1);
 
   object = gimp_context_get_by_type (context, type);
 
