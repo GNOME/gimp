@@ -1,8 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir    = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor
-
-## The icon theme images
+iconsdir = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor
 
 icons_DATA = \
 	index.theme
@@ -14,6 +12,10 @@ include $(top_srcdir)/icons/Symbolic/icon-list.mk
 12/gimp-default-colors.png: $(top_srcdir)/icons/Symbolic/12/gimp-default-colors.png
 	mkdir -p `dirname $<`
 	cp -f $< $@
+
+scalable/%.svg: ../Symbolic/scalable/%.svg ../../tools/invert-svg
+	mkdir -p scalable && \
+	$(top_builddir)/tools/invert-svg $< $@
 
 # We are basically repeating the same rule for every subdirectory, which
 # is very dirty. But this is the only way we found to have a rule

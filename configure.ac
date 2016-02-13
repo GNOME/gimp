@@ -2028,6 +2028,29 @@ AM_CONDITIONAL(HAVE_XMLLINT, test "x$XMLLINT" != "xno")
 AC_PATH_PROG(XSLTPROC, xsltproc, no)
 AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 
+###########################
+# Check for vectorial icons
+###########################
+
+AC_ARG_ENABLE(vector-icons, [  --enable-vector-icons   generate vector icons], ,
+              enable_vector_icons=no)
+
+if test "x$enable_vector_icons" = "xyes"; then
+  if test "x$XMLLINT" = "xno"; then
+    if test "x$have_librsvg" != "xyes"; then
+      enable_vector_icons="no (librsvg and xmllint missing)"
+    else
+      enable_vector_icons="no (xmllint missing)"
+    fi
+  elif test "x$have_librsvg" != "xyes"; then
+    enable_vector_icons="no (librsvg missing)"
+  fi
+fi
+AM_CONDITIONAL(ENABLE_VECTOR_ICONS, test "x$enable_vector_icons" = "xyes")
+
+if test "x$enable_vector_icons" = "xyes"; then
+  enable_vector_icons="yes (experimental)"
+fi
 
 ####################
 # Check for xvfb-run
@@ -2475,6 +2498,7 @@ Extra Binaries:
 
 Optional Features:
   Language selection:  $have_iso_codes
+  Vectorial icons:     $enable_vector_icons
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa

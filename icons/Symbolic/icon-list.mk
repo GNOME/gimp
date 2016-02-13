@@ -1,18 +1,247 @@
-icons12dir  = $(iconsdir)/12x12/apps
-icons16dir  = $(iconsdir)/16x16/apps
-icons18dir  = $(iconsdir)/18x18/apps
-icons20dir  = $(iconsdir)/20x20/apps
-icons22dir  = $(iconsdir)/22x22/apps
-icons24dir  = $(iconsdir)/24x24/apps
-icons32dir  = $(iconsdir)/32x32/apps
-icons48dir  = $(iconsdir)/48x48/apps
-icons64dir  = $(iconsdir)/64x64/apps
-icons96dir  = $(iconsdir)/96x96/apps
-icons128dir = $(iconsdir)/128x128/apps
-icons192dir = $(iconsdir)/192x192/apps
-icons256dir = $(iconsdir)/256x256/apps
+scalable_images = \
+	scalable/gimp-anchor.svg			\
+	scalable/gimp-cap-butt.svg			\
+	scalable/gimp-cap-round.svg			\
+	scalable/gimp-cap-square.svg			\
+	scalable/gimp-center.svg			\
+	scalable/gimp-channel-alpha.svg			\
+	scalable/gimp-channel-blue.svg			\
+	scalable/gimp-channel-gray.svg			\
+	scalable/gimp-channel-green.svg			\
+	scalable/gimp-channel-indexed.svg		\
+	scalable/gimp-channel-red.svg			\
+	scalable/gimp-channels.svg			\
+	scalable/gimp-channel.svg			\
+	scalable/gimp-char-picker.svg			\
+	scalable/gimp-close.svg				\
+	scalable/gimp-colormap.svg			\
+	scalable/gimp-color-picker-black.svg		\
+	scalable/gimp-color-picker-gray.svg		\
+	scalable/gimp-color-picker-white.svg		\
+	scalable/gimp-color-pick-from-screen.svg	\
+	scalable/gimp-color-triangle.svg		\
+	scalable/gimp-controller-keyboard.svg		\
+	scalable/gimp-controller-linux-input.svg	\
+	scalable/gimp-controller-midi.svg		\
+	scalable/gimp-controller.svg			\
+	scalable/gimp-controller-wheel.svg		\
+	scalable/gimp-convert-grayscale.svg		\
+	scalable/gimp-convert-indexed.svg		\
+	scalable/gimp-convert-rgb.svg			\
+	scalable/gimp-cursor.svg			\
+	scalable/gimp-curve-free.svg			\
+	scalable/gimp-curve-smooth.svg			\
+	scalable/gimp-default-colors.svg		\
+	scalable/gimp-device-status.svg			\
+	scalable/gimp-display-filter-colorblind.svg	\
+	scalable/gimp-display-filter-contrast.svg	\
+	scalable/gimp-display-filter-gamma.svg		\
+	scalable/gimp-display-filter-lcms.svg		\
+	scalable/gimp-display-filter-proof.svg		\
+	scalable/gimp-display-filter.svg		\
+	scalable/gimp-duplicate.svg			\
+	scalable/gimp-dynamics.svg			\
+	scalable/gimp-edit.svg				\
+	scalable/gimp-error.svg				\
+	scalable/gimp-flip-horizontal.svg		\
+	scalable/gimp-flip-vertical.svg			\
+	scalable/gimp-floating-selection.svg		\
+	scalable/gimp-gegl.svg				\
+	scalable/gimp-gradient-bilinear.svg		\
+	scalable/gimp-gradient-conical-asymmetric.svg	\
+	scalable/gimp-gradient-conical-symmetric.svg	\
+	scalable/gimp-gradient-linear.svg		\
+	scalable/gimp-gradient-radial.svg		\
+	scalable/gimp-gradient-shapeburst-angular.svg	\
+	scalable/gimp-gradient-shapeburst-dimpled.svg	\
+	scalable/gimp-gradient-shapeburst-spherical.svg	\
+	scalable/gimp-gradient-spiral-anticlockwise.svg	\
+	scalable/gimp-gradient-spiral-clockwise.svg	\
+	scalable/gimp-gradient-square.svg		\
+	scalable/gimp-gravity-east.svg			\
+	scalable/gimp-gravity-north-east.svg		\
+	scalable/gimp-gravity-north.svg			\
+	scalable/gimp-gravity-north-west.svg		\
+	scalable/gimp-gravity-south-east.svg		\
+	scalable/gimp-gravity-south.svg			\
+	scalable/gimp-gravity-south-west.svg		\
+	scalable/gimp-gravity-west.svg			\
+	scalable/gimp-grid.svg				\
+	scalable/gimp-hcenter.svg			\
+	scalable/gimp-hchain-broken.svg			\
+	scalable/gimp-hchain.svg			\
+	scalable/gimp-hfill.svg				\
+	scalable/gimp-histogram-linear.svg		\
+	scalable/gimp-histogram-logarithmic.svg		\
+	scalable/gimp-histogram.svg			\
+	scalable/gimp-images.svg			\
+	scalable/gimp-image.svg				\
+	scalable/gimp-info.svg				\
+	scalable/gimp-input-device.svg			\
+	scalable/gimp-invert.svg			\
+	scalable/gimp-join-bevel.svg			\
+	scalable/gimp-join-miter.svg			\
+	scalable/gimp-join-round.svg			\
+	scalable/gimp-landscape.svg			\
+	scalable/gimp-layer-mask.svg			\
+	scalable/gimp-layers.svg			\
+	scalable/gimp-layer.svg				\
+	scalable/gimp-layer-to-imagesize.svg		\
+	scalable/gimp-letter-spacing.svg		\
+	scalable/gimp-line-spacing.svg			\
+	scalable/gimp-linked.svg			\
+	scalable/gimp-list.svg				\
+	scalable/gimp-menu-left.svg			\
+	scalable/gimp-menu-right.svg			\
+	scalable/gimp-merge-down.svg			\
+	scalable/gimp-move-to-screen.svg		\
+	scalable/gimp-navigation.svg			\
+	scalable/gimp-paste-as-new.svg			\
+	scalable/gimp-paste-into.svg			\
+	scalable/gimp-paths.svg				\
+	scalable/gimp-path-stroke.svg			\
+	scalable/gimp-path.svg				\
+	scalable/gimp-plugin.svg			\
+	scalable/gimp-portrait.svg			\
+	scalable/gimp-prefs-color-management.svg	\
+	scalable/gimp-prefs-controllers.svg		\
+	scalable/gimp-prefs-default-comment.svg		\
+	scalable/gimp-prefs-default-grid.svg		\
+	scalable/gimp-prefs-display.svg			\
+	scalable/gimp-prefs-folders-brushes.svg		\
+	scalable/gimp-prefs-folders-dynamics.svg	\
+	scalable/gimp-prefs-folders-environ.svg		\
+	scalable/gimp-prefs-folders-fonts.svg		\
+	scalable/gimp-prefs-folders-gradients.svg	\
+	scalable/gimp-prefs-folders-icon-themes.svg	\
+	scalable/gimp-prefs-folders-interp.svg		\
+	scalable/gimp-prefs-folders-modules.svg		\
+	scalable/gimp-prefs-folders-palettes.svg	\
+	scalable/gimp-prefs-folders-patterns.svg	\
+	scalable/gimp-prefs-folders-plug-ins.svg	\
+	scalable/gimp-prefs-folders-scripts.svg		\
+	scalable/gimp-prefs-folders.svg			\
+	scalable/gimp-prefs-folders-themes.svg		\
+	scalable/gimp-prefs-folders-tool-plug-ins.svg	\
+	scalable/gimp-prefs-folders-tool-presets.svg	\
+	scalable/gimp-prefs-folders-tools.svg		\
+	scalable/gimp-prefs-help-system.svg		\
+	scalable/gimp-prefs-icon-theme.svg		\
+	scalable/gimp-prefs-image-title.svg		\
+	scalable/gimp-prefs-image-windows.svg		\
+	scalable/gimp-prefs-input-devices.svg		\
+	scalable/gimp-prefs-interface.svg		\
+	scalable/gimp-prefs-new-image.svg		\
+	scalable/gimp-prefs-playground.svg		\
+	scalable/gimp-prefs-session.svg			\
+	scalable/gimp-prefs-system-resources.svg	\
+	scalable/gimp-prefs-theme.svg			\
+	scalable/gimp-prefs-toolbox.svg			\
+	scalable/gimp-prefs-tool-options.svg		\
+	scalable/gimp-prefs-window-management.svg	\
+	scalable/gimp-print-resolution.svg		\
+	scalable/gimp-question.svg			\
+	scalable/gimp-quick-mask-off.svg		\
+	scalable/gimp-quick-mask-on.svg			\
+	scalable/gimp-reset.svg				\
+	scalable/gimp-reshow-filter.svg			\
+	scalable/gimp-resize.svg			\
+	scalable/gimp-rotate-180.svg			\
+	scalable/gimp-rotate-270.svg			\
+	scalable/gimp-rotate-90.svg			\
+	scalable/gimp-sample-point.svg			\
+	scalable/gimp-scale.svg				\
+	scalable/gimp-selection.svg			\
+	scalable/gimp-selection-add.svg			\
+	scalable/gimp-selection-all.svg			\
+	scalable/gimp-selection-border.svg		\
+	scalable/gimp-selection-grow.svg		\
+	scalable/gimp-selection-intersect.svg		\
+	scalable/gimp-selection-none.svg		\
+	scalable/gimp-selection-replace.svg		\
+	scalable/gimp-selection-shrink.svg		\
+	scalable/gimp-selection-stroke.svg		\
+	scalable/gimp-selection-subtract.svg		\
+	scalable/gimp-selection-to-channel.svg		\
+	scalable/gimp-selection-to-path.svg		\
+	scalable/gimp-shape-circle.svg			\
+	scalable/gimp-shape-diamond.svg			\
+	scalable/gimp-shape-square.svg			\
+	scalable/gimp-swap-colors.svg			\
+	scalable/gimp-template.svg			\
+	scalable/gimp-text-dir-ltr.svg			\
+	scalable/gimp-text-dir-rtl.svg			\
+	scalable/gimp-text-layer.svg			\
+	scalable/gimp-toilet-paper.svg			\
+	scalable/gimp-tool-airbrush.svg			\
+	scalable/gimp-tool-align.svg			\
+	scalable/gimp-tool-blend.svg			\
+	scalable/gimp-tool-blur.svg			\
+	scalable/gimp-tool-brightness-contrast.svg	\
+	scalable/gimp-tool-bucket-fill.svg		\
+	scalable/gimp-tool-by-color-select.svg		\
+	scalable/gimp-tool-cage.svg			\
+	scalable/gimp-tool-clone.svg			\
+	scalable/gimp-tool-color-balance.svg		\
+	scalable/gimp-tool-colorize.svg			\
+	scalable/gimp-tool-color-picker.svg		\
+	scalable/gimp-tool-crop.svg			\
+	scalable/gimp-tool-curves.svg			\
+	scalable/gimp-tool-desaturate.svg		\
+	scalable/gimp-tool-dodge.svg			\
+	scalable/gimp-tool-ellipse-select.svg		\
+	scalable/gimp-tool-eraser.svg			\
+	scalable/gimp-tool-flip.svg			\
+	scalable/gimp-tool-foreground-select.svg	\
+	scalable/gimp-tool-free-select.svg		\
+	scalable/gimp-tool-fuzzy-select.svg		\
+	scalable/gimp-tool-handle-transform.svg		\
+	scalable/gimp-tool-heal.svg			\
+	scalable/gimp-tool-hue-saturation.svg		\
+	scalable/gimp-tool-ink.svg			\
+	scalable/gimp-tool-iscissors.svg		\
+	scalable/gimp-tool-levels.svg			\
+	scalable/gimp-tool-measure.svg			\
+	scalable/gimp-tool-move.svg			\
+	scalable/gimp-tool-mypaint-brush.svg		\
+	scalable/gimp-tool-n-point-deformation.svg	\
+	scalable/gimp-tool-options.svg			\
+	scalable/gimp-tool-paintbrush.svg		\
+	scalable/gimp-tool-path.svg			\
+	scalable/gimp-tool-pencil.svg			\
+	scalable/gimp-tool-perspective-clone.svg	\
+	scalable/gimp-tool-perspective.svg		\
+	scalable/gimp-tool-posterize.svg		\
+	scalable/gimp-tool-preset.svg			\
+	scalable/gimp-tool-rect-select.svg		\
+	scalable/gimp-tool-rotate.svg			\
+	scalable/gimp-tool-scale.svg			\
+	scalable/gimp-tool-seamless-clone.svg		\
+	scalable/gimp-tool-shear.svg			\
+	scalable/gimp-tool-smudge.svg			\
+	scalable/gimp-tools.svg				\
+	scalable/gimp-tool-text.svg			\
+	scalable/gimp-tool-threshold.svg		\
+	scalable/gimp-tool-unified-transform.svg	\
+	scalable/gimp-tool-warp.svg			\
+	scalable/gimp-tool-zoom.svg			\
+	scalable/gimp-transparency.svg			\
+	scalable/gimp-undo-history.svg			\
+	scalable/gimp-user-manual.svg			\
+	scalable/gimp-vcenter.svg			\
+	scalable/gimp-vchain.svg			\
+	scalable/gimp-vchain-broken.svg			\
+	scalable/gimp-vfill.svg				\
+	scalable/gimp-video.svg				\
+	scalable/gimp-visible.svg			\
+	scalable/gimp-warning.svg			\
+	scalable/gimp-web.svg				\
+	scalable/gimp-wilber.svg			\
+	scalable/gimp-wilber-eek.svg			\
+	scalable/gimp-wilber-outline.svg		\
+	scalable/gimp-zoom-follow-window.svg
 
-icons12_DATA = \
+icons12_images = \
 	12/gimp-close.png			\
 	12/gimp-default-colors.png		\
 	12/gimp-linked.png			\
@@ -24,7 +253,7 @@ icons12_DATA = \
 	12/gimp-visible.png			\
 	12/gimp-zoom-follow-window.png
 
-icons16_DATA = \
+icons16_images = \
 	16/gimp-anchor.png				\
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\
@@ -216,16 +445,16 @@ icons16_DATA = \
 	16/gimp-web.png					\
 	16/gimp-wilber.png
 
-icons18_DATA = \
+icons18_images = \
 	18/gimp-color-picker-black.png		\
 	18/gimp-color-picker-gray.png		\
 	18/gimp-color-picker-white.png
 
-icons20_DATA = \
+icons20_images = \
 	20/gimp-linked.png			\
 	20/gimp-visible.png
 
-icons22_DATA = \
+icons22_images = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
 	22/gimp-gegl.png			\
@@ -324,7 +553,7 @@ icons22_DATA = \
 	22/gimp-tool-zoom.png			\
 	22/gimp-wilber.png
 
-icons24_DATA = \
+icons24_images = \
 	24/gimp-center.png			\
 	24/gimp-channel-alpha.png		\
 	24/gimp-channel-blue.png		\
@@ -389,7 +618,7 @@ icons24_DATA = \
 	24/gimp-warning.png			\
 	24/gimp-web.png
 
-icons32_DATA = \
+icons32_images = \
 	32/gimp-channel-alpha.png	\
 	32/gimp-channel-blue.png	\
 	32/gimp-channel-gray.png	\
@@ -405,7 +634,7 @@ icons32_DATA = \
 	32/gimp-user-manual.png		\
 	32/gimp-wilber.png
 
-icons48_DATA = \
+icons48_images = \
 	48/gimp-channel-alpha.png		\
 	48/gimp-channel-blue.png		\
 	48/gimp-channel-gray.png		\
@@ -456,7 +685,7 @@ icons48_DATA = \
 	48/gimp-text-layer.png			\
 	48/gimp-wilber.png
 
-icons64_DATA = \
+icons64_images = \
 	64/gimp-error.png		\
 	64/gimp-frame.png		\
 	64/gimp-info.png		\
@@ -468,18 +697,84 @@ icons64_DATA = \
 	64/gimp-wilber.png		\
 	64/gimp-wilber-outline.png
 
-icons96_DATA = \
+icons96_images = \
 	96/gimp-wilber.png		\
 	96/gimp-wilber-outline.png
 
-icons128_DATA = \
+icons128_images = \
 	128/gimp-wilber.png		\
 	128/gimp-wilber-outline.png
 
-icons192_DATA = \
+icons192_images = \
 	192/gimp-wilber.png		\
 	192/gimp-wilber-outline.png
 
-icons256_DATA = \
+icons256_images = \
 	256/gimp-wilber.png		\
 	256/gimp-wilber-outline.png
+
+if ENABLE_VECTOR_ICONS
+icons64dir  = $(iconsdir)/64x64/apps
+scalabledir = $(iconsdir)/scalable/apps
+
+icons64_DATA = \
+	64/gimp-frame.png		\
+	64/gimp-texture.png
+
+scalable_DATA = \
+	$(scalable_images)
+
+else
+icons12dir  = $(iconsdir)/12x12/apps
+icons16dir  = $(iconsdir)/16x16/apps
+icons18dir  = $(iconsdir)/18x18/apps
+icons20dir  = $(iconsdir)/20x20/apps
+icons22dir  = $(iconsdir)/22x22/apps
+icons24dir  = $(iconsdir)/24x24/apps
+icons32dir  = $(iconsdir)/32x32/apps
+icons48dir  = $(iconsdir)/48x48/apps
+icons64dir  = $(iconsdir)/64x64/apps
+icons96dir  = $(iconsdir)/96x96/apps
+icons128dir = $(iconsdir)/128x128/apps
+icons192dir = $(iconsdir)/192x192/apps
+icons256dir = $(iconsdir)/256x256/apps
+
+icons12_DATA = \
+	$(icons12_images)
+
+icons16_DATA = \
+	$(icons16_images)
+
+icons18_DATA = \
+	$(icons18_images)
+
+icons20_DATA = \
+	$(icons20_images)
+
+icons22_DATA = \
+	$(icons22_images)
+
+icons24_DATA = \
+	$(icons24_images)
+
+icons32_DATA = \
+	$(icons32_images)
+
+icons48_DATA = \
+	$(icons48_images)
+
+icons64_DATA = \
+	$(icons64_images)
+
+icons96_DATA = \
+	$(icons96_images)
+
+icons128_DATA = \
+	$(icons128_images)
+
+icons192_DATA = \
+	$(icons192_images)
+
+icons256_DATA = \
+	$(icons256_images)
+endif
