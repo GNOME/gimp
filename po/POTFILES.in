@@ -131,6 +131,7 @@ app/core/gimpdrawable-offset.c
 app/core/gimpdrawable-stroke.c
 app/core/gimpdrawable-transform.c
 app/core/gimpdynamicsoutput.c
+app/core/gimpfilloptions.c
 app/core/gimpgradient-load.c
 app/core/gimpgradient-save.c
 app/core/gimpgrid.c
@@ -178,7 +179,9 @@ app/core/gimpsymmetry-mirror.c
 app/core/gimpsymmetry-tiling.c
 app/core/gimptagcache.c
 app/core/gimptemplate.c
+app/core/gimptoolinfo.c
 app/core/gimptooloptions.c
+app/core/gimptoolpreset.c
 app/core/gimptoolpreset-load.c
 app/core/gimpunit.c
 
@@ -272,11 +275,16 @@ app/gui/themes.c
 app/menus/menus.c
 
 app/paint/gimpairbrush.c
+app/paint/gimpairbrushoptions.c
 app/paint/gimpbrushcore.c
 app/paint/gimpclone.c
+app/paint/gimpcloneoptions.c
 app/paint/gimpconvolve.c
+app/paint/gimpconvolveoptions.c
 app/paint/gimpdodgeburn.c
+app/paint/gimpdodgeburnoptions.c
 app/paint/gimperaser.c
+app/paint/gimperaseroptions.c
 app/paint/gimpheal.c
 app/paint/gimpink.c
 app/paint/gimpinkoptions.c
@@ -289,7 +297,9 @@ app/paint/gimppaintoptions.c
 app/paint/gimppencil.c
 app/paint/gimpperspectiveclone.c
 app/paint/gimpsmudge.c
+app/paint/gimpsmudgeoptions.c
 app/paint/gimpsourcecore.c
+app/paint/gimpsourceoptions.c
 app/paint/paint-enums.c
 
 app/pdb/channel-cmds.c
@@ -385,6 +395,7 @@ app/tools/gimphandletransformtool.c
 app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
+app/tools/gimpimagemapoptions.c
 app/tools/gimpimagemaptool.c
 app/tools/gimpimagemaptool-settings.c
 app/tools/gimpinkoptions-gui.c
@@ -461,12 +472,14 @@ app/widgets/gimpcolorselectorpalette.c
 app/widgets/gimpcontainergridview.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollereditor.c
+app/widgets/gimpcontrollerinfo.c
 app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerlist.c
 app/widgets/gimpcontrollermouse.c
 app/widgets/gimpcontrollerwheel.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdeviceeditor.c
+app/widgets/gimpdeviceinfo.c
 app/widgets/gimpdeviceinfoeditor.c
 app/widgets/gimpdevices.c
 app/widgets/gimpdevicestatus.c
