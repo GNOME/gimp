@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-13 07:12+0000\n"
-"PO-Revision-Date: 2016-02-13 16:53+0100\n"
+"POT-Creation-Date: 2016-02-13 16:20+0000\n"
+"PO-Revision-Date: 2016-02-13 17:40+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -5696,7 +5696,7 @@ msgstr "Obnoviť nastavenia filtrov"
 #: ../app/actions/plug-in-commands.c:185
 msgid "Do you really want to reset all filters to default values?"
 msgstr ""
-"Skutočne chcete obnoviť nastavenia všetkých filtrov na štandardné hodnoty?"
+"Skutočne chcete obnoviť nastavenia všetkých filtrov na predvolené hodnoty?"
 
 # názov ponuky
 #: ../app/actions/quick-mask-actions.c:43
@@ -8050,7 +8050,7 @@ msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"Keď je povolené, ponuka je štandardne viditeľná. Toto môže byť zmenené "
+"Keď je povolené, ponuka je predvolene viditeľná. Toto môže byť zmenené "
 "pomocou príkazu „Zobrazenie->Zobraziť ponuku“."
 
 # tooltip
@@ -8059,7 +8059,7 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Keď je povolené, pravítka sú štandardne viditeľné. Toto môže byť zmenené "
+"Keď je povolené, pravítka sú predvolene viditeľné. Toto môže byť zmenené "
 "pomocou príkazu „Zobrazenie->Zobraziť pravítka“."
 
 # tooltip
@@ -8068,7 +8068,7 @@ msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Keď je povolené, posuvníky sú štandardne viditeľné. Toto môže byť zmenené "
+"Keď je povolené, posuvníky sú predvolene viditeľné. Toto môže byť zmenené "
 "pomocou príkazu „Zobrazenie->Zobraziť posuvníky“."
 
 # tooltip
@@ -8077,7 +8077,7 @@ msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"Keď je povolené, stavový riadok bude štandardne viditeľný. Toto môže byť "
+"Keď je povolené, stavový riadok bude predvolene viditeľný. Toto môže byť "
 "zmenené pomocou príkazu „Zobrazenie->Zobraziť stavovú lištu“."
 
 # tooltip
@@ -8086,7 +8086,7 @@ msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"Keď je povolené, výber je štandardne viditeľný. Toto môže byť zmenené "
+"Keď je povolené, výber je predvolene viditeľný. Toto môže byť zmenené "
 "pomocou „Zobrazenie->Zobraziť výber“."
 
 # tooltip
@@ -8095,7 +8095,7 @@ msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"Keď je povolené, ohraničenie vrstvy je štandardne viditeľné. Toto môže byť "
+"Keď je povolené, ohraničenie vrstvy je predvolene viditeľné. Toto môže byť "
 "zmenené pomocou „Zobrazenie->Zobraziť ohraničenie vrstvy“."
 
 # tooltip
@@ -8104,7 +8104,7 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Keď je povolené, vodidlá sú štandardne viditeľné. Toto môže byť zmenené "
+"Keď je povolené, vodidlá sú predvolene viditeľné. Toto môže byť zmenené "
 "pomocou „Zobrazenie->Zobraziť vodidlá“."
 
 # tooltip
@@ -8113,7 +8113,7 @@ msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Keď je povolené, mriežka je štandardne viditeľná. Toto môže byť zmenené "
+"Keď je povolené, mriežka je predvolene viditeľná. Toto môže byť zmenené "
 "pomocou „Zobraziť->Zobraziť mriežku“."
 
 # tooltip
@@ -8122,7 +8122,7 @@ msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Keď je povolené, pravítka sú štandardne viditeľné. Toto môže byť zmenené "
+"Keď je povolené, pravítka sú predvolene viditeľné. Toto môže byť zmenené "
 "pomocou príkazu „Zobraziť->Zobraziť bodové vzorky“."
 
 # tooltip
@@ -11060,7 +11060,7 @@ msgid ""
 "default value."
 msgstr ""
 "Čítanie súboru palety „%s“: Neplatný počet stĺpcov na riadku %d. Použije sa "
-"štandardná hodnota."
+"predvolená hodnota."
 
 #: ../app/core/gimppalette-load.c:147
 #, c-format
@@ -11571,7 +11571,7 @@ msgstr "Informácie o programe GIMP"
 
 #: ../app/dialogs/about-dialog.c:126
 msgid "Visit the GIMP website"
-msgstr "Navštíviť webstránku GIMP"
+msgstr "Navštíviť webovú stránku programu GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
@@ -12489,7 +12489,7 @@ msgstr "Obnoviť všetky pôvodné nastavenia"
 #: ../app/dialogs/preferences-dialog.c:286
 msgid "Do you really want to reset all preferences to default values?"
 msgstr ""
-"Skutočne chcete obnoviť všetky nastavenia nástrojov na štandardné hodnoty?"
+"Skutočne chcete obnoviť všetky nastavenia nástrojov na predvolené hodnoty?"
 
 #: ../app/dialogs/preferences-dialog.c:356
 msgid "You will have to restart GIMP for the following changes to take effect:"
@@ -12500,7 +12500,7 @@ msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Klávesové skratky budú nastavené na štandardné hodnoty po nasledujúcom "
+"Klávesové skratky budú nastavené na predvolené hodnoty po nasledujúcom "
 "spustení programu GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:553
@@ -12516,7 +12516,7 @@ msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Nastavenia okien budú nastavené na štandardné hodnoty po nasledujúcom "
+"Nastavenia okien budú nastavené na predvolené hodnoty po nasledujúcom "
 "spustení programu GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:651
@@ -12524,7 +12524,7 @@ msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Nastavenia vstupných zariadení budú nastavené na štandardné hodnoty po "
+"Nastavenia vstupných zariadení budú nastavené na predvolené hodnoty po "
 "nasledujúcom spustení programu GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:693
@@ -12532,7 +12532,7 @@ msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Voľby nástrojov budú nastavené na štandardné hodnoty po nasledujúcom "
+"Voľby nástrojov budú nastavené na predvolené hodnoty po nasledujúcom "
 "spustení programu GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:1165
@@ -12821,11 +12821,11 @@ msgstr "_Teraz uložiť voľby nástrojov"
 
 #: ../app/dialogs/preferences-dialog.c:1635
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "_Obnoviť uložené voľby nástrojov na štandardné hodnoty"
+msgstr "_Obnoviť uložené voľby nástrojov na predvolené hodnoty"
 
 #: ../app/dialogs/preferences-dialog.c:1649
 msgid "Default _interpolation:"
-msgstr "Štandardná _interpolácia:"
+msgstr "Predvolená _interpolácia:"
 
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1656
@@ -12879,12 +12879,12 @@ msgstr "Farba rýchlej masky:"
 # notebook title
 #: ../app/dialogs/preferences-dialog.c:1740
 msgid "Default Image Grid"
-msgstr "Štandardná mriežka obrázka"
+msgstr "Predvolená mriežka obrázka"
 
 # notebook card
 #: ../app/dialogs/preferences-dialog.c:1741
 msgid "Default Grid"
-msgstr "Štandardná mriežka"
+msgstr "Predvolená mriežka"
 
 #: ../app/dialogs/preferences-dialog.c:1760
 msgid "User Interface"
@@ -12909,7 +12909,7 @@ msgstr "_Povoliť náhľad na vrstvy a kanály"
 
 #: ../app/dialogs/preferences-dialog.c:1785
 msgid "_Default layer & channel preview size:"
-msgstr "Štandardná veľkosť náhľadu na _vrstvy a kanály:"
+msgstr "Predvolená veľkosť náhľadu na _vrstvy a kanály:"
 
 #: ../app/dialogs/preferences-dialog.c:1788
 msgid "Na_vigation preview size:"
@@ -12938,7 +12938,7 @@ msgstr "_Teraz uložiť klávesové skratky"
 
 #: ../app/dialogs/preferences-dialog.c:1818
 msgid "_Reset Keyboard Shortcuts to Default Values"
-msgstr "O_bnoviť uložené klávesové skratky na štandardné hodnoty"
+msgstr "O_bnoviť uložené klávesové skratky na predvolené hodnoty"
 
 #: ../app/dialogs/preferences-dialog.c:1827
 msgid "Remove _All Keyboard Shortcuts"
@@ -13168,7 +13168,7 @@ msgstr "_Teraz uložiť pozície okien"
 # button
 #: ../app/dialogs/preferences-dialog.c:2359
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "_Zmeniť uložené pozície okien na štandardné hodnoty"
+msgstr "_Zmeniť uložené pozície okien na predvolené hodnoty"
 
 # notebook card
 #: ../app/dialogs/preferences-dialog.c:2374
@@ -13178,7 +13178,7 @@ msgstr "Okná obrázka"
 
 #: ../app/dialogs/preferences-dialog.c:2386
 msgid "Use \"_Dot for dot\" by default"
-msgstr "Štandardne použiť „_jedna k jednej“"
+msgstr "Predvolene použiť „_jedna k jednej“"
 
 #: ../app/dialogs/preferences-dialog.c:2392
 msgid "Marching _ants speed:"
@@ -13244,11 +13244,11 @@ msgstr "Vzhľad okna obrázka"
 
 #: ../app/dialogs/preferences-dialog.c:2461
 msgid "Default Appearance in Normal Mode"
-msgstr "Štandardný vzhľad v bežnom režime"
+msgstr "Predvolený vzhľad v bežnom režime"
 
 #: ../app/dialogs/preferences-dialog.c:2466
 msgid "Default Appearance in Fullscreen Mode"
-msgstr "Štandardný vzhľad v celoobrazovkovom režime"
+msgstr "Predvolený vzhľad v režime na celú obrazovku"
 
 #: ../app/dialogs/preferences-dialog.c:2475
 msgid "Image Title & Statusbar Format"
@@ -13264,7 +13264,7 @@ msgstr "Aktuálny formát"
 
 #: ../app/dialogs/preferences-dialog.c:2495
 msgid "Default format"
-msgstr "Štandardný formát"
+msgstr "Predvolený formát"
 
 #: ../app/dialogs/preferences-dialog.c:2496
 msgid "Show zoom percentage"
@@ -13347,7 +13347,7 @@ msgstr "_Teraz uložiť nastavenia vstupného zariadenia"
 # button
 #: ../app/dialogs/preferences-dialog.c:2657
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "Z_meniť uložené nastavenia vstupného zariadenia na štandardné hodnoty"
+msgstr "Z_meniť uložené nastavenia vstupného zariadenia na predvolené hodnoty"
 
 # notebook title
 #: ../app/dialogs/preferences-dialog.c:2672
@@ -15396,7 +15396,7 @@ msgstr ""
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"Rozlíšenie obrázka je mimo rozsah, namiesto neho sa použije štandardné "
+"Rozlíšenie obrázka je mimo rozsah, namiesto neho sa použije predvolené "
 "rozlíšenie."
 
 #: ../app/pdb/image-select-cmds.c:302 ../app/pdb/selection-tools-cmds.c:223
@@ -19366,7 +19366,7 @@ msgstr "Aktívne filtre"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:328
 msgid "Reset the selected filter to default values"
-msgstr "Nastaví zvolený filter na štandardné hodnoty"
+msgstr "Nastaví zvolený filter na predvolené hodnoty"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:530
 #, c-format
