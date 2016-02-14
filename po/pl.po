@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-07 12:17+0100\n"
-"PO-Revision-Date: 2016-02-07 12:18+0100\n"
+"POT-Creation-Date: 2016-02-14 17:14+0100\n"
+"PO-Revision-Date: 2016-02-14 17:15+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -814,6 +814,8 @@ msgid "_Fill opacity:"
 msgstr "_Krycie wypełnienia:"
 
 #: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:281
+#: ../app/operations/gimpcurvesconfig.c:104
+#: ../app/operations/gimplevelsconfig.c:105
 #: ../app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "Kanał"
@@ -3254,21 +3256,21 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Wyświetla jeszcze raz okno ostatnio używanego filtru"
 
-#: ../app/actions/filters-actions.c:813
+#: ../app/actions/filters-actions.c:814
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz „%s”"
 
-#: ../app/actions/filters-actions.c:814
+#: ../app/actions/filters-actions.c:815
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl ponownie „%s”"
 
-#: ../app/actions/filters-actions.c:852
+#: ../app/actions/filters-actions.c:853
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:854
+#: ../app/actions/filters-actions.c:855
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -4777,7 +4779,7 @@ msgstr "Nowa warstwa"
 msgid "Create a New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:364
+#: ../app/actions/layers-commands.c:364 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Widoczny"
 
@@ -6101,7 +6103,7 @@ msgstr "Nowa ścieżka"
 msgid "New Path Options"
 msgstr "Opcje nowej ścieżki"
 
-#: ../app/actions/vectors-commands.c:395 ../app/tools/gimpvectoroptions.c:200
+#: ../app/actions/vectors-commands.c:395 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:1977
 msgid "Stroke Path"
 msgstr "Rysuj wzdłuż ścieżki"
@@ -8434,8 +8436,9 @@ msgid "Parasites"
 msgstr "Dane pasożytnicze"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:1105 ../app/dialogs/preferences-dialog.c:2750
-#: ../app/tools/gimppaintoptions-gui.c:217
+#: ../app/core/gimp.c:1105 ../app/core/gimpcontext.c:711
+#: ../app/dialogs/preferences-dialog.c:2750
+#: ../app/tools/gimppaintoptions-gui.c:214
 msgid "Dynamics"
 msgstr "Dynamika"
 
@@ -8676,7 +8679,7 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: nie można dekodować "
 "wersji formatu abr %d."
 
-#: ../app/core/gimpbrush.c:149 ../app/paint/gimppaintoptions.c:208
+#: ../app/core/gimpbrush.c:149 ../app/paint/gimppaintoptions.c:219
 msgid "Brush Spacing"
 msgstr "Odstępy pędzla"
 
@@ -8712,15 +8715,15 @@ msgstr "Promień pędzla"
 msgid "Brush Spikes"
 msgstr "Ostrza pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:152 ../app/paint/gimppaintoptions.c:213
+#: ../app/core/gimpbrushgenerated.c:152 ../app/paint/gimppaintoptions.c:226
 msgid "Brush Hardness"
 msgstr "Twardość pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:160 ../app/paint/gimppaintoptions.c:198
+#: ../app/core/gimpbrushgenerated.c:160 ../app/paint/gimppaintoptions.c:205
 msgid "Brush Aspect Ratio"
 msgstr "Proporcje pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:167 ../app/paint/gimppaintoptions.c:203
+#: ../app/core/gimpbrushgenerated.c:167 ../app/paint/gimppaintoptions.c:212
 msgid "Brush Angle"
 msgstr "Nachylenie pędzla"
 
@@ -8913,14 +8916,68 @@ msgstr "Ustawienie krycia kanału"
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
-#: ../app/core/gimpcontext.c:683 ../app/tools/gimppaintoptions-gui.c:131
+#: ../app/core/gimpcontext.c:673
+msgid "Foreground"
+msgstr "Kolor pierwszoplanowy"
+
+#: ../app/core/gimpcontext.c:674 ../app/core/gimpgrid.c:94
+msgid "Foreground color"
+msgstr "Kolor pierwszoplanowy"
+
+#: ../app/core/gimpcontext.c:680 ../app/core/gimpimage-new.c:140
+msgid "Background"
+msgstr "Tło"
+
+#: ../app/core/gimpcontext.c:681 ../app/core/gimpgrid.c:101
+msgid "Background color"
+msgstr "Kolor tła"
+
+#: ../app/core/gimpcontext.c:687 ../app/core/gimpcontext.c:688
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:287
 msgid "Opacity"
 msgstr "Krycie"
 
-#: ../app/core/gimpcontext.c:691
+#: ../app/core/gimpcontext.c:696 ../app/core/gimpcontext.c:697
 msgid "Paint Mode"
 msgstr "Tryb rysowania"
+
+#: ../app/core/gimpcontext.c:704 ../app/core/gimpcontext.c:705
+#: ../app/tools/gimpmybrushoptions-gui.c:54
+#: ../app/tools/gimppaintoptions-gui.c:155
+msgid "Brush"
+msgstr "Pędzel"
+
+#: ../app/core/gimpcontext.c:712
+msgid "Paint dynamics"
+msgstr "Dynamika pędzla"
+
+#: ../app/core/gimpcontext.c:718 ../app/core/gimpcontext.c:719
+#: ../app/tools/gimpmybrushtool.c:73
+msgid "MyPaint Brush"
+msgstr "Pędzel programu MyPaint"
+
+#: ../app/core/gimpcontext.c:725 ../app/core/gimpcontext.c:726
+msgid "Pattern"
+msgstr "Deseń"
+
+#: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
+#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:362
+msgid "Gradient"
+msgstr "Gradient"
+
+#: ../app/core/gimpcontext.c:739 ../app/core/gimpcontext.c:740
+#: ../app/widgets/gimpcolorselectorpalette.c:59
+msgid "Palette"
+msgstr "Paleta"
+
+#: ../app/core/gimpcontext.c:746 ../app/core/gimpcontext.c:747
+msgid "Tool Preset"
+msgstr "Ustawienia narzędzia"
+
+#: ../app/core/gimpcontext.c:753 ../app/core/gimpcontext.c:754
+#: ../app/tools/gimptextoptions.c:548
+msgid "Font"
+msgstr "Czcionka"
 
 #: ../app/core/gimpdata.c:537 ../app/core/gimpdata.c:545
 #, c-format
@@ -9036,7 +9093,7 @@ msgid "Computing alpha of unknown pixels"
 msgstr "Obliczanie alfy nieznanych pikseli"
 
 #: ../app/core/gimpdrawable-levels.c:72
-#: ../app/tools/gimpforegroundselectoptions.c:324
+#: ../app/tools/gimpforegroundselectoptions.c:116
 #: ../app/tools/gimplevelstool.c:137
 msgid "Levels"
 msgstr "Poziomy"
@@ -9083,6 +9140,15 @@ msgstr "Przekształcenie"
 msgid "Output type"
 msgstr "Typ wyjścia"
 
+#: ../app/core/gimpfilloptions.c:89
+msgid "Style"
+msgstr "Styl"
+
+#: ../app/core/gimpfilloptions.c:97 ../app/pdb/gimppdbcontext.c:99
+#: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:150
+msgid "Antialiasing"
+msgstr "Wygładzanie"
+
 #: ../app/core/gimpgradient-load.c:72
 #, c-format
 msgid "Not a GIMP gradient file."
@@ -9124,36 +9190,64 @@ msgid "Writing POV file '%s' failed: %s"
 msgstr "Zapisanie pliku POV „%s” się nie powiodło: %s"
 
 #: ../app/core/gimpgrid.c:86
+msgid "Line style"
+msgstr "Styl linii"
+
+#: ../app/core/gimpgrid.c:87
 msgid "Line style used for the grid."
 msgstr "Styl linii siatki."
 
-#: ../app/core/gimpgrid.c:92
+#: ../app/core/gimpgrid.c:95
 msgid "The foreground color of the grid."
 msgstr "Kolor pierwszoplanowy siatki."
 
-#: ../app/core/gimpgrid.c:97
+#: ../app/core/gimpgrid.c:102
 msgid ""
 "The background color of the grid; only used in double dashed line style."
 msgstr ""
 "Kolor tła siatki, używany tylko przy wyświetlaniu linii podwójnie "
 "kreskowanej."
 
-#: ../app/core/gimpgrid.c:103
+#: ../app/core/gimpgrid.c:109
+msgid "Spacing X"
+msgstr "Odstępy na osi X"
+
+#: ../app/core/gimpgrid.c:110
 msgid "Horizontal spacing of grid lines."
 msgstr "Poziome odstępy pomiędzy liniami siatki."
 
-#: ../app/core/gimpgrid.c:108
+#: ../app/core/gimpgrid.c:116
+msgid "Spacing Y"
+msgstr "Odstępy na osi Y"
+
+#: ../app/core/gimpgrid.c:117
 msgid "Vertical spacing of grid lines."
 msgstr "Pionowe odstępy pomiędzy liniami siatki."
 
-#: ../app/core/gimpgrid.c:117
+#: ../app/core/gimpgrid.c:123
+msgid "Spacing unit"
+msgstr "Jednostka odstępów"
+
+#: ../app/core/gimpgrid.c:130
+msgid "Offset X"
+msgstr "Przesunięcie na osi X"
+
+#: ../app/core/gimpgrid.c:131
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
 msgstr "Poziome przesunięcie pierwszej linii siatki; może być liczbą ujemną."
 
-#: ../app/core/gimpgrid.c:124
+#: ../app/core/gimpgrid.c:139
+msgid "Offset Y"
+msgstr "Przesunięcie na osi Y"
+
+#: ../app/core/gimpgrid.c:140
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Pionowe przesunięcie pierwszej linii siatki, może być liczbą ujemną."
+
+#: ../app/core/gimpgrid.c:148
+msgid "Offset unit"
+msgstr "Jednostka przesunięcia"
 
 #: ../app/core/gimpgrouplayer.c:228
 msgid "Layer Group"
@@ -9522,10 +9616,6 @@ msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są co "
 "najmniej dwie."
-
-#: ../app/core/gimpimage-new.c:140
-msgid "Background"
-msgstr "Tło"
 
 #: ../app/core/gimpimage-quick-mask.c:87
 msgctxt "undo-type"
@@ -10013,7 +10103,32 @@ msgstr "Oderwanie zaznaczenia"
 msgid "Floated Layer"
 msgstr "Oderwana warstwa"
 
-#: ../app/core/gimpstrokeoptions.c:182
+#: ../app/core/gimpstrokeoptions.c:156
+msgid "Method"
+msgstr "Metoda"
+
+#: ../app/core/gimpstrokeoptions.c:164
+msgid "Line width"
+msgstr "Szerokość linii"
+
+#: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:141
+#: ../app/tools/gimptextoptions.c:137
+msgid "Unit"
+msgstr "Jednostka"
+
+#: ../app/core/gimpstrokeoptions.c:178
+msgid "Cap style"
+msgstr "Wygląd trzonka"
+
+#: ../app/core/gimpstrokeoptions.c:185
+msgid "Join style"
+msgstr "Wygląd grzbietu"
+
+#: ../app/core/gimpstrokeoptions.c:192
+msgid "Miter limit"
+msgstr "Ograniczenie zaostrzenia"
+
+#: ../app/core/gimpstrokeoptions.c:193
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -10022,6 +10137,14 @@ msgstr ""
 "większy dystans niż wynosi ograniczenie zaostrzenia * szerokość linii z "
 "właściwego punktu połączenia."
 
+#: ../app/core/gimpstrokeoptions.c:202
+msgid "Dash offset"
+msgstr "Odstęp kreski"
+
+#: ../app/core/gimpstrokeoptions.c:224
+msgid "Emulate brush dynamics"
+msgstr "Emulowanie dynamiki pędzla"
+
 #. no undo (or redo) steps available
 #: ../app/core/gimpsymmetry.c:132 ../app/widgets/gimpimagepropview.c:399
 #: ../app/widgets/gimpsymmetryeditor.c:166
@@ -10029,6 +10152,10 @@ msgid "None"
 msgstr "Brak"
 
 #: ../app/core/gimpsymmetry.c:145
+msgid "Active"
+msgstr "Aktywne"
+
+#: ../app/core/gimpsymmetry.c:146
 msgid "Activate symmetry painting"
 msgstr "Uruchamia malowanie symetryczne"
 
@@ -10036,24 +10163,23 @@ msgstr "Uruchamia malowanie symetryczne"
 msgid "Mandala"
 msgstr "Mandala"
 
-#: ../app/core/gimpsymmetry-mandala.c:118
+#: ../app/core/gimpsymmetry-mandala.c:119
 msgid "Center abscisse"
 msgstr "Wyśrodkowana odcięta"
 
-#: ../app/core/gimpsymmetry-mandala.c:123
+#: ../app/core/gimpsymmetry-mandala.c:127
 msgid "Center ordinate"
 msgstr "Wyśrodkowana rzędna"
 
-#: ../app/core/gimpsymmetry-mandala.c:129
-#: ../app/core/gimpsymmetry-mandala.c:130
+#: ../app/core/gimpsymmetry-mandala.c:135
 msgid "Number of points"
 msgstr "Liczba punktów"
 
-#: ../app/core/gimpsymmetry-mandala.c:138 ../app/core/gimpsymmetry-mirror.c:149
+#: ../app/core/gimpsymmetry-mandala.c:143 ../app/core/gimpsymmetry-mirror.c:145
 msgid "Disable brush transform"
 msgstr "Wyłączenie przekształcenia pędzla"
 
-#: ../app/core/gimpsymmetry-mandala.c:139 ../app/core/gimpsymmetry-mirror.c:150
+#: ../app/core/gimpsymmetry-mandala.c:144 ../app/core/gimpsymmetry-mirror.c:146
 msgid "Disable brush transformation (faster)"
 msgstr "Wyłączenie przekształcenia pędzla (szybsze)"
 
@@ -10061,25 +10187,25 @@ msgstr "Wyłączenie przekształcenia pędzla (szybsze)"
 msgid "Mirror"
 msgstr "Lustrzane odbicie"
 
-#: ../app/core/gimpsymmetry-mirror.c:122
+#: ../app/core/gimpsymmetry-mirror.c:121
 msgid "Horizontal Mirror"
 msgstr "Poziome lustrzane odbicie"
 
-#: ../app/core/gimpsymmetry-mirror.c:131
+#: ../app/core/gimpsymmetry-mirror.c:129
 msgid "Vertical Mirror"
 msgstr "Pionowe lustrzane odbicie"
 
-#: ../app/core/gimpsymmetry-mirror.c:140
+#: ../app/core/gimpsymmetry-mirror.c:137
 msgid "Central Symmetry"
 msgstr "Wyśrodkowana symetria"
 
-#: ../app/core/gimpsymmetry-mirror.c:159
-msgid "Horizontal guide position"
-msgstr "Położenie poziomej prowadnicy"
+#: ../app/core/gimpsymmetry-mirror.c:153
+msgid "Horizontal axis position"
+msgstr "Położenie poziomej osi"
 
-#: ../app/core/gimpsymmetry-mirror.c:164
-msgid "Vertical guide position"
-msgstr "Położenie pionowej prowadnicy"
+#: ../app/core/gimpsymmetry-mirror.c:161
+msgid "Vertical axis position"
+msgstr "Położenie pionowej osi"
 
 #: ../app/core/gimpsymmetry-tiling.c:100
 msgid "Tiling"
@@ -10093,35 +10219,35 @@ msgstr "Odstępy na osi X"
 msgid "Interval on the X axis (pixels)"
 msgstr "Odstępy na osi X (w pikselach)"
 
-#: ../app/core/gimpsymmetry-tiling.c:115
+#: ../app/core/gimpsymmetry-tiling.c:114
 msgid "Interval Y"
 msgstr "Odstępy na osi Y"
 
-#: ../app/core/gimpsymmetry-tiling.c:116
+#: ../app/core/gimpsymmetry-tiling.c:115
 msgid "Interval on the Y axis (pixels)"
 msgstr "Odstępy na osi Y (w pikselach)"
 
-#: ../app/core/gimpsymmetry-tiling.c:124
+#: ../app/core/gimpsymmetry-tiling.c:122
 msgid "Shift"
 msgstr "Przesunięcie"
 
-#: ../app/core/gimpsymmetry-tiling.c:125
+#: ../app/core/gimpsymmetry-tiling.c:123
 msgid "X-shift between lines (pixels)"
 msgstr "Przesunięcie na osi X między liniami (w pikselach)"
 
-#: ../app/core/gimpsymmetry-tiling.c:133
+#: ../app/core/gimpsymmetry-tiling.c:130
 msgid "Max strokes X"
 msgstr "Maksymalna liczba krzywych na osi X"
 
-#: ../app/core/gimpsymmetry-tiling.c:134
+#: ../app/core/gimpsymmetry-tiling.c:131
 msgid "Maximum number of strokes on the X axis"
 msgstr "Maksymalna liczba krzywych na osi X"
 
-#: ../app/core/gimpsymmetry-tiling.c:142
+#: ../app/core/gimpsymmetry-tiling.c:138
 msgid "Max strokes Y"
 msgstr "Maksymalna liczba krzywych na osi Y"
 
-#: ../app/core/gimpsymmetry-tiling.c:143
+#: ../app/core/gimpsymmetry-tiling.c:139
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Maksymalna liczba krzywych na osi Y"
 
@@ -10130,19 +10256,90 @@ msgstr "Maksymalna liczba krzywych na osi Y"
 msgid "Error writing '%s': %s\n"
 msgstr "Błąd podczas zapisywania „%s”: %s\n"
 
-#: ../app/core/gimptemplate.c:135
+#: ../app/core/gimptemplate.c:125 ../app/widgets/gimpgrideditor.c:195
+#: ../app/widgets/gimpgrideditor.c:227
+msgid "Width"
+msgstr "Szerokość"
+
+#: ../app/core/gimptemplate.c:133 ../app/widgets/gimpgrideditor.c:197
+#: ../app/widgets/gimpgrideditor.c:229
+msgid "Height"
+msgstr "Wysokość"
+
+#: ../app/core/gimptemplate.c:142
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 "Jednostka używana do wyświetlania współrzędnych na obrazie, jeśli nie jest "
 "ustawiony tryb „punkt do punktu”."
 
-#: ../app/core/gimptemplate.c:142
+#: ../app/core/gimptemplate.c:149 ../app/core/gimptemplate.c:157
+msgid "Resolution X"
+msgstr "Rozdzielczość na osi X"
+
+#: ../app/core/gimptemplate.c:150
 msgid "The horizontal image resolution."
 msgstr "Pozioma rozdzielczość obrazu."
 
-#: ../app/core/gimptemplate.c:148
+#: ../app/core/gimptemplate.c:158
 msgid "The vertical image resolution."
 msgstr "Pionowa rozdzielczość obrazu."
+
+#: ../app/core/gimptemplate.c:165
+msgid "Resolution unit"
+msgstr "Jednostka rozdzielczości"
+
+#. serialized name
+#: ../app/core/gimptemplate.c:172
+msgid "Image type"
+msgstr "Typ obrazu"
+
+#: ../app/core/gimptemplate.c:179
+msgid "Precision"
+msgstr "Dokładność"
+
+#: ../app/core/gimptemplate.c:186 ../app/tools/gimpbucketfilloptions.c:93
+msgid "Fill type"
+msgstr "Typ wypełnienia"
+
+#: ../app/core/gimptemplate.c:193 ../app/dialogs/image-properties-dialog.c:94
+msgid "Comment"
+msgstr "Komentarz"
+
+#: ../app/core/gimptemplate.c:200
+msgid "Filename"
+msgstr "Nazwa pliku"
+
+#: ../app/core/gimptoolpreset.c:147
+msgid "Apply stored FG/BG"
+msgstr "Zastosuj zachowane kolory"
+
+#: ../app/core/gimptoolpreset.c:154
+msgid "Apply stored brush"
+msgstr "Zastosuj zachowany pędzel"
+
+#: ../app/core/gimptoolpreset.c:161
+msgid "Apply stored dynamics"
+msgstr "Zastosuj zachowaną dynamikę"
+
+#: ../app/core/gimptoolpreset.c:168
+msgid "Apply stored MyPaint brush"
+msgstr "Zastosuj zachowany pędzel programu MyPaint"
+
+#: ../app/core/gimptoolpreset.c:175
+msgid "Apply stored pattern"
+msgstr "Zastosuj zachowany deseń"
+
+#: ../app/core/gimptoolpreset.c:182
+msgid "Apply stored palette"
+msgstr "Zastosuj zachowaną paletę"
+
+#: ../app/core/gimptoolpreset.c:189
+msgid "Apply stored gradient"
+msgstr "Zastosuj zachowany gradient"
+
+#: ../app/core/gimptoolpreset.c:196
+msgid "Apply stored font"
+msgstr "Zastosuj zachowaną czcionkę"
 
 #: ../app/core/gimptoolpreset-load.c:64
 msgid "Tool preset file is corrupt."
@@ -10383,7 +10580,7 @@ msgstr "K_onwertuj"
 
 #. dithering
 #: ../app/dialogs/convert-precision-dialog.c:185
-#: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:248
+#: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:119
 msgid "Dithering"
 msgstr "Dithering"
 
@@ -10407,7 +10604,8 @@ msgstr "_Kanały i maski:"
 
 #. gamma
 #: ../app/dialogs/convert-precision-dialog.c:272
-#: ../app/operations/gimplevelsconfig.c:111 ../app/tools/gimplevelstool.c:486
+#: ../app/operations/gimplevelsconfig.c:112
+#: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:486
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -10741,10 +10939,6 @@ msgstr "Właściwości"
 msgid "Color Profile"
 msgstr "Profil kolorów"
 
-#: ../app/dialogs/image-properties-dialog.c:94
-msgid "Comment"
-msgstr "Komentarz"
-
 #: ../app/dialogs/image-scale-dialog.c:111
 msgctxt "dialog-title"
 msgid "Scale Image"
@@ -10831,7 +11025,7 @@ msgstr "Typ wypełnienia warstwy"
 msgid "Set name from _text"
 msgstr "Ustawienie nazwy w oparciu o _tekst"
 
-#: ../app/dialogs/lebl-dialog.c:126
+#: ../app/dialogs/lebl-dialog.c:122
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>KONIEC GRY</b> na poziomie: %d!"
@@ -10840,41 +11034,41 @@ msgstr "<b>KONIEC GRY</b> na poziomie: %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../app/dialogs/lebl-dialog.c:133
+#: ../app/dialogs/lebl-dialog.c:129
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../app/dialogs/lebl-dialog.c:134
+#: ../app/dialogs/lebl-dialog.c:130
 msgid "Press 'q' to quit"
 msgstr "Naciśnięcie „q” zakończy"
 
-#: ../app/dialogs/lebl-dialog.c:139
+#: ../app/dialogs/lebl-dialog.c:135
 msgid "Paused"
 msgstr "Wstrzymano"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../app/dialogs/lebl-dialog.c:142 ../app/dialogs/lebl-dialog.c:153
+#: ../app/dialogs/lebl-dialog.c:138 ../app/dialogs/lebl-dialog.c:149
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../app/dialogs/lebl-dialog.c:143
+#: ../app/dialogs/lebl-dialog.c:139
 msgid "Press 'p' to unpause"
 msgstr "Naciśnięcie „p” wznowi"
 
-#: ../app/dialogs/lebl-dialog.c:149
+#: ../app/dialogs/lebl-dialog.c:145
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Poziom: %s,  życia: %s"
 
-#: ../app/dialogs/lebl-dialog.c:154
+#: ../app/dialogs/lebl-dialog.c:150
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
 "Strzałki w lewo/prawo poruszają, spacja strzela, „p” wstrzymuje, „q” zakończy"
 
-#: ../app/dialogs/lebl-dialog.c:808
+#: ../app/dialogs/lebl-dialog.c:804
 msgid "Killer GEGLs from Outer Space"
 msgstr "Zabójcze GEGL-e z kosmosu"
 
@@ -10932,7 +11126,8 @@ msgstr "Przesunięcie kanału"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:122 ../app/dialogs/offset-dialog.c:156
-#: ../app/dialogs/resize-dialog.c:200 ../app/tools/gimpblendoptions.c:241
+#: ../app/dialogs/resize-dialog.c:200 ../app/tools/gimpalignoptions.c:100
+#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpblendoptions.c:79
 #: ../app/widgets/gimpgrideditor.c:206
 msgid "Offset"
 msgstr "Przesunięcie"
@@ -11412,7 +11607,7 @@ msgstr "Interfejs użytkownika"
 msgid "Interface"
 msgstr "Interfejs"
 
-#: ../app/dialogs/preferences-dialog.c:1770
+#: ../app/dialogs/preferences-dialog.c:1770 ../app/tools/gimptextoptions.c:167
 msgid "Language"
 msgstr "Język"
 
@@ -12116,7 +12311,7 @@ msgstr "Pio_nowo:"
 msgid "Image Size"
 msgstr "Wymiary obrazu"
 
-#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:416
+#: ../app/dialogs/scale-dialog.c:176 ../app/paint/gimppaintoptions.c:402
 msgid "Quality"
 msgstr "Jakość"
 
@@ -12725,99 +12920,123 @@ msgstr ""
 "zniekształca obraz"
 
 #: ../app/operations/gimpbrightnesscontrastconfig.c:82
+#: ../app/operations/gimpbrightnesscontrastconfig.c:83
 msgid "Brightness"
 msgstr "Jasność"
 
-#: ../app/operations/gimpbrightnesscontrastconfig.c:87
+#: ../app/operations/gimpbrightnesscontrastconfig.c:88
+#: ../app/operations/gimpbrightnesscontrastconfig.c:89
 msgid "Contrast"
 msgstr "Kontrast"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:96
 #: ../app/operations/gimphuesaturationconfig.c:94
+#: ../app/paint/gimpdodgeburnoptions.c:78
+msgid "Range"
+msgstr "Zakres"
+
+#: ../app/operations/gimpcolorbalanceconfig.c:97
+#: ../app/operations/gimphuesaturationconfig.c:95
 msgid "The affected range"
 msgstr "Uwzględniany zakres"
 
-#: ../app/operations/gimpcolorbalanceconfig.c:102
+#: ../app/operations/gimpcolorbalanceconfig.c:103
+#: ../app/operations/gimpcolorbalanceconfig.c:104
 msgid "Cyan-Red"
 msgstr "Niebieskozielony-czerwony"
 
-#: ../app/operations/gimpcolorbalanceconfig.c:107
+#: ../app/operations/gimpcolorbalanceconfig.c:109
+#: ../app/operations/gimpcolorbalanceconfig.c:110
 msgid "Magenta-Green"
 msgstr "Purpurowy-zielony"
 
-#: ../app/operations/gimpcolorbalanceconfig.c:112
+#: ../app/operations/gimpcolorbalanceconfig.c:115
+#: ../app/operations/gimpcolorbalanceconfig.c:116
 msgid "Yellow-Blue"
 msgstr "Żółty-niebieski"
 
-#: ../app/operations/gimpcolorbalanceconfig.c:117
+#: ../app/operations/gimpcolorbalanceconfig.c:121
+#: ../app/operations/gimpcolorbalanceconfig.c:122
 msgid "Preserve Luminosity"
 msgstr "Zachowanie luminancji"
 
 #: ../app/operations/gimpcolorizeconfig.c:85
-#: ../app/operations/gimphuesaturationconfig.c:100
+#: ../app/operations/gimpcolorizeconfig.c:86
+#: ../app/operations/gimphuesaturationconfig.c:101
+#: ../app/operations/gimphuesaturationconfig.c:102
 msgid "Hue"
 msgstr "Barwa"
 
-#: ../app/operations/gimpcolorizeconfig.c:90
-#: ../app/operations/gimphuesaturationconfig.c:105
+#: ../app/operations/gimpcolorizeconfig.c:91
+#: ../app/operations/gimpcolorizeconfig.c:92
+#: ../app/operations/gimphuesaturationconfig.c:107
+#: ../app/operations/gimphuesaturationconfig.c:108
 msgid "Saturation"
 msgstr "Nasycenie"
 
-#: ../app/operations/gimpcolorizeconfig.c:95
-#: ../app/operations/gimphuesaturationconfig.c:110
+#: ../app/operations/gimpcolorizeconfig.c:97
+#: ../app/operations/gimpcolorizeconfig.c:98
+#: ../app/operations/gimphuesaturationconfig.c:113
+#: ../app/operations/gimphuesaturationconfig.c:114
 msgid "Lightness"
 msgstr "Jasność"
 
-#: ../app/operations/gimpcurvesconfig.c:104
-#: ../app/operations/gimplevelsconfig.c:105
+#: ../app/operations/gimpcurvesconfig.c:105
+#: ../app/operations/gimplevelsconfig.c:106
 msgid "The affected channel"
 msgstr "Uwzględniany kanał"
 
-#: ../app/operations/gimpcurvesconfig.c:110
+#: ../app/operations/gimpcurvesconfig.c:111
+#: ../app/operations/gimpcurvesconfig.c:112
 msgid "Curve"
 msgstr "Krzywa"
 
-#: ../app/operations/gimpcurvesconfig.c:524
+#: ../app/operations/gimpcurvesconfig.c:526
 msgid "not a GIMP Curves file"
 msgstr "nie jest plikiem krzywych programu GIMP"
 
-#: ../app/operations/gimpcurvesconfig.c:555
+#: ../app/operations/gimpcurvesconfig.c:557
 msgid "Parse error, didn't find 2 integers"
 msgstr "Błąd podczas przetwarzania, nie odnaleziono dwóch liczb całkowitych"
 
-#: ../app/operations/gimpcurvesconfig.c:671
+#: ../app/operations/gimpcurvesconfig.c:673
 msgid "Writing curves file failed: "
 msgstr "Zapisanie pliku krzywych się nie powiodło: "
 
-#: ../app/operations/gimphuesaturationconfig.c:115
+#: ../app/operations/gimphuesaturationconfig.c:119
+#: ../app/operations/gimphuesaturationconfig.c:120
 msgid "Overlap"
 msgstr "Pokrywanie"
 
-#: ../app/operations/gimplevelsconfig.c:116
+#: ../app/operations/gimplevelsconfig.c:118
+#: ../app/operations/gimplevelsconfig.c:119
 msgid "Low Input"
 msgstr "Niskie wejście"
 
-#: ../app/operations/gimplevelsconfig.c:121
+#: ../app/operations/gimplevelsconfig.c:124
+#: ../app/operations/gimplevelsconfig.c:125
 msgid "High Input"
 msgstr "Wysokie wejście"
 
-#: ../app/operations/gimplevelsconfig.c:126
+#: ../app/operations/gimplevelsconfig.c:130
+#: ../app/operations/gimplevelsconfig.c:131
 msgid "Low Output"
 msgstr "Niskie wyjście"
 
-#: ../app/operations/gimplevelsconfig.c:131
+#: ../app/operations/gimplevelsconfig.c:136
+#: ../app/operations/gimplevelsconfig.c:137
 msgid "High Output"
 msgstr "Wysokie wyjście"
 
-#: ../app/operations/gimplevelsconfig.c:769
+#: ../app/operations/gimplevelsconfig.c:775
 msgid "not a GIMP Levels file"
 msgstr "nie jest plikiem poziomów programu GIMP"
 
-#: ../app/operations/gimplevelsconfig.c:837
+#: ../app/operations/gimplevelsconfig.c:843
 msgid "parse error"
 msgstr "błąd podczas przetwarzania"
 
-#: ../app/operations/gimplevelsconfig.c:872
+#: ../app/operations/gimplevelsconfig.c:878
 msgid "Writing levels file failed: "
 msgstr "Zapisanie pliku poziomów się nie powiodło: "
 
@@ -12825,7 +13044,7 @@ msgstr "Zapisanie pliku poziomów się nie powiodło: "
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr "Oblicza zestaw współczynnika bufora dla narzędzia klatki programu GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:123
+#: ../app/operations/gimpoperationcagetransform.c:124
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
@@ -12833,11 +13052,11 @@ msgstr ""
 "Konwertuje zestaw współczynnika bufora na współczynnik bufora dla narzędzia "
 "klatki programu GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:145
+#: ../app/operations/gimpoperationcagetransform.c:146
 msgid "Fill with plain color"
 msgstr "Wypełnij zwykłym kolorem"
 
-#: ../app/operations/gimpoperationcagetransform.c:146
+#: ../app/operations/gimpoperationcagetransform.c:147
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Wypełnienie pierwotnego położenia klatki prostym kolorem"
 
@@ -12846,7 +13065,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Zamienia kolory na odcienie szarości"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
-#: ../app/tools/gimppaintoptions-gui.c:114
+#: ../app/tools/gimppaintoptions-gui.c:113 ../app/widgets/gimpdeviceinfo.c:132
 #: ../app/widgets/gimplayertreeview.c:270
 msgid "Mode"
 msgstr "Tryb"
@@ -12907,6 +13126,19 @@ msgstr "Uruchamianie programu GIMP"
 msgid "Airbrush"
 msgstr "Aerograf"
 
+#: ../app/paint/gimpairbrushoptions.c:70
+msgctxt "airbrush-tool"
+msgid "Rate"
+msgstr "Tempo"
+
+#: ../app/paint/gimpairbrushoptions.c:78
+msgid "Motion only"
+msgstr "Tylko ruch"
+
+#: ../app/paint/gimpairbrushoptions.c:85
+msgid "Flow"
+msgstr "Strumień"
+
 #: ../app/paint/gimpbrushcore.c:405
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
@@ -12923,17 +13155,42 @@ msgstr "Klonowanie"
 msgid "No patterns available for use with this tool."
 msgstr "Brak dostępnych deseni dla tego narzędzia."
 
+#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpcloneoptions-gui.c:70
+msgid "Source"
+msgstr "Źródło"
+
 #: ../app/paint/gimpconvolve.c:79
 msgid "Convolve"
 msgstr "Rozmywanie lub wyostrzanie"
+
+#: ../app/paint/gimpconvolveoptions.c:68
+msgid "Convolve Type"
+msgstr "Typ działania"
+
+#: ../app/paint/gimpconvolveoptions.c:76
+msgctxt "convolve-tool"
+msgid "Rate"
+msgstr "Tempo"
 
 #: ../app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
 msgstr "Rozjaśnianie/przyciemnianie"
 
+#: ../app/paint/gimpdodgeburnoptions.c:70
+msgid "Type"
+msgstr "Typ"
+
+#: ../app/paint/gimpdodgeburnoptions.c:86
+msgid "Exposure"
+msgstr "Ekspozycja"
+
 #: ../app/paint/gimperaser.c:63 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
 msgstr "Gumka"
+
+#: ../app/paint/gimperaseroptions.c:66
+msgid "Anti erase"
+msgstr "Cofanie wycierania"
 
 #: ../app/paint/gimpheal.c:106 ../app/tools/gimphealtool.c:53
 msgid "Heal"
@@ -12947,15 +13204,44 @@ msgstr "Łatanie nie jest możliwe na warstwach indeksowanych."
 msgid "Ink"
 msgstr "Stalówka"
 
-#: ../app/paint/gimpinkoptions.c:73
+#: ../app/paint/gimpinkoptions.c:74 ../app/paint/gimpinkoptions.c:87
+#: ../app/paint/gimppaintoptions.c:190 ../app/tools/gimpwarpoptions.c:91
+msgid "Size"
+msgstr "Rozmiar"
+
+#: ../app/paint/gimpinkoptions.c:75
 msgid "Ink Blob Size"
 msgstr "Rozmiar kropli tuszu"
 
-#: ../app/paint/gimpinkoptions.c:100
+#: ../app/paint/gimpinkoptions.c:80 ../app/paint/gimpinkoptions.c:119
+#: ../app/paint/gimppaintoptions.c:211 ../app/widgets/gimpbrusheditor.c:200
+msgid "Angle"
+msgstr "Kąt"
+
+#: ../app/paint/gimpinkoptions.c:93
+msgid "Speed"
+msgstr "Prędkość"
+
+#: ../app/paint/gimpinkoptions.c:99 ../app/widgets/gimpdynamicseditor.c:145
+#: ../app/widgets/gimpdynamicsoutputeditor.c:73
+msgid "Tilt"
+msgstr "Nachylenie"
+
+#. Blob shape widgets
+#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpblendoptions.c:85
+#: ../app/tools/gimpblendoptions.c:235 ../app/tools/gimpinkoptions-gui.c:103
+msgid "Shape"
+msgstr "Kształt"
+
+#: ../app/paint/gimpinkoptions.c:113 ../app/widgets/gimpbrusheditor.c:189
+msgid "Aspect ratio"
+msgstr "Proporcje"
+
+#: ../app/paint/gimpinkoptions.c:114
 msgid "Ink Blob Aspect Ratio"
 msgstr "Proporcje kropli tuszu"
 
-#: ../app/paint/gimpinkoptions.c:104
+#: ../app/paint/gimpinkoptions.c:120
 msgid "Ink Blob Angle"
 msgstr "Nachylenie kropli tuszu"
 
@@ -12967,17 +13253,24 @@ msgstr "MyBrush"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli programu MyPaint dla tego narzędzia."
 
-#: ../app/paint/gimpmybrushoptions.c:83 ../app/tools/gimpcoloroptions.c:158
-#: ../app/tools/gimpmybrushoptions-gui.c:67
-#: ../app/tools/gimprectangleselectoptions.c:164
-#: ../app/tools/gimpselectionoptions.c:278 ../app/widgets/gimpbrusheditor.c:156
+#: ../app/paint/gimpmybrushoptions.c:85 ../app/tools/gimpcoloroptions.c:84
+#: ../app/tools/gimprectangleselectoptions.c:92
+#: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
 msgid "Radius"
 msgstr "Promień"
 
-#: ../app/paint/gimpmybrushoptions.c:87
-#: ../app/tools/gimpmybrushoptions-gui.c:74
+#: ../app/paint/gimpmybrushoptions.c:92
 msgid "Base Opacity"
 msgstr "Krycie bazowe"
+
+#: ../app/paint/gimpmybrushoptions.c:99 ../app/paint/gimppaintoptions.c:225
+#: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
+msgid "Hardness"
+msgstr "Twardość"
+
+#: ../app/paint/gimpmybrushoptions.c:106
+msgid "Erase with this brush"
+msgstr "Wycieranie za pomocą tego pędzla"
 
 #: ../app/paint/gimppaintbrush.c:67 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
@@ -12987,75 +13280,153 @@ msgstr "Pędzel"
 msgid "Paint"
 msgstr "Rysowanie"
 
-#: ../app/paint/gimppaintoptions.c:188
+#: ../app/paint/gimppaintoptions.c:191
 msgid "Brush Size"
 msgstr "Rozmiar pędzla"
 
-#: ../app/paint/gimppaintoptions.c:193
+#: ../app/paint/gimppaintoptions.c:197
+msgid "Brush Zoom"
+msgstr "Powiększanie pędzla"
+
+#: ../app/paint/gimppaintoptions.c:198
 msgid "Link brush size with canvas zoom"
 msgstr "Wiąże rozmiar pędzla z powiększeniem płótna"
 
-#: ../app/paint/gimppaintoptions.c:218
+#: ../app/paint/gimppaintoptions.c:204
+msgid "Aspect Ratio"
+msgstr "Proporcje"
+
+#: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:211
+#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
+msgid "Spacing"
+msgstr "Odstępy"
+
+#: ../app/paint/gimppaintoptions.c:232
+msgid "Force"
+msgstr "Siła"
+
+#: ../app/paint/gimppaintoptions.c:233
 msgid "Brush Force"
 msgstr "Siła pędzla"
 
-#: ../app/paint/gimppaintoptions.c:224
+#: ../app/paint/gimppaintoptions.c:239
+msgid "Link Size"
+msgstr "Dowiązanie rozmiaru"
+
+#: ../app/paint/gimppaintoptions.c:240
 msgid "Link brush size to brush native"
 msgstr "Dowiązuje rozmiar do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:230
+#: ../app/paint/gimppaintoptions.c:246
+msgid "Link Aspect Ratio"
+msgstr "Dowiązanie proporcji"
+
+#: ../app/paint/gimppaintoptions.c:247
 msgid "Link brush aspect ratio to brush native"
 msgstr "Dowiązuje proporcje do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:236
+#: ../app/paint/gimppaintoptions.c:253
+msgid "Link Angle"
+msgstr "Dowiązanie kąta"
+
+#: ../app/paint/gimppaintoptions.c:254
 msgid "Link brush angle to brush native"
 msgstr "Dowiązuje kąt do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:242
+#: ../app/paint/gimppaintoptions.c:260
+msgid "Link Spacing"
+msgstr "Dowiązanie odstępu"
+
+#: ../app/paint/gimppaintoptions.c:261
 msgid "Link brush spacing to brush native"
 msgstr "Dowiązuje odstęp do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:248
+#: ../app/paint/gimppaintoptions.c:267
+msgid "Link Hardness"
+msgstr "Dowiązanie twardości"
+
+#: ../app/paint/gimppaintoptions.c:268
 msgid "Link brush hardness to brush native"
 msgstr "Dowiązuje twardość do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:253
+#: ../app/paint/gimppaintoptions.c:274
+msgid "Incremental"
+msgstr "Przyrostowe"
+
+#: ../app/paint/gimppaintoptions.c:275
 msgid "Every stamp has its own opacity"
 msgstr "Każda pieczątka ma swoje własne krycie"
 
-#: ../app/paint/gimppaintoptions.c:259
+#: ../app/paint/gimppaintoptions.c:282
+msgid "Hard edge"
+msgstr "Twarda krawędź"
+
+#: ../app/paint/gimppaintoptions.c:283
 msgid "Ignore fuzziness of the current brush"
 msgstr "Ignorowanie rozmycia bieżącego pędzla"
 
-#: ../app/paint/gimppaintoptions.c:264
+#: ../app/paint/gimppaintoptions.c:289
+msgid "Apply Jitter"
+msgstr "Drganie"
+
+#: ../app/paint/gimppaintoptions.c:290
 msgid "Scatter brush as you paint"
 msgstr "Rozpraszanie pędzla podczas rysowania"
 
-#: ../app/paint/gimppaintoptions.c:268
+#: ../app/paint/gimppaintoptions.c:295
+msgid "Amount"
+msgstr "Ilość"
+
+#: ../app/paint/gimppaintoptions.c:296
 msgid "Distance of scattering"
 msgstr "Dystans rozpraszania"
 
-#: ../app/paint/gimppaintoptions.c:278
+#: ../app/paint/gimppaintoptions.c:302
+msgid "Dynamics Options"
+msgstr "Opcje dynamiki"
+
+#: ../app/paint/gimppaintoptions.c:309
+msgid "Fade length"
+msgstr "Długość zanikania"
+
+#: ../app/paint/gimppaintoptions.c:310
 msgid "Distance over which strokes fade out"
 msgstr "Dystans, po którym krzywe zanikają"
 
-#: ../app/paint/gimppaintoptions.c:286
+#: ../app/paint/gimppaintoptions.c:320 ../app/widgets/gimpviewablebox.c:373
+msgid "Reverse"
+msgstr "Odwrócenie"
+
+#: ../app/paint/gimppaintoptions.c:321
 msgid "Reverse direction of fading"
 msgstr "Odwrócony kierunek zanikania"
 
-#: ../app/paint/gimppaintoptions.c:290
+#: ../app/paint/gimppaintoptions.c:326 ../app/tools/gimpblendoptions.c:92
+#: ../app/tools/gimpblendoptions.c:244 ../app/tools/gimppaintoptions-gui.c:345
+msgid "Repeat"
+msgstr "Okresowość"
+
+#: ../app/paint/gimppaintoptions.c:327
 msgid "How fade is repeated as you paint"
 msgstr "Jak zanikanie jest powtarzane podczas rysowania"
 
-#: ../app/paint/gimppaintoptions.c:349
+#: ../app/paint/gimppaintoptions.c:396
+msgid "Smooth stroke"
+msgstr "Płynne rysowanie"
+
+#: ../app/paint/gimppaintoptions.c:397
 msgid "Paint smoother strokes"
 msgstr "Rysowanie gładkich krzywych"
 
-#: ../app/paint/gimppaintoptions.c:353
+#: ../app/paint/gimppaintoptions.c:403
 msgid "Depth of smoothing"
 msgstr "Głębia wygładzania"
 
-#: ../app/paint/gimppaintoptions.c:357
+#: ../app/paint/gimppaintoptions.c:408
+msgid "Weight"
+msgstr "Waga"
+
+#: ../app/paint/gimppaintoptions.c:409
 msgid "Gravity of the pen"
 msgstr "Ciążenie ołówka"
 
@@ -13072,9 +13443,25 @@ msgstr "Klon perspektywy"
 msgid "Smudge"
 msgstr "Rozsmarowywanie"
 
+#: ../app/paint/gimpsmudgeoptions.c:66
+msgctxt "smudge-tool"
+msgid "Rate"
+msgstr "Tempo"
+
 #: ../app/paint/gimpsourcecore.c:238
 msgid "Set a source image first."
 msgstr "Należy najpierw wybrać źródło obrazu."
+
+#: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpcloneoptions-gui.c:102
+#: ../app/tools/gimphealtool.c:105
+msgid "Alignment"
+msgstr "Wyrównanie"
+
+#: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:127
+#: ../app/tools/gimpbucketfilloptions.c:113 ../app/tools/gimpcoloroptions.c:70
+#: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
+msgid "Sample merged"
+msgstr "Próbkowanie wszystkich warstw"
 
 #: ../app/paint/paint-enums.c:52
 msgctxt "perspective-clone-mode"
@@ -13179,8 +13566,8 @@ msgstr "Odwrócenie"
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:270 ../app/pdb/transform-tools-cmds.c:171
 #: ../app/tools/gimpperspectivetool.c:83
-#: ../app/tools/gimptransformoptions.c:501
-#: ../app/tools/gimptransformoptions.c:510
+#: ../app/tools/gimptransformoptions.c:524
+#: ../app/tools/gimptransformoptions.c:533
 msgid "Perspective"
 msgstr "Perspektywa"
 
@@ -13476,9 +13863,51 @@ msgstr ""
 "Procedura „%s” została wywołana z błędnym typem parametru #%d. Oczekiwano "
 "%s, otrzymano %s."
 
-#: ../app/pdb/gimppdbcontext.c:99 ../app/tools/gimpselectionoptions.c:79
+#: ../app/pdb/gimppdbcontext.c:100 ../app/tools/gimpselectionoptions.c:81
 msgid "Smooth edges"
 msgstr "Wygładza brzegi"
+
+#: ../app/pdb/gimppdbcontext.c:106
+msgid "Feather"
+msgstr "Zmiękcz"
+
+#: ../app/pdb/gimppdbcontext.c:113
+msgid "Feather radius X"
+msgstr "Promień zmiękczania na osi X"
+
+#: ../app/pdb/gimppdbcontext.c:120
+msgid "Feather radius Y"
+msgstr "Promień zmiękczania na osi Y"
+
+#: ../app/pdb/gimppdbcontext.c:134
+msgid "Sample criterion"
+msgstr "Kryterium próbki"
+
+#: ../app/pdb/gimppdbcontext.c:142
+msgid "Sample threshold"
+msgstr "Progowanie próbki"
+
+#: ../app/pdb/gimppdbcontext.c:149
+msgid "Sample transparent"
+msgstr "Przezroczysta próbka"
+
+#: ../app/pdb/gimppdbcontext.c:156 ../app/tools/gimpbucketfilloptions.c:119
+#: ../app/tools/gimpregionselectoptions.c:104
+msgid "Diagonal neighbors"
+msgstr "Sąsiedzi po przekątnej"
+
+#: ../app/pdb/gimppdbcontext.c:163 ../app/tools/gimptransformoptions.c:124
+#: ../app/tools/gimptransformoptions.c:441
+msgid "Interpolation"
+msgstr "Interpolacja"
+
+#: ../app/pdb/gimppdbcontext.c:171
+msgid "Transform direction"
+msgstr "Kierunek przekształcenia"
+
+#: ../app/pdb/gimppdbcontext.c:179
+msgid "Transform resize"
+msgstr "Zmiana rozmiaru przekształcenia"
 
 #: ../app/pdb/gimpprocedure.c:461 ../app/plug-in/gimppluginprocframe.c:213
 #, c-format
@@ -13983,9 +14412,9 @@ msgstr "Interpreter wtyczek"
 msgid "Plug-In Environment"
 msgstr "Środowisko wtyczek"
 
-#: ../app/plug-in/gimppluginmanager-call.c:172
-#: ../app/plug-in/gimppluginmanager-call.c:223
-#: ../app/plug-in/gimppluginmanager-call.c:321
+#: ../app/plug-in/gimppluginmanager-call.c:184
+#: ../app/plug-in/gimppluginmanager-call.c:235
+#: ../app/plug-in/gimppluginmanager-call.c:333
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Uruchomienie wtyczki „%s” się nie powiodło"
@@ -14098,19 +14527,19 @@ msgstr "Obrót warstwy tekstowej"
 msgid "Transform Text Layer"
 msgstr "Przekształcenie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:567
+#: ../app/text/gimptextlayer.c:570
 msgid "Discard Text Information"
 msgstr "Porzucenie informacji o tekście"
 
-#: ../app/text/gimptextlayer.c:635
+#: ../app/text/gimptextlayer.c:638
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkcje tekstowe nie są dostępne z powodu braku czcionek."
 
-#: ../app/text/gimptextlayer.c:694
+#: ../app/text/gimptextlayer.c:697
 msgid "Empty Text Layer"
 msgstr "Pusta warstwa tekstowa"
 
-#: ../app/text/gimptextlayer.c:744
+#: ../app/text/gimptextlayer.c:747
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -14168,100 +14597,87 @@ msgstr "Aerograf: rysuje ze zmiennym naciskiem"
 msgid "_Airbrush"
 msgstr "_Aerograf"
 
-#: ../app/tools/gimpairbrushtool.c:87
-msgid "Motion only"
-msgstr "Tylko ruch"
-
-#: ../app/tools/gimpairbrushtool.c:92
-msgctxt "airbrush-tool"
-msgid "Rate"
-msgstr "Tempo"
-
-#: ../app/tools/gimpairbrushtool.c:98
-msgid "Flow"
-msgstr "Strumień"
-
-#: ../app/tools/gimpalignoptions.c:92
-msgid "Reference image object a layer will be aligned on"
-msgstr "Odsyłacz do obiektu obrazu, do którego warstwa będzie wyrównywana"
-
-#: ../app/tools/gimpalignoptions.c:99
-msgid "Horizontal offset for distribution"
-msgstr "Poziome przesunięcie dla rozmieszczania"
-
-#: ../app/tools/gimpalignoptions.c:105
-msgid "Vertical offset for distribution"
-msgstr "Pionowe przesunięcie dla rozmieszczania"
-
-#: ../app/tools/gimpalignoptions.c:279 ../app/tools/gimpaligntool.c:124
-msgid "Align"
-msgstr "Wyrównanie"
-
-#: ../app/tools/gimpalignoptions.c:288
+#: ../app/tools/gimpalignoptions.c:92 ../app/tools/gimpalignoptions.c:291
 msgid "Relative to"
 msgstr "Odniesienie"
 
-#: ../app/tools/gimpalignoptions.c:299
+#: ../app/tools/gimpalignoptions.c:93
+msgid "Reference image object a layer will be aligned on"
+msgstr "Odsyłacz do obiektu obrazu, do którego warstwa będzie wyrównywana"
+
+#: ../app/tools/gimpalignoptions.c:101
+msgid "Horizontal offset for distribution"
+msgstr "Poziome przesunięcie dla rozmieszczania"
+
+#: ../app/tools/gimpalignoptions.c:108
+msgid "Vertical offset for distribution"
+msgstr "Pionowe przesunięcie dla rozmieszczania"
+
+#: ../app/tools/gimpalignoptions.c:282 ../app/tools/gimpaligntool.c:124
+msgid "Align"
+msgstr "Wyrównanie"
+
+#: ../app/tools/gimpalignoptions.c:302
 msgid "Align left edge of target"
 msgstr "Wyrównuje lewą krawędź"
 
-#: ../app/tools/gimpalignoptions.c:303
+#: ../app/tools/gimpalignoptions.c:306
 msgid "Align center of target"
 msgstr "Wyrównuje środek"
 
-#: ../app/tools/gimpalignoptions.c:307
+#: ../app/tools/gimpalignoptions.c:310
 msgid "Align right edge of target"
 msgstr "Wyrównuje prawą krawędź"
 
-#: ../app/tools/gimpalignoptions.c:315
+#: ../app/tools/gimpalignoptions.c:318
 msgid "Align top edge of target"
 msgstr "Wyrównuje górną krawędź"
 
-#: ../app/tools/gimpalignoptions.c:319
+#: ../app/tools/gimpalignoptions.c:322
 msgid "Align middle of target"
 msgstr "Wyrównuje środek"
 
-#: ../app/tools/gimpalignoptions.c:323
+#: ../app/tools/gimpalignoptions.c:326
 msgid "Align bottom of target"
 msgstr "Wyrównuje dolną krawędź"
 
-#: ../app/tools/gimpalignoptions.c:325
+#: ../app/tools/gimpalignoptions.c:328
 msgid "Distribute"
 msgstr "Rozmieszczenie"
 
-#: ../app/tools/gimpalignoptions.c:339
+#: ../app/tools/gimpalignoptions.c:342
 msgid "Distribute left edges of targets"
 msgstr "Rozmieszczenie lewych krawędzi"
 
-#: ../app/tools/gimpalignoptions.c:343
+#: ../app/tools/gimpalignoptions.c:346
 msgid "Distribute horizontal centers of targets"
 msgstr "Rozmieszczenie poziomych środków"
 
-#: ../app/tools/gimpalignoptions.c:347
+#: ../app/tools/gimpalignoptions.c:350
 msgid "Distribute right edges of targets"
 msgstr "Rozmieszczenie prawych krawędzi"
 
-#: ../app/tools/gimpalignoptions.c:351
+#: ../app/tools/gimpalignoptions.c:354
 msgid "Distribute targets evenly in the horizontal"
 msgstr "Rozmieszczenie równo w poziomie"
 
-#: ../app/tools/gimpalignoptions.c:359
+#: ../app/tools/gimpalignoptions.c:362
 msgid "Distribute top edges of targets"
 msgstr "Rozmieszczenie górnych krawędzi"
 
-#: ../app/tools/gimpalignoptions.c:363
+#: ../app/tools/gimpalignoptions.c:366
 msgid "Distribute vertical centers of targets"
 msgstr "Rozmieszczenie pionowych środków"
 
-#: ../app/tools/gimpalignoptions.c:367
+#: ../app/tools/gimpalignoptions.c:370
 msgid "Distribute bottoms of targets"
 msgstr "Rozmieszczenie dołów krawędzi"
 
-#: ../app/tools/gimpalignoptions.c:371
+#: ../app/tools/gimpalignoptions.c:374
 msgid "Distribute targets evenly in the vertical"
 msgstr "Rozmieszczenie równo w pionie"
 
-#: ../app/tools/gimpalignoptions.c:377
+#: ../app/tools/gimpalignoptions.c:380
 msgid "Offset:"
 msgstr "Przesunięcie:"
 
@@ -14303,29 +14719,16 @@ msgstr "Kliknięcie wybierze pierwszą ścieżkę"
 msgid "Click to add this path to the list"
 msgstr "Kliknięcie doda tę ścieżkę do listy"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:369
-msgid "Gradient"
-msgstr "Gradient"
-
-#. Blob shape widgets
-#: ../app/tools/gimpblendoptions.c:221 ../app/tools/gimpinkoptions-gui.c:108
-msgid "Shape"
-msgstr "Kształt"
-
-#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:351
-msgid "Repeat"
-msgstr "Okresowość"
-
-#: ../app/tools/gimpblendoptions.c:255
-msgid "Adaptive supersampling"
+#: ../app/tools/gimpblendoptions.c:100
+msgid "Adaptive Supersampling"
 msgstr "Nadpróbkowanie adaptywne"
 
-#: ../app/tools/gimpblendoptions.c:262
+#: ../app/tools/gimpblendoptions.c:106
 msgid "Max depth"
 msgstr "Maksymalna głębia"
 
-#: ../app/tools/gimpblendoptions.c:269 ../app/tools/gimpbucketfilloptions.c:315
-#: ../app/tools/gimpregionselectoptions.c:273
+#: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:126
+#: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
 msgstr "Progowanie"
@@ -14403,77 +14806,70 @@ msgstr "_Kontrast"
 msgid "Edit these Settings as Levels"
 msgstr "Modyfikuje te ustawienia jako poziomy"
 
-#: ../app/tools/gimpbucketfilloptions.c:98
+#: ../app/tools/gimpbucketfilloptions.c:100
+msgid "Fill selection"
+msgstr "Wypełnienie zaznaczenia"
+
+#: ../app/tools/gimpbucketfilloptions.c:101
 msgid "Which area will be filled"
 msgstr "Który obszar ma zostać wypełniony"
 
-#: ../app/tools/gimpbucketfilloptions.c:103
+#: ../app/tools/gimpbucketfilloptions.c:106
+msgid "Fill transparent areas"
+msgstr "Z obszarami przezroczystymi"
+
+#: ../app/tools/gimpbucketfilloptions.c:107
 msgid "Allow completely transparent regions to be filled"
 msgstr "Umożliwia wypełnianie całkowicie przezroczystych obszarów"
 
-#: ../app/tools/gimpbucketfilloptions.c:109
+#: ../app/tools/gimpbucketfilloptions.c:114
 msgid "Base filled area on all visible layers"
 msgstr ""
 "Powoduje ustalanie wypełnianego obszaru w oparciu o wszystkie widoczne "
 "warstwy"
 
-#: ../app/tools/gimpbucketfilloptions.c:115
-#: ../app/tools/gimpregionselectoptions.c:102
+#: ../app/tools/gimpbucketfilloptions.c:120
+#: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Traktuje piksele sąsiadujące po przekątnej jako połączone"
 
-#: ../app/tools/gimpbucketfilloptions.c:121
-#: ../app/tools/gimpregionselectoptions.c:109
+#: ../app/tools/gimpbucketfilloptions.c:127
+#: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "Maksymalna różnica kolorów"
 
-#: ../app/tools/gimpbucketfilloptions.c:126
+#: ../app/tools/gimpbucketfilloptions.c:132
+#: ../app/tools/gimpbucketfilloptions.c:325
+msgid "Fill by"
+msgstr "Wypełnienie"
+
+#: ../app/tools/gimpbucketfilloptions.c:133
 msgid "Criterion used for determining color similarity"
 msgstr "Kryterium używane do ustalania podobieństwa kolorów"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:253
+#: ../app/tools/gimpbucketfilloptions.c:260
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Typ wypełnienia  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:268
+#: ../app/tools/gimpbucketfilloptions.c:275
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Uwzględniany obszar  (%s)"
 
-#: ../app/tools/gimpbucketfilloptions.c:272
+#: ../app/tools/gimpbucketfilloptions.c:279
 msgid "Fill whole selection"
 msgstr "Całe zaznaczenie"
 
-#: ../app/tools/gimpbucketfilloptions.c:273
+#: ../app/tools/gimpbucketfilloptions.c:280
 msgid "Fill similar colors"
 msgstr "Podobne kolory"
 
-#: ../app/tools/gimpbucketfilloptions.c:282
+#: ../app/tools/gimpbucketfilloptions.c:289
 msgid "Finding Similar Colors"
 msgstr "Wyszukiwanie podobnych kolorów"
-
-#: ../app/tools/gimpbucketfilloptions.c:297
-msgid "Fill transparent areas"
-msgstr "Z obszarami przezroczystymi"
-
-#: ../app/tools/gimpbucketfilloptions.c:303
-#: ../app/tools/gimpcloneoptions-gui.c:80
-#: ../app/tools/gimpcolorpickeroptions.c:158 ../app/tools/gimphealtool.c:99
-#: ../app/tools/gimpregionselectoptions.c:258
-msgid "Sample merged"
-msgstr "Próbkowanie wszystkich warstw"
-
-#: ../app/tools/gimpbucketfilloptions.c:309
-#: ../app/tools/gimpregionselectoptions.c:266
-msgid "Diagonal neighbors"
-msgstr "Sąsiedzi po przekątnej"
-
-#: ../app/tools/gimpbucketfilloptions.c:322
-msgid "Fill by"
-msgstr "Wypełnienie"
 
 #: ../app/tools/gimpbucketfilltool.c:87
 msgid "Bucket Fill"
@@ -14504,7 +14900,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Zaznaczenie według koloru"
 
-#: ../app/tools/gimpcageoptions.c:144
+#: ../app/tools/gimpcageoptions.c:77
 msgid ""
 "Fill the original position\n"
 "of the cage with a color"
@@ -14536,14 +14932,6 @@ msgstr "Obliczanie współrzędnych klatki"
 #: ../app/tools/gimpcagetool.c:1230
 msgid "Cage transform"
 msgstr "Przekształcenie za pomocą klatki"
-
-#: ../app/tools/gimpcloneoptions-gui.c:70
-msgid "Source"
-msgstr "Źródło"
-
-#: ../app/tools/gimpcloneoptions-gui.c:103 ../app/tools/gimphealtool.c:105
-msgid "Alignment"
-msgstr "Wyrównanie"
 
 #: ../app/tools/gimpclonetool.c:57
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -14693,24 +15081,33 @@ msgstr "Kolor barwienia"
 msgid "Pick color from image"
 msgstr "Wybór koloru z obrazu"
 
-#: ../app/tools/gimpcoloroptions.c:78
-msgid "Color Picker Average Radius"
-msgstr "Promień średniego pobrania koloru"
-
-#: ../app/tools/gimpcoloroptions.c:164
+#: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:69
 msgid "Sample average"
 msgstr "Próbowanie średniej kolorów"
 
-#: ../app/tools/gimpcolorpickeroptions.c:69
+#: ../app/tools/gimpcoloroptions.c:85
+msgid "Color Picker Average Radius"
+msgstr "Promień średniego pobrania koloru"
+
+#: ../app/tools/gimpcolorpickeroptions.c:70
 msgid "Use accumulated color value from all composited visible layers"
 msgstr ""
 "Używa połączonych wartości kolorów wszystkich złożonych widocznych warstw"
 
-#: ../app/tools/gimpcolorpickeroptions.c:75
+#: ../app/tools/gimpcolorpickeroptions.c:77
+msgid "Pick Mode"
+msgstr "Tryb wybierania"
+
+#: ../app/tools/gimpcolorpickeroptions.c:78
 msgid "Choose what color picker will do"
 msgstr "Proszę wybrać tryb działania wyboru kolorów"
 
-#: ../app/tools/gimpcolorpickeroptions.c:81
+#: ../app/tools/gimpcolorpickeroptions.c:85
+#: ../app/tools/gimpmeasureoptions.c:68
+msgid "Use info window"
+msgstr "Okno informacyjne"
+
+#: ../app/tools/gimpcolorpickeroptions.c:86
 msgid ""
 "Open a floating dialog to view picked color values in various color models"
 msgstr ""
@@ -14718,13 +15115,13 @@ msgstr ""
 "modelach kolorów"
 
 #. the pick FG/BG frame
-#: ../app/tools/gimpcolorpickeroptions.c:163
+#: ../app/tools/gimpcolorpickeroptions.c:167
 #, c-format
 msgid "Pick Mode  (%s)"
 msgstr "Tryb wybierania  (%s)"
 
 #. the use_info_window toggle button
-#: ../app/tools/gimpcolorpickeroptions.c:172
+#: ../app/tools/gimpcolorpickeroptions.c:176
 #, c-format
 msgid "Use info window  (%s)"
 msgstr "Okno informacyjne  (%s)"
@@ -14821,33 +15218,34 @@ msgstr "%s rozmyje"
 msgid "Convolve Type  (%s)"
 msgstr "Typ działania  (%s)"
 
-#: ../app/tools/gimpconvolvetool.c:225
-msgctxt "convolve-tool"
-msgid "Rate"
-msgstr "Tempo"
-
 #: ../app/tools/gimpcropoptions.c:77
 #: ../app/tools/gimprectangleselectoptions.c:78
+#: ../app/tools/gimptextoptions.c:130
+msgid "Highlight"
+msgstr "Podświetlenie"
+
+#: ../app/tools/gimpcropoptions.c:78
+#: ../app/tools/gimprectangleselectoptions.c:79
 msgid "Dim everything outside selection"
 msgstr "Przyciemnienie wszystkiego poza zaznaczeniem"
 
-#: ../app/tools/gimpcropoptions.c:83
+#: ../app/tools/gimpcropoptions.c:84
+msgid "Current layer only"
+msgstr "Tylko bieżąca warstwa"
+
+#: ../app/tools/gimpcropoptions.c:85
 msgid "Crop only currently selected layer"
 msgstr "Kadrowanie tylko obecnie zaznaczonej warstwy"
 
-#: ../app/tools/gimpcropoptions.c:89
+#: ../app/tools/gimpcropoptions.c:91
+msgid "Allow growing"
+msgstr "Umożliwienie powiększania"
+
+#: ../app/tools/gimpcropoptions.c:92
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
 "Umożliwia zmianę rozmiaru płótna przez przeciągnięcie ramki kadrowania poza "
 "granice obrazu"
-
-#: ../app/tools/gimpcropoptions.c:165
-msgid "Current layer only"
-msgstr "Tylko bieżąca warstwa"
-
-#: ../app/tools/gimpcropoptions.c:171
-msgid "Allow growing"
-msgstr "Umożliwienie powiększania"
 
 #: ../app/tools/gimpcroptool.c:117
 msgid "Crop"
@@ -14981,15 +15379,6 @@ msgstr "%s rozjaśni"
 msgid "Type  (%s)"
 msgstr "Typ  (%s)"
 
-#. mode (highlights, midtones, or shadows)
-#: ../app/tools/gimpdodgeburntool.c:231
-msgid "Range"
-msgstr "Zakres"
-
-#: ../app/tools/gimpdodgeburntool.c:237
-msgid "Exposure"
-msgstr "Ekspozycja"
-
 #: ../app/tools/gimpeditselectiontool.c:419
 #: ../app/tools/gimpeditselectiontool.c:605
 msgid "Move: "
@@ -15040,15 +15429,19 @@ msgid "Anti erase  (%s)"
 msgstr "Cofanie wycierania  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:67
+msgid "Flip Type"
+msgstr "Typ odbicia"
+
+#: ../app/tools/gimpflipoptions.c:68
 msgid "Direction of flipping"
 msgstr "Kierunek odbicia"
 
-#: ../app/tools/gimpflipoptions.c:134
+#: ../app/tools/gimpflipoptions.c:135
 msgid "Affect:"
 msgstr "Element:"
 
 #. tool toggle
-#: ../app/tools/gimpflipoptions.c:143
+#: ../app/tools/gimpflipoptions.c:144
 #, c-format
 msgid "Flip Type  (%s)"
 msgstr "Typ odbicia  (%s)"
@@ -15085,6 +15478,10 @@ msgid "Flip"
 msgstr "Odbicie"
 
 #: ../app/tools/gimpforegroundselectoptions.c:84
+msgid "Draw Mode"
+msgstr "Tryb rysowania"
+
+#: ../app/tools/gimpforegroundselectoptions.c:85
 msgid ""
 "Paint over areas to mark color values for inclusion or exclusion from "
 "selection"
@@ -15092,57 +15489,55 @@ msgstr ""
 "Rysowanie ponad obszarami do oznaczenia wartości kolorów włączonych lub "
 "wyłączonych z zaznaczenia"
 
-#: ../app/tools/gimpforegroundselectoptions.c:92
-msgid "Size of the brush used for refinements"
-msgstr "Rozmiar użytego pędzla"
-
-#: ../app/tools/gimpforegroundselectoptions.c:98
-msgid "Color of selection preview mask"
-msgstr "Kolor maski podglądu zaznaczenia"
-
-#: ../app/tools/gimpforegroundselectoptions.c:105
-msgid "Matting engine to use"
-msgstr "Używany mechanizm mierzwienia"
-
-#: ../app/tools/gimpforegroundselectoptions.c:112
-msgid "Number of downsampled levels to use"
-msgstr "Liczba używanych zmniejszonych poziomów"
-
-#: ../app/tools/gimpforegroundselectoptions.c:118
-msgid "Number of levels to perform solving"
-msgstr "Liczba poziomów do wykonania rozwiązywania"
-
-#: ../app/tools/gimpforegroundselectoptions.c:124
-msgid "Number of iterations to perform"
-msgstr "Liczba wykonywanych iteracji"
-
-#: ../app/tools/gimpforegroundselectoptions.c:264
-msgid "Draw Mode"
-msgstr "Tryb rysowania"
-
-#: ../app/tools/gimpforegroundselectoptions.c:275
+#: ../app/tools/gimpforegroundselectoptions.c:93
 msgid "Stroke width"
 msgstr "Szerokość ścieżki"
 
-#: ../app/tools/gimpforegroundselectoptions.c:294
-msgid "Reset stroke width native size"
-msgstr "Przywraca szerokość do natywnej wartości ścieżki"
+#: ../app/tools/gimpforegroundselectoptions.c:94
+msgid "Size of the brush used for refinements"
+msgstr "Rozmiar użytego pędzla"
 
-#: ../app/tools/gimpforegroundselectoptions.c:299
+#: ../app/tools/gimpforegroundselectoptions.c:100
+#: ../app/tools/gimpforegroundselectoptions.c:305
 msgid "Preview color"
 msgstr "Podgląd koloru"
 
-#: ../app/tools/gimpforegroundselectoptions.c:310
+#: ../app/tools/gimpforegroundselectoptions.c:101
+msgid "Color of selection preview mask"
+msgstr "Kolor maski podglądu zaznaczenia"
+
+#: ../app/tools/gimpforegroundselectoptions.c:108
+#: ../app/tools/gimpforegroundselectoptions.c:316
 msgid "Engine"
 msgstr "Mechanizm"
 
-#: ../app/tools/gimpforegroundselectoptions.c:337
+#: ../app/tools/gimpforegroundselectoptions.c:109
+msgid "Matting engine to use"
+msgstr "Używany mechanizm mierzwienia"
+
+#: ../app/tools/gimpforegroundselectoptions.c:117
+msgid "Number of downsampled levels to use"
+msgstr "Liczba używanych zmniejszonych poziomów"
+
+#: ../app/tools/gimpforegroundselectoptions.c:123
 msgid "Active levels"
 msgstr "Aktywne poziomy"
 
-#: ../app/tools/gimpforegroundselectoptions.c:350
+#: ../app/tools/gimpforegroundselectoptions.c:124
+msgid "Number of levels to perform solving"
+msgstr "Liczba poziomów do wykonania rozwiązywania"
+
+#: ../app/tools/gimpforegroundselectoptions.c:130
 msgid "Iterations"
 msgstr "Iteracje"
+
+#: ../app/tools/gimpforegroundselectoptions.c:131
+msgid "Number of iterations to perform"
+msgstr "Liczba wykonywanych iteracji"
+
+#: ../app/tools/gimpforegroundselectoptions.c:300
+msgid "Reset stroke width native size"
+msgstr "Przywraca szerokość do natywnej wartości ścieżki"
 
 #: ../app/tools/gimpforegroundselecttool.c:187
 msgid "Foreground Select"
@@ -15271,19 +15666,19 @@ msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
 #: ../app/tools/gimphandletransformoptions.c:73
-#: ../app/tools/gimphandletransformoptions.c:142
+#: ../app/tools/gimphandletransformoptions.c:74
 msgid "Handle mode"
 msgstr "Tryb uchwytów"
 
-#: ../app/tools/gimphandletransformoptions.c:166
+#: ../app/tools/gimphandletransformoptions.c:167
 msgid "Add handles and transform the image"
 msgstr "Dodaje uchwyty i przekształca obraz"
 
-#: ../app/tools/gimphandletransformoptions.c:171
+#: ../app/tools/gimphandletransformoptions.c:172
 msgid "Move transform handles"
 msgstr "Przenosi uchwyty przekształcenia"
 
-#: ../app/tools/gimphandletransformoptions.c:176
+#: ../app/tools/gimphandletransformoptions.c:177
 msgid "Remove transform handles"
 msgstr "Usuwa uchwyty przekształcenia"
 
@@ -15337,7 +15732,7 @@ msgstr "%s ustawi nowe źródło usuwania nieregularności"
 msgid "Click to set a new heal source"
 msgstr "Kliknięcie ustawi nowe źródło usuwania nieregularności"
 
-#: ../app/tools/gimphistogramoptions.c:127
+#: ../app/tools/gimphistogramoptions.c:69
 msgid "Histogram Scale"
 msgstr "Skala histogramu"
 
@@ -15413,7 +15808,7 @@ msgstr "Dopasowanie zaznaczonego koloru"
 msgid "R_eset Color"
 msgstr "_Przywróć kolor"
 
-#: ../app/tools/gimpimagemaptool.c:429
+#: ../app/tools/gimpimagemapoptions.c:69
 msgid "_Preview"
 msgstr "_Podgląd"
 
@@ -15431,29 +15826,10 @@ msgstr "Zapisano ustawienia do „%s”"
 msgid "Adjustment"
 msgstr "Dopasowanie"
 
-#: ../app/tools/gimpinkoptions-gui.c:65 ../app/tools/gimpinkoptions-gui.c:88
-#: ../app/tools/gimppaintoptions-gui.c:167 ../app/tools/gimpwarpoptions.c:199
-msgid "Size"
-msgstr "Rozmiar"
-
-#: ../app/tools/gimpinkoptions-gui.c:72 ../app/tools/gimppaintoptions-gui.c:183
-#: ../app/widgets/gimpbrusheditor.c:200
-msgid "Angle"
-msgstr "Kąt"
-
 #. sens sliders
-#: ../app/tools/gimpinkoptions-gui.c:78
+#: ../app/tools/gimpinkoptions-gui.c:76
 msgid "Sensitivity"
 msgstr "Czułość"
-
-#: ../app/tools/gimpinkoptions-gui.c:95 ../app/widgets/gimpdynamicseditor.c:145
-#: ../app/widgets/gimpdynamicsoutputeditor.c:73
-msgid "Tilt"
-msgstr "Nachylenie"
-
-#: ../app/tools/gimpinkoptions-gui.c:102
-msgid "Speed"
-msgstr "Prędkość"
 
 #: ../app/tools/gimpinktool.c:62
 msgid "Ink Tool: Calligraphy-style painting"
@@ -15464,14 +15840,14 @@ msgid "In_k"
 msgstr "Sta_lówka"
 
 #: ../app/tools/gimpiscissorsoptions.c:69
+msgid "Interactive boundary"
+msgstr "Interaktywna granica"
+
+#: ../app/tools/gimpiscissorsoptions.c:70
 msgid "Display future selection segment as you drag a control node"
 msgstr ""
 "Wyświetlanie przyszłego segmentu zaznaczenia podczas przeciągania węzła "
 "kontrolnego"
-
-#: ../app/tools/gimpiscissorsoptions.c:128
-msgid "Interactive boundary"
-msgstr "Interaktywna granica"
 
 #: ../app/tools/gimpiscissorstool.c:274
 msgid "Scissors"
@@ -15600,19 +15976,25 @@ msgid "Use _old levels file format"
 msgstr "Użycie _starego formatu pliku poziomów"
 
 #: ../app/tools/gimpmagnifyoptions.c:83
-msgid "Resize image window to accommodate new zoom level"
-msgstr "Zmienianie rozmiaru okna obrazu podczas zmiany poziomu powiększenia"
-
-#: ../app/tools/gimpmagnifyoptions.c:90
-msgid "Direction of magnification"
-msgstr "Kierunek powiększania"
-
-#: ../app/tools/gimpmagnifyoptions.c:185
 msgid "Auto-resize window"
 msgstr "Dopasowanie rozmiaru okna"
 
+#: ../app/tools/gimpmagnifyoptions.c:84
+msgid "Resize image window to accommodate new zoom level"
+msgstr "Zmienianie rozmiaru okna obrazu podczas zmiany poziomu powiększenia"
+
+#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
+#: ../app/widgets/gimpdynamicseditor.c:144
+#: ../app/widgets/gimpdynamicsoutputeditor.c:72
+msgid "Direction"
+msgstr "Kierunek"
+
+#: ../app/tools/gimpmagnifyoptions.c:92
+msgid "Direction of magnification"
+msgstr "Kierunek powiększania"
+
 #. tool toggle
-#: ../app/tools/gimpmagnifyoptions.c:190
+#: ../app/tools/gimpmagnifyoptions.c:191
 #, c-format
 msgid "Direction  (%s)"
 msgstr "Kierunek  (%s)"
@@ -15629,13 +16011,9 @@ msgstr "Powiększenie: umożliwia dostosowanie powiększenia"
 msgid "_Zoom"
 msgstr "_Powiększenie"
 
-#: ../app/tools/gimpmeasureoptions.c:68
+#: ../app/tools/gimpmeasureoptions.c:69
 msgid "Open a floating dialog to view details about measurements"
 msgstr "Otwiera oddzielne okno wyświetlające informacje o pomiarach"
-
-#: ../app/tools/gimpmeasureoptions.c:126
-msgid "Use info window"
-msgstr "Okno informacyjne"
 
 #: ../app/tools/gimpmeasuretool.c:127
 msgid "Measure"
@@ -15691,31 +16069,31 @@ msgstr "Pomiary odległości i kątów"
 msgid "Distance:"
 msgstr "Odległość:"
 
-#: ../app/tools/gimpmoveoptions.c:140
+#: ../app/tools/gimpmoveoptions.c:143
 msgid "Pick a layer or guide"
 msgstr "Wybór warstwy lub prowadnicy"
 
-#: ../app/tools/gimpmoveoptions.c:141
+#: ../app/tools/gimpmoveoptions.c:144
 msgid "Move the active layer"
 msgstr "Przemieszczenie aktywnej warstwy"
 
-#: ../app/tools/gimpmoveoptions.c:145
+#: ../app/tools/gimpmoveoptions.c:148
 msgid "Move selection"
 msgstr "Przemieszczenie zaznaczenia"
 
-#: ../app/tools/gimpmoveoptions.c:149
+#: ../app/tools/gimpmoveoptions.c:152
 msgid "Pick a path"
 msgstr "Wybór ścieżki"
 
-#: ../app/tools/gimpmoveoptions.c:150
+#: ../app/tools/gimpmoveoptions.c:153
 msgid "Move the active path"
 msgstr "Przemieszczenie aktywnej ścieżki"
 
-#: ../app/tools/gimpmoveoptions.c:179
+#: ../app/tools/gimpmoveoptions.c:182
 msgid "Move:"
 msgstr "Przesunięcie:"
 
-#: ../app/tools/gimpmoveoptions.c:189
+#: ../app/tools/gimpmoveoptions.c:192
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Przełącznik narzędzia  (%s)"
@@ -15773,25 +16151,6 @@ msgstr "Anuluj prowadnicę"
 msgid "Add Guide: "
 msgstr "Dodanie prowadnicy: "
 
-#: ../app/tools/gimpmybrushoptions-gui.c:54
-#: ../app/tools/gimppaintoptions-gui.c:158
-msgid "Brush"
-msgstr "Pędzel"
-
-#: ../app/tools/gimpmybrushoptions-gui.c:61
-msgid "Erase with this brush"
-msgstr "Wycieranie za pomocą tego pędzla"
-
-#: ../app/tools/gimpmybrushoptions-gui.c:81
-#: ../app/tools/gimppaintoptions-gui.c:199 ../app/tools/gimpwarpoptions.c:206
-#: ../app/widgets/gimpbrusheditor.c:178
-msgid "Hardness"
-msgstr "Twardość"
-
-#: ../app/tools/gimpmybrushtool.c:73
-msgid "MyPaint Brush"
-msgstr "Pędzel programu MyPaint"
-
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
 msgstr ""
@@ -15801,43 +16160,46 @@ msgstr ""
 msgid "M_yPaint Brush"
 msgstr "Pędzel programu M_yPaint"
 
-#: ../app/tools/gimpnpointdeformationoptions.c:76
-#: ../app/tools/gimpnpointdeformationoptions.c:204
+#: ../app/tools/gimpnpointdeformationoptions.c:77
+#: ../app/tools/gimpnpointdeformationoptions.c:78
 msgid "Density"
 msgstr "Gęstość"
 
-#: ../app/tools/gimpnpointdeformationoptions.c:81
-#: ../app/tools/gimpnpointdeformationoptions.c:212
+#: ../app/tools/gimpnpointdeformationoptions.c:84
+#: ../app/tools/gimpnpointdeformationoptions.c:85
 msgid "Rigidity"
 msgstr "Sztywność"
 
-#: ../app/tools/gimpnpointdeformationoptions.c:86
-#: ../app/tools/gimpnpointdeformationoptions.c:219
+#: ../app/tools/gimpnpointdeformationoptions.c:91
+#: ../app/tools/gimpnpointdeformationoptions.c:92
 msgid "Deformation mode"
 msgstr "Metoda zniekształcania"
 
-#: ../app/tools/gimpnpointdeformationoptions.c:91
-#: ../app/tools/gimpnpointdeformationoptions.c:227
+#: ../app/tools/gimpnpointdeformationoptions.c:98
+#: ../app/tools/gimpnpointdeformationoptions.c:99
 msgid "Use weights"
 msgstr "Użycie wag"
 
-#: ../app/tools/gimpnpointdeformationoptions.c:97
-#: ../app/tools/gimpnpointdeformationoptions.c:233
+#: ../app/tools/gimpnpointdeformationoptions.c:105
+msgid "Control points influence"
+msgstr "Oddziaływanie punktów kontrolnych"
+
+#: ../app/tools/gimpnpointdeformationoptions.c:106
 msgid "Amount of control points' influence"
 msgstr "Oddziaływanie punktów kontrolnych"
 
-#: ../app/tools/gimpnpointdeformationoptions.c:102
-#: ../app/tools/gimpnpointdeformationoptions.c:197
+#: ../app/tools/gimpnpointdeformationoptions.c:112
+#: ../app/tools/gimpnpointdeformationoptions.c:113
 msgid "Show lattice"
 msgstr "Wyświetlanie kratki"
 
-#: ../app/tools/gimpnpointdeformationoptions.c:220
-#: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:495
-#: ../app/tools/gimptransformoptions.c:506
+#: ../app/tools/gimpnpointdeformationoptions.c:230
+#: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:518
+#: ../app/tools/gimptransformoptions.c:529
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/tools/gimpnpointdeformationoptions.c:221
+#: ../app/tools/gimpnpointdeformationoptions.c:231
 msgid "Rigid (Rubber)"
 msgstr "Sztywne (guma)"
 
@@ -15889,92 +16251,43 @@ msgstr "Pędzel: maluje płynnymi pociągnięciami pędzla"
 msgid "_Paintbrush"
 msgstr "_Pędzel"
 
-#: ../app/tools/gimppaintoptions-gui.c:168
+#: ../app/tools/gimppaintoptions-gui.c:165
 msgid "Reset size to brush's native size"
 msgstr "Przywraca rozmiar do natywnej wartości pędzla"
 
-#: ../app/tools/gimppaintoptions-gui.c:175
-msgid "Aspect Ratio"
-msgstr "Proporcje"
-
-#: ../app/tools/gimppaintoptions-gui.c:176
+#: ../app/tools/gimppaintoptions-gui.c:173
 msgid "Reset aspect ratio to brush's native"
 msgstr "Przywraca proporcje do natywnej wartości pędzla"
 
-#: ../app/tools/gimppaintoptions-gui.c:184
+#: ../app/tools/gimppaintoptions-gui.c:181
 msgid "Reset angle to zero"
 msgstr "Przywraca kąt na zero"
 
-#: ../app/tools/gimppaintoptions-gui.c:191 ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
-msgid "Spacing"
-msgstr "Odstępy"
-
-#: ../app/tools/gimppaintoptions-gui.c:192
+#: ../app/tools/gimppaintoptions-gui.c:189
 msgid "Reset spacing to brush's native spacing"
 msgstr "Przywraca odstęp do natywnej wartości pędzla"
 
-#: ../app/tools/gimppaintoptions-gui.c:200
+#: ../app/tools/gimppaintoptions-gui.c:197
 msgid "Reset hardness to default"
 msgstr "Przywraca domyślną twardość"
 
-#: ../app/tools/gimppaintoptions-gui.c:207
-msgid "Force"
-msgstr "Siła"
-
-#: ../app/tools/gimppaintoptions-gui.c:208
+#: ../app/tools/gimppaintoptions-gui.c:205
 msgid "Reset force to default"
 msgstr "Przywraca domyślną siłę"
 
-#: ../app/tools/gimppaintoptions-gui.c:254
+#: ../app/tools/gimppaintoptions-gui.c:250
 msgid "Lock brush size to zoom"
 msgstr "Blokuje rozmiar pędzla do powiększenia"
 
-#: ../app/tools/gimppaintoptions-gui.c:268
-msgid "Incremental"
-msgstr "Przyrostowe"
-
-#: ../app/tools/gimppaintoptions-gui.c:286
-msgid "Hard edge"
-msgstr "Twarda krawędź"
-
 #: ../app/tools/gimppaintoptions-gui.c:314
-msgid "Dynamics Options"
-msgstr "Opcje dynamiki"
-
-#: ../app/tools/gimppaintoptions-gui.c:320
 msgid "Fade Options"
 msgstr "Opcje zanikania"
 
-#: ../app/tools/gimppaintoptions-gui.c:334
-msgid "Fade length"
-msgstr "Długość zanikania"
-
-#: ../app/tools/gimppaintoptions-gui.c:357 ../app/widgets/gimpviewablebox.c:373
-msgid "Reverse"
-msgstr "Odwrócenie"
-
-#: ../app/tools/gimppaintoptions-gui.c:364
+#: ../app/tools/gimppaintoptions-gui.c:357
 msgid "Color Options"
 msgstr "Opcje kolorów"
 
-#: ../app/tools/gimppaintoptions-gui.c:390
-msgid "Amount"
-msgstr "Ilość"
-
-#: ../app/tools/gimppaintoptions-gui.c:394
-msgid "Apply Jitter"
-msgstr "Drganie"
-
-#: ../app/tools/gimppaintoptions-gui.c:412
-msgid "Smooth stroke"
-msgstr "Płynne rysowanie"
-
-#: ../app/tools/gimppaintoptions-gui.c:422
-msgid "Weight"
-msgstr "Waga"
-
-#: ../app/tools/gimppaintoptions-gui.c:590
+#: ../app/tools/gimppaintoptions-gui.c:576
 msgid "Link to brush default"
 msgstr "Wiąże z domyślną wartością pędzla"
 
@@ -16045,12 +16358,16 @@ msgid "Automatically shrink to the nearest rectangular shape in a layer"
 msgstr ""
 "Automatyczne zmniejszanie do najbliższego prostokątnego kształtu na warstwie"
 
+#: ../app/tools/gimprectangleoptions.c:113
+msgid "Shrink merged"
+msgstr "Wszystkie warstwy"
+
 #: ../app/tools/gimprectangleoptions.c:114
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Używa wszystkich widocznych warstw podczas zmniejszania zaznaczenia"
 
 #: ../app/tools/gimprectangleoptions.c:123
-#: ../app/tools/gimptransformoptions.c:142
+#: ../app/tools/gimptransformoptions.c:155
 msgid "Composition guides such as rule of thirds"
 msgstr "Prowadnice kompozycji, takie jak jedna trzecia"
 
@@ -16098,6 +16415,10 @@ msgstr "Własna stała wysokość"
 msgid "Unit of fixed width, height or size"
 msgstr "Jednostka stałej szerokości, wysokości lub rozmiaru"
 
+#: ../app/tools/gimprectangleoptions.c:317
+msgid "Expand from center"
+msgstr "Powiększanie od środka"
+
 #: ../app/tools/gimprectangleoptions.c:318
 msgid "Expand selection from center outwards"
 msgstr "Powiększenie zaznaczenia od środka"
@@ -16107,10 +16428,6 @@ msgstr "Powiększenie zaznaczenia od środka"
 msgid "Current"
 msgstr "Bieżący"
 
-#: ../app/tools/gimprectangleoptions.c:840
-msgid "Expand from center"
-msgstr "Powiększanie od środka"
-
 #: ../app/tools/gimprectangleoptions.c:871
 msgid "Fixed"
 msgstr "Stałe"
@@ -16119,34 +16436,26 @@ msgstr "Stałe"
 msgid "Position:"
 msgstr "Położenie:"
 
-#: ../app/tools/gimprectangleoptions.c:1022 ../app/tools/gimptextoptions.c:538
+#: ../app/tools/gimprectangleoptions.c:1022 ../app/tools/gimptextoptions.c:563
 msgid "Size:"
 msgstr "Rozmiar:"
 
-#: ../app/tools/gimprectangleoptions.c:1030
-msgid "Highlight"
-msgstr "Podświetlenie"
-
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1042
+#: ../app/tools/gimprectangleoptions.c:1041
 msgid "Auto Shrink"
 msgstr "Automatyczne zmniejszanie"
 
-#: ../app/tools/gimprectangleoptions.c:1052
-msgid "Shrink merged"
-msgstr "Wszystkie warstwy"
+#: ../app/tools/gimprectangleselectoptions.c:85
+msgid "Rounded corners"
+msgstr "Zaokrąglanie rogów"
 
-#: ../app/tools/gimprectangleselectoptions.c:84
+#: ../app/tools/gimprectangleselectoptions.c:86
 msgid "Round corners of selection"
 msgstr "Zaokrąglanie rogów zaznaczenia"
 
-#: ../app/tools/gimprectangleselectoptions.c:90
+#: ../app/tools/gimprectangleselectoptions.c:93
 msgid "Radius of rounding in pixels"
 msgstr "Promień zaokrąglania w pikselach"
-
-#: ../app/tools/gimprectangleselectoptions.c:168
-msgid "Rounded corners"
-msgstr "Zaokrąglanie rogów"
 
 #: ../app/tools/gimprectangleselecttool.c:166
 msgid "Rectangle Select"
@@ -16165,38 +16474,39 @@ msgid "Rectangle: "
 msgstr "Prostokąt: "
 
 #: ../app/tools/gimpregionselectoptions.c:89
-msgid "Allow completely transparent regions to be selected"
-msgstr "Umożliwia zaznaczanie całkowicie przezroczystych obszarów"
-
-#: ../app/tools/gimpregionselectoptions.c:96
-msgid "Base selection on all visible layers"
-msgstr "Bazowe zaznaczenie na wszystkich widocznych warstwach"
-
-#: ../app/tools/gimpregionselectoptions.c:115
-msgid "Selection criterion"
-msgstr "Kryterium zaznaczenia"
-
-#: ../app/tools/gimpregionselectoptions.c:123
-msgid "Draw the selected region's mask"
-msgstr "Rysuje maskę zaznaczonego obszaru"
-
-#: ../app/tools/gimpregionselectoptions.c:252
 msgid "Select transparent areas"
 msgstr "Z obszarami przezroczystymi"
 
-#: ../app/tools/gimpregionselectoptions.c:280
+#: ../app/tools/gimpregionselectoptions.c:90
+msgid "Allow completely transparent regions to be selected"
+msgstr "Umożliwia zaznaczanie całkowicie przezroczystych obszarów"
+
+#: ../app/tools/gimpregionselectoptions.c:98
+msgid "Base selection on all visible layers"
+msgstr "Bazowe zaznaczenie na wszystkich widocznych warstwach"
+
+#: ../app/tools/gimpregionselectoptions.c:119
+#: ../app/tools/gimpregionselectoptions.c:281
 msgid "Select by"
 msgstr "Zaznaczenie"
 
-#: ../app/tools/gimpregionselectoptions.c:286
-msgid "Draw Mask"
+#: ../app/tools/gimpregionselectoptions.c:120
+msgid "Selection criterion"
+msgstr "Kryterium zaznaczenia"
+
+#: ../app/tools/gimpregionselectoptions.c:127
+msgid "Draw mask"
 msgstr "Narysuj maskę"
+
+#: ../app/tools/gimpregionselectoptions.c:128
+msgid "Draw the selected region's mask"
+msgstr "Rysuje maskę zaznaczonego obszaru"
 
 #: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
 msgstr "Poruszenie myszą zmieni próg"
 
-#: ../app/tools/gimprotatetool.c:94 ../app/tools/gimptransformoptions.c:497
+#: ../app/tools/gimprotatetool.c:94 ../app/tools/gimptransformoptions.c:520
 msgid "Rotate"
 msgstr "Obrót"
 
@@ -16241,13 +16551,13 @@ msgid "Scale to %d x %d"
 msgstr "Przeskalowanie do %d×%d"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:72
+msgid "Refinement scale"
+msgstr "Skala ulepszenia"
+
+#: ../app/tools/gimpseamlesscloneoptions.c:73
 msgid ""
 "Maximal scale of refinement points to be used for the interpolation mesh"
 msgstr "Maksymalna skala punktów ulepszenia używanych dla siatki interpolacji"
-
-#: ../app/tools/gimpseamlesscloneoptions.c:130
-msgid "Refinement scale"
-msgstr "Skala ulepszenia"
 
 #: ../app/tools/gimpseamlessclonetool.c:190
 #: ../app/tools/gimpseamlessclonetool.c:763
@@ -16266,25 +16576,21 @@ msgstr "Klon _bezszwowy"
 msgid "Cloning the foreground object"
 msgstr "Klonowanie obiektu pierwszoplanowego"
 
-#: ../app/tools/gimpselectionoptions.c:85
+#: ../app/tools/gimpselectionoptions.c:87
+msgid "Feather edges"
+msgstr "Zmiękczanie krawędzi"
+
+#: ../app/tools/gimpselectionoptions.c:88
 msgid "Enable feathering of selection edges"
 msgstr "Zmiękczanie krawędzi zaznaczenia"
 
-#: ../app/tools/gimpselectionoptions.c:91
+#: ../app/tools/gimpselectionoptions.c:95
 msgid "Radius of feathering"
 msgstr "Promień zmiękczania"
 
-#: ../app/tools/gimpselectionoptions.c:218 ../app/widgets/gimpbrushselect.c:190
+#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Tryb:"
-
-#: ../app/tools/gimpselectionoptions.c:265 ../app/tools/gimptextoptions.c:551
-msgid "Antialiasing"
-msgstr "Wygładzanie"
-
-#: ../app/tools/gimpselectionoptions.c:282
-msgid "Feather edges"
-msgstr "Zmiękczanie krawędzi"
 
 #: ../app/tools/gimpselectiontool.c:255
 msgid "Click-Drag to replace the current selection"
@@ -16322,8 +16628,8 @@ msgstr "Kliknięcie i przeciągnięcie przesunie kopię zaznaczonych pikseli"
 msgid "Click to anchor the floating selection"
 msgstr "Kliknięcie zakotwiczy oderwane zaznaczenie"
 
-#: ../app/tools/gimpsheartool.c:87 ../app/tools/gimptransformoptions.c:499
-#: ../app/tools/gimptransformoptions.c:508
+#: ../app/tools/gimpsheartool.c:87 ../app/tools/gimptransformoptions.c:522
+#: ../app/tools/gimptransformoptions.c:531
 msgid "Shear"
 msgstr "Nachylenie"
 
@@ -16378,47 +16684,66 @@ msgstr "Kliknięcie rozsmaruje"
 msgid "Click to smudge the line"
 msgstr "Kliknięcie rozsmaruje linię"
 
-#: ../app/tools/gimpsmudgetool.c:92
-msgctxt "smudge-tool"
-msgid "Rate"
-msgstr "Tempo"
-
-#: ../app/tools/gimptextoptions.c:135
+#: ../app/tools/gimptextoptions.c:138
 msgid "Font size unit"
 msgstr "Jednostka rozmiaru czcionki"
 
-#: ../app/tools/gimptextoptions.c:140
+#: ../app/tools/gimptextoptions.c:143 ../app/tools/gimptextoptions.c:144
 msgid "Font size"
 msgstr "Rozmiar czcionki"
 
-#: ../app/tools/gimptextoptions.c:149
+#: ../app/tools/gimptextoptions.c:157
+msgid "Hinting"
+msgstr "Hinting"
+
+#: ../app/tools/gimptextoptions.c:158
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Hinting wpływa przy niewielkich rozmiarach znaków na kształt czcionki, tak "
 "aby przy rasteryzacji powstawała bitmapa lepszej jakości"
 
-#: ../app/tools/gimptextoptions.c:157
+#: ../app/tools/gimptextoptions.c:168
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Język tekstu może mieć wpływ na sposób jego wyświetlania."
 
-#: ../app/tools/gimptextoptions.c:168
+#: ../app/tools/gimptextoptions.c:182
+msgid "Justify"
+msgstr "Justowanie"
+
+#: ../app/tools/gimptextoptions.c:183
 msgid "Text alignment"
 msgstr "Wyrównanie tekstu"
 
-#: ../app/tools/gimptextoptions.c:174
+#: ../app/tools/gimptextoptions.c:190
+msgid "Indentation"
+msgstr "Wcięcie"
+
+#: ../app/tools/gimptextoptions.c:191
 msgid "Indentation of the first line"
 msgstr "Wcięcie pierwszego wiersza"
 
-#: ../app/tools/gimptextoptions.c:180
+#: ../app/tools/gimptextoptions.c:198
+msgid "Line spacing"
+msgstr "Odstęp między wierszami"
+
+#: ../app/tools/gimptextoptions.c:199
 msgid "Adjust line spacing"
 msgstr "Dopasowanie odstępu między wierszami"
 
-#: ../app/tools/gimptextoptions.c:186
+#: ../app/tools/gimptextoptions.c:206
+msgid "Letter spacing"
+msgstr "Odstęp między literami"
+
+#: ../app/tools/gimptextoptions.c:207
 msgid "Adjust letter spacing"
 msgstr "Dopasowanie odstępu między literami"
 
-#: ../app/tools/gimptextoptions.c:192
+#: ../app/tools/gimptextoptions.c:214
+msgid "Box"
+msgstr "Pole"
+
+#: ../app/tools/gimptextoptions.c:215
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -16426,39 +16751,35 @@ msgstr ""
 "Określa, czy tekst mieści się w prostokątnym kształcie, czy przesuwa się do "
 "nowego wiersza po naciśnięciu klawisza Enter"
 
-#: ../app/tools/gimptextoptions.c:200
-msgid "Use an external editor window for text entry"
-msgstr "Użycie zewnętrznego okna edytora do wprowadzania tekstu"
-
-#: ../app/tools/gimptextoptions.c:523
-msgid "Font"
-msgstr "Czcionka"
-
-#: ../app/tools/gimptextoptions.c:547
+#: ../app/tools/gimptextoptions.c:223
 msgid "Use editor"
 msgstr "Użycie edytora"
 
-#: ../app/tools/gimptextoptions.c:567
+#: ../app/tools/gimptextoptions.c:224
+msgid "Use an external editor window for text entry"
+msgstr "Użycie zewnętrznego okna edytora do wprowadzania tekstu"
+
+#: ../app/tools/gimptextoptions.c:592
 msgid "Hinting:"
 msgstr "Hinting:"
 
-#: ../app/tools/gimptextoptions.c:571
+#: ../app/tools/gimptextoptions.c:596
 msgid "Text Color"
 msgstr "Kolor tekstu"
 
-#: ../app/tools/gimptextoptions.c:576
+#: ../app/tools/gimptextoptions.c:601
 msgid "Color:"
 msgstr "Kolor:"
 
-#: ../app/tools/gimptextoptions.c:582
+#: ../app/tools/gimptextoptions.c:607
 msgid "Justify:"
 msgstr "Justowanie:"
 
-#: ../app/tools/gimptextoptions.c:605
+#: ../app/tools/gimptextoptions.c:630
 msgid "Box:"
 msgstr "Pole:"
 
-#: ../app/tools/gimptextoptions.c:622
+#: ../app/tools/gimptextoptions.c:647
 msgid "Language:"
 msgstr "Język:"
 
@@ -16539,152 +16860,144 @@ msgstr "Automatyczne dopasowanie optymalnego progu binaryzacji"
 msgid "Can't work on an empty image, add a layer first"
 msgstr "Nie można pracować na pustym obrazie, należy najpierw dodać warstwę"
 
-#: ../app/tools/gimptransformoptions.c:114
+#: ../app/tools/gimptransformoptions.c:117
 msgid "Direction of transformation"
 msgstr "Kierunek przekształcenia"
 
-#: ../app/tools/gimptransformoptions.c:120
+#: ../app/tools/gimptransformoptions.c:125
 msgid "Interpolation method"
 msgstr "Metoda interpolacji"
 
-#: ../app/tools/gimptransformoptions.c:126
-msgid "How to clip"
-msgstr "Jak przycinać"
-
 #: ../app/tools/gimptransformoptions.c:132
-msgid "Show a preview of the transformed image"
-msgstr "Wyświetlenie podglądu przekształcanego obrazu"
-
-#: ../app/tools/gimptransformoptions.c:137
-msgid "Opacity of the preview image"
-msgstr "Krycie obrazu podglądu"
-
-#: ../app/tools/gimptransformoptions.c:148
-msgid "Size of a grid cell for variable number of composition guides"
-msgstr "Rozmiar komórki siatki dla zmiennej liczby prowadnic kompozycji"
-
-#: ../app/tools/gimptransformoptions.c:401
-msgid "Transform:"
-msgstr "Przekształcenie:"
-
-#: ../app/tools/gimptransformoptions.c:410
-#: ../app/widgets/gimpdynamicseditor.c:144
-#: ../app/widgets/gimpdynamicsoutputeditor.c:72
-msgid "Direction"
-msgstr "Kierunek"
-
-#: ../app/tools/gimptransformoptions.c:416
-msgid "Interpolation"
-msgstr "Interpolacja"
-
-#: ../app/tools/gimptransformoptions.c:423
+#: ../app/tools/gimptransformoptions.c:448
 msgid "Clipping"
 msgstr "Przycinanie"
 
-#: ../app/tools/gimptransformoptions.c:430
-msgid "Image opacity"
-msgstr "Krycie obrazu"
+#: ../app/tools/gimptransformoptions.c:133
+msgid "How to clip"
+msgstr "Jak przycinać"
 
-#: ../app/tools/gimptransformoptions.c:434
+#: ../app/tools/gimptransformoptions.c:140
 msgid "Show image preview"
 msgstr "Podgląd obrazu"
 
-#: ../app/tools/gimptransformoptions.c:446
+#: ../app/tools/gimptransformoptions.c:141
+msgid "Show a preview of the transformed image"
+msgstr "Wyświetlenie podglądu przekształcanego obrazu"
+
+#: ../app/tools/gimptransformoptions.c:147
+msgid "Image opacity"
+msgstr "Krycie obrazu"
+
+#: ../app/tools/gimptransformoptions.c:148
+msgid "Opacity of the preview image"
+msgstr "Krycie obrazu podglądu"
+
+#: ../app/tools/gimptransformoptions.c:154
+#: ../app/tools/gimptransformoptions.c:469
 msgid "Guides"
 msgstr "Prowadnice"
 
-#: ../app/tools/gimptransformoptions.c:467
+#: ../app/tools/gimptransformoptions.c:163
+msgid "Size of a grid cell for variable number of composition guides"
+msgstr "Rozmiar komórki siatki dla zmiennej liczby prowadnic kompozycji"
+
+#: ../app/tools/gimptransformoptions.c:426
+msgid "Transform:"
+msgstr "Przekształcenie:"
+
+#: ../app/tools/gimptransformoptions.c:490
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 stopni (%s)"
 
-#: ../app/tools/gimptransformoptions.c:468
+#: ../app/tools/gimptransformoptions.c:491
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Ograniczenie kroków obrotu do 15 stopni"
 
-#: ../app/tools/gimptransformoptions.c:473
+#: ../app/tools/gimptransformoptions.c:496
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Stałe proporcje (%s)"
 
-#: ../app/tools/gimptransformoptions.c:474
+#: ../app/tools/gimptransformoptions.c:497
 msgid "Keep the original aspect ratio"
 msgstr "Utrzymywanie pierwotnych proporcji"
 
-#: ../app/tools/gimptransformoptions.c:492
+#: ../app/tools/gimptransformoptions.c:515
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Ograniczenie (%s)"
 
-#: ../app/tools/gimptransformoptions.c:493
+#: ../app/tools/gimptransformoptions.c:516
 msgid "Move"
 msgstr "Ruch"
 
-#: ../app/tools/gimptransformoptions.c:494
+#: ../app/tools/gimptransformoptions.c:517
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Ograniczenie ruchu do 45 stopni od środka (%s)"
 
-#: ../app/tools/gimptransformoptions.c:496
+#: ../app/tools/gimptransformoptions.c:519
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Utrzymywanie proporcji podczas skalowania (%s)"
 
-#: ../app/tools/gimptransformoptions.c:498
+#: ../app/tools/gimptransformoptions.c:521
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Ograniczenie obrotu do 15-stopniowych kroków (%s)"
 
-#: ../app/tools/gimptransformoptions.c:500
+#: ../app/tools/gimptransformoptions.c:523
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Nachylanie tylko wzdłuż kierunku krawędzi (%s)"
 
-#: ../app/tools/gimptransformoptions.c:502
+#: ../app/tools/gimptransformoptions.c:525
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Ograniczenie ruchu uchwytów perspektywy wzdłuż krawędzi i przekątnej (%s)"
 
-#: ../app/tools/gimptransformoptions.c:505
+#: ../app/tools/gimptransformoptions.c:528
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Od osi  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:507
+#: ../app/tools/gimptransformoptions.c:530
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Skalowanie od punktu osi (%s)"
 
-#: ../app/tools/gimptransformoptions.c:509
+#: ../app/tools/gimptransformoptions.c:532
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Nachylanie przeciwległej krawędzi o tą samą wartość (%s)"
 
-#: ../app/tools/gimptransformoptions.c:511
+#: ../app/tools/gimptransformoptions.c:534
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Utrzymywanie położenia osi podczas zmieniania perspektywy (%s)"
 
-#: ../app/tools/gimptransformoptions.c:514
+#: ../app/tools/gimptransformoptions.c:537
 msgid "Pivot"
 msgstr "Oś"
 
-#: ../app/tools/gimptransformoptions.c:515
+#: ../app/tools/gimptransformoptions.c:538
 #, c-format
 msgid "Snap (%s)"
 msgstr "Przyciąganie (%s)"
 
-#: ../app/tools/gimptransformoptions.c:516
+#: ../app/tools/gimptransformoptions.c:539
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Przyciąganie osi do rogów i środka (%s)"
 
-#: ../app/tools/gimptransformoptions.c:517
+#: ../app/tools/gimptransformoptions.c:540
 msgid "Lock"
 msgstr "Blokowanie"
 
-#: ../app/tools/gimptransformoptions.c:518
+#: ../app/tools/gimptransformoptions.c:541
 msgid "Lock pivot position to canvas"
 msgstr "Blokowanie położenia osi do płótna"
 
@@ -16747,19 +17060,19 @@ msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Uniwersalne przekształcenie"
 
-#: ../app/tools/gimpvectoroptions.c:77
-msgid "Restrict editing to polygons"
-msgstr "Wymuszenie ścieżki w kształcie wielokąta"
-
-#: ../app/tools/gimpvectoroptions.c:156
+#: ../app/tools/gimpvectoroptions.c:71
 msgid "Edit Mode"
 msgstr "Tryb modyfikacji"
 
-#: ../app/tools/gimpvectoroptions.c:175
+#: ../app/tools/gimpvectoroptions.c:79
 msgid "Polygonal"
 msgstr "Wielokąt"
 
-#: ../app/tools/gimpvectoroptions.c:179
+#: ../app/tools/gimpvectoroptions.c:80
+msgid "Restrict editing to polygons"
+msgstr "Wymuszenie ścieżki w kształcie wielokąta"
+
+#: ../app/tools/gimpvectoroptions.c:181
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -16773,7 +17086,7 @@ msgstr ""
 "%s  Przecięcie"
 
 #. Create a selection from the current path
-#: ../app/tools/gimpvectoroptions.c:190
+#: ../app/tools/gimpvectoroptions.c:192
 msgid "Selection from Path"
 msgstr "Zaznaczenie ze ścieżki"
 
@@ -16918,40 +17231,40 @@ msgstr "Usunięcie zaczepów"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Brak aktywnej warstwy lub kanału, na którym można rysować"
 
-#: ../app/tools/gimpwarpoptions.c:76
+#: ../app/tools/gimpwarpoptions.c:76 ../app/tools/gimpwarpoptions.c:77
 msgid "Behavior"
 msgstr "Zachowanie"
 
-#: ../app/tools/gimpwarpoptions.c:83
-msgid "Effect Strength"
-msgstr "Siła efektu"
-
-#: ../app/tools/gimpwarpoptions.c:89
-msgid "Effect Size"
-msgstr "Rozmiar efektu"
-
-#: ../app/tools/gimpwarpoptions.c:95
-msgid "Effect Hardness"
-msgstr "Twardość efektu"
-
-#: ../app/tools/gimpwarpoptions.c:101
-msgid "Number of animation frames"
-msgstr "Liczba klatek animacji"
-
-#: ../app/tools/gimpwarpoptions.c:192
+#: ../app/tools/gimpwarpoptions.c:84
 msgid "Strength"
 msgstr "Siła"
 
-#. the animation frame
-#: ../app/tools/gimpwarpoptions.c:213
-msgid "Animate"
-msgstr "Animuj"
+#: ../app/tools/gimpwarpoptions.c:85
+msgid "Effect Strength"
+msgstr "Siła efektu"
 
-#: ../app/tools/gimpwarpoptions.c:222
+#: ../app/tools/gimpwarpoptions.c:92
+msgid "Effect Size"
+msgstr "Rozmiar efektu"
+
+#: ../app/tools/gimpwarpoptions.c:99
+msgid "Effect Hardness"
+msgstr "Twardość efektu"
+
+#: ../app/tools/gimpwarpoptions.c:105
 msgid "Frames"
 msgstr "Klatki"
 
-#: ../app/tools/gimpwarpoptions.c:228
+#: ../app/tools/gimpwarpoptions.c:106
+msgid "Number of animation frames"
+msgstr "Liczba klatek animacji"
+
+#. the animation frame
+#: ../app/tools/gimpwarpoptions.c:215
+msgid "Animate"
+msgstr "Animuj"
+
+#: ../app/tools/gimpwarpoptions.c:229
 msgid "Create Animation"
 msgstr "Utwórz animację"
 
@@ -17315,10 +17628,6 @@ msgstr "Kształt:"
 msgid "Spikes"
 msgstr "Ostrza"
 
-#: ../app/widgets/gimpbrusheditor.c:189
-msgid "Aspect ratio"
-msgstr "Proporcje"
-
 #: ../app/widgets/gimpbrusheditor.c:216
 #: ../app/widgets/gimpbrushfactoryview.c:85
 msgid "Percentage of width of brush"
@@ -17441,10 +17750,6 @@ msgstr "Notacja języka HTML:"
 msgid "Only indexed images have a colormap."
 msgstr "Tylko indeksowane obrazy posiadają paletę kolorów."
 
-#: ../app/widgets/gimpcolorselectorpalette.c:59
-msgid "Palette"
-msgstr "Paleta"
-
 #: ../app/widgets/gimpcontainerpopup.c:337
 msgid "Smaller Previews"
 msgstr "Mniejsze podglądy"
@@ -17499,6 +17804,14 @@ msgstr "Wybieranie czynności dla zdarzenia „%s”"
 #: ../app/widgets/gimpcontrollereditor.c:657
 msgid "Select Controller Event Action"
 msgstr "Wybór czynności dla zdarzenia z urządzenia sterującego"
+
+#: ../app/widgets/gimpcontrollerinfo.c:112
+msgid "Enabled"
+msgstr "Włączone"
+
+#: ../app/widgets/gimpcontrollerinfo.c:119
+msgid "Debug events"
+msgstr "Debugowanie zdarzeń"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
 #: ../app/widgets/gimpcontrollerkeyboard.c:73
@@ -17801,6 +18114,10 @@ msgstr ""
 "Zostanie usunięte przechowane ustawienia urządzenia.\n"
 "Po następnym podłączeniu urządzenia zostaną użyte ustawienia domyślne."
 
+#: ../app/widgets/gimpdeviceinfo.c:163
+msgid "Pressure curve"
+msgstr "Krzywa nacisku"
+
 #: ../app/widgets/gimpdeviceinfoeditor.c:141
 #: ../app/widgets/gimpdynamicseditor.c:142
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
@@ -17987,15 +18304,15 @@ msgstr "Według rozszerzenia"
 msgid "All export images"
 msgstr "Wszystkie eksportowane obrazy"
 
-#: ../app/widgets/gimpfiledialog.c:745
+#: ../app/widgets/gimpfiledialog.c:752
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: ../app/widgets/gimpfiledialog.c:750
+#: ../app/widgets/gimpfiledialog.c:757
 msgid "All images"
 msgstr "Wszystkie obrazy"
 
-#: ../app/widgets/gimpfiledialog.c:946
+#: ../app/widgets/gimpfiledialog.c:953
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Wybór _typu pliku (%s)"
@@ -18117,14 +18434,6 @@ msgstr "Zmiana koloru tła siatki"
 #: ../app/widgets/gimpgrideditor.c:169
 msgid "_Background color:"
 msgstr "Kolor _tła:"
-
-#: ../app/widgets/gimpgrideditor.c:195 ../app/widgets/gimpgrideditor.c:227
-msgid "Width"
-msgstr "Szerokość"
-
-#: ../app/widgets/gimpgrideditor.c:197 ../app/widgets/gimpgrideditor.c:229
-msgid "Height"
-msgstr "Wysokość"
 
 #: ../app/widgets/gimphelp.c:299
 msgid "Help browser is missing"
@@ -18847,39 +19156,7 @@ msgstr "Usuń ustawienia narzędzia…"
 msgid "Icon:"
 msgstr "Ikona:"
 
-#: ../app/widgets/gimptoolpreseteditor.c:160
-msgid "Apply stored FG/BG"
-msgstr "Zastosuj zachowane kolory"
-
-#: ../app/widgets/gimptoolpreseteditor.c:166
-msgid "Apply stored brush"
-msgstr "Zastosuj zachowany pędzel"
-
-#: ../app/widgets/gimptoolpreseteditor.c:172
-msgid "Apply stored dynamics"
-msgstr "Zastosuj zachowaną dynamikę"
-
-#: ../app/widgets/gimptoolpreseteditor.c:178
-msgid "Apply stored MyPaint brush"
-msgstr "Zastosuj zachowany pędzel programu MyPaint"
-
-#: ../app/widgets/gimptoolpreseteditor.c:184
-msgid "Apply stored gradient"
-msgstr "Zastosuj zachowany gradient"
-
-#: ../app/widgets/gimptoolpreseteditor.c:190
-msgid "Apply stored pattern"
-msgstr "Zastosuj zachowany deseń"
-
-#: ../app/widgets/gimptoolpreseteditor.c:196
-msgid "Apply stored palette"
-msgstr "Zastosuj zachowaną paletę"
-
-#: ../app/widgets/gimptoolpreseteditor.c:202
-msgid "Apply stored font"
-msgstr "Zastosuj zachowaną czcionkę"
-
-#: ../app/widgets/gimptoolpreseteditor.c:299
+#: ../app/widgets/gimptoolpreseteditor.c:291
 #, c-format
 msgid "%s Preset"
 msgstr "Ustawienia %s"
@@ -18929,11 +19206,11 @@ msgstr "Otwiera okno wyboru desenia"
 msgid "Open the gradient selection dialog"
 msgstr "Otwiera okno wyboru gradientu"
 
-#: ../app/widgets/gimpviewablebox.c:462
+#: ../app/widgets/gimpviewablebox.c:466
 msgid "Open the palette selection dialog"
 msgstr "Otwarcie okna wyboru palety"
 
-#: ../app/widgets/gimpviewablebox.c:527
+#: ../app/widgets/gimpviewablebox.c:531
 msgid "Open the font selection dialog"
 msgstr "Otwiera okno wyboru czcionki"
 
