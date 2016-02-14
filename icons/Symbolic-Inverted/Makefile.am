@@ -76,23 +76,22 @@ MAKE_ICON = mkdir -p `dirname $@`; \
 	$(MAKE_ICON)
 
 all_icons = \
-	$(icons12_DATA)		\
-	$(icons16_DATA)		\
-	$(icons18_DATA)		\
-	$(icons20_DATA)		\
-	$(icons22_DATA)		\
-	$(icons24_DATA)		\
-	$(icons32_DATA)		\
-	$(icons48_DATA)		\
-	$(icons64_DATA)		\
-	$(icons96_DATA)		\
-	$(icons128_DATA)	\
-	$(icons192_DATA)	\
-	$(icons256_DATA)
+	$(icons12_images)	\
+	$(icons16_images)	\
+	$(icons18_images)	\
+	$(icons20_images)	\
+	$(icons22_images)	\
+	$(icons24_images)	\
+	$(icons32_images)	\
+	$(icons48_images)	\
+	$(icons64_images)	\
+	$(icons96_images)	\
+	$(icons128_images)	\
+	$(icons192_images)	\
+	$(icons256_images)
 
 EXTRA_DIST = \
-	$(icons_DATA)		\
-	$(all_icons)
+	$(icons_DATA)
 
 DISTCLEANFILES = \
 	$(all_icons)
