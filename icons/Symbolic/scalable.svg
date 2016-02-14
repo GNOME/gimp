@@ -6084,9 +6084,6 @@
            transform="matrix(0.99996,0,0,1,0,-1036.36)"
            id="g4-3">
           <g
-             transform="matrix(0.99826,0,0,1.0103,37.65,-6.275)"
-             id="g6-9" />
-          <g
              style="stroke-width:0.80800003"
              transform="translate(0,1036.36)"
              id="g12-6">
@@ -6101,7 +6098,7 @@
                id="path16" />
           </g>
           <path
-             style="opacity:0.3;stroke-width:0.26899999"
+             style="opacity:0.3;stroke-width:1.00002;stroke-miterlimit:4;stroke-dasharray:none"
              inkscape:connector-curvature="0"
              d="m 9.496637,1044.5747 a 1.365387,1.365387 0 0 1 -1.364303,1.3654 1.365387,1.365387 0 0 1 -1.366469,-1.3632 1.365387,1.365387 0 0 1 1.362133,-1.3676 1.365387,1.365387 0 0 1 1.368631,1.3611"
              id="path18-8" />
