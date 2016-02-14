@@ -42,14 +42,10 @@ struct _GimpToolOptions
 struct _GimpToolOptionsClass
 {
   GimpContextClass parent_class;
-
-  void (* reset) (GimpToolOptions *tool_options);
 };
 
 
 GType      gimp_tool_options_get_type      (void) G_GNUC_CONST;
-
-void       gimp_tool_options_reset         (GimpToolOptions  *tool_options);
 
 gboolean   gimp_tool_options_serialize     (GimpToolOptions   *tool_options,
                                             GError           **error);

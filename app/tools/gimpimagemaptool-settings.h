@@ -21,7 +21,7 @@
 #define __GIMP_IMAGE_MAP_TOOL_SETTINGS_H__
 
 
-GtkWidget * gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool *tool,
+GtkWidget * gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool *im_tool,
                                                       GimpContainer    *settings,
                                                       GFile            *settings_file,
                                                       const gchar      *import_dialog_title,
@@ -29,10 +29,10 @@ GtkWidget * gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool *tool,
                                                       const gchar      *file_dialog_help_id,
                                                       GFile            *default_folder,
                                                       GtkWidget       **settings_box);
-gboolean    gimp_image_map_tool_real_settings_import (GimpImageMapTool *tool,
+gboolean    gimp_image_map_tool_real_settings_import (GimpImageMapTool *im_tool,
                                                       GInputStream     *input,
                                                       GError          **error);
-gboolean    gimp_image_map_tool_real_settings_export (GimpImageMapTool *tool,
+gboolean    gimp_image_map_tool_real_settings_export (GimpImageMapTool *im_tool,
                                                       GOutputStream    *output,
                                                       GError          **error);
 

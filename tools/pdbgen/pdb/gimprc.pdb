@@ -193,6 +193,29 @@ CODE
     );
 }
 
+sub get_icon_theme_dir {
+    $blurb = 'Get the directory of the current icon theme.';
+    $help  = 'Returns a copy of the current icon theme dir.';
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+	{  name => 'icon_theme_dir', type => 'string',
+	   desc => 'The icon theme dir' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GFile *file = gimp_get_icon_theme_dir (gimp);
+
+  if (file)
+    icon_theme_dir = g_file_get_path (file);
+}
+CODE
+    );
+}
+
 sub get_color_configuration {
     $blurb = 'Get a serialized version of the color management configuration.';
     $help = 'Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.';
@@ -243,10 +266,11 @@ CODE
 
 @procs = qw(gimprc_query
             gimprc_set 
-	    get_default_comment
+            get_default_comment
             get_default_unit
             get_monitor_resolution
-	    get_theme_dir
+            get_theme_dir
+            get_icon_theme_dir
             get_color_configuration
             get_module_load_inhibit);
 

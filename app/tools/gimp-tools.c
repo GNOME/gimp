@@ -52,7 +52,6 @@
 #include "gimpconvolvetool.h"
 #include "gimpcroptool.h"
 #include "gimpcurvestool.h"
-#include "gimpdesaturatetool.h"
 #include "gimpdodgeburntool.h"
 #include "gimpellipseselecttool.h"
 #include "gimperasertool.h"
@@ -77,7 +76,6 @@
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
 #include "gimpperspectivetool.h"
-#include "gimpposterizetool.h"
 #include "gimpthresholdtool.h"
 #include "gimprectangleselecttool.h"
 #include "gimprotatetool.h"
@@ -127,7 +125,6 @@ gimp_tools_init (Gimp *gimp)
     /*  color tools  */
     gimp_operation_tool_register,
     gimp_gegl_tool_register,
-    gimp_posterize_tool_register,
     gimp_curves_tool_register,
     gimp_levels_tool_register,
     gimp_threshold_tool_register,
@@ -135,7 +132,6 @@ gimp_tools_init (Gimp *gimp)
     gimp_colorize_tool_register,
     gimp_hue_saturation_tool_register,
     gimp_color_balance_tool_register,
-    gimp_desaturate_tool_register,
 
     /*  paint tools  */
 
@@ -145,9 +141,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_perspective_clone_tool_register,
     gimp_heal_tool_register,
     gimp_clone_tool_register,
-#ifdef HAVE_LIBMYPAINT
     gimp_mybrush_tool_register,
-#endif
     gimp_ink_tool_register,
     gimp_airbrush_tool_register,
     gimp_eraser_tool_register,
@@ -324,7 +318,7 @@ gimp_tools_restore (Gimp *gimp)
       GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
 
       /*  get default values from prefs (see bug #120832)  */
-      gimp_tool_options_reset (tool_info->tool_options);
+      gimp_config_reset (GIMP_CONFIG (tool_info->tool_options));
     }
 
   if (! gimp_contexts_load (gimp, &error))
@@ -550,12 +544,10 @@ gimp_tools_register (GType                   tool_type,
     {
       paint_core_name = "gimp-ink";
     }
-#ifdef HAVE_LIBMYPAINT
   else if (tool_type == GIMP_TYPE_MYBRUSH_TOOL)
     {
       paint_core_name = "gimp-mybrush";
     }
-#endif
   else
     {
       paint_core_name = "gimp-paintbrush";

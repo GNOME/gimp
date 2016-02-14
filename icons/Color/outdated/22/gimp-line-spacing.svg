@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22"
+   height="22"
+   viewBox="0 0 22 22"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-line-spacing.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/gimp-icons/Nostrification/Default/texttool/gimp-line-spacing.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs30573">
+    <linearGradient
+       id="linearGradient19282"
+       osb:paint="solid"
+       gradientTransform="matrix(1.2178615,0,0,1.043881,356.69172,1794.4958)">
+      <stop
+         style="stop-color:#666666;stop-opacity:1;"
+         offset="0"
+         id="stop19284" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="16.964824"
+     inkscape:cx="-20.54532"
+     inkscape:cy="8.1802326"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1030.3622)">
+    <rect
+       style="color:#555753;display:inline;overflow:visible;visibility:visible;fill:#1e1e1e;fill-opacity:1;stroke:#000000;stroke-width:0.5;marker:none;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect5996-2-1-0-7-8-0-9"
+       width="11.999928"
+       height="2.0000999"
+       x="-21"
+       y="1047.8622"
+       inkscape:label="a"
+       transform="scale(-1,1)"
+       inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+       inkscape:export-xdpi="89"
+       inkscape:export-ydpi="89" />
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
+       d="m 3.000128,1048.8621 1.9999474,0 0,-14.9999 -1.9999474,0 0,14.9999 z"
+       id="path5322-17-0-5-9-9"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+       inkscape:export-xdpi="89"
+       inkscape:export-ydpi="89" />
+    <path
+       inkscape:connector-curvature="0"
+       style="color:#555753;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#ff9955;fill-opacity:1;stroke:#ff5000;stroke-width:0.5;marker:none;enable-background:accumulate;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 7.0000837,1036.8622 -0.9999937,0 c -0.2568891,0 -0.5284573,-0.1298 -0.7187464,-0.3125 l -1.2811819,-1.6875 -1.2813018,1.6875 c -0.1902891,0.1827 -0.4618573,0.3125 -0.7187464,0.3125 l -0.9999937,0 0,-0.4131 1.1e-4,-0.5869 c 0,-0.3093 0.0903,-0.5522 0.2812482,-0.75 1.0730037,-1.4167 1.64569,-1.8332 2.7186837,-3.25 l 2.7187938,3.25 c 0.1909391,0.1978 0.2812482,0.4407 0.2812482,0.75 l -1.2e-4,0.5869 z"
+       id="path4538-2-6-6-3-9"
+       sodipodi:nodetypes="ccccccccccccccc"
+       inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+       inkscape:export-xdpi="89"
+       inkscape:export-ydpi="89" />
+    <path
+       inkscape:connector-curvature="0"
+       style="color:#555753;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#ff9955;fill-opacity:1;stroke:#ff5000;stroke-width:0.5;marker:none;enable-background:accumulate;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 1.0001198,1045.8621 0.9999937,0 c 0.2568891,0 0.5284573,0.1299 0.7187464,0.3126 l 1.2811818,1.6874 1.2813019,-1.6874 c 0.1902891,-0.1827 0.4618573,-0.3126 0.7187464,-0.3126 l 0.9999937,0 0,0.4133 -1.1e-4,0.5867 c 0,0.3096 -0.0903,0.5524 -0.2812482,0.75 -1.0730037,1.4168 -1.6456901,1.8333 -2.7186838,3.2501 l -2.7187937,-3.2501 c -0.1909391,-0.1976 -0.28124823,-0.4404 -0.28124823,-0.75 l 1.2003e-4,-0.5867 z"
+       id="path4538-2-6-3-3-1-9"
+       sodipodi:nodetypes="ccccccccccccccc"
+       inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+       inkscape:export-xdpi="89"
+       inkscape:export-ydpi="89" />
+    <rect
+       style="color:#555753;display:inline;overflow:visible;visibility:visible;fill:#1e1e1e;fill-opacity:1;stroke:#000000;stroke-width:0.5;marker:none;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect5996-2-1-0-7-5-7-64"
+       width="11.999928"
+       height="2.0000999"
+       x="-21"
+       y="1042.8623"
+       inkscape:label="a"
+       transform="scale(-1,1)"
+       inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+       inkscape:export-xdpi="89"
+       inkscape:export-ydpi="89" />
+    <rect
+       style="color:#555753;display:inline;overflow:visible;visibility:visible;fill:#1e1e1e;fill-opacity:1;stroke:#000000;stroke-width:0.5;marker:none;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect5996-2-1-0-4-1-0"
+       width="11.999928"
+       height="2.0000999"
+       x="-21"
+       y="1037.8623"
+       inkscape:label="a"
+       transform="scale(-1,1)"
+       inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+       inkscape:export-xdpi="89"
+       inkscape:export-ydpi="89" />
+    <rect
+       style="color:#555753;display:inline;overflow:visible;visibility:visible;fill:#1e1e1e;fill-opacity:1;stroke:#000000;stroke-width:0.5;marker:none;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect5996-2-1-0-4-1-0-9"
+       width="11.999928"
+       height="2.0000999"
+       x="-21"
+       y="1032.8623"
+       inkscape:label="a"
+       transform="scale(-1,1)"
+       inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacepara2.png"
+       inkscape:export-xdpi="89"
+       inkscape:export-ydpi="89" />
+  </g>
+</svg>

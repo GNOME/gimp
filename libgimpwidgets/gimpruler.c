@@ -234,7 +234,7 @@ gimp_ruler_init (GimpRuler *ruler)
   gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
   priv->orientation         = GTK_ORIENTATION_HORIZONTAL;
-  priv->unit                = GIMP_PIXELS;
+  priv->unit                = GIMP_UNIT_PIXEL;
   priv->lower               = 0;
   priv->upper               = 0;
   priv->position            = 0;

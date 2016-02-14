@@ -32,8 +32,8 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimpstock.h"
 #include "gimpcolordisplay.h"
+#include "gimpicons.h"
 
 
 /**

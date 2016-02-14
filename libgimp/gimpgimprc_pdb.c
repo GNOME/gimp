@@ -237,6 +237,36 @@ gimp_get_theme_dir (void)
 }
 
 /**
+ * gimp_get_icon_theme_dir:
+ *
+ * Get the directory of the current icon theme.
+ *
+ * Returns a copy of the current icon theme dir.
+ *
+ * Returns: The icon theme dir.
+ *
+ * Since: 2.10
+ **/
+gchar *
+gimp_get_icon_theme_dir (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *icon_theme_dir = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-get-icon-theme-dir",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    icon_theme_dir = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return icon_theme_dir;
+}
+
+/**
  * _gimp_get_color_configuration:
  *
  * Get a serialized version of the color management configuration.

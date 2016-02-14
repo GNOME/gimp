@@ -85,6 +85,13 @@ gboolean      gimp_int_combo_box_set_active      (GimpIntComboBox *combo_box,
 gboolean      gimp_int_combo_box_get_active      (GimpIntComboBox *combo_box,
                                                   gint            *value);
 
+gboolean
+      gimp_int_combo_box_set_active_by_user_data (GimpIntComboBox *combo_box,
+                                                  gpointer         user_data);
+gboolean
+      gimp_int_combo_box_get_active_user_data    (GimpIntComboBox *combo_box,
+                                                  gpointer        *user_data);
+
 gulong        gimp_int_combo_box_connect         (GimpIntComboBox *combo_box,
                                                   gint             value,
                                                   GCallback        callback,

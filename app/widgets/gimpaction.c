@@ -330,7 +330,7 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
       "tools-ink-blob-size-",
       "tools-ink-blob-aspect-",
       "tools-ink-blob-angle-",
-      "tools-mybrush-radius-",
+      "tools-mypaint-brush-radius-",
       "tools-foreground-select-brush-size-",
       "tools-transform-preview-opacity-",
       "tools-warp-effect-size-"

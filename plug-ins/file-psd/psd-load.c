@@ -96,7 +96,7 @@ static gint             read_channel_data          (PSDchannel     *channel,
                                                     guint16         compression,
                                                     const guint16  *rle_pack_len,
                                                     FILE           *f,
-                                                    guint16         comp_len,
+                                                    guint32         comp_len,
                                                     GError        **error);
 
 static void             convert_1_bit              (const gchar *src,
@@ -1424,7 +1424,7 @@ add_layers (gint32     image_id,
                                          img_a->columns, img_a->rows,
                                          image_type, 0, GIMP_NORMAL_MODE);
               g_free (lyr_a[lidx]->name);
-              gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
+              gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
               gimp_drawable_fill (layer_id, GIMP_FILL_TRANSPARENT);
               gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
@@ -1462,7 +1462,7 @@ add_layers (gint32     image_id,
                                          layer_mode);
               IFDBG(3) g_debug ("Layer tattoo: %d", layer_id);
               g_free (lyr_a[lidx]->name);
-              gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
+              gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
               gimp_layer_set_offsets (layer_id, l_x, l_y);
               gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
               buffer = gimp_drawable_get_buffer (layer_id);
@@ -2000,7 +2000,7 @@ read_channel_data (PSDchannel     *channel,
                    guint16         compression,
                    const guint16  *rle_pack_len,
                    FILE           *f,
-                   guint16         comp_len,
+                   guint32         comp_len,
                    GError        **error)
 {
   gchar    *raw_data;
@@ -2090,7 +2090,8 @@ read_channel_data (PSDchannel     *channel,
             }
           else
             {
-              psd_set_error (feof (f), errno, error);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Failed to decompress data"));
               g_free (src);
               return -1;
             }

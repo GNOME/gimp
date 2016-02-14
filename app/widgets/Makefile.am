@@ -38,6 +38,8 @@ libappwidgets_a_sources = \
 	gimpbrushfactoryview.h		\
 	gimpbrushselect.c		\
 	gimpbrushselect.h		\
+	gimpbuffersourcebox.c		\
+	gimpbuffersourcebox.h		\
 	gimpbufferview.c		\
 	gimpbufferview.h		\
 	gimpcairo-wilber.c		\
@@ -62,6 +64,8 @@ libappwidgets_a_sources = \
 	gimpcoloreditor.h		\
 	gimpcolorframe.c		\
 	gimpcolorframe.h		\
+	gimpcolorhistory.c		\
+	gimpcolorhistory.h		\
 	gimpcolormapeditor.c		\
 	gimpcolormapeditor.h		\
 	gimpcolorpanel.c		\
@@ -274,14 +278,14 @@ libappwidgets_a_sources = \
 	gimppickablepopup.h		\
 	gimppixbuf.c			\
 	gimppixbuf.h			\
-	gimppluginaction.c		\
-	gimppluginaction.h		\
 	gimppolar.c			\
 	gimppolar.h			\
 	gimppopup.c			\
 	gimppopup.h			\
 	gimpprefsbox.c			\
 	gimpprefsbox.h			\
+	gimpprocedureaction.c		\
+	gimpprocedureaction.h		\
 	gimpprogressbox.c		\
 	gimpprogressbox.h		\
 	gimpprogressdialog.c		\
@@ -333,6 +337,8 @@ libappwidgets_a_sources = \
 	gimpstringaction.h		\
 	gimpstrokeeditor.c		\
 	gimpstrokeeditor.h		\
+	gimpsymmetryeditor.c		\
+	gimpsymmetryeditor.h		\
 	gimptagentry.c			\
 	gimptagentry.h			\
 	gimptagpopup.c			\

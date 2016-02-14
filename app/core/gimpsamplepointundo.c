@@ -91,8 +91,9 @@ gimp_sample_point_undo_constructed (GObject *object)
 
   g_assert (sample_point_undo->sample_point != NULL);
 
-  sample_point_undo->x = sample_point_undo->sample_point->x;
-  sample_point_undo->y = sample_point_undo->sample_point->y;
+  gimp_sample_point_get_position (sample_point_undo->sample_point,
+                                  &sample_point_undo->x,
+                                  &sample_point_undo->y);
 }
 
 static void
@@ -146,8 +147,7 @@ gimp_sample_point_undo_pop (GimpUndo              *undo,
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  x = sample_point_undo->sample_point->x;
-  y = sample_point_undo->sample_point->y;
+  gimp_sample_point_get_position (sample_point_undo->sample_point, &x, &y);
 
   if (x == -1)
     {
@@ -163,8 +163,9 @@ gimp_sample_point_undo_pop (GimpUndo              *undo,
     }
   else
     {
-      sample_point_undo->sample_point->x = sample_point_undo->x;
-      sample_point_undo->sample_point->y = sample_point_undo->y;
+      gimp_sample_point_set_position (sample_point_undo->sample_point,
+                                      sample_point_undo->x,
+                                      sample_point_undo->y);
 
       gimp_image_sample_point_moved (undo->image,
                                      sample_point_undo->sample_point);

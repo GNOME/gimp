@@ -423,6 +423,35 @@ CODE
     );
 }
 
+sub selection_flood {
+    $blurb = "Flood the image's selection";
+
+    $help .= <<'HELP';
+This procedure floods the selection. Flooding assigns to each pixel
+of the selection mask the minimum of the maxima of all paths from
+that pixel to the outside, as if the selection mask were a height
+map of a terrain flooded with water.
+HELP
+
+    $author = 'Ell';
+    $copyright = 'Ell';
+    $date = '2016';
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_flood (gimp_image_get_mask (image), TRUE);
+}
+CODE
+    );
+}
+
 sub selection_layer_alpha {
     &std_pdb_deprecated ('gimp-image-select-item');
 
@@ -534,7 +563,7 @@ CODE
 	    selection_translate selection_float
 	    selection_invert selection_sharpen selection_all selection_none
 	    selection_feather selection_border selection_grow selection_shrink
-	    selection_layer_alpha selection_load selection_save
+	    selection_flood selection_layer_alpha selection_load selection_save
 	    selection_combine);
 
 %exports = (app => [@procs], lib => [@procs]);

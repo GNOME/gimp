@@ -50,10 +50,13 @@ enum
   PROP_FILL_SELECTION,
   PROP_FILL_TRANSPARENT,
   PROP_SAMPLE_MERGED,
+  PROP_DIAGONAL_NEIGHBORS,
   PROP_THRESHOLD,
   PROP_FILL_CRITERION
 };
 
+
+static void   gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface);
 
 static void   gimp_bucket_fill_options_set_property (GObject         *object,
                                                      guint            property_id,
@@ -64,59 +67,81 @@ static void   gimp_bucket_fill_options_get_property (GObject         *object,
                                                      GValue          *value,
                                                      GParamSpec      *pspec);
 
-static void   gimp_bucket_fill_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_bucket_fill_options_reset        (GimpConfig      *config);
 
 
-G_DEFINE_TYPE (GimpBucketFillOptions, gimp_bucket_fill_options,
-               GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE_WITH_CODE (GimpBucketFillOptions, gimp_bucket_fill_options,
+                         GIMP_TYPE_PAINT_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_bucket_fill_options_config_iface_init))
 
 #define parent_class gimp_bucket_fill_options_parent_class
+
+static GimpConfigInterface *parent_config_iface = NULL;
 
 
 static void
 gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = gimp_bucket_fill_options_set_property;
   object_class->get_property = gimp_bucket_fill_options_get_property;
 
-  options_class->reset       = gimp_bucket_fill_options_reset;
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_MODE,
+                         "fill-mode",
+                         _("Fill type"),
+                         NULL,
+                         GIMP_TYPE_BUCKET_FILL_MODE,
+                         GIMP_BUCKET_FILL_FG,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
+                            "fill-selection",
+                            _("Fill selection"),
+                            _("Which area will be filled"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
+                            "fill-transparent",
+                            _("Fill transparent areas"),
+                            _("Allow completely transparent regions "
+                              "to be filled"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                            "sample-merged",
+                            _("Sample merged"),
+                            _("Base filled area on all visible layers"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+                            "diagonal-neighbors",
+                            _("Diagonal neighbors"),
+                            _("Treat diagonally neighboring pixels as "
+                              "connected"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_THRESHOLD,
+                           "threshold",
+                           _("Threshold"),
+                           _("Maximum color difference"),
+                           0.0, 255.0, 15.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_CRITERION,
+                         "fill-criterion",
+                         _("Fill by"),
+                         _("Criterion used for determining color similarity"),
+                         GIMP_TYPE_SELECT_CRITERION,
+                         GIMP_SELECT_CRITERION_COMPOSITE,
+                         GIMP_PARAM_STATIC_STRINGS);
+}
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_MODE,
-                                 "fill-mode", NULL,
-                                 GIMP_TYPE_BUCKET_FILL_MODE,
-                                 GIMP_BUCKET_FILL_FG,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
-                                    "fill-selection",
-                                    _("Which area will be filled"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
-                                    "fill-transparent",
-                                    _("Allow completely transparent regions "
-                                      "to be filled"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged",
-                                    _("Base filled area on all visible "
-                                      "layers"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
-                                   "threshold",
-                                   _("Maximum color difference"),
-                                   0.0, 255.0, 15.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_CRITERION,
-                                 "fill-criterion",
-                                 _("Criterion used for determining color similarity"),
-                                 GIMP_TYPE_SELECT_CRITERION,
-                                 GIMP_SELECT_CRITERION_COMPOSITE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+static void
+gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  config_iface->reset = gimp_bucket_fill_options_reset;
 }
 
 static void
@@ -145,6 +170,9 @@ gimp_bucket_fill_options_set_property (GObject      *object,
       break;
     case PROP_SAMPLE_MERGED:
       options->sample_merged = g_value_get_boolean (value);
+      break;
+    case PROP_DIAGONAL_NEIGHBORS:
+      options->diagonal_neighbors = g_value_get_boolean (value);
       break;
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
@@ -181,6 +209,9 @@ gimp_bucket_fill_options_get_property (GObject    *object,
     case PROP_SAMPLE_MERGED:
       g_value_set_boolean (value, options->sample_merged);
       break;
+    case PROP_DIAGONAL_NEIGHBORS:
+      g_value_set_boolean (value, options->diagonal_neighbors);
+      break;
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
       break;
@@ -195,18 +226,19 @@ gimp_bucket_fill_options_get_property (GObject    *object,
 }
 
 static void
-gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
+gimp_bucket_fill_options_reset (GimpConfig *config)
 {
-  GParamSpec *pspec;
+  GimpToolOptions *tool_options = GIMP_TOOL_OPTIONS (config);
+  GParamSpec      *pspec;
 
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                         "threshold");
 
   if (pspec)
     G_PARAM_SPEC_DOUBLE (pspec)->default_value =
       tool_options->tool_info->gimp->config->default_threshold;
 
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+  parent_config_iface->reset (config);
 }
 
 GtkWidget *
@@ -268,20 +300,22 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (vbox2);
 
   /*  the fill transparent areas toggle  */
-  button = gimp_prop_check_button_new (config, "fill-transparent",
-                                       _("Fill transparent areas"));
+  button = gimp_prop_check_button_new (config, "fill-transparent", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the sample merged toggle  */
-  button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample merged"));
+  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /*  the diagonal neighbors toggle  */
+  button = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "threshold",
-                                    _("Threshold"),
+  scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);

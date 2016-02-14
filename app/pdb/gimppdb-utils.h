@@ -31,6 +31,10 @@ GimpDynamics  * gimp_pdb_get_dynamics           (Gimp               *gimp,
                                                  const gchar        *name,
                                                  gboolean            writable,
                                                  GError            **error);
+GimpMybrush   * gimp_pdb_get_mybrush            (Gimp               *gimp,
+                                                 const gchar        *name,
+                                                 gboolean            writable,
+                                                 GError            **error);
 GimpPattern   * gimp_pdb_get_pattern            (Gimp               *gimp,
                                                  const gchar        *name,
                                                  GError            **error);
@@ -98,6 +102,10 @@ gboolean        gimp_pdb_image_is_not_precision (GimpImage          *image,
 
 GimpGuide     * gimp_pdb_image_get_guide        (GimpImage          *image,
                                                  gint                guide_ID,
+                                                 GError            **error);
+GimpSamplePoint *
+                gimp_pdb_image_get_sample_point (GimpImage          *image,
+                                                 gint                sample_point_ID,
                                                  GError            **error);
 
 GimpStroke    * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,

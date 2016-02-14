@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6119260k)
+# (tile-cache-size 6119176k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -105,6 +105,15 @@
 # 
 # (dynamics-path-writable "${gimp_dir}/dynamics")
 
+# Sets the brush search path.  This is a colon-separated list of folders to
+# search.
+# 
+# (mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:~/.mypaint/brushes")
+
+# This is a colon-separated list of folders to search.
+# 
+# (mypaint-brush-path-writable "~/.mypaint/brushes")
+
 # Sets the pattern search path.  This is a colon-separated list of folders to
 # search.
 # 
@@ -146,15 +155,6 @@
 # 
 # (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
 
-# Sets the brush search path.  This is a colon-separated list of folders to
-# search.
-# 
-# (mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:~/.mypaint/brushes")
-
-# This is a colon-separated list of folders to search.
-# 
-# (mypaint-brush-path-writable "~/.mypaint/brushes")
-
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
 # 
@@ -164,6 +164,10 @@
 # dynamics path.  This is a string value.
 # 
 # (default-dynamics "Dynamics Off")
+
+# Specify a default MyPaint brush.  This is a string value.
+# 
+# (default-mypaint-brush "Fixme")
 
 # Specify a default pattern.  This is a string value.
 # 
@@ -185,10 +189,6 @@
 # Specify a default font.  This is a string value.
 # 
 # (default-font "Sans-serif")
-
-# Specify a default MyPaint brush.  This is a string value.
-# 
-# (default-mypaint-brush "Fixme")
 
 # When enabled, the selected brush will be used for all tools.  Possible
 # values are yes and no.
@@ -260,7 +260,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1529815k)
+# (undo-size 1529794k)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -669,6 +669,15 @@
 # 
 # (theme "Default")
 
+# Sets the icon theme search path.  This is a colon-separated list of folders
+# to search.
+# 
+# (icon-theme-path "${gimp_dir}/icons:${gimp_data_dir}/icons")
+
+# The name of the icon theme to use.  This is a string value.
+# 
+# (icon-theme "Default")
+
 # When enabled, pressing F1 will open the help browser.  Possible values are
 # yes and no.
 # 
@@ -730,10 +739,6 @@
 # Enable the Handle Transform tool.  Possible values are yes and no.
 # 
 # (playground-handle-transform-tool no)
-
-# Enable the MyPaint Brush tool.  Possible values are yes and no.
-# 
-# (playground-mybrush-tool no)
 
 # Enable the Seamless Clone tool.  Possible values are yes and no.
 # 

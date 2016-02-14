@@ -1699,6 +1699,73 @@ gimp_context_set_dynamics (const gchar *name)
 }
 
 /**
+ * gimp_context_get_mypaint_brush:
+ *
+ * Retrieve the currently active MyPaint brush.
+ *
+ * This procedure returns the name of the currently active MyPaint
+ * brush.
+ *
+ * Returns: The name of the active MyPaint brush.
+ *
+ * Since: 2.10
+ **/
+gchar *
+gimp_context_get_mypaint_brush (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-mypaint-brush",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_context_set_mypaint_brush:
+ * @name: The name of the MyPaint brush.
+ *
+ * Set the specified MyPaint brush as the active MyPaint brush.
+ *
+ * This procedure allows the active MyPaint brush to be set by
+ * specifying its name. The name is simply a string which corresponds
+ * to one of the names of the installed MyPaint brushes. If there is no
+ * matching MyPaint brush found, this procedure will return an error.
+ * Otherwise, the specified MyPaint brush becomes active and will be
+ * used in all subsequent MyPaint paint operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_mypaint_brush (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-mypaint-brush",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_pattern:
  *
  * Retrieve the currently active pattern.
@@ -2503,6 +2570,74 @@ gimp_context_set_sample_transparent (gboolean sample_transparent)
   return_vals = gimp_run_procedure ("gimp-context-set-sample-transparent",
                                     &nreturn_vals,
                                     GIMP_PDB_INT32, sample_transparent,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_diagonal_neighbors:
+ *
+ * Get the diagonal neighbors setting.
+ *
+ * This procedure returns the diagonal neighbors setting.
+ *
+ * Returns: The diagonal neighbors setting.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_get_diagonal_neighbors (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean diagonal_neighbors = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-diagonal-neighbors",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    diagonal_neighbors = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return diagonal_neighbors;
+}
+
+/**
+ * gimp_context_set_diagonal_neighbors:
+ * @diagonal_neighbors: The diagonal neighbors setting.
+ *
+ * Set the diagonal neighbors setting.
+ *
+ * This procedure modifies the diagonal neighbors setting. If the
+ * affected region of an operation is based on a seed point, like when
+ * doing a seed fill, then, when this setting is TRUE, all eight
+ * neighbors of each pixel are considered when calculating the affected
+ * region; in contrast, when this setting is FALSE, only the four
+ * orthogonal neighors of each pixel are considered.
+ * This setting affects the following procedures:
+ * gimp_image_select_contiguous_color().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_diagonal_neighbors (gboolean diagonal_neighbors)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-diagonal-neighbors",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, diagonal_neighbors,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

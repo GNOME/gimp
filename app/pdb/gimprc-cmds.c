@@ -196,6 +196,28 @@ get_theme_dir_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+get_icon_theme_dir_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  GimpValueArray *return_vals;
+  gchar *icon_theme_dir = NULL;
+
+  GFile *file = gimp_get_icon_theme_dir (gimp);
+
+  if (file)
+    icon_theme_dir = g_file_get_path (file);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_take_string (gimp_value_array_index (return_vals, 1), icon_theme_dir);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 get_color_configuration_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
@@ -396,6 +418,30 @@ register_gimprc_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("theme-dir",
                                                            "theme dir",
                                                            "The GUI theme dir",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-get-icon-theme-dir
+   */
+  procedure = gimp_procedure_new (get_icon_theme_dir_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-icon-theme-dir");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-get-icon-theme-dir",
+                                     "Get the directory of the current icon theme.",
+                                     "Returns a copy of the current icon theme dir.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("icon-theme-dir",
+                                                           "icon theme dir",
+                                                           "The icon theme dir",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));

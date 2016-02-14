@@ -42,6 +42,17 @@ GtkWidget * gimp_prop_dynamics_box_new (GimpContainer *container,
                                         const gchar   *view_size_prop,
                                         const gchar   *editor_id);
 
+GtkWidget * gimp_mybrush_box_new       (GimpContainer *container,
+                                        GimpContext   *context,
+                                        const gchar   *label,
+                                        gint           spacing);
+GtkWidget * gimp_prop_mybrush_box_new  (GimpContainer *container,
+                                        GimpContext   *context,
+                                        const gchar   *label,
+                                        gint           spacing,
+                                        const gchar   *view_type_prop,
+                                        const gchar   *view_size_prop);
+
 GtkWidget * gimp_pattern_box_new       (GimpContainer *container,
                                         GimpContext   *context,
                                         const gchar   *label,

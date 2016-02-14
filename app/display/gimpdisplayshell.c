@@ -70,6 +70,7 @@
 #include "gimpdisplayshell-progress.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-rotate.h"
+#include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
@@ -360,7 +361,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   /*  zoom model callback  */
   g_signal_connect_swapped (shell->zoom, "zoomed",
-                            G_CALLBACK (gimp_display_shell_scale_changed),
+                            G_CALLBACK (gimp_display_shell_scale_update),
                             shell);
 
   /*  active display callback  */
@@ -759,9 +760,8 @@ gimp_display_shell_constructed (GObject *object)
        * not even finnished creating the display shell, we can safely
        * assume we will get a size-allocate later.
        */
-      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
-                                                                    TRUE,
-                                                                    TRUE);
+      gimp_display_shell_scroll_center_image_on_size_allocate (shell,
+                                                               TRUE, TRUE);
     }
   else
     {
@@ -776,9 +776,6 @@ gimp_display_shell_constructed (GObject *object)
 
       gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
     }
-
-  /* make sure the information is up-to-date */
-  gimp_display_shell_scale_changed (shell);
 }
 
 static void
@@ -1521,11 +1518,18 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
 
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
-  gimp_display_shell_scale_changed (shell);
+
+  /* center the image so subsequent stuff only moves it a little in
+   * the center
+   */
+  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 
   gimp_display_shell_sync_config (shell, shell->display->config);
 
+  gimp_image_window_suspend_keep_pos (window);
   gimp_display_shell_appearance_update (shell);
+  gimp_image_window_resume_keep_pos (window);
+
   gimp_image_window_update_tabs (window);
 #if 0
   gimp_help_set_help_data (shell->canvas, NULL, NULL);
@@ -1536,9 +1540,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   /* A size-allocate will always occur because the scrollbars will
    * become visible forcing the canvas to become smaller
    */
-  gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
-                                                                TRUE,
-                                                                TRUE);
+  gimp_display_shell_scroll_center_image_on_size_allocate (shell, TRUE, TRUE);
 
   if (shell->blink_timeout_id)
     {
@@ -1550,34 +1552,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
     g_idle_add_full (GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE,
                      (GSourceFunc) gimp_display_shell_fill_idle, shell,
                      NULL);
-}
-
-/* We used to calculate the scale factor in the SCALEFACTOR_X() and
- * SCALEFACTOR_Y() macros. But since these are rather frequently
- * called and the values rarely change, we now store them in the
- * shell and call this function whenever they need to be recalculated.
- */
-void
-gimp_display_shell_scale_changed (GimpDisplayShell *shell)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  image = gimp_display_get_image (shell->display);
-
-  if (image)
-    {
-      gimp_display_shell_calculate_scale_x_and_y (shell,
-                                                  gimp_zoom_model_get_factor (shell->zoom),
-                                                  &shell->scale_x,
-                                                  &shell->scale_y);
-    }
-  else
-    {
-      shell->scale_x = 1.0;
-      shell->scale_y = 1.0;
-    }
 }
 
 void
@@ -1646,7 +1620,7 @@ gimp_display_shell_set_unit (GimpDisplayShell *shell,
     {
       shell->unit = unit;
 
-      gimp_display_shell_scale_update_rulers (shell);
+      gimp_display_shell_rulers_update (shell);
 
       gimp_display_shell_scaled (shell);
 
@@ -1848,9 +1822,6 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
 
       gimp_display_shell_title_update (shell);
 
-      /* make sure the information is up-to-date */
-      gimp_display_shell_scale_changed (shell);
-
       gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                             gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
 
@@ -1965,12 +1936,15 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  * @color: the color to use for drawing the mask
  * @inverted: #TRUE if the mask should be drawn inverted
  *
- * Previews an image-sized mask. Depending on @inverted, pixels that
- * are selected or not selected are tinted with the given color.
+ * Previews a mask originating at offset_x, offset_x. Depending on
+ * @inverted, pixels that are selected or not selected are tinted with
+ * the given color.
  **/
 void
 gimp_display_shell_set_mask (GimpDisplayShell *shell,
                              GeglBuffer       *mask,
+                             gint              offset_x,
+                             gint              offset_y,
                              const GimpRGB    *color,
                              gboolean          inverted)
 {
@@ -1985,6 +1959,9 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
     g_object_unref (shell->mask);
 
   shell->mask = mask;
+
+  shell->mask_offset_x = offset_x;
+  shell->mask_offset_y = offset_y;
 
   if (mask)
     shell->mask_color = *color;

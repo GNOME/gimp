@@ -56,6 +56,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-tool-events.h"
 #include "gimpdisplayshell-transform.h"
@@ -117,6 +118,8 @@ struct _GimpImageWindowPrivate
 
   GdkScreen         *initial_screen;
   gint               initial_monitor;
+
+  gint               suspend_keep_pos;
 };
 
 typedef struct
@@ -673,7 +676,9 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
         gtk_widget_set_name (private->menubar,
                              fullscreen ? "gimp-menubar-fullscreen" : NULL);
 
+      gimp_image_window_suspend_keep_pos (window);
       gimp_display_shell_appearance_update (shell);
+      gimp_image_window_resume_keep_pos (window);
     }
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
@@ -777,7 +782,7 @@ gimp_image_window_monitor_changed (GimpWindow *window,
                              gtk_widget_get_screen (list->data));
 
       /*  make it fetch the new monitor's resolution  */
-      gimp_display_shell_scale_changed (GIMP_DISPLAY_SHELL (list->data));
+      gimp_display_shell_scale_update (GIMP_DISPLAY_SHELL (list->data));
 
       /*  make it fetch the right monitor profile  */
       gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (list->data));
@@ -1598,11 +1603,21 @@ gimp_image_window_get_default_dockbook (GimpImageWindow  *window)
 void
 gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
 {
-  GimpDisplayShell  *shell = gimp_image_window_get_active_shell (window);
-  gint               canvas_x;
-  gint               canvas_y;
-  gint               window_x;
-  gint               window_y;
+  GimpImageWindowPrivate *private;
+  GimpDisplayShell       *shell;
+  gint                    canvas_x;
+  gint                    canvas_y;
+  gint                    window_x;
+  gint                    window_y;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  if (private->suspend_keep_pos > 0)
+    return;
+
+  shell = gimp_image_window_get_active_shell (window);
 
   gimp_display_shell_transform_xy (shell, 0.0, 0.0, &canvas_x, &canvas_y);
 
@@ -1625,6 +1640,31 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
     }
 }
 
+void
+gimp_image_window_suspend_keep_pos (GimpImageWindow  *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  private->suspend_keep_pos++;
+}
+
+void
+gimp_image_window_resume_keep_pos (GimpImageWindow  *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  g_return_if_fail (private->suspend_keep_pos > 0);
+
+  private->suspend_keep_pos--;
+}
 
 /**
  * gimp_image_window_update_tabs:
@@ -1802,9 +1842,11 @@ gimp_image_window_shell_size_allocate (GimpDisplayShell  *shell,
                                         data->canvas_x, data->canvas_y,
                                         &new_window_x, &new_window_y))
     {
-      gimp_display_shell_scroll (shell,
-                                 new_window_x - data->window_x,
-                                 new_window_y - data->window_y);
+      gint off_x = new_window_x - data->window_x;
+      gint off_y = new_window_y - data->window_y;
+
+      if (off_x || off_y)
+        gimp_display_shell_scroll (shell, off_x, off_y);
     }
 
   g_signal_handlers_disconnect_by_func (shell,

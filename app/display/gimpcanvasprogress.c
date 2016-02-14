@@ -83,7 +83,8 @@ static void             gimp_canvas_progress_get_property (GObject          *obj
                                                            GParamSpec       *pspec);
 static void             gimp_canvas_progress_draw         (GimpCanvasItem   *item,
                                                            cairo_t          *cr);
-static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem   *item);static gboolean        gimp_canvas_progress_hit          (GimpCanvasItem   *item,
+static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem   *item);
+static gboolean         gimp_canvas_progress_hit          (GimpCanvasItem   *item,
                                                                                                                                              gdouble           x,
                                                                                                                                              gdouble           y);
 

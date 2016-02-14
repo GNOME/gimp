@@ -17,6 +17,10 @@ framework_cocoa = -framework Cocoa
 endif
 
 if OS_WIN32
+if HAVE_EXCHNDL
+exchndl = -lexchndl
+endif
+
 gimp_def = gimp.def
 gimpui_def = gimpui.def
 libgimp_export_symbols = -export-symbols $(srcdir)/gimp.def
@@ -103,6 +107,7 @@ PDB_WRAPPERS_C = \
 	gimpimageconvert_pdb.c		\
 	gimpimagegrid_pdb.c		\
 	gimpimageguides_pdb.c		\
+	gimpimagesamplepoints_pdb.c	\
 	gimpimageselect_pdb.c		\
 	gimpimagetransform_pdb.c	\
 	gimpimageundo_pdb.c		\
@@ -159,6 +164,7 @@ PDB_WRAPPERS_H = \
 	gimpimageconvert_pdb.h		\
 	gimpimagegrid_pdb.h		\
 	gimpimageguides_pdb.h		\
+	gimpimagesamplepoints_pdb.h	\
 	gimpimageselect_pdb.h		\
 	gimpimagetransform_pdb.h	\
 	gimpimageundo_pdb.h		\
@@ -391,6 +397,7 @@ libgimp_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
+	$(exchndl)		\
 	$(CAIRO_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\

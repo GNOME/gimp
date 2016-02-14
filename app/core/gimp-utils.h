@@ -76,6 +76,9 @@ void         gimp_constrain_line                   (gdouble          start_x,
 gint         gimp_file_compare                     (GFile           *file1,
                                                     GFile           *file2);
 gboolean     gimp_file_is_executable               (GFile           *file);
+gchar      * gimp_file_get_extension               (GFile           *file);
+GFile      * gimp_file_with_new_extension          (GFile           *file,
+                                                    GFile           *ext_file);
 
 GimpImage  * gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer,

@@ -36,9 +36,7 @@
 #include "core/gimpprogress.h"
 #include "core/gimpsubprogress.h"
 
-#include "plug-in/gimppluginmanager.h"
-
-#include "file/file-procedure.h"
+#include "plug-in/gimppluginmanager-file.h"
 
 #include "gimpfiledialog.h" /* eek */
 #include "gimpthumbbox.h"
@@ -727,8 +725,9 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
     case GIMP_THUMB_STATE_OLD:
       if (thumb->image_filesize < gimp->config->thumbnail_filesize_limit &&
           ! gimp_thumbnail_has_failed (thumb)                            &&
-          file_procedure_find_by_extension (gimp->plug_in_manager->load_procs,
-                                            file))
+          gimp_plug_in_manager_file_procedure_find_by_extension (gimp->plug_in_manager,
+                                                                 GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                                 file))
         {
           if (thumb->image_filesize > 0)
             {

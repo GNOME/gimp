@@ -80,20 +80,23 @@ gimp_colorize_config_class_init (GimpColorizeConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-colorize";
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HUE,
-                                   "hue",
-                                   _("Hue"),
-                                   0.0, 1.0, 0.5, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HUE,
+                           "hue",
+                           _("Hue"),
+                           _("Hue"),
+                           0.0, 1.0, 0.5, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SATURATION,
-                                   "saturation",
-                                   _("Saturation"),
-                                   0.0, 1.0, 0.5, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SATURATION,
+                           "saturation",
+                           _("Saturation"),
+                           _("Saturation"),
+                           0.0, 1.0, 0.5, 0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
-                                   "lightness",
-                                   _("Lightness"),
-                                   -1.0, 1.0, 0.0, 0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
+                           "lightness",
+                           _("Lightness"),
+                           _("Lightness"),
+                           -1.0, 1.0, 0.0, 0);
 
   gimp_hsl_set (&hsl, 0.5, 0.5, 0.5);
   gimp_hsl_set_alpha (&hsl, 1.0);

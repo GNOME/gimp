@@ -139,76 +139,89 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_PRESSURE,
-                                    "use-pressure", NULL,
-                                    DEFAULT_USE_PRESSURE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_PRESSURE,
+                            "use-pressure",
+                            NULL, NULL,
+                            DEFAULT_USE_PRESSURE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_VELOCITY,
-                                    "use-velocity", NULL,
-                                    DEFAULT_USE_VELOCITY,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_VELOCITY,
+                            "use-velocity",
+                            NULL, NULL,
+                            DEFAULT_USE_VELOCITY,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_DIRECTION,
-                                    "use-direction", NULL,
-                                    DEFAULT_USE_DIRECTION,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_DIRECTION,
+                            "use-direction",
+                            NULL, NULL,
+                            DEFAULT_USE_DIRECTION,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_TILT,
-                                    "use-tilt", NULL,
-                                    DEFAULT_USE_TILT,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_TILT,
+                            "use-tilt",
+                            NULL, NULL,
+                            DEFAULT_USE_TILT,
+                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_WHEEL,
+                            "use-wheel",
+                            NULL, NULL,
+                            DEFAULT_USE_TILT,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_WHEEL,
-                                    "use-wheel", NULL,
-                                    DEFAULT_USE_TILT,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_RANDOM,
+                            "use-random",
+                            NULL, NULL,
+                            DEFAULT_USE_RANDOM,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_RANDOM,
-                                    "use-random", NULL,
-                                    DEFAULT_USE_RANDOM,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_FADE,
+                            "use-fade",
+                            NULL, NULL,
+                            DEFAULT_USE_FADE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
-                                    "use-fade", NULL,
-                                    DEFAULT_USE_FADE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
+                           "pressure-curve",
+                            NULL, NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
-                                   "pressure-curve", NULL,
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_VELOCITY_CURVE,
+                           "velocity-curve",
+                            NULL, NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_VELOCITY_CURVE,
-                                   "velocity-curve", NULL,
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_DIRECTION_CURVE,
+                           "direction-curve",
+                            NULL, NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DIRECTION_CURVE,
-                                   "direction-curve", NULL,
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_TILT_CURVE,
+                           "tilt-curve",
+                            NULL, NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TILT_CURVE,
-                                   "tilt-curve", NULL,
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_WHEEL_CURVE,
+                           "wheel-curve",
+                            NULL, NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_WHEEL_CURVE,
-                                   "wheel-curve", NULL,
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_RANDOM_CURVE,
+                           "random-curve",
+                            NULL, NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_RANDOM_CURVE,
-                                   "random-curve", NULL,
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
-
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_FADE_CURVE,
-                                   "fade-curve", NULL,
-                                   GIMP_TYPE_CURVE,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_FADE_CURVE,
+                           "fade-curve",
+                            NULL, NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
   g_type_class_add_private (klass, sizeof (GimpDynamicsOutputPrivate));
 }

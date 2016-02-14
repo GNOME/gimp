@@ -39,6 +39,7 @@
 #include "gimp.h"
 #include "gimp-memsize.h"
 #include "gimp-parasites.h"
+#include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpdrawablestack.h"
 #include "gimpgrid.h"
@@ -55,6 +56,7 @@
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
 #include "gimpimage-quick-mask.h"
+#include "gimpimage-symmetry.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitemtree.h"
@@ -68,11 +70,10 @@
 #include "gimpprojection.h"
 #include "gimpsamplepoint.h"
 #include "gimpselection.h"
+#include "gimpsymmetry.h"
 #include "gimptempbuf.h"
 #include "gimptemplate.h"
 #include "gimpundostack.h"
-
-#include "file/file-utils.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -131,7 +132,8 @@ enum
   PROP_BASE_TYPE,
   PROP_PRECISION,
   PROP_METADATA,
-  PROP_BUFFER
+  PROP_BUFFER,
+  PROP_SYMMETRY
 };
 
 
@@ -625,6 +627,13 @@ gimp_image_class_init (GimpImageClass *klass)
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
+  g_object_class_install_property (object_class, PROP_SYMMETRY,
+                                   g_param_spec_gtype ("symmetry",
+                                                       NULL, _("Symmetry"),
+                                                       GIMP_TYPE_SYMMETRY,
+                                                       GIMP_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
+
   g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
 
@@ -696,6 +705,9 @@ gimp_image_init (GimpImage *image)
   private->tattoo_state        = 0;
 
   private->projection          = gimp_projection_new (GIMP_PROJECTABLE (image));
+
+  private->symmetries          = NULL;
+  private->active_symmetry     = NULL;
 
   private->guides              = NULL;
   private->grid                = NULL;
@@ -859,6 +871,43 @@ gimp_image_set_property (GObject      *object,
       private->precision = g_value_get_enum (value);
       break;
     case PROP_BUFFER:
+      break;
+    case PROP_SYMMETRY:
+      {
+        GList *iter;
+        GType  type = g_value_get_gtype (value);
+
+        if (private->active_symmetry)
+          g_object_set (private->active_symmetry,
+                        "active", FALSE,
+                        NULL);
+        private->active_symmetry = NULL;
+
+        for (iter = private->symmetries; iter; iter = g_list_next (iter))
+          {
+            GimpSymmetry *sym = iter->data;
+
+            if (type == G_TYPE_FROM_INSTANCE (sym))
+              private->active_symmetry = iter->data;
+          }
+
+        if (! private->active_symmetry &&
+            g_type_is_a (type, GIMP_TYPE_SYMMETRY))
+          {
+            GimpSymmetry *sym = gimp_image_symmetry_new (image, type);
+
+            gimp_image_symmetry_add (image, sym);
+            g_object_unref (sym);
+
+            private->active_symmetry = sym;
+          }
+
+        if (private->active_symmetry)
+          g_object_set (private->active_symmetry,
+                        "active", TRUE,
+                        NULL);
+      }
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -896,6 +945,12 @@ gimp_image_get_property (GObject    *object,
       break;
     case PROP_BUFFER:
       g_value_set_object (value, gimp_image_get_buffer (GIMP_PICKABLE (image)));
+      break;
+    case PROP_SYMMETRY:
+      g_value_set_gtype (value,
+                         private->active_symmetry ?
+                         G_TYPE_FROM_INSTANCE (private->active_symmetry) :
+                         G_TYPE_NONE);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1045,6 +1100,12 @@ gimp_image_finalize (GObject *object)
     {
       g_list_free_full (private->guides, (GDestroyNotify) g_object_unref);
       private->guides = NULL;
+    }
+
+  if (private->symmetries)
+    {
+      g_list_free_full (private->symmetries, g_object_unref);
+      private->symmetries = NULL;
     }
 
   if (private->grid)
@@ -1389,7 +1450,7 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
 
   profile = gimp_image_get_color_profile (image);
 
-  if (! profile && gimp_image_get_base_type (image) != GIMP_GRAY)
+  if (! profile)
     profile = gimp_image_get_builtin_color_profile (image);
 
   return profile;
@@ -2170,7 +2231,7 @@ gimp_image_format_display_uri (GimpImage *image,
         }
 
       if (display_file)
-        display_file = file_utils_file_with_new_ext (display_file, NULL);
+        display_file = gimp_file_with_new_extension (display_file, NULL);
 
       uri_format = "[%s]";
     }
@@ -2323,9 +2384,9 @@ gimp_image_get_xcf_version (GimpImage    *image,
 
   g_list_free (layers);
 
-  /* need version 6 for new metadata */
-  if (gimp_image_get_attributes (image))
-    version = MAX (6, version);
+  /* version 6 for new metadata has been dropped since they are
+   * saved through parasites, which is compatible with older versions.
+   */
 
   /* need version 7 for high bit depth images */
   if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)

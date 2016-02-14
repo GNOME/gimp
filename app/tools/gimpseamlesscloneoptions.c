@@ -67,11 +67,13 @@ gimp_seamless_clone_options_class_init (GimpSeamlessCloneOptionsClass *klass)
   object_class->set_property = gimp_seamless_clone_options_set_property;
   object_class->get_property = gimp_seamless_clone_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_MAX_REFINE_SCALE,
-                                 "max-refine-scale",
-                                 _("Maximal scale of refinement points to be used for the interpolation mesh"),
-                                 0, 50, 5,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT  (object_class, PROP_MAX_REFINE_SCALE,
+                         "max-refine-scale",
+                         _("Refinement scale"),
+                         _("Maximal scale of refinement points to be "
+                           "used for the interpolation mesh"),
+                         0, 50, 5,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -126,8 +128,7 @@ gimp_seamless_clone_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *scale;
 
-  scale = gimp_prop_spin_scale_new (config, "max-refine-scale",
-                                    _("Refinement scale"),
+  scale = gimp_prop_spin_scale_new (config, "max-refine-scale", NULL,
                                     1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 50.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);

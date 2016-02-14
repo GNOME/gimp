@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_LIBMYPAINT
-
 #ifndef  __GIMP_MYBRUSH_TOOL_H__
 #define  __GIMP_MYBRUSH_TOOL_H__
 
@@ -53,7 +51,10 @@ void    gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
 
 GType   gimp_mybrush_tool_get_type (void) G_GNUC_CONST;
 
+GimpCanvasItem * gimp_mybrush_tool_create_cursor (GimpPaintTool *paint_tool,
+                                                  GimpDisplay   *display,
+                                                  gdouble        x,
+                                                  gdouble        y,
+                                                  gdouble        radius);
 
 #endif  /*  __GIMP_MYBRUSH_TOOL_H__  */
-
-#endif

@@ -9,6 +9,7 @@ no_undefined = -no-undefined
 endif
 
 if PLATFORM_WIN32
+libgdi32 = -lgdi32
 else
 libm = -lm
 endif
@@ -125,6 +126,8 @@ libgimpwidgets_sources = \
 	gimphelpui.h			\
 	gimphintbox.c			\
 	gimphintbox.h			\
+	gimpicons.c			\
+	gimpicons.h			\
 	gimpintcombobox.c		\
 	gimpintcombobox.h		\
 	gimpintstore.c			\
@@ -161,8 +164,6 @@ libgimpwidgets_sources = \
 	gimpscrolledpreview.h		\
 	gimpsizeentry.c			\
 	gimpsizeentry.h			\
-	gimpstock.c			\
-	gimpstock.h			\
 	gimpstringcombobox.c		\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.c		\
@@ -229,6 +230,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpframe.h			\
 	gimphelpui.h			\
 	gimphintbox.h			\
+	gimpicons.h			\
 	gimpintcombobox.h		\
 	gimpintstore.h			\
 	gimpmemsizeentry.h		\
@@ -247,7 +249,6 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpscaleentry.h		\
 	gimpscrolledpreview.h		\
 	gimpsizeentry.h			\
-	gimpstock.h			\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.h		\
 	gimpunitmenu.h			\
@@ -274,7 +275,8 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(LCMS_LIBS)		\
-	$(libm)
+	$(libm)			\
+	$(libgdi32)
 
 
 EXTRA_DIST = \

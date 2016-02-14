@@ -27,10 +27,11 @@
 
 #include "display-types.h"
 
-#include "config/gimpdisplayconfig.h"
 #include "config/gimpdisplayoptions.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-cairo.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
@@ -59,6 +60,7 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-profile.h"
+#include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
@@ -562,13 +564,13 @@ static void
 gimp_display_shell_resolution_changed_handler (GimpImage        *image,
                                                GimpDisplayShell *shell)
 {
-  gimp_display_shell_scale_changed (shell);
+  gimp_display_shell_scale_update (shell);
 
   if (shell->dot_for_dot)
     {
       if (shell->unit != GIMP_UNIT_PIXEL)
         {
-          gimp_display_shell_scale_update_rulers (shell);
+          gimp_display_shell_rulers_update (shell);
         }
 
       gimp_display_shell_scaled (shell);
@@ -579,9 +581,15 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *image,
        * a display shell point of view. Force a redraw of the display
        * so that we don't get any display garbage.
        */
-      gimp_display_shell_scale_resize (shell,
-                                       shell->display->config->resize_windows_on_resize,
-                                       FALSE);
+
+      GimpDisplayConfig *config = shell->display->config;
+      gboolean           resize_window;
+
+      /* Resize windows only in multi-window mode */
+      resize_window = (config->resize_windows_on_resize &&
+                       ! GIMP_GUI_CONFIG (config)->single_window_mode);
+
+      gimp_display_shell_scale_resize (shell, resize_window, FALSE);
     }
 }
 
@@ -622,11 +630,13 @@ gimp_display_shell_guide_add_handler (GimpImage        *image,
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->guides);
   GimpCanvasItem       *item;
+  GimpGuideStyle        style;
 
+  style = gimp_guide_get_style (guide);
   item = gimp_canvas_guide_new (shell,
                                 gimp_guide_get_orientation (guide),
                                 gimp_guide_get_position (guide),
-                                TRUE);
+                                style);
 
   gimp_canvas_proxy_group_add_item (group, guide, item);
   g_object_unref (item);
@@ -665,12 +675,13 @@ gimp_display_shell_sample_point_add_handler (GimpImage        *image,
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->sample_points);
   GimpCanvasItem       *item;
   GList                *list;
+  gint                  x;
+  gint                  y;
   gint                  i;
 
-  item = gimp_canvas_sample_point_new (shell,
-                                       sample_point->x,
-                                       sample_point->y,
-                                       0, TRUE);
+  gimp_sample_point_get_position (sample_point, &x, &y);
+
+  item = gimp_canvas_sample_point_new (shell, x, y, 0, TRUE);
 
   gimp_canvas_proxy_group_add_item (group, sample_point, item);
   g_object_unref (item);
@@ -724,10 +735,14 @@ gimp_display_shell_sample_point_move_handler (GimpImage        *image,
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->sample_points);
   GimpCanvasItem       *item;
+  gint                  x;
+  gint                  y;
 
   item = gimp_canvas_proxy_group_get_item (group, sample_point);
 
-  gimp_canvas_sample_point_set (item, sample_point->x, sample_point->y);
+  gimp_sample_point_get_position (sample_point, &x, &y);
+
+  gimp_canvas_sample_point_set (item, x, y);
 }
 
 static void
@@ -738,7 +753,14 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
                                                   gint              previous_height,
                                                   GimpDisplayShell *shell)
 {
-  if (shell->display->config->resize_windows_on_resize)
+  GimpDisplayConfig *config = shell->display->config;
+  gboolean           resize_window;
+
+  /* Resize windows only in multi-window mode */
+  resize_window = (config->resize_windows_on_resize &&
+                   ! GIMP_GUI_CONFIG (config)->single_window_mode);
+
+  if (resize_window)
     {
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
@@ -752,13 +774,16 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
     }
   else
     {
-      GimpImage *image                    = gimp_display_get_image (shell->display);
-      gint       new_width                = gimp_image_get_width  (image);
-      gint       new_height               = gimp_image_get_height (image);
-      gint       scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
-      gint       scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
+      GimpImage *image      = gimp_display_get_image (shell->display);
+      gint       new_width  = gimp_image_get_width  (image);
+      gint       new_height = gimp_image_get_height (image);
+      gint       scaled_previous_origin_x;
+      gint       scaled_previous_origin_y;
       gboolean   horizontally;
       gboolean   vertically;
+
+      scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
+      scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
 
       horizontally = (SCALEX (shell, previous_width)  >  shell->disp_width  &&
                       SCALEX (shell, new_width)       <= shell->disp_width);
@@ -772,9 +797,12 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
       gimp_display_shell_scroll_center_image (shell, horizontally, vertically);
 
       /* The above calls might not lead to a call to
-       * gimp_display_shell_scroll_clamp_and_update() in all cases we
-       * need it to be called, so simply call it explicitly here at
-       * the end
+       * gimp_display_shell_scroll_clamp_and_update() and
+       * gimp_display_shell_expose_full() in all cases because when
+       * scaling the old and new scroll offset might be the same.
+       *
+       * We need them to be called in all cases, so simply call them
+       * explicitly here at the end
        */
       gimp_display_shell_scroll_clamp_and_update (shell);
 
@@ -978,7 +1006,7 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
       shell->monitor_yres = GIMP_DISPLAY_CONFIG (config)->monitor_yres;
     }
 
-  gimp_display_shell_scale_changed (shell);
+  gimp_display_shell_scale_update (shell);
 
   if (! shell->dot_for_dot)
     {

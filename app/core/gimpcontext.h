@@ -76,6 +76,9 @@ struct _GimpContext
   GimpDynamics         *dynamics;
   gchar                *dynamics_name;
 
+  GimpMybrush          *mybrush;
+  gchar                *mybrush_name;
+
   GimpPattern          *pattern;
   gchar                *pattern_name;
 
@@ -127,6 +130,8 @@ struct _GimpContextClass
                                GimpBrush            *brush);
   void (* dynamics_changed)   (GimpContext          *context,
                                GimpDynamics         *dynamics);
+  void (* mybrush_changed)    (GimpContext          *context,
+                               GimpMybrush          *brush);
   void (* pattern_changed)    (GimpContext          *context,
                                GimpPattern          *pattern);
   void (* gradient_changed)   (GimpContext          *context,
@@ -297,6 +302,13 @@ GimpDynamics   * gimp_context_get_dynamics        (GimpContext     *context);
 void             gimp_context_set_dynamics        (GimpContext     *context,
                                                    GimpDynamics    *dynamics);
 void             gimp_context_dynamics_changed    (GimpContext     *context);
+
+
+/*  mybrush  */
+GimpMybrush    * gimp_context_get_mybrush         (GimpContext     *context);
+void             gimp_context_set_mybrush         (GimpContext     *context,
+                                                   GimpMybrush     *brush);
+void             gimp_context_mybrush_changed     (GimpContext     *context);
 
 
 /*  pattern  */

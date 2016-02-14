@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -33,9 +31,6 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "plug-in/gimppluginmanager.h"
-
-#include "gimpfiledialog.h"
 #include "gimphelp-ids.h"
 #include "gimpopendialog.h"
 
@@ -64,29 +59,23 @@ gimp_open_dialog_init (GimpOpenDialog *dialog)
 GtkWidget *
 gimp_open_dialog_new (Gimp *gimp)
 {
-  GimpOpenDialog *dialog;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  dialog = g_object_new (GIMP_TYPE_OPEN_DIALOG,
-                         "gimp",                      gimp,
-                         "title",                     _("Open Image"),
-                         "role",                      "gimp-file-open",
-                         "help-id",                   GIMP_HELP_FILE_OPEN,
-                         "stock-id",                  GTK_STOCK_OPEN,
+  return g_object_new (GIMP_TYPE_OPEN_DIALOG,
+                       "gimp",                  gimp,
+                       "title",                 _("Open Image"),
+                       "role",                  "gimp-file-open",
+                       "help-id",               GIMP_HELP_FILE_OPEN,
+                       "stock-id",              GTK_STOCK_OPEN,
 
-                         "automatic-label",           _("Automatically Detected"),
-                         "automatic-help-id",         GIMP_HELP_FILE_OPEN_BY_EXTENSION,
+                       "automatic-label",       _("Automatically Detected"),
+                       "automatic-help-id",     GIMP_HELP_FILE_OPEN_BY_EXTENSION,
 
-                         "action",                    GTK_FILE_CHOOSER_ACTION_OPEN,
-                         "file-procs",                gimp->plug_in_manager->load_procs,
-                         "file-procs-all-images",     NULL,
-                         "file-filter-label",         NULL,
-                         "local-only",                FALSE,
-                         "do-overwrite-confirmation", TRUE,
-                         NULL);
-
-  return GTK_WIDGET (dialog);
+                       "action",                GTK_FILE_CHOOSER_ACTION_OPEN,
+                       "file-procs",            GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                       "file-procs-all-images", GIMP_FILE_PROCEDURE_GROUP_NONE,
+                       "file-filter-label",     NULL,
+                       NULL);
 }
 
 void

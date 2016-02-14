@@ -52,6 +52,7 @@ void   register_image_color_profile_procs (GimpPDB *pdb);
 void   register_image_convert_procs       (GimpPDB *pdb);
 void   register_image_grid_procs          (GimpPDB *pdb);
 void   register_image_guides_procs        (GimpPDB *pdb);
+void   register_image_sample_points_procs (GimpPDB *pdb);
 void   register_image_select_procs        (GimpPDB *pdb);
 void   register_image_transform_procs     (GimpPDB *pdb);
 void   register_image_undo_procs          (GimpPDB *pdb);

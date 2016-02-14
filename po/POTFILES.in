@@ -42,8 +42,8 @@ app/actions/error-console-commands.c
 app/actions/file-actions.c
 app/actions/file-commands.c
 app/actions/filters-actions.c
-app/actions/filters-commands.c
 app/actions/fonts-actions.c
+app/actions/gimpgeglprocedure.c
 app/actions/gradient-editor-actions.c
 app/actions/gradient-editor-commands.c
 app/actions/gradients-actions.c
@@ -54,6 +54,7 @@ app/actions/image-commands.c
 app/actions/images-actions.c
 app/actions/layers-actions.c
 app/actions/layers-commands.c
+app/actions/mypaint-brushes-actions.c
 app/actions/palette-editor-actions.c
 app/actions/palette-editor-commands.c
 app/actions/palettes-actions.c
@@ -130,6 +131,7 @@ app/core/gimpdrawable-offset.c
 app/core/gimpdrawable-stroke.c
 app/core/gimpdrawable-transform.c
 app/core/gimpdynamicsoutput.c
+app/core/gimpfilloptions.c
 app/core/gimpgradient-load.c
 app/core/gimpgradient-save.c
 app/core/gimpgrid.c
@@ -158,6 +160,7 @@ app/core/gimpitem-linked.c
 app/core/gimplayer-floating-sel.c
 app/core/gimplayer.c
 app/core/gimplayermask.c
+app/core/gimpmybrush-load.c
 app/core/gimppalette.c
 app/core/gimppalette-import.c
 app/core/gimppalette-load.c
@@ -170,9 +173,15 @@ app/core/gimppdbprogress.c
 app/core/gimpprogress.c
 app/core/gimpselection.c
 app/core/gimpstrokeoptions.c
+app/core/gimpsymmetry.c
+app/core/gimpsymmetry-mandala.c
+app/core/gimpsymmetry-mirror.c
+app/core/gimpsymmetry-tiling.c
 app/core/gimptagcache.c
 app/core/gimptemplate.c
+app/core/gimptoolinfo.c
 app/core/gimptooloptions.c
+app/core/gimptoolpreset.c
 app/core/gimptoolpreset-load.c
 app/core/gimpunit.c
 
@@ -236,7 +245,6 @@ app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
 
 app/file/file-open.c
-app/file/file-procedure.c
 app/file/file-remote.c
 app/file/file-save.c
 app/file/file-utils.c
@@ -248,14 +256,15 @@ app/operations/gimpbrightnesscontrastconfig.c
 app/operations/gimpcolorbalanceconfig.c
 app/operations/gimpcolorizeconfig.c
 app/operations/gimpcurvesconfig.c
-app/operations/gimpdesaturateconfig.c
 app/operations/gimphuesaturationconfig.c
 app/operations/gimplevelsconfig.c
 app/operations/gimpoperationcagecoefcalc.c
 app/operations/gimpoperationcagetransform.c
+app/operations/gimpoperationdesaturate.c
+app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
+app/operations/gimpoperationthreshold.c
 app/operations/gimpoperationthresholdalpha.c
-app/operations/gimpthresholdconfig.c
 
 app/gui/gui.c
 app/gui/gui-message.c
@@ -266,15 +275,20 @@ app/gui/themes.c
 app/menus/menus.c
 
 app/paint/gimpairbrush.c
+app/paint/gimpairbrushoptions.c
 app/paint/gimpbrushcore.c
 app/paint/gimpclone.c
+app/paint/gimpcloneoptions.c
 app/paint/gimpconvolve.c
+app/paint/gimpconvolveoptions.c
 app/paint/gimpdodgeburn.c
+app/paint/gimpdodgeburnoptions.c
 app/paint/gimperaser.c
+app/paint/gimperaseroptions.c
 app/paint/gimpheal.c
 app/paint/gimpink.c
 app/paint/gimpinkoptions.c
-app/paint/gimpmybrush.c
+app/paint/gimpmybrushcore.c
 app/paint/gimpmybrushoptions.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore-stroke.c
@@ -283,7 +297,9 @@ app/paint/gimppaintoptions.c
 app/paint/gimppencil.c
 app/paint/gimpperspectiveclone.c
 app/paint/gimpsmudge.c
+app/paint/gimpsmudgeoptions.c
 app/paint/gimpsourcecore.c
+app/paint/gimpsourceoptions.c
 app/paint/paint-enums.c
 
 app/pdb/channel-cmds.c
@@ -301,6 +317,7 @@ app/pdb/gimpprocedure.c
 app/pdb/image-cmds.c
 app/pdb/image-convert-cmds.c
 app/pdb/image-guides-cmds.c
+app/pdb/image-sample-points-cmds.c
 app/pdb/image-select-cmds.c
 app/pdb/image-transform-cmds.c
 app/pdb/image-undo-cmds.c
@@ -322,6 +339,7 @@ app/plug-in/gimpplugin-message.c
 app/plug-in/gimpplugin-progress.c
 app/plug-in/gimppluginmanager.c
 app/plug-in/gimppluginmanager-call.c
+app/plug-in/gimppluginmanager-file-procedure.c
 app/plug-in/gimppluginmanager-restore.c
 app/plug-in/gimppluginprocedure.c
 app/plug-in/gimppluginprocframe.c
@@ -361,7 +379,6 @@ app/tools/gimpconvolvetool.c
 app/tools/gimpcropoptions.c
 app/tools/gimpcroptool.c
 app/tools/gimpcurvestool.c
-app/tools/gimpdesaturatetool.c
 app/tools/gimpdodgeburntool.c
 app/tools/gimpeditselectiontool.c
 app/tools/gimpellipseselecttool.c
@@ -378,6 +395,7 @@ app/tools/gimphandletransformtool.c
 app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
+app/tools/gimpimagemapoptions.c
 app/tools/gimpimagemaptool.c
 app/tools/gimpimagemaptool-settings.c
 app/tools/gimpinkoptions-gui.c
@@ -402,7 +420,6 @@ app/tools/gimppainttool.c
 app/tools/gimppenciltool.c
 app/tools/gimpperspectiveclonetool.c
 app/tools/gimpperspectivetool.c
-app/tools/gimpposterizetool.c
 app/tools/gimprectangleoptions.c
 app/tools/gimprectangleselectoptions.c
 app/tools/gimprectangleselecttool.c
@@ -441,6 +458,7 @@ app/widgets/gimpactionview.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbrushselect.c
+app/widgets/gimpbuffersourcebox.c
 app/widgets/gimpbufferview.c
 app/widgets/gimpchanneltreeview.c
 app/widgets/gimpclipboard.c
@@ -448,17 +466,20 @@ app/widgets/gimpcolordialog.c
 app/widgets/gimpcolordisplayeditor.c
 app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolorframe.c
+app/widgets/gimpcolorhistory.c
 app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcolorselectorpalette.c
 app/widgets/gimpcontainergridview.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollereditor.c
+app/widgets/gimpcontrollerinfo.c
 app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerlist.c
 app/widgets/gimpcontrollermouse.c
 app/widgets/gimpcontrollerwheel.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdeviceeditor.c
+app/widgets/gimpdeviceinfo.c
 app/widgets/gimpdeviceinfoeditor.c
 app/widgets/gimpdevices.c
 app/widgets/gimpdevicestatus.c
@@ -511,6 +532,7 @@ app/widgets/gimpsettingsbox.c
 app/widgets/gimpsettingseditor.c
 app/widgets/gimpsizebox.c
 app/widgets/gimpstrokeeditor.c
+app/widgets/gimpsymmetryeditor.c
 app/widgets/gimptagentry.c
 app/widgets/gimptemplateeditor.c
 app/widgets/gimptextbuffer-serialize.c

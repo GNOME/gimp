@@ -207,7 +207,7 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
               break;
 
             case GIMP_ATTRIBUTES_COLORSPACE_ADOBERGB:
-              profile = gimp_color_profile_new_adobe_rgb ();
+              profile = gimp_color_profile_new_rgb_adobe ();
               break;
             }
 

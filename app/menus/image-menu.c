@@ -24,6 +24,7 @@
 #include "menus-types.h"
 
 #include "file-menu.h"
+#include "filters-menu.h"
 #include "image-menu.h"
 #include "plug-in-menus.h"
 #include "window-menu.h"
@@ -42,6 +43,7 @@ image_menu_setup (GimpUIManager *manager,
   file_menu_setup (manager, ui_path);
   windows_menu_setup (manager, ui_path);
   plug_in_menus_setup (manager, ui_path);
+  filters_menu_setup (manager, ui_path);
 
   path = g_strconcat (ui_path, "/View", NULL);
   window_menu_setup (manager, "view", path);

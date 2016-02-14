@@ -9,10 +9,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-11-14 08:35+0000\n"
-"PO-Revision-Date: 2015-11-14 08:46+0000\n"
-"Last-Translator: <>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-12-19 07:12+0000\n"
+"PO-Revision-Date: 2015-12-19 08:00+0000\n"
+"Last-Translator:  <>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
@@ -484,7 +485,6 @@ msgid "Pattern fill"
 msgstr "Enchimento com textura"
 
 #: ../libgimpbase/gimpbaseenums.c:162
-#| msgid "Button 0"
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Fundo"
@@ -495,8 +495,6 @@ msgid "Round"
 msgstr "Redondo"
 
 #: ../libgimpbase/gimpbaseenums.c:164
-#| msgctxt "brush-generated-shape"
-#| msgid "Square"
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Quadrado"
@@ -1107,7 +1105,6 @@ msgid "Points"
 msgstr "Pontos"
 
 #: ../libgimpbase/gimpbaseenums.c:1641
-#| msgid "_Stroke"
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Traçar linha"
@@ -1261,34 +1258,34 @@ msgstr "Ligação a org.freedesktop.FileManager1 falhou: "
 msgid "Calling ShowItems failed: "
 msgstr "Chamada a ShowItems falhou: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:234
+#: ../libgimpcolor/gimpcolorprofile.c:252
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" não parece ser um perfil cor ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:280
+#: ../libgimpcolor/gimpcolorprofile.c:298
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Os dados não parecem ser um perfil de cor ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:337
+#: ../libgimpcolor/gimpcolorprofile.c:355
 msgid "Could not save color profile to memory"
 msgstr "Impossível gravar perfil de cor em memória"
 
-#: ../libgimpcolor/gimpcolorprofile.c:524
+#: ../libgimpcolor/gimpcolorprofile.c:542
 msgid "(unnamed profile)"
 msgstr "(perfil sem nome)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:566
+#: ../libgimpcolor/gimpcolorprofile.c:584
 #, c-format
 msgid "Model: %s"
 msgstr "Modelo: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:575
+#: ../libgimpcolor/gimpcolorprofile.c:593
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Fabricante: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:584
+#: ../libgimpcolor/gimpcolorprofile.c:602
 #, c-format
 msgid "Copyright: %s"
 msgstr "Direitos de autor: %s"
@@ -1327,10 +1324,21 @@ msgstr ""
 "perfil RGB interno quando possa ser escolhido um perfil de cor."
 
 #: ../libgimpconfig/gimpcolorconfig.c:69
+#| msgid ""
+#| "The preferred RGB working space color profile. It will be offered next to "
+#| "the built-in RGB profile when a color profile can be chosen."
+msgid ""
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
+msgstr ""
+"O perfil de cor de espaço de trabalho em tons de cinzento preferido. Será oferecido junto ao "
+"perfil em tons de cinzento interno quando possa ser escolhido um perfil de cor."
+
+#: ../libgimpconfig/gimpcolorconfig.c:73
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "O perfil de cores CMYK usado para converter entre RGB e CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:76
 msgid ""
 "The color profile to use for soft proofing from your image's color space to "
 "some other color space, including soft proofing to a printer or other output "
@@ -1340,7 +1348,7 @@ msgstr ""
 "outro espaço de cor, incluindo impressão numa impressora ou outro perfil de "
 "dispositivo de saída."
 
-#: ../libgimpconfig/gimpcolorconfig.c:77
+#: ../libgimpconfig/gimpcolorconfig.c:81
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1352,14 +1360,14 @@ msgstr ""
 "que use um perfil de monitor LUT ( a maioria é matriz), escolher intenção "
 "percetiva dá-lhe realmente a colorimetria relativa."
 
-#: ../libgimpconfig/gimpcolorconfig.c:84
+#: ../libgimpconfig/gimpcolorconfig.c:88
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to). "
 msgstr ""
 "Usar compensação de ponto preto (a não ser que tenha uma boa razão para não "
 "o fazer)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:88
+#: ../libgimpconfig/gimpcolorconfig.c:92
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1369,14 +1377,14 @@ msgstr ""
 "dispositivo de simulação de saída (normalmente o monitor). Experimente-os "
 "todos e escolha o que lhe parecer melhor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:93
+#: ../libgimpconfig/gimpcolorconfig.c:97
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 "Experimente com e sem compensação de ponto preto e escolha o que lhe parecer "
 "melhor. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:97
+#: ../libgimpconfig/gimpcolorconfig.c:101
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -1384,16 +1392,25 @@ msgstr ""
 "Quando ativo, a simulação de impressão marcará as cores que não podem ser "
 "representadas no espaço de cores de destino."
 
-#: ../libgimpconfig/gimpcolorconfig.c:101
+#: ../libgimpconfig/gimpcolorconfig.c:105
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Cor a usar para marcar as cores que ficarem fora da gama."
 
-#: ../libgimpconfig/gimpcolorconfig.c:408 ../libgimpconfig/gimpcolorconfig.c:511
+#: ../libgimpconfig/gimpcolorconfig.c:431
+#: ../libgimpconfig/gimpcolorconfig.c:565
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Perfil de cor \"%s\" não é para espaço de cor RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:439 ../libgimpconfig/gimpcolorconfig.c:552
+#: ../libgimpconfig/gimpcolorconfig.c:462
+#: ../libgimpconfig/gimpcolorconfig.c:606
+#, c-format
+#| msgid "Color profile '%s' is not for RGB color space."
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr "Perfil de cor \"%s\" não é para espaço de cor GRAY."
+
+#: ../libgimpconfig/gimpcolorconfig.c:493
+#: ../libgimpconfig/gimpcolorconfig.c:647
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Perfil de cor \"%s\" não é para espaço de cor CMYK."
@@ -1657,6 +1674,83 @@ msgstr "Selecionar ficheiro"
 msgid "Press F1 for more help"
 msgstr "Prima F1 para mais ajuda"
 
+#: ../libgimpwidgets/gimpicons.c:60
+msgid "Anchor"
+msgstr "Âncora"
+
+#: ../libgimpwidgets/gimpicons.c:61
+msgid "C_enter"
+msgstr "C_Entro"
+
+#: ../libgimpwidgets/gimpicons.c:62
+msgid "_Duplicate"
+msgstr "_Duplicar"
+
+#: ../libgimpwidgets/gimpicons.c:63
+msgid "_Edit"
+msgstr "_Editar"
+
+#: ../libgimpwidgets/gimpicons.c:64
+msgid "Linked"
+msgstr "Ligado"
+
+#: ../libgimpwidgets/gimpicons.c:65
+msgid "Paste as New"
+msgstr "Colar como novo"
+
+#: ../libgimpwidgets/gimpicons.c:66
+msgid "Paste Into"
+msgstr "Colar em"
+
+#: ../libgimpwidgets/gimpicons.c:67
+msgid "_Reset"
+msgstr "_Repor"
+
+#: ../libgimpwidgets/gimpicons.c:68
+msgid "Visible"
+msgstr "Visível"
+
+#: ../libgimpwidgets/gimpicons.c:107 ../libgimpwidgets/gimpicons.c:111
+msgid "_Stroke"
+msgstr "_Traçar"
+
+#: ../libgimpwidgets/gimpicons.c:123
+msgid "L_etter Spacing"
+msgstr "_Espaçamento de letras"
+
+#: ../libgimpwidgets/gimpicons.c:124
+msgid "L_ine Spacing"
+msgstr "Espaçamento de _Linhas"
+
+#: ../libgimpwidgets/gimpicons.c:140
+msgid "Re_size"
+msgstr "_Redimensionar"
+
+#: ../libgimpwidgets/gimpicons.c:141 ../libgimpwidgets/gimpicons.c:276
+msgid "_Scale"
+msgstr "_Dimensionar"
+
+#: ../libgimpwidgets/gimpicons.c:248
+msgid "Cr_op"
+msgstr "_Recortar"
+
+#: ../libgimpwidgets/gimpicons.c:256
+msgid "_Select"
+msgstr "_Selecionar"
+
+#: ../libgimpwidgets/gimpicons.c:259 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimpwidgets/gimpicons.c:282
+msgid "_Transform"
+msgstr "_Transformar"
+
+#: ../libgimpwidgets/gimpicons.c:275
+msgid "_Rotate"
+msgstr "_Rodar"
+
+#: ../libgimpwidgets/gimpicons.c:278
+msgid "_Shear"
+msgstr "_Aparar"
+
 #: ../libgimpwidgets/gimpmemsizeentry.c:223
 msgid "Kilobytes"
 msgstr "Quilobytes"
@@ -1736,83 +1830,6 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Este campo de entrada de texto está limitado a %d carácter."
 msgstr[1] "Este campo de entrada de texto está limitado a %d caracteres."
-
-#: ../libgimpwidgets/gimpstock.c:60
-msgid "Anchor"
-msgstr "Âncora"
-
-#: ../libgimpwidgets/gimpstock.c:61
-msgid "C_enter"
-msgstr "C_Entro"
-
-#: ../libgimpwidgets/gimpstock.c:62
-msgid "_Duplicate"
-msgstr "_Duplicar"
-
-#: ../libgimpwidgets/gimpstock.c:63
-msgid "_Edit"
-msgstr "_Editar"
-
-#: ../libgimpwidgets/gimpstock.c:64
-msgid "Linked"
-msgstr "Ligado"
-
-#: ../libgimpwidgets/gimpstock.c:65
-msgid "Paste as New"
-msgstr "Colar como novo"
-
-#: ../libgimpwidgets/gimpstock.c:66
-msgid "Paste Into"
-msgstr "Colar em"
-
-#: ../libgimpwidgets/gimpstock.c:67
-msgid "_Reset"
-msgstr "_Repor"
-
-#: ../libgimpwidgets/gimpstock.c:68
-msgid "Visible"
-msgstr "Visível"
-
-#: ../libgimpwidgets/gimpstock.c:107 ../libgimpwidgets/gimpstock.c:111
-msgid "_Stroke"
-msgstr "_Traçar"
-
-#: ../libgimpwidgets/gimpstock.c:123
-msgid "L_etter Spacing"
-msgstr "_Espaçamento de letras"
-
-#: ../libgimpwidgets/gimpstock.c:124
-msgid "L_ine Spacing"
-msgstr "Espaçamento de _Linhas"
-
-#: ../libgimpwidgets/gimpstock.c:140
-msgid "Re_size"
-msgstr "_Redimensionar"
-
-#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:276
-msgid "_Scale"
-msgstr "_Dimensionar"
-
-#: ../libgimpwidgets/gimpstock.c:248
-msgid "Cr_op"
-msgstr "_Recortar"
-
-#: ../libgimpwidgets/gimpstock.c:256
-msgid "_Select"
-msgstr "_Selecionar"
-
-#: ../libgimpwidgets/gimpstock.c:259 ../libgimpwidgets/gimpstock.c:271
-#: ../libgimpwidgets/gimpstock.c:282
-msgid "_Transform"
-msgstr "_Transformar"
-
-#: ../libgimpwidgets/gimpstock.c:275
-msgid "_Rotate"
-msgstr "_Rodar"
-
-#: ../libgimpwidgets/gimpstock.c:278
-msgid "_Shear"
-msgstr "_Aparar"
 
 #: ../libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -2104,15 +2121,18 @@ msgstr "X - inclinar à frente"
 msgid "Y Axis Tilt Right"
 msgstr "Y - inclinar à direita"
 
-#: ../modules/controller-dx-dinput.c:481 ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y - inclinar à esquerda"
 
-#: ../modules/controller-dx-dinput.c:487 ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z - virar à esquerda"
 
-#: ../modules/controller-dx-dinput.c:490 ../modules/controller-linux-input.c:102
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z - virar à direita"
 

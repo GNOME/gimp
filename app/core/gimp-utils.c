@@ -745,6 +745,90 @@ gimp_file_is_executable (GFile *file)
   return executable;
 }
 
+/**
+ * gimp_file_get_extension:
+ * @file: A #GFile
+ *
+ * Returns @file's extension (including the .), or NULL if there is no
+ * extension. Note that this function handles compressed files too,
+ * e.g. for "file.png.gz" it will return ".png.gz".
+ *
+ * Returns: The @file's extension. Free with g_free() when no longer needed.
+ **/
+gchar *
+gimp_file_get_extension (GFile *file)
+{
+  gchar *uri;
+  gint   uri_len;
+  gchar *ext = NULL;
+  gint   search_len;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  uri     = g_file_get_uri (file);
+  uri_len = strlen (uri);
+
+  if (g_str_has_suffix (uri, ".gz"))
+    search_len = uri_len - 3;
+  else if (g_str_has_suffix (uri, ".bz2"))
+    search_len = uri_len - 4;
+  else if (g_str_has_suffix (uri, ".xz"))
+    search_len = uri_len - 3;
+  else
+    search_len = uri_len;
+
+  ext = g_strrstr_len (uri, search_len, ".");
+
+  if (ext)
+    ext = g_strdup (ext);
+
+  g_free (uri);
+
+  return ext;
+}
+
+GFile *
+gimp_file_with_new_extension (GFile *file,
+                              GFile *ext_file)
+{
+  gchar *uri;
+  gchar *file_ext;
+  gint   file_ext_len = 0;
+  gchar *ext_file_ext = NULL;
+  gchar *uri_without_ext;
+  gchar *new_uri;
+  GFile *ret;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (ext_file == NULL || G_IS_FILE (ext_file), NULL);
+
+  uri      = g_file_get_uri (file);
+  file_ext = gimp_file_get_extension (file);
+
+  if (file_ext)
+    {
+      file_ext_len = strlen (file_ext);
+      g_free (file_ext);
+    }
+
+  if (ext_file)
+    ext_file_ext = gimp_file_get_extension (ext_file);
+
+  uri_without_ext = g_strndup (uri, strlen (uri) - file_ext_len);
+
+  g_free (uri);
+
+  new_uri = g_strconcat (uri_without_ext, ext_file_ext, NULL);
+
+  ret = g_file_new_for_uri (new_uri);
+
+  g_free (ext_file_ext);
+  g_free (uri_without_ext);
+  g_free (new_uri);
+
+  return ret;
+}
+
 
 /*  debug stuff  */
 

@@ -394,7 +394,7 @@ gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
             {
               for (b = 0; b < 3; b++)
                 dest[b] =
-                  bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]);
+                  bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]) / a;
 
               dest[3] = a;
             }
@@ -667,23 +667,31 @@ static gboolean
 gimp_color_profile_can_gegl_copy (GimpColorProfile *src_profile,
                                   GimpColorProfile *dest_profile)
 {
-  static GimpColorProfile *srgb_profile       = NULL;
-  static GimpColorProfile *linear_rgb_profile = NULL;
+  static GimpColorProfile *srgb_profile        = NULL;
+  static GimpColorProfile *srgb_linear_profile = NULL;
+  static GimpColorProfile *gray_profile        = NULL;
+  static GimpColorProfile *gray_linear_profile = NULL;
 
   if (gimp_color_profile_is_equal (src_profile, dest_profile))
     return TRUE;
 
   if (! srgb_profile)
     {
-      srgb_profile       = gimp_color_profile_new_srgb ();
-      linear_rgb_profile = gimp_color_profile_new_linear_rgb ();
+      srgb_profile        = gimp_color_profile_new_rgb_srgb ();
+      srgb_linear_profile = gimp_color_profile_new_rgb_srgb_linear ();
+      gray_profile        = gimp_color_profile_new_gray_srgb ();
+      gray_linear_profile = gimp_color_profile_new_gray_srgb_linear ();
     }
 
-  if ((gimp_color_profile_is_equal (src_profile, srgb_profile) ||
-       gimp_color_profile_is_equal (src_profile, linear_rgb_profile))
+  if ((gimp_color_profile_is_equal (src_profile, srgb_profile)        ||
+       gimp_color_profile_is_equal (src_profile, srgb_linear_profile) ||
+       gimp_color_profile_is_equal (src_profile, gray_profile)        ||
+       gimp_color_profile_is_equal (src_profile, gray_linear_profile))
       &&
-      (gimp_color_profile_is_equal (dest_profile, srgb_profile) ||
-       gimp_color_profile_is_equal (dest_profile, linear_rgb_profile)))
+      (gimp_color_profile_is_equal (dest_profile, srgb_profile)        ||
+       gimp_color_profile_is_equal (dest_profile, srgb_linear_profile) ||
+       gimp_color_profile_is_equal (dest_profile, gray_profile)        ||
+       gimp_color_profile_is_equal (dest_profile, gray_linear_profile)))
     return TRUE;
 
   return FALSE;
@@ -712,9 +720,7 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
 
-  if ((gimp_babl_format_get_base_type (src_format)  != GIMP_RGB) ||
-      (gimp_babl_format_get_base_type (dest_format) != GIMP_RGB) ||
-      gimp_color_profile_can_gegl_copy (src_profile, dest_profile))
+  if (gimp_color_profile_can_gegl_copy (src_profile, dest_profile))
     {
       gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
                         dest_buffer, dest_rect);

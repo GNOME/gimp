@@ -53,6 +53,7 @@
 #include "widgets/gimppatternfactoryview.h"
 #include "widgets/gimpsamplepointeditor.h"
 #include "widgets/gimpselectioneditor.h"
+#include "widgets/gimpsymmetryeditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptooloptionseditor.h"
@@ -387,6 +388,22 @@ dialogs_dynamics_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_mypaint_brush_list_view_new (GimpDialogFactory *factory,
+                                     GimpContext       *context,
+                                     GimpUIManager     *ui_manager,
+                                     gint               view_size)
+{
+  return gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                     context->gimp->mybrush_factory,
+                                     context,
+                                     view_size, 1,
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<MyPaintBrushes>",
+                                     "/mypaint-brushes-popup",
+                                     "mypaint-brushes");
+}
+
+GtkWidget *
 dialogs_pattern_list_view_new (GimpDialogFactory *factory,
                                GimpContext       *context,
                                GimpUIManager     *ui_manager,
@@ -524,6 +541,22 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
                                       TRUE,
                                       view_size, 1,
                                       gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
+dialogs_mypaint_brush_grid_view_new (GimpDialogFactory *factory,
+                                     GimpContext       *context,
+                                     GimpUIManager     *ui_manager,
+                                     gint               view_size)
+{
+  return gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                     context->gimp->mybrush_factory,
+                                     context,
+                                     view_size, 1,
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<MyPaintBrushes>",
+                                     "/mypaint-brushes-popup",
+                                     "mypaint-brushes");
 }
 
 GtkWidget *
@@ -702,6 +735,15 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
                               gint               view_size)
 {
   return gimp_selection_editor_new (gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
+dialogs_symmetry_editor_new (GimpDialogFactory *factory,
+                             GimpContext       *context,
+                             GimpUIManager     *ui_manager,
+                             gint               view_size)
+{
+  return gimp_symmetry_editor_new (gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *

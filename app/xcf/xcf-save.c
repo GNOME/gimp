@@ -930,12 +930,19 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_GUIDES:
       {
+        GList *iter;
         GList *guides;
         gint   n_guides;
 
         guides = va_arg (args, GList *);
         n_guides = g_list_length (guides);
 
+        for (iter = guides; iter; iter = g_list_next (iter))
+          {
+            /* Do not save custom guides. */
+            if (gimp_guide_is_custom (GIMP_GUIDE (iter->data)))
+              n_guides--;
+          }
         size = n_guides * (4 + 1);
 
         xcf_write_prop_type_check_error (info, prop_type);
@@ -946,6 +953,9 @@ xcf_save_prop (XcfInfo    *info,
             GimpGuide *guide    = guides->data;
             gint32     position = gimp_guide_get_position (guide);
             gint8      orientation;
+
+            if (gimp_guide_is_custom (guide))
+              continue;
 
             switch (gimp_guide_get_orientation (guide))
               {
@@ -987,8 +997,7 @@ xcf_save_prop (XcfInfo    *info,
             GimpSamplePoint *sample_point = sample_points->data;
             gint32           x, y;
 
-            x = sample_point->x;
-            y = sample_point->y;
+            gimp_sample_point_get_position (sample_point, &x, &y);
 
             xcf_write_int32_check_error (info, (guint32 *) &x, 1);
             xcf_write_int32_check_error (info, (guint32 *) &y, 1);
@@ -1982,7 +1991,7 @@ xcf_save_vectors (XcfInfo    *info,
       tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));
       parasites     = gimp_item_get_parasites (GIMP_ITEM (vectors));
       num_parasites = gimp_parasite_list_persistent_length (parasites);
-      num_strokes   = g_list_length (vectors->strokes);
+      num_strokes   = g_queue_get_length (vectors->strokes);
 
       xcf_write_string_check_error (info, (gchar **) &name, 1);
       xcf_write_int32_check_error  (info, &tattoo,          1);
@@ -1993,7 +2002,7 @@ xcf_save_vectors (XcfInfo    *info,
 
       xcf_check_error (xcf_save_parasite_list (info, parasites, error));
 
-      for (stroke_list = g_list_first (vectors->strokes);
+      for (stroke_list = g_list_first (vectors->strokes->head);
            stroke_list;
            stroke_list = g_list_next (stroke_list))
         {

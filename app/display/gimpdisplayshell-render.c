@@ -342,12 +342,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                      mask_src_y * cairo_stride + mask_src_x * 4;
 
       gegl_buffer_get (shell->mask,
-                       GEGL_RECTANGLE (scaled_x, scaled_y,
+                       GEGL_RECTANGLE (scaled_x - shell->mask_offset_x,
+                                       scaled_y - shell->mask_offset_y,
                                        scaled_width, scaled_height),
                        buffer_scale,
                        babl_format ("Y u8"),
                        cairo_data, cairo_stride,
-                       GEGL_ABYSS_CLAMP);
+                       GEGL_ABYSS_NONE);
 
       if (shell->mask_inverted)
         {

@@ -80,7 +80,7 @@ user_install_dialog_new (GimpUserInstall *install)
   GtkTextBuffer *buffer;
   GtkWidget     *view;
 
-  gimp_stock_init ();
+  gimp_icons_init ();
 
   dialog = gimp_message_dialog_new (_("GIMP User Installation"),
 				    GIMP_STOCK_WILBER_EEK,

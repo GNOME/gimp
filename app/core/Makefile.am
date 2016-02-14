@@ -16,6 +16,7 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)					\
 	$(GEGL_CFLAGS)					\
 	$(GDK_PIXBUF_CFLAGS)				\
+	$(LIBMYPAINT_CFLAGS)			\
 	$(GEXIV2_CFLAGS)				\
 	$(LCMS_CFLAGS)					\
 	-I$(includedir)					\
@@ -36,6 +37,8 @@ libappcore_a_sources = \
 	gimp-contexts.h				\
 	gimp-edit.c				\
 	gimp-edit.h				\
+	gimp-filter-history.c			\
+	gimp-filter-history.h			\
 	gimp-gradients.c			\
 	gimp-gradients.h			\
 	gimp-gui.c				\
@@ -256,6 +259,8 @@ libappcore_a_sources = \
 	gimpimage-scale.h			\
 	gimpimage-snap.c			\
 	gimpimage-snap.h			\
+	gimpimage-symmetry.c			\
+	gimpimage-symmetry.h			\
 	gimpimage-undo.c			\
 	gimpimage-undo.h			\
 	gimpimage-undo-push.c			\
@@ -304,6 +309,11 @@ libappcore_a_sources = \
 	gimplist.h				\
 	gimpmaskundo.c				\
 	gimpmaskundo.h				\
+	gimpmybrush.c				\
+	gimpmybrush.h				\
+	gimpmybrush-load.c			\
+	gimpmybrush-load.h			\
+	gimpmybrush-private.h			\
 	gimpobject.c				\
 	gimpobject.h				\
 	gimppaintinfo.c				\
@@ -361,6 +371,14 @@ libappcore_a_sources = \
 	gimpstrokeoptions.h			\
 	gimpsubprogress.c			\
 	gimpsubprogress.h			\
+	gimpsymmetry.c				\
+	gimpsymmetry.h				\
+	gimpsymmetry-mandala.c			\
+	gimpsymmetry-mandala.h			\
+	gimpsymmetry-mirror.c			\
+	gimpsymmetry-mirror.h			\
+	gimpsymmetry-tiling.c			\
+	gimpsymmetry-tiling.h			\
 	gimptag.c				\
 	gimptag.h				\
 	gimptagcache.c				\

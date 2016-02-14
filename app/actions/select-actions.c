@@ -101,6 +101,12 @@ static const GimpActionEntry select_actions[] =
     G_CALLBACK (select_border_cmd_callback),
     GIMP_HELP_SELECTION_BORDER },
 
+  { "select-flood", NULL,
+    NC_("select-action", "F_lood"), NULL,
+    NC_("select-action", "Level the selection's interior"),
+    G_CALLBACK (select_flood_cmd_callback),
+    GIMP_HELP_SELECTION_FLOOD },
+
   { "select-save", GIMP_STOCK_SELECTION_TO_CHANNEL,
     NC_("select-action", "Save to _Channel"), NULL,
     NC_("select-action", "Save the selection to a channel"),
@@ -169,6 +175,7 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-shrink",  drawable && sel);
   SET_SENSITIVE ("select-grow",    drawable && sel);
   SET_SENSITIVE ("select-border",  drawable && sel);
+  SET_SENSITIVE ("select-flood",   drawable && sel);
 
   SET_SENSITIVE ("select-save",               drawable && !fs);
   SET_SENSITIVE ("select-stroke",             writable && !children && sel);

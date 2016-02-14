@@ -68,8 +68,6 @@ libapptools_a_sources = \
 	gimpcroptool.h			\
 	gimpcurvestool.c		\
 	gimpcurvestool.h		\
-	gimpdesaturatetool.c		\
-	gimpdesaturatetool.h		\
 	gimpdodgeburntool.c		\
 	gimpdodgeburntool.h		\
 	gimpdrawtool.c			\
@@ -156,8 +154,6 @@ libapptools_a_sources = \
 	gimpperspectiveclonetool.h	\
 	gimpperspectivetool.c		\
 	gimpperspectivetool.h		\
-	gimpposterizetool.c		\
-	gimpposterizetool.h		\
 	gimprectangleselecttool.c	\
 	gimprectangleselecttool.h	\
 	gimprectangleselectoptions.c	\

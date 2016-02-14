@@ -284,7 +284,7 @@ CODE
 		    $ch = 'gimp_parasite_copy (&';
 		    $cf = ')';
 		}
-		elsif ($type =~ /boolean|enum|guide/) {
+		elsif ($type =~ /boolean|enum|guide|sample_point/) {
 		    $type = 'int32';
 		}
 

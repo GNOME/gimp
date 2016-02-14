@@ -157,19 +157,21 @@ gimp_image_flip (GimpImage           *image,
        list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
+      gint             x;
+      gint             y;
+
+      gimp_sample_point_get_position (sample_point, &x, &y);
 
       if (flip_type == GIMP_ORIENTATION_VERTICAL)
         gimp_image_move_sample_point (image, sample_point,
-                                      sample_point->x,
-                                      gimp_image_get_height (image) -
-                                      sample_point->y,
+                                      x,
+                                      gimp_image_get_height (image) - y,
                                       TRUE);
 
       if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
         gimp_image_move_sample_point (image, sample_point,
-                                      gimp_image_get_width (image) -
-                                      sample_point->x,
-                                      sample_point->y,
+                                      gimp_image_get_width (image) - x,
+                                      y,
                                       TRUE);
     }
 

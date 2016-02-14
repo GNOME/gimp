@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#ifdef HAVE_LIBMYPAINT
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -27,9 +25,11 @@
 
 #include "tools-types.h"
 
-#include "config/gimpguiconfig.h" /* playground */
-
 #include "paint/gimpmybrushoptions.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpcanvasarc.h"
 
 #include "core/gimp.h"
 
@@ -38,9 +38,9 @@
 #include "gimpmybrushoptions-gui.h"
 #include "gimpmybrushtool.h"
 #include "gimptoolcontrol.h"
+#include "core/gimpmybrush.h"
 
 #include "gimp-intl.h"
-
 
 G_DEFINE_TYPE (GimpMybrushTool, gimp_mybrush_tool, GIMP_TYPE_PAINT_TOOL)
 
@@ -61,24 +61,21 @@ void
 gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
                             gpointer                  data)
 {
-  /* we should not know that "data" is a Gimp*, but what the heck this
-   * is experimental playground stuff
-   */
-  if (GIMP_GUI_CONFIG (GIMP (data)->config)->playground_mybrush_tool)
-    (* callback) (GIMP_TYPE_MYBRUSH_TOOL,
-                  GIMP_TYPE_MYBRUSH_OPTIONS,
-                  gimp_mybrush_options_gui,
-                  GIMP_CONTEXT_PROP_MASK_FOREGROUND |
-                  GIMP_CONTEXT_PROP_MASK_BACKGROUND |
-                  GIMP_CONTEXT_PROP_MASK_OPACITY    |
-                  GIMP_CONTEXT_PROP_MASK_PAINT_MODE,
-                  "gimp-mybrush-tool",
-                  _("MyPaint Brush"),
-                  _("MyPaint Brush Tool: Use MyPaint brushes in GIMP"),
-                  N_("M_yPaint Brush"), "Y",
-                  NULL, GIMP_HELP_TOOL_MYBRUSH,
-                  GIMP_STOCK_TOOL_MYBRUSH,
-                  data);
+  (* callback) (GIMP_TYPE_MYBRUSH_TOOL,
+                GIMP_TYPE_MYBRUSH_OPTIONS,
+                gimp_mybrush_options_gui,
+                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                GIMP_CONTEXT_PROP_MASK_BACKGROUND |
+                GIMP_CONTEXT_PROP_MASK_OPACITY    |
+                GIMP_CONTEXT_PROP_MASK_PAINT_MODE |
+                GIMP_CONTEXT_PROP_MASK_MYBRUSH,
+                "gimp-mypaint-brush-tool",
+                _("MyPaint Brush"),
+                _("MyPaint Brush Tool: Use MyPaint brushes in GIMP"),
+                N_("M_yPaint Brush"), "Y",
+                NULL, GIMP_HELP_TOOL_MYPAINT_BRUSH,
+                GIMP_STOCK_TOOL_MYPAINT_BRUSH,
+                data);
 }
 
 static void
@@ -99,7 +96,7 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_INK);
   gimp_tool_control_set_action_size (tool->control,
-                                     "tools/tools-mybrush-radius-set");
+                                     "tools/tools-mypaint-brush-radius-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
@@ -126,11 +123,45 @@ gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
                                gdouble        y)
 {
   GimpMybrushOptions *options = GIMP_MYBRUSH_TOOL_GET_OPTIONS (paint_tool);
+  GimpMybrush        *brush   = gimp_context_get_mybrush (GIMP_CONTEXT (options));
+  GimpCanvasItem     *item    = NULL;
+  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
 
-  gimp_paint_tool_set_draw_circle (paint_tool, TRUE,
-                                   exp (options->radius));
+  gdouble radius = exp (options->radius) + 2 * options->radius * gimp_mybrush_get_offset_by_random (brush);
+  radius = MAX (MAX (4 / shell->scale_x, 4 / shell->scale_y), radius);
+
+  item = gimp_mybrush_tool_create_cursor (paint_tool, display, x, y, radius);
+
+  if (! item)
+    {
+      gimp_paint_tool_set_draw_fallback (paint_tool,
+                                         TRUE, radius);
+    }
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_mybrush_tool_create_cursor (GimpPaintTool *paint_tool,
+                                 GimpDisplay   *display,
+                                 gdouble        x,
+                                 gdouble        y,
+                                 gdouble        radius)
+{
+
+  GimpDisplayShell     *shell;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_TOOL (paint_tool), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+
+  shell = gimp_display_get_shell (display);
+
+  /*  don't draw the boundary if it becomes too small  */
+  if (SCALEX (shell, radius) > 4 &&
+      SCALEY (shell, radius) > 4)
+    {
+      return gimp_canvas_arc_new(shell, x, y, radius, radius, 0.0, 2 * G_PI, FALSE);
+    }
 
   return NULL;
 }
-
-#endif

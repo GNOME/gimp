@@ -44,7 +44,6 @@
 
 #include "file-remote.h"
 #include "file-save.h"
-#include "file-utils.h"
 #include "gimp-file.h"
 
 #include "gimp-intl.h"
@@ -277,7 +276,7 @@ file_save (Gimp                *gimp,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("%s plug-in could not save image"),
-                       gimp_plug_in_procedure_get_label (file_proc));
+                       gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
         }
     }
 

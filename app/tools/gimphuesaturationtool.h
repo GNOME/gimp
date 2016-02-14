@@ -35,13 +35,11 @@ typedef struct _GimpHueSaturationToolClass GimpHueSaturationToolClass;
 
 struct _GimpHueSaturationTool
 {
-  GimpImageMapTool         parent_instance;
-
-  GimpHueSaturationConfig *config;
+  GimpImageMapTool  parent_instance;
 
   /*  dialog  */
-  GtkWidget               *range_radio;
-  GtkWidget               *hue_range_color_area[6];
+  GtkWidget        *range_radio;
+  GtkWidget        *hue_range_color_area[6];
 };
 
 struct _GimpHueSaturationToolClass

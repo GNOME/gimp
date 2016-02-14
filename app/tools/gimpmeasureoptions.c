@@ -63,12 +63,13 @@ gimp_measure_options_class_init (GimpMeasureOptionsClass *klass)
   object_class->set_property = gimp_measure_options_set_property;
   object_class->get_property = gimp_measure_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
-                                    "use-info-window",
-                                    N_("Open a floating dialog to view details "
-                                       "about measurements"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
+                            "use-info-window",
+                            _("Use info window"),
+                            _("Open a floating dialog to view details "
+                              "about measurements"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -122,8 +123,7 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
 
   /*  the use_info_window toggle button  */
-  button = gimp_prop_check_button_new (config, "use-info-window",
-                                       _("Use info window"));
+  button = gimp_prop_check_button_new (config, "use-info-window", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

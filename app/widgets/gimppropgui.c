@@ -339,6 +339,7 @@ gui_new_funcs[] =
 GtkWidget *
 gimp_prop_gui_new (GObject              *config,
                    GType                 owner_type,
+                   GParamFlags           flags,
                    GimpContext          *context,
                    GimpCreatePickerFunc  create_picker_func,
                    gpointer              picker_creator)
@@ -360,6 +361,9 @@ gimp_prop_gui_new (GObject              *config,
 
       /*  ignore properties of parent classes of owner_type  */
       if (! g_type_is_a (pspec->owner_type, owner_type))
+        continue;
+
+      if (flags && ((pspec->flags & flags) != flags))
         continue;
 
       if (HAS_KEY (pspec, "role", "output-extent"))

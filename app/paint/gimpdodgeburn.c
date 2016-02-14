@@ -31,6 +31,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpimage.h"
+#include "core/gimpsymmetry.h"
 
 #include "gimpdodgeburn.h"
 #include "gimpdodgeburnoptions.h"
@@ -41,13 +42,13 @@
 static void   gimp_dodge_burn_paint  (GimpPaintCore    *paint_core,
                                       GimpDrawable     *drawable,
                                       GimpPaintOptions *paint_options,
-                                      const GimpCoords *coords,
+                                      GimpSymmetry     *sym,
                                       GimpPaintState    paint_state,
                                       guint32           time);
 static void   gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                       GimpDrawable     *drawable,
                                       GimpPaintOptions *paint_options,
-                                      const GimpCoords *coords);
+                                      GimpSymmetry     *sym);
 
 
 G_DEFINE_TYPE (GimpDodgeBurn, gimp_dodge_burn, GIMP_TYPE_BRUSH_CORE)
@@ -87,7 +88,7 @@ static void
 gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
                        GimpDrawable     *drawable,
                        GimpPaintOptions *paint_options,
-                       const GimpCoords *coords,
+                       GimpSymmetry     *sym,
                        GimpPaintState    paint_state,
                        guint32           time)
 {
@@ -97,7 +98,7 @@ gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      gimp_dodge_burn_motion (paint_core, drawable, paint_options, coords);
+      gimp_dodge_burn_motion (paint_core, drawable, paint_options, sym);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -109,7 +110,7 @@ static void
 gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                         GimpDrawable     *drawable,
                         GimpPaintOptions *paint_options,
-                        const GimpCoords *coords)
+                        GimpSymmetry     *sym)
 {
   GimpDodgeBurnOptions *options   = GIMP_DODGE_BURN_OPTIONS (paint_options);
   GimpContext          *context   = GIMP_CONTEXT (paint_options);
@@ -121,10 +122,16 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gdouble               fade_point;
   gdouble               opacity;
   gdouble               force;
+  const GimpCoords     *coords;
+  GeglNode             *op;
+  gint                  paint_width, paint_height;
+  gint                  n_strokes;
+  gint                  i;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
+  coords = gimp_symmetry_get_origin (sym);
   opacity = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_OPACITY,
                                             coords,
@@ -133,40 +140,56 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                   paint_options, coords,
-                                                   &paint_buffer_x,
-                                                   &paint_buffer_y);
-  if (! paint_buffer)
-    return;
+  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+                                           drawable,
+                                           paint_options,
+                                           coords);
+  n_strokes = gimp_symmetry_get_size (sym);
+  for (i = 0; i < n_strokes; i++)
+    {
+      coords = gimp_symmetry_get_coords (sym, i);
 
-  /*  DodgeBurn the region  */
-  gimp_gegl_dodgeburn (gimp_paint_core_get_orig_image (paint_core),
-                       GEGL_RECTANGLE (paint_buffer_x,
-                                       paint_buffer_y,
-                                       gegl_buffer_get_width  (paint_buffer),
-                                       gegl_buffer_get_height (paint_buffer)),
-                       paint_buffer,
-                       GEGL_RECTANGLE (0, 0, 0, 0),
-                       options->exposure / 100.0,
-                       options->type,
-                       options->mode);
+      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                       paint_options, coords,
+                                                       &paint_buffer_x,
+                                                       &paint_buffer_y,
+                                                       &paint_width,
+                                                       &paint_height);
+      if (! paint_buffer)
+        continue;
 
-  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
-    force = gimp_dynamics_get_linear_value (dynamics,
-                                            GIMP_DYNAMICS_OUTPUT_FORCE,
-                                            coords,
-                                            paint_options,
-                                            fade_point);
-  else
-    force = paint_options->brush_force;
+      op = gimp_symmetry_get_operation (sym, i,
+                                        paint_width,
+                                        paint_height);
 
-  /* Replace the newly dodgedburned area (paint_area) to the image */
-  gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
-                                  coords,
-                                  MIN (opacity, GIMP_OPACITY_OPAQUE),
-                                  gimp_context_get_opacity (context),
-                                  gimp_paint_options_get_brush_mode (paint_options),
-                                  force,
-                                  GIMP_PAINT_CONSTANT);
+      /*  DodgeBurn the region  */
+      gimp_gegl_dodgeburn (gimp_paint_core_get_orig_image (paint_core),
+                           GEGL_RECTANGLE (paint_buffer_x,
+                                           paint_buffer_y,
+                                           gegl_buffer_get_width  (paint_buffer),
+                                           gegl_buffer_get_height (paint_buffer)),
+                           paint_buffer,
+                           GEGL_RECTANGLE (0, 0, 0, 0),
+                           options->exposure / 100.0,
+                           options->type,
+                           options->mode);
+
+      if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
+        force = gimp_dynamics_get_linear_value (dynamics,
+                                                GIMP_DYNAMICS_OUTPUT_FORCE,
+                                                coords,
+                                                paint_options,
+                                                fade_point);
+      else
+        force = paint_options->brush_force;
+
+      /* Replace the newly dodgedburned area (paint_area) to the image */
+      gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
+                                      coords,
+                                      MIN (opacity, GIMP_OPACITY_OPAQUE),
+                                      gimp_context_get_opacity (context),
+                                      gimp_paint_options_get_brush_mode (paint_options),
+                                      force,
+                                      GIMP_PAINT_CONSTANT, op);
+    }
 }

@@ -103,6 +103,8 @@ static void   gimp_prop_check_button_notify   (GObject    *config,
  *
  * Creates a #GtkCheckButton that displays and sets the specified
  * boolean property.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned button.
  *
  * Return value: The newly created #GtkCheckButton widget.
  *
@@ -124,6 +126,9 @@ gimp_prop_check_button_new (GObject     *config,
                                    G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,
@@ -208,6 +213,8 @@ static void   gimp_prop_enum_check_button_notify   (GObject    *config,
  * property of type Enum.  Note that this widget only allows two values
  * for the enum, one corresponding to the "checked" state and the
  * other to the "unchecked" state.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned button.
  *
  * Return value: The newly created #GtkCheckButton widget.
  *
@@ -231,6 +238,9 @@ gimp_prop_enum_check_button_new (GObject     *config,
                                    G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,
@@ -337,11 +347,17 @@ gimp_prop_enum_check_button_notify (GObject    *config,
 /*  int/enum combo box   */
 /*************************/
 
-static void   gimp_prop_int_combo_box_callback (GtkWidget   *widget,
-                                                GObject     *config);
-static void   gimp_prop_int_combo_box_notify   (GObject     *config,
-                                                GParamSpec  *param_spec,
-                                                GtkWidget   *widget);
+static void gimp_prop_int_combo_box_callback     (GtkWidget  *widget,
+                                                  GObject    *config);
+static void gimp_prop_int_combo_box_notify       (GObject    *config,
+                                                  GParamSpec *param_spec,
+                                                  GtkWidget  *widget);
+
+static void gimp_prop_pointer_combo_box_callback (GtkWidget  *widget,
+                                                  GObject    *config);
+static void gimp_prop_pointer_combo_box_notify   (GObject    *config,
+                                                  GParamSpec *param_spec,
+                                                  GtkWidget  *combo_box);
 
 /**
  * gimp_prop_int_combo_box_new:
@@ -392,6 +408,72 @@ gimp_prop_int_combo_box_new (GObject      *config,
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_int_combo_box_notify),
+                  combo_box);
+
+  return combo_box;
+}
+
+/**
+ * gimp_prop_pointer_combo_box_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of GType/gpointer property controlled by combo box.
+ * @store:         #GimpIntStore holding list of labels, values, etc.
+ *
+ * Creates a #GimpIntComboBox widget to display and set the specified
+ * property.  The contents of the widget are determined by @store,
+ * which should be created using gimp_int_store_new().
+ * Values are GType/gpointer data, and therefore must be stored in the
+ * "user-data" column, instead of the usual "value" column.
+ *
+ * Return value: The newly created #GimpIntComboBox widget.
+ *
+ * Since GIMP 2.10
+ */
+GtkWidget *
+gimp_prop_pointer_combo_box_new (GObject      *config,
+                                 const gchar  *property_name,
+                                 GimpIntStore *store)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo_box;
+  gpointer    property_value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_GTYPE, G_STRFUNC);
+  if (! param_spec)
+    {
+      param_spec = check_param_spec_w (config, property_name,
+                                       G_TYPE_PARAM_POINTER, G_STRFUNC);
+      if (! param_spec)
+        return NULL;
+    }
+
+  g_object_get (config,
+                property_name, &property_value,
+                NULL);
+
+  /* We use a GimpIntComboBox but we cannot store gpointer in the
+   * "value" column, because gpointer is not a subset of gint. Instead
+   * we store the value in the "user-data" column which is a gpointer.
+   */
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "model", store,
+                            NULL);
+
+  gimp_int_combo_box_set_active_by_user_data (GIMP_INT_COMBO_BOX (combo_box),
+                                              property_value);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_prop_pointer_combo_box_callback),
+                    config);
+
+  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_pointer_combo_box_notify),
                   combo_box);
 
   return combo_box;
@@ -510,6 +592,48 @@ gimp_prop_int_combo_box_notify (GObject    *config,
                                      config);
 }
 
+static void
+gimp_prop_pointer_combo_box_callback (GtkWidget *widget,
+                                      GObject   *config)
+{
+  GParamSpec *param_spec;
+  gpointer    value;
+
+  param_spec = get_param_spec (G_OBJECT (widget));
+  if (! param_spec)
+    return;
+
+  if (gimp_int_combo_box_get_active_user_data (GIMP_INT_COMBO_BOX (widget),
+                                               &value))
+    {
+      g_object_set (config,
+                    param_spec->name, value,
+                    NULL);
+    }
+}
+
+static void
+gimp_prop_pointer_combo_box_notify (GObject    *config,
+                                    GParamSpec *param_spec,
+                                    GtkWidget  *combo_box)
+{
+  gpointer value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (combo_box,
+                                   gimp_prop_pointer_combo_box_callback,
+                                   config);
+
+  gimp_int_combo_box_set_active_by_user_data (GIMP_INT_COMBO_BOX (combo_box),
+                                              value);
+
+  g_signal_handlers_unblock_by_func (combo_box,
+                                     gimp_prop_pointer_combo_box_callback,
+                                     config);
+}
 
 /************************/
 /*  boolean combo box   */
@@ -644,6 +768,8 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
  * the specified enum property.  The @minimum and @maximum arguments
  * allow only a subset of the enum to be used.  If the two arguments
  * are equal (e.g., 0, 0), then the full range of the enum will be used.
+ * If @title is #NULL, the @property_name's nick will be used as label
+ * of the returned frame.
  *
  * Return value: A #GimpFrame containing the radio buttons.
  *
@@ -668,6 +794,9 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
                                    G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! title)
+    title = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,
@@ -848,6 +977,8 @@ gimp_prop_enum_label_notify (GObject    *config,
  *
  * Creates a pair of radio buttons which function to set and display
  * the specified boolean property.
+ * If @title is #NULL, the @property_name's nick will be used as label
+ * of the returned frame.
  *
  * Return value: A #GimpFrame containing the radio buttons.
  *
@@ -872,6 +1003,9 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
                                    G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! title)
+    title = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,
@@ -1190,6 +1324,8 @@ gimp_prop_hscale_new (GObject     *config,
  * Creates a #libgimpwidgets-gimpscaleentry (slider and spin button)
  * to set and display the value of the specified double property.  See
  * gimp_scale_entry_new() for more information.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned object.
  *
  * Note that the @scale_limits boolean is the inverse of
  * gimp_scale_entry_new()'s "constrain" parameter.
@@ -1226,6 +1362,9 @@ gimp_prop_scale_entry_new (GObject     *config,
   if (! get_numeric_values (config,
                             param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
+
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
 
   tooltip = g_param_spec_get_blurb (param_spec);
 
@@ -3842,6 +3981,8 @@ static void   gimp_prop_expander_notify (GObject     *config,
  * Creates a #GtkExpander controlled by the specified boolean property.
  * A value of %TRUE for the property corresponds to the expanded state
  * for the widget.
+ * If @label is #NULL, the @property_name's nick will be used as label
+ * of the returned widget.
  *
  * Return value:  A new #GtkExpander widget.
  *
@@ -3860,6 +4001,9 @@ gimp_prop_expander_new (GObject     *config,
                                    G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
 
   g_object_get (config,
                 property_name, &value,

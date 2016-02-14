@@ -59,6 +59,9 @@
 #include "gimp-intl.h"
 
 
+#define FAR_OUTSIDE -10000
+
+
 typedef struct _StrokeUndo StrokeUndo;
 
 struct _StrokeUndo
@@ -296,7 +299,9 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
     {
       fg_select->gui =
         gimp_tool_gui_new (tool->tool_info,
+                           NULL,
                            _("Dialog for foreground select"),
+                           NULL, NULL,
                            gtk_widget_get_screen (GTK_WIDGET (shell)),
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            TRUE,
@@ -598,7 +603,15 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
 
       gimp_draw_tool_pause (draw_tool);
 
-      fg_select->last_coords = *coords;
+      if (proximity)
+        {
+          fg_select->last_coords = *coords;
+        }
+      else
+        {
+          fg_select->last_coords.x = FAR_OUTSIDE;
+          fg_select->last_coords.y = FAR_OUTSIDE;
+        }
 
       gimp_draw_tool_resume (draw_tool);
 
@@ -864,10 +877,11 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
             }
         }
 
-      gimp_draw_tool_add_arc (draw_tool, FALSE,
-                              x - radius, y - radius,
-                              2 * radius, 2 * radius,
-                              0.0, 2.0 * G_PI);
+      if (x > FAR_OUTSIDE && y > FAR_OUTSIDE)
+        gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                x - radius, y - radius,
+                                2 * radius, 2 * radius,
+                                0.0, 2.0 * G_PI);
     }
 }
 
@@ -945,7 +959,7 @@ gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
 
   if (tool->display)
     gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
-                                 NULL, NULL, FALSE);
+                                 NULL, 0, 0, NULL, FALSE);
 
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_FREE_SELECT);
@@ -1007,7 +1021,7 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select)
 
   gimp_foreground_select_options_get_mask_color (options, &color);
   gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
-                               fg_select->trimap, &color, TRUE);
+                               fg_select->trimap, 0, 0, &color, TRUE);
 
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PAINTBRUSH);
@@ -1035,7 +1049,7 @@ gimp_foreground_select_tool_set_preview (GimpForegroundSelectTool *fg_select)
 
   gimp_foreground_select_options_get_mask_color (options, &color);
   gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
-                               fg_select->mask, &color, TRUE);
+                               fg_select->mask, 0, 0, &color, TRUE);
 
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PAINTBRUSH);

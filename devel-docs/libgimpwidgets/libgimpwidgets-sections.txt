@@ -762,9 +762,11 @@ GIMP_QUERY_BOX_VBOX
 </SECTION>
 
 <SECTION>
-<FILE>gimpstock</FILE>
-<TITLE>GimpStock</TITLE>
+<FILE>gimpicons</FILE>
+<TITLE>GimpIcons</TITLE>
 gimp_stock_init
+gimp_icons_init
+gimp_icons_set_icon_theme
 <SUBSECTION Stock IDs>
 GIMP_STOCK_ANCHOR
 GIMP_STOCK_CENTER

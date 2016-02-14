@@ -228,22 +228,26 @@ gimp_image_resize_with_layers (GimpImage    *image,
     {
       GimpSamplePoint *sample_point        = list->data;
       gboolean         remove_sample_point = FALSE;
-      gint             new_x               = sample_point->x;
-      gint             new_y               = sample_point->y;
+      gint             old_x;
+      gint             old_y;
+      gint             new_x;
+      gint             new_y;
 
       list = g_list_next (list);
 
-      new_y += offset_y;
-      if ((sample_point->y < 0) || (sample_point->y > new_height))
+      gimp_sample_point_get_position (sample_point, &old_x, &old_y);
+
+      new_y = old_y + offset_y;
+      if ((new_y < 0) || (new_y > new_height))
         remove_sample_point = TRUE;
 
-      new_x += offset_x;
-      if ((sample_point->x < 0) || (sample_point->x > new_width))
+      new_x = old_x + offset_x;
+      if ((new_x < 0) || (new_x > new_width))
         remove_sample_point = TRUE;
 
       if (remove_sample_point)
         gimp_image_remove_sample_point (image, sample_point, TRUE);
-      else if (new_x != sample_point->x || new_y != sample_point->y)
+      else if (new_x != old_x || new_y != old_y)
         gimp_image_move_sample_point (image, sample_point,
                                       new_x, new_y, TRUE);
     }

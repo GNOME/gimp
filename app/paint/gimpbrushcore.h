@@ -107,7 +107,8 @@ void   gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                        GimpLayerModeEffects      paint_mode,
                                        GimpBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness,
-                                       GimpPaintApplicationMode  mode);
+                                       GimpPaintApplicationMode  mode,
+                                       GeglNode                 *op);
 void   gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                        GimpDrawable             *drawable,
                                        const GimpCoords         *coords,
@@ -115,12 +116,14 @@ void   gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                        gdouble                   image_opacity,
                                        GimpBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness,
-                                       GimpPaintApplicationMode  mode);
+                                       GimpPaintApplicationMode  mode,
+                                       GeglNode                 *op);
 
 void   gimp_brush_core_color_area_with_pixmap
                                       (GimpBrushCore            *core,
                                        GimpDrawable             *drawable,
                                        const GimpCoords         *coords,
+                                       GeglNode                 *op,
                                        GeglBuffer               *area,
                                        gint                      area_x,
                                        gint                      area_y,
@@ -129,6 +132,7 @@ void   gimp_brush_core_color_area_with_pixmap
 const GimpTempBuf * gimp_brush_core_get_brush_mask
                                       (GimpBrushCore            *core,
                                        const GimpCoords         *coords,
+                                       GeglNode                 *op,
                                        GimpBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness);
 

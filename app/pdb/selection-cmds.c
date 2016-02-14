@@ -422,6 +422,28 @@ selection_shrink_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+selection_flood_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      gimp_channel_flood (gimp_image_get_mask (image), TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 selection_layer_alpha_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
@@ -945,6 +967,29 @@ register_selection_procs (GimpPDB *pdb)
                                                       "Steps of shrink (in pixels)",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-selection-flood
+   */
+  procedure = gimp_procedure_new (selection_flood_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-flood");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-selection-flood",
+                                     "Flood the image's selection",
+                                     "This procedure floods the selection. Flooding assigns to each pixel of the selection mask the minimum of the maxima of all paths from that pixel to the outside, as if the selection mask were a height map of a terrain flooded with water.",
+                                     "Ell",
+                                     "Ell",
+                                     "2016",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

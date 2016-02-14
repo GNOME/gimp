@@ -221,8 +221,9 @@ gimp_color_tool_button_press (GimpTool            *tool,
   if (color_tool->sample_point)
     {
       color_tool->moving_sample_point = TRUE;
-      color_tool->sample_point_x      = color_tool->sample_point->x;
-      color_tool->sample_point_y      = color_tool->sample_point->y;
+      gimp_sample_point_get_position (color_tool->sample_point,
+                                      &color_tool->sample_point_x,
+                                      &color_tool->sample_point_y);
 
       gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
@@ -542,14 +543,15 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
           GimpImage      *image = gimp_display_get_image (draw_tool->display);
           GimpCanvasItem *item;
           gint            index;
+          gint            x;
+          gint            y;
+
+          gimp_sample_point_get_position (color_tool->sample_point, &x, &y);
 
           index = g_list_index (gimp_image_get_sample_points (image),
                                 color_tool->sample_point) + 1;
 
-          item = gimp_draw_tool_add_sample_point (draw_tool,
-                                                  color_tool->sample_point->x,
-                                                  color_tool->sample_point->y,
-                                                  index);
+          item = gimp_draw_tool_add_sample_point (draw_tool, x, y, index);
           gimp_canvas_item_set_highlight (item, TRUE);
         }
 

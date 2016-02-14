@@ -71,6 +71,8 @@ static void     gimp_fg_bg_editor_get_property    (GObject        *object,
                                                    GValue         *value,
                                                    GParamSpec     *pspec);
 
+static void     gimp_fg_bg_editor_style_set       (GtkWidget      *widget,
+                                                   GtkStyle       *prev_style);
 static gboolean gimp_fg_bg_editor_expose          (GtkWidget      *widget,
                                                    GdkEventExpose *eevent);
 static gboolean gimp_fg_bg_editor_button_press    (GtkWidget      *widget,
@@ -120,6 +122,7 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
   object_class->set_property         = gimp_fg_bg_editor_set_property;
   object_class->get_property         = gimp_fg_bg_editor_get_property;
 
+  widget_class->style_set            = gimp_fg_bg_editor_style_set;
   widget_class->expose_event         = gimp_fg_bg_editor_expose;
   widget_class->button_press_event   = gimp_fg_bg_editor_button_press;
   widget_class->button_release_event = gimp_fg_bg_editor_button_release;
@@ -219,6 +222,27 @@ gimp_fg_bg_editor_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_fg_bg_editor_style_set (GtkWidget *widget,
+                             GtkStyle  *prev_style)
+{
+  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  if (editor->default_icon)
+    {
+      g_object_unref (editor->default_icon);
+      editor->default_icon = NULL;
+    }
+
+  if (editor->swap_icon)
+    {
+      g_object_unref (editor->swap_icon);
+      editor->swap_icon = NULL;
     }
 }
 

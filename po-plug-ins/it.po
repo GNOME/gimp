@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-29 17:25+0200\n"
-"PO-Revision-Date: 2015-06-29 17:26+0200\n"
+"PO-Revision-Date: 2015-12-13 01:22+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -1864,7 +1864,7 @@ msgstr "Sorgente 2:"
 
 #: ../plug-ins/common/depth-merge.c:765
 msgid "O_verlap:"
-msgstr "So_vrapponi:"
+msgstr "So_vrapposizione:"
 
 #: ../plug-ins/common/depth-merge.c:775
 #: ../plug-ins/common/file-raw-data.c:1432

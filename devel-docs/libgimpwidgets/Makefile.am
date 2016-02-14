@@ -33,15 +33,18 @@ IGNORE_HFILES = \
 
 # Images to copy into HTML directory
 HTML_IMAGES = \
-	$(top_srcdir)/icons/12/gimp-*.png	\
-	$(top_srcdir)/icons/16/gimp-*.png	\
-	$(top_srcdir)/icons/18/gimp-*.png	\
-	$(top_srcdir)/icons/20/gimp-*.png	\
-	$(top_srcdir)/icons/22/gimp-*.png	\
-	$(top_srcdir)/icons/24/gimp-*.png	\
-	$(top_srcdir)/icons/32/gimp-*.png	\
-	$(top_srcdir)/icons/48/gimp-*.png	\
-	$(top_srcdir)/icons/64/gimp-*.png	\
+	$(top_srcdir)/icons/Color/12/gimp-*.png		\
+	$(top_srcdir)/icons/Color/16/gimp-*.png		\
+	$(top_srcdir)/icons/Color/18/gimp-*.png		\
+	$(top_srcdir)/icons/Color/20/gimp-*.png		\
+	$(top_srcdir)/icons/Color/22/gimp-*.png		\
+	$(top_srcdir)/icons/Color/24/gimp-*.png		\
+	$(top_srcdir)/icons/Color/32/gimp-*.png		\
+	$(top_srcdir)/icons/Color/48/gimp-*.png		\
+	$(top_srcdir)/icons/Color/64/gimp-*.png		\
+	$(top_srcdir)/icons/Color/128/gimp-*.png	\
+	$(top_srcdir)/icons/Color/192/gimp-*.png	\
+	$(top_srcdir)/icons/Color/256/gimp-*.png	\
 	$(srcdir)/images/gimp-widget-*.png
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)

@@ -62,15 +62,18 @@ gimp_move_options_class_init (GimpMoveOptionsClass *klass)
   object_class->set_property = gimp_move_options_set_property;
   object_class->get_property = gimp_move_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MOVE_TYPE,
-                                 "move-type", NULL,
-                                 GIMP_TYPE_TRANSFORM_TYPE,
-                                 GIMP_TRANSFORM_TYPE_LAYER,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MOVE_CURRENT,
-                                    "move-current", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MOVE_TYPE,
+                         "move-type",
+                         NULL, NULL,
+                         GIMP_TYPE_TRANSFORM_TYPE,
+                         GIMP_TRANSFORM_TYPE_LAYER,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MOVE_CURRENT,
+                            "move-current",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

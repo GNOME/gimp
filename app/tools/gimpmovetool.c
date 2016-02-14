@@ -31,6 +31,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-cairo.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
@@ -835,11 +836,14 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
   if (move->guide)
     {
       GimpCanvasItem *item;
+      GimpGuideStyle  style;
+
+      style = gimp_guide_get_style (move->guide);
 
       item = gimp_draw_tool_add_guide (draw_tool,
                                        gimp_guide_get_orientation (move->guide),
                                        gimp_guide_get_position (move->guide),
-                                       TRUE);
+                                       style);
       gimp_canvas_item_set_highlight (item, TRUE);
     }
 
@@ -849,7 +853,7 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_add_guide (draw_tool,
                                 move->guide_orientation,
                                 move->guide_position,
-                                FALSE);
+                                GIMP_GUIDE_STYLE_NONE);
     }
 }
 

@@ -131,6 +131,8 @@ static void       gimp_selection_shrink        (GimpChannel         *channel,
                                                 gint                 radius_y,
                                                 gboolean             edge_lock,
                                                 gboolean             push_undo);
+static void       gimp_selection_flood         (GimpChannel         *channel,
+                                                gboolean             push_undo);
 
 
 G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
@@ -173,6 +175,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   channel_class->border               = gimp_selection_border;
   channel_class->grow                 = gimp_selection_grow;
   channel_class->shrink               = gimp_selection_shrink;
+  channel_class->flood                = gimp_selection_flood;
 
   channel_class->feather_desc         = C_("undo-type", "Feather Selection");
   channel_class->sharpen_desc         = C_("undo-type", "Sharpen Selection");
@@ -182,6 +185,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   channel_class->border_desc          = C_("undo-type", "Border Selection");
   channel_class->grow_desc            = C_("undo-type", "Grow Selection");
   channel_class->shrink_desc          = C_("undo-type", "Shrink Selection");
+  channel_class->flood_desc           = C_("undo-type", "Flood Selection");
 }
 
 static void
@@ -531,6 +535,13 @@ gimp_selection_shrink (GimpChannel *channel,
   GIMP_CHANNEL_CLASS (parent_class)->shrink (channel,
 					     radius_x, radius_y, edge_lock,
 					     push_undo);
+}
+
+static void
+gimp_selection_flood (GimpChannel *channel,
+                      gboolean     push_undo)
+{
+  GIMP_CHANNEL_CLASS (parent_class)->flood (channel, push_undo);
 }
 
 

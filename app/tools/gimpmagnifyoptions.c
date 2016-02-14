@@ -46,6 +46,8 @@ enum
 };
 
 
+static void   gimp_magnify_options_config_iface_init (GimpConfigInterface *config_iface);
+
 static void   gimp_magnify_options_set_property (GObject         *object,
                                                  guint            property_id,
                                                  const GValue    *value,
@@ -55,39 +57,50 @@ static void   gimp_magnify_options_get_property (GObject         *object,
                                                  GValue          *value,
                                                  GParamSpec      *pspec);
 
-static void   gimp_magnify_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_magnify_options_reset        (GimpConfig      *config);
 
 
-G_DEFINE_TYPE (GimpMagnifyOptions, gimp_magnify_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE_WITH_CODE (GimpMagnifyOptions, gimp_magnify_options,
+                         GIMP_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_magnify_options_config_iface_init))
 
 #define parent_class gimp_magnify_options_parent_class
+
+static GimpConfigInterface *parent_config_iface = NULL;
 
 
 static void
 gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = gimp_magnify_options_set_property;
   object_class->get_property = gimp_magnify_options_get_property;
 
-  options_class->reset       = gimp_magnify_options_reset;
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
+                            "auto-resize",
+                            _("Auto-resize window"),
+                            _("Resize image window to accommodate "
+                              "new zoom level"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
-                                    "auto-resize",
-                                    _("Resize image window to accommodate "
-                                      "new zoom level"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
+                         "zoom-type",
+                         _("Direction"),
+                         _("Direction of magnification"),
+                         GIMP_TYPE_ZOOM_TYPE,
+                         GIMP_ZOOM_IN,
+                         GIMP_PARAM_STATIC_STRINGS);
+}
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
-                                 "zoom-type",
-                                 _("Direction of magnification"),
-                                 GIMP_TYPE_ZOOM_TYPE,
-                                 GIMP_ZOOM_IN,
-                                 GIMP_PARAM_STATIC_STRINGS);
+static void
+gimp_magnify_options_config_iface_init (GimpConfigInterface *config_iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  config_iface->reset = gimp_magnify_options_reset;
 }
 
 static void
@@ -142,18 +155,19 @@ gimp_magnify_options_get_property (GObject    *object,
 }
 
 static void
-gimp_magnify_options_reset (GimpToolOptions *tool_options)
+gimp_magnify_options_reset (GimpConfig *config)
 {
-  GParamSpec *pspec;
+  GimpToolOptions *tool_options = GIMP_TOOL_OPTIONS (config);
+  GParamSpec      *pspec;
 
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                         "auto-resize");
 
   if (pspec)
     G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
       GIMP_DISPLAY_CONFIG (tool_options->tool_info->gimp->config)->resize_windows_on_zoom;
 
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+  parent_config_iface->reset (config);
 }
 
 GtkWidget *
@@ -169,8 +183,7 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
   toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  the auto_resize toggle button  */
-  button = gimp_prop_check_button_new (config, "auto-resize",
-                                       _("Auto-resize window"));
+  button = gimp_prop_check_button_new (config, "auto-resize", NULL);
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

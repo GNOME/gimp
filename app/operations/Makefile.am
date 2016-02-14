@@ -33,16 +33,10 @@ libappoperations_generic_a_sources = \
 	gimpcolorizeconfig.h			\
 	gimpcurvesconfig.c			\
 	gimpcurvesconfig.h			\
-	gimpdesaturateconfig.c			\
-	gimpdesaturateconfig.h			\
 	gimphuesaturationconfig.c		\
 	gimphuesaturationconfig.h		\
 	gimplevelsconfig.c			\
 	gimplevelsconfig.h			\
-	gimpposterizeconfig.c			\
-	gimpposterizeconfig.h			\
-	gimpthresholdconfig.c			\
-	gimpthresholdconfig.h			\
 	\
 	gimpoperationblend.c			\
 	gimpoperationblend.h			\
@@ -54,6 +48,8 @@ libappoperations_generic_a_sources = \
 	gimpoperationcagetransform.h		\
 	gimpoperationequalize.c			\
 	gimpoperationequalize.h			\
+	gimpoperationflood.c			\
+	gimpoperationflood.h			\
 	gimpoperationgrow.c			\
 	gimpoperationgrow.h			\
 	gimpoperationhistogramsink.c		\

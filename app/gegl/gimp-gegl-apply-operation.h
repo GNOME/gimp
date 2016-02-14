@@ -95,6 +95,12 @@ void   gimp_gegl_apply_shrink          (GeglBuffer            *src_buffer,
                                         gint                   radius_y,
                                         gboolean               edge_lock);
 
+void   gimp_gegl_apply_flood           (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        const GeglRectangle   *dest_rect);
+
 void   gimp_gegl_apply_gaussian_blur   (GeglBuffer            *src_buffer,
                                         GimpProgress          *progress,
                                         const gchar           *undo_desc,

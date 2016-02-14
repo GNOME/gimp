@@ -1,32 +1,32 @@
-# Danish translation of GIMP python.
+# Danish translation for GIMP-Python.
 # Copyright (C) 2011 Free Software Foundation, Inc.
+#
+# Yderligere oplysninger og konventioner kan findes på
+# http://wiki.dansk-gruppen.dk/index.php/GIMP
+#
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
 # Ole Laursen <olau@hardworking.dk>, 2001, 02, 04.
 # Joe Hansen <joedalton2@yahoo.dk>, 2008, 2011.
-#
-# Konventioner:
-#
-#   script -> program
-#   utils -> værktøjer
-#   web page themes -> hjemmesidetemaer
-#   DB Browser -> proceduredatabase (browser er overflødigt)
-#
-# Bemærk at en hel del af oversættelserne af programnavnene optræder i to
-# sammenhænge og derfor skal synkroniseres.
+# scootergrisen, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-18 17:28+0200\n"
-"PO-Revision-Date: 2011-09-07 00:12+0200\n"
-"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-03-15 06:13+0000\n"
+"PO-Revision-Date: 2015-06-09 00:00+0200\n"
+"Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: \n"
+"X-Language: da_DK\n"
+"X-Source-Language: C\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
@@ -50,18 +50,18 @@ msgstr "Nej"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:597 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Pyton-Fu-filvælger"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pygimp/gimpfu.py:643
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu-mappevælger"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pygimp/gimpfu.py:732
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "Ugyldige inddata for \"%s\""
+msgstr "Ugyldige input for \"%s\""
 
 #: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
@@ -268,7 +268,7 @@ msgstr "Mellemrum mellem tabelelementer"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
-msgstr "Javaskript for onmouseover og trykket på"
+msgstr "JavaScript for onmouseover og clicked"
 
 # har ikke kunnet finde en egnet oversættelse for table caps. Nogen ideer?
 #. table caps are table cells on the edge of the table
@@ -286,7 +286,7 @@ msgstr "_Gennemse..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
-msgstr "Python-procedure-fremviser"
+msgstr "Python-procedurebrowser"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
@@ -300,7 +300,7 @@ msgstr "Kunne ikke skrive til \"%s\": %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
-msgstr "Gem Python-Fu-konsoluddata"
+msgstr "Gem konsoloutput fra Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
@@ -344,24 +344,25 @@ msgstr "Baggrundsskygge _x forskydning"
 msgid "Drop shadow _Y displacement"
 msgstr "Baggrundsskygge _y forskydning"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:76
 msgid "Create a new brush with characters from a text sequence"
 msgstr "Opret en ny pensel med tegn fra en tekstsekvens"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:82
 msgid "New Brush from _Text..."
 msgstr "Ny pensel fra _tekst..."
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
 msgid "Font"
 msgstr "Skrifttype"
 
 # i hovedfilen er der en streng hvor forklaringen er pixel size
 # og oversættelsen "%d × %d punkter"
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "Størrelse i billedpunkter"
-
+# scootergrisen : Pixelstørrelse/Størrelse på pixel?
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+msgid "Pixel Size"
+msgstr "Pixelstørrelse"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:87
 msgid "Text"
 msgstr "Tekst"

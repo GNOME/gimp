@@ -86,11 +86,6 @@ static const GimpModuleInfo colorsel_water_info =
   "1998-2006"
 };
 
-static const GtkTargetEntry targets[] =
-{
-  { "application/x-color", 0 }
-};
-
 
 G_DEFINE_DYNAMIC_TYPE (ColorselWater, colorsel_water,
                        GIMP_TYPE_COLOR_SELECTOR)

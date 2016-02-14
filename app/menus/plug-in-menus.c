@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -98,12 +99,12 @@ plug_in_menus_setup (GimpUIManager *manager,
 
   merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
 
-  for (i = 0; i < manager->gimp->config->plug_in_history_size; i++)
+  for (i = 0; i < manager->gimp->config->filter_history_size; i++)
     {
       gchar *action_name;
       gchar *action_path;
 
-      action_name = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+      action_name = g_strdup_printf ("filter-recent-%02d", i + 1);
       action_path = g_strdup_printf ("%s/Filters/Recently Used/Plug-Ins",
                                      ui_path);
 
@@ -320,6 +321,11 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
       else if (! strcmp (manager->name, "<Dynamics>"))
         {
           plug_in_menus_add_proc (manager, "/dynamics-popup",
+                                  plug_in_proc, menu_path);
+        }
+      else if (! strcmp (manager->name, "<MyPaintBrushes>"))
+        {
+          plug_in_menus_add_proc (manager, "/mypaint-brushes-popup",
                                   plug_in_proc, menu_path);
         }
       else if (! strcmp (manager->name, "<Gradients>"))

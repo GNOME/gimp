@@ -743,7 +743,7 @@ gimp_dockable_set_actual_tab_style (GimpDockable *dockable,
 {
   GimpTabStyle new_tab_style = gimp_dockable_convert_tab_style (dockable, tab_style);
   GimpTabStyle old_tab_style = dockable->p->actual_tab_style;
-  
+
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), FALSE);
   g_return_val_if_fail (tab_style != GIMP_TAB_STYLE_AUTOMATIC, FALSE);
 
@@ -967,7 +967,7 @@ gimp_dockable_blink_timeout (GimpDockable *dockable)
   gimp_highlight_widget (GTK_WIDGET (dockable),
                          dockable->p->blink_counter % 2 == 1);
   dockable->p->blink_counter++;
-  
+
   if (dockable->p->blink_counter == 3)
     {
       dockable->p->blink_timeout_id = 0;

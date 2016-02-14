@@ -64,12 +64,13 @@ gimp_iscissors_options_class_init (GimpIscissorsOptionsClass *klass)
   object_class->set_property = gimp_iscissors_options_set_property;
   object_class->get_property = gimp_iscissors_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
-                                    "interactive",
-                                    N_("Display future selection segment "
-                                       "as you drag a control node"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
+                            "interactive",
+                            _("Interactive boundary"),
+                            _("Display future selection segment "
+                              "as you drag a control node"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -124,8 +125,7 @@ gimp_iscissors_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox    = gimp_selection_options_gui (tool_options);
   GtkWidget *button;
 
-  button = gimp_prop_check_button_new (config, "interactive",
-                                       _("Interactive boundary"));
+  button = gimp_prop_check_button_new (config, "interactive", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

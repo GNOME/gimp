@@ -221,8 +221,7 @@ gimp_convolve_options_gui (GimpToolOptions *tool_options)
   g_free (str);
 
   /*  the rate scale  */
-  scale = gimp_prop_spin_scale_new (config, "rate",
-                                    C_("convolve-tool", "Rate"),
+  scale = gimp_prop_spin_scale_new (config, "rate", NULL,
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);

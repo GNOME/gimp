@@ -35,9 +35,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
 
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-file.h"
 
-#include "file-procedure.h"
 #include "file-utils.h"
 
 #include "gimp-intl.h"
@@ -105,8 +104,9 @@ file_utils_filename_to_file (Gimp         *gimp,
   file = g_file_new_for_uri (filename);
 
   /*  check for prefixes like http or ftp  */
-  if (file_procedure_find_by_prefix (gimp->plug_in_manager->load_procs,
-                                     file))
+  if (gimp_plug_in_manager_file_procedure_find_by_prefix (gimp->plug_in_manager,
+                                                          GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                          file))
     {
       if (g_utf8_validate (filename, -1, NULL))
         {
@@ -153,90 +153,6 @@ file_utils_filename_to_file (Gimp         *gimp,
   g_free (absolute);
 
   return file;
-}
-
-GFile *
-file_utils_file_with_new_ext (GFile *file,
-                              GFile *ext_file)
-{
-  gchar *uri;
-  gchar *file_ext;
-  gint   file_ext_len = 0;
-  gchar *ext_file_ext = NULL;
-  gchar *uri_without_ext;
-  gchar *new_uri;
-  GFile *ret;
-
-  g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (ext_file == NULL || G_IS_FILE (ext_file), NULL);
-
-  uri      = g_file_get_uri (file);
-  file_ext = file_utils_file_get_ext (file);
-
-  if (file_ext)
-    {
-      file_ext_len = strlen (file_ext);
-      g_free (file_ext);
-    }
-
-  if (ext_file)
-    ext_file_ext = file_utils_file_get_ext (ext_file);
-
-  uri_without_ext = g_strndup (uri, strlen (uri) - file_ext_len);
-
-  g_free (uri);
-
-  new_uri = g_strconcat (uri_without_ext, ext_file_ext, NULL);
-
-  ret = g_file_new_for_uri (new_uri);
-
-  g_free (ext_file_ext);
-  g_free (uri_without_ext);
-  g_free (new_uri);
-
-  return ret;
-}
-
-
-/**
- * file_utils_file_get_ext:
- * @file:
- *
- * Returns the position of the extension (including the .), or NULL
- * if there is no extension.
- *
- * Returns:
- **/
-gchar *
-file_utils_file_get_ext (GFile *file)
-{
-  gchar *uri;
-  gint   uri_len;
-  gchar *ext = NULL;
-  gint   search_len;
-
-  g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-  uri     = g_file_get_uri (file);
-  uri_len = strlen (uri);
-
-  if (g_str_has_suffix (uri, ".gz"))
-    search_len = uri_len - 3;
-  else if (g_str_has_suffix (uri, ".bz2"))
-    search_len = uri_len - 4;
-  else if (g_str_has_suffix (uri, ".xz"))
-    search_len = uri_len - 3;
-  else
-    search_len = uri_len;
-
-  ext = g_strrstr_len (uri, search_len, ".");
-
-  if (ext)
-    ext = g_strdup (ext);
-
-  g_free (uri);
-
-  return ext;
 }
 
 GdkPixbuf *

@@ -782,7 +782,7 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
   if (! r)
     {
       g_prefix_error (error,
-                      _("Fatal parse error in brush file : "
+                      _("Fatal parse error in brush file: "
                         "File appears truncated: "));
       return NULL;
     }

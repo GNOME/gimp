@@ -35,12 +35,17 @@
 #include "gimp-intl.h"
 
 
+/*  The defaults are "everything except color", which is problematic
+ *  with gradients, which is why we special case the blend tool in
+ *  gimp_tool_preset_set_options().
+ */
 #define DEFAULT_USE_FG_BG    FALSE
 #define DEFAULT_USE_BRUSH    TRUE
 #define DEFAULT_USE_DYNAMICS TRUE
-#define DEFAULT_USE_GRADIENT TRUE
+#define DEFAULT_USE_MYBRUSH  TRUE
+#define DEFAULT_USE_GRADIENT FALSE
 #define DEFAULT_USE_PATTERN  TRUE
-#define DEFAULT_USE_PALETTE  TRUE
+#define DEFAULT_USE_PALETTE  FALSE
 #define DEFAULT_USE_FONT     TRUE
 
 enum
@@ -52,6 +57,7 @@ enum
   PROP_USE_FG_BG,
   PROP_USE_BRUSH,
   PROP_USE_DYNAMICS,
+  PROP_USE_MYBRUSH,
   PROP_USE_GRADIENT,
   PROP_USE_PATTERN,
   PROP_USE_PALETTE,
@@ -117,10 +123,11 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
   data_class->save                          = gimp_tool_preset_save;
   data_class->get_extension                 = gimp_tool_preset_get_extension;
 
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_NAME,
-                                   "name", NULL,
-                                   "Unnamed",
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_NAME,
+                           "name",
+                           NULL, NULL,
+                           "Unnamed",
+                           GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -129,39 +136,67 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TOOL_OPTIONS,
-                                   "tool-options", NULL,
-                                   GIMP_TYPE_TOOL_OPTIONS,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_TOOL_OPTIONS,
+                           "tool-options",
+                           NULL, NULL,
+                           GIMP_TYPE_TOOL_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FG_BG,
-                                    "use-fg-bg", NULL,
-                                    DEFAULT_USE_FG_BG,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_BRUSH,
-                                    "use-brush", NULL,
-                                    DEFAULT_USE_BRUSH,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_DYNAMICS,
-                                    "use-dynamics", NULL,
-                                    DEFAULT_USE_DYNAMICS,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_PATTERN,
-                                    "use-pattern", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_PALETTE,
-                                    "use-palette", NULL,
-                                    DEFAULT_USE_PALETTE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
-                                    "use-gradient", NULL,
-                                    DEFAULT_USE_GRADIENT,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FONT,
-                                    "use-font", NULL,
-                                    DEFAULT_USE_FONT,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_FG_BG,
+                            "use-fg-bg",
+                            _("Apply stored FG/BG"),
+                            NULL,
+                            DEFAULT_USE_FG_BG,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_BRUSH,
+                            "use-brush",
+                            _("Apply stored brush"),
+                            NULL,
+                            DEFAULT_USE_BRUSH,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_DYNAMICS,
+                            "use-dynamics",
+                            _("Apply stored dynamics"),
+                            NULL,
+                            DEFAULT_USE_DYNAMICS,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_MYBRUSH,
+                            "use-mypaint-brush",
+                            _("Apply stored MyPaint brush"),
+                            NULL,
+                            DEFAULT_USE_MYBRUSH,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_PATTERN,
+                            "use-pattern",
+                            _("Apply stored pattern"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_PALETTE,
+                            "use-palette",
+                            _("Apply stored palette"),
+                            NULL,
+                            DEFAULT_USE_PALETTE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
+                            "use-gradient",
+                            _("Apply stored gradient"),
+                            NULL,
+                            DEFAULT_USE_GRADIENT,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_FONT,
+                            "use-font",
+                            _("Apply stored font"),
+                            NULL,
+                            DEFAULT_USE_FONT,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -229,6 +264,9 @@ gimp_tool_preset_set_property (GObject      *object,
     case PROP_USE_DYNAMICS:
       tool_preset->use_dynamics = g_value_get_boolean (value);
       break;
+    case PROP_USE_MYBRUSH:
+      tool_preset->use_mybrush = g_value_get_boolean (value);
+      break;
     case PROP_USE_PATTERN:
       tool_preset->use_pattern = g_value_get_boolean (value);
       break;
@@ -275,6 +313,9 @@ gimp_tool_preset_get_property (GObject    *object,
       break;
     case PROP_USE_BRUSH:
       g_value_set_boolean (value, tool_preset->use_brush);
+      break;
+    case PROP_USE_MYBRUSH:
+      g_value_set_boolean (value, tool_preset->use_mybrush);
       break;
     case PROP_USE_DYNAMICS:
       g_value_set_boolean (value, tool_preset->use_dynamics);
@@ -386,6 +427,7 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
                                       GIMP_CONTEXT (options),
                                       GIMP_CONTEXT_PROP_MASK_BRUSH    |
                                       GIMP_CONTEXT_PROP_MASK_DYNAMICS |
+                                      GIMP_CONTEXT_PROP_MASK_MYBRUSH  |
                                       GIMP_CONTEXT_PROP_MASK_PATTERN  |
                                       GIMP_CONTEXT_PROP_MASK_GRADIENT |
                                       GIMP_CONTEXT_PROP_MASK_PALETTE  |
@@ -483,6 +525,9 @@ gimp_tool_preset_set_options (GimpToolPreset  *preset,
       if (! (serialize_props & GIMP_CONTEXT_PROP_MASK_DYNAMICS))
         g_object_set (preset, "use-dynamics", FALSE, NULL);
 
+      if (! (serialize_props & GIMP_CONTEXT_PROP_MASK_MYBRUSH))
+        g_object_set (preset, "use-mypaint-brush", FALSE, NULL);
+
       if (! (serialize_props & GIMP_CONTEXT_PROP_MASK_GRADIENT))
         g_object_set (preset, "use-gradient", FALSE, NULL);
 
@@ -494,6 +539,11 @@ gimp_tool_preset_set_options (GimpToolPreset  *preset,
 
       if (! (serialize_props & GIMP_CONTEXT_PROP_MASK_FONT))
         g_object_set (preset, "use-font", FALSE, NULL);
+
+      /*  see comment above the DEFAULT defines at the top of the file  */
+      if (! g_strcmp0 ("gimp-blend-tool",
+                       gimp_object_get_name (preset->tool_options->tool_info)))
+        g_object_set (preset, "use-gradient", TRUE, NULL);
 
       g_signal_connect (preset->tool_options, "notify",
                         G_CALLBACK (gimp_tool_preset_options_notify),
@@ -594,6 +644,9 @@ gimp_tool_preset_get_prop_mask (GimpToolPreset *preset)
 
   if (preset->use_dynamics)
     use_props |= (GIMP_CONTEXT_PROP_MASK_DYNAMICS & serialize_props);
+
+  if (preset->use_mybrush)
+    use_props |= (GIMP_CONTEXT_PROP_MASK_MYBRUSH & serialize_props);
 
   if (preset->use_pattern)
     use_props |= (GIMP_CONTEXT_PROP_MASK_PATTERN & serialize_props);

@@ -43,34 +43,40 @@
 #include "gimp-intl.h"
 
 
-static void             gimp_procedure_finalize      (GObject         *object);
+static void          gimp_procedure_finalize            (GObject         *object);
 
-static gint64           gimp_procedure_get_memsize   (GimpObject      *object,
-                                                      gint64          *gui_size);
+static gint64        gimp_procedure_get_memsize         (GimpObject      *object,
+                                                         gint64          *gui_size);
 
-static GimpValueArray * gimp_procedure_real_execute  (GimpProcedure   *procedure,
-                                                      Gimp            *gimp,
-                                                      GimpContext     *context,
-                                                      GimpProgress    *progress,
-                                                      GimpValueArray  *args,
-                                                      GError         **error);
-static void       gimp_procedure_real_execute_async  (GimpProcedure   *procedure,
-                                                      Gimp            *gimp,
-                                                      GimpContext     *context,
-                                                      GimpProgress    *progress,
-                                                      GimpValueArray  *args,
-                                                      GimpObject      *display);
+static const gchar * gimp_procedure_real_get_label      (GimpProcedure   *procedure);
+static const gchar * gimp_procedure_real_get_menu_label (GimpProcedure   *procedure);
+static const gchar * gimp_procedure_real_get_blurb      (GimpProcedure   *procedure);
+static const gchar * gimp_procedure_real_get_help_id    (GimpProcedure   *procedure);
+static gboolean      gimp_procedure_real_get_sensitive  (GimpProcedure   *procedure,
+                                                         GimpObject      *object);
+static GimpValueArray * gimp_procedure_real_execute     (GimpProcedure   *procedure,
+                                                         Gimp            *gimp,
+                                                         GimpContext     *context,
+                                                         GimpProgress    *progress,
+                                                         GimpValueArray  *args,
+                                                         GError         **error);
+static void        gimp_procedure_real_execute_async    (GimpProcedure   *procedure,
+                                                         Gimp            *gimp,
+                                                         GimpContext     *context,
+                                                         GimpProgress    *progress,
+                                                         GimpValueArray  *args,
+                                                         GimpObject      *display);
 
-static void             gimp_procedure_free_strings  (GimpProcedure   *procedure);
-static gboolean         gimp_procedure_validate_args (GimpProcedure   *procedure,
-                                                      GParamSpec     **param_specs,
-                                                      gint             n_param_specs,
-                                                      GimpValueArray  *args,
-                                                      gboolean         return_vals,
-                                                      GError         **error);
+static void          gimp_procedure_free_strings        (GimpProcedure   *procedure);
+static gboolean      gimp_procedure_validate_args       (GimpProcedure   *procedure,
+                                                         GParamSpec     **param_specs,
+                                                         gint             n_param_specs,
+                                                         GimpValueArray  *args,
+                                                         gboolean         return_vals,
+                                                         GError         **error);
 
 
-G_DEFINE_TYPE (GimpProcedure, gimp_procedure, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE (GimpProcedure, gimp_procedure, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_procedure_parent_class
 
@@ -85,6 +91,11 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
 
   gimp_object_class->get_memsize = gimp_procedure_get_memsize;
 
+  klass->get_label               = gimp_procedure_real_get_label;
+  klass->get_menu_label          = gimp_procedure_real_get_menu_label;
+  klass->get_blurb               = gimp_procedure_real_get_blurb;
+  klass->get_help_id             = gimp_procedure_real_get_help_id;
+  klass->get_sensitive           = gimp_procedure_real_get_sensitive;
   klass->execute                 = gimp_procedure_real_execute;
   klass->execute_async           = gimp_procedure_real_execute_async;
 }
@@ -155,6 +166,37 @@ gimp_procedure_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static const gchar *
+gimp_procedure_real_get_label (GimpProcedure *procedure)
+{
+  return gimp_object_get_name (procedure); /* lame fallback */
+}
+
+static const gchar *
+gimp_procedure_real_get_menu_label (GimpProcedure *procedure)
+{
+  return gimp_procedure_get_label (procedure);
+}
+
+static const gchar *
+gimp_procedure_real_get_blurb (GimpProcedure *procedure)
+{
+  return procedure->blurb;
+}
+
+static const gchar *
+gimp_procedure_real_get_help_id (GimpProcedure *procedure)
+{
+  return NULL;
+}
+
+static gboolean
+gimp_procedure_real_get_sensitive (GimpProcedure *procedure,
+                                   GimpObject    *object)
+{
+  return TRUE /* random fallback */;
 }
 
 static GimpValueArray *
@@ -293,6 +335,49 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
   procedure->deprecated    = deprecated;
 
   procedure->static_strings = FALSE;
+}
+
+const gchar *
+gimp_procedure_get_label (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return GIMP_PROCEDURE_GET_CLASS (procedure)->get_label (procedure);
+}
+
+const gchar *
+gimp_procedure_get_menu_label (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return GIMP_PROCEDURE_GET_CLASS (procedure)->get_menu_label (procedure);
+}
+
+const gchar *
+gimp_procedure_get_blurb (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return GIMP_PROCEDURE_GET_CLASS (procedure)->get_blurb (procedure);
+}
+
+const gchar *
+gimp_procedure_get_help_id (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return GIMP_PROCEDURE_GET_CLASS (procedure)->get_help_id (procedure);
+}
+
+gboolean
+gimp_procedure_get_sensitive (GimpProcedure *procedure,
+                              GimpObject    *object)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (object == NULL || GIMP_IS_OBJECT (object), FALSE);
+
+  return GIMP_PROCEDURE_GET_CLASS (procedure)->get_sensitive (procedure,
+                                                              object);
 }
 
 GimpValueArray *

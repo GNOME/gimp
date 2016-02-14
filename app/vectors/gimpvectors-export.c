@@ -234,7 +234,9 @@ gimp_vectors_export_path_data (const GimpVectors *vectors)
 
   str = g_string_new (NULL);
 
-  for (strokes = vectors->strokes; strokes; strokes = strokes->next)
+  for (strokes = vectors->strokes->head;
+       strokes;
+       strokes = strokes->next)
     {
       GimpStroke *stroke = strokes->data;
       GArray     *control_points;

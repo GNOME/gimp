@@ -79,51 +79,58 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
 
   /*  override the antialias default value from GimpSelectionOptions  */
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DRAW_MODE,
-                                 "draw-mode",
-                                 _("Paint over areas to mark color values for "
-                                   "inclusion or exclusion from selection"),
-                                 GIMP_TYPE_MATTING_DRAW_MODE,
-                                 GIMP_MATTING_DRAW_MODE_FOREGROUND,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DRAW_MODE,
+                         "draw-mode",
+                         _("Draw Mode"),
+                         _("Paint over areas to mark color values for "
+                           "inclusion or exclusion from selection"),
+                         GIMP_TYPE_MATTING_DRAW_MODE,
+                         GIMP_MATTING_DRAW_MODE_FOREGROUND,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_STROKE_WIDTH,
-                                 "stroke-width",
-                                 _("Size of the brush used for refinements"),
-                                 1, 6000, 10,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT  (object_class, PROP_STROKE_WIDTH,
+                         "stroke-width",
+                         _("Stroke width"),
+                         _("Size of the brush used for refinements"),
+                         1, 6000, 10,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MASK_COLOR,
-                                 "mask-color",
-                                 _("Color of selection preview mask"),
-                                 GIMP_TYPE_CHANNEL_TYPE,
-                                 GIMP_BLUE_CHANNEL,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MASK_COLOR,
+                         "mask-color",
+                         _("Preview color"),
+                         _("Color of selection preview mask"),
+                         GIMP_TYPE_CHANNEL_TYPE,
+                         GIMP_BLUE_CHANNEL,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ENGINE,
-                                 "engine",
-                                 _("Matting engine to use"),
-                                 GIMP_TYPE_MATTING_ENGINE,
-                                 GIMP_MATTING_ENGINE_GLOBAL,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ENGINE,
+                         "engine",
+                         _("Engine"),
+                         _("Matting engine to use"),
+                         GIMP_TYPE_MATTING_ENGINE,
+                         GIMP_MATTING_ENGINE_GLOBAL,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_LEVELS,
-                                 "levels",
-                                 _("Number of downsampled levels to use"),
-                                 1, 10, 2,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT  (object_class, PROP_LEVELS,
+                         "levels",
+                         _("Levels"),
+                         _("Number of downsampled levels to use"),
+                         1, 10, 2,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ACTIVE_LEVELS,
-                                 "active-levels",
-                                 _("Number of levels to perform solving"),
-                                 1, 10, 2,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT  (object_class, PROP_ACTIVE_LEVELS,
+                         "active-levels",
+                         _("Active levels"),
+                         _("Number of levels to perform solving"),
+                         1, 10, 2,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ITERATIONS,
-                                 "iterations",
-                                 _("Number of iterations to perform"),
-                                 1, 10, 2,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT  (object_class, PROP_ITERATIONS,
+                         "iterations",
+                         _("Iterations"),
+                         _("Number of iterations to perform"),
+                         1, 10, 2,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -261,8 +268,8 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   antialias_toggle = GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle;
   gtk_widget_hide (antialias_toggle);
 
-  frame = gimp_prop_enum_radio_frame_new (config, "draw-mode", _("Draw Mode"),
-                                          0,0);
+  frame = gimp_prop_enum_radio_frame_new (config, "draw-mode", NULL,
+                                          0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -271,8 +278,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (hbox);
 
   /* stroke width */
-  scale = gimp_prop_spin_scale_new (config, "stroke-width",
-                                    _("Stroke width"),
+  scale = gimp_prop_spin_scale_new (config, "stroke-width", NULL,
                                     1.0, 10.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
@@ -320,8 +326,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (inner_vbox);
 
   /*  engine parameters  */
-  scale = gimp_prop_spin_scale_new (config, "levels",
-                                    _("Levels"),
+  scale = gimp_prop_spin_scale_new (config, "levels", NULL,
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
@@ -333,8 +338,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                GINT_TO_POINTER (GIMP_MATTING_ENGINE_LEVIN),
                                NULL);
 
-  scale = gimp_prop_spin_scale_new (config, "active-levels",
-                                    _("Active levels"),
+  scale = gimp_prop_spin_scale_new (config, "active-levels", NULL,
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
@@ -346,8 +350,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                GINT_TO_POINTER (GIMP_MATTING_ENGINE_LEVIN),
                                NULL);
 
-  scale = gimp_prop_spin_scale_new (config, "iterations",
-                                    _("Iterations"),
+  scale = gimp_prop_spin_scale_new (config, "iterations", NULL,
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 

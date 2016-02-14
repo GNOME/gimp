@@ -38,19 +38,17 @@ struct _GimpOperationTool
   GimpImageMapTool  parent_instance;
 
   gchar            *operation;
+  gchar            *title;
+  gchar            *description;
   gchar            *undo_desc;
   gchar            *icon_name;
+  gchar            *help_id;
 
-  GeglNode         *aux_input;
-  GeglNode         *aux2_input;
+  GList            *aux_inputs;
 
   /* dialog */
   GtkWidget        *options_box;
   GtkWidget        *options_gui;
-  GtkWidget        *aux_input_box;
-  GtkWidget        *aux_input_button;
-  GtkWidget        *aux2_input_box;
-  GtkWidget        *aux2_input_button;
 };
 
 struct _GimpOperationToolClass
@@ -66,8 +64,11 @@ GType   gimp_operation_tool_get_type      (void) G_GNUC_CONST;
 
 void    gimp_operation_tool_set_operation (GimpOperationTool        *tool,
                                            const gchar              *operation,
+                                           const gchar              *title,
+                                           const gchar              *description,
                                            const gchar              *undo_desc,
-                                           const gchar              *icon_name);
+                                           const gchar              *icon_name,
+                                           const gchar              *help_id);
 
 
 #endif  /*  __GIMP_OPERATION_TOOL_H__  */

@@ -20,6 +20,8 @@ libappmenus_a_SOURCES = \
 	dockable-menu.h		\
 	file-menu.c		\
 	file-menu.h		\
+	filters-menu.c		\
+	filters-menu.h		\
 	image-menu.c		\
 	image-menu.h		\
 	plug-in-menus.c		\

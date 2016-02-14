@@ -133,6 +133,7 @@ typedef struct _GimpCurve            GimpCurve;
 typedef struct _GimpDynamics         GimpDynamics;
 typedef struct _GimpDynamicsOutput   GimpDynamicsOutput;
 typedef struct _GimpGradient         GimpGradient;
+typedef struct _GimpMybrush          GimpMybrush;
 typedef struct _GimpPalette          GimpPalette;
 typedef struct _GimpPaletteMru       GimpPaletteMru;
 typedef struct _GimpPattern          GimpPattern;
@@ -173,6 +174,14 @@ typedef struct _GimpFloatingSelUndo   GimpFloatingSelUndo;
 typedef struct _GimpUndoStack         GimpUndoStack;
 typedef struct _GimpUndoAccumulator   GimpUndoAccumulator;
 typedef struct _GimpViewableUndo      GimpViewableUndo;
+
+
+/* Symmetry transformations */
+
+typedef struct _GimpSymmetry        GimpSymmetry;
+typedef struct _GimpMirror          GimpMirror;
+typedef struct _GimpTiling          GimpTiling;
+typedef struct _GimpMandala         GimpMandala;
 
 
 /*  misc objects  */
@@ -248,16 +257,17 @@ typedef gint64   (* GimpMemsizeFunc)       (gpointer          instance,
 
 struct _GimpCoords
 {
-  gdouble x;
-  gdouble y;
-  gdouble pressure;
-  gdouble xtilt;
-  gdouble ytilt;
-  gdouble wheel;
-  gdouble velocity;
-  gdouble direction;
-  gdouble xscale; /* the view scale */
-  gdouble yscale;
+  gdouble  x;
+  gdouble  y;
+  gdouble  pressure;
+  gdouble  xtilt;
+  gdouble  ytilt;
+  gdouble  wheel;
+  gdouble  velocity;
+  gdouble  direction;
+  gdouble  xscale; /* the view scale */
+  gdouble  yscale;
+  gboolean extended;
 };
 
 /*  temp hack as replacement for GdkSegment  */

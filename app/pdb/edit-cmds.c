@@ -636,7 +636,9 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
                                                    FALSE /* don't fill transparent */,
                                                    GIMP_SELECT_CRITERION_COMPOSITE,
                                                    threshold / 255.0,
-                                                   sample_merged, x, y,
+                                                   sample_merged,
+                                                   FALSE /* no diagonal neighbors */,
+                                                   x, y,
                                                    error);
             }
         }
@@ -720,7 +722,9 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
                                                    fill_transparent,
                                                    select_criterion,
                                                    threshold / 255.0,
-                                                   sample_merged, x, y,
+                                                   sample_merged,
+                                                   FALSE /* no diagonal neighbors */,
+                                                   x, y,
                                                    error);
             }
         }

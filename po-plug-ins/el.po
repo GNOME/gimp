@@ -8,10 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
-"eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-11-25 07:11+0000\n"
-"PO-Revision-Date: 2015-11-25 12:19+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-01-29 07:13+0000\n"
+"PO-Revision-Date: 2016-02-04 19:15+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -19,9 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
-"X-Poedit-Language: Greek\n"
-"X-Poedit-Country: GREECE\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -324,12 +322,12 @@ msgid "Orientation"
 msgstr "Προσανατολισμός"
 
 #: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:559
-#: ../plug-ins/common/tile-small.c:432 ../plug-ins/pagecurl/pagecurl.c:537
+#: ../plug-ins/common/tile-small.c:432 ../plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "_Οριζόντιος"
 
 #: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:562
-#: ../plug-ins/common/tile-small.c:442 ../plug-ins/pagecurl/pagecurl.c:536
+#: ../plug-ins/common/tile-small.c:442 ../plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "Κά_θετος"
 
@@ -344,8 +342,8 @@ msgstr "Κά_θετος"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:669
-#: ../plug-ins/common/file-raw-data.c:970 ../plug-ins/common/file-sunras.c:1049
-#: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-tiff-load.c:1235
+#: ../plug-ins/common/file-raw-data.c:970
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:255 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:699 ../plug-ins/file-exr/file-exr.c:245
@@ -353,7 +351,9 @@ msgstr "Κά_θετος"
 #: ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
-#: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/file-tiff/file-tiff-load.c:920
+#: ../plug-ins/gfig/gfig-dialog.c:1319
+#: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -383,37 +383,6 @@ msgstr "_Θόλωση"
 #: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:589
 msgid "Blurring"
 msgstr "Θόλωση"
-
-#: ../plug-ins/common/blur-gauss-selective.c:105
-msgid "Blur neighboring pixels, but only in low-contrast areas"
-msgstr ""
-"Θόλωση γειτονικών εικονοστοιχείων, αλλά μόνο σε περιοχές χαμηλής αντίθεσης"
-
-#: ../plug-ins/common/blur-gauss-selective.c:116
-msgid "_Selective Gaussian Blur..."
-msgstr "Επι_λεκτική θόλωση Γκάους..."
-
-#: ../plug-ins/common/blur-gauss-selective.c:196
-#: ../plug-ins/common/blur-gauss-selective.c:233
-msgid "Selective Gaussian Blur"
-msgstr "Επιλεκτική θόλωση Γκάους"
-
-#: ../plug-ins/common/blur-gauss-selective.c:212
-#: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
-#: ../plug-ins/common/edge-neon.c:229 ../plug-ins/common/photocopy.c:244
-#: ../plug-ins/common/softglow.c:224
-#: ../plug-ins/gradient-flare/gradient-flare.c:966
-msgid "Cannot operate on indexed color images."
-msgstr "Αδυναμία λειτουργίας σε χρωματιστές εικόνες από ευρετήριο."
-
-#
-#: ../plug-ins/common/blur-gauss-selective.c:273
-msgid "_Blur radius:"
-msgstr "Α_κτίνα θόλωσης:"
-
-#: ../plug-ins/common/blur-gauss-selective.c:283
-msgid "_Max. delta:"
-msgstr "_Μέγιστο δέλτα:"
 
 #: ../plug-ins/common/border-average.c:99
 msgid "Set foreground to the average color of the image border"
@@ -459,6 +428,13 @@ msgstr "Προσομοίωση σκίτσου βελτιώνοντας τις ά
 #: ../plug-ins/common/cartoon.c:147
 msgid "Ca_rtoon..."
 msgstr "Σκί_τσο..."
+
+#: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
+#: ../plug-ins/common/edge-neon.c:229 ../plug-ins/common/photocopy.c:244
+#: ../plug-ins/common/softglow.c:224
+#: ../plug-ins/gradient-flare/gradient-flare.c:966
+msgid "Cannot operate on indexed color images."
+msgstr "Αδυναμία λειτουργίας σε χρωματιστές εικόνες από ευρετήριο."
 
 #: ../plug-ins/common/cartoon.c:809
 msgid "Cartoon"
@@ -713,7 +689,8 @@ msgstr "Κορεσμός"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:186
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/ui/plug-in-metadata.ui.h:2
+#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ui/plug-in-metadata.ui.h:2
 msgid "Value"
 msgstr "Τιμή"
 
@@ -925,12 +902,12 @@ msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/file-pcx.c:734 ../plug-ins/common/file-pdf-save.c:432
 #: ../plug-ins/common/file-png.c:1504 ../plug-ins/common/file-raw-data.c:785
 #: ../plug-ins/common/file-raw-data.c:813 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-tiff-save.c:965
-#: ../plug-ins/common/file-xmc.c:1473 ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1473
+#: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:326 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1079
 #: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1523
-#: ../plug-ins/flame/flame.c:442
+#: ../plug-ins/file-tiff/file-tiff-save.c:521 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:792 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1223
@@ -1199,7 +1176,6 @@ msgid "_B:"
 msgstr "_B:"
 
 #: ../plug-ins/common/compose.c:179
-#| msgid "_L:"
 msgid "_L"
 msgstr "_L"
 
@@ -1209,7 +1185,6 @@ msgstr "_C"
 
 #
 #: ../plug-ins/common/compose.c:181
-#| msgid "_Hue"
 msgid "_H"
 msgstr "_H"
 
@@ -1382,7 +1357,8 @@ msgid "Stretch brightness values to cover the full range"
 msgstr "Επέκταση τιμών φωτεινότητας για κάλυψη όλης της περιοχής"
 
 #
-#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91
+#: ../plug-ins/common/edge-dog.c:362
 msgid "_Normalize"
 msgstr "Κα_νονικοποίηση"
 
@@ -1861,7 +1837,8 @@ msgstr "Πηγή 2:"
 msgid "O_verlap:"
 msgstr "Επι_κάλυψη:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1432
+#: ../plug-ins/common/depth-merge.c:775
+#: ../plug-ins/common/file-raw-data.c:1432
 msgid "O_ffset:"
 msgstr "Με_τατόπιση:"
 
@@ -2103,14 +2080,14 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:887
 #: ../plug-ins/common/file-pnm.c:562 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:887 ../plug-ins/common/file-sunras.c:429
-#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-tiff-load.c:551
-#: ../plug-ins/common/file-wmf.c:985 ../plug-ins/common/file-xbm.c:740
-#: ../plug-ins/common/file-xmc.c:649 ../plug-ins/common/file-xpm.c:354
-#: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-read.c:200
-#: ../plug-ins/file-exr/file-exr.c:174 ../plug-ins/file-faxg3/faxg3.c:218
-#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:642
-#: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
-#: ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:985
+#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
+#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
+#: ../plug-ins/file-bmp/bmp-read.c:200 ../plug-ins/file-exr/file-exr.c:174
+#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-ico/ico-load.c:642 ../plug-ins/file-jpeg/jpeg-load.c:90
+#: ../plug-ins/file-psd/psd-load.c:130 ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
 msgstr "Άνοιγμα του '%s'"
@@ -2190,13 +2167,13 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/common/file-pcx.c:660 ../plug-ins/common/file-pix.c:536
 #: ../plug-ins/common/file-png.c:1497 ../plug-ins/common/file-pnm.c:1206
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-tiff-save.c:758
-#: ../plug-ins/common/file-xbm.c:1033 ../plug-ins/common/file-xmc.c:1462
-#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
-#: ../plug-ins/file-bmp/bmp-write.c:318 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1073
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
-#: ../plug-ins/file-sgi/sgi.c:577
+#: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
+#: ../plug-ins/common/file-xmc.c:1462 ../plug-ins/common/file-xpm.c:660
+#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-write.c:318
+#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:716
+#: ../plug-ins/file-ico/ico-save.c:1073 ../plug-ins/file-jpeg/jpeg-save.c:285
+#: ../plug-ins/file-psd/psd-save.c:1516 ../plug-ins/file-sgi/sgi.c:577
+#: ../plug-ins/file-tiff/file-tiff-save.c:314
 #, c-format
 msgid "Saving '%s'"
 msgstr "Αποθήκευση '%s'"
@@ -3017,7 +2994,7 @@ msgid "Import from PDF"
 msgstr "Εισαγωγή από PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1090 ../plug-ins/common/file-ps.c:3421
-#: ../plug-ins/common/file-tiff-load.c:466
+#: ../plug-ins/file-tiff/file-tiff-load.c:148
 msgid "_Import"
 msgstr "Ε_ισαγωγή"
 
@@ -3115,7 +3092,7 @@ msgstr "Προσθήκη αυτής της εικόνας"
 #: ../plug-ins/common/file-pdf-save.c:1079
 #: ../plug-ins/common/file-pdf-save.c:1147
 #: ../plug-ins/common/file-pdf-save.c:1245 ../plug-ins/common/file-ps.c:1915
-#: ../plug-ins/common/file-tiff-load.c:1237
+#: ../plug-ins/file-tiff/file-tiff-load.c:922
 #, c-format
 msgid "Page %d"
 msgstr "Σελίδα %d"
@@ -3206,12 +3183,14 @@ msgstr "Σφάλμα δημιουργίας PNG γράφει δομή ενώ α�
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Σφάλμα αποθήκευσης '%s'. Αδυναμία αποθήκευσης εικόνας."
 
-#: ../plug-ins/common/file-png.c:2191 ../plug-ins/common/file-tiff-save.c:1283
+#: ../plug-ins/common/file-png.c:2191
+#: ../plug-ins/file-tiff/file-tiff-save.c:840
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Σφάλμα φόρτωσης αρχείου UI '%s': %s"
 
-#: ../plug-ins/common/file-png.c:2192 ../plug-ins/common/file-tiff-save.c:1284
+#: ../plug-ins/common/file-png.c:2192
+#: ../plug-ins/file-tiff/file-tiff-save.c:841
 msgid "Unknown error"
 msgstr "Άγνωστο σφάλμα"
 
@@ -3465,7 +3444,8 @@ msgid "_Millimeter"
 msgstr "_Χιλιοστό"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3774 ../plug-ins/map-object/map-object-ui.c:989
+#: ../plug-ins/common/file-ps.c:3774
+#: ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Περιστροφή"
 
@@ -3853,99 +3833,6 @@ msgstr "Κάτω αριστερά"
 #: ../plug-ins/common/file-tga.c:1441
 msgid "Top left"
 msgstr "Πάνω αριστερά"
-
-#: ../plug-ins/common/file-tiff-load.c:182
-#: ../plug-ins/common/file-tiff-save.c:182
-#: ../plug-ins/common/file-tiff-save.c:199
-msgid "TIFF image"
-msgstr "Εικόνα TIFF"
-
-#: ../plug-ins/common/file-tiff-load.c:240
-#, c-format
-msgid "TIFF '%s' does not contain any directories"
-msgstr "TIFF '%s' δεν περιέχει καταλόγους"
-
-#: ../plug-ins/common/file-tiff-load.c:461
-msgid "Import from TIFF"
-msgstr "Εισαγωγή από TIFF"
-
-#: ../plug-ins/common/file-tiff-load.c:1032
-#, c-format
-msgid "%s-%d-of-%d-pages"
-msgstr "%s-%d-από-%d-σελίδες"
-
-#: ../plug-ins/common/file-tiff-load.c:1266
-msgid "TIFF Channel"
-msgstr "Κανάλι TIFF"
-
-#: ../plug-ins/common/file-tiff-save.c:926
-#, c-format
-msgid "TIFF save cannot handle indexed images with an alpha channel."
-msgstr ""
-"Η αποθήκευση TIFF αδυνατεί να χειριστεί εικόνες από ευρετήριο με κανάλι άλφα."
-
-#: ../plug-ins/common/file-tiff-save.c:939
-msgid ""
-"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
-"Group 3\"."
-msgstr ""
-"Μόνο μονόχρωμες εικόνες μπορούν να συμπιεστούν με \"CCITT ομάδα 4\" ή "
-"\"CCITT ομάδα 3\"."
-
-#: ../plug-ins/common/file-tiff-save.c:953
-msgid "Indexed pictures cannot be compressed with \"JPEG\"."
-msgstr "Οι εικόνες από ευρετήριο δεν μπορούν να συμπιεστούν με \"JPEG\"."
-
-#: ../plug-ins/common/file-tiff-save.c:1051
-msgid ""
-"The TIFF format only supports comments in\n"
-"7bit ASCII encoding. No comment is saved."
-msgstr ""
-"Η μορφή TIFF υποστηρίζει σχόλια μόνο σε\n"
-"κωδικοποίηση 7 δυαδικών ASCII. Κανένα σχόλιο δεν αποθηκεύτηκε."
-
-#: ../plug-ins/common/file-tiff-save.c:1151
-#, c-format
-msgid "Failed a scanline write on row %d"
-msgstr "Αποτυχία εγγραφής γραμμής σάρωσης στη γραμμή %d"
-
-#: ../plug-ins/common/file-tiff-save.c:1273
-msgid "TIFF"
-msgstr "TIFF"
-
-#: ../plug-ins/common/file-tiff-save.c:1299
-msgid "Compression"
-msgstr "Συμπίεση"
-
-#
-#: ../plug-ins/common/file-tiff-save.c:1303
-msgid "_None"
-msgstr "Κα_νένα"
-
-#: ../plug-ins/common/file-tiff-save.c:1304
-msgid "_LZW"
-msgstr "_LZW"
-
-#: ../plug-ins/common/file-tiff-save.c:1305
-msgid "_Pack Bits"
-msgstr "_Πακέτα δυαδικών ψηφίων"
-
-#
-#: ../plug-ins/common/file-tiff-save.c:1306
-msgid "_Deflate"
-msgstr "_Ξεφούσκωμα"
-
-#: ../plug-ins/common/file-tiff-save.c:1307
-msgid "_JPEG"
-msgstr "_JPEG"
-
-#: ../plug-ins/common/file-tiff-save.c:1308
-msgid "CCITT Group _3 fax"
-msgstr "Τηλεομοιοτυπία CCITT ομάδα _3"
-
-#: ../plug-ins/common/file-tiff-save.c:1309
-msgid "CCITT Group _4 fax"
-msgstr "Τηλεομοιοτυπία CCITT ομάδα _4"
 
 #: ../plug-ins/common/file-wmf.c:129
 msgid "Microsoft WMF file"
@@ -7052,6 +6939,12 @@ msgstr "Πρόσθετο"
 msgid "Unsupported or invalid channel size"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος καναλιού"
 
+#: ../plug-ins/file-psd/psd-load.c:2094
+#, c-format
+#| msgid "Failed to open '%s': %s"
+msgid "Failed to decompress data"
+msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
+
 #: ../plug-ins/file-psd/psd-save.c:253
 #, c-format
 msgid ""
@@ -7144,6 +7037,98 @@ msgid ""
 msgstr ""
 "Επιθετική RLE\n"
 "(δεν υποστηρίζεται από SGI)"
+
+#: ../plug-ins/file-tiff/file-tiff.c:140 ../plug-ins/file-tiff/file-tiff.c:161
+#: ../plug-ins/file-tiff/file-tiff.c:178
+msgid "TIFF image"
+msgstr "Εικόνα TIFF"
+
+#: ../plug-ins/file-tiff/file-tiff.c:228
+#, c-format
+msgid "TIFF '%s' does not contain any directories"
+msgstr "TIFF '%s' δεν περιέχει καταλόγους"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:143
+msgid "Import from TIFF"
+msgstr "Εισαγωγή από TIFF"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:717
+#, c-format
+msgid "%s-%d-of-%d-pages"
+msgstr "%s-%d-από-%d-σελίδες"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:951
+msgid "TIFF Channel"
+msgstr "Κανάλι TIFF"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:482
+#, c-format
+msgid "TIFF save cannot handle indexed images with an alpha channel."
+msgstr ""
+"Η αποθήκευση TIFF αδυνατεί να χειριστεί εικόνες από ευρετήριο με κανάλι άλφα."
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:495
+msgid ""
+"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
+"Group 3\"."
+msgstr ""
+"Μόνο μονόχρωμες εικόνες μπορούν να συμπιεστούν με \"CCITT ομάδα 4\" ή "
+"\"CCITT ομάδα 3\"."
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:509
+msgid "Indexed pictures cannot be compressed with \"JPEG\"."
+msgstr "Οι εικόνες από ευρετήριο δεν μπορούν να συμπιεστούν με \"JPEG\"."
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:607
+msgid ""
+"The TIFF format only supports comments in\n"
+"7bit ASCII encoding. No comment is saved."
+msgstr ""
+"Η μορφή TIFF υποστηρίζει σχόλια μόνο σε\n"
+"κωδικοποίηση 7 δυαδικών ASCII. Κανένα σχόλιο δεν αποθηκεύτηκε."
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:705
+#, c-format
+msgid "Failed a scanline write on row %d"
+msgstr "Αποτυχία εγγραφής γραμμής σάρωσης στη γραμμή %d"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:830
+msgid "TIFF"
+msgstr "TIFF"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:856
+msgid "Compression"
+msgstr "Συμπίεση"
+
+#
+#: ../plug-ins/file-tiff/file-tiff-save.c:860
+msgid "_None"
+msgstr "Κα_νένα"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:861
+msgid "_LZW"
+msgstr "_LZW"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:862
+msgid "_Pack Bits"
+msgstr "_Πακέτα δυαδικών ψηφίων"
+
+#
+#: ../plug-ins/file-tiff/file-tiff-save.c:863
+msgid "_Deflate"
+msgstr "_Ξεφούσκωμα"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:864
+msgid "_JPEG"
+msgstr "_JPEG"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:865
+msgid "CCITT Group _3 fax"
+msgstr "Τηλεομοιοτυπία CCITT ομάδα _3"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:866
+msgid "CCITT Group _4 fax"
+msgstr "Τηλεομοιοτυπία CCITT ομάδα _4"
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
@@ -7955,7 +7940,8 @@ msgstr "Προβολή σημείων ελέγχου"
 msgid "Max undo:"
 msgstr "Μέγιστες αναιρέσεις:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1318 ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1318
+#: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Διαφανές"
 
@@ -9326,7 +9312,8 @@ msgstr "Τυχαίος σπόρος:"
 msgid "_Second Flares"
 msgstr "_Δεύτερες λάμψεις"
 
-#: ../plug-ins/help-browser/dialog.c:180 ../plug-ins/help-browser/dialog.c:1107
+#: ../plug-ins/help-browser/dialog.c:180
+#: ../plug-ins/help-browser/dialog.c:1107
 msgid "GIMP Help Browser"
 msgstr "Περιηγητής βοήθειας GIMP"
 
@@ -9648,7 +9635,8 @@ msgstr "Κέντρο _x:"
 #: ../plug-ins/imagemap/imap_circle.c:266
 #: ../plug-ins/imagemap/imap_circle.c:273
 #: ../plug-ins/imagemap/imap_circle.c:279 ../plug-ins/imagemap/imap_grid.c:249
-#: ../plug-ins/imagemap/imap_grid.c:255 ../plug-ins/imagemap/imap_polygon.c:502
+#: ../plug-ins/imagemap/imap_grid.c:255
+#: ../plug-ins/imagemap/imap_polygon.c:502
 #: ../plug-ins/imagemap/imap_polygon.c:510
 #: ../plug-ins/imagemap/imap_rectangle.c:390
 #: ../plug-ins/imagemap/imap_rectangle.c:397
@@ -11029,71 +11017,71 @@ msgstr "Εμφάνιση _δικτυώματος"
 msgid "Update preview _live"
 msgstr "Ζ_ωντανή προεπισκόπηση ενημέρωσης"
 
-#: ../plug-ins/pagecurl/pagecurl.c:216
+#: ../plug-ins/pagecurl/pagecurl.c:204
 msgid "Curl up one of the image corners"
 msgstr "Κατσάρωμα μιας από τις γωνίες της εικόνας"
 
-#: ../plug-ins/pagecurl/pagecurl.c:221
+#: ../plug-ins/pagecurl/pagecurl.c:209
 msgid "_Pagecurl..."
 msgstr "Κατ_σαρή σελίδα..."
 
-#: ../plug-ins/pagecurl/pagecurl.c:442
+#: ../plug-ins/pagecurl/pagecurl.c:435
 msgid "Pagecurl Effect"
 msgstr "Εφέ κατσαρής σελίδας"
 
 #
-#: ../plug-ins/pagecurl/pagecurl.c:464
+#: ../plug-ins/pagecurl/pagecurl.c:457
 msgid "Curl Location"
 msgstr "Τοποθεσία κατσαρώματος"
 
-#: ../plug-ins/pagecurl/pagecurl.c:483
+#: ../plug-ins/pagecurl/pagecurl.c:476
 msgid "Lower right"
 msgstr "Κατώτερο δεξιά"
 
 # # FIX?  see above for "send to back"
-#: ../plug-ins/pagecurl/pagecurl.c:484
+#: ../plug-ins/pagecurl/pagecurl.c:477
 msgid "Lower left"
 msgstr "Κατώτερο αριστερά"
 
-#: ../plug-ins/pagecurl/pagecurl.c:485
+#: ../plug-ins/pagecurl/pagecurl.c:478
 msgid "Upper left"
 msgstr "Ανώτερο αριστερά"
 
-#: ../plug-ins/pagecurl/pagecurl.c:486
+#: ../plug-ins/pagecurl/pagecurl.c:479
 msgid "Upper right"
 msgstr "Ανώτερο δεξιά"
 
-#: ../plug-ins/pagecurl/pagecurl.c:526
+#: ../plug-ins/pagecurl/pagecurl.c:519
 msgid "Curl Orientation"
 msgstr "Προσανατολισμός κατσαρώματος"
 
-#: ../plug-ins/pagecurl/pagecurl.c:571
+#: ../plug-ins/pagecurl/pagecurl.c:564
 msgid "_Shade under curl"
 msgstr "_Σκιά κάτω από το κατσάρωμα"
 
-#: ../plug-ins/pagecurl/pagecurl.c:584
+#: ../plug-ins/pagecurl/pagecurl.c:577
 msgid "Current gradient (reversed)"
 msgstr "Τρέχουσα διαβάθμιση (αντεστραμμένη)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:589
+#: ../plug-ins/pagecurl/pagecurl.c:582
 msgid "Current gradient"
 msgstr "Τρέχουσα διαβάθμιση"
 
-#: ../plug-ins/pagecurl/pagecurl.c:594
+#: ../plug-ins/pagecurl/pagecurl.c:587
 msgid "Foreground / background colors"
 msgstr "Χρώματα προσκηνίου/παρασκηνίου"
 
 #
-#: ../plug-ins/pagecurl/pagecurl.c:614
+#: ../plug-ins/pagecurl/pagecurl.c:607
 msgid "_Opacity:"
 msgstr "Α_διαφάνεια:"
 
 # # FIX?  see above for "send to back"
-#: ../plug-ins/pagecurl/pagecurl.c:730
+#: ../plug-ins/pagecurl/pagecurl.c:723
 msgid "Curl Layer"
 msgstr "Στρώση κατσαρώματος"
 
-#: ../plug-ins/pagecurl/pagecurl.c:1022
+#: ../plug-ins/pagecurl/pagecurl.c:1015
 msgid "Page Curl"
 msgstr "Κατσαρή σελίδα"
 
@@ -11575,6 +11563,23 @@ msgstr "_Στιγμιότυπο..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Χωρίς λήψη δεδομένων"
+
+#~ msgid "Blur neighboring pixels, but only in low-contrast areas"
+#~ msgstr ""
+#~ "Θόλωση γειτονικών εικονοστοιχείων, αλλά μόνο σε περιοχές χαμηλής αντίθεσης"
+
+#~ msgid "_Selective Gaussian Blur..."
+#~ msgstr "Επι_λεκτική θόλωση Γκάους..."
+
+#~ msgid "Selective Gaussian Blur"
+#~ msgstr "Επιλεκτική θόλωση Γκάους"
+
+#
+#~ msgid "_Blur radius:"
+#~ msgstr "Α_κτίνα θόλωσης:"
+
+#~ msgid "_Max. delta:"
+#~ msgstr "_Μέγιστο δέλτα:"
 
 #~ msgid "Create an embossing effect using a bump map"
 #~ msgstr "Δημιουργία ενός εφέ χάραξης χρησιμοποιώντας χάρτη ανάγλυφου"

@@ -45,6 +45,7 @@ struct _GimpPlugInProcedure
   gchar               *menu_label;
   GList               *menu_paths;
   gchar               *label;
+  gchar               *help_id;
   GimpIconType         icon_type;
   gint                 icon_data_length;
   guint8              *icon_data;
@@ -101,20 +102,14 @@ gboolean      gimp_plug_in_procedure_add_menu_path   (GimpPlugInProcedure       
                                                       const gchar               *menu_path,
                                                       GError                   **error);
 
-const gchar * gimp_plug_in_procedure_get_label       (GimpPlugInProcedure       *proc);
-const gchar * gimp_plug_in_procedure_get_blurb       (const GimpPlugInProcedure *proc);
-
 void          gimp_plug_in_procedure_set_icon        (GimpPlugInProcedure       *proc,
                                                       GimpIconType               type,
                                                       const guint8              *data,
                                                       gint                       data_length);
-const gchar * gimp_plug_in_procedure_get_icon_name   (const GimpPlugInProcedure *proc);
-GdkPixbuf   * gimp_plug_in_procedure_get_pixbuf      (const GimpPlugInProcedure *proc);
-
-gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc);
-
-gboolean      gimp_plug_in_procedure_get_sensitive   (const GimpPlugInProcedure *proc,
-                                                      GimpDrawable              *drawable);
+void          gimp_plug_in_procedure_take_icon       (GimpPlugInProcedure       *proc,
+                                                      GimpIconType               type,
+                                                      guint8                    *data,
+                                                      gint                       data_length);
 
 void          gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure       *proc,
                                                       const gchar               *image_types);

@@ -64,11 +64,13 @@ gimp_histogram_options_class_init (GimpHistogramOptionsClass *klass)
   object_class->set_property = gimp_histogram_options_set_property;
   object_class->get_property = gimp_histogram_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SCALE,
-                                 "histogram-scale", NULL,
-                                 GIMP_TYPE_HISTOGRAM_SCALE,
-                                 GIMP_HISTOGRAM_SCALE_LINEAR,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SCALE,
+                         "histogram-scale",
+                         _("Histogram Scale"),
+                         NULL,
+                         GIMP_TYPE_HISTOGRAM_SCALE,
+                         GIMP_HISTOGRAM_SCALE_LINEAR,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -123,8 +125,8 @@ gimp_histogram_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *frame;
 
-  frame = gimp_prop_enum_radio_frame_new (config, "histogram-scale",
-                                          _("Histogram Scale"), 0, 0);
+  frame = gimp_prop_enum_radio_frame_new (config, "histogram-scale", NULL,
+                                          0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

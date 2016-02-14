@@ -253,7 +253,9 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
   off_x -= vectors_off_x;
   off_y -= vectors_off_y;
 
-  for (stroke = vectors->strokes; stroke; stroke = stroke->next)
+  for (stroke = vectors->strokes->head;
+       stroke;
+       stroke = stroke->next)
     {
       GArray   *coords;
       gboolean  closed;

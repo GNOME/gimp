@@ -173,7 +173,7 @@ gimp_image_convert_precision (GimpImage     *image,
       if (gimp_babl_format_get_linear (new_format))
         {
           new_profile =
-            gimp_color_profile_new_linear_rgb_from_color_profile (old_profile);
+            gimp_color_profile_new_linear_gamma_from_color_profile (old_profile);
         }
       else
         {

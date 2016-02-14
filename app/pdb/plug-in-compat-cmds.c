@@ -912,38 +912,37 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-           GeglNode *node = NULL;
-           if ((gboolean) monochrome)
-             {
-                node =
-                   gegl_node_new_child (NULL,
-                                        "operation", "gegl:mono-mixer",
-                                        "red", (gdouble) rr_gain,
-                                        "green", (gdouble) rg_gain,
-                                        "blue", (gdouble) rb_gain,
-                                        NULL);
-              }
-            else
-              {
-                 node =
-                   gegl_node_new_child (NULL,
-                                        "operation", "gegl:channel-mixer",
-                                        "rr-gain", (gdouble) rr_gain,
-                                        "rg-gain", (gdouble) rg_gain,
-                                        "rb-gain", (gdouble) rb_gain,
-                                        "gr-gain", (gdouble) gr_gain,
-                                        "gg-gain", (gdouble) gg_gain,
-                                        "gb-gain", (gdouble) gb_gain,
-                                        "br-gain", (gdouble) br_gain,
-                                        "bg-gain", (gdouble) bg_gain,
-                                        "bb-gain", (gdouble) bb_gain,
-                                         NULL);
-               }
+          GeglNode *node = NULL;
 
-          gimp_drawable_apply_operation (drawable, progress,
-                                         C_("undo-type", "Channel Mixer"),
-                                         node);
-          g_object_unref (node);
+          if (monochrome)
+            {
+              node = gegl_node_new_child (NULL,
+                                          "operation", "gegl:mono-mixer",
+                                          "red",       rr_gain,
+                                          "green",     rg_gain,
+                                          "blue",      rb_gain,
+                                          NULL);
+             }
+           else
+             {
+               node = gegl_node_new_child (NULL,
+                                           "operation", "gegl:channel-mixer",
+                                           "rr-gain",   rr_gain,
+                                           "rg-gain",   rg_gain,
+                                           "rb-gain",   rb_gain,
+                                           "gr-gain",   gr_gain,
+                                           "gg-gain",   gg_gain,
+                                           "gb-gain",   gb_gain,
+                                           "br-gain",   br_gain,
+                                           "bg-gain",   bg_gain,
+                                           "bb-gain",   bb_gain,
+                                            NULL);
+             }
+
+           gimp_drawable_apply_operation (drawable, progress,
+                                          C_("undo-type", "Channel Mixer"),
+                                          node);
+           g_object_unref (node);
         }
       else
         success = FALSE;
@@ -2443,7 +2442,7 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
                                        "x",              width,
                                        "y",              height,
                                        "algorithm-type", algorithm,
-                                       "tilable",        tileable,
+                                       "tileable",       tileable,
                                        "seed",           seed,
                                        "fg-color",       fg_color,
                                        "bg-color",       bg_color,
@@ -3472,6 +3471,50 @@ plug_in_noisify_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_sel_gauss_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble radius;
+  gint32 max_delta;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  radius = g_value_get_double (gimp_value_array_index (args, 3));
+  max_delta = g_value_get_int (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:gaussian-blur-selective",
+                                      "blur-radius", radius,
+                                      "max-delta",   (gdouble) max_delta / 255.0,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Selective Gaussian Blur"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_semiflatten_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -3719,7 +3762,7 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gboolean tilable;
+  gboolean tileable;
   gboolean turbulent;
   gint32 seed;
   gint32 detail;
@@ -3727,7 +3770,7 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
   gdouble ysize;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  tilable = g_value_get_boolean (gimp_value_array_index (args, 3));
+  tileable = g_value_get_boolean (gimp_value_array_index (args, 3));
   turbulent = g_value_get_boolean (gimp_value_array_index (args, 4));
   seed = g_value_get_int (gimp_value_array_index (args, 5));
   detail = g_value_get_int (gimp_value_array_index (args, 6));
@@ -3750,7 +3793,7 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
                                       "x-size",    xsize,
                                       "y-size",    ysize,
                                       "detail",    detail,
-                                      "tilable",   tilable,
+                                      "tileable",  tileable,
                                       "turbulent", turbulent,
                                       "seed",      seed,
                                       "width",     width,
@@ -5482,7 +5525,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "plug-in-edge",
                                      "Several simple methods for detecting edges",
-                                     "Perform edge detection on the contents of the specified drawable. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image). EDGEMODE sets the kind of matrix transform applied to the pixels, SOBEL was the method used in older versions.",
+                                     "Perform edge detection on the contents of the specified drawable. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tileable image). EDGEMODE sets the kind of matrix transform applied to the pixels, SOBEL was the method used in older versions.",
                                      "Compatibility procedure. Please see 'gegl:edge' for credits.",
                                      "Compatibility procedure. Please see 'gegl:edge' for credits.",
                                      "2015",
@@ -7609,6 +7652,54 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-plug-in-sel-gauss
+   */
+  procedure = gimp_procedure_new (plug_in_sel_gauss_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-sel-gauss");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-sel-gauss",
+                                     "Blur neighboring pixels, but only in low-contrast areas",
+                                     "This filter functions similar to the regular gaussian blur filter except that neighbouring pixels that differ more than the given maxdelta parameter will not be blended with. This way with the correct parameters, an image can be smoothed out without losing details. However, this filter can be rather slow.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur-selective' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur-selective' for credits.",
+                                     "2099",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("radius",
+                                                    "radius",
+                                                    "Radius of gaussian blur (in pixels)",
+                                                    0.0, G_MAXDOUBLE, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("max-delta",
+                                                      "max delta",
+                                                      "Maximum delta",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-plug-in-semiflatten
    */
   procedure = gimp_procedure_new (plug_in_semiflatten_invoker);
@@ -7896,9 +7987,9 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("tilable",
-                                                     "tilable",
-                                                     "Create a tilable output",
+                               g_param_spec_boolean ("tileable",
+                                                     "tileable",
+                                                     "Create a tileable output",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

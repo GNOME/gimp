@@ -33,7 +33,7 @@
 
 #define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "gimpcontroller.h"
-#include "gimpstock.h"
+#include "gimpicons.h"
 
 
 /**

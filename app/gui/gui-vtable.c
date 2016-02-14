@@ -47,9 +47,7 @@
 
 #include "text/gimpfont.h"
 
-#include "plug-in/gimppluginmanager.h"
-
-#include "file/file-procedure.h"
+#include "plug-in/gimppluginmanager-file.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpbrushselect.h"
@@ -81,6 +79,7 @@
 #include "gui.h"
 #include "gui-message.h"
 #include "gui-vtable.h"
+#include "icon-themes.h"
 #include "themes.h"
 
 
@@ -105,6 +104,7 @@ static gchar        * gui_get_display_name       (Gimp                *gimp,
                                                   gint                *monitor);
 static guint32        gui_get_user_time          (Gimp                *gimp);
 static GFile        * gui_get_theme_dir          (Gimp                *gimp);
+static GFile        * gui_get_icon_theme_dir     (Gimp                *gimp);
 static GimpObject   * gui_get_window_strategy    (Gimp                *gimp);
 static GimpObject   * gui_get_empty_display      (Gimp                *gimp);
 static GimpObject   * gui_display_get_by_ID      (Gimp                *gimp,
@@ -176,6 +176,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.get_display_name       = gui_get_display_name;
   gimp->gui.get_user_time          = gui_get_user_time;
   gimp->gui.get_theme_dir          = gui_get_theme_dir;
+  gimp->gui.get_icon_theme_dir     = gui_get_icon_theme_dir;
   gimp->gui.get_window_strategy    = gui_get_window_strategy;
   gimp->gui.get_empty_display      = gui_get_empty_display;
   gimp->gui.display_get_by_id      = gui_display_get_by_ID;
@@ -304,6 +305,12 @@ static GFile *
 gui_get_theme_dir (Gimp *gimp)
 {
   return themes_get_theme_dir (gimp, GIMP_GUI_CONFIG (gimp->config)->theme);
+}
+
+static GFile *
+gui_get_icon_theme_dir (Gimp *gimp)
+{
+  return icon_themes_get_theme_dir (gimp, GIMP_GUI_CONFIG (gimp->config)->icon_theme);
 }
 
 static GimpObject *
@@ -725,8 +732,9 @@ gui_recent_list_load (Gimp *gimp)
           const gchar *mime_type = gtk_recent_info_get_mime_type (info);
 
           if (mime_type &&
-              file_procedure_find_by_mime_type (gimp->plug_in_manager->load_procs,
-                                                mime_type))
+              gimp_plug_in_manager_file_procedure_find_by_mime_type (gimp->plug_in_manager,
+                                                                     GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                                     mime_type))
             {
               GimpImagefile *imagefile;
               GFile         *file;

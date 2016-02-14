@@ -23,7 +23,7 @@
 
 GType gimp_text_box_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_TEXT_BOX_DYNAMIC, /*< desc="Dynamic" >*/
   GIMP_TEXT_BOX_FIXED    /*< desc="Fixed"   >*/
@@ -34,7 +34,7 @@ typedef enum /*< pdb-skip >*/
 
 GType gimp_text_outline_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_TEXT_OUTLINE_NONE,
   GIMP_TEXT_OUTLINE_STROKE_ONLY,

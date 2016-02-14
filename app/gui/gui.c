@@ -74,6 +74,7 @@
 #include "gui.h"
 #include "gui-unique.h"
 #include "gui-vtable.h"
+#include "icon-themes.h"
 #include "session.h"
 #include "splash.h"
 #include "themes.h"
@@ -219,6 +220,11 @@ gui_init (Gimp     *gimp,
 
   gui_unique_init (gimp);
   gimp_language_store_parser_init ();
+
+  /*  initialize icon themes before gimp_widgets_init() so we avoid
+   *  setting the configured theme twice
+   */
+  icon_themes_init (gimp);
 
   gimp_widgets_init (gui_help_func,
                      gui_get_foreground_func,

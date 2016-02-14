@@ -427,6 +427,28 @@ gimp_gegl_apply_shrink (GeglBuffer          *src_buffer,
 }
 
 void
+gimp_gegl_apply_flood (GeglBuffer          *src_buffer,
+                       GimpProgress        *progress,
+                       const gchar         *undo_desc,
+                       GeglBuffer          *dest_buffer,
+                       const GeglRectangle *dest_rect)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gimp:flood",
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, dest_rect);
+  g_object_unref (node);
+}
+
+void
 gimp_gegl_apply_gaussian_blur (GeglBuffer          *src_buffer,
                                GimpProgress        *progress,
                                const gchar         *undo_desc,

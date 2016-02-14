@@ -100,7 +100,7 @@ static void       gimp_warp_tool_options_notify     (GimpTool              *tool
 
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
-static void       gimp_warp_tool_start              (GimpWarpTool          *wt,
+static gboolean   gimp_warp_tool_start              (GimpWarpTool          *wt,
                                                      GimpDisplay           *display);
 static void       gimp_warp_tool_halt               (GimpWarpTool          *wt);
 static void       gimp_warp_tool_commit             (GimpWarpTool          *wt);
@@ -233,7 +233,10 @@ gimp_warp_tool_button_press (GimpTool            *tool,
     }
 
   if (! tool->display)
-    gimp_warp_tool_start (wt, display);
+    {
+      if (! gimp_warp_tool_start (wt, display))
+        return;
+    }
 
   wt->current_stroke = gegl_path_new ();
 
@@ -309,6 +312,7 @@ gimp_warp_tool_button_release (GimpTool              *tool,
           g_list_free_full (wt->redo_stack, (GDestroyNotify) g_object_unref);
           wt->redo_stack = NULL;
         }
+
       gimp_tool_push_status (tool, tool->display,
                              _("Press ENTER to commit the transform"));
     }
@@ -403,7 +407,7 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
   GimpWarpOptions    *options  = GIMP_WARP_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
 
-  if (tool->display)
+  if (display == tool->display)
     {
       /* FIXME have better cursors  */
 
@@ -418,6 +422,18 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
         case GEGL_WARP_BEHAVIOR_SMOOTH:
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
+        }
+    }
+  else
+    {
+      GimpImage    *image    = gimp_display_get_image (display);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
+          gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
+          ! gimp_item_is_visible (GIMP_ITEM (drawable)))
+        {
+          modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
     }
 
@@ -537,7 +553,7 @@ gimp_warp_tool_draw (GimpDrawTool *draw_tool)
                           0.0, 2.0 * G_PI);
 }
 
-static void
+static gboolean
 gimp_warp_tool_start (GimpWarpTool *wt,
                       GimpDisplay  *display)
 {
@@ -547,6 +563,27 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
   const Babl      *format;
   GeglRectangle    bbox;
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("Cannot warp layer groups."));
+      return FALSE;
+    }
+
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("The active layer's pixels are locked."));
+      return FALSE;
+    }
+
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("The active layer is not visible."));
+      return FALSE;
+    }
 
   tool->display  = display;
   tool->drawable = drawable;
@@ -577,6 +614,8 @@ gimp_warp_tool_start (GimpWarpTool *wt,
 
       gtk_widget_set_sensitive (options->animate_button, TRUE);
     }
+
+  return TRUE;
 }
 
 static void

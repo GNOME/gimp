@@ -494,6 +494,7 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
                            gfloat               threshold,
                            gboolean             select_transparent,
                            GimpSelectCriterion  select_criterion,
+                           gboolean             diagonal_neighbors,
                            GimpChannelOps       op,
                            gboolean             antialias,
                            gboolean             feather,
@@ -519,6 +520,7 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
                                                     threshold,
                                                     select_transparent,
                                                     select_criterion,
+                                                    diagonal_neighbors,
                                                     x, y);
 
   if (! sample_merged)

@@ -1,6 +1,6 @@
-/Makefile
-/Makefile.in
-/gimp-core-pixbufs.c
-/gimp-core-pixbufs.gresource.xml
-/gimp-icon-pixbufs.c
-/gimp-icon-pixbufs.gresource.xml
+Makefile
+Makefile.in
+gimp-core-pixbufs.c
+gimp-core-pixbufs.gresource.xml
+gimp-icon-pixbufs.c
+gimp-icon-pixbufs.gresource.xml

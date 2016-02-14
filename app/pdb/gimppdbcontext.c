@@ -52,6 +52,7 @@ enum
   PROP_SAMPLE_CRITERION,
   PROP_SAMPLE_THRESHOLD,
   PROP_SAMPLE_TRANSPARENT,
+  PROP_DIAGONAL_NEIGHBORS,
   PROP_INTERPOLATION,
   PROP_TRANSFORM_DIRECTION,
   PROP_TRANSFORM_RESIZE
@@ -93,65 +94,93 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
   object_class->set_property = gimp_pdb_context_set_property;
   object_class->get_property = gimp_pdb_context_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
-                                    "antialias",
-                                    N_("Smooth edges"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                            "antialias",
+                            _("Antialiasing"),
+                            _("Smooth edges"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FEATHER,
-                                    "feather", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FEATHER,
+                            "feather",
+                            _("Feather"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_X,
-                                   "feather-radius-x", NULL,
-                                   0.0, 1000.0, 10.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_X,
+                           "feather-radius-x",
+                           _("Feather radius X"),
+                           NULL,
+                           0.0, 1000.0, 10.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_Y,
-                                   "feather-radius-y", NULL,
-                                   0.0, 1000.0, 10.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_Y,
+                           "feather-radius-y",
+                           _("Feather radius Y"),
+                           NULL,
+                           0.0, 1000.0, 10.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                            "sample-merged",
+                            _("Sample merged"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
-                                 "sample-criterion", NULL,
-                                 GIMP_TYPE_SELECT_CRITERION,
-                                 GIMP_SELECT_CRITERION_COMPOSITE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
+                         "sample-criterion",
+                         _("Sample criterion"),
+                         NULL,
+                         GIMP_TYPE_SELECT_CRITERION,
+                         GIMP_SELECT_CRITERION_COMPOSITE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SAMPLE_THRESHOLD,
-                                   "sample-threshold", NULL,
-                                   0.0, 1.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SAMPLE_THRESHOLD,
+                           "sample-threshold",
+                           _("Sample threshold"),
+                           NULL,
+                           0.0, 1.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_TRANSPARENT,
-                                    "sample-transparent", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_TRANSPARENT,
+                            "sample-transparent",
+                            _("Sample transparent"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
-                                 "interpolation", NULL,
-                                 GIMP_TYPE_INTERPOLATION_TYPE,
-                                 GIMP_INTERPOLATION_CUBIC,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+                            "diagonal-neighbors",
+                            _("Diagonal neighbors"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSFORM_DIRECTION,
-                                 "transform-direction", NULL,
-                                 GIMP_TYPE_TRANSFORM_DIRECTION,
-                                 GIMP_TRANSFORM_FORWARD,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
+                         "interpolation",
+                         _("Interpolation"),
+                         NULL,
+                         GIMP_TYPE_INTERPOLATION_TYPE,
+                         GIMP_INTERPOLATION_CUBIC,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSFORM_RESIZE,
-                                 "transform-resize", NULL,
-                                 GIMP_TYPE_TRANSFORM_RESIZE,
-                                 GIMP_TRANSFORM_RESIZE_ADJUST,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSFORM_DIRECTION,
+                         "transform-direction",
+                         _("Transform direction"),
+                         NULL,
+                         GIMP_TYPE_TRANSFORM_DIRECTION,
+                         GIMP_TRANSFORM_FORWARD,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSFORM_RESIZE,
+                         "transform-resize",
+                         _("Transform resize"),
+                         NULL,
+                         GIMP_TYPE_TRANSFORM_RESIZE,
+                         GIMP_TRANSFORM_RESIZE_ADJUST,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -185,6 +214,12 @@ gimp_pdb_context_constructed (GObject *object)
   context->stroke_options = gimp_stroke_options_new (GIMP_CONTEXT (context)->gimp,
                                                      GIMP_CONTEXT (context),
                                                      TRUE);
+
+  /* keep the stroke options in sync with the context */
+  gimp_context_define_properties (GIMP_CONTEXT (context->stroke_options),
+                                  GIMP_CONTEXT_PROP_MASK_ALL, FALSE);
+  gimp_context_set_parent (GIMP_CONTEXT (context->stroke_options),
+                           GIMP_CONTEXT (context));
 
   /* preserve the traditional PDB default */
   g_object_set (context->stroke_options,
@@ -282,6 +317,10 @@ gimp_pdb_context_set_property (GObject      *object,
       options->sample_transparent = g_value_get_boolean (value);
       break;
 
+    case PROP_DIAGONAL_NEIGHBORS:
+      options->diagonal_neighbors = g_value_get_boolean (value);
+      break;
+
     case PROP_INTERPOLATION:
       options->interpolation = g_value_get_enum (value);
       break;
@@ -340,6 +379,10 @@ gimp_pdb_context_get_property (GObject    *object,
 
     case PROP_SAMPLE_TRANSPARENT:
       g_value_set_boolean (value, options->sample_transparent);
+      break;
+
+    case PROP_DIAGONAL_NEIGHBORS:
+      g_value_set_boolean (value, options->diagonal_neighbors);
       break;
 
     case PROP_INTERPOLATION:
@@ -401,8 +444,6 @@ gimp_pdb_context_new (Gimp        *gimp,
                           "name", "PDB Context",
                           NULL);
 
-  gimp_config_sync (G_OBJECT (parent), G_OBJECT (context), 0);
-
   if (set_parent)
     {
       gimp_context_define_properties (GIMP_CONTEXT (context),
@@ -431,7 +472,17 @@ gimp_pdb_context_new (Gimp        *gimp,
                               GIMP_OBJECT (options));
           g_object_unref (options);
         }
+
+      gimp_config_copy (GIMP_CONFIG (GIMP_PDB_CONTEXT (parent)->stroke_options),
+                        GIMP_CONFIG (context->stroke_options),
+                        0);
     }
+
+  /*  copy the context properties last, they might have been
+   *  overwritten by the above copying of stroke options, which have
+   *  the pdb context as parent
+   */
+  gimp_config_sync (G_OBJECT (parent), G_OBJECT (context), 0);
 
   return GIMP_CONTEXT (context);
 }

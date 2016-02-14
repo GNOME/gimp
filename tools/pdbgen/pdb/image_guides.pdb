@@ -246,7 +246,8 @@ CODE
 }
 
 
-@headers = qw("core/gimpguide.h"
+@headers = qw("cairo.h"
+              "core/gimpguide.h"
               "core/gimpimage-guides.h"
               "core/gimpimage-undo-push.h"
               "gimppdb-utils.h"

@@ -71,36 +71,41 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
   object_class->set_property = gimp_warp_options_set_property;
   object_class->get_property = gimp_warp_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BEHAVIOR,
-                                 "behavior",
-                                 _("Behavior"),
-                                 GIMP_TYPE_WARP_BEHAVIOR,
-                                 GIMP_WARP_BEHAVIOR_MOVE,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BEHAVIOR,
+                         "behavior",
+                         _("Behavior"),
+                         _("Behavior"),
+                         GIMP_TYPE_WARP_BEHAVIOR,
+                         GIMP_WARP_BEHAVIOR_MOVE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
-                                   "effect-strength",
-                                   _("Effect Strength"),
-                                   1.0, 100.0, 50.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
+                           "effect-strength",
+                           _("Strength"),
+                           _("Effect Strength"),
+                           1.0, 100.0, 50.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_SIZE,
-                                   "effect-size",
-                                   _("Effect Size"),
-                                   1.0, 10000.0, 40.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_SIZE,
+                           "effect-size",
+                           _("Size"),
+                           _("Effect Size"),
+                           1.0, 10000.0, 40.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_HARDNESS,
-                                   "effect-hardness",
-                                   _("Effect Hardness"),
-                                   0.0, 1.0, 0.5,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_HARDNESS,
+                           "effect-hardness",
+                           _("Hardness"),
+                           _("Effect Hardness"),
+                           0.0, 1.0, 0.5,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_N_ANIMATION_FRAMES,
-                                "n-animation-frames",
-                                _("Number of animation frames"),
-                                3, 1000, 10,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_N_ANIMATION_FRAMES,
+                        "n-animation-frames",
+                        _("Frames"),
+                        _("Number of animation frames"),
+                        3, 1000, 10,
+                        GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -188,22 +193,19 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
-  scale = gimp_prop_spin_scale_new (config, "effect-strength",
-                                    _("Strength"),
+  scale = gimp_prop_spin_scale_new (config, "effect-strength", NULL,
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_spin_scale_new (config, "effect-size",
-                                    _("Size"),
+  scale = gimp_prop_spin_scale_new (config, "effect-size", NULL,
                                     0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_spin_scale_new (config, "effect-hardness",
-                                    _("Hardness"),
+  scale = gimp_prop_spin_scale_new (config, "effect-hardness", NULL,
                                     0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 1.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -218,8 +220,7 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), anim_vbox);
   gtk_widget_show (anim_vbox);
 
-  scale = gimp_prop_spin_scale_new (config, "n-animation-frames",
-                                    _("Frames"),
+  scale = gimp_prop_spin_scale_new (config, "n-animation-frames", NULL,
                                     1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 3.0, 100.0);
   gtk_box_pack_start (GTK_BOX (anim_vbox), scale, FALSE, FALSE, 0);

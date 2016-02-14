@@ -72,36 +72,47 @@ gimp_n_point_deformation_options_class_init (GimpNPointDeformationOptionsClass *
   object_class->set_property = gimp_n_point_deformation_options_set_property;
   object_class->get_property = gimp_n_point_deformation_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE  (object_class, PROP_SQUARE_SIZE,
-                                    "square-size", _("Density"),
-                                    5.0, 1000.0, 20.0,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE  (object_class, PROP_SQUARE_SIZE,
+                            "square-size",
+                            _("Density"),
+                            _("Density"),
+                            5.0, 1000.0, 20.0,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE  (object_class, PROP_RIGIDITY,
-                                    "rigidity", _("Rigidity"),
-                                    1.0, 10000.0, 100.0,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE  (object_class, PROP_RIGIDITY,
+                            "rigidity",
+                            _("Rigidity"),
+                            _("Rigidity"),
+                            1.0, 10000.0, 100.0,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ASAP_DEFORMATION,
-                                    "asap-deformation", _("Deformation mode"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ASAP_DEFORMATION,
+                            "asap-deformation",
+                            _("Deformation mode"),
+                            _("Deformation mode"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MLS_WEIGHTS,
-                                    "mls-weights", _("Use weights"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MLS_WEIGHTS,
+                            "mls-weights",
+                            _("Use weights"),
+                            _("Use weights"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE  (object_class, PROP_MLS_WEIGHTS_ALPHA,
-                                    "mls-weights-alpha",
-                                    _("Amount of control points' influence"),
-                                    0.1, 2.0, 1.0,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE  (object_class, PROP_MLS_WEIGHTS_ALPHA,
+                            "mls-weights-alpha",
+                            _("Control points influence"),
+                            _("Amount of control points' influence"),
+                            0.1, 2.0, 1.0,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MESH_VISIBLE,
-                                    "mesh-visible", _("Show lattice"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MESH_VISIBLE,
+                            "mesh-visible",
+                            _("Show lattice"),
+                            _("Show lattice"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -193,44 +204,41 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
 
   npd_options = GIMP_N_POINT_DEFORMATION_OPTIONS (tool_options);
 
-  widget = gimp_prop_check_button_new (config, "mesh-visible",
-                                       _("Show lattice"));
+  widget = gimp_prop_check_button_new (config, "mesh-visible", NULL);
   npd_options->check_mesh_visible = widget;
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_spin_scale_new (config, "square-size",
-                                     _("Density"), 1.0, 10.0, 0);
+  widget = gimp_prop_spin_scale_new (config, "square-size", NULL,
+                                     1.0, 10.0, 0);
   npd_options->scale_square_size = widget;
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 10.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_spin_scale_new (config, "rigidity",
-                                     _("Rigidity"), 1.0, 10.0, 0);
+  widget = gimp_prop_spin_scale_new (config, "rigidity", NULL,
+                                     1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 1.0, 2000.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
   widget = gimp_prop_boolean_radio_frame_new (config, "asap-deformation",
-                                              _("Deformation mode"),
+                                              NULL,
                                               _("Scale"),
                                               _("Rigid (Rubber)"));
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_check_button_new (config, "mls-weights",
-                                       _("Use weights"));
+  widget = gimp_prop_check_button_new (config, "mls-weights", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_spin_scale_new (config, "mls-weights-alpha",
-                                     _("Amount of control points' influence"),
+  widget = gimp_prop_spin_scale_new (config, "mls-weights-alpha", NULL,
                                      0.1, 0.1, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 0.1, 2.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);

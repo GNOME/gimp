@@ -5,21 +5,22 @@
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2011.
 # Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015.
+# Sebastian Rasmussen <sebras@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-05-01 17:38+0000\n"
-"PO-Revision-Date: 2015-05-05 21:07+0100\n"
-"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"POT-Creation-Date: 2015-11-07 19:13+0000\n"
+"PO-Revision-Date: 2015-11-28 23:43+0100\n"
+"Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -198,7 +199,7 @@ msgstr "Fel vid körning av %s:"
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "För få argument till ”script-fu-register”-anrop"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Fel vid inläsning av %s:"
@@ -231,1069 +232,1442 @@ msgstr ""
 "Att lyssna på en annan IP-adress än 127.0.0.1 (särskilt 0.0.0.0) kan tillåta "
 "en angripare att köra godtycklig kod från distans på den här maskinen."
 
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr "Bumpmap"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+msgid "Add B_evel..."
+msgstr "Lägg till av_fasning..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+msgid "Add a beveled border to an image"
+msgstr "Lägg till en avfasad ram till en bild"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+msgid "Thickness"
+msgstr "Tjocklek"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Work on copy"
+msgstr "Arbeta på kopia"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "Keep bump layer"
+msgstr "Behåll bumplager"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
+msgid "Border Layer"
+msgstr "Kantlager"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:160
+msgid "Add _Border..."
+msgstr "Lägg till _kant..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:161
+msgid "Add a border around an image"
+msgstr "Lägg till en ram runt en bild"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:168
+msgid "Border X size"
+msgstr "X-storlek för kant"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:169
+msgid "Border Y size"
+msgstr "Y-storlek för kant"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border color"
+msgstr "Kantfärg"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Delta value on color"
+msgstr "Deltavärde på färg"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+msgid "Frame"
+msgstr "Ram"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr "Toningsanimation behöver minst tre lager som källor"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "_Intonad..."
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"Skapa mellanliggande lager för att tona två eller fler lager över en "
+"bakgrund som en animation"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr "Mellanramar"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr "Maximal utsmetningsradie"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr "Evig slinga"
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"Skriptet Inbränning behöver totalt två lager. Ett förgrundslager med "
+"transparens och ett bakgrundslager."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+msgid "B_urn-In..."
+msgstr "In_bränning..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"Skapa mellanliggande lager för att producera en animerad \"inbränd\" "
+"övergång mellan två lager"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+msgid "Glow color"
+msgstr "Glödfärg"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+msgid "Fadeout"
+msgstr "Utfasning"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+msgid "Fadeout width"
+msgstr "Utfasningsbredd"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+msgid "Corona width"
+msgstr "Koronabredd"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+msgid "After glow"
+msgstr "Efterglöd"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Add glowing"
+msgstr "Lägg till glöd"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Prepare for GIF"
+msgstr "Förbered för GIF"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Speed (pixels/frame)"
+msgstr "Hastighet (bildpunkter/ram)"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+msgid "Carved Surface"
+msgstr "Utkarvad yta"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+msgid "Bevel Shadow"
+msgstr "Avfasa skugga"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+msgid "Bevel Highlight"
+msgstr "Avfasa färgmarkering"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+msgid "Cast Shadow"
+msgstr "Kasta skugga"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+msgid "Inset"
+msgstr "Infällning"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+msgid "Stencil C_arve..."
+msgstr "Stencilerad kar_vning..."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+"Använde den angivna ritytan som en stencil att karva ut från den angivna "
+"bilden."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+msgid "Image to carve"
+msgstr "Bild att karva ut"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+msgid "Carve white areas"
+msgstr "Karva ut vita ytor"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+msgid "Background"
+msgstr "Bakgrund"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+msgid "Layer 1"
+msgstr "Lager 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+msgid "Layer 2"
+msgstr "Lager 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+msgid "Layer 3"
+msgstr "Lager 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+msgid "Drop Shadow"
+msgstr "Skuggkastning"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+msgid "Chrome"
+msgstr "Krom"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+msgid "Highlight"
+msgstr "Färgmarkera"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+msgid "Stencil C_hrome..."
+msgstr "Stencilerat k_rom..."
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"Lägg till en kromeffekt till markerad region (eller alfa) med en angiven "
+"(gråskalig) stencil"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+msgid "Chrome saturation"
+msgstr "Krommättnad"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+msgid "Chrome lightness"
+msgstr "Kromljusstyrka"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+msgid "Chrome factor"
+msgstr "Kromfaktor"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+msgid "Environment map"
+msgstr "Miljökarta"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+msgid "Highlight balance"
+msgstr "Markeringsbalans"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+msgid "Chrome balance"
+msgstr "Krombalans"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+msgid "Chrome white areas"
+msgstr "Krom på vita ytor"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:74
+msgid "Effect layer"
+msgstr "Effektlager"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:127
+msgid "_Circuit..."
+msgstr "_Krets..."
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:128
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+"Fyll markerad region (eller alfa) med spår som liknar de på ett kretskort"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid "Oilify mask size"
+msgstr "Storlek på oljningsmask"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:136
+msgid "Circuit seed"
+msgstr "Kretsfrö"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:137
+msgid "No background (only for separate layer)"
+msgstr "Ingen bakgrund (endast för separat lager)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:138
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Keep selection"
+msgstr "Behåll markering"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:139
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+msgid "Separate layer"
+msgstr "Separat lager"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:51
+msgid "_Clothify..."
+msgstr "_Tygifiera..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "Lägg till en tygliknande textur till markerad region (eller alfa)"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:59
+msgid "Blur X"
+msgstr "Utsmetning i X-led"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur Y"
+msgstr "Utsmetning i Y-led"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Elevation"
+msgstr "Höjd"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Depth"
+msgstr "Djup"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr "Stänk"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:81
+msgid "_Coffee Stain..."
+msgstr "_Kaffefläck..."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "Add realistic looking coffee stains to the image"
+msgstr "Lägg till realistiska kaffefläckar till bilden"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:89
+msgid "Stains"
+msgstr "Stänk"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+msgid "Darken only"
+msgstr "Mörka endast"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+msgid "Difference Clouds..."
+msgstr "Differensmoln..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Enfärgat brus applicerat med differenslagerläget"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+msgid "_Distort..."
+msgstr "_Förvrid..."
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+msgid "Distress the selection"
+msgstr "Matta ut markeringen"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Tröskel (större 1<-->254 mindre)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "Spread"
+msgstr "Spridning"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "Granularity (1 is low)"
+msgstr "Granularitet (1 är låg)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+msgid "Smooth"
+msgstr "Jämna ut"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+msgid "Smooth horizontally"
+msgstr "Utjämna horisontellt"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+msgid "Smooth vertically"
+msgstr "Utjämna vertikalt"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow..."
+msgstr "S_kuggkastning..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Lägg till en skuggkastning till markerad region (eller alfa)"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "Avstånd i X-led"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "Avstånd i Y-led"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Blur radius"
+msgstr "Utsmetningsradie"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+msgid "Color"
+msgstr "Färg"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Opacity"
+msgstr "Opacitet"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+msgid "Allow resizing"
+msgstr "Tillåt storleksändring"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
+msgid "_Erase Every Other Row..."
+msgstr "_Radera varannan rad..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
+msgid "Erase every other row or column"
+msgstr "Radera varannan rad eller kolumn"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Rows/cols"
+msgstr "Rader/Kolumner"
+
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
 msgstr "Rader"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Columns"
+msgstr "Kolumner"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even/odd"
+msgstr "Jämn/Udda"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Even"
 msgstr "Jämn"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Odd"
+msgstr "Udda"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Erase/fill"
+msgstr "Ta bort/Fyll"
+
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
 msgid "Erase"
 msgstr "Ta bort"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Fill with BG"
+msgstr "Fyll med bakgrund"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr "Rendera typsnitts_karta..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+"Skapa en bild fylld med förhandsvisningar av typsnitt som matchar ett "
+"typsnittsfilter"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+msgid "_Text"
+msgstr "_Text"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr "Använd typsnitts_namnet som text"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr "_Etiketter"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr "_Filter (regexp)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Font _size (pixels)"
+msgstr "Typsnitts_storlek (bildpunkter)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+msgid "_Border (pixels)"
+msgstr "_Kant (bildpunkter)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "_Color scheme"
+msgstr "Färg_schema"
+
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
 msgstr "Svart på vitt"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Active colors"
+msgstr "Aktiva färger"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+msgid "_Fuzzy Border..."
+msgstr "_Suddig kant..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "Lägg till en naggad, luddig ram till en bild"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr "Kantstorlek"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+msgid "Blur border"
+msgstr "Smeta ut kant"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+msgid "Granularity (1 is Low)"
+msgstr "Granularitet (1 är låg)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+msgid "Add shadow"
+msgstr "Lägg till skugga"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Shadow weight (%)"
+msgstr "Skuggvikt (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Flatten image"
+msgstr "Platta till bilden"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr "Användning av _slingor"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "Bokmärke till användarhandboken"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr "_Förbered dina bilder för webben"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "Arbeta med digital_kamerabilder"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr "Skapa, öppna och spara _filer"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr "_Grundläggande koncept"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr "Hur man använder _dialogrutor"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr "Rita _enkla objekt"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr "Skapa och använd _markeringar"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+msgid "_Main Web Site"
+msgstr "_Huvudwebbplats"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the GIMP web site"
+msgstr "Bokmärke till GIMP:s webbplats"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+msgid "_Developer Web Site"
+msgstr "Webbplats för _utvecklare"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+msgid "_User Manual Web Site"
+msgstr "Webbplats för _användarhandbok"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Plug-in _Registry"
+msgstr "_Register för insticksmoduler"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+msgid "Custom _Gradient..."
+msgstr "Anpassad _gradient..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Skapa en bild fylld med ett exempel på aktuell gradient"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+msgid "Width"
+msgstr "Bredd"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Height"
+msgstr "Höjd"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+msgid "Gradient reverse"
+msgstr "Omvänd gradient"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "_Rutnät..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+"Rita ett rutnät angivet av listorna för X- och Y-koordinaterna med aktuell "
+"pensel"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr "X-delar"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr "Y-delar"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "Nya guider from _urval"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+msgid "Create four guides around the bounding box of the current selection"
+msgstr "Skapa fyra guider runt begränsningsrutan för den aktuella markeringen"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr "Ny guide (i _procent)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr ""
+"Lägg till en hjälplinje på angiven position som ett procenttal av "
+"bildstorleken"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Direction"
+msgstr "Beskrivning"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "Horisontell"
 
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "Vertikal"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "Position (in %)"
+msgstr "Position (i %)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr "Ny _guide..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr ""
+"Lägg till en hjälplinje med angiven orientering och position (i bildpunkter)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "Position"
+msgstr "Position"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "_Ta bort alla guider"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr "Ta bort alla horisontella och vertikala hjälplinjer"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr "_Lava..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr "Fyll aktuell markering med lava"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
+msgid "Seed"
+msgstr "Slumptalsfrö"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "Storlek"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
+msgstr "Strävhet"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+msgid "Gradient"
+msgstr "Gradient"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+msgid "Use current gradient"
+msgstr "Använd aktuell gradient"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+msgid "Line _Nova..."
+msgstr "Linje_nova..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+"Fyll ett lager med utåtriktade strålar från dess centrum med förgrundsfärgen"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Number of lines"
+msgstr "Antal linjer"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Sharpness (degrees)"
+msgstr "Skärpa (grader)"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:118
+msgid "Offset radius"
+msgstr "Avståndsradie"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:119
+msgid "Randomness"
+msgstr "Slumpmässighet"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr "_Rektangulär..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr "Skapa en rektangulär pensel"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+msgid "Name"
+msgstr "Namn"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "Spacing"
+msgstr "Mellanrum"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+msgid "Re_ctangular, Feathered..."
+msgstr "Re_ktangulär, fjädrad..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+msgid "Create a rectangular brush with feathered edges"
+msgstr "Skapa en rektangulär pensel med fjädrade kanter"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Feathering"
+msgstr "Fjäder"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+msgid "_Elliptical..."
+msgstr "_Elliptisk..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+msgid "Create an elliptical brush"
+msgstr "Skapa en elliptisk pensel"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+msgid "Elli_ptical, Feathered..."
+msgstr "Elli_ptisk, fjädrad..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+msgid "Create an elliptical brush with feathered edges"
+msgstr "Skapa en elliptisk pensel med fjädrade kanter"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr "_Gammalt fotografi..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr "Gör så att en bild ser ut som ett gammalt fotografi"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr "Avfokusera"
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "Sepia"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr "Fläck"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
+msgid "Folder for the output file"
+msgstr "Mapp för utdatafilen"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Namnet på filen att skapa (om en fil med detta namn redan finns så kommer "
+"den att ersättas)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "Filnamnet som du angav är inte ett lämpligt namn för en fil."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Alla tecken i namnet är antingen blanksteg eller tecken som inte kan visas i "
+"filnamn."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Exportera aktiva paletten som en CSS-stilmall med färgnamnen som deras "
+"klassnamn samt själva färgen som färgattributet"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Exportera aktiva paletten som ett PHP dictionary (namn => färg)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Exportera aktiva paletten som ett Python dictionary (namn: färg)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"Skriv alla färgerna i en palett till en textfil, ett hexadecimalt värde per "
+"rad (inga namn)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Exportera aktiva paletten som en java.util.Hashtable<Sträng, Färg>"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr "Det finns inget bilddata i urklipp att klistra in."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+msgid "New _Brush..."
+msgstr "Ny _pensel..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr "Klistra in urklippets innehåll till en ny pensel"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "Brush name"
+msgstr "Penselnamn"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+msgid "File name"
+msgstr "Filnamn"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+msgid "New _Pattern..."
+msgstr "Nytt _mönster..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "Klistra in urklippets innehåll till ett nytt mönster"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+msgid "Pattern name"
+msgstr "Mönsternamn"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr "_Perspektiv..."
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "Lägg till en perspektivskugga till markerad region (eller alfa)"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "Vinkel"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative distance of horizon"
+msgstr "Relativt avstånd till horisont"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Relative length of shadow"
+msgstr "Relativ längd på skugga"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr "Interpolation"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr "_Predator..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "Lägg till en \"Predator\"-effekt till markerad region (eller alfa)"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+msgid "Edge amount"
+msgstr "Hörnmängd"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr "Pixelisera"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+msgid "Pixel amount"
+msgstr "Mängd bildpunkter"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer Order"
+msgstr "Omvänd lagerordning"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr "Vänd ordning på lagren i bilden"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:67
+msgid "_Rippling..."
+msgstr "_Krusning..."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr ""
+"Skapa en flerlagrad bild genom att lägga till en krusningseffekt till "
+"aktuellt lager"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
+msgid "Rippling strength"
+msgstr "Krusningsstyrka"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:76
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Antal ramar"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Edge behavior"
+msgstr "Kantbeteende"
+
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Wrap"
 msgstr "Slå runt"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Smear"
+msgstr "Smeta"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Black"
+msgstr "Svart"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr "_Runda hörn..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+"Runda av hörnen i en bild och lägg valfritt till en skuggkastning och "
+"bakgrund"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+msgid "Edge radius"
+msgstr "Hörnradie"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+msgid "Add drop-shadow"
+msgstr "Lägg till kastad skugga"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Shadow X offset"
+msgstr "X-avstånd för skugga"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Shadow Y offset"
+msgstr "Y-avstånd för skugga"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add background"
+msgstr "Lägg till bakgrund"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr "S_täll in färgkarta..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "Ändra färgkartan för en bild till färgerna i en angiven palett."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr "Palett"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr "Rundad r_ektangel..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr "Runda av hörnen på den aktuella markeringen"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "Radius (%)"
+msgstr "Radie (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Concave"
+msgstr "Konkav"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+msgid "To _Brush..."
+msgstr "Till _pensel..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr "Konvertera en markering till en pensel"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+msgid "To _Image"
+msgstr "Till _bild"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr "Konvertera en markering till en bild"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+msgid "To _Pattern..."
+msgstr "Till _mönster..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr "Konvertera en markering till ett mönster"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:236
+msgid "_Slide..."
+msgstr "_Bildspel..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm:237
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+"Lägg till en diabildsliknande bildruta, perforeringar och etiketter till en "
+"bild"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:244
+msgid "Text"
+msgstr "Text"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "Number"
+msgstr "Nummer"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Font"
+msgstr "Typsnitt"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:247
+msgid "Font color"
+msgstr "Typsnittsfärg"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr "_Roterande glob..."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "Skapa en animation genom att mapp aktuell bild på en roterande sfär"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "Ramar"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Turn from left to right"
+msgstr "Vänd från vänster till höger"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Transparent background"
+msgstr "Genomskinlig bakgrund"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "Indexera till n färger (0 = behåll RGB)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+msgid "Rendering Spyro"
+msgstr "Renderar spiro"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+msgid "_Spyrogimp..."
+msgstr "_Spirogimp..."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr ""
+"Lägg till spirografer, epitrokoider och Lissajous-kurvor till aktuellt lager"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Type"
+msgstr "Typ"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
 msgstr "Spirograf"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+msgid "Epitrochoid"
+msgstr "Epitrokoid"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Shape"
+msgstr "Form"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
 msgid "Circle"
 msgstr "Cirkel"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+msgid "Triangle"
+msgstr "Triangel"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+msgid "Square"
+msgstr "Fyrkant"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+msgid "Pentagon"
+msgstr "Femhörning"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+msgid "Hexagon"
+msgstr "Hexagon"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+msgid "Polygon: 7 sides"
+msgstr "Polygon: 7 sidor"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+msgid "Polygon: 8 sides"
+msgstr "Polygon: 8 sidor"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+msgid "Polygon: 9 sides"
+msgstr "Polygon: 9 sidor"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+msgid "Polygon: 10 sides"
+msgstr "Polygon: 10 sidor"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+msgid "Outer teeth"
+msgstr "Yttre tänder"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+msgid "Inner teeth"
+msgstr "Inre tänder"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+msgid "Margin (pixels)"
+msgstr "Marginal (bildpunkter)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+msgid "Hole ratio"
+msgstr "Hålförhållande"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+msgid "Start angle"
+msgstr "Startvinkel"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Tool"
+msgstr "Verktyg"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
 msgid "Pencil"
 msgstr "Penna"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+msgid "Brush"
+msgstr "Pensel"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+msgid "Airbrush"
+msgstr "Färgspruta"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Color method"
+msgstr "Färgmetod"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Solid Color"
 msgstr "Solid färg"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+msgid "Gradient: Loop Sawtooth"
+msgstr "Gradient: repetera sågtand"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+msgid "Gradient: Loop Triangle"
+msgstr "Gradient: repetera triangel"
+
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+msgid "_Sphere..."
+msgstr "_Sfär..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr "_Brickutsmetning..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "Gör kanterna i en bild oskarpa"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "Radie"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+msgid "Blur vertically"
+msgstr "Smeta ut vertikalt"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+msgid "Blur horizontally"
+msgstr "Smeta ut horisontellt"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Blur type"
+msgstr "Utsmetningstyp"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
 msgstr "IIR"
 
-#~ msgid "Bumpmap"
-#~ msgstr "Bumpmap"
-
-#~ msgid "Add B_evel..."
-#~ msgstr "Lägg till av_fasning..."
-
-#~ msgid "Add a beveled border to an image"
-#~ msgstr "Lägg till en avfasad ram till en bild"
-
-#~ msgid "Thickness"
-#~ msgstr "Tjocklek"
-
-#~ msgid "Work on copy"
-#~ msgstr "Arbeta på kopia"
-
-#~ msgid "Keep bump layer"
-#~ msgstr "Behåll bumplager"
-
-#~ msgid "Border Layer"
-#~ msgstr "Kantlager"
-
-#~ msgid "Add _Border..."
-#~ msgstr "Lägg till _kant..."
-
-#~ msgid "Add a border around an image"
-#~ msgstr "Lägg till en ram runt en bild"
-
-#~ msgid "Border X size"
-#~ msgstr "X-storlek för kant"
-
-#~ msgid "Border Y size"
-#~ msgstr "Y-storlek för kant"
-
-#~ msgid "Border color"
-#~ msgstr "Kantfärg"
-
-#~ msgid "Delta value on color"
-#~ msgstr "Deltavärde på färg"
-
-#~ msgid "Frame"
-#~ msgstr "Ram"
-
-#~ msgid "Blend Animation needs at least three source layers"
-#~ msgstr "Toningsanimation behöver minst tre lager som källor"
-
-#~ msgid "_Blend..."
-#~ msgstr "_Intonad..."
-
-#~ msgid ""
-#~ "Create intermediate layers to blend two or more layers over a background "
-#~ "as an animation"
-#~ msgstr ""
-#~ "Skapa mellanliggande lager för att tona två eller fler lager över en "
-#~ "bakgrund som en animation"
-
-#~ msgid "Intermediate frames"
-#~ msgstr "Mellanramar"
-
-#~ msgid "Max. blur radius"
-#~ msgstr "Maximal utsmetningsradie"
-
-#~ msgid "Looped"
-#~ msgstr "Evig slinga"
-
-#~ msgid ""
-#~ "The Burn-In script needs two layers in total. A foreground layer with "
-#~ "transparency and a background layer."
-#~ msgstr ""
-#~ "Skriptet Inbränning behöver totalt två lager. Ett förgrundslager med "
-#~ "transparens och ett bakgrundslager."
-
-#~ msgid "B_urn-In..."
-#~ msgstr "In_bränning..."
-
-#~ msgid ""
-#~ "Create intermediate layers to produce an animated 'burn-in' transition "
-#~ "between two layers"
-#~ msgstr ""
-#~ "Skapa mellanliggande lager för att producera en animerad \"inbränd\" "
-#~ "övergång mellan två lager"
-
-#~ msgid "Glow color"
-#~ msgstr "Glödfärg"
-
-#~ msgid "Fadeout"
-#~ msgstr "Utfasning"
-
-#~ msgid "Fadeout width"
-#~ msgstr "Utfasningsbredd"
-
-#~ msgid "Corona width"
-#~ msgstr "Koronabredd"
-
-#~ msgid "After glow"
-#~ msgstr "Efterglöd"
-
-#~ msgid "Add glowing"
-#~ msgstr "Lägg till glöd"
-
-#~ msgid "Prepare for GIF"
-#~ msgstr "Förbered för GIF"
-
-#~ msgid "Speed (pixels/frame)"
-#~ msgstr "Hastighet (bildpunkter/ram)"
-
-#~ msgid "Carved Surface"
-#~ msgstr "Utkarvad yta"
-
-#~ msgid "Bevel Shadow"
-#~ msgstr "Avfasa skugga"
-
-#~ msgid "Bevel Highlight"
-#~ msgstr "Avfasa färgmarkering"
-
-#~ msgid "Cast Shadow"
-#~ msgstr "Kasta skugga"
-
-#~ msgid "Inset"
-#~ msgstr "Infällning"
-
-#~ msgid "Stencil C_arve..."
-#~ msgstr "Stencilerad kar_vning..."
-
-#~ msgid "Image to carve"
-#~ msgstr "Bild att karva ut"
-
-#~ msgid "Carve white areas"
-#~ msgstr "Karva ut vita ytor"
-
-#~ msgid "Background"
-#~ msgstr "Bakgrund"
-
-#~ msgid "Layer 1"
-#~ msgstr "Lager 1"
-
-#~ msgid "Layer 2"
-#~ msgstr "Lager 2"
-
-#~ msgid "Layer 3"
-#~ msgstr "Lager 3"
-
-#~ msgid "Drop Shadow"
-#~ msgstr "Skuggkastning"
-
-#~ msgid "Chrome"
-#~ msgstr "Krom"
-
-#~ msgid "Highlight"
-#~ msgstr "Färgmarkera"
-
-#~ msgid "Stencil C_hrome..."
-#~ msgstr "Stencilerat k_rom..."
-
-#~ msgid ""
-#~ "Add a chrome effect to the selected region (or alpha) using a specified "
-#~ "(grayscale) stencil"
-#~ msgstr ""
-#~ "Lägg till en kromeffekt till markerad region (eller alfa) med en angiven "
-#~ "(gråskalig) stencil"
-
-#~ msgid "Chrome saturation"
-#~ msgstr "Krommättnad"
-
-#~ msgid "Chrome lightness"
-#~ msgstr "Kromljusstyrka"
-
-#~ msgid "Chrome factor"
-#~ msgstr "Kromfaktor"
-
-#~ msgid "Environment map"
-#~ msgstr "Miljökarta"
-
-#~ msgid "Highlight balance"
-#~ msgstr "Markeringsbalans"
-
-#~ msgid "Chrome balance"
-#~ msgstr "Krombalans"
-
-#~ msgid "Chrome white areas"
-#~ msgstr "Krom på vita ytor"
-
-#~ msgid "Effect layer"
-#~ msgstr "Effektlager"
-
-#~ msgid "_Circuit..."
-#~ msgstr "_Krets..."
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with traces like those on a circuit "
-#~ "board"
-#~ msgstr ""
-#~ "Fyll markerad region (eller alfa) med spår som liknar de på ett kretskort"
-
-#~ msgid "Oilify mask size"
-#~ msgstr "Storlek på oljningsmask"
-
-#~ msgid "Circuit seed"
-#~ msgstr "Kretsfrö"
-
-#~ msgid "No background (only for separate layer)"
-#~ msgstr "Ingen bakgrund (endast för separat lager)"
-
-#~ msgid "Keep selection"
-#~ msgstr "Behåll markering"
-
-#~ msgid "Separate layer"
-#~ msgstr "Separat lager"
-
-#~ msgid "_Clothify..."
-#~ msgstr "_Tygifiera..."
-
-#~ msgid "Add a cloth-like texture to the selected region (or alpha)"
-#~ msgstr "Lägg till en tygliknande textur till markerad region (eller alfa)"
-
-#~ msgid "Blur X"
-#~ msgstr "Utsmetning i X-led"
-
-#~ msgid "Blur Y"
-#~ msgstr "Utsmetning i Y-led"
-
-#~ msgid "Azimuth"
-#~ msgstr "Azimut"
-
-#~ msgid "Elevation"
-#~ msgstr "Höjd"
-
-#~ msgid "Depth"
-#~ msgstr "Djup"
-
-#~ msgid "Stain"
-#~ msgstr "Stänk"
-
-#~ msgid "_Coffee Stain..."
-#~ msgstr "_Kaffefläck..."
-
-#~ msgid "Add realistic looking coffee stains to the image"
-#~ msgstr "Lägg till realistiska kaffefläckar till bilden"
-
-#~ msgid "Stains"
-#~ msgstr "Stänk"
-
-#~ msgid "Darken only"
-#~ msgstr "Mörka endast"
-
-#~ msgid "Difference Clouds..."
-#~ msgstr "Differensmoln..."
-
-#~ msgid "Solid noise applied with Difference layer mode"
-#~ msgstr "Enfärgat brus applicerat med differenslagerläget"
-
-#~ msgid "_Distort..."
-#~ msgstr "_Förvrid..."
-
-#~ msgid "Distress the selection"
-#~ msgstr "Matta ut markeringen"
-
-#, fuzzy
-#~ msgid "Threshold (bigger 1<-->254 smaller)"
-#~ msgstr "Tröskel (större 1<-->255 mindre)"
-
-#~ msgid "Spread"
-#~ msgstr "Spridning"
-
-#~ msgid "Granularity (1 is low)"
-#~ msgstr "Granularitet (1 är låg)"
-
-#~ msgid "Smooth"
-#~ msgstr "Jämna ut"
-
-#~ msgid "Smooth horizontally"
-#~ msgstr "Utjämna horisontellt"
-
-#~ msgid "Smooth vertically"
-#~ msgstr "Utjämna vertikalt"
-
-#~ msgid "_Drop Shadow..."
-#~ msgstr "S_kuggkastning..."
-
-#~ msgid "Add a drop shadow to the selected region (or alpha)"
-#~ msgstr "Lägg till en skuggkastning till markerad region (eller alfa)"
-
-#~ msgid "Offset X"
-#~ msgstr "Avstånd i X-led"
-
-#~ msgid "Offset Y"
-#~ msgstr "Avstånd i Y-led"
-
-#~ msgid "Blur radius"
-#~ msgstr "Utsmetningsradie"
-
-#~ msgid "Color"
-#~ msgstr "Färg"
-
-#~ msgid "Opacity"
-#~ msgstr "Opacitet"
-
-#~ msgid "Allow resizing"
-#~ msgstr "Tillåt storleksändring"
-
-#~ msgid "_Erase Every Other Row..."
-#~ msgstr "_Radera varannan rad..."
-
-#~ msgid "Erase every other row or column"
-#~ msgstr "Radera varannan rad eller kolumn"
-
-#~ msgid "Rows/cols"
-#~ msgstr "Rader/Kolumner"
-
-#~ msgid "Columns"
-#~ msgstr "Kolumner"
-
-#~ msgid "Even/odd"
-#~ msgstr "Jämn/Udda"
-
-#~ msgid "Odd"
-#~ msgstr "Udda"
-
-#~ msgid "Erase/fill"
-#~ msgstr "Ta bort/Fyll"
-
-#~ msgid "Fill with BG"
-#~ msgstr "Fyll med bakgrund"
-
-#~ msgid "Render _Font Map..."
-#~ msgstr "Rendera typsnitts_karta..."
-
-#~ msgid ""
-#~ "Create an image filled with previews of fonts matching a fontname filter"
-#~ msgstr ""
-#~ "Skapa en bild fylld med förhandsvisningar av typsnitt som matchar ett "
-#~ "typsnittsfilter"
-
-#~ msgid "_Text"
-#~ msgstr "_Text"
-
-#~ msgid "Use font _name as text"
-#~ msgstr "Använd typsnitts_namnet som text"
-
-#~ msgid "_Labels"
-#~ msgstr "_Etiketter"
-
-#~ msgid "_Filter (regexp)"
-#~ msgstr "_Filter (regexp)"
-
-#~ msgid "Font _size (pixels)"
-#~ msgstr "Typsnitts_storlek (bildpunkter)"
-
-#~ msgid "_Border (pixels)"
-#~ msgstr "_Kant (bildpunkter)"
-
-#~ msgid "_Color scheme"
-#~ msgstr "Färg_schema"
-
-#~ msgid "Active colors"
-#~ msgstr "Aktiva färger"
-
-#~ msgid "_Fuzzy Border..."
-#~ msgstr "_Suddig kant..."
-
-#~ msgid "Add a jagged, fuzzy border to an image"
-#~ msgstr "Lägg till en naggad, luddig ram till en bild"
-
-#~ msgid "Border size"
-#~ msgstr "Kantstorlek"
-
-#~ msgid "Blur border"
-#~ msgstr "Smeta ut kant"
-
-#~ msgid "Granularity (1 is Low)"
-#~ msgstr "Granularitet (1 är låg)"
-
-#~ msgid "Add shadow"
-#~ msgstr "Lägg till skugga"
-
-#~ msgid "Shadow weight (%)"
-#~ msgstr "Skuggvikt (%)"
-
-#~ msgid "Flatten image"
-#~ msgstr "Platta till bilden"
-
-#~ msgid "Using _Paths"
-#~ msgstr "Användning av _slingor"
-
-#~ msgid "Bookmark to the user manual"
-#~ msgstr "Bokmärke till användarhandboken"
-
-#~ msgid "_Preparing your Images for the Web"
-#~ msgstr "_Förbered dina bilder för webben"
-
-#~ msgid "_Working with Digital Camera Photos"
-#~ msgstr "Arbeta med digital_kamerabilder"
-
-#~ msgid "Create, Open and Save _Files"
-#~ msgstr "Skapa, öppna och spara _filer"
-
-#~ msgid "_Basic Concepts"
-#~ msgstr "_Grundläggande koncept"
-
-#~ msgid "How to Use _Dialogs"
-#~ msgstr "Hur man använder _dialogrutor"
-
-#~ msgid "Drawing _Simple Objects"
-#~ msgstr "Rita _enkla objekt"
-
-#~ msgid "Create and Use _Selections"
-#~ msgstr "Skapa och använd _markeringar"
-
-#~ msgid "_Main Web Site"
-#~ msgstr "_Huvudwebbplats"
-
-#~ msgid "Bookmark to the GIMP web site"
-#~ msgstr "Bokmärke till GIMP:s webbplats"
-
-#~ msgid "_Developer Web Site"
-#~ msgstr "Webbplats för _utvecklare"
-
-#~ msgid "_User Manual Web Site"
-#~ msgstr "Webbplats för _användarhandbok"
-
-#~ msgid "Plug-in _Registry"
-#~ msgstr "_Register för insticksmoduler"
-
-#~ msgid "Custom _Gradient..."
-#~ msgstr "Anpassad _gradient..."
-
-#~ msgid "Create an image filled with an example of the current gradient"
-#~ msgstr "Skapa en bild fylld med ett exempel på aktuell gradient"
-
-#~ msgid "Width"
-#~ msgstr "Bredd"
-
-#~ msgid "Height"
-#~ msgstr "Höjd"
-
-#~ msgid "Gradient reverse"
-#~ msgstr "Omvänd gradient"
-
-#~ msgid "_Grid..."
-#~ msgstr "_Rutnät..."
-
-#~ msgid ""
-#~ "Draw a grid as specified by the lists of X and Y locations using the "
-#~ "current brush"
-#~ msgstr ""
-#~ "Rita ett rutnät angivet av listorna för X- och Y-koordinaterna med "
-#~ "aktuell pensel"
-
-#~ msgid "X divisions"
-#~ msgstr "X-delar"
-
-#~ msgid "Y divisions"
-#~ msgstr "Y-delar"
-
-#~ msgid "New Guides from _Selection"
-#~ msgstr "Nya guider from _urval"
-
-#, fuzzy
-#~ msgid "Create four guides around the bounding box of the current selection"
-#~ msgstr "Runda av hörnen på den aktuella markeringen"
-
-#~ msgid "New Guide (by _Percent)..."
-#~ msgstr "Ny guide (i _procent)..."
-
-#~ msgid ""
-#~ "Add a guide at the position specified as a percentage of the image size"
-#~ msgstr ""
-#~ "Lägg till en hjälplinje på angiven position som ett procenttal av "
-#~ "bildstorleken"
-
-#~ msgid "Direction"
-#~ msgstr "Beskrivning"
-
-#~ msgid "Vertical"
-#~ msgstr "Vertikal"
-
-#~ msgid "Position (in %)"
-#~ msgstr "Position (i %)"
-
-#~ msgid "New _Guide..."
-#~ msgstr "Ny _guide..."
-
-#~ msgid "Add a guide at the orientation and position specified (in pixels)"
-#~ msgstr ""
-#~ "Lägg till en hjälplinje med angiven orientering och position (i "
-#~ "bildpunkter)"
-
-#~ msgid "Position"
-#~ msgstr "Position"
-
-#~ msgid "_Remove all Guides"
-#~ msgstr "_Ta bort alla guider"
-
-#~ msgid "Remove all horizontal and vertical guides"
-#~ msgstr "Ta bort alla horisontella och vertikala hjälplinjer"
-
-#~ msgid "_Lava..."
-#~ msgstr "_Lava..."
-
-#~ msgid "Fill the current selection with lava"
-#~ msgstr "Fyll aktuell markering med lava"
-
-#~ msgid "Seed"
-#~ msgstr "Slumptalsfrö"
-
-#~ msgid "Size"
-#~ msgstr "Storlek"
-
-#~ msgid "Roughness"
-#~ msgstr "Strävhet"
-
-#~ msgid "Gradient"
-#~ msgstr "Gradient"
-
-#~ msgid "Use current gradient"
-#~ msgstr "Använd aktuell gradient"
-
-#~ msgid "Line _Nova..."
-#~ msgstr "Linje_nova..."
-
-#~ msgid ""
-#~ "Fill a layer with rays emanating outward from its center using the "
-#~ "foreground color"
-#~ msgstr ""
-#~ "Fyll ett lager med utåtriktade strålar från dess centrum med "
-#~ "förgrundsfärgen"
-
-#~ msgid "Number of lines"
-#~ msgstr "Antal linjer"
-
-#~ msgid "Sharpness (degrees)"
-#~ msgstr "Skärpa (grader)"
-
-#~ msgid "Offset radius"
-#~ msgstr "Avståndsradie"
-
-#~ msgid "Randomness"
-#~ msgstr "Slumpmässighet"
-
-#~ msgid "_Rectangular..."
-#~ msgstr "_Rektangulär..."
-
-#~ msgid "Create a rectangular brush"
-#~ msgstr "Skapa en rektangulär pensel"
-
-#~ msgid "Name"
-#~ msgstr "Namn"
-
-#~ msgid "Spacing"
-#~ msgstr "Mellanrum"
-
-#~ msgid "Re_ctangular, Feathered..."
-#~ msgstr "Re_ktangulär, fjädrad..."
-
-#~ msgid "Create a rectangular brush with feathered edges"
-#~ msgstr "Skapa en rektangulär pensel med fjädrade kanter"
-
-#~ msgid "Feathering"
-#~ msgstr "Fjäder"
-
-#~ msgid "_Elliptical..."
-#~ msgstr "_Elliptisk..."
-
-#~ msgid "Create an elliptical brush"
-#~ msgstr "Skapa en elliptisk pensel"
-
-#~ msgid "Elli_ptical, Feathered..."
-#~ msgstr "Elli_ptisk, fjädrad..."
-
-#~ msgid "Create an elliptical brush with feathered edges"
-#~ msgstr "Skapa en elliptisk pensel med fjädrade kanter"
-
-#~ msgid "_Old Photo..."
-#~ msgstr "_Gammalt fotografi..."
-
-#~ msgid "Make an image look like an old photo"
-#~ msgstr "Gör så att en bild ser ut som ett gammalt fotografi"
-
-#~ msgid "Defocus"
-#~ msgstr "Avfokusera"
-
-#~ msgid "Sepia"
-#~ msgstr "Sepia"
-
-#~ msgid "Mottle"
-#~ msgstr "Fläck"
-
-#~ msgid "Folder for the output file"
-#~ msgstr "Mapp för utdatafilen"
-
-#~ msgid ""
-#~ "The name of the file to create (if a file with this name already exist, "
-#~ "it will be replaced)"
-#~ msgstr ""
-#~ "Namnet på filen att skapa (om en fil med detta namn redan finns så kommer "
-#~ "den att ersättas)"
-
-#~ msgid "The filename you entered is not a suitable name for a file."
-#~ msgstr "Filnamnet som du angav är inte ett lämpligt namn för en fil."
-
-#~ msgid ""
-#~ "All characters in the name are either white-spaces or characters which "
-#~ "can not appear in filenames."
-#~ msgstr ""
-#~ "Alla tecken i namnet är antingen blanksteg eller tecken som inte kan "
-#~ "visas i filnamn."
-
-#~ msgid ""
-#~ "Export the active palette as a CSS stylesheet with the color entry name "
-#~ "as their class name, and the color itself as the color attribute"
-#~ msgstr ""
-#~ "Exportera aktiva paletten som en CSS-stilmall med färgnamnen som deras "
-#~ "klassnamn samt själva färgen som färgattributet"
-
-#~ msgid "Export the active palette as a PHP dictionary (name => color)"
-#~ msgstr "Exportera aktiva paletten som ett PHP dictionary (namn => färg)"
-
-#~ msgid "Export the active palette as a Python dictionary (name: color)"
-#~ msgstr "Exportera aktiva paletten som ett Python dictionary (namn: färg)"
-
-#~ msgid ""
-#~ "Write all the colors in a palette to a text file, one hexadecimal value "
-#~ "per line (no names)"
-#~ msgstr ""
-#~ "Skriv alla färgerna i en palett till en textfil, ett hexadecimalt värde "
-#~ "per rad (inga namn)"
-
-#~ msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-#~ msgstr "Exportera aktiva paletten som en java.util.Hashtable<Sträng, Färg>"
-
-#~ msgid "There is no image data in the clipboard to paste."
-#~ msgstr "Det finns inget bilddata i urklipp att klistra in."
-
-#~ msgid "New _Brush..."
-#~ msgstr "Ny _pensel..."
-
-#~ msgid "Paste the clipboard contents into a new brush"
-#~ msgstr "Klistra in urklippets innehåll till en ny pensel"
-
-#~ msgid "Brush name"
-#~ msgstr "Penselnamn"
-
-#~ msgid "File name"
-#~ msgstr "Filnamn"
-
-#~ msgid "New _Pattern..."
-#~ msgstr "Nytt _mönster..."
-
-#~ msgid "Paste the clipboard contents into a new pattern"
-#~ msgstr "Klistra in urklippets innehåll till ett nytt mönster"
-
-#~ msgid "Pattern name"
-#~ msgstr "Mönsternamn"
-
-#~ msgid "_Perspective..."
-#~ msgstr "_Perspektiv..."
-
-#~ msgid "Add a perspective shadow to the selected region (or alpha)"
-#~ msgstr "Lägg till en perspektivskugga till markerad region (eller alfa)"
-
-#~ msgid "Angle"
-#~ msgstr "Vinkel"
-
-#~ msgid "Relative distance of horizon"
-#~ msgstr "Relativt avstånd till horisont"
-
-#~ msgid "Relative length of shadow"
-#~ msgstr "Relativ längd på skugga"
-
-#~ msgid "Interpolation"
-#~ msgstr "Interpolation"
-
-#~ msgid "_Predator..."
-#~ msgstr "_Predator..."
-
-#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
-#~ msgstr "Lägg till en \"Predator\"-effekt till markerad region (eller alfa)"
-
-#~ msgid "Edge amount"
-#~ msgstr "Hörnmängd"
-
-#~ msgid "Pixelize"
-#~ msgstr "Pixelisera"
-
-#~ msgid "Pixel amount"
-#~ msgstr "Mängd bildpunkter"
-
-#~ msgid "Reverse Layer Order"
-#~ msgstr "Omvänd lagerordning"
-
-#~ msgid "Reverse the order of layers in the image"
-#~ msgstr "Vänd ordning på lagren i bilden"
-
-#~ msgid "_Rippling..."
-#~ msgstr "_Krusning..."
-
-#~ msgid ""
-#~ "Create a multi-layer image by adding a ripple effect to the current image"
-#~ msgstr ""
-#~ "Skapa en flerlagrad bild genom att lägga till en krusningseffekt till "
-#~ "aktuell bild"
-
-#~ msgid "Rippling strength"
-#~ msgstr "Krusningsstyrka"
-
-#~ msgid "Number of frames"
-#~ msgstr "Antal ramar"
-
-#~ msgid "Edge behavior"
-#~ msgstr "Kantbeteende"
-
-#~ msgid "Smear"
-#~ msgstr "Smeta"
-
-#~ msgid "Black"
-#~ msgstr "Svart"
-
-#~ msgid "_Round Corners..."
-#~ msgstr "_Runda hörn..."
-
-#~ msgid ""
-#~ "Round the corners of an image and optionally add a drop-shadow and "
-#~ "background"
-#~ msgstr ""
-#~ "Runda av hörnen i en bild och lägg valfritt till en skuggkastning och "
-#~ "bakgrund"
-
-#~ msgid "Edge radius"
-#~ msgstr "Hörnradie"
-
-#~ msgid "Add drop-shadow"
-#~ msgstr "Lägg till kastad skugga"
-
-#~ msgid "Shadow X offset"
-#~ msgstr "X-avstånd för skugga"
-
-#~ msgid "Shadow Y offset"
-#~ msgstr "Y-avstånd för skugga"
-
-#~ msgid "Add background"
-#~ msgstr "Lägg till bakgrund"
-
-#~ msgid "Se_t Colormap..."
-#~ msgstr "S_täll in färgkarta..."
-
-#~ msgid ""
-#~ "Change the colormap of an image to the colors in a specified palette."
-#~ msgstr "Ändra färgkartan för en bild till färgerna i en angiven palett."
-
-#~ msgid "Palette"
-#~ msgstr "Palett"
-
-#~ msgid "Rounded R_ectangle..."
-#~ msgstr "Rundad r_ektangel..."
-
-#~ msgid "Round the corners of the current selection"
-#~ msgstr "Runda av hörnen på den aktuella markeringen"
-
-#~ msgid "Radius (%)"
-#~ msgstr "Radie (%)"
-
-#~ msgid "Concave"
-#~ msgstr "Konkav"
-
-#~ msgid "To _Brush..."
-#~ msgstr "Till _pensel..."
-
-#~ msgid "Convert a selection to a brush"
-#~ msgstr "Konvertera en markering till en pensel"
-
-#~ msgid "To _Image"
-#~ msgstr "Till _bild"
-
-#~ msgid "Convert a selection to an image"
-#~ msgstr "Konvertera en markering till en bild"
-
-#~ msgid "To _Pattern..."
-#~ msgstr "Till _mönster..."
-
-#~ msgid "Convert a selection to a pattern"
-#~ msgstr "Konvertera en markering till ett mönster"
-
-#~ msgid "_Slide..."
-#~ msgstr "_Bildspel..."
-
-#~ msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-#~ msgstr ""
-#~ "Lägg till en diabildsliknande bildruta, perforeringar och etiketter till "
-#~ "en bild"
-
-#~ msgid "Text"
-#~ msgstr "Text"
-
-#~ msgid "Number"
-#~ msgstr "Nummer"
-
-#~ msgid "Font"
-#~ msgstr "Typsnitt"
-
-#~ msgid "Font color"
-#~ msgstr "Typsnittsfärg"
-
-#~ msgid "_Spinning Globe..."
-#~ msgstr "_Roterande glob..."
-
-#~ msgid ""
-#~ "Create an animation by mapping the current image onto a spinning sphere"
-#~ msgstr "Skapa en animation genom att mapp aktuell bild på en roterande sfär"
-
-#~ msgid "Frames"
-#~ msgstr "Ramar"
-
-#~ msgid "Turn from left to right"
-#~ msgstr "Vänd från vänster till höger"
-
-#~ msgid "Transparent background"
-#~ msgstr "Genomskinlig bakgrund"
-
-#~ msgid "Index to n colors (0 = remain RGB)"
-#~ msgstr "Indexera till n färger (0 = behåll RGB)"
-
-#~ msgid "Rendering Spyro"
-#~ msgstr "Renderar spiro"
-
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Spirogimp..."
-
-#~ msgid ""
-#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-#~ msgstr ""
-#~ "Lägg till spirografer, epitrokoider och Lissajous-kurvor till aktuellt "
-#~ "lager"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
-#~ msgid "Epitrochoid"
-#~ msgstr "Epitrokoid"
-
-#~ msgid "Lissajous"
-#~ msgstr "Lissajous"
-
-#~ msgid "Shape"
-#~ msgstr "Form"
-
-#~ msgid "Triangle"
-#~ msgstr "Triangel"
-
-#~ msgid "Square"
-#~ msgstr "Fyrkant"
-
-#~ msgid "Pentagon"
-#~ msgstr "Femhörning"
-
-#~ msgid "Hexagon"
-#~ msgstr "Hexagon"
-
-#~ msgid "Polygon: 7 sides"
-#~ msgstr "Polygon: 7 sidor"
-
-#~ msgid "Polygon: 8 sides"
-#~ msgstr "Polygon: 8 sidor"
-
-#~ msgid "Polygon: 9 sides"
-#~ msgstr "Polygon: 9 sidor"
-
-#~ msgid "Polygon: 10 sides"
-#~ msgstr "Polygon: 10 sidor"
-
-#~ msgid "Outer teeth"
-#~ msgstr "Yttre tänder"
-
-#~ msgid "Inner teeth"
-#~ msgstr "Inre tänder"
-
-#~ msgid "Margin (pixels)"
-#~ msgstr "Marginal (bildpunkter)"
-
-#~ msgid "Hole ratio"
-#~ msgstr "Hålförhållande"
-
-#~ msgid "Start angle"
-#~ msgstr "Startvinkel"
-
-#~ msgid "Tool"
-#~ msgstr "Verktyg"
-
-#~ msgid "Brush"
-#~ msgstr "Pensel"
-
-#~ msgid "Airbrush"
-#~ msgstr "Färgspruta"
-
-#~ msgid "Color method"
-#~ msgstr "Färgmetod"
-
-#~ msgid "Gradient: Loop Sawtooth"
-#~ msgstr "Gradient: repetera sågtand"
-
-#~ msgid "Gradient: Loop Triangle"
-#~ msgstr "Gradient: repetera triangel"
-
-#~ msgid "_Sphere..."
-#~ msgstr "_Sfär..."
-
-#~ msgid "_Tileable Blur..."
-#~ msgstr "_Brickutsmetning..."
-
-#~ msgid "Blur the edges of an image so the result tiles seamlessly"
-#~ msgstr "Gör kanterna i en bild oskarpa"
-
-#~ msgid "Radius"
-#~ msgstr "Radie"
-
-#~ msgid "Blur vertically"
-#~ msgstr "Smeta ut vertikalt"
-
-#~ msgid "Blur horizontally"
-#~ msgstr "Smeta ut horisontellt"
-
-#~ msgid "Blur type"
-#~ msgstr "Utsmetningstyp"
-
-#~ msgid "RLE"
-#~ msgstr "RLE"
-
-#~ msgid "Mask size"
-#~ msgstr "Maskstorlek"
-
-#~ msgid "Mask opacity"
-#~ msgstr "Maskopacitet"
-
-#~ msgid "_Waves..."
-#~ msgstr "_Vågor..."
-
-#~ msgid ""
-#~ "Create a multi-layer image with an effect like a stone was thrown into "
-#~ "the current image"
-#~ msgstr ""
-#~ "Skapa en flerlagrad bild med en effekt liknande en sten som kastats genom "
-#~ "den aktuella bilden"
-
-#~ msgid "Amplitude"
-#~ msgstr "Amplitud"
-
-#~ msgid "Wavelength"
-#~ msgstr "Våglängd"
-
-#~ msgid "Invert direction"
-#~ msgstr "Invertera riktning"
-
-#~ msgid "_Weave..."
-#~ msgstr "_Våg..."
-
-#~ msgid ""
-#~ "Create a new layer filled with a weave effect to be used as an overlay or "
-#~ "bump map"
-#~ msgstr ""
-#~ "Skapa ett nytt lager fyllt med en vågeffekt som kan användas som en "
-#~ "överliggande eller bumpmapp"
-
-#~ msgid "Ribbon width"
-#~ msgstr "Bredd på remsor"
-
-#~ msgid "Ribbon spacing"
-#~ msgstr "Mellanrum mellan remsor"
-
-#~ msgid "Shadow darkness"
-#~ msgstr "Skuggmörkhet"
-
-#~ msgid "Shadow depth"
-#~ msgstr "Skuggdjup"
-
-#~ msgid "Thread length"
-#~ msgstr "Trådlängd"
-
-#~ msgid "Thread density"
-#~ msgstr "Tråddensitet"
-
-#~ msgid "Thread intensity"
-#~ msgstr "Trådintensitet"
-
-#~ msgid "Shadow"
-#~ msgstr "Skugga"
-
-#~ msgid "_Xach-Effect..."
-#~ msgstr "_Xach-effekt..."
-
-#~ msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Lägg till en subtil halvgenomskinlig 3D-effekt till markerad region "
-#~ "(eller alfa)"
-
-#~ msgid "Highlight X offset"
-#~ msgstr "X-avstånd för markering"
-
-#~ msgid "Highlight Y offset"
-#~ msgstr "Y-avstånd för markering"
-
-#~ msgid "Highlight color"
-#~ msgstr "Markeringsfärg"
-
-#~ msgid "Highlight opacity"
-#~ msgstr "Markeringsopacitet"
-
-#~ msgid "Drop shadow color"
-#~ msgstr "Skuggkastningsfärg"
-
-#~ msgid "Drop shadow opacity"
-#~ msgstr "Skuggkastningsopacitet"
-
-#~ msgid "Drop shadow blur radius"
-#~ msgstr "Utsmetningsradie för skuggkastning"
-
-#~ msgid "Drop shadow X offset"
-#~ msgstr "X-avstånd för skuggkastning"
-
-#~ msgid "Drop shadow Y offset"
-#~ msgstr "Y-avstånd för skuggkastning"
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr "Maskstorlek"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+msgid "Mask opacity"
+msgstr "Maskopacitet"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr "_Vågor..."
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"Skapa en flerlagrad bild med en effekt liknande en sten som kastats genom "
+"den aktuella bilden"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr "Amplitud"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr "Våglängd"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+msgid "Invert direction"
+msgstr "Invertera riktning"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:389
+msgid "_Weave..."
+msgstr "_Våg..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm:390
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"Skapa ett nytt lager fyllt med en vågeffekt som kan användas som en "
+"överliggande eller bumpmapp"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "Ribbon width"
+msgstr "Bredd på remsor"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid "Ribbon spacing"
+msgstr "Mellanrum mellan remsor"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:399
+msgid "Shadow darkness"
+msgstr "Skuggmörkhet"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:400
+msgid "Shadow depth"
+msgstr "Skuggdjup"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:401
+msgid "Thread length"
+msgstr "Trådlängd"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:402
+msgid "Thread density"
+msgstr "Tråddensitet"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:403
+msgid "Thread intensity"
+msgstr "Trådintensitet"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "Skugga"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr "_Xach-effekt..."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+"Lägg till en subtil halvgenomskinlig 3D-effekt till markerad region (eller "
+"alfa)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+msgid "Highlight X offset"
+msgstr "X-avstånd för markering"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight Y offset"
+msgstr "Y-avstånd för markering"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "Markeringsfärg"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight opacity"
+msgstr "Markeringsopacitet"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Drop shadow color"
+msgstr "Skuggkastningsfärg"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr "Skuggkastningsopacitet"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow blur radius"
+msgstr "Utsmetningsradie för skuggkastning"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow X offset"
+msgstr "X-avstånd för skuggkastning"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow Y offset"
+msgstr "Y-avstånd för skuggkastning"
 
 #~ msgid "3D _Outline..."
 #~ msgstr "3D-_kontur..."

@@ -1397,6 +1397,61 @@ context_set_dynamics_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+context_get_mypaint_brush_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gchar *name = NULL;
+
+  GimpMybrush *brush = gimp_context_get_mybrush (context);
+
+  if (brush)
+    name = g_strdup (gimp_object_get_name (brush));
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_mypaint_brush_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *name;
+
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, FALSE, error);
+
+      if (brush)
+        gimp_context_set_mybrush (context, brush);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 context_get_pattern_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -1980,6 +2035,51 @@ context_set_sample_transparent_invoker (GimpProcedure         *procedure,
     {
       g_object_set (context,
                     "sample-transparent", sample_transparent,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_diagonal_neighbors_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
+{
+  GimpValueArray *return_vals;
+  gboolean diagonal_neighbors = FALSE;
+
+  g_object_get (context,
+                "diagonal-neighbors", &diagonal_neighbors,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (gimp_value_array_index (return_vals, 1), diagonal_neighbors);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_diagonal_neighbors_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
+{
+  gboolean success = TRUE;
+  gboolean diagonal_neighbors;
+
+  diagonal_neighbors = g_value_get_boolean (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      g_object_set (context,
+                    "diagonal-neighbors", diagonal_neighbors,
                     NULL);
     }
 
@@ -3841,6 +3941,54 @@ register_context_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-context-get-mypaint-brush
+   */
+  procedure = gimp_procedure_new (context_get_mypaint_brush_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-mypaint-brush");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-mypaint-brush",
+                                     "Retrieve the currently active MyPaint brush.",
+                                     "This procedure returns the name of the currently active MyPaint brush.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2016",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active MyPaint brush",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-mypaint-brush
+   */
+  procedure = gimp_procedure_new (context_set_mypaint_brush_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-mypaint-brush");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-mypaint-brush",
+                                     "Set the specified MyPaint brush as the active MyPaint brush.",
+                                     "This procedure allows the active MyPaint brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed MyPaint brushes. If there is no matching MyPaint brush found, this procedure will return an error. Otherwise, the specified MyPaint brush becomes active and will be used in all subsequent MyPaint paint operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2016",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the MyPaint brush",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-context-get-pattern
    */
   procedure = gimp_procedure_new (context_get_pattern_invoker);
@@ -4416,6 +4564,53 @@ register_context_procs (GimpPDB *pdb)
                                g_param_spec_boolean ("sample-transparent",
                                                      "sample transparent",
                                                      "The sample transparent setting",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-diagonal-neighbors
+   */
+  procedure = gimp_procedure_new (context_get_diagonal_neighbors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-diagonal-neighbors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-diagonal-neighbors",
+                                     "Get the diagonal neighbors setting.",
+                                     "This procedure returns the diagonal neighbors setting.",
+                                     "Ell",
+                                     "Ell",
+                                     "2016",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("diagonal-neighbors",
+                                                         "diagonal neighbors",
+                                                         "The diagonal neighbors setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-diagonal-neighbors
+   */
+  procedure = gimp_procedure_new (context_set_diagonal_neighbors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-diagonal-neighbors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-diagonal-neighbors",
+                                     "Set the diagonal neighbors setting.",
+                                     "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighors of each pixel are considered.\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-contiguous-color'.",
+                                     "Ell",
+                                     "Ell",
+                                     "2016",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("diagonal-neighbors",
+                                                     "diagonal neighbors",
+                                                     "The diagonal neighbors setting",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

@@ -21,21 +21,18 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
-
-#include "tools/gimpoperationtool.h"
-#include "tools/tool_manager.h"
+#include "core/gimp-filter-history.h"
+#include "core/gimpprogress.h"
 
 #include "actions.h"
 #include "filters-commands.h"
-
-#include "gimp-intl.h"
+#include "gimpgeglprocedure.h"
+#include "procedure-commands.h"
 
 
 /*  public functions  */
@@ -45,51 +42,85 @@ filters_filter_cmd_callback (GtkAction   *action,
                              const gchar *operation,
                              gpointer     data)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GimpDisplay  *display;
-  GimpTool     *active_tool;
-  return_if_no_drawable (image, drawable, data);
+  GimpDisplay   *display;
+  GimpProcedure *procedure;
   return_if_no_display (display, data);
 
-  active_tool = tool_manager_get_active (image->gimp);
+  procedure = gimp_gegl_procedure_new (action_data_get_gimp (data),
+                                       operation,
+                                       gtk_action_get_name (action),
+                                       gtk_action_get_label (action),
+                                       gtk_action_get_tooltip (action),
+                                       gtk_action_get_icon_name (action),
+                                       g_object_get_qdata (G_OBJECT (action),
+                                                           GIMP_HELP_ID));
 
-  if (G_TYPE_FROM_INSTANCE (active_tool) != GIMP_TYPE_OPERATION_TOOL)
+  gimp_filter_history_add (action_data_get_gimp (data), procedure);
+  filters_history_cmd_callback (NULL, procedure, data);
+
+  g_object_unref (procedure);
+}
+
+void
+filters_repeat_cmd_callback (GtkAction *action,
+                             gint       value,
+                             gpointer   data)
+{
+  Gimp          *gimp;
+  GimpDisplay   *display;
+  GimpRunMode    run_mode;
+  GimpProcedure *procedure;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  run_mode = (GimpRunMode) value;
+
+  procedure = gimp_filter_history_nth (gimp, 0);
+
+  if (procedure)
     {
-      GimpToolInfo *tool_info = gimp_get_tool_info (image->gimp,
-                                                    "gimp-operation-tool");
+      GimpValueArray *args;
 
-      if (GIMP_IS_TOOL_INFO (tool_info))
-        gimp_context_set_tool (action_data_get_context (data), tool_info);
-    }
-  else
-    {
-      gimp_context_tool_changed (action_data_get_context (data));
-    }
+      args = procedure_commands_get_display_args (procedure, display);
 
-  active_tool = tool_manager_get_active (image->gimp);
-
-  if (GIMP_IS_OPERATION_TOOL (active_tool))
-    {
-      gchar       *label    = gimp_strip_uline (gtk_action_get_label (action));
-      const gchar *ellipsis = _("...");
-      gint         label_len;
-      gint         ellipsis_len;
-
-      label_len    = strlen (label);
-      ellipsis_len = strlen (ellipsis);
-
-      if (label_len > ellipsis_len &&
-          strcmp (label + label_len - ellipsis_len, ellipsis) == 0)
+      if (args)
         {
-          label[label_len - ellipsis_len] = '\0';
+          if (procedure_commands_run_procedure (procedure, gimp,
+                                                GIMP_PROGRESS (display),
+                                                run_mode, args,
+                                                display))
+            {
+              gimp_filter_history_add (gimp, procedure);
+            }
+
+          gimp_value_array_unref (args);
+        }
+    }
+}
+
+void
+filters_history_cmd_callback (GtkAction     *action,
+                              GimpProcedure *procedure,
+                              gpointer       data)
+{
+  Gimp           *gimp;
+  GimpDisplay    *display;
+  GimpValueArray *args;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  args = procedure_commands_get_display_args (procedure, display);
+
+  if (args)
+    {
+      if (procedure_commands_run_procedure (procedure, gimp,
+                                            GIMP_PROGRESS (display),
+                                            GIMP_RUN_INTERACTIVE, args,
+                                            display))
+        {
+          gimp_filter_history_add (gimp, procedure);
         }
 
-      gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
-                                         operation, label,
-                                         gtk_action_get_icon_name (action));
-      tool_manager_initialize_active (image->gimp, display);
-
-      g_free (label);
+      gimp_value_array_unref (args);
     }
 }

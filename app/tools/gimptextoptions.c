@@ -72,6 +72,8 @@ enum
 };
 
 
+static void  gimp_text_options_config_iface_init (GimpConfigInterface *config_iface);
+
 static void  gimp_text_options_finalize           (GObject         *object);
 static void  gimp_text_options_set_property       (GObject         *object,
                                                    guint            property_id,
@@ -82,7 +84,7 @@ static void  gimp_text_options_get_property       (GObject         *object,
                                                    GValue          *value,
                                                    GParamSpec      *pspec);
 
-static void  gimp_text_options_reset              (GimpToolOptions *tool_options);
+static void  gimp_text_options_reset              (GimpConfig      *config);
 
 static void  gimp_text_options_notify_font        (GimpContext     *context,
                                                    GParamSpec      *pspec,
@@ -100,118 +102,152 @@ static void  gimp_text_options_notify_text_color  (GimpText        *text,
 
 G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options,
                          GIMP_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_text_options_config_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
                                                 NULL))
 
 #define parent_class gimp_text_options_parent_class
 
+static GimpConfigInterface *parent_config_iface = NULL;
+
 
 static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
 
-  options_class->reset       = gimp_text_options_reset;
-
   /* The 'highlight' property is defined here because we want different
    * default values for the Crop, Text and the Rectangle Select tools.
    */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
-                                    "highlight", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+                            "highlight",
+                            _("Highlight"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
-                                 "font-size-unit",
-                                 _("Font size unit"),
-                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
-                                   "font-size",
-                                   _("Font size"),
-                                   0.0, 8192.0, 18.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
-                                    "antialias", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HINT_STYLE,
-                                 "hint-style",
-                                 _("Hinting alters the font outline to "
-                                   "produce a crisp bitmap at small "
-                                   "sizes"),
-                                 GIMP_TYPE_TEXT_HINT_STYLE,
-                                 GIMP_TEXT_HINT_STYLE_MEDIUM,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
-                                   "language",
-                                   _("The text language may have an effect "
-                                     "on the way the text is rendered."),
-                                   (const gchar *) gtk_get_default_language (),
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
-                                "base-direction", NULL,
-                                 GIMP_TYPE_TEXT_DIRECTION,
-                                 GIMP_TEXT_DIRECTION_LTR,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
-                                "justify",
-                                _("Text alignment"),
-                                 GIMP_TYPE_TEXT_JUSTIFICATION,
-                                 GIMP_TEXT_JUSTIFY_LEFT,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
-                                   "indent",
-                                   _("Indentation of the first line"),
-                                   -8192.0, 8192.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_DEFAULTS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
-                                   "line-spacing",
-                                   _("Adjust line spacing"),
-                                   -8192.0, 8192.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_DEFAULTS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
-                                   "letter-spacing",
-                                   _("Adjust letter spacing"),
-                                   -8192.0, 8192.0, 0.0,
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_DEFAULTS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
-                                "box-mode",
-                                 _("Whether text flows into rectangular shape or "
-                                   "moves into a new line when you press Enter"),
-                                 GIMP_TYPE_TEXT_BOX_MODE,
-                                 GIMP_TEXT_BOX_DYNAMIC,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
+                         "font-size-unit",
+                         _("Unit"),
+                         _("Font size unit"),
+                         TRUE, FALSE, GIMP_UNIT_PIXEL,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
+                           "font-size",
+                           _("Font size"),
+                           _("Font size"),
+                           0.0, 8192.0, 18.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_EDITOR,
-                                    "use-editor",
-                                    _("Use an external editor window for text "
-                                      "entry"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                            "antialias",
+                            _("Antialiasing"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FONT_VIEW_TYPE,
-                                 "font-view-type", NULL,
-                                 GIMP_TYPE_VIEW_TYPE,
-                                 GIMP_VIEW_TYPE_LIST,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FONT_VIEW_SIZE,
-                                "font-view-size", NULL,
-                                GIMP_VIEW_SIZE_TINY,
-                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                                GIMP_VIEW_SIZE_SMALL,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_HINT_STYLE,
+                         "hint-style",
+                         _("Hinting"),
+                         _("Hinting alters the font outline to "
+                           "produce a crisp bitmap at small "
+                           "sizes"),
+                         GIMP_TYPE_TEXT_HINT_STYLE,
+                         GIMP_TEXT_HINT_STYLE_MEDIUM,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_LANGUAGE,
+                           "language",
+                           _("Language"),
+                           _("The text language may have an effect "
+                             "on the way the text is rendered."),
+                           (const gchar *) gtk_get_default_language (),
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BASE_DIR,
+                         "base-direction",
+                         NULL, NULL,
+                         GIMP_TYPE_TEXT_DIRECTION,
+                         GIMP_TEXT_DIRECTION_LTR,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_JUSTIFICATION,
+                         "justify",
+                         _("Justify"),
+                         _("Text alignment"),
+                         GIMP_TYPE_TEXT_JUSTIFICATION,
+                         GIMP_TEXT_JUSTIFY_LEFT,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_INDENTATION,
+                           "indent",
+                           _("Indentation"),
+                           _("Indentation of the first line"),
+                           -8192.0, 8192.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_DEFAULTS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
+                           "line-spacing",
+                           _("Line spacing"),
+                           _("Adjust line spacing"),
+                           -8192.0, 8192.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_DEFAULTS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
+                           "letter-spacing",
+                           _("Letter spacing"),
+                           _("Adjust letter spacing"),
+                           -8192.0, 8192.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_DEFAULTS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BOX_MODE,
+                         "box-mode",
+                         _("Box"),
+                         _("Whether text flows into rectangular shape or "
+                           "moves into a new line when you press Enter"),
+                         GIMP_TYPE_TEXT_BOX_MODE,
+                         GIMP_TEXT_BOX_DYNAMIC,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_EDITOR,
+                            "use-editor",
+                            _("Use editor"),
+                            _("Use an external editor window for text entry"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FONT_VIEW_TYPE,
+                         "font-view-type",
+                         NULL, NULL,
+                         GIMP_TYPE_VIEW_TYPE,
+                         GIMP_VIEW_TYPE_LIST,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_FONT_VIEW_SIZE,
+                        "font-view-size",
+                        NULL, NULL,
+                        GIMP_VIEW_SIZE_TINY,
+                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                        GIMP_VIEW_SIZE_SMALL,
+                        GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
+}
+
+static void
+gimp_text_options_config_iface_init (GimpConfigInterface *config_iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  config_iface->reset = gimp_text_options_reset;
 }
 
 static void
@@ -358,9 +394,9 @@ gimp_text_options_set_property (GObject      *object,
 }
 
 static void
-gimp_text_options_reset (GimpToolOptions *tool_options)
+gimp_text_options_reset (GimpConfig *config)
 {
-  GObject *object = G_OBJECT (tool_options);
+  GObject *object = G_OBJECT (config);
 
   /*  implement reset() ourselves because the default impl would
    *  reset *all* properties, including all rectangle properties
@@ -533,11 +569,11 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  button = gimp_prop_check_button_new (config, "use-editor", _("Use editor"));
+  button = gimp_prop_check_button_new (config, "use-editor", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (config, "antialias", _("Antialiasing"));
+  button = gimp_prop_check_button_new (config, "antialias", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

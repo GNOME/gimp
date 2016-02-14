@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 #define GIMP_EXPORT_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_EXPORT_DIALOG, GimpExportDialogClass))
 
 
-typedef struct _GimpExportDialogClass  GimpExportDialogClass;
+typedef struct _GimpExportDialogClass GimpExportDialogClass;
 
 struct _GimpExportDialog
 {
@@ -46,13 +46,12 @@ struct _GimpExportDialogClass
 };
 
 
-GType       gimp_export_dialog_get_type         (void) G_GNUC_CONST;
+GType       gimp_export_dialog_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_export_dialog_new              (Gimp                 *gimp);
+GtkWidget * gimp_export_dialog_new       (Gimp             *gimp);
 
-void        gimp_export_dialog_set_image        (GimpExportDialog      *dialog,
-                                                 Gimp                  *gimp,
-                                                 GimpImage             *image);
+void        gimp_export_dialog_set_image (GimpExportDialog *dialog,
+                                          GimpImage        *image);
 
 G_END_DECLS
 

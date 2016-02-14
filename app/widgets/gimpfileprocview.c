@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gegl.h>
 
 #include "widgets-types.h"
 
@@ -137,8 +138,8 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
       if (! proc->prefixes_list) /*  skip URL loaders  */
         {
-          const gchar *label   = gimp_plug_in_procedure_get_label (proc);
-          gchar       *help_id = gimp_plug_in_procedure_get_help_id (proc);
+          const gchar *label   = gimp_procedure_get_label (GIMP_PROCEDURE (proc));
+          const gchar *help_id = gimp_procedure_get_help_id (GIMP_PROCEDURE (proc));
           GSList      *list2;
 
           if (label)
@@ -151,8 +152,6 @@ gimp_file_proc_view_new (Gimp        *gimp,
                                   COLUMN_HELP_ID,    help_id,
                                   -1);
             }
-
-          g_free (help_id);
 
           for (list2 = proc->extensions_list;
                list2;

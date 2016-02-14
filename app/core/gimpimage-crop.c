@@ -149,7 +149,7 @@ gimp_image_crop (GimpImage   *image,
         }
     }
 
-  /*  Reposition or remove all guides  */
+  /*  Reposition or remove guides  */
   list = gimp_image_get_guides (image);
 
   while (list)
@@ -163,17 +163,15 @@ gimp_image_crop (GimpImage   *image,
       switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          if ((position < y) || (position > (y + height)))
+          position -= y;
+          if ((position < 0) || (position > height))
             remove_guide = TRUE;
-          else
-            position -= y;
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          if ((position < x) || (position > (x + width)))
+          position -= x;
+          if ((position < 0) || (position > width))
             remove_guide = TRUE;
-          else
-            position -= x;
           break;
 
         default:
@@ -193,22 +191,28 @@ gimp_image_crop (GimpImage   *image,
     {
       GimpSamplePoint *sample_point        = list->data;
       gboolean         remove_sample_point = FALSE;
-      gint             new_x               = sample_point->x;
-      gint             new_y               = sample_point->y;
+      gint             old_x;
+      gint             old_y;
+      gint             new_x;
+      gint             new_y;
 
       list = g_list_next (list);
 
+      gimp_sample_point_get_position (sample_point, &old_x, &old_y);
+      new_x = old_x;
+      new_y = old_y;
+
       new_y -= y;
-      if ((sample_point->y < y) || (sample_point->y > (y + height)))
-        remove_sample_point = TRUE;
+      if ((new_y < 0) || (new_y > height))
+       remove_sample_point = TRUE;
 
       new_x -= x;
-      if ((sample_point->x < x) || (sample_point->x > (x + width)))
+      if ((new_x < 0) || (new_x > width))
         remove_sample_point = TRUE;
 
       if (remove_sample_point)
         gimp_image_remove_sample_point (image, sample_point, TRUE);
-      else if (new_x != sample_point->x || new_y != sample_point->y)
+      else if (new_x != old_x || new_y != old_y)
         gimp_image_move_sample_point (image, sample_point,
                                       new_x, new_y, TRUE);
     }

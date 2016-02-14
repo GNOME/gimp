@@ -77,6 +77,7 @@ EXPORTS
 	gimp_context_get_brush_hardness
 	gimp_context_get_brush_size
 	gimp_context_get_brush_spacing
+	gimp_context_get_diagonal_neighbors
 	gimp_context_get_dynamics
 	gimp_context_get_feather
 	gimp_context_get_feather_radius
@@ -99,6 +100,7 @@ EXPORTS
 	gimp_context_get_line_miter_limit
 	gimp_context_get_line_width
 	gimp_context_get_line_width_unit
+	gimp_context_get_mypaint_brush
 	gimp_context_get_opacity
 	gimp_context_get_paint_method
 	gimp_context_get_paint_mode
@@ -130,6 +132,7 @@ EXPORTS
 	gimp_context_set_brush_spacing
 	gimp_context_set_default_colors
 	gimp_context_set_defaults
+	gimp_context_set_diagonal_neighbors
 	gimp_context_set_dynamics
 	gimp_context_set_feather
 	gimp_context_set_feather_radius
@@ -152,6 +155,7 @@ EXPORTS
 	gimp_context_set_line_miter_limit
 	gimp_context_set_line_width
 	gimp_context_set_line_width_unit
+	gimp_context_set_mypaint_brush
 	gimp_context_set_opacity
 	gimp_context_set_paint_method
 	gimp_context_set_paint_mode
@@ -325,6 +329,7 @@ EXPORTS
 	gimp_get_color_configuration
 	gimp_get_default_comment
 	gimp_get_default_unit
+	gimp_get_icon_theme_dir
 	gimp_get_module_load_inhibit
 	gimp_get_monitor_resolution
 	gimp_get_parasite
@@ -388,6 +393,7 @@ EXPORTS
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer
+	gimp_image_add_sample_point
 	gimp_image_add_vectors
 	gimp_image_add_vguide
 	gimp_image_attach_new_parasite
@@ -404,9 +410,11 @@ EXPORTS
 	gimp_image_crop
 	gimp_image_delete
 	gimp_image_delete_guide
+	gimp_image_delete_sample_point
 	gimp_image_detach_parasite
 	gimp_image_duplicate
 	gimp_image_find_next_guide
+	gimp_image_find_next_sample_point
 	gimp_image_flatten
 	gimp_image_flip
 	gimp_image_floating_sel_attached_to
@@ -442,6 +450,7 @@ EXPORTS
 	gimp_image_get_parasite_list
 	gimp_image_get_precision
 	gimp_image_get_resolution
+	gimp_image_get_sample_point_position
 	gimp_image_get_selection
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail
@@ -766,6 +775,7 @@ EXPORTS
 	gimp_selection_combine
 	gimp_selection_feather
 	gimp_selection_float
+	gimp_selection_flood
 	gimp_selection_grow
 	gimp_selection_invert
 	gimp_selection_is_empty

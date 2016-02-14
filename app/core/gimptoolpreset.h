@@ -42,6 +42,7 @@ struct _GimpToolPreset
   gboolean         use_fg_bg;
   gboolean         use_brush;
   gboolean         use_dynamics;
+  gboolean         use_mybrush;
   gboolean         use_gradient;
   gboolean         use_pattern;
   gboolean         use_palette;

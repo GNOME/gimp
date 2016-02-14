@@ -9,7 +9,7 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GDK_PIXBUF_CFLAGS)			\
-	$(LIBMYPAINTGEGL_CFLAGS)		\
+	$(LIBMYPAINT_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = libapppaint.a
@@ -52,10 +52,12 @@ libapppaint_a_sources = \
 	gimpinkoptions.h		\
 	gimpinkundo.c			\
 	gimpinkundo.h			\
-	gimpmybrush.c			\
-	gimpmybrush.h			\
+	gimpmybrushcore.c		\
+	gimpmybrushcore.h		\
 	gimpmybrushoptions.c		\
 	gimpmybrushoptions.h		\
+	gimpmybrushsurface.c		\
+	gimpmybrushsurface.h		\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
 	gimppaintcore-loops.c		\

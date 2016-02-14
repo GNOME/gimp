@@ -39,6 +39,8 @@ typedef struct _GimpOperationDesaturateClass GimpOperationDesaturateClass;
 struct _GimpOperationDesaturate
 {
   GimpOperationPointFilter  parent_instance;
+
+  GimpDesaturateMode        mode;
 };
 
 struct _GimpOperationDesaturateClass

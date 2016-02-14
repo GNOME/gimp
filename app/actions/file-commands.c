@@ -36,10 +36,9 @@
 #include "core/gimpprogress.h"
 #include "core/gimptemplate.h"
 
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-file.h"
 
 #include "file/file-open.h"
-#include "file/file-procedure.h"
 #include "file/file-save.h"
 #include "file/gimp-file.h"
 
@@ -258,8 +257,9 @@ file_save_cmd_callback (GtkAction *action,
           if (file && ! save_proc)
             {
               save_proc =
-                file_procedure_find (image->gimp->plug_in_manager->save_procs,
-                                     file, NULL);
+                gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                          GIMP_FILE_PROCEDURE_GROUP_SAVE,
+                                                          file, NULL);
             }
 
           if (file && save_proc)
@@ -357,8 +357,9 @@ file_save_cmd_callback (GtkAction *action,
         if (file && ! export_proc)
           {
             export_proc =
-              file_procedure_find (image->gimp->plug_in_manager->export_procs,
-                                   file, NULL);
+              gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                        GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+                                                        file, NULL);
           }
 
         if (file && export_proc)
@@ -605,10 +606,16 @@ file_open_dialog_show (Gimp        *gimp,
                                   GIMP_FILE_OPEN_LAST_FILE_KEY);
 
       if (file)
-        gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog), file, NULL);
+        {
+          gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog), file, NULL);
+        }
       else if (gimp->default_folder)
-        gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
-                                                  gimp->default_folder, NULL);
+        {
+          gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                                    gimp->default_folder, NULL);
+        }
+
+      gtk_window_set_title (GTK_WINDOW (dialog), title);
 
       gimp_open_dialog_set_image (GIMP_OPEN_DIALOG (dialog),
                                   image, open_as_layers);
@@ -664,7 +671,7 @@ file_save_dialog_show (Gimp        *gimp,
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
       gimp_save_dialog_set_image (GIMP_SAVE_DIALOG (dialog),
-                                  gimp, image, save_a_copy,
+                                  image, save_a_copy,
                                   close_after_saving, GIMP_OBJECT (display));
 
       gtk_window_present (GTK_WINDOW (dialog));
@@ -751,8 +758,7 @@ file_export_dialog_show (Gimp      *gimp,
 
   if (dialog)
     {
-      gimp_export_dialog_set_image (GIMP_EXPORT_DIALOG (dialog),
-                                    gimp, image);
+      gimp_export_dialog_set_image (GIMP_EXPORT_DIALOG (dialog), image);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }

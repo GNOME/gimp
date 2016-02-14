@@ -62,8 +62,9 @@ libappinternal_procs_a_SOURCES = \
 	image-convert-cmds.c		\
 	image-grid-cmds.c		\
 	image-guides-cmds.c		\
-	image-transform-cmds.c		\
+	image-sample-points-cmds.c	\
 	image-select-cmds.c		\
+	image-transform-cmds.c		\
 	image-undo-cmds.c		\
 	item-cmds.c			\
 	item-transform-cmds.c		\

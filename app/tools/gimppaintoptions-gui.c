@@ -41,9 +41,7 @@
 #include "gimperasertool.h"
 #include "gimphealtool.h"
 #include "gimpinktool.h"
-#ifdef HAVE_LIBMYPAINT
 #include "gimpmybrushtool.h"
-#endif
 #include "gimppaintoptions-gui.h"
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
@@ -52,6 +50,10 @@
 
 #include "gimp-intl.h"
 
+
+static void gimp_paint_options_gui_brush_changed
+                                               (GimpContext      *context,
+                                                GimpBrush        *brush);
 
 static void gimp_paint_options_gui_reset_size  (GtkWidget        *button,
                                                 GimpPaintOptions *paint_options);
@@ -79,7 +81,6 @@ static GtkWidget * smoothing_options_gui       (GimpPaintOptions *paint_options,
 static GtkWidget * gimp_paint_options_gui_scale_with_buttons
                                                (GObject      *config,
                                                 gchar        *prop_name,
-                                                gchar        *prop_descr,
                                                 gchar        *link_prop_name,
                                                 gchar        *reset_tooltip,
                                                 gdouble       step_increment,
@@ -118,33 +119,26 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_HEAL_TOOL       ||
-#ifdef HAVE_LIBMYPAINT
       tool_type == GIMP_TYPE_MYBRUSH_TOOL    ||
-#endif
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       gtk_widget_set_sensitive (menu, FALSE);
     }
 
   /*  the opacity scale  */
-  scale = gimp_prop_spin_scale_new (config, "opacity",
-                                    _("Opacity"),
+  scale = gimp_prop_spin_scale_new (config, "opacity", NULL,
                                     0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  temp debug foo  */
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL)
-#ifdef HAVE_LIBMYPAINT
-      && tool_type != GIMP_TYPE_MYBRUSH_TOOL
-#endif
-      )
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL) &&
+      tool_type != GIMP_TYPE_MYBRUSH_TOOL)
     {
       GtkWidget *button;
 
-      button = gimp_prop_check_button_new (config, "use-applicator",
-                                           "Use GimpApplicator");
+      button = gimp_prop_check_button_new (config, "use-applicator", NULL);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
     }
@@ -167,7 +161,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       link_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
-        (config, "brush-size", _("Size"), "brush-link-size",
+        (config, "brush-size", "brush-link-size",
          _("Reset size to brush's native size"),
          1.0, 10.0, 2, 1.0, 1000.0, 1.0, 1.7,
          G_CALLBACK (gimp_paint_options_gui_reset_size), link_group);
@@ -175,7 +169,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (hbox);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
-        (config, "brush-aspect-ratio", _("Aspect Ratio"), "brush-link-aspect-ratio",
+        (config, "brush-aspect-ratio", "brush-link-aspect-ratio",
          _("Reset aspect ratio to brush's native"),
          0.1, 1.0, 2, -20.0, 20.0, 1.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_aspect_ratio), link_group);
@@ -183,7 +177,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (hbox);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
-        (config, "brush-angle", _("Angle"), "brush-link-angle",
+        (config, "brush-angle", "brush-link-angle",
          _("Reset angle to zero"),
          0.1, 1.0, 2, -180.0, 180.0, 1.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_angle), link_group);
@@ -191,7 +185,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (hbox);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
-        (config, "brush-spacing", _("Spacing"), "brush-link-spacing",
+        (config, "brush-spacing", "brush-link-spacing",
          _("Reset spacing to brush's native spacing"),
          0.1, 1.0, 1, 1.0, 200.0, 100.0, 1.7,
          G_CALLBACK (gimp_paint_options_gui_reset_spacing), link_group);
@@ -199,7 +193,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (hbox);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
-        (config, "brush-hardness", _("Hardness"), "brush-link-hardness",
+        (config, "brush-hardness", "brush-link-hardness",
          _("Reset hardness to default"),
          0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_hardness), link_group);
@@ -207,7 +201,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (hbox);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
-        (config, "brush-force", _("Force"), NULL,
+        (config, "brush-force", NULL,
          _("Reset force to default"),
          0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_force), link_group);
@@ -231,6 +225,10 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       frame = jitter_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
+
+      g_signal_connect (options, "brush-changed",
+                        G_CALLBACK (gimp_paint_options_gui_brush_changed),
+                        NULL);
     }
 
   /*  the "smooth stroke" options  */
@@ -248,8 +246,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     {
       GtkWidget *button;
 
-      button = gimp_prop_check_button_new (config,
-                                           "brush-zoom",
+      button = gimp_prop_check_button_new (config, "brush-zoom",
                                            _("Lock brush size to zoom"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
@@ -262,9 +259,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     {
       GtkWidget *button;
 
-      button = gimp_prop_enum_check_button_new (config,
-                                                "application-mode",
-                                                _("Incremental"),
+      button = gimp_prop_enum_check_button_new (config, "application-mode",
+                                                NULL,
                                                 GIMP_PAINT_CONSTANT,
                                                 GIMP_PAINT_INCREMENTAL);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -282,7 +278,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     {
       GtkWidget *button;
 
-      button = gimp_prop_check_button_new (config, "hard", _("Hard edge"));
+      button = gimp_prop_check_button_new (config, "hard", NULL);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
     }
@@ -309,8 +305,7 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   GtkWidget *hbox;
   GtkWidget *box;
 
-  frame = gimp_prop_expander_new (config, "dynamics-expanded",
-                                  _("Dynamics Options"));
+  frame = gimp_prop_expander_new (config, "dynamics-expanded", NULL);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -329,8 +324,8 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  scale = gimp_prop_spin_scale_new (config, "fade-length",
-                                    _("Fade length"), 1.0, 50.0, 0);
+  scale = gimp_prop_spin_scale_new (config, "fade-length", NULL,
+                                    1.0, 50.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
@@ -352,8 +347,7 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   gtk_box_pack_start (GTK_BOX (inner_vbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  checkbox = gimp_prop_check_button_new (config, "fade-reverse",
-                                         _("Reverse"));
+  checkbox = gimp_prop_check_button_new (config, "fade-reverse", NULL);
   gtk_box_pack_start (GTK_BOX (inner_vbox), checkbox, FALSE, FALSE, 0);
   gtk_widget_show (checkbox);
 
@@ -385,12 +379,10 @@ jitter_options_gui (GimpPaintOptions *paint_options,
   GtkWidget *frame;
   GtkWidget *scale;
 
-  scale = gimp_prop_spin_scale_new (config, "jitter-amount",
-                                    _("Amount"),
+  scale = gimp_prop_spin_scale_new (config, "jitter-amount", NULL,
                                     0.01, 1.0, 2);
 
-  frame = gimp_prop_expanding_frame_new (config, "use-jitter",
-                                         _("Apply Jitter"),
+  frame = gimp_prop_expanding_frame_new (config, "use-jitter", NULL,
                                          scale, NULL);
 
   return frame;
@@ -407,23 +399,49 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
-  frame = gimp_prop_expanding_frame_new (config, "use-smoothing",
-                                         _("Smooth stroke"),
+  frame = gimp_prop_expanding_frame_new (config, "use-smoothing", NULL,
                                          vbox, NULL);
 
-  scale = gimp_prop_spin_scale_new (config, "smoothing-quality",
-                                    _("Quality"),
+  scale = gimp_prop_spin_scale_new (config, "smoothing-quality", NULL,
                                     1, 10, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_spin_scale_new (config, "smoothing-factor",
-                                    _("Weight"),
+  scale = gimp_prop_spin_scale_new (config, "smoothing-factor", NULL,
                                     1, 10, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   return frame;
+}
+
+static void
+gimp_paint_options_gui_brush_changed (GimpContext *context,
+                                      GimpBrush   *brush)
+{
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (context);
+
+  if (brush)
+    {
+      if (options->brush_link_size)
+        gimp_paint_options_set_default_brush_size (options, brush);
+
+      if (options->brush_link_aspect_ratio)
+        g_object_set (options,
+                      "brush-aspect-ratio", 0.0,
+                      NULL);
+
+      if (options->brush_link_angle)
+        g_object_set (options,
+                      "brush-angle", 0.0,
+                      NULL);
+
+      if (options->brush_link_spacing)
+        gimp_paint_options_set_default_brush_spacing (options, brush);
+
+      if (options->brush_link_hardness)
+        gimp_paint_options_set_default_brush_hardness (options, brush);
+    }
 }
 
 static void
@@ -486,7 +504,6 @@ gimp_paint_options_gui_reset_force (GtkWidget        *button,
 static GtkWidget *
 gimp_paint_options_gui_scale_with_buttons (GObject      *config,
                                            gchar        *prop_name,
-                                           gchar        *prop_descr,
                                            gchar        *link_prop_name,
                                            gchar        *reset_tooltip,
                                            gdouble       step_increment,
@@ -505,8 +522,7 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
-  scale = gimp_prop_spin_scale_new (config, prop_name,
-                                    prop_descr,
+  scale = gimp_prop_spin_scale_new (config, prop_name, NULL,
                                     step_increment, page_increment, digits);
   gimp_prop_widget_set_factor (scale, factor,
                                step_increment, page_increment, digits);

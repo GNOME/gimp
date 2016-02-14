@@ -29,6 +29,7 @@
 
 #include "operations-types.h"
 
+#include "core/gimpmarshal.h"
 #include "gimpoperationshapeburst.h"
 
 
@@ -36,7 +37,12 @@ enum
 {
   PROP_0,
   PROP_NORMALIZE,
-  PROP_PROGRESS
+};
+
+enum
+{
+  PROGRESS,
+  LAST_SIGNAL
 };
 
 
@@ -69,6 +75,8 @@ G_DEFINE_TYPE (GimpOperationShapeburst, gimp_operation_shapeburst,
 
 #define parent_class gimp_operation_shapeburst_parent_class
 
+static guint shapeburst_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
@@ -76,6 +84,16 @@ gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
+
+  shapeburst_signals[PROGRESS] =
+    g_signal_new ("progress",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  gimp_marshal_VOID__DOUBLE,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_DOUBLE);
 
   object_class->set_property   = gimp_operation_shapeburst_set_property;
   object_class->get_property   = gimp_operation_shapeburst_get_property;
@@ -98,13 +116,6 @@ gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
                                                          "Normalize",
                                                          FALSE,
                                                          G_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_PROGRESS,
-                                   g_param_spec_double ("progress",
-                                                        "Progress",
-                                                        "Progress indicator, and a bad hack",
-                                                        0.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE));
 }
 
 static void
@@ -124,10 +135,6 @@ gimp_operation_shapeburst_get_property (GObject    *object,
     {
     case PROP_NORMALIZE:
       g_value_set_boolean (value, self->normalize);
-      break;
-
-    case PROP_PROGRESS:
-      g_value_set_double (value, self->progress);
       break;
 
     default:
@@ -150,14 +157,17 @@ gimp_operation_shapeburst_set_property (GObject      *object,
       self->normalize = g_value_get_boolean (value);
       break;
 
-    case PROP_PROGRESS:
-      self->progress = g_value_get_double (value);
-      break;
-
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_operation_shapeburst_notify_progress (gpointer instance,
+                                           gdouble  progress)
+{
+  g_signal_emit (instance, shapeburst_signals[PROGRESS], 0, progress);
 }
 
 static void
@@ -263,8 +273,8 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
                   /* FIXME: this should be much faster, it converts to
                    * 32 bit rgba intermediately, bah...
                    */
-                  gegl_buffer_sample (input, x1, y1, NULL, &src,
-                                      input_format,
+                  gegl_buffer_sample (input, x1 + roi->x, y1 + roi->y,
+                                      NULL, &src, input_format,
                                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
                   if (src < EPSILON)
@@ -310,9 +320,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
                        0, output_format, distbuf_cur,
                        GEGL_AUTO_ROWSTRIDE);
 
-      g_object_set (operation,
-                    "progress", (gdouble) y / roi->height,
-                    NULL);
+      gimp_operation_shapeburst_notify_progress (operation, (gdouble) y / roi->height);
     }
 
   g_free (distbuf);
@@ -333,6 +341,8 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
             *data++ /= max_dist;
         }
     }
+
+  gimp_operation_shapeburst_notify_progress (operation, 1.0);
 
   return TRUE;
 }

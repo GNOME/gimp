@@ -76,6 +76,7 @@ typedef struct _GimpHistogramEditor          GimpHistogramEditor;
 typedef struct _GimpImageEditor              GimpImageEditor;
 typedef struct _GimpSamplePointEditor        GimpSamplePointEditor;
 typedef struct _GimpSelectionEditor          GimpSelectionEditor;
+typedef struct _GimpSymmetryEditor           GimpSymmetryEditor;
 typedef struct _GimpUndoEditor               GimpUndoEditor;
 
 
@@ -125,7 +126,7 @@ typedef struct _GimpActionFactory            GimpActionFactory;
 typedef struct _GimpActionGroup              GimpActionGroup;
 typedef struct _GimpEnumAction               GimpEnumAction;
 typedef struct _GimpMenuFactory              GimpMenuFactory;
-typedef struct _GimpPlugInAction             GimpPlugInAction;
+typedef struct _GimpProcedureAction          GimpProcedureAction;
 typedef struct _GimpStringAction             GimpStringAction;
 typedef struct _GimpUIManager                GimpUIManager;
 
@@ -161,10 +162,12 @@ typedef struct _GimpPdbDialog                GimpPdbDialog;
 typedef struct _GimpActionEditor             GimpActionEditor;
 typedef struct _GimpActionView               GimpActionView;
 typedef struct _GimpBlobEditor               GimpBlobEditor;
+typedef struct _GimpBufferSourceBox          GimpBufferSourceBox;
 typedef struct _GimpCircle                   GimpCircle;
 typedef struct _GimpColorBar                 GimpColorBar;
 typedef struct _GimpColorDisplayEditor       GimpColorDisplayEditor;
 typedef struct _GimpColorFrame               GimpColorFrame;
+typedef struct _GimpColorHistory             GimpColorHistory;
 typedef struct _GimpColorPanel               GimpColorPanel;
 typedef struct _GimpComboTagEntry            GimpComboTagEntry;
 typedef struct _GimpControllerEditor         GimpControllerEditor;
@@ -263,7 +266,7 @@ typedef struct _GimpSessionManaged           GimpSessionManaged;
 
 typedef struct _GimpActionEntry              GimpActionEntry;
 typedef struct _GimpEnumActionEntry          GimpEnumActionEntry;
-typedef struct _GimpPlugInActionEntry        GimpPlugInActionEntry;
+typedef struct _GimpProcedureActionEntry     GimpProcedureActionEntry;
 typedef struct _GimpRadioActionEntry         GimpRadioActionEntry;
 typedef struct _GimpStringActionEntry        GimpStringActionEntry;
 typedef struct _GimpToggleActionEntry        GimpToggleActionEntry;

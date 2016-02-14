@@ -36,7 +36,13 @@ gint64   gimp_g_slist_get_memsize_foreach      (GSList          *slist,
 
 gint64   gimp_g_list_get_memsize               (GList           *list,
                                                 gint64           data_size);
-gint64   gimp_g_list_get_memsize_foreach       (GList            *slist,
+gint64   gimp_g_list_get_memsize_foreach       (GList           *list,
+                                                GimpMemsizeFunc  func,
+                                                gint64          *gui_size);
+
+gint64   gimp_g_queue_get_memsize              (GQueue          *queue,
+                                                gint64           data_size);
+gint64   gimp_g_queue_get_memsize_foreach      (GQueue          *queue,
                                                 GimpMemsizeFunc  func,
                                                 gint64          *gui_size);
 

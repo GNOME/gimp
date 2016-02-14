@@ -24,6 +24,7 @@
 
 void   gimp_canvas_set_guide_style         (GtkWidget     *canvas,
                                             cairo_t       *cr,
+                                            GimpGuideStyle style,
                                             gboolean       active);
 void   gimp_canvas_set_sample_point_style  (GtkWidget     *canvas,
                                             cairo_t       *cr,

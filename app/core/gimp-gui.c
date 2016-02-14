@@ -52,6 +52,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.get_display_name       = NULL;
   gimp->gui.get_user_time          = NULL;
   gimp->gui.get_theme_dir          = NULL;
+  gimp->gui.get_icon_theme_dir     = NULL;
   gimp->gui.display_get_by_id      = NULL;
   gimp->gui.display_get_id         = NULL;
   gimp->gui.display_get_window_id  = NULL;
@@ -262,6 +263,17 @@ gimp_get_theme_dir (Gimp *gimp)
 
   if (gimp->gui.get_theme_dir)
     return gimp->gui.get_theme_dir (gimp);
+
+  return NULL;
+}
+
+GFile *
+gimp_get_icon_theme_dir (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->gui.get_icon_theme_dir)
+    return gimp->gui.get_icon_theme_dir (gimp);
 
   return NULL;
 }

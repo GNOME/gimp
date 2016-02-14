@@ -173,7 +173,7 @@ static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  GimpPrecision       new_precision,
                                                  gint                layer_dither_type,
                                                  gint                mask_dither_type,
-                                                 gboolean            convert_type,
+                                                 gboolean            convert_profile,
                                                  gboolean            push_undo,
                                                  GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
@@ -1132,21 +1132,23 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
         {
           const Babl *src_format = gimp_drawable_get_format (drawable);
 
-          /* when converting between linear and gamma, we create a new
-           * profile using the original profile's chromacities and
-           * whitepoint, but a linear/sRGB-gamma TRC.
-           * gimp_image_convert_precision() will use the same profile.
-           */
           if (gimp_babl_format_get_linear (src_format) !=
               gimp_babl_format_get_linear (new_format))
             {
+              /* when converting between linear and gamma, we create a
+               * new profile using the original profile's chromacities
+               * and whitepoint, but a linear/sRGB-gamma TRC.
+               * gimp_image_convert_precision() will use the same
+               * profile.
+               */
+
               src_profile =
                 gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
 
               if (gimp_babl_format_get_linear (new_format))
                 {
                   dest_profile =
-                    gimp_color_profile_new_linear_rgb_from_color_profile (src_profile);
+                    gimp_color_profile_new_linear_gamma_from_color_profile (src_profile);
                 }
               else
                 {
@@ -1154,9 +1156,9 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                     gimp_color_profile_new_srgb_gamma_from_color_profile (src_profile);
                 }
 
-              /* if a new profile cannot be be generated, convert to the
-               * builtin profile, which is better than leaving the user
-               * with broken colors
+              /* if a new profile cannot be be generated, convert to
+               * the builtin profile, which is better than leaving the
+               * user with broken colors
                */
               if (! dest_profile)
                 {
@@ -1165,6 +1167,22 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                   g_object_ref (dest_profile);
                 }
             }
+          else if (gimp_drawable_get_base_type (drawable) != new_base_type &&
+                   (gimp_drawable_get_base_type (drawable) == GIMP_GRAY ||
+                    new_base_type                          == GIMP_GRAY))
+            {
+              /* when converting to/from GRAY, convert to the new
+               * type's builtin profile because the conversion will
+               * get rid of the profile, see gimp_image_convert_type().
+               */
+
+              src_profile =
+                gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+
+              dest_profile =
+                gimp_image_get_builtin_color_profile (dest_image);
+              g_object_ref (dest_profile);
+           }
         }
     }
 

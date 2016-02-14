@@ -28,8 +28,8 @@
 
 #include "gimpcairo-utils.h"
 #include "gimphelpui.h"
+#include "gimpicons.h"
 #include "gimppickbutton.h"
-#include "gimpstock.h"
 
 #include "libgimp/libgimp-intl.h"
 

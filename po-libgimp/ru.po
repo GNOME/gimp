@@ -5,14 +5,14 @@
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2011.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009, 2015.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-14 03:03+0300\n"
-"PO-Revision-Date: 2015-11-14 03:08+0300\n"
+"POT-Creation-Date: 2015-12-16 05:45+0300\n"
+"PO-Revision-Date: 2016-01-10 06:08+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -250,14 +250,13 @@ msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
 #: ../libgimp/gimpimagemetadata.c:605
-#, fuzzy
 msgid "Background"
-msgstr "Цвет _фона"
+msgstr ""
 
 #: ../libgimp/gimpimagemetadata.c:796
-#, fuzzy, c-format
+#, c-format
 msgid "Rotate %s?"
-msgstr "_Повернуть"
+msgstr "Повернуть %s?"
 
 #: ../libgimp/gimpimagemetadata.c:802
 msgid "_Keep Original"
@@ -268,9 +267,8 @@ msgid "Original"
 msgstr ""
 
 #: ../libgimp/gimpimagemetadata.c:860
-#, fuzzy
 msgid "Rotated"
-msgstr "_Повернуть"
+msgstr ""
 
 #: ../libgimp/gimpimagemetadata.c:878
 msgid "This image contains Exif orientation metadata."
@@ -282,7 +280,7 @@ msgstr ""
 
 #: ../libgimp/gimpimagemetadata.c:908
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "_Больше не спрашивать"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
@@ -475,7 +473,7 @@ msgstr "Собственный градиент"
 #: ../libgimpbase/gimpbaseenums.c:98
 msgctxt "brush-generated-shape"
 msgid "Circle"
-msgstr ""
+msgstr "Окружность"
 
 #: ../libgimpbase/gimpbaseenums.c:99
 #, fuzzy
@@ -486,7 +484,7 @@ msgstr "Квадратная"
 #: ../libgimpbase/gimpbaseenums.c:100
 msgctxt "brush-generated-shape"
 msgid "Diamond"
-msgstr ""
+msgstr "Ромб"
 
 #: ../libgimpbase/gimpbaseenums.c:130
 msgctxt "bucket-fill-mode"
@@ -504,10 +502,9 @@ msgid "Pattern fill"
 msgstr "Текстурой"
 
 #: ../libgimpbase/gimpbaseenums.c:162
-#, fuzzy
 msgctxt "cap-style"
 msgid "Butt"
-msgstr "Клавиша 0"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:163
 msgctxt "cap-style"
@@ -658,7 +655,7 @@ msgstr ""
 #: ../libgimpbase/gimpbaseenums.c:405
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
-msgstr ""
+msgstr "Создать оптимальную палитру"
 
 #: ../libgimpbase/gimpbaseenums.c:406
 msgctxt "convert-palette-type"
@@ -678,12 +675,12 @@ msgstr ""
 #: ../libgimpbase/gimpbaseenums.c:437
 msgctxt "convolve-type"
 msgid "Blur"
-msgstr ""
+msgstr "Размывание"
 
 #: ../libgimpbase/gimpbaseenums.c:438
 msgctxt "convolve-type"
 msgid "Sharpen"
-msgstr ""
+msgstr "Резкость"
 
 #: ../libgimpbase/gimpbaseenums.c:469
 msgctxt "desaturate-mode"
@@ -693,7 +690,7 @@ msgstr "Освещенность"
 #: ../libgimpbase/gimpbaseenums.c:470
 msgctxt "desaturate-mode"
 msgid "Luma"
-msgstr ""
+msgstr "Яркость"
 
 #: ../libgimpbase/gimpbaseenums.c:471
 msgctxt "desaturate-mode"
@@ -703,7 +700,7 @@ msgstr "Среднее"
 #: ../libgimpbase/gimpbaseenums.c:472
 msgctxt "desaturate-mode"
 msgid "Luminance"
-msgstr ""
+msgstr "Светимость"
 
 #: ../libgimpbase/gimpbaseenums.c:501
 msgctxt "dodge-burn-type"
@@ -716,31 +713,26 @@ msgid "Burn"
 msgstr "Затемнить"
 
 #: ../libgimpbase/gimpbaseenums.c:534
-#, fuzzy
 msgctxt "fill-type"
 msgid "Foreground color"
-msgstr "Цвет _переднего плана"
+msgstr "Цвет переднего плана"
 
 #: ../libgimpbase/gimpbaseenums.c:535
-#, fuzzy
 msgctxt "fill-type"
 msgid "Background color"
-msgstr "Цвет _фона"
+msgstr "Цвет фона"
 
 #: ../libgimpbase/gimpbaseenums.c:536
-#, fuzzy
 msgctxt "fill-type"
 msgid "White"
-msgstr "_Белый"
+msgstr "Белый"
 
 #: ../libgimpbase/gimpbaseenums.c:537
-#, fuzzy
 msgctxt "fill-type"
 msgid "Transparency"
-msgstr "Передний план до прозрачности"
+msgstr "Прозрачность"
 
 #: ../libgimpbase/gimpbaseenums.c:538
-#, fuzzy
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Текстура"
@@ -826,10 +818,9 @@ msgid "Solid"
 msgstr "Цельная линия"
 
 #: ../libgimpbase/gimpbaseenums.c:790
-#, fuzzy
 msgctxt "icon-type"
 msgid "Icon name"
-msgstr "по имени"
+msgstr "Название значка"
 
 #: ../libgimpbase/gimpbaseenums.c:791
 msgctxt "icon-type"
@@ -889,7 +880,7 @@ msgstr "Индексированный + альфа"
 #: ../libgimpbase/gimpbaseenums.c:892
 msgctxt "ink-blob-type"
 msgid "Circle"
-msgstr ""
+msgstr "Окружность"
 
 #: ../libgimpbase/gimpbaseenums.c:893
 #, fuzzy
@@ -900,7 +891,7 @@ msgstr "Квадратная"
 #: ../libgimpbase/gimpbaseenums.c:894
 msgctxt "ink-blob-type"
 msgid "Diamond"
-msgstr ""
+msgstr "Ромб"
 
 #: ../libgimpbase/gimpbaseenums.c:926
 msgctxt "interpolation-type"
@@ -1085,46 +1076,39 @@ msgstr "Запустить с последними введёнными знач
 #: ../libgimpbase/gimpbaseenums.c:1543
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr ""
+msgstr "Композитный цвет"
 
 #: ../libgimpbase/gimpbaseenums.c:1544
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Красный"
 
 #: ../libgimpbase/gimpbaseenums.c:1545
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Green"
-msgstr "Зеленый"
+msgstr "Зелёный"
 
 #: ../libgimpbase/gimpbaseenums.c:1546
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Синий"
 
 #: ../libgimpbase/gimpbaseenums.c:1547
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Тон"
 
 #: ../libgimpbase/gimpbaseenums.c:1548
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Насыщенность"
 
 #: ../libgimpbase/gimpbaseenums.c:1549
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Значение"
 
 #: ../libgimpbase/gimpbaseenums.c:1550
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Альфа"
@@ -1140,10 +1124,9 @@ msgid "Points"
 msgstr "Пунктов"
 
 #: ../libgimpbase/gimpbaseenums.c:1641
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "_Обвести"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:1642
 msgctxt "stroke-method"
@@ -1258,12 +1241,12 @@ msgstr ""
 #: ../libgimpbase/gimpmetadata.c:656
 #, c-format
 msgid "Parsing Exif data failed."
-msgstr ""
+msgstr "Не удалось разобрать данные Exif."
 
 #: ../libgimpbase/gimpmetadata.c:710
 #, c-format
 msgid "Parsing XMP data failed."
-msgstr ""
+msgstr "Не удалось разобрать данные XMP."
 
 #: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
 msgid "(invalid UTF-8 string)"
@@ -1294,36 +1277,34 @@ msgstr ""
 msgid "Calling ShowItems failed: "
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:234
+#: ../libgimpcolor/gimpcolorprofile.c:252
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' не похож на цветовой ICC-профиль"
 
-#: ../libgimpcolor/gimpcolorprofile.c:280
-#, fuzzy
+#: ../libgimpcolor/gimpcolorprofile.c:298
 msgid "Data does not appear to be an ICC color profile"
-msgstr "Фильтр настройки цветопередачи, использующий ICC-профиль"
+msgstr "Данные не похожи на ICC-профиль"
 
-#: ../libgimpcolor/gimpcolorprofile.c:337
+#: ../libgimpcolor/gimpcolorprofile.c:355
 msgid "Could not save color profile to memory"
-msgstr ""
+msgstr "Не удалось сохранить цветовой профиль в память"
 
-#: ../libgimpcolor/gimpcolorprofile.c:524
-#, fuzzy
+#: ../libgimpcolor/gimpcolorprofile.c:542
 msgid "(unnamed profile)"
-msgstr "Профиль изображения:"
+msgstr "(безымянный профиль)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:566
+#: ../libgimpcolor/gimpcolorprofile.c:584
 #, c-format
 msgid "Model: %s"
 msgstr "Модель: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:575
+#: ../libgimpcolor/gimpcolorprofile.c:593
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Производитель: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:584
+#: ../libgimpcolor/gimpcolorprofile.c:602
 #, c-format
 msgid "Copyright: %s"
 msgstr "Авторские права: %s"
@@ -1360,17 +1341,23 @@ msgid ""
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:69
+msgid ""
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:73
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK-профиль для преобразований между RGB и CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:76
 msgid ""
 "The color profile to use for soft proofing from your image's color space to "
 "some other color space, including soft proofing to a printer or other output "
 "device profile. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:77
+#: ../libgimpconfig/gimpcolorconfig.c:81
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1378,24 +1365,24 @@ msgid ""
 "intent really gives you relative colorimetric."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:84
+#: ../libgimpconfig/gimpcolorconfig.c:88
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to). "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:88
+#: ../libgimpconfig/gimpcolorconfig.c:92
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:93
+#: ../libgimpconfig/gimpcolorconfig.c:97
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:97
+#: ../libgimpconfig/gimpcolorconfig.c:101
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -1403,21 +1390,28 @@ msgstr ""
 "Если включено, при экранной цветопробе все цвета, не попадающие в цветовой "
 "охват, будут заменены на указанный здесь цвет."
 
-#: ../libgimpconfig/gimpcolorconfig.c:101
+#: ../libgimpconfig/gimpcolorconfig.c:105
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Цвет, используемый для пометки цветов вне цветового охвата."
 
-#: ../libgimpconfig/gimpcolorconfig.c:408
-#: ../libgimpconfig/gimpcolorconfig.c:511
-#, fuzzy, c-format
+#: ../libgimpconfig/gimpcolorconfig.c:431
+#: ../libgimpconfig/gimpcolorconfig.c:565
+#, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr "Фильтр настройки цветопередачи, использующий ICC-профиль"
+msgstr "Цветовой профиль '%s' не предназначен для пространства RGB"
 
-#: ../libgimpconfig/gimpcolorconfig.c:439
-#: ../libgimpconfig/gimpcolorconfig.c:552
-#, fuzzy, c-format
+#: ../libgimpconfig/gimpcolorconfig.c:462
+#: ../libgimpconfig/gimpcolorconfig.c:606
+#, c-format
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr ""
+"Цветовой профиль '%s' не предназначен для пространства в градациях серого."
+
+#: ../libgimpconfig/gimpcolorconfig.c:493
+#: ../libgimpconfig/gimpcolorconfig.c:647
+#, c-format
 msgid "Color profile '%s' is not for CMYK color space."
-msgstr "Фильтр настройки цветопередачи, использующий ICC-профиль"
+msgstr "Цветовой профиль '%s' не предназначен для пространства CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgctxt "color-management-mode"
@@ -1457,7 +1451,7 @@ msgstr "Абсолютная колориметрическая"
 #: ../libgimpconfig/gimpconfig-deserialize.c:110
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "значение для маркёра %s не является корректной строкой в UTF-8"
+msgstr "значение для маркера %s не является корректной строкой в UTF-8"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpconfig-deserialize.c:452
@@ -1499,14 +1493,14 @@ msgid "Error writing to '%s': %s"
 msgstr "Ошибка записи в '%s': %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create temporary file for '%s': "
-msgstr "Не удалось создать временный файл для '%s': %s"
+msgstr "Не удалось создать временный файл для '%s':"
 
 #: ../libgimpconfig/gimpconfigwriter.c:761
-#, fuzzy, c-format
+#, c-format
 msgid "Error writing '%s': %s"
-msgstr "Ошибка записи в '%s': %s"
+msgstr "Ошибка записи '%s': %s"
 
 #: ../libgimpconfig/gimpscanner.c:408
 #, c-format
@@ -1654,7 +1648,7 @@ msgstr "HTML-р_азметка:"
 
 #: ../libgimpwidgets/gimpfileentry.c:150
 msgid "Show file location in the file manager"
-msgstr ""
+msgstr "Показать расположение файла в файловом менеджере"
 
 #: ../libgimpwidgets/gimpfileentry.c:227
 msgid "Open a file selector to browse your folders"
@@ -1680,6 +1674,83 @@ msgstr "Выбрать файл"
 #: ../libgimpwidgets/gimphelpui.c:433
 msgid "Press F1 for more help"
 msgstr "Нажмите F1 для получения полной справки"
+
+#: ../libgimpwidgets/gimpicons.c:60
+msgid "Anchor"
+msgstr "Прикрепить"
+
+#: ../libgimpwidgets/gimpicons.c:61
+msgid "C_enter"
+msgstr "Центр"
+
+#: ../libgimpwidgets/gimpicons.c:62
+msgid "_Duplicate"
+msgstr "Сделать копию"
+
+#: ../libgimpwidgets/gimpicons.c:63
+msgid "_Edit"
+msgstr "Исправить"
+
+#: ../libgimpwidgets/gimpicons.c:64
+msgid "Linked"
+msgstr "Связанные"
+
+#: ../libgimpwidgets/gimpicons.c:65
+msgid "Paste as New"
+msgstr "Вставить как новое"
+
+#: ../libgimpwidgets/gimpicons.c:66
+msgid "Paste Into"
+msgstr "Вставить в"
+
+#: ../libgimpwidgets/gimpicons.c:67
+msgid "_Reset"
+msgstr "_Сбросить"
+
+#: ../libgimpwidgets/gimpicons.c:68
+msgid "Visible"
+msgstr "Видимый"
+
+#: ../libgimpwidgets/gimpicons.c:107 ../libgimpwidgets/gimpicons.c:111
+msgid "_Stroke"
+msgstr "_Обвести"
+
+#: ../libgimpwidgets/gimpicons.c:123
+msgid "L_etter Spacing"
+msgstr "М_ежбуквенное расстояние"
+
+#: ../libgimpwidgets/gimpicons.c:124
+msgid "L_ine Spacing"
+msgstr "_Интерлиньяж"
+
+#: ../libgimpwidgets/gimpicons.c:140
+msgid "Re_size"
+msgstr "_Изменить"
+
+#: ../libgimpwidgets/gimpicons.c:141 ../libgimpwidgets/gimpicons.c:276
+msgid "_Scale"
+msgstr "Из_менить"
+
+#: ../libgimpwidgets/gimpicons.c:248
+msgid "Cr_op"
+msgstr "_Обрезать"
+
+#: ../libgimpwidgets/gimpicons.c:256
+msgid "_Select"
+msgstr "В_ыбрать"
+
+#: ../libgimpwidgets/gimpicons.c:259 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimpwidgets/gimpicons.c:282
+msgid "_Transform"
+msgstr "_Преобразовать"
+
+#: ../libgimpwidgets/gimpicons.c:275
+msgid "_Rotate"
+msgstr "_Повернуть"
+
+#: ../libgimpwidgets/gimpicons.c:278
+msgid "_Shear"
+msgstr "Н_аклонить"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:223
 msgid "Kilobytes"
@@ -1732,7 +1803,7 @@ msgstr[2] "Выбрано %d страниц"
 
 #: ../libgimpwidgets/gimppatheditor.c:239
 msgid "Writable"
-msgstr "Перезаписываемый"
+msgstr "Запись"
 
 #: ../libgimpwidgets/gimppickbutton.c:110
 msgid ""
@@ -1761,84 +1832,6 @@ msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Ввод текста в это поле ограничен %d символом"
 msgstr[1] "Ввод текста в это поле ограничен %d символами."
 msgstr[2] "Ввод текста в это поле ограничен %d символами."
-
-#: ../libgimpwidgets/gimpstock.c:60
-msgid "Anchor"
-msgstr "Прикрепить"
-
-#: ../libgimpwidgets/gimpstock.c:61
-msgid "C_enter"
-msgstr "Центр"
-
-#: ../libgimpwidgets/gimpstock.c:62
-msgid "_Duplicate"
-msgstr "Сделать копию"
-
-#: ../libgimpwidgets/gimpstock.c:63
-msgid "_Edit"
-msgstr "Исправить"
-
-#: ../libgimpwidgets/gimpstock.c:64
-msgid "Linked"
-msgstr "Связанные"
-
-#: ../libgimpwidgets/gimpstock.c:65
-msgid "Paste as New"
-msgstr "Вставить как новое"
-
-#: ../libgimpwidgets/gimpstock.c:66
-msgid "Paste Into"
-msgstr "Вставить в"
-
-#: ../libgimpwidgets/gimpstock.c:67
-msgid "_Reset"
-msgstr "_Сбросить"
-
-#: ../libgimpwidgets/gimpstock.c:68
-msgid "Visible"
-msgstr "Видимый"
-
-#: ../libgimpwidgets/gimpstock.c:107 ../libgimpwidgets/gimpstock.c:111
-msgid "_Stroke"
-msgstr "_Обвести"
-
-#: ../libgimpwidgets/gimpstock.c:123
-msgid "L_etter Spacing"
-msgstr "М_ежбуквенное расстояние"
-
-#: ../libgimpwidgets/gimpstock.c:124
-msgid "L_ine Spacing"
-msgstr "_Интерлиньяж"
-
-#: ../libgimpwidgets/gimpstock.c:140
-msgid "Re_size"
-msgstr "_Изменить размер"
-
-#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:276
-msgid "_Scale"
-msgstr "Из_менить"
-
-#: ../libgimpwidgets/gimpstock.c:248
-msgid "Cr_op"
-msgstr "_Обрезать"
-
-#: ../libgimpwidgets/gimpstock.c:256
-#, fuzzy
-msgid "_Select"
-msgstr "_Выделение"
-
-#: ../libgimpwidgets/gimpstock.c:259 ../libgimpwidgets/gimpstock.c:271
-#: ../libgimpwidgets/gimpstock.c:282
-msgid "_Transform"
-msgstr "_Преобразовать"
-
-#: ../libgimpwidgets/gimpstock.c:275
-msgid "_Rotate"
-msgstr "_Повернуть"
-
-#: ../libgimpwidgets/gimpstock.c:278
-msgid "_Shear"
-msgstr "Н_аклонить"
 
 #: ../libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -1950,7 +1943,7 @@ msgstr "_G"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgid "Green"
-msgstr "Зеленый"
+msgstr "Зелёный"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"

@@ -210,10 +210,14 @@ gimp_image_scale (GimpImage             *image,
        list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
+      gint             x;
+      gint             y;
+
+      gimp_sample_point_get_position (sample_point, &x, &y);
 
       gimp_image_move_sample_point (image, sample_point,
-                                    sample_point->x * new_width  / old_width,
-                                    sample_point->y * new_height / old_height,
+                                    x * new_width  / old_width,
+                                    y * new_height / old_height,
                                     TRUE);
     }
 

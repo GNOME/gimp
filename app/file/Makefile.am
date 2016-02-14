@@ -13,14 +13,12 @@ AM_CPPFLAGS = \
 noinst_LIBRARIES = libappfile.a
 
 libappfile_a_SOURCES = \
-	file-open.c		\
-	file-open.h		\
-	file-procedure.c	\
-	file-procedure.h	\
-	file-remote.c		\
-	file-remote.h		\
-	file-save.c		\
-	file-save.h		\
-	file-utils.c		\
-	file-utils.h		\
+	file-open.c	\
+	file-open.h	\
+	file-remote.c	\
+	file-remote.h	\
+	file-save.c	\
+	file-save.h	\
+	file-utils.c	\
+	file-utils.h	\
 	gimp-file.h

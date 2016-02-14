@@ -46,10 +46,10 @@ libappplug_in_a_SOURCES = \
 	gimppluginmanager-data.h		\
 	gimppluginmanager-file.c		\
 	gimppluginmanager-file.h		\
+	gimppluginmanager-file-procedure.c	\
+	gimppluginmanager-file-procedure.h	\
 	gimppluginmanager-help-domain.c		\
 	gimppluginmanager-help-domain.h		\
-	gimppluginmanager-history.c		\
-	gimppluginmanager-history.h		\
 	gimppluginmanager-locale-domain.c	\
 	gimppluginmanager-locale-domain.h	\
 	gimppluginmanager-menu-branch.c		\

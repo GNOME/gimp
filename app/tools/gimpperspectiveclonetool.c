@@ -877,7 +877,9 @@ gimp_perspective_clone_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_clone_options_gui (tool_options);
   GtkWidget *mode;
 
-  /* radio buttons to set if you are modifying perspe plane or painting */
+  /* radio buttons to set if you are modifying the perspective plane
+   * or painting
+   */
   mode = gimp_prop_enum_radio_box_new (config, "clone-mode", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (vbox), mode, 0);

@@ -71,25 +71,28 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
   /* The 'highlight' property is defined here because we want different
    * default values for the Crop and the Rectangle Select tools.
    */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
-                                    "highlight",
-                                    _("Dim everything outside selection"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+                            "highlight",
+                            _("Highlight"),
+                            _("Dim everything outside selection"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
-                                    "layer-only",
-                                    _("Crop only currently selected layer"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
+                            "layer-only",
+                            _("Current layer only"),
+                            _("Crop only currently selected layer"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ALLOW_GROWING,
-                                    "allow-growing",
-                                    _("Allow resizing canvas by dragging cropping frame "
-                                      "beyond image boundary"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALLOW_GROWING,
+                            "allow-growing",
+                            _("Allow growing"),
+                            _("Allow resizing canvas by dragging cropping frame "
+                              "beyond image boundary"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
 }
@@ -161,14 +164,12 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
 
   /*  layer toggle  */
-  button = gimp_prop_check_button_new (config, "layer-only",
-                                       _("Current layer only"));
+  button = gimp_prop_check_button_new (config, "layer-only", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  allow growing toggle  */
-  button = gimp_prop_check_button_new (config, "allow-growing",
-                                       _("Allow growing"));
+  button = gimp_prop_check_button_new (config, "allow-growing", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

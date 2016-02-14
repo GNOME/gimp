@@ -39,13 +39,12 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpimage.h"
 
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-file.h"
 
-#include "file/file-procedure.h"
 #include "file/file-save.h"
-#include "file/file-utils.h"
 
 #include "gimpdnd-xds.h"
 #include "gimpfiledialog.h"
@@ -95,7 +94,7 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
 
       if (file)
         {
-          GFile *xcf_file = file_utils_file_with_new_ext (file, untitled);
+          GFile *xcf_file = gimp_file_with_new_extension (file, untitled);
           basename = g_file_get_basename (xcf_file);
           g_object_unref (xcf_file);
         }
@@ -153,12 +152,14 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 
   file = g_file_new_for_uri (uri);
 
-  proc = file_procedure_find (image->gimp->plug_in_manager->save_procs,
-                              file, NULL);
+  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                   GIMP_FILE_PROCEDURE_GROUP_SAVE,
+                                                   file, NULL);
   if (! proc)
     {
-      proc = file_procedure_find (image->gimp->plug_in_manager->export_procs,
-                                  file, NULL);
+      proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
+                                                       GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+                                                       file, NULL);
       export = TRUE;
     }
 

@@ -63,6 +63,7 @@ libappdialogs_a_sources = \
 	layer-options-dialog.c		\
 	layer-options-dialog.h		\
 	lebl-dialog.c			\
+	lebl-dialog.h			\
 	module-dialog.c			\
 	module-dialog.h			\
 	offset-dialog.c			\

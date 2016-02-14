@@ -72,3 +72,35 @@ gimp_sample_point_unref (GimpSamplePoint *sample_point)
   if (sample_point->ref_count < 1)
     g_slice_free (GimpSamplePoint, sample_point);
 }
+
+guint32
+gimp_sample_point_get_ID (GimpSamplePoint *sample_point)
+{
+  g_return_val_if_fail (sample_point != NULL, 0);
+
+  return sample_point->sample_point_ID;
+}
+
+void
+gimp_sample_point_get_position (GimpSamplePoint *sample_point,
+                                gint            *position_x,
+                                gint            *position_y)
+{
+  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (position_x != NULL);
+  g_return_if_fail (position_y != NULL);
+
+  *position_x = sample_point->x;
+  *position_y = sample_point->y;
+}
+
+void
+gimp_sample_point_set_position (GimpSamplePoint *sample_point,
+                                gint             position_x,
+                                gint             position_y)
+{
+  g_return_if_fail (sample_point != NULL);
+
+  sample_point->x = position_x;
+  sample_point->y = position_y;
+}

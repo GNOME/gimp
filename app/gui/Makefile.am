@@ -35,6 +35,8 @@ libappgui_a_sources = \
 	gui-vtable.c		\
 	gui-vtable.h		\
 	gui-types.h		\
+	icon-themes.c		\
+	icon-themes.h		\
 	session.c		\
 	session.h		\
 	splash.c		\

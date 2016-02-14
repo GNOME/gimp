@@ -129,65 +129,77 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   data_class->get_extension                 = gimp_dynamics_get_extension;
   data_class->duplicate                     = gimp_dynamics_duplicate;
 
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_NAME,
-                                   "name", NULL,
-                                   DEFAULT_NAME,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_NAME,
+                           "name",
+                           NULL, NULL,
+                           DEFAULT_NAME,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_OPACITY_OUTPUT,
-                                   "opacity-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_OPACITY_OUTPUT,
+                           "opacity-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_FORCE_OUTPUT,
-                                   "force-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_FORCE_OUTPUT,
+                           "force-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_HARDNESS_OUTPUT,
-                                   "hardness-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_HARDNESS_OUTPUT,
+                           "hardness-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_RATE_OUTPUT,
-                                   "rate-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_RATE_OUTPUT,
+                           "rate-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_FLOW_OUTPUT,
-                                   "flow-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_FLOW_OUTPUT,
+                           "flow-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_SIZE_OUTPUT,
-                                   "size-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_SIZE_OUTPUT,
+                           "size-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_ASPECT_RATIO_OUTPUT,
-                                   "aspect-ratio-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_ASPECT_RATIO_OUTPUT,
+                           "aspect-ratio-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_COLOR_OUTPUT,
-                                   "color-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_COLOR_OUTPUT,
+                           "color-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_ANGLE_OUTPUT,
-                                   "angle-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_ANGLE_OUTPUT,
+                           "angle-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_JITTER_OUTPUT,
-                                   "jitter-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_JITTER_OUTPUT,
+                           "jitter-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_SPACING_OUTPUT,
-                                   "spacing-output", NULL,
-                                   GIMP_TYPE_DYNAMICS_OUTPUT,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_SPACING_OUTPUT,
+                           "spacing-output",
+                           NULL, NULL,
+                           GIMP_TYPE_DYNAMICS_OUTPUT,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 
   g_type_class_add_private (klass, sizeof (GimpDynamicsPrivate));
 }

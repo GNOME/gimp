@@ -76,6 +76,7 @@
 #include "image-actions.h"
 #include "images-actions.h"
 #include "layers-actions.h"
+#include "mypaint-brushes-actions.h"
 #include "palette-editor-actions.h"
 #include "palettes-actions.h"
 #include "patterns-actions.h"
@@ -190,6 +191,9 @@ static const GimpActionFactoryEntry action_groups[] =
   { "layers", N_("Layers"), GIMP_STOCK_LAYER,
     layers_actions_setup,
     layers_actions_update },
+  { "mypaint-brushes", N_("MyPaint Brushes"), GIMP_STOCK_MYPAINT_BRUSH,
+    mypaint_brushes_actions_setup,
+    mypaint_brushes_actions_update },
   { "palette-editor", N_("Palette Editor"), GIMP_STOCK_PALETTE,
     palette_editor_actions_setup,
     palette_editor_actions_update },

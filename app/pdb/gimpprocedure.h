@@ -19,7 +19,7 @@
 #define __GIMP_PROCEDURE_H__
 
 
-#include "core/gimpobject.h"
+#include "core/gimpviewable.h"
 
 
 typedef GimpValueArray * (* GimpMarshalFunc) (GimpProcedure         *procedure,
@@ -42,7 +42,7 @@ typedef struct _GimpProcedureClass GimpProcedureClass;
 
 struct _GimpProcedure
 {
-  GimpObject        parent_instance;
+  GimpViewable      parent_instance;
 
   GimpPDBProcType   proc_type;      /* Type of procedure              */
 
@@ -67,20 +67,27 @@ struct _GimpProcedure
 
 struct _GimpProcedureClass
 {
-  GimpObjectClass parent_class;
+  GimpViewableClass parent_class;
 
-  GimpValueArray * (* execute)       (GimpProcedure   *procedure,
-                                      Gimp            *gimp,
-                                      GimpContext     *context,
-                                      GimpProgress    *progress,
-                                      GimpValueArray  *args,
-                                      GError         **error);
-  void             (* execute_async) (GimpProcedure   *procedure,
-                                      Gimp            *gimp,
-                                      GimpContext     *context,
-                                      GimpProgress    *progress,
-                                      GimpValueArray  *args,
-                                      GimpObject      *display);
+  const gchar    * (* get_label)      (GimpProcedure   *procedure);
+  const gchar    * (* get_menu_label) (GimpProcedure   *procedure);
+  const gchar    * (* get_blurb)      (GimpProcedure   *procedure);
+  const gchar    * (* get_help_id)    (GimpProcedure   *procedure);
+  gboolean         (* get_sensitive)  (GimpProcedure   *procedure,
+                                       GimpObject      *object);
+
+  GimpValueArray * (* execute)        (GimpProcedure   *procedure,
+                                       Gimp            *gimp,
+                                       GimpContext     *context,
+                                       GimpProgress    *progress,
+                                       GimpValueArray  *args,
+                                       GError         **error);
+  void             (* execute_async)  (GimpProcedure   *procedure,
+                                       Gimp            *gimp,
+                                       GimpContext     *context,
+                                       GimpProgress    *progress,
+                                       GimpValueArray  *args,
+                                       GimpObject      *display);
 };
 
 
@@ -112,6 +119,13 @@ void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
                                                     gchar            *copyright,
                                                     gchar            *date,
                                                     gchar            *deprecated);
+
+const gchar    * gimp_procedure_get_label          (GimpProcedure    *procedure);
+const gchar    * gimp_procedure_get_menu_label     (GimpProcedure    *procedure);
+const gchar    * gimp_procedure_get_blurb          (GimpProcedure    *procedure);
+const gchar    * gimp_procedure_get_help_id        (GimpProcedure    *procedure);
+gboolean         gimp_procedure_get_sensitive      (GimpProcedure    *procedure,
+                                                    GimpObject       *object);
 
 void             gimp_procedure_add_argument       (GimpProcedure    *procedure,
                                                     GParamSpec       *pspec);

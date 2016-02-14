@@ -66,17 +66,20 @@ gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
   object_class->set_property = gimp_vector_options_set_property;
   object_class->get_property = gimp_vector_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_VECTORS_EDIT_MODE,
-                                 "vectors-edit-mode", NULL,
-                                 GIMP_TYPE_VECTOR_MODE,
-                                 GIMP_VECTOR_MODE_DESIGN,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_VECTORS_EDIT_MODE,
+                         "vectors-edit-mode",
+                         _("Edit Mode"),
+                         NULL,
+                         GIMP_TYPE_VECTOR_MODE,
+                         GIMP_VECTOR_MODE_DESIGN,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VECTORS_POLYGONAL,
-                                    "vectors-polygonal",
-                                    N_("Restrict editing to polygons"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_POLYGONAL,
+                            "vectors-polygonal",
+                            _("Polygonal"),
+                            _("Restrict editing to polygons"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -152,8 +155,8 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   gchar             *str;
 
   /*  tool toggle  */
-  frame = gimp_prop_enum_radio_frame_new (config, "vectors-edit-mode",
-                                          _("Edit Mode"), 0, 0);
+  frame = gimp_prop_enum_radio_frame_new (config, "vectors-edit-mode", NULL,
+                                          0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -171,8 +174,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
                                 gimp_get_toggle_behavior_mask ());
     }
 
-  button = gimp_prop_check_button_new (config, "vectors-polygonal",
-                                       _("Polygonal"));
+  button = gimp_prop_check_button_new (config, "vectors-polygonal", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

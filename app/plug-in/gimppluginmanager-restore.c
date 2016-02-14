@@ -815,8 +815,8 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
   if (g_str_has_prefix (gimp_file_get_utf8_name (proc_b->file), "gimp-xcf"))
     return 1;
 
-  label_a = gimp_plug_in_procedure_get_label (proc_a);
-  label_b = gimp_plug_in_procedure_get_label (proc_b);
+  label_a = gimp_procedure_get_label (GIMP_PROCEDURE (proc_a));
+  label_b = gimp_procedure_get_label (GIMP_PROCEDURE (proc_b));
 
   if (label_a && label_b)
     retval = g_utf8_collate (label_a, label_b);

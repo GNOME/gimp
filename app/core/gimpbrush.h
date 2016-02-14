@@ -109,11 +109,13 @@ void                   gimp_brush_transform_size     (GimpBrush        *brush,
                                                       gint             *width,
                                                       gint             *height);
 const GimpTempBuf    * gimp_brush_transform_mask     (GimpBrush        *brush,
+                                                      GeglNode         *op,
                                                       gdouble           scale,
                                                       gdouble           aspect_ratio,
                                                       gdouble           angle,
                                                       gdouble           hardness);
 const GimpTempBuf    * gimp_brush_transform_pixmap   (GimpBrush        *brush,
+                                                      GeglNode         *op,
                                                       gdouble           scale,
                                                       gdouble           aspect_ratio,
                                                       gdouble           angle,

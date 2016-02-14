@@ -41,11 +41,8 @@
 #include "operations/gimpcolorbalanceconfig.h"
 #include "operations/gimpcolorizeconfig.h"
 #include "operations/gimpcurvesconfig.h"
-#include "operations/gimpdesaturateconfig.h"
 #include "operations/gimphuesaturationconfig.h"
 #include "operations/gimplevelsconfig.h"
-#include "operations/gimpposterizeconfig.h"
-#include "operations/gimpthresholdconfig.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
@@ -316,15 +313,16 @@ drawable_desaturate_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           gimp_drawable_is_rgb (drawable))
         {
-          GObject *config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
-                                          "mode", desaturate_mode,
-                                          NULL);
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:desaturate",
+                                 "mode",      desaturate_mode,
+                                 NULL);
 
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 C_("undo-type", "Desaturate"),
-                                                 "gimp:desaturate",
-                                                 config);
-          g_object_unref (config);
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Desaturate"),
+                                         node);
+          g_object_unref (node);
         }
       else
         success = FALSE;
@@ -652,15 +650,16 @@ drawable_posterize_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GObject *config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG,
-                                          "levels", levels,
-                                          NULL);
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:posterize",
+                                 "levels",    levels,
+                                 NULL);
 
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 C_("undo-type", "Posterize"),
-                                                 "gimp:posterize",
-                                                 config);
-          g_object_unref (config);
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Posterize"),
+                                         node);
+          g_object_unref (node);
         }
       else
         success = FALSE;
@@ -693,16 +692,17 @@ drawable_threshold_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GObject *config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG,
-                                          "low",  low_threshold  / 255.0,
-                                          "high", high_threshold / 255.0,
-                                          NULL);
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:threshold",
+                                 "low",       low_threshold  / 255.0,
+                                 "high",      high_threshold / 255.0,
+                                 NULL);
 
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 C_("undo-type", "Threshold"),
-                                                 "gimp:threshold",
-                                                 config);
-          g_object_unref (config);
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Threshold"),
+                                         node);
+          g_object_unref (node);
         }
       else
         success = FALSE;

@@ -17,6 +17,9 @@ libappactions_a_SOURCES = \
 	actions.c			\
 	actions.h			\
 	\
+	gimpgeglprocedure.c		\
+	gimpgeglprocedure.h		\
+	\
 	brush-editor-actions.c		\
 	brush-editor-actions.h		\
 	brushes-actions.c		\
@@ -117,6 +120,8 @@ libappactions_a_SOURCES = \
 	layers-actions.h		\
 	layers-commands.c		\
 	layers-commands.h		\
+	mypaint-brushes-actions.c	\
+	mypaint-brushes-actions.h	\
 	palette-editor-actions.c	\
 	palette-editor-actions.h	\
 	palette-editor-commands.c	\
@@ -131,6 +136,8 @@ libappactions_a_SOURCES = \
 	plug-in-actions.h		\
 	plug-in-commands.c		\
 	plug-in-commands.h		\
+	procedure-commands.c		\
+	procedure-commands.h		\
 	quick-mask-actions.c		\
 	quick-mask-actions.h		\
 	quick-mask-commands.c		\

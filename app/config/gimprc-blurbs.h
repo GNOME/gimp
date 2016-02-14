@@ -270,8 +270,8 @@ _("When enabled, the X server is queried for the mouse's current position " \
   "be slower.  Conversely, on some X servers enabling this option results " \
   "in faster painting.")
 
-#define PLUG_IN_HISTORY_SIZE_BLURB \
-"How many recently used plug-ins to keep on the Filters menu."
+#define FILTER_HISTORY_SIZE_BLURB \
+"How many recently used filters and plug-ins to keep on the Filters menu."
 
 #define PLUG_IN_PATH_BLURB \
 "Sets the plug-in search path."
@@ -293,11 +293,13 @@ _("Sets the default quick mask color.")
 
 #define RESIZE_WINDOWS_ON_RESIZE_BLURB \
 _("When enabled, the image window will automatically resize itself " \
-  "whenever the physical image size changes.")
+  "whenever the physical image size changes. This setting only takes " \
+  "effect in multi-window mode.")
 
 #define RESIZE_WINDOWS_ON_ZOOM_BLURB \
 _("When enabled, the image window will automatically resize itself " \
-  "when zooming into and out of images.")
+  "when zooming into and out of images. This setting only takes " \
+  "effect in multi-window mode.")
 
 #define RESTORE_SESSION_BLURB \
 _("Let GIMP try to restore your last saved session on each startup.")
@@ -388,6 +390,9 @@ _("Enable the N-Point Deformation tool.")
 #define PLAYGROUND_HANDLE_TRANSFORM_TOOL_BLURB \
 _("Enable the Handle Transform tool.")
 
+#define PLAYGROUND_SYMMETRY_BLURB \
+_("Enable symmetry on painting.")
+
 #define PLAYGROUND_MYBRUSH_TOOL_BLURB \
 _("Enable the MyPaint Brush tool.")
 
@@ -430,6 +435,12 @@ _("Sets the folder for temporary storage. Files will appear here " \
 
 #define THEME_PATH_BLURB \
 "Sets the theme search path."
+
+#define ICON_THEME_BLURB \
+"The name of the icon theme to use."
+
+#define ICON_THEME_PATH_BLURB \
+"Sets the icon theme search path."
 
 #define THUMBNAIL_SIZE_BLURB \
 _("Sets the size of the thumbnail shown in the Open dialog.")

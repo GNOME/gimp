@@ -27,7 +27,7 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimpstock.h"
+#include "gimpicons.h"
 #include "gimpwidgets-private.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -74,7 +74,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   _gimp_get_background_func = get_background_func;
   _gimp_ensure_modules_func = ensure_modules_func;
 
-  gimp_stock_init ();
+  gimp_icons_init ();
 
   gtk_window_set_default_icon_name (GIMP_STOCK_WILBER);
 

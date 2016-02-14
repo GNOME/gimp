@@ -160,12 +160,13 @@ static void     gradient_put_pixel           (gint                x,
                                               gpointer            put_pixel_data);
 
 static gboolean gimp_operation_blend_process (GeglOperation       *operation,
+                                              GeglBuffer          *input,
                                               GeglBuffer          *output,
                                               const GeglRectangle *result,
                                               gint                 level);
 
 G_DEFINE_TYPE (GimpOperationBlend, gimp_operation_blend,
-               GEGL_TYPE_OPERATION_SOURCE)
+               GEGL_TYPE_OPERATION_FILTER)
 
 #define parent_class gimp_operation_blend_parent_class
 
@@ -174,7 +175,7 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
 {
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
-  GeglOperationSourceClass *source_class    = GEGL_OPERATION_SOURCE_CLASS (klass);
+  GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
 
   object_class->dispose        = gimp_operation_blend_dispose;
   object_class->set_property   = gimp_operation_blend_set_property;
@@ -183,7 +184,7 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
   operation_class->prepare          = gimp_operation_blend_prepare;
   operation_class->get_bounding_box = gimp_operation_blend_get_bounding_box;
 
-  source_class->process             = gimp_operation_blend_process;
+  filter_class->process             = gimp_operation_blend_process;
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:blend",
@@ -750,11 +751,9 @@ gradient_calc_shapeburst_angular_factor (GeglBuffer *dist_buffer,
                                          gdouble     x,
                                          gdouble     y)
 {
-  gint   ix = CLAMP (x, 0.0, gegl_buffer_get_width  (dist_buffer) - 0.7);
-  gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (ix, iy, 1, 1), 1.0,
+  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
                    NULL, &value,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -769,11 +768,9 @@ gradient_calc_shapeburst_spherical_factor (GeglBuffer *dist_buffer,
                                            gdouble     x,
                                            gdouble     y)
 {
-  gint   ix = CLAMP (x, 0.0, gegl_buffer_get_width  (dist_buffer) - 0.7);
-  gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (ix, iy, 1, 1), 1.0,
+  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
                    NULL, &value,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -788,11 +785,9 @@ gradient_calc_shapeburst_dimpled_factor (GeglBuffer *dist_buffer,
                                          gdouble     x,
                                          gdouble     y)
 {
-  gint   ix = CLAMP (x, 0.0, gegl_buffer_get_width  (dist_buffer) - 0.7);
-  gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (ix, iy, 1, 1), 1.0,
+  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
                    NULL, &value,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -973,6 +968,7 @@ gradient_put_pixel (gint      x,
 
 static gboolean
 gimp_operation_blend_process (GeglOperation       *operation,
+                              GeglBuffer          *input,
                               GeglBuffer          *output,
                               const GeglRectangle *result,
                               gint                 level)
@@ -1044,11 +1040,7 @@ gimp_operation_blend_process (GeglOperation       *operation,
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
-      /*rbd.dist_buffer = gradient_precalc_shapeburst (image, drawable,
-                                                     buffer_region,
-                                                     rbd.dist, progress);*/
-      /* FIXME */
-      g_return_val_if_reached (FALSE);
+      rbd.dist_buffer = input;
       break;
 
     default:
@@ -1163,9 +1155,6 @@ gimp_operation_blend_process (GeglOperation       *operation,
 #endif
 
   g_object_unref (rbd.gradient);
-
-  if (rbd.dist_buffer)
-    g_object_unref (rbd.dist_buffer);
 
   return TRUE;
 }

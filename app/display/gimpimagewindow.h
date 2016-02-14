@@ -93,6 +93,8 @@ void               gimp_image_window_shrink_wrap          (GimpImageWindow  *win
 GtkWidget        * gimp_image_window_get_default_dockbook (GimpImageWindow  *window);
 
 void               gimp_image_window_keep_canvas_pos      (GimpImageWindow  *window);
+void               gimp_image_window_suspend_keep_pos     (GimpImageWindow  *window);
+void               gimp_image_window_resume_keep_pos      (GimpImageWindow  *window);
 
 void               gimp_image_window_update_tabs          (GimpImageWindow  *window);
 

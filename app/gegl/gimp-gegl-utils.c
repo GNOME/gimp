@@ -74,13 +74,11 @@ gimp_gegl_color_new (const GimpRGB *rgb)
 
 static void
 gimp_gegl_progress_notify (GObject          *object,
-                           const GParamSpec *pspec,
+                           gdouble           value,
                            GimpProgress     *progress)
 {
   const gchar *text;
-  gdouble      value;
 
-  g_object_get (object, "progress", &value, NULL);
 
   text = g_object_get_data (object, "gimp-progress-text");
 
@@ -115,7 +113,7 @@ gimp_gegl_progress_connect (GeglNode     *node,
 
   g_return_if_fail (operation != NULL);
 
-  g_signal_connect (operation, "notify::progress",
+  g_signal_connect (operation, "progress",
                     G_CALLBACK (gimp_gegl_progress_notify),
                     progress);
 

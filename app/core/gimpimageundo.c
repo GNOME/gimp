@@ -24,6 +24,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -326,7 +327,18 @@ gimp_image_undo_pop (GimpUndo            *undo,
         gimp_image_colormap_changed (image, -1);
 
         if (image_undo->base_type != gimp_image_get_base_type (image))
-          accum->mode_changed = TRUE;
+          {
+            if ((image_undo->base_type            == GIMP_GRAY) ||
+                (gimp_image_get_base_type (image) == GIMP_GRAY))
+              {
+                /* in case ther was no profile undo, we need to emit
+                 * profile-changed anyway
+                 */
+                gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+              }
+
+            accum->mode_changed = TRUE;
+          }
       }
       break;
 

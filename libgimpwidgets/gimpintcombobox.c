@@ -471,6 +471,72 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
 }
 
 /**
+ * gimp_int_combo_box_set_active_by_user_data:
+ * @combo_box: a #GimpIntComboBox
+ * @user_data: an integer value
+ *
+ * Looks up the item that has the given @user_data and makes it the
+ * selected item in the @combo_box.
+ *
+ * Return value: %TRUE on success or %FALSE if there was no item for
+ *               this user-data.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_int_combo_box_set_active_by_user_data (GimpIntComboBox *combo_box,
+                                            gpointer         user_data)
+{
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+
+  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
+
+  if (gimp_int_store_lookup_by_user_data (model, user_data, &iter))
+    {
+      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+/**
+ * gimp_int_combo_box_get_active_user_data:
+ * @combo_box: a #GimpIntComboBox
+ * @user_data: return location for the gpointer value
+ *
+ * Retrieves the user-data of the selected (active) item in the @combo_box.
+ *
+ * Return value: %TRUE if @user_data has been set or %FALSE if no item was
+ *               active.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_int_combo_box_get_active_user_data (GimpIntComboBox *combo_box,
+                                         gpointer        *user_data)
+{
+  GtkTreeIter  iter;
+
+  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
+  g_return_val_if_fail (user_data != NULL, FALSE);
+
+  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
+    {
+      gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)),
+                          &iter,
+                          GIMP_INT_STORE_USER_DATA, user_data,
+                          -1);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+/**
  * gimp_int_combo_box_connect:
  * @combo_box: a #GimpIntComboBox
  * @value:     the value to set

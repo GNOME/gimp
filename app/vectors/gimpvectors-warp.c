@@ -63,7 +63,9 @@ gimp_vectors_warp_point (const GimpVectors *vectors,
   GList      *list;
   GimpStroke *stroke;
 
-  for (list = vectors->strokes; list; list = g_list_next (list))
+  for (list = vectors->strokes->head;
+       list;
+       list = g_list_next (list))
     {
       stroke = list->data;
 
@@ -139,7 +141,7 @@ gimp_vectors_warp_stroke (const GimpVectors *vectors,
 {
   GList *list;
 
-  for (list = stroke->anchors; list; list = g_list_next (list))
+  for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
       GimpAnchor *anchor = list->data;
 
@@ -156,7 +158,9 @@ gimp_vectors_warp_vectors (const GimpVectors *vectors,
 {
   GList *list;
 
-  for (list = vectors_in->strokes; list; list = g_list_next (list))
+  for (list = vectors_in->strokes->head;
+       list;
+       list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 

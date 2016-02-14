@@ -327,6 +327,15 @@ g_param_spec_uint ("$name",
                    $flags)
 CODE
     }
+    elsif ($pdbtype eq 'sample_point') {
+	$pspec = <<CODE;
+g_param_spec_uint ("$name",
+                   "$nick",
+                   "$blurb",
+                   1, G_MAXUINT32, 1,
+                   $flags)
+CODE
+    }
     elsif ($pdbtype eq 'float') {
 	$min = defined $typeinfo[0] ? $typeinfo[0] : -G_MAXDOUBLE;
 	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXDOUBLE;

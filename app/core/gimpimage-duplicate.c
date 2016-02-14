@@ -461,11 +461,12 @@ gimp_image_duplicate_sample_points (GimpImage *image,
        list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
+      gint             x;
+      gint             y;
 
-      gimp_image_add_sample_point_at_pos (new_image,
-                                          sample_point->x,
-                                          sample_point->y,
-                                          FALSE);
+      gimp_sample_point_get_position (sample_point, &x, &y);
+
+      gimp_image_add_sample_point_at_pos (new_image, x, y, FALSE);
     }
 }
 

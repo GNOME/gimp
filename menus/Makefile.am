@@ -25,6 +25,7 @@ menudata_DATA = \
 	gradients-menu.xml		\
 	images-menu.xml			\
 	layers-menu.xml			\
+	mypaint-brushes-menu.xml	\
 	palette-editor-menu.xml		\
 	palettes-menu.xml		\
 	patterns-menu.xml		\

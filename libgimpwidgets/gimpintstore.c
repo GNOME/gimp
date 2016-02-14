@@ -309,3 +309,42 @@ gimp_int_store_lookup_by_value (GtkTreeModel *model,
 
   return iter_valid;
 }
+
+/**
+ * gimp_int_store_lookup_by_user_data:
+ * @model: a #GimpIntStore
+ * @user_data: a gpointer "user-data" to lookup in the @model
+ * @iter:  return location for the iter of the given @user_data
+ *
+ * Iterate over the @model looking for @user_data.
+ *
+ * Return value: %TRUE if the user-data has been located and @iter is
+ *               valid, %FALSE otherwise.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_int_store_lookup_by_user_data (GtkTreeModel *model,
+                                    gpointer      user_data,
+                                    GtkTreeIter  *iter)
+{
+  gboolean iter_valid = FALSE;
+
+  g_return_val_if_fail (GTK_IS_TREE_MODEL (model), FALSE);
+  g_return_val_if_fail (iter != NULL, FALSE);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, iter))
+    {
+      gpointer this;
+
+      gtk_tree_model_get (model, iter,
+                          GIMP_INT_STORE_USER_DATA, &this,
+                          -1);
+      if (this == user_data)
+        break;
+    }
+
+  return (gboolean) iter_valid;
+}

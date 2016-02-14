@@ -65,19 +65,26 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
   object_class->set_property = gimp_color_options_set_property;
   object_class->get_property = gimp_color_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
-                                    "sample-average", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
-                                   "average-radius",
-                                   _("Color Picker Average Radius"),
-                                   1.0, 300.0, 3.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                            "sample-merged",
+                            _("Sample merged"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
+                            "sample-average",
+                            _("Sample average"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
+                           "average-radius",
+                           _("Radius"),
+                           _("Color Picker Average Radius"),
+                           1.0, 300.0, 3.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -154,14 +161,12 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  scale = gimp_prop_spin_scale_new (config, "average-radius",
-                                    _("Radius"),
+  scale = gimp_prop_spin_scale_new (config, "average-radius", NULL,
                                     1.0, 10.0, 0);
   gtk_container_add (GTK_CONTAINER (frame), scale);
   gtk_widget_show (scale);
 
-  button = gimp_prop_check_button_new (config, "sample-average",
-                                       _("Sample average"));
+  button = gimp_prop_check_button_new (config, "sample-average", NULL);
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 

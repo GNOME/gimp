@@ -61,6 +61,12 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-device-status",
     GIMP_HELP_DEVICE_STATUS_DIALOG },
 
+  { "dialogs-symmetry", GIMP_STOCK_SYMMETRY,
+    NC_("dialogs-action", "_Symmetry Painting"), NULL,
+    NC_("dialogs-action", "Open the symmetry dialog"),
+    "gimp-symmetry-editor",
+    GIMP_HELP_SYMMETRY_DIALOG },
+
   { "dialogs-layers", GIMP_STOCK_LAYERS,
     NC_("dialogs-action", "_Layers"), "<primary>L",
     NC_("dialogs-action", "Open the layers dialog"),
@@ -150,6 +156,12 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     NC_("dialogs-action", "Open the paint dynamics editor"),
     "gimp-dynamics-editor",
     GIMP_HELP_DYNAMICS_EDITOR_DIALOG },
+
+  { "dialogs-mypaint-brushes", GIMP_STOCK_MYPAINT_BRUSH,
+    NC_("dialogs-action", "_MyPaint Brushes"), "<primary><shift>Y",
+    NC_("dialogs-action", "Open the mypaint brushes dialog"),
+    "gimp-mypaint-brush-grid|gimp-mapyint-brush-list",
+    GIMP_HELP_MYPAINT_BRUSH_DIALOG },
 
   { "dialogs-patterns", GIMP_STOCK_PATTERN,
     NC_("dialogs-action", "P_atterns"), "<primary><shift>P",

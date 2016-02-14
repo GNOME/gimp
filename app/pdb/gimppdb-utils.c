@@ -31,6 +31,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimpitem.h"
 
 #include "text/gimptextlayer.h"
@@ -152,6 +153,41 @@ gimp_pdb_get_dynamics (Gimp         *gimp,
     }
 
   return dynamics;
+}
+
+GimpMybrush *
+gimp_pdb_get_mybrush (Gimp         *gimp,
+                      const gchar  *name,
+                      gboolean      writable,
+                      GError      **error)
+{
+  GimpMybrush *brush;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (! name || ! strlen (name))
+    {
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+			   _("Invalid empty MyPaint brush name"));
+      return NULL;
+    }
+
+  brush = (GimpMybrush *) gimp_pdb_get_data_factory_item (gimp->mybrush_factory, name);
+
+  if (! brush)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("MyPaint brush '%s' not found"), name);
+    }
+  else if (writable && ! gimp_data_is_writable (GIMP_DATA (brush)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("MyPaint brush '%s' is not editable"), name);
+      return NULL;
+    }
+
+  return brush;
 }
 
 GimpPattern *
@@ -699,6 +735,29 @@ gimp_pdb_image_get_guide (GimpImage  *image,
                gimp_image_get_display_name (image),
                gimp_image_get_ID (image),
                guide_ID);
+  return NULL;
+}
+
+GimpSamplePoint *
+gimp_pdb_image_get_sample_point (GimpImage  *image,
+                                 gint        sample_point_ID,
+                                 GError    **error)
+{
+  GimpSamplePoint *sample_point;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  sample_point = gimp_image_get_sample_point (image, sample_point_ID);
+
+  if (sample_point)
+    return sample_point;
+
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+               _("Image '%s' (%d) does not contain sample point with ID %d"),
+               gimp_image_get_display_name (image),
+               gimp_image_get_ID (image),
+               sample_point_ID);
   return NULL;
 }
 

@@ -51,6 +51,7 @@ libgimpwidgets/gimpcolorselect.c
 libgimpwidgets/gimpcolorselection.c
 libgimpwidgets/gimpfileentry.c
 libgimpwidgets/gimphelpui.c
+libgimpwidgets/gimpicons.c
 libgimpwidgets/gimpintstore.c
 libgimpwidgets/gimpmemsizeentry.c
 libgimpwidgets/gimppageselector.c
@@ -60,7 +61,6 @@ libgimpwidgets/gimppreview.c
 libgimpwidgets/gimppreviewarea.c
 libgimpwidgets/gimppropwidgets.c
 libgimpwidgets/gimpquerybox.c
-libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c
 libgimpwidgets/gimpwidgets-private.c

@@ -40,7 +40,7 @@ tool_presets_restore_cmd_callback (GtkAction *action,
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
-  GimpToolPreset *preset;
+  GimpToolPreset      *preset;
 
   context = gimp_container_view_get_context (editor->view);
 

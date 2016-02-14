@@ -489,7 +489,7 @@ static void
 gimp_cursor_view_set_label_italic (GtkWidget *label,
                                    gboolean   italic)
 {
-  PangoAttrType attribute = italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL;
+  PangoStyle attribute = italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL;
 
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, attribute,

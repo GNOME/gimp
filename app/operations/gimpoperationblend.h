@@ -38,7 +38,7 @@ typedef struct _GimpOperationBlendClass GimpOperationBlendClass;
 
 struct _GimpOperationBlend
 {
-  GeglOperationSource  parent_instance;
+  GeglOperationFilter  parent_instance;
 
   GimpContext         *context;
 
@@ -58,7 +58,7 @@ struct _GimpOperationBlend
 
 struct _GimpOperationBlendClass
 {
-  GeglOperationSourceClass  parent_class;
+  GeglOperationFilterClass  parent_class;
 };
 
 

@@ -65,6 +65,10 @@
   _("The preferred RGB working space color profile. It will be offered " \
     "next to the built-in RGB profile when a color profile can be chosen.")
 
+#define GRAY_PROFILE_BLURB \
+  _("The preferred grayscale working space color profile. It will be offered " \
+    "next to the built-in grayscale profile when a color profile can be chosen.")
+
 #define CMYK_PROFILE_BLURB \
   _("The CMYK color profile used to convert between RGB and CMYK.")
 
@@ -106,6 +110,7 @@ enum
   PROP_0,
   PROP_MODE,
   PROP_RGB_PROFILE,
+  PROP_GRAY_PROFILE,
   PROP_CMYK_PROFILE,
   PROP_DISPLAY_PROFILE,
   PROP_DISPLAY_PROFILE_FROM_GDK,
@@ -131,6 +136,9 @@ static void  gimp_color_config_get_property        (GObject          *object,
                                                     GParamSpec       *pspec);
 
 static void  gimp_color_config_set_rgb_profile     (GimpColorConfig  *config,
+                                                    const gchar      *filename,
+                                                    GError          **error);
+static void  gimp_color_config_set_gray_profile    (GimpColorConfig  *config,
                                                     const gchar      *filename,
                                                     GError          **error);
 static void  gimp_color_config_set_cmyk_profile    (GimpColorConfig  *config,
@@ -171,6 +179,10 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_RGB_PROFILE,
                                  "rgb-profile", RGB_PROFILE_BLURB,
+                                 GIMP_CONFIG_PATH_FILE, NULL,
+                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRAY_PROFILE,
+                                 "gray-profile", GRAY_PROFILE_BLURB,
                                  GIMP_CONFIG_PATH_FILE, NULL,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_CMYK_PROFILE,
@@ -241,6 +253,9 @@ gimp_color_config_finalize (GObject *object)
   if (color_config->rgb_profile)
     g_free (color_config->rgb_profile);
 
+  if (color_config->gray_profile)
+    g_free (color_config->gray_profile);
+
   if (color_config->cmyk_profile)
     g_free (color_config->cmyk_profile);
 
@@ -274,6 +289,11 @@ gimp_color_config_set_property (GObject      *object,
       gimp_color_config_set_rgb_profile (color_config,
                                          g_value_get_string (value),
                                          &error);
+      break;
+    case PROP_GRAY_PROFILE:
+      gimp_color_config_set_gray_profile (color_config,
+                                          g_value_get_string (value),
+                                          &error);
       break;
     case PROP_CMYK_PROFILE:
       gimp_color_config_set_cmyk_profile (color_config,
@@ -344,6 +364,9 @@ gimp_color_config_get_property (GObject    *object,
     case PROP_RGB_PROFILE:
       g_value_set_string (value, color_config->rgb_profile);
       break;
+    case PROP_GRAY_PROFILE:
+      g_value_set_string (value, color_config->gray_profile);
+      break;
     case PROP_CMYK_PROFILE:
       g_value_set_string (value, color_config->cmyk_profile);
       break;
@@ -406,6 +429,37 @@ gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
 
           g_set_error (error, GIMP_CONFIG_ERROR, 0,
                        _("Color profile '%s' is not for RGB color space."),
+                       gimp_file_get_utf8_name (file));
+        }
+
+      g_object_unref (file);
+    }
+
+  return profile;
+}
+
+GimpColorProfile *
+gimp_color_config_get_gray_color_profile (GimpColorConfig  *config,
+                                          GError          **error)
+{
+  GimpColorProfile *profile = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (config->gray_profile)
+    {
+      GFile *file = g_file_new_for_path (config->gray_profile);
+
+      profile = gimp_color_profile_new_from_file (file, error);
+
+      if (profile && ! gimp_color_profile_is_gray (profile))
+        {
+          g_object_unref (profile);
+          profile = NULL;
+
+          g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                       _("Color profile '%s' is not for GRAY color space."),
                        gimp_file_get_utf8_name (file));
         }
 
@@ -527,6 +581,47 @@ gimp_color_config_set_rgb_profile (GimpColorConfig  *config,
     {
       g_free (config->rgb_profile);
       config->rgb_profile = g_strdup (filename);
+    }
+}
+
+static void
+gimp_color_config_set_gray_profile (GimpColorConfig  *config,
+                                    const gchar      *filename,
+                                    GError          **error)
+{
+  gboolean success = TRUE;
+
+  if (filename)
+    {
+      GimpColorProfile *profile;
+      GFile            *file = g_file_new_for_path (filename);
+
+      profile = gimp_color_profile_new_from_file (file, error);
+
+      if (profile)
+        {
+          if (! gimp_color_profile_is_gray (profile))
+            {
+              g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                           _("Color profile '%s' is not for GRAY color space."),
+                           gimp_file_get_utf8_name (file));
+              success = FALSE;
+            }
+
+          g_object_unref (profile);
+        }
+      else
+        {
+          success = FALSE;
+        }
+
+      g_object_unref (file);
+    }
+
+  if (success)
+    {
+      g_free (config->gray_profile);
+      config->gray_profile = g_strdup (filename);
     }
 }
 

@@ -77,6 +77,7 @@ struct _GimpSourceCoreClass
                                GimpDrawable      *drawable,
                                GimpPaintOptions  *paint_options,
                                const GimpCoords  *coords,
+                               GeglNode          *op,
                                gdouble            opacity,
                                GimpPickable      *src_pickable,
                                GeglBuffer        *src_buffer,
@@ -103,7 +104,7 @@ gboolean gimp_source_core_use_source (GimpSourceCore    *source_core,
 void     gimp_source_core_motion     (GimpSourceCore    *source_core,
                                       GimpDrawable      *drawable,
                                       GimpPaintOptions  *paint_options,
-                                      const GimpCoords  *coords);
+                                      GimpSymmetry      *sym);
 
 
 #endif  /*  __GIMP_SOURCE_CORE_H__  */

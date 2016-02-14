@@ -20,15 +20,20 @@
 
 #include "config.h"
 
+#include <cairo.h>
+#include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimpguide.h"
 #include "gimpmarshal.h"
+
 
 enum
 {
@@ -41,7 +46,8 @@ enum
   PROP_0,
   PROP_ID,
   PROP_ORIENTATION,
-  PROP_POSITION
+  PROP_POSITION,
+  PROP_STYLE
 };
 
 
@@ -50,6 +56,8 @@ struct _GimpGuidePrivate
   guint32              guide_ID;
   GimpOrientationType  orientation;
   gint                 position;
+
+  GimpGuideStyle       style;
 };
 
 
@@ -94,17 +102,27 @@ gimp_guide_class_init (GimpGuideClass *klass)
                                                       G_PARAM_CONSTRUCT_ONLY |
                                                       GIMP_PARAM_READWRITE));
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ORIENTATION,
-                                 "orientation", NULL,
-                                 GIMP_TYPE_ORIENTATION_TYPE,
-                                 GIMP_ORIENTATION_UNKNOWN,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_POSITION,
-                                "position", NULL,
-                                GIMP_GUIDE_POSITION_UNDEFINED,
-                                GIMP_MAX_IMAGE_SIZE,
-                                GIMP_GUIDE_POSITION_UNDEFINED,
-                                0);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
+                         "orientation",
+                         NULL, NULL,
+                         GIMP_TYPE_ORIENTATION_TYPE,
+                         GIMP_ORIENTATION_UNKNOWN,
+                         0);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_POSITION,
+                        "position",
+                        NULL, NULL,
+                        GIMP_GUIDE_POSITION_UNDEFINED,
+                        GIMP_MAX_IMAGE_SIZE,
+                        GIMP_GUIDE_POSITION_UNDEFINED,
+                        0);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
+                         "style",
+                         NULL, NULL,
+                         GIMP_TYPE_GUIDE_STYLE,
+                         GIMP_GUIDE_STYLE_NONE,
+                         0);
 
   g_type_class_add_private (klass, sizeof (GimpGuidePrivate));
 }
@@ -135,6 +153,9 @@ gimp_guide_get_property (GObject      *object,
     case PROP_POSITION:
       g_value_set_int (value, guide->priv->position);
       break;
+    case PROP_STYLE:
+      g_value_set_enum (value, guide->priv->style);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -160,6 +181,9 @@ gimp_guide_set_property (GObject      *object,
     case PROP_POSITION:
       guide->priv->position = g_value_get_int (value);
       break;
+    case PROP_STYLE:
+      guide->priv->style = g_value_get_enum (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -173,7 +197,40 @@ gimp_guide_new (GimpOrientationType  orientation,
   return g_object_new (GIMP_TYPE_GUIDE,
                        "id",          guide_ID,
                        "orientation", orientation,
+                       "style",       GIMP_GUIDE_STYLE_NORMAL,
                        NULL);
+}
+
+/**
+ * gimp_guide_custom_new:
+ * @orientation:       the #GimpOrientationType
+ * @guide_ID:          the unique guide ID
+ * @guide_style:       the #GimpGuideStyle
+ *
+ * This function returns a new guide and will flag it as "custom".
+ * Custom guides are used for purpose "other" than the basic guides
+ * a user can create oneself, for instance as symmetry guides, to
+ * drive GEGL ops, etc.
+ * They are not saved in the XCF file. If an op, a symmetry or a plugin
+ * wishes to save its state, it has to do it internally.
+ * Moreover they don't follow guide snapping settings and never snap.
+ *
+ * Returns: the custom #GimpGuide.
+ **/
+GimpGuide *
+gimp_guide_custom_new (GimpOrientationType  orientation,
+                       guint32              guide_ID,
+                       GimpGuideStyle       guide_style)
+{
+  GimpGuide *guide;
+
+  guide = g_object_new (GIMP_TYPE_GUIDE,
+                        "id",                guide_ID,
+                        "orientation",       orientation,
+                        "style",             guide_style,
+                        NULL);
+
+  return guide;
 }
 
 guint32
@@ -228,4 +285,17 @@ gimp_guide_removed (GimpGuide *guide)
   g_return_if_fail (GIMP_IS_GUIDE (guide));
 
   g_signal_emit (guide, gimp_guide_signals[REMOVED], 0);
+}
+
+
+GimpGuideStyle
+gimp_guide_get_style (GimpGuide *guide)
+{
+  return guide->priv->style;
+}
+
+gboolean
+gimp_guide_is_custom (GimpGuide *guide)
+{
+  return (guide->priv->style != GIMP_GUIDE_STYLE_NORMAL);
 }

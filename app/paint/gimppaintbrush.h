@@ -54,7 +54,7 @@ GType   gimp_paintbrush_get_type (void) G_GNUC_CONST;
 void    _gimp_paintbrush_motion  (GimpPaintCore             *paint_core,
                                   GimpDrawable              *drawable,
                                   GimpPaintOptions          *paint_options,
-                                  const GimpCoords          *coords,
+                                  GimpSymmetry              *sym,
                                   gdouble                    opacity);
 
 

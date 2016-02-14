@@ -44,6 +44,7 @@
 
 #include "gimp.h"
 #include "gimp-contexts.h"
+#include "gimp-filter-history.h"
 #include "gimp-gradients.h"
 #include "gimp-memsize.h"
 #include "gimp-modules.h"
@@ -70,6 +71,8 @@
 #include "gimpimagefile.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
+#include "gimpmybrush-load.h"
+#include "gimpmybrush.h"
 #include "gimppalette-load.h"
 #include "gimppalette.h"
 #include "gimpparasitelist.h"
@@ -91,6 +94,7 @@ enum
   RESTORE,
   EXIT,
   BUFFER_CHANGED,
+  FILTER_HISTORY_CHANGED,
   IMAGE_OPENED,
   LAST_SIGNAL
 };
@@ -180,6 +184,16 @@ gimp_class_init (GimpClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpClass, buffer_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  gimp_signals[FILTER_HISTORY_CHANGED] =
+    g_signal_new ("filter-history-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpClass,
+                                   filter_history_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -331,6 +345,9 @@ gimp_dispose (GObject *object)
   if (gimp->dynamics_factory)
     gimp_data_factory_data_free (gimp->dynamics_factory);
 
+  if (gimp->mybrush_factory)
+    gimp_data_factory_data_free (gimp->mybrush_factory);
+
   if (gimp->pattern_factory)
     gimp_data_factory_data_free (gimp->pattern_factory);
 
@@ -342,6 +359,8 @@ gimp_dispose (GObject *object)
 
   if (gimp->tool_preset_factory)
     gimp_data_factory_data_free (gimp->tool_preset_factory);
+
+  gimp_filter_history_clear (gimp);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -359,6 +378,8 @@ gimp_finalize (GObject *object)
                               gimp_brush_get_standard (gimp->user_context));
   standards = g_list_prepend (standards,
                               gimp_dynamics_get_standard (gimp->user_context));
+  standards = g_list_prepend (standards,
+                              gimp_mybrush_get_standard (gimp->user_context));
   standards = g_list_prepend (standards,
                               gimp_pattern_get_standard (gimp->user_context));
   standards = g_list_prepend (standards,
@@ -414,6 +435,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->dynamics_factory);
       gimp->dynamics_factory = NULL;
+    }
+
+  if (gimp->mybrush_factory)
+    {
+      g_object_unref (gimp->mybrush_factory);
+      gimp->mybrush_factory = NULL;
     }
 
   if (gimp->pattern_factory)
@@ -564,6 +591,11 @@ gimp_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->plug_in_manager),
                                       gui_size);
 
+  memsize += gimp_g_list_get_memsize_foreach (gimp->filter_history,
+                                              (GimpMemsizeFunc)
+                                              gimp_object_get_memsize,
+                                              gui_size);
+
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->image_table), 0);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->item_table),  0);
 
@@ -579,6 +611,8 @@ gimp_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->brush_factory),
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->dynamics_factory),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->mybrush_factory),
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->pattern_factory),
                                       gui_size);
@@ -635,6 +669,11 @@ gimp_real_initialize (Gimp               *gimp,
     { gimp_dynamics_load,        GIMP_DYNAMICS_FILE_EXTENSION,        TRUE  }
   };
 
+  static const GimpDataFactoryLoaderEntry mybrush_loader_entries[] =
+  {
+    { gimp_mybrush_load,         GIMP_MYBRUSH_FILE_EXTENSION,         FALSE }
+  };
+
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
   {
     { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION,         FALSE },
@@ -688,6 +727,17 @@ gimp_real_initialize (Gimp               *gimp,
                            gimp_dynamics_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->dynamics_factory),
                                "dynamics factory");
+
+  gimp->mybrush_factory =
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_MYBRUSH,
+                           "mypaint-brush-path", "mypaint-brush-path-writable",
+                           mybrush_loader_entries,
+                           G_N_ELEMENTS (mybrush_loader_entries),
+                           NULL,
+                           NULL);
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->mybrush_factory),
+                               "mypaint brush factory");
 
   gimp->pattern_factory =
     gimp_data_factory_new (gimp,
@@ -813,6 +863,7 @@ gimp_real_exit (Gimp     *gimp,
 
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_save (gimp->dynamics_factory);
+  gimp_data_factory_data_save (gimp->mybrush_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
@@ -1055,6 +1106,11 @@ gimp_restore (Gimp               *gimp,
   gimp_data_factory_data_init (gimp->dynamics_factory, gimp->user_context,
                                gimp->no_data);
 
+  /*  initialize the list of mypaint brushes    */
+  status_callback (NULL, _("MyPaint Brushes"), 0.25);
+  gimp_data_factory_data_init (gimp->mybrush_factory, gimp->user_context,
+                               gimp->no_data);
+
   /*  initialize the list of gimp patterns   */
   status_callback (NULL, _("Patterns"), 0.3);
   gimp_data_factory_data_init (gimp->pattern_factory, gimp->user_context,
@@ -1102,6 +1158,8 @@ gimp_restore (Gimp               *gimp,
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->dynamics_factory));
   gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp_data_factory_get_container (gimp->mybrush_factory));
+  gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->pattern_factory));
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->gradient_factory));
@@ -1118,6 +1176,7 @@ gimp_restore (Gimp               *gimp,
    */
   gimp_data_factory_data_clean (gimp->brush_factory);
   gimp_data_factory_data_clean (gimp->dynamics_factory);
+  gimp_data_factory_data_clean (gimp->mybrush_factory);
   gimp_data_factory_data_clean (gimp->pattern_factory);
   gimp_data_factory_data_clean (gimp->palette_factory);
   gimp_data_factory_data_clean (gimp->gradient_factory);
@@ -1394,6 +1453,14 @@ gimp_message_literal (Gimp                *gimp,
   g_return_if_fail (message != NULL);
 
   gimp_show_message (gimp, handler, severity, NULL, message);
+}
+
+void
+gimp_filter_history_changed (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_signal_emit (gimp, gimp_signals[FILTER_HISTORY_CHANGED], 0);
 }
 
 void

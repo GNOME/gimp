@@ -64,15 +64,17 @@ struct _GimpColorProfileClass
 
 GType              gimp_color_profile_get_type              (void) G_GNUC_CONST;
 
-GimpColorProfile * gimp_color_profile_new_srgb              (void);
-GimpColorProfile * gimp_color_profile_new_linear_rgb        (void);
+GimpColorProfile * gimp_color_profile_new_rgb_srgb          (void);
+GimpColorProfile * gimp_color_profile_new_rgb_srgb_linear   (void);
+GimpColorProfile * gimp_color_profile_new_rgb_adobe         (void);
 
-GimpColorProfile * gimp_color_profile_new_adobe_rgb         (void);
+GimpColorProfile * gimp_color_profile_new_gray_srgb         (void);
+GimpColorProfile * gimp_color_profile_new_gray_srgb_linear  (void);
 
 GimpColorProfile *
-       gimp_color_profile_new_srgb_gamma_from_color_profile (GimpColorProfile  *profile);
+     gimp_color_profile_new_srgb_gamma_from_color_profile   (GimpColorProfile  *profile);
 GimpColorProfile *
-       gimp_color_profile_new_linear_rgb_from_color_profile (GimpColorProfile  *profile);
+     gimp_color_profile_new_linear_gamma_from_color_profile (GimpColorProfile  *profile);
 
 GimpColorProfile * gimp_color_profile_new_from_file         (GFile             *file,
                                                              GError           **error);
@@ -99,8 +101,10 @@ gboolean           gimp_color_profile_is_equal              (GimpColorProfile  *
                                                              GimpColorProfile  *profile2);
 
 gboolean           gimp_color_profile_is_rgb                (GimpColorProfile  *profile);
-gboolean           gimp_color_profile_is_linear             (GimpColorProfile  *profile);
+gboolean           gimp_color_profile_is_gray               (GimpColorProfile  *profile);
 gboolean           gimp_color_profile_is_cmyk               (GimpColorProfile  *profile);
+
+gboolean           gimp_color_profile_is_linear             (GimpColorProfile  *profile);
 
 const Babl       * gimp_color_profile_get_format            (const Babl        *format,
                                                              guint32           *lcms_format);

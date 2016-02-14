@@ -24,6 +24,10 @@
 #include "config/gimpdisplayconfig.h"
 
 
+#define GIMP_CONFIG_DEFAULT_THEME          "Default"
+#define GIMP_CONFIG_DEFAULT_ICON_THEME     "Color"
+
+
 #define GIMP_TYPE_GUI_CONFIG            (gimp_gui_config_get_type ())
 #define GIMP_GUI_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GUI_CONFIG, GimpGuiConfig))
 #define GIMP_GUI_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GUI_CONFIG, GimpGuiConfigClass))
@@ -58,6 +62,8 @@ struct _GimpGuiConfig
   gboolean             toolbox_wilber;
   gchar               *theme_path;
   gchar               *theme;
+  gchar               *icon_theme_path;
+  gchar               *icon_theme;
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;
@@ -76,7 +82,6 @@ struct _GimpGuiConfig
   /* experimental playground */
   gboolean             playground_npd_tool;
   gboolean             playground_handle_transform_tool;
-  gboolean             playground_mybrush_tool;
   gboolean             playground_seamless_clone_tool;
 
   /* saved in sessionrc */
