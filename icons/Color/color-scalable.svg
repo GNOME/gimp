@@ -31,10 +31,10 @@
         <dc:title>Gimp Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
-            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan,  Johannes Matschke, Marek Dvoroznak, Michael Natterer, Klaus Staedtler</dc:title>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Marek Dvoroznak, Michael Natterer, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, enlarged, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -61,16 +61,16 @@
      inkscape:snap-nodes="true"
      showborder="false"
      inkscape:current-layer="stock"
-     inkscape:window-maximized="0"
-     inkscape:window-y="228"
-     inkscape:window-x="214"
-     inkscape:cy="175.92083"
-     inkscape:cx="481.66406"
+     inkscape:window-maximized="1"
+     inkscape:window-y="27"
+     inkscape:window-x="0"
+     inkscape:cy="282.72551"
+     inkscape:cx="389.00785"
      inkscape:zoom="7.4903084"
      showgrid="true"
      id="namedview88"
-     inkscape:window-height="752"
-     inkscape:window-width="1440"
+     inkscape:window-height="1016"
+     inkscape:window-width="1920"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
      guidetolerance="10"
@@ -35842,7 +35842,7 @@
     <g
        transform="translate(-536.78992,-395.27288)"
        style="display:inline"
-       id="gimp-flip-horizontal"
+       id="gimp-flip-vertical"
        inkscape:export-xdpi="95.999451"
        inkscape:export-ydpi="95.999451">
       <rect
@@ -35886,7 +35886,7 @@
     <g
        transform="rotate(-90,55.997972,460.72913)"
        style="display:inline"
-       id="gimp-flip-vertical"
+       id="gimp-flip-horizontal"
        inkscape:export-xdpi="95.999451"
        inkscape:export-ydpi="95.999451">
       <rect
