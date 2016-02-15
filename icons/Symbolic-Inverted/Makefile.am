@@ -14,7 +14,7 @@ include $(top_srcdir)/icons/Symbolic/icon-list.mk
 scalable/gimp-default-colors.svg: ../Symbolic/scalable/gimp-default-colors.svg
 	mkdir -p `dirname $<` && cp -f $< $@
 
-%/gimp-toilet-paper.png: $(top_srcdir)/icons/Symbolic/%/gimp-toilet-paper.png
+%/gimp-toilet-paper.png: $(top_srcdir)/icons/Symbolic/$(@D)/gimp-toilet-paper.png
 	mkdir -p `dirname $<` && cp -f $< $@
 scalable/gimp-toilet-paper.svg: ../Symbolic/scalable/gimp-toilet-paper.svg
 	mkdir -p `dirname $<` && cp -f $< $@
