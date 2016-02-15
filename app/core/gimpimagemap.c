@@ -324,7 +324,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       image_map->applicator =
         gimp_applicator_new (filter_node,
                              gimp_drawable_get_linear (image_map->drawable),
-                             TRUE);
+                             TRUE, TRUE);
 
       gimp_filter_set_applicator (image_map->filter,
                                   image_map->applicator);

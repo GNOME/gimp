@@ -947,7 +947,8 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
 
           gegl_node_add_child (node, fs_source);
 
-          private->fs_applicator = gimp_applicator_new (node, linear, FALSE);
+          private->fs_applicator = gimp_applicator_new (node, linear,
+                                                        FALSE, FALSE);
 
           private->fs_crop_node =
             gegl_node_new_child (node,

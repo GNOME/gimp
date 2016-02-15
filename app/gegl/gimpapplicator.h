@@ -89,7 +89,8 @@ GType        gimp_applicator_get_type         (void) G_GNUC_CONST;
 
 GimpApplicator * gimp_applicator_new          (GeglNode             *parent,
                                                gboolean              linear,
-                                               gboolean              use_cache);
+                                               gboolean              use_preview_cache,
+                                               gboolean              use_result_cache);
 
 void         gimp_applicator_set_src_buffer   (GimpApplicator       *applicator,
                                                GeglBuffer           *dest_buffer);

@@ -107,7 +107,8 @@ gimp_applicator_get_property (GObject    *object,
 GimpApplicator *
 gimp_applicator_new (GeglNode *parent,
                      gboolean  linear,
-                     gboolean  use_cache)
+                     gboolean  use_preview_cache,
+                     gboolean  use_result_cache)
 {
   GimpApplicator *applicator;
 
@@ -154,24 +155,35 @@ gimp_applicator_new (GeglNode *parent,
                          "operation", "gegl:copy-buffer",
                          NULL);
 
-  applicator->preview_cache_node =
-    gegl_node_new_child (applicator->node,
-                         "operation", "gegl:cache",
-                         NULL);
-
-  applicator->preview_crop_node =
-    gegl_node_new_child (applicator->node,
-                         "operation", "gegl:nop",
-                         NULL);
-
   gegl_node_link_many (applicator->aux_node,
                        applicator->apply_offset_node,
                        applicator->dup_apply_buffer_node,
-                       applicator->preview_cache_node,
-                       applicator->preview_crop_node,
                        NULL);
-  gegl_node_connect_to (applicator->preview_crop_node, "output",
-                        applicator->mode_node,         "aux");
+
+  if (use_preview_cache)
+    {
+      applicator->preview_cache_node =
+        gegl_node_new_child (applicator->node,
+                             "operation", "gegl:cache",
+                             NULL);
+
+      applicator->preview_crop_node =
+        gegl_node_new_child (applicator->node,
+                             "operation", "gegl:nop",
+                             NULL);
+
+      gegl_node_link_many (applicator->dup_apply_buffer_node,
+                           applicator->preview_cache_node,
+                           applicator->preview_crop_node,
+                           NULL);
+      gegl_node_connect_to (applicator->preview_crop_node, "output",
+                            applicator->mode_node,         "aux");
+    }
+  else
+    {
+      gegl_node_connect_to (applicator->dup_apply_buffer_node, "output",
+                            applicator->mode_node,             "aux");
+    }
 
   applicator->mask_node =
     gegl_node_new_child (applicator->node,
@@ -193,7 +205,7 @@ gimp_applicator_new (GeglNode *parent,
                          "mask",      applicator->affect,
                          NULL);
 
-  if (use_cache)
+  if (use_result_cache)
     {
       applicator->output_cache_node =
         gegl_node_new_child (applicator->node,
@@ -472,6 +484,9 @@ gimp_applicator_set_preview (GimpApplicator      *applicator,
 {
   g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
   g_return_if_fail (rect != NULL);
+
+  if (! applicator->preview_cache_node)
+    return;
 
   if (applicator->preview_enabled     != enable      ||
       applicator->preview_rect.x      != rect->x     ||
