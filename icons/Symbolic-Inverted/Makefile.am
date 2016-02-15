@@ -5,7 +5,7 @@ iconsdir = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor
 icons_DATA = \
 	index.theme
 
-include $(top_srcdir)/icons/Symbolic/icon-list.mk
+include $(top_srcdir)/icons/icon-list.mk
 
 # As exceptions, we do not want to invert some icons.
 # Just use these as-is: gimp-default-colors, gimp-toilet-paper.png.

@@ -5,9 +5,9 @@ iconsdir = $(gimpdatadir)/icons/Symbolic/hicolor
 icons_DATA = \
 	index.theme
 
-## The icon theme images are listed in a separate file to ensure the
-## dark and light symbolic icon themes both have the same list.
-include $(top_srcdir)/icons/Symbolic/icon-list.mk
+## The icon theme images are listed in a separate file to ensure all
+## official icon themes have the same list.
+include $(top_srcdir)/icons/icon-list.mk
 
 scalable/%.svg: scalable.svg ../../tools/compute-svg-viewbox
 	mkdir -p scalable && \
