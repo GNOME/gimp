@@ -50,6 +50,11 @@ struct _GimpApplicator
 
   GeglNode             *dup_apply_buffer_node;
 
+  gboolean              preview_enabled;
+  GeglRectangle         preview_rect;
+  GeglNode             *preview_cache_node;
+  GeglNode             *preview_crop_node;
+
   gdouble               opacity;
   GimpLayerModeEffects  paint_mode;
   gboolean              linear;
@@ -58,7 +63,7 @@ struct _GimpApplicator
   GimpComponentMask     affect;
   GeglNode             *affect_node;
 
-  GeglNode             *cache_node;
+  GeglNode             *output_cache_node;
 
   GeglBuffer           *src_buffer;
   GeglNode             *src_node;
@@ -108,6 +113,10 @@ void         gimp_applicator_set_mode         (GimpApplicator       *applicator,
                                                GimpLayerModeEffects  paint_mode);
 void         gimp_applicator_set_affect       (GimpApplicator       *applicator,
                                                GimpComponentMask     affect);
+
+void         gimp_applicator_set_preview      (GimpApplicator       *applicator,
+                                               gboolean              enable,
+                                               const GeglRectangle  *rect);
 
 void         gimp_applicator_blit             (GimpApplicator       *applicator,
                                                const GeglRectangle  *rect);

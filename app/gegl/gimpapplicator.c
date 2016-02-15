@@ -154,12 +154,24 @@ gimp_applicator_new (GeglNode *parent,
                          "operation", "gegl:copy-buffer",
                          NULL);
 
+  applicator->preview_cache_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gegl:cache",
+                         NULL);
+
+  applicator->preview_crop_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gegl:nop",
+                         NULL);
+
   gegl_node_link_many (applicator->aux_node,
                        applicator->apply_offset_node,
                        applicator->dup_apply_buffer_node,
+                       applicator->preview_cache_node,
+                       applicator->preview_crop_node,
                        NULL);
-  gegl_node_connect_to (applicator->dup_apply_buffer_node, "output",
-                        applicator->mode_node,             "aux");
+  gegl_node_connect_to (applicator->preview_crop_node, "output",
+                        applicator->mode_node,         "aux");
 
   applicator->mask_node =
     gegl_node_new_child (applicator->node,
@@ -183,14 +195,14 @@ gimp_applicator_new (GeglNode *parent,
 
   if (use_cache)
     {
-      applicator->cache_node =
+      applicator->output_cache_node =
         gegl_node_new_child (applicator->node,
                              "operation", "gegl:cache",
                              NULL);
 
       gegl_node_link_many (applicator->input_node,
                            applicator->affect_node,
-                           applicator->cache_node,
+                           applicator->output_cache_node,
                            applicator->output_node,
                            NULL);
     }
@@ -212,6 +224,7 @@ void
 gimp_applicator_set_src_buffer (GimpApplicator *applicator,
                                 GeglBuffer     *src_buffer)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
   g_return_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer));
 
   if (src_buffer == applicator->src_buffer)
@@ -257,6 +270,7 @@ void
 gimp_applicator_set_dest_buffer (GimpApplicator *applicator,
                                  GeglBuffer     *dest_buffer)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
   g_return_if_fail (dest_buffer == NULL || GEGL_IS_BUFFER (dest_buffer));
 
   if (dest_buffer == applicator->dest_buffer)
@@ -302,6 +316,9 @@ void
 gimp_applicator_set_mask_buffer (GimpApplicator *applicator,
                                  GeglBuffer     *mask_buffer)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (mask_buffer == NULL || GEGL_IS_BUFFER (mask_buffer));
+
   if (applicator->mask_buffer == mask_buffer)
     return;
 
@@ -327,6 +344,8 @@ gimp_applicator_set_mask_offset (GimpApplicator *applicator,
                                  gint            mask_offset_x,
                                  gint            mask_offset_y)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
   if (applicator->mask_offset_x != mask_offset_x ||
       applicator->mask_offset_y != mask_offset_y)
     {
@@ -344,6 +363,7 @@ void
 gimp_applicator_set_apply_buffer (GimpApplicator *applicator,
                                   GeglBuffer     *apply_buffer)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
   g_return_if_fail (apply_buffer == NULL || GEGL_IS_BUFFER (apply_buffer));
 
   if (apply_buffer == applicator->apply_buffer)
@@ -386,6 +406,8 @@ gimp_applicator_set_apply_offset (GimpApplicator *applicator,
                                   gint            apply_offset_x,
                                   gint            apply_offset_y)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
   if (applicator->apply_offset_x != apply_offset_x ||
       applicator->apply_offset_y != apply_offset_y)
     {
@@ -404,6 +426,8 @@ gimp_applicator_set_mode (GimpApplicator       *applicator,
                           gdouble               opacity,
                           GimpLayerModeEffects  paint_mode)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
   if (applicator->opacity != opacity)
     {
       applicator->opacity = opacity;
@@ -425,6 +449,8 @@ void
 gimp_applicator_set_affect (GimpApplicator    *applicator,
                             GimpComponentMask  affect)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
   if (applicator->affect != affect)
     {
       applicator->affect = affect;
@@ -435,10 +461,95 @@ gimp_applicator_set_affect (GimpApplicator    *applicator,
     }
 }
 
+gboolean gegl_buffer_list_valid_rectangles (GeglBuffer     *buffer,
+                                            GeglRectangle **rectangles,
+                                            gint           *n_rectangles);
+
+void
+gimp_applicator_set_preview (GimpApplicator      *applicator,
+                             gboolean             enable,
+                             const GeglRectangle *rect)
+{
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (rect != NULL);
+
+  if (applicator->preview_enabled     != enable      ||
+      applicator->preview_rect.x      != rect->x     ||
+      applicator->preview_rect.y      != rect->y     ||
+      applicator->preview_rect.width  != rect->width ||
+      applicator->preview_rect.height != rect->height)
+    {
+      if (enable)
+        {
+          if (! applicator->preview_enabled)
+            {
+              gegl_node_set (applicator->preview_crop_node,
+                             "operation", "gegl:crop",
+                             "x",         (gdouble) rect->x,
+                             "y",         (gdouble) rect->y,
+                             "width",     (gdouble) rect->width,
+                             "height",    (gdouble) rect->height,
+                             NULL);
+            }
+          else
+            {
+              gegl_node_set (applicator->preview_crop_node,
+                             "x",      (gdouble) rect->x,
+                             "y",      (gdouble) rect->y,
+                             "width",  (gdouble) rect->width,
+                             "height", (gdouble) rect->height,
+                             NULL);
+            }
+        }
+      else if (applicator->preview_enabled)
+        {
+          GeglBuffer *cache;
+
+          gegl_node_set (applicator->preview_crop_node,
+                         "operation", "gegl:nop",
+                         NULL);
+
+          /*  when disabling the preview, preserve the cached result
+           *  by processing it into the output cache, which only
+           *  involves the mode and affect nodes.
+           */
+          gegl_node_get (applicator->preview_cache_node,
+                         "cache", &cache,
+                         NULL);
+
+          if (cache)
+            {
+              GeglRectangle *rectangles;
+              gint           n_rectangles;
+
+              if (gegl_buffer_list_valid_rectangles (cache, &rectangles,
+                                                     &n_rectangles))
+                {
+                  gint i;
+
+                  for (i = 0; i < n_rectangles; i++)
+                    gegl_node_blit (applicator->output_cache_node, 1.0,
+                                    &rectangles[i],
+                                    NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+
+                  g_free (rectangles);
+                }
+
+              g_object_unref (cache);
+            }
+        }
+
+      applicator->preview_enabled = enable;
+      applicator->preview_rect    = *rect;
+    }
+}
+
 void
 gimp_applicator_blit (GimpApplicator      *applicator,
                       const GeglRectangle *rect)
 {
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
   gegl_node_blit (applicator->dest_node, 1.0, rect,
                   NULL, NULL, 0, GEGL_BLIT_DEFAULT);
 }
@@ -449,6 +560,9 @@ gimp_applicator_dup_apply_buffer (GimpApplicator      *applicator,
 {
   GeglBuffer *buffer;
   GeglBuffer *shifted;
+
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+  g_return_val_if_fail (rect != NULL, NULL);
 
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect->width, rect->height),
                             babl_format ("RGBA float"));
@@ -468,20 +582,20 @@ gimp_applicator_dup_apply_buffer (GimpApplicator      *applicator,
   return buffer;
 }
 
-gboolean gegl_buffer_list_valid_rectangles (GeglBuffer     *buffer,
-                                            GeglRectangle **rectangles,
-                                            gint           *n_rectangles);
-
 GeglBuffer *
 gimp_applicator_get_cache_buffer (GimpApplicator  *applicator,
                                   GeglRectangle  **rectangles,
                                   gint            *n_rectangles)
 {
-  if (applicator->cache_node)
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+  g_return_val_if_fail (rectangles != NULL, NULL);
+  g_return_val_if_fail (n_rectangles != NULL, NULL);
+
+  if (applicator->output_cache_node)
     {
       GeglBuffer *cache;
 
-      gegl_node_get (applicator->cache_node,
+      gegl_node_get (applicator->output_cache_node,
                      "cache", &cache,
                      NULL);
 
