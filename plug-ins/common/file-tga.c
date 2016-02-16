@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * TrueVision Targa loading and saving file filter for GIMP.
+ * TrueVision Targa loading and exporting file filter for GIMP.
  * Targa code Copyright (C) 1997 Raphael FRANCOIS and Gordon Matzigkeit
  *
  * The Targa reading and writing code was written from scratch by
@@ -229,9 +229,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" },
     { GIMP_PDB_INT32,    "rle",          "Use RLE compression"          },
     { GIMP_PDB_INT32,    "origin",       "Image origin (0 = top-left, 1 = bottom-left)"}
   } ;
@@ -256,7 +256,7 @@ query (void)
                                     "-18&,string,TRUEVISION-XFILE.,-1,byte,0");
 
   gimp_install_procedure (SAVE_PROC,
-                          "saves files in the Targa file format",
+                          "exports files in the Targa file format",
                           "FIXME: write help for tga_save",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
@@ -1195,7 +1195,7 @@ save_image (const gchar  *filename,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   if ((fp = g_fopen (filename, "wb")) == NULL)

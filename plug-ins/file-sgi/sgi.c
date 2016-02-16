@@ -22,9 +22,9 @@
  *   query()                     - Respond to a plug-in query...
  *   run()                       - Run the plug-in...
  *   load_image()                - Load a PNG image into a new image window.
- *   save_image()                - Save the specified image to a PNG file.
- *   save_ok_callback()          - Destroy the save dialog and save the image.
- *   save_dialog()               - Pop up the save dialog.
+ *   save_image()                - Export the specified image to a PNG file.
+ *   save_ok_callback()          - Destroy the export dialog and export the image.
+ *   save_dialog()               - Pop up the export dialog.
  *
  */
 
@@ -106,9 +106,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" },
     { GIMP_PDB_INT32,    "compression",  "Compression level (0 = none, 1 = RLE, 2 = ARLE)" }
   };
 
@@ -133,8 +133,8 @@ query (void)
                                     "0,short,474");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Saves files in SGI image file format",
-                          "This plug-in saves SGI image files.",
+                          "Exports files in SGI image file format",
+                          "This plug-in exports SGI image files.",
                           "Michael Sweet <mike@easysw.com>",
                           "Copyright 1997-1998 by Michael Sweet",
                           PLUG_IN_VERSION,
@@ -574,7 +574,7 @@ save_image (const gchar  *filename,
    * Open the file for writing...
    */
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   sgip = sgiOpen (filename, SGI_WRITE, compression, 1,

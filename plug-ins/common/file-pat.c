@@ -1,6 +1,6 @@
 /*
  * pat plug-in version 1.01
- * Loads/saves version 1 GIMP .pat files, by Tim Newsome <drz@frody.bloke.com>
+ * Loads/exports version 1 GIMP .pat files, by Tim Newsome <drz@frody.bloke.com>
  *
  * GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -87,9 +87,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
     { GIMP_PDB_IMAGE,    "image",       "Input image"                      },
-    { GIMP_PDB_DRAWABLE, "drawable",    "Drawable to save"                 },
-    { GIMP_PDB_STRING,   "uri",         "The URI of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-uri",     "The URI of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Drawable to export"                 },
+    { GIMP_PDB_STRING,   "uri",         "The URI of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-uri",     "The URI of the file to export the image in" },
     { GIMP_PDB_STRING,   "description", "Short description of the pattern" }
   };
 
@@ -117,8 +117,8 @@ query (void)
                                     "20,string,GPAT");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Saves Gimp pattern file (.PAT)",
-                          "New Gimp patterns can be created by saving them "
+                          "Exports Gimp pattern file (.PAT)",
+                          "New Gimp patterns can be created by exporting them "
                           "in the appropriate place with this plug-in.",
                           "Tim Newsome",
                           "Tim Newsome",
@@ -530,7 +530,7 @@ save_image (GFile   *file,
       return FALSE;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,

@@ -128,10 +128,10 @@ static const GimpParamDef save_args[] =
   { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
   { GIMP_PDB_IMAGE,    "image",        "Input image" },
   { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable (unused)" },
-  { GIMP_PDB_STRING,   "filename",     "The name of the file to save" },
+  { GIMP_PDB_STRING,   "filename",     "The name of the file to export" },
   { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
-  { GIMP_PDB_INT32,    "from-frame",   "Save beginning from this frame" },
-  { GIMP_PDB_INT32,    "to-frame",     "End saving with this frame" },
+  { GIMP_PDB_INT32,    "from-frame",   "Export beginning from this frame" },
+  { GIMP_PDB_INT32,    "to-frame",     "End exporting with this frame" },
 };
 
 static const GimpParamDef info_args[] =
@@ -155,7 +155,7 @@ static void
 query (void)
 {
   /*
-   * Load/save procedures
+   * Load/export procedures
    */
   gimp_install_procedure (LOAD_PROC,
 			  "load FLI-movies",
@@ -178,7 +178,7 @@ query (void)
 				    "");
 
   gimp_install_procedure (SAVE_PROC,
-			  "save FLI-movies",
+			  "export FLI-movies",
 			  "This is an experimantal plug-in to handle FLI movies",
 			  "Jens Ch. Restemeier",
 			  "Jens Ch. Restemeier",
@@ -709,11 +709,11 @@ save_image (const gchar  *filename,
       break;
 
     default:
-      g_message (_("Sorry, I can save only INDEXED and GRAY images."));
+      g_message (_("Sorry, I can export only INDEXED and GRAY images."));
       return FALSE;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /*

@@ -1,4 +1,4 @@
-/* GIF saving file filter for GIMP
+/* GIF exporting file filter for GIMP
  *
  *    Copyright
  *    - Adam D. Moss
@@ -131,11 +131,11 @@ MAIN ()
 
 #define COMMON_SAVE_ARGS \
     { GIMP_PDB_INT32,    "run-mode",        "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" }, \
-    { GIMP_PDB_IMAGE,    "image",           "Image to save" }, \
-    { GIMP_PDB_DRAWABLE, "drawable",        "Drawable to save" }, \
-    { GIMP_PDB_STRING,   "filename",        "The name of the file to save the image in" }, \
+    { GIMP_PDB_IMAGE,    "image",           "Image to export" }, \
+    { GIMP_PDB_DRAWABLE, "drawable",        "Drawable to export" }, \
+    { GIMP_PDB_STRING,   "filename",        "The name of the file to export the image in" }, \
     { GIMP_PDB_STRING,   "raw-filename",    "The name entered" }, \
-    { GIMP_PDB_INT32,    "interlace",       "Try to save as interlaced" }, \
+    { GIMP_PDB_INT32,    "interlace",       "Try to export as interlaced" }, \
     { GIMP_PDB_INT32,    "loop",            "(animated gif) loop infinitely" }, \
     { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between framese in milliseconds" }, \
     { GIMP_PDB_INT32,    "default-dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
@@ -151,16 +151,16 @@ query (void)
   static const GimpParamDef save2_args[] =
   {
     COMMON_SAVE_ARGS,
-    { GIMP_PDB_INT32,    "as-animation", "Save GIF as animation?" },
+    { GIMP_PDB_INT32,    "as-animation", "Export GIF as animation?" },
     { GIMP_PDB_INT32,    "force-delay", "(animated gif) Use specified delay for all frames?" },
     { GIMP_PDB_INT32,    "force-dispose", "(animated gif) Use specified disposal for all frames?" }
   };
 
   gimp_install_procedure (SAVE_PROC,
-                          "saves files in Compuserve GIF file format",
-                          "Save a file in Compuserve GIF format, with "
+                          "exports files in Compuserve GIF file format",
+                          "Export a file in Compuserve GIF format, with "
                           "possible animation, transparency, and comment.  "
-                          "To save an animation, operate on a multi-layer "
+                          "To export an animation, operate on a multi-layer "
                           "file.  The plug-in will interpret <50% alpha as "
                           "transparent.  When run non-interactively, the "
                           "value for the comment is taken from the "
@@ -175,10 +175,10 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (SAVE2_PROC,
-                          "saves files in Compuserve GIF file format",
-                          "Save a file in Compuserve GIF format, with "
+                          "exports files in Compuserve GIF file format",
+                          "Export a file in Compuserve GIF format, with "
                           "possible animation, transparency, and comment.  "
-                          "To save an animation, operate on a multi-layer "
+                          "To export an animation, operate on a multi-layer "
                           "file and give the 'as-animation' parameter "
                           "as TRUE.  The plug-in will interpret <50% "
                           "alpha as transparent.  When run "
@@ -507,7 +507,7 @@ find_unused_ia_color (const guchar *pixels,
       return ((*colors) - 1);
     }
 
-  g_message (_("Couldn't simply reduce colors further. Saving as opaque."));
+  g_message (_("Couldn't simply reduce colors further. Exporting as opaque."));
 
   return -1;
 }
@@ -622,7 +622,7 @@ sanity_check (const gchar  *filename,
   if (image_width > G_MAXUSHORT || image_height > G_MAXUSHORT)
     {
       g_set_error (error, 0, 0,
-                   _("Unable to save '%s'.  "
+                   _("Unable to export '%s'.  "
                    "The GIF file format does not support images that are "
                    "more than %d pixels wide or tall."),
                    gimp_filename_to_utf8 (filename), G_MAXUSHORT);
@@ -796,7 +796,7 @@ save_image (const gchar *filename,
       break;
 
     default:
-      g_message (_("Cannot save RGB color images. Convert to "
+      g_message (_("Cannot export RGB color images. Convert to "
                    "indexed color or grayscale first."));
       return FALSE;
     }
@@ -821,7 +821,7 @@ save_image (const gchar *filename,
 
 
   /* init the progress meter */
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
 
@@ -1012,7 +1012,7 @@ bad_bounds_dialog (void)
 
   dialog = gtk_message_dialog_new (NULL, 0,
                                    GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
-                                   _("The image you are trying to save as a "
+                                   _("The image you are trying to export as a "
                                      "GIF contains layers which extend beyond "
                                      "the actual borders of the image."));
 
@@ -1033,7 +1033,7 @@ bad_bounds_dialog (void)
                                               "allow this.  You may choose "
                                               "whether to crop all of the "
                                               "layers to the image borders, "
-                                              "or cancel this save."));
+                                              "or cancel this export."));
 
   gtk_widget_show (dialog);
 

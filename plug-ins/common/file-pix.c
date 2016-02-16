@@ -31,7 +31,7 @@
  */
 
 /* Features
- *  - loads and saves
+ *  - loads and exports
  *    - 24-bit (.pix)
  *    - 8-bit (.matte, .alpha, or .mask) images
  *
@@ -129,9 +129,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -151,8 +151,8 @@ query (void)
   gimp_register_load_handler (LOAD_PROC, "pix,matte,mask,alpha,als", "");
 
   gimp_install_procedure (SAVE_PROC,
-                          "save file in the Alias|Wavefront pix/matte file format",
-                          "save file in the Alias|Wavefront pix/matte file format",
+                          "export file in the Alias|Wavefront pix/matte file format",
+                          "export file in the Alias|Wavefront pix/matte file format",
                           "Michael Taylor",
                           "Michael Taylor",
                           "1997",
@@ -533,7 +533,7 @@ save_image (GFile   *file,
   guchar        *src;
   guchar        *src_base;
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,

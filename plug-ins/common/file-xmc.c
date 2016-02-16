@@ -308,8 +308,8 @@ query (void)
     {
       { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
       { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-      { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
-      { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+      { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
+      { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
       { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
       /* following elements are XMC specific options */
       { GIMP_PDB_INT32,    "x_hot",        "X-coordinate of hot spot"       },
@@ -365,8 +365,8 @@ query (void)
   gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
 
   gimp_install_procedure (SAVE_PROC,
-                          "Saves files of X11 cursor file",
-                          "This plug-in saves X11 Mouse Cursor (XMC) files",
+                          "Exports files of X11 cursor file",
+                          "This plug-in exports X11 Mouse Cursor (XMC) files",
                           "Takeshi Matsuyama <tksmashiw@gmail.com>",
                           "Takeshi Matsuyama",
                           "26 May 2009",
@@ -467,7 +467,7 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
-      DM_XMC("run: save %s\n", name);
+      DM_XMC("run: export %s\n", name);
       run_mode    = param[0].data.d_int32;
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -1582,10 +1582,10 @@ save_image (const gchar *filename,
                                &save_rgn))
             { /* if hotspot is not on save_rgn */
               g_set_error (error, 0, 0,
-                           _("Cannot save the cursor because the hot spot "
+                           _("Cannot export the cursor because the hot spot "
                              "is not on frame '%s'.\n"
                              "Try to change the hot spot position, "
-                             "layer geometry or save without auto-crop."),
+                             "layer geometry or export without auto-crop."),
                            gimp_any_to_utf8 (framename, -1, NULL));
               return FALSE;
             }
@@ -1745,18 +1745,18 @@ save_image (const gchar *filename,
   /* actual warning about dimensions */
   if (dimension_warn)
     {
-      g_message (_("Your cursor was successfully saved but it contains one or "
+      g_message (_("Your cursor was successfully exported but it contains one or "
                    "more frames whose width or height is more than %ipx.\n"
                    "It will clutter the screen in some environments."),
                    MAX_BITMAP_CURSOR_SIZE);
     }
   if (size_warn)
     {
-      g_message (_("Your cursor was successfully saved but it contains one "
+      g_message (_("Your cursor was successfully exported but it contains one "
                    "or more frames whose nominal size is not supported by "
                    "GNOME settings.\n"
                    "You can satisfy it by checking \"Replace the size of all "
-                   "frames...\" in the save dialog, or your cursor may not "
+                   "frames...\" in the export dialog, or your cursor may not "
                    "appear in GNOME settings."));
     }
   /*

@@ -630,9 +630,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" },
     { GIMP_PDB_FLOAT,    "width",        "Width of the image in PostScript file (0: use input image size)" },
     { GIMP_PDB_FLOAT,    "height",       "Height of image in PostScript file (0: use input image size)" },
     { GIMP_PDB_FLOAT,    "x-offset",     "X-offset to image from lower left corner" },
@@ -737,8 +737,8 @@ query (void)
 #endif
 
   gimp_install_procedure (SAVE_PS_PROC,
-                          "save image as PostScript docuement",
-                          "PostScript saving handles all image types except "
+                          "export image as PostScript document",
+                          "PostScript exporting handles all image types except "
                           "those with alpha channels.",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
@@ -754,8 +754,8 @@ query (void)
   gimp_register_save_handler (SAVE_PS_PROC, "ps", "");
 
   gimp_install_procedure (SAVE_EPS_PROC,
-                          "save image as Encapsulated PostScript image",
-                          "PostScript saving handles all image types except "
+                          "export image as Encapsulated PostScript image",
+                          "PostScript exporting handles all image types except "
                           "those with alpha channels.",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
@@ -1240,11 +1240,11 @@ save_image (GFile   *file,
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
-  /*  Make sure we're not saving an image with an alpha channel  */
+  /*  Make sure we're not exporting an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("PostScript save cannot handle images with alpha channels"));
+                   _("PostScript export cannot handle images with alpha channels"));
       return FALSE;
     }
 
@@ -1262,7 +1262,7 @@ save_image (GFile   *file,
       break;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,

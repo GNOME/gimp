@@ -90,7 +90,7 @@ typedef struct
   guint         source_id;
 } PreviewPersistent;
 
-/*le added : struct containing pointers to save dialog*/
+/*le added : struct containing pointers to export dialog*/
 typedef struct
 {
   gboolean       run;
@@ -282,7 +282,7 @@ save_image (const gchar  *filename,
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
   if (! preview)
-    gimp_progress_init_printf (_("Saving '%s'"),
+    gimp_progress_init_printf (_("Exporting '%s'"),
                                gimp_filename_to_utf8 (filename));
 
   /* Step 1: allocate and initialize JPEG compression object */

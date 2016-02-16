@@ -153,9 +153,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",      "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",         "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename",  "The name of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to export" },
+    { GIMP_PDB_STRING,   "filename",      "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename",  "The name of the file to export the image in" },
     { GIMP_PDB_INT32,    "threshold",     "Alpha threshold (0-255)" }
   };
 
@@ -185,8 +185,8 @@ query (void)
                                     "0, string,/*\\040XPM\\040*/");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Save files in XPM (X11 Pixmap) format.",
-                          "Save files in XPM (X11 Pixmap) format. "
+                          "Export files in XPM (X11 Pixmap) format.",
+                          "Export files in XPM (X11 Pixmap) format. "
                           "XPM is a portable image format designed to be "
                           "included in C source code. XLib provides utility "
                           "functions to read this format. Newer code should "
@@ -657,7 +657,7 @@ save_image (const gchar  *filename,
 
   hash = g_hash_table_new ((GHashFunc) rgbhash, (GCompareFunc) compare);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   ncolors = alpha ? 1 : 0;

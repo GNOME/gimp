@@ -17,7 +17,7 @@
 
 /*
  * gbr plug-in version 1.00
- * Loads/saves version 2 GIMP .gbr files, by Tim Newsome <drz@frody.bloke.com>
+ * Loads/exports version 2 GIMP .gbr files, by Tim Newsome <drz@frody.bloke.com>
  * Some bits stolen from the .99.7 source tree.
  *
  * Added in GBR version 1 support after learning that there wasn't a
@@ -115,9 +115,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",       "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",    "Drawable to save" },
-    { GIMP_PDB_STRING,   "uri",         "The URI of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-uri",     "The URI of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Drawable to export" },
+    { GIMP_PDB_STRING,   "uri",         "The URI of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-uri",     "The URI of the file to export the image in" },
     { GIMP_PDB_INT32,    "spacing",     "Spacing of the brush" },
     { GIMP_PDB_STRING,   "description", "Short description of the brush" }
   };
@@ -145,8 +145,8 @@ query (void)
                                     "20, string, GIMP");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Saves files in the GIMP brush file format",
-                          "Saves files in the GIMP brush file format",
+                          "Exports files in the GIMP brush file format",
+                          "Exports files in the GIMP brush file format",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "1997-2000",
@@ -686,7 +686,7 @@ save_image (GFile   *file,
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,

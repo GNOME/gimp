@@ -1,4 +1,4 @@
-/* tiff saving for GIMP
+/* tiff exporting for GIMP
  *  -Peter Mattis
  *
  * The TIFF loading code has been completely revamped by Nick Lamb
@@ -311,7 +311,7 @@ save_image (const gchar  *filename,
   tile_height = gimp_tile_height ();
   rowsperstrip = tile_height;
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   drawable_type = gimp_drawable_type (layer);
@@ -479,7 +479,7 @@ save_image (const gchar  *filename,
 
     case GIMP_INDEXEDA_IMAGE:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("TIFF save cannot handle indexed images with "
+                   _("TIFF export cannot handle indexed images with "
                      "an alpha channel."));
     default:
       goto out;

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GTM plug-in --- GIMP Table Magic
- * Allows images to be saved as HTML tables with different colored cells.
+ * Allows images to be exported as HTML tables with different colored cells.
  * It doesn't  have very much practical use other than being able to
  * easily design a table by "painting" it in GIMP, or to make small HTML
  * table images/icons.
@@ -139,9 +139,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" }
   };
 
   gimp_install_procedure (SAVE_PROC,
@@ -233,7 +233,7 @@ save_image (GFile       *file,
   cols = gegl_buffer_get_width  (buffer);
   rows = gegl_buffer_get_height (buffer);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
@@ -731,7 +731,7 @@ color_comp (guchar *buf,
           buf[2] == buf2[2]);
 }
 
-/*  Save interface functions  */
+/*  Export interface functions  */
 
 static void
 entry_changed_callback (GtkEntry *entry,

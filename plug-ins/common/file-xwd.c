@@ -274,9 +274,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -301,8 +301,8 @@ query (void)
                                     "4,long,0x00000007");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Saves files in the XWD (X Window Dump) format",
-                          "XWD saving handles all image types except "
+                          "Exports files in the XWD (X Window Dump) format",
+                          "XWD exporting handles all image types except "
                           "those with alpha channels.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
@@ -629,11 +629,11 @@ save_image (GFile   *file,
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
-  /*  Make sure we're not saving an image with an alpha channel  */
+  /*  Make sure we're not exporting an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
       g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Cannot save images with alpha channels."));
+                           _("Cannot export images with alpha channels."));
       return FALSE;
     }
 
@@ -649,7 +649,7 @@ save_image (GFile   *file,
       break;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
@@ -683,7 +683,7 @@ save_image (GFile   *file,
   if (success && ! g_output_stream_close (output, NULL, error))
     {
       g_prefix_error (error,
-                      _("Error saving '%s': "),
+                      _("Error exporting '%s': "),
                       gimp_file_get_utf8_name (file));
       success = FALSE;
     }

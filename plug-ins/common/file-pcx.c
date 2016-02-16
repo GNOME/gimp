@@ -1,5 +1,5 @@
 /*
- * pcx.c GIMP plug-in for loading & saving PCX files
+ * pcx.c GIMP plug-in for loading & exporting PCX files
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,8 +120,8 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
     { GIMP_PDB_STRING,   "raw-filename", "The name entered"             }
   };
 
@@ -145,7 +145,7 @@ query (void)
                                     "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Saves files in ZSoft PCX file format",
+                          "Exports files in ZSoft PCX file format",
                           "FIXME: write help for pcx_save",
                           "Francisco Bustamante & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
@@ -657,7 +657,7 @@ save_image (const gchar  *filename,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   pcx_header.manufacturer = 0x0a;
@@ -692,7 +692,7 @@ save_image (const gchar  *filename,
       break;
 
     default:
-      g_message (_("Cannot save images with alpha channel."));
+      g_message (_("Cannot export images with alpha channel."));
       return FALSE;
   }
 
