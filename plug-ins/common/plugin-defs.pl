@@ -84,7 +84,7 @@
     'softglow' => { ui => 1 },
     'sparkle' => { ui => 1 },
     'sphere-designer' => { ui => 1 },
-    'tile' => { ui => 1 },
+    'tile' => { ui => 1, gegl => 1 },
     'tile-small' => { ui => 1 },
     'unit-editor' => { ui => 1 },
     'unsharp-mask' => { ui => 1 },
