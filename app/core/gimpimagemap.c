@@ -27,6 +27,7 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
@@ -62,6 +63,8 @@ struct _GimpImageMap
   gchar                *icon_name;
 
   GimpImageMapRegion    region;
+  GimpOrientationType   preview_orientation;
+  gdouble               preview_percent;
   gdouble               opacity;
   GimpLayerModeEffects  paint_mode;
   gboolean              gamma_hack;
@@ -81,6 +84,9 @@ static void       gimp_image_map_dispose         (GObject             *object);
 static void       gimp_image_map_finalize        (GObject             *object);
 
 static void       gimp_image_map_sync_region     (GimpImageMap        *image_map);
+static void       gimp_image_map_sync_preview    (GimpImageMap        *image_map,
+                                                  GimpOrientationType  old_orientation,
+                                                  gdouble              old_percent);
 static void       gimp_image_map_sync_mode       (GimpImageMap        *image_map);
 static void       gimp_image_map_sync_affect     (GimpImageMap        *image_map);
 static void       gimp_image_map_sync_gamma_hack (GimpImageMap        *image_map);
@@ -125,9 +131,11 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
 static void
 gimp_image_map_init (GimpImageMap *image_map)
 {
-  image_map->region     = GIMP_IMAGE_MAP_REGION_SELECTION;
-  image_map->opacity    = GIMP_OPACITY_OPAQUE;
-  image_map->paint_mode = GIMP_REPLACE_MODE;
+  image_map->region              = GIMP_IMAGE_MAP_REGION_SELECTION;
+  image_map->preview_orientation = GIMP_ORIENTATION_HORIZONTAL;
+  image_map->preview_percent     = 1.0;
+  image_map->opacity             = GIMP_OPACITY_OPAQUE;
+  image_map->paint_mode          = GIMP_REPLACE_MODE;
 }
 
 static void
@@ -225,6 +233,28 @@ gimp_image_map_set_region (GimpImageMap       *image_map,
       image_map->region = region;
 
       gimp_image_map_sync_region (image_map);
+    }
+}
+
+void
+gimp_image_map_set_preview (GimpImageMap        *image_map,
+                            GimpOrientationType  orientation,
+                            gdouble              percent)
+{
+  g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
+
+  percent = CLAMP (percent, 0.0, 1.0);
+
+  if (orientation != image_map->preview_orientation ||
+      percent     != image_map->preview_percent)
+    {
+      GimpOrientationType old_orientation = image_map->preview_orientation;
+      gdouble             old_percent     = image_map->preview_percent;
+
+      image_map->preview_orientation = orientation;
+      image_map->preview_percent     = percent;
+
+      gimp_image_map_sync_preview (image_map, old_orientation, old_percent);
     }
 }
 
@@ -344,6 +374,9 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                                    NULL);
 
       gimp_image_map_sync_region (image_map);
+      gimp_image_map_sync_preview (image_map,
+                                   image_map->preview_orientation,
+                                   image_map->preview_percent);
       gimp_image_map_sync_mode (image_map);
       gimp_image_map_sync_gamma_hack (image_map);
 
@@ -472,6 +505,74 @@ gimp_image_map_sync_region (GimpImageMap *image_map)
                          NULL);
 
           gimp_applicator_set_apply_offset (image_map->applicator, 0, 0);
+        }
+    }
+}
+
+static void
+gimp_image_map_get_preview_rect (GimpImageMap        *image_map,
+                                 GimpOrientationType  orientation,
+                                 gdouble              percent,
+                                 GeglRectangle       *rect)
+{
+  rect->x = 0;
+  rect->y = 0;
+  rect->width  = gimp_item_get_width  (GIMP_ITEM (image_map->drawable));
+  rect->height = gimp_item_get_height (GIMP_ITEM (image_map->drawable));
+
+  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+    rect->width *= percent;
+  else
+    rect->height *= percent;
+ }
+
+static void
+gimp_image_map_sync_preview (GimpImageMap        *image_map,
+                             GimpOrientationType  old_orientation,
+                             gdouble              old_percent)
+{
+  if (image_map->applicator)
+    {
+      GeglRectangle old_rect;
+      GeglRectangle new_rect;
+
+      gimp_image_map_get_preview_rect (image_map,
+                                       old_orientation,
+                                       old_percent,
+                                       &old_rect);
+
+      gimp_image_map_get_preview_rect (image_map,
+                                       image_map->preview_orientation,
+                                       image_map->preview_percent,
+                                       &new_rect);
+
+      gimp_applicator_set_preview (image_map->applicator, TRUE, &new_rect);
+
+      if (old_rect.width  != new_rect.width ||
+          old_rect.height != new_rect.height)
+        {
+          cairo_region_t *region;
+          gint            n_rects;
+          gint            i;
+
+          region = cairo_region_create_rectangle ((cairo_rectangle_int_t *)
+                                                  &old_rect);
+          cairo_region_xor_rectangle (region,
+                                      (cairo_rectangle_int_t *) &new_rect);
+
+          n_rects = cairo_region_num_rectangles (region);
+
+          for (i = 0; i < n_rects; i++)
+            {
+              cairo_rectangle_int_t rect;
+
+              cairo_region_get_rectangle (region, i, &rect);
+
+              gimp_image_map_update_drawable (image_map,
+                                              (const GeglRectangle *) &rect);
+            }
+
+          cairo_region_destroy (region);
         }
     }
 }
