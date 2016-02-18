@@ -664,6 +664,7 @@ var lblAssocInfo: TNewStaticText;
 	btnSelectAll,btnSelectUnused: TNewButton;
 	i,ButtonWidth: Integer;
 	ButtonText: TArrayOfString;
+	MeasureLabel: TNewStaticText;
 	//lblInfo: TNewStaticText;
 begin
 	DebugMsg('InitCustomPages','pgAssociations');
@@ -784,11 +785,26 @@ begin
 		OnClick := @InstallOnClick;
 	end;
 
+	//used to measure text width
+	MeasureLabel := TNewStaticText.Create(WizardForm);
+	with MeasureLabel do
+	begin
+		Parent := WizardForm;
+		Left := 0;
+		Top := 0;
+		AutoSize := True;
+		Caption := CustomMessage('Customize');
+	end;
+
 	btnCustomize := TNewButton.Create(WizardForm);
 	with btnCustomize do
 	begin
 		Parent := WizardForm;
 		Width := WizardForm.NextButton.Width;
+
+		if Width < (MeasureLabel.Width + ScaleX(8)) then
+			Width := MeasureLabel.Width + ScaleX(8);
+
 		Height := WizardForm.NextButton.Height;
 		Left := WizardForm.ClientWidth - (WizardForm.CancelButton.Left + WizardForm.CancelButton.Width);
 		//Left := WizardForm.BackButton.Left;
@@ -799,6 +815,8 @@ begin
 
 		OnClick := @CustomizeOnClick;
 	end;
+
+	MeasureLabel.Free;
 
 end;
 
