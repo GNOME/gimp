@@ -1059,7 +1059,7 @@ ico_save_image (const gchar  *filename,
   IcoFileEntry    *entries;
   gboolean          saved;
 
-  D(("*** Saving Microsoft icon file %s\n", filename));
+  D(("*** Exporting Microsoft icon file %s\n", filename));
 
   ico_save_init (image, &info);
 
@@ -1070,7 +1070,7 @@ ico_save_image (const gchar  *filename,
         return GIMP_PDB_CANCEL;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   if (! (fp = g_fopen (filename, "wb")))

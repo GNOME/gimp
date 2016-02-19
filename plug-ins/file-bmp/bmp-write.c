@@ -194,7 +194,7 @@ WriteBMP (const gchar  *filename,
       break;
 
     case GIMP_GRAYA_IMAGE:
-      if (interactive && !warning_dialog (_("Cannot save indexed image with "
+      if (interactive && !warning_dialog (_("Cannot export indexed image with "
                                             "transparency in BMP file format."),
                                           _("Alpha channel will be ignored.")))
         return GIMP_PDB_CANCEL;
@@ -226,7 +226,7 @@ WriteBMP (const gchar  *filename,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      if (interactive && !warning_dialog (_("Cannot save indexed image with "
+      if (interactive && !warning_dialog (_("Cannot export indexed image with "
                                             "transparency in BMP file format."),
                                           _("Alpha channel will be ignored.")))
         return GIMP_PDB_CANCEL;
@@ -315,7 +315,7 @@ WriteBMP (const gchar  *filename,
   gimp_set_data (SAVE_PROC, &BMPSaveData, sizeof (BMPSaveData));
 
   /* Let's begin the progress */
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /* Let's take some file */

@@ -97,8 +97,8 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",         "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",            "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",         "Drawable to save"             },
-    { GIMP_PDB_STRING,   "filename",         "Filename to save image to"    },
+    { GIMP_PDB_DRAWABLE, "drawable",         "Drawable to export"           },
+    { GIMP_PDB_STRING,   "filename",         "Filename to export image to"  },
     { GIMP_PDB_STRING,   "raw-filename",     "Name entered"                 },
     { GIMP_PDB_STRING,   "palette-filename", "Filename to save palette to"  },
   };
@@ -122,8 +122,8 @@ query (void)
                                     "0,string,KiSS\\040");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Saves files in KISS CEL file format",
-                          "This plug-in saves individual KISS cell files.",
+                          "Exports files in KISS CEL file format",
+                          "This plug-in exports individual KISS cell files.",
                           "Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "May 1998",
@@ -770,7 +770,7 @@ save_image (GFile   *file,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,

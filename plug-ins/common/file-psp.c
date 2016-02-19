@@ -1,4 +1,4 @@
-/* GIMP plug-in to load and save Paint Shop Pro files (.PSP and .TUB)
+/* GIMP plug-in to load and export Paint Shop Pro files (.PSP and .TUB)
  *
  * Copyright (C) 1999 Tor Lillqvist
  *
@@ -18,7 +18,7 @@
 
 /*
  *
- * Work in progress! Doesn't handle saving yet.
+ * Work in progress! Doesn't handle exporting yet.
  *
  * For a copy of the PSP file format documentation, surf to
  * http://www.jasc.com.
@@ -580,18 +580,18 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" },
     { GIMP_PDB_INT32,    "compression",  "Specify 0 for no compression, 1 for RLE, and 2 for LZ77" }
   };
 #endif
 
   gimp_install_procedure (LOAD_PROC,
                           "loads images from the Paint Shop Pro PSP file format",
-                          "This plug-in loads and saves images in "
+                          "This plug-in loads and exports images in "
                           "Paint Shop Pro's native PSP format. "
-                          "Vector layers aren't handled. Saving isn't "
+                          "Vector layers aren't handled. Exporting isn't "
                           "yet implemented.",
                           "Tor Lillqvist",
                           "Tor Lillqvist",
@@ -609,13 +609,13 @@ query (void)
                                     "",
                                     "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
 
-  /* commented out until saving is implemented */
+  /* commented out until exporting is implemented */
 #if 0
   gimp_install_procedure (SAVE_PROC,
-                          "saves images in the Paint Shop Pro PSP file format",
-                          "This plug-in loads and saves images in "
+                          "exports images in the Paint Shop Pro PSP file format",
+                          "This plug-in loads and exports images in "
                           "Paint Shop Pro's native PSP format. "
-                          "Vector layers aren't handled. Saving isn't "
+                          "Vector layers aren't handled. Exporting isn't "
                           "yet implemented.",
                           "Tor Lillqvist",
                           "Tor Lillqvist",
@@ -1641,7 +1641,7 @@ read_tube_block (FILE     *f,
 
   /* We use a parasite to pass in the tube (pipe) parameters in
    * case we will have any use of those, for instance in the gpb
-   * plug-in that saves a GIMP image pipe.
+   * plug-in that exports a GIMP image pipe.
    */
   params.dim = 1;
   params.cellwidth = ia->width / params.cols;
@@ -1889,7 +1889,7 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  g_message ("Saving not implemented yet");
+  g_message ("Exporting not implemented yet");
 
   return FALSE;
 }

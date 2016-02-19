@@ -1,4 +1,4 @@
-/* Plug-in to load and save .gih (GIMP Brush Pipe) files.
+/* Plug-in to load and export .gih (GIMP Brush Pipe) files.
  *
  * Copyright (C) 1999 Tor Lillqvist
  * Copyright (C) 2000 Jens Lautenbacher, Sven Neumann
@@ -59,7 +59,7 @@
 #define PLUG_IN_ROLE   "gimp-file-gih"
 
 
-/* Parameters applicable each time we save a gih, saved in the
+/* Parameters applicable each time we export a gih, exported in the
  * main gimp application between invocations of this plug-in.
  */
 typedef struct
@@ -153,9 +153,9 @@ query (void)
   {
     { GIMP_PDB_INT32,       "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,       "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE,    "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,      "uri",          "The URI of the file to save the brush pipe in" },
-    { GIMP_PDB_STRING,      "raw-uri",      "The URI of the file to save the brush pipe in" },
+    { GIMP_PDB_DRAWABLE,    "drawable",     "Drawable to export" },
+    { GIMP_PDB_STRING,      "uri",          "The URI of the file to export the brush pipe in" },
+    { GIMP_PDB_STRING,      "raw-uri",      "The URI of the file to export the brush pipe in" },
     { GIMP_PDB_INT32,       "spacing",      "Spacing of the brush" },
     { GIMP_PDB_STRING,      "description",  "Short description of the brush pipe" },
     { GIMP_PDB_INT32,       "cell-width",   "Width of the brush cells" },
@@ -200,8 +200,8 @@ query (void)
   gimp_register_magic_load_handler (LOAD_PROC, "gih", "", "");
 
   gimp_install_procedure (SAVE_PROC,
-                          "saves images in GIMP brush pipe format",
-                          "This plug-in saves an image in the GIMP brush pipe "
+                          "exports images in GIMP brush pipe format",
+                          "This plug-in exports an image in the GIMP brush pipe "
                           "format. For a colored brush pipe, RGBA layers are "
                           "used, otherwise the layers should be grayscale "
                           "masks. The image can be multi-layered, and "
@@ -1291,7 +1291,7 @@ gih_save_image (GFile    *file,
   imagew = gimp_image_width (image_ID);
   imageh = gimp_image_height (image_ID);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,

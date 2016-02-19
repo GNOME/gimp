@@ -742,22 +742,6 @@ gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          width,
                            gint          height)
 {
-  if (drawable->private->buffer_source_node)
-    {
-      GObject *operation = NULL;
-
-      g_object_get (drawable->private->buffer_source_node,
-                    "gegl-operation", &operation,
-                    NULL);
-
-      if (operation)
-        {
-          gegl_operation_invalidate (GEGL_OPERATION (operation),
-                                     GEGL_RECTANGLE (x,y,width,height), FALSE);
-          g_object_unref (operation);
-        }
-    }
-
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 }
 
@@ -963,7 +947,8 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
 
           gegl_node_add_child (node, fs_source);
 
-          private->fs_applicator = gimp_applicator_new (node, linear, FALSE);
+          private->fs_applicator = gimp_applicator_new (node, linear,
+                                                        FALSE, FALSE);
 
           private->fs_crop_node =
             gegl_node_new_child (node,

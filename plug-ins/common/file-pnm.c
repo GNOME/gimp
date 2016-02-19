@@ -101,7 +101,7 @@ struct _PNMRowInfo
   gboolean       zero_is_black; /* index zero is black (PBM only) */
 };
 
-/* Save info  */
+/* Export info  */
 typedef struct
 {
   gint  raw;            /*  raw or ascii  */
@@ -240,9 +240,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" },
     { GIMP_PDB_INT32,    "raw",          "TRUE for raw output, FALSE for ascii output" }
   };
 
@@ -250,9 +250,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -278,8 +278,8 @@ query (void)
                                     "0,string,PF,0,string,Pf");
 
   gimp_install_procedure (PNM_SAVE_PROC,
-                          "Saves files in the PNM file format",
-                          "PNM saving handles all image types without transparency.",
+                          "Exports files in the PNM file format",
+                          "PNM exporting handles all image types without transparency.",
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",
@@ -290,8 +290,8 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (PBM_SAVE_PROC,
-                          "Saves files in the PBM file format",
-                          "PBM saving produces mono images without transparency.",
+                          "Exports files in the PBM file format",
+                          "PBM exporting produces mono images without transparency.",
                           "Martin K Collins",
                           "Erik Nygren",
                           "2006",
@@ -302,8 +302,8 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (PGM_SAVE_PROC,
-                          "Saves files in the PGM file format",
-                          "PGM saving produces grayscale images without transparency.",
+                          "Exports files in the PGM file format",
+                          "PGM exporting produces grayscale images without transparency.",
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",
@@ -314,8 +314,8 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (PPM_SAVE_PROC,
-                          "Saves files in the PPM file format",
-                          "PPM saving handles RGB images without transparency.",
+                          "Exports files in the PPM file format",
+                          "PPM exporting handles RGB images without transparency.",
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",
@@ -326,8 +326,8 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (PFM_SAVE_PROC,
-                          "Saves files in the PFM file format",
-                          "PFM saving handles all images without transparency.",
+                          "Exports files in the PFM file format",
+                          "PFM exporting handles all images without transparency.",
                           "Mukund Sivaraman",
                           "Mukund Sivaraman",
                           "2015",
@@ -1199,11 +1199,11 @@ save_image (GFile     *file,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      g_message (_("Cannot save images with alpha channel."));
+      g_message (_("Cannot export images with alpha channel."));
       goto out;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
   /* open the file */
@@ -1364,7 +1364,7 @@ save_image (GFile     *file,
               break;
 
             default:
-              g_warning ("Images saved as PBM should be black/white");
+              g_warning ("Images exported as PBM should be black/white");
               break;
             }
         }

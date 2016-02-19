@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 13:31+0100\n"
-"PO-Revision-Date: 2016-01-10 13:32+0100\n"
+"POT-Creation-Date: 2016-02-17 22:08+0100\n"
+"PO-Revision-Date: 2016-02-17 22:09+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -341,10 +341,10 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:669
-#: ../plug-ins/common/file-raw-data.c:970 ../plug-ins/common/file-sunras.c:1049
+#: ../plug-ins/common/file-raw-data.c:984 ../plug-ins/common/file-sunras.c:1049
 #: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-xbm.c:904
 #: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:255
-#: ../plug-ins/common/tile.c:262 ../plug-ins/file-bmp/bmp-read.c:699
+#: ../plug-ins/common/tile.c:354 ../plug-ins/file-bmp/bmp-read.c:699
 #: ../plug-ins/file-exr/file-exr.c:245 ../plug-ins/file-faxg3/faxg3.c:525
 #: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
@@ -879,8 +879,8 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-gif-save.c:833
 #: ../plug-ins/common/file-mng.c:648 ../plug-ins/common/file-mng.c:985
 #: ../plug-ins/common/file-pcx.c:734 ../plug-ins/common/file-pdf-save.c:432
-#: ../plug-ins/common/file-png.c:1504 ../plug-ins/common/file-raw-data.c:785
-#: ../plug-ins/common/file-raw-data.c:813 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-png.c:1504 ../plug-ins/common/file-raw-data.c:799
+#: ../plug-ins/common/file-raw-data.c:827 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1473
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:326 ../plug-ins/file-fits/fits.c:481
@@ -912,7 +912,7 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:895
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3369
 #: ../plug-ins/common/file-psp.c:1714 ../plug-ins/common/file-raw-data.c:271
-#: ../plug-ins/common/file-raw-data.c:894 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-raw-data.c:908 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:709
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:840
@@ -1179,7 +1179,7 @@ msgid "_Redness cr709:"
 msgstr "_Czerwień cr709:"
 
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1404
+#: ../plug-ins/common/file-raw-data.c:1418
 msgid "RGB"
 msgstr "RGB"
 
@@ -1779,7 +1779,7 @@ msgstr "Źródło 2:"
 msgid "O_verlap:"
 msgstr "_Nakładanie:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1432
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1446
 msgid "O_ffset:"
 msgstr "Prz_esunięcie:"
 
@@ -1848,8 +1848,8 @@ msgstr "Usunięcie pasków"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3495 ../plug-ins/common/file-ps.c:3700
-#: ../plug-ins/common/file-raw-data.c:1445
-#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/tile.c:428
+#: ../plug-ins/common/file-raw-data.c:1459
+#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/tile.c:464
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
 #: ../plug-ins/print/print-page-layout.c:282
@@ -2016,7 +2016,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:887
 #: ../plug-ins/common/file-pnm.c:562 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:887 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:901 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:985
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
@@ -2105,15 +2105,14 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-png.c:1497 ../plug-ins/common/file-pnm.c:1206
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xmc.c:1462 ../plug-ins/common/file-xpm.c:660
-#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-write.c:318
-#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:716
-#: ../plug-ins/file-ico/ico-save.c:1073 ../plug-ins/file-jpeg/jpeg-save.c:285
-#: ../plug-ins/file-psd/psd-save.c:1516 ../plug-ins/file-sgi/sgi.c:577
-#: ../plug-ins/file-tiff/file-tiff-save.c:314
+#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/file-bmp/bmp-write.c:318 ../plug-ins/file-fits/fits.c:473
+#: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1073
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
+#: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:314
 #, c-format
-msgid "Saving '%s'"
-msgstr "Zapisywanie „%s”"
+msgid "Exporting '%s'"
+msgstr "Eksportowanie „%s”"
 
 #: ../plug-ins/common/file-csource.c:111
 msgid "C source code"
@@ -2207,8 +2206,7 @@ msgstr "Obraz DICOM (Digital Imaging and Communications in Medicine)"
 msgid "'%s' is not a DICOM file."
 msgstr "„%s” nie jest plikiem DICOM."
 
-#: ../plug-ins/common/file-dicom.c:1335 ../plug-ins/common/file-pcx.c:695
-#: ../plug-ins/common/file-pnm.c:1202
+#: ../plug-ins/common/file-dicom.c:1335
 msgid "Cannot save images with alpha channel."
 msgstr "Nie można zapisać obrazów z kanałem alfa."
 
@@ -2324,19 +2322,19 @@ msgstr ""
 "być odtwarzana w nieoczekiwany sposób, zmieni się ona również po zapisaniu."
 
 #: ../plug-ins/common/file-gif-save.c:510
-msgid "Couldn't simply reduce colors further. Saving as opaque."
+msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr ""
-"Nie można w prosty sposób bardziej zredukować kolorów. Zapisywanie bez "
+"Nie można w prosty sposób bardziej zredukować kolorów. Eksportowanie bez "
 "przezroczystości."
 
 #: ../plug-ins/common/file-gif-save.c:625
 #, c-format
 msgid ""
-"Unable to save '%s'.  The GIF file format does not support images that are "
+"Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Nie można zapisać „%s”. Format GIF nie obsługuje obrazów większych niż %d "
-"pikseli wzdłuż lub wszerz."
+"Nie można wyeksportować „%s”. Format GIF nie obsługuje obrazów większych niż "
+"%d pikseli wzdłuż lub wszerz."
 
 #: ../plug-ins/common/file-gif-save.c:735
 msgid ""
@@ -2348,10 +2346,10 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:799
 msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+"Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Nie można zapisywać obrazów RGB w formacie GIF. Należy najpierw skonwertować "
-"obraz do odcieni szarości lub do trybu indeksowanego."
+"Nie można eksportować obrazów RGB w formacie GIF. Należy najpierw "
+"skonwertować obraz do odcieni szarości lub do trybu indeksowanego."
 
 #: ../plug-ins/common/file-gif-save.c:974
 msgid "Delay inserted to prevent evil CPU-sucking animation."
@@ -2360,19 +2358,19 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1015
 msgid ""
-"The image you are trying to save as a GIF contains layers which extend "
+"The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"Zapisywany obraz w formacie GIF zawiera warstwy, które wykraczają poza "
+"Eksportowany obraz w formacie GIF zawiera warstwy, które wykraczają poza "
 "granice obrazu."
 
 #: ../plug-ins/common/file-gif-save.c:1032
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
-"of the layers to the image borders, or cancel this save."
+"of the layers to the image borders, or cancel this export."
 msgstr ""
 "W formacie GIF takie sytuacje nie są dopuszczalne. Można wybrać między "
-"przycięciem wszystkich warstw do granic obrazu lub anulowaniem zapisu."
+"przycięciem wszystkich warstw do granic obrazu lub anulowaniem eksportu."
 
 #: ../plug-ins/common/file-gif-save.c:1166
 msgid "GIF"
@@ -2574,9 +2572,9 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "Szerokość każdej komórki. Liczba lub procent."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3508
-#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1461
+#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1475
 #: ../plug-ins/common/film.c:1002 ../plug-ins/common/smooth-palette.c:440
-#: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:173
+#: ../plug-ins/common/tile.c:468 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:284
 msgid "_Height:"
@@ -2852,6 +2850,10 @@ msgstr "Wymiary obrazu są za duże: szerokość %d × wysokość %d"
 msgid "Unusual PCX flavour, giving up"
 msgstr "Nietypowa odmiana formatu PCX, zrezygnowano"
 
+#: ../plug-ins/common/file-pcx.c:695 ../plug-ins/common/file-pnm.c:1202
+msgid "Cannot export images with alpha channel."
+msgstr "Nie można eksportować obrazów z kanałem alfa."
+
 #: ../plug-ins/common/file-pcx.c:707
 #, c-format
 msgid "Invalid X offset: %d"
@@ -3029,8 +3031,9 @@ msgstr "Błąd podczas wczytywania pliku PNG: %s"
 
 #: ../plug-ins/common/file-png.c:863
 #, c-format
-msgid "Error creating PNG read struct while saving '%s'."
-msgstr "Błąd podczas tworzenia struktur odczytu PNG podczas zapisywania „%s”."
+msgid "Error creating PNG read struct while exporting '%s'."
+msgstr ""
+"Błąd podczas tworzenia struktur odczytu PNG podczas eksportowania „%s”."
 
 #: ../plug-ins/common/file-png.c:873
 #, c-format
@@ -3078,13 +3081,13 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1473
 #, c-format
-msgid "Error creating PNG write struct while saving '%s'."
-msgstr "Błąd podczas tworzenia struktur zapisu PNG podczas zapisywania „%s”."
+msgid "Error creating PNG write struct while exporting '%s'."
+msgstr "Błąd podczas tworzenia struktur zapisu PNG podczas eksportowania „%s”."
 
 #: ../plug-ins/common/file-png.c:1483
 #, c-format
-msgid "Error while saving '%s'. Could not save image."
-msgstr "Błąd podczas zapisywania pliku „%s”. Nie można zapisać obrazu."
+msgid "Error while exporting '%s'. Could not export image."
+msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
 #: ../plug-ins/common/file-png.c:2191
 #: ../plug-ins/file-tiff/file-tiff-save.c:840
@@ -3201,8 +3204,8 @@ msgstr "Nie można zinterpretować pliku PostScript „%s”"
 
 #: ../plug-ins/common/file-ps.c:1247
 #, c-format
-msgid "PostScript save cannot handle images with alpha channels"
-msgstr "Zapis PostScript nie obsługuje obrazów z kanałami alfa"
+msgid "PostScript export cannot handle images with alpha channels"
+msgstr "Eksport PostScript nie obsługuje obrazów z kanałami alfa"
 
 #: ../plug-ins/common/file-ps.c:3416
 msgid "Import from PostScript"
@@ -3387,113 +3390,113 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Dane obrazu Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1356
+#: ../plug-ins/common/file-raw-data.c:1370
 msgid "Load Image from Raw Data"
 msgstr "Wczytanie obrazu z danych Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1394
+#: ../plug-ins/common/file-raw-data.c:1408
 msgid "Image"
 msgstr "Obraz"
 
-#: ../plug-ins/common/file-raw-data.c:1405
+#: ../plug-ins/common/file-raw-data.c:1419
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1406
+#: ../plug-ins/common/file-raw-data.c:1420
 msgid "RGB565 Big Endian"
 msgstr "RGB565 (Big Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1407
+#: ../plug-ins/common/file-raw-data.c:1421
 msgid "RGB565 Little Endian"
 msgstr "RGB565 (Little Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1408
+#: ../plug-ins/common/file-raw-data.c:1422
 msgid "BGR565 Big Endian"
 msgstr "BGR565 (Big Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1409
+#: ../plug-ins/common/file-raw-data.c:1423
 msgid "BGR565 Little Endian"
 msgstr "BGR565 (Little Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1410
+#: ../plug-ins/common/file-raw-data.c:1424
 msgid "Planar RGB"
 msgstr "Płaski RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1411
+#: ../plug-ins/common/file-raw-data.c:1425
 msgid "B&W 1 bit"
 msgstr "Czarno-biały (1-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1412
+#: ../plug-ins/common/file-raw-data.c:1426
 msgid "Gray 2 bit"
 msgstr "Szary (2-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1413
+#: ../plug-ins/common/file-raw-data.c:1427
 msgid "Gray 4 bit"
 msgstr "Szary (4-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1414
+#: ../plug-ins/common/file-raw-data.c:1428
 msgid "Gray 8 bit"
 msgstr "Szary (8-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1415
+#: ../plug-ins/common/file-raw-data.c:1429
 msgid "Indexed"
 msgstr "Zindeksowany"
 
-#: ../plug-ins/common/file-raw-data.c:1416
+#: ../plug-ins/common/file-raw-data.c:1430
 msgid "Indexed Alpha"
 msgstr "Zindeksowana alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1421
+#: ../plug-ins/common/file-raw-data.c:1435
 msgid "Image _Type:"
 msgstr "_Typ obrazu:"
 
-#: ../plug-ins/common/file-raw-data.c:1477
+#: ../plug-ins/common/file-raw-data.c:1491
 msgid "Palette"
 msgstr "Deseń"
 
-#: ../plug-ins/common/file-raw-data.c:1487
-#: ../plug-ins/common/file-raw-data.c:1572
+#: ../plug-ins/common/file-raw-data.c:1501
+#: ../plug-ins/common/file-raw-data.c:1586
 msgid "R, G, B (normal)"
 msgstr "R, G, B (zwykły)"
 
-#: ../plug-ins/common/file-raw-data.c:1488
-#: ../plug-ins/common/file-raw-data.c:1574
+#: ../plug-ins/common/file-raw-data.c:1502
+#: ../plug-ins/common/file-raw-data.c:1588
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (format BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1493
+#: ../plug-ins/common/file-raw-data.c:1507
 msgid "_Palette Type:"
 msgstr "Typ _desenia:"
 
-#: ../plug-ins/common/file-raw-data.c:1504
+#: ../plug-ins/common/file-raw-data.c:1518
 msgid "Off_set:"
 msgstr "Prze_sunięcie:"
 
-#: ../plug-ins/common/file-raw-data.c:1516
+#: ../plug-ins/common/file-raw-data.c:1530
 msgid "Select Palette File"
 msgstr "Wybór pliku desenia"
 
-#: ../plug-ins/common/file-raw-data.c:1522
+#: ../plug-ins/common/file-raw-data.c:1536
 msgid "Pal_ette File:"
 msgstr "Plik d_esenia:"
 
-#: ../plug-ins/common/file-raw-data.c:1550
+#: ../plug-ins/common/file-raw-data.c:1564
 msgid "Raw Image"
 msgstr "Obraz Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1558
+#: ../plug-ins/common/file-raw-data.c:1572
 msgid "RGB Save Type"
 msgstr "Zapis typu RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1562
+#: ../plug-ins/common/file-raw-data.c:1576
 msgid "Standard (RGB RGB RGB ...)"
 msgstr "Standardowy (RGB RGB RGB…)"
 
-#: ../plug-ins/common/file-raw-data.c:1563
+#: ../plug-ins/common/file-raw-data.c:1577
 msgid "Planar (RRR... GGG... BBB...)"
 msgstr "Płaski (RRR… GGG… BBB…)"
 
-#: ../plug-ins/common/file-raw-data.c:1568
+#: ../plug-ins/common/file-raw-data.c:1582
 msgid "Indexed Palette Type"
 msgstr "Typ indeksowanego deseniu"
 
@@ -3565,8 +3568,8 @@ msgstr "Ta głębia kolorów nie jest obsługiwana"
 
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
-msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr "Zapis SUNRAS nie obsługuje obrazów z kanałami alfa"
+msgid "SUNRAS export cannot handle images with alpha channels"
+msgstr "Eksport SUNRAS nie obsługuje obrazów z kanałami alfa"
 
 #: ../plug-ins/common/file-sunras.c:597
 msgid "Can't operate on unknown image types"
@@ -3761,12 +3764,12 @@ msgstr ""
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:997
 msgid ""
-"The image which you are trying to save as an XBM contains more than two "
+"The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
-"Obraz zapisywany w formacie XBM zawiera więcej niż dwa kolory.\n"
+"Obraz eksportowany w formacie XBM zawiera więcej niż dwa kolory.\n"
 "\n"
 "Proszę skonwertować obraz na indeksowany czarno-biały (1-bitowy) i spróbować "
 "ponownie."
@@ -4002,6 +4005,11 @@ msgstr "Proszę wprowadzić inne komentarze, jeśli są potrzebne."
 msgid "Comment is limited to %d characters."
 msgstr "Komentarz jest ograniczony do %d znaków."
 
+#: ../plug-ins/common/file-xmc.c:1462
+#, c-format
+msgid "Saving '%s'"
+msgstr "Zapisywanie „%s”"
+
 #: ../plug-ins/common/file-xmc.c:1528
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
@@ -4023,37 +4031,37 @@ msgstr "Szerokość i/lub wysokość klatki „%s” wynosi zero."
 #: ../plug-ins/common/file-xmc.c:1585
 #, c-format
 msgid ""
-"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
-"Try to change the hot spot position, layer geometry or save without auto-"
+"Cannot export the cursor because the hot spot is not on frame '%s'.\n"
+"Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"Nie można zapisać kursora, ponieważ gorący punkt nie znajduje się w klatce "
-"„%s”.\n"
+"Nie można wyeksportować kursora, ponieważ gorący punkt nie znajduje się w "
+"klatce „%s”.\n"
 "Proszę spróbować zmienić położenie gorącego punktu, geometrię warstw lub "
-"zapisać bez automatycznego przycinania."
+"wyeksportować bez automatycznego przycinania."
 
 #: ../plug-ins/common/file-xmc.c:1748
 #, c-format
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames whose "
-"width or height is more than %ipx.\n"
+"Your cursor was successfully exported but it contains one or more frames "
+"whose width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
-"Kursor został pomyślnie zapisany, ale zawiera jedną lub więcej klatek o "
-"szerokości lub wysokości większej niż %i pikseli.\n"
+"Kursor został pomyślnie wyeksportowany, ale zawiera jedną lub więcej klatek "
+"o szerokości lub wysokości większej niż %i pikseli.\n"
 "Spowoduje to zaśmiecenie ekranu w niektórych środowiskach."
 
 #: ../plug-ins/common/file-xmc.c:1755
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames whose "
-"nominal size is not supported by GNOME settings.\n"
+"Your cursor was successfully exported but it contains one or more frames "
+"whose nominal size is not supported by GNOME settings.\n"
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
-"save dialog, or your cursor may not appear in GNOME settings."
+"export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Kursor został pomyślnie zapisany, ale zawiera jedną lub więcej klatek o "
-"rozmiarze nominalnym nieobsługiwanym przez ustawienia środowiska GNOME.\n"
+"Kursor został pomyślnie wyeksportowany, ale zawiera jedną lub więcej klatek "
+"o rozmiarze nominalnym nieobsługiwanym przez ustawienia środowiska GNOME.\n"
 "Można to naprawić przez zaznaczenie opcji „Zastąpienie rozmiaru wszystkich "
-"klatek…” w oknie zapisywania. W innym przypadku kursor nie pojawi się w "
+"klatek…” w oknie eksportowania. W innym przypadku kursor nie pojawi się w "
 "ustawieniach środowiska GNOME."
 
 #: ../plug-ins/common/file-xmc.c:1992
@@ -4142,8 +4150,8 @@ msgstr ""
 "obecnie nie jest obsługiwany."
 
 #: ../plug-ins/common/file-xwd.c:636
-msgid "Cannot save images with alpha channels."
-msgstr "Nie można zapisać obrazów z kanałami alfa."
+msgid "Cannot export images with alpha channels."
+msgstr "Nie można eksportować obrazów z kanałami alfa."
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
@@ -4152,8 +4160,8 @@ msgstr "Nie można otworzyć pliku „%s” do zapisania: "
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
-msgid "Error saving '%s': "
-msgstr "Błąd podczas zapisywania pliku „%s”: "
+msgid "Error exporting '%s': "
+msgstr "Błąd podczas eksportowania pliku „%s”: "
 
 #: ../plug-ins/common/file-xwd.c:1751 ../plug-ins/common/file-xwd.c:2149
 #, c-format
@@ -5645,28 +5653,28 @@ msgstr "_Projektowanie sfery…"
 msgid "Region selected for plug-in is empty"
 msgstr "Zaznaczony obszar dla wtyczki jest pusty"
 
-#: ../plug-ins/common/tile.c:101
+#: ../plug-ins/common/tile.c:110
 msgid "Create an array of copies of the image"
 msgstr "Tworzy macierz kopii obrazu"
 
-#: ../plug-ins/common/tile.c:111
+#: ../plug-ins/common/tile.c:120
 msgid "_Tile..."
 msgstr "_Kafelki…"
 
 #. Set the tile cache size
-#: ../plug-ins/common/tile.c:185 ../plug-ins/common/tile-small.c:326
+#: ../plug-ins/common/tile.c:197 ../plug-ins/common/tile-small.c:326
 msgid "Tiling"
 msgstr "Układanie kafelków"
 
-#: ../plug-ins/common/tile.c:397
+#: ../plug-ins/common/tile.c:433
 msgid "Tile"
 msgstr "Kafelki"
 
-#: ../plug-ins/common/tile.c:419
+#: ../plug-ins/common/tile.c:455
 msgid "Tile to New Size"
 msgstr "Ułożenie o nowym rozmiarze"
 
-#: ../plug-ins/common/tile.c:441
+#: ../plug-ins/common/tile.c:477
 msgid "C_reate new image"
 msgstr "Utwó_rz nowy obraz"
 
@@ -6254,10 +6262,10 @@ msgid "The bitmap ends unexpectedly."
 msgstr "Bitmapa niespodziewanie się zakończyła."
 
 #: ../plug-ins/file-bmp/bmp-write.c:197 ../plug-ins/file-bmp/bmp-write.c:229
-msgid "Cannot save indexed image with transparency in BMP file format."
+msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
-"Nie można zapisać indeksowanego obrazu z przezroczystością w formacie pliku "
-"BMP."
+"Nie można wyeksportować indeksowanego obrazu z przezroczystością w formacie "
+"pliku BMP."
 
 #: ../plug-ins/file-bmp/bmp-write.c:199 ../plug-ins/file-bmp/bmp-write.c:231
 msgid "Alpha channel will be ignored."
@@ -6351,8 +6359,8 @@ msgid "FITS file keeps no displayable images"
 msgstr "Plik FITS nie zawiera rozpoznawanych obrazów"
 
 #: ../plug-ins/file-fits/fits.c:457
-msgid "FITS save cannot handle images with alpha channels"
-msgstr "FITS nie zapisuje obrazów z kanałami alfa"
+msgid "FITS export cannot handle images with alpha channels"
+msgstr "FITS nie eksportuje obrazów z kanałami alfa"
 
 #: ../plug-ins/file-fits/fits.c:1145
 msgid "Load FITS File"
@@ -6394,9 +6402,10 @@ msgid "Frame (%i)"
 msgstr "Klatka (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:712
-msgid "Sorry, I can save only INDEXED and GRAY images."
+msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr ""
-"Można zapisywać obrazy tylko w trybie indeksowanym lub w odcieniach szarości."
+"Można eksportować obrazy tylko w trybie indeksowanym lub w odcieniach "
+"szarości."
 
 #: ../plug-ins/file-fli/fli-gimp.c:864
 msgid "GFLI 1.3 - Load framestack"
@@ -6728,11 +6737,12 @@ msgstr "Dekompresja danych się nie powiodła"
 #: ../plug-ins/file-psd/psd-save.c:253
 #, c-format
 msgid ""
-"Unable to save layer with mode '%s'.  Either the PSD file format or the save "
-"plug-in does not support that, using normal mode instead."
+"Unable to export layer with mode '%s'.  Either the PSD file format or the "
+"export plug-in does not support that, using normal mode instead."
 msgstr ""
-"Nie można zapisać warstwy za pomocą trybu „%s”. Format pliku PSD lub wtyczka "
-"zapisywania nie obsługuje go. Zamiast tego zostanie użyty zwykły tryb."
+"Nie można wyeksportować warstwy za pomocą trybu „%s”. Format pliku PSD lub "
+"wtyczka eksportowania nie obsługuje go. Zamiast tego zostanie użyty zwykły "
+"tryb."
 
 #: ../plug-ins/file-psd/psd-save.c:503
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -6743,20 +6753,20 @@ msgstr ""
 #: ../plug-ins/file-psd/psd-save.c:1490
 #, c-format
 msgid ""
-"Unable to save '%s'.  The PSD file format does not support images that are "
+"Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Nie można zapisać '„%s”. Format pliku PSD nie obsługuje obrazów większych "
-"niż 30000 pikseli wzdłuż lub wszerz."
+"Nie można wyeksportować „%s”. Format pliku PSD nie obsługuje obrazów "
+"większych niż 30000 pikseli wzdłuż lub wszerz."
 
 #: ../plug-ins/file-psd/psd-save.c:1505
 #, c-format
 msgid ""
-"Unable to save '%s'.  The PSD file format does not support images with "
+"Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Nie można zapisać „%s”. Format pliku PSD nie obsługuje obrazów z warstwami "
-"większymi niż 30000 pikseli wzdłuż lub wszerz."
+"Nie można wyeksportować „%s”. Format pliku PSD nie obsługuje obrazów z "
+"warstwami większymi niż 30000 pikseli wzdłuż lub wszerz."
 
 #: ../plug-ins/file-psd/psd-util.c:50
 msgid "Unexpected end of file"
@@ -6844,8 +6854,8 @@ msgstr "Kanały TIFF"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:482
 #, c-format
-msgid "TIFF save cannot handle indexed images with an alpha channel."
-msgstr "TIFF nie zapisuje indeksowanych obrazów z kanałem alfa."
+msgid "TIFF export cannot handle indexed images with an alpha channel."
+msgstr "TIFF nie eksportuje indeksowanych obrazów z kanałem alfa."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:495
 msgid ""

@@ -1,12 +1,12 @@
 /*
- * PSD Save Plugin version 1.0 (BETA)
- * This GIMP plug-in is designed to save Adobe Photoshop(tm) files (.PSD)
+ * PSD Export Plugin version 1.0 (BETA)
+ * This GIMP plug-in is designed to export Adobe Photoshop(tm) files (.PSD)
  *
  * Monigotes
  *
- *     If this plug-in fails to save a file which you think it should,
+ *     If this plug-in fails to export a file which you think it should,
  *     please tell me what seemed to go wrong, and anything you know
- *     about the image you tried to save.  Please don't send big PSD
+ *     about the image you tried to export.  Please don't send big PSD
  *     files to me without asking first.
  *
  *          Copyright (C) 2000 Monigotes
@@ -56,7 +56,7 @@
 
 /*
  * TODO:
- *       Save preview
+ *       Export preview
  */
 
 /*
@@ -250,8 +250,8 @@ psd_lmode_layer (gint32  idLayer,
                              gimp_layer_get_mode (idLayer),
                              NULL, &nick, NULL, NULL);
 
-        g_message (_("Unable to save layer with mode '%s'.  Either the PSD "
-                     "file format or the save plug-in does not support that, "
+        g_message (_("Unable to export layer with mode '%s'.  Either the PSD "
+                     "file format or the export plug-in does not support that, "
                      "using normal mode instead."), nick);
 
         IFDBG printf ("PSD: Warning - unsupported layer-blend mode: %s, "
@@ -501,7 +501,7 @@ gimpBaseTypeToPsdMode (GimpImageBaseType gimpBaseType)
       return 2;                                         /* Indexed */
     default:
       g_message (_("Error: Can't convert GIMP base imagetype to PSD mode"));
-      IFDBG printf ("PSD Save: gimpBaseType value is %d, "
+      IFDBG printf ("PSD Export: gimpBaseType value is %d, "
                     "can't convert to PSD mode", gimpBaseType);
       gimp_quit ();
       return 3;                            /* Return RGB by default */
@@ -575,7 +575,7 @@ save_header (FILE   *fd,
                 "channels");
   write_gint32 (fd, PSDImageData.image_height, "rows");
   write_gint32 (fd, PSDImageData.image_width, "columns");
-  write_gint16 (fd, 8, "depth");  /* Saving can only be done in 8 bits at the moment. */
+  write_gint16 (fd, 8, "depth");  /* Exporting can only be done in 8 bits at the moment. */
   write_gint16 (fd, gimpBaseTypeToPsdMode (PSDImageData.baseType), "mode");
 }
 
@@ -1487,7 +1487,7 @@ save_image (const gchar  *filename,
       gimp_image_height (image_id) > 30000)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Unable to save '%s'.  The PSD file format does not "
+                   _("Unable to export '%s'.  The PSD file format does not "
                      "support images that are more than 30,000 pixels wide "
                      "or tall."),
                    gimp_filename_to_utf8 (filename));
@@ -1502,7 +1502,7 @@ save_image (const gchar  *filename,
       if (gegl_buffer_get_width (buffer) > 30000 || gegl_buffer_get_height (buffer) > 30000)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Unable to save '%s'.  The PSD file format does not "
+                       _("Unable to export '%s'.  The PSD file format does not "
                          "support images with layers that are more than 30,000 "
                          "pixels wide or tall."),
                        gimp_filename_to_utf8 (filename));
@@ -1513,7 +1513,7 @@ save_image (const gchar  *filename,
     }
   g_free (layers);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   fd = g_fopen (filename, "wb");

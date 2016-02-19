@@ -151,9 +151,9 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" },
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -177,8 +177,8 @@ query (void)
                                     "0,string,SIMPLE");
 
   gimp_install_procedure (SAVE_PROC,
-                          "save file in the FITS file format",
-                          "FITS saving handles all image types except "
+                          "export file in the FITS file format",
+                          "FITS exporting handles all image types except "
                           "those with alpha channels.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner (peter@kirchgessner.net)",
@@ -449,12 +449,12 @@ save_image (const gchar  *filename,
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
-  /*  Make sure we're not saving an image with an alpha channel  */
+  /*  Make sure we're not exporting an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s",
-                   _("FITS save cannot handle images with alpha channels"));
+                   _("FITS export cannot handle images with alpha channels"));
       return FALSE;
     }
 
@@ -470,7 +470,7 @@ save_image (const gchar  *filename,
       break;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /* Open the output file. */

@@ -1,19 +1,40 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir    = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor
-
-## The icon theme images
+iconsdir = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor
 
 icons_DATA = \
 	index.theme
 
-include $(top_srcdir)/icons/Symbolic/icon-list.mk
+include $(top_srcdir)/icons/icon-list.mk
 
-# As an exception, we do not want to invert gimp-default-colors.
-# Just use it as-is.
+# As exceptions, we do not want to invert some icons.
+# Just use these as-is: gimp-default-colors, gimp-toilet-paper.png.
 12/gimp-default-colors.png: $(top_srcdir)/icons/Symbolic/12/gimp-default-colors.png
-	mkdir -p `dirname $<`
-	cp -f $< $@
+	mkdir -p `dirname $<` && cp -f $< $@
+scalable/gimp-default-colors.svg: ../Symbolic/scalable/gimp-default-colors.svg
+	mkdir -p `dirname $<` && cp -f $< $@
+
+%/gimp-toilet-paper.png: $(top_srcdir)/icons/Symbolic/$(@D)/gimp-toilet-paper.png
+	mkdir -p `dirname $<` && cp -f $< $@
+scalable/gimp-toilet-paper.svg: ../Symbolic/scalable/gimp-toilet-paper.svg
+	mkdir -p `dirname $<` && cp -f $< $@
+
+# Other exceptions: inverted gimp-color-picker-white|black are generated
+# from each other.
+18/gimp-color-picker-black.png: $(top_srcdir)/icons/Symbolic/18/gimp-color-picker-white.png
+	$(MAKE_ICON)
+scalable/gimp-color-picker-black.svg: $(top_builddir)/icons/Symbolic/scalable/gimp-color-picker-white.svg
+	mkdir -p scalable && $(top_builddir)/tools/invert-svg $< $@
+
+18/gimp-color-picker-white.png: $(top_srcdir)/icons/Symbolic/18/gimp-color-picker-black.png
+	$(MAKE_ICON)
+scalable/gimp-color-picker-white.svg: $(top_builddir)/icons/Symbolic/scalable/gimp-color-picker-black.svg
+	mkdir -p scalable && $(top_builddir)/tools/invert-svg $< $@
+
+# Rule for all other scalable icons.
+scalable/%.svg: ../Symbolic/scalable/%.svg ../../tools/invert-svg
+	mkdir -p scalable && \
+	$(top_builddir)/tools/invert-svg $< $@
 
 # We are basically repeating the same rule for every subdirectory, which
 # is very dirty. But this is the only way we found to have a rule
@@ -29,7 +50,7 @@ MAKE_ICON = mkdir -p `dirname $@`; \
 	  <node operation='gegl:invert-gamma'></node> \
 	  <node operation='gegl:load'> \
 	    <params> \
-	      <param name='path'>$(top_srcdir)/icons/Symbolic/$@</param> \
+	      <param name='path'>$<</param> \
 	    </params> \
 	  </node> \
 	</gegl>" -o $@
@@ -74,23 +95,22 @@ MAKE_ICON = mkdir -p `dirname $@`; \
 	$(MAKE_ICON)
 
 all_icons = \
-	$(icons12_DATA)		\
-	$(icons16_DATA)		\
-	$(icons18_DATA)		\
-	$(icons20_DATA)		\
-	$(icons22_DATA)		\
-	$(icons24_DATA)		\
-	$(icons32_DATA)		\
-	$(icons48_DATA)		\
-	$(icons64_DATA)		\
-	$(icons96_DATA)		\
-	$(icons128_DATA)	\
-	$(icons192_DATA)	\
-	$(icons256_DATA)
+	$(icons12_images)	\
+	$(icons16_images)	\
+	$(icons18_images)	\
+	$(icons20_images)	\
+	$(icons22_images)	\
+	$(icons24_images)	\
+	$(icons32_images)	\
+	$(icons48_images)	\
+	$(icons64_images)	\
+	$(icons96_images)	\
+	$(icons128_images)	\
+	$(icons192_images)	\
+	$(icons256_images)
 
 EXTRA_DIST = \
-	$(icons_DATA)		\
-	$(all_icons)
+	$(icons_DATA)
 
 DISTCLEANFILES = \
 	$(all_icons)

@@ -47,29 +47,32 @@ struct _GimpImageMapClass
  *  both of which will remove the live filter from the drawable.
  */
 
-GType          gimp_image_map_get_type   (void) G_GNUC_CONST;
+GType          gimp_image_map_get_type    (void) G_GNUC_CONST;
 
-GimpImageMap * gimp_image_map_new        (GimpDrawable         *drawable,
-                                          const gchar          *undo_desc,
-                                          GeglNode             *operation,
-                                          const gchar          *icon_name);
+GimpImageMap * gimp_image_map_new         (GimpDrawable         *drawable,
+                                           const gchar          *undo_desc,
+                                           GeglNode             *operation,
+                                           const gchar          *icon_name);
 
-void           gimp_image_map_set_region (GimpImageMap         *image_map,
-                                          GimpImageMapRegion    region);
-void           gimp_image_map_set_mode   (GimpImageMap         *image_map,
-                                          gdouble               opacity,
-                                          GimpLayerModeEffects  paint_mode);
+void           gimp_image_map_set_region  (GimpImageMap         *image_map,
+                                           GimpImageMapRegion    region);
+void           gimp_image_map_set_preview (GimpImageMap         *image_map,
+                                           GimpOrientationType   orienatnios,
+                                           gdouble               percent_visible);
+void           gimp_image_map_set_mode    (GimpImageMap         *image_map,
+                                           gdouble               opacity,
+                                           GimpLayerModeEffects  paint_mode);
 
-void       gimp_image_map_set_gamma_hack (GimpImageMap         *image_map,
-                                          gboolean              gamma_hack);
+void        gimp_image_map_set_gamma_hack (GimpImageMap         *image_map,
+                                           gboolean              gamma_hack);
 
-void           gimp_image_map_apply      (GimpImageMap         *image_map,
-                                          const GeglRectangle  *area);
+void           gimp_image_map_apply       (GimpImageMap         *image_map,
+                                           const GeglRectangle  *area);
 
-gboolean       gimp_image_map_commit     (GimpImageMap         *image_map,
-                                          GimpProgress         *progress,
-                                          gboolean              cancellable);
-void           gimp_image_map_abort      (GimpImageMap         *image_map);
+gboolean       gimp_image_map_commit      (GimpImageMap         *image_map,
+                                           GimpProgress         *progress,
+                                           gboolean              cancellable);
+void           gimp_image_map_abort       (GimpImageMap         *image_map);
 
 
 #endif /* __GIMP_IMAGE_MAP_H__ */

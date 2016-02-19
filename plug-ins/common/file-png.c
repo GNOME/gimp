@@ -28,10 +28,10 @@
  *   load_image()                - Load a PNG image into a new image window.
  *   offsets_dialog()            - Asks the user about offsets when loading.
  *   respin_cmap()               - Re-order a Gimp colormap for PNG tRNS
- *   save_image()                - Save the specified image to a PNG file.
+ *   save_image()                - Export the specified image to a PNG file.
  *   save_compression_callback() - Update the image compression level.
  *   save_interlace_update()     - Update the interlacing option.
- *   save_dialog()               - Pop up the save dialog.
+ *   save_dialog()               - Pop up the export dialog.
  *
  * Revision History:
  *
@@ -238,9 +238,9 @@ query (void)
 #define COMMON_SAVE_ARGS \
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" }, \
     { GIMP_PDB_IMAGE,    "image",        "Input image"                  }, \
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             }, \
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"}, \
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in"}
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           }, \
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in"}, \
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in"}
 
 #define OLD_CONFIG_ARGS \
     { GIMP_PDB_INT32, "interlace",   "Use Adam7 interlacing?"            }, \
@@ -305,8 +305,8 @@ query (void)
                                     "png", "", "0,string,\211PNG\r\n\032\n");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Saves files in PNG file format",
-                          "This plug-in saves Portable Network Graphics "
+                          "Exports files in PNG file format",
+                          "This plug-in exports Portable Network Graphics "
                           "(PNG) files.",
                           "Michael Sweet <mike@easysw.com>, "
                           "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
@@ -321,8 +321,8 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (SAVE2_PROC,
-                          "Saves files in PNG file format",
-                          "This plug-in saves Portable Network Graphics "
+                          "Exports files in PNG file format",
+                          "This plug-in exports Portable Network Graphics "
                           "(PNG) files. "
                           "This procedure adds 2 extra parameters to "
                           "file-png-save that control whether "
@@ -341,8 +341,8 @@ query (void)
                           save_args2, NULL);
 
   gimp_install_procedure (SAVE_DEFAULTS_PROC,
-                          "Saves files in PNG file format",
-                          "This plug-in saves Portable Network Graphics (PNG) "
+                          "Exports files in PNG file format",
+                          "This plug-in exports Portable Network Graphics (PNG) "
                           "files, using the default settings stored as "
                           "a parasite.",
                           "Michael Sweet <mike@easysw.com>, "
@@ -362,10 +362,10 @@ query (void)
 
   gimp_install_procedure (GET_DEFAULTS_PROC,
                           "Get the current set of defaults used by the "
-                          "PNG file save plug-in",
+                          "PNG file export plug-in",
                           "This procedure returns the current set of "
                           "defaults stored as a parasite for the PNG "
-                          "save plug-in. "
+                          "export plug-in. "
                           "These defaults are used to seed the UI, by the "
                           "file_png_save_defaults procedure, and by "
                           "gimp_file_save when it detects to use PNG.",
@@ -383,9 +383,9 @@ query (void)
 
   gimp_install_procedure (SET_DEFAULTS_PROC,
                           "Set the current set of defaults used by the "
-                          "PNG file save plug-in",
+                          "PNG file export plug-in",
                           "This procedure set the current set of defaults "
-                          "stored as a parasite for the PNG save plug-in. "
+                          "stored as a parasite for the PNG export plug-in. "
                           "These defaults are used to seed the UI, by the "
                           "file_png_save_defaults procedure, and by "
                           "gimp_file_save when it detects to use PNG.",
@@ -871,7 +871,7 @@ load_image (const gchar  *filename,
          versions do not match. */
 
       g_set_error (error, 0, 0,
-                   _("Error creating PNG read struct while saving '%s'."),
+                   _("Error creating PNG read struct while exporting '%s'."),
                    gimp_filename_to_utf8 (filename));
       return -1;
     }
@@ -1427,7 +1427,7 @@ offsets_dialog (gint offset_x,
 }
 
 /*
- * 'save_image ()' - Save the specified image to a PNG file.
+ * 'save_image ()' - Export the specified image to a PNG file.
  */
 
 static gboolean
@@ -1484,7 +1484,7 @@ save_image (const gchar  *filename,
          versions do not match. */
 
       g_set_error (error, 0, 0,
-                   _("Error creating PNG write struct while saving '%s'."),
+                   _("Error creating PNG write struct while exporting '%s'."),
                    gimp_filename_to_utf8 (filename));
       return FALSE;
     }
@@ -1494,7 +1494,7 @@ save_image (const gchar  *filename,
   if (setjmp (png_jmpbuf (pp)))
     {
       g_set_error (error, 0, 0,
-                   _("Error while saving '%s'. Could not save image."),
+                   _("Error while exporting '%s'. Could not export image."),
                    gimp_filename_to_utf8 (filename));
       return FALSE;
     }
@@ -1508,7 +1508,7 @@ save_image (const gchar  *filename,
    * Open the file and initialize the PNG write "engine"...
    */
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   fp = g_fopen (filename, "wb");
@@ -1592,7 +1592,7 @@ save_image (const gchar  *filename,
       break;
 
     default:
-      g_set_error (error, 0, 0, "Image type can't be saved as PNG");
+      g_set_error (error, 0, 0, "Image type can't be exported as PNG");
       return FALSE;
     }
 
@@ -1834,7 +1834,7 @@ save_image (const gchar  *filename,
     png_set_packing (pp);
 
   /*
-   * Allocate memory for "tile_height" rows and save the image...
+   * Allocate memory for "tile_height" rows and export the image...
    */
 
   tile_height = gimp_tile_height ();

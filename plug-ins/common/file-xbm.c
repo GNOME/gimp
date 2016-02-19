@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * X10 and X11 bitmap (XBM) loading and saving file filter for GIMP.
+ * X10 and X11 bitmap (XBM) loading and exporting file filter for GIMP.
  * XBM code Copyright (C) 1998 Gordon Matzigkeit
  *
  * The XBM reading and writing code was written from scratch by Gordon
@@ -64,7 +64,7 @@
 #define DEFAULT_PREFIX "bitmap"
 #define MAX_PREFIX     64
 
-/* Whether or not to save as X10 bitmap. */
+/* Whether or not to export as X10 bitmap. */
 #define DEFAULT_X10_FORMAT FALSE
 
 typedef struct _XBMSaveVals
@@ -162,11 +162,11 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run-mode",       "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",          "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",       "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",       "The name of the file to save" },
+    { GIMP_PDB_DRAWABLE, "drawable",       "Drawable to export" },
+    { GIMP_PDB_STRING,   "filename",       "The name of the file to export" },
     { GIMP_PDB_STRING,   "raw-filename",   "The name entered" },
     { GIMP_PDB_STRING,   "comment",        "Image description (maximum 72 bytes)" },
-    { GIMP_PDB_INT32,    "x10",            "Save in X10 format" },
+    { GIMP_PDB_INT32,    "x10",            "Export in X10 format" },
     { GIMP_PDB_INT32,    "x-hot",          "X coordinate of hotspot" },
     { GIMP_PDB_INT32,    "y-hot",          "Y coordinate of hotspot" },
     { GIMP_PDB_STRING,   "prefix",         "Identifier prefix [determined from filename]"},
@@ -193,8 +193,8 @@ query (void)
                               "");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Save a file in X10 or X11 bitmap (XBM) file format",
-                          "Save a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images.",
+                          "Export a file in X10 or X11 bitmap (XBM) file format",
+                          "Export a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images.",
                           "Gordon Matzigkeit",
                           "Gordon Matzigkeit",
                           "1998",
@@ -994,7 +994,7 @@ save_image (GFile        *file,
   if (! gimp_drawable_is_indexed (drawable_ID) || colors > 2)
     {
       /* The image is not black-and-white. */
-      g_message (_("The image which you are trying to save as "
+      g_message (_("The image which you are trying to export as "
                    "an XBM contains more than two colors.\n\n"
                    "Please convert it to a black and white "
                    "(1-bit) indexed image and try again."));
@@ -1030,7 +1030,7 @@ save_image (GFile        *file,
         dark = 1;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'"),
+  gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
