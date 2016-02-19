@@ -263,12 +263,13 @@ run (const gchar      *name,
               if (run_it)
                 {
                   gint32   image;
+                  gint32   layer_ID;
                   gboolean resolution_loaded = FALSE;
 
                   gimp_set_data (LOAD_PROC,
                                  &pages.target, sizeof (pages.target));
 
-                  image = load_image (param[1].data.d_string, tif, &pages,
+                  image = load_image (param[1].data.d_string, &layer_ID, tif, &pages,
                                       &resolution_loaded,
                                       &error);
 
@@ -292,7 +293,7 @@ run (const gchar      *name,
                           if (resolution_loaded)
                             flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-                          gimp_image_metadata_load_finish (image, "image/tiff",
+                          gimp_image_metadata_load_finish (image, layer_ID, "image/tiff",
                                                            metadata, flags,
                                                            run_mode == GIMP_RUN_INTERACTIVE);
 
@@ -328,7 +329,7 @@ run (const gchar      *name,
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
 
-      GimpMetadata          *metadata;
+      GimpAttributes        *attributes;
       GimpMetadataSaveFlags  metadata_flags;
       GimpParasite          *parasite;
       gint32                 image      = param[1].data.d_int32;
@@ -358,9 +359,9 @@ run (const gchar      *name,
           break;
         }
 
-      metadata = gimp_image_metadata_save_prepare (orig_image,
-                                                   "image/tiff",
-                                                   &metadata_flags);
+      attributes = gimp_image_metadata_save_prepare (orig_image,
+                                                     "image/tiff",
+                                                     &metadata_flags);
 
       tsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
       tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
@@ -461,7 +462,7 @@ run (const gchar      *name,
                           image, drawable, orig_image, image_comment,
                           &saved_bpp, &error))
             {
-              if (metadata)
+              if (attributes)
                 {
                   GFile *file;
 
@@ -469,10 +470,10 @@ run (const gchar      *name,
                    * exiv2 saves them with wrong type and the original values
                    * could be invalid
                    */
-                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.0x0118");
-                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.0x0119");
+                  gimp_attributes_remove_attribute (attributes, "Exif.Image.0x0118");
+                  gimp_attributes_remove_attribute (attributes, "Exif.Image.0x0119");
 
-                  gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
+                  gimp_attributes_set_bits_per_sample (attributes, saved_bpp);
 
                   if (tsvals.save_exif)
                     metadata_flags |= GIMP_METADATA_SAVE_EXIF;
@@ -495,7 +496,7 @@ run (const gchar      *name,
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (image,
                                                    "image/tiff",
-                                                   metadata, metadata_flags,
+                                                   attributes, metadata_flags,
                                                    file, NULL);
                   g_object_unref (file);
                 }
@@ -512,8 +513,8 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image);
 
-      if (metadata)
-        g_object_unref (metadata);
+      if (attributes)
+        g_object_unref (attributes);
     }
   else
     {

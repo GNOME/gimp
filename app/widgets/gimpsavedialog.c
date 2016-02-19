@@ -270,7 +270,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
       tooltip = g_strdup_printf (_("Disables compression to make the XCF "
                                    "file readable by %s and later."),
                                  version_string);
-      if (gimp_image_get_metadata (image))
+      if (gimp_image_get_attributes (image))
         {
           gchar *temp_tooltip;
 
