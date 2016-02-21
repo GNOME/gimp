@@ -50,10 +50,10 @@
      id="namedview88"
      showgrid="true"
      inkscape:zoom="1.1847466"
-     inkscape:cx="190.46693"
+     inkscape:cx="260.7814"
      inkscape:cy="302.00779"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-x="390"
+     inkscape:window-y="238"
      inkscape:window-maximized="0"
      inkscape:current-layer="tools"
      showborder="false"
@@ -773,14 +773,26 @@
        y1="12.351767"
        x2="14.391122"
        y2="12.351767" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5408"
+       id="radialGradient3957"
+       cx="1.5"
+       cy="1037.8622"
+       fx="1.5"
+       fy="1037.8622"
+       r="1.5"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.3007953,0.06390084,-0.06617939,1.344806,68.233906,-357.95699)"
+       spreadMethod="pad" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient5408"
        id="linearGradient4252"
-       x1="10.246855"
-       y1="1046.6072"
-       x2="2.6301932"
-       y2="1039.0305"
+       x1="11.669101"
+       y1="1048.2946"
+       x2="2.0079606"
+       y2="1038.1425"
        gradientUnits="userSpaceOnUse" />
   </defs>
   <g
@@ -3454,47 +3466,6 @@
       </g>
     </g>
     <g
-       transform="translate(69.474085,-720.59537)"
-       id="gimp-tool-blend"
-       inkscape:export-xdpi="95.999908"
-       inkscape:export-ydpi="95.999908"
-       inkscape:export-filename="/home/klaus/gimp-tool-blend.png">
-      <g
-         inkscape:export-ydpi="131.99983"
-         inkscape:export-xdpi="131.99983"
-         inkscape:export-filename="/home/klaus/g4278.png"
-         id="g4278">
-        <path
-           inkscape:connector-curvature="0"
-           style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.58399999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="M 6.3554688,0.56445312 3.6992188,3.3046875 11.058594,7.8867188 12.439453,6.4628906 Z M 3.2929688,3.7226562 0.43945312,6.6679688 6.5253906,12.564453 7.9394531,11.105469 Z"
-           transform="translate(0,1036.3622)"
-           id="rect10-3" />
-        <rect
-           style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.43752223;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="rect4216-4"
-           width="3"
-           height="3"
-           x="0"
-           y="1036.3622" />
-        <g
-           id="g4256-4"
-           transform="matrix(1.1000002,0,0,1.0998661,-1.5995058,-105.09608)" />
-        <path
-           style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:url(#linearGradient4252);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-           d="m 2.6033629,1038.9845 0.029947,0.052 8.9611631,12.7505 c -1.359207,-5.1781 0.565916,-4.4266 3.794798,-3.7852 z"
-           id="path4258-1"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="ccccc" />
-      </g>
-      <path
-         inkscape:connector-curvature="0"
-         id="path4238"
-         transform="translate(0,1036.3622)"
-         d="M 13.25,10.5 A 2.75,2.75 0 0 0 10.5,13.25 2.75,2.75 0 0 0 13.25,16 2.75,2.75 0 0 0 16,13.25 2.75,2.75 0 0 0 13.25,10.5 Z m 0,1 A 1.75,1.75 0 0 1 15,13.25 1.75,1.75 0 0 1 13.25,15 1.75,1.75 0 0 1 11.5,13.25 1.75,1.75 0 0 1 13.25,11.5 Z"
-         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.63325107;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    </g>
-    <g
        id="gimp-tool-measure"
        transform="matrix(0.99999845,0,0,1.0001197,45.076565,-675.11316)"
        inkscape:export-xdpi="95.999908"
@@ -3566,6 +3537,46 @@
          id="rect4226"
          d="m 1.4616436,1043.2444 c 0.533869,-1.3767 6.5405274,-3.211 4.4097584,-1.7978 l -2.663522,1.7665 c 0,0 -0.01341,3.9521 0.02626,6.084 0.01315,0.7068 -0.391596,1.2125 -0.928129,1.2288 -0.5636494,0.017 -1.0114924,-0.3153 -1.0631144,-1.2288 -0.12032,-2.1291 -0.45614396,-4.3122 0.21875,-6.0527 z"
          style="opacity:0.5;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.49152637;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <g
+       id="gimp-tool-blend"
+       transform="matrix(0.99435227,0,0,0.99522912,68.853705,-714.4481)"
+       inkscape:export-xdpi="132"
+       inkscape:export-ydpi="132">
+      <g
+         inkscape:export-ydpi="131.99983"
+         inkscape:export-xdpi="131.99983"
+         inkscape:export-filename="/home/klaus/g4278.png"
+         id="g4278">
+        <path
+           style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.77866739;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 7.7971442,1036.2855 -3.2765018,3.3 9.2821696,6.5513 2.106311,-1.9867 z m -4.7020519,4.8296 -3.18596929,3.3084 8.11458359,7.862 1.797028,-1.9454 z"
+           id="rect10-1"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccccccc" />
+        <rect
+           style="opacity:1;fill:url(#radialGradient3957);fill-opacity:1;stroke:none;stroke-width:0.43752223;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect4216-4"
+           width="3"
+           height="3"
+           x="0"
+           y="1036.3622" />
+        <g
+           id="g4256-3"
+           transform="matrix(1.1000002,0,0,1.0998661,-1.5995058,-105.09608)" />
+        <path
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:url(#linearGradient4252);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           d="m 2.6033629,1038.9845 0.029947,0.052 8.9611631,12.7505 c -1.359207,-5.1781 0.565916,-4.4266 3.794798,-3.7852 z"
+           id="path4258-5"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccc" />
+      </g>
+      <path
+         id="path4238"
+         transform="translate(0,1036.3622)"
+         d="M 13.25,10.5 A 2.75,2.75 0 0 0 10.5,13.25 2.75,2.75 0 0 0 13.25,16 2.75,2.75 0 0 0 16,13.25 2.75,2.75 0 0 0 13.25,10.5 Z m 0,1 A 1.75,1.75 0 0 1 15,13.25 1.75,1.75 0 0 1 13.25,15 1.75,1.75 0 0 1 11.5,13.25 1.75,1.75 0 0 1 13.25,11.5 Z"
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.63325107;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
     </g>
   </g>
   <g
