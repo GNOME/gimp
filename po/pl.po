@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 17:14+0100\n"
-"PO-Revision-Date: 2016-02-14 17:15+0100\n"
+"POT-Creation-Date: 2016-02-23 20:02+0100\n"
+"PO-Revision-Date: 2016-02-23 20:03+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -18679,6 +18679,14 @@ msgstr "Proszę pobrać współrzędne z obrazu"
 msgid "Clockwise"
 msgstr "Prawoskrętnie"
 
+#: ../app/widgets/gimppropgui-constructors.c:305
+msgid "Invert Range"
+msgstr "Odwrócenie zakresu"
+
+#: ../app/widgets/gimppropgui-constructors.c:309
+msgid "Select All"
+msgstr "Zaznaczenie wszystkiego"
+
 #: ../app/widgets/gimppropgui-constructors.c:387
 msgid "Source Range"
 msgstr "Zakres źródła"
@@ -18702,6 +18710,22 @@ msgstr "Kanał zielony"
 #: ../app/widgets/gimppropgui-constructors.c:595
 msgid "Blue channel"
 msgstr "Kanał niebieski"
+
+#: ../app/widgets/gimppropgui-constructors.c:653
+msgid "Frequencies"
+msgstr "Częstotliwości"
+
+#: ../app/widgets/gimppropgui-constructors.c:663
+msgid "Contours"
+msgstr "Kontury"
+
+#: ../app/widgets/gimppropgui-constructors.c:673
+msgid "Sharp Edges"
+msgstr "Ostre krawędzie"
+
+#: ../app/widgets/gimppropgui-constructors.c:683
+msgid "Other Options"
+msgstr "Inne opcje"
 
 #: ../app/widgets/gimppropgui.c:113
 msgid "New Seed"
