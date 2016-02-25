@@ -42,13 +42,13 @@ enum
   RESPONSE_NEXT     = 2
 };
 
-static void  tips_dialog_set_tip  (GimpTip       *tip);
-static void  tips_dialog_response (GtkWidget     *dialog,
-                                   gint           response);
-static void  tips_dialog_destroy  (GtkWidget     *widget,
-                                   GimpGuiConfig *config);
-static void  more_button_clicked  (GtkWidget     *button,
-                                   Gimp          *gimp);
+static void     tips_dialog_set_tip  (GimpTip       *tip);
+static void     tips_dialog_response (GtkWidget     *dialog,
+                                      gint           response);
+static void     tips_dialog_destroy  (GtkWidget     *widget,
+                                      GimpGuiConfig *config);
+static gboolean more_button_clicked  (GtkWidget     *button,
+                                      Gimp          *gimp);
 
 
 static GtkWidget *tips_dialog = NULL;
@@ -195,7 +195,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_show (more_button);
   gtk_box_pack_start (GTK_BOX (hbox), more_button, FALSE, FALSE, 0);
 
-  g_signal_connect (more_button, "clicked",
+  g_signal_connect (more_button, "activate-link",
                     G_CALLBACK (more_button_clicked),
                     gimp);
 
@@ -254,7 +254,7 @@ tips_dialog_set_tip (GimpTip *tip)
   gtk_widget_set_sensitive (more_button, tip->help_id != NULL);
 }
 
-static void
+static gboolean
 more_button_clicked (GtkWidget *button,
                      Gimp      *gimp)
 {
@@ -262,4 +262,7 @@ more_button_clicked (GtkWidget *button,
 
   if (tip->help_id)
     gimp_help (gimp, NULL, NULL, tip->help_id);
+
+  /* Do not run the link set at construction. */
+  return TRUE;
 }
