@@ -185,8 +185,8 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
                   g_message ("%s\n\n%s",
                              _("The GIMP user manual is not available."),
                              _("Please install the additional help package "
-                               "or use the online user manual at "
-                               "http://docs.gimp.org/."));
+                               "or use the online user manual at: "
+                               "http://docs.gimp.org/"));
                 }
               break;
 
