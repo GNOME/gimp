@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   x="0.0000000"
+   y="0.0000000"
+   width="16"
+   height="16"
+   id="svg1"
+   sodipodi:version="0.32"
+   inkscape:version="0.43+devel"
+   sodipodi:docname="folders-fonts16.svg"
+   sodipodi:docbase="/home/lapo/Desktop/Grafica/WIP/gimp/preferences">
+  <metadata
+     id="metadata162">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Folder</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jakub Steiner</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:date>2005-02-01</dc:date>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/GPL/2.0/" />
+        <dc:identifier>http://jimmac.musichall.cz/</dc:identifier>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>folder</rdf:li>
+            <rdf:li>directory</rdf:li>
+            <rdf:li>storage</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/GPL/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/SourceCode" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666"
+     borderopacity="1"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1043"
+     inkscape:window-height="655"
+     inkscape:cy="5.0551894"
+     inkscape:cx="21.386789"
+     inkscape:zoom="1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:window-x="467"
+     inkscape:window-y="332"
+     inkscape:current-layer="layer2"
+     inkscape:showpageshadow="false"
+     gridspacingx="0.5px"
+     gridspacingy="0.5px"
+     gridempspacing="2"
+     width="16px"
+     height="16px"
+     showborder="false"
+     borderlayer="true" />
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient2833">
+      <stop
+         style="stop-color:#babdb6;stop-opacity:1"
+         offset="0"
+         id="stop2835" />
+      <stop
+         style="stop-color:#eeeeec;stop-opacity:1"
+         offset="1"
+         id="stop2837" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2833"
+       id="linearGradient1954"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.714288,0,0,0.714287,-17.71435,-16.28576)"
+       x1="35.75"
+       y1="18.120352"
+       x2="35.75"
+       y2="43.194206" />
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="pixmap"
+     style="display:inline" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="vectors"
+     style="display:inline">
+    <g
+       id="g891"
+       transform="matrix(0.186703,0,0,0.186703,-21.1073,57.62299)" />
+    <rect
+       style="color:black;fill:url(#linearGradient1954);fill-opacity:1;fill-rule:evenodd;stroke:#888a85;stroke-width:0.99999988;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       id="rect1934"
+       width="15.000035"
+       height="15.000026"
+       x="0.49997342"
+       y="0.49997541"
+       rx="1.4285754"
+       ry="1.4285736" />
+    <rect
+       style="color:black;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:white;stroke-width:1;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       id="rect2823"
+       width="12.999987"
+       height="12.999979"
+       x="1.5000111"
+       y="1.5000144"
+       rx="0.70559078"
+       ry="0.70558995" />
+    <path
+       style="font-size:22.27977753px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       d="M 5.2624684,5.983493 C 4.5586155,5.983496 4.0709707,6.070344 3.7995331,6.244037 C 3.5280915,6.417735 3.3923711,6.714038 3.3923728,7.132948 C 3.3923711,7.466717 3.4933718,7.732369 3.6953754,7.929904 C 3.9005321,8.124035 4.1782838,8.2211 4.528633,8.221099 C 5.0115405,8.2211 5.3981848,8.037187 5.6885664,7.669361 C 5.9820962,7.29813 6.1288623,6.805995 6.1288672,6.19295 L 6.1288672,5.983493 L 5.2624684,5.983493 M 7,5.595233 L 7,8.859685 L 6.1288672,8.859685 L 6.1288672,7.991208 C 5.9300174,8.3386 5.6822498,8.595736 5.385563,8.76262 C 5.0888696,8.926098 4.7258978,9.007837 4.2966468,9.007837 C 3.7537652,9.007837 3.3213555,8.84436 2.999416,8.517403 C 2.6806312,8.187042 2.5212392,7.745992 2.52124,7.194253 C 2.5212392,6.55056 2.720085,6.065236 3.1177765,5.738276 C 3.5186219,5.411324 4.1151584,5.247846 4.9073869,5.247842 L 6.1288672,5.247842 L 6.1288672,5.155886 C 6.1288623,4.723354 5.996299,4.389587 5.7311757,4.154582 C 5.4692004,3.916182 5.0999169,3.79698 4.6233219,3.796975 C 4.3203168,3.79698 4.0252044,3.836146 3.7379847,3.914475 C 3.4507625,3.992813 3.1745886,4.110312 2.9094619,4.266974 L 2.9094619,3.398496 C 3.2282451,3.265677 3.5375603,3.166908 3.8374084,3.102193 C 4.1372531,3.034083 4.4292085,3.000025 4.713276,3.000019 C 5.4802478,3.000025 6.0531119,3.21459 6.4318691,3.643714 C 6.8106181,4.072848 6.9999943,4.723354 7,5.595233"
+       id="text2841" />
+    <path
+       style="font-size:10.17865562px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       d="M 11.052237,11.729063 C 11.425117,11.729064 11.708832,11.58686 11.903384,11.302451 C 12.10117,11.018044 12.200065,10.604976 12.20007,10.063244 C 12.200065,9.521518 12.10117,9.108449 11.903384,8.824037 C 11.708832,8.539633 11.425117,8.39743 11.052237,8.397424 C 10.67935,8.39743 10.392393,8.541327 10.191363,8.829115 C 9.99357,9.113528 9.894675,9.524903 9.894678,10.063244 C 9.894675,10.60159 9.99357,11.014659 10.191363,11.302451 C 10.392393,11.58686 10.67935,11.729064 11.052237,11.729063 M 9.894678,8.046993 C 10.134617,7.71519 10.400498,7.471411 10.692323,7.315658 C 10.984141,7.156531 11.319736,7.076964 11.699109,7.076958 C 12.370294,7.076964 12.921513,7.356293 13.352766,7.914947 C 13.784008,8.470224 13.999631,9.186323 13.999638,10.063244 C 13.999631,10.940171 13.784008,11.657963 13.352766,12.21662 C 12.921513,12.771893 12.370294,13.049529 11.699109,13.049529 C 11.319736,13.049529 10.984141,12.971656 10.692323,12.815908 C 10.400498,12.656775 10.134617,12.411304 9.894678,12.079494 L 9.894678,12.902247 L 8.153473,12.902247 L 8.153473,4.999763 L 9.894678,4.999763 L 9.894678,8.046993"
+       id="text2849" />
+  </g>
+</svg>
