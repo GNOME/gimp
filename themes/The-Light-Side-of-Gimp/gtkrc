@@ -835,7 +835,7 @@ style "tlsog-menu-item"
         {
           function = BOX
           state = PRELIGHT
-          file = "ui/menu-item-prelight.png"
+          file = "ui/menuitem-prelight.png"
           border = { 1, 0, 1, 0 }
           stretch = TRUE
         }
