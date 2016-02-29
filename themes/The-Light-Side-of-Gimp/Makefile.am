@@ -122,6 +122,7 @@ themeui_DATA =	\
 	ui/spin-down-pressed.png	\
 	ui/spin-insensitive.png	\
 	ui/spin.png	\
+	ui/spin-fill-bg.png	\
 	ui/spin-up-insensitive.png	\
 	ui/spin-up-normal.png	\
 	ui/spin-up-pressed.png	\
