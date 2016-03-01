@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-25 19:16+0000\n"
-"PO-Revision-Date: 2016-02-26 09:01+0100\n"
+"POT-Creation-Date: 2016-02-29 19:16+0000\n"
+"PO-Revision-Date: 2016-03-01 09:21+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -2138,7 +2138,6 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
 #: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:314
 #, c-format
-#| msgid "Opening '%s'"
 msgid "Exporting '%s'"
 msgstr "Exportando «%s»"
 
@@ -2352,16 +2351,12 @@ msgstr ""
 "animación podría no reproducirse o volverse a guardar perfectamente."
 
 #: ../plug-ins/common/file-gif-save.c:510
-#| msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr ""
 "Simplemente no se ha podido reducir más los colores. Exportando como opaco."
 
 #: ../plug-ins/common/file-gif-save.c:625
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The GIF file format does not support images that "
-#| "are more than %d pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
@@ -2378,8 +2373,6 @@ msgstr ""
 "se guardará ningún comentario."
 
 #: ../plug-ins/common/file-gif-save.c:799
-#| msgid ""
-#| "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
@@ -2391,9 +2384,6 @@ msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Retardo insertado para evitar la maldita animación chupadora de CPU."
 
 #: ../plug-ins/common/file-gif-save.c:1015
-#| msgid ""
-#| "The image you are trying to save as a GIF contains layers which extend "
-#| "beyond the actual borders of the image."
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2403,9 +2393,6 @@ msgstr ""
 "más allá de los bordes reales de la imagen."
 
 #: ../plug-ins/common/file-gif-save.c:1032
-#| msgid ""
-#| "The GIF file format does not allow this.  You may choose whether to crop "
-#| "all of the layers to the image borders, or cancel this save."
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2901,7 +2888,6 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "Versión de PCX inusual, terminando"
 
 #: ../plug-ins/common/file-pcx.c:695 ../plug-ins/common/file-pnm.c:1202
-#| msgid "Cannot save images with alpha channel."
 msgid "Cannot export images with alpha channel."
 msgstr "No se pueden exportar imágenes con canales alfa."
 
@@ -3089,7 +3075,6 @@ msgstr "Ocurrió un error al abrir el archivo PNG: %s"
 
 #: ../plug-ins/common/file-png.c:863
 #, c-format
-#| msgid "Error creating PNG read struct while saving '%s'."
 msgid "Error creating PNG read struct while exporting '%s'."
 msgstr "Error al crear la estructura de lectura PNG mientras exporta «%s»."
 
@@ -3139,13 +3124,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1473
 #, c-format
-#| msgid "Error creating PNG write struct while saving '%s'."
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Error al crear la estructura de escritura PNG mientras exporta «%s»."
 
 #: ../plug-ins/common/file-png.c:1483
 #, c-format
-#| msgid "Error while saving '%s'. Could not save image."
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Error al exportar «%s». No se puede exportar la imagen."
 
@@ -3263,10 +3246,11 @@ msgid "Could not interpret Postscript file '%s'"
 msgstr "No se pudo interpretar el archivo PostScript «%s»"
 
 #: ../plug-ins/common/file-ps.c:1247
-#, fuzzy, c-format
+#, c-format
 #| msgid "PostScript save cannot handle images with alpha channels"
 msgid "PostScript export cannot handle images with alpha channels"
-msgstr "Guardar como PostScript no funciona con imágenes con canales alfa"
+msgstr ""
+"PostScript no puede manejar la exportación de imágenes con canales alfa"
 
 #: ../plug-ins/common/file-ps.c:3416
 msgid "Import from PostScript"
@@ -3630,10 +3614,10 @@ msgid "This image depth is not supported"
 msgstr "Esta profundidad de imagen no está soportada"
 
 #: ../plug-ins/common/file-sunras.c:586
-#, fuzzy, c-format
+#, c-format
 #| msgid "SUNRAS save cannot handle images with alpha channels"
 msgid "SUNRAS export cannot handle images with alpha channels"
-msgstr "SUNRAS no puede manejar imágenes con canales alfa"
+msgstr "SUNRAS no puede manejar la exportación de imágenes con canales alfa"
 
 #: ../plug-ins/common/file-sunras.c:597
 msgid "Can't operate on unknown image types"
@@ -3828,7 +3812,6 @@ msgstr ""
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:997
-#, fuzzy
 #| msgid ""
 #| "The image which you are trying to save as an XBM contains more than two "
 #| "colors.\n"
@@ -3841,10 +3824,11 @@ msgid ""
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
-"La imagen que está intentando guardar como XBM contiene más de dos colores.\n"
+"La imagen que está intentando exportar como XBM contiene más de dos "
+"colores.\n"
 "\n"
-"Por favor, conviértala a una imagen indexada en blanco y negro (1-bit) e "
-"inténtelo de nuevo."
+"Conviértala a imagen indexada en blanco y negro (1-bit) y vuelva a "
+"intentarlo."
 
 # //R Hum
 #: ../plug-ins/common/file-xbm.c:1009
@@ -4221,6 +4205,8 @@ msgid ""
 "'%s':\n"
 "Number of colormap entries < number of colors"
 msgstr ""
+"«%s»:\n"
+"Número de entradas del mapa de colores < número de colores"
 
 #: ../plug-ins/common/file-xwd.c:518
 msgid "Can't read color entries"
@@ -4236,10 +4222,9 @@ msgstr ""
 "Actualmente esto no está soportado."
 
 #: ../plug-ins/common/file-xwd.c:636
-#, fuzzy
 #| msgid "Cannot save images with alpha channels."
 msgid "Cannot export images with alpha channels."
-msgstr "No se pueden guardar imágenes con canales alfa."
+msgstr "No se pueden exportar imágenes con canales alfa."
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
@@ -4247,10 +4232,10 @@ msgid "Could not open '%s' for writing: "
 msgstr "No se pudo abrir «%s» para escritura: "
 
 #: ../plug-ins/common/file-xwd.c:686
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error saving '%s': "
 msgid "Error exporting '%s': "
-msgstr "Error al guardar «%s»: "
+msgstr "Error al exportar «%s»:"
 
 #: ../plug-ins/common/file-xwd.c:1751 ../plug-ins/common/file-xwd.c:2149
 #, c-format
@@ -6361,12 +6346,11 @@ msgid "The bitmap ends unexpectedly."
 msgstr "El mapa de bits finaliza inesperadamente."
 
 #: ../plug-ins/file-bmp/bmp-write.c:197 ../plug-ins/file-bmp/bmp-write.c:229
-#, fuzzy
 #| msgid "Cannot save indexed image with transparency in BMP file format."
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
-"No se puede guardar una imagen indexada con transparencia en formato de "
-"archivo BMP."
+"No se puede exportar una imagen indexada con transparencia en \n"
+"formato de archivo BMP."
 
 #: ../plug-ins/file-bmp/bmp-write.c:199 ../plug-ins/file-bmp/bmp-write.c:231
 msgid "Alpha channel will be ignored."
@@ -6424,28 +6408,28 @@ msgid "Error opening file '%s' for reading"
 msgstr "Error al abrir el archivo «%s» para lectura"
 
 #: ../plug-ins/file-exr/file-exr.c:191
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image dimensions from '%s'"
-msgstr "Ocurrió un error al leer cabecera del archivo BMP de «%s»"
+msgstr "Error al consultar las dimensiones de la imagen «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:211
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image precision from '%s'"
-msgstr "Ocurrió un error al leer cabecera del archivo BMP de «%s»"
+msgstr "Error al consultar la precisión de la imagen «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:228
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image type from '%s'"
-msgstr "Ocurrió un error al leer cabecera del archivo BMP de «%s»"
+msgstr "Error al consultar el tipo de la imagen «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:271
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading BMP file header from '%s'"
 msgid "Error reading pixel data from '%s'"
-msgstr "Ocurrió un error al leer cabecera del archivo BMP de «%s»"
+msgstr "Error al leer los datos de los píxeles de «%s»"
 
 #: ../plug-ins/file-faxg3/faxg3.c:104
 msgid "G3 fax image"
@@ -6464,10 +6448,9 @@ msgid "FITS file keeps no displayable images"
 msgstr "El archivo FITS no tiene imágenes visualizables"
 
 #: ../plug-ins/file-fits/fits.c:457
-#, fuzzy
 #| msgid "FITS save cannot handle images with alpha channels"
 msgid "FITS export cannot handle images with alpha channels"
-msgstr "No se puede guardar en archivos FITS imágenes con canales alfa"
+msgstr "FITS no puede manejar la exportación de imágenes con canales alfa"
 
 #: ../plug-ins/file-fits/fits.c:1145
 msgid "Load FITS File"
@@ -6509,11 +6492,9 @@ msgid "Frame (%i)"
 msgstr "Cuadro (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:712
-#, fuzzy
 #| msgid "Sorry, I can save only INDEXED and GRAY images."
 msgid "Sorry, I can export only INDEXED and GRAY images."
-msgstr ""
-"Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
+msgstr "Disculpe, sólo se puede exportar ÍNDICES e imágenes en GRIS. "
 
 #: ../plug-ins/file-fli/fli-gimp.c:864
 msgid "GFLI 1.3 - Load framestack"
@@ -6646,7 +6627,7 @@ msgstr "Optimi_zar"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:917
 msgid "Use arithmetic _coding"
-msgstr ""
+msgstr "Utilizar _codificación aritmética"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:919
 msgid "Older software may have trouble opening arithmetic-coded images"
@@ -9235,7 +9216,13 @@ msgstr "No están disponibles las páginas de ayuda para «%s»."
 msgid "The GIMP user manual is not available."
 msgstr "No está disponible el manual de usuario de GIMP."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#. TRANSLATORS: do not end the URL with a dot,
+#. * it would be in the link. Because of
+#. * technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../plug-ins/help/gimphelpdomain.c:193
 #, fuzzy
 #| msgid ""
 #| "Please install the additional help package or use the online user manual "
@@ -9247,11 +9234,11 @@ msgstr ""
 "Por favor, instale el paquete adicional de ayuda o use el manual en línea en "
 "http://docs.gimp.org/."
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "¿Quizá le faltan los «backends» de GIO y necesita instalar GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "El ID de la ayuda «%s» es desconocido"
