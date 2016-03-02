@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
+# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-25 19:13+0000\n"
-"PO-Revision-Date: 2016-02-26 09:04+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2016-03-01 07:13+0000\n"
+"PO-Revision-Date: 2016-03-01 13:13-0600\n"
+"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -45,6 +45,9 @@ msgid ""
 "distributed program for such tasks as photo retouching, image composition "
 "and image authoring."
 msgstr ""
+"GIMP es el acrónimo de Programa de Manipulación de Imágenes de GNU. Se "
+"distribuye libre y gratuitamente para tareas de retocado de fotos, "
+"composición de imágenes y autoría de imágenes."
 
 #: ../desktop/gimp.appdata.xml.in.h:4
 msgid ""
@@ -52,6 +55,10 @@ msgid ""
 "expert quality photo retouching program, an online batch processing system, "
 "a mass production image renderer, an image format converter, etc."
 msgstr ""
+"Tiene muchas características. Se puede usar como un simple programa de "
+"dibujo, un programa de retoque fotográfico profesional, un sistema de "
+"procesado por lotes, un generador de imágenes renderizadas en masa, un "
+"conversor de formato de imágenes, etc."
 
 #: ../desktop/gimp.appdata.xml.in.h:5
 msgid ""
@@ -89,7 +96,12 @@ msgstr ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis y el equipo de desarrollo de GIMP"
 
-#: ../app/about.h:34
+#. TRANSLATORS: do not end the license URL with a dot, because it would
+#. * be in the link. Because of technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../app/about.h:39
 #, fuzzy
 #| msgid ""
 #| "GIMP is free software: you can redistribute it and/or modify it under the "
@@ -2951,7 +2963,7 @@ msgstr "Canal _nuevo…"
 #: ../app/actions/filters-actions.c:141
 msgctxt "filters-action"
 msgid "_Checkerboard..."
-msgstr ""
+msgstr "_Cuadriculado..."
 
 #: ../app/actions/filters-actions.c:146
 #, fuzzy
@@ -5725,6 +5737,8 @@ msgstr "Seleccionar un área contigua simple"
 #: ../app/actions/select-commands.c:214
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
+"Cuando se está encogiendo, actúa como si las áreas seleccionadas continuaran "
+"fuera de la imagen."
 
 #: ../app/actions/select-commands.c:241
 msgid "Grow Selection"
@@ -5751,6 +5765,8 @@ msgstr "_Difuminar los bordes"
 #: ../app/actions/select-commands.c:298
 msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
+"Cuando se está bordeando, actúa como si las áreas seleccionadas continuaran "
+"fuera de la imagen."
 
 #: ../app/actions/select-commands.c:358 ../app/actions/select-commands.c:391
 #: ../app/actions/vectors-commands.c:389 ../app/actions/vectors-commands.c:423
@@ -7637,6 +7653,9 @@ msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
 msgstr ""
+"Cuando se encuentre activado, GIMP tratará de restaurar las ventanas que se "
+"abrieron anteriormente en la pantalla. Cuando se encuentre desactivado, las "
+"ventanas aparecerán en la pantalla actualmente usada."
 
 #: ../app/config/gimprc-blurbs.h:313
 msgid ""
@@ -8087,7 +8106,7 @@ msgstr "Clarear sólo"
 #: ../app/core/core-enums.c:335
 msgctxt "layer-mode-effects"
 msgid "Hue (HSV)"
-msgstr ""
+msgstr "Tono (HSV)"
 
 #: ../app/core/core-enums.c:336
 msgctxt "layer-mode-effects"
@@ -8152,7 +8171,7 @@ msgstr "Solapar"
 #: ../app/core/core-enums.c:348
 msgctxt "layer-mode-effects"
 msgid "Hue (LCH)"
-msgstr ""
+msgstr "Tono (LCH)"
 
 #: ../app/core/core-enums.c:349
 msgctxt "layer-mode-effects"
@@ -9637,7 +9656,7 @@ msgstr "El archivo está corrupto"
 #: ../app/core/gimpgradient-load.c:195 ../app/core/gimpgradient-load.c:203
 #, c-format
 msgid "Corrupt segment %d."
-msgstr ""
+msgstr "Segmento %d corrupto."
 
 #: ../app/core/gimpgradient-load.c:214 ../app/core/gimpgradient-load.c:224
 #, fuzzy, c-format
@@ -10107,7 +10126,7 @@ msgstr "Aplanar la imagen"
 
 #: ../app/core/gimpimage-merge.c:218
 msgid "Cannot flatten an image without any visible layer."
-msgstr ""
+msgstr "No se puede aplanar una imagen sin una capa visible."
 
 #: ../app/core/gimpimage-merge.c:261
 msgid "Cannot merge down to a layer group."
@@ -10449,7 +10468,7 @@ msgstr "Tipo de archivo de paleta desconocido: %s"
 #: ../app/core/gimppalette-load.c:70
 #, c-format
 msgid "Missing magic header."
-msgstr ""
+msgstr "Cabecera mágica perdida."
 
 #: ../app/core/gimppalette-load.c:93
 #, c-format
@@ -10510,7 +10529,7 @@ msgstr "No se ha podido leer la cabecera del archivo de paleta «%s»"
 
 #: ../app/core/gimppalette-load.c:461
 msgid "Premature end of file."
-msgstr ""
+msgstr "Fin precipitado del archivo."
 
 #: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:254
 msgid "History Color"
@@ -11157,12 +11176,12 @@ msgstr "Dirección (%s)"
 #: ../app/dialogs/color-profile-dialog.c:337
 #, c-format
 msgid "Preferred grayscale (%s)"
-msgstr ""
+msgstr "Escala de grises preferida (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:342
 #, c-format
 msgid "Preferred RGB (%s)"
-msgstr ""
+msgstr "RGB preferido (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:407
 #, fuzzy, c-format
@@ -12115,20 +12134,18 @@ msgid "Color Management"
 msgstr "Gestión del color"
 
 #: ../app/dialogs/preferences-dialog.c:1450
-#, fuzzy
 #| msgid "_RGB profile:"
 msgid "Preferred _RGB profile:"
-msgstr "Perfil _RGB:"
+msgstr "Perfil _RGB preferido:"
 
 #: ../app/dialogs/preferences-dialog.c:1451
 msgid "Select RGB Color Profile"
 msgstr "Seleccionar el perfil de color RGB"
 
 #: ../app/dialogs/preferences-dialog.c:1452
-#, fuzzy
 #| msgid "_RGB profile:"
 msgid "Preferred _grayscale profile:"
-msgstr "Perfil _RGB:"
+msgstr "Perfil _escala de grises preferido:"
 
 #: ../app/dialogs/preferences-dialog.c:1453
 #, fuzzy
