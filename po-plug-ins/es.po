@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-29 19:16+0000\n"
-"PO-Revision-Date: 2016-03-01 09:21+0100\n"
+"POT-Creation-Date: 2016-03-01 19:16+0000\n"
+"PO-Revision-Date: 2016-03-02 09:12+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -3247,7 +3247,6 @@ msgstr "No se pudo interpretar el archivo PostScript «%s»"
 
 #: ../plug-ins/common/file-ps.c:1247
 #, c-format
-#| msgid "PostScript save cannot handle images with alpha channels"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr ""
 "PostScript no puede manejar la exportación de imágenes con canales alfa"
@@ -3615,7 +3614,6 @@ msgstr "Esta profundidad de imagen no está soportada"
 
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
-#| msgid "SUNRAS save cannot handle images with alpha channels"
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "SUNRAS no puede manejar la exportación de imágenes con canales alfa"
 
@@ -3812,12 +3810,6 @@ msgstr ""
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:997
-#| msgid ""
-#| "The image which you are trying to save as an XBM contains more than two "
-#| "colors.\n"
-#| "\n"
-#| "Please convert it to a black and white (1-bit) indexed image and try "
-#| "again."
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -4222,7 +4214,6 @@ msgstr ""
 "Actualmente esto no está soportado."
 
 #: ../plug-ins/common/file-xwd.c:636
-#| msgid "Cannot save images with alpha channels."
 msgid "Cannot export images with alpha channels."
 msgstr "No se pueden exportar imágenes con canales alfa."
 
@@ -4233,7 +4224,6 @@ msgstr "No se pudo abrir «%s» para escritura: "
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
-#| msgid "Error saving '%s': "
 msgid "Error exporting '%s': "
 msgstr "Error al exportar «%s»:"
 
@@ -6346,7 +6336,6 @@ msgid "The bitmap ends unexpectedly."
 msgstr "El mapa de bits finaliza inesperadamente."
 
 #: ../plug-ins/file-bmp/bmp-write.c:197 ../plug-ins/file-bmp/bmp-write.c:229
-#| msgid "Cannot save indexed image with transparency in BMP file format."
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 "No se puede exportar una imagen indexada con transparencia en \n"
@@ -6409,25 +6398,21 @@ msgstr "Error al abrir el archivo «%s» para lectura"
 
 #: ../plug-ins/file-exr/file-exr.c:191
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image dimensions from '%s'"
 msgstr "Error al consultar las dimensiones de la imagen «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:211
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image precision from '%s'"
 msgstr "Error al consultar la precisión de la imagen «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:228
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image type from '%s'"
 msgstr "Error al consultar el tipo de la imagen «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:271
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error reading pixel data from '%s'"
 msgstr "Error al leer los datos de los píxeles de «%s»"
 
@@ -6448,7 +6433,6 @@ msgid "FITS file keeps no displayable images"
 msgstr "El archivo FITS no tiene imágenes visualizables"
 
 #: ../plug-ins/file-fits/fits.c:457
-#| msgid "FITS save cannot handle images with alpha channels"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS no puede manejar la exportación de imágenes con canales alfa"
 
@@ -6492,7 +6476,6 @@ msgid "Frame (%i)"
 msgstr "Cuadro (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:712
-#| msgid "Sorry, I can save only INDEXED and GRAY images."
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Disculpe, sólo se puede exportar ÍNDICES e imágenes en GRIS. "
 
@@ -6632,6 +6615,8 @@ msgstr "Utilizar _codificación aritmética"
 #: ../plug-ins/file-jpeg/jpeg-save.c:919
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
+"El software antiguo puede tener problemas para abrir imágenes codificadas "
+"aritméticamente"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:942
 msgid "_Progressive"
@@ -6818,13 +6803,13 @@ msgid "Unsupported or invalid channel size"
 msgstr "Tamaño del canal no soportado o no válido"
 
 #: ../plug-ins/file-psd/psd-load.c:2094
-#, fuzzy, c-format
+#, c-format
 #| msgid "Failed to open '%s': %s"
 msgid "Failed to decompress data"
-msgstr "Falló al abrir «%s»: %s"
+msgstr "Error al descomprimir los datos"
 
 #: ../plug-ins/file-psd/psd-save.c:253
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Unable to save layer with mode '%s'.  Either the PSD file format or the "
 #| "save plug-in does not support that, using normal mode instead."
@@ -6832,9 +6817,9 @@ msgid ""
 "Unable to export layer with mode '%s'.  Either the PSD file format or the "
 "export plug-in does not support that, using normal mode instead."
 msgstr ""
-"No se puede guardar la capa con el modo «%s». Bien el formato del archivo "
-"PSD o bien el complemento de guardado no lo soportan, se utilizará el modo "
-"normal en su lugar."
+"No se puede exportar la capa con modo «%s». Debido a que, el formato de "
+"archivo PSD o bien la exportación del complemento no lo soportan, se "
+"utilizará el modo normal en su lugar."
 
 #: ../plug-ins/file-psd/psd-save.c:503
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -6842,7 +6827,7 @@ msgstr ""
 "Error: no se puede convertir el tipo de imagen básico de GIMP al modo PSD"
 
 #: ../plug-ins/file-psd/psd-save.c:1490
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Unable to save '%s'.  The PSD file format does not support images that "
 #| "are more than 30,000 pixels wide or tall."
@@ -6850,11 +6835,11 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Imposible guardar «%s». El formato de archivo PSD no soporta imágenes que "
-"tengan más de 30.000 píxeles de anchura o de altura."
+"Imposible exportar «%s». El formato de archivo PSD no soporta imágenes que "
+"tengan más de 30.000 píxeles de anchura o altura."
 
 #: ../plug-ins/file-psd/psd-save.c:1505
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Unable to save '%s'.  The PSD file format does not support images with "
 #| "layers that are more than 30,000 pixels wide or tall."
@@ -6862,8 +6847,8 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Imposible guardar «%s». El formato de archivo PSD no soporta imágenes con "
-"capas que tengan más de 30.000 píxeles de anchura o de altura."
+"Imposible exportar «%s». El formato de archivo PSD no soporta imágenes con "
+"capas que tengan más de 30.000 píxeles de anchura o altura"
 
 #: ../plug-ins/file-psd/psd-util.c:50
 msgid "Unexpected end of file"
@@ -6950,20 +6935,22 @@ msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:482
-#, fuzzy, c-format
+#, c-format
 #| msgid "FITS save cannot handle images with alpha channels"
 msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr "No se puede guardar en archivos FITS imágenes con canales alfa"
+msgstr "TIFF no puede manejar la exportación de imágenes con un canal alfa."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:495
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
 msgstr ""
+"Sólo las imágenes monocromáticas se pueden comprimir con «CCITT Group 4» o "
+"«CCITT Group 3»."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:509
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
-msgstr ""
+msgstr "Las imágenes indexadas no se pueden comprimir con «JPEG»."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:607
 msgid ""
@@ -6976,7 +6963,7 @@ msgstr ""
 #: ../plug-ins/file-tiff/file-tiff-save.c:705
 #, c-format
 msgid "Failed a scanline write on row %d"
-msgstr ""
+msgstr "Ha fallado un trazo de la imagen por lícnea escrita en la fila %d"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:830
 msgid "TIFF"
@@ -8745,20 +8732,18 @@ msgid "Author"
 msgstr "Autor"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:8
-#, fuzzy
 #| msgid "_Author:"
 msgid "Authortitle"
-msgstr "_Autor:"
+msgstr "Título del autor"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:9
 msgid "Copyright"
 msgstr "Copyright"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:10
-#, fuzzy
 #| msgid "C_aption"
 msgid "Caption"
-msgstr "Tít_ulo"
+msgstr "Título"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:11
 #, fuzzy
@@ -8767,10 +8752,9 @@ msgid "Captionwriter"
 msgstr "_Descripción:"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:12
-#, fuzzy
 #| msgid "Create line"
 msgid "Headline"
-msgstr "Crear línea"
+msgstr "Titular"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:13
 msgid ""
@@ -8797,6 +8781,8 @@ msgid ""
 "Supplemental\n"
 "Category"
 msgstr ""
+"Categoría\n"
+"suplementaria"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:20
 msgid "Urgency"
@@ -8819,16 +8805,17 @@ msgid ""
 "Transmission\n"
 "reference"
 msgstr ""
+"Referencia para \n"
+"transmisión"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:26
 msgid "City"
 msgstr "Ciudad"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:27
-#, fuzzy
 #| msgid "Curl Location"
 msgid "Sublocation"
-msgstr "Localización del doblado"
+msgstr "Sublocalización"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:28
 msgid "Province/State"
@@ -8911,10 +8898,9 @@ msgid "A_uto update preview"
 msgstr "Actualizar a_utomáticamente la previsualización"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
-#, fuzzy
 #| msgid "`Default' is created."
 msgid "'Default' is created."
-msgstr "«Default» fue creado."
+msgstr "Se crea el «predeterminado»."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2465
 msgid "Default"
