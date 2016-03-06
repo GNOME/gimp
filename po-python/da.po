@@ -8,7 +8,7 @@
 # Keld Simonsen <keld@dkuug.dk>, 2000.
 # Ole Laursen <olau@hardworking.dk>, 2001, 02, 04.
 # Joe Hansen <joedalton2@yahoo.dk>, 2008, 2011.
-# scootergrisen, 2015.
+# scootergrisen, 2015, 2016.
 #
 msgid ""
 msgstr ""
@@ -16,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-03-15 06:13+0000\n"
-"PO-Revision-Date: 2015-06-09 00:00+0200\n"
+"PO-Revision-Date: 2016-02-26 00:00+0200\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -103,7 +103,7 @@ msgstr "_Fil at læse eller tegn til brug"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
-msgstr "Skriftstørrelse i skærmpu_nkter"
+msgstr "_Skriftstørrelse i pixels"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
@@ -358,7 +358,6 @@ msgstr "Skrifttype"
 
 # i hovedfilen er der en streng hvor forklaringen er pixel size
 # og oversættelsen "%d × %d punkter"
-# scootergrisen : Pixelstørrelse/Størrelse på pixel?
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:86
 msgid "Pixel Size"
 msgstr "Pixelstørrelse"
