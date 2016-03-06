@@ -10,7 +10,7 @@
 # Ole Laursen <olau@hardworking.dk>, 2001, 02, 03, 04, 05, 07.
 # Per Kongstad <p_kongstad@op.pl>, 2009.
 # Joe Hansen <joedalton2@yahoo.dk>, 2011, 2015.
-# scootergrisen, 2015.
+# scootergrisen, 2015, 2016.
 #
 msgid ""
 msgstr ""
@@ -18,7 +18,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-03-15 06:11+0000\n"
-"PO-Revision-Date: 2015-06-09 00:00+0200\n"
+"PO-Revision-Date: 2016-02-26 00:00+0200\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -69,7 +69,6 @@ msgstr "Pluginet %s kan ikke håndtere lag"
 msgid "Merge Visible Layers"
 msgstr "Forén synlige lag"
 
-# scootergrisen: synlighed/opacitet
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
@@ -208,7 +207,6 @@ msgstr ""
 "Dit billede skal eksporteres før det kan gemmes som %s på grund af følgende "
 "årsager:"
 
-# scootergrisen: eventuelt "originalbilledet"
 #. the footline
 #: ../libgimp/gimpexport.c:622
 msgid "The export conversion won't modify your original image."
@@ -279,7 +277,6 @@ msgstr "efter hjælp"
 msgid "by author"
 msgstr "efter forfatter"
 
-# scootergrisen: copyright/ophavsret
 #: ../libgimp/gimpprocbrowserdialog.c:153
 msgid "by copyright"
 msgstr "efter ophavsret"
@@ -322,7 +319,6 @@ msgstr "Søgning efter hjælp"
 msgid "Searching by author"
 msgstr "Søgning efter forfatter"
 
-# scootergrisen: copyright/ophavsret
 #: ../libgimp/gimpprocbrowserdialog.c:459
 msgid "Searching by copyright"
 msgstr "Søgning efter ophavsret"
@@ -375,7 +371,6 @@ msgstr "Forfatter:"
 msgid "Date:"
 msgstr "Dato:"
 
-# scootergrisen: copyright/ophavsret
 #: ../libgimp/gimpprocview.c:262
 msgid "Copyright:"
 msgstr "Ophavsret:"
@@ -384,7 +379,6 @@ msgstr "Ophavsret:"
 msgid "percent"
 msgstr "procent"
 
-# scootergrisen: synlighed/opacitet
 #: ../libgimpbase/gimpbaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
@@ -460,7 +454,7 @@ msgstr "Mønsterudfyldning"
 #: ../libgimpbase/gimpbaseenums.c:131
 msgctxt "channel-ops"
 msgid "Add to the current selection"
-msgstr "Tilføj til den aktuelle markering"
+msgstr "Føj til den aktuelle markering"
 
 #: ../libgimpbase/gimpbaseenums.c:132
 msgctxt "channel-ops"
@@ -580,12 +574,14 @@ msgctxt "desaturate-mode"
 msgid "Average"
 msgstr "Gennemsnit"
 
+# scootergrisen: se om skal være noget andet
 # http://meetthegimp.org/wp-content/uploads/meetthegimp069.mp4
 #: ../libgimpbase/gimpbaseenums.c:333
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Lysne"
 
+# scootergrisen: se om skal være noget andet
 # http://meetthegimp.org/wp-content/uploads/meetthegimp069.mp4
 #: ../libgimpbase/gimpbaseenums.c:334
 msgctxt "dodge-burn-type"
@@ -748,6 +744,7 @@ msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Kubisk"
 
+# scootergrisen: Lanczos3 med lille l? Kig også i andre strenge
 #: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
@@ -814,15 +811,17 @@ msgid "Midtones"
 msgstr "Mellemtoner"
 
 # Kunne vi ikke finde et bedre udtryk
+# scootergrisen: måske noget med højlys
 #: ../libgimpbase/gimpbaseenums.c:738
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Highlights"
 
+# scootergrisen: måske "Normal (fremad)" er bedre end "Almindelig (fremad)"
 #: ../libgimpbase/gimpbaseenums.c:767
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
-msgstr "Almindelig (fremad)"
+msgstr "Normal (fremad)"
 
 #: ../libgimpbase/gimpbaseenums.c:768
 msgctxt "transform-direction"
@@ -889,10 +888,11 @@ msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Let"
 
+# scootergrisen: se om medium er bedre
 #: ../libgimpbase/gimpbaseenums.c:1139
 msgctxt "text-hint-style"
 msgid "Medium"
-msgstr "Mellem"
+msgstr "Mellem/medium"
 
 #: ../libgimpbase/gimpbaseenums.c:1140
 msgctxt "text-hint-style"
@@ -1014,7 +1014,7 @@ msgid "Print simulation"
 msgstr "Udskriftssimulering"
 
 # Opfattelse?
-# scootergrisen : måske "Som det opfattes" eller "Sanselig"
+# scootergrisen: måske "Som det opfattes" eller "Sanselig"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
@@ -1173,7 +1173,7 @@ msgstr "Kunne ikke oprette miniaturemappen \"%s\"."
 #: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr "Miniature indeholder ikke et Thumb::URI-mærke"
+msgstr "Miniature indeholder ikke et Thumb::URI-mærkat"
 
 #: ../libgimpthumb/gimpthumbnail.c:905
 #, c-format
@@ -1318,11 +1318,10 @@ msgstr ""
 "Klik på pipetten og klik derefter et vilkårligt på skærmen "
 "for at vælge den pågældende farve."
 
-# scootergrisen: Forhåndsvis/Forhåndsvisning
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:290
 msgid "_Preview"
-msgstr "_Forhåndsvis"
+msgstr "_Forhåndsvisning"
 
 #: ../libgimpwidgets/gimppreviewarea.c:103
 msgid "Check Size"
@@ -1469,11 +1468,13 @@ msgctxt "aspect-type"
 msgid "Square"
 msgstr "Kvadratisk"
 
+# scootergrisen: portræt?
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Stående"
 
+# scootergrisen: landskab?
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"
@@ -1882,7 +1883,7 @@ msgstr "Y flyt tilbage"
 
 #: ../modules/controller-linux-input.c:96
 msgid "X Axis Tilt Forward"
-msgstr "X-akse hæld frem"
+msgstr "X-akse hæld fremad"
 
 #: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Back"
