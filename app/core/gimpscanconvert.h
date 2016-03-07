@@ -19,7 +19,14 @@
 #define __GIMP_SCAN_CONVERT_H__
 
 
-GimpScanConvert * gimp_scan_convert_new        (void);
+GimpScanConvert *
+          gimp_scan_convert_new               (void);
+
+GimpScanConvert *
+          gimp_scan_convert_new_from_boundary (const GimpBoundSeg *bound_segs,
+                                               gint                n_bound_segs,
+                                               gint                offset_x,
+                                               gint                offset_y);
 
 void      gimp_scan_convert_free               (GimpScanConvert   *sc);
 void      gimp_scan_convert_set_pixel_ratio    (GimpScanConvert   *sc,

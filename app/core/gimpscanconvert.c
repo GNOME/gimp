@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include <gio/gio.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include <cairo.h>
@@ -29,6 +29,7 @@
 
 #include "core-types.h"
 
+#include "gimpboundary.h"
 #include "gimpbezierdesc.h"
 #include "gimpscanconvert.h"
 
@@ -74,6 +75,51 @@ gimp_scan_convert_new (void)
   sc->ratio_xy = 1.0;
 
   return sc;
+}
+
+GimpScanConvert *
+gimp_scan_convert_new_from_boundary (const GimpBoundSeg *bound_segs,
+                                     gint                n_bound_segs,
+                                     gint                offset_x,
+                                     gint                offset_y)
+{
+  g_return_val_if_fail (bound_segs == NULL || n_bound_segs != 0, NULL);
+
+  if (bound_segs)
+    {
+      GimpBoundSeg *stroke_segs;
+      gint          n_stroke_segs;
+
+      stroke_segs = gimp_boundary_sort (bound_segs, n_bound_segs,
+                                        &n_stroke_segs);
+
+      if (stroke_segs)
+        {
+          GimpBezierDesc *bezier;
+
+          bezier = gimp_bezier_desc_new_from_bound_segs (stroke_segs,
+                                                         n_bound_segs,
+                                                         n_stroke_segs);
+
+          g_free (stroke_segs);
+
+          if (bezier)
+            {
+              GimpScanConvert *scan_convert;
+
+              scan_convert = gimp_scan_convert_new ();
+
+              gimp_bezier_desc_translate (bezier, offset_x, offset_y);
+              gimp_scan_convert_add_bezier (scan_convert, bezier);
+
+              gimp_bezier_desc_free (bezier);
+
+              return scan_convert;
+            }
+        }
+    }
+
+  return NULL;
 }
 
 /**
