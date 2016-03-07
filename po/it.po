@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-21 19:09+0100\n"
-"PO-Revision-Date: 2016-02-22 02:21+0100\n"
+"POT-Creation-Date: 2016-03-07 22:04+0100\n"
+"PO-Revision-Date: 2016-03-07 22:08+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -107,7 +107,12 @@ msgstr ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis e il team di sviluppo di GIMP"
 
-#: ../app/about.h:34
+#. TRANSLATORS: do not end the license URL with a dot, because it would
+#. * be in the link. Because of technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../app/about.h:39
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -120,18 +125,13 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP. If not, see: http://www.gnu.org/licenses/"
 msgstr ""
-"GIMP è software libero; puoi redistribuirlo e/o modificarlo nei termini "
-"della GNU General Public License come pubblicato dalla Free Software "
-"Foundation versione 3 o (a proprio giudizio) successive.\n"
+"GIMP è software libero; puoi redistribuirlo e/o modificarlo nei termini della GNU General Public License come pubblicato dalla Free Software Foundation versione 3 o (a proprio giudizio) successive.\n"
 "\n"
-"GIMP è distribuito sperando sia utile, ma SENZA ALCUNA GARANZIA espressa o "
-"implicita, di COMMERCIABILITÀ o di IDONEITÀ AD UNO SCOPO PARTICOLARE. Vedere "
-"la GNU General Public License per ulteriori dettagli.\n"
+"GIMP è distribuito sperando sia utile, ma SENZA ALCUNA GARANZIA espressa o implicita, di COMMERCIABILITÀ o di IDONEITÀ AD UNO SCOPO PARTICOLARE. Vedere la GNU General Public License per ulteriori dettagli.\n"
 "\n"
-"Dovresti aver ricevuto una copia della GNU General Public License con GIMP. "
-"Se così non fosse, vedere http://www.gnu.org/licenses/."
+"Dovresti aver ricevuto una copia della GNU General Public License con GIMP. Se così non fosse, vedere http://www.gnu.org/licenses/."
 
 #: ../app/main.c:158
 msgid "Show version information and exit"
@@ -8831,7 +8831,7 @@ msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Delinea canale"
 
-#: ../app/core/gimpchannel.c:290 ../app/core/gimpselection.c:613
+#: ../app/core/gimpchannel.c:290 ../app/core/gimpselection.c:612
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Canale a selezione"
@@ -9109,6 +9109,15 @@ msgstr "Equalizza"
 msgid "Computing alpha of unknown pixels"
 msgstr "Calcolo alfa per i pixel sconosciuti"
 
+#: ../app/core/gimpdrawable-fill.c:110
+msgid "Not enough points to fill"
+msgstr "Non ci sono abbastanza punti per riempire"
+
+#: ../app/core/gimpdrawable-fill.c:206
+msgctxt "undo-type"
+msgid "Render Stroke"
+msgstr "Disegna il delineato"
+
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:116
 #: ../app/tools/gimplevelstool.c:137
@@ -9120,19 +9129,10 @@ msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Impostazione disegnabile"
 
-#: ../app/core/gimpdrawable-stroke.c:271
+#: ../app/core/gimpdrawable-stroke.c:111
 #: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:636
 msgid "Not enough points to stroke"
 msgstr "Non ci sono abbastanza punti da tracciare"
-
-#: ../app/core/gimpdrawable-stroke.c:272
-msgid "Not enough points to fill"
-msgstr "Non ci sono abbastanza punti per riempire"
-
-#: ../app/core/gimpdrawable-stroke.c:387
-msgctxt "undo-type"
-msgid "Render Stroke"
-msgstr "Disegna il delineato"
 
 #: ../app/core/gimpdrawable-transform.c:724
 msgctxt "undo-type"
@@ -10093,26 +10093,26 @@ msgctxt "undo-type"
 msgid "Flood Selection"
 msgstr "Selezione allagamento"
 
-#: ../app/core/gimpselection.c:295
+#: ../app/core/gimpselection.c:294
 msgid "There is no selection to stroke."
 msgstr "Nessuna selezione da disegnare."
 
-#: ../app/core/gimpselection.c:701
+#: ../app/core/gimpselection.c:700
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 "Non è possibile a tagliare o copiare perché la regione selezionata è vuota."
 
-#: ../app/core/gimpselection.c:830
+#: ../app/core/gimpselection.c:829
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Non è possibile la selezione fluttuante perché la regione selezionata è vuota"
 
-#: ../app/core/gimpselection.c:837
+#: ../app/core/gimpselection.c:836
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Selezione fluttuante"
 
-#: ../app/core/gimpselection.c:853
+#: ../app/core/gimpselection.c:852
 msgid "Floated Layer"
 msgstr "Livello fluttuante"
 
@@ -10728,7 +10728,7 @@ msgstr "Modifica la selezione"
 
 #: ../app/dialogs/dialogs.c:389
 msgid "Symmetry Painting"
-msgstr ""
+msgstr "Disegno simmetrico"
 
 #: ../app/dialogs/dialogs.c:393
 msgid "Undo"
@@ -18724,6 +18724,14 @@ msgstr "Prelievo coordinate dall'immagine"
 msgid "Clockwise"
 msgstr "In senso orario"
 
+#: ../app/widgets/gimppropgui-constructors.c:305
+msgid "Invert Range"
+msgstr "Inverti campo"
+
+#: ../app/widgets/gimppropgui-constructors.c:309
+msgid "Select All"
+msgstr "Seleziona tutto"
+
 #: ../app/widgets/gimppropgui-constructors.c:387
 msgid "Source Range"
 msgstr "Campo sorgente"
@@ -18747,6 +18755,22 @@ msgstr "Canale verde"
 #: ../app/widgets/gimppropgui-constructors.c:595
 msgid "Blue channel"
 msgstr "Canale blu"
+
+#: ../app/widgets/gimppropgui-constructors.c:653
+msgid "Frequencies"
+msgstr "Frequenze"
+
+#: ../app/widgets/gimppropgui-constructors.c:663
+msgid "Contours"
+msgstr "Contorni"
+
+#: ../app/widgets/gimppropgui-constructors.c:673
+msgid "Sharp Edges"
+msgstr "Bordi affilati"
+
+#: ../app/widgets/gimppropgui-constructors.c:683
+msgid "Other Options"
+msgstr "Altre opzioni"
 
 #: ../app/widgets/gimppropgui.c:113
 msgid "New Seed"
