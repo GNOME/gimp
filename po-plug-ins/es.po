@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-01 19:16+0000\n"
-"PO-Revision-Date: 2016-03-02 09:12+0100\n"
+"POT-Creation-Date: 2016-03-06 20:22+0000\n"
+"PO-Revision-Date: 2016-03-07 11:42+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -6804,15 +6804,11 @@ msgstr "Tamaño del canal no soportado o no válido"
 
 #: ../plug-ins/file-psd/psd-load.c:2094
 #, c-format
-#| msgid "Failed to open '%s': %s"
 msgid "Failed to decompress data"
 msgstr "Error al descomprimir los datos"
 
 #: ../plug-ins/file-psd/psd-save.c:253
 #, c-format
-#| msgid ""
-#| "Unable to save layer with mode '%s'.  Either the PSD file format or the "
-#| "save plug-in does not support that, using normal mode instead."
 msgid ""
 "Unable to export layer with mode '%s'.  Either the PSD file format or the "
 "export plug-in does not support that, using normal mode instead."
@@ -6828,9 +6824,6 @@ msgstr ""
 
 #: ../plug-ins/file-psd/psd-save.c:1490
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images that "
-#| "are more than 30,000 pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
@@ -6840,9 +6833,6 @@ msgstr ""
 
 #: ../plug-ins/file-psd/psd-save.c:1505
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images with "
-#| "layers that are more than 30,000 pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
@@ -6936,7 +6926,6 @@ msgstr "Canal TIFF"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:482
 #, c-format
-#| msgid "FITS save cannot handle images with alpha channels"
 msgid "TIFF export cannot handle indexed images with an alpha channel."
 msgstr "TIFF no puede manejar la exportación de imágenes con un canal alfa."
 
@@ -8732,7 +8721,6 @@ msgid "Author"
 msgstr "Autor"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:8
-#| msgid "_Author:"
 msgid "Authortitle"
 msgstr "Título del autor"
 
@@ -8741,18 +8729,15 @@ msgid "Copyright"
 msgstr "Copyright"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:10
-#| msgid "C_aption"
 msgid "Caption"
 msgstr "Título"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:11
-#, fuzzy
 #| msgid "Description _writer:"
 msgid "Captionwriter"
-msgstr "_Descripción:"
+msgstr "Redactor"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:12
-#| msgid "Create line"
 msgid "Headline"
 msgstr "Titular"
 
@@ -8813,7 +8798,6 @@ msgid "City"
 msgstr "Ciudad"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:27
-#| msgid "Curl Location"
 msgid "Sublocation"
 msgstr "Sublocalización"
 
@@ -8898,7 +8882,6 @@ msgid "A_uto update preview"
 msgstr "Actualizar a_utomáticamente la previsualización"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
-#| msgid "`Default' is created."
 msgid "'Default' is created."
 msgstr "Se crea el «predeterminado»."
 
@@ -9209,7 +9192,6 @@ msgstr "No está disponible el manual de usuario de GIMP."
 #. * Cf. bug 762282.
 #.
 #: ../plug-ins/help/gimphelpdomain.c:193
-#, fuzzy
 #| msgid ""
 #| "Please install the additional help package or use the online user manual "
 #| "at http://docs.gimp.org/."
@@ -9217,8 +9199,8 @@ msgid ""
 "Please install the additional help package or use the online user manual at: "
 "http://docs.gimp.org/"
 msgstr ""
-"Por favor, instale el paquete adicional de ayuda o use el manual en línea en "
-"http://docs.gimp.org/."
+"Instale el paquete de ayuda adicional o use el manual de usuario en línea "
+"en: http://docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -10988,20 +10970,18 @@ msgid "Selection to Path Advanced Settings"
 msgstr "Configuración avanzada de selección a ruta"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:98
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Align Threshold:"
-msgstr "Umbral:"
+msgstr "Alineación del límite:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:102
 msgid "If two endpoints are closer than this, they are made to be equal."
-msgstr ""
+msgstr "Si dos puntos finales están cerca de este valor, tienden a igualarse."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
-#, fuzzy
 #| msgid "Gray Threshold"
 msgid "Corner Always Threshold:"
-msgstr "Umbral de gris"
+msgstr "Siempre la esquina límite:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:115
 msgid ""
@@ -11009,29 +10989,34 @@ msgid ""
 "smaller than this, it's a corner, even if it's within `corner_surround' "
 "pixels of a point with a smaller angle."
 msgstr ""
+"Si el ángulo definido por un punto y sus predecesores y sucesores son más "
+"pequeño que este, es una esquina, incluso si está dentro de los píxeles del "
+"«entorno de la esquina» de un punto con un ángulo más pequeño."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:126
-#, fuzzy
 #| msgid "Foreground"
 msgid "Corner Surround:"
-msgstr "Frente"
+msgstr "Entorno de la esquina:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:130
 msgid ""
 "Number of points to consider when determining if a point is a corner or not."
 msgstr ""
+"Número de puntos que considerar cuando se determina si un punto es una "
+"esquina o no."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:139
-#, fuzzy
 #| msgid "Lower t_hreshold:"
 msgid "Corner Threshold:"
-msgstr "Umbral in_ferior:"
+msgstr "Borde de esquina:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:143
 msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
 msgstr ""
+"Si un punto, sus predecesores, y sus sucesores definen un ángulo más pequeño "
+"que este, es una esquina."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:154
 msgid "Error Threshold:"
@@ -11042,20 +11027,21 @@ msgid ""
 "Amount of error at which a fitted spline is unacceptable.  If any pixel is "
 "further away than this from the fitted curve, we try again."
 msgstr ""
+"La cantidad de error en el que un ajuste de spline es inaceptable. Si "
+"cualquier píxel está más lejos de la curva ajustada, intentar de nuevo."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:169
 msgid "Filter Alternative Surround:"
-msgstr ""
+msgstr "Filtro alternativo envoltorio:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:173
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
+msgstr "Un segundo número de puntos adyacentes a considerar cuando al filtrar."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:183
-#, fuzzy
 #| msgid "_Filter length:"
 msgid "Filter Epsilon:"
-msgstr "Longitud del _filtro:"
+msgstr "Filtro Epsilon:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:187
 msgid ""
@@ -11168,16 +11154,17 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:330
-#, fuzzy
 #| msgid "Subdivide:"
 msgid "Subdivide Search:"
-msgstr "Subdividir:"
+msgstr "Subdividir búsqueda:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:334
 msgid ""
 "Percentage of the curve away from the worst point to look for a better place "
 "to subdivide."
 msgstr ""
+"Porcentaje de la curva lejos del peor punto para buscar un buen lugar para "
+"subdividir."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:343
 #, fuzzy
@@ -11192,28 +11179,30 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:357
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Subdivide Threshold:"
-msgstr "Umbral:"
+msgstr "Límite de subdivisión:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
 msgid ""
 "How many pixels a point can diverge from a straight line and still be "
 "considered a better place to subdivide."
 msgstr ""
+"Cuantos píxeles de punto pueden diferir de una línea recta y considerarse el "
+"mejor lugar para subdividir."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:371
-#, fuzzy
 #| msgid "Transparent background"
 msgid "Tangent Surround:"
-msgstr "Fondo transparente"
+msgstr "Marco de la tangente:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
 msgid ""
 "Number of points to look at on either side of a point when computing the "
 "approximation to the tangent at that point."
 msgstr ""
+"Número de puntos que considerar en a cada lado de un punto cuando se calcula "
+"la aproximación a la tangente en ese punto."
 
 #: ../plug-ins/twain/twain.c:86
 msgid "Capture an image from a TWAIN datasource"
