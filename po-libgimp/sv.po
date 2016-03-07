@@ -1,41 +1,44 @@
 # Swedish messages for libgimp.
-# Copyright (C) 1999-2012 Free Software Foundation, Inc.
+# Copyright © 1999-2016 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén (jan.moren@lucs.lu.se> 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-28 09:04+0100\n"
-"PO-Revision-Date: 2012-02-28 09:05+0100\n"
-"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-09-19 15:38+0000\n"
+"PO-Revision-Date: 2016-03-07 22:45+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1077
+#: ../libgimp/gimp.c:1136
 msgid "success"
 msgstr "lyckades"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1081
+#: ../libgimp/gimp.c:1140
 msgid "execution error"
 msgstr "exekveringsfel"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1085
+#: ../libgimp/gimp.c:1144
 msgid "calling error"
 msgstr "anropsfel"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1089
+#: ../libgimp/gimp.c:1148
 msgid "cancelled"
 msgstr "avbruten"
 
@@ -48,37 +51,34 @@ msgstr "Penselval"
 msgid "_Browse..."
 msgstr "_Bläddra..."
 
-#: ../libgimp/gimpexport.c:243
-#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Insticksmodulen %s kan inte hantera lager"
 
-#: ../libgimp/gimpexport.c:244
-#: ../libgimp/gimpexport.c:253
-#: ../libgimp/gimpexport.c:262
-#: ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
 msgid "Merge Visible Layers"
 msgstr "Slå samman synliga lager"
 
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "Insticksmodulen %s kan inte hantera lageravstånd, lagerstorlek eller lageropacitet"
+msgstr ""
+"Insticksmodulen %s kan inte hantera lageravstånd, lagerstorlek eller "
+"lageropacitet"
 
-#: ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "Insticksmodulen %s kan endast hantera lager som bildrutor i en animation"
+msgstr ""
+"Insticksmodulen %s kan endast hantera lager som bildrutor i en animation"
 
-#: ../libgimp/gimpexport.c:262
-#: ../libgimp/gimpexport.c:271
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
 msgstr "Spara som animation"
 
-#: ../libgimp/gimpexport.c:271
-#: ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
 #: ../libgimp/gimpexport.c:289
 msgid "Flatten Image"
 msgstr "Platta till bild"
@@ -102,8 +102,7 @@ msgstr "Applicera lagermask"
 msgid "%s plug-in can only handle RGB images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder"
 
-#: ../libgimp/gimpexport.c:307
-#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:354
 msgid "Convert to RGB"
 msgstr "Konvertera till RGB"
@@ -113,8 +112,7 @@ msgstr "Konvertera till RGB"
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera gråskalebilder"
 
-#: ../libgimp/gimpexport.c:316
-#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
 msgstr "Konvertera till gråskala"
@@ -124,8 +122,7 @@ msgstr "Konvertera till gråskala"
 msgid "%s plug-in can only handle indexed images"
 msgstr "Insticksmodulen %s kan endast hantera indexerade bilder"
 
-#: ../libgimp/gimpexport.c:325
-#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
 #: ../libgimp/gimpexport.c:364
 msgid ""
 "Convert to Indexed using default settings\n"
@@ -137,7 +134,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Insticksmodulen %s kan endast hantera bitmapp (tvåfärgs) indexerade bilder"
+msgstr ""
+"Insticksmodulen %s kan endast hantera bitmapp (tvåfärgs) indexerade bilder"
 
 #: ../libgimp/gimpexport.c:335
 msgid ""
@@ -155,12 +153,14 @@ msgstr "Insticksmodulen %s kan endast hantera RGB-bilder eller gråskalebilder"
 #: ../libgimp/gimpexport.c:353
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "Insticksmodulen %s kan endast hantera RGB-bilder eller indexerade bilder"
+msgstr ""
+"Insticksmodulen %s kan endast hantera RGB-bilder eller indexerade bilder"
 
 #: ../libgimp/gimpexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Insticksmodulen %s kan endast hantera gråskalebilder eller indexerade bilder"
+msgstr ""
+"Insticksmodulen %s kan endast hantera gråskalebilder eller indexerade bilder"
 
 #: ../libgimp/gimpexport.c:374
 #, c-format
@@ -187,23 +187,25 @@ msgstr "Exportera fil"
 msgid "_Ignore"
 msgstr "_Ignorera"
 
-#: ../libgimp/gimpexport.c:518
-#: ../libgimp/gimpexport.c:988
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
 msgid "_Export"
 msgstr "_Export"
 
 #. the headline
 #: ../libgimp/gimpexport.c:548
 #, c-format
-msgid "Your image should be exported before it can be saved as %s for the following reasons:"
-msgstr "Din bild bör exporteras innan den kan sparas som %s av följande anledningar:"
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr ""
+"Din bild bör exporteras innan den kan sparas som %s av följande anledningar:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:622
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen vid export modifierar inte originalbilden."
 
-#: ../libgimp/gimpexport.c:725
+#: ../libgimp/gimpexport.c:729
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -212,7 +214,7 @@ msgstr ""
 "Du kommer att spara en lagermask som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: ../libgimp/gimpexport.c:731
+#: ../libgimp/gimpexport.c:735
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -221,7 +223,7 @@ msgstr ""
 "Du kommer att spara en kanal (sparad markering) som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: ../libgimp/gimpexport.c:979
+#: ../libgimp/gimpexport.c:1004
 msgid "Export Image as "
 msgstr "Exportera bild som "
 
@@ -240,8 +242,7 @@ msgstr "Gradientval"
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:461
-#: ../libgimpwidgets/gimpintstore.c:241
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:259
 msgid "(Empty)"
 msgstr "(Tom)"
 
@@ -283,8 +284,7 @@ msgstr "efter typ"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:394
-#: ../libgimp/gimpprocbrowserdialog.c:545
-#: ../libgimpwidgets/gimpbrowser.c:139
+#: ../libgimp/gimpprocbrowserdialog.c:545 ../libgimpwidgets/gimpbrowser.c:139
 msgid "No matches"
 msgstr "Inga sökträffar"
 
@@ -788,12 +788,12 @@ msgstr "Skuggor"
 #: ../libgimpbase/gimpbaseenums.c:737
 msgctxt "transfer-mode"
 msgid "Midtones"
-msgstr "Mittentoner"
+msgstr "Mellantoner"
 
 #: ../libgimpbase/gimpbaseenums.c:738
 msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr "Ljuspunkter"
+msgstr "Högdagrar"
 
 #: ../libgimpbase/gimpbaseenums.c:767
 msgctxt "transform-direction"
@@ -895,11 +895,10 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Fylld"
 
-#: ../libgimpbase/gimputils.c:178
-#: ../libgimpbase/gimputils.c:183
-#: ../modules/color-selector-cmyk-lcms.c:424
-#: ../modules/color-selector-cmyk-lcms.c:430
-#: ../modules/display-filter-lcms.c:178
+#: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
+#: ../modules/color-selector-cmyk-lcms.c:458
+#: ../modules/color-selector-cmyk-lcms.c:485
+#: ../modules/display-filter-lcms.c:230 ../modules/display-filter-lcms.c:239
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8 sträng)"
 
@@ -919,8 +918,14 @@ msgid "The color profile of your (primary) monitor."
 msgstr "Färgprofilen för din (primära) skärm."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
-msgstr "När aktiverad kommer GIMP att försöka använda displayfärgprofilen från fönstersystemet.  Den konfigurerade skärmprofilen kommer då endast att användas för att falla tillbaka på."
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+"När aktiverad kommer GIMP att försöka använda displayfärgprofilen från "
+"fönstersystemet.  Den konfigurerade skärmprofilen kommer då endast att "
+"användas för att falla tillbaka på."
 
 #: ../libgimpconfig/gimpcolorconfig.c:60
 msgid "The default RGB working space color profile."
@@ -932,19 +937,29 @@ msgstr "CMYK-färgprofilen som används för att konvertera mellan RGB och CMYK.
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr "Färgprofilen som används för simulering av en utskriven version (färggodkännande på skärm)."
+msgstr ""
+"Färgprofilen som används för simulering av en utskriven version "
+"(färggodkännande på skärm)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:66
 msgid "Sets how colors are mapped for your display."
 msgstr "Ställer in hur färger mappas för din display."
 
 #: ../libgimpconfig/gimpcolorconfig.c:68
-msgid "Sets how colors are converted from RGB working space to the print simulation device."
-msgstr "Ställer in hur färger konverteras från RGB-arbetsrymd till enheten för utskriftssimulering."
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr ""
+"Ställer in hur färger konverteras från RGB-arbetsrymd till enheten för "
+"utskriftssimulering."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
-msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
-msgstr "När aktiverad kommer utskriftssimuleringen att markera färger som inte kan representeras i målfärgrymden."
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"När aktiverad kommer utskriftssimuleringen att markera färger som inte kan "
+"representeras i målfärgrymden."
 
 #: ../libgimpconfig/gimpcolorconfig.c:74
 msgid "The color to use for marking colors which are out of gamut."
@@ -985,41 +1000,40 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Absolut kolorimetri"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:106
+#: ../libgimpconfig/gimpconfig-deserialize.c:109
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "värde för elementet %s är inte en giltig UTF-8-sträng"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:444
+#: ../libgimpconfig/gimpconfig-deserialize.c:451
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "\"ja\" eller \"nej\" för booleskt element %s förväntades, fick \"%s\""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:518
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ogiltigt värde \"%s\" för element %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:533
+#: ../libgimpconfig/gimpconfig-deserialize.c:540
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ogiltigt värde \"%ld\" för element %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:602
+#: ../libgimpconfig/gimpconfig-deserialize.c:609
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "vid tolkning av elementet \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495
-#: ../libgimpconfig/gimpscanner.c:559
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
 #: ../libgimpconfig/gimpscanner.c:641
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "ödesdigert tolkningsfel"
 
-#: ../libgimpconfig/gimpconfig-path.c:387
+#: ../libgimpconfig/gimpconfig-path.c:389
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Kan inte expandera ${%s}"
@@ -1080,10 +1094,8 @@ msgstr "förväntade ett \"yes\" eller \"no\" för booleskt element, fick \"%s\"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fel vid tolkning av \"%s\" på rad %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:163
-#: ../libgimpmodule/gimpmodule.c:181
-#: ../libgimpmodule/gimpmodule.c:290
-#: ../libgimpmodule/gimpmodule.c:317
+#: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
+#: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
 #: ../libgimpmodule/gimpmodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
@@ -1105,7 +1117,7 @@ msgstr "Inläsning misslyckades"
 msgid "Not loaded"
 msgstr "Inte inläst"
 
-#: ../libgimpthumb/gimpthumb-utils.c:131
+#: ../libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1114,8 +1126,7 @@ msgstr ""
 "Kan inte fastställa en giltig hemkatalog.\n"
 "Miniatyrbilder kommer istället att lagras i mappen för temporärfiler (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:255
-#: ../libgimpthumb/gimpthumb-utils.c:323
+#: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kunde inte skapa miniatyrbildskatalog \"%s\"."
@@ -1125,7 +1136,7 @@ msgstr "Kunde inte skapa miniatyrbildskatalog \"%s\"."
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Miniatyrbilden innehåller ingen Thumb::URI-tagg"
 
-#: ../libgimpthumb/gimpthumbnail.c:904
+#: ../libgimpthumb/gimpthumbnail.c:905
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kunde inte skapa miniaturbild för %s: %s"
@@ -1172,8 +1183,12 @@ msgid "Old:"
 msgstr "Gammal:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:314
-msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
-msgstr "Hexadecimal färgnotation som används i HTML och CSS. Den här posten accepterar även CSS-färgnamn."
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Hexadecimal färgnotation som används i HTML och CSS. Den här posten "
+"accepterar även CSS-färgnamn."
 
 #: ../libgimpwidgets/gimpcolorselection.c:320
 msgid "HTML _notation:"
@@ -1212,39 +1227,35 @@ msgid "Gigabytes"
 msgstr "gigabyte"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:282
-#: ../libgimpwidgets/gimppageselector.c:1178
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1067
 msgid "Nothing selected"
 msgstr "Ingenting markerat"
 
-#: ../libgimpwidgets/gimppageselector.c:300
+#: ../libgimpwidgets/gimppageselector.c:287
 msgid "Select _All"
 msgstr "Markera _allt"
 
-#: ../libgimpwidgets/gimppageselector.c:320
+#: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
 msgstr "Välj _intervall:"
 
-#: ../libgimpwidgets/gimppageselector.c:332
+#: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
 msgstr "Öppna _sidor som"
 
-#: ../libgimpwidgets/gimppageselector.c:433
-msgid "Page 000"
-msgstr "Sida 000"
-
-#: ../libgimpwidgets/gimppageselector.c:521
-#: ../libgimpwidgets/gimppageselector.c:758
+#: ../libgimpwidgets/gimppageselector.c:449
+#: ../libgimpwidgets/gimppageselector.c:647
 #, c-format
 msgid "Page %d"
 msgstr "Sida %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1072
 msgid "One page selected"
 msgstr "En sida markerad"
 
-#: ../libgimpwidgets/gimppageselector.c:1190
-#: ../libgimpwidgets/gimppageselector.c:1194
+#: ../libgimpwidgets/gimppageselector.c:1079
+#: ../libgimpwidgets/gimppageselector.c:1083
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1259,9 +1270,13 @@ msgstr "Skrivbar"
 msgid "Folder"
 msgstr "Mapp"
 
-#: ../libgimpwidgets/gimppickbutton.c:127
-msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
-msgstr "Klicka på pipetten och klicka sedan på en färg någonstans på din skärm för att välja den färgen."
+#: ../libgimpwidgets/gimppickbutton.c:130
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"Klicka på pipetten och klicka sedan på en färg någonstans på din skärm för "
+"att välja den färgen."
 
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:290
@@ -1319,8 +1334,7 @@ msgstr "_Återställ"
 msgid "Visible"
 msgstr "Synlig"
 
-#: ../libgimpwidgets/gimpstock.c:171
-#: ../libgimpwidgets/gimpstock.c:175
+#: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
 msgid "_Stroke"
 msgstr "_Stryk"
 
@@ -1336,8 +1350,7 @@ msgstr "_Radmellanrum"
 msgid "_Resize"
 msgstr "_Ändra storlek"
 
-#: ../libgimpwidgets/gimpstock.c:205
-#: ../libgimpwidgets/gimpstock.c:340
+#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
 msgid "_Scale"
 msgstr "_Skala"
 
@@ -1374,8 +1387,12 @@ msgid "Factor"
 msgstr "Faktor"
 
 #: ../libgimpwidgets/gimpwidgets.c:516
-msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Använd detta värde för generering av slumptalsfrö - det låter dig upprepa en given \"slumpfunktion\""
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Använd detta värde för generering av slumptalsfrö - det låter dig upprepa en "
+"given \"slumpfunktion\""
 
 #: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
@@ -1502,64 +1519,64 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Zooma ut"
 
-#: ../modules/color-selector-cmyk-lcms.c:86
+#: ../modules/color-selector-cmyk-lcms.c:91
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK-färgväljare (använd färgprofil)"
 
-#: ../modules/color-selector-cmyk-lcms.c:149
+#: ../modules/color-selector-cmyk-lcms.c:154
 #: ../modules/color-selector-cmyk.c:101
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:168
+#: ../modules/color-selector-cmyk-lcms.c:175
 #: ../modules/color-selector-cmyk.c:124
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:170
+#: ../modules/color-selector-cmyk-lcms.c:177
 #: ../modules/color-selector-cmyk.c:126
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:172
+#: ../modules/color-selector-cmyk-lcms.c:179
 #: ../modules/color-selector-cmyk.c:128
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:174
+#: ../modules/color-selector-cmyk-lcms.c:181
 #: ../modules/color-selector-cmyk.c:130
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:178
+#: ../modules/color-selector-cmyk-lcms.c:185
 #: ../modules/color-selector-cmyk.c:134
 msgid "Cyan"
 msgstr "Cyan"
 
-#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk-lcms.c:186
 #: ../modules/color-selector-cmyk.c:135
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk-lcms.c:187
 #: ../modules/color-selector-cmyk.c:136
 msgid "Yellow"
 msgstr "Gul"
 
-#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk-lcms.c:188
 #: ../modules/color-selector-cmyk.c:137
 msgid "Black"
 msgstr "Svart"
 
-#: ../modules/color-selector-cmyk-lcms.c:412
+#: ../modules/color-selector-cmyk-lcms.c:425
 msgid "Profile: (none)"
 msgstr "Profil: (ingen)"
 
-#: ../modules/color-selector-cmyk-lcms.c:433
+#: ../modules/color-selector-cmyk-lcms.c:488
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -1588,11 +1605,11 @@ msgstr "Vattenfärg"
 msgid "Pressure"
 msgstr "Tryck"
 
-#: ../modules/color-selector-wheel.c:71
+#: ../modules/color-selector-wheel.c:69
 msgid "HSV color wheel"
 msgstr "HSV-färghjul"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:101
 msgid "Wheel"
 msgstr "Hjul"
 
@@ -1601,8 +1618,7 @@ msgid "DirectX DirectInput event controller"
 msgstr "Kontroller för DirectX DirectInput-händelser"
 
 #: ../modules/controller-dx-dinput.c:195
-#: ../modules/controller-linux-input.c:217
-#: ../modules/controller-midi.c:211
+#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
 msgid "Device:"
 msgstr "Enhet:"
 
@@ -1629,13 +1645,11 @@ msgstr "Knapp %d intryckt"
 msgid "Button %d Release"
 msgstr "Knapp %d släppt"
 
-#: ../modules/controller-dx-dinput.c:441
-#: ../modules/controller-linux-input.c:89
+#: ../modules/controller-dx-dinput.c:441 ../modules/controller-linux-input.c:89
 msgid "X Move Left"
 msgstr "X flytta vänster"
 
-#: ../modules/controller-dx-dinput.c:444
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:444 ../modules/controller-linux-input.c:90
 msgid "X Move Right"
 msgstr "X flytta höger"
 
@@ -1647,13 +1661,11 @@ msgstr "Y-flytta bort"
 msgid "Y Move Near"
 msgstr "Y-flytta nära"
 
-#: ../modules/controller-dx-dinput.c:459
-#: ../modules/controller-linux-input.c:93
+#: ../modules/controller-dx-dinput.c:459 ../modules/controller-linux-input.c:93
 msgid "Z Move Up"
 msgstr "Z flytta uppåt"
 
-#: ../modules/controller-dx-dinput.c:462
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:462 ../modules/controller-linux-input.c:94
 msgid "Z Move Down"
 msgstr "Z flytta nedåt"
 
@@ -1665,13 +1677,11 @@ msgstr "X-axel luta bort"
 msgid "X Axis Tilt Near"
 msgstr "X-axel luta nära"
 
-#: ../modules/controller-dx-dinput.c:477
-#: ../modules/controller-linux-input.c:98
+#: ../modules/controller-dx-dinput.c:477 ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
 msgstr "Y-axel luta höger"
 
-#: ../modules/controller-dx-dinput.c:480
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:480 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
 msgstr "Y-axel luta vänster"
 
@@ -1715,8 +1725,7 @@ msgid "DirectInput Events"
 msgstr "DirectInput-händelser"
 
 #: ../modules/controller-dx-dinput.c:1092
-#: ../modules/controller-linux-input.c:524
-#: ../modules/controller-midi.c:504
+#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "Ingen enhet konfigurerad"
 
@@ -1869,24 +1878,20 @@ msgstr "Linux-inmatning"
 msgid "Linux Input Events"
 msgstr "Linux-inmatningshändelser"
 
-#: ../modules/controller-linux-input.c:550
-#: ../modules/controller-midi.c:453
+#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
 #: ../modules/controller-midi.c:479
 #, c-format
 msgid "Reading from %s"
 msgstr "Läser från %s"
 
 #: ../modules/controller-linux-input.c:568
-#: ../modules/controller-linux-input.c:622
-#: ../modules/controller-midi.c:435
-#: ../modules/controller-midi.c:496
-#: ../modules/controller-midi.c:567
+#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
+#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
 #, c-format
 msgid "Device not available: %s"
 msgstr "Enheten är inte tillgänglig: %s"
 
-#: ../modules/controller-linux-input.c:631
-#: ../modules/controller-midi.c:576
+#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
 msgid "End of file"
 msgstr "Slut på filen"
 
@@ -1907,8 +1912,12 @@ msgid "Channel:"
 msgstr "Kanal:"
 
 #: ../modules/controller-midi.c:221
-msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
-msgstr "MIDI-kanalen att läsa av händelser från. Ställ in till -1 för läsning från alla MIDI-kanaler."
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+"MIDI-kanalen att läsa av händelser från. Ställ in till -1 för läsning från "
+"alla MIDI-kanaler."
 
 #: ../modules/controller-midi.c:225
 msgid "MIDI"
@@ -1955,7 +1964,8 @@ msgstr "Tritanopi (okänslighet för blått)"
 
 #: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Simulationsfilter för färgbristfällighet (Brettel-Vienot-Mollon-algoritm)"
+msgstr ""
+"Simulationsfilter för färgbristfällighet (Brettel-Vienot-Mollon-algoritm)"
 
 #: ../modules/display-filter-color-blind.c:257
 msgid "Color Deficient Vision"
@@ -1989,69 +1999,76 @@ msgstr "Kontrast"
 msgid "Contrast c_ycles:"
 msgstr "Kontrastc_ykler:"
 
-#: ../modules/display-filter-lcms.c:97
+#: ../modules/display-filter-lcms.c:104
 msgid "Color management display filter using ICC color profiles"
 msgstr "Visningsfilter för färghantering med ICC-färgprofiler"
 
-#: ../modules/display-filter-lcms.c:129
+#: ../modules/display-filter-lcms.c:136
 msgid "Color Management"
 msgstr "Färghantering"
 
-#: ../modules/display-filter-lcms.c:186
+#: ../modules/display-filter-lcms.c:265 ../modules/display-filter-lcms.c:267
 msgid "None"
 msgstr "Ingen"
 
-#: ../modules/display-filter-lcms.c:207
-msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
-msgstr "Det här filtret tar sin konfiguration från sektionen Färghantering i inställningsdialogrutan."
+#: ../modules/display-filter-lcms.c:289
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr ""
+"Det här filtret tar sin konfiguration från sektionen Färghantering i "
+"inställningsdialogrutan."
 
-#: ../modules/display-filter-lcms.c:221
+#: ../modules/display-filter-lcms.c:303
 msgid "Mode of operation:"
 msgstr "Operationsläge:"
 
-#: ../modules/display-filter-lcms.c:228
+#: ../modules/display-filter-lcms.c:310
 msgid "Image profile:"
 msgstr "Bildprofil:"
 
-#: ../modules/display-filter-lcms.c:236
+#: ../modules/display-filter-lcms.c:318
 msgid "Monitor profile:"
 msgstr "Skärmprofil:"
 
-#: ../modules/display-filter-lcms.c:244
+#: ../modules/display-filter-lcms.c:326
 msgid "Print simulation profile:"
 msgstr "Profil för utskriftssimulering:"
 
-#: ../modules/display-filter-proof.c:93
+#: ../modules/display-filter-proof.c:98
 msgid "Color proof filter using ICC color profile"
 msgstr "Färgprovfilter med ICC-färgprofil"
 
-#: ../modules/display-filter-proof.c:141
+#: ../modules/display-filter-proof.c:146
 msgid "Color Proof"
 msgstr "Färgprov"
 
-#: ../modules/display-filter-proof.c:338
+#: ../modules/display-filter-proof.c:381
 msgid "Choose an ICC Color Profile"
 msgstr "Välj en ICC-färgprofil"
 
-#: ../modules/display-filter-proof.c:365
+#: ../modules/display-filter-proof.c:408
 msgid "All files (*.*)"
 msgstr "Alla filer (*.*)"
 
-#: ../modules/display-filter-proof.c:370
+#: ../modules/display-filter-proof.c:413
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-färgprofil (*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:428
+#: ../modules/display-filter-proof.c:471
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:434
+#: ../modules/display-filter-proof.c:477
 msgid "_Intent:"
 msgstr "_Avsikt:"
 
-#: ../modules/display-filter-proof.c:439
+#: ../modules/display-filter-proof.c:482
 msgid "_Black Point Compensation"
 msgstr "_Svartpunktskompensering"
+
+#~ msgid "Page 000"
+#~ msgstr "Sida 000"
 
 #~ msgid "gradient|Linear"
 #~ msgstr "Linjär"
@@ -2072,7 +2089,6 @@ msgstr "_Svartpunktskompensering"
 #~ msgstr "Triangel"
 
 #~ msgid "%d Byte"
-
 #~ msgid_plural "%d Bytes"
 #~ msgstr[0] "%d byte"
 #~ msgstr[1] "%d byte"
