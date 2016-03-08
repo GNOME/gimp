@@ -31,6 +31,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 

@@ -21,11 +21,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp-utils.h"
 #include "gimpbezierdesc.h"
 #include "gimpchannel.h"
 #include "gimpdrawable-fill.h"
@@ -41,6 +44,47 @@
 
 
 /*  public functions  */
+
+void
+gimp_drawable_fill (GimpDrawable *drawable,
+                    GimpContext  *context,
+                    GimpFillType  fill_type)
+{
+  GimpRGB      color;
+  GimpPattern *pattern;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
+    return;
+
+  if (pattern)
+    {
+      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
+
+      gegl_buffer_set_pattern (gimp_drawable_get_buffer (drawable),
+                               NULL, src_buffer, 0, 0);
+      g_object_unref (src_buffer);
+    }
+  else
+    {
+      GeglColor *gegl_color;
+
+      if (! gimp_drawable_has_alpha (drawable))
+        gimp_rgb_set_alpha (&color, 1.0);
+
+      gegl_color = gimp_gegl_color_new (&color);
+      gegl_buffer_set_color (gimp_drawable_get_buffer (drawable),
+                             NULL, gegl_color);
+      g_object_unref (gegl_color);
+    }
+
+  gimp_drawable_update (drawable,
+                        0, 0,
+                        gimp_item_get_width  (GIMP_ITEM (drawable)),
+                        gimp_item_get_height (GIMP_ITEM (drawable)));
+}
 
 void
 gimp_drawable_fill_boundary (GimpDrawable       *drawable,

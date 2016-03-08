@@ -35,6 +35,7 @@
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpdrawable-fill.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"

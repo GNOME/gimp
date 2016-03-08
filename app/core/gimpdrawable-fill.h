@@ -19,6 +19,18 @@
 #define __GIMP_DRAWABLE_FILL_H__
 
 
+/*  Lowlevel API that is used for initializing the entire drawable
+ *  before it is added to the image, doesn't even push an undo.
+ */
+
+void       gimp_drawable_fill              (GimpDrawable        *drawable,
+                                            GimpContext         *context,
+                                            GimpFillType         fill_type);
+
+
+/*  Proper API that is used for actual editing (not just initializing)
+ */
+
 void       gimp_drawable_fill_boundary     (GimpDrawable        *drawable,
                                             GimpFillOptions     *options,
                                             const GimpBoundSeg  *bound_segs,

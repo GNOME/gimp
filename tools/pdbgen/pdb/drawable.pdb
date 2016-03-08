@@ -94,7 +94,6 @@ sub drawable_fill {
     $blurb = 'Fill the drawable with the specified fill mode.';
 
     $help = <<'HELP';
-
 This procedure fills the drawable. If the fill mode is foreground the
 current foreground color is used. If the fill mode is background, the
 current background color is used. If the fill type is white, then
@@ -119,6 +118,7 @@ HELP
     );
 
     %invoke = (
+	headers => [ qw("core/gimpdrawable-fill.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_modifyable (GIMP_ITEM (drawable),

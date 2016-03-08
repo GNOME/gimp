@@ -30,6 +30,7 @@
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpchannel-select.h"
+#include "core/gimpdrawable-fill.h"
 #include "core/gimpdrawable-foreground-extract.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpdrawable-preview.h"

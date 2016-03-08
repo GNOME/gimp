@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable-fill.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
