@@ -712,7 +712,7 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
               success = gimp_edit_fill (image, drawable, context, fill_type,
-                                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                        opacity / 100.0, paint_mode,
                                         error);
             }
           else
