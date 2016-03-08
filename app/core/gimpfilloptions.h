@@ -51,7 +51,12 @@ GType             gimp_fill_options_get_type         (void) G_GNUC_CONST;
 GimpFillOptions * gimp_fill_options_new              (Gimp             *gimp);
 
 GimpFillStyle     gimp_fill_options_get_style        (GimpFillOptions  *options);
+void              gimp_fill_options_set_style        (GimpFillOptions  *options,
+                                                      GimpFillStyle     style);
+
 gboolean          gimp_fill_options_get_antialias    (GimpFillOptions  *options);
+void              gimp_fill_options_set_antialias    (GimpFillOptions  *options,
+                                                      gboolean          antialias);
 
 gboolean          gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
                                                       GimpContext      *context,

@@ -208,12 +208,30 @@ gimp_fill_options_get_style (GimpFillOptions *options)
   return GET_PRIVATE (options)->style;
 }
 
+void
+gimp_fill_options_set_style (GimpFillOptions *options,
+                             GimpFillStyle    style)
+{
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+
+  g_object_set (options, "style", style, NULL);
+}
+
 gboolean
 gimp_fill_options_get_antialias (GimpFillOptions *options)
 {
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
 
   return GET_PRIVATE (options)->antialias;
+}
+
+void
+gimp_fill_options_set_antialias (GimpFillOptions *options,
+                                 gboolean         antialias)
+{
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+
+  g_object_set (options, "antialias", antialias, NULL);
 }
 
 gboolean
@@ -258,9 +276,7 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
             return FALSE;
           }
 
-        g_object_set (options,
-                      "style", GIMP_FILL_STYLE_PATTERN,
-                      NULL);
+        gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
         gimp_context_set_pattern (GIMP_CONTEXT (options), pattern);
 
         return TRUE;
@@ -272,9 +288,7 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
       return FALSE;
     }
 
-  g_object_set (options,
-                "style", GIMP_FILL_STYLE_SOLID,
-                NULL);
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
   gimp_context_set_foreground (GIMP_CONTEXT (options), &color);
 
   return TRUE;
