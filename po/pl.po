@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-26 16:47+0100\n"
-"PO-Revision-Date: 2016-02-26 16:48+0100\n"
+"POT-Creation-Date: 2016-03-08 14:32+0100\n"
+"PO-Revision-Date: 2016-03-08 14:33+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -104,7 +104,12 @@ msgstr ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis oraz zespół programistów programu GIMP"
 
-#: ../app/about.h:34
+#. TRANSLATORS: do not end the license URL with a dot, because it would
+#. * be in the link. Because of technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../app/about.h:39
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -797,44 +802,44 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Przecina ten kanał z bieżącym zaznaczeniem"
 
-#: ../app/actions/channels-commands.c:85 ../app/actions/channels-commands.c:402
+#: ../app/actions/channels-commands.c:86 ../app/actions/channels-commands.c:403
 msgid "Channel Attributes"
 msgstr "Atrybuty kanału"
 
-#: ../app/actions/channels-commands.c:88
+#: ../app/actions/channels-commands.c:89
 msgid "Edit Channel Attributes"
 msgstr "Modyfikacja atrybutów kanału"
 
-#: ../app/actions/channels-commands.c:90
+#: ../app/actions/channels-commands.c:91
 msgid "Edit Channel Color"
 msgstr "Modyfikacja koloru kanału"
 
-#: ../app/actions/channels-commands.c:91 ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:92 ../app/actions/channels-commands.c:124
 msgid "_Fill opacity:"
 msgstr "_Krycie wypełnienia:"
 
-#: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:281
+#: ../app/actions/channels-commands.c:117 ../app/core/gimpchannel.c:281
 #: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:105
 #: ../app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "Kanał"
 
-#: ../app/actions/channels-commands.c:117
-#: ../app/actions/channels-commands.c:159
+#: ../app/actions/channels-commands.c:118
+#: ../app/actions/channels-commands.c:160
 #: ../app/widgets/gimpchanneltreeview.c:328
 msgid "New Channel"
 msgstr "Nowy kanał"
 
-#: ../app/actions/channels-commands.c:120
+#: ../app/actions/channels-commands.c:121
 msgid "New Channel Options"
 msgstr "Opcje nowego kanału"
 
-#: ../app/actions/channels-commands.c:122
+#: ../app/actions/channels-commands.c:123
 msgid "New Channel Color"
 msgstr "Kolor nowego kanału"
 
-#: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:264
+#: ../app/actions/channels-commands.c:245 ../app/core/gimpimage-new.c:265
 #: ../app/display/gimpdisplayshell-dnd.c:649
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:778
@@ -4178,7 +4183,7 @@ msgstr "Odbijanie"
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:616 ../app/actions/layers-commands.c:702
+#: ../app/actions/image-commands.c:616 ../app/actions/layers-commands.c:703
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
@@ -4200,7 +4205,7 @@ msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:918 ../app/actions/layers-commands.c:1197
+#: ../app/actions/image-commands.c:918 ../app/actions/layers-commands.c:1198
 #: ../app/dialogs/preferences-dialog.c:1645
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -4757,63 +4762,63 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Do _nowej warstwy"
 
-#: ../app/actions/layers-commands.c:210
+#: ../app/actions/layers-commands.c:211
 msgid "Layer Attributes"
 msgstr "Atrybuty warstwy"
 
-#: ../app/actions/layers-commands.c:213
+#: ../app/actions/layers-commands.c:214
 msgid "Edit Layer Attributes"
 msgstr "Modyfikacja atrybutów warstwy"
 
-#: ../app/actions/layers-commands.c:257 ../app/core/gimplayer.c:323
+#: ../app/actions/layers-commands.c:258 ../app/core/gimplayer.c:323
 msgid "Layer"
 msgstr "Warstwa"
 
-#: ../app/actions/layers-commands.c:259 ../app/actions/layers-commands.c:327
+#: ../app/actions/layers-commands.c:260 ../app/actions/layers-commands.c:328
 #: ../app/widgets/gimpdrawabletreeview.c:319
 #: ../app/widgets/gimplayertreeview.c:839
 msgid "New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:262
+#: ../app/actions/layers-commands.c:263
 msgid "Create a New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:364 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:365 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../app/actions/layers-commands.c:628
+#: ../app/actions/layers-commands.c:629
 msgid "Set Layer Boundary Size"
 msgstr "Ustawienie wymiarów granic warstwy"
 
-#: ../app/actions/layers-commands.c:673
+#: ../app/actions/layers-commands.c:674
 msgid "Scale Layer"
 msgstr "Skaluj warstwę"
 
-#: ../app/actions/layers-commands.c:711
+#: ../app/actions/layers-commands.c:712
 msgid "Crop Layer to Selection"
 msgstr "Kadruj warstwę według zaznaczenia"
 
-#: ../app/actions/layers-commands.c:740
+#: ../app/actions/layers-commands.c:741
 msgid "Crop Layer to Content"
 msgstr "Kadruj warstwę do zawartości"
 
-#: ../app/actions/layers-commands.c:752
+#: ../app/actions/layers-commands.c:753
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nie można wykadrować, ponieważ aktywna warstwa nie posiada zawartości."
 
-#: ../app/actions/layers-commands.c:758
+#: ../app/actions/layers-commands.c:759
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ aktywna warstwa jest już wykadrowana do "
 "zawartości."
 
-#: ../app/actions/layers-commands.c:1132
+#: ../app/actions/layers-commands.c:1133
 msgid "Please select a channel first"
 msgstr "Proszę najpierw zaznaczyć kanał"
 
-#: ../app/actions/layers-commands.c:1140
+#: ../app/actions/layers-commands.c:1141
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
@@ -4890,7 +4895,7 @@ msgid "_Edit MyPaint Brush..."
 msgstr "_Modyfikuj pędzel programu MyPaint…"
 
 #: ../app/actions/mypaint-brushes-actions.c:87
-msgctxt "mypaint-bruahes-action"
+msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
 msgstr "Modyfikuje pędzel programu MyPaint"
 
@@ -8476,7 +8481,7 @@ msgstr ""
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Usunięcie „%s” się nie powiodło: %s"
 
-#: ../app/core/gimp-edit.c:183 ../app/core/gimpimage-new.c:317
+#: ../app/core/gimp-edit.c:183 ../app/core/gimpimage-new.c:318
 msgid "Pasted Layer"
 msgstr "Wklejona warstwa"
 
@@ -8581,7 +8586,7 @@ msgstr "Tworzenie katalogu „%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Nie można utworzyć katalogu „%s”: %s"
 
-#: ../app/core/gimp-utils.c:553
+#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:257
 msgid "No patterns available for this operation."
 msgstr "Brak deseni dostępnych dla tego działania."
 
@@ -8815,7 +8820,7 @@ msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Rysowanie wzdłuż kanału"
 
-#: ../app/core/gimpchannel.c:290 ../app/core/gimpselection.c:613
+#: ../app/core/gimpchannel.c:290 ../app/core/gimpselection.c:612
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Kanał na zaznaczenie"
@@ -8924,7 +8929,7 @@ msgstr "Kolor pierwszoplanowy"
 msgid "Foreground color"
 msgstr "Kolor pierwszoplanowy"
 
-#: ../app/core/gimpcontext.c:680 ../app/core/gimpimage-new.c:140
+#: ../app/core/gimpcontext.c:680 ../app/core/gimpimage-new.c:141
 msgid "Background"
 msgstr "Tło"
 
@@ -9092,6 +9097,15 @@ msgstr "Zrównanie"
 msgid "Computing alpha of unknown pixels"
 msgstr "Obliczanie alfy nieznanych pikseli"
 
+#: ../app/core/gimpdrawable-fill.c:154
+msgid "Not enough points to fill"
+msgstr "Niewystarczająca liczba punktów do wypełnienia"
+
+#: ../app/core/gimpdrawable-fill.c:250
+msgctxt "undo-type"
+msgid "Render Stroke"
+msgstr "Rysowanie pociągnięcia"
+
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:116
 #: ../app/tools/gimplevelstool.c:137
@@ -9103,19 +9117,10 @@ msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Przesunięcie obszaru rysowania"
 
-#: ../app/core/gimpdrawable-stroke.c:271
+#: ../app/core/gimpdrawable-stroke.c:111
 #: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:636
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
-
-#: ../app/core/gimpdrawable-stroke.c:272
-msgid "Not enough points to fill"
-msgstr "Niewystarczająca liczba punktów do wypełnienia"
-
-#: ../app/core/gimpdrawable-stroke.c:387
-msgctxt "undo-type"
-msgid "Render Stroke"
-msgstr "Rysowanie pociągnięcia"
 
 #: ../app/core/gimpdrawable-transform.c:724
 msgctxt "undo-type"
@@ -9140,11 +9145,11 @@ msgstr "Przekształcenie"
 msgid "Output type"
 msgstr "Typ wyjścia"
 
-#: ../app/core/gimpfilloptions.c:89
+#: ../app/core/gimpfilloptions.c:92
 msgid "Style"
 msgstr "Styl"
 
-#: ../app/core/gimpfilloptions.c:97 ../app/pdb/gimppdbcontext.c:99
+#: ../app/core/gimpfilloptions.c:100 ../app/pdb/gimppdbcontext.c:99
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:150
 msgid "Antialiasing"
 msgstr "Wygładzanie"
@@ -10082,24 +10087,24 @@ msgctxt "undo-type"
 msgid "Flood Selection"
 msgstr "Zalanie zaznaczenia"
 
-#: ../app/core/gimpselection.c:295
+#: ../app/core/gimpselection.c:294
 msgid "There is no selection to stroke."
 msgstr "Brak zaznaczenia do narysowania."
 
-#: ../app/core/gimpselection.c:701
+#: ../app/core/gimpselection.c:700
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nie można wyciąć lub skopiować, ponieważ zaznaczony obszar jest pusty."
 
-#: ../app/core/gimpselection.c:830
+#: ../app/core/gimpselection.c:829
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nie można oderwać zaznaczenia, ponieważ zaznaczony obszar jest pusty."
 
-#: ../app/core/gimpselection.c:837
+#: ../app/core/gimpselection.c:836
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Oderwanie zaznaczenia"
 
-#: ../app/core/gimpselection.c:853
+#: ../app/core/gimpselection.c:852
 msgid "Floated Layer"
 msgstr "Oderwana warstwa"
 
@@ -13543,11 +13548,11 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Progowanie"
 
-#: ../app/pdb/drawable-cmds.c:523
+#: ../app/pdb/drawable-cmds.c:524
 msgid "Plug-In"
 msgstr "Wtyczka"
 
-#: ../app/pdb/drawable-cmds.c:962 ../app/tools/gimpforegroundselecttool.c:998
+#: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:998
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Zaznaczenie pierwszego planu"
