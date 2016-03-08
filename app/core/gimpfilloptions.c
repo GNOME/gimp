@@ -20,15 +20,18 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimperror.h"
 #include "gimpfilloptions.h"
 #include "gimpviewable.h"
 
@@ -211,4 +214,68 @@ gimp_fill_options_get_antialias (GimpFillOptions *options)
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
 
   return GET_PRIVATE (options)->antialias;
+}
+
+gboolean
+gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
+                                    GimpContext      *context,
+                                    GimpFillType      fill_type,
+                                    GError          **error)
+{
+  GimpRGB color;
+
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  switch (fill_type)
+    {
+    case GIMP_FILL_FOREGROUND:
+      gimp_context_get_foreground (context, &color);
+      break;
+
+    case GIMP_FILL_BACKGROUND:
+      gimp_context_get_background (context, &color);
+      break;
+
+    case GIMP_FILL_WHITE:
+      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      break;
+
+    case GIMP_FILL_TRANSPARENT:
+      gimp_context_get_background (context, &color);
+      gimp_context_set_paint_mode (GIMP_CONTEXT (options), GIMP_ERASE_MODE);
+      break;
+
+    case GIMP_FILL_PATTERN:
+      {
+        GimpPattern *pattern = gimp_context_get_pattern (context);
+
+        if (! pattern)
+          {
+            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                 _("No patterns available for this operation."));
+            return FALSE;
+          }
+
+        g_object_set (options,
+                      "style", GIMP_FILL_STYLE_PATTERN,
+                      NULL);
+        gimp_context_set_pattern (GIMP_CONTEXT (options), pattern);
+
+        return TRUE;
+      }
+      break;
+
+    default:
+      g_warning ("%s: invalid fill_type %d", G_STRFUNC, fill_type);
+      return FALSE;
+    }
+
+  g_object_set (options,
+                "style", GIMP_FILL_STYLE_SOLID,
+                NULL);
+  gimp_context_set_foreground (GIMP_CONTEXT (options), &color);
+
+  return TRUE;
 }
