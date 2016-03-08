@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-02 19:16+0000\n"
-"PO-Revision-Date: 2016-03-03 09:08+0100\n"
+"POT-Creation-Date: 2016-03-08 01:27+0000\n"
+"PO-Revision-Date: 2016-03-08 12:06+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -808,46 +808,46 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Intersectar este canal con la selección actual"
 
-#: ../app/actions/channels-commands.c:85
-#: ../app/actions/channels-commands.c:402
+#: ../app/actions/channels-commands.c:86
+#: ../app/actions/channels-commands.c:403
 msgid "Channel Attributes"
 msgstr "Atributos del canal"
 
-#: ../app/actions/channels-commands.c:88
+#: ../app/actions/channels-commands.c:89
 msgid "Edit Channel Attributes"
 msgstr "Editar los atributos del canal"
 
-#: ../app/actions/channels-commands.c:90
+#: ../app/actions/channels-commands.c:91
 msgid "Edit Channel Color"
 msgstr "Editar el color del canal"
 
-#: ../app/actions/channels-commands.c:91
-#: ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:92
+#: ../app/actions/channels-commands.c:124
 msgid "_Fill opacity:"
 msgstr "Opacidad del _relleno:"
 
-#: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:281
+#: ../app/actions/channels-commands.c:117 ../app/core/gimpchannel.c:281
 #: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:105
 #: ../app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "Canal"
 
-#: ../app/actions/channels-commands.c:117
-#: ../app/actions/channels-commands.c:159
+#: ../app/actions/channels-commands.c:118
+#: ../app/actions/channels-commands.c:160
 #: ../app/widgets/gimpchanneltreeview.c:328
 msgid "New Channel"
 msgstr "Canal nuevo"
 
-#: ../app/actions/channels-commands.c:120
+#: ../app/actions/channels-commands.c:121
 msgid "New Channel Options"
 msgstr "Opciones del canal nuevo"
 
-#: ../app/actions/channels-commands.c:122
+#: ../app/actions/channels-commands.c:123
 msgid "New Channel Color"
 msgstr "Canal de color nuevo"
 
-#: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:264
+#: ../app/actions/channels-commands.c:245 ../app/core/gimpimage-new.c:265
 #: ../app/display/gimpdisplayshell-dnd.c:649
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:778
@@ -4469,7 +4469,7 @@ msgstr "Volteando"
 msgid "Rotating"
 msgstr "Rotando"
 
-#: ../app/actions/image-commands.c:616 ../app/actions/layers-commands.c:702
+#: ../app/actions/image-commands.c:616 ../app/actions/layers-commands.c:703
 msgid "Cannot crop because the current selection is empty."
 msgstr "No se puede recortar porque la selección actual está vacía."
 
@@ -4492,7 +4492,7 @@ msgid "Scale Image"
 msgstr "Escalar la imagen"
 
 #. Scaling
-#: ../app/actions/image-commands.c:918 ../app/actions/layers-commands.c:1197
+#: ../app/actions/image-commands.c:918 ../app/actions/layers-commands.c:1198
 #: ../app/dialogs/preferences-dialog.c:1645
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -5057,63 +5057,63 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "A una capa _nueva"
 
-#: ../app/actions/layers-commands.c:210
+#: ../app/actions/layers-commands.c:211
 msgid "Layer Attributes"
 msgstr "Atributos de la capa"
 
-#: ../app/actions/layers-commands.c:213
+#: ../app/actions/layers-commands.c:214
 msgid "Edit Layer Attributes"
 msgstr "Editar atributos de capa"
 
-#: ../app/actions/layers-commands.c:257 ../app/core/gimplayer.c:323
+#: ../app/actions/layers-commands.c:258 ../app/core/gimplayer.c:323
 msgid "Layer"
 msgstr "Capa"
 
-#: ../app/actions/layers-commands.c:259 ../app/actions/layers-commands.c:327
+#: ../app/actions/layers-commands.c:260 ../app/actions/layers-commands.c:328
 #: ../app/widgets/gimpdrawabletreeview.c:319
 #: ../app/widgets/gimplayertreeview.c:839
 msgid "New Layer"
 msgstr "Capa nueva"
 
-#: ../app/actions/layers-commands.c:262
+#: ../app/actions/layers-commands.c:263
 msgid "Create a New Layer"
 msgstr "Crear una capa nueva"
 
-#: ../app/actions/layers-commands.c:364 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:365 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Visible"
 
-#: ../app/actions/layers-commands.c:628
+#: ../app/actions/layers-commands.c:629
 msgid "Set Layer Boundary Size"
 msgstr "Establecer el tamaño de borde de capa"
 
-#: ../app/actions/layers-commands.c:673
+#: ../app/actions/layers-commands.c:674
 msgid "Scale Layer"
 msgstr "Escalar la capa"
 
-#: ../app/actions/layers-commands.c:711
+#: ../app/actions/layers-commands.c:712
 msgid "Crop Layer to Selection"
 msgstr "Recortar capa a la selección"
 
-#: ../app/actions/layers-commands.c:740
+#: ../app/actions/layers-commands.c:741
 msgid "Crop Layer to Content"
 msgstr "Recortar capa al contenido"
 
-#: ../app/actions/layers-commands.c:752
+#: ../app/actions/layers-commands.c:753
 msgid "Cannot crop because the active layer has no content."
 msgstr "No se puede recortar porque la capa activa no tiene contenido."
 
-#: ../app/actions/layers-commands.c:758
+#: ../app/actions/layers-commands.c:759
 #, fuzzy
 #| msgid "Cannot crop because the active layer has no content."
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr "No se puede recortar porque la capa activa no tiene contenido."
 
-#: ../app/actions/layers-commands.c:1132
+#: ../app/actions/layers-commands.c:1133
 msgid "Please select a channel first"
 msgstr "Seleccione un canal primero"
 
-#: ../app/actions/layers-commands.c:1140
+#: ../app/actions/layers-commands.c:1141
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
@@ -5230,7 +5230,7 @@ msgstr "_Editar pincel…"
 #: ../app/actions/mypaint-brushes-actions.c:87
 #, fuzzy
 #| msgid "Paintbrush"
-msgctxt "mypaint-bruahes-action"
+msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
 msgstr "Pincel"
 
@@ -8919,7 +8919,7 @@ msgstr ""
 msgid "Deleting \"%s\" failed: %s"
 msgstr "El borrado de «%s» ha fallado: %s"
 
-#: ../app/core/gimp-edit.c:183 ../app/core/gimpimage-new.c:317
+#: ../app/core/gimp-edit.c:183 ../app/core/gimpimage-new.c:318
 msgid "Pasted Layer"
 msgstr "Capa pegada"
 
@@ -9024,7 +9024,7 @@ msgstr "Creando la carpeta «%s»…"
 msgid "Cannot create folder '%s': %s"
 msgstr "No se puede crear la carpeta «%s»: %s"
 
-#: ../app/core/gimp-utils.c:553
+#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:257
 msgid "No patterns available for this operation."
 msgstr "No hay patrones disponibles para esta operación."
 
@@ -9281,7 +9281,7 @@ msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Impresionar el canal"
 
-#: ../app/core/gimpchannel.c:290 ../app/core/gimpselection.c:613
+#: ../app/core/gimpchannel.c:290 ../app/core/gimpselection.c:612
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Canal a selección"
@@ -9399,7 +9399,7 @@ msgstr "Frente"
 msgid "Foreground color"
 msgstr "Color de frente"
 
-#: ../app/core/gimpcontext.c:680 ../app/core/gimpimage-new.c:140
+#: ../app/core/gimpcontext.c:680 ../app/core/gimpimage-new.c:141
 msgid "Background"
 msgstr "Fondo"
 
@@ -9581,6 +9581,15 @@ msgstr "Ecualizar"
 msgid "Computing alpha of unknown pixels"
 msgstr "Calculando alfa de píxeles desconocidos."
 
+#: ../app/core/gimpdrawable-fill.c:154
+msgid "Not enough points to fill"
+msgstr "No hay suficientes puntos que rellenar"
+
+#: ../app/core/gimpdrawable-fill.c:250
+msgctxt "undo-type"
+msgid "Render Stroke"
+msgstr "Renderizar el trazo"
+
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:116
 #: ../app/tools/gimplevelstool.c:137
@@ -9592,19 +9601,10 @@ msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Desplazar el dibujable"
 
-#: ../app/core/gimpdrawable-stroke.c:271
+#: ../app/core/gimpdrawable-stroke.c:111
 #: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:636
 msgid "Not enough points to stroke"
 msgstr "No hay suficientes puntos para trazar"
-
-#: ../app/core/gimpdrawable-stroke.c:272
-msgid "Not enough points to fill"
-msgstr "No hay suficientes puntos que rellenar"
-
-#: ../app/core/gimpdrawable-stroke.c:387
-msgctxt "undo-type"
-msgid "Render Stroke"
-msgstr "Renderizar el trazo"
 
 #: ../app/core/gimpdrawable-transform.c:724
 msgctxt "undo-type"
@@ -9629,14 +9629,14 @@ msgstr "Transformación"
 msgid "Output type"
 msgstr "Tipo de salida"
 
-#: ../app/core/gimpfilloptions.c:89
+#: ../app/core/gimpfilloptions.c:92
 #, fuzzy
 #| msgctxt "dockable-action"
 #| msgid "_Tab Style"
 msgid "Style"
 msgstr "Es_tilo de pestaña"
 
-#: ../app/core/gimpfilloptions.c:97 ../app/pdb/gimppdbcontext.c:99
+#: ../app/core/gimpfilloptions.c:100 ../app/pdb/gimppdbcontext.c:99
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:150
 msgid "Antialiasing"
 msgstr "Alisado"
@@ -10641,26 +10641,26 @@ msgctxt "undo-type"
 msgid "Flood Selection"
 msgstr "Flotar la selección"
 
-#: ../app/core/gimpselection.c:295
+#: ../app/core/gimpselection.c:294
 msgid "There is no selection to stroke."
 msgstr "No hay ninguna selección que trazar."
 
-#: ../app/core/gimpselection.c:701
+#: ../app/core/gimpselection.c:700
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "No se puede cortar o copiar porque la región seleccionada está vacía."
 
-#: ../app/core/gimpselection.c:830
+#: ../app/core/gimpselection.c:829
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "No se puede hacer flotar la selección porque la región seleccionada está "
 "vacía."
 
-#: ../app/core/gimpselection.c:837
+#: ../app/core/gimpselection.c:836
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Flotar la selección"
 
-#: ../app/core/gimpselection.c:853
+#: ../app/core/gimpselection.c:852
 msgid "Floated Layer"
 msgstr "Capa flotante"
 
@@ -10826,7 +10826,7 @@ msgstr "_Intervalo:"
 
 #: ../app/core/gimpsymmetry-tiling.c:107
 msgid "Interval on the X axis (pixels)"
-msgstr ""
+msgstr "Intervalo en el eje X (píxeles)"
 
 #: ../app/core/gimpsymmetry-tiling.c:114
 #, fuzzy
@@ -10836,7 +10836,7 @@ msgstr "_Intervalo:"
 
 #: ../app/core/gimpsymmetry-tiling.c:115
 msgid "Interval on the Y axis (pixels)"
-msgstr ""
+msgstr "Intervalo en el eje Y (píxeles)"
 
 #: ../app/core/gimpsymmetry-tiling.c:122
 #, fuzzy
@@ -11145,7 +11145,7 @@ msgstr "Diseño"
 
 #: ../app/dialogs/color-profile-dialog.c:236
 msgid "Profile _details"
-msgstr ""
+msgstr "_Detalles del perfil"
 
 #: ../app/dialogs/color-profile-dialog.c:265
 #, fuzzy
@@ -11235,7 +11235,7 @@ msgstr "Importar ajustes desde un archivo"
 
 #: ../app/dialogs/color-profile-import-dialog.c:99
 msgid "Keep"
-msgstr ""
+msgstr "Guardar"
 
 #: ../app/dialogs/color-profile-import-dialog.c:100
 #, fuzzy
@@ -11246,7 +11246,7 @@ msgstr "C_onvertir"
 #: ../app/dialogs/color-profile-import-dialog.c:117
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr ""
+msgstr "La imagen «%s» tiene un perfil de color incrustado"
 
 #: ../app/dialogs/color-profile-import-dialog.c:138
 msgid "_Don't ask me again"
@@ -12078,7 +12078,7 @@ msgstr "Preferencias"
 #: ../app/dialogs/preferences-dialog.c:1360
 #: ../app/dialogs/preferences-dialog.c:1361
 msgid "System Resources"
-msgstr ""
+msgstr "Recursos del sistema"
 
 #: ../app/dialogs/preferences-dialog.c:1368
 msgid "Resource Consumption"
@@ -12107,7 +12107,7 @@ msgstr "Número de _procesadores que usar:"
 #. Hardware Acceleration
 #: ../app/dialogs/preferences-dialog.c:1397
 msgid "Hardware Acceleration"
-msgstr ""
+msgstr "Aceleración de hardware"
 
 #: ../app/dialogs/preferences-dialog.c:1401
 msgid "Use OpenCL"
@@ -12193,7 +12193,7 @@ msgstr "Prueba de renderizado en _pantalla:"
 
 #: ../app/dialogs/preferences-dialog.c:1516
 msgid "Use _black point compensation for the display"
-msgstr ""
+msgstr "Utilizar la _compensación de punto negro para la pantalla"
 
 #: ../app/dialogs/preferences-dialog.c:1530
 msgid "_Softproof rendering intent:"
@@ -12217,7 +12217,7 @@ msgstr "Comportamiento de apertura de archivos:"
 
 #: ../app/dialogs/preferences-dialog.c:1586
 msgid "Experimental Playground"
-msgstr ""
+msgstr "Entorno experimental"
 
 #: ../app/dialogs/preferences-dialog.c:1587
 #, fuzzy
@@ -12597,7 +12597,7 @@ msgstr "G_uardar posiciones de ventanas al salir"
 
 #: ../app/dialogs/preferences-dialog.c:2348
 msgid "Open windows on the same _monitor they were open before"
-msgstr ""
+msgstr "Abrir ventanas en el mismo _monitor en el que estaban antes abiertas"
 
 #: ../app/dialogs/preferences-dialog.c:2352
 msgid "Save Window Positions _Now"
@@ -13039,7 +13039,7 @@ msgstr "Pulse %s para descartar todos los cambios y salir."
 #: ../app/dialogs/quit-dialog.c:333
 #, c-format
 msgid "Press %s to discard all changes and close all images."
-msgstr ""
+msgstr "Pulse %s para descartar todos los cambios y cerrar todas las imágenes."
 
 #: ../app/dialogs/quit-dialog.c:341
 #: ../app/display/gimpdisplayshell-close.c:179
@@ -13565,12 +13565,12 @@ msgstr "Subiendo imagen (%s de %s)"
 #: ../app/file/file-remote.c:384
 #, c-format
 msgid "Downloaded %s of image data"
-msgstr ""
+msgstr "Descargados %s de los datos de la imagen"
 
 #: ../app/file/file-remote.c:388
 #, c-format
 msgid "Uploaded %s of image data"
-msgstr ""
+msgstr "Subidos %s de los datos de la imagen"
 
 #: ../app/file/file-save.c:278
 #, c-format
@@ -13760,7 +13760,7 @@ msgstr "no es un archivo de curvas de GIMP"
 
 #: ../app/operations/gimpcurvesconfig.c:557
 msgid "Parse error, didn't find 2 integers"
-msgstr ""
+msgstr "Error de análisis, no se encontraron 2 enteros"
 
 #: ../app/operations/gimpcurvesconfig.c:673
 msgid "Writing curves file failed: "
@@ -13776,22 +13776,22 @@ msgstr "S_olapar"
 #: ../app/operations/gimplevelsconfig.c:118
 #: ../app/operations/gimplevelsconfig.c:119
 msgid "Low Input"
-msgstr ""
+msgstr "Entrada baja"
 
 #: ../app/operations/gimplevelsconfig.c:124
 #: ../app/operations/gimplevelsconfig.c:125
 msgid "High Input"
-msgstr ""
+msgstr "Entrada alta"
 
 #: ../app/operations/gimplevelsconfig.c:130
 #: ../app/operations/gimplevelsconfig.c:131
 msgid "Low Output"
-msgstr ""
+msgstr "Salida baja"
 
 #: ../app/operations/gimplevelsconfig.c:136
 #: ../app/operations/gimplevelsconfig.c:137
 msgid "High Output"
-msgstr ""
+msgstr "Salida alta"
 
 #: ../app/operations/gimplevelsconfig.c:775
 msgid "not a GIMP Levels file"
@@ -14090,7 +14090,7 @@ msgstr "Carpetas de pinceles"
 
 #: ../app/paint/gimppaintoptions.c:198
 msgid "Link brush size with canvas zoom"
-msgstr ""
+msgstr "Enlazar el tamaño del pincel con la ampliación del lienzo"
 
 #: ../app/paint/gimppaintoptions.c:204
 msgid "Aspect Ratio"
@@ -14144,7 +14144,7 @@ msgstr "Ángulo de la gota de tinta"
 
 #: ../app/paint/gimppaintoptions.c:254
 msgid "Link brush angle to brush native"
-msgstr ""
+msgstr "Enlazar el ángulo del pincel al pincel nativo"
 
 #: ../app/paint/gimppaintoptions.c:260
 #, fuzzy
@@ -14365,11 +14365,11 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Umbral"
 
-#: ../app/pdb/drawable-cmds.c:523
+#: ../app/pdb/drawable-cmds.c:524
 msgid "Plug-In"
 msgstr "Complemento"
 
-#: ../app/pdb/drawable-cmds.c:962 ../app/tools/gimpforegroundselecttool.c:998
+#: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:998
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Selección del frente"
