@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-08 19:33+0000\n"
-"PO-Revision-Date: 2016-03-09 09:08+0100\n"
+"POT-Creation-Date: 2016-03-09 19:12+0000\n"
+"PO-Revision-Date: 2016-03-10 11:38+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -808,7 +808,8 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Intersectar este canal con la selección actual"
 
-#: ../app/actions/channels-commands.c:86 ../app/actions/channels-commands.c:403
+#: ../app/actions/channels-commands.c:86
+#: ../app/actions/channels-commands.c:403
 msgid "Channel Attributes"
 msgstr "Atributos del canal"
 
@@ -820,7 +821,8 @@ msgstr "Editar los atributos del canal"
 msgid "Edit Channel Color"
 msgstr "Editar el color del canal"
 
-#: ../app/actions/channels-commands.c:92 ../app/actions/channels-commands.c:124
+#: ../app/actions/channels-commands.c:92
+#: ../app/actions/channels-commands.c:124
 msgid "_Fill opacity:"
 msgstr "Opacidad del _relleno:"
 
@@ -1090,7 +1092,8 @@ msgstr ""
 "La apertura de «%s» ha fallado:\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
+#: ../app/actions/data-commands.c:114
+#: ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1963
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
@@ -2937,7 +2940,7 @@ msgstr "Mostrar _filtros…"
 #: ../app/actions/filters-actions.c:121
 msgctxt "filters-action"
 msgid "_Bump Map..."
-msgstr ""
+msgstr "Mapa de _relieve..."
 
 #: ../app/actions/filters-actions.c:126
 #, fuzzy
@@ -3081,7 +3084,7 @@ msgstr "_Sóbel…"
 #: ../app/actions/filters-actions.c:236
 msgctxt "filters-action"
 msgid "_Emboss..."
-msgstr ""
+msgstr "_Repujado..."
 
 #: ../app/actions/filters-actions.c:241
 #, fuzzy
@@ -3126,7 +3129,7 @@ msgstr "_Rejilla…"
 #: ../app/actions/filters-actions.c:271
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr ""
+msgstr "_Paso alto..."
 
 #: ../app/actions/filters-actions.c:276
 msgctxt "filters-action"
@@ -3147,7 +3150,7 @@ msgstr "Distorsión de lente…"
 #: ../app/actions/filters-actions.c:291
 msgctxt "filters-action"
 msgid "Lens Flare..."
-msgstr ""
+msgstr "Reflejo en la lente..."
 
 #: ../app/actions/filters-actions.c:296
 #, fuzzy
@@ -3435,7 +3438,7 @@ msgstr "_Ondas…"
 #: ../app/actions/filters-actions.c:521
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
-msgstr ""
+msgstr "_Girar y comprimir..."
 
 #: ../app/actions/filters-actions.c:526
 msgctxt "filters-action"
@@ -4362,7 +4365,7 @@ msgstr "Convertir la imagen a 16 bits en coma flotante"
 #: ../app/actions/image-actions.c:230
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr ""
+msgstr "Gamma perceptual (sRGB)"
 
 #: ../app/actions/image-actions.c:232
 #, fuzzy
@@ -4451,13 +4454,15 @@ msgstr "Redimensionando"
 msgid "Set Image Print Resolution"
 msgstr "Establecer la resolución de impresión de la imagen"
 
-#: ../app/actions/image-commands.c:566 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:566
+#: ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Volteando"
 
-#: ../app/actions/image-commands.c:590 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:590
+#: ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
@@ -7151,7 +7156,7 @@ msgstr "Cuando está activado, GIMP está en modo de ventana única."
 #: ../app/actions/windows-actions.c:139
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
-msgstr ""
+msgstr "Parte _superior"
 
 #: ../app/actions/windows-actions.c:140
 #, fuzzy
@@ -7313,12 +7318,12 @@ msgstr "Diestro"
 #: ../app/config/config-enums.c:267
 msgctxt "position"
 msgid "Top"
-msgstr ""
+msgstr "Parte superior"
 
 #: ../app/config/config-enums.c:268
 msgctxt "position"
 msgid "Bottom"
-msgstr ""
+msgstr "Parte inferior"
 
 #: ../app/config/config-enums.c:269
 msgctxt "position"
@@ -7811,7 +7816,7 @@ msgstr "Abre el diálogo de información del puntero"
 
 #: ../app/config/gimprc-blurbs.h:391
 msgid "Enable the Handle Transform tool."
-msgstr ""
+msgstr "Activar la herramienta de transformación del tirador."
 
 #: ../app/config/gimprc-blurbs.h:394
 msgid "Enable symmetry on painting."
@@ -7819,7 +7824,7 @@ msgstr "Activar simetría en el pintado."
 
 #: ../app/config/gimprc-blurbs.h:397
 msgid "Enable the MyPaint Brush tool."
-msgstr ""
+msgstr "Activar la herramienta pincel MyPaint."
 
 #: ../app/config/gimprc-blurbs.h:400
 #, fuzzy
@@ -9878,16 +9883,20 @@ msgstr "Disponer objetos"
 #: ../app/core/gimpimage-color-profile.c:88
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
+"La validación de perfiles ICC falló: el nombre del parásito no es «icc-"
+"profile»"
 
 #: ../app/core/gimpimage-color-profile.c:97
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
 msgstr ""
+"La validación de perfiles ICC falló: las opciones del parásito no son "
+"(PERSISTENT | UNDOABLE)"
 
 #: ../app/core/gimpimage-color-profile.c:154
 msgid "ICC profile validation failed: "
-msgstr ""
+msgstr "La validación de perfiles ICC falló:"
 
 #: ../app/core/gimpimage-color-profile.c:252
 #, fuzzy
@@ -9899,6 +9908,8 @@ msgstr "Colorear sólo funciona sobre capas de color RGB."
 #: ../app/core/gimpimage-color-profile.c:262
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
+"La validación de perfiles ICC falló: el perfil de color no es para el "
+"espacio de color RGB"
 
 #: ../app/core/gimpimage-color-profile.c:397
 #, fuzzy, c-format
@@ -10446,7 +10457,7 @@ msgstr "No se pueden renombrar las máscaras de capa."
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
 msgid "MyPaint brush file is unreasonably large, skipping."
-msgstr ""
+msgstr "El archivo del pincel MyPaint es excesivamente grande, omitiendo."
 
 #: ../app/core/gimpmybrush-load.c:93
 #, fuzzy, c-format
@@ -10758,13 +10769,15 @@ msgstr "Líneas medias"
 msgid "Number of points"
 msgstr "Número de líneas"
 
-#: ../app/core/gimpsymmetry-mandala.c:143 ../app/core/gimpsymmetry-mirror.c:145
+#: ../app/core/gimpsymmetry-mandala.c:143
+#: ../app/core/gimpsymmetry-mirror.c:145
 #, fuzzy
 #| msgid "Cage transform"
 msgid "Disable brush transform"
 msgstr "Transformar rejilla"
 
-#: ../app/core/gimpsymmetry-mandala.c:144 ../app/core/gimpsymmetry-mirror.c:146
+#: ../app/core/gimpsymmetry-mandala.c:144
+#: ../app/core/gimpsymmetry-mirror.c:146
 #, fuzzy
 #| msgid "Transformation"
 msgid "Disable brush transformation (faster)"
@@ -11243,7 +11256,7 @@ msgstr "La imagen «%s» tiene un perfil de color incrustado"
 
 #: ../app/dialogs/color-profile-import-dialog.c:138
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "_No volver a preguntar"
 
 #: ../app/dialogs/convert-precision-dialog.c:135
 #, c-format
@@ -11261,7 +11274,8 @@ msgstr "C_onvertir"
 
 #. dithering
 #: ../app/dialogs/convert-precision-dialog.c:185
-#: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:119
+#: ../app/dialogs/convert-type-dialog.c:239
+#: ../app/tools/gimpblendoptions.c:119
 msgid "Dithering"
 msgstr "Difuminado"
 
@@ -11338,7 +11352,8 @@ msgstr "Activar difuminado de las capas de texto"
 msgid "Converting to indexed colors"
 msgstr "Convirtiendo a colores indexados"
 
-#: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/image-convert-cmds.c:162
+#: ../app/dialogs/convert-type-dialog.c:439
+#: ../app/pdb/image-convert-cmds.c:162
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "No se puede convertir a una paleta con más de 256 colores."
 
@@ -12411,7 +12426,8 @@ msgstr "Seleccionar un tema"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2061
-#: ../app/dialogs/preferences-dialog.c:2454 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2454
+#: ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Apariencia"
 
@@ -12523,8 +12539,9 @@ msgstr "Resolución de monitor"
 
 # Debe ir en minúsculas por las reglas de estilo
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2218 ../app/display/gimpcursorview.c:207
-#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2218
+#: ../app/display/gimpcursorview.c:207 ../app/widgets/gimpgrideditor.c:199
+#: ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "píxeles"
 
@@ -13030,7 +13047,8 @@ msgstr "Pulse %s para descartar todos los cambios y salir."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Pulse %s para descartar todos los cambios y cerrar todas las imágenes."
 
-#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:179
+#: ../app/dialogs/quit-dialog.c:341
+#: ../app/display/gimpdisplayshell-close.c:179
 msgid "_Discard Changes"
 msgstr "_Descartar cambios"
 
@@ -13305,8 +13323,8 @@ msgstr "Activar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:773 ../app/display/gimpdisplayshell.c:1467
-#: ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:773
+#: ../app/display/gimpdisplayshell.c:1467 ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
 
@@ -14085,7 +14103,8 @@ msgid "Aspect Ratio"
 msgstr "Proporción de aspecto"
 
 #: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:81
+#: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaciado"
 
@@ -14840,7 +14859,7 @@ msgstr "Selección libre"
 #: ../app/pdb/plug-in-compat-cmds.c:241
 msgctxt "undo-type"
 msgid "Bump Map"
-msgstr ""
+msgstr "Mapa de relieve"
 
 #: ../app/pdb/plug-in-compat-cmds.c:313
 #, fuzzy
@@ -14893,7 +14912,7 @@ msgstr "Autorecortar capa"
 #: ../app/pdb/plug-in-compat-cmds.c:710
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
-msgstr ""
+msgstr "Expansión del contraste HSV"
 
 #: ../app/pdb/plug-in-compat-cmds.c:864
 #, fuzzy
@@ -15177,7 +15196,7 @@ msgstr "Ondas"
 #: ../app/pdb/plug-in-compat-cmds.c:4281
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
-msgstr ""
+msgstr "Girar y comprimir"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4333
 msgctxt "undo-type"
@@ -15617,7 +15636,8 @@ msgstr "Sobremuestreo adaptativo"
 msgid "Max depth"
 msgstr "Profundidad máxima"
 
-#: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:126
+#: ../app/tools/gimpblendoptions.c:112
+#: ../app/tools/gimpbucketfilloptions.c:126
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
@@ -15958,15 +15978,18 @@ msgstr "Colorear la imagen"
 msgid "Select Color"
 msgstr "Seleccionar el color"
 
-#: ../app/tools/gimpcolorizetool.c:174 ../app/tools/gimphuesaturationtool.c:312
+#: ../app/tools/gimpcolorizetool.c:174
+#: ../app/tools/gimphuesaturationtool.c:312
 msgid "_Hue"
 msgstr "_Tono"
 
-#: ../app/tools/gimpcolorizetool.c:181 ../app/tools/gimphuesaturationtool.c:326
+#: ../app/tools/gimpcolorizetool.c:181
+#: ../app/tools/gimphuesaturationtool.c:326
 msgid "_Saturation"
 msgstr "_Saturación"
 
-#: ../app/tools/gimpcolorizetool.c:188 ../app/tools/gimphuesaturationtool.c:319
+#: ../app/tools/gimpcolorizetool.c:188
+#: ../app/tools/gimphuesaturationtool.c:319
 msgid "_Lightness"
 msgstr "_Luminosidad"
 
@@ -16965,7 +16988,8 @@ msgid "Resize image window to accommodate new zoom level"
 msgstr ""
 "Redimensionar la ventana de imagen para ajustarse nuevo nivel de ampliación"
 
-#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
+#: ../app/tools/gimpmagnifyoptions.c:91
+#: ../app/tools/gimptransformoptions.c:116
 #: ../app/widgets/gimpdynamicseditor.c:144
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
@@ -17601,7 +17625,8 @@ msgstr "Permitir el difuminado de los límites de la selección"
 msgid "Radius of feathering"
 msgstr "Radio del difuminado"
 
-#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:190
+#: ../app/tools/gimpselectionoptions.c:222
+#: ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Modo:"
 
