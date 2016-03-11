@@ -32,6 +32,7 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpfilloptions.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-new.h"
 #include "core/gimpimage.h"
@@ -495,18 +496,22 @@ edit_fill_cmd_callback (GtkAction *action,
                         gint       value,
                         gpointer   data)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GimpFillType  fill_type;
-  GError       *error = NULL;
+  GimpImage       *image;
+  GimpDrawable    *drawable;
+  GimpFillType     fill_type;
+  GimpFillOptions *options;
+  GError          *error = NULL;
   return_if_no_drawable (image, drawable, data);
 
   fill_type = (GimpFillType) value;
 
-  if (gimp_edit_fill (image, drawable, action_data_get_context (data),
-                      fill_type, GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                      &error))
+  options = gimp_fill_options_new (action_data_get_gimp (data));
+
+  if (gimp_fill_options_set_by_fill_type (options,
+                                          action_data_get_context (data),
+                                          fill_type, &error))
     {
+      gimp_edit_fill (image, drawable, options, NULL);
       gimp_image_flush (image);
     }
   else
@@ -515,6 +520,8 @@ edit_fill_cmd_callback (GtkAction *action,
                             error->message);
       g_clear_error (&error);
     }
+
+  g_object_unref (options);
 }
 
 

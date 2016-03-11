@@ -28,6 +28,7 @@
 #include "core/gimp-edit.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimperror.h"
+#include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimppickable.h"
@@ -173,47 +174,61 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
     {
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
       GimpContext  *context  = GIMP_CONTEXT (options);
-      GimpFillType  fill_type;
-      gint          x, y;
       gboolean      success;
       GError       *error = NULL;
 
-      switch (options->fill_mode)
-        {
-        default:
-        case GIMP_BUCKET_FILL_FG:
-          fill_type = GIMP_FILL_FOREGROUND;
-          break;
-        case GIMP_BUCKET_FILL_BG:
-          fill_type = GIMP_FILL_BACKGROUND;
-          break;
-        case GIMP_BUCKET_FILL_PATTERN:
-          fill_type = GIMP_FILL_PATTERN;
-          break;
-        }
-
-      x = coords->x;
-      y = coords->y;
-
-      if (! options->sample_merged)
-        {
-          gint off_x, off_y;
-
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-          x -= off_x;
-          y -= off_y;
-        }
-
       if (options->fill_selection)
         {
-          success = gimp_edit_fill (image, drawable, context, fill_type,
-                                    gimp_context_get_opacity (context),
-                                    gimp_context_get_paint_mode (context),
-                                    &error);
+          GimpFillOptions *fill_options = gimp_fill_options_new (image->gimp);
+
+          success = gimp_fill_options_set_by_fill_mode (fill_options, context,
+                                                        options->fill_mode,
+                                                        &error);
+
+          if (success)
+            {
+              gimp_context_set_opacity (GIMP_CONTEXT (fill_options),
+                                        gimp_context_get_opacity (context));
+              gimp_context_set_paint_mode (GIMP_CONTEXT (fill_options),
+                                           gimp_context_get_paint_mode (context));
+
+              success = gimp_edit_fill (image, drawable, fill_options, NULL);
+            }
+
+          g_object_unref (fill_options);
         }
       else
         {
+          GimpFillType fill_type;
+          gint         x, y;
+
+          x = coords->x;
+          y = coords->y;
+
+          switch (options->fill_mode)
+            {
+            default:
+            case GIMP_BUCKET_FILL_FG:
+              fill_type = GIMP_FILL_FOREGROUND;
+              break;
+            case GIMP_BUCKET_FILL_BG:
+              fill_type = GIMP_FILL_BACKGROUND;
+              break;
+            case GIMP_BUCKET_FILL_PATTERN:
+              fill_type = GIMP_FILL_PATTERN;
+              break;
+            }
+
+          if (! options->sample_merged)
+            {
+              gint off_x, off_y;
+
+              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+              x -= off_x;
+              y -= off_y;
+            }
+
           success = gimp_drawable_bucket_fill (drawable, context, fill_type,
                                                gimp_context_get_paint_mode (context),
                                                gimp_context_get_opacity (context),

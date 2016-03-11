@@ -19,62 +19,51 @@
 #define __GIMP_EDIT_H__
 
 
-const GimpBuffer * gimp_edit_cut                (GimpImage     *image,
-                                                 GimpDrawable  *drawable,
-                                                 GimpContext   *context,
-                                                 GError       **error);
-const GimpBuffer * gimp_edit_copy               (GimpImage     *image,
-                                                 GimpDrawable  *drawable,
-                                                 GimpContext   *context,
-                                                 GError       **error);
-const GimpBuffer * gimp_edit_copy_visible       (GimpImage     *image,
-                                                 GimpContext   *context,
-                                                 GError       **error);
-GimpLayer        * gimp_edit_paste              (GimpImage     *image,
-                                                 GimpDrawable  *drawable,
-                                                 GimpBuffer    *paste,
-                                                 gboolean       paste_into,
-                                                 gint           viewport_x,
-                                                 gint           viewport_y,
-                                                 gint           viewport_width,
-                                                 gint           viewport_height);
+const GimpBuffer * gimp_edit_cut                (GimpImage       *image,
+                                                 GimpDrawable    *drawable,
+                                                 GimpContext     *context,
+                                                 GError         **error);
+const GimpBuffer * gimp_edit_copy               (GimpImage       *image,
+                                                 GimpDrawable    *drawable,
+                                                 GimpContext     *context,
+                                                 GError         **error);
+const GimpBuffer * gimp_edit_copy_visible       (GimpImage       *image,
+                                                 GimpContext     *context,
+                                                 GError         **error);
+GimpLayer        * gimp_edit_paste              (GimpImage       *image,
+                                                 GimpDrawable    *drawable,
+                                                 GimpBuffer      *paste,
+                                                 gboolean         paste_into,
+                                                 gint             viewport_x,
+                                                 gint             viewport_y,
+                                                 gint             viewport_width,
+                                                 gint             viewport_height);
 
-const gchar      * gimp_edit_named_cut          (GimpImage     *image,
-                                                 const gchar   *name,
-                                                 GimpDrawable  *drawable,
-                                                 GimpContext   *context,
-                                                 GError       **error);
-const gchar      * gimp_edit_named_copy         (GimpImage     *image,
-                                                 const gchar   *name,
-                                                 GimpDrawable  *drawable,
-                                                 GimpContext   *context,
-                                                 GError       **error);
-const gchar      * gimp_edit_named_copy_visible (GimpImage     *image,
-                                                 const gchar   *name,
-                                                 GimpContext   *context,
-                                                 GError       **error);
+const gchar      * gimp_edit_named_cut          (GimpImage       *image,
+                                                 const gchar     *name,
+                                                 GimpDrawable    *drawable,
+                                                 GimpContext     *context,
+                                                 GError         **error);
+const gchar      * gimp_edit_named_copy         (GimpImage       *image,
+                                                 const gchar     *name,
+                                                 GimpDrawable    *drawable,
+                                                 GimpContext     *context,
+                                                 GError         **error);
+const gchar      * gimp_edit_named_copy_visible (GimpImage       *image,
+                                                 const gchar     *name,
+                                                 GimpContext     *context,
+                                                 GError         **error);
 
-gboolean           gimp_edit_clear              (GimpImage     *image,
-                                                 GimpDrawable  *drawable,
-                                                 GimpContext   *context);
-gboolean           gimp_edit_fill               (GimpImage     *image,
-                                                 GimpDrawable  *drawable,
-                                                 GimpContext   *context,
-                                                 GimpFillType   fill_type,
-                                                 gdouble        opacity,
-                                                 GimpLayerModeEffects  paint_mode,
-                                                 GError       **error);
+gboolean           gimp_edit_clear              (GimpImage       *image,
+                                                 GimpDrawable    *drawable,
+                                                 GimpContext     *context);
+gboolean           gimp_edit_fill               (GimpImage       *image,
+                                                 GimpDrawable    *drawable,
+                                                 GimpFillOptions *options,
+                                                 const gchar     *undo_desc);
 
-gboolean           gimp_edit_fill_full          (GimpImage     *image,
-                                                 GimpDrawable  *drawable,
-                                                 const GimpRGB *color,
-                                                 GimpPattern   *pattern,
-                                                 gdouble        opacity,
-                                                 GimpLayerModeEffects  paint_mode,
-                                                 const gchar   *undo_desc);
-
-gboolean           gimp_edit_fade               (GimpImage     *image,
-                                                 GimpContext   *context);
+gboolean           gimp_edit_fade               (GimpImage       *image,
+                                                 GimpContext     *context);
 
 
 #endif  /*  __GIMP_EDIT_H__  */

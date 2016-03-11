@@ -32,6 +32,7 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-new.h"
@@ -382,12 +383,24 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
     }
   else
     {
-      gimp_edit_fill_full (image, drawable,
-                           color, pattern,
-                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                           pattern ?
-                           C_("undo-type", "Drop pattern to layer") :
-                           C_("undo-type", "Drop color to layer"));
+      GimpFillOptions *options = gimp_fill_options_new (image->gimp);
+
+      if (color)
+        {
+          gimp_context_set_foreground (GIMP_CONTEXT (options), color);
+        }
+      else
+        {
+          gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
+          gimp_context_set_pattern (GIMP_CONTEXT (options), pattern);
+        }
+
+      gimp_edit_fill (image, drawable, options,
+                      pattern ?
+                      C_("undo-type", "Drop pattern to layer") :
+                      C_("undo-type", "Drop color to layer"));
+
+      g_object_unref (options);
     }
 
   gimp_display_shell_dnd_flush (shell, image);

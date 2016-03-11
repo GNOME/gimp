@@ -36,6 +36,7 @@
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpfilloptions.h"
 #include "gimpdrawableundo.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
@@ -399,98 +400,61 @@ gimp_edit_clear (GimpImage    *image,
                  GimpDrawable *drawable,
                  GimpContext  *context)
 {
-  GimpRGB              background;
-  GimpLayerModeEffects paint_mode;
+  GimpFillOptions *options;
+  gboolean         success;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
-  gimp_context_get_background (context, &background);
+  options = gimp_fill_options_new (context->gimp);
 
   if (gimp_drawable_has_alpha (drawable))
-    paint_mode = GIMP_ERASE_MODE;
+    gimp_fill_options_set_by_fill_type (options, context,
+                                        GIMP_FILL_TRANSPARENT, NULL);
   else
-    paint_mode = GIMP_NORMAL_MODE;
+    gimp_fill_options_set_by_fill_type (options, context,
+                                        GIMP_FILL_BACKGROUND, NULL);
 
-  return gimp_edit_fill_full (image, drawable,
-                              &background, NULL,
-                              GIMP_OPACITY_OPAQUE, paint_mode,
-                              C_("undo-type", "Clear"));
+  success = gimp_edit_fill (image, drawable, options,
+                            C_("undo-type", "Clear"));
+
+  g_object_unref (options);
+
+  return success;
 }
 
 gboolean
-gimp_edit_fill (GimpImage             *image,
-                GimpDrawable          *drawable,
-                GimpContext           *context,
-                GimpFillType           fill_type,
-                gdouble                opacity,
-                GimpLayerModeEffects   paint_mode,
-                GError               **error)
+gimp_edit_fill (GimpImage       *image,
+                GimpDrawable    *drawable,
+                GimpFillOptions *options,
+                const gchar     *undo_desc)
 {
+  GeglBuffer  *dest_buffer;
+  GimpPattern *pattern = NULL;
   GimpRGB      color;
-  GimpPattern *pattern;
-  const gchar *undo_desc = NULL;
+  const Babl  *format;
+  gint         x, y, width, height;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, error))
-    return FALSE;
-
-  switch (fill_type)
-    {
-    case GIMP_FILL_FOREGROUND:
-      undo_desc = C_("undo-type", "Fill with Foreground Color");
-      break;
-
-    case GIMP_FILL_BACKGROUND:
-      undo_desc = C_("undo-type", "Fill with Background Color");
-      break;
-
-    case GIMP_FILL_WHITE:
-      undo_desc = C_("undo-type", "Fill with White");
-      break;
-
-    case GIMP_FILL_TRANSPARENT:
-      undo_desc = C_("undo-type", "Fill with Transparency");
-      break;
-
-    case GIMP_FILL_PATTERN:
-      undo_desc = C_("undo-type", "Fill with Pattern");
-      break;
-    }
-
-  return gimp_edit_fill_full (image, drawable,
-                              &color, pattern,
-                              opacity, paint_mode,
-                              undo_desc);
-}
-
-gboolean
-gimp_edit_fill_full (GimpImage            *image,
-                     GimpDrawable         *drawable,
-                     const GimpRGB        *color,
-                     GimpPattern          *pattern,
-                     gdouble               opacity,
-                     GimpLayerModeEffects  paint_mode,
-                     const gchar          *undo_desc)
-{
-  GeglBuffer *dest_buffer;
-  const Babl *format;
-  gint        x, y, width, height;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
-  g_return_val_if_fail (color != NULL || pattern != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
 
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeeded  */
+
+  switch (gimp_fill_options_get_style (options))
+    {
+    case GIMP_FILL_STYLE_SOLID:
+      gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+      break;
+
+    case GIMP_FILL_STYLE_PATTERN:
+      pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
+      break;
+    }
 
   if (pattern &&
       babl_format_has_alpha (gimp_temp_buf_get_format (pattern->mask)) &&
@@ -515,16 +479,20 @@ gimp_edit_fill_full (GimpImage            *image,
     }
   else
     {
-      GeglColor *gegl_color = gimp_gegl_color_new (color);
+      GeglColor *gegl_color = gimp_gegl_color_new (&color);
 
       gegl_buffer_set_color (dest_buffer, NULL, gegl_color);
       g_object_unref (gegl_color);
     }
 
+  if (! undo_desc)
+    undo_desc = gimp_fill_options_get_undo_desc (options);
+
   gimp_drawable_apply_buffer (drawable, dest_buffer,
                               GEGL_RECTANGLE (0, 0, width, height),
                               TRUE, undo_desc,
-                              opacity, paint_mode,
+                              gimp_context_get_opacity (GIMP_CONTEXT (options)),
+                              gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
                               NULL, x, y);
 
   g_object_unref (dest_buffer);
