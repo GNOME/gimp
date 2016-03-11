@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-04 19:14+0000\n"
-"PO-Revision-Date: 2016-02-06 23:05+0100\n"
+"POT-Creation-Date: 2016-03-08 19:14+0000\n"
+"PO-Revision-Date: 2016-03-08 22:18+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl_SI\n"
@@ -339,10 +339,10 @@ msgstr "_Navpične"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:669
-#: ../plug-ins/common/file-raw-data.c:970 ../plug-ins/common/file-sunras.c:1049
+#: ../plug-ins/common/file-raw-data.c:984 ../plug-ins/common/file-sunras.c:1049
 #: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-xbm.c:904
 #: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:255
-#: ../plug-ins/common/tile.c:262 ../plug-ins/file-bmp/bmp-read.c:699
+#: ../plug-ins/common/tile.c:354 ../plug-ins/file-bmp/bmp-read.c:699
 #: ../plug-ins/file-exr/file-exr.c:245 ../plug-ins/file-faxg3/faxg3.c:525
 #: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
@@ -878,8 +878,8 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-gif-save.c:833
 #: ../plug-ins/common/file-mng.c:648 ../plug-ins/common/file-mng.c:985
 #: ../plug-ins/common/file-pcx.c:734 ../plug-ins/common/file-pdf-save.c:432
-#: ../plug-ins/common/file-png.c:1504 ../plug-ins/common/file-raw-data.c:785
-#: ../plug-ins/common/file-raw-data.c:813 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-png.c:1504 ../plug-ins/common/file-raw-data.c:799
+#: ../plug-ins/common/file-raw-data.c:827 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1473
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:326 ../plug-ins/file-fits/fits.c:481
@@ -911,7 +911,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:895
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3369
 #: ../plug-ins/common/file-psp.c:1714 ../plug-ins/common/file-raw-data.c:271
-#: ../plug-ins/common/file-raw-data.c:894 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-raw-data.c:908 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:709
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:840
@@ -1148,8 +1148,9 @@ msgid "_L"
 msgstr "_L"
 
 #: ../plug-ins/common/compose.c:180
+#, fuzzy
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: ../plug-ins/common/compose.c:181
 #, fuzzy
@@ -1181,7 +1182,7 @@ msgid "_Redness cr709:"
 msgstr "_Pordelost cr709:"
 
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1404
+#: ../plug-ins/common/file-raw-data.c:1418
 msgid "RGB"
 msgstr "RGB"
 
@@ -1617,12 +1618,14 @@ msgid "B"
 msgstr "B"
 
 #: ../plug-ins/common/decompose.c:161
+#, fuzzy
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: ../plug-ins/common/decompose.c:162
+#, fuzzy
 msgid "H"
-msgstr ""
+msgstr "H/O"
 
 #: ../plug-ins/common/decompose.c:164
 msgid "luma-y470"
@@ -1778,7 +1781,7 @@ msgstr "Vir 2:"
 msgid "O_verlap:"
 msgstr "Pre_krivanje:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1432
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1446
 msgid "O_ffset:"
 msgstr "_Zamik:"
 
@@ -1847,8 +1850,8 @@ msgstr "Odstrani trakove"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3495 ../plug-ins/common/file-ps.c:3700
-#: ../plug-ins/common/file-raw-data.c:1445
-#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/tile.c:428
+#: ../plug-ins/common/file-raw-data.c:1459
+#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/tile.c:464
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
 #: ../plug-ins/print/print-page-layout.c:282
@@ -2015,7 +2018,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:887
 #: ../plug-ins/common/file-pnm.c:562 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:887 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:901 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:985
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
@@ -2104,15 +2107,14 @@ msgstr "'%s': EOF ali napaka pri branju podatkov palete"
 #: ../plug-ins/common/file-png.c:1497 ../plug-ins/common/file-pnm.c:1206
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xmc.c:1462 ../plug-ins/common/file-xpm.c:660
-#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-write.c:318
-#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:716
-#: ../plug-ins/file-ico/ico-save.c:1073 ../plug-ins/file-jpeg/jpeg-save.c:285
-#: ../plug-ins/file-psd/psd-save.c:1516 ../plug-ins/file-sgi/sgi.c:577
-#: ../plug-ins/file-tiff/file-tiff-save.c:314
+#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/file-bmp/bmp-write.c:318 ../plug-ins/file-fits/fits.c:473
+#: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1073
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
+#: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:314
 #, c-format
-msgid "Saving '%s'"
-msgstr "Shranjevanje '%s'"
+msgid "Exporting '%s'"
+msgstr "Izvažanje »%s« ..."
 
 #: ../plug-ins/common/file-csource.c:111
 msgid "C source code"
@@ -2207,8 +2209,7 @@ msgstr "Slika Digital Imaging and Communications in Medicine"
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' ni datoteka DICOM."
 
-#: ../plug-ins/common/file-dicom.c:1335 ../plug-ins/common/file-pcx.c:695
-#: ../plug-ins/common/file-pnm.c:1202
+#: ../plug-ins/common/file-dicom.c:1335
 msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
@@ -2322,16 +2323,16 @@ msgstr ""
 "bo predvajala ali shranila pravilno."
 
 #: ../plug-ins/common/file-gif-save.c:510
-msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr "Nadaljnja redukcija barv ni možna. Shranjeno kot prekrivno."
+msgid "Couldn't simply reduce colors further. Exporting as opaque."
+msgstr "Nadaljnja redukcija barv enostavno ni možna. Shranjeno kot prekrivno."
 
 #: ../plug-ins/common/file-gif-save.c:625
 #, c-format
 msgid ""
-"Unable to save '%s'.  The GIF file format does not support images that are "
+"Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Shranjevanje '%s' ni uspelo.  Vrsta datotek GIF ne podpira slik, ki so "
+"Shranjevanje ‘%s’ ni uspelo.  Vrsta datotek GIF ne podpira slik, ki so "
 "daljše ali širše od %d slikovnih točk."
 
 #: ../plug-ins/common/file-gif-save.c:735
@@ -2344,9 +2345,9 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:799
 msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+"Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Barvnih slik RGB ni mogoče shraniti. Najprej pretvorite v indeksirano ali "
+"Barvnih slik RGB ni mogoče izvoziti. Najprej pretvorite v indeksirano ali "
 "sivinsko sliko."
 
 #: ../plug-ins/common/file-gif-save.c:974
@@ -2356,19 +2357,19 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1015
 msgid ""
-"The image you are trying to save as a GIF contains layers which extend "
+"The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"Slika, ki jo želite shraniti kot GIF, vsebuje plasti, ki se raztezajo prek "
+"Slika, ki jo želite izvoziti kot GIF, vsebuje plasti, ki se raztezajo prek "
 "dejanskih meja slike."
 
 #: ../plug-ins/common/file-gif-save.c:1032
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
-"of the layers to the image borders, or cancel this save."
+"of the layers to the image borders, or cancel this export."
 msgstr ""
 "Datotečni zapis GIF tega ne podpira.  Izberite, ali želite vse plasti "
-"porezati na robove slike ali pa preklicati shranjevanje."
+"porezati na robove slike ali pa preklicati izvažanje."
 
 #: ../plug-ins/common/file-gif-save.c:1166
 msgid "GIF"
@@ -2570,9 +2571,9 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "Širina posamezne celice v tabeli. Možen je vpis števila ali odstotka."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3508
-#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1461
+#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1475
 #: ../plug-ins/common/film.c:1002 ../plug-ins/common/smooth-palette.c:440
-#: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:173
+#: ../plug-ins/common/tile.c:468 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:284
 msgid "_Height:"
@@ -2845,6 +2846,10 @@ msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 msgid "Unusual PCX flavour, giving up"
 msgstr "Nenavadna vrsta PCX, sledi prekinitev"
 
+#: ../plug-ins/common/file-pcx.c:695 ../plug-ins/common/file-pnm.c:1202
+msgid "Cannot export images with alpha channel."
+msgstr "Slik ni mogoče izvoziti s kanalom alfa."
+
 #: ../plug-ins/common/file-pcx.c:707
 #, c-format
 msgid "Invalid X offset: %d"
@@ -3022,8 +3027,8 @@ msgstr "Napaka pri nalaganju datoteke PNG: %s"
 
 #: ../plug-ins/common/file-png.c:863
 #, c-format
-msgid "Error creating PNG read struct while saving '%s'."
-msgstr "Napaka pri ustvarjanju bralne strukture za PNG pri shranjevanju '%s'."
+msgid "Error creating PNG read struct while exporting '%s'."
+msgstr "Napaka pri ustvarjanju bralne strukture za PNG pri izvažanju »%s«."
 
 #: ../plug-ins/common/file-png.c:873
 #, c-format
@@ -3071,13 +3076,13 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1473
 #, c-format
-msgid "Error creating PNG write struct while saving '%s'."
-msgstr "Napaka pri ustvarjanju pisalne strukture za PNG pri shranjevanju '%s'."
+msgid "Error creating PNG write struct while exporting '%s'."
+msgstr "Napaka pri ustvarjanju pisalne strukture za PNG pri izvažanju »%s«."
 
 #: ../plug-ins/common/file-png.c:1483
 #, c-format
-msgid "Error while saving '%s'. Could not save image."
-msgstr "Napaka pri shranjevanju '%s'. Slike ni mogoče shraniti."
+msgid "Error while exporting '%s'. Could not export image."
+msgstr "Napaka pri izvažanju »%s«. Slike ni mogoče izvoziti."
 
 #: ../plug-ins/common/file-png.c:2191
 #: ../plug-ins/file-tiff/file-tiff-save.c:840
@@ -3194,8 +3199,8 @@ msgstr "Datoteke PostScript '%s' ni mogoče interpretirati."
 
 #: ../plug-ins/common/file-ps.c:1247
 #, c-format
-msgid "PostScript save cannot handle images with alpha channels"
-msgstr "Shranjevanje PostScript ne podpira slik s kanali alfa"
+msgid "PostScript export cannot handle images with alpha channels"
+msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
 
 #: ../plug-ins/common/file-ps.c:3416
 msgid "Import from PostScript"
@@ -3380,113 +3385,113 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Surovi podatki slike (RAW)"
 
-#: ../plug-ins/common/file-raw-data.c:1356
+#: ../plug-ins/common/file-raw-data.c:1370
 msgid "Load Image from Raw Data"
 msgstr "Naloži sliko iz surovih podatkov"
 
-#: ../plug-ins/common/file-raw-data.c:1394
+#: ../plug-ins/common/file-raw-data.c:1408
 msgid "Image"
 msgstr "Slika"
 
-#: ../plug-ins/common/file-raw-data.c:1405
+#: ../plug-ins/common/file-raw-data.c:1419
 msgid "RGB Alpha"
 msgstr "RGB z alfo"
 
-#: ../plug-ins/common/file-raw-data.c:1406
+#: ../plug-ins/common/file-raw-data.c:1420
 msgid "RGB565 Big Endian"
 msgstr "RGB565, največje na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1407
+#: ../plug-ins/common/file-raw-data.c:1421
 msgid "RGB565 Little Endian"
 msgstr "RGB565, najmanjše na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1408
+#: ../plug-ins/common/file-raw-data.c:1422
 msgid "BGR565 Big Endian"
 msgstr "BGR565, največje na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1409
+#: ../plug-ins/common/file-raw-data.c:1423
 msgid "BGR565 Little Endian"
 msgstr "BGR565, najmanjše na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1410
+#: ../plug-ins/common/file-raw-data.c:1424
 msgid "Planar RGB"
 msgstr "Ravninska RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1411
+#: ../plug-ins/common/file-raw-data.c:1425
 msgid "B&W 1 bit"
 msgstr "Č/B, 1-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:1412
+#: ../plug-ins/common/file-raw-data.c:1426
 msgid "Gray 2 bit"
 msgstr "Sivinska, 2-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:1413
+#: ../plug-ins/common/file-raw-data.c:1427
 msgid "Gray 4 bit"
 msgstr "Sivinska, 4-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:1414
+#: ../plug-ins/common/file-raw-data.c:1428
 msgid "Gray 8 bit"
 msgstr "Sivinska, 8-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:1415
+#: ../plug-ins/common/file-raw-data.c:1429
 msgid "Indexed"
 msgstr "Indeksirana"
 
-#: ../plug-ins/common/file-raw-data.c:1416
+#: ../plug-ins/common/file-raw-data.c:1430
 msgid "Indexed Alpha"
 msgstr "Indeksirana z alfo"
 
-#: ../plug-ins/common/file-raw-data.c:1421
+#: ../plug-ins/common/file-raw-data.c:1435
 msgid "Image _Type:"
 msgstr "Vrs_ta slike:"
 
-#: ../plug-ins/common/file-raw-data.c:1477
+#: ../plug-ins/common/file-raw-data.c:1491
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/common/file-raw-data.c:1487
-#: ../plug-ins/common/file-raw-data.c:1572
+#: ../plug-ins/common/file-raw-data.c:1501
+#: ../plug-ins/common/file-raw-data.c:1586
 msgid "R, G, B (normal)"
 msgstr "R, G, B (navadno)"
 
-#: ../plug-ins/common/file-raw-data.c:1488
-#: ../plug-ins/common/file-raw-data.c:1574
+#: ../plug-ins/common/file-raw-data.c:1502
+#: ../plug-ins/common/file-raw-data.c:1588
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (slog BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1493
+#: ../plug-ins/common/file-raw-data.c:1507
 msgid "_Palette Type:"
 msgstr "Vrsta _palete:"
 
-#: ../plug-ins/common/file-raw-data.c:1504
+#: ../plug-ins/common/file-raw-data.c:1518
 msgid "Off_set:"
 msgstr "_Zamik:"
 
-#: ../plug-ins/common/file-raw-data.c:1516
+#: ../plug-ins/common/file-raw-data.c:1530
 msgid "Select Palette File"
 msgstr "Izberite datoteko palete"
 
-#: ../plug-ins/common/file-raw-data.c:1522
+#: ../plug-ins/common/file-raw-data.c:1536
 msgid "Pal_ette File:"
 msgstr "Datoteka pal_ete:"
 
-#: ../plug-ins/common/file-raw-data.c:1550
+#: ../plug-ins/common/file-raw-data.c:1564
 msgid "Raw Image"
 msgstr "Surova slika (RAW)"
 
-#: ../plug-ins/common/file-raw-data.c:1558
+#: ../plug-ins/common/file-raw-data.c:1572
 msgid "RGB Save Type"
 msgstr "Vrsta shranjevanja RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1562
+#: ../plug-ins/common/file-raw-data.c:1576
 msgid "Standard (RGB RGB RGB ...)"
 msgstr "Navadno (RGB RGB RGB …)"
 
-#: ../plug-ins/common/file-raw-data.c:1563
+#: ../plug-ins/common/file-raw-data.c:1577
 msgid "Planar (RRR... GGG... BBB...)"
 msgstr "Planarno (RRR… GGG… BBB…)"
 
-#: ../plug-ins/common/file-raw-data.c:1568
+#: ../plug-ins/common/file-raw-data.c:1582
 msgid "Indexed Palette Type"
 msgstr "Vrsta indeksirane palete"
 
@@ -3558,8 +3563,8 @@ msgstr "Ta globina slike ni podprta"
 
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
-msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr "Shranjevanje SUNRAS ne zmore obdelati slik s kanali alfa"
+msgid "SUNRAS export cannot handle images with alpha channels"
+msgstr "Izvoz SUNRAS ne zmore obdelati slik s kanali alfa"
 
 #: ../plug-ins/common/file-sunras.c:597
 msgid "Can't operate on unknown image types"
@@ -3754,15 +3759,15 @@ msgstr ""
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:997
 msgid ""
-"The image which you are trying to save as an XBM contains more than two "
+"The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
-"Slika, ki jo poskusite shraniti v zapisu XBM, vsebuje več kot dve barvi.\n"
+"Slika, ki jo poskušate izvoziti v zapisu XBM, vsebuje več kot dve barvi.\n"
 " \n"
-"Prosimo, pretvorite jo v 1-bitno črno belo sliko in jo potem poskusite znova "
-"shraniti. "
+"Prosimo, pretvorite jo v 1-bitno črno belo indeksirano sliko in potem "
+"poskusite znova."
 
 #: ../plug-ins/common/file-xbm.c:1009
 msgid ""
@@ -3991,6 +3996,11 @@ msgstr "Vnesite dodaten komentar, če želite."
 msgid "Comment is limited to %d characters."
 msgstr "Komentar je omejen na %d znakov."
 
+#: ../plug-ins/common/file-xmc.c:1462
+#, c-format
+msgid "Saving '%s'"
+msgstr "Shranjevanje '%s'"
+
 #: ../plug-ins/common/file-xmc.c:1528
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
@@ -4009,37 +4019,37 @@ msgstr "Širina in/ali višina sličice '%s' je nič!"
 #: ../plug-ins/common/file-xmc.c:1585
 #, c-format
 msgid ""
-"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
-"Try to change the hot spot position, layer geometry or save without auto-"
+"Cannot export the cursor because the hot spot is not on frame '%s'.\n"
+"Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"Kazalca ni mogoče shraniti, ker vroča točka ni na sličici '%s'.\n"
+"Kazalca ni mogoče izvoziti, ker vroča točka ni na sličici '%s'.\n"
 "Poskusite spremeniti položaj vroče točke, geometrijo plasti ali pa shranite "
 "s samo-obrezavo."
 
 #: ../plug-ins/common/file-xmc.c:1748
 #, c-format
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames whose "
-"width or height is more than %ipx.\n"
+"Your cursor was successfully exported but it contains one or more frames "
+"whose width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
-"Vaš kazalec je bil uspešno shranjen, vendar vsebuje eno ali več sličic, "
+"Vaš kazalec je bil uspešno izvožen, vendar vsebuje eno ali več sličic, "
 "katerih širina ali višina je več kot %ipx.\n"
 "V nekaterih okoljih bo naredil zmedo na namizju."
 
 #: ../plug-ins/common/file-xmc.c:1755
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames whose "
-"nominal size is not supported by GNOME settings.\n"
+"Your cursor was successfully exported but it contains one or more frames "
+"whose nominal size is not supported by GNOME settings.\n"
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
-"save dialog, or your cursor may not appear in GNOME settings."
+"export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Vaš kazalec je bil uspešno shranjen, vendar vsebuje eno ali več sličic, "
+"Vaš kazalec je bil uspešno izvožen, vendar vsebuje eno ali več sličic, "
 "katerih nominalna velikost ni podprta na strani nastavitev za GNOME.\n"
-"Slednje lahko zadovoljite, če potrdite \"Zamenjaj velikost v vseh "
-"sličicah ...\" v oknu shranjevanja, sicer vaš kazalec morda ne bo prisoten v "
-"nastavitvah za GNOME."
+"Slednje lahko zadovoljite, če potrdite »Zamenjaj velikost v vseh sličicah …« "
+"v oknu shranjevanja, sicer vaš kazalec morda ne bo prisoten v nastavitvah za "
+"GNOME."
 
 #: ../plug-ins/common/file-xmc.c:1992
 #, c-format
@@ -4127,8 +4137,8 @@ msgstr ""
 "Trenutna različica teh vrednosti ne podpira."
 
 #: ../plug-ins/common/file-xwd.c:636
-msgid "Cannot save images with alpha channels."
-msgstr "Slik s kanali alfa ni mogoče shraniti."
+msgid "Cannot export images with alpha channels."
+msgstr "Slik s kanali alfa ni mogoče izvoziti."
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
@@ -4137,8 +4147,8 @@ msgstr "»%s« ni mogoče odpreti za pisanje: "
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
-msgid "Error saving '%s': "
-msgstr "Napaka pri shranjevanju »%s«: "
+msgid "Error exporting '%s': "
+msgstr "Napaka pri izvažanju »%s«: "
 
 #: ../plug-ins/common/file-xwd.c:1751 ../plug-ins/common/file-xwd.c:2149
 #, c-format
@@ -5632,28 +5642,28 @@ msgstr "_Oblikovalec krogle ..."
 msgid "Region selected for plug-in is empty"
 msgstr "Izbrano področje za vstavek je prazno"
 
-#: ../plug-ins/common/tile.c:101
+#: ../plug-ins/common/tile.c:110
 msgid "Create an array of copies of the image"
 msgstr "Ustvari vrsto kopij slike"
 
-#: ../plug-ins/common/tile.c:111
+#: ../plug-ins/common/tile.c:120
 msgid "_Tile..."
 msgstr "_Tlakuj ..."
 
 #. Set the tile cache size
-#: ../plug-ins/common/tile.c:185 ../plug-ins/common/tile-small.c:326
+#: ../plug-ins/common/tile.c:197 ../plug-ins/common/tile-small.c:326
 msgid "Tiling"
 msgstr "Tlakovanje ..."
 
-#: ../plug-ins/common/tile.c:397
+#: ../plug-ins/common/tile.c:433
 msgid "Tile"
 msgstr "Tlakuj"
 
-#: ../plug-ins/common/tile.c:419
+#: ../plug-ins/common/tile.c:455
 msgid "Tile to New Size"
 msgstr "Tlakuj z novo velikostjo"
 
-#: ../plug-ins/common/tile.c:441
+#: ../plug-ins/common/tile.c:477
 msgid "C_reate new image"
 msgstr "_Ustvari novo sliko"
 
@@ -6238,7 +6248,7 @@ msgid "The bitmap ends unexpectedly."
 msgstr "Bitna slika se nepričakovano zaključi."
 
 #: ../plug-ins/file-bmp/bmp-write.c:197 ../plug-ins/file-bmp/bmp-write.c:229
-msgid "Cannot save indexed image with transparency in BMP file format."
+msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Indeksirane slike s prosojnostjo ni mogoče shraniti v zapisu BMP."
 
 #: ../plug-ins/file-bmp/bmp-write.c:199 ../plug-ins/file-bmp/bmp-write.c:231
@@ -6332,8 +6342,8 @@ msgid "FITS file keeps no displayable images"
 msgstr "Datoteka FITS ne shrani slik za prikaz"
 
 #: ../plug-ins/file-fits/fits.c:457
-msgid "FITS save cannot handle images with alpha channels"
-msgstr "Shranjevanje FITS ne podpira slik s kanali alfa"
+msgid "FITS export cannot handle images with alpha channels"
+msgstr "Izvažanje v FITS ne podpira slik s kanali alfa"
 
 #: ../plug-ins/file-fits/fits.c:1145
 msgid "Load FITS File"
@@ -6375,8 +6385,8 @@ msgid "Frame (%i)"
 msgstr "Sličica (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:712
-msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "Žal je podprto le shranjevanje indeksiranih in sivinskih slik."
+msgid "Sorry, I can export only INDEXED and GRAY images."
+msgstr "Žal je podprto le izvažanje indeksiranih in sivinskih slik."
 
 #: ../plug-ins/file-fli/fli-gimp.c:864
 msgid "GFLI 1.3 - Load framestack"
@@ -6707,11 +6717,11 @@ msgstr "Podatkov ni mogoče razpakirati"
 #: ../plug-ins/file-psd/psd-save.c:253
 #, c-format
 msgid ""
-"Unable to save layer with mode '%s'.  Either the PSD file format or the save "
-"plug-in does not support that, using normal mode instead."
+"Unable to export layer with mode '%s'.  Either the PSD file format or the "
+"export plug-in does not support that, using normal mode instead."
 msgstr ""
-"V načinu '%s' plasti ni mogoče shraniti. Vrsta datoteke PSD ali vstavek "
-"shranjevanja tega ne podpirata, raje uporabite navadni način."
+"V načinu '%s' plasti ni mogoče izvoziti. Vrsta datoteke PSD ali vstavek "
+"izvažanja tega ne podpirata, raje uporabite navadni način."
 
 #: ../plug-ins/file-psd/psd-save.c:503
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -6720,20 +6730,20 @@ msgstr "Napaka: Osnovne vrste slike GIMP ni mogoče pretvoriti v način PSD"
 #: ../plug-ins/file-psd/psd-save.c:1490
 #, c-format
 msgid ""
-"Unable to save '%s'.  The PSD file format does not support images that are "
+"Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Shranjevanje '%s' ni uspelo.  Vrsta datotek PSD ne podpira slik, ki so "
-"daljše ali širše od 30.000 slikovnih točk."
+"Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik, ki so daljše "
+"ali širše od 30.000 slikovnih točk."
 
 #: ../plug-ins/file-psd/psd-save.c:1505
 #, c-format
 msgid ""
-"Unable to save '%s'.  The PSD file format does not support images with "
+"Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Shranjevanje '%s' ni uspelo.  Vrsta datotek PSD ne podpira slik s plastmi, "
-"ki so daljše ali širše od 30.000 slikovnih točk."
+"Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik s plastmi, ki so "
+"daljše ali širše od 30.000 slikovnih točk."
 
 #: ../plug-ins/file-psd/psd-util.c:50
 msgid "Unexpected end of file"
@@ -6821,8 +6831,8 @@ msgstr "Kanal TIFF"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:482
 #, c-format
-msgid "TIFF save cannot handle indexed images with an alpha channel."
-msgstr "Shranjevanje TIFF ne podpira indeksiranih slik s kanalom alfa."
+msgid "TIFF export cannot handle indexed images with an alpha channel."
+msgstr "Izvažanje v zapisu TIFF ne podpira indeksiranih slik s kanalom alfa."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:495
 msgid ""
@@ -9050,19 +9060,25 @@ msgstr "Strani pomoči za '%s' niso na voljo."
 msgid "The GIMP user manual is not available."
 msgstr "Uporabniški priročnik za GIMP ni na voljo."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#. TRANSLATORS: do not end the URL with a dot,
+#. * it would be in the link. Because of
+#. * technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
-"Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"Please install the additional help package or use the online user manual at: "
+"http://docs.gimp.org/"
 msgstr ""
 "Namestite dodatne pakete pomoči ali pa uporabite spletni uporabniški "
-"priročnik na naslovu http://docs.gimp.org/."
+"priročnik na naslovu http://docs.gimp.org/"
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Morda vam manjka ogrodje GIO in morate namestiti GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "ID pomoči '%s' ni znan"
