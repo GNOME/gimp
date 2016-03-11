@@ -395,18 +395,17 @@ gimp_edit_named_copy_visible (GimpImage    *image,
   return NULL;
 }
 
-gboolean
+void
 gimp_edit_clear (GimpImage    *image,
                  GimpDrawable *drawable,
                  GimpContext  *context)
 {
   GimpFillOptions *options;
-  gboolean         success;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   options = gimp_fill_options_new (context->gimp);
 
@@ -417,15 +416,12 @@ gimp_edit_clear (GimpImage    *image,
     gimp_fill_options_set_by_fill_type (options, context,
                                         GIMP_FILL_BACKGROUND, NULL);
 
-  success = gimp_edit_fill (image, drawable, options,
-                            C_("undo-type", "Clear"));
+  gimp_edit_fill (image, drawable, options, C_("undo-type", "Clear"));
 
   g_object_unref (options);
-
-  return success;
 }
 
-gboolean
+void
 gimp_edit_fill (GimpImage       *image,
                 GimpDrawable    *drawable,
                 GimpFillOptions *options,
@@ -437,13 +433,13 @@ gimp_edit_fill (GimpImage       *image,
   const Babl  *format;
   gint         x, y, width, height;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
 
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
-    return TRUE;  /*  nothing to do, but the fill succeeded  */
+    return;  /*  nothing to do, but the fill succeeded  */
 
   switch (gimp_fill_options_get_style (options))
     {
@@ -498,8 +494,6 @@ gimp_edit_fill (GimpImage       *image,
   g_object_unref (dest_buffer);
 
   gimp_drawable_update (drawable, x, y, width, height);
-
-  return TRUE;
 }
 
 gboolean

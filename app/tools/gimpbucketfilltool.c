@@ -31,7 +31,6 @@
 #include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
-#include "core/gimppickable.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -175,16 +174,13 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
       GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
       GimpContext     *context  = GIMP_CONTEXT (options);
       GimpFillOptions *fill_options;
-      gboolean         success;
       GError          *error = NULL;
 
       fill_options = gimp_fill_options_new (image->gimp);
 
-      success = gimp_fill_options_set_by_fill_mode (fill_options, context,
-                                                    options->fill_mode,
-                                                    &error);
-
-      if (success)
+      if (gimp_fill_options_set_by_fill_mode (fill_options, context,
+                                              options->fill_mode,
+                                              &error))
         {
           gimp_context_set_opacity (GIMP_CONTEXT (fill_options),
                                     gimp_context_get_opacity (context));
@@ -193,7 +189,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 
           if (options->fill_selection)
             {
-              success = gimp_edit_fill (image, drawable, fill_options, NULL);
+              gimp_edit_fill (image, drawable, fill_options, NULL);
             }
           else
             {
@@ -218,12 +214,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                          options->diagonal_neighbors,
                                          x, y);
             }
-        }
 
-      g_object_unref (fill_options);
-
-      if (success)
-        {
           gimp_image_flush (image);
         }
       else
@@ -232,6 +223,8 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                 GIMP_MESSAGE_WARNING, error->message);
           g_clear_error (&error);
         }
+
+      g_object_unref (fill_options);
     }
 
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,

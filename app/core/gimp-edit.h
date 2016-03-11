@@ -54,10 +54,10 @@ const gchar      * gimp_edit_named_copy_visible (GimpImage       *image,
                                                  GimpContext     *context,
                                                  GError         **error);
 
-gboolean           gimp_edit_clear              (GimpImage       *image,
+void               gimp_edit_clear              (GimpImage       *image,
                                                  GimpDrawable    *drawable,
                                                  GimpContext     *context);
-gboolean           gimp_edit_fill               (GimpImage       *image,
+void               gimp_edit_fill               (GimpImage       *image,
                                                  GimpDrawable    *drawable,
                                                  GimpFillOptions *options,
                                                  const gchar     *undo_desc);

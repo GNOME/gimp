@@ -520,7 +520,7 @@ edit_clear_invoker (GimpProcedure         *procedure,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-          success = gimp_edit_clear (image, drawable, context);
+          gimp_edit_clear (image, drawable, context);
         }
       else
         success = FALSE;
@@ -554,11 +554,13 @@ edit_fill_invoker (GimpProcedure         *procedure,
           GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpFillOptions *options = gimp_fill_options_new (gimp);
 
-          success = gimp_fill_options_set_by_fill_type (options, context,
-                                                        fill_type, error);
-
-          if (success)
-            success = gimp_edit_fill (image, drawable, options, NULL);
+          if (gimp_fill_options_set_by_fill_type (options, context,
+                                                  fill_type, error))
+            {
+              gimp_edit_fill (image, drawable, options, NULL);
+            }
+          else
+            success = FALSE;
 
           g_object_unref (options);
         }
@@ -617,7 +619,7 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
 
               if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
                 {
-                  success = gimp_edit_fill (image, drawable, options, NULL);
+                  gimp_edit_fill (image, drawable, options, NULL);
                 }
               else
                 {
@@ -694,7 +696,7 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
 
               if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
                 {
-                  success = gimp_edit_fill (image, drawable, options, NULL);
+                  gimp_edit_fill (image, drawable, options, NULL);
                 }
               else
                 {
