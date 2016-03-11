@@ -63,5 +63,7 @@ gboolean          gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
                                                       GimpFillType      fill_type,
                                                       GError          **error);
 
+const gchar     * gimp_fill_options_get_undo_desc    (GimpFillOptions  *options);
+
 
 #endif /* __GIMP_FILL_OPTIONS_H__ */
