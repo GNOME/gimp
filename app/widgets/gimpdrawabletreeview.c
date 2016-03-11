@@ -29,7 +29,6 @@
 
 #include "core/gimp.h"
 #include "core/gimp-edit.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"

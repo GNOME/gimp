@@ -31,7 +31,6 @@
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"

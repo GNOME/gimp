@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -34,9 +32,6 @@
 
 #include "gimp.h"
 #include "gimp-palettes.h"
-#include "gimp-utils.h"
-#include "gimpchannel-combine.h"
-#include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"
 #include "gimpfilloptions.h"
