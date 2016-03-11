@@ -39,6 +39,7 @@
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"
+#include "gimpfilloptions.h"
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimppickable.h"
@@ -47,85 +48,25 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
-                                                  GimpFillType         fill_type,
-                                                  gint                 paint_mode,
-                                                  gdouble              opacity,
-                                                  gboolean             fill_transparent,
-                                                  GimpSelectCriterion  fill_criterion,
-                                                  gdouble              threshold,
-                                                  gboolean             sample_merged,
-                                                  gboolean             diagonal_neighbors,
-                                                  gdouble              x,
-                                                  gdouble              y,
-                                                  const GimpRGB       *color,
-                                                  GimpPattern         *pattern);
-
-
 /*  public functions  */
 
-gboolean
+void
 gimp_drawable_bucket_fill (GimpDrawable         *drawable,
-                           GimpContext          *context,
-                           GimpFillType          fill_type,
-                           gint                  paint_mode,
-                           gdouble               opacity,
+                           GimpFillOptions      *options,
                            gboolean              fill_transparent,
                            GimpSelectCriterion   fill_criterion,
                            gdouble               threshold,
                            gboolean              sample_merged,
                            gboolean              diagonal_neighbors,
                            gdouble               x,
-                           gdouble               y,
-                           GError              **error)
-{
-  GimpPattern *pattern;
-  GimpRGB      color;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, error))
-    return FALSE;
-
-  gimp_palettes_add_color_history (context->gimp,
-                                   &color);
-
-  gimp_drawable_bucket_fill_internal (drawable,
-                                      fill_type,
-                                      paint_mode, opacity,
-                                      fill_transparent, fill_criterion,
-                                      threshold, sample_merged,
-                                      diagonal_neighbors, x, y,
-                                      &color, pattern);
-
-  return TRUE;
-}
-
-
-/*  private functions  */
-
-static void
-gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
-                                    GimpFillType         fill_type,
-                                    gint                 paint_mode,
-                                    gdouble              opacity,
-                                    gboolean             fill_transparent,
-                                    GimpSelectCriterion  fill_criterion,
-                                    gdouble              threshold,
-                                    gboolean             sample_merged,
-                                    gboolean             diagonal_neighbors,
-                                    gdouble              x,
-                                    gdouble              y,
-                                    const GimpRGB       *color,
-                                    GimpPattern         *pattern)
+                           gdouble               y)
 {
   GimpImage    *image;
   GimpPickable *pickable;
   GeglBuffer   *buffer;
   GeglBuffer   *mask_buffer;
+  GimpPattern  *pattern = NULL;
+  GimpRGB       color;
   gint          x1, y1, x2, y2;
   gint          mask_offset_x = 0;
   gint          mask_offset_y = 0;
@@ -133,10 +74,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (fill_type != GIMP_FILL_PATTERN ||
-                    GIMP_IS_PATTERN (pattern));
-  g_return_if_fail (fill_type == GIMP_FILL_PATTERN ||
-                    color != NULL);
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -216,28 +154,32 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                             gimp_drawable_get_format_with_alpha (drawable));
 
-  switch (fill_type)
+  switch (gimp_fill_options_get_style (options))
     {
-    case GIMP_FILL_FOREGROUND:
-    case GIMP_FILL_BACKGROUND:
-    case GIMP_FILL_WHITE:
-    case GIMP_FILL_TRANSPARENT:
-      {
-        GeglColor *gegl_color = gimp_gegl_color_new (color);
-
-        gegl_buffer_set_color (buffer, NULL, gegl_color);
-        g_object_unref (gegl_color);
-      }
+    case GIMP_FILL_STYLE_SOLID:
+      gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
       break;
 
-    case GIMP_FILL_PATTERN:
-      {
-        GeglBuffer *pattern_buffer = gimp_pattern_create_buffer (pattern);
-
-        gegl_buffer_set_pattern (buffer, NULL, pattern_buffer, -x1, -y1);
-        g_object_unref (pattern_buffer);
-      }
+    case GIMP_FILL_STYLE_PATTERN:
+      pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
       break;
+    }
+
+  if (pattern)
+    {
+      GeglBuffer *pattern_buffer = gimp_pattern_create_buffer (pattern);
+
+      gegl_buffer_set_pattern (buffer, NULL, pattern_buffer, -x1, -y1);
+      g_object_unref (pattern_buffer);
+    }
+  else
+    {
+      GeglColor *gegl_color = gimp_gegl_color_new (&color);
+
+      gegl_buffer_set_color (buffer, NULL, gegl_color);
+      g_object_unref (gegl_color);
+
+      gimp_palettes_add_color_history (image->gimp, &color);
     }
 
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
@@ -251,7 +193,8 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
   gimp_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                               TRUE, C_("undo-type", "Bucket Fill"),
-                              opacity, paint_mode,
+                              gimp_context_get_opacity (GIMP_CONTEXT (options)),
+                              gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
                               NULL, x1, y1);
 
   g_object_unref (buffer);

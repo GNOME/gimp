@@ -172,73 +172,55 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
       gimp_image_coords_in_active_pickable (image, coords,
                                             options->sample_merged, TRUE))
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-      GimpContext  *context  = GIMP_CONTEXT (options);
-      gboolean      success;
-      GError       *error = NULL;
+      GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
+      GimpContext     *context  = GIMP_CONTEXT (options);
+      GimpFillOptions *fill_options;
+      gboolean         success;
+      GError          *error = NULL;
 
-      if (options->fill_selection)
+      fill_options = gimp_fill_options_new (image->gimp);
+
+      success = gimp_fill_options_set_by_fill_mode (fill_options, context,
+                                                    options->fill_mode,
+                                                    &error);
+
+      if (success)
         {
-          GimpFillOptions *fill_options = gimp_fill_options_new (image->gimp);
+          gimp_context_set_opacity (GIMP_CONTEXT (fill_options),
+                                    gimp_context_get_opacity (context));
+          gimp_context_set_paint_mode (GIMP_CONTEXT (fill_options),
+                                       gimp_context_get_paint_mode (context));
 
-          success = gimp_fill_options_set_by_fill_mode (fill_options, context,
-                                                        options->fill_mode,
-                                                        &error);
-
-          if (success)
+          if (options->fill_selection)
             {
-              gimp_context_set_opacity (GIMP_CONTEXT (fill_options),
-                                        gimp_context_get_opacity (context));
-              gimp_context_set_paint_mode (GIMP_CONTEXT (fill_options),
-                                           gimp_context_get_paint_mode (context));
-
               success = gimp_edit_fill (image, drawable, fill_options, NULL);
             }
-
-          g_object_unref (fill_options);
-        }
-      else
-        {
-          GimpFillType fill_type;
-          gint         x, y;
-
-          x = coords->x;
-          y = coords->y;
-
-          switch (options->fill_mode)
+          else
             {
-            default:
-            case GIMP_BUCKET_FILL_FG:
-              fill_type = GIMP_FILL_FOREGROUND;
-              break;
-            case GIMP_BUCKET_FILL_BG:
-              fill_type = GIMP_FILL_BACKGROUND;
-              break;
-            case GIMP_BUCKET_FILL_PATTERN:
-              fill_type = GIMP_FILL_PATTERN;
-              break;
+              gint x = coords->x;
+              gint y = coords->y;
+
+              if (! options->sample_merged)
+                {
+                  gint off_x, off_y;
+
+                  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+                  x -= off_x;
+                  y -= off_y;
+                }
+
+              gimp_drawable_bucket_fill (drawable, fill_options,
+                                         options->fill_transparent,
+                                         options->fill_criterion,
+                                         options->threshold / 255.0,
+                                         options->sample_merged,
+                                         options->diagonal_neighbors,
+                                         x, y);
             }
-
-          if (! options->sample_merged)
-            {
-              gint off_x, off_y;
-
-              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-              x -= off_x;
-              y -= off_y;
-            }
-
-          success = gimp_drawable_bucket_fill (drawable, context, fill_type,
-                                               gimp_context_get_paint_mode (context),
-                                               gimp_context_get_opacity (context),
-                                               options->fill_transparent,
-                                               options->fill_criterion,
-                                               options->threshold / 255.0,
-                                               options->sample_merged,
-                                               options->diagonal_neighbors,
-                                               x, y, &error);
         }
+
+      g_object_unref (fill_options);
 
       if (success)
         {
