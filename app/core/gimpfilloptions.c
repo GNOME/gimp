@@ -308,6 +308,38 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
   return TRUE;
 }
 
+gboolean
+gimp_fill_options_set_by_fill_mode (GimpFillOptions     *options,
+                                    GimpContext         *context,
+                                    GimpBucketFillMode   fill_mode,
+                                    GError             **error)
+{
+  GimpFillType fill_type;
+
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  switch (fill_mode)
+    {
+    default:
+    case GIMP_BUCKET_FILL_FG:
+      fill_type = GIMP_FILL_FOREGROUND;
+      break;
+
+    case GIMP_BUCKET_FILL_BG:
+      fill_type = GIMP_FILL_BACKGROUND;
+      break;
+
+    case GIMP_BUCKET_FILL_PATTERN:
+      fill_type = GIMP_FILL_PATTERN;
+      break;
+    }
+
+  return gimp_fill_options_set_by_fill_type (options, context,
+                                             fill_type, error);
+}
+
 const gchar *
 gimp_fill_options_get_undo_desc (GimpFillOptions *options)
 {
