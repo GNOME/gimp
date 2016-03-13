@@ -269,6 +269,7 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
       GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (dest_viewable));
       GimpFillOptions *options = gimp_fill_options_new (image->gimp);
 
+      gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
       gimp_context_set_foreground (GIMP_CONTEXT (options), color);
 
       gimp_edit_fill (image, GIMP_DRAWABLE (dest_viewable),
@@ -320,46 +321,23 @@ gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
 
 static void
 gimp_drawable_tree_view_new_dropped (GimpItemTreeView *view,
-                                     gint              x,
-                                     gint              y,
-                                     const GimpRGB    *color,
-                                     GimpPattern      *pattern)
+                                     GimpFillOptions  *options,
+                                     const gchar      *undo_desc)
 {
-  GimpItem *item;
+  GimpImage *image = gimp_item_tree_view_get_image (view);
+  GimpItem  *item;
 
-  gimp_image_undo_group_start (gimp_item_tree_view_get_image (view),
-                               GIMP_UNDO_GROUP_EDIT_PASTE,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (gimp_item_tree_view_get_image (view));
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (image);
 
   if (item)
-    {
-      GimpImage       *image   = gimp_item_get_image (item);
-      GimpFillOptions *options = gimp_fill_options_new (image->gimp);
+    gimp_edit_fill (image, GIMP_DRAWABLE (item), options, undo_desc);
 
-      if (color)
-        {
-          gimp_context_set_foreground (GIMP_CONTEXT (options), color);
-        }
-      else
-        {
-          gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
-          gimp_context_set_pattern (GIMP_CONTEXT (options), pattern);
-        }
+  gimp_image_undo_group_end (image);
 
-      gimp_edit_fill (image, GIMP_DRAWABLE (item),
-                      options,
-                      pattern ?
-                      C_("undo-type", "Drop pattern to layer") :
-                      C_("undo-type", "Drop color to layer"));
-
-      g_object_unref (options);
-    }
-
-  gimp_image_undo_group_end (gimp_item_tree_view_get_image (view));
-
-  gimp_image_flush (gimp_item_tree_view_get_image (view));
+  gimp_image_flush (image);
 }
 
 static void
@@ -369,8 +347,17 @@ gimp_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
                                              GimpViewable *viewable,
                                              gpointer      data)
 {
-  gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data), x, y,
-                                       NULL, GIMP_PATTERN (viewable));
+  GimpItemTreeView *view    = GIMP_ITEM_TREE_VIEW (data);
+  GimpImage        *image   = gimp_item_tree_view_get_image (view);
+  GimpFillOptions  *options = gimp_fill_options_new (image->gimp);
+
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
+  gimp_context_set_pattern (GIMP_CONTEXT (options), GIMP_PATTERN (viewable));
+
+  gimp_drawable_tree_view_new_dropped (view, options,
+                                       C_("undo-type", "Drop pattern to layer"));
+
+  g_object_unref (options);
 }
 
 static void
@@ -380,6 +367,15 @@ gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
                                            const GimpRGB *color,
                                            gpointer       data)
 {
-  gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data), x, y,
-                                       color, NULL);
+  GimpItemTreeView *view    = GIMP_ITEM_TREE_VIEW (data);
+  GimpImage        *image   = gimp_item_tree_view_get_image (view);
+  GimpFillOptions  *options = gimp_fill_options_new (image->gimp);
+
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
+  gimp_context_set_foreground (GIMP_CONTEXT (options), color);
+
+  gimp_drawable_tree_view_new_dropped (view, options,
+                                       C_("undo-type", "Drop color to layer"));
+
+  g_object_unref (options);
 }
