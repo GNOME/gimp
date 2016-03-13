@@ -48,6 +48,7 @@ static void       gimp_airbrush_motion   (GimpPaintCore    *paint_core,
                                           GimpDrawable     *drawable,
                                           GimpPaintOptions *paint_options,
                                           GimpSymmetry     *sym);
+
 static gboolean   gimp_airbrush_timeout  (gpointer          data);
 
 
@@ -82,8 +83,6 @@ gimp_airbrush_class_init (GimpAirbrushClass *klass)
 static void
 gimp_airbrush_init (GimpAirbrush *airbrush)
 {
-  airbrush->timeout_id = 0;
-  airbrush->sym    = NULL;
 }
 
 static void
@@ -98,7 +97,10 @@ gimp_airbrush_finalize (GObject *object)
     }
 
   if (airbrush->sym)
-    g_object_unref (airbrush->sym);
+    {
+      g_object_unref (airbrush->sym);
+      airbrush->sym = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -115,15 +117,15 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
   GimpAirbrushOptions *options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
   GimpDynamics        *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
 
+  if (airbrush->timeout_id)
+    {
+      g_source_remove (airbrush->timeout_id);
+      airbrush->timeout_id = 0;
+    }
+
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
-      if (airbrush->timeout_id)
-        {
-          g_source_remove (airbrush->timeout_id);
-          airbrush->timeout_id = 0;
-        }
-
       GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
                                                    paint_options,
                                                    sym,
@@ -131,15 +133,9 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      if (airbrush->timeout_id)
-        {
-          g_source_remove (airbrush->timeout_id);
-          airbrush->timeout_id = 0;
-        }
-
       gimp_airbrush_motion (paint_core, drawable, paint_options, sym);
 
-      if ((options->rate != 0.0) && (!options->motion_only))
+      if ((options->rate != 0.0) && ! options->motion_only)
         {
           GimpImage  *image = gimp_item_get_image (GIMP_ITEM (drawable));
           gdouble     fade_point;
@@ -175,10 +171,10 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
-      if (airbrush->timeout_id)
+      if (airbrush->sym)
         {
-          g_source_remove (airbrush->timeout_id);
-          airbrush->timeout_id = 0;
+          g_object_unref (airbrush->sym);
+          airbrush->sym = NULL;
         }
 
       GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
@@ -232,5 +228,5 @@ gimp_airbrush_timeout (gpointer data)
 
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush->drawable)));
 
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }
