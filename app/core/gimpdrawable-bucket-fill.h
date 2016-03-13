@@ -19,19 +19,15 @@
 #define  __GIMP_DRAWABLE_BUCKET_FILL_H__
 
 
-gboolean   gimp_drawable_bucket_fill (GimpDrawable         *drawable,
-                                      GimpContext          *context,
-                                      GimpFillType          fill_type,
-                                      gint                  paint_mode,
-                                      gdouble               opacity,
-                                      gboolean              fill_transparent,
-                                      GimpSelectCriterion   fill_criterion,
-                                      gdouble               threshold,
-                                      gboolean              sample_merged,
-                                      gboolean              diagonal_neighbors,
-                                      gdouble               x,
-                                      gdouble               y,
-                                      GError              **error);
+void   gimp_drawable_bucket_fill (GimpDrawable        *drawable,
+                                  GimpFillOptions     *options,
+                                  gboolean             fill_transparent,
+                                  GimpSelectCriterion  fill_criterion,
+                                  gdouble              threshold,
+                                  gboolean             sample_merged,
+                                  gboolean             diagonal_neighbors,
+                                  gdouble              x,
+                                  gdouble              y);
 
 
 #endif  /*  __GIMP_DRAWABLE_BUCKET_FILL_H__  */

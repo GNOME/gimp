@@ -302,11 +302,11 @@ gimp_prop_angle_range_box_new (GObject     *config,
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  invert_button = gtk_button_new_with_label ("Invert Range");
+  invert_button = gtk_button_new_with_label (_("Invert Range"));
   gtk_box_pack_start (GTK_BOX (hbox), invert_button, TRUE, TRUE, 0);
   gtk_widget_show (invert_button);
 
-  all_button = gtk_button_new_with_label ("Select All");
+  all_button = gtk_button_new_with_label (_("Select All"));
   gtk_box_pack_start (GTK_BOX (hbox), all_button, TRUE, TRUE, 0);
   gtk_widget_show (all_button);
 
@@ -650,7 +650,7 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
                                      picker_creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-                            gtk_label_new ("Frequencies"));
+                            gtk_label_new (_("Frequencies")));
   gtk_widget_show (vbox);
 
   vbox = _gimp_prop_gui_new_generic (config,
@@ -660,7 +660,7 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
                                      picker_creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-                            gtk_label_new ("Contours"));
+                            gtk_label_new (_("Contours")));
   gtk_widget_show (vbox);
 
   vbox = _gimp_prop_gui_new_generic (config,
@@ -670,7 +670,7 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
                                      picker_creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-                            gtk_label_new ("Sharp Edges"));
+                            gtk_label_new (_("Sharp Edges")));
   gtk_widget_show (vbox);
 
   vbox = _gimp_prop_gui_new_generic (config,
@@ -680,7 +680,7 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
                                      picker_creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-                            gtk_label_new ("Other Options"));
+                            gtk_label_new (_("Other Options")));
   gtk_widget_show (vbox);
 
   return notebook;

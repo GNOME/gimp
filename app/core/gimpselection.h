@@ -36,7 +36,7 @@ struct _GimpSelection
 {
   GimpChannel parent_instance;
 
-  gint        stroking_count;
+  gint        suspend_count;
 };
 
 struct _GimpSelectionClass
@@ -45,36 +45,36 @@ struct _GimpSelectionClass
 };
 
 
-GType         gimp_selection_get_type      (void) G_GNUC_CONST;
+GType         gimp_selection_get_type (void) G_GNUC_CONST;
 
-GimpChannel * gimp_selection_new           (GimpImage     *image,
-                                            gint           width,
-                                            gint           height);
+GimpChannel * gimp_selection_new      (GimpImage     *image,
+                                       gint           width,
+                                       gint           height);
 
-gint          gimp_selection_push_stroking (GimpSelection *selection);
-gint          gimp_selection_pop_stroking  (GimpSelection *selection);
+gint          gimp_selection_suspend  (GimpSelection *selection);
+gint          gimp_selection_resume   (GimpSelection *selection);
 
-void          gimp_selection_load          (GimpSelection *selection,
-                                            GimpChannel   *channel);
-GimpChannel * gimp_selection_save          (GimpSelection *selection);
+void          gimp_selection_load     (GimpSelection *selection,
+                                       GimpChannel   *channel);
+GimpChannel * gimp_selection_save     (GimpSelection *selection);
 
-GeglBuffer  * gimp_selection_extract       (GimpSelection *selection,
-                                            GimpPickable  *pickable,
-                                            GimpContext   *context,
-                                            gboolean       cut_image,
-                                            gboolean       keep_indexed,
-                                            gboolean       add_alpha,
-                                            gint          *offset_x,
-                                            gint          *offset_y,
-                                            GError       **error);
+GeglBuffer  * gimp_selection_extract  (GimpSelection *selection,
+                                       GimpPickable  *pickable,
+                                       GimpContext   *context,
+                                       gboolean       cut_image,
+                                       gboolean       keep_indexed,
+                                       gboolean       add_alpha,
+                                       gint          *offset_x,
+                                       gint          *offset_y,
+                                       GError       **error);
 
-GimpLayer   * gimp_selection_float         (GimpSelection *selection,
-                                            GimpDrawable  *drawable,
-                                            GimpContext   *context,
-                                            gboolean       cut_image,
-                                            gint           off_x,
-                                            gint           off_y,
-                                            GError       **error);
+GimpLayer   * gimp_selection_float    (GimpSelection *selection,
+                                       GimpDrawable  *drawable,
+                                       GimpContext   *context,
+                                       gboolean       cut_image,
+                                       gint           off_x,
+                                       gint           off_y,
+                                       GError       **error);
 
 
 #endif /* __GIMP_SELECTION_H__ */

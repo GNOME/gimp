@@ -19,8 +19,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -522,7 +520,7 @@ edit_clear_invoker (GimpProcedure         *procedure,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-          success = gimp_edit_clear (image, drawable, context);
+          gimp_edit_clear (image, drawable, context);
         }
       else
         success = FALSE;
@@ -553,12 +551,18 @@ edit_fill_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpFillOptions *options = gimp_fill_options_new (gimp);
 
-          success = gimp_edit_fill (image, drawable, context,
-                                    (GimpFillType) fill_type,
-                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                                    error);
+          if (gimp_fill_options_set_by_fill_type (options, context,
+                                                  fill_type, error))
+            {
+              gimp_edit_fill (image, drawable, options, NULL);
+            }
+          else
+            success = FALSE;
+
+          g_object_unref (options);
         }
       else
         success = FALSE;
@@ -601,46 +605,37 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage    *image = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpFillType  fill_type;
+          GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpFillOptions *options = gimp_fill_options_new (gimp);
 
-          if (paint_mode == GIMP_OVERLAY_MODE)
-            paint_mode = GIMP_SOFTLIGHT_MODE;
-
-          switch (fill_mode)
+          if (gimp_fill_options_set_by_fill_mode (options, context,
+                                                  fill_mode, error))
             {
-            default:
-            case GIMP_BUCKET_FILL_FG:
-              fill_type = GIMP_FILL_FOREGROUND;
-              break;
+              if (paint_mode == GIMP_OVERLAY_MODE)
+                paint_mode = GIMP_SOFTLIGHT_MODE;
 
-            case GIMP_BUCKET_FILL_BG:
-              fill_type = GIMP_FILL_BACKGROUND;
-              break;
+              gimp_context_set_opacity (GIMP_CONTEXT (options), opacity / 100.0);
+              gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
 
-            case GIMP_BUCKET_FILL_PATTERN:
-              fill_type = GIMP_FILL_PATTERN;
-              break;
-            }
-
-          if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-            {
-              success = gimp_edit_fill (image, drawable, context, fill_type,
-                                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                                        error);
+              if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+                {
+                  gimp_edit_fill (image, drawable, options, NULL);
+                }
+              else
+                {
+                  gimp_drawable_bucket_fill (drawable, options,
+                                             FALSE /* don't fill transparent */,
+                                             GIMP_SELECT_CRITERION_COMPOSITE,
+                                             threshold / 255.0,
+                                             sample_merged,
+                                             FALSE /* no diagonal neighbors */,
+                                             x, y);
+               }
             }
           else
-            {
-              success = gimp_drawable_bucket_fill (drawable, context, fill_type,
-                                                   paint_mode, opacity / 100.0,
-                                                   FALSE /* don't fill transparent */,
-                                                   GIMP_SELECT_CRITERION_COMPOSITE,
-                                                   threshold / 255.0,
-                                                   sample_merged,
-                                                   FALSE /* no diagonal neighbors */,
-                                                   x, y,
-                                                   error);
-            }
+            success = FALSE;
+
+          g_object_unref (options);
         }
       else
         success = FALSE;
@@ -687,46 +682,37 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage    *image = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpFillType  fill_type;
+          GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpFillOptions *options = gimp_fill_options_new (gimp);
 
-          if (paint_mode == GIMP_OVERLAY_MODE)
-            paint_mode = GIMP_SOFTLIGHT_MODE;
-
-          switch (fill_mode)
+          if (gimp_fill_options_set_by_fill_mode (options, context,
+                                                  fill_mode, error))
             {
-            default:
-            case GIMP_BUCKET_FILL_FG:
-              fill_type = GIMP_FILL_FOREGROUND;
-              break;
+              if (paint_mode == GIMP_OVERLAY_MODE)
+                paint_mode = GIMP_SOFTLIGHT_MODE;
 
-            case GIMP_BUCKET_FILL_BG:
-              fill_type = GIMP_FILL_BACKGROUND;
-              break;
+              gimp_context_set_opacity (GIMP_CONTEXT (options), opacity / 100.0);
+              gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
 
-            case GIMP_BUCKET_FILL_PATTERN:
-              fill_type = GIMP_FILL_PATTERN;
-              break;
-            }
-
-          if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-            {
-              success = gimp_edit_fill (image, drawable, context, fill_type,
-                                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                                        error);
+              if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+                {
+                  gimp_edit_fill (image, drawable, options, NULL);
+                }
+              else
+                {
+                  gimp_drawable_bucket_fill (drawable, options,
+                                             fill_transparent,
+                                             select_criterion,
+                                             threshold / 255.0,
+                                             sample_merged,
+                                             FALSE /* no diagonal neighbors */,
+                                             x, y);
+               }
             }
           else
-            {
-              success = gimp_drawable_bucket_fill (drawable, context, fill_type,
-                                                   paint_mode, opacity / 100.0,
-                                                   fill_transparent,
-                                                   select_criterion,
-                                                   threshold / 255.0,
-                                                   sample_merged,
-                                                   FALSE /* no diagonal neighbors */,
-                                                   x, y,
-                                                   error);
-            }
+            success = FALSE;
+
+          g_object_unref (options);
         }
       else
         success = FALSE;

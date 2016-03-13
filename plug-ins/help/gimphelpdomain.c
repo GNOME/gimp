@@ -184,9 +184,15 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
                 {
                   g_message ("%s\n\n%s",
                              _("The GIMP user manual is not available."),
+                             /* TRANSLATORS: do not end the URL with a dot,
+                              * it would be in the link. Because of
+                              * technical limitations, make sure the URL
+                              * ends with a space, a newline or is end of text.
+                              * Cf. bug 762282.
+                              */
                              _("Please install the additional help package "
-                               "or use the online user manual at "
-                               "http://docs.gimp.org/."));
+                               "or use the online user manual at: "
+                               "http://docs.gimp.org/"));
                 }
               break;
 

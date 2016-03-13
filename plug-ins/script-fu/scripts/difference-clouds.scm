@@ -29,13 +29,16 @@
          (width         (cadddr (gimp-drawable-mask-intersect drawable)))
          (height        (caddr (cddr (gimp-drawable-mask-intersect drawable))))
          (type          (car (gimp-drawable-type-with-alpha drawable)))
-         (diff-clouds   (car (gimp-layer-new image width height type
-                                             "Clouds" 100 DIFFERENCE-MODE)))
+         (diff-clouds  -1)
          (offset-x      0)
          (offset-y      0)
         )
 
     (gimp-image-undo-group-start image)
+
+    ; Create the cloud layer
+    (set! diff-clouds (car (gimp-layer-new image width height type
+                                             "Clouds" 100 DIFFERENCE-MODE)))
 
     ; Add the cloud layer above the current layer
     (gimp-image-insert-layer image diff-clouds 0 -1)

@@ -126,6 +126,7 @@ app/core/gimpdrawable-blend.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-equalize.c
 app/core/gimpdrawable-foreground-extract.c
+app/core/gimpdrawable-fill.c
 app/core/gimpdrawable-levels.c
 app/core/gimpdrawable-offset.c
 app/core/gimpdrawable-stroke.c

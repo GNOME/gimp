@@ -2419,6 +2419,7 @@ menus/Makefile
 cursors/Makefile
 icons/Makefile
 icons/Color/Makefile
+icons/Legacy/Makefile
 icons/Symbolic/Makefile
 icons/Symbolic-Inverted/Makefile
 themes/Makefile

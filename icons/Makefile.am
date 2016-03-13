@@ -1,4 +1,5 @@
 SUBDIRS = \
-	Color \
-	Symbolic \
+	Color		\
+	Legacy		\
+	Symbolic	\
 	Symbolic-Inverted

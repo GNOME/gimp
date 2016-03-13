@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-29 07:13+0000\n"
-"PO-Revision-Date: 2016-02-04 19:15+0200\n"
+"POT-Creation-Date: 2016-02-21 19:15+0000\n"
+"PO-Revision-Date: 2016-02-22 11:11+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -342,10 +342,10 @@ msgstr "Κά_θετος"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:669
-#: ../plug-ins/common/file-raw-data.c:970
+#: ../plug-ins/common/file-raw-data.c:984
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
-#: ../plug-ins/common/smooth-palette.c:255 ../plug-ins/common/tile.c:262
+#: ../plug-ins/common/smooth-palette.c:255 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-read.c:699 ../plug-ins/file-exr/file-exr.c:245
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:239
@@ -900,8 +900,8 @@ msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-gif-save.c:833
 #: ../plug-ins/common/file-mng.c:648 ../plug-ins/common/file-mng.c:985
 #: ../plug-ins/common/file-pcx.c:734 ../plug-ins/common/file-pdf-save.c:432
-#: ../plug-ins/common/file-png.c:1504 ../plug-ins/common/file-raw-data.c:785
-#: ../plug-ins/common/file-raw-data.c:813 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-png.c:1504 ../plug-ins/common/file-raw-data.c:799
+#: ../plug-ins/common/file-raw-data.c:827 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1473
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:326 ../plug-ins/file-fits/fits.c:481
@@ -933,7 +933,7 @@ msgstr "Φόρτωση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:895
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3369
 #: ../plug-ins/common/file-psp.c:1714 ../plug-ins/common/file-raw-data.c:271
-#: ../plug-ins/common/file-raw-data.c:894 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-raw-data.c:908 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:709
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:840
@@ -1213,7 +1213,7 @@ msgid "_Redness cr709:"
 msgstr "Ε_ρυθρότητα cr709:"
 
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1404
+#: ../plug-ins/common/file-raw-data.c:1418
 msgid "RGB"
 msgstr "RGB"
 
@@ -1838,7 +1838,7 @@ msgid "O_verlap:"
 msgstr "Επι_κάλυψη:"
 
 #: ../plug-ins/common/depth-merge.c:775
-#: ../plug-ins/common/file-raw-data.c:1432
+#: ../plug-ins/common/file-raw-data.c:1446
 msgid "O_ffset:"
 msgstr "Με_τατόπιση:"
 
@@ -1907,8 +1907,8 @@ msgstr "Αποράβδωση"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3495 ../plug-ins/common/file-ps.c:3700
-#: ../plug-ins/common/file-raw-data.c:1445
-#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/tile.c:428
+#: ../plug-ins/common/file-raw-data.c:1459
+#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/tile.c:464
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
 #: ../plug-ins/print/print-page-layout.c:282
@@ -2079,7 +2079,7 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:887
 #: ../plug-ins/common/file-pnm.c:562 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:887 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:901 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:985
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
@@ -2168,15 +2168,15 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/common/file-png.c:1497 ../plug-ins/common/file-pnm.c:1206
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xmc.c:1462 ../plug-ins/common/file-xpm.c:660
-#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-write.c:318
-#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:716
-#: ../plug-ins/file-ico/ico-save.c:1073 ../plug-ins/file-jpeg/jpeg-save.c:285
-#: ../plug-ins/file-psd/psd-save.c:1516 ../plug-ins/file-sgi/sgi.c:577
-#: ../plug-ins/file-tiff/file-tiff-save.c:314
+#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/file-bmp/bmp-write.c:318 ../plug-ins/file-fits/fits.c:473
+#: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1073
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
+#: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:314
 #, c-format
-msgid "Saving '%s'"
-msgstr "Αποθήκευση '%s'"
+#| msgid "Opening '%s'"
+msgid "Exporting '%s'"
+msgstr "Εξαγωγή του '%s'"
 
 #
 #: ../plug-ins/common/file-csource.c:111
@@ -2275,8 +2275,7 @@ msgstr "Ψηφιακή εικόνα και επικοινωνίες σε εικ�
 msgid "'%s' is not a DICOM file."
 msgstr "Το '%s' δεν είναι αρχείο DICOM."
 
-#: ../plug-ins/common/file-dicom.c:1335 ../plug-ins/common/file-pcx.c:695
-#: ../plug-ins/common/file-pnm.c:1202
+#: ../plug-ins/common/file-dicom.c:1335
 msgid "Cannot save images with alpha channel."
 msgstr "Αδυναμία αποθήκευσης εικόνων με άλφα κανάλι."
 
@@ -2398,16 +2397,20 @@ msgstr ""
 "αποθήκευση ίσως να μην παίξουν τέλεια."
 
 #: ../plug-ins/common/file-gif-save.c:510
-msgid "Couldn't simply reduce colors further. Saving as opaque."
+#| msgid "Couldn't simply reduce colors further. Saving as opaque."
+msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Αδυναμία παραπέρα μείωσης χρωμάτων. Αποθήκευση ως αδιαφανούς."
 
 #: ../plug-ins/common/file-gif-save.c:625
 #, c-format
+#| msgid ""
+#| "Unable to save '%s'.  The GIF file format does not support images that "
+#| "are more than %d pixels wide or tall."
 msgid ""
-"Unable to save '%s'.  The GIF file format does not support images that are "
+"Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Αδυναμία αποθήκευσης '%s'. Ο τύπος αρχείου GIF δεν υποστηρίζει εικόνες που "
+"Αδυναμία εξαγωγής του '%s'. Η μορφή αρχείου GIF δεν υποστηρίζει εικόνες που "
 "είναι πάνω από %d εικονοστοιχεία πλατιές ή ψηλές."
 
 #: ../plug-ins/common/file-gif-save.c:735
@@ -2419,11 +2422,13 @@ msgstr ""
 "αποθήκευση σχολίου."
 
 #: ../plug-ins/common/file-gif-save.c:799
+#| msgid ""
+#| "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+"Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Αδυναμία αποθήκευσης εικόνων χρώματος RGB. Μετατροπή σε χρώμα από ευρετήριο "
-"ή σε γκρι κλίμακα πρώτα."
+"Αδυναμία εξαγωγής εικόνων χρώματος RGB. Μετατρέψτε σε χρώμα από ευρετήριο ή "
+"σε γκρι κλίμακα πρώτα."
 
 #: ../plug-ins/common/file-gif-save.c:974
 msgid "Delay inserted to prevent evil CPU-sucking animation."
@@ -2431,21 +2436,27 @@ msgstr ""
 "Εισαγωγή καθυστέρησης για αποφυγή κίνησης υπερβολικά καταναλωτικής της CPU."
 
 #: ../plug-ins/common/file-gif-save.c:1015
+#| msgid ""
+#| "The image you are trying to save as a GIF contains layers which extend "
+#| "beyond the actual borders of the image."
 msgid ""
-"The image you are trying to save as a GIF contains layers which extend "
+"The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"Η εικόνα που προσπαθείτε να αποθηκεύσετε ως GIF περιέχει στρώσεις που "
+"Η εικόνα που προσπαθείτε να εξάγετε ως GIF περιέχει στρώσεις που "
 "επεκτείνονται πέρα από τα τρέχοντα περιγράμματα της εικόνας."
 
 #: ../plug-ins/common/file-gif-save.c:1032
+#| msgid ""
+#| "The GIF file format does not allow this.  You may choose whether to crop "
+#| "all of the layers to the image borders, or cancel this save."
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
-"of the layers to the image borders, or cancel this save."
+"of the layers to the image borders, or cancel this export."
 msgstr ""
-"Ο τύπος αρχείου GIF δεν το επιτρέπει αυτό. Μπορείτε να διαλέξετε εάν θα "
-"περικοπούν όλες οι στρώσεις στα περιγράμματα της εικόνας, ή να ακυρώσετε την "
-"αποθήκευση."
+"Η μορφή αρχείου GIF δεν το επιτρέπει αυτό. Μπορείτε να διαλέξετε εάν θα "
+"περικοπούν όλες οι στρώσεις στα περιγράμματα της εικόνας, ή να ακυρώσετε "
+"αυτήν την εξαγωγή."
 
 #: ../plug-ins/common/file-gif-save.c:1166
 msgid "GIF"
@@ -2656,9 +2667,9 @@ msgstr ""
 "Το πλάτος για κάθε κελί πίνακα. Μπορεί να είναι ένας αριθμός ή ποσοστό."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3508
-#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1461
+#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1475
 #: ../plug-ins/common/film.c:1002 ../plug-ins/common/smooth-palette.c:440
-#: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:173
+#: ../plug-ins/common/tile.c:468 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:284
 msgid "_Height:"
@@ -2943,6 +2954,11 @@ msgstr "Διαστάσεις εικόνας υπερβολικά μεγάλες:
 msgid "Unusual PCX flavour, giving up"
 msgstr "Ασυνήθιστη παραλλαγή PCX, εγκατάλειψη"
 
+#: ../plug-ins/common/file-pcx.c:695 ../plug-ins/common/file-pnm.c:1202
+#| msgid "Cannot save images with alpha channel."
+msgid "Cannot export images with alpha channel."
+msgstr "Αδυναμία εξαγωγής εικόνων με άλφα κανάλι."
+
 #: ../plug-ins/common/file-pcx.c:707
 #, c-format
 msgid "Invalid X offset: %d"
@@ -3125,8 +3141,9 @@ msgstr "Σφάλμα φόρτωσης αρχείου PNG: %s"
 
 #: ../plug-ins/common/file-png.c:863
 #, c-format
-msgid "Error creating PNG read struct while saving '%s'."
-msgstr "Σφάλμα δημιουργίας PNG διαβάζει δομή ενώ αποθηκεύει '%s'."
+#| msgid "Error creating PNG read struct while saving '%s'."
+msgid "Error creating PNG read struct while exporting '%s'."
+msgstr "Σφάλμα κατά τη δημιουργία PNG διαβάζει δομή ενώ εξάγει '%s'."
 
 #: ../plug-ins/common/file-png.c:873
 #, c-format
@@ -3175,13 +3192,15 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1473
 #, c-format
-msgid "Error creating PNG write struct while saving '%s'."
-msgstr "Σφάλμα δημιουργίας PNG γράφει δομή ενώ αποθηκεύει '%s'."
+#| msgid "Error creating PNG write struct while saving '%s'."
+msgid "Error creating PNG write struct while exporting '%s'."
+msgstr "Σφάλμα κατά τη δημιουργία του PNG γράφει δομή ενώ εξάγει '%s'."
 
 #: ../plug-ins/common/file-png.c:1483
 #, c-format
-msgid "Error while saving '%s'. Could not save image."
-msgstr "Σφάλμα αποθήκευσης '%s'. Αδυναμία αποθήκευσης εικόνας."
+#| msgid "Error while saving '%s'. Could not save image."
+msgid "Error while exporting '%s'. Could not export image."
+msgstr "Σφάλμα κατά την εξαγωγή του '%s'. Αδυναμία εξαγωγής της εικόνας."
 
 #: ../plug-ins/common/file-png.c:2191
 #: ../plug-ins/file-tiff/file-tiff-save.c:840
@@ -3308,8 +3327,9 @@ msgstr "Αδυναμία ερμηνείας αρχείου Postscript '%s'"
 
 #: ../plug-ins/common/file-ps.c:1247
 #, c-format
-msgid "PostScript save cannot handle images with alpha channels"
-msgstr "Η αποθήκευση PostScript αδυνατεί να χειριστεί εικόνες με άλφα κανάλια"
+#| msgid "PostScript save cannot handle images with alpha channels"
+msgid "PostScript export cannot handle images with alpha channels"
+msgstr "Η εξαγωγή PostScript αδυνατεί να χειριστεί εικόνες με άλφα κανάλια"
 
 #: ../plug-ins/common/file-ps.c:3416
 msgid "Import from PostScript"
@@ -3506,114 +3526,114 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Ακατέργαστα δεδομένα εικόνας"
 
-#: ../plug-ins/common/file-raw-data.c:1356
+#: ../plug-ins/common/file-raw-data.c:1370
 msgid "Load Image from Raw Data"
 msgstr "Φόρτωση εικόνας από ακατέργαστα δεδομένα"
 
 #
-#: ../plug-ins/common/file-raw-data.c:1394
+#: ../plug-ins/common/file-raw-data.c:1408
 msgid "Image"
 msgstr "Εικόνα"
 
-#: ../plug-ins/common/file-raw-data.c:1405
+#: ../plug-ins/common/file-raw-data.c:1419
 msgid "RGB Alpha"
 msgstr "Άλφα RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1406
+#: ../plug-ins/common/file-raw-data.c:1420
 msgid "RGB565 Big Endian"
 msgstr "Μεγαλύτερη τελική RGB565"
 
-#: ../plug-ins/common/file-raw-data.c:1407
+#: ../plug-ins/common/file-raw-data.c:1421
 msgid "RGB565 Little Endian"
 msgstr "Μικρότερη τελική RGB565"
 
-#: ../plug-ins/common/file-raw-data.c:1408
+#: ../plug-ins/common/file-raw-data.c:1422
 msgid "BGR565 Big Endian"
 msgstr "Μεγαλύτερη τελική BGR565"
 
-#: ../plug-ins/common/file-raw-data.c:1409
+#: ../plug-ins/common/file-raw-data.c:1423
 msgid "BGR565 Little Endian"
 msgstr "Μικρότερη τελική BGR565"
 
-#: ../plug-ins/common/file-raw-data.c:1410
+#: ../plug-ins/common/file-raw-data.c:1424
 msgid "Planar RGB"
 msgstr "Επίπεδο RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1411
+#: ../plug-ins/common/file-raw-data.c:1425
 msgid "B&W 1 bit"
 msgstr "Ασπρόμαυρο 1 δυαδικού"
 
-#: ../plug-ins/common/file-raw-data.c:1412
+#: ../plug-ins/common/file-raw-data.c:1426
 msgid "Gray 2 bit"
 msgstr "Γκρίζο 2 δυαδικών"
 
-#: ../plug-ins/common/file-raw-data.c:1413
+#: ../plug-ins/common/file-raw-data.c:1427
 msgid "Gray 4 bit"
 msgstr "Γκρίζο 4 δυαδικών"
 
-#: ../plug-ins/common/file-raw-data.c:1414
+#: ../plug-ins/common/file-raw-data.c:1428
 msgid "Gray 8 bit"
 msgstr "Γκρίζο 8 δυαδικών"
 
-#: ../plug-ins/common/file-raw-data.c:1415
+#: ../plug-ins/common/file-raw-data.c:1429
 msgid "Indexed"
 msgstr "Από ευρετήριο"
 
-#: ../plug-ins/common/file-raw-data.c:1416
+#: ../plug-ins/common/file-raw-data.c:1430
 msgid "Indexed Alpha"
 msgstr "Άλφα από ευρετήριο"
 
-#: ../plug-ins/common/file-raw-data.c:1421
+#: ../plug-ins/common/file-raw-data.c:1435
 msgid "Image _Type:"
 msgstr "_Τύπος εικόνας:"
 
-#: ../plug-ins/common/file-raw-data.c:1477
+#: ../plug-ins/common/file-raw-data.c:1491
 msgid "Palette"
 msgstr "Παλέτα"
 
-#: ../plug-ins/common/file-raw-data.c:1487
-#: ../plug-ins/common/file-raw-data.c:1572
+#: ../plug-ins/common/file-raw-data.c:1501
+#: ../plug-ins/common/file-raw-data.c:1586
 msgid "R, G, B (normal)"
 msgstr "R, G, B (κανονικό)"
 
-#: ../plug-ins/common/file-raw-data.c:1488
-#: ../plug-ins/common/file-raw-data.c:1574
+#: ../plug-ins/common/file-raw-data.c:1502
+#: ../plug-ins/common/file-raw-data.c:1588
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (μορφοποίηση BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1493
+#: ../plug-ins/common/file-raw-data.c:1507
 msgid "_Palette Type:"
 msgstr "Τύπος _Παλέτας:"
 
-#: ../plug-ins/common/file-raw-data.c:1504
+#: ../plug-ins/common/file-raw-data.c:1518
 msgid "Off_set:"
 msgstr "Μετατόπι_ση:"
 
-#: ../plug-ins/common/file-raw-data.c:1516
+#: ../plug-ins/common/file-raw-data.c:1530
 msgid "Select Palette File"
 msgstr "Επιλογή αρχείου παλέτας"
 
-#: ../plug-ins/common/file-raw-data.c:1522
+#: ../plug-ins/common/file-raw-data.c:1536
 msgid "Pal_ette File:"
 msgstr "Αρχ_είο παλέτας:"
 
-#: ../plug-ins/common/file-raw-data.c:1550
+#: ../plug-ins/common/file-raw-data.c:1564
 msgid "Raw Image"
 msgstr "Ακατέργαστη εικόνα"
 
-#: ../plug-ins/common/file-raw-data.c:1558
+#: ../plug-ins/common/file-raw-data.c:1572
 msgid "RGB Save Type"
 msgstr "Αποθήκευση τύπου RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1562
+#: ../plug-ins/common/file-raw-data.c:1576
 msgid "Standard (RGB RGB RGB ...)"
 msgstr "Πρότυπο (RGB RGB RGB ...)"
 
-#: ../plug-ins/common/file-raw-data.c:1563
+#: ../plug-ins/common/file-raw-data.c:1577
 msgid "Planar (RRR... GGG... BBB...)"
 msgstr "Επίπεδο (RRR... GGG... BBB...)"
 
-#: ../plug-ins/common/file-raw-data.c:1568
+#: ../plug-ins/common/file-raw-data.c:1582
 msgid "Indexed Palette Type"
 msgstr "Τύπος παλέτας από ευρετήριο"
 
@@ -3686,8 +3706,9 @@ msgstr "Αυτό το βάθος εικόνας δεν υποστηρίζετα�
 
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
-msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr "Η αποθήκευση SUNRAS αδυνατεί να χειριστεί εικόνες με άλφα κανάλια"
+#| msgid "SUNRAS save cannot handle images with alpha channels"
+msgid "SUNRAS export cannot handle images with alpha channels"
+msgstr "Η εξαγωγή SUNRAS αδυνατεί να επεξεργαστεί εικόνες με άλφα κανάλια"
 
 #: ../plug-ins/common/file-sunras.c:597
 msgid "Can't operate on unknown image types"
@@ -3883,17 +3904,23 @@ msgstr ""
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:997
+#| msgid ""
+#| "The image which you are trying to save as an XBM contains more than two "
+#| "colors.\n"
+#| "\n"
+#| "Please convert it to a black and white (1-bit) indexed image and try "
+#| "again."
 msgid ""
-"The image which you are trying to save as an XBM contains more than two "
+"The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
-"Η εικόνα που προσπαθείτε να αποθηκεύσετε ως XBM περιέχει περισσότερα από δύο "
+"Η εικόνα που προσπαθείτε να εξάγετε ως XBM περιέχει περισσότερα από δύο "
 "χρώματα.\n"
 "\n"
-"Παρακαλώ μετατρέψτε την σε ασπρόμαυρη εικόνα από ευρετήριο (1-δυαδικού) και "
-"ξαναπροσπαθήστε."
+"Παρακαλούμε, μετατρέψτε την σε ασπρόμαυρη εικόνα από ευρετήριο (1-δυαδικού) "
+"και ξαναπροσπαθήστε."
 
 #: ../plug-ins/common/file-xbm.c:1009
 msgid ""
@@ -4139,6 +4166,11 @@ msgstr "Εισαγωγή άλλου σχολίου εάν επιθυμείτε."
 msgid "Comment is limited to %d characters."
 msgstr "Το σχόλιο περιορίζεται στους %d χαρακτήρες."
 
+#: ../plug-ins/common/file-xmc.c:1462
+#, c-format
+msgid "Saving '%s'"
+msgstr "Αποθήκευση '%s'"
+
 #: ../plug-ins/common/file-xmc.c:1528
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
@@ -4160,39 +4192,51 @@ msgstr "Το πλάτος και/ή ύψος του πλαισίου '%s' είν
 
 #: ../plug-ins/common/file-xmc.c:1585
 #, c-format
+#| msgid ""
+#| "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
+#| "Try to change the hot spot position, layer geometry or save without auto-"
+#| "crop."
 msgid ""
-"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
-"Try to change the hot spot position, layer geometry or save without auto-"
+"Cannot export the cursor because the hot spot is not on frame '%s'.\n"
+"Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"Αδυναμία αποθήκευσης του δρομέα επειδή το ενεργό σημείο δεν είναι στο "
-"πλαίσιο '%s'.\n"
-"Προσπάθεια αλλαγής της θέσης του ενεργού σημείου, γεωμετρίας στρώσης ή "
-"αποθήκευσης χωρίς αυτόματη περικοπή."
+"Αδυναμία εξαγωγής του δρομέα επειδή το ενεργό σημείο δεν είναι στο πλαίσιο "
+"'%s'.\n"
+"Προσπαθήστε να αλλάξετε τη θέση του ενεργού σημείου, τη γεωμετρία στρώσης ή "
+"εξάγετε χωρίς αυτόματη περικοπή."
 
 #: ../plug-ins/common/file-xmc.c:1748
 #, c-format
+#| msgid ""
+#| "Your cursor was successfully saved but it contains one or more frames "
+#| "whose width or height is more than %ipx.\n"
+#| "It will clutter the screen in some environments."
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames whose "
-"width or height is more than %ipx.\n"
+"Your cursor was successfully exported but it contains one or more frames "
+"whose width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
-"Ο δρομέας σας αποθηκεύτηκε με επιτυχία, αλλά περιέχει ένα ή περισσότερα "
-"πλαίσια των οποίων το πλάτος ή ύψος είναι περισσότερο από %ipx.\n"
-"Θα διαταράξει την οθόνη σε κάποια περιβάλλοντα."
+"Ο δρομέας σας εξήχθη με επιτυχία, αλλά περιέχει ένα ή περισσότερα πλαίσια "
+"των οποίων το πλάτος ή ύψος είναι περισσότερο από %ipx.\n"
+"Θα διαταραχθεί η οθόνη σε κάποια περιβάλλοντα."
 
 #: ../plug-ins/common/file-xmc.c:1755
+#| msgid ""
+#| "Your cursor was successfully saved but it contains one or more frames "
+#| "whose nominal size is not supported by GNOME settings.\n"
+#| "You can satisfy it by checking \"Replace the size of all frames...\" in "
+#| "the save dialog, or your cursor may not appear in GNOME settings."
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames whose "
-"nominal size is not supported by GNOME settings.\n"
+"Your cursor was successfully exported but it contains one or more frames "
+"whose nominal size is not supported by GNOME settings.\n"
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
-"save dialog, or your cursor may not appear in GNOME settings."
+"export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Ο δρομέας σας αποθηκεύτηκε με επιτυχία, αλλά περιέχει ένα ή περισσότερα "
-"πλαίσια των οποίων το ονομαστικό μέγεθος δεν υποστηρίζεται από τις ρυθμίσεις "
-"GNOME.\n"
-"Μπορείτε να το ικανοποιήσετε επιλέγοντας \"αντικατάσταση του μεγέθους όλων "
-"των πλαισίων...\" στο διάλογο αποθήκευσης, ή ο δρομέας σας ίσως να μην "
+"Ο δρομέας σας εξήχθη με επιτυχία, αλλά περιέχει ένα ή περισσότερα πλαίσια "
+"των οποίων το ονομαστικό μέγεθος δεν υποστηρίζεται από τις ρυθμίσεις GNOME.\n"
+"Μπορείτε να το ικανοποιήσετε επιλέγοντας \"Αντικατάσταση του μεγέθους όλων "
+"των πλαισίων...\" στον διάλογο εξαγωγής, ή ο δρομέας σας ίσως να μην "
 "εμφανιστεί στις ρυθμίσεις GNOME."
 
 #: ../plug-ins/common/file-xmc.c:1992
@@ -4281,8 +4325,9 @@ msgstr ""
 "εικονοστοιχείο %d. Προς το παρόν αυτό δεν υποστηρίζεται."
 
 #: ../plug-ins/common/file-xwd.c:636
-msgid "Cannot save images with alpha channels."
-msgstr "Αδυναμία αποθήκευσης εικόνων με άλφα κανάλια."
+#| msgid "Cannot save images with alpha channels."
+msgid "Cannot export images with alpha channels."
+msgstr "Αδυναμία εξαγωγής εικόνων με άλφα κανάλια."
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
@@ -4291,8 +4336,9 @@ msgstr "Αδυναμία ανοίγματος του '%s' για εγγραφή:
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
-msgid "Error saving '%s': "
-msgstr "Σφάλμα κατά την αποθήκευση του '%s': "
+#| msgid "Error saving '%s': "
+msgid "Error exporting '%s': "
+msgstr "Σφάλμα κατά την εξαγωγή του '%s': "
 
 #: ../plug-ins/common/file-xwd.c:1751 ../plug-ins/common/file-xwd.c:2149
 #, c-format
@@ -5836,28 +5882,28 @@ msgstr "Σ_χεδιαστής σφαίρας..."
 msgid "Region selected for plug-in is empty"
 msgstr "Η επιλεγμένη περιοχή για πρόσθετο είναι άδεια"
 
-#: ../plug-ins/common/tile.c:101
+#: ../plug-ins/common/tile.c:110
 msgid "Create an array of copies of the image"
 msgstr "Δημιουργία ενός πίνακα αντιγράφων της εικόνας"
 
-#: ../plug-ins/common/tile.c:111
+#: ../plug-ins/common/tile.c:120
 msgid "_Tile..."
 msgstr "_Παράθεση..."
 
 #. Set the tile cache size
-#: ../plug-ins/common/tile.c:185 ../plug-ins/common/tile-small.c:326
+#: ../plug-ins/common/tile.c:197 ../plug-ins/common/tile-small.c:326
 msgid "Tiling"
 msgstr "Παραθέσεις"
 
-#: ../plug-ins/common/tile.c:397
+#: ../plug-ins/common/tile.c:433
 msgid "Tile"
 msgstr "Παράθεση"
 
-#: ../plug-ins/common/tile.c:419
+#: ../plug-ins/common/tile.c:455
 msgid "Tile to New Size"
 msgstr "Παράθεση σε νέο μέγεθος"
 
-#: ../plug-ins/common/tile.c:441
+#: ../plug-ins/common/tile.c:477
 msgid "C_reate new image"
 msgstr "Δημιου_ργία νέας εικόνας"
 
@@ -6461,9 +6507,10 @@ msgid "The bitmap ends unexpectedly."
 msgstr "Οι ψηφιογραφίες τελειώνουν αναπάντεχα."
 
 #: ../plug-ins/file-bmp/bmp-write.c:197 ../plug-ins/file-bmp/bmp-write.c:229
-msgid "Cannot save indexed image with transparency in BMP file format."
+#| msgid "Cannot save indexed image with transparency in BMP file format."
+msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
-"Αδυναμία αποθήκευσης εικόνας από ευρετήριο με διαφάνεια σε μορφή αρχείου BMP."
+"Αδυναμία εξαγωγής εικόνας από ευρετήριο με διαφάνεια σε μορφή αρχείου BMP."
 
 #: ../plug-ins/file-bmp/bmp-write.c:199 ../plug-ins/file-bmp/bmp-write.c:231
 msgid "Alpha channel will be ignored."
@@ -6558,7 +6605,8 @@ msgid "FITS file keeps no displayable images"
 msgstr "Τα αρχεία FITS δεν διατηρούν εμφανίσιμες εικόνες"
 
 #: ../plug-ins/file-fits/fits.c:457
-msgid "FITS save cannot handle images with alpha channels"
+#| msgid "FITS save cannot handle images with alpha channels"
+msgid "FITS export cannot handle images with alpha channels"
 msgstr "Η αποθήκευση FITS αδυνατεί να χειριστεί εικόνες με κανάλια άλφα"
 
 #: ../plug-ins/file-fits/fits.c:1145
@@ -6602,8 +6650,10 @@ msgid "Frame (%i)"
 msgstr "Πλαίσιο (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:712
-msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "Συγνώμη, αποθήκευση μόνο εικόνων από ευρετήριο και γκρι κλίμακας."
+#| msgid "Sorry, I can save only INDEXED and GRAY images."
+msgid "Sorry, I can export only INDEXED and GRAY images."
+msgstr ""
+"Συγνώμη, μπορούν να εξαχθούν μόνο εικόνες ΑΠΟ ΕΥΡΕΤΗΡΙΟ ή ΓΚΡΙΖΑ ΚΛΙΜΑΚΑ."
 
 #: ../plug-ins/file-fli/fli-gimp.c:864
 msgid "GFLI 1.3 - Load framestack"
@@ -6941,19 +6991,21 @@ msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος κανα�
 
 #: ../plug-ins/file-psd/psd-load.c:2094
 #, c-format
-#| msgid "Failed to open '%s': %s"
 msgid "Failed to decompress data"
 msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
 
 #: ../plug-ins/file-psd/psd-save.c:253
 #, c-format
+#| msgid ""
+#| "Unable to save layer with mode '%s'.  Either the PSD file format or the "
+#| "save plug-in does not support that, using normal mode instead."
 msgid ""
-"Unable to save layer with mode '%s'.  Either the PSD file format or the save "
-"plug-in does not support that, using normal mode instead."
+"Unable to export layer with mode '%s'.  Either the PSD file format or the "
+"export plug-in does not support that, using normal mode instead."
 msgstr ""
-"Αδυναμία αποθήκευσης στρώσης με κατάσταση '%s'. Είτε ο τύπος αρχείου PSD, "
-"είτε το πρόσθετο αποθήκευσης δεν το υποστηρίζουν, θα χρησιμοποιηθεί η "
-"κανονική κατάσταση."
+"Αδυναμία εξαγωγής στρώσης με κατάσταση '%s'. Είτε η μορφή αρχείου PSD, είτε "
+"το πρόσθετο εξαγωγής δεν το υποστηρίζουν, θα χρησιμοποιηθεί η κανονική "
+"κατάσταση."
 
 #: ../plug-ins/file-psd/psd-save.c:503
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -6961,21 +7013,27 @@ msgstr "Σφάλμα: Αδυναμία μετατροπής τύπου εικό�
 
 #: ../plug-ins/file-psd/psd-save.c:1490
 #, c-format
+#| msgid ""
+#| "Unable to save '%s'.  The PSD file format does not support images that "
+#| "are more than 30,000 pixels wide or tall."
 msgid ""
-"Unable to save '%s'.  The PSD file format does not support images that are "
+"Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Αδυναμία αποθήκευσης '%s'. Ο τύπος αρχείου PSD δεν υποστηρίζει εικόνες που "
-"είναι πιο πλατιές ή ψηλές από 30000 εικονοστοιχεία."
+"Αδυναμία εξαγωγής του '%s'. Η μορφή αρχείου PSD δεν υποστηρίζει εικόνες που "
+"είναι πιο πλατιές ή πιο ψηλές από 30.000 εικονοστοιχεία."
 
 #: ../plug-ins/file-psd/psd-save.c:1505
 #, c-format
+#| msgid ""
+#| "Unable to save '%s'.  The PSD file format does not support images with "
+#| "layers that are more than 30,000 pixels wide or tall."
 msgid ""
-"Unable to save '%s'.  The PSD file format does not support images with "
+"Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Αδυναμία αποθήκευσης '%s'. Ο τύπος αρχείου PSD δεν υποστηρίζει εικόνες με "
-"στρώσεις που είναι πιο πλατιές ή ψηλές από 30000 εικονοστοιχεία."
+"Αδυναμία εξαγωγής του '%s'. Η μορφή αρχείου PSD δεν υποστηρίζει εικόνες με "
+"στρώσεις που είναι πιο πλατιές ή πιο ψηλές από 30.000 εικονοστοιχεία."
 
 #: ../plug-ins/file-psd/psd-util.c:50
 msgid "Unexpected end of file"
@@ -7063,9 +7121,10 @@ msgstr "Κανάλι TIFF"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:482
 #, c-format
-msgid "TIFF save cannot handle indexed images with an alpha channel."
+#| msgid "TIFF save cannot handle indexed images with an alpha channel."
+msgid "TIFF export cannot handle indexed images with an alpha channel."
 msgstr ""
-"Η αποθήκευση TIFF αδυνατεί να χειριστεί εικόνες από ευρετήριο με κανάλι άλφα."
+"Η εξαγωγή TIFF αδυνατεί να χειριστεί εικόνες από ευρετήριο με κανάλι άλφα."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:495
 msgid ""

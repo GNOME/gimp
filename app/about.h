@@ -30,6 +30,11 @@
   _("Copyright © 1995-%s\n" \
     "Spencer Kimball, Peter Mattis and the GIMP Development Team")
 
+/* TRANSLATORS: do not end the license URL with a dot, because it would
+ * be in the link. Because of technical limitations, make sure the URL
+ * ends with a space, a newline or is end of text.
+ * Cf. bug 762282.
+ */
 #define GIMP_LICENSE \
   _("GIMP is free software: you can redistribute it and/or modify it "   \
     "under the terms of the GNU General Public License as published by " \
@@ -42,7 +47,7 @@
     "GNU General Public License for more details."                       \
     "\n\n"                                                               \
     "You should have received a copy of the GNU General Public License " \
-    "along with GIMP.  If not, see http://www.gnu.org/licenses/.")
+    "along with GIMP. If not, see: http://www.gnu.org/licenses/")
 
 
 #endif /* __ABOUT_H__ */

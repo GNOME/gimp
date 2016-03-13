@@ -20,15 +20,18 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimperror.h"
 #include "gimpfilloptions.h"
 #include "gimpviewable.h"
 
@@ -50,11 +53,12 @@ typedef struct _GimpFillOptionsPrivate GimpFillOptionsPrivate;
 struct _GimpFillOptionsPrivate
 {
   GimpFillStyle style;
-
   gboolean      antialias;
 
   GimpViewType  pattern_view_type;
   GimpViewSize  pattern_view_size;
+
+  const gchar  *undo_desc;
 };
 
 #define GET_PRIVATE(options) \
@@ -136,6 +140,7 @@ gimp_fill_options_set_property (GObject      *object,
     {
     case PROP_STYLE:
       private->style = g_value_get_enum (value);
+      private->undo_desc = NULL;
       break;
     case PROP_ANTIALIAS:
       private->antialias = g_value_get_boolean (value);
@@ -205,10 +210,156 @@ gimp_fill_options_get_style (GimpFillOptions *options)
   return GET_PRIVATE (options)->style;
 }
 
+void
+gimp_fill_options_set_style (GimpFillOptions *options,
+                             GimpFillStyle    style)
+{
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+
+  g_object_set (options, "style", style, NULL);
+}
+
 gboolean
 gimp_fill_options_get_antialias (GimpFillOptions *options)
 {
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
 
   return GET_PRIVATE (options)->antialias;
+}
+
+void
+gimp_fill_options_set_antialias (GimpFillOptions *options,
+                                 gboolean         antialias)
+{
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+
+  g_object_set (options, "antialias", antialias, NULL);
+}
+
+gboolean
+gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
+                                    GimpContext      *context,
+                                    GimpFillType      fill_type,
+                                    GError          **error)
+{
+  GimpFillOptionsPrivate *private;
+  GimpRGB                 color;
+  const gchar            *undo_desc;
+
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  private = GET_PRIVATE (options);
+
+  private->undo_desc = NULL;
+
+  switch (fill_type)
+    {
+    case GIMP_FILL_FOREGROUND:
+      gimp_context_get_foreground (context, &color);
+      undo_desc = C_("undo-type", "Fill with Foreground Color");
+      break;
+
+    case GIMP_FILL_BACKGROUND:
+      gimp_context_get_background (context, &color);
+      undo_desc = C_("undo-type", "Fill with Background Color");
+      break;
+
+    case GIMP_FILL_WHITE:
+      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      undo_desc = C_("undo-type", "Fill with White");
+      break;
+
+    case GIMP_FILL_TRANSPARENT:
+      gimp_context_get_background (context, &color);
+      gimp_context_set_paint_mode (GIMP_CONTEXT (options), GIMP_ERASE_MODE);
+      undo_desc = C_("undo-type", "Fill with Transparency");
+      break;
+
+    case GIMP_FILL_PATTERN:
+      {
+        GimpPattern *pattern = gimp_context_get_pattern (context);
+
+        if (! pattern)
+          {
+            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                 _("No patterns available for this operation."));
+            return FALSE;
+          }
+
+        gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
+        gimp_context_set_pattern (GIMP_CONTEXT (options), pattern);
+        private->undo_desc = C_("undo-type", "Fill with Pattern");
+
+        return TRUE;
+      }
+      break;
+
+    default:
+      g_warning ("%s: invalid fill_type %d", G_STRFUNC, fill_type);
+      return FALSE;
+    }
+
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
+  gimp_context_set_foreground (GIMP_CONTEXT (options), &color);
+  private->undo_desc = undo_desc;
+
+  return TRUE;
+}
+
+gboolean
+gimp_fill_options_set_by_fill_mode (GimpFillOptions     *options,
+                                    GimpContext         *context,
+                                    GimpBucketFillMode   fill_mode,
+                                    GError             **error)
+{
+  GimpFillType fill_type;
+
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  switch (fill_mode)
+    {
+    default:
+    case GIMP_BUCKET_FILL_FG:
+      fill_type = GIMP_FILL_FOREGROUND;
+      break;
+
+    case GIMP_BUCKET_FILL_BG:
+      fill_type = GIMP_FILL_BACKGROUND;
+      break;
+
+    case GIMP_BUCKET_FILL_PATTERN:
+      fill_type = GIMP_FILL_PATTERN;
+      break;
+    }
+
+  return gimp_fill_options_set_by_fill_type (options, context,
+                                             fill_type, error);
+}
+
+const gchar *
+gimp_fill_options_get_undo_desc (GimpFillOptions *options)
+{
+  GimpFillOptionsPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
+
+  private = GET_PRIVATE (options);
+
+  if (private->undo_desc)
+    return private->undo_desc;
+
+  switch (private->style)
+    {
+    case GIMP_FILL_STYLE_SOLID:
+      return C_("undo-type", "Fill with Solid Color");
+
+    case GIMP_FILL_STYLE_PATTERN:
+      return C_("undo-type", "Fill with Pattern");
+    }
+
+  g_return_val_if_reached (NULL);
 }

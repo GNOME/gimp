@@ -199,13 +199,6 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   gint                width,
                                                   gint                height);
 
-void            gimp_drawable_fill               (GimpDrawable       *drawable,
-                                                  GimpContext        *context,
-                                                  GimpFillType        fill_type);
-void            gimp_drawable_fill_full          (GimpDrawable       *drawable,
-                                                  const GimpRGB      *color,
-                                                  const GimpPattern  *pattern);
-
 const Babl    * gimp_drawable_get_format         (const GimpDrawable *drawable);
 const Babl    * gimp_drawable_get_format_with_alpha
                                                  (const GimpDrawable *drawable);
