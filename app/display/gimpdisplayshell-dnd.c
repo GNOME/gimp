@@ -338,8 +338,8 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
 
 static void
 gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
-                             const GimpRGB    *color,
-                             GimpPattern      *pattern)
+                             GimpFillOptions  *options,
+                             const gchar      *undo_desc)
 {
   GimpImage    *image = gimp_display_get_image (shell->display);
   GimpDrawable *drawable;
@@ -374,32 +374,20 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
   /* FIXME: there should be a virtual method for this that the
    *        GimpTextLayer can override.
    */
-  if (color && gimp_item_is_text_layer (GIMP_ITEM (drawable)))
+  if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_SOLID &&
+      gimp_item_is_text_layer (GIMP_ITEM (drawable)))
     {
+      GimpRGB color;
+
+      gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+
       gimp_text_layer_set (GIMP_TEXT_LAYER (drawable), NULL,
                            "color", color,
                            NULL);
     }
   else
     {
-      GimpFillOptions *options = gimp_fill_options_new (image->gimp);
-
-      if (color)
-        {
-          gimp_context_set_foreground (GIMP_CONTEXT (options), color);
-        }
-      else
-        {
-          gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
-          gimp_context_set_pattern (GIMP_CONTEXT (options), pattern);
-        }
-
-      gimp_edit_fill (image, drawable, options,
-                      pattern ?
-                      C_("undo-type", "Drop pattern to layer") :
-                      C_("undo-type", "Drop color to layer"));
-
-      g_object_unref (options);
+      gimp_edit_fill (image, drawable, options, undo_desc);
     }
 
   gimp_display_shell_dnd_flush (shell, image);
@@ -412,11 +400,18 @@ gimp_display_shell_drop_pattern (GtkWidget    *widget,
                                  GimpViewable *viewable,
                                  gpointer      data)
 {
+  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
+  GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp);
+
   GIMP_LOG (DND, NULL);
 
-  if (GIMP_IS_PATTERN (viewable))
-    gimp_display_shell_dnd_fill (GIMP_DISPLAY_SHELL (data),
-                                 NULL, GIMP_PATTERN (viewable));
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
+  gimp_context_set_pattern (GIMP_CONTEXT (options), GIMP_PATTERN (viewable));
+
+  gimp_display_shell_dnd_fill (shell, options,
+                               C_("undo-type", "Drop pattern to layer"));
+
+  g_object_unref (options);
 }
 
 static void
@@ -426,10 +421,18 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
                                const GimpRGB *color,
                                gpointer       data)
 {
+  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
+  GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp);
+
   GIMP_LOG (DND, NULL);
 
-  gimp_display_shell_dnd_fill (GIMP_DISPLAY_SHELL (data),
-                               color, NULL);
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
+  gimp_context_set_foreground (GIMP_CONTEXT (options), color);
+
+  gimp_display_shell_dnd_fill (shell, options,
+                               C_("undo-type", "Drop color to layer"));
+
+  g_object_unref (options);
 }
 
 static void
