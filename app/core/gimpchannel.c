@@ -47,6 +47,7 @@
 #include "gimpchannel.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
+#include "gimpdrawable-fill.h"
 #include "gimpdrawable-stroke.h"
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
@@ -122,6 +123,12 @@ static void       gimp_channel_transform     (GimpItem          *item,
                                               GimpInterpolationType interpolation_type,
                                               GimpTransformResize clip_result,
                                               GimpProgress      *progress);
+static gboolean   gimp_channel_fill          (GimpItem          *item,
+                                              GimpDrawable      *drawable,
+                                              GimpFillOptions   *fill_options,
+                                              gboolean           push_undo,
+                                              GimpProgress      *progress,
+                                              GError           **error);
 static gboolean   gimp_channel_stroke        (GimpItem          *item,
                                               GimpDrawable      *drawable,
                                               GimpStrokeOptions *stroke_options,
@@ -276,6 +283,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->flip                 = gimp_channel_flip;
   item_class->rotate               = gimp_channel_rotate;
   item_class->transform            = gimp_channel_transform;
+  item_class->fill                 = gimp_channel_fill;
   item_class->stroke               = gimp_channel_stroke;
   item_class->to_selection         = gimp_channel_to_selection;
   item_class->default_name         = _("Channel");
@@ -286,6 +294,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->flip_desc            = C_("undo-type", "Flip Channel");
   item_class->rotate_desc          = C_("undo-type", "Rotate Channel");
   item_class->transform_desc       = C_("undo-type", "Transform Channel");
+  item_class->fill_desc            = C_("undo-type", "Fill Channel");
   item_class->stroke_desc          = C_("undo-type", "Stroke Channel");
   item_class->to_selection_desc    = C_("undo-type", "Channel to Selection");
   item_class->reorder_desc         = C_("undo-type", "Reorder Channel");
@@ -805,6 +814,41 @@ gimp_channel_transform (GimpItem               *item,
 }
 
 static gboolean
+gimp_channel_fill (GimpItem         *item,
+                   GimpDrawable     *drawable,
+                   GimpFillOptions  *fill_options,
+                   gboolean          push_undo,
+                   GimpProgress     *progress,
+                   GError          **error)
+{
+  GimpChannel        *channel = GIMP_CHANNEL (item);
+  const GimpBoundSeg *segs_in;
+  const GimpBoundSeg *segs_out;
+  gint                n_segs_in;
+  gint                n_segs_out;
+  gint                offset_x, offset_y;
+
+  if (! gimp_channel_boundary (channel, &segs_in, &segs_out,
+                               &n_segs_in, &n_segs_out,
+                               0, 0, 0, 0))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Cannot fill empty channel."));
+      return FALSE;
+    }
+
+  gimp_item_get_offset (item, &offset_x, &offset_y);
+
+  gimp_drawable_fill_boundary (drawable,
+                               fill_options,
+                               segs_in, n_segs_in,
+                               offset_x, offset_y,
+                               push_undo);
+
+  return TRUE;
+}
+
+static gboolean
 gimp_channel_stroke (GimpItem           *item,
                      GimpDrawable       *drawable,
                      GimpStrokeOptions  *stroke_options,
@@ -829,7 +873,7 @@ gimp_channel_stroke (GimpItem           *item,
       return FALSE;
     }
 
-  gimp_item_get_offset (GIMP_ITEM (channel), &offset_x, &offset_y);
+  gimp_item_get_offset (item, &offset_x, &offset_y);
 
   switch (gimp_stroke_options_get_method (stroke_options))
     {
