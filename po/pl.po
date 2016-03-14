@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-12 16:27+0100\n"
-"PO-Revision-Date: 2016-03-12 16:28+0100\n"
+"POT-Creation-Date: 2016-03-15 00:10+0100\n"
+"PO-Revision-Date: 2016-03-15 00:11+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -466,7 +466,7 @@ msgid "Plug-Ins"
 msgstr "Wtyczki"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:397
+#: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:406
 #: ../app/dialogs/preferences-dialog.c:1721
 msgid "Quick Mask"
 msgstr "Szybka maska"
@@ -818,7 +818,7 @@ msgstr "Modyfikacja koloru kanału"
 msgid "_Fill opacity:"
 msgstr "_Krycie wypełnienia:"
 
-#: ../app/actions/channels-commands.c:117 ../app/core/gimpchannel.c:281
+#: ../app/actions/channels-commands.c:117 ../app/core/gimpchannel.c:289
 #: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:105
 #: ../app/widgets/gimpchanneltreeview.c:333
@@ -840,7 +840,7 @@ msgid "New Channel Color"
 msgstr "Kolor nowego kanału"
 
 #: ../app/actions/channels-commands.c:245 ../app/core/gimpimage-new.c:265
-#: ../app/display/gimpdisplayshell-dnd.c:661
+#: ../app/display/gimpdisplayshell-dnd.c:664
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:778
 #, c-format
@@ -1071,7 +1071,7 @@ msgstr "Używa połączonych kolorów wszystkich widocznych warstw"
 #: ../app/dialogs/file-open-dialog.c:253
 #: ../app/dialogs/file-open-location-dialog.c:218
 #: ../app/dialogs/file-open-location-dialog.c:228
-#: ../app/display/gimpdisplayshell-dnd.c:605
+#: ../app/display/gimpdisplayshell-dnd.c:608
 #: ../app/widgets/gimplayertreeview.c:738 ../app/widgets/gimptoolbox.c:809
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
@@ -4775,7 +4775,7 @@ msgid "Layer"
 msgstr "Warstwa"
 
 #: ../app/actions/layers-commands.c:260 ../app/actions/layers-commands.c:328
-#: ../app/widgets/gimpdrawabletreeview.c:332
+#: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:839
 msgid "New Layer"
 msgstr "Nowa warstwa"
@@ -6095,7 +6095,7 @@ msgstr "Atrybuty ścieżki"
 msgid "Edit Path Attributes"
 msgstr "Modyfikacja atrybutów ścieżki"
 
-#: ../app/actions/vectors-commands.c:165 ../app/vectors/gimpvectors.c:214
+#: ../app/actions/vectors-commands.c:165 ../app/vectors/gimpvectors.c:222
 #: ../app/widgets/gimpvectorstreeview.c:254
 msgid "Path"
 msgstr "Ścieżka"
@@ -8755,144 +8755,148 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Zaznaczenie według koloru indeksowanego"
 
-#: ../app/core/gimpchannel.c:282
+#: ../app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Zmiana nazwy kanału"
 
-#: ../app/core/gimpchannel.c:283
+#: ../app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Przesunięcie kanału"
 
-#: ../app/core/gimpchannel.c:284
+#: ../app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Przeskalowanie kanału"
 
-#: ../app/core/gimpchannel.c:285
+#: ../app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Zmiana wymiarów kanału"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Odbicie kanału"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:295
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Obrót kanału"
 
-#: ../app/core/gimpchannel.c:288 ../app/core/gimpdrawable-transform.c:953
+#: ../app/core/gimpchannel.c:296 ../app/core/gimpdrawable-transform.c:953
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Przekształcenie kanału"
 
-#: ../app/core/gimpchannel.c:289
-msgctxt "undo-type"
-msgid "Stroke Channel"
-msgstr "Rysowanie wzdłuż kanału"
-
-#: ../app/core/gimpchannel.c:290 ../app/core/gimpselection.c:612
-msgctxt "undo-type"
-msgid "Channel to Selection"
-msgstr "Kanał na zaznaczenie"
-
-#: ../app/core/gimpchannel.c:291
-msgctxt "undo-type"
-msgid "Reorder Channel"
-msgstr "Zmiana pozycji kanału"
-
-#: ../app/core/gimpchannel.c:292
-msgctxt "undo-type"
-msgid "Raise Channel"
-msgstr "Podniesienie kanału"
-
-#: ../app/core/gimpchannel.c:293
-msgctxt "undo-type"
-msgid "Raise Channel to Top"
-msgstr "Podniesienie kanału na górę"
-
-#: ../app/core/gimpchannel.c:294
-msgctxt "undo-type"
-msgid "Lower Channel"
-msgstr "Obniżenie kanału"
-
-#: ../app/core/gimpchannel.c:295
-msgctxt "undo-type"
-msgid "Lower Channel to Bottom"
-msgstr "Obniżenie kanału na dół"
-
-#: ../app/core/gimpchannel.c:296
-msgid "Channel cannot be raised higher."
-msgstr "Nie można wyżej podnieść kanału."
-
-#: ../app/core/gimpchannel.c:297
-msgid "Channel cannot be lowered more."
-msgstr "Nie można niżej obniżyć kanału."
-
-#: ../app/core/gimpchannel.c:320
-msgctxt "undo-type"
-msgid "Feather Channel"
-msgstr "Zmiękczenie kanału"
-
-#: ../app/core/gimpchannel.c:321
-msgctxt "undo-type"
-msgid "Sharpen Channel"
-msgstr "Wyostrzenie kanału"
-
-#: ../app/core/gimpchannel.c:322
-msgctxt "undo-type"
-msgid "Clear Channel"
-msgstr "Wyczyszczenie kanału"
-
-#: ../app/core/gimpchannel.c:323
+#: ../app/core/gimpchannel.c:297 ../app/core/gimpchannel.c:332
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Wypełnienie kanału"
 
-#: ../app/core/gimpchannel.c:324
+#: ../app/core/gimpchannel.c:298
+msgctxt "undo-type"
+msgid "Stroke Channel"
+msgstr "Rysowanie wzdłuż kanału"
+
+#: ../app/core/gimpchannel.c:299 ../app/core/gimpselection.c:656
+msgctxt "undo-type"
+msgid "Channel to Selection"
+msgstr "Kanał na zaznaczenie"
+
+#: ../app/core/gimpchannel.c:300
+msgctxt "undo-type"
+msgid "Reorder Channel"
+msgstr "Zmiana pozycji kanału"
+
+#: ../app/core/gimpchannel.c:301
+msgctxt "undo-type"
+msgid "Raise Channel"
+msgstr "Podniesienie kanału"
+
+#: ../app/core/gimpchannel.c:302
+msgctxt "undo-type"
+msgid "Raise Channel to Top"
+msgstr "Podniesienie kanału na górę"
+
+#: ../app/core/gimpchannel.c:303
+msgctxt "undo-type"
+msgid "Lower Channel"
+msgstr "Obniżenie kanału"
+
+#: ../app/core/gimpchannel.c:304
+msgctxt "undo-type"
+msgid "Lower Channel to Bottom"
+msgstr "Obniżenie kanału na dół"
+
+#: ../app/core/gimpchannel.c:305
+msgid "Channel cannot be raised higher."
+msgstr "Nie można wyżej podnieść kanału."
+
+#: ../app/core/gimpchannel.c:306
+msgid "Channel cannot be lowered more."
+msgstr "Nie można niżej obniżyć kanału."
+
+#: ../app/core/gimpchannel.c:329
+msgctxt "undo-type"
+msgid "Feather Channel"
+msgstr "Zmiękczenie kanału"
+
+#: ../app/core/gimpchannel.c:330
+msgctxt "undo-type"
+msgid "Sharpen Channel"
+msgstr "Wyostrzenie kanału"
+
+#: ../app/core/gimpchannel.c:331
+msgctxt "undo-type"
+msgid "Clear Channel"
+msgstr "Wyczyszczenie kanału"
+
+#: ../app/core/gimpchannel.c:333
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Odwrócenie kanału"
 
-#: ../app/core/gimpchannel.c:325
+#: ../app/core/gimpchannel.c:334
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Obramowanie kanału"
 
-#: ../app/core/gimpchannel.c:326
+#: ../app/core/gimpchannel.c:335
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Powiększenie kanału"
 
-#: ../app/core/gimpchannel.c:327
+#: ../app/core/gimpchannel.c:336
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Zmniejszenie kanału"
 
-#: ../app/core/gimpchannel.c:328
+#: ../app/core/gimpchannel.c:337
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Zalanie kanału"
 
-#: ../app/core/gimpchannel.c:828
+#: ../app/core/gimpchannel.c:836
+msgid "Cannot fill empty channel."
+msgstr "Nie można wypełniać na obszarze pustego kanału."
+
+#: ../app/core/gimpchannel.c:872
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1728
+#: ../app/core/gimpchannel.c:1772
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1782
+#: ../app/core/gimpchannel.c:1826
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1879 ../app/core/gimpselection.c:161
+#: ../app/core/gimpchannel.c:1923 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -8982,11 +8986,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:557 ../app/core/gimpdatafactory.c:560
-#: ../app/core/gimpitem.c:545 ../app/core/gimpitem.c:548
+#: ../app/core/gimpitem.c:548 ../app/core/gimpitem.c:551
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:569 ../app/core/gimpitem.c:556
+#: ../app/core/gimpdatafactory.c:569 ../app/core/gimpitem.c:559
 #, c-format
 msgid "%s copy"
 msgstr "kopia: %s"
@@ -9072,7 +9076,7 @@ msgstr "Zrównanie"
 msgid "Computing alpha of unknown pixels"
 msgstr "Obliczanie alfy nieznanych pikseli"
 
-#: ../app/core/gimpdrawable-fill.c:154
+#: ../app/core/gimpdrawable-fill.c:154 ../app/vectors/gimpvectors.c:644
 msgid "Not enough points to fill"
 msgstr "Niewystarczająca liczba punktów do wypełnienia"
 
@@ -9093,7 +9097,7 @@ msgid "Offset Drawable"
 msgstr "Przesunięcie obszaru rysowania"
 
 #: ../app/core/gimpdrawable-stroke.c:111
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:636
+#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:666
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
 
@@ -9718,17 +9722,17 @@ msgstr[2] "%d warstw"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nie można otworzyć miniatury „%s”: %s"
 
-#: ../app/core/gimpitem.c:1915
+#: ../app/core/gimpitem.c:1957
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:1925
+#: ../app/core/gimpitem.c:1967
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Dołączenie do elementu danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:1976 ../app/core/gimpitem.c:1983
+#: ../app/core/gimpitem.c:2018 ../app/core/gimpitem.c:2025
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Usunięcie z elementu danych pasożytniczych"
@@ -10037,79 +10041,88 @@ msgstr ""
 "Nie można uruchomić wywołania %s. Być może przestała działać odpowiadająca "
 "jej wtyczka."
 
-#: ../app/core/gimpselection.c:162
+#: ../app/core/gimpselection.c:169
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Przesunięcie zaznaczenia"
 
-#: ../app/core/gimpselection.c:163
+#: ../app/core/gimpselection.c:170
+msgctxt "undo-type"
+msgid "Fill Selection"
+msgstr "Wypełnienie zaznaczenia"
+
+#: ../app/core/gimpselection.c:171
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Rysowanie wzdłuż zaznaczenia"
 
-#: ../app/core/gimpselection.c:180
+#: ../app/core/gimpselection.c:188
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Zmiękczenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:181
+#: ../app/core/gimpselection.c:189
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Wyostrzenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:182
+#: ../app/core/gimpselection.c:190
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Rezygnacja z zaznaczenia"
 
-#: ../app/core/gimpselection.c:183
+#: ../app/core/gimpselection.c:191
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Zaznaczenie wszystkiego"
 
-#: ../app/core/gimpselection.c:184
+#: ../app/core/gimpselection.c:192
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Odwrócenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:185
+#: ../app/core/gimpselection.c:193
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Obramowanie zaznaczenia"
 
-#: ../app/core/gimpselection.c:186
+#: ../app/core/gimpselection.c:194
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Powiększenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:187
+#: ../app/core/gimpselection.c:195
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Zmniejszenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:188
+#: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
 msgid "Flood Selection"
 msgstr "Zalanie zaznaczenia"
 
-#: ../app/core/gimpselection.c:294
+#: ../app/core/gimpselection.c:302
+msgid "There is no selection to fill."
+msgstr "Brak zaznaczenia do wypełnienia."
+
+#: ../app/core/gimpselection.c:338
 msgid "There is no selection to stroke."
 msgstr "Brak zaznaczenia do narysowania."
 
-#: ../app/core/gimpselection.c:700
+#: ../app/core/gimpselection.c:744
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nie można wyciąć lub skopiować, ponieważ zaznaczony obszar jest pusty."
 
-#: ../app/core/gimpselection.c:829
+#: ../app/core/gimpselection.c:873
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nie można oderwać zaznaczenia, ponieważ zaznaczony obszar jest pusty."
 
-#: ../app/core/gimpselection.c:836
+#: ../app/core/gimpselection.c:880
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Oderwanie zaznaczenia"
 
-#: ../app/core/gimpselection.c:852
+#: ../app/core/gimpselection.c:896
 msgid "Floated Layer"
 msgstr "Oderwana warstwa"
 
@@ -12643,8 +12656,8 @@ msgid "The image has been exported to '%s'."
 msgstr "Wyeksportowano obraz do „%s”."
 
 #: ../app/display/gimpdisplayshell-dnd.c:248
-#: ../app/display/gimpdisplayshell-dnd.c:664
-#: ../app/display/gimpdisplayshell-dnd.c:723
+#: ../app/display/gimpdisplayshell-dnd.c:667
+#: ../app/display/gimpdisplayshell-dnd.c:726
 msgid "Drop New Layer"
 msgstr "Upuszczenie nowej warstwy"
 
@@ -12653,14 +12666,14 @@ msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
-#: ../app/display/gimpdisplayshell-dnd.c:473 ../app/tools/gimpblendtool.c:245
+#: ../app/display/gimpdisplayshell-dnd.c:476 ../app/tools/gimpblendtool.c:245
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:323
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
 #: ../app/display/gimpdisplayshell-dnd.c:370
-#: ../app/display/gimpdisplayshell-dnd.c:481 ../app/tools/gimpblendtool.c:252
+#: ../app/display/gimpdisplayshell-dnd.c:484 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:330 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
@@ -12668,27 +12681,27 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
-#: ../app/display/gimpdisplayshell-dnd.c:399
+#: ../app/display/gimpdisplayshell-dnd.c:412
 #: ../app/widgets/gimpdrawabletreeview.c:247
-#: ../app/widgets/gimpdrawabletreeview.c:354
+#: ../app/widgets/gimpdrawabletreeview.c:358
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Upuszczenie desenia do warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:400
-#: ../app/widgets/gimpdrawabletreeview.c:276
-#: ../app/widgets/gimpdrawabletreeview.c:355
+#: ../app/display/gimpdisplayshell-dnd.c:433
+#: ../app/widgets/gimpdrawabletreeview.c:277
+#: ../app/widgets/gimpdrawabletreeview.c:378
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Upuszczenie koloru do warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:560
+#: ../app/display/gimpdisplayshell-dnd.c:563
 #: ../app/widgets/gimplayertreeview.c:729
 msgid "Drop layers"
 msgstr "Upuszczone warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:697
-#: ../app/display/gimpdisplayshell-dnd.c:715
+#: ../app/display/gimpdisplayshell-dnd.c:700
+#: ../app/display/gimpdisplayshell-dnd.c:718
 #: ../app/widgets/gimplayertreeview.c:804 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Upuszczony bufor"
@@ -13132,7 +13145,7 @@ msgstr "Dokumenty"
 msgid "GIMP Startup"
 msgstr "Uruchamianie programu GIMP"
 
-#: ../app/paint/gimpairbrush.c:67 ../app/tools/gimpairbrushtool.c:55
+#: ../app/paint/gimpairbrush.c:68 ../app/tools/gimpairbrushtool.c:55
 msgid "Airbrush"
 msgstr "Aerograf"
 
@@ -17450,97 +17463,102 @@ msgctxt "warp-behavior"
 msgid "Smooth warping"
 msgstr "Gładkie odkształcanie"
 
-#: ../app/vectors/gimpvectors.c:215
+#: ../app/vectors/gimpvectors.c:223
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Zmiana nazwy ścieżki"
 
-#: ../app/vectors/gimpvectors.c:216
+#: ../app/vectors/gimpvectors.c:224
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Przesunięcie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:217
+#: ../app/vectors/gimpvectors.c:225
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Przeskalowanie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:218
+#: ../app/vectors/gimpvectors.c:226
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Zmiana rozmiaru ścieżki"
 
-#: ../app/vectors/gimpvectors.c:219
+#: ../app/vectors/gimpvectors.c:227
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Odbicie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:220
+#: ../app/vectors/gimpvectors.c:228
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Obracanie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:221
+#: ../app/vectors/gimpvectors.c:229
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Przekształcenie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:222
+#: ../app/vectors/gimpvectors.c:230
+msgctxt "undo-type"
+msgid "Fill Path"
+msgstr "Wypełnienie ścieżki"
+
+#: ../app/vectors/gimpvectors.c:231
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Rysowanie wzdłuż ścieżki"
 
-#: ../app/vectors/gimpvectors.c:223
+#: ../app/vectors/gimpvectors.c:232
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Utworzenie zaznaczenia ze ścieżki"
 
-#: ../app/vectors/gimpvectors.c:224
+#: ../app/vectors/gimpvectors.c:233
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Zmiana pozycji ścieżki"
 
-#: ../app/vectors/gimpvectors.c:225
+#: ../app/vectors/gimpvectors.c:234
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Podniesienie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:226
+#: ../app/vectors/gimpvectors.c:235
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Podniesienie ścieżki na górę"
 
-#: ../app/vectors/gimpvectors.c:227
+#: ../app/vectors/gimpvectors.c:236
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Obniżenie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:228
+#: ../app/vectors/gimpvectors.c:237
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Obniżenie ścieżki na dół"
 
-#: ../app/vectors/gimpvectors.c:229
+#: ../app/vectors/gimpvectors.c:238
 msgid "Path cannot be raised higher."
 msgstr "Nie można wyżej podnieść ścieżki."
 
-#: ../app/vectors/gimpvectors.c:230
+#: ../app/vectors/gimpvectors.c:239
 msgid "Path cannot be lowered more."
 msgstr "Nie można niżej obniżyć ścieżki."
 
-#: ../app/vectors/gimpvectors.c:445
+#: ../app/vectors/gimpvectors.c:454
 msgid "Move Path"
 msgstr "Przesunięcie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:544
+#: ../app/vectors/gimpvectors.c:553
 msgid "Flip Path"
 msgstr "Odbicie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:575
+#: ../app/vectors/gimpvectors.c:584
 msgid "Rotate Path"
 msgstr "Obrót ścieżki"
 
-#: ../app/vectors/gimpvectors.c:604
+#: ../app/vectors/gimpvectors.c:613
 msgid "Transform Path"
 msgstr "Przekształcenie ścieżki"
 
