@@ -193,13 +193,31 @@ gimp_fill_options_get_property (GObject    *object,
 /*  public functions  */
 
 GimpFillOptions *
-gimp_fill_options_new (Gimp *gimp)
+gimp_fill_options_new (Gimp        *gimp,
+                       GimpContext *context,
+                       gboolean     use_context_color)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  GimpFillOptions *options;
 
-  return g_object_new (GIMP_TYPE_FILL_OPTIONS,
-                       "gimp", gimp,
-                       NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (use_context_color == FALSE || context != NULL, NULL);
+
+  options = g_object_new (GIMP_TYPE_FILL_OPTIONS,
+                          "gimp", gimp,
+                          NULL);
+
+  if (use_context_color)
+    {
+      gimp_context_define_properties (GIMP_CONTEXT (options),
+                                      GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                                      GIMP_CONTEXT_PROP_MASK_PATTERN,
+                                      FALSE);
+
+      gimp_context_set_parent (GIMP_CONTEXT (options), context);
+    }
+
+  return options;
 }
 
 GimpFillStyle

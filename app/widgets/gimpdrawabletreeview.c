@@ -236,7 +236,7 @@ gimp_drawable_tree_view_drop_viewable (GimpContainerTreeView   *view,
   if (dest_viewable && GIMP_IS_PATTERN (src_viewable))
     {
       GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (dest_viewable));
-      GimpFillOptions *options = gimp_fill_options_new (image->gimp);
+      GimpFillOptions *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
 
       gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
       gimp_context_set_pattern (GIMP_CONTEXT (options),
@@ -267,7 +267,7 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
   if (dest_viewable)
     {
       GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (dest_viewable));
-      GimpFillOptions *options = gimp_fill_options_new (image->gimp);
+      GimpFillOptions *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
 
       gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
       gimp_context_set_foreground (GIMP_CONTEXT (options), color);
@@ -349,7 +349,7 @@ gimp_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
 {
   GimpItemTreeView *view    = GIMP_ITEM_TREE_VIEW (data);
   GimpImage        *image   = gimp_item_tree_view_get_image (view);
-  GimpFillOptions  *options = gimp_fill_options_new (image->gimp);
+  GimpFillOptions  *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
 
   gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
   gimp_context_set_pattern (GIMP_CONTEXT (options), GIMP_PATTERN (viewable));
@@ -369,7 +369,7 @@ gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
 {
   GimpItemTreeView *view    = GIMP_ITEM_TREE_VIEW (data);
   GimpImage        *image   = gimp_item_tree_view_get_image (view);
-  GimpFillOptions  *options = gimp_fill_options_new (image->gimp);
+  GimpFillOptions  *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
 
   gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
   gimp_context_set_foreground (GIMP_CONTEXT (options), color);

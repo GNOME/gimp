@@ -176,7 +176,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
       GimpFillOptions *fill_options;
       GError          *error = NULL;
 
-      fill_options = gimp_fill_options_new (image->gimp);
+      fill_options = gimp_fill_options_new (image->gimp, NULL, FALSE);
 
       if (gimp_fill_options_set_by_fill_mode (fill_options, context,
                                               options->fill_mode,

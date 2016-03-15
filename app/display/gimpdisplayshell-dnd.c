@@ -401,7 +401,8 @@ gimp_display_shell_drop_pattern (GtkWidget    *widget,
                                  gpointer      data)
 {
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
-  GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp);
+  GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp,
+                                                     NULL, FALSE);
 
   GIMP_LOG (DND, NULL);
 
@@ -422,7 +423,8 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
                                gpointer       data)
 {
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
-  GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp);
+  GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp,
+                                                     NULL, FALSE);
 
   GIMP_LOG (DND, NULL);
 
