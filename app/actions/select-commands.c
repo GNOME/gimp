@@ -39,6 +39,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "dialogs/fill-dialog.h"
 #include "dialogs/stroke-dialog.h"
 
 #include "actions.h"
@@ -336,6 +337,82 @@ select_save_cmd_callback (GtkAction *action,
                                              gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              "gimp-channel-list");
+}
+
+void
+select_fill_cmd_callback (GtkAction *action,
+                          gpointer   data)
+{
+  GimpImage    *image;
+  GimpDrawable *drawable;
+  GtkWidget    *widget;
+  GtkWidget    *dialog;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
+
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (! drawable)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to fill."));
+      return;
+    }
+
+  dialog = fill_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
+                            action_data_get_context (data),
+                            _("Fill Selection Outline"),
+                            GIMP_STOCK_TOOL_BUCKET_FILL,
+                            GIMP_HELP_SELECTION_FILL,
+                            widget);
+  gtk_widget_show (dialog);
+}
+
+void
+select_fill_last_vals_cmd_callback (GtkAction *action,
+                                    gpointer   data)
+{
+  GimpImage       *image;
+  GimpDrawable    *drawable;
+  GtkWidget       *widget;
+  GimpFillOptions *options;
+  GError          *error = NULL;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
+
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (! drawable)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to fill."));
+      return;
+    }
+
+  options = g_object_get_data (G_OBJECT (image->gimp), "saved-fill-options");
+
+  if (options)
+    g_object_ref (options);
+  else
+    options = gimp_fill_options_new (image->gimp,
+                                     action_data_get_context (data), TRUE);
+
+  if (! gimp_item_fill (GIMP_ITEM (gimp_image_get_mask (image)),
+                        drawable, options, TRUE, NULL, &error))
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gimp_image_flush (image);
+    }
+
+  g_object_unref (options);
 }
 
 void

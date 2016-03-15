@@ -213,6 +213,8 @@
         <menuitem action="edit-fill-fg" />
         <menuitem action="edit-fill-bg" />
         <menuitem action="edit-fill-pattern" />
+        <menuitem action="select-fill" />
+        <menuitem action="vectors-fill" />
       </placeholder>
       <placeholder name="Stroke">
         <menuitem action="select-stroke" />

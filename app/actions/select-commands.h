@@ -41,6 +41,11 @@ void   select_flood_cmd_callback            (GtkAction *action,
                                              gpointer   data);
 void   select_save_cmd_callback             (GtkAction *action,
                                              gpointer   data);
+
+void   select_fill_cmd_callback             (GtkAction *action,
+                                             gpointer   data);
+void   select_fill_last_vals_cmd_callback   (GtkAction *action,
+                                             gpointer   data);
 void   select_stroke_cmd_callback           (GtkAction *action,
                                              gpointer   data);
 void   select_stroke_last_vals_cmd_callback (GtkAction *action,
