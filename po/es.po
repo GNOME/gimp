@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-14 19:11+0000\n"
-"PO-Revision-Date: 2016-03-15 09:30+0100\n"
+"POT-Creation-Date: 2016-03-15 20:09+0000\n"
+"PO-Revision-Date: 2016-03-16 09:16+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -445,10 +445,9 @@ msgstr "Capas"
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:194 ../app/core/gimp.c:1110
 #: ../app/dialogs/dialogs.c:331 ../app/dialogs/preferences-dialog.c:2774
-#, fuzzy
 #| msgid "Paintbrush"
 msgid "MyPaint Brushes"
-msgstr "Pincel"
+msgstr "Pinceles MyPaint"
 
 #: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:427
 #: ../app/widgets/gimppaletteeditor.c:149
@@ -848,7 +847,7 @@ msgid "New Channel Color"
 msgstr "Canal de color nuevo"
 
 #: ../app/actions/channels-commands.c:245 ../app/core/gimpimage-new.c:265
-#: ../app/display/gimpdisplayshell-dnd.c:664
+#: ../app/display/gimpdisplayshell-dnd.c:666
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:778
 #, c-format
@@ -1080,7 +1079,7 @@ msgstr "Usar el color compuesto de todas las capas visibles"
 #: ../app/dialogs/file-open-dialog.c:253
 #: ../app/dialogs/file-open-location-dialog.c:218
 #: ../app/dialogs/file-open-location-dialog.c:228
-#: ../app/display/gimpdisplayshell-dnd.c:608
+#: ../app/display/gimpdisplayshell-dnd.c:610
 #: ../app/widgets/gimplayertreeview.c:738 ../app/widgets/gimptoolbox.c:809
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
@@ -1138,12 +1137,11 @@ msgid "_Symmetry Painting"
 msgstr "_Pintado simétrico"
 
 #: ../app/actions/dialogs-actions.c:66
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the layers dialog"
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
-msgstr "Abre el diálogo de capas"
+msgstr "Abre el diálogo de simetría"
 
 #: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
@@ -1296,19 +1294,17 @@ msgid "Open the paint dynamics editor"
 msgstr "Abre el editor de dinámica de la pintura"
 
 #: ../app/actions/dialogs-actions.c:161
-#, fuzzy
 #| msgid "Paintbrush"
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
-msgstr "Pincel"
+msgstr "_Pinceles MyPaint"
 
 #: ../app/actions/dialogs-actions.c:162
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the brushes dialog"
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
-msgstr "Abre el diálogo de pinceles"
+msgstr "Abre el diálogo de pinceles mypaint"
 
 #: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
@@ -5696,89 +5692,136 @@ msgid "Save the selection to a channel"
 msgstr "Guarda la selección en un canal"
 
 #: ../app/actions/select-actions.c:117
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Float selection"
+msgctxt "select-action"
+msgid "_Fill Selection Outline..."
+msgstr "Selección flotante"
+
+#: ../app/actions/select-actions.c:118
+#, fuzzy
+#| msgctxt "view-action"
+#| msgid "Display the selection outline"
+msgctxt "select-action"
+msgid "Fill the selection outline"
+msgstr "Muestra el contorno de la selección"
+
+#: ../app/actions/select-actions.c:123
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Float selection"
+msgctxt "select-action"
+msgid "_Fill Selection Outline"
+msgstr "Selección flotante"
+
+#: ../app/actions/select-actions.c:124
+#, fuzzy
+#| msgctxt "select-action"
+#| msgid "Stroke the selection with last used values"
+msgctxt "select-action"
+msgid "Fill the selection outline with last used values"
+msgstr "Trazar la selección con los últimos valores usados"
+
+#: ../app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "_Trazar selección [Stroke]…"
 
-#: ../app/actions/select-actions.c:118
+#: ../app/actions/select-actions.c:130
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Pintar a lo largo del contorno de la selección"
 
-#: ../app/actions/select-actions.c:123
+#: ../app/actions/select-actions.c:135
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr "_Trazar selección [Stroke]"
 
-#: ../app/actions/select-actions.c:124
+#: ../app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Trazar la selección con los últimos valores usados"
 
-#: ../app/actions/select-commands.c:157
+#: ../app/actions/select-commands.c:158
 msgid "Feather Selection"
 msgstr "Difuminar selección [Feather]"
 
-#: ../app/actions/select-commands.c:161
+#: ../app/actions/select-commands.c:162
 msgid "Feather selection by"
 msgstr "Difuminar selección en"
 
-#: ../app/actions/select-commands.c:198
+#: ../app/actions/select-commands.c:199
 msgid "Shrink Selection"
 msgstr "Encoger selección"
 
-#: ../app/actions/select-commands.c:202
+#: ../app/actions/select-commands.c:203
 msgid "Shrink selection by"
 msgstr "Encoger selección en"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:211 ../app/actions/select-commands.c:295
+#: ../app/actions/select-commands.c:212 ../app/actions/select-commands.c:296
 #, fuzzy
 #| msgid "Select a single contiguous area"
 msgid "_Selected areas continue outside the image"
 msgstr "Seleccionar un área contigua simple"
 
-#: ../app/actions/select-commands.c:214
+#: ../app/actions/select-commands.c:215
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
 "Cuando se está encogiendo, actúa como si las áreas seleccionadas continuaran "
 "fuera de la imagen."
 
-#: ../app/actions/select-commands.c:241
+#: ../app/actions/select-commands.c:242
 msgid "Grow Selection"
 msgstr "Agrandar selección"
 
-#: ../app/actions/select-commands.c:245
+#: ../app/actions/select-commands.c:246
 msgid "Grow selection by"
 msgstr "Agrandar selección en"
 
-#: ../app/actions/select-commands.c:271
+#: ../app/actions/select-commands.c:272
 msgid "Border Selection"
 msgstr "Selección de borde"
 
 # ¿Bordear selección por (serrador)
-#: ../app/actions/select-commands.c:275
+#: ../app/actions/select-commands.c:276
 msgid "Border selection by"
 msgstr "Selección de borde en"
 
 #. Feather button
-#: ../app/actions/select-commands.c:284
+#: ../app/actions/select-commands.c:285
 msgid "_Feather border"
 msgstr "_Difuminar los bordes"
 
-#: ../app/actions/select-commands.c:298
+#: ../app/actions/select-commands.c:299
 msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 "Cuando se está bordeando, actúa como si las áreas seleccionadas continuaran "
 "fuera de la imagen."
 
-#: ../app/actions/select-commands.c:358 ../app/actions/select-commands.c:391
-#: ../app/actions/vectors-commands.c:389 ../app/actions/vectors-commands.c:423
+#: ../app/actions/select-commands.c:359 ../app/actions/select-commands.c:390
+#: ../app/actions/vectors-commands.c:390 ../app/actions/vectors-commands.c:422
+#: ../app/dialogs/fill-dialog.c:162
+#, fuzzy
+#| msgid "There is no active layer or channel to cut from."
+msgid "There is no active layer or channel to fill."
+msgstr "No hay una capa o canal activo desde donde cortar."
+
+#: ../app/actions/select-commands.c:365
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Float selection"
+msgid "Fill Selection Outline"
+msgstr "Selección flotante"
+
+#: ../app/actions/select-commands.c:435 ../app/actions/select-commands.c:468
+#: ../app/actions/vectors-commands.c:467 ../app/actions/vectors-commands.c:501
 #: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
 msgstr "No hay una capa o canal activo adonde se pueda trazar."
 
-#: ../app/actions/select-commands.c:364
+#: ../app/actions/select-commands.c:441
 msgid "Stroke Selection"
 msgstr "Trazar selección"
 
@@ -6309,163 +6352,202 @@ msgid "Lower this path to the bottom"
 msgstr "Bajar esta ruta hasta abajo del todo"
 
 #: ../app/actions/vectors-actions.c:112
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
 msgctxt "vectors-action"
-msgid "Stro_ke Path..."
-msgstr "Tra_zar ruta…"
+msgid "Fill Path..."
+msgstr "Voltear la ruta"
 
 #: ../app/actions/vectors-actions.c:113
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
 msgctxt "vectors-action"
-msgid "Paint along the path"
-msgstr "Pintar a lo largo de la ruta"
+msgid "Fill the path"
+msgstr "Voltear la ruta"
 
 #: ../app/actions/vectors-actions.c:118
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
 msgctxt "vectors-action"
-msgid "Stro_ke Path"
-msgstr "_Trazar ruta [Stroke]"
+msgid "Fill Path"
+msgstr "Voltear la ruta"
 
 #: ../app/actions/vectors-actions.c:119
+#, fuzzy
+#| msgctxt "vectors-action"
+#| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
-msgid "Paint along the path with last values"
+msgid "Fill the path with last values"
 msgstr "Trazar la ruta con los últimos valores"
 
 #: ../app/actions/vectors-actions.c:124
 msgctxt "vectors-action"
+msgid "Stro_ke Path..."
+msgstr "Tra_zar ruta…"
+
+#: ../app/actions/vectors-actions.c:125
+msgctxt "vectors-action"
+msgid "Paint along the path"
+msgstr "Pintar a lo largo de la ruta"
+
+#: ../app/actions/vectors-actions.c:130
+msgctxt "vectors-action"
+msgid "Stro_ke Path"
+msgstr "_Trazar ruta [Stroke]"
+
+#: ../app/actions/vectors-actions.c:131
+msgctxt "vectors-action"
+msgid "Paint along the path with last values"
+msgstr "Trazar la ruta con los últimos valores"
+
+#: ../app/actions/vectors-actions.c:136
+msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "Co_piar ruta"
 
-#: ../app/actions/vectors-actions.c:129
+#: ../app/actions/vectors-actions.c:141
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "Pegar ru_ta"
 
-#: ../app/actions/vectors-actions.c:134
+#: ../app/actions/vectors-actions.c:146
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "E_xportar ruta…"
 
-#: ../app/actions/vectors-actions.c:139
+#: ../app/actions/vectors-actions.c:151
 msgctxt "vectors-action"
 msgid "I_mport Path..."
 msgstr "I_mportar ruta…"
 
-#: ../app/actions/vectors-actions.c:147
+#: ../app/actions/vectors-actions.c:159
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr "_Visible"
 
-#: ../app/actions/vectors-actions.c:153
+#: ../app/actions/vectors-actions.c:165
 msgctxt "vectors-action"
 msgid "_Linked"
 msgstr "_Enlazado"
 
 #. GIMP_STOCK_LOCK
-#: ../app/actions/vectors-actions.c:159
+#: ../app/actions/vectors-actions.c:171
 msgctxt "vectors-action"
 msgid "L_ock strokes"
 msgstr "B_loquear los trazos"
 
-#: ../app/actions/vectors-actions.c:165
+#: ../app/actions/vectors-actions.c:177
 msgctxt "vectors-action"
 msgid "L_ock position"
 msgstr "B_loquear posición"
 
-#: ../app/actions/vectors-actions.c:174
+#: ../app/actions/vectors-actions.c:186
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr "Ruta a sele_cción"
 
-#: ../app/actions/vectors-actions.c:175
+#: ../app/actions/vectors-actions.c:187
 msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr "Ruta a selección"
 
-#: ../app/actions/vectors-actions.c:180
+#: ../app/actions/vectors-actions.c:192
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr "A partir de una _ruta"
 
-#: ../app/actions/vectors-actions.c:181
+#: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
 msgid "Replace selection with path"
 msgstr "Sustituir la selección con la ruta"
 
-#: ../app/actions/vectors-actions.c:186
+#: ../app/actions/vectors-actions.c:198
 msgctxt "vectors-action"
 msgid "_Add to Selection"
 msgstr "_Añadir a selección"
 
-#: ../app/actions/vectors-actions.c:187
+#: ../app/actions/vectors-actions.c:199
 msgctxt "vectors-action"
 msgid "Add path to selection"
 msgstr "Añadir ruta a selección"
 
-#: ../app/actions/vectors-actions.c:192
+#: ../app/actions/vectors-actions.c:204
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
 msgstr "_Sustraer de selección"
 
-#: ../app/actions/vectors-actions.c:193
+#: ../app/actions/vectors-actions.c:205
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
 msgstr "Sustraer la ruta de la selección"
 
-#: ../app/actions/vectors-actions.c:198
+#: ../app/actions/vectors-actions.c:210
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
 msgstr "_Intersectar con selección"
 
-#: ../app/actions/vectors-actions.c:199
+#: ../app/actions/vectors-actions.c:211
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
 msgstr "Establecer la ruta como su intersección con la selección"
 
-#: ../app/actions/vectors-actions.c:207
+#: ../app/actions/vectors-actions.c:219
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "Se_lección a ruta"
 
-#: ../app/actions/vectors-actions.c:208 ../app/actions/vectors-actions.c:214
+#: ../app/actions/vectors-actions.c:220 ../app/actions/vectors-actions.c:226
 msgctxt "vectors-action"
 msgid "Selection to path"
 msgstr "Selección a ruta"
 
-#: ../app/actions/vectors-actions.c:213
+#: ../app/actions/vectors-actions.c:225
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "A _ruta"
 
-#: ../app/actions/vectors-actions.c:219
+#: ../app/actions/vectors-actions.c:231
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Selección a ruta (_avanzado)"
 
-#: ../app/actions/vectors-actions.c:220
+#: ../app/actions/vectors-actions.c:232
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Opciones avanzadas"
 
-#: ../app/actions/vectors-commands.c:138
+#: ../app/actions/vectors-commands.c:139
 msgid "Path Attributes"
 msgstr "Atributos de la ruta"
 
-#: ../app/actions/vectors-commands.c:141
+#: ../app/actions/vectors-commands.c:142
 msgid "Edit Path Attributes"
 msgstr "Editar atributos de la ruta"
 
-#: ../app/actions/vectors-commands.c:165 ../app/vectors/gimpvectors.c:222
+#: ../app/actions/vectors-commands.c:166 ../app/vectors/gimpvectors.c:222
 #: ../app/widgets/gimpvectorstreeview.c:254
 msgid "Path"
 msgstr "Ruta"
 
-#: ../app/actions/vectors-commands.c:166
+#: ../app/actions/vectors-commands.c:167
 msgid "New Path"
 msgstr "Nueva ruta"
 
-#: ../app/actions/vectors-commands.c:169
+#: ../app/actions/vectors-commands.c:170
 msgid "New Path Options"
 msgstr "Opciones de ruta nueva"
 
-#: ../app/actions/vectors-commands.c:395 ../app/tools/gimpvectoroptions.c:202
+#: ../app/actions/vectors-commands.c:396
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
+msgid "Fill Path"
+msgstr "Voltear la ruta"
+
+#: ../app/actions/vectors-commands.c:473 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:1977
 msgid "Stroke Path"
 msgstr "Trazar ruta"
@@ -8999,7 +9081,7 @@ msgstr "Creando la carpeta «%s»…"
 msgid "Cannot create folder '%s': %s"
 msgstr "No se puede crear la carpeta «%s»: %s"
 
-#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:287
+#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:305
 msgid "No patterns available for this operation."
 msgstr "No hay patrones disponibles para esta operación."
 
@@ -9622,32 +9704,32 @@ msgstr "Es_tilo de pestaña"
 msgid "Antialiasing"
 msgstr "Alisado"
 
-#: ../app/core/gimpfilloptions.c:261
+#: ../app/core/gimpfilloptions.c:279
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Rellenar con el color del frente"
 
-#: ../app/core/gimpfilloptions.c:266
+#: ../app/core/gimpfilloptions.c:284
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Rellenar con el color del fondo"
 
-#: ../app/core/gimpfilloptions.c:271
+#: ../app/core/gimpfilloptions.c:289
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Rellenar con blanco"
 
-#: ../app/core/gimpfilloptions.c:277
+#: ../app/core/gimpfilloptions.c:295
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Rellenar con transparencia"
 
-#: ../app/core/gimpfilloptions.c:293 ../app/core/gimpfilloptions.c:361
+#: ../app/core/gimpfilloptions.c:311 ../app/core/gimpfilloptions.c:379
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Rellenar con un patrón"
 
-#: ../app/core/gimpfilloptions.c:358
+#: ../app/core/gimpfilloptions.c:376
 #, fuzzy
 #| msgid "Fill with plain color"
 msgctxt "undo-type"
@@ -11585,6 +11667,19 @@ msgstr ""
 "\n"
 "%s"
 
+#: ../app/dialogs/fill-dialog.c:87
+#, fuzzy
+#| msgid "Choose Stroke Style"
+msgid "Choose Fill Style"
+msgstr "Seleccionar el estilo de trazo"
+
+#: ../app/dialogs/fill-dialog.c:94
+#, fuzzy
+#| msgctxt "file-action"
+#| msgid "_File"
+msgid "_Fill"
+msgstr "_Archivo"
+
 #: ../app/dialogs/grid-dialog.c:85
 msgid "Configure Grid"
 msgstr "Configurar la rejilla"
@@ -13423,8 +13518,8 @@ msgid "The image has been exported to '%s'."
 msgstr "La imagen se ha exportado en «%s»."
 
 #: ../app/display/gimpdisplayshell-dnd.c:248
-#: ../app/display/gimpdisplayshell-dnd.c:667
-#: ../app/display/gimpdisplayshell-dnd.c:726
+#: ../app/display/gimpdisplayshell-dnd.c:669
+#: ../app/display/gimpdisplayshell-dnd.c:728
 msgid "Drop New Layer"
 msgstr "Soltar la capa nueva"
 
@@ -13433,14 +13528,14 @@ msgid "Drop New Path"
 msgstr "Descartar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
-#: ../app/display/gimpdisplayshell-dnd.c:476 ../app/tools/gimpblendtool.c:245
+#: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:323
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "No se pueden modificar píxeles de los grupos de capas."
 
 #: ../app/display/gimpdisplayshell-dnd.c:370
-#: ../app/display/gimpdisplayshell-dnd.c:484 ../app/tools/gimpblendtool.c:252
+#: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:330 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
@@ -13448,27 +13543,27 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 msgid "The active layer's pixels are locked."
 msgstr "Los píxeles de la capa activa están bloqueados."
 
-#: ../app/display/gimpdisplayshell-dnd.c:412
+#: ../app/display/gimpdisplayshell-dnd.c:413
 #: ../app/widgets/gimpdrawabletreeview.c:247
 #: ../app/widgets/gimpdrawabletreeview.c:358
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Arrastrar patrón a la capa"
 
-#: ../app/display/gimpdisplayshell-dnd.c:433
+#: ../app/display/gimpdisplayshell-dnd.c:435
 #: ../app/widgets/gimpdrawabletreeview.c:277
 #: ../app/widgets/gimpdrawabletreeview.c:378
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Arrastrar color a la capa"
 
-#: ../app/display/gimpdisplayshell-dnd.c:563
+#: ../app/display/gimpdisplayshell-dnd.c:565
 #: ../app/widgets/gimplayertreeview.c:729
 msgid "Drop layers"
 msgstr "Descartar las capas"
 
-#: ../app/display/gimpdisplayshell-dnd.c:700
-#: ../app/display/gimpdisplayshell-dnd.c:718
+#: ../app/display/gimpdisplayshell-dnd.c:702
+#: ../app/display/gimpdisplayshell-dnd.c:720
 #: ../app/widgets/gimplayertreeview.c:804 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Búfer descartado"
@@ -18045,6 +18140,8 @@ msgstr "Inclinar a lo largo de la dirección del borde solamente (%s)"
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
+"Restringir la perspectiva de los tiradores para mover a lo largo los bordes "
+"y la diagonal (%s)"
 
 #: ../app/tools/gimptransformoptions.c:528
 #, c-format
@@ -18059,7 +18156,7 @@ msgstr "Escalar desde el punto de pivote (%s)"
 #: ../app/tools/gimptransformoptions.c:532
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
-msgstr ""
+msgstr "Inclinar el borde opuesto de la misma cantidad (%s)"
 
 #: ../app/tools/gimptransformoptions.c:534
 #, c-format
@@ -18068,7 +18165,7 @@ msgstr ""
 
 #: ../app/tools/gimptransformoptions.c:537
 msgid "Pivot"
-msgstr ""
+msgstr "Pivote"
 
 #: ../app/tools/gimptransformoptions.c:538
 #, fuzzy, c-format
@@ -18079,7 +18176,7 @@ msgstr "Tipo  (%s)"
 #: ../app/tools/gimptransformoptions.c:539
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
-msgstr ""
+msgstr "Ajustar el pivote a las esquinas y el centro (%s)"
 
 #: ../app/tools/gimptransformoptions.c:540
 msgid "Lock"
@@ -18332,15 +18429,15 @@ msgstr "Comportamiento"
 
 #: ../app/tools/gimpwarpoptions.c:84
 msgid "Strength"
-msgstr ""
+msgstr "Fuerza"
 
 #: ../app/tools/gimpwarpoptions.c:85
 msgid "Effect Strength"
-msgstr ""
+msgstr "Fuerza del efecto"
 
 #: ../app/tools/gimpwarpoptions.c:92
 msgid "Effect Size"
-msgstr ""
+msgstr "Tamaño del efecto"
 
 #: ../app/tools/gimpwarpoptions.c:99
 #, fuzzy
@@ -18407,7 +18504,7 @@ msgstr ""
 #: ../app/tools/gimpwarptool.c:899 ../app/tools/gimpwarptool.c:935
 #, c-format
 msgid "Rendering Frame %d"
-msgstr ""
+msgstr "Renderizando marco %d"
 
 #: ../app/tools/gimpwarptool.c:914 ../app/tools/gimpwarptool.c:943
 #, c-format
@@ -18949,7 +19046,7 @@ msgstr "Seleccionar un controlador de acción de evento"
 
 #: ../app/widgets/gimpcontrollerinfo.c:112
 msgid "Enabled"
-msgstr ""
+msgstr "Activado"
 
 #: ../app/widgets/gimpcontrollerinfo.c:119
 #, fuzzy
@@ -19665,7 +19762,7 @@ msgstr "Canal:"
 
 #: ../app/widgets/gimpiconpicker.c:245
 msgid "From File..."
-msgstr ""
+msgstr "Desde el archivo…"
 
 #: ../app/widgets/gimpiconpicker.c:254
 #, fuzzy
@@ -19684,7 +19781,7 @@ msgstr "Pegar icono del portapapeles"
 
 #: ../app/widgets/gimpiconpicker.c:512
 msgid "Load Icon Image"
-msgstr ""
+msgstr "Cargar imagen de icono"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
@@ -19799,7 +19896,7 @@ msgstr "Detectado automáticamente"
 
 #: ../app/widgets/gimpoverlaydialog.c:229
 msgid "Detach dialog from canvas"
-msgstr ""
+msgstr "Desprender diálogo del lienzo"
 
 #: ../app/widgets/gimppaletteeditor.c:240
 #: ../app/widgets/gimppaletteeditor.c:717
@@ -19995,14 +20092,17 @@ msgstr "Todas las imágenes XCF"
 #, c-format
 msgid "Disables compression to make the XCF file readable by %s and later."
 msgstr ""
+"Desactiva la compresión para hacer los archivos XCF legibles para %s y "
+"posterior."
 
 #: ../app/widgets/gimpsavedialog.c:278
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr ""
+"Los metadatos no serán visibles en versiones GIMP más antiguas que la 2.10."
 
 #: ../app/widgets/gimpsavedialog.c:342
 msgid "Save this XCF file with maximum compatibility"
-msgstr ""
+msgstr "Guardar este archivo XCF con la máxima compatibilidad"
 
 #: ../app/widgets/gimpselectiondata.c:248
 #, c-format
@@ -20241,7 +20341,7 @@ msgstr "Tachado"
 #: ../app/widgets/gimptextstyleeditor.c:1309
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
-msgstr ""
+msgstr "Tipografía «%s» no disponible en este sistema"
 
 #: ../app/widgets/gimpthumbbox.c:328
 #, c-format
@@ -20457,7 +20557,7 @@ msgstr "Fondo"
 #: ../app/widgets/widgets-enums.c:52
 msgctxt "circle-background"
 msgid "Plain"
-msgstr ""
+msgstr "Plano"
 
 #: ../app/widgets/widgets-enums.c:53
 msgctxt "circle-background"
