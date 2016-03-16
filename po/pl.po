@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-15 00:10+0100\n"
-"PO-Revision-Date: 2016-03-15 00:11+0100\n"
+"POT-Creation-Date: 2016-03-16 17:50+0100\n"
+"PO-Revision-Date: 2016-03-16 17:52+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -840,7 +840,7 @@ msgid "New Channel Color"
 msgstr "Kolor nowego kanału"
 
 #: ../app/actions/channels-commands.c:245 ../app/core/gimpimage-new.c:265
-#: ../app/display/gimpdisplayshell-dnd.c:664
+#: ../app/display/gimpdisplayshell-dnd.c:666
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:778
 #, c-format
@@ -1071,7 +1071,7 @@ msgstr "Używa połączonych kolorów wszystkich widocznych warstw"
 #: ../app/dialogs/file-open-dialog.c:253
 #: ../app/dialogs/file-open-location-dialog.c:218
 #: ../app/dialogs/file-open-location-dialog.c:228
-#: ../app/display/gimpdisplayshell-dnd.c:608
+#: ../app/display/gimpdisplayshell-dnd.c:610
 #: ../app/widgets/gimplayertreeview.c:738 ../app/widgets/gimptoolbox.c:809
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
@@ -5358,85 +5358,115 @@ msgstr "Zapisuje zaznaczenie do kanału"
 
 #: ../app/actions/select-actions.c:117
 msgctxt "select-action"
+msgid "_Fill Selection Outline..."
+msgstr "_Wypełnij krawędź zaznaczenia…"
+
+#: ../app/actions/select-actions.c:118
+msgctxt "select-action"
+msgid "Fill the selection outline"
+msgstr "Wypełnia krawędź zaznaczenia"
+
+#: ../app/actions/select-actions.c:123
+msgctxt "select-action"
+msgid "_Fill Selection Outline"
+msgstr "_Wypełnij krawędź zaznaczenia"
+
+#: ../app/actions/select-actions.c:124
+msgctxt "select-action"
+msgid "Fill the selection outline with last used values"
+msgstr "Wypełnia krawędź zaznaczenia za pomocą ostatnio użytych wartości"
+
+#: ../app/actions/select-actions.c:129
+msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "Ry_suj wzdłuż zaznaczenia…"
 
-#: ../app/actions/select-actions.c:118
+#: ../app/actions/select-actions.c:130
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Rysuje wzdłuż krawędzi zaznaczenia"
 
-#: ../app/actions/select-actions.c:123
+#: ../app/actions/select-actions.c:135
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr "Ry_suj wzdłuż zaznaczenia"
 
-#: ../app/actions/select-actions.c:124
+#: ../app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Rysuje wzdłuż zaznaczenia za pomocą ostatnio użytych wartości"
 
-#: ../app/actions/select-commands.c:157
+#: ../app/actions/select-commands.c:158
 msgid "Feather Selection"
 msgstr "Zmiękcza zaznaczenie"
 
-#: ../app/actions/select-commands.c:161
+#: ../app/actions/select-commands.c:162
 msgid "Feather selection by"
 msgstr "Zmiękcza zaznaczenie o"
 
-#: ../app/actions/select-commands.c:198
+#: ../app/actions/select-commands.c:199
 msgid "Shrink Selection"
 msgstr "Zmniejszenie zaznaczenia"
 
-#: ../app/actions/select-commands.c:202
+#: ../app/actions/select-commands.c:203
 msgid "Shrink selection by"
 msgstr "Stopień zmniejszenia zaznaczenia"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:211 ../app/actions/select-commands.c:295
+#: ../app/actions/select-commands.c:212 ../app/actions/select-commands.c:296
 msgid "_Selected areas continue outside the image"
 msgstr "_Zaznaczone obszary znajdują się także poza obrazem"
 
-#: ../app/actions/select-commands.c:214
+#: ../app/actions/select-commands.c:215
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
 "Podczas zmniejszania zaznaczone obszary są traktowane tak, jakby znajdowały "
 "się także poza obrazem."
 
-#: ../app/actions/select-commands.c:241
+#: ../app/actions/select-commands.c:242
 msgid "Grow Selection"
 msgstr "Powiększenie zaznaczenia"
 
-#: ../app/actions/select-commands.c:245
+#: ../app/actions/select-commands.c:246
 msgid "Grow selection by"
 msgstr "Stopień powiększenia zaznaczenia"
 
-#: ../app/actions/select-commands.c:271
+#: ../app/actions/select-commands.c:272
 msgid "Border Selection"
 msgstr "Obramowanie zaznaczenia"
 
-#: ../app/actions/select-commands.c:275
+#: ../app/actions/select-commands.c:276
 msgid "Border selection by"
 msgstr "Odległość obramowania od zaznaczenia"
 
 #. Feather button
-#: ../app/actions/select-commands.c:284
+#: ../app/actions/select-commands.c:285
 msgid "_Feather border"
 msgstr "_Zmiękcz obramowanie"
 
-#: ../app/actions/select-commands.c:298
+#: ../app/actions/select-commands.c:299
 msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 "Podczas dodawania obramowania zaznaczone obszary są traktowane tak, jakby "
 "znajdowały się także poza obrazem."
 
-#: ../app/actions/select-commands.c:358 ../app/actions/select-commands.c:391
-#: ../app/actions/vectors-commands.c:389 ../app/actions/vectors-commands.c:423
+#: ../app/actions/select-commands.c:359 ../app/actions/select-commands.c:390
+#: ../app/actions/vectors-commands.c:390 ../app/actions/vectors-commands.c:422
+#: ../app/dialogs/fill-dialog.c:162
+msgid "There is no active layer or channel to fill."
+msgstr "Brak aktywnej warstwy lub kanału, który można wypełnić."
+
+#: ../app/actions/select-commands.c:365
+msgid "Fill Selection Outline"
+msgstr "Wypełnienie krawędzi zaznaczenia"
+
+#: ../app/actions/select-commands.c:435 ../app/actions/select-commands.c:468
+#: ../app/actions/vectors-commands.c:467 ../app/actions/vectors-commands.c:501
 #: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
 msgstr "Brak aktywnej warstwy lub kanału, na którym można rysować."
 
-#: ../app/actions/select-commands.c:364
+#: ../app/actions/select-commands.c:441
 msgid "Stroke Selection"
 msgstr "Rysowanie wzdłuż zaznaczenia"
 
@@ -5953,162 +5983,186 @@ msgstr "Obniża ścieżkę na dół"
 
 #: ../app/actions/vectors-actions.c:112
 msgctxt "vectors-action"
+msgid "Fill Path..."
+msgstr "Wypełnij ścieżkę…"
+
+#: ../app/actions/vectors-actions.c:113
+msgctxt "vectors-action"
+msgid "Fill the path"
+msgstr "Wypełnia ścieżkę"
+
+#: ../app/actions/vectors-actions.c:118
+msgctxt "vectors-action"
+msgid "Fill Path"
+msgstr "Wypełnij ścieżkę"
+
+#: ../app/actions/vectors-actions.c:119
+msgctxt "vectors-action"
+msgid "Fill the path with last values"
+msgstr "Wypełnia ścieżkę za pomocą ostatnio użytych wartości"
+
+#: ../app/actions/vectors-actions.c:124
+msgctxt "vectors-action"
 msgid "Stro_ke Path..."
 msgstr "_Rysuj wzdłuż ścieżki…"
 
-#: ../app/actions/vectors-actions.c:113
+#: ../app/actions/vectors-actions.c:125
 msgctxt "vectors-action"
 msgid "Paint along the path"
 msgstr "Rysuje wzdłuż ścieżki"
 
-#: ../app/actions/vectors-actions.c:118
+#: ../app/actions/vectors-actions.c:130
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
 msgstr "_Rysuj wzdłuż ścieżki"
 
-#: ../app/actions/vectors-actions.c:119
+#: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
 msgid "Paint along the path with last values"
 msgstr "Rysuje wzdłuż ścieżki za pomocą ostatnio użytych wartości"
 
-#: ../app/actions/vectors-actions.c:124
+#: ../app/actions/vectors-actions.c:136
 msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "S_kopiuj ścieżkę"
 
-#: ../app/actions/vectors-actions.c:129
+#: ../app/actions/vectors-actions.c:141
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "Wk_lej ścieżkę"
 
-#: ../app/actions/vectors-actions.c:134
+#: ../app/actions/vectors-actions.c:146
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "Wy_eksportuj ścieżkę…"
 
-#: ../app/actions/vectors-actions.c:139
+#: ../app/actions/vectors-actions.c:151
 msgctxt "vectors-action"
 msgid "I_mport Path..."
 msgstr "Za_importuj ścieżkę…"
 
-#: ../app/actions/vectors-actions.c:147
+#: ../app/actions/vectors-actions.c:159
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr "_Widoczny"
 
-#: ../app/actions/vectors-actions.c:153
+#: ../app/actions/vectors-actions.c:165
 msgctxt "vectors-action"
 msgid "_Linked"
 msgstr "_Dowiązany"
 
 #. GIMP_STOCK_LOCK
-#: ../app/actions/vectors-actions.c:159
+#: ../app/actions/vectors-actions.c:171
 msgctxt "vectors-action"
 msgid "L_ock strokes"
 msgstr "Zabl_okuj rysowanie"
 
-#: ../app/actions/vectors-actions.c:165
+#: ../app/actions/vectors-actions.c:177
 msgctxt "vectors-action"
 msgid "L_ock position"
 msgstr "Zabl_okuj położenie"
 
-#: ../app/actions/vectors-actions.c:174
+#: ../app/actions/vectors-actions.c:186
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr "Ścieżka na _zaznaczenie"
 
-#: ../app/actions/vectors-actions.c:175
+#: ../app/actions/vectors-actions.c:187
 msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr "Ścieżka na zaznaczenie"
 
-#: ../app/actions/vectors-actions.c:180
+#: ../app/actions/vectors-actions.c:192
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr "Ze ś_cieżki"
 
-#: ../app/actions/vectors-actions.c:181
+#: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
 msgid "Replace selection with path"
 msgstr "Zamienia zaznaczenie na kanał"
 
-#: ../app/actions/vectors-actions.c:186
+#: ../app/actions/vectors-actions.c:198
 msgctxt "vectors-action"
 msgid "_Add to Selection"
 msgstr "_Dodaj do zaznaczenia"
 
-#: ../app/actions/vectors-actions.c:187
+#: ../app/actions/vectors-actions.c:199
 msgctxt "vectors-action"
 msgid "Add path to selection"
 msgstr "Dodaje ścieżkę do zaznaczenia"
 
-#: ../app/actions/vectors-actions.c:192
+#: ../app/actions/vectors-actions.c:204
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
 msgstr "Od_ejmij od zaznaczenia"
 
-#: ../app/actions/vectors-actions.c:193
+#: ../app/actions/vectors-actions.c:205
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
 msgstr "Odejmuje ścieżkę od zaznaczenia"
 
-#: ../app/actions/vectors-actions.c:198
+#: ../app/actions/vectors-actions.c:210
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
 msgstr "Prze_tnij z zaznaczeniem"
 
-#: ../app/actions/vectors-actions.c:199
+#: ../app/actions/vectors-actions.c:211
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
 msgstr "Przecina ścieżkę z zaznaczeniem"
 
-#: ../app/actions/vectors-actions.c:207
+#: ../app/actions/vectors-actions.c:219
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "Zaznaczenie na ś_cieżkę"
 
-#: ../app/actions/vectors-actions.c:208 ../app/actions/vectors-actions.c:214
+#: ../app/actions/vectors-actions.c:220 ../app/actions/vectors-actions.c:226
 msgctxt "vectors-action"
 msgid "Selection to path"
 msgstr "Przekształca zaznaczenie na ścieżkę"
 
-#: ../app/actions/vectors-actions.c:213
+#: ../app/actions/vectors-actions.c:225
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "Prz_ekształć na ścieżkę"
 
-#: ../app/actions/vectors-actions.c:219
+#: ../app/actions/vectors-actions.c:231
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Zaznaczenie na ścieżkę (z_aawansowane)"
 
-#: ../app/actions/vectors-actions.c:220
+#: ../app/actions/vectors-actions.c:232
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Zaawansowane opcje"
 
-#: ../app/actions/vectors-commands.c:138
+#: ../app/actions/vectors-commands.c:139
 msgid "Path Attributes"
 msgstr "Atrybuty ścieżki"
 
-#: ../app/actions/vectors-commands.c:141
+#: ../app/actions/vectors-commands.c:142
 msgid "Edit Path Attributes"
 msgstr "Modyfikacja atrybutów ścieżki"
 
-#: ../app/actions/vectors-commands.c:165 ../app/vectors/gimpvectors.c:222
+#: ../app/actions/vectors-commands.c:166 ../app/vectors/gimpvectors.c:222
 #: ../app/widgets/gimpvectorstreeview.c:254
 msgid "Path"
 msgstr "Ścieżka"
 
-#: ../app/actions/vectors-commands.c:166
+#: ../app/actions/vectors-commands.c:167
 msgid "New Path"
 msgstr "Nowa ścieżka"
 
-#: ../app/actions/vectors-commands.c:169
+#: ../app/actions/vectors-commands.c:170
 msgid "New Path Options"
 msgstr "Opcje nowej ścieżki"
 
-#: ../app/actions/vectors-commands.c:395 ../app/tools/gimpvectoroptions.c:202
+#: ../app/actions/vectors-commands.c:396
+msgid "Fill Path"
+msgstr "Wypełnij ścieżkę"
+
+#: ../app/actions/vectors-commands.c:473 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:1977
 msgid "Stroke Path"
 msgstr "Rysuj wzdłuż ścieżki"
@@ -8561,7 +8615,7 @@ msgstr "Tworzenie katalogu „%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Nie można utworzyć katalogu „%s”: %s"
 
-#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:287
+#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:305
 msgid "No patterns available for this operation."
 msgstr "Brak deseni dostępnych dla tego działania."
 
@@ -9133,32 +9187,32 @@ msgstr "Styl"
 msgid "Antialiasing"
 msgstr "Wygładzanie"
 
-#: ../app/core/gimpfilloptions.c:261
+#: ../app/core/gimpfilloptions.c:279
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Wypełnienie kolorem pierwszoplanowym"
 
-#: ../app/core/gimpfilloptions.c:266
+#: ../app/core/gimpfilloptions.c:284
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Wypełnienie kolorem tła"
 
-#: ../app/core/gimpfilloptions.c:271
+#: ../app/core/gimpfilloptions.c:289
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Wypełnienie białym kolorem"
 
-#: ../app/core/gimpfilloptions.c:277
+#: ../app/core/gimpfilloptions.c:295
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Wypełnienie przezroczystością"
 
-#: ../app/core/gimpfilloptions.c:293 ../app/core/gimpfilloptions.c:361
+#: ../app/core/gimpfilloptions.c:311 ../app/core/gimpfilloptions.c:379
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Wypełnienie deseniem"
 
-#: ../app/core/gimpfilloptions.c:358
+#: ../app/core/gimpfilloptions.c:376
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
 msgstr "Wypełnienie pełnym kolorem"
@@ -10869,9 +10923,17 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Zapisywanie „%s” się nie powiodło:\n"
+"Zapisanie „%s” się nie powiodło:\n"
 "\n"
 "%s"
+
+#: ../app/dialogs/fill-dialog.c:87
+msgid "Choose Fill Style"
+msgstr "Wybór stylu wypełniania"
+
+#: ../app/dialogs/fill-dialog.c:94
+msgid "_Fill"
+msgstr "_Wypełnij"
 
 #: ../app/dialogs/grid-dialog.c:85
 msgid "Configure Grid"
@@ -12656,8 +12718,8 @@ msgid "The image has been exported to '%s'."
 msgstr "Wyeksportowano obraz do „%s”."
 
 #: ../app/display/gimpdisplayshell-dnd.c:248
-#: ../app/display/gimpdisplayshell-dnd.c:667
-#: ../app/display/gimpdisplayshell-dnd.c:726
+#: ../app/display/gimpdisplayshell-dnd.c:669
+#: ../app/display/gimpdisplayshell-dnd.c:728
 msgid "Drop New Layer"
 msgstr "Upuszczenie nowej warstwy"
 
@@ -12666,14 +12728,14 @@ msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
-#: ../app/display/gimpdisplayshell-dnd.c:476 ../app/tools/gimpblendtool.c:245
+#: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:323
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
 #: ../app/display/gimpdisplayshell-dnd.c:370
-#: ../app/display/gimpdisplayshell-dnd.c:484 ../app/tools/gimpblendtool.c:252
+#: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:330 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
@@ -12681,27 +12743,27 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
-#: ../app/display/gimpdisplayshell-dnd.c:412
+#: ../app/display/gimpdisplayshell-dnd.c:413
 #: ../app/widgets/gimpdrawabletreeview.c:247
 #: ../app/widgets/gimpdrawabletreeview.c:358
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Upuszczenie desenia do warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:433
+#: ../app/display/gimpdisplayshell-dnd.c:435
 #: ../app/widgets/gimpdrawabletreeview.c:277
 #: ../app/widgets/gimpdrawabletreeview.c:378
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Upuszczenie koloru do warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:563
+#: ../app/display/gimpdisplayshell-dnd.c:565
 #: ../app/widgets/gimplayertreeview.c:729
 msgid "Drop layers"
 msgstr "Upuszczone warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:700
-#: ../app/display/gimpdisplayshell-dnd.c:718
+#: ../app/display/gimpdisplayshell-dnd.c:702
+#: ../app/display/gimpdisplayshell-dnd.c:720
 #: ../app/widgets/gimplayertreeview.c:804 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Upuszczony bufor"
