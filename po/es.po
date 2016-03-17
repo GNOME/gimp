@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-15 20:09+0000\n"
-"PO-Revision-Date: 2016-03-16 09:16+0100\n"
+"POT-Creation-Date: 2016-03-16 19:15+0000\n"
+"PO-Revision-Date: 2016-03-17 11:31+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -445,7 +445,6 @@ msgstr "Capas"
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:194 ../app/core/gimp.c:1110
 #: ../app/dialogs/dialogs.c:331 ../app/dialogs/preferences-dialog.c:2774
-#| msgid "Paintbrush"
 msgid "MyPaint Brushes"
 msgstr "Pinceles MyPaint"
 
@@ -1137,8 +1136,6 @@ msgid "_Symmetry Painting"
 msgstr "_Pintado simétrico"
 
 #: ../app/actions/dialogs-actions.c:66
-#| msgctxt "dialogs-action"
-#| msgid "Open the layers dialog"
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
 msgstr "Abre el diálogo de simetría"
@@ -1294,14 +1291,11 @@ msgid "Open the paint dynamics editor"
 msgstr "Abre el editor de dinámica de la pintura"
 
 #: ../app/actions/dialogs-actions.c:161
-#| msgid "Paintbrush"
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
 msgstr "_Pinceles MyPaint"
 
 #: ../app/actions/dialogs-actions.c:162
-#| msgctxt "dialogs-action"
-#| msgid "Open the brushes dialog"
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
 msgstr "Abre el diálogo de pinceles mypaint"
@@ -3130,7 +3124,7 @@ msgstr "_Paso alto..."
 #: ../app/actions/filters-actions.c:276
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr ""
+msgstr "_Ilusión…"
 
 #: ../app/actions/filters-actions.c:281
 msgctxt "filters-action"
@@ -3187,7 +3181,7 @@ msgstr "Desenfoque ga_ussiano…"
 #: ../app/actions/filters-actions.c:321
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr ""
+msgstr "_Ampliar desenfoque de movimiento…"
 
 #: ../app/actions/filters-actions.c:326
 #, fuzzy
@@ -3270,7 +3264,7 @@ msgstr "_Rejilla…"
 #: ../app/actions/filters-actions.c:386
 msgctxt "filters-action"
 msgid "Oili_fy..."
-msgstr ""
+msgstr "Pintura al ó_leo…"
 
 #: ../app/actions/filters-actions.c:391
 msgctxt "filters-action"
@@ -3361,7 +3355,7 @@ msgstr "_Brillo y contraste…"
 #: ../app/actions/filters-actions.c:466
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV..."
-msgstr ""
+msgstr "_Expansión del contraste HSV"
 
 #: ../app/actions/filters-actions.c:471
 #, fuzzy
@@ -3395,7 +3389,7 @@ msgstr "Tamaño del _lienzo…"
 #: ../app/actions/filters-actions.c:491
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
-msgstr ""
+msgstr "_Mosaico sin costura…"
 
 #: ../app/actions/filters-actions.c:496
 msgctxt "filters-action"
@@ -10855,7 +10849,7 @@ msgstr "Activar pintado simétrico"
 
 #: ../app/core/gimpsymmetry-mandala.c:112
 msgid "Mandala"
-msgstr ""
+msgstr "Mandala"
 
 #: ../app/core/gimpsymmetry-mandala.c:119
 #, fuzzy
@@ -10962,7 +10956,7 @@ msgstr "_Desplazamiento…"
 
 #: ../app/core/gimpsymmetry-tiling.c:123
 msgid "X-shift between lines (pixels)"
-msgstr ""
+msgstr "Desplazamiento X entre líneas (píxeles)"
 
 #: ../app/core/gimpsymmetry-tiling.c:130
 #, fuzzy
@@ -12329,7 +12323,7 @@ msgstr "_Pseudoprueba de renderizado:"
 
 #: ../app/dialogs/preferences-dialog.c:1536
 msgid "Use black _point compensation for softproofing"
-msgstr ""
+msgstr "Usar compensación de _punto negro para la pseudoprueba"
 
 #: ../app/dialogs/preferences-dialog.c:1554
 msgid "Mark out of gamut colors"
@@ -17347,6 +17341,8 @@ msgstr "Información del puntero"
 #: ../app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
 msgstr ""
+"Herramienta de deformación N-Point: deformación de tipo borrador de imágenes "
+"usando puntos"
 
 #: ../app/tools/gimpnpointdeformationtool.c:161
 #, fuzzy
@@ -17714,6 +17710,8 @@ msgstr "Re_centrar punto medio del segmento"
 msgid ""
 "Maximal scale of refinement points to be used for the interpolation mesh"
 msgstr ""
+"Máxima escala de puntos de refinamiento que se utilizará para la malla de "
+"interpolación"
 
 #: ../app/tools/gimpseamlessclonetool.c:190
 #: ../app/tools/gimpseamlessclonetool.c:763
@@ -18161,7 +18159,7 @@ msgstr "Inclinar el borde opuesto de la misma cantidad (%s)"
 #: ../app/tools/gimptransformoptions.c:534
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
-msgstr ""
+msgstr "Mantener la posición del pivote mientras se cambia la perspectiva (%s)"
 
 #: ../app/tools/gimptransformoptions.c:537
 msgid "Pivot"
@@ -18473,7 +18471,7 @@ msgstr "Transformar rejilla"
 
 #: ../app/tools/gimpwarptool.c:143
 msgid "Warp Transform: Deform with different tools"
-msgstr ""
+msgstr "Transformada de deformación: deforma con diferentes herramientas "
 
 #: ../app/tools/gimpwarptool.c:144
 #, fuzzy
@@ -18483,7 +18481,7 @@ msgstr "_Transformar rejilla"
 
 #: ../app/tools/gimpwarptool.c:462 ../app/tools/gimpwarptool.c:474
 msgid "Warp Tool Stroke"
-msgstr ""
+msgstr "Herramienta de deformación de trazo"
 
 #: ../app/tools/gimpwarptool.c:570
 #, fuzzy
@@ -18499,7 +18497,7 @@ msgstr "Transformar rejilla"
 
 #: ../app/tools/gimpwarptool.c:886
 msgid "Please add some warp strokes first."
-msgstr ""
+msgstr "Agregue primero algunos trazos de deformación."
 
 #: ../app/tools/gimpwarptool.c:899 ../app/tools/gimpwarptool.c:935
 #, c-format
@@ -20018,23 +20016,24 @@ msgstr "Esta operación no tiene propiedades editables"
 
 #: ../app/widgets/gimppropgui.c:472
 msgid "1,700 K – Match flame"
-msgstr ""
+msgstr "1,700 K – Llama de fósforo"
 
 #: ../app/widgets/gimppropgui.c:473
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr ""
+msgstr "1,850 K – Llama de vela, anochecer/amanecer"
 
 #: ../app/widgets/gimppropgui.c:474
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
-msgstr ""
+msgstr "3,000 K – Lámparas blancas fluorescentes compactas suaves (o cálidas)"
 
 #: ../app/widgets/gimppropgui.c:475
 msgid "3,300 K – Incandescent lamps"
-msgstr ""
+msgstr "3,300 K – Lámparas incandescentes"
 
 #: ../app/widgets/gimppropgui.c:476
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr ""
+"3,200 K – Lámparas de estudio, lámparas incandescentes de gran voltaje, etc."
 
 #: ../app/widgets/gimppropgui.c:477
 msgid "3,350 K – Studio \"CP\" light"
@@ -20042,7 +20041,7 @@ msgstr ""
 
 #: ../app/widgets/gimppropgui.c:478
 msgid "4,100 K – Moonlight"
-msgstr ""
+msgstr "4,100 K – Luz de luna"
 
 #: ../app/widgets/gimppropgui.c:479
 msgid "5,000 K – D50"
