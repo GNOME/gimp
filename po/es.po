@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
+# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-16 19:15+0000\n"
-"PO-Revision-Date: 2016-03-17 11:31+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2016-03-17 19:11+0000\n"
+"PO-Revision-Date: 2016-03-17 22:32-0600\n"
+"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -2023,12 +2023,11 @@ msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
 
 #: ../app/actions/dynamics-actions.c:66
-#, fuzzy
 #| msgctxt "dynamics-action"
 #| msgid "Copy dynamics file location to clipboard"
 msgctxt "dynamics-action"
 msgid "Show dynamics file location in the file manager"
-msgstr "Copiar al portapapeles la ruta del archivo de dinámica"
+msgstr "Mostrar la ruta del archivo de dinámica en el gestor de archivos"
 
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
@@ -2752,20 +2751,18 @@ msgid "Recently Used"
 msgstr "Usados recientemente"
 
 #: ../app/actions/filters-actions.c:59
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Blur"
 msgctxt "filters-action"
 msgid "_Blur"
-msgstr "_Desenfoque"
+msgstr "_Difuminar"
 
 #: ../app/actions/filters-actions.c:61
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_Noise"
-msgstr "R_uido"
+msgstr "_Ruido"
 
 #: ../app/actions/filters-actions.c:63
 #, fuzzy
@@ -2784,12 +2781,11 @@ msgid "En_hance"
 msgstr "Real_zar"
 
 #: ../app/actions/filters-actions.c:67
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "C_ombine"
 msgctxt "filters-action"
 msgid "C_ombine"
-msgstr "Combi_nar"
+msgstr "C_ombinar"
 
 #: ../app/actions/filters-actions.c:69
 #, fuzzy
@@ -2824,12 +2820,11 @@ msgid "_Artistic"
 msgstr "_Artísticos"
 
 #: ../app/actions/filters-actions.c:77
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Decor"
 msgctxt "filters-action"
 msgid "_Decor"
-msgstr "Dec_orativos"
+msgstr "_Decorativos"
 
 #: ../app/actions/filters-actions.c:79
 #, fuzzy
@@ -2840,12 +2835,11 @@ msgid "_Map"
 msgstr "_Mapa"
 
 #: ../app/actions/filters-actions.c:81
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Render"
 msgctxt "filters-action"
 msgid "_Render"
-msgstr "Render_izado"
+msgstr "_Renderizado"
 
 #: ../app/actions/filters-actions.c:83
 #, fuzzy
@@ -2872,12 +2866,11 @@ msgid "_Nature"
 msgstr "_Naturaleza"
 
 #: ../app/actions/filters-actions.c:89
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "N_oise"
 msgctxt "filters-action"
 msgid "N_oise"
-msgstr "R_uido"
+msgstr "_Ruido"
 
 #: ../app/actions/filters-actions.c:91
 #, fuzzy
@@ -2920,12 +2913,11 @@ msgid "_Apply Canvas..."
 msgstr "_Aplicar lienzo..."
 
 #: ../app/actions/filters-actions.c:116
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Display _Filters..."
 msgctxt "filters-action"
 msgid "Apply _Lens..."
-msgstr "Mostrar _filtros…"
+msgstr "Aplicar _lente…"
 
 #: ../app/actions/filters-actions.c:121
 msgctxt "filters-action"
@@ -2933,12 +2925,11 @@ msgid "_Bump Map..."
 msgstr "Mapa de _relieve..."
 
 #: ../app/actions/filters-actions.c:126
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "Color to _Alpha..."
 msgctxt "filters-action"
 msgid "_Color to Gray..."
-msgstr "Color a _alfa…"
+msgstr "_Color a escala de grises…"
 
 #: ../app/actions/filters-actions.c:131
 msgctxt "filters-action"
@@ -2946,12 +2937,11 @@ msgid "Ca_rtoon..."
 msgstr "_Viñeta…"
 
 #: ../app/actions/filters-actions.c:136
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "_New Channel..."
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
-msgstr "Canal _nuevo…"
+msgstr "Mezclador de _canal…"
 
 #: ../app/actions/filters-actions.c:141
 msgctxt "filters-action"
@@ -2976,12 +2966,11 @@ msgid "Color _Reduction..."
 msgstr "_Reducción de color…"
 
 #: ../app/actions/filters-actions.c:161
-#, fuzzy
 #| msgctxt "colormap-action"
 #| msgid "_Edit Color..."
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
-msgstr "_Editar color…"
+msgstr "_Rotar colores…"
 
 #: ../app/actions/filters-actions.c:166
 msgctxt "filters-action"
@@ -14002,7 +13991,7 @@ msgstr "Umbral B/N"
 msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
-msgstr ""
+msgstr "Hacer transparencia todo o nada, umbralizando el canal alfa a un valor"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -20037,7 +20026,7 @@ msgstr ""
 
 #: ../app/widgets/gimppropgui.c:477
 msgid "3,350 K – Studio \"CP\" light"
-msgstr ""
+msgstr "3,350 K – Luz de estudio \"CP\""
 
 #: ../app/widgets/gimppropgui.c:478
 msgid "4,100 K – Moonlight"
@@ -20050,10 +20039,11 @@ msgstr "5,000 K – D50"
 #: ../app/widgets/gimppropgui.c:480
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr ""
+"5,000 K – Lámparas fluorescentes compactas de color blanco frío/luz diurna"
 
 #: ../app/widgets/gimppropgui.c:481
 msgid "5,000 K – Horizon daylight"
-msgstr ""
+msgstr "5,000 K – Luz diurna del horizonte"
 
 #: ../app/widgets/gimppropgui.c:482
 msgid "5,500 K – D55"
@@ -20061,11 +20051,11 @@ msgstr "5,500 K – D55"
 
 #: ../app/widgets/gimppropgui.c:483
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr ""
+msgstr "5,500 K – Luz diurna vertical, flash electrónico"
 
 #: ../app/widgets/gimppropgui.c:484
 msgid "6,200 K – Xenon short-arc lamp"
-msgstr ""
+msgstr "6,200 K – Lámpara de xenón de arco corto"
 
 #: ../app/widgets/gimppropgui.c:485
 msgid "6,500 K – D65"
@@ -20073,7 +20063,7 @@ msgstr "6,500 K – D65"
 
 #: ../app/widgets/gimppropgui.c:486
 msgid "6,500 K – Daylight, overcast"
-msgstr ""
+msgstr "6,500 K – Luz diurna, nublado"
 
 #: ../app/widgets/gimppropgui.c:487
 msgid "7,500 K – D75"
@@ -20701,6 +20691,8 @@ msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
+"Parásito corrupto de datos exif descubierto.\n"
+"Los datos exif no se pudieron migrar: %s"
 
 #: ../app/xcf/xcf-load.c:349
 #, c-format
@@ -20708,6 +20700,8 @@ msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated: %s"
 msgstr ""
+"Parásito corrupto de metadatos gimp descubierto.\n"
+"Los datos XMP no se pudieron migrar: %s"
 
 #: ../app/xcf/xcf-load.c:535
 msgid ""
