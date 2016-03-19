@@ -95,27 +95,25 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
-        {
-          GimpContext   *context = GIMP_CONTEXT (paint_options);
-          GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_core);
-          GimpDynamics  *dynamics;
+      {
+        GimpContext   *context    = GIMP_CONTEXT (paint_options);
+        GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_core);
+        GimpDynamics  *dynamics   = gimp_context_get_dynamics (context);
 
-          dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+        if (! gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR) &&
+            (! brush_core->brush || ! gimp_brush_get_pixmap (brush_core->brush)))
+          {
+            /* We don't save gradient color history and pixmap brushes
+             * have no color to save.
+             */
+            GimpRGB foreground;
 
-          if (! gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR) &&
-              (! brush_core->brush || ! gimp_brush_get_pixmap (brush_core->brush)))
-            {
-              /* We don't save gradient color history and
-               * pixmap brushes have no color to save.
-               */
-              GimpRGB foreground;
-
-              gimp_context_get_foreground (context, &foreground);
-              gimp_palettes_add_color_history (context->gimp,
-                                               &foreground);
-            }
-        }
+            gimp_context_get_foreground (context, &foreground);
+            gimp_palettes_add_color_history (context->gimp, &foreground);
+          }
+      }
       break;
+
     case GIMP_PAINT_STATE_MOTION:
       _gimp_paintbrush_motion (paint_core, drawable, paint_options,
                                sym, GIMP_OPACITY_OPAQUE);

@@ -200,6 +200,7 @@ app/dialogs/fade-dialog.c
 app/dialogs/file-open-dialog.c
 app/dialogs/file-open-location-dialog.c
 app/dialogs/file-save-dialog.c
+app/dialogs/fill-dialog.c
 app/dialogs/grid-dialog.c
 app/dialogs/image-merge-layers-dialog.c
 app/dialogs/image-new-dialog.c

@@ -103,6 +103,12 @@ struct _GimpItemClass
                                           GimpInterpolationType   interpolation_type,
                                           GimpTransformResize     clip_result,
                                           GimpProgress           *progress);
+  gboolean        (* fill)               (GimpItem               *item,
+                                          GimpDrawable           *drawable,
+                                          GimpFillOptions        *fill_options,
+                                          gboolean                push_undo,
+                                          GimpProgress           *progress,
+                                          GError                **error);
   gboolean        (* stroke)             (GimpItem               *item,
                                           GimpDrawable           *drawable,
                                           GimpStrokeOptions      *stroke_options,
@@ -125,6 +131,7 @@ struct _GimpItemClass
   const gchar *rotate_desc;
   const gchar *transform_desc;
   const gchar *to_selection_desc;
+  const gchar *fill_desc;
   const gchar *stroke_desc;
 
   const gchar *reorder_desc;
@@ -251,6 +258,12 @@ void            gimp_item_transform          (GimpItem           *item,
                                               GimpTransformResize clip_result,
                                               GimpProgress       *progress);
 
+gboolean        gimp_item_fill               (GimpItem           *item,
+                                              GimpDrawable       *drawable,
+                                              GimpFillOptions    *fill_options,
+                                              gboolean            push_undo,
+                                              GimpProgress       *progress,
+                                              GError            **error);
 gboolean        gimp_item_stroke             (GimpItem           *item,
                                               GimpDrawable       *drawable,
                                               GimpContext        *context,

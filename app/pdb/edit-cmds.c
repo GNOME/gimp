@@ -552,7 +552,7 @@ edit_fill_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpFillOptions *options = gimp_fill_options_new (gimp);
+          GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
 
           if (gimp_fill_options_set_by_fill_type (options, context,
                                                   fill_type, error))
@@ -606,7 +606,7 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpFillOptions *options = gimp_fill_options_new (gimp);
+          GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
 
           if (gimp_fill_options_set_by_fill_mode (options, context,
                                                   fill_mode, error))
@@ -683,7 +683,7 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpFillOptions *options = gimp_fill_options_new (gimp);
+          GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
 
           if (gimp_fill_options_set_by_fill_mode (options, context,
                                                   fill_mode, error))

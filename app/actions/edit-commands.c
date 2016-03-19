@@ -505,7 +505,7 @@ edit_fill_cmd_callback (GtkAction *action,
 
   fill_type = (GimpFillType) value;
 
-  options = gimp_fill_options_new (action_data_get_gimp (data));
+  options = gimp_fill_options_new (action_data_get_gimp (data), NULL, FALSE);
 
   if (gimp_fill_options_set_by_fill_type (options,
                                           action_data_get_context (data),

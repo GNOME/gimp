@@ -75,6 +75,12 @@ static void       gimp_selection_rotate        (GimpItem            *item,
                                                 gdouble              center_x,
                                                 gdouble              center_y,
                                                 gboolean             clip_result);
+static gboolean   gimp_selection_fill          (GimpItem            *item,
+                                                GimpDrawable        *drawable,
+                                                GimpFillOptions     *fill_options,
+                                                gboolean             push_undo,
+                                                GimpProgress        *progress,
+                                                GError             **error);
 static gboolean   gimp_selection_stroke        (GimpItem            *item,
                                                 GimpDrawable        *drawable,
                                                 GimpStrokeOptions   *stroke_options,
@@ -157,9 +163,11 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   item_class->resize                  = gimp_selection_resize;
   item_class->flip                    = gimp_selection_flip;
   item_class->rotate                  = gimp_selection_rotate;
+  item_class->fill                    = gimp_selection_fill;
   item_class->stroke                  = gimp_selection_stroke;
   item_class->default_name            = _("Selection Mask");
   item_class->translate_desc          = C_("undo-type", "Move Selection");
+  item_class->fill_desc               = C_("undo-type", "Fill Selection");
   item_class->stroke_desc             = C_("undo-type", "Stroke Selection");
 
   drawable_class->convert_type        = gimp_selection_convert_type;
@@ -268,6 +276,42 @@ gimp_selection_rotate (GimpItem         *item,
   GIMP_ITEM_CLASS (parent_class)->rotate (item, context, rotation_type,
                                           center_x, center_y,
                                           clip_result);
+}
+
+static gboolean
+gimp_selection_fill (GimpItem         *item,
+                     GimpDrawable     *drawable,
+                     GimpFillOptions  *fill_options,
+                     gboolean          push_undo,
+                     GimpProgress     *progress,
+                     GError          **error)
+{
+  GimpSelection      *selection = GIMP_SELECTION (item);
+  const GimpBoundSeg *dummy_in;
+  const GimpBoundSeg *dummy_out;
+  gint                num_dummy_in;
+  gint                num_dummy_out;
+  gboolean            retval;
+
+  if (! gimp_channel_boundary (GIMP_CHANNEL (selection),
+                               &dummy_in, &dummy_out,
+                               &num_dummy_in, &num_dummy_out,
+                               0, 0, 0, 0))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("There is no selection to fill."));
+      return FALSE;
+    }
+
+  gimp_selection_suspend (selection);
+
+  retval = GIMP_ITEM_CLASS (parent_class)->fill (item, drawable,
+                                                 fill_options,
+                                                 push_undo, progress, error);
+
+  gimp_selection_resume (selection);
+
+  return retval;
 }
 
 static gboolean

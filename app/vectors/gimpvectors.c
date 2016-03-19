@@ -35,6 +35,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable-fill.h"
 #include "core/gimpdrawable-stroke.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
@@ -114,6 +115,12 @@ static void       gimp_vectors_transform     (GimpItem          *item,
                                               GimpInterpolationType interp_type,
                                               GimpTransformResize   clip_result,
                                               GimpProgress      *progress);
+static gboolean   gimp_vectors_fill          (GimpItem          *item,
+                                              GimpDrawable      *drawable,
+                                              GimpFillOptions   *fill_options,
+                                              gboolean           push_undo,
+                                              GimpProgress      *progress,
+                                              GError           **error);
 static gboolean   gimp_vectors_stroke        (GimpItem          *item,
                                               GimpDrawable      *drawable,
                                               GimpStrokeOptions *stroke_options,
@@ -209,6 +216,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->flip                  = gimp_vectors_flip;
   item_class->rotate                = gimp_vectors_rotate;
   item_class->transform             = gimp_vectors_transform;
+  item_class->fill                  = gimp_vectors_fill;
   item_class->stroke                = gimp_vectors_stroke;
   item_class->to_selection          = gimp_vectors_to_selection;
   item_class->default_name          = _("Path");
@@ -219,6 +227,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->flip_desc             = C_("undo-type", "Flip Path");
   item_class->rotate_desc           = C_("undo-type", "Rotate Path");
   item_class->transform_desc        = C_("undo-type", "Transform Path");
+  item_class->fill_desc             = C_("undo-type", "Fill Path");
   item_class->stroke_desc           = C_("undo-type", "Stroke Path");
   item_class->to_selection_desc     = C_("undo-type", "Path to Selection");
   item_class->reorder_desc          = C_("undo-type", "Reorder Path");
@@ -620,6 +629,27 @@ gimp_vectors_transform (GimpItem               *item,
 }
 
 static gboolean
+gimp_vectors_fill (GimpItem         *item,
+                   GimpDrawable     *drawable,
+                   GimpFillOptions  *fill_options,
+                   gboolean          push_undo,
+                   GimpProgress     *progress,
+                   GError          **error)
+{
+  GimpVectors *vectors = GIMP_VECTORS (item);
+
+  if (g_queue_is_empty (vectors->strokes))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("Not enough points to fill"));
+      return FALSE;
+    }
+
+  return gimp_drawable_fill_vectors (drawable, fill_options,
+                                     vectors, push_undo, error);
+}
+
+static gboolean
 gimp_vectors_stroke (GimpItem           *item,
                      GimpDrawable       *drawable,
                      GimpStrokeOptions  *stroke_options,
@@ -640,8 +670,7 @@ gimp_vectors_stroke (GimpItem           *item,
   switch (gimp_stroke_options_get_method (stroke_options))
     {
     case GIMP_STROKE_LINE:
-      retval = gimp_drawable_stroke_vectors (drawable,
-                                             stroke_options,
+      retval = gimp_drawable_stroke_vectors (drawable, stroke_options,
                                              vectors, push_undo, error);
       break;
 

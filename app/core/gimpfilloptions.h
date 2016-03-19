@@ -48,7 +48,9 @@ struct _GimpFillOptionsClass
 
 GType             gimp_fill_options_get_type         (void) G_GNUC_CONST;
 
-GimpFillOptions * gimp_fill_options_new              (Gimp               *gimp);
+GimpFillOptions * gimp_fill_options_new              (Gimp               *gimp,
+                                                      GimpContext        *context,
+                                                      gboolean            use_context_color);
 
 GimpFillStyle     gimp_fill_options_get_style        (GimpFillOptions    *options);
 void              gimp_fill_options_set_style        (GimpFillOptions    *options,

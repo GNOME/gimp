@@ -113,6 +113,18 @@ static const GimpActionEntry select_actions[] =
     G_CALLBACK (select_save_cmd_callback),
     GIMP_HELP_SELECTION_TO_CHANNEL },
 
+  { "select-fill", GIMP_STOCK_TOOL_BUCKET_FILL,
+    NC_("select-action", "_Fill Selection Outline..."), NULL,
+    NC_("select-action", "Fill the selection outline"),
+    G_CALLBACK (select_fill_cmd_callback),
+    GIMP_HELP_SELECTION_FILL },
+
+  { "select-fill-last-values", GIMP_STOCK_TOOL_BUCKET_FILL,
+    NC_("select-action", "_Fill Selection Outline"), NULL,
+    NC_("select-action", "Fill the selection outline with last used values"),
+    G_CALLBACK (select_fill_last_vals_cmd_callback),
+    GIMP_HELP_SELECTION_FILL },
+
   { "select-stroke", GIMP_STOCK_SELECTION_STROKE,
     NC_("select-action", "_Stroke Selection..."), NULL,
     NC_("select-action", "Paint along the selection outline"),
@@ -178,6 +190,8 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-flood",   drawable && sel);
 
   SET_SENSITIVE ("select-save",               drawable && !fs);
+  SET_SENSITIVE ("select-fill",               writable && !children && sel);
+  SET_SENSITIVE ("select-fill-last-values",   writable && !children && sel);
   SET_SENSITIVE ("select-stroke",             writable && !children && sel);
   SET_SENSITIVE ("select-stroke-last-values", writable && !children && sel);
 

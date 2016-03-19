@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
+# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-09 19:12+0000\n"
-"PO-Revision-Date: 2016-03-10 11:38+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2016-03-17 19:11+0000\n"
+"PO-Revision-Date: 2016-03-17 22:32-0600\n"
+"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -445,10 +445,8 @@ msgstr "Capas"
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:194 ../app/core/gimp.c:1110
 #: ../app/dialogs/dialogs.c:331 ../app/dialogs/preferences-dialog.c:2774
-#, fuzzy
-#| msgid "Paintbrush"
 msgid "MyPaint Brushes"
-msgstr "Pincel"
+msgstr "Pinceles MyPaint"
 
 #: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:427
 #: ../app/widgets/gimppaletteeditor.c:149
@@ -472,7 +470,7 @@ msgid "Plug-Ins"
 msgstr "Complementos"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:397
+#: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:406
 #: ../app/dialogs/preferences-dialog.c:1721
 msgid "Quick Mask"
 msgstr "Máscara rápida"
@@ -826,7 +824,7 @@ msgstr "Editar el color del canal"
 msgid "_Fill opacity:"
 msgstr "Opacidad del _relleno:"
 
-#: ../app/actions/channels-commands.c:117 ../app/core/gimpchannel.c:281
+#: ../app/actions/channels-commands.c:117 ../app/core/gimpchannel.c:289
 #: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:105
 #: ../app/widgets/gimpchanneltreeview.c:333
@@ -848,7 +846,7 @@ msgid "New Channel Color"
 msgstr "Canal de color nuevo"
 
 #: ../app/actions/channels-commands.c:245 ../app/core/gimpimage-new.c:265
-#: ../app/display/gimpdisplayshell-dnd.c:649
+#: ../app/display/gimpdisplayshell-dnd.c:666
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:778
 #, c-format
@@ -1080,7 +1078,7 @@ msgstr "Usar el color compuesto de todas las capas visibles"
 #: ../app/dialogs/file-open-dialog.c:253
 #: ../app/dialogs/file-open-location-dialog.c:218
 #: ../app/dialogs/file-open-location-dialog.c:228
-#: ../app/display/gimpdisplayshell-dnd.c:593
+#: ../app/display/gimpdisplayshell-dnd.c:610
 #: ../app/widgets/gimplayertreeview.c:738 ../app/widgets/gimptoolbox.c:809
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
@@ -1138,12 +1136,9 @@ msgid "_Symmetry Painting"
 msgstr "_Pintado simétrico"
 
 #: ../app/actions/dialogs-actions.c:66
-#, fuzzy
-#| msgctxt "dialogs-action"
-#| msgid "Open the layers dialog"
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
-msgstr "Abre el diálogo de capas"
+msgstr "Abre el diálogo de simetría"
 
 #: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
@@ -1296,19 +1291,14 @@ msgid "Open the paint dynamics editor"
 msgstr "Abre el editor de dinámica de la pintura"
 
 #: ../app/actions/dialogs-actions.c:161
-#, fuzzy
-#| msgid "Paintbrush"
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
-msgstr "Pincel"
+msgstr "_Pinceles MyPaint"
 
 #: ../app/actions/dialogs-actions.c:162
-#, fuzzy
-#| msgctxt "dialogs-action"
-#| msgid "Open the brushes dialog"
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
-msgstr "Abre el diálogo de pinceles"
+msgstr "Abre el diálogo de pinceles mypaint"
 
 #: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
@@ -2033,12 +2023,11 @@ msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
 
 #: ../app/actions/dynamics-actions.c:66
-#, fuzzy
 #| msgctxt "dynamics-action"
 #| msgid "Copy dynamics file location to clipboard"
 msgctxt "dynamics-action"
 msgid "Show dynamics file location in the file manager"
-msgstr "Copiar al portapapeles la ruta del archivo de dinámica"
+msgstr "Mostrar la ruta del archivo de dinámica en el gestor de archivos"
 
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
@@ -2349,66 +2338,66 @@ msgstr "_Rehacer"
 msgid "_Fade..."
 msgstr "_Desvanecer…"
 
-#: ../app/actions/edit-commands.c:151
+#: ../app/actions/edit-commands.c:152
 msgid "Clear Undo History"
 msgstr "Vaciar historial de deshacer"
 
-#: ../app/actions/edit-commands.c:177
+#: ../app/actions/edit-commands.c:178
 msgid "Really clear image's undo history?"
 msgstr "¿Seguro que quiere vaciar el histórico de deshacer de la imagen?"
 
-#: ../app/actions/edit-commands.c:190
+#: ../app/actions/edit-commands.c:191
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "Al limpiar el historial de deshacer de esta imagen se recuperarán %s de "
 "memoria."
 
-#: ../app/actions/edit-commands.c:220
+#: ../app/actions/edit-commands.c:221
 msgid "Cut pixels to the clipboard"
 msgstr "Cortar los píxeles al portapapeles"
 
-#: ../app/actions/edit-commands.c:250 ../app/actions/edit-commands.c:279
+#: ../app/actions/edit-commands.c:251 ../app/actions/edit-commands.c:280
 msgid "Copied pixels to the clipboard"
 msgstr "Píxeles copiados a una memoria intermedia con nombre"
 
-#: ../app/actions/edit-commands.c:343 ../app/actions/edit-commands.c:379
-#: ../app/actions/edit-commands.c:573 ../app/tools/gimpseamlessclonetool.c:295
+#: ../app/actions/edit-commands.c:344 ../app/actions/edit-commands.c:380
+#: ../app/actions/edit-commands.c:580 ../app/tools/gimpseamlessclonetool.c:295
 msgid "There is no image data in the clipboard to paste."
 msgstr "No hay datos de imágenes para pegar en el portapapeles."
 
-#: ../app/actions/edit-commands.c:366 ../app/core/gimpbrushclipboard.c:168
+#: ../app/actions/edit-commands.c:367 ../app/core/gimpbrushclipboard.c:168
 #: ../app/core/gimppatternclipboard.c:168 ../app/widgets/gimpclipboard.c:346
 msgid "Clipboard"
 msgstr "Portapapeles"
 
-#: ../app/actions/edit-commands.c:393
+#: ../app/actions/edit-commands.c:394
 msgid "Cut Named"
 msgstr "Cortar (con nombre)"
 
-#: ../app/actions/edit-commands.c:396 ../app/actions/edit-commands.c:437
-#: ../app/actions/edit-commands.c:457
+#: ../app/actions/edit-commands.c:397 ../app/actions/edit-commands.c:438
+#: ../app/actions/edit-commands.c:458
 msgid "Enter a name for this buffer"
 msgstr "Ponga un nombre a este búfer"
 
-#: ../app/actions/edit-commands.c:434
+#: ../app/actions/edit-commands.c:435
 msgid "Copy Named"
 msgstr "Copiar (con nombre)"
 
-#: ../app/actions/edit-commands.c:454
+#: ../app/actions/edit-commands.c:455
 msgid "Copy Visible Named "
 msgstr "Copiar visible con nombre"
 
-#: ../app/actions/edit-commands.c:590
+#: ../app/actions/edit-commands.c:597
 msgid "There is no active layer or channel to cut from."
 msgstr "No hay una capa o canal activo desde donde cortar."
 
-#: ../app/actions/edit-commands.c:595 ../app/actions/edit-commands.c:627
-#: ../app/actions/edit-commands.c:651
+#: ../app/actions/edit-commands.c:602 ../app/actions/edit-commands.c:634
+#: ../app/actions/edit-commands.c:658
 msgid "(Unnamed Buffer)"
 msgstr "(Búfer sin nombre)"
 
-#: ../app/actions/edit-commands.c:622
+#: ../app/actions/edit-commands.c:629
 msgid "There is no active layer or channel to copy from."
 msgstr "No hay una capa o canal activo desde donde se pueda copiar."
 
@@ -2762,20 +2751,18 @@ msgid "Recently Used"
 msgstr "Usados recientemente"
 
 #: ../app/actions/filters-actions.c:59
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Blur"
 msgctxt "filters-action"
 msgid "_Blur"
-msgstr "_Desenfoque"
+msgstr "_Difuminar"
 
 #: ../app/actions/filters-actions.c:61
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_Noise"
-msgstr "R_uido"
+msgstr "_Ruido"
 
 #: ../app/actions/filters-actions.c:63
 #, fuzzy
@@ -2794,12 +2781,11 @@ msgid "En_hance"
 msgstr "Real_zar"
 
 #: ../app/actions/filters-actions.c:67
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "C_ombine"
 msgctxt "filters-action"
 msgid "C_ombine"
-msgstr "Combi_nar"
+msgstr "C_ombinar"
 
 #: ../app/actions/filters-actions.c:69
 #, fuzzy
@@ -2834,12 +2820,11 @@ msgid "_Artistic"
 msgstr "_Artísticos"
 
 #: ../app/actions/filters-actions.c:77
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Decor"
 msgctxt "filters-action"
 msgid "_Decor"
-msgstr "Dec_orativos"
+msgstr "_Decorativos"
 
 #: ../app/actions/filters-actions.c:79
 #, fuzzy
@@ -2850,12 +2835,11 @@ msgid "_Map"
 msgstr "_Mapa"
 
 #: ../app/actions/filters-actions.c:81
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Render"
 msgctxt "filters-action"
 msgid "_Render"
-msgstr "Render_izado"
+msgstr "_Renderizado"
 
 #: ../app/actions/filters-actions.c:83
 #, fuzzy
@@ -2882,12 +2866,11 @@ msgid "_Nature"
 msgstr "_Naturaleza"
 
 #: ../app/actions/filters-actions.c:89
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "N_oise"
 msgctxt "filters-action"
 msgid "N_oise"
-msgstr "R_uido"
+msgstr "_Ruido"
 
 #: ../app/actions/filters-actions.c:91
 #, fuzzy
@@ -2930,12 +2913,11 @@ msgid "_Apply Canvas..."
 msgstr "_Aplicar lienzo..."
 
 #: ../app/actions/filters-actions.c:116
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Display _Filters..."
 msgctxt "filters-action"
 msgid "Apply _Lens..."
-msgstr "Mostrar _filtros…"
+msgstr "Aplicar _lente…"
 
 #: ../app/actions/filters-actions.c:121
 msgctxt "filters-action"
@@ -2943,12 +2925,11 @@ msgid "_Bump Map..."
 msgstr "Mapa de _relieve..."
 
 #: ../app/actions/filters-actions.c:126
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "Color to _Alpha..."
 msgctxt "filters-action"
 msgid "_Color to Gray..."
-msgstr "Color a _alfa…"
+msgstr "_Color a escala de grises…"
 
 #: ../app/actions/filters-actions.c:131
 msgctxt "filters-action"
@@ -2956,12 +2937,11 @@ msgid "Ca_rtoon..."
 msgstr "_Viñeta…"
 
 #: ../app/actions/filters-actions.c:136
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "_New Channel..."
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
-msgstr "Canal _nuevo…"
+msgstr "Mezclador de _canal…"
 
 #: ../app/actions/filters-actions.c:141
 msgctxt "filters-action"
@@ -2986,12 +2966,11 @@ msgid "Color _Reduction..."
 msgstr "_Reducción de color…"
 
 #: ../app/actions/filters-actions.c:161
-#, fuzzy
 #| msgctxt "colormap-action"
 #| msgid "_Edit Color..."
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
-msgstr "_Editar color…"
+msgstr "_Rotar colores…"
 
 #: ../app/actions/filters-actions.c:166
 msgctxt "filters-action"
@@ -3134,7 +3113,7 @@ msgstr "_Paso alto..."
 #: ../app/actions/filters-actions.c:276
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr ""
+msgstr "_Ilusión…"
 
 #: ../app/actions/filters-actions.c:281
 msgctxt "filters-action"
@@ -3191,7 +3170,7 @@ msgstr "Desenfoque ga_ussiano…"
 #: ../app/actions/filters-actions.c:321
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr ""
+msgstr "_Ampliar desenfoque de movimiento…"
 
 #: ../app/actions/filters-actions.c:326
 #, fuzzy
@@ -3274,7 +3253,7 @@ msgstr "_Rejilla…"
 #: ../app/actions/filters-actions.c:386
 msgctxt "filters-action"
 msgid "Oili_fy..."
-msgstr ""
+msgstr "Pintura al ó_leo…"
 
 #: ../app/actions/filters-actions.c:391
 msgctxt "filters-action"
@@ -3365,7 +3344,7 @@ msgstr "_Brillo y contraste…"
 #: ../app/actions/filters-actions.c:466
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV..."
-msgstr ""
+msgstr "_Expansión del contraste HSV"
 
 #: ../app/actions/filters-actions.c:471
 #, fuzzy
@@ -3399,7 +3378,7 @@ msgstr "Tamaño del _lienzo…"
 #: ../app/actions/filters-actions.c:491
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
-msgstr ""
+msgstr "_Mosaico sin costura…"
 
 #: ../app/actions/filters-actions.c:496
 msgctxt "filters-action"
@@ -5070,7 +5049,7 @@ msgid "Layer"
 msgstr "Capa"
 
 #: ../app/actions/layers-commands.c:260 ../app/actions/layers-commands.c:328
-#: ../app/widgets/gimpdrawabletreeview.c:319
+#: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:839
 msgid "New Layer"
 msgstr "Capa nueva"
@@ -5696,89 +5675,136 @@ msgid "Save the selection to a channel"
 msgstr "Guarda la selección en un canal"
 
 #: ../app/actions/select-actions.c:117
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Float selection"
+msgctxt "select-action"
+msgid "_Fill Selection Outline..."
+msgstr "Selección flotante"
+
+#: ../app/actions/select-actions.c:118
+#, fuzzy
+#| msgctxt "view-action"
+#| msgid "Display the selection outline"
+msgctxt "select-action"
+msgid "Fill the selection outline"
+msgstr "Muestra el contorno de la selección"
+
+#: ../app/actions/select-actions.c:123
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Float selection"
+msgctxt "select-action"
+msgid "_Fill Selection Outline"
+msgstr "Selección flotante"
+
+#: ../app/actions/select-actions.c:124
+#, fuzzy
+#| msgctxt "select-action"
+#| msgid "Stroke the selection with last used values"
+msgctxt "select-action"
+msgid "Fill the selection outline with last used values"
+msgstr "Trazar la selección con los últimos valores usados"
+
+#: ../app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "_Trazar selección [Stroke]…"
 
-#: ../app/actions/select-actions.c:118
+#: ../app/actions/select-actions.c:130
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Pintar a lo largo del contorno de la selección"
 
-#: ../app/actions/select-actions.c:123
+#: ../app/actions/select-actions.c:135
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr "_Trazar selección [Stroke]"
 
-#: ../app/actions/select-actions.c:124
+#: ../app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Trazar la selección con los últimos valores usados"
 
-#: ../app/actions/select-commands.c:157
+#: ../app/actions/select-commands.c:158
 msgid "Feather Selection"
 msgstr "Difuminar selección [Feather]"
 
-#: ../app/actions/select-commands.c:161
+#: ../app/actions/select-commands.c:162
 msgid "Feather selection by"
 msgstr "Difuminar selección en"
 
-#: ../app/actions/select-commands.c:198
+#: ../app/actions/select-commands.c:199
 msgid "Shrink Selection"
 msgstr "Encoger selección"
 
-#: ../app/actions/select-commands.c:202
+#: ../app/actions/select-commands.c:203
 msgid "Shrink selection by"
 msgstr "Encoger selección en"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:211 ../app/actions/select-commands.c:295
+#: ../app/actions/select-commands.c:212 ../app/actions/select-commands.c:296
 #, fuzzy
 #| msgid "Select a single contiguous area"
 msgid "_Selected areas continue outside the image"
 msgstr "Seleccionar un área contigua simple"
 
-#: ../app/actions/select-commands.c:214
+#: ../app/actions/select-commands.c:215
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
 "Cuando se está encogiendo, actúa como si las áreas seleccionadas continuaran "
 "fuera de la imagen."
 
-#: ../app/actions/select-commands.c:241
+#: ../app/actions/select-commands.c:242
 msgid "Grow Selection"
 msgstr "Agrandar selección"
 
-#: ../app/actions/select-commands.c:245
+#: ../app/actions/select-commands.c:246
 msgid "Grow selection by"
 msgstr "Agrandar selección en"
 
-#: ../app/actions/select-commands.c:271
+#: ../app/actions/select-commands.c:272
 msgid "Border Selection"
 msgstr "Selección de borde"
 
 # ¿Bordear selección por (serrador)
-#: ../app/actions/select-commands.c:275
+#: ../app/actions/select-commands.c:276
 msgid "Border selection by"
 msgstr "Selección de borde en"
 
 #. Feather button
-#: ../app/actions/select-commands.c:284
+#: ../app/actions/select-commands.c:285
 msgid "_Feather border"
 msgstr "_Difuminar los bordes"
 
-#: ../app/actions/select-commands.c:298
+#: ../app/actions/select-commands.c:299
 msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 "Cuando se está bordeando, actúa como si las áreas seleccionadas continuaran "
 "fuera de la imagen."
 
-#: ../app/actions/select-commands.c:358 ../app/actions/select-commands.c:391
-#: ../app/actions/vectors-commands.c:389 ../app/actions/vectors-commands.c:423
+#: ../app/actions/select-commands.c:359 ../app/actions/select-commands.c:390
+#: ../app/actions/vectors-commands.c:390 ../app/actions/vectors-commands.c:422
+#: ../app/dialogs/fill-dialog.c:162
+#, fuzzy
+#| msgid "There is no active layer or channel to cut from."
+msgid "There is no active layer or channel to fill."
+msgstr "No hay una capa o canal activo desde donde cortar."
+
+#: ../app/actions/select-commands.c:365
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Float selection"
+msgid "Fill Selection Outline"
+msgstr "Selección flotante"
+
+#: ../app/actions/select-commands.c:435 ../app/actions/select-commands.c:468
+#: ../app/actions/vectors-commands.c:467 ../app/actions/vectors-commands.c:501
 #: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
 msgstr "No hay una capa o canal activo adonde se pueda trazar."
 
-#: ../app/actions/select-commands.c:364
+#: ../app/actions/select-commands.c:441
 msgid "Stroke Selection"
 msgstr "Trazar selección"
 
@@ -6309,163 +6335,202 @@ msgid "Lower this path to the bottom"
 msgstr "Bajar esta ruta hasta abajo del todo"
 
 #: ../app/actions/vectors-actions.c:112
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
 msgctxt "vectors-action"
-msgid "Stro_ke Path..."
-msgstr "Tra_zar ruta…"
+msgid "Fill Path..."
+msgstr "Voltear la ruta"
 
 #: ../app/actions/vectors-actions.c:113
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
 msgctxt "vectors-action"
-msgid "Paint along the path"
-msgstr "Pintar a lo largo de la ruta"
+msgid "Fill the path"
+msgstr "Voltear la ruta"
 
 #: ../app/actions/vectors-actions.c:118
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
 msgctxt "vectors-action"
-msgid "Stro_ke Path"
-msgstr "_Trazar ruta [Stroke]"
+msgid "Fill Path"
+msgstr "Voltear la ruta"
 
 #: ../app/actions/vectors-actions.c:119
+#, fuzzy
+#| msgctxt "vectors-action"
+#| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
-msgid "Paint along the path with last values"
+msgid "Fill the path with last values"
 msgstr "Trazar la ruta con los últimos valores"
 
 #: ../app/actions/vectors-actions.c:124
 msgctxt "vectors-action"
+msgid "Stro_ke Path..."
+msgstr "Tra_zar ruta…"
+
+#: ../app/actions/vectors-actions.c:125
+msgctxt "vectors-action"
+msgid "Paint along the path"
+msgstr "Pintar a lo largo de la ruta"
+
+#: ../app/actions/vectors-actions.c:130
+msgctxt "vectors-action"
+msgid "Stro_ke Path"
+msgstr "_Trazar ruta [Stroke]"
+
+#: ../app/actions/vectors-actions.c:131
+msgctxt "vectors-action"
+msgid "Paint along the path with last values"
+msgstr "Trazar la ruta con los últimos valores"
+
+#: ../app/actions/vectors-actions.c:136
+msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "Co_piar ruta"
 
-#: ../app/actions/vectors-actions.c:129
+#: ../app/actions/vectors-actions.c:141
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "Pegar ru_ta"
 
-#: ../app/actions/vectors-actions.c:134
+#: ../app/actions/vectors-actions.c:146
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "E_xportar ruta…"
 
-#: ../app/actions/vectors-actions.c:139
+#: ../app/actions/vectors-actions.c:151
 msgctxt "vectors-action"
 msgid "I_mport Path..."
 msgstr "I_mportar ruta…"
 
-#: ../app/actions/vectors-actions.c:147
+#: ../app/actions/vectors-actions.c:159
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr "_Visible"
 
-#: ../app/actions/vectors-actions.c:153
+#: ../app/actions/vectors-actions.c:165
 msgctxt "vectors-action"
 msgid "_Linked"
 msgstr "_Enlazado"
 
 #. GIMP_STOCK_LOCK
-#: ../app/actions/vectors-actions.c:159
+#: ../app/actions/vectors-actions.c:171
 msgctxt "vectors-action"
 msgid "L_ock strokes"
 msgstr "B_loquear los trazos"
 
-#: ../app/actions/vectors-actions.c:165
+#: ../app/actions/vectors-actions.c:177
 msgctxt "vectors-action"
 msgid "L_ock position"
 msgstr "B_loquear posición"
 
-#: ../app/actions/vectors-actions.c:174
+#: ../app/actions/vectors-actions.c:186
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr "Ruta a sele_cción"
 
-#: ../app/actions/vectors-actions.c:175
+#: ../app/actions/vectors-actions.c:187
 msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr "Ruta a selección"
 
-#: ../app/actions/vectors-actions.c:180
+#: ../app/actions/vectors-actions.c:192
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr "A partir de una _ruta"
 
-#: ../app/actions/vectors-actions.c:181
+#: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
 msgid "Replace selection with path"
 msgstr "Sustituir la selección con la ruta"
 
-#: ../app/actions/vectors-actions.c:186
+#: ../app/actions/vectors-actions.c:198
 msgctxt "vectors-action"
 msgid "_Add to Selection"
 msgstr "_Añadir a selección"
 
-#: ../app/actions/vectors-actions.c:187
+#: ../app/actions/vectors-actions.c:199
 msgctxt "vectors-action"
 msgid "Add path to selection"
 msgstr "Añadir ruta a selección"
 
-#: ../app/actions/vectors-actions.c:192
+#: ../app/actions/vectors-actions.c:204
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
 msgstr "_Sustraer de selección"
 
-#: ../app/actions/vectors-actions.c:193
+#: ../app/actions/vectors-actions.c:205
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
 msgstr "Sustraer la ruta de la selección"
 
-#: ../app/actions/vectors-actions.c:198
+#: ../app/actions/vectors-actions.c:210
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
 msgstr "_Intersectar con selección"
 
-#: ../app/actions/vectors-actions.c:199
+#: ../app/actions/vectors-actions.c:211
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
 msgstr "Establecer la ruta como su intersección con la selección"
 
-#: ../app/actions/vectors-actions.c:207
+#: ../app/actions/vectors-actions.c:219
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "Se_lección a ruta"
 
-#: ../app/actions/vectors-actions.c:208 ../app/actions/vectors-actions.c:214
+#: ../app/actions/vectors-actions.c:220 ../app/actions/vectors-actions.c:226
 msgctxt "vectors-action"
 msgid "Selection to path"
 msgstr "Selección a ruta"
 
-#: ../app/actions/vectors-actions.c:213
+#: ../app/actions/vectors-actions.c:225
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "A _ruta"
 
-#: ../app/actions/vectors-actions.c:219
+#: ../app/actions/vectors-actions.c:231
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Selección a ruta (_avanzado)"
 
-#: ../app/actions/vectors-actions.c:220
+#: ../app/actions/vectors-actions.c:232
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Opciones avanzadas"
 
-#: ../app/actions/vectors-commands.c:138
+#: ../app/actions/vectors-commands.c:139
 msgid "Path Attributes"
 msgstr "Atributos de la ruta"
 
-#: ../app/actions/vectors-commands.c:141
+#: ../app/actions/vectors-commands.c:142
 msgid "Edit Path Attributes"
 msgstr "Editar atributos de la ruta"
 
-#: ../app/actions/vectors-commands.c:165 ../app/vectors/gimpvectors.c:214
+#: ../app/actions/vectors-commands.c:166 ../app/vectors/gimpvectors.c:222
 #: ../app/widgets/gimpvectorstreeview.c:254
 msgid "Path"
 msgstr "Ruta"
 
-#: ../app/actions/vectors-commands.c:166
+#: ../app/actions/vectors-commands.c:167
 msgid "New Path"
 msgstr "Nueva ruta"
 
-#: ../app/actions/vectors-commands.c:169
+#: ../app/actions/vectors-commands.c:170
 msgid "New Path Options"
 msgstr "Opciones de ruta nueva"
 
-#: ../app/actions/vectors-commands.c:395 ../app/tools/gimpvectoroptions.c:202
+#: ../app/actions/vectors-commands.c:396
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
+msgid "Fill Path"
+msgstr "Voltear la ruta"
+
+#: ../app/actions/vectors-commands.c:473 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:1977
 msgid "Stroke Path"
 msgstr "Trazar ruta"
@@ -8553,12 +8618,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Anclar la selección flotante"
 
-#: ../app/core/core-enums.c:898 ../app/core/gimp-edit.c:286
+#: ../app/core/core-enums.c:898 ../app/core/gimp-edit.c:287
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Pegar"
 
-#: ../app/core/core-enums.c:899 ../app/core/gimp-edit.c:595
+#: ../app/core/core-enums.c:899 ../app/core/gimp-edit.c:557
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Cortar"
@@ -8919,41 +8984,16 @@ msgstr ""
 msgid "Deleting \"%s\" failed: %s"
 msgstr "El borrado de «%s» ha fallado: %s"
 
-#: ../app/core/gimp-edit.c:183 ../app/core/gimpimage-new.c:318
+#: ../app/core/gimp-edit.c:184 ../app/core/gimpimage-new.c:318
 msgid "Pasted Layer"
 msgstr "Capa pegada"
 
-#: ../app/core/gimp-edit.c:420
+#: ../app/core/gimp-edit.c:419
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Limpiar"
 
-#: ../app/core/gimp-edit.c:448
-msgctxt "undo-type"
-msgid "Fill with Foreground Color"
-msgstr "Rellenar con el color del frente"
-
-#: ../app/core/gimp-edit.c:452
-msgctxt "undo-type"
-msgid "Fill with Background Color"
-msgstr "Rellenar con el color del fondo"
-
-#: ../app/core/gimp-edit.c:456
-msgctxt "undo-type"
-msgid "Fill with White"
-msgstr "Rellenar con blanco"
-
-#: ../app/core/gimp-edit.c:460
-msgctxt "undo-type"
-msgid "Fill with Transparency"
-msgstr "Rellenar con transparencia"
-
-#: ../app/core/gimp-edit.c:464
-msgctxt "undo-type"
-msgid "Fill with Pattern"
-msgstr "Rellenar con un patrón"
-
-#: ../app/core/gimp-edit.c:608
+#: ../app/core/gimp-edit.c:570
 msgid "Global Buffer"
 msgstr "Búfer global"
 
@@ -9024,7 +9064,7 @@ msgstr "Creando la carpeta «%s»…"
 msgid "Cannot create folder '%s': %s"
 msgstr "No se puede crear la carpeta «%s»: %s"
 
-#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:275
+#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:305
 msgid "No patterns available for this operation."
 msgstr "No hay patrones disponibles para esta operación."
 
@@ -9241,125 +9281,125 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Seleccionar por color"
 
-#: ../app/core/gimpchannel.c:282
+#: ../app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Renombrar el canal"
 
-#: ../app/core/gimpchannel.c:283
+#: ../app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Mover el canal"
 
-#: ../app/core/gimpchannel.c:284
+#: ../app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Escalar el canal"
 
-#: ../app/core/gimpchannel.c:285
+#: ../app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Redimensionar el canal"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Voltear el canal"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:295
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Rotar el canal"
 
-#: ../app/core/gimpchannel.c:288 ../app/core/gimpdrawable-transform.c:953
+#: ../app/core/gimpchannel.c:296 ../app/core/gimpdrawable-transform.c:953
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transformar el canal"
 
-#: ../app/core/gimpchannel.c:289
-msgctxt "undo-type"
-msgid "Stroke Channel"
-msgstr "Impresionar el canal"
-
-#: ../app/core/gimpchannel.c:290 ../app/core/gimpselection.c:612
-msgctxt "undo-type"
-msgid "Channel to Selection"
-msgstr "Canal a selección"
-
-#: ../app/core/gimpchannel.c:291
-msgctxt "undo-type"
-msgid "Reorder Channel"
-msgstr "Reordenar el canal"
-
-#: ../app/core/gimpchannel.c:292
-msgctxt "undo-type"
-msgid "Raise Channel"
-msgstr "Elevar el canal"
-
-#: ../app/core/gimpchannel.c:293
-msgctxt "undo-type"
-msgid "Raise Channel to Top"
-msgstr "Elevar el canal hasta lo alto"
-
-#: ../app/core/gimpchannel.c:294
-msgctxt "undo-type"
-msgid "Lower Channel"
-msgstr "Bajar el canal"
-
-#: ../app/core/gimpchannel.c:295
-msgctxt "undo-type"
-msgid "Lower Channel to Bottom"
-msgstr "Bajar el canal hasta lo más bajo"
-
-#: ../app/core/gimpchannel.c:296
-msgid "Channel cannot be raised higher."
-msgstr "El canal no puede ser elevado más alto."
-
-#: ../app/core/gimpchannel.c:297
-msgid "Channel cannot be lowered more."
-msgstr "El canal no puede descender más."
-
-#: ../app/core/gimpchannel.c:320
-msgctxt "undo-type"
-msgid "Feather Channel"
-msgstr "Difuminar el canal"
-
-#: ../app/core/gimpchannel.c:321
-msgctxt "undo-type"
-msgid "Sharpen Channel"
-msgstr "Enfocar el canal"
-
-#: ../app/core/gimpchannel.c:322
-msgctxt "undo-type"
-msgid "Clear Channel"
-msgstr "Limpiar el canal"
-
-#: ../app/core/gimpchannel.c:323
+#: ../app/core/gimpchannel.c:297 ../app/core/gimpchannel.c:332
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Rellenar el canal"
 
-#: ../app/core/gimpchannel.c:324
+#: ../app/core/gimpchannel.c:298
+msgctxt "undo-type"
+msgid "Stroke Channel"
+msgstr "Impresionar el canal"
+
+#: ../app/core/gimpchannel.c:299 ../app/core/gimpselection.c:656
+msgctxt "undo-type"
+msgid "Channel to Selection"
+msgstr "Canal a selección"
+
+#: ../app/core/gimpchannel.c:300
+msgctxt "undo-type"
+msgid "Reorder Channel"
+msgstr "Reordenar el canal"
+
+#: ../app/core/gimpchannel.c:301
+msgctxt "undo-type"
+msgid "Raise Channel"
+msgstr "Elevar el canal"
+
+#: ../app/core/gimpchannel.c:302
+msgctxt "undo-type"
+msgid "Raise Channel to Top"
+msgstr "Elevar el canal hasta lo alto"
+
+#: ../app/core/gimpchannel.c:303
+msgctxt "undo-type"
+msgid "Lower Channel"
+msgstr "Bajar el canal"
+
+#: ../app/core/gimpchannel.c:304
+msgctxt "undo-type"
+msgid "Lower Channel to Bottom"
+msgstr "Bajar el canal hasta lo más bajo"
+
+#: ../app/core/gimpchannel.c:305
+msgid "Channel cannot be raised higher."
+msgstr "El canal no puede ser elevado más alto."
+
+#: ../app/core/gimpchannel.c:306
+msgid "Channel cannot be lowered more."
+msgstr "El canal no puede descender más."
+
+#: ../app/core/gimpchannel.c:329
+msgctxt "undo-type"
+msgid "Feather Channel"
+msgstr "Difuminar el canal"
+
+#: ../app/core/gimpchannel.c:330
+msgctxt "undo-type"
+msgid "Sharpen Channel"
+msgstr "Enfocar el canal"
+
+#: ../app/core/gimpchannel.c:331
+msgctxt "undo-type"
+msgid "Clear Channel"
+msgstr "Limpiar el canal"
+
+#: ../app/core/gimpchannel.c:333
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Invertir el canal"
 
-#: ../app/core/gimpchannel.c:325
+#: ../app/core/gimpchannel.c:334
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Bordear el canal"
 
-#: ../app/core/gimpchannel.c:326
+#: ../app/core/gimpchannel.c:335
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Agrandar el canal"
 
-#: ../app/core/gimpchannel.c:327
+#: ../app/core/gimpchannel.c:336
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Achicar el canal"
 
-#: ../app/core/gimpchannel.c:328
+#: ../app/core/gimpchannel.c:337
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Channel"
@@ -9367,21 +9407,27 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Voltear el canal"
 
-#: ../app/core/gimpchannel.c:828
+#: ../app/core/gimpchannel.c:836
+#, fuzzy
+#| msgid "Cannot stroke empty channel."
+msgid "Cannot fill empty channel."
+msgstr "No se puede trazar un canal vacío."
+
+#: ../app/core/gimpchannel.c:872
 msgid "Cannot stroke empty channel."
 msgstr "No se puede trazar un canal vacío."
 
-#: ../app/core/gimpchannel.c:1728
+#: ../app/core/gimpchannel.c:1772
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Definir el color del canal"
 
-#: ../app/core/gimpchannel.c:1782
+#: ../app/core/gimpchannel.c:1826
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Definir la opacidad del canal"
 
-#: ../app/core/gimpchannel.c:1879 ../app/core/gimpselection.c:161
+#: ../app/core/gimpchannel.c:1923 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Máscara de selección"
 
@@ -9490,11 +9536,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:557 ../app/core/gimpdatafactory.c:560
-#: ../app/core/gimpitem.c:545 ../app/core/gimpitem.c:548
+#: ../app/core/gimpitem.c:548 ../app/core/gimpitem.c:551
 msgid "copy"
 msgstr "copiar"
 
-#: ../app/core/gimpdatafactory.c:569 ../app/core/gimpitem.c:556
+#: ../app/core/gimpdatafactory.c:569 ../app/core/gimpitem.c:559
 #, c-format
 msgid "%s copy"
 msgstr "Copia de %s"
@@ -9567,7 +9613,7 @@ msgstr "Mezclar"
 msgid "Calculating distance map"
 msgstr "Calculando mapa de distancias"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:253
+#: ../app/core/gimpdrawable-bucket-fill.c:190
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Relleno de cubeta"
@@ -9581,7 +9627,7 @@ msgstr "Ecualizar"
 msgid "Computing alpha of unknown pixels"
 msgstr "Calculando alfa de píxeles desconocidos."
 
-#: ../app/core/gimpdrawable-fill.c:154
+#: ../app/core/gimpdrawable-fill.c:154 ../app/vectors/gimpvectors.c:644
 msgid "Not enough points to fill"
 msgstr "No hay suficientes puntos que rellenar"
 
@@ -9602,7 +9648,7 @@ msgid "Offset Drawable"
 msgstr "Desplazar el dibujable"
 
 #: ../app/core/gimpdrawable-stroke.c:111
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:636
+#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:666
 msgid "Not enough points to stroke"
 msgstr "No hay suficientes puntos para trazar"
 
@@ -9629,17 +9675,49 @@ msgstr "Transformación"
 msgid "Output type"
 msgstr "Tipo de salida"
 
-#: ../app/core/gimpfilloptions.c:92
+#: ../app/core/gimpfilloptions.c:93
 #, fuzzy
 #| msgctxt "dockable-action"
 #| msgid "_Tab Style"
 msgid "Style"
 msgstr "Es_tilo de pestaña"
 
-#: ../app/core/gimpfilloptions.c:100 ../app/pdb/gimppdbcontext.c:99
+#: ../app/core/gimpfilloptions.c:101 ../app/pdb/gimppdbcontext.c:99
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:150
 msgid "Antialiasing"
 msgstr "Alisado"
+
+#: ../app/core/gimpfilloptions.c:279
+msgctxt "undo-type"
+msgid "Fill with Foreground Color"
+msgstr "Rellenar con el color del frente"
+
+#: ../app/core/gimpfilloptions.c:284
+msgctxt "undo-type"
+msgid "Fill with Background Color"
+msgstr "Rellenar con el color del fondo"
+
+#: ../app/core/gimpfilloptions.c:289
+msgctxt "undo-type"
+msgid "Fill with White"
+msgstr "Rellenar con blanco"
+
+#: ../app/core/gimpfilloptions.c:295
+msgctxt "undo-type"
+msgid "Fill with Transparency"
+msgstr "Rellenar con transparencia"
+
+#: ../app/core/gimpfilloptions.c:311 ../app/core/gimpfilloptions.c:379
+msgctxt "undo-type"
+msgid "Fill with Pattern"
+msgstr "Rellenar con un patrón"
+
+#: ../app/core/gimpfilloptions.c:376
+#, fuzzy
+#| msgid "Fill with plain color"
+msgctxt "undo-type"
+msgid "Fill with Solid Color"
+msgstr "Rellenar con color sencillo"
 
 #: ../app/core/gimpgradient-load.c:72
 #, fuzzy, c-format
@@ -10260,17 +10338,17 @@ msgstr[1] "%d capas"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "No se ha podido abrir la miniatura «%s»: %s"
 
-#: ../app/core/gimpitem.c:1915
+#: ../app/core/gimpitem.c:1957
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Adjuntar parásito"
 
-#: ../app/core/gimpitem.c:1925
+#: ../app/core/gimpitem.c:1967
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Adjuntar una parásito al elemento"
 
-#: ../app/core/gimpitem.c:1976 ../app/core/gimpitem.c:1983
+#: ../app/core/gimpitem.c:2018 ../app/core/gimpitem.c:2025
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Eliminar un parásito del elemento"
@@ -10589,57 +10667,65 @@ msgstr ""
 "No se puede ejecutar la retrollamada %s. El complemento correspondiente debe "
 "haber fallado."
 
-#: ../app/core/gimpselection.c:162
+#: ../app/core/gimpselection.c:169
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Mover la selección"
 
-#: ../app/core/gimpselection.c:163
+#: ../app/core/gimpselection.c:170
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Float selection"
+msgctxt "undo-type"
+msgid "Fill Selection"
+msgstr "Selección flotante"
+
+#: ../app/core/gimpselection.c:171
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Trazar la selección"
 
-#: ../app/core/gimpselection.c:180
+#: ../app/core/gimpselection.c:188
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Difuminar la selección"
 
-#: ../app/core/gimpselection.c:181
+#: ../app/core/gimpselection.c:189
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Enfocar la selección"
 
-#: ../app/core/gimpselection.c:182
+#: ../app/core/gimpselection.c:190
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Seleccionar nada"
 
-#: ../app/core/gimpselection.c:183
+#: ../app/core/gimpselection.c:191
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Seleccionar todo"
 
-#: ../app/core/gimpselection.c:184
+#: ../app/core/gimpselection.c:192
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Invertir la selección"
 
-#: ../app/core/gimpselection.c:185
+#: ../app/core/gimpselection.c:193
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Selección de borde"
 
-#: ../app/core/gimpselection.c:186
+#: ../app/core/gimpselection.c:194
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Agrandar selección"
 
-#: ../app/core/gimpselection.c:187
+#: ../app/core/gimpselection.c:195
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Encoger selección"
 
-#: ../app/core/gimpselection.c:188
+#: ../app/core/gimpselection.c:196
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float Selection"
@@ -10647,26 +10733,32 @@ msgctxt "undo-type"
 msgid "Flood Selection"
 msgstr "Flotar la selección"
 
-#: ../app/core/gimpselection.c:294
+#: ../app/core/gimpselection.c:302
+#, fuzzy
+#| msgid "There is no selection to stroke."
+msgid "There is no selection to fill."
+msgstr "No hay ninguna selección que trazar."
+
+#: ../app/core/gimpselection.c:338
 msgid "There is no selection to stroke."
 msgstr "No hay ninguna selección que trazar."
 
-#: ../app/core/gimpselection.c:700
+#: ../app/core/gimpselection.c:744
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "No se puede cortar o copiar porque la región seleccionada está vacía."
 
-#: ../app/core/gimpselection.c:829
+#: ../app/core/gimpselection.c:873
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "No se puede hacer flotar la selección porque la región seleccionada está "
 "vacía."
 
-#: ../app/core/gimpselection.c:836
+#: ../app/core/gimpselection.c:880
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Flotar la selección"
 
-#: ../app/core/gimpselection.c:852
+#: ../app/core/gimpselection.c:896
 msgid "Floated Layer"
 msgstr "Capa flotante"
 
@@ -10746,7 +10838,7 @@ msgstr "Activar pintado simétrico"
 
 #: ../app/core/gimpsymmetry-mandala.c:112
 msgid "Mandala"
-msgstr ""
+msgstr "Mandala"
 
 #: ../app/core/gimpsymmetry-mandala.c:119
 #, fuzzy
@@ -10853,7 +10945,7 @@ msgstr "_Desplazamiento…"
 
 #: ../app/core/gimpsymmetry-tiling.c:123
 msgid "X-shift between lines (pixels)"
-msgstr ""
+msgstr "Desplazamiento X entre líneas (píxeles)"
 
 #: ../app/core/gimpsymmetry-tiling.c:130
 #, fuzzy
@@ -11558,6 +11650,19 @@ msgstr ""
 "\n"
 "%s"
 
+#: ../app/dialogs/fill-dialog.c:87
+#, fuzzy
+#| msgid "Choose Stroke Style"
+msgid "Choose Fill Style"
+msgstr "Seleccionar el estilo de trazo"
+
+#: ../app/dialogs/fill-dialog.c:94
+#, fuzzy
+#| msgctxt "file-action"
+#| msgid "_File"
+msgid "_Fill"
+msgstr "_Archivo"
+
 #: ../app/dialogs/grid-dialog.c:85
 msgid "Configure Grid"
 msgstr "Configurar la rejilla"
@@ -12207,7 +12312,7 @@ msgstr "_Pseudoprueba de renderizado:"
 
 #: ../app/dialogs/preferences-dialog.c:1536
 msgid "Use black _point compensation for softproofing"
-msgstr ""
+msgstr "Usar compensación de _punto negro para la pseudoprueba"
 
 #: ../app/dialogs/preferences-dialog.c:1554
 msgid "Mark out of gamut colors"
@@ -12252,7 +12357,7 @@ msgstr "Herramientas de _transformación"
 
 #: ../app/dialogs/preferences-dialog.c:1602
 msgid "_Seamless Clone tool"
-msgstr ""
+msgstr "Herramienta de _clonado continuo"
 
 #: ../app/dialogs/preferences-dialog.c:1612
 #: ../app/dialogs/preferences-dialog.c:1613
@@ -13396,8 +13501,8 @@ msgid "The image has been exported to '%s'."
 msgstr "La imagen se ha exportado en «%s»."
 
 #: ../app/display/gimpdisplayshell-dnd.c:248
-#: ../app/display/gimpdisplayshell-dnd.c:652
-#: ../app/display/gimpdisplayshell-dnd.c:711
+#: ../app/display/gimpdisplayshell-dnd.c:669
+#: ../app/display/gimpdisplayshell-dnd.c:728
 msgid "Drop New Layer"
 msgstr "Soltar la capa nueva"
 
@@ -13406,14 +13511,14 @@ msgid "Drop New Path"
 msgstr "Descartar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
-#: ../app/display/gimpdisplayshell-dnd.c:461 ../app/tools/gimpblendtool.c:245
+#: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:323
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "No se pueden modificar píxeles de los grupos de capas."
 
 #: ../app/display/gimpdisplayshell-dnd.c:370
-#: ../app/display/gimpdisplayshell-dnd.c:469 ../app/tools/gimpblendtool.c:252
+#: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:330 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
@@ -13421,27 +13526,27 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 msgid "The active layer's pixels are locked."
 msgstr "Los píxeles de la capa activa están bloqueados."
 
-#: ../app/display/gimpdisplayshell-dnd.c:389
-#: ../app/widgets/gimpdrawabletreeview.c:242
-#: ../app/widgets/gimpdrawabletreeview.c:330
+#: ../app/display/gimpdisplayshell-dnd.c:413
+#: ../app/widgets/gimpdrawabletreeview.c:247
+#: ../app/widgets/gimpdrawabletreeview.c:358
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Arrastrar patrón a la capa"
 
-#: ../app/display/gimpdisplayshell-dnd.c:390
-#: ../app/widgets/gimpdrawabletreeview.c:266
-#: ../app/widgets/gimpdrawabletreeview.c:331
+#: ../app/display/gimpdisplayshell-dnd.c:435
+#: ../app/widgets/gimpdrawabletreeview.c:277
+#: ../app/widgets/gimpdrawabletreeview.c:378
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Arrastrar color a la capa"
 
-#: ../app/display/gimpdisplayshell-dnd.c:548
+#: ../app/display/gimpdisplayshell-dnd.c:565
 #: ../app/widgets/gimplayertreeview.c:729
 msgid "Drop layers"
 msgstr "Descartar las capas"
 
-#: ../app/display/gimpdisplayshell-dnd.c:685
-#: ../app/display/gimpdisplayshell-dnd.c:703
+#: ../app/display/gimpdisplayshell-dnd.c:702
+#: ../app/display/gimpdisplayshell-dnd.c:720
 #: ../app/widgets/gimplayertreeview.c:804 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Búfer descartado"
@@ -13886,7 +13991,7 @@ msgstr "Umbral B/N"
 msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
-msgstr ""
+msgstr "Hacer transparencia todo o nada, umbralizando el canal alfa a un valor"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -13908,7 +14013,7 @@ msgstr "Documentos"
 msgid "GIMP Startup"
 msgstr "Inicio de GIMP"
 
-#: ../app/paint/gimpairbrush.c:67 ../app/tools/gimpairbrushtool.c:55
+#: ../app/paint/gimpairbrush.c:68 ../app/tools/gimpairbrushtool.c:55
 msgid "Airbrush"
 msgstr "Aerógrafo"
 
@@ -14420,7 +14525,7 @@ msgstr "Transformación 2D"
 msgid "2D Transforming"
 msgstr "Aplicando transformación 2D"
 
-#: ../app/pdb/edit-cmds.c:805
+#: ../app/pdb/edit-cmds.c:791
 msgid "Blending"
 msgstr "Mezclando"
 
@@ -16471,7 +16576,7 @@ msgstr "Niveles activos"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Number of levels to perform solving"
-msgstr ""
+msgstr "Número de niveles para representar la solución"
 
 #: ../app/tools/gimpforegroundselectoptions.c:130
 msgid "Iterations"
@@ -16638,11 +16743,11 @@ msgstr "Seleccionar una operación de la lista de arriba"
 #: ../app/tools/gimphandletransformoptions.c:73
 #: ../app/tools/gimphandletransformoptions.c:74
 msgid "Handle mode"
-msgstr ""
+msgstr "Modo del tirador"
 
 #: ../app/tools/gimphandletransformoptions.c:167
 msgid "Add handles and transform the image"
-msgstr ""
+msgstr "Añadir tiradores y transformar la imagen"
 
 #: ../app/tools/gimphandletransformoptions.c:172
 #, fuzzy
@@ -16890,7 +16995,7 @@ msgstr "Pulse o arrastre para añadir un punto"
 
 #: ../app/tools/gimpiscissorstool.c:1133 ../app/tools/gimpiscissorstool.c:1145
 msgid "Modify Scissors Curve"
-msgstr ""
+msgstr "Modificar la curva de las tijeras"
 
 #: ../app/tools/gimplevelstool.c:138
 msgid "Levels Tool: Adjust color levels"
@@ -17177,7 +17282,7 @@ msgstr "Densidad"
 #: ../app/tools/gimpnpointdeformationoptions.c:84
 #: ../app/tools/gimpnpointdeformationoptions.c:85
 msgid "Rigidity"
-msgstr ""
+msgstr "Rigidez"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:91
 #: ../app/tools/gimpnpointdeformationoptions.c:92
@@ -17212,7 +17317,7 @@ msgstr "Redimensionar"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:231
 msgid "Rigid (Rubber)"
-msgstr ""
+msgstr "Rígido (Borrador)"
 
 #: ../app/tools/gimpnpointdeformationtool.c:158
 #: ../app/tools/gimpnpointdeformationtool.c:1014
@@ -17225,6 +17330,8 @@ msgstr "Información del puntero"
 #: ../app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
 msgstr ""
+"Herramienta de deformación N-Point: deformación de tipo borrador de imágenes "
+"usando puntos"
 
 #: ../app/tools/gimpnpointdeformationtool.c:161
 #, fuzzy
@@ -17251,12 +17358,12 @@ msgstr "Exportar los ajustes de umbral"
 #: ../app/tools/gimpoperationtool.c:690
 #, c-format
 msgid "Aux Input"
-msgstr ""
+msgstr "Entrada auxiliar"
 
 #: ../app/tools/gimpoperationtool.c:695
 #, c-format
 msgid "Aux%d Input"
-msgstr ""
+msgstr "Entrada auxiliar%d"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -17300,7 +17407,7 @@ msgstr "Reiniciar con los valores predeterminados"
 
 #: ../app/tools/gimppaintoptions-gui.c:250
 msgid "Lock brush size to zoom"
-msgstr ""
+msgstr "Bloquear el tamaño del pincel a la ampliación"
 
 #: ../app/tools/gimppaintoptions-gui.c:314
 msgid "Fade Options"
@@ -17312,7 +17419,7 @@ msgstr "Opciones de color"
 
 #: ../app/tools/gimppaintoptions-gui.c:576
 msgid "Link to brush default"
-msgstr ""
+msgstr "Enlazar al pincel predeterminado"
 
 #: ../app/tools/gimppainttool.c:156
 msgid "Click to paint"
@@ -17592,19 +17699,21 @@ msgstr "Re_centrar punto medio del segmento"
 msgid ""
 "Maximal scale of refinement points to be used for the interpolation mesh"
 msgstr ""
+"Máxima escala de puntos de refinamiento que se utilizará para la malla de "
+"interpolación"
 
 #: ../app/tools/gimpseamlessclonetool.c:190
 #: ../app/tools/gimpseamlessclonetool.c:763
 msgid "Seamless Clone"
-msgstr ""
+msgstr "Clonado continuo"
 
 #: ../app/tools/gimpseamlessclonetool.c:191
 msgid "Seamless Clone: Seamlessly paste one image into another"
-msgstr ""
+msgstr "Clonado continuo: pega continuamente una imagen en otra"
 
 #: ../app/tools/gimpseamlessclonetool.c:192
 msgid "_Seamless Clone"
-msgstr ""
+msgstr "_Clonado continuo"
 
 #: ../app/tools/gimpseamlessclonetool.c:801
 #, fuzzy
@@ -17997,51 +18106,53 @@ msgstr "Mover"
 #: ../app/tools/gimptransformoptions.c:517
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
-msgstr ""
+msgstr "Restringir el movimiento a ángulos de 45 grados desde el centro (%s)"
 
 #: ../app/tools/gimptransformoptions.c:519
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
-msgstr ""
+msgstr "Mantener la proporción de aspecto cuando se escala (%s)"
 
 #: ../app/tools/gimptransformoptions.c:521
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
-msgstr ""
+msgstr "Restringir la rotación a incrementos de 15 grados (%s)"
 
 #: ../app/tools/gimptransformoptions.c:523
 #, c-format
 msgid "Shear along edge direction only (%s)"
-msgstr ""
+msgstr "Inclinar a lo largo de la dirección del borde solamente (%s)"
 
 #: ../app/tools/gimptransformoptions.c:525
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
+"Restringir la perspectiva de los tiradores para mover a lo largo los bordes "
+"y la diagonal (%s)"
 
 #: ../app/tools/gimptransformoptions.c:528
 #, c-format
 msgid "From pivot  (%s)"
-msgstr ""
+msgstr "Desde el pivote (%s)"
 
 #: ../app/tools/gimptransformoptions.c:530
 #, c-format
 msgid "Scale from pivot point (%s)"
-msgstr ""
+msgstr "Escalar desde el punto de pivote (%s)"
 
 #: ../app/tools/gimptransformoptions.c:532
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
-msgstr ""
+msgstr "Inclinar el borde opuesto de la misma cantidad (%s)"
 
 #: ../app/tools/gimptransformoptions.c:534
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
-msgstr ""
+msgstr "Mantener la posición del pivote mientras se cambia la perspectiva (%s)"
 
 #: ../app/tools/gimptransformoptions.c:537
 msgid "Pivot"
-msgstr ""
+msgstr "Pivote"
 
 #: ../app/tools/gimptransformoptions.c:538
 #, fuzzy, c-format
@@ -18052,7 +18163,7 @@ msgstr "Tipo  (%s)"
 #: ../app/tools/gimptransformoptions.c:539
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
-msgstr ""
+msgstr "Ajustar el pivote a las esquinas y el centro (%s)"
 
 #: ../app/tools/gimptransformoptions.c:540
 msgid "Lock"
@@ -18305,15 +18416,15 @@ msgstr "Comportamiento"
 
 #: ../app/tools/gimpwarpoptions.c:84
 msgid "Strength"
-msgstr ""
+msgstr "Fuerza"
 
 #: ../app/tools/gimpwarpoptions.c:85
 msgid "Effect Strength"
-msgstr ""
+msgstr "Fuerza del efecto"
 
 #: ../app/tools/gimpwarpoptions.c:92
 msgid "Effect Size"
-msgstr ""
+msgstr "Tamaño del efecto"
 
 #: ../app/tools/gimpwarpoptions.c:99
 #, fuzzy
@@ -18349,7 +18460,7 @@ msgstr "Transformar rejilla"
 
 #: ../app/tools/gimpwarptool.c:143
 msgid "Warp Transform: Deform with different tools"
-msgstr ""
+msgstr "Transformada de deformación: deforma con diferentes herramientas "
 
 #: ../app/tools/gimpwarptool.c:144
 #, fuzzy
@@ -18359,7 +18470,7 @@ msgstr "_Transformar rejilla"
 
 #: ../app/tools/gimpwarptool.c:462 ../app/tools/gimpwarptool.c:474
 msgid "Warp Tool Stroke"
-msgstr ""
+msgstr "Herramienta de deformación de trazo"
 
 #: ../app/tools/gimpwarptool.c:570
 #, fuzzy
@@ -18375,12 +18486,12 @@ msgstr "Transformar rejilla"
 
 #: ../app/tools/gimpwarptool.c:886
 msgid "Please add some warp strokes first."
-msgstr ""
+msgstr "Agregue primero algunos trazos de deformación."
 
 #: ../app/tools/gimpwarptool.c:899 ../app/tools/gimpwarptool.c:935
 #, c-format
 msgid "Rendering Frame %d"
-msgstr ""
+msgstr "Renderizando marco %d"
 
 #: ../app/tools/gimpwarptool.c:914 ../app/tools/gimpwarptool.c:943
 #, c-format
@@ -18548,97 +18659,105 @@ msgctxt "warp-behavior"
 msgid "Smooth warping"
 msgstr "Suavizado:"
 
-#: ../app/vectors/gimpvectors.c:215
+#: ../app/vectors/gimpvectors.c:223
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Renombrar la ruta"
 
-#: ../app/vectors/gimpvectors.c:216
+#: ../app/vectors/gimpvectors.c:224
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Mover la ruta"
 
-#: ../app/vectors/gimpvectors.c:217
+#: ../app/vectors/gimpvectors.c:225
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Escalar la ruta"
 
-#: ../app/vectors/gimpvectors.c:218
+#: ../app/vectors/gimpvectors.c:226
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Redimensionar la ruta"
 
-#: ../app/vectors/gimpvectors.c:219
+#: ../app/vectors/gimpvectors.c:227
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Voltear la ruta"
 
-#: ../app/vectors/gimpvectors.c:220
+#: ../app/vectors/gimpvectors.c:228
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Rotar la ruta"
 
-#: ../app/vectors/gimpvectors.c:221
+#: ../app/vectors/gimpvectors.c:229
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Transformar la ruta"
 
-#: ../app/vectors/gimpvectors.c:222
+#: ../app/vectors/gimpvectors.c:230
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Flip Path"
+msgctxt "undo-type"
+msgid "Fill Path"
+msgstr "Voltear la ruta"
+
+#: ../app/vectors/gimpvectors.c:231
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Trazar ruta"
 
-#: ../app/vectors/gimpvectors.c:223
+#: ../app/vectors/gimpvectors.c:232
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Ruta a selección"
 
-#: ../app/vectors/gimpvectors.c:224
+#: ../app/vectors/gimpvectors.c:233
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Reordenar la ruta"
 
-#: ../app/vectors/gimpvectors.c:225
+#: ../app/vectors/gimpvectors.c:234
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Elevar la ruta"
 
-#: ../app/vectors/gimpvectors.c:226
+#: ../app/vectors/gimpvectors.c:235
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Subir la ruta al lugar más alto"
 
-#: ../app/vectors/gimpvectors.c:227
+#: ../app/vectors/gimpvectors.c:236
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
-#: ../app/vectors/gimpvectors.c:228
+#: ../app/vectors/gimpvectors.c:237
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Bajar la ruta al lugar más bajo"
 
-#: ../app/vectors/gimpvectors.c:229
+#: ../app/vectors/gimpvectors.c:238
 msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada más alto."
 
-#: ../app/vectors/gimpvectors.c:230
+#: ../app/vectors/gimpvectors.c:239
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender más."
 
-#: ../app/vectors/gimpvectors.c:445
+#: ../app/vectors/gimpvectors.c:454
 msgid "Move Path"
 msgstr "Mover la ruta"
 
-#: ../app/vectors/gimpvectors.c:544
+#: ../app/vectors/gimpvectors.c:553
 msgid "Flip Path"
 msgstr "Voltear la ruta"
 
-#: ../app/vectors/gimpvectors.c:575
+#: ../app/vectors/gimpvectors.c:584
 msgid "Rotate Path"
 msgstr "Rotar la ruta"
 
-#: ../app/vectors/gimpvectors.c:604
+#: ../app/vectors/gimpvectors.c:613
 msgid "Transform Path"
 msgstr "Transformar la ruta"
 
@@ -18914,7 +19033,7 @@ msgstr "Seleccionar un controlador de acción de evento"
 
 #: ../app/widgets/gimpcontrollerinfo.c:112
 msgid "Enabled"
-msgstr ""
+msgstr "Activado"
 
 #: ../app/widgets/gimpcontrollerinfo.c:119
 #, fuzzy
@@ -19441,11 +19560,11 @@ msgstr "Tipo de archivo"
 msgid "Extensions"
 msgstr "Extensiones"
 
-#: ../app/widgets/gimpfilleditor.c:125
+#: ../app/widgets/gimpfilleditor.c:124
 msgid "Fill Color"
 msgstr "Rellenar con color"
 
-#: ../app/widgets/gimpfilleditor.c:144
+#: ../app/widgets/gimpfilleditor.c:143
 msgid "_Antialiasing"
 msgstr "_Anti-alias"
 
@@ -19630,7 +19749,7 @@ msgstr "Canal:"
 
 #: ../app/widgets/gimpiconpicker.c:245
 msgid "From File..."
-msgstr ""
+msgstr "Desde el archivo…"
 
 #: ../app/widgets/gimpiconpicker.c:254
 #, fuzzy
@@ -19649,7 +19768,7 @@ msgstr "Pegar icono del portapapeles"
 
 #: ../app/widgets/gimpiconpicker.c:512
 msgid "Load Icon Image"
-msgstr ""
+msgstr "Cargar imagen de icono"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
@@ -19764,7 +19883,7 @@ msgstr "Detectado automáticamente"
 
 #: ../app/widgets/gimpoverlaydialog.c:229
 msgid "Detach dialog from canvas"
-msgstr ""
+msgstr "Desprender diálogo del lienzo"
 
 #: ../app/widgets/gimppaletteeditor.c:240
 #: ../app/widgets/gimppaletteeditor.c:717
@@ -19886,31 +20005,32 @@ msgstr "Esta operación no tiene propiedades editables"
 
 #: ../app/widgets/gimppropgui.c:472
 msgid "1,700 K – Match flame"
-msgstr ""
+msgstr "1,700 K – Llama de fósforo"
 
 #: ../app/widgets/gimppropgui.c:473
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr ""
+msgstr "1,850 K – Llama de vela, anochecer/amanecer"
 
 #: ../app/widgets/gimppropgui.c:474
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
-msgstr ""
+msgstr "3,000 K – Lámparas blancas fluorescentes compactas suaves (o cálidas)"
 
 #: ../app/widgets/gimppropgui.c:475
 msgid "3,300 K – Incandescent lamps"
-msgstr ""
+msgstr "3,300 K – Lámparas incandescentes"
 
 #: ../app/widgets/gimppropgui.c:476
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr ""
+"3,200 K – Lámparas de estudio, lámparas incandescentes de gran voltaje, etc."
 
 #: ../app/widgets/gimppropgui.c:477
 msgid "3,350 K – Studio \"CP\" light"
-msgstr ""
+msgstr "3,350 K – Luz de estudio \"CP\""
 
 #: ../app/widgets/gimppropgui.c:478
 msgid "4,100 K – Moonlight"
-msgstr ""
+msgstr "4,100 K – Luz de luna"
 
 #: ../app/widgets/gimppropgui.c:479
 msgid "5,000 K – D50"
@@ -19919,10 +20039,11 @@ msgstr "5,000 K – D50"
 #: ../app/widgets/gimppropgui.c:480
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr ""
+"5,000 K – Lámparas fluorescentes compactas de color blanco frío/luz diurna"
 
 #: ../app/widgets/gimppropgui.c:481
 msgid "5,000 K – Horizon daylight"
-msgstr ""
+msgstr "5,000 K – Luz diurna del horizonte"
 
 #: ../app/widgets/gimppropgui.c:482
 msgid "5,500 K – D55"
@@ -19930,11 +20051,11 @@ msgstr "5,500 K – D55"
 
 #: ../app/widgets/gimppropgui.c:483
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr ""
+msgstr "5,500 K – Luz diurna vertical, flash electrónico"
 
 #: ../app/widgets/gimppropgui.c:484
 msgid "6,200 K – Xenon short-arc lamp"
-msgstr ""
+msgstr "6,200 K – Lámpara de xenón de arco corto"
 
 #: ../app/widgets/gimppropgui.c:485
 msgid "6,500 K – D65"
@@ -19942,7 +20063,7 @@ msgstr "6,500 K – D65"
 
 #: ../app/widgets/gimppropgui.c:486
 msgid "6,500 K – Daylight, overcast"
-msgstr ""
+msgstr "6,500 K – Luz diurna, nublado"
 
 #: ../app/widgets/gimppropgui.c:487
 msgid "7,500 K – D75"
@@ -19960,14 +20081,17 @@ msgstr "Todas las imágenes XCF"
 #, c-format
 msgid "Disables compression to make the XCF file readable by %s and later."
 msgstr ""
+"Desactiva la compresión para hacer los archivos XCF legibles para %s y "
+"posterior."
 
 #: ../app/widgets/gimpsavedialog.c:278
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr ""
+"Los metadatos no serán visibles en versiones GIMP más antiguas que la 2.10."
 
 #: ../app/widgets/gimpsavedialog.c:342
 msgid "Save this XCF file with maximum compatibility"
-msgstr ""
+msgstr "Guardar este archivo XCF con la máxima compatibilidad"
 
 #: ../app/widgets/gimpselectiondata.c:248
 #, c-format
@@ -20206,7 +20330,7 @@ msgstr "Tachado"
 #: ../app/widgets/gimptextstyleeditor.c:1309
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
-msgstr ""
+msgstr "Tipografía «%s» no disponible en este sistema"
 
 #: ../app/widgets/gimpthumbbox.c:328
 #, c-format
@@ -20422,7 +20546,7 @@ msgstr "Fondo"
 #: ../app/widgets/widgets-enums.c:52
 msgctxt "circle-background"
 msgid "Plain"
-msgstr ""
+msgstr "Plano"
 
 #: ../app/widgets/widgets-enums.c:53
 msgctxt "circle-background"
@@ -20567,6 +20691,8 @@ msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
+"Parásito corrupto de datos exif descubierto.\n"
+"Los datos exif no se pudieron migrar: %s"
 
 #: ../app/xcf/xcf-load.c:349
 #, c-format
@@ -20574,6 +20700,8 @@ msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated: %s"
 msgstr ""
+"Parásito corrupto de metadatos gimp descubierto.\n"
+"Los datos XMP no se pudieron migrar: %s"
 
 #: ../app/xcf/xcf-load.c:535
 msgid ""

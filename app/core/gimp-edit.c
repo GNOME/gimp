@@ -407,7 +407,7 @@ gimp_edit_clear (GimpImage    *image,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  options = gimp_fill_options_new (context->gimp);
+  options = gimp_fill_options_new (context->gimp, NULL, FALSE);
 
   if (gimp_drawable_has_alpha (drawable))
     gimp_fill_options_set_by_fill_type (options, context,

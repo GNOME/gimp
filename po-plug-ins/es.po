@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-06 20:22+0000\n"
-"PO-Revision-Date: 2016-03-07 11:42+0100\n"
+"POT-Creation-Date: 2016-03-15 19:13+0000\n"
+"PO-Revision-Date: 2016-03-16 08:49+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -4079,7 +4079,7 @@ msgid "Width and/or height of frame '%s' is zero!"
 msgstr "La anchura y/o la altura del cuadro «%s» es cero."
 
 #: ../plug-ins/common/file-xmc.c:1585
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 #| "Try to change the hot spot position, layer geometry or save without auto-"
@@ -4089,13 +4089,13 @@ msgid ""
 "Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"No se pudo guardar el cursor porque el punto activo no está sobre el "
-"fotograma «%s».\n"
-"Trate de cambiar la posición del punto activo o la geometría de las capas, o "
-"guárdelo sin auto-recortar."
+"No se puede exportar el cursor porque el punto activo no esta en el marco "
+"«%s». \n"
+"Trate de cambiar la posición del punto activo, la geometría de la capa o "
+"exportar sin auto-recorte."
 
 #: ../plug-ins/common/file-xmc.c:1748
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Your cursor was successfully saved but it contains one or more frames "
 #| "whose width or height is more than %ipx.\n"
@@ -4105,12 +4105,11 @@ msgid ""
 "whose width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
-"El cursor se ha guardado con éxito pero contiene uno o más cuadros cuya "
-"anchura o altura es mayor de %ipx.\n"
-"Ello desbaratará la pantalla en ciertos entornos."
+"El cursor se ha exportado correctamente pero no contiene uno o más cuadros "
+"cuya anchura o altura es más de %ipx.\n"
+"Esto desordenara la pantalla en algunos entornos."
 
 #: ../plug-ins/common/file-xmc.c:1755
-#, fuzzy
 #| msgid ""
 #| "Your cursor was successfully saved but it contains one or more frames "
 #| "whose nominal size is not supported by GNOME settings.\n"
@@ -4122,11 +4121,11 @@ msgid ""
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"El cursor se ha guardado con éxito pero contiene uno o más cuadros cuyo "
-"tamaño nominal no está soportado por los ajustes de GNOME.\n"
-"Puede satisfacerlo marcando «Sustituir el tamaño de todos los cuadros...» en "
-"el diálogo de Guardar, o el cursor podría no aparecer en los ajustes de "
-"GNOME."
+"El cursor se ha exportado correctamente pero contiene uno o más cuadros cuyo "
+"tamaño nominal no está soportado por la configuración de GNOME.\n"
+"Puede cumplir con ello marcando «Sustituir el tamaño de todos los marcos...» "
+"en el diálogo de exportación, o el cursor podría no aparecer en la "
+"configuración de GNOME."
 
 #: ../plug-ins/common/file-xmc.c:1992
 #, c-format
@@ -8733,7 +8732,6 @@ msgid "Caption"
 msgstr "Título"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:11
-#| msgid "Description _writer:"
 msgid "Captionwriter"
 msgstr "Redactor"
 
@@ -9192,9 +9190,6 @@ msgstr "No está disponible el manual de usuario de GIMP."
 #. * Cf. bug 762282.
 #.
 #: ../plug-ins/help/gimphelpdomain.c:193
-#| msgid ""
-#| "Please install the additional help package or use the online user manual "
-#| "at http://docs.gimp.org/."
 msgid ""
 "Please install the additional help package or use the online user manual at: "
 "http://docs.gimp.org/"
@@ -10970,7 +10965,6 @@ msgid "Selection to Path Advanced Settings"
 msgstr "Configuración avanzada de selección a ruta"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:98
-#| msgid "Threshold:"
 msgid "Align Threshold:"
 msgstr "Alineación del límite:"
 
@@ -10979,7 +10973,6 @@ msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr "Si dos puntos finales están cerca de este valor, tienden a igualarse."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
-#| msgid "Gray Threshold"
 msgid "Corner Always Threshold:"
 msgstr "Siempre la esquina límite:"
 
@@ -10994,7 +10987,6 @@ msgstr ""
 "«entorno de la esquina» de un punto con un ángulo más pequeño."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:126
-#| msgid "Foreground"
 msgid "Corner Surround:"
 msgstr "Entorno de la esquina:"
 
@@ -11006,7 +10998,6 @@ msgstr ""
 "esquina o no."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:139
-#| msgid "Lower t_hreshold:"
 msgid "Corner Threshold:"
 msgstr "Borde de esquina:"
 
@@ -11039,7 +11030,6 @@ msgid "A second number of adjacent points to consider when filtering."
 msgstr "Un segundo número de puntos adyacentes a considerar cuando al filtrar."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:183
-#| msgid "_Filter length:"
 msgid "Filter Epsilon:"
 msgstr "Filtro Epsilon:"
 
@@ -11049,12 +11039,14 @@ msgid ""
 "filter_alternative_surround points differ by more than this, use the one "
 "from filter_alternative_surround."
 msgstr ""
+"Si los ángulos entre los vectores producidos por filtro_envolvente y los "
+"puntos filtro_envolvente_alternativo difieren por más de esto, utilice el de "
+"filtro_envolvente_alternativo."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:198
-#, fuzzy
 #| msgid "T_ile saturation:"
 msgid "Filter Iteration Count:"
-msgstr "Saturación del _enlosado:"
+msgstr "Filtrar el número de iteraciones:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:202
 msgid ""
@@ -11063,50 +11055,58 @@ msgid ""
 "any points that ``should'' be corners aren't found, the curve goes to hell "
 "around that point."
 msgstr ""
+"Número de veces para suavizar los puntos de datos originales. Al aumentar "
+"este número drásticamente (a 50 o menos) puede producir resultados mucho "
+"mejores. Pero si los puntos que no se encuentran «deben» ser curvas, la "
+"curva va al infierno alrededor de ese punto."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:214
-#, fuzzy
 #| msgid "_Filter length:"
 msgid "Filter Percent:"
-msgstr "Longitud del _filtro:"
+msgstr "Porcentaje de filtro:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:218
 msgid ""
 "To produce the new point, use the old point plus this times the neighbors."
 msgstr ""
+"Para producir el punto nuevo, use el punto antiguo más un porcentaje de sus "
+"vecinos."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:227
 msgid "Filter Secondary Surround:"
-msgstr ""
+msgstr "Filtro secundario envolvente:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:231
 msgid ""
 "Number of adjacent points to consider if `filter_surround' points defines a "
 "straight line."
 msgstr ""
+"Número de puntos que considerar si los puntos de «filtro_envolvente» definen "
+"una línea recta."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:241
 msgid "Filter Surround:"
-msgstr ""
+msgstr "Filtro envolvente:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:245
 msgid "Number of adjacent points to consider when filtering."
-msgstr ""
+msgstr "Número de puntos adyacentes que considerar cuando filtra."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:253
 msgid "Keep Knees"
-msgstr ""
+msgstr "Guardar los ángulos"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:258
 msgid ""
 "Says whether or not to remove ``knee'' points after finding the outline."
 msgstr ""
+"Menciona si se eliminan o no los puntos «ángulo» después de encontrar el "
+"contorno."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:269
-#, fuzzy
 #| msgid "Deviation threshold:"
 msgid "Line Reversion Threshold:"
-msgstr "Umbral de desviación:"
+msgstr "Línea límite de reversión:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:273
 msgid ""
@@ -11115,34 +11115,41 @@ msgid ""
 "weighted by the square of the curve length, to make shorter curves more "
 "likely to be reverted."
 msgstr ""
+"Si una curva está más cerca de una línea recta que este, permanece una línea "
+"recta, incluso si de alguna manera cambiará de nuevo a una curva. Esta se "
+"mide por el cuadrado de la longitud de la curva, para hacer curvas más "
+"cortas, más probablemente para reconvertirse."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:285
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Line Threshold:"
-msgstr "Umbral:"
+msgstr "Línea límite:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:289
 msgid ""
 "How many pixels (on the average) a spline can diverge from the line "
 "determined by its endpoints before it is changed to a straight line."
 msgstr ""
+"El número de píxeles (en promedio) que una curva puede diferir de la línea "
+"determinada por sus puntos finales antes de que cambie a una línea recta."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:299
 msgid "Reparametrize Improvement:"
-msgstr ""
+msgstr "Cambio de parámetros de mejora:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
 msgid ""
 "If reparameterization doesn't improve the fit by this much percent, stop "
 "doing it. Amount of error at which it is pointless to reparameterize."
 msgstr ""
+"Si el cambio de parámetros no mejora la adaptación con cierto porcentaje, se "
+"dejará de hacerlo. Cantidad de error en el que no tiene sentido cambiar los "
+"parámetros."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:313
-#, fuzzy
 #| msgid "Deviation threshold:"
 msgid "Reparametrize Threshold:"
-msgstr "Umbral de desviación:"
+msgstr "Cambio de parámetros del límite:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:317
 msgid ""
@@ -11152,9 +11159,13 @@ msgid ""
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
+"Cantidad de error en el que no tiene sentido cambiar los parámetros. Esto "
+"sucede, por ejemplo, cuando trata de ajustarse al contorno de la parte "
+"exterior de una «O» con una sola curva. La adaptación inicial no es lo "
+"bastante buena para mejorarla con la iteración de Newton-Raphson. Sería "
+"mejor detectar los casos en los que no se encontró ninguna esquina."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:330
-#| msgid "Subdivide:"
 msgid "Subdivide Search:"
 msgstr "Subdividir búsqueda:"
 
@@ -11167,19 +11178,19 @@ msgstr ""
 "subdividir."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:343
-#, fuzzy
 #| msgid "Subdivide:"
 msgid "Subdivide Surround:"
-msgstr "Subdividir:"
+msgstr "Subdivisión envolvente:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:347
 msgid ""
 "Number of points to consider when deciding whether a given point is a better "
 "place to subdivide."
 msgstr ""
+"Número de puntos que considerar cuando se decide si un punto dado es un buen "
+"lugar para subdividir."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:357
-#| msgid "Threshold:"
 msgid "Subdivide Threshold:"
 msgstr "Límite de subdivisión:"
 
@@ -11192,7 +11203,6 @@ msgstr ""
 "mejor lugar para subdividir."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:371
-#| msgid "Transparent background"
 msgid "Tangent Surround:"
 msgstr "Marco de la tangente:"
 

@@ -44,6 +44,8 @@ libappdialogs_a_sources = \
 	file-open-location-dialog.h	\
 	file-save-dialog.c		\
 	file-save-dialog.h		\
+	fill-dialog.c			\
+	fill-dialog.h			\
 	grid-dialog.h                   \
 	grid-dialog.c                   \
 	image-merge-layers-dialog.c	\
