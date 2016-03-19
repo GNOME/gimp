@@ -196,9 +196,6 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 static void
 gimp_image_map_tool_base_init (GimpImageMapToolClass *klass)
 {
-  klass->recent_settings = gimp_list_new (GIMP_TYPE_SETTINGS, TRUE);
-  gimp_list_set_sort_func (GIMP_LIST (klass->recent_settings),
-                           (GCompareFunc) gimp_settings_compare);
 }
 
 static void
@@ -390,16 +387,23 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
       if (im_tool->config && klass->settings_name)
         {
-          GtkWidget *settings_ui;
-          GFile     *default_folder;
-          GFile     *settings_file;
+          GType          type = G_TYPE_FROM_INSTANCE (im_tool->config);
+          GimpContainer *settings;
+          GFile         *settings_file;
+          GFile         *default_folder;
+          GtkWidget     *settings_ui;
+
+          settings = gimp_gegl_config_get_container (type);
+          if (! gimp_list_get_sort_func (GIMP_LIST (settings)))
+            gimp_list_set_sort_func (GIMP_LIST (settings),
+                                     (GCompareFunc) gimp_settings_compare);
 
           settings_file = gimp_tool_info_get_options_file (tool_info,
                                                            ".settings");
           default_folder = gimp_directory_file (klass->settings_name, NULL);
 
           settings_ui = klass->get_settings_ui (im_tool,
-                                                klass->recent_settings,
+                                                settings,
                                                 settings_file,
                                                 klass->import_dialog_title,
                                                 klass->export_dialog_title,
@@ -838,6 +842,12 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *im_tool)
       im_tool->config = NULL;
     }
 
+  if (im_tool->default_config)
+    {
+      g_object_unref (im_tool->default_config);
+      im_tool->default_config = NULL;
+    }
+
   if (im_tool->title)
     {
       g_free (im_tool->title);
@@ -912,8 +922,7 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *im_tool)
       gimp_tool_gui_set_help_id     (im_tool->gui, im_tool->help_id);
     }
 
-  if (operation_name &&
-      gegl_operation_get_key (operation_name, "position-dependent"))
+  if (gegl_operation_get_key (operation_name, "position-dependent"))
     {
       if (im_tool->gui)
         gtk_widget_show (im_tool->region_combo);

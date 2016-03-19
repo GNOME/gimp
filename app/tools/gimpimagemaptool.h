@@ -68,8 +68,6 @@ struct _GimpImageMapToolClass
   const gchar        *import_dialog_title;
   const gchar        *export_dialog_title;
 
-  GimpContainer      *recent_settings;
-
   /* virtual functions */
   gchar     * (* get_operation)   (GimpImageMapTool  *im_tool,
                                    gchar            **title,
