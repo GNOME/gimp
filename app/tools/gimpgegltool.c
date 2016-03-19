@@ -49,16 +49,10 @@ enum
 
 /*  local function prototypes  */
 
-static gchar * gimp_gegl_tool_get_operation     (GimpImageMapTool  *im_tool,
-                                                 gchar            **title,
-                                                 gchar            **description,
-                                                 gchar            **undo_desc,
-                                                 gchar            **icon_name,
-                                                 gchar            **help_id);
-static void    gimp_gegl_tool_dialog            (GimpImageMapTool  *im_tool);
+static void   gimp_gegl_tool_dialog            (GimpImageMapTool *im_tool);
 
-static void    gimp_gegl_tool_operation_changed (GtkWidget         *widget,
-                                                 GimpGeglTool      *tool);
+static void   gimp_gegl_tool_operation_changed (GtkWidget        *widget,
+                                                GimpGeglTool     *tool);
 
 
 G_DEFINE_TYPE (GimpGeglTool, gimp_gegl_tool, GIMP_TYPE_OPERATION_TOOL)
@@ -88,8 +82,7 @@ gimp_gegl_tool_class_init (GimpGeglToolClass *klass)
 {
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  im_tool_class->get_operation = gimp_gegl_tool_get_operation;
-  im_tool_class->dialog        = gimp_gegl_tool_dialog;
+  im_tool_class->dialog = gimp_gegl_tool_dialog;
 }
 
 static void
@@ -330,31 +323,6 @@ gimp_get_geglopclasses (void)
 /*****************/
 /*  Gegl dialog  */
 /*****************/
-
-static gchar *
-gimp_gegl_tool_get_operation (GimpImageMapTool  *im_tool,
-                              gchar            **title,
-                              gchar            **description,
-                              gchar            **undo_desc,
-                              gchar            **icon_name,
-                              gchar            **help_id)
-{
-  gchar *operation;
-
-  operation = GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_operation (im_tool,
-                                                                       title,
-                                                                       description,
-                                                                       undo_desc,
-                                                                       icon_name,
-                                                                       help_id);
-
-  if (*description)
-    g_free (*description);
-
-  *description = g_strdup (_("GEGL Operation"));
-
-  return operation;
-}
 
 static void
 gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
