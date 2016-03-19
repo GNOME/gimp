@@ -565,6 +565,18 @@ G_DEFINE_TYPE (GimpOperationFlood, gimp_operation_flood,
 #define parent_class gimp_operation_flood_parent_class
 
 
+/* GEGL graph for the test case. */
+static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
+"<gegl>"
+"<node operation='gimp:flood'> </node>"
+"<node operation='gegl:load'>"
+"  <params>"
+"    <param name='path'>flood-input.png</param>"
+"  </params>"
+"</node>"
+"</gegl>";
+
+
 static void
 gimp_operation_flood_class_init (GimpOperationFloodClass *klass)
 {
@@ -589,6 +601,8 @@ gimp_operation_flood_class_init (GimpOperationFloodClass *klass)
                                  "name",        "gimp:flood",
                                  "categories",  "gimp",
                                  "description", "GIMP Flood operation",
+                                 "reference-image", "flood-output.png",
+                                 "reference-composition", reference_xml,
                                  NULL);
 
   operation_class->prepare                 = gimp_operation_flood_prepare;
