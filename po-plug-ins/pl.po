@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-26 16:47+0100\n"
-"PO-Revision-Date: 2016-02-26 16:48+0100\n"
+"POT-Creation-Date: 2016-03-20 16:02+0100\n"
+"PO-Revision-Date: 2016-03-20 16:03+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -3199,7 +3199,7 @@ msgstr "Dokument PDF"
 
 #: ../plug-ins/common/file-ps.c:1110
 #, c-format
-msgid "Could not interpret Postscript file '%s'"
+msgid "Could not interpret PostScript file '%s'"
 msgstr "Nie można zinterpretować pliku PostScript „%s”"
 
 #: ../plug-ins/common/file-ps.c:1247
@@ -9091,7 +9091,13 @@ msgstr "Strony pomocy dla „%s” są niedostępne."
 msgid "The GIMP user manual is not available."
 msgstr "Podręcznik użytkownika programu GIMP jest niedostępny."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#. TRANSLATORS: do not end the URL with a dot,
+#. * it would be in the link. Because of
+#. * technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
 "http://docs.gimp.org/"
@@ -9099,12 +9105,12 @@ msgstr ""
 "Proszę zainstalować dodatkowy pakiet pomocy lub skorzystać z podręcznika "
 "użytkownika online na stronie http://docs.gimp.org/"
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 "Być może brakuje mechanizmów GIO lub należy zainstalować bibliotekę GVFS."
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Identyfikator pomocy „%s” jest nieznany"
