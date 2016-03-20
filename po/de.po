@@ -14,7 +14,7 @@
 # Daniel Winzen <d@winzen4.de>, 2012, 2013.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2011, 2012, 2013.
 # Sven Claussner <sclaussner@src.gnome.org>, 2013.
-# Hartmut Kuhse <hk_priv@gmx.de>, 2016.
+# Hartmut Kuhse <hatti@gimp.org>, 2016.
 #
 msgid ""
 msgstr ""
@@ -22,15 +22,15 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-12-26 16:40+0000\n"
-"PO-Revision-Date: 2016-03-19 16:08+0100\n"
-"Last-Translator: Hartmut Kuhse <hk_priv@gmx.de>\n"
+"PO-Revision-Date: 2016-03-20 10:51+0100\n"
+"Last-Translator: Hartmut Kuhse <hatti@gimp.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.6.11\n"
 "X-Project-Style: gnome\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -7893,7 +7893,7 @@ msgstr "Bildschirm"
 #: ../app/core/core-enums.c:296
 msgctxt "layer-mode-effects"
 msgid "Old broken Overlay"
-msgstr ""
+msgstr "Alter, defekter Overlay Modus"
 
 #: ../app/core/core-enums.c:297
 msgctxt "layer-mode-effects"
@@ -7993,7 +7993,7 @@ msgstr "Farbton (LCH)"
 #: ../app/core/core-enums.c:316
 msgctxt "layer-mode-effects"
 msgid "Chroma (LCH)"
-msgstr ""
+msgstr "Sättigung (LCH)"
 
 #: ../app/core/core-enums.c:317
 msgctxt "layer-mode-effects"
@@ -8660,12 +8660,12 @@ msgstr "Zittern"
 #: ../app/core/core-enums.c:1142
 msgctxt "image-map-region"
 msgid "Use the selection as input"
-msgstr "Die Auswahl als Eingabe verwenden"
+msgstr "Auf Auswahl anwenden"
 
 #: ../app/core/core-enums.c:1143
 msgctxt "image-map-region"
 msgid "Use the entire layer as input"
-msgstr "Die gesamte Ebene als Eingabe verwenden"
+msgstr "Auf gesamte Ebene anwenden"
 
 #: ../app/core/gimp.c:686
 msgid "Initialization"
@@ -9530,12 +9530,16 @@ msgstr "Objekte anordnen"
 #: ../app/core/gimpimage-color-profile.c:88
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
+"ICC Profil Prüfung fehlgeschlagen. Der Name des parasite ist nicht 'icc-"
+"profile'"
 
 #: ../app/core/gimpimage-color-profile.c:97
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
 msgstr ""
+"ICC Profil Prüfung fehlgeschlagen. Der Modus des parasite ist nicht "
+"(PERSISTENT | UNDOABLE)"
 
 #: ../app/core/gimpimage-color-profile.c:154
 msgid "ICC profile validation failed: "
@@ -11448,7 +11452,7 @@ msgstr "Fa_rbanpassung der Drucksimulation:"
 
 #: ../app/dialogs/preferences-dialog.c:1536
 msgid "Use black _point compensation for softproofing"
-msgstr ""
+msgstr "Benutze Tiefenkompensation für das Soft Proofing"
 
 #: ../app/dialogs/preferences-dialog.c:1554
 msgid "Mark out of gamut colors"
@@ -11960,10 +11964,9 @@ msgid "Image Window Snapping Behavior"
 msgstr "Malverhalten des Bildfensters"
 
 #: ../app/dialogs/preferences-dialog.c:2575
-#, fuzzy
 #| msgid "Flipping"
 msgid "Snapping"
-msgstr "Wird gespiegelt"
+msgstr "Fangen"
 
 #: ../app/dialogs/preferences-dialog.c:2582
 msgid "Default Behavior in Normal Mode"
@@ -12175,7 +12178,6 @@ msgid "Icon Theme Folders"
 msgstr "Themenordner"
 
 #: ../app/dialogs/preferences-dialog.c:2780
-#, fuzzy
 #| msgid "Select Theme Folders"
 msgid "Select Icon Theme Folders"
 msgstr "Themenordner auswählen"
@@ -13129,10 +13131,9 @@ msgid "Ink Blob Angle"
 msgstr "Winkel des Tintenkleckses"
 
 #: ../app/paint/gimpmybrushcore.c:98
-#, fuzzy
 #| msgid "Airbrush"
 msgid "Mybrush"
-msgstr "Sprühpistole"
+msgstr "MyPaint Brush"
 
 #: ../app/paint/gimpmybrushcore.c:136
 #, fuzzy
@@ -13749,19 +13750,17 @@ msgid "Free Select"
 msgstr "Freie Auswahl"
 
 #: ../app/pdb/plug-in-compat-cmds.c:241
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Bump Map..."
 msgctxt "undo-type"
 msgid "Bump Map"
-msgstr "_Bump-Map …"
+msgstr "Bump-Map"
 
 #: ../app/pdb/plug-in-compat-cmds.c:313
-#, fuzzy
 #| msgid "Display"
 msgctxt "undo-type"
 msgid "Displace"
-msgstr "Anzeige"
+msgstr "Verschieben"
 
 #: ../app/pdb/plug-in-compat-cmds.c:347
 msgctxt "undo-type"
@@ -13799,7 +13798,7 @@ msgstr "Ebene automatisch zuschneiden"
 #: ../app/pdb/plug-in-compat-cmds.c:710
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
-msgstr ""
+msgstr "Kontrastspreizung (HSV)"
 
 #: ../app/pdb/plug-in-compat-cmds.c:864
 msgctxt "undo-type"
@@ -13896,10 +13895,9 @@ msgid "Lens Distortion"
 msgstr "Objektivfehler"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2389
-#, fuzzy
 msgctxt "undo-type"
 msgid "Tile Seamless"
-msgstr "Dateiname:"
+msgstr "Nahtlos schneiden"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2456
 msgctxt "undo-type"
@@ -13999,12 +13997,11 @@ msgid "Sobel"
 msgstr "Sobel"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3805
-#, fuzzy
 #| msgctxt "fill-style"
 #| msgid "Solid color"
 msgctxt "undo-type"
 msgid "Solid Noise"
-msgstr "Vollfarbe"
+msgstr "Rauschen"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3849
 msgctxt "undo-type"
@@ -14029,7 +14026,7 @@ msgstr "Wert umkehren"
 #: ../app/pdb/plug-in-compat-cmds.c:4077
 msgctxt "undo-type"
 msgid "Value Propagate"
-msgstr ""
+msgstr "Werte verteilen"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4124
 msgctxt "undo-type"
@@ -15072,10 +15069,9 @@ msgid "Click to add control points to all channels"
 msgstr "Klicken Sie zum Hinzufügen eines Kontrollpunktes zu allen Kanälen"
 
 #: ../app/tools/gimpcurvestool.c:337
-#, fuzzy
 #| msgid "Click to close the curve"
 msgid "Click to locate on curve"
-msgstr "Klicken Sie zum Schließen der Kurve"
+msgstr "Klicken Sie zum Zufügen eines Punktes zur Kurve"
 
 #: ../app/tools/gimpcurvestool.c:339
 #, c-format
@@ -15292,7 +15288,7 @@ msgstr "Maskenfarbe der Auswahlvorschau"
 
 #: ../app/tools/gimpforegroundselectoptions.c:105
 msgid "Matting engine to use"
-msgstr ""
+msgstr "Freistellmethode"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 #, fuzzy
@@ -15724,7 +15720,7 @@ msgstr "Klicken oder klicken und ziehen Sie, um einen Punkt hinzuzufügen"
 
 #: ../app/tools/gimpiscissorstool.c:1133 ../app/tools/gimpiscissorstool.c:1145
 msgid "Modify Scissors Curve"
-msgstr ""
+msgstr "Ändern der Kurve der magnetischen Schere"
 
 #: ../app/tools/gimplevelstool.c:134
 msgid "Levels Tool: Adjust color levels"
@@ -16021,10 +16017,9 @@ msgstr ""
 
 #: ../app/tools/gimpnpointdeformationoptions.c:102
 #: ../app/tools/gimpnpointdeformationoptions.c:197
-#, fuzzy
 #| msgid "Show _tooltips"
 msgid "Show lattice"
-msgstr "_Minihilfen anzeigen"
+msgstr "Gitterlinien anzeigen"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:220
 #: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:483
@@ -16499,10 +16494,9 @@ msgid "_Seamless Clone"
 msgstr "_Nahtlos klonen"
 
 #: ../app/tools/gimpseamlessclonetool.c:801
-#, fuzzy
 #| msgid "Dialog for foreground select"
 msgid "Cloning the foreground object"
-msgstr "Dialog zur Vordergrundauswahl"
+msgstr "Vordergrundobjekt duplizieren"
 
 #: ../app/tools/gimpselectionoptions.c:85
 msgid "Enable feathering of selection edges"
@@ -16831,7 +16825,7 @@ msgid "Guides"
 msgstr "Hilfslinien"
 
 #: ../app/tools/gimptransformoptions.c:455
-#, fuzzy, c-format
+#, c-format
 #| msgid "15 degrees  (%s)"
 msgid "15 degrees (%s)"
 msgstr "15 Grad (%s)"
@@ -16841,7 +16835,7 @@ msgid "Limit rotation steps to 15 degrees"
 msgstr "Drehvorgänge auf 15 Grad beschränken"
 
 #: ../app/tools/gimptransformoptions.c:461
-#, fuzzy, c-format
+#, c-format
 #| msgid "Keep aspect  (%s)"
 msgid "Keep aspect (%s)"
 msgstr "Verhältnis beibehalten (%s)"
@@ -16851,7 +16845,7 @@ msgid "Keep the original aspect ratio"
 msgstr "Ursprüngliches Seitenverhältnis beibehalten"
 
 #: ../app/tools/gimptransformoptions.c:480
-#, fuzzy, c-format
+#, c-format
 msgid "Constrain (%s)"
 msgstr "Beschränkung (%s)"
 
@@ -16865,7 +16859,7 @@ msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Bewegung auf 45-Grad-Winkel aus der Mitte einschränken (%s)"
 
 #: ../app/tools/gimptransformoptions.c:484
-#, fuzzy, c-format
+#, c-format
 #| msgid "Maintain aspect ratio when scaling  (%s)"
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Seitenverhältnis beim Skalieren beibehalten (%s)"
@@ -17200,7 +17194,6 @@ msgstr "Stärke"
 
 #. the animation frame
 #: ../app/tools/gimpwarpoptions.c:213
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "An_imation"
 msgid "Animate"
@@ -17231,10 +17224,9 @@ msgid "Warp Tool Stroke"
 msgstr "Warp Tool Stroke"
 
 #: ../app/tools/gimpwarptool.c:570
-#, fuzzy
 #| msgid "Cannot paint on layer groups."
 msgid "Cannot warp layer groups."
-msgstr "Es kann nicht auf Ebenenmasken gezeichnet werden."
+msgstr "Auf Ebenenmasken kann der Warp-Effekt nicht angewendet werden"
 
 #: ../app/tools/gimpwarptool.c:749
 msgid "Warp transform"
@@ -17372,28 +17364,24 @@ msgid "Shrink area"
 msgstr "Bereich verkleinern"
 
 #: ../app/tools/tools-enums.c:377
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
-msgstr "HSV (Farbton _im Uhrzeigersinn)"
+msgstr "Drehen im Uhrzeigersinn"
 
 #: ../app/tools/tools-enums.c:378
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
-msgstr "HSV (Farbton _gegen Uhrzeigersinn)"
+msgstr "Drehen gegen den Uhrzeigersinn"
 
 #: ../app/tools/tools-enums.c:379
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Erase warping"
-msgstr "Radierer"
+msgstr "Effekt zurücknehmen"
 
 #: ../app/tools/tools-enums.c:380
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Smooth warping"
-msgstr "Weichzeichnen:"
+msgstr "Glätten"
 
 #: ../app/vectors/gimpvectors.c:215
 msgctxt "undo-type"
@@ -19154,7 +19142,6 @@ msgid "Apply stored dynamics"
 msgstr "Gespeicherte Zeichendynamik anwenden"
 
 #: ../app/widgets/gimptoolpreseteditor.c:178
-#, fuzzy
 #| msgid "Apply stored brush"
 msgid "Apply stored MyPaint brush"
 msgstr "Gespeicherten Pinsel anwenden"
