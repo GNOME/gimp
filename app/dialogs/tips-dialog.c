@@ -42,17 +42,6 @@ enum
   RESPONSE_NEXT     = 2
 };
 
-
-/* eek, see bug 762279 */
-GtkLinkButtonUriFunc
-gtk_link_button_set_uri_hook      (GtkLinkButtonUriFunc func,
-                                   gpointer             data,
-                                   GDestroyNotify       destroy);
-static void  tips_uri_hook        (GtkLinkButton *button,
-                                   const gchar   *link_,
-                                   gpointer       user_data);
-
-
 static void  tips_dialog_set_tip  (GimpTip       *tip);
 static void  tips_dialog_response (GtkWidget     *dialog,
                                    gint           response);
@@ -206,9 +195,6 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_show (more_button);
   gtk_box_pack_start (GTK_BOX (hbox), more_button, FALSE, FALSE, 0);
 
-  /* this is deprecated but better than showing two URIs, see bug #762279 */
-  gtk_link_button_set_uri_hook (tips_uri_hook, NULL, NULL);
-
   g_signal_connect (more_button, "clicked",
                     G_CALLBACK (more_button_clicked),
                     gimp);
@@ -261,7 +247,9 @@ tips_dialog_set_tip (GimpTip *tip)
 
   gtk_label_set_markup (GTK_LABEL (tip_label), tip->text);
 
-  gtk_link_button_set_visited (GTK_LINK_BUTTON (more_button), FALSE);
+  /*  set the URI to unset the "visited" state  */
+  gtk_link_button_set_uri (GTK_LINK_BUTTON (more_button),
+                           "http://docs.gimp.org/");
 
   gtk_widget_set_sensitive (more_button, tip->help_id != NULL);
 }
@@ -272,16 +260,6 @@ more_button_clicked (GtkWidget *button,
 {
   GimpTip *tip = current_tip->data;
 
-  g_signal_stop_emission_by_name (button, "clicked");
-
   if (tip->help_id)
     gimp_help (gimp, NULL, NULL, tip->help_id);
-}
-
-static void
-tips_uri_hook (GtkLinkButton *button,
-               const gchar   *link_,
-               gpointer       user_data)
-{
-  /* do nothing */
 }
