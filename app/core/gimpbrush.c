@@ -492,6 +492,8 @@ gimp_brush_get_checksum (GimpTagged *tagged)
                          (const guchar *) &brush->priv->y_axis,
                          sizeof (brush->priv->y_axis));
 
+      checksum_string = g_strdup (g_checksum_get_string (checksum));
+
       g_checksum_free (checksum);
     }
 
