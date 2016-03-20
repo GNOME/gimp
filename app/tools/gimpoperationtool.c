@@ -328,17 +328,11 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *im_tool,
                                      GtkWidget        **settings_box)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
-  GType              type = G_TYPE_FROM_INSTANCE (im_tool->config);
   GtkWidget         *widget;
   gchar             *basename;
   GFile             *file;
   gchar             *import_title;
   gchar             *export_title;
-
-  settings = gimp_gegl_config_get_container (type);
-  if (! gimp_list_get_sort_func (GIMP_LIST (settings)))
-    gimp_list_set_sort_func (GIMP_LIST (settings),
-                             (GCompareFunc) gimp_settings_compare);
 
   basename = g_strconcat (G_OBJECT_TYPE_NAME (im_tool->config),
                           ".settings", NULL);

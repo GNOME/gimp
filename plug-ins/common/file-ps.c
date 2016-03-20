@@ -132,7 +132,7 @@ static PSLoadVals plvals =
   1            /* dont use graphics antialiasing */
 };
 
-/* Widgets for width and height of postscript image to
+/* Widgets for width and height of PostScript image to
 *  be loaded, so that they can be updated when desired resolution is
 *  changed
 */
@@ -1107,7 +1107,7 @@ load_image (const gchar  *filename,
   if (!ifp)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR,
-                   _("Could not interpret Postscript file '%s'"),
+                   _("Could not interpret PostScript file '%s'"),
                    gimp_filename_to_utf8 (filename));
       return -1;
     }

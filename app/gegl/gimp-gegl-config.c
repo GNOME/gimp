@@ -299,9 +299,7 @@ gimp_gegl_config_new (const gchar *operation,
             g_type_class_unref (viewable_class);
           }
 
-        g_hash_table_insert (config_types,
-                             g_strdup (operation),
-                             (gpointer) config_type);
+        gimp_gegl_config_register (operation, config_type);
       }
     }
 

@@ -44,8 +44,8 @@ ComponentsTranslations=Traduções
 ComponentsTranslationsDescription=Traduções
 ComponentsPython=Suporte a scripts em Python
 ComponentsPythonDescription=Permite que você use plug-ins escritos na linguagem Python(necessário para algumas funcionalidades).
-ComponentsGhostscript=Suporte a Postscript
-ComponentsGhostscriptDescription=Permite que o GIMP possa abrir arquivos Postscript
+ComponentsGhostscript=Suporte a PostScript
+ComponentsGhostscriptDescription=Permite que o GIMP possa abrir arquivos PostScript
 ;only when installing on x64 Windows
 ComponentsGimp32=Suporte a plug-ins de 32-bit
 ComponentsGimp32Description=Inclui arquivos necessários para o uso de plug-ins de 32bits.%nNecessário para o suporte a Python.

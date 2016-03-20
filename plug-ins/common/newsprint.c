@@ -1592,7 +1592,7 @@ spot_diamond (gdouble x,
 }
 
 /* The following two functions are implementations of algorithms
- * described in "Postscript Screening: Adobe Accurate Screens"
+ * described in "PostScript Screening: Adobe Accurate Screens"
  * (Adobe Press, 1992) by Peter Fink.
  */
 

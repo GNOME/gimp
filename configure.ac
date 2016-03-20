@@ -44,7 +44,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
 m4_define([babl_required_version], [0.1.14])
-m4_define([gegl_required_version], [0.3.5])
+m4_define([gegl_required_version], [0.3.6])
 m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
@@ -1390,7 +1390,7 @@ if test "x$with_gs" != xno; then
   if test "x$have_gs" != xyes -a "x$with_gs" = xyes; then
     AC_MSG_ERROR([
 *** Checks for Ghostscript library failed. You can build without it by passing
-*** --without-gs to configure but you won't be able to use Postscript files then.])
+*** --without-gs to configure but you won't be able to use PostPcript files then.])
   fi
 fi
 
