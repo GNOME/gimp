@@ -99,7 +99,7 @@ gimp_blob_editor_class_init (GimpBlobEditorClass *klass)
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("blob-angle",
                                                         NULL, NULL,
-                                                        -90.0, 90.0, 0.0,
+                                                        -G_PI, G_PI, 0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }

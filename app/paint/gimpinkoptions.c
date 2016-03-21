@@ -118,7 +118,7 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
                            "blob-angle",
                            _("Angle"),
                            _("Ink Blob Angle"),
-                           -90.0, 90.0, 0.0,
+                           -G_PI, G_PI, 0.0,
                            GIMP_PARAM_STATIC_STRINGS);
 }
 
