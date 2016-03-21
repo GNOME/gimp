@@ -255,7 +255,7 @@ query (void)
     { GIMP_PDB_INT32, "guess-missing", "TRUE: guess samplecolors for the missing intensity values FALSE: use only colors found in the sample" },
     { GIMP_PDB_INT32, "in-low",   "intensity of lowest input (0 <= in_low <= 254)" },
     { GIMP_PDB_INT32, "in-high",  "intensity of highest input (1 <= in_high <= 255)" },
-    { GIMP_PDB_FLOAT, "gamma",  "gamma correction factor (0.1 <= gamma <= 10) where 1.0 is linear" },
+    { GIMP_PDB_FLOAT, "gamma",  "gamma adjustment factor (0.1 <= gamma <= 10) where 1.0 is linear" },
     { GIMP_PDB_INT32, "out-low",   "lowest sample color intensity (0 <= out_low <= 254)" },
     { GIMP_PDB_INT32, "out-high",  "highest sample color intensity (1 <= out_high <= 255)" }
   };

@@ -651,9 +651,9 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
 
       if (delta_out != 0 && gamma != 1.0)
         {
-          /* The Levels tool performs gamma correction, which is a
+          /* The Levels tool performs gamma adjustment, which is a
            * power law, while the Curves tool uses cubic Bézier
-           * curves. Here we try to approximate this gamma correction
+           * curves. Here we try to approximate this gamma adjustment
            * with a Bézier curve with 5 control points. Two of them
            * must be (low_input, low_output) and (high_input,
            * high_output), so we need to add 3 more control points in
