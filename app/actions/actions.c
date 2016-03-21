@@ -535,7 +535,7 @@ action_select_value (GimpActionSelectType  select_type,
         value = max - (min - value);
 
       while (value > max)
-        value = min + (max - value);
+        value = min + (value - max);
     }
   else
     {
