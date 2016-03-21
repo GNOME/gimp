@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-17 19:11+0000\n"
-"PO-Revision-Date: 2016-03-17 22:32-0600\n"
-"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
+"POT-Creation-Date: 2016-03-18 19:12+0000\n"
+"PO-Revision-Date: 2016-03-21 16:46+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 2.91.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -2023,8 +2023,6 @@ msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
 
 #: ../app/actions/dynamics-actions.c:66
-#| msgctxt "dynamics-action"
-#| msgid "Copy dynamics file location to clipboard"
 msgctxt "dynamics-action"
 msgid "Show dynamics file location in the file manager"
 msgstr "Mostrar la ruta del archivo de dinámica en el gestor de archivos"
@@ -2743,23 +2741,18 @@ msgid "Filte_rs"
 msgstr "_Filtros"
 
 #: ../app/actions/filters-actions.c:57
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "Recently Used"
 msgctxt "filters-action"
 msgid "Recently Used"
-msgstr "Usados recientemente"
+msgstr "Usado recientemente"
 
 #: ../app/actions/filters-actions.c:59
-#| msgctxt "plug-in-action"
-#| msgid "_Blur"
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Difuminar"
 
 #: ../app/actions/filters-actions.c:61
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Ruido"
@@ -2781,8 +2774,6 @@ msgid "En_hance"
 msgstr "Real_zar"
 
 #: ../app/actions/filters-actions.c:67
-#| msgctxt "plug-in-action"
-#| msgid "C_ombine"
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "C_ombinar"
@@ -2820,8 +2811,6 @@ msgid "_Artistic"
 msgstr "_Artísticos"
 
 #: ../app/actions/filters-actions.c:77
-#| msgctxt "plug-in-action"
-#| msgid "_Decor"
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Decorativos"
@@ -2835,8 +2824,6 @@ msgid "_Map"
 msgstr "_Mapa"
 
 #: ../app/actions/filters-actions.c:81
-#| msgctxt "plug-in-action"
-#| msgid "_Render"
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Renderizado"
@@ -2866,8 +2853,6 @@ msgid "_Nature"
 msgstr "_Naturaleza"
 
 #: ../app/actions/filters-actions.c:89
-#| msgctxt "plug-in-action"
-#| msgid "N_oise"
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Ruido"
@@ -2913,8 +2898,6 @@ msgid "_Apply Canvas..."
 msgstr "_Aplicar lienzo..."
 
 #: ../app/actions/filters-actions.c:116
-#| msgctxt "view-action"
-#| msgid "Display _Filters..."
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "Aplicar _lente…"
@@ -2925,8 +2908,6 @@ msgid "_Bump Map..."
 msgstr "Mapa de _relieve..."
 
 #: ../app/actions/filters-actions.c:126
-#| msgctxt "filters-action"
-#| msgid "Color to _Alpha..."
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "_Color a escala de grises…"
@@ -2937,8 +2918,6 @@ msgid "Ca_rtoon..."
 msgstr "_Viñeta…"
 
 #: ../app/actions/filters-actions.c:136
-#| msgctxt "channels-action"
-#| msgid "_New Channel..."
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "Mezclador de _canal…"
@@ -2949,11 +2928,10 @@ msgid "_Checkerboard..."
 msgstr "_Cuadriculado..."
 
 #: ../app/actions/filters-actions.c:146
-#, fuzzy
 #| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "_Color Enhance..."
-msgstr "_Balance de color…"
+msgstr "_Realzar color…"
 
 #: ../app/actions/filters-actions.c:151
 msgctxt "filters-action"
@@ -2966,8 +2944,6 @@ msgid "Color _Reduction..."
 msgstr "_Reducción de color…"
 
 #: ../app/actions/filters-actions.c:161
-#| msgctxt "colormap-action"
-#| msgid "_Edit Color..."
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "_Rotar colores…"
@@ -2983,11 +2959,10 @@ msgid "Color to _Alpha..."
 msgstr "Color a _alfa…"
 
 #: ../app/actions/filters-actions.c:176
-#, fuzzy
 #| msgid "Transformation Matrix"
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
-msgstr "Matriz de transformación"
+msgstr "Matriz de _convolución…"
 
 #: ../app/actions/filters-actions.c:181
 msgctxt "filters-action"
@@ -2995,11 +2970,10 @@ msgid "_Cubism..."
 msgstr "_Cubismo..."
 
 #: ../app/actions/filters-actions.c:186
-#, fuzzy
 #| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "_Deinterlace..."
-msgstr "_Desaturar…"
+msgstr "_Desentrelazar…"
 
 #: ../app/actions/filters-actions.c:191
 #, fuzzy
@@ -3014,41 +2988,36 @@ msgid "Difference of Gaussians..."
 msgstr "Diferencia de gaussianas…"
 
 #: ../app/actions/filters-actions.c:201
-#, fuzzy
 #| msgctxt "patterns-action"
 #| msgid "_Edit Pattern..."
 msgctxt "filters-action"
 msgid "Diffraction Patterns..."
-msgstr "_Editar patrón…"
+msgstr "Patrones de difracción…"
 
 #: ../app/actions/filters-actions.c:206
-#, fuzzy
 #| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "Displace..."
-msgstr "_Desaturar…"
+msgstr "Desplazar…"
 
 #: ../app/actions/filters-actions.c:211
-#, fuzzy
 #| msgid "Distance:"
 msgctxt "filters-action"
 msgid "Distance Map..."
-msgstr "Distancia:"
+msgstr "Mapa de distancia…"
 
 #: ../app/actions/filters-actions.c:216
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "_Grow..."
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
-msgstr "Agran_dar [Grow]…"
+msgstr "_Sombra base…"
 
 #: ../app/actions/filters-actions.c:221
-#, fuzzy
 #| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Edge..."
-msgstr "_Desvanecer…"
+msgstr "_Arista…"
 
 #: ../app/actions/filters-actions.c:226
 msgctxt "filters-action"
@@ -3066,26 +3035,23 @@ msgid "_Emboss..."
 msgstr "_Repujado..."
 
 #: ../app/actions/filters-actions.c:241
-#, fuzzy
 #| msgid "Exposure"
 msgctxt "filters-action"
 msgid "En_grave..."
-msgstr "Exposición"
+msgstr "_Grabado…"
 
 #: ../app/actions/filters-actions.c:246
-#, fuzzy
 #| msgid "Exposure"
 msgctxt "filters-action"
 msgid "E_xposure..."
-msgstr "Exposición"
+msgstr "_Exposición…"
 
 #: ../app/actions/filters-actions.c:251
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "_Scale Image..."
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
-msgstr "E_scalar la imagen…"
+msgstr "Traza _fractal…"
 
 #: ../app/actions/filters-actions.c:256
 msgctxt "filters-action"
@@ -3093,12 +3059,11 @@ msgid "_Gaussian Blur..."
 msgstr "Desenfoque ga_ussiano…"
 
 #: ../app/actions/filters-actions.c:261
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
-msgstr "Desenfoque ga_ussiano…"
+msgstr "Desenfoque _gaussiano selectivo…"
 
 #: ../app/actions/filters-actions.c:266
 msgctxt "filters-action"
@@ -3132,11 +3097,10 @@ msgid "Lens Flare..."
 msgstr "Reflejo en la lente..."
 
 #: ../app/actions/filters-actions.c:296
-#, fuzzy
 #| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Maze..."
-msgstr "_Desvanecer…"
+msgstr "_Laberinto…"
 
 #: ../app/actions/filters-actions.c:301
 #, fuzzy
@@ -3152,20 +3116,18 @@ msgid "_Mosaic..."
 msgstr "_Mosaico..."
 
 #: ../app/actions/filters-actions.c:311
-#, fuzzy
 #| msgctxt "tools-action"
 #| msgid "_Arbitrary Rotation..."
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
-msgstr "Rotación _arbitraria…"
+msgstr "_Desenfoque de movimiento circular…"
 
 #: ../app/actions/filters-actions.c:316
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
-msgstr "Desenfoque ga_ussiano…"
+msgstr "_Desenfoque de movimiento lineal…"
 
 #: ../app/actions/filters-actions.c:321
 msgctxt "filters-action"
@@ -3217,12 +3179,11 @@ msgid "_RGB Noise..."
 msgstr "Ruido _RGB…"
 
 #: ../app/actions/filters-actions.c:361
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "Color _Reduction..."
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
-msgstr "_Reducción de color…"
+msgstr "_Reducción de ruido…"
 
 #: ../app/actions/filters-actions.c:366
 #, fuzzy
@@ -3243,12 +3204,11 @@ msgid "_Solid Noise..."
 msgstr "_Ruido sólido…"
 
 #: ../app/actions/filters-actions.c:381
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Grid..."
 msgctxt "filters-action"
 msgid "Sp_read..."
-msgstr "_Rejilla…"
+msgstr "_Esparcir…"
 
 #: ../app/actions/filters-actions.c:386
 msgctxt "filters-action"
@@ -3281,7 +3241,6 @@ msgid "P_olar Coordinates..."
 msgstr "Coordenadas p_olares…"
 
 #: ../app/actions/filters-actions.c:416
-#, fuzzy
 #| msgid "_Posterize..."
 msgctxt "filters-action"
 msgid "_Posterize..."
@@ -3298,11 +3257,10 @@ msgid "_Ripple..."
 msgstr "_Remolino…"
 
 #: ../app/actions/filters-actions.c:431
-#, fuzzy
 #| msgid "Saturation"
 msgctxt "filters-action"
 msgid "Sat_uration..."
-msgstr "Saturación"
+msgstr "_Saturación…"
 
 #: ../app/actions/filters-actions.c:436
 msgctxt "filters-action"
