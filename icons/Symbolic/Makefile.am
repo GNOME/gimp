@@ -37,7 +37,7 @@ EXTRA_DIST = \
 	$(icons128_images)	\
 	$(icons192_images)	\
 	$(icons256_images)	\
-	scalable.svg
+	symbolic-scalable.svg
 
 noinst_DATA = \
 	gimp-core-pixbufs.c	\
