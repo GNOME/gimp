@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
+# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-18 19:12+0000\n"
-"PO-Revision-Date: 2016-03-21 16:46+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2016-03-21 19:23+0000\n"
+"PO-Revision-Date: 2016-03-21 21:01-0600\n"
+"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -2741,8 +2741,6 @@ msgid "Filte_rs"
 msgstr "_Filtros"
 
 #: ../app/actions/filters-actions.c:57
-#| msgctxt "plug-in-action"
-#| msgid "Recently Used"
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Usado recientemente"
@@ -2928,7 +2926,6 @@ msgid "_Checkerboard..."
 msgstr "_Cuadriculado..."
 
 #: ../app/actions/filters-actions.c:146
-#| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "_Color Enhance..."
 msgstr "_Realzar color…"
@@ -2959,7 +2956,6 @@ msgid "Color to _Alpha..."
 msgstr "Color a _alfa…"
 
 #: ../app/actions/filters-actions.c:176
-#| msgid "Transformation Matrix"
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "Matriz de _convolución…"
@@ -2970,7 +2966,6 @@ msgid "_Cubism..."
 msgstr "_Cubismo..."
 
 #: ../app/actions/filters-actions.c:186
-#| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Desentrelazar…"
@@ -2988,33 +2983,26 @@ msgid "Difference of Gaussians..."
 msgstr "Diferencia de gaussianas…"
 
 #: ../app/actions/filters-actions.c:201
-#| msgctxt "patterns-action"
-#| msgid "_Edit Pattern..."
 msgctxt "filters-action"
 msgid "Diffraction Patterns..."
 msgstr "Patrones de difracción…"
 
 #: ../app/actions/filters-actions.c:206
-#| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "Displace..."
 msgstr "Desplazar…"
 
 #: ../app/actions/filters-actions.c:211
-#| msgid "Distance:"
 msgctxt "filters-action"
 msgid "Distance Map..."
 msgstr "Mapa de distancia…"
 
 #: ../app/actions/filters-actions.c:216
-#| msgctxt "select-action"
-#| msgid "_Grow..."
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Sombra base…"
 
 #: ../app/actions/filters-actions.c:221
-#| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Arista…"
@@ -3035,20 +3023,16 @@ msgid "_Emboss..."
 msgstr "_Repujado..."
 
 #: ../app/actions/filters-actions.c:241
-#| msgid "Exposure"
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Grabado…"
 
 #: ../app/actions/filters-actions.c:246
-#| msgid "Exposure"
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Exposición…"
 
 #: ../app/actions/filters-actions.c:251
-#| msgctxt "image-action"
-#| msgid "_Scale Image..."
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "Traza _fractal…"
@@ -3059,8 +3043,6 @@ msgid "_Gaussian Blur..."
 msgstr "Desenfoque ga_ussiano…"
 
 #: ../app/actions/filters-actions.c:261
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "Desenfoque _gaussiano selectivo…"
@@ -3097,7 +3079,6 @@ msgid "Lens Flare..."
 msgstr "Reflejo en la lente..."
 
 #: ../app/actions/filters-actions.c:296
-#| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Laberinto…"
@@ -3116,15 +3097,11 @@ msgid "_Mosaic..."
 msgstr "_Mosaico..."
 
 #: ../app/actions/filters-actions.c:311
-#| msgctxt "tools-action"
-#| msgid "_Arbitrary Rotation..."
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Desenfoque de movimiento circular…"
 
 #: ../app/actions/filters-actions.c:316
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Desenfoque de movimiento lineal…"
@@ -3179,8 +3156,6 @@ msgid "_RGB Noise..."
 msgstr "Ruido _RGB…"
 
 #: ../app/actions/filters-actions.c:361
-#| msgctxt "filters-action"
-#| msgid "Color _Reduction..."
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "_Reducción de ruido…"
@@ -3204,8 +3179,6 @@ msgid "_Solid Noise..."
 msgstr "_Ruido sólido…"
 
 #: ../app/actions/filters-actions.c:381
-#| msgctxt "filters-action"
-#| msgid "_Grid..."
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Esparcir…"
@@ -3241,7 +3214,6 @@ msgid "P_olar Coordinates..."
 msgstr "Coordenadas p_olares…"
 
 #: ../app/actions/filters-actions.c:416
-#| msgid "_Posterize..."
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterizar…"
@@ -3257,7 +3229,6 @@ msgid "_Ripple..."
 msgstr "_Remolino…"
 
 #: ../app/actions/filters-actions.c:431
-#| msgid "Saturation"
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Saturación…"
@@ -3268,12 +3239,11 @@ msgid "_Semi-Flatten..."
 msgstr "_Semiaplanar…"
 
 #: ../app/actions/filters-actions.c:441
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Super_nova..."
 msgctxt "filters-action"
 msgid "_Sepia..."
-msgstr "_Supernova..."
+msgstr "_Sepia…"
 
 #: ../app/actions/filters-actions.c:446
 msgctxt "filters-action"
@@ -3281,11 +3251,10 @@ msgid "_Shift..."
 msgstr "_Desplazamiento…"
 
 #: ../app/actions/filters-actions.c:451
-#, fuzzy
 #| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Sinus..."
-msgstr "_Curvas…"
+msgstr "_Seno…"
 
 #: ../app/actions/filters-actions.c:456
 msgctxt "filters-action"
@@ -3293,11 +3262,10 @@ msgid "_Softglow..."
 msgstr "Brillo _suave…"
 
 #: ../app/actions/filters-actions.c:461
-#, fuzzy
 #| msgid "B_rightness-Contrast..."
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
-msgstr "_Brillo y contraste…"
+msgstr "_Expansión del contraste…"
 
 #: ../app/actions/filters-actions.c:466
 msgctxt "filters-action"
@@ -3318,20 +3286,18 @@ msgid "_Threshold Alpha..."
 msgstr "_Umbral alfa…"
 
 #: ../app/actions/filters-actions.c:481
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Can_vas Size..."
 msgctxt "filters-action"
 msgid "_Glass Tile..."
-msgstr "Tamaño del _lienzo…"
+msgstr "Mosaico de _cristal…"
 
 #: ../app/actions/filters-actions.c:486
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Can_vas Size..."
 msgctxt "filters-action"
 msgid "_Paper Tile..."
-msgstr "Tamaño del _lienzo…"
+msgstr "Mosaico de _papel…"
 
 #: ../app/actions/filters-actions.c:491
 msgctxt "filters-action"
@@ -3344,20 +3310,18 @@ msgid "_Unsharp Mask..."
 msgstr "Máscara de desenfoq_ue…"
 
 #: ../app/actions/filters-actions.c:501
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "_Scale Image..."
 msgctxt "filters-action"
 msgid "_Value Propagate..."
-msgstr "E_scalar la imagen…"
+msgstr "_Propagar valor…"
 
 # Location lo traducimos por lugar (Serrador)
 #: ../app/actions/filters-actions.c:506
-#, fuzzy
 #| msgid "_GEGL Operation..."
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
-msgstr "Operación _GEGL…"
+msgstr "_Degradación del vídeo…"
 
 #: ../app/actions/filters-actions.c:511
 #, fuzzy
@@ -3391,12 +3355,12 @@ msgid "Re_peat Last"
 msgstr "Re_petir el último"
 
 #: ../app/actions/filters-actions.c:536
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "Rerun the last used plug-in using the same settings"
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
-msgstr "Ejecutar el último complemento usado con los mismos ajustes"
+msgstr ""
+"Volver a ejecutar el último filtro utilizado con la misma configuración"
 
 #: ../app/actions/filters-actions.c:541
 #, fuzzy
@@ -3407,12 +3371,11 @@ msgid "R_e-Show Last"
 msgstr "_Volver a mostrar el último"
 
 #: ../app/actions/filters-actions.c:542
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "Show the last used plug-in dialog again"
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
-msgstr "Muestra otra vez el diálogo del último complemento utilizado"
+msgstr "Mostrar otra vez el diálogo del último filtro utilizado"
 
 #: ../app/actions/filters-actions.c:814
 #, c-format
@@ -3447,7 +3410,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Reexaminar las tipografías instaladas"
 
-#: ../app/actions/gimpgeglprocedure.c:294
+#: ../app/actions/gimpgeglprocedure.c:300
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -3854,12 +3817,11 @@ msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
 
 #: ../app/actions/gradients-actions.c:67
-#, fuzzy
 #| msgctxt "gradients-action"
 #| msgid "Copy gradient file location to clipboard"
 msgctxt "gradients-action"
 msgid "Show gradient file location in the file manager"
-msgstr "Copiar al portapapeles la localización del archivo de degradado"
+msgstr "Mostrar la ubicación del archivo de degradado en el gestor de archivos"
 
 #: ../app/actions/gradients-actions.c:72
 msgctxt "gradients-action"
@@ -3950,11 +3912,10 @@ msgid "Pr_ecision"
 msgstr "_Precisión"
 
 #: ../app/actions/image-actions.c:62
-#, fuzzy
 #| msgid "Color Management"
 msgctxt "image-action"
 msgid "Color Ma_nagement"
-msgstr "Gestión del color"
+msgstr "_Gestión del color"
 
 #: ../app/actions/image-actions.c:63
 msgctxt "image-action"
@@ -4007,47 +3968,41 @@ msgid "Create a new image"
 msgstr "Crea una imagen nueva"
 
 #: ../app/actions/image-actions.c:80
-#, fuzzy
 #| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
-msgstr "Perfil de color"
+msgstr "_Asignar perfil de color…"
 
 #: ../app/actions/image-actions.c:81
-#, fuzzy
 #| msgid "Pick color from image"
 msgctxt "image-action"
 msgid "Set a color profile on the image"
-msgstr "Recoger color de la imagen"
+msgstr "Establecer un perfil de color en la imagen"
 
 #: ../app/actions/image-actions.c:86
-#, fuzzy
 #| msgid "Select Monitor Color Profile"
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
-msgstr "Seleccionar el perfil de color del monitor"
+msgstr "_Convertir a perfil de color…"
 
 #: ../app/actions/image-actions.c:87
-#, fuzzy
 #| msgid "Pick color from image"
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
-msgstr "Recoger color de la imagen"
+msgstr "Aplicar un perfil de color a la imagen"
 
 #: ../app/actions/image-actions.c:92
-#, fuzzy
 #| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Discard Color Profile"
-msgstr "Perfil de color"
+msgstr "_Descartar perfil de color"
 
 #: ../app/actions/image-actions.c:93
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Display the image's color sample points"
 msgctxt "image-action"
 msgid "Remove the image's color profile"
-msgstr "Muestra los puntos de muestreo de color de la imagen"
+msgstr "Eliminar el perfil de color de la imagen"
 
 #: ../app/actions/image-actions.c:98
 msgctxt "image-action"
@@ -4204,28 +4159,25 @@ msgid "Convert the image to indexed colors"
 msgstr "Convertir la imagen a colores indexados"
 
 #: ../app/actions/image-actions.c:191
-#, fuzzy
 #| msgctxt "component-type"
 #| msgid "8-bit integer"
 msgctxt "image-convert-action"
 msgid "8 bit integer"
-msgstr "entero de 8 bits"
+msgstr "Entero de 8 bits"
 
 #: ../app/actions/image-actions.c:193
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 8 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
-msgstr "Convertir la imagen a enteros de 8 bits lineales"
+msgstr "Convertir la imagen a entero de 8 bits"
 
 #: ../app/actions/image-actions.c:197
-#, fuzzy
 #| msgctxt "component-type"
 #| msgid "16-bit integer"
 msgctxt "image-convert-action"
 msgid "16 bit integer"
-msgstr "entero de 16 bits"
+msgstr "Entero de 16 bits"
 
 #: ../app/actions/image-actions.c:199
 #, fuzzy
@@ -13185,37 +13137,37 @@ msgstr "Herramienta de pintura:"
 msgid "_Emulate brush dynamics"
 msgstr "_Emular la dinámica del pincel"
 
-#: ../app/dialogs/tips-dialog.c:88
+#: ../app/dialogs/tips-dialog.c:99
 msgid "The GIMP tips file is empty!"
 msgstr "¡El archivo de consejos de GIMP está vacío!"
 
-#: ../app/dialogs/tips-dialog.c:92
+#: ../app/dialogs/tips-dialog.c:103
 msgid "The GIMP tips file appears to be missing!"
 msgstr "¡Parece que falta el archivo de consejos de GIMP!"
 
-#: ../app/dialogs/tips-dialog.c:94
+#: ../app/dialogs/tips-dialog.c:105
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr "Debería haber un archivo llamado «%s». Compruebe su instalación."
 
-#: ../app/dialogs/tips-dialog.c:100
+#: ../app/dialogs/tips-dialog.c:111
 msgid "The GIMP tips file could not be parsed!"
 msgstr "¡El archivo de consejos de GIMP no se ha podido analizar!"
 
-#: ../app/dialogs/tips-dialog.c:128
+#: ../app/dialogs/tips-dialog.c:139
 msgid "GIMP Tip of the Day"
 msgstr "Consejo del día de GIMP"
 
-#: ../app/dialogs/tips-dialog.c:134
+#: ../app/dialogs/tips-dialog.c:145
 msgid "_Previous Tip"
 msgstr "Consejo _anterior"
 
-#: ../app/dialogs/tips-dialog.c:140
+#: ../app/dialogs/tips-dialog.c:151
 msgid "_Next Tip"
 msgstr "Consejo _siguiente"
 
 #. a link to the related section in the user manual
-#: ../app/dialogs/tips-dialog.c:193
+#: ../app/dialogs/tips-dialog.c:204
 msgid "Learn more"
 msgstr "Aprender más"
 
@@ -13470,7 +13422,7 @@ msgstr "Descartar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
 #: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
-#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:323
+#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:320
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "No se pueden modificar píxeles de los grupos de capas."
@@ -13478,7 +13430,7 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 #: ../app/display/gimpdisplayshell-dnd.c:370
 #: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:330 ../app/tools/gimppainttool.c:278
+#: ../app/tools/gimpimagemaptool.c:327 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
 #: ../app/tools/gimpwarptool.c:577
 msgid "The active layer's pixels are locked."
@@ -15722,7 +15674,7 @@ msgstr "_Mezcla [Blend]"
 
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:290
-#: ../app/tools/gimpimagemaptool.c:337 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimpimagemaptool.c:334 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:584
 msgid "The active layer is not visible."
 msgstr "La capa activa no está visible."
@@ -16679,22 +16631,21 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Selección difusa"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:354
-#: ../app/tools/gimpgegltool.c:497 ../app/tools/gimpgegltool.c:498
-#: ../app/tools/gimpoperationtool.c:131
+#: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:465
+#: ../app/tools/gimpgegltool.c:466 ../app/tools/gimpoperationtool.c:131
 msgid "GEGL Operation"
 msgstr "Operación de GEGL"
 
-#: ../app/tools/gimpgegltool.c:79
+#: ../app/tools/gimpgegltool.c:73
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "Herramienta GEGL: utilice una operación GEGL arbitraria"
 
 # Location lo traducimos por lugar (Serrador)
-#: ../app/tools/gimpgegltool.c:80 ../app/tools/gimpoperationtool.c:133
+#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:133
 msgid "_GEGL Operation..."
 msgstr "Operación _GEGL…"
 
-#: ../app/tools/gimpgegltool.c:452
+#: ../app/tools/gimpgegltool.c:420
 msgid "Select an operation from the list above"
 msgstr "Seleccionar una operación de la lista de arriba"
 
@@ -17301,24 +17252,24 @@ msgstr "Información del puntero"
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Herramienta de operación: utilizar una operación GEGL arbitraria"
 
-#: ../app/tools/gimpoperationtool.c:348
+#: ../app/tools/gimpoperationtool.c:342
 #, fuzzy, c-format
 #| msgid "Import Threshold Settings"
 msgid "Import '%s' Settings"
 msgstr "Importar los ajustes de umbral"
 
-#: ../app/tools/gimpoperationtool.c:349
+#: ../app/tools/gimpoperationtool.c:343
 #, fuzzy, c-format
 #| msgid "Export Threshold Settings"
 msgid "Export '%s' Settings"
 msgstr "Exportar los ajustes de umbral"
 
-#: ../app/tools/gimpoperationtool.c:690
+#: ../app/tools/gimpoperationtool.c:684
 #, c-format
 msgid "Aux Input"
 msgstr "Entrada auxiliar"
 
-#: ../app/tools/gimpoperationtool.c:695
+#: ../app/tools/gimpoperationtool.c:689
 #, c-format
 msgid "Aux%d Input"
 msgstr "Entrada auxiliar%d"
@@ -18934,11 +18885,11 @@ msgstr "Notación HTML:"
 msgid "Only indexed images have a colormap."
 msgstr "Solamente las imágenes indexadas tienen un mapa de colores."
 
-#: ../app/widgets/gimpcontainerpopup.c:337
+#: ../app/widgets/gimpcontainerpopup.c:351
 msgid "Smaller Previews"
 msgstr "Vistas previas diminutas"
 
-#: ../app/widgets/gimpcontainerpopup.c:342
+#: ../app/widgets/gimpcontainerpopup.c:356
 msgid "Larger Previews"
 msgstr "Vistas previas enormes"
 
