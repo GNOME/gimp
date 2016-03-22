@@ -325,15 +325,20 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
       "<",
       "tools-color-average-radius-",
       "tools-paintbrush-size-",
-      "tools-paintbrush-angle-",
       "tools-paintbrush-aspect-ratio-",
+      "tools-paintbrush-angle-",
+      "tools-paintbrush-spacing-",
+      "tools-paintbrush-hardness-",
+      "tools-paintbrush-force-",
       "tools-ink-blob-size-",
       "tools-ink-blob-aspect-",
       "tools-ink-blob-angle-",
       "tools-mypaint-brush-radius-",
+      "tools-mypaint-brush-hardness-",
       "tools-foreground-select-brush-size-",
       "tools-transform-preview-opacity-",
       "tools-warp-effect-size-"
+      "tools-warp-effect-hardness-"
     };
 
   gint i;

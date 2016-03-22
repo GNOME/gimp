@@ -75,14 +75,6 @@ gimp_tool_control_init (GimpToolControl *control)
   control->toggle_cursor          = -1;
   control->toggle_tool_cursor     = -1;
   control->toggle_cursor_modifier = -1;
-
-  control->action_opacity         = NULL;
-  control->action_size            = NULL;
-  control->action_aspect          = NULL;
-  control->action_angle           = NULL;
-
-  control->action_object_1        = NULL;
-  control->action_object_2        = NULL;
 }
 
 static void
@@ -96,6 +88,9 @@ gimp_tool_control_finalize (GObject *object)
   g_free (control->action_size);
   g_free (control->action_aspect);
   g_free (control->action_angle);
+  g_free (control->action_spacing);
+  g_free (control->action_hardness);
+  g_free (control->action_force);
   g_free (control->action_object_1);
   g_free (control->action_object_2);
 
@@ -585,6 +580,69 @@ gimp_tool_control_get_action_angle (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_angle;
+}
+
+void
+gimp_tool_control_set_action_spacing (GimpToolControl *control,
+                                      const gchar     *action)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  if (action != control->action_spacing)
+    {
+      g_free (control->action_spacing);
+      control->action_spacing = g_strdup (action);
+    }
+}
+
+const gchar *
+gimp_tool_control_get_action_spacing (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+
+  return control->action_spacing;
+}
+
+void
+gimp_tool_control_set_action_hardness (GimpToolControl *control,
+                                       const gchar     *action)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  if (action != control->action_hardness)
+    {
+      g_free (control->action_hardness);
+      control->action_hardness = g_strdup (action);
+    }
+}
+
+const gchar *
+gimp_tool_control_get_action_hardness (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+
+  return control->action_hardness;
+}
+
+void
+gimp_tool_control_set_action_force (GimpToolControl *control,
+                                      const gchar     *action)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  if (action != control->action_force)
+    {
+      g_free (control->action_force);
+      control->action_force = g_strdup (action);
+    }
+}
+
+const gchar *
+gimp_tool_control_get_action_force (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+
+  return control->action_force;
 }
 
 void

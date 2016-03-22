@@ -81,6 +81,14 @@ static const GimpEnumActionEntry tools_paintbrush_size_actions[] =
     NULL }
 };
 
+static const GimpEnumActionEntry tools_paintbrush_aspect_ratio_actions[] =
+{
+  { "tools-paintbrush-aspect-ratio-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Set Brush Aspect Ratio", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL }
+};
+
 static const GimpEnumActionEntry tools_paintbrush_angle_actions[] =
 {
   { "tools-paintbrush-angle-set", GIMP_STOCK_TOOL_PAINTBRUSH,
@@ -89,10 +97,26 @@ static const GimpEnumActionEntry tools_paintbrush_angle_actions[] =
     NULL }
 };
 
-static const GimpEnumActionEntry tools_paintbrush_aspect_ratio_actions[] =
+static const GimpEnumActionEntry tools_paintbrush_spacing_actions[] =
 {
-  { "tools-paintbrush-aspect-ratio-set", GIMP_STOCK_TOOL_PAINTBRUSH,
-    "Set Brush Aspect Ratio", NULL, NULL,
+  { "tools-paintbrush-spacing-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Set Brush Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL }
+};
+
+static const GimpEnumActionEntry tools_paintbrush_hardness_actions[] =
+{
+  { "tools-paintbrush-hardness-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Set Brush Hardness", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL }
+};
+
+static const GimpEnumActionEntry tools_paintbrush_force_actions[] =
+{
+  { "tools-paintbrush-force-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Set Brush Force", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
 };
@@ -193,6 +217,14 @@ static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
     NULL }
 };
 
+static const GimpEnumActionEntry tools_mybrush_hardness_actions[] =
+{
+  { "tools-mypaint-brush-hardness-set", GIMP_STOCK_TOOL_MYPAINT_BRUSH,
+    "Set MyPaint Brush Hardness", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL }
+};
+
 static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
 {
   { "tools-foreground-select-brush-size-set",
@@ -215,6 +247,15 @@ static const GimpEnumActionEntry tools_warp_effect_size_actions[] =
   { "tools-warp-effect-size-set",
     GIMP_STOCK_TOOL_WARP,
     "Set Warp Effect Size", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL }
+};
+
+static const GimpEnumActionEntry tools_warp_effect_hardness_actions[] =
+{
+  { "tools-warp-effect-hardness-set",
+    GIMP_STOCK_TOOL_WARP,
+    "Set Warp Effect Hardness", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
 };
@@ -395,6 +436,138 @@ static const GimpEnumActionEntry tools_angle_actions[] =
     NULL },
 };
 
+static const GimpEnumActionEntry tools_spacing_actions[] =
+{
+  { "tools-spacing-set", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-spacing-set-to-default", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Spacing To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
+    NULL },
+  { "tools-spacing-minimum", GIMP_STOCK_TOOL_OPTIONS,
+    "Minimize Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-spacing-maximum", GIMP_STOCK_TOOL_OPTIONS,
+    "Maximize Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-spacing-decrease", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-spacing-increase", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-spacing-decrease-skip", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Spacing More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-spacing-increase-skip", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Spacing More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+  { "tools-spacing-decrease-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Spacing Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-spacing-increase-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Spacing Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
+};
+
+static const GimpEnumActionEntry tools_hardness_actions[] =
+{
+  { "tools-hardness-set", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Hardness", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-hardness-set-to-default", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Hardness To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
+    NULL },
+  { "tools-hardness-minimum", GIMP_STOCK_TOOL_OPTIONS,
+    "Minimize Hardness", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-hardness-maximum", GIMP_STOCK_TOOL_OPTIONS,
+    "Maximize Hardness", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-hardness-decrease", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Hardness", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-hardness-increase", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Hardness", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-hardness-decrease-skip", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Hardness More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-hardness-increase-skip", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Hardness More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+  { "tools-hardness-decrease-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Hardness Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-hardness-increase-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Hardness Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
+};
+
+static const GimpEnumActionEntry tools_force_actions[] =
+{
+  { "tools-force-set", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Force", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-force-set-to-default", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Force To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
+    NULL },
+  { "tools-force-minimum", GIMP_STOCK_TOOL_OPTIONS,
+    "Minimize Force", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-force-maximum", GIMP_STOCK_TOOL_OPTIONS,
+    "Maximize Force", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-force-decrease", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Force", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-force-increase", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Force", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-force-decrease-skip", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Force More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-force-increase-skip", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Force More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+  { "tools-force-decrease-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Force Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-force-increase-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Force Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
+};
+
 static const GimpEnumActionEntry tools_object_1_actions[] =
 {
   { "tools-object-1-set", GIMP_STOCK_TOOL_OPTIONS,
@@ -472,16 +645,26 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_paintbrush_size_actions,
                                       G_N_ELEMENTS (tools_paintbrush_size_actions),
                                       G_CALLBACK (tools_paintbrush_size_cmd_callback));
-
-  gimp_action_group_add_enum_actions (group, NULL,
-                                      tools_paintbrush_angle_actions,
-                                      G_N_ELEMENTS (tools_paintbrush_angle_actions),
-                                      G_CALLBACK (tools_paintbrush_angle_cmd_callback));
-
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_paintbrush_aspect_ratio_actions,
                                       G_N_ELEMENTS (tools_paintbrush_aspect_ratio_actions),
                                       G_CALLBACK (tools_paintbrush_aspect_ratio_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_paintbrush_angle_actions,
+                                      G_N_ELEMENTS (tools_paintbrush_angle_actions),
+                                      G_CALLBACK (tools_paintbrush_angle_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_paintbrush_spacing_actions,
+                                      G_N_ELEMENTS (tools_paintbrush_spacing_actions),
+                                      G_CALLBACK (tools_paintbrush_spacing_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_paintbrush_hardness_actions,
+                                      G_N_ELEMENTS (tools_paintbrush_hardness_actions),
+                                      G_CALLBACK (tools_paintbrush_hardness_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_paintbrush_force_actions,
+                                      G_N_ELEMENTS (tools_paintbrush_force_actions),
+                                      G_CALLBACK (tools_paintbrush_force_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_ink_blob_size_actions,
@@ -509,6 +692,10 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_mybrush_radius_actions,
                                       G_N_ELEMENTS (tools_mybrush_radius_actions),
                                       G_CALLBACK (tools_mybrush_radius_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_mybrush_hardness_actions,
+                                      G_N_ELEMENTS (tools_mybrush_hardness_actions),
+                                      G_CALLBACK (tools_mybrush_hardness_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_foreground_select_brush_size_actions,
@@ -524,6 +711,10 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_warp_effect_size_actions,
                                       G_N_ELEMENTS (tools_warp_effect_size_actions),
                                       G_CALLBACK (tools_warp_effect_size_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_warp_effect_hardness_actions,
+                                      G_N_ELEMENTS (tools_warp_effect_hardness_actions),
+                                      G_CALLBACK (tools_warp_effect_hardness_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_opacity_actions,
@@ -541,6 +732,18 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_angle_actions,
                                       G_N_ELEMENTS (tools_angle_actions),
                                       G_CALLBACK (tools_angle_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_spacing_actions,
+                                      G_N_ELEMENTS (tools_spacing_actions),
+                                      G_CALLBACK (tools_spacing_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_hardness_actions,
+                                      G_N_ELEMENTS (tools_hardness_actions),
+                                      G_CALLBACK (tools_hardness_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_force_actions,
+                                      G_N_ELEMENTS (tools_force_actions),
+                                      G_CALLBACK (tools_force_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_object_1_actions,
