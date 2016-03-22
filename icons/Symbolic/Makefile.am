@@ -9,7 +9,7 @@ icons_DATA = \
 ## official icon themes have the same list.
 include $(top_srcdir)/icons/icon-list.mk
 
-scalable/%.svg: scalable.svg ../../tools/compute-svg-viewbox
+scalable/%.svg: symbolic-scalable.svg ../../tools/compute-svg-viewbox
 	mkdir -p scalable && \
 	SVG=`$(top_srcdir)/tools/extract-vector-icon.sh $< $*` && \
 	echo $${SVG} > $@
