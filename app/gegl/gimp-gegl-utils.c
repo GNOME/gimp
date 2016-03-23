@@ -73,12 +73,11 @@ gimp_gegl_color_new (const GimpRGB *rgb)
 }
 
 static void
-gimp_gegl_progress_notify (GObject          *object,
-                           gdouble           value,
-                           GimpProgress     *progress)
+gimp_gegl_progress_callback (GObject      *object,
+                             gdouble       value,
+                             GimpProgress *progress)
 {
   const gchar *text;
-
 
   text = g_object_get_data (object, "gimp-progress-text");
 
@@ -86,12 +85,17 @@ gimp_gegl_progress_notify (GObject          *object,
     {
       if (value == 0.0)
         {
-          gimp_progress_start (progress, FALSE, "%s", text);
+          if (gimp_progress_is_active (progress))
+            gimp_progress_set_text (progress, "%s", text);
+          else
+            gimp_progress_start (progress, FALSE, "%s", text);
+
           return;
         }
       else if (value == 1.0)
         {
           gimp_progress_end (progress);
+
           return;
         }
     }
@@ -114,7 +118,7 @@ gimp_gegl_progress_connect (GeglNode     *node,
   g_return_if_fail (operation != NULL);
 
   g_signal_connect (operation, "progress",
-                    G_CALLBACK (gimp_gegl_progress_notify),
+                    G_CALLBACK (gimp_gegl_progress_callback),
                     progress);
 
   if (text)
