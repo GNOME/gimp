@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-21 19:23+0000\n"
-"PO-Revision-Date: 2016-03-21 21:01-0600\n"
+"POT-Creation-Date: 2016-03-22 19:24+0000\n"
+"PO-Revision-Date: 2016-03-22 22:15-0600\n"
 "Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -3239,8 +3239,6 @@ msgid "_Semi-Flatten..."
 msgstr "_Semiaplanar…"
 
 #: ../app/actions/filters-actions.c:441
-#| msgctxt "filters-action"
-#| msgid "_Super_nova..."
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
@@ -3251,7 +3249,6 @@ msgid "_Shift..."
 msgstr "_Desplazamiento…"
 
 #: ../app/actions/filters-actions.c:451
-#| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Seno…"
@@ -3262,7 +3259,6 @@ msgid "_Softglow..."
 msgstr "Brillo _suave…"
 
 #: ../app/actions/filters-actions.c:461
-#| msgid "B_rightness-Contrast..."
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Expansión del contraste…"
@@ -3286,15 +3282,11 @@ msgid "_Threshold Alpha..."
 msgstr "_Umbral alfa…"
 
 #: ../app/actions/filters-actions.c:481
-#| msgctxt "image-action"
-#| msgid "Can_vas Size..."
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Mosaico de _cristal…"
 
 #: ../app/actions/filters-actions.c:486
-#| msgctxt "image-action"
-#| msgid "Can_vas Size..."
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "Mosaico de _papel…"
@@ -3310,15 +3302,12 @@ msgid "_Unsharp Mask..."
 msgstr "Máscara de desenfoq_ue…"
 
 #: ../app/actions/filters-actions.c:501
-#| msgctxt "image-action"
-#| msgid "_Scale Image..."
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Propagar valor…"
 
 # Location lo traducimos por lugar (Serrador)
 #: ../app/actions/filters-actions.c:506
-#| msgid "_GEGL Operation..."
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradación del vídeo…"
@@ -3355,8 +3344,6 @@ msgid "Re_peat Last"
 msgstr "Re_petir el último"
 
 #: ../app/actions/filters-actions.c:536
-#| msgctxt "plug-in-action"
-#| msgid "Rerun the last used plug-in using the same settings"
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
@@ -3371,8 +3358,6 @@ msgid "R_e-Show Last"
 msgstr "_Volver a mostrar el último"
 
 #: ../app/actions/filters-actions.c:542
-#| msgctxt "plug-in-action"
-#| msgid "Show the last used plug-in dialog again"
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostrar otra vez el diálogo del último filtro utilizado"
@@ -3817,8 +3802,6 @@ msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
 
 #: ../app/actions/gradients-actions.c:67
-#| msgctxt "gradients-action"
-#| msgid "Copy gradient file location to clipboard"
 msgctxt "gradients-action"
 msgid "Show gradient file location in the file manager"
 msgstr "Mostrar la ubicación del archivo de degradado en el gestor de archivos"
@@ -3912,7 +3895,6 @@ msgid "Pr_ecision"
 msgstr "_Precisión"
 
 #: ../app/actions/image-actions.c:62
-#| msgid "Color Management"
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "_Gestión del color"
@@ -3968,38 +3950,31 @@ msgid "Create a new image"
 msgstr "Crea una imagen nueva"
 
 #: ../app/actions/image-actions.c:80
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Asignar perfil de color…"
 
 #: ../app/actions/image-actions.c:81
-#| msgid "Pick color from image"
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Establecer un perfil de color en la imagen"
 
 #: ../app/actions/image-actions.c:86
-#| msgid "Select Monitor Color Profile"
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
 msgstr "_Convertir a perfil de color…"
 
 #: ../app/actions/image-actions.c:87
-#| msgid "Pick color from image"
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
 msgstr "Aplicar un perfil de color a la imagen"
 
 #: ../app/actions/image-actions.c:92
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Discard Color Profile"
 msgstr "_Descartar perfil de color"
 
 #: ../app/actions/image-actions.c:93
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Eliminar el perfil de color de la imagen"
@@ -4159,97 +4134,82 @@ msgid "Convert the image to indexed colors"
 msgstr "Convertir la imagen a colores indexados"
 
 #: ../app/actions/image-actions.c:191
-#| msgctxt "component-type"
-#| msgid "8-bit integer"
 msgctxt "image-convert-action"
 msgid "8 bit integer"
 msgstr "Entero de 8 bits"
 
 #: ../app/actions/image-actions.c:193
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 8 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Convertir la imagen a entero de 8 bits"
 
 #: ../app/actions/image-actions.c:197
-#| msgctxt "component-type"
-#| msgid "16-bit integer"
 msgctxt "image-convert-action"
 msgid "16 bit integer"
 msgstr "Entero de 16 bits"
 
 #: ../app/actions/image-actions.c:199
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 16 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
-msgstr "Convertir la imagen a enteros de 16 bits lineales"
+msgstr "Convertir la imagen a entero de 16 bits"
 
 #: ../app/actions/image-actions.c:203
-#, fuzzy
 #| msgctxt "component-type"
 #| msgid "32-bit integer"
 msgctxt "image-convert-action"
 msgid "32 bit integer"
-msgstr "entero de 32 bits"
+msgstr "Entero de 32 bits"
 
 #: ../app/actions/image-actions.c:205
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 32 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
-msgstr "Convertir la imagen a enteros de 32 bits lineales"
+msgstr "Convertir la imagen a entero de 32 bits"
 
 #: ../app/actions/image-actions.c:209
-#, fuzzy
 #| msgctxt "component-type"
 #| msgid "16-bit floating point"
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
-msgstr "16 bits en coma flotante"
+msgstr "Coma flotante de 16 bits"
 
 #: ../app/actions/image-actions.c:211
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 16 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr "Convertir la imagen a 16 bits en coma flotante"
+msgstr "Convertir la imagen a coma flotante de 16 bits"
 
 #: ../app/actions/image-actions.c:215
-#, fuzzy
 #| msgctxt "component-type"
 #| msgid "32-bit floating point"
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
-msgstr "32 bits en coma flotante"
+msgstr "Coma flotante de 32 bits"
 
 #: ../app/actions/image-actions.c:217
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 32 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr "Convertir la imagen a 32 bits en coma flotante"
+msgstr "Convertir la imagen a coma flotante de 32 bits"
 
 #: ../app/actions/image-actions.c:221
-#, fuzzy
 #| msgctxt "component-type"
 #| msgid "16-bit floating point"
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
-msgstr "16 bits en coma flotante"
+msgstr "Coma flotante de 64 bits"
 
 #: ../app/actions/image-actions.c:223
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 16 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
-msgstr "Convertir la imagen a 16 bits en coma flotante"
+msgstr "Convertir la imagen a coma flotante de 64 bits"
 
 #: ../app/actions/image-actions.c:230
 msgctxt "image-convert-action"
@@ -4257,28 +4217,25 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Gamma perceptual (sRGB)"
 
 #: ../app/actions/image-actions.c:232
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to grayscale"
 msgctxt "image-convert-action"
 msgid "Convert the image to preceptual (sRGB) gamma"
-msgstr "Convertir la imagen a escala de grises"
+msgstr "Convertir la imagen a gamma perceptual (sRGB)"
 
 #: ../app/actions/image-actions.c:236
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hard light"
 msgctxt "image-convert-action"
 msgid "Linear light"
-msgstr "Claridad fuerte"
+msgstr "Luz lineal"
 
 #: ../app/actions/image-actions.c:238
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 8 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
-msgstr "Convertir la imagen a enteros de 8 bits lineales"
+msgstr "Convertir la imagen a luz lineal"
 
 #: ../app/actions/image-actions.c:245
 msgctxt "image-action"
@@ -4367,10 +4324,10 @@ msgid "Cannot crop because the image has no content."
 msgstr "No se puede recortar porque la imagen no tiene contenido."
 
 #: ../app/actions/image-commands.c:656
-#, fuzzy
 #| msgid "Cannot crop because the image has no content."
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr "No se puede recortar porque la imagen no tiene contenido."
+msgstr ""
+"No se puede recortar porque la imagen ya está recortada a su contenido."
 
 #: ../app/actions/image-commands.c:866
 msgid "Change Print Size"
@@ -4993,10 +4950,10 @@ msgid "Cannot crop because the active layer has no content."
 msgstr "No se puede recortar porque la capa activa no tiene contenido."
 
 #: ../app/actions/layers-commands.c:759
-#, fuzzy
 #| msgid "Cannot crop because the active layer has no content."
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr "No se puede recortar porque la capa activa no tiene contenido."
+msgstr ""
+"No se puede recortar porque la capa activa ya está recortada a su contenido."
 
 #: ../app/actions/layers-commands.c:1133
 msgid "Please select a channel first"
@@ -5008,50 +4965,44 @@ msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
-#, fuzzy
 #| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "MyPaint Brushes Menu"
-msgstr "Pincel"
+msgstr "Menú de pinceles MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:47
-#, fuzzy
 #| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "_New MyPaint Brush"
-msgstr "Pincel"
+msgstr "_Nuevo pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:48
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Create a new brush"
 msgctxt "mypaint-brushes-action"
 msgid "Create a new MyPaint brush"
-msgstr "Crear un pincel nuevo"
+msgstr "Crear un nuevo pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:53
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "D_uplicate Brush"
 msgctxt "mypaint-brushes-action"
 msgid "D_uplicate MyPaint Brush"
-msgstr "D_uplicar pincel"
+msgstr "_Duplicar pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:54
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Duplicate this brush"
 msgctxt "mypaint-brushes-action"
 msgid "Duplicate this MyPaint brush"
-msgstr "Duplicar este pincel"
+msgstr "Duplicar este pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:59
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Copy Brush _Location"
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint Brush _Location"
-msgstr "Copiar la _ubicación del pincel"
+msgstr "Copiar la _ubicación del pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:60
 #, fuzzy
