@@ -22,6 +22,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "actions-types.h"
 
 #include "core/gimp.h"
@@ -190,6 +192,69 @@ tools_paintbrush_aspect_ratio_cmd_callback (GtkAction *action,
 }
 
 void
+tools_paintbrush_spacing_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (tool_info->tool_options),
+                              "brush-spacing",
+                              0.001, 0.01, 0.1, 0.1, FALSE);
+    }
+}
+
+void
+tools_paintbrush_hardness_cmd_callback (GtkAction *action,
+                                        gint       value,
+                                        gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (tool_info->tool_options),
+                              "brush-hardness",
+                              0.001, 0.01, 0.1, 0.1, FALSE);
+    }
+}
+
+void
+tools_paintbrush_force_cmd_callback (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (tool_info->tool_options),
+                              "brush-force",
+                              0.001, 0.01, 0.1, 0.1, FALSE);
+    }
+}
+
+void
 tools_ink_blob_size_cmd_callback (GtkAction *action,
                                   gint       value,
                                   gpointer   data)
@@ -206,7 +271,7 @@ tools_ink_blob_size_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "size",
-                              1.0, 1.0, 10.0, 0.1, FALSE);
+                              0.1, 1.0, 10.0, 0.1, FALSE);
     }
 }
 
@@ -248,7 +313,10 @@ tools_ink_blob_angle_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "blob-angle",
-                              1.0, 1.0, 15.0, 0.1, TRUE);
+                              gimp_deg_to_rad (0.1),
+                              gimp_deg_to_rad (1.0),
+                              gimp_deg_to_rad (15.0),
+                              0.1, TRUE);
     }
 }
 
@@ -269,7 +337,7 @@ tools_airbrush_rate_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "rate",
-                              0.1, 1.0, 15.0, 0.1, FALSE);
+                              0.1, 1.0, 10.0, 0.1, FALSE);
     }
 }
 
@@ -312,6 +380,27 @@ tools_mybrush_radius_cmd_callback (GtkAction *action,
                               G_OBJECT (tool_info->tool_options),
                               "radius",
                               0.1, 0.1, 0.5, 1.0, FALSE);
+    }
+}
+
+void
+tools_mybrush_hardness_cmd_callback (GtkAction *action,
+                                   gint       value,
+                                   gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_MYBRUSH_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (tool_info->tool_options),
+                              "hardness",
+                              0.001, 0.01, 0.1, 1.0, FALSE);
     }
 }
 
@@ -375,6 +464,27 @@ tools_warp_effect_size_cmd_callback (GtkAction *action,
                               G_OBJECT (tool_info->tool_options),
                               "effect-size",
                               1.0, 4.0, 16.0, 0.1, FALSE);
+    }
+}
+
+void
+tools_warp_effect_hardness_cmd_callback (GtkAction *action,
+                                         gint       value,
+                                         gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_WARP_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (tool_info->tool_options),
+                              "effect-hardness",
+                              0.001, 0.01, 0.1, 0.1, FALSE);
     }
 }
 
@@ -460,6 +570,72 @@ tools_angle_cmd_callback (GtkAction *action,
       const gchar *action_desc;
 
       action_desc = gimp_tool_control_get_action_angle (tool->control);
+
+      if (action_desc)
+        tools_activate_enum_action (action_desc, value);
+    }
+}
+
+void
+tools_spacing_cmd_callback (GtkAction *action,
+                            gint       value,
+                            gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_spacing (tool->control);
+
+      if (action_desc)
+        tools_activate_enum_action (action_desc, value);
+    }
+}
+
+void
+tools_hardness_cmd_callback (GtkAction *action,
+                             gint       value,
+                             gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_hardness (tool->control);
+
+      if (action_desc)
+        tools_activate_enum_action (action_desc, value);
+    }
+}
+
+void
+tools_force_cmd_callback (GtkAction *action,
+                          gint       value,
+                          gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_force (tool->control);
 
       if (action_desc)
         tools_activate_enum_action (action_desc, value);

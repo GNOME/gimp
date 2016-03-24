@@ -2423,10 +2423,13 @@ icons/Legacy/Makefile
 icons/Symbolic/Makefile
 icons/Symbolic-Inverted/Makefile
 themes/Makefile
-themes/Default/Makefile
+themes/System/Makefile
 themes/Small/Makefile
-themes/The-Dark-Side-of-Gimp/Makefile
-themes/The-Light-Side-of-Gimp/Makefile
+themes/Darker/Makefile
+themes/Dark/Makefile
+themes/Gray/Makefile
+themes/Light/Makefile
+themes/Lighter/Makefile
 data/Makefile
 data/brushes/Makefile
 data/brushes/Basic/Makefile

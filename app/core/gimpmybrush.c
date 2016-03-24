@@ -25,6 +25,7 @@
 
 #include "core-types.h"
 
+#include "gimp-memsize.h"
 #include "gimpmybrush.h"
 #include "gimpmybrush-load.h"
 #include "gimpmybrush-private.h"
@@ -155,6 +156,8 @@ gimp_mybrush_get_memsize (GimpObject *object,
   GimpMybrush *brush   = GIMP_MYBRUSH (object);
   gint64       memsize = 0;
 
+  memsize += gimp_string_get_memsize (brush->priv->brush_json);
+
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
@@ -186,6 +189,19 @@ gimp_mybrush_get_checksum (GimpTagged *tagged)
 {
   GimpMybrush *brush           = GIMP_MYBRUSH (tagged);
   gchar       *checksum_string = NULL;
+
+  if (brush->priv->brush_json)
+    {
+      GChecksum *checksum = g_checksum_new (G_CHECKSUM_MD5);
+
+      g_checksum_update (checksum,
+                         (const guchar *) brush->priv->brush_json,
+                         strlen (brush->priv->brush_json));
+
+      checksum_string = g_strdup (g_checksum_get_string (checksum));
+
+      g_checksum_free (checksum);
+    }
 
   return checksum_string;
 }

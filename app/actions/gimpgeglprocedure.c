@@ -262,6 +262,12 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   /*  the last used settings  */
   settings = gimp_container_get_child_by_index (container, 0);
 
+  /*  only use the settings if they are automatically created "last used"
+   *  values, not if they were saved explicitly and have a zero timestamp
+   */
+  if (settings && GIMP_SETTINGS (settings)->time == 0)
+    settings = NULL;
+
   if (run_mode == GIMP_RUN_WITH_LAST_VALS)
     {
       if (settings)

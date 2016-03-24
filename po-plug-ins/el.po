@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-21 19:15+0000\n"
-"PO-Revision-Date: 2016-02-22 11:11+0200\n"
+"POT-Creation-Date: 2016-03-22 07:25+0000\n"
+"PO-Revision-Date: 2016-03-22 12:30+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -2174,7 +2174,6 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
 #: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:314
 #, c-format
-#| msgid "Opening '%s'"
 msgid "Exporting '%s'"
 msgstr "Εξαγωγή του '%s'"
 
@@ -2397,15 +2396,11 @@ msgstr ""
 "αποθήκευση ίσως να μην παίξουν τέλεια."
 
 #: ../plug-ins/common/file-gif-save.c:510
-#| msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Αδυναμία παραπέρα μείωσης χρωμάτων. Αποθήκευση ως αδιαφανούς."
 
 #: ../plug-ins/common/file-gif-save.c:625
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The GIF file format does not support images that "
-#| "are more than %d pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
@@ -2422,8 +2417,6 @@ msgstr ""
 "αποθήκευση σχολίου."
 
 #: ../plug-ins/common/file-gif-save.c:799
-#| msgid ""
-#| "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
@@ -2436,9 +2429,6 @@ msgstr ""
 "Εισαγωγή καθυστέρησης για αποφυγή κίνησης υπερβολικά καταναλωτικής της CPU."
 
 #: ../plug-ins/common/file-gif-save.c:1015
-#| msgid ""
-#| "The image you are trying to save as a GIF contains layers which extend "
-#| "beyond the actual borders of the image."
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2447,9 +2437,6 @@ msgstr ""
 "επεκτείνονται πέρα από τα τρέχοντα περιγράμματα της εικόνας."
 
 #: ../plug-ins/common/file-gif-save.c:1032
-#| msgid ""
-#| "The GIF file format does not allow this.  You may choose whether to crop "
-#| "all of the layers to the image borders, or cancel this save."
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2955,7 +2942,6 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "Ασυνήθιστη παραλλαγή PCX, εγκατάλειψη"
 
 #: ../plug-ins/common/file-pcx.c:695 ../plug-ins/common/file-pnm.c:1202
-#| msgid "Cannot save images with alpha channel."
 msgid "Cannot export images with alpha channel."
 msgstr "Αδυναμία εξαγωγής εικόνων με άλφα κανάλι."
 
@@ -3141,7 +3127,6 @@ msgstr "Σφάλμα φόρτωσης αρχείου PNG: %s"
 
 #: ../plug-ins/common/file-png.c:863
 #, c-format
-#| msgid "Error creating PNG read struct while saving '%s'."
 msgid "Error creating PNG read struct while exporting '%s'."
 msgstr "Σφάλμα κατά τη δημιουργία PNG διαβάζει δομή ενώ εξάγει '%s'."
 
@@ -3192,13 +3177,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1473
 #, c-format
-#| msgid "Error creating PNG write struct while saving '%s'."
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Σφάλμα κατά τη δημιουργία του PNG γράφει δομή ενώ εξάγει '%s'."
 
 #: ../plug-ins/common/file-png.c:1483
 #, c-format
-#| msgid "Error while saving '%s'. Could not save image."
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Σφάλμα κατά την εξαγωγή του '%s'. Αδυναμία εξαγωγής της εικόνας."
 
@@ -3322,12 +3305,12 @@ msgstr "Έγγραφο PDF"
 #
 #: ../plug-ins/common/file-ps.c:1110
 #, c-format
-msgid "Could not interpret Postscript file '%s'"
-msgstr "Αδυναμία ερμηνείας αρχείου Postscript '%s'"
+#| msgid "Could not interpret Postscript file '%s'"
+msgid "Could not interpret PostScript file '%s'"
+msgstr "Αδυναμία ερμηνείας του αρχείου Postscript '%s'"
 
 #: ../plug-ins/common/file-ps.c:1247
 #, c-format
-#| msgid "PostScript save cannot handle images with alpha channels"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Η εξαγωγή PostScript αδυνατεί να χειριστεί εικόνες με άλφα κανάλια"
 
@@ -3706,7 +3689,6 @@ msgstr "Αυτό το βάθος εικόνας δεν υποστηρίζετα�
 
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
-#| msgid "SUNRAS save cannot handle images with alpha channels"
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "Η εξαγωγή SUNRAS αδυνατεί να επεξεργαστεί εικόνες με άλφα κανάλια"
 
@@ -3904,12 +3886,6 @@ msgstr ""
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:997
-#| msgid ""
-#| "The image which you are trying to save as an XBM contains more than two "
-#| "colors.\n"
-#| "\n"
-#| "Please convert it to a black and white (1-bit) indexed image and try "
-#| "again."
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -4192,10 +4168,6 @@ msgstr "Το πλάτος και/ή ύψος του πλαισίου '%s' είν
 
 #: ../plug-ins/common/file-xmc.c:1585
 #, c-format
-#| msgid ""
-#| "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
-#| "Try to change the hot spot position, layer geometry or save without auto-"
-#| "crop."
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or export without auto-"
@@ -4208,10 +4180,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1748
 #, c-format
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose width or height is more than %ipx.\n"
@@ -4222,11 +4190,6 @@ msgstr ""
 "Θα διαταραχθεί η οθόνη σε κάποια περιβάλλοντα."
 
 #: ../plug-ins/common/file-xmc.c:1755
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "whose nominal size is not supported by GNOME settings.\n"
-#| "You can satisfy it by checking \"Replace the size of all frames...\" in "
-#| "the save dialog, or your cursor may not appear in GNOME settings."
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -4325,7 +4288,6 @@ msgstr ""
 "εικονοστοιχείο %d. Προς το παρόν αυτό δεν υποστηρίζεται."
 
 #: ../plug-ins/common/file-xwd.c:636
-#| msgid "Cannot save images with alpha channels."
 msgid "Cannot export images with alpha channels."
 msgstr "Αδυναμία εξαγωγής εικόνων με άλφα κανάλια."
 
@@ -4336,7 +4298,6 @@ msgstr "Αδυναμία ανοίγματος του '%s' για εγγραφή:
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
-#| msgid "Error saving '%s': "
 msgid "Error exporting '%s': "
 msgstr "Σφάλμα κατά την εξαγωγή του '%s': "
 
@@ -6507,7 +6468,6 @@ msgid "The bitmap ends unexpectedly."
 msgstr "Οι ψηφιογραφίες τελειώνουν αναπάντεχα."
 
 #: ../plug-ins/file-bmp/bmp-write.c:197 ../plug-ins/file-bmp/bmp-write.c:229
-#| msgid "Cannot save indexed image with transparency in BMP file format."
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 "Αδυναμία εξαγωγής εικόνας από ευρετήριο με διαφάνεια σε μορφή αρχείου BMP."
@@ -6605,7 +6565,6 @@ msgid "FITS file keeps no displayable images"
 msgstr "Τα αρχεία FITS δεν διατηρούν εμφανίσιμες εικόνες"
 
 #: ../plug-ins/file-fits/fits.c:457
-#| msgid "FITS save cannot handle images with alpha channels"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Η αποθήκευση FITS αδυνατεί να χειριστεί εικόνες με κανάλια άλφα"
 
@@ -6650,7 +6609,6 @@ msgid "Frame (%i)"
 msgstr "Πλαίσιο (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:712
-#| msgid "Sorry, I can save only INDEXED and GRAY images."
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr ""
 "Συγνώμη, μπορούν να εξαχθούν μόνο εικόνες ΑΠΟ ΕΥΡΕΤΗΡΙΟ ή ΓΚΡΙΖΑ ΚΛΙΜΑΚΑ."
@@ -6996,9 +6954,6 @@ msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
 
 #: ../plug-ins/file-psd/psd-save.c:253
 #, c-format
-#| msgid ""
-#| "Unable to save layer with mode '%s'.  Either the PSD file format or the "
-#| "save plug-in does not support that, using normal mode instead."
 msgid ""
 "Unable to export layer with mode '%s'.  Either the PSD file format or the "
 "export plug-in does not support that, using normal mode instead."
@@ -7013,9 +6968,6 @@ msgstr "Σφάλμα: Αδυναμία μετατροπής τύπου εικό�
 
 #: ../plug-ins/file-psd/psd-save.c:1490
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images that "
-#| "are more than 30,000 pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
@@ -7025,9 +6977,6 @@ msgstr ""
 
 #: ../plug-ins/file-psd/psd-save.c:1505
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images with "
-#| "layers that are more than 30,000 pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
@@ -7121,7 +7070,6 @@ msgstr "Κανάλι TIFF"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:482
 #, c-format
-#| msgid "TIFF save cannot handle indexed images with an alpha channel."
 msgid "TIFF export cannot handle indexed images with an alpha channel."
 msgstr ""
 "Η εξαγωγή TIFF αδυνατεί να χειριστεί εικόνες από ευρετήριο με κανάλι άλφα."
@@ -9459,19 +9407,28 @@ msgstr "Οι σελίδες βοήθειας για '%s' δεν είναι δι�
 msgid "The GIMP user manual is not available."
 msgstr "Το εγχειρίδιο χρήστη του GIMP δεν είναι διαθέσιμο."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#. TRANSLATORS: do not end the URL with a dot,
+#. * it would be in the link. Because of
+#. * technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../plug-ins/help/gimphelpdomain.c:193
+#| msgid ""
+#| "Please install the additional help package or use the online user manual "
+#| "at http://docs.gimp.org/."
 msgid ""
-"Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"Please install the additional help package or use the online user manual at: "
+"http://docs.gimp.org/"
 msgstr ""
 "Παρακαλώ εγκαταστήστε το πρόσθετο πακέτο βοήθειας ή χρησιμοποιήστε το "
-"ζωντανό εγχειρίδιο χρήστη στο http://docs.gimp.org/."
+"δικτυακό εγχειρίδιο χρήστη στο http://docs.gimp.org/."
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Ίσως σας λείπουν υποστηρικτικά GIO και χρειαζόσαστε εγκατάσταση GVFS;"
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Ταυτότητα βοήθειας '%s' άγνωστη"

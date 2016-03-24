@@ -36,6 +36,15 @@ void   tools_paintbrush_angle_cmd_callback          (GtkAction   *action,
 void   tools_paintbrush_aspect_ratio_cmd_callback   (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
+void   tools_paintbrush_spacing_cmd_callback        (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_paintbrush_hardness_cmd_callback       (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_paintbrush_force_cmd_callback          (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
 
 void   tools_ink_blob_size_cmd_callback             (GtkAction   *action,
                                                      gint         value,
@@ -57,6 +66,9 @@ void   tools_airbrush_flow_cmd_callback             (GtkAction   *action,
 void   tools_mybrush_radius_cmd_callback            (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
+void   tools_mybrush_hardness_cmd_callback          (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
 
 void   tools_fg_select_brush_size_cmd_callback      (GtkAction   *action,
                                                      gint         value,
@@ -67,6 +79,9 @@ void   tools_transform_preview_opacity_cmd_callback (GtkAction   *action,
                                                      gpointer     data);
 
 void   tools_warp_effect_size_cmd_callback          (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_warp_effect_hardness_cmd_callback      (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 
@@ -80,6 +95,15 @@ void   tools_aspect_cmd_callback                    (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 void   tools_angle_cmd_callback                     (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_spacing_cmd_callback                   (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_hardness_cmd_callback                  (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_force_cmd_callback                     (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 

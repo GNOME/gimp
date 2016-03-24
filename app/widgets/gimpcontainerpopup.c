@@ -295,6 +295,8 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
 {
   GimpEditor *editor;
   GtkWidget  *button;
+  gint        rows;
+  gint        columns;
 
   popup->editor = g_object_new (GIMP_TYPE_CONTAINER_EDITOR,
                                 "view-type",         popup->view_type,
@@ -319,11 +321,23 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
       gtk_widget_show (search_entry);
     }
 
+  /* lame workaround for bug #761998 */
+  if (popup->default_view_size >= GIMP_VIEW_SIZE_LARGE)
+    {
+      rows    = 6;
+      columns = 6;
+    }
+  else
+    {
+      rows    = 10;
+      columns = 6;
+    }
+
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (popup->editor->view),
-                                       6  * (popup->default_view_size +
-                                             2 * popup->view_border_width),
-                                       10 * (popup->default_view_size +
-                                             2 * popup->view_border_width));
+                                       columns * (popup->default_view_size +
+                                                  2 * popup->view_border_width),
+                                       rows    * (popup->default_view_size +
+                                                  2 * popup->view_border_width));
 
   if (GIMP_IS_EDITOR (popup->editor->view))
     gimp_editor_set_show_name (GIMP_EDITOR (popup->editor->view), FALSE);

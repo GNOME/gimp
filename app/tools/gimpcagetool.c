@@ -309,46 +309,61 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
         {
           /* switch to deform mode */
 
-          gimp_cage_config_reset_displacement (ct->config);
-          gimp_cage_config_reverse_cage_if_needed (ct->config);
-          gimp_tool_push_status (tool, tool->display,
-                                 _("Press ENTER to commit the transform"));
-          ct->tool_state = DEFORM_STATE_WAIT;
-
-          if (! ct->render_node)
+          if (gimp_cage_config_get_n_points (ct->config) > 2)
             {
-              gimp_cage_tool_create_render_node (ct);
-            }
+              gimp_cage_config_reset_displacement (ct->config);
+              gimp_cage_config_reverse_cage_if_needed (ct->config);
+              gimp_tool_push_status (tool, tool->display,
+                                     _("Press ENTER to commit the transform"));
+              ct->tool_state = DEFORM_STATE_WAIT;
 
-          if (ct->dirty_coef)
+              if (! ct->render_node)
+                {
+                  gimp_cage_tool_create_render_node (ct);
+                }
+
+              if (ct->dirty_coef)
+                {
+                  gimp_cage_tool_compute_coef (ct);
+                  gimp_cage_tool_render_node_update (ct);
+                }
+
+              if (! ct->image_map)
+                {
+                  GimpImage    *image    = gimp_display_get_image (tool->display);
+                  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+                  gimp_cage_tool_create_image_map (ct, drawable);
+                }
+
+              gimp_cage_tool_image_map_update (ct);
+            }
+          else
             {
-              gimp_cage_tool_compute_coef (ct);
-              gimp_cage_tool_render_node_update (ct);
+              g_object_set (options,
+                            "cage-mode", GIMP_CAGE_MODE_CAGE_CHANGE,
+                            NULL);
             }
-
-          if (! ct->image_map)
-            {
-              GimpImage    *image    = gimp_display_get_image (tool->display);
-              GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-
-              gimp_cage_tool_create_image_map (ct, drawable);
-            }
-
-          gimp_cage_tool_image_map_update (ct);
         }
       else
         {
           /* switch to edit mode */
-          gimp_image_map_abort (ct->image_map);
+          if (ct->image_map)
+            {
+              gimp_image_map_abort (ct->image_map);
 
-          gimp_tool_pop_status (tool, tool->display);
-          ct->tool_state = CAGE_STATE_WAIT;
+              gimp_tool_pop_status (tool, tool->display);
+              ct->tool_state = CAGE_STATE_WAIT;
+            }
         }
     }
   else if (strcmp  (pspec->name, "fill-plain-color") == 0)
     {
-      gimp_cage_tool_render_node_update (ct);
-      gimp_cage_tool_image_map_update (ct);
+      if (ct->tool_state == DEFORM_STATE_WAIT)
+        {
+          gimp_cage_tool_render_node_update (ct);
+          gimp_cage_tool_image_map_update (ct);
+        }
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -711,6 +726,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
         case DEFORM_STATE_MOVE_HANDLE:
           ct->tool_state = DEFORM_STATE_WAIT;
           gimp_cage_config_commit_displacement (ct->config);
+          gegl_node_set (ct->cage_node, "config", ct->config, NULL);
           gimp_cage_tool_image_map_update (ct);
           break;
 
@@ -938,17 +954,20 @@ gimp_cage_tool_halt (GimpCageTool *ct)
 static void
 gimp_cage_tool_commit (GimpCageTool *ct)
 {
-  GimpTool *tool = GIMP_TOOL (ct);
+  if (ct->image_map)
+    {
+      GimpTool *tool = GIMP_TOOL (ct);
 
-  gimp_tool_control_push_preserve (tool->control, TRUE);
+      gimp_tool_control_push_preserve (tool->control, TRUE);
 
-  gimp_image_map_commit (ct->image_map, GIMP_PROGRESS (tool), FALSE);
-  g_object_unref (ct->image_map);
-  ct->image_map = NULL;
+      gimp_image_map_commit (ct->image_map, GIMP_PROGRESS (tool), FALSE);
+      g_object_unref (ct->image_map);
+      ct->image_map = NULL;
 
-  gimp_tool_control_pop_preserve (tool->control);
+      gimp_tool_control_pop_preserve (tool->control);
 
-  gimp_image_flush (gimp_display_get_image (tool->display));
+      gimp_image_flush (gimp_display_get_image (tool->display));
+    }
 }
 
 static gint

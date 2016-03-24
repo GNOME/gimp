@@ -69,14 +69,12 @@ def get_layer_attributes(layer):
 def get_group_layer_attributes(layer):
     a = layer.attrib
     name = a.get('name', '')
-    x = int(a.get('x', '0'))
-    y = int(a.get('y', '0'))
     opac = float(a.get('opacity', '1.0'))
     visible = a.get('visibility', 'visible') != 'hidden'
     m = a.get('composite-op', 'svg:src-over')
     layer_mode = layermodes_map.get(m, NORMAL_MODE)
 
-    return name, x, y, opac, visible, layer_mode
+    return name, 0, 0, opac, visible, layer_mode
 
 def thumbnail_ora(filename, thumb_size):
     # FIXME: Untested. Does not seem to be used at all? should be run
@@ -156,16 +154,12 @@ def save_ora(img, drawable, filename, raw_filename):
         a['composite-op'] = reverse_map(layermodes_map).get(gimp_layer.mode, 'svg:src-over')
         return layer
 
-    def add_group_layer(parent, x, y, opac, gimp_layer, visible=True):
+    def add_group_layer(parent, opac, gimp_layer, visible=True):
         # create layer attributes
         group_layer = ET.Element('stack')
         parent.append(group_layer)
         a = group_layer.attrib
         a['name'] = gimp_layer.name
-        if x:
-            a['x'] = str(x)
-        if y:
-            a['y'] = str(y)
         a['opacity'] = str(opac)
         a['visibility'] = 'visible' if visible else 'hidden'
         a['composite-op'] = reverse_map(layermodes_map).get(gimp_layer.mode, 'svg:src-over')
@@ -203,7 +197,7 @@ def save_ora(img, drawable, filename, raw_filename):
         parent = stack if not parent_groups else parent_groups[-1][0]
 
         if isinstance(lay, gimp.GroupLayer):
-            group = add_group_layer(parent, x, y, opac, lay, lay.visible)
+            group = add_group_layer(parent, opac, lay, lay.visible)
             group_path = ("{:03d}".format(i) if not parent_groups else
                 parent_groups[-1][1] + "-{:03d}".format(parent_groups[-1][2]))
             parent_groups.append([group, group_path , 0])

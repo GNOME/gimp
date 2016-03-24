@@ -107,6 +107,12 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
                                          "tools/tools-paintbrush-aspect-ratio-set");
   gimp_tool_control_set_action_angle    (tool->control,
                                          "tools/tools-paintbrush-angle-set");
+  gimp_tool_control_set_action_spacing  (tool->control,
+                                         "tools/tools-paintbrush-spacing-set");
+  gimp_tool_control_set_action_hardness (tool->control,
+                                         "tools/tools-paintbrush-hardness-set");
+  gimp_tool_control_set_action_force    (tool->control,
+                                         "tools/tools-paintbrush-force-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-brush-select-set");
 }

@@ -78,6 +78,9 @@ struct _GimpToolControl
   gchar               *action_size;
   gchar               *action_aspect;
   gchar               *action_angle;
+  gchar               *action_spacing;
+  gchar               *action_hardness;
+  gchar               *action_force;
   gchar               *action_object_1;
   gchar               *action_object_2;
 };
@@ -199,6 +202,18 @@ const gchar * gimp_tool_control_get_action_aspect   (GimpToolControl *control);
 void          gimp_tool_control_set_action_angle    (GimpToolControl *control,
                                                      const gchar     *action);
 const gchar * gimp_tool_control_get_action_angle    (GimpToolControl *control);
+
+void          gimp_tool_control_set_action_spacing  (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_spacing  (GimpToolControl *control);
+
+void          gimp_tool_control_set_action_hardness (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_hardness (GimpToolControl *control);
+
+void          gimp_tool_control_set_action_force    (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_force    (GimpToolControl *control);
 
 void          gimp_tool_control_set_action_object_1 (GimpToolControl *control,
                                                      const gchar     *action);
