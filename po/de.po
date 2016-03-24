@@ -22,15 +22,15 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-12-26 16:40+0000\n"
-"PO-Revision-Date: 2016-03-20 10:51+0100\n"
-"Last-Translator: Hartmut Kuhse <hatti@gimp.org>\n"
+"PO-Revision-Date: 2016-03-24 14:25+0100\n"
+"Last-Translator: Klaus Staedtler <staedtler-przyborski@web.de>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 1.8.4\n"
 "X-Project-Style: gnome\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -7629,7 +7629,7 @@ msgstr ""
 #| msgctxt "dialogs-action"
 #| msgid "Open the pointer information dialog"
 msgid "Enable the N-Point Deformation tool."
-msgstr "Das N-Point Deformationswerkzeug aktivieren"
+msgstr "Das N-Punkt Verformungsswerkzeug aktivieren"
 
 #: ../app/config/gimprc-blurbs.h:389
 msgid "Enable the Handle Transform tool."
@@ -11481,7 +11481,7 @@ msgstr "Verrückte Einstellungen"
 #: ../app/dialogs/preferences-dialog.c:1596
 #| msgid "Pointer Information"
 msgid "_N-Point Deformation tool"
-msgstr "_N-Point Deformations Werkzeug"
+msgstr "_N-Punkt Verformungs Werkzeug"
 
 #: ../app/dialogs/preferences-dialog.c:1599
 #| msgctxt "tools-action"
@@ -11652,12 +11652,12 @@ msgstr "_Aktuelles Thema neu laden"
 #: ../app/dialogs/preferences-dialog.c:1975
 #| msgid "Theme"
 msgid "Icon Theme"
-msgstr "Thema"
+msgstr "Symbol Thema"
 
 #: ../app/dialogs/preferences-dialog.c:1945
 #| msgid "Select Theme"
 msgid "Select an Icon Theme"
-msgstr "Thema auswählen"
+msgstr "Symbol Thema auswählen"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2037
@@ -12170,17 +12170,17 @@ msgstr "Themenordner auswählen"
 #: ../app/dialogs/preferences-dialog.c:2778
 #| msgid "Themes"
 msgid "Icon Themes"
-msgstr "Themen"
+msgstr "Symbol Themen"
 
 #: ../app/dialogs/preferences-dialog.c:2778
 #| msgid "Theme Folders"
 msgid "Icon Theme Folders"
-msgstr "Themenordner"
+msgstr "Symbol Themenordner"
 
 #: ../app/dialogs/preferences-dialog.c:2780
 #| msgid "Select Theme Folders"
 msgid "Select Icon Theme Folders"
-msgstr "Themenordner auswählen"
+msgstr "Symbol Themenordner auswählen"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
@@ -15485,7 +15485,7 @@ msgstr "Käfig-Transformation"
 #| msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
-"Käfig-Transformations Werkzeugt: Ebene, Auswahl oder Pfad transformieren"
+"Käfig-Transformations Werkzeug: Ebene, Auswahl oder Pfad transformieren"
 
 #: ../app/tools/gimphandletransformtool.c:167
 #| msgid "_Cage Transform"
@@ -16036,18 +16036,18 @@ msgstr "Steifheit (Gummi)"
 #: ../app/tools/gimpnpointdeformationtool.c:1018
 #| msgid "Pointer Information"
 msgid "N-Point Deformation"
-msgstr "N-Point Deformation"
+msgstr "N-Punkt Verformung"
 
 #: ../app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
 msgstr ""
-"N-Point Deformations Werkzeug: Gummi-artige Deformation eines Bildes durch "
+"N-Punkt Verformungs Werkzeug: Gummi-artige Deformation eines Bildes durch "
 "Punktverschiebungen"
 
 #: ../app/tools/gimpnpointdeformationtool.c:161
 #| msgid "Pointer Information"
 msgid "_N-Point Deformation"
-msgstr "_N-Point Deformation"
+msgstr "_N-Punkt Verformung"
 
 #: ../app/tools/gimpoperationtool.c:130
 msgid "Operation Tool: Use an arbitrary GEGL operation"
