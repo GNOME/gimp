@@ -22,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-12-26 16:40+0000\n"
-"PO-Revision-Date: 2016-03-24 15:32+0100\n"
+"PO-Revision-Date: 2016-03-25 10:40+0100\n"
 "Last-Translator: Klaus Staedtler <staedtler-przyborski@web.de>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -7633,7 +7633,7 @@ msgstr "Das N-Punkt Verformungswerkzeug aktivieren"
 
 #: ../app/config/gimprc-blurbs.h:389
 msgid "Enable the Handle Transform tool."
-msgstr ""
+msgstr "Das Gitter Transformationswerkzeug aktivieren"
 
 #: ../app/config/gimprc-blurbs.h:392
 msgid "Enable the MyPaint Brush tool."
@@ -7641,7 +7641,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:395
 msgid "Enable the Seamless Clone tool."
-msgstr "Werkzeug »Nahtlos klonen« aktivieren."
+msgstr "»Nahtlos klonen« Werkzeug aktivieren."
 
 #: ../app/config/gimprc-blurbs.h:398
 msgid "What to do when the space bar is pressed in the image window."
@@ -11487,11 +11487,11 @@ msgstr "_N-Punkt Verformungs Werkzeug"
 #| msgctxt "tools-action"
 #| msgid "_Transform Tools"
 msgid "_Handle Transform tool"
-msgstr "_Käfig Transformations Werkzeug"
+msgstr "_Gitter Transformations Werkzeug"
 
 #: ../app/dialogs/preferences-dialog.c:1602
 msgid "_Seamless Clone tool"
-msgstr "Werkzeug »_Nahtlos klonen«"
+msgstr "»_Nahtlos klonen« Werkzeug"
 
 #: ../app/dialogs/preferences-dialog.c:1612
 #: ../app/dialogs/preferences-dialog.c:1613
@@ -14681,7 +14681,7 @@ msgstr "Käfig-Transformation"
 
 #: ../app/tools/gimpcagetool.c:161
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr "Käfig-Transformation: Eine Auswahl mit einem Käfig deformieren"
+msgstr "Käfig-Transformation: Eine Auswahl mit einem Käfig verformen"
 
 #: ../app/tools/gimpcagetool.c:162
 msgid "_Cage Transform"
@@ -15479,23 +15479,23 @@ msgstr "Transform Ankerpunkte entfernen"
 #: ../app/tools/gimphandletransformtool.c:164
 #| msgid "Cage Transform"
 msgid "Handle Transform"
-msgstr "Käfig-Transformation"
+msgstr "Gitter-Transformation"
 
 #: ../app/tools/gimphandletransformtool.c:165
 #| msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
-"Käfig-Transformations Werkzeug: Ebene, Auswahl oder Pfad transformieren"
+"Gitter-Transformations Werkzeug: Ebene, Auswahl oder Pfad transformieren"
 
 #: ../app/tools/gimphandletransformtool.c:167
 #| msgid "_Cage Transform"
 msgid "_Handle Transform"
-msgstr "_Käfig-Transformation"
+msgstr "_Gitter-Transformation"
 
 #: ../app/tools/gimphandletransformtool.c:199
 #| msgid "Transformation"
 msgid "Handle transformation"
-msgstr "Käfig-Transformation"
+msgstr "Gitter-Transformation"
 
 #: ../app/tools/gimphandletransformtool.c:425
 #: ../app/tools/gimpperspectivetool.c:131
@@ -15506,7 +15506,7 @@ msgstr "Transformationsmatrix"
 #| msgid "Cage transform"
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "Käfig-Transformation"
+msgstr "Gitter-Transformation"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
@@ -17201,7 +17201,7 @@ msgstr "A_nimation"
 
 #: ../app/tools/gimpwarpoptions.c:222
 msgid "Frames"
-msgstr "Frames"
+msgstr "Rahmen"
 
 #: ../app/tools/gimpwarpoptions.c:228
 msgid "Create Animation"
@@ -17239,16 +17239,16 @@ msgstr "Zunächst Warp Werkzeug verwenden"
 #: ../app/tools/gimpwarptool.c:899 ../app/tools/gimpwarptool.c:935
 #, c-format
 msgid "Rendering Frame %d"
-msgstr "Frame %d wird gerendert"
+msgstr "Rahmen %d wird gerendert"
 
 #: ../app/tools/gimpwarptool.c:914 ../app/tools/gimpwarptool.c:943
 #, c-format
 msgid "Frame %d"
-msgstr "Frame %d"
+msgstr "Rahmen %d"
 
 #: ../app/tools/gimpwarptool.c:952
 msgid "Frame"
-msgstr "Frame"
+msgstr "Rahmen"
 
 #: ../app/tools/tools-enums.c:89
 #, fuzzy
@@ -19395,7 +19395,7 @@ msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
-"Beschädigten »exif-data«-Parasit entdeckt.\n"
+"Beschädigter »exif-data«-Parasit entdeckt.\n"
 "Fehler beim Übertragen der Exif-Daten: %s"
 
 #: ../app/xcf/xcf-load.c:349
@@ -19404,7 +19404,7 @@ msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated: %s"
 msgstr ""
-"Beschädigten »gimp-metadata«-Parasit entdeckt.\n"
+"Beschädigter »gimp-metadata«-Parasit entdeckt.\n"
 "Fehler beim Übertragen der XMP-Daten: %s"
 
 #: ../app/xcf/xcf-load.c:535
