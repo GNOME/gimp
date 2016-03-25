@@ -8,8 +8,8 @@
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 # Piotr Zaryk <pzaryk@aviary.pl>, 2008.
 # Robert Gomulka <carramba@epf.pl>, 2008.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2015.
-# Aviary.pl <gnomepl@aviary.pl>, 2011-2015.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
+# Aviary.pl <gnomepl@aviary.pl>, 2011-2016.
 #
 # Terminy:
 #  drawable    - obszar rysowania (warstwa, kanał itp.)
@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-27 21:47+0100\n"
-"PO-Revision-Date: 2015-11-27 21:48+0100\n"
+"POT-Creation-Date: 2016-03-25 23:32+0100\n"
+"PO-Revision-Date: 2016-03-25 23:33+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -57,7 +57,12 @@ msgstr ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis oraz zespół programistów programu GIMP"
 
-#: ../app/about.h:34
+#. TRANSLATORS: do not end the license URL with a dot, because it would
+#. * be in the link. Because of technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../app/about.h:39
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -70,7 +75,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP. If not, see: http://www.gnu.org/licenses/"
 msgstr ""
 "Program GIMP jest wolnym oprogramowaniem; można go rozprowadzać dalej i/lub "
 "modyfikować na warunkach Powszechnej Licencji Publicznej GNU, wydanej przez "
@@ -85,7 +90,7 @@ msgstr ""
 "\n"
 "Z pewnością wraz z niniejszym programem dostarczono także egzemplarz "
 "Powszechnej Licencji Publicznej GNU (GNU General Public License); jeśli nie "
-"— proszę odwiedzić stronę internetową http://www.gnu.org/licenses/."
+"— proszę odwiedzić stronę internetową http://www.gnu.org/licenses/"
 
 #: ../app/app.c:225
 #, c-format
@@ -2443,7 +2448,7 @@ msgstr "Otwiera obraz jako warstwy"
 msgid "No changes need to be saved"
 msgstr "Brak niezapisanych zmian"
 
-#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:701
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:703
 #: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Zapis obrazu"
@@ -2481,11 +2486,11 @@ msgstr ""
 "Przywrócenie obrazu do stanu zapisanego w pliku spowoduje utratę wszystkich "
 "dokonanych w nim zmian, wraz z informacjami o historii działań."
 
-#: ../app/actions/file-commands.c:731
+#: ../app/actions/file-commands.c:733
 msgid "(Unnamed Template)"
 msgstr "(Szablon bez nazwy)"
 
-#: ../app/actions/file-commands.c:782
+#: ../app/actions/file-commands.c:784
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4618,7 +4623,7 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 #: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
 #: ../app/core/gimppalette-load.c:320 ../app/core/gimppalette-load.c:377
 #: ../app/core/gimppalette-load.c:467 ../app/core/gimppalette-load.c:634
-#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpcurvestool.c:651
+#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpcurvestool.c:658
 #: ../app/tools/gimplevelstool.c:747 ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -5979,7 +5984,7 @@ msgstr "Praworęczny"
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:62
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:704
+#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:711
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
 #: ../app/xcf/xcf.c:452
 #, c-format
@@ -8959,8 +8964,8 @@ msgstr ""
 "Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011\n"
 "Piotr Zaryk <pzaryk@aviary.pl>, 2008\n"
 "Robert Gomulka <carramba@epf.pl>, 2008\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2011-2015\n"
-"Aviary.pl <gnomepl@aviary.pl>, 2011-2015"
+"Piotr Drąg <piotrdrag@gmail.com>, 2011-2016\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2011-2016"
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
@@ -9792,19 +9797,19 @@ msgstr "Ogólne"
 
 #: ../app/dialogs/preferences-dialog.c:1789
 msgid "Show _tooltips"
-msgstr "Wyświetlanie po_dpowiedzi"
+msgstr "Po_dpowiedzi"
 
 #: ../app/dialogs/preferences-dialog.c:1792
 msgid "Show help _buttons"
-msgstr "Wyświetlanie przycisków po_mocy"
+msgstr "Przyciski po_mocy"
 
 #: ../app/dialogs/preferences-dialog.c:1805
 msgid "Use the online version"
-msgstr "Używanie wersji sieciowej"
+msgstr "Wersja sieciowa"
 
 #: ../app/dialogs/preferences-dialog.c:1806
 msgid "Use a locally installed copy"
-msgstr "Używanie lokalnie zainstalowanej kopii"
+msgstr "Kopia zainstalowana na komputerze"
 
 #: ../app/dialogs/preferences-dialog.c:1807
 msgid "User manual:"
@@ -9812,11 +9817,11 @@ msgstr "Podręcznik użytkownika:"
 
 #: ../app/dialogs/preferences-dialog.c:1814
 msgid "There's a local installation of the user manual."
-msgstr "Odnaleziono zainstalowaną, lokalną wersję podręcznika użytkownika."
+msgstr "Podręcznik użytkownika jest zainstalowany na komputerze."
 
 #: ../app/dialogs/preferences-dialog.c:1819
 msgid "The user manual is not installed locally."
-msgstr "Podręcznik użytkownika nie został zainstalowany lokalnie."
+msgstr "Podręcznik użytkownika nie jest zainstalowany na komputerze."
 
 #: ../app/dialogs/preferences-dialog.c:1844
 msgid "Help Browser"
@@ -9824,7 +9829,7 @@ msgstr "Przeglądarka pomocy"
 
 #: ../app/dialogs/preferences-dialog.c:1848
 msgid "H_elp browser to use:"
-msgstr "Używana prz_eglądarka pomocy:"
+msgstr "Prz_eglądarka pomocy:"
 
 #: ../app/dialogs/preferences-dialog.c:1876
 msgid "_Save tool options on exit"
@@ -11630,9 +11635,9 @@ msgstr ""
 "stan programu GIMP. Dla bezpieczeństwa zalecane jest zapisanie obrazów i "
 "ponowne uruchomienie programu."
 
-#: ../app/plug-in/gimppluginmanager-call.c:173
-#: ../app/plug-in/gimppluginmanager-call.c:223
-#: ../app/plug-in/gimppluginmanager-call.c:321
+#: ../app/plug-in/gimppluginmanager-call.c:185
+#: ../app/plug-in/gimppluginmanager-call.c:235
+#: ../app/plug-in/gimppluginmanager-call.c:333
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Uruchomienie wtyczki „%s” się nie powiodło"
@@ -12524,37 +12529,37 @@ msgstr "Eksportowanie krzywych"
 msgid "Curves does not operate on indexed layers."
 msgstr "Narzędzie Krzywe nie pracuje na warstwach indeksowanych."
 
-#: ../app/tools/gimpcurvestool.c:343
+#: ../app/tools/gimpcurvestool.c:348
 msgid "Click to add a control point"
 msgstr "Kliknięcie doda punkt kontrolny"
 
-#: ../app/tools/gimpcurvestool.c:348
+#: ../app/tools/gimpcurvestool.c:353
 msgid "Click to add control points to all channels"
 msgstr "Kliknięcie doda punkty kontrolne do wszystkich kanałów"
 
-#: ../app/tools/gimpcurvestool.c:353
+#: ../app/tools/gimpcurvestool.c:358
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr ""
 "Kliknięcie określi na krzywej (proszę spróbować użyć klawiszy Shift i Ctrl)"
 
-#: ../app/tools/gimpcurvestool.c:466 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:473 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
 msgstr "Ka_nał:"
 
-#: ../app/tools/gimpcurvestool.c:492 ../app/tools/gimplevelstool.c:408
+#: ../app/tools/gimpcurvestool.c:499 ../app/tools/gimplevelstool.c:408
 msgid "R_eset Channel"
 msgstr "_Przywróć kanał"
 
-#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:590 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Typ krzywej:"
 
-#: ../app/tools/gimpcurvestool.c:660 ../app/tools/gimplevelstool.c:756
+#: ../app/tools/gimpcurvestool.c:667 ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Nie można odczytać nagłówka z „%s”: %s"
 
-#: ../app/tools/gimpcurvestool.c:733
+#: ../app/tools/gimpcurvestool.c:740
 msgid "Use _old curves file format"
 msgstr "Użycie _starego formatu pliku krzywych"
 

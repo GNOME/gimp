@@ -7,14 +7,14 @@
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2015.
-# Aviary.pl <gnomepl@aviary.pl>, 2011-2015.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
+# Aviary.pl <gnomepl@aviary.pl>, 2011-2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 00:20+0100\n"
-"PO-Revision-Date: 2015-11-23 00:22+0100\n"
+"POT-Creation-Date: 2016-03-25 23:32+0100\n"
+"PO-Revision-Date: 2016-03-25 23:33+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -274,7 +274,7 @@ msgstr "Kąt fazy, 0-360 stopni"
 
 #. Propagate Mode
 #: ../plug-ins/common/alien-map.c:516 ../plug-ins/common/hot.c:613
-#: ../plug-ins/common/value-propagate.c:1121 ../plug-ins/common/waves.c:279
+#: ../plug-ins/common/value-propagate.c:1125 ../plug-ins/common/waves.c:279
 msgid "Mode"
 msgstr "Tryb"
 
@@ -617,7 +617,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
 #: ../plug-ins/common/file-png.c:898 ../plug-ins/common/file-pnm.c:585
-#: ../plug-ins/common/file-raw.c:766 ../plug-ins/common/file-sunras.c:979
+#: ../plug-ins/common/file-raw.c:780 ../plug-ins/common/file-sunras.c:979
 #: ../plug-ins/common/file-tga.c:1095 ../plug-ins/common/file-tiff-load.c:1011
 #: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
@@ -1031,7 +1031,7 @@ msgstr "Wczytanie ustawień miksera kanałów"
 #: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
 #: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
 #: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
-#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:714
+#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:728
 #: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
 #: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
@@ -1069,7 +1069,7 @@ msgstr "Zapis ustawień miksera kanałów"
 #: ../plug-ins/common/file-pcx.c:713 ../plug-ins/common/file-pdf-save.c:438
 #: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1370
 #: ../plug-ins/common/file-pnm.c:1012 ../plug-ins/common/file-ps.c:1195
-#: ../plug-ins/common/file-raw.c:609 ../plug-ins/common/file-raw.c:637
+#: ../plug-ins/common/file-raw.c:623 ../plug-ins/common/file-raw.c:651
 #: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1202
 #: ../plug-ins/common/file-tiff-save.c:842 ../plug-ins/common/file-xbm.c:1037
 #: ../plug-ins/common/file-xmc.c:1449 ../plug-ins/common/file-xwd.c:637
@@ -1759,7 +1759,7 @@ msgstr ""
 "porządkowania."
 
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw.c:1103
+#: ../plug-ins/common/file-raw.c:1117
 msgid "RGB"
 msgstr "RGB"
 
@@ -2121,7 +2121,7 @@ msgid "D_ivisor:"
 msgstr "Po_dzielnik:"
 
 #: ../plug-ins/common/convolution-matrix.c:1001
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1124
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1138
 msgid "O_ffset:"
 msgstr "Prz_esunięcie:"
 
@@ -2675,7 +2675,7 @@ msgstr "Usunięcie pasków"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
 #: ../plug-ins/common/file-ps.c:3039 ../plug-ins/common/file-ps.c:3237
-#: ../plug-ins/common/file-raw.c:1137 ../plug-ins/common/smooth-palette.c:437
+#: ../plug-ins/common/file-raw.c:1151 ../plug-ins/common/smooth-palette.c:437
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
@@ -2987,7 +2987,7 @@ msgstr "Grawerowanie"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
 #: ../plug-ins/common/file-ps.c:3049 ../plug-ins/common/file-ps.c:3246
-#: ../plug-ins/common/file-raw.c:1150 ../plug-ins/common/film.c:1002
+#: ../plug-ins/common/file-raw.c:1164 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
@@ -3036,7 +3036,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:350
 #: ../plug-ins/common/file-png.c:770 ../plug-ins/common/file-pnm.c:501
-#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:719
+#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:733
 #: ../plug-ins/common/file-sunras.c:489 ../plug-ins/common/file-tga.c:448
 #: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:743 ../plug-ins/common/file-xmc.c:669
@@ -4350,83 +4350,83 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Dane obrazu Raw"
 
-#: ../plug-ins/common/file-raw.c:1059
+#: ../plug-ins/common/file-raw.c:1073
 msgid "Load Image from Raw Data"
 msgstr "Wczytanie obrazu z danych Raw"
 
-#: ../plug-ins/common/file-raw.c:1093
+#: ../plug-ins/common/file-raw.c:1107
 msgid "Image"
 msgstr "Obraz"
 
-#: ../plug-ins/common/file-raw.c:1104
+#: ../plug-ins/common/file-raw.c:1118
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw.c:1105
+#: ../plug-ins/common/file-raw.c:1119
 msgid "RGB565"
 msgstr "RGB565"
 
-#: ../plug-ins/common/file-raw.c:1106
+#: ../plug-ins/common/file-raw.c:1120
 msgid "Planar RGB"
 msgstr "Płaski RGB"
 
-#: ../plug-ins/common/file-raw.c:1107
+#: ../plug-ins/common/file-raw.c:1121
 msgid "Indexed"
 msgstr "Zindeksowany"
 
-#: ../plug-ins/common/file-raw.c:1108
+#: ../plug-ins/common/file-raw.c:1122
 msgid "Indexed Alpha"
 msgstr "Zindeksowana alfa"
 
-#: ../plug-ins/common/file-raw.c:1113
+#: ../plug-ins/common/file-raw.c:1127
 msgid "Image _Type:"
 msgstr "_Typ obrazu:"
 
-#: ../plug-ins/common/file-raw.c:1163
+#: ../plug-ins/common/file-raw.c:1177
 msgid "Palette"
 msgstr "Deseń"
 
-#: ../plug-ins/common/file-raw.c:1173 ../plug-ins/common/file-raw.c:1258
+#: ../plug-ins/common/file-raw.c:1187 ../plug-ins/common/file-raw.c:1272
 msgid "R, G, B (normal)"
 msgstr "R, G, B (zwykły)"
 
-#: ../plug-ins/common/file-raw.c:1174 ../plug-ins/common/file-raw.c:1260
+#: ../plug-ins/common/file-raw.c:1188 ../plug-ins/common/file-raw.c:1274
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (format BMP)"
 
-#: ../plug-ins/common/file-raw.c:1179
+#: ../plug-ins/common/file-raw.c:1193
 msgid "_Palette Type:"
 msgstr "Typ _desenia:"
 
-#: ../plug-ins/common/file-raw.c:1190
+#: ../plug-ins/common/file-raw.c:1204
 msgid "Off_set:"
 msgstr "Prze_sunięcie:"
 
-#: ../plug-ins/common/file-raw.c:1202
+#: ../plug-ins/common/file-raw.c:1216
 msgid "Select Palette File"
 msgstr "Wybór pliku desenia"
 
-#: ../plug-ins/common/file-raw.c:1208
+#: ../plug-ins/common/file-raw.c:1222
 msgid "Pal_ette File:"
 msgstr "Plik d_esenia:"
 
-#: ../plug-ins/common/file-raw.c:1236
+#: ../plug-ins/common/file-raw.c:1250
 msgid "Raw Image"
 msgstr "Obraz Raw"
 
-#: ../plug-ins/common/file-raw.c:1244
+#: ../plug-ins/common/file-raw.c:1258
 msgid "RGB Save Type"
 msgstr "Zapis typu RGB"
 
-#: ../plug-ins/common/file-raw.c:1248
+#: ../plug-ins/common/file-raw.c:1262
 msgid "Standard (R,G,B)"
 msgstr "Standardowy (R,G,B)"
 
-#: ../plug-ins/common/file-raw.c:1249
+#: ../plug-ins/common/file-raw.c:1263
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Płaski (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/file-raw.c:1254
+#: ../plug-ins/common/file-raw.c:1268
 msgid "Indexed Palette Type"
 msgstr "Typ indeksowanego deseniu"
 
@@ -8093,49 +8093,49 @@ msgstr "Powiększa jaśniejsze obszary obrazu"
 msgid "_Dilate"
 msgstr "_Rozciągaj"
 
-#: ../plug-ins/common/value-propagate.c:476
-#: ../plug-ins/common/value-propagate.c:1086
+#: ../plug-ins/common/value-propagate.c:480
+#: ../plug-ins/common/value-propagate.c:1090
 msgid "Value Propagate"
 msgstr "Rozprowadzanie wartości"
 
 #. Parameter settings
-#: ../plug-ins/common/value-propagate.c:1153
+#: ../plug-ins/common/value-propagate.c:1157
 msgid "Propagate"
 msgstr "Rozprowadzanie"
 
-#: ../plug-ins/common/value-propagate.c:1166
+#: ../plug-ins/common/value-propagate.c:1170
 msgid "Lower t_hreshold:"
 msgstr "_Dolny próg:"
 
-#: ../plug-ins/common/value-propagate.c:1178
+#: ../plug-ins/common/value-propagate.c:1182
 msgid "_Upper threshold:"
 msgstr "_Górny próg:"
 
-#: ../plug-ins/common/value-propagate.c:1190
+#: ../plug-ins/common/value-propagate.c:1194
 msgid "_Propagating rate:"
 msgstr "_Tempo rozprowadzania:"
 
-#: ../plug-ins/common/value-propagate.c:1201
+#: ../plug-ins/common/value-propagate.c:1205
 msgid "To l_eft"
 msgstr "Do _lewej"
 
-#: ../plug-ins/common/value-propagate.c:1204
+#: ../plug-ins/common/value-propagate.c:1208
 msgid "To _right"
 msgstr "Do p_rawej"
 
-#: ../plug-ins/common/value-propagate.c:1207
+#: ../plug-ins/common/value-propagate.c:1211
 msgid "To _top"
 msgstr "Do gór_nej"
 
-#: ../plug-ins/common/value-propagate.c:1210
+#: ../plug-ins/common/value-propagate.c:1214
 msgid "To _bottom"
 msgstr "Do d_olnej"
 
-#: ../plug-ins/common/value-propagate.c:1219
+#: ../plug-ins/common/value-propagate.c:1223
 msgid "Propagating _alpha channel"
 msgstr "Rozprowadzanie kanału _alfa"
 
-#: ../plug-ins/common/value-propagate.c:1230
+#: ../plug-ins/common/value-propagate.c:1234
 msgid "Propagating value channel"
 msgstr "Rozprowadzanie wartości kanału"
 
@@ -11394,20 +11394,26 @@ msgstr "Strony pomocy dla „%s” są niedostępne."
 msgid "The GIMP user manual is not available."
 msgstr "Podręcznik użytkownika programu GIMP jest niedostępny."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#. TRANSLATORS: do not end the URL with a dot,
+#. * it would be in the link. Because of
+#. * technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
-"Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"Please install the additional help package or use the online user manual at: "
+"http://docs.gimp.org/"
 msgstr ""
-"Proszę zainstalować dodatkowy pakiet pomocy lub użyć podręcznika użytkownika "
-"online na stronie http://docs.gimp.org/."
+"Proszę zainstalować dodatkowy pakiet pomocy lub skorzystać z podręcznika "
+"użytkownika na stronie http://docs.gimp.org/"
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 "Być może brakuje mechanizmów GIO lub należy zainstalować bibliotekę GVFS."
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Identyfikator pomocy „%s” jest nieznany"
