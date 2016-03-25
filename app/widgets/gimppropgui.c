@@ -239,7 +239,8 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
                                                g_param_spec_get_nick (pspec),
                                                GTK_FILE_CHOOSER_ACTION_OPEN);
         }
-      else if (g_param_spec_get_qdata (pspec, multiline_quark))
+      else if (g_param_spec_get_qdata (pspec, multiline_quark) ||
+               HAS_KEY (pspec, "multiline", "true"))
         {
           GtkTextBuffer *buffer;
           GtkWidget     *view;
