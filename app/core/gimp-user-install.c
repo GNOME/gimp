@@ -562,6 +562,18 @@ user_update_controllerrc (const GMatchInfo *matched_value,
 
   return FALSE;
 }
+
+#define GIMPRC_UPDATE_PATTERN "\\(theme [^)]*\\)"
+
+static gboolean
+user_update_gimprc (const GMatchInfo *matched_value,
+                    GString          *new_value,
+                    gpointer          data)
+{
+  /* Do not migrate themes from GIMP < 2.10. */
+  return FALSE;
+}
+
 static gboolean
 user_install_dir_copy (GimpUserInstall *install,
                        const gchar     *source,
@@ -731,6 +743,11 @@ user_install_migrate_files (GimpUserInstall *install)
             {
               update_pattern  = CONTROLLERRC_UPDATE_PATTERN;
               update_callback = user_update_controllerrc;
+            }
+          else if (strcmp (basename, "gimprc") == 0)
+            {
+              update_pattern  = GIMPRC_UPDATE_PATTERN;
+              update_callback = user_update_gimprc;
             }
 
           g_snprintf (dest, sizeof (dest), "%s%c%s",
