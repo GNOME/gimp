@@ -250,9 +250,12 @@ gimp_canvas_guide_stroke (GimpCanvasItem *item,
 
   if (private->style != GIMP_GUIDE_STYLE_NONE)
     {
+      GimpDisplayShell *shell = gimp_canvas_item_get_shell (item);
+
       gimp_canvas_set_guide_style (gimp_canvas_item_get_canvas (item), cr,
                                    private->style,
-                                   gimp_canvas_item_get_highlight (item));
+                                   gimp_canvas_item_get_highlight (item),
+                                   shell->offset_x, shell->offset_y);
       cairo_stroke (cr);
     }
   else

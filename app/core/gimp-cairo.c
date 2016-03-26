@@ -27,6 +27,7 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -40,7 +41,9 @@ static cairo_user_data_key_t surface_data_key = { 0, };
 cairo_pattern_t *
 gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
                                    const GimpRGB *bg,
-                                   gint           index)
+                                   gint           index,
+                                   gdouble        offset_x,
+                                   gdouble        offset_y)
 {
   cairo_surface_t *surface;
   cairo_pattern_t *pattern;
@@ -83,6 +86,16 @@ gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
   cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
 
   cairo_surface_destroy (surface);
+
+  if (offset_x != 0.0 || offset_y != 0.0)
+    {
+      cairo_matrix_t matrix;
+
+      cairo_matrix_init_translate (&matrix,
+                                   fmod (offset_x, 8),
+                                   fmod (offset_y, 8));
+      cairo_pattern_set_matrix (pattern, &matrix);
+    }
 
   return pattern;
 }

@@ -379,8 +379,11 @@ gimp_canvas_grid_stroke (GimpCanvasItem *item,
 
   if (private->grid_style)
     {
+      GimpDisplayShell *shell = gimp_canvas_item_get_shell (item);
+
       gimp_canvas_set_grid_style (gimp_canvas_item_get_canvas (item), cr,
-                                  private->grid);
+                                  private->grid,
+                                  shell->offset_x, shell->offset_y);
       cairo_stroke (cr);
     }
   else

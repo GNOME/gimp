@@ -91,7 +91,9 @@ void
 gimp_canvas_set_guide_style (GtkWidget      *canvas,
                              cairo_t        *cr,
                              GimpGuideStyle  style,
-                             gboolean        active)
+                             gboolean        active,
+                             gdouble         offset_x,
+                             gdouble         offset_y)
 {
   cairo_pattern_t *pattern;
   GimpRGB          normal_fg;
@@ -134,13 +136,11 @@ gimp_canvas_set_guide_style (GtkWidget      *canvas,
   cairo_set_line_width (cr, line_width);
 
   if (active)
-    pattern = gimp_cairo_stipple_pattern_create (&active_fg,
-                                                 &active_bg,
-                                                 0);
+    pattern = gimp_cairo_stipple_pattern_create (&active_fg, &active_bg, 0,
+                                                 offset_x, offset_y);
   else
-    pattern = gimp_cairo_stipple_pattern_create (&normal_fg,
-                                                 &normal_bg,
-                                                 0);
+    pattern = gimp_cairo_stipple_pattern_create (&normal_fg, &normal_bg, 0,
+                                                 offset_x, offset_y);
 
   cairo_set_source (cr, pattern);
   cairo_pattern_destroy (pattern);
@@ -165,7 +165,9 @@ gimp_canvas_set_sample_point_style (GtkWidget *canvas,
 void
 gimp_canvas_set_grid_style (GtkWidget *canvas,
                             cairo_t   *cr,
-                            GimpGrid  *grid)
+                            GimpGrid  *grid,
+                            gdouble    offset_x,
+                            gdouble    offset_y)
 {
   GimpRGB fg;
   GimpRGB bg;
@@ -188,13 +190,15 @@ gimp_canvas_set_grid_style (GtkWidget *canvas,
         {
           gimp_grid_get_bgcolor (grid, &bg);
 
-          pattern = gimp_cairo_stipple_pattern_create (&fg, &bg, 0);
+          pattern = gimp_cairo_stipple_pattern_create (&fg, &bg, 0,
+                                                       offset_x, offset_y);
         }
       else
         {
           gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
 
-          pattern = gimp_cairo_stipple_pattern_create (&fg, &bg, 0);
+          pattern = gimp_cairo_stipple_pattern_create (&fg, &bg, 0,
+                                                       offset_x, offset_y);
         }
 
       cairo_set_source (cr, pattern);
@@ -230,7 +234,9 @@ gimp_canvas_set_pen_style (GtkWidget     *canvas,
 void
 gimp_canvas_set_layer_style (GtkWidget *canvas,
                              cairo_t   *cr,
-                             GimpLayer *layer)
+                             GimpLayer *layer,
+                             gdouble    offset_x,
+                             gdouble    offset_y)
 {
   cairo_pattern_t *pattern;
 
@@ -246,19 +252,22 @@ gimp_canvas_set_layer_style (GtkWidget *canvas,
     {
       pattern = gimp_cairo_stipple_pattern_create (&layer_mask_fg,
                                                    &layer_mask_bg,
-                                                   0);
+                                                   0,
+                                                   offset_x, offset_y);
     }
   else if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     {
       pattern = gimp_cairo_stipple_pattern_create (&layer_group_fg,
                                                    &layer_group_bg,
-                                                   0);
+                                                   0,
+                                                   offset_x, offset_y);
     }
   else
     {
       pattern = gimp_cairo_stipple_pattern_create (&layer_fg,
                                                    &layer_bg,
-                                                   0);
+                                                   0,
+                                                   offset_x, offset_y);
     }
 
   cairo_set_source (cr, pattern);
@@ -267,7 +276,9 @@ gimp_canvas_set_layer_style (GtkWidget *canvas,
 
 void
 gimp_canvas_set_selection_out_style (GtkWidget *canvas,
-                                     cairo_t   *cr)
+                                     cairo_t   *cr,
+                                     gdouble    offset_x,
+                                     gdouble    offset_y)
 {
   cairo_pattern_t *pattern;
 
@@ -279,7 +290,8 @@ gimp_canvas_set_selection_out_style (GtkWidget *canvas,
 
   pattern = gimp_cairo_stipple_pattern_create (&selection_out_fg,
                                                &selection_out_bg,
-                                               0);
+                                               0,
+                                               offset_x, offset_y);
   cairo_set_source (cr, pattern);
   cairo_pattern_destroy (pattern);
 }
@@ -287,7 +299,9 @@ gimp_canvas_set_selection_out_style (GtkWidget *canvas,
 void
 gimp_canvas_set_selection_in_style (GtkWidget *canvas,
                                     cairo_t   *cr,
-                                    gint       index)
+                                    gint       index,
+                                    gdouble    offset_x,
+                                    gdouble    offset_y)
 {
   cairo_pattern_t *pattern;
 
@@ -299,7 +313,8 @@ gimp_canvas_set_selection_in_style (GtkWidget *canvas,
 
   pattern = gimp_cairo_stipple_pattern_create (&selection_in_fg,
                                                &selection_in_bg,
-                                               index);
+                                               index,
+                                               offset_x, offset_y);
   cairo_set_source (cr, pattern);
   cairo_pattern_destroy (pattern);
 }

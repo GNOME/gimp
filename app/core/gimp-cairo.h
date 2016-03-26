@@ -27,7 +27,9 @@
 
 cairo_pattern_t * gimp_cairo_stipple_pattern_create (const GimpRGB   *fg,
                                                      const GimpRGB   *bg,
-                                                     gint             index);
+                                                     gint             index,
+                                                     gdouble          offset_x,
+                                                     gdouble          offset_y);
 
 void              gimp_cairo_add_arc                (cairo_t         *cr,
                                                      gdouble          center_x,
