@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-07 22:46+0100\n"
+"POT-Creation-Date: 2016-02-07 22:48+0100\n"
 "PO-Revision-Date: 2016-01-02 20:44+0100\n"
 "Last-Translator: Tirs <softcatala@tirsabril.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -5967,7 +5967,7 @@ msgstr "Camí _nou..."
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "Crea un camí nou"
+msgstr "Crea un camí nou..."
 
 #: ../app/actions/vectors-actions.c:65
 msgctxt "vectors-action"
@@ -12571,7 +12571,7 @@ msgstr[1] "Si no deseu la imatge, es perdran els canvis dels últims %d minuts."
 #: ../app/display/gimpdisplayshell-close.c:350
 #, c-format
 msgid "The image has been exported to '%s'."
-msgstr "S'ha exportat la imatge a «%s»"
+msgstr "S'ha exportat la imatge a «%s»."
 
 #: ../app/display/gimpdisplayshell-dnd.c:248
 #: ../app/display/gimpdisplayshell-dnd.c:652
@@ -18552,7 +18552,7 @@ msgstr "Podeu arrossegar diàlegs aquí."
 #: ../app/widgets/gimppickablepopup.c:206
 #: ../app/widgets/gimppickablepopup.c:432
 msgid "Select an image in the left pane"
-msgstr "Seleccioneu una imatge de la subfinestra de la dreta"
+msgstr "Seleccioneu una imatge de la subfinestra de l'esquerra"
 
 #: ../app/widgets/gimpprogressdialog.c:223
 msgid "Progress"
