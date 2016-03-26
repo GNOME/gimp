@@ -227,11 +227,6 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
     }
   else if (G_IS_PARAM_SPEC_STRING (pspec))
     {
-      static GQuark multiline_quark = 0;
-
-      if (! multiline_quark)
-        multiline_quark = g_quark_from_static_string ("multiline");
-
       if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
         {
           widget =
@@ -239,8 +234,7 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
                                                g_param_spec_get_nick (pspec),
                                                GTK_FILE_CHOOSER_ACTION_OPEN);
         }
-      else if (g_param_spec_get_qdata (pspec, multiline_quark) ||
-               HAS_KEY (pspec, "multiline", "true"))
+      else if (HAS_KEY (pspec, "multiline", "true"))
         {
           GtkTextBuffer *buffer;
           GtkWidget     *view;

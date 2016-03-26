@@ -66,23 +66,11 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
         }
       else
         {
-
           copy = g_param_spec_string (pspec->name,
                                       g_param_spec_get_nick (pspec),
                                       g_param_spec_get_blurb (pspec),
                                       spec->default_value,
                                       flags);
-
-          if (GEGL_IS_PARAM_SPEC_MULTILINE (pspec))
-            {
-              static GQuark multiline_quark = 0;
-
-              if (! multiline_quark)
-                multiline_quark = g_quark_from_static_string ("multiline");
-
-              g_param_spec_set_qdata (copy, multiline_quark,
-                                      GINT_TO_POINTER (TRUE));
-            }
         }
     }
   else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
