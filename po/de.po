@@ -22,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-12-26 16:40+0000\n"
-"PO-Revision-Date: 2016-03-25 10:40+0100\n"
+"PO-Revision-Date: 2016-03-26 12:36+0100\n"
 "Last-Translator: Klaus Staedtler <staedtler-przyborski@web.de>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -4859,18 +4859,14 @@ msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
-#, fuzzy
-#| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "MyPaint Brushes Menu"
-msgstr "Pinsel"
+msgstr "MyPaint Pinsel Menue"
 
 #: ../app/actions/mypaint-brushes-actions.c:47
-#, fuzzy
-#| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "_New MyPaint Brush"
-msgstr "Pinsel"
+msgstr "_Neuer MyPaint Pinsel"
 
 #: ../app/actions/mypaint-brushes-actions.c:48
 #| msgctxt "brushes-action"
@@ -4956,19 +4952,14 @@ msgid "Refresh MyPaint brushes"
 msgstr "Die Pinsel neu laden"
 
 #: ../app/actions/mypaint-brushes-actions.c:86
-#, fuzzy
-#| msgctxt "brushes-action"
-#| msgid "_Edit Brush..."
 msgctxt "mypaint-brushes-action"
 msgid "_Edit MyPaint Brush..."
-msgstr "Pinsel b_earbeiten …"
+msgstr "MyPaint Pinsel b_earbeiten …"
 
 #: ../app/actions/mypaint-brushes-actions.c:87
-#, fuzzy
-#| msgid "Paintbrush"
 msgctxt "mypaint-bruahes-action"
 msgid "Edit MyPaint brush"
-msgstr "Pinsel"
+msgstr "MyPaint Pinsel bearbeiten"
 
 #: ../app/actions/palette-editor-actions.c:44
 msgctxt "palette-editor-action"
@@ -6912,10 +6903,9 @@ msgid "(V) "
 msgstr "(V) "
 
 #: ../app/actions/view-actions.c:924
-#, fuzzy, c-format
-#| msgid "_Rotate (%d°)"
+#, c-format
 msgid "_Flip %s& Rotate (%d°)"
-msgstr "_Drehen (%d°)"
+msgstr "_Umkehren %s & Drehen (%d°)"
 
 #: ../app/actions/view-commands.c:723
 msgid "Set Canvas Padding Color"
@@ -7637,7 +7627,7 @@ msgstr "Das Gitter Transformationswerkzeug aktivieren"
 
 #: ../app/config/gimprc-blurbs.h:392
 msgid "Enable the MyPaint Brush tool."
-msgstr ""
+msgstr "Das MyPaint Pinsel Werkzeug aktivieren"
 
 #: ../app/config/gimprc-blurbs.h:395
 msgid "Enable the Seamless Clone tool."
@@ -13392,14 +13382,14 @@ msgstr "Beschneiden"
 #: ../app/pdb/drawable-transform-cmds.c:1161
 #: ../app/pdb/item-transform-cmds.c:719 ../app/pdb/transform-tools-cmds.c:523
 msgid "2D Transform"
-msgstr "2D-Transformation"
+msgstr "2D Transformation"
 
 #: ../app/pdb/drawable-transform-cmds.c:1259
 #: ../app/pdb/drawable-transform-cmds.c:1364
 #: ../app/pdb/drawable-transform-cmds.c:1470
 #: ../app/pdb/item-transform-cmds.c:825
 msgid "2D Transforming"
-msgstr "2D-Transformation"
+msgstr "2D Transformation"
 
 #: ../app/pdb/floating-sel-cmds.c:69
 msgid "Cannot remove this layer because it is not a floating selection."
@@ -14677,15 +14667,15 @@ msgstr "Die Originalposition des Käfigs mit einer Farbe füllen"
 
 #: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1179
 msgid "Cage Transform"
-msgstr "Käfig-Transformation"
+msgstr "Käfig Transformation"
 
 #: ../app/tools/gimpcagetool.c:161
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr "Käfig-Transformation: Eine Auswahl mit einem Käfig verformen"
+msgstr "Käfig Transformation: Eine Auswahl mit einem Käfig verformen"
 
 #: ../app/tools/gimpcagetool.c:162
 msgid "_Cage Transform"
-msgstr "_Käfig-Transformation"
+msgstr "_Käfig Transformation"
 
 #: ../app/tools/gimpcagetool.c:315 ../app/tools/gimpwarptool.c:317
 msgid "Press ENTER to commit the transform"
@@ -14693,11 +14683,11 @@ msgstr "Drücken Sie die Eingabetaste zur Ausführung der Transformation"
 
 #: ../app/tools/gimpcagetool.c:1082
 msgid "Computing Cage Coefficients"
-msgstr "Käfig-Koeffizienten berechnen"
+msgstr "Käfig Koeffizienten berechnen"
 
 #: ../app/tools/gimpcagetool.c:1230
 msgid "Cage transform"
-msgstr "Käfig-Transformation"
+msgstr "Käfig Transformation"
 
 #: ../app/tools/gimpcloneoptions-gui.c:70
 msgid "Source"
@@ -15479,23 +15469,23 @@ msgstr "Transform Ankerpunkte entfernen"
 #: ../app/tools/gimphandletransformtool.c:164
 #| msgid "Cage Transform"
 msgid "Handle Transform"
-msgstr "Gitter-Transformation"
+msgstr "Gitter Transformation"
 
 #: ../app/tools/gimphandletransformtool.c:165
 #| msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
-"Gitter-Transformations Werkzeug: Ebene, Auswahl oder Pfad transformieren"
+"Gitter Transformations Werkzeug: Ebene, Auswahl oder Pfad transformieren"
 
 #: ../app/tools/gimphandletransformtool.c:167
 #| msgid "_Cage Transform"
 msgid "_Handle Transform"
-msgstr "_Gitter-Transformation"
+msgstr "_Gitter Transformation"
 
 #: ../app/tools/gimphandletransformtool.c:199
 #| msgid "Transformation"
 msgid "Handle transformation"
-msgstr "Gitter-Transformation"
+msgstr "Gitter Transformation"
 
 #: ../app/tools/gimphandletransformtool.c:425
 #: ../app/tools/gimpperspectivetool.c:131
@@ -15506,7 +15496,7 @@ msgstr "Transformationsmatrix"
 #| msgid "Cage transform"
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "Gitter-Transformation"
+msgstr "Gitter Transformation"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
@@ -16003,7 +15993,7 @@ msgstr "Steifheit"
 #: ../app/tools/gimpnpointdeformationoptions.c:219
 #| msgid "Desaturate mode"
 msgid "Deformation mode"
-msgstr "Deformationsmodus"
+msgstr "Verformungsmodus"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:91
 #: ../app/tools/gimpnpointdeformationoptions.c:227
@@ -16262,9 +16252,8 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterisieren (Farbanzahl vermindern)"
 
 #: ../app/tools/gimpposterizetool.c:110
-#, fuzzy
 msgid "Posterize _levels"
-msgstr "Farbanzahl"
+msgstr "Anzahl der Bereiche"
 
 #: ../app/tools/gimprectangleoptions.c:105
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
@@ -16472,13 +16461,11 @@ msgstr "Skalieren auf %d x %d"
 #: ../app/tools/gimpseamlesscloneoptions.c:72
 msgid ""
 "Maximal scale of refinement points to be used for the interpolation mesh"
-msgstr ""
+msgstr "Maximalgrad der im Interpolationsnetz benutzen Verfeinerungspunkte "
 
 #: ../app/tools/gimpseamlesscloneoptions.c:130
-#, fuzzy
-#| msgid "Re-_center Segment's Midpoint"
 msgid "Refinement scale"
-msgstr "Mittelpunkt des Segments _zentrieren"
+msgstr "Verfeinerungsgrad"
 
 #: ../app/tools/gimpseamlessclonetool.c:190
 #: ../app/tools/gimpseamlessclonetool.c:763
@@ -16905,10 +16892,9 @@ msgid "Pivot"
 msgstr "Pivot"
 
 #: ../app/tools/gimptransformoptions.c:503
-#, fuzzy, c-format
-#| msgid "Type  (%s)"
+#, c-format
 msgid "Snap (%s)"
-msgstr "Typ (%s)"
+msgstr "Einrasten (%s)"
 
 #: ../app/tools/gimptransformoptions.c:504
 #, c-format
@@ -16951,10 +16937,8 @@ msgid "The active layer's position and size are locked."
 msgstr "Die Position und Größe der aktiven Ebene sind gesperrt."
 
 #: ../app/tools/gimptransformtool.c:1846
-#, fuzzy
-#| msgid "There is no selection to stroke."
 msgid "There is no selection to transform."
-msgstr "Keine Auswahl zum Nachzeichnen vorhanden."
+msgstr "Keine Auswahl zum transformieren vorhanden."
 
 #: ../app/tools/gimptransformtool.c:1856
 msgid "There is no path to transform."
@@ -17182,11 +17166,8 @@ msgid "Effect Hardness"
 msgstr "Effektstärke"
 
 #: ../app/tools/gimpwarpoptions.c:101
-#, fuzzy
-#| msgctxt "guides-type"
-#| msgid "Number of lines"
 msgid "Number of animation frames"
-msgstr "Anzahl der Linien"
+msgstr "Anzahl der animierten Bilder"
 
 #: ../app/tools/gimpwarpoptions.c:192
 msgid "Strength"
@@ -17201,7 +17182,7 @@ msgstr "A_nimation"
 
 #: ../app/tools/gimpwarpoptions.c:222
 msgid "Frames"
-msgstr "Rahmen"
+msgstr "Bewegte Bilder"
 
 #: ../app/tools/gimpwarpoptions.c:228
 msgid "Create Animation"
@@ -17209,15 +17190,15 @@ msgstr "Animation erstellen"
 
 #: ../app/tools/gimpwarptool.c:142
 msgid "Warp Transform"
-msgstr "Warp-Transformation"
+msgstr "Warp Transformation"
 
 #: ../app/tools/gimpwarptool.c:143
 msgid "Warp Transform: Deform with different tools"
-msgstr "Warp Transform: Deformieren mit verschiedenen Werkzeugen"
+msgstr "Warp Transformation: Verformen mit verschiedenen Werkzeugen"
 
 #: ../app/tools/gimpwarptool.c:144
 msgid "_Warp Transform"
-msgstr "_Warp-Transformation"
+msgstr "_Warp Transformation"
 
 #: ../app/tools/gimpwarptool.c:462 ../app/tools/gimpwarptool.c:474
 msgid "Warp Tool Stroke"
@@ -17230,7 +17211,7 @@ msgstr "Auf Ebenenmasken kann der Warp-Effekt nicht angewendet werden"
 
 #: ../app/tools/gimpwarptool.c:749
 msgid "Warp transform"
-msgstr "Warp-Transformation"
+msgstr "Warp Transformation"
 
 #: ../app/tools/gimpwarptool.c:886
 msgid "Please add some warp strokes first."
@@ -17239,24 +17220,21 @@ msgstr "Zunächst Warp Werkzeug verwenden"
 #: ../app/tools/gimpwarptool.c:899 ../app/tools/gimpwarptool.c:935
 #, c-format
 msgid "Rendering Frame %d"
-msgstr "Rahmen %d wird gerendert"
+msgstr "Bild %d wird gerendert"
 
 #: ../app/tools/gimpwarptool.c:914 ../app/tools/gimpwarptool.c:943
 #, c-format
 msgid "Frame %d"
-msgstr "Rahmen %d"
+msgstr "Bild %d"
 
 #: ../app/tools/gimpwarptool.c:952
 msgid "Frame"
-msgstr "Rahmen"
+msgstr "Bewegtes Bild"
 
 #: ../app/tools/tools-enums.c:89
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Transform"
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
-msgstr "Transformation"
+msgstr "Hinzufügen/Transformieren"
 
 #: ../app/tools/tools-enums.c:90
 msgctxt "transform-handle-mode"
@@ -17478,10 +17456,9 @@ msgid "Transform Path"
 msgstr "Pfad transformieren"
 
 #: ../app/vectors/gimpvectors-export.c:87
-#, fuzzy, c-format
-#| msgid "Opening '%s' failed: %s"
+#, c-format
 msgid "Writing SVG file '%s' failed: %s"
-msgstr "»%s« konnte nicht geöffnet werden: %s"
+msgstr "SVG Datei »%s« konnte nicht geschrieben werden: %s"
 
 #: ../app/vectors/gimpvectors-import.c:331
 msgid "Import Paths"
@@ -18700,9 +18677,8 @@ msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr "3,200 K – Studiolampen, etc."
 
 #: ../app/widgets/gimppropgui.c:473
-#, fuzzy
 msgid "3,350 K – Studio \"CP\" light"
-msgstr "3,350 K – Studiolicht"
+msgstr "3,350 K – Studio \"CP\" Licht"
 
 #: ../app/widgets/gimppropgui.c:474
 msgid "4,100 K – Moonlight"
