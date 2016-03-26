@@ -286,7 +286,7 @@ gimp_operation_tool_dialog (GimpImageMapTool *im_tool)
   /*  The options vbox  */
   tool->options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), tool->options_box,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (tool->options_box);
 
   for (list = tool->aux_inputs; list; list = g_list_next (list))
@@ -734,7 +734,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       if (tool->options_box)
         {
           gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_gui,
-                              FALSE, FALSE, 0);
+                              TRUE, TRUE, 0);
           gtk_widget_show (tool->options_gui);
         }
     }
