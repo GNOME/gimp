@@ -180,8 +180,8 @@ prefs_config_notify (GObject    *config,
                      GParamSpec *param_spec,
                      GObject    *config_copy)
 {
-  GValue global_value = { 0, };
-  GValue copy_value   = { 0, };
+  GValue global_value = G_VALUE_INIT;
+  GValue copy_value   = G_VALUE_INIT;
 
   g_value_init (&global_value, param_spec->value_type);
   g_value_init (&copy_value,   param_spec->value_type);
@@ -211,8 +211,8 @@ prefs_config_copy_notify (GObject    *config_copy,
                           GParamSpec *param_spec,
                           GObject    *config)
 {
-  GValue copy_value   = { 0, };
-  GValue global_value = { 0, };
+  GValue copy_value   = G_VALUE_INIT;
+  GValue global_value = G_VALUE_INIT;
 
   g_value_init (&copy_value,   param_spec->value_type);
   g_value_init (&global_value, param_spec->value_type);
@@ -324,7 +324,7 @@ prefs_response (GtkWidget *widget,
         for (list = confirm_diff; list; list = g_list_next (list))
           {
             GParamSpec *param_spec = list->data;
-            GValue      value      = { 0, };
+            GValue      value      = G_VALUE_INIT;
 
             g_value_init (&value, param_spec->value_type);
 
@@ -395,7 +395,7 @@ prefs_response (GtkWidget *widget,
         for (list = diff; list; list = g_list_next (list))
           {
             GParamSpec *param_spec = list->data;
-            GValue      value      = { 0, };
+            GValue      value      = G_VALUE_INIT;
 
             g_value_init (&value, param_spec->value_type);
 
@@ -704,7 +704,7 @@ prefs_format_string_select_callback (GtkTreeSelection *sel,
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
-      GValue val = { 0, };
+      GValue val = G_VALUE_INIT;
 
       gtk_tree_model_get_value (model, &iter, 1, &val);
       gtk_entry_set_text (entry, g_value_get_string (&val));
@@ -721,7 +721,7 @@ prefs_theme_select_callback (GtkTreeSelection *sel,
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
-      GValue val = { 0, };
+      GValue val = G_VALUE_INIT;
 
       gtk_tree_model_get_value (model, &iter, 0, &val);
       g_object_set_property (G_OBJECT (gimp->config), "theme", &val);
@@ -745,7 +745,7 @@ prefs_icon_theme_select_callback (GtkTreeSelection *sel,
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
-      GValue val = { 0, };
+      GValue val = G_VALUE_INIT;
 
       gtk_tree_model_get_value (model, &iter, 1, &val);
       g_object_set_property (G_OBJECT (gimp->config), "icon-theme", &val);

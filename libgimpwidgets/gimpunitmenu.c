@@ -447,7 +447,7 @@ gimp_unit_menu_selection_response (GtkWidget    *widget,
       if (menu->selection && gtk_tree_selection_get_selected (sel, &model,
                                                               &iter))
         {
-          GValue   val = { 0, };
+          GValue   val = G_VALUE_INIT;
           GimpUnit unit;
 
           gtk_tree_model_get_value (model, &iter, 2, &val);

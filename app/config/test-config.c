@@ -194,7 +194,7 @@ notify_callback (GObject    *object,
                  GParamSpec *pspec)
 {
   GString *str;
-  GValue   value = { 0, };
+  GValue   value = G_VALUE_INIT;
 
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));

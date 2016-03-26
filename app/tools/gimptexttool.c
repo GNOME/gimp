@@ -1155,7 +1155,7 @@ gimp_text_tool_text_notify (GimpText         *text,
 
   if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE)
     {
-      GValue value = { 0, };
+      GValue value = G_VALUE_INIT;
 
       g_value_init (&value, pspec->value_type);
 
@@ -1313,7 +1313,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
 
   for (; list; list = g_list_next (list))
     {
-      GValue value = { 0, };
+      GValue value = G_VALUE_INIT;
 
       /*  look ahead and compress changes  */
       if (list->next && list->next->data == list->data)

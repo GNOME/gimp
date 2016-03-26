@@ -47,8 +47,8 @@ gimp_config_diff_property (GObject    *a,
                            GObject    *b,
                            GParamSpec *prop_spec)
 {
-  GValue    a_value = { 0, };
-  GValue    b_value = { 0, };
+  GValue    a_value = G_VALUE_INIT;
+  GValue    b_value = G_VALUE_INIT;
   gboolean  retval  = FALSE;
 
   g_value_init (&a_value, prop_spec->value_type);
@@ -231,7 +231,7 @@ gimp_config_sync (GObject     *src,
 
       if (! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
         {
-          GValue value = { 0, };
+          GValue value = G_VALUE_INIT;
 
           g_value_init (&value, prop_spec->value_type);
 
@@ -266,7 +266,7 @@ gimp_config_reset_properties (GObject *object)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
-  GValue         value = { 0, };
+  GValue         value = G_VALUE_INIT;
   guint          n_property_specs;
   guint          i;
 
@@ -353,7 +353,7 @@ gimp_config_reset_property (GObject     *object,
   if ((prop_spec->flags & G_PARAM_WRITABLE) &&
       ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
     {
-      GValue  value = { 0, };
+      GValue  value = G_VALUE_INIT;
 
       if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
         {

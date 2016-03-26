@@ -854,7 +854,7 @@ gimp_unit_store_get_value (GimpUnitStore *store,
 {
   GimpUnitStorePrivate *private;
   GtkTreeIter          iter;
-  GValue               value = { 0, };
+  GValue               value = G_VALUE_INIT;
 
   g_return_val_if_fail (GIMP_IS_UNIT_STORE (store), 0.0);
 

@@ -511,7 +511,7 @@ GimpValueArray *
 gimp_procedure_get_arguments (GimpProcedure *procedure)
 {
   GimpValueArray *args;
-  GValue          value = { 0, };
+  GValue          value = G_VALUE_INIT;
   gint            i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
@@ -534,7 +534,7 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
                                   const GError  *error)
 {
   GimpValueArray *args;
-  GValue          value = { 0, };
+  GValue          value = G_VALUE_INIT;
   gint            i;
 
   g_return_val_if_fail (success == FALSE || GIMP_IS_PROCEDURE (procedure),
@@ -753,7 +753,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
         }
       else if (! (pspec->flags & GIMP_PARAM_NO_VALIDATE))
         {
-          GValue string_value = { 0, };
+          GValue string_value = G_VALUE_INIT;
 
           g_value_init (&string_value, G_TYPE_STRING);
 

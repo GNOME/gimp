@@ -1862,7 +1862,7 @@ gimp_prop_label_notify (GObject    *config,
                         GParamSpec *param_spec,
                         GtkWidget  *label)
 {
-  GValue  value = { 0, };
+  GValue  value = G_VALUE_INIT;
 
   g_value_init (&value, param_spec->value_type);
 
@@ -1876,7 +1876,7 @@ gimp_prop_label_notify (GObject    *config,
     }
   else
     {
-      GValue       str_value = { 0, };
+      GValue       str_value = G_VALUE_INIT;
       const gchar *str;
 
       g_value_init (&str_value, G_TYPE_STRING);
@@ -2787,7 +2787,7 @@ gimp_prop_size_entry_new (GObject                   *config,
 
   if (unit_property_name)
     {
-      GValue value = { 0 };
+      GValue value = G_VALUE_INIT;
 
       unit_param_spec = check_param_spec_w (config, unit_property_name,
                                             GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
@@ -3645,7 +3645,7 @@ gimp_prop_unit_combo_box_new (GObject     *config,
   GtkWidget    *combo;
   GtkTreeModel *model;
   GimpUnit      unit;
-  GValue        value = { 0, };
+  GValue        value = G_VALUE_INIT;
   gboolean      show_pixels;
   gboolean      show_percent;
 
@@ -3773,7 +3773,7 @@ gimp_prop_unit_menu_new (GObject     *config,
   GParamSpec *param_spec;
   GtkWidget  *menu;
   GimpUnit    unit;
-  GValue      value = { 0, };
+  GValue      value = G_VALUE_INIT;
   gboolean    show_pixels;
   gboolean    show_percent;
 

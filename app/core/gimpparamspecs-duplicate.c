@@ -215,7 +215,7 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
       gdouble    g = 0.0;
       gdouble    b = 0.0;
       gdouble    a = 1.0;
-      GValue     value = { 0, };
+      GValue     value = G_VALUE_INIT;
 
       g_value_init (&value, GEGL_TYPE_COLOR);
       g_param_value_set_default (pspec, &value);

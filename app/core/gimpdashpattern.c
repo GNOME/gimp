@@ -254,7 +254,7 @@ gimp_dash_pattern_to_value_array (GArray *pattern)
   if (pattern != NULL && pattern->len > 0)
     {
       GimpValueArray *value_array = gimp_value_array_new (pattern->len);
-      GValue          item        = { 0, };
+      GValue          item        = G_VALUE_INIT;
       gint            i;
 
       g_value_init (&item, G_TYPE_DOUBLE);

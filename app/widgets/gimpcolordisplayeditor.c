@@ -521,7 +521,7 @@ gimp_color_display_editor_src_changed (GtkTreeSelection       *sel,
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
-      GValue val = { 0, };
+      GValue val = G_VALUE_INIT;
 
       gtk_tree_model_get_value (model, &iter, SRC_COLUMN_NAME, &val);
 
@@ -556,7 +556,7 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
-      GValue val = { 0, };
+      GValue val = G_VALUE_INIT;
 
       gtk_tree_model_get_value (model, &iter, DEST_COLUMN_FILTER, &val);
 

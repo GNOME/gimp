@@ -54,7 +54,7 @@ plug_in_params_to_args (GParamSpec **pspecs,
 
   for (i = 0; i < n_params; i++)
     {
-      GValue value = { 0, };
+      GValue value = G_VALUE_INIT;
       GType  type;
       gint   count;
 

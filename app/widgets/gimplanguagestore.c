@@ -113,8 +113,8 @@ gimp_language_store_sort (GtkTreeModel *model,
                           GtkTreeIter  *b,
                           gpointer      userdata)
 {
-  GValue avalue = { 0, };
-  GValue bvalue = { 0, };
+  GValue avalue = G_VALUE_INIT;
+  GValue bvalue = G_VALUE_INIT;
   gint   cmp    = 0;
 
   /*  keep system language at the top of the list  */

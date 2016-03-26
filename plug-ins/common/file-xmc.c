@@ -1031,7 +1031,7 @@ save_dialog (const gint32   image_ID,
   GtkWidget      *tmpwidget;
   GtkWidget      *label;
   GtkTextBuffer  *textbuffer;
-  GValue          val = {0,};
+  GValue          val = G_VALUE_INIT;
   gint            x1, x2, y1, y2;
   gboolean        run;
 
