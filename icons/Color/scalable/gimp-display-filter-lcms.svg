@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="16.000004"
+   height="16.000004"
+   id="svg2"
+   viewBox="0 0 16.000003 16.000003"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-display-filter-lcms.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview1696"
+     showgrid="false"
+     inkscape:zoom="14.695724"
+     inkscape:cx="-569.92205"
+     inkscape:cy="-180.85745"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5140">
+      <stop
+         stop-color="#eeeeec"
+         id="stop5142" />
+      <stop
+         stop-color="#d4d4cf"
+         id="stop5144"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0.6551903,0,0,0.6453469,580.23923,255.62835)"
+       gradientUnits="userSpaceOnUse"
+       y2="21.251747"
+       x2="0"
+       y1="1.268379"
+       id="linearGradient5146-5"
+       xlink:href="#linearGradient5140" />
+    <linearGradient
+       gradientTransform="matrix(0.7649036,0,0,0.7649036,578.54923,256.42667)"
+       gradientUnits="userSpaceOnUse"
+       x2="18.913376"
+       x1="6.0288601"
+       id="linearGradient5259"
+       xlink:href="#linearGradient5253" />
+    <linearGradient
+       id="linearGradient5253">
+      <stop
+         stop-color="#729fcf"
+         id="stop5255" />
+      <stop
+         stop-color="#73d216"
+         offset="0.203623"
+         id="stop5261" />
+      <stop
+         stop-color="#c17d11"
+         id="stop5263"
+         offset="0.522219" />
+      <stop
+         stop-color="#75507b"
+         offset="0.888999"
+         id="stop5265" />
+      <stop
+         stop-color="#a40000"
+         id="stop5257"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(-200.92013,-97.800272)"
+     id="stock">
+    <g
+       id="gimp-display-filter-lcms"
+       transform="matrix(0.99632048,0,0,0.99632048,200.92712,97.807266)">
+      <rect
+         style="color:#000000;fill:url(#linearGradient5146-5);fill-rule:evenodd;stroke:#888a85;stroke-width:0.98378402"
+         id="rect4559-5"
+         width="15.07531"
+         height="15.07531"
+         x="0.48487201"
+         y="0.48487201"
+         rx="1.40557"
+         ry="1.540835" />
+      <rect
+         style="color:#000000;fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.90239203"
+         ry="0.62965202"
+         rx="0.64012903"
+         y="1.526893"
+         x="1.518019"
+         height="12.991261"
+         width="13.00901"
+         id="rect5148-3" />
+      <path
+         style="color:#000000;fill:url(#linearGradient5259);fill-rule:evenodd;stroke-linecap:round"
+         d="M 7.9418351,3.9861405 C 4.6592266,3.9861405 1.9999993,6.6606019 2,9.9432101 2,10.667233 2.128764,11.358475 2.3656515,12 l 3.36704,0 C 5.2305363,11.461132 4.9252111,10.737265 4.9252111,9.9432101 4.9252119,8.2781192 6.2767438,6.926587 7.9418351,6.926587 9.6069282,6.9265872 10.95846,8.2781192 10.95846,9.9432101 10.958459,10.739638 10.640566,11.460626 10.135742,12 l 3.367042,0 c 0.236888,-0.641525 0.380887,-1.332767 0.380887,-2.0567899 -2e-6,-3.2826084 -2.659227,-5.9570696 -5.9418359,-5.9570696 z"
+         id="path5245"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

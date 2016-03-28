@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="16"
+   height="16"
+   id="svg2"
+   viewBox="0 0 16 16"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-toilet-paper.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="501"
+     inkscape:window-height="405"
+     id="namedview1703"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="-563.59108"
+     inkscape:cy="807.54682"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(13969.744,5033.3136)"
+       gradientUnits="userSpaceOnUse"
+       y2="617.86304"
+       x2="264.02869"
+       y1="617.86304"
+       x1="65.257019"
+       id="linearGradient4092"
+       xlink:href="#linearGradient19282" />
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="616.36218"
+       x2="360"
+       y1="616.36218"
+       x1="234.28571"
+       id="linearGradient4086"
+       xlink:href="#linearGradient19282"
+       gradientTransform="matrix(0.04091636,0,0,0.04091636,571.76388,1221.6107)" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(-194.56663,-49.86487)"
+     id="stock">
+    <g
+       id="gimp-toilet-paper"
+       transform="translate(194.56663,-986.49733)"
+       style="display:inline">
+      <g
+         id="gimp-new-toilet-paper"
+         transform="translate(0,1.7382813e-5)">
+        <g
+           transform="matrix(0.04091636,0,0,0.04091636,0.17280194,1015.6658)"
+           id="gimp-new-toilet-paper-1">
+          <path
+             transform="matrix(0.88230041,0.47068671,-0.32499327,0.94571633,0,0)"
+             style="fill:#dcdcdc;fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 322.0353,505.95697 192.35984,0 c 0.3292,0 0.78022,0.32567 0.59422,0.59423 -66.35806,95.80927 67.67524,131.04989 0,185.11165 -2.24128,1.79043 0.0213,-0.052 0.0213,-0.052 L 357.04161,759.8161 c -3.02892,0 -45.96246,30.8141 -43.81678,-28.01111 l 8.21624,-225.25379 c 0.0121,-0.3309 0.26503,-0.59423 0.59423,-0.59423 z"
+             id="rect3932-0"
+             inkscape:connector-curvature="0" />
+          <path
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 87.355,510.36221 202.14715,0 c 0.19667,0 0.355,0.15833 0.355,0.355 l 0,211.29 c 0,0.19667 -0.15833,0.355 -0.355,0.355 l -202.14715,0 c -0.19667,0 -0.227971,-0.24605 -0.355,-0.355 -53.380966,-45.78312 -59.452394,-145.14974 0,-211.29 0.111874,-0.12446 0.515473,-10.71214 0.355,-0.355 z"
+             id="rect3940-5"
+             inkscape:connector-curvature="0" />
+          <path
+             style="fill:url(#linearGradient4092);fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 99.870243,533.7742 163.870677,0 c 0.15943,0 0.28778,0.12835 0.28778,0.28778 l 0,171.28232 c 0,0.15943 -0.12835,0.28778 -0.28778,0.28778 l -163.870677,0 c -0.15943,0 -0.1848,-0.19946 -0.28778,-0.28778 -43.2733,-37.1141 -48.1951,-117.66569 0,-171.28232 0.0907,-0.10089 0.417867,-8.6838 0.28778,-0.28778 z"
+             id="rect3940-4-7"
+             inkscape:connector-curvature="0" />
+          <path
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 108.43802,552.14223 150.32667,0 c 0.14626,0 0.264,0.10022 0.264,0.22473 l 0,133.75468 c 0,0.1245 -0.1177,0.22473 -0.264,0.22473 l -150.32667,0 c -0.14626,0 -0.16953,-0.15576 -0.264,-0.22473 -39.696742,-28.98247 -44.211754,-91.88536 0,-133.75468 0.0832,-0.0788 0.38334,-6.7812 0.264,-0.22473 z"
+             id="rect3940-8-8"
+             inkscape:connector-curvature="0" />
+        </g>
+        <rect
+           y="1036.3622"
+           x="0"
+           height="16"
+           width="16"
+           id="rect3999-9"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.10246458;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+      </g>
+      <path
+         style="opacity:1;fill:#464646;fill-opacity:1;stroke:none;stroke-width:0.12168574;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 4.6471828,1044.4812 6.6155352,0 c 0.03273,0 0.05909,0.026 0.05909,0.059 l 0,0.2705 c 0,0.033 -0.02635,0.059 -0.05909,0.059 l -6.4576989,0.063 c 1.5508436,0.036 0.098749,-0.059 0.098749,-0.059 0,0 -0.825702,-0.1199 -0.7576143,-0.3967 0.03989,-0.1622 1.2890436,0.099 0.5010287,0 z"
+         id="rect3956"
+         inkscape:connector-curvature="0" />
+      <ellipse
+         style="fill:url(#linearGradient4086);fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path3934-6"
+         cx="12.330806"
+         cy="1040.8851"
+         rx="2.5718856"
+         ry="4.3371344" />
+      <ellipse
+         style="fill:#464646;fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path3938-4-8"
+         cx="12.437504"
+         cy="1040.8086"
+         rx="0.6429714"
+         ry="1.2274908" />
+    </g>
+  </g>
+</svg>

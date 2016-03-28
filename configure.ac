@@ -2036,14 +2036,14 @@ AC_ARG_ENABLE(vector-icons, [  --enable-vector-icons   generate vector icons], ,
               enable_vector_icons=no)
 
 if test "x$enable_vector_icons" = "xyes"; then
-  if test "x$XMLLINT" = "xno"; then
-    if test "x$have_librsvg" != "xyes"; then
-      enable_vector_icons="no (librsvg and xmllint missing)"
-    else
-      enable_vector_icons="no (xmllint missing)"
-    fi
-  elif test "x$have_librsvg" != "xyes"; then
+  if test "x$have_librsvg" != "xyes"; then
     enable_vector_icons="no (librsvg missing)"
+  else
+    # Check if librsvg was built with --disable-pixbuf-loader.
+    gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
+    AC_CHECK_FILE(["$gdk_pixbuf_moduledir/libpixbufloader-svg.*"],
+                  [enable_vector_icons="yes"],
+                  [enable_vector_icons="no (librsvg GdkPixbuf loader missing)"])
   fi
 fi
 AM_CONDITIONAL(ENABLE_VECTOR_ICONS, test "x$enable_vector_icons" = "xyes")

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="15.999996"
+   height="15.999996"
+   id="svg2"
+   viewBox="0 0 15.999996 15.999996"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-tool-move.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview1693"
+     showgrid="false"
+     inkscape:zoom="14.750004"
+     inkscape:cx="-128.02425"
+     inkscape:cy="182.54332"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       id="linearGradient3204-1">
+      <stop
+         id="stop3206" />
+      <stop
+         stop-opacity="0"
+         id="stop3208"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(1.0283543,0,0,1.0283543,223.8022,292.97621)"
+       gradientUnits="userSpaceOnUse"
+       y2="337.29449"
+       x2="173.83766"
+       y1="320.22839"
+       x1="191.02673"
+       id="linearGradient8313"
+       xlink:href="#linearGradient3204-1" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(-136.12595,-339.11179)"
+     id="tools">
+    <path
+       style="color:#000000;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient8313);stroke-width:0.51417702;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       stroke-miterlimit="10"
+       id="gimp-tool-move"
+       d="m 144.12595,339.36887 -3.38753,3.38753 2.24077,0 0,3.59197 -3.20851,0 -1.2e-4,-2.6241 -3.38753,3.38752 3.38753,3.38753 0,-2.25095 3.20863,0 0,3.21882 -2.24077,0 3.38753,3.38752 3.38753,-3.38752 -2.53429,0 0,-3.21882 3.50215,0 0,2.25095 3.38753,-3.38753 -3.38753,-3.38752 0,2.6241 -3.50215,0 0,-3.59197 2.53429,0 z"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

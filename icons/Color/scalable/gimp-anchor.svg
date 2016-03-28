@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="16"
+   height="16"
+   id="svg2"
+   viewBox="0 0 16 16"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-anchor.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview1696"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="-359.98594"
+     inkscape:cy="-403.38852"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(-94,65.000059)"
+     id="stock">
+    <g
+       transform="translate(-9.038513,-5.2918524)"
+       id="gimp-anchor">
+      <rect
+         id="rect6639-5"
+         width="16"
+         height="16"
+         x="103.03851"
+         y="-59.708206"
+         style="fill:none;stroke-width:0.2" />
+      <g
+         id="layer1-1"
+         transform="matrix(0.04927215,0,0,0.03582173,93.725929,-60.703753)"
+         style="fill:#0000ff;stroke:#ffffff;stroke-width:3.21300006">
+        <path
+           id="path2987"
+           transform="matrix(20.222194,0,0,27.741496,191.02682,28.568366)"
+           d="M 7.9316406,0.07226562 A 2.8996713,2.8817272 0 0 0 5.03125,2.9550781 2.8996713,2.8817272 0 0 0 7.1074219,5.7148438 l -0.052734,0.65625 -5.6757817,0 0,0.796875 2.796875,0 c 1.5383594,-10e-8 2.8116303,0.017184 2.828125,0.039062 0.016492,0.021881 -0.010696,1.4009524 -0.060547,3.0644532 C 6.8453032,13.542858 6.8397703,13.58317 6.441406,13.773438 5.694949,14.129979 3.4789218,13.342809 3.3027342,12.658203 3.2349322,12.394771 3.3198532,12.128709 3.5292967,11.947266 L 3.7089844,11.792969 3.2246094,11.626953 C 2.4973391,11.378841 1.8639023,11.028052 1,10.392578 L 0.22070312,9.8183594 0.109375,10.09375 c -0.14112218,0.346412 -0.14161651,0.978348 -0.001953,1.410156 0.20581347,0.636195 0.9297484,1.715581 1.078125,1.607422 0.042943,-0.0313 0.2125941,-0.05664 0.3769531,-0.05664 0.2824125,0 0.3168379,0.01877 0.6328125,0.332031 0.9742267,0.965845 2.1641725,1.546165 4.2539063,2.074219 0.7820615,0.197592 1.2935256,0.367847 1.3691406,0.457031 0.025086,0.02959 0.07408,0.05469 0.109375,0.05469 0.035298,0 0.084289,-0.0251 0.109375,-0.05469 0.07561,-0.08918 0.5890816,-0.259429 1.3710937,-0.457031 2.0568988,-0.519727 3.2296388,-1.085627 4.2148438,-2.03125 0.1692,-0.162403 0.340739,-0.312553 0.380859,-0.333985 0.111215,-0.05942 0.579764,-0.04867 0.667969,0.01563 0.148401,0.108141 0.872356,-0.971227 1.078125,-1.607422 0.139663,-0.431808 0.139164,-1.063762 -0.002,-1.410156 L 15.634766,9.8183594 14.855469,10.392578 c -0.863853,0.635474 -1.497339,0.986292 -2.22461,1.234375 l -0.484375,0.166016 0.179688,0.154297 c 0.209444,0.181425 0.294364,0.447491 0.226562,0.710937 -0.176192,0.68457 -2.390212,1.471776 -3.1367184,1.115235 C 9.0176315,13.583181 9.0120934,13.542865 8.9140625,10.271484 8.8642103,8.6079836 8.8370199,7.22891 8.8535156,7.2070312 8.8699827,7.1851539 10.141328,7.1679688 11.679688,7.1679688 l 2.796874,0 0,-0.796875 -5.6757808,0 -0.044922,-0.65625 A 2.8996713,2.8817272 0 0 0 10.832031,2.9550781 2.8996713,2.8817272 0 0 0 7.9316406,0.07226562 Z m 0,1.27148438 A 1.5926131,1.5567253 0 0 1 9.5234375,2.9003906 1.5926131,1.5567253 0 0 1 7.9316406,4.4570312 1.5926131,1.5567253 0 0 1 6.3378906,2.9003906 1.5926131,1.5567253 0 0 1 7.9316406,1.34375 Z"
+           style="fill:#3465a4;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+  </g>
+</svg>

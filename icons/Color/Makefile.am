@@ -7,10 +7,13 @@ icons_DATA = \
 
 include $(top_srcdir)/icons/icon-list.mk
 
-scalable/%.svg: color-scalable.svg ../../tools/compute-svg-viewbox
-	mkdir -p scalable && \
-	SVG=`$(top_srcdir)/tools/extract-vector-icon.sh $< $*` && \
-	echo $${SVG} > $@
+# Vectorial icons are now committed into the repository.
+# librsvg is just too buggy to handle build-time extraction with
+# acceptable quality.
+#scalable/%.svg: color-scalable.svg ../../tools/compute-svg-viewbox
+#	mkdir -p scalable && \
+#	SVG=`$(top_srcdir)/tools/extract-vector-icon.sh $< $*` && \
+#	echo $${SVG} > $@
 
 ## Compiled-in icons for both the core and libgimpwidgets
 
@@ -35,6 +38,7 @@ EXTRA_DIST = \
 	$(icons128_images)	\
 	$(icons192_images)	\
 	$(icons256_images)	\
+	$(scalable_images)	\
 	color-scalable.svg
 
 noinst_DATA = \
