@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-22 19:24+0000\n"
-"PO-Revision-Date: 2016-03-22 22:15-0600\n"
-"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
+"POT-Creation-Date: 2016-03-28 18:21+0000\n"
+"PO-Revision-Date: 2016-03-29 09:15+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 2.91.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -609,12 +609,12 @@ msgstr "Eliminar este pincel"
 #: ../app/actions/brushes-actions.c:83
 msgctxt "brushes-action"
 msgid "_Refresh Brushes"
-msgstr "_Refrescar pinceles"
+msgstr "_Actualizar pinceles"
 
 #: ../app/actions/brushes-actions.c:84
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr "Refrescar los pinceles"
+msgstr "Actualizar los pinceles"
 
 #: ../app/actions/brushes-actions.c:92
 msgctxt "brushes-action"
@@ -3829,7 +3829,7 @@ msgstr "Borra este degradado"
 #: ../app/actions/gradients-actions.c:84
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
-msgstr "_Refrescar degradados"
+msgstr "_Actualizar degradados"
 
 #: ../app/actions/gradients-actions.c:85
 msgctxt "gradients-action"
@@ -4149,64 +4149,46 @@ msgid "16 bit integer"
 msgstr "Entero de 16 bits"
 
 #: ../app/actions/image-actions.c:199
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Convertir la imagen a entero de 16 bits"
 
 #: ../app/actions/image-actions.c:203
-#| msgctxt "component-type"
-#| msgid "32-bit integer"
 msgctxt "image-convert-action"
 msgid "32 bit integer"
 msgstr "Entero de 32 bits"
 
 #: ../app/actions/image-actions.c:205
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 32 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Convertir la imagen a entero de 32 bits"
 
 #: ../app/actions/image-actions.c:209
-#| msgctxt "component-type"
-#| msgid "16-bit floating point"
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
 msgstr "Coma flotante de 16 bits"
 
 #: ../app/actions/image-actions.c:211
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Convertir la imagen a coma flotante de 16 bits"
 
 #: ../app/actions/image-actions.c:215
-#| msgctxt "component-type"
-#| msgid "32-bit floating point"
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
 msgstr "Coma flotante de 32 bits"
 
 #: ../app/actions/image-actions.c:217
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 32 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Convertir la imagen a coma flotante de 32 bits"
 
 #: ../app/actions/image-actions.c:221
-#| msgctxt "component-type"
-#| msgid "16-bit floating point"
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
 msgstr "Coma flotante de 64 bits"
 
 #: ../app/actions/image-actions.c:223
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
 msgstr "Convertir la imagen a coma flotante de 64 bits"
@@ -4217,22 +4199,16 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Gamma perceptual (sRGB)"
 
 #: ../app/actions/image-actions.c:232
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to grayscale"
 msgctxt "image-convert-action"
 msgid "Convert the image to preceptual (sRGB) gamma"
 msgstr "Convertir la imagen a gamma perceptual (sRGB)"
 
 #: ../app/actions/image-actions.c:236
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "image-convert-action"
 msgid "Linear light"
 msgstr "Luz lineal"
 
 #: ../app/actions/image-actions.c:238
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 8 bit linear integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
 msgstr "Convertir la imagen a luz lineal"
@@ -4324,7 +4300,6 @@ msgid "Cannot crop because the image has no content."
 msgstr "No se puede recortar porque la imagen no tiene contenido."
 
 #: ../app/actions/image-commands.c:656
-#| msgid "Cannot crop because the image has no content."
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "No se puede recortar porque la imagen ya está recortada a su contenido."
@@ -4950,7 +4925,6 @@ msgid "Cannot crop because the active layer has no content."
 msgstr "No se puede recortar porque la capa activa no tiene contenido."
 
 #: ../app/actions/layers-commands.c:759
-#| msgid "Cannot crop because the active layer has no content."
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "No se puede recortar porque la capa activa ya está recortada a su contenido."
@@ -4965,52 +4939,41 @@ msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
-#| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "MyPaint Brushes Menu"
 msgstr "Menú de pinceles MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:47
-#| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "_New MyPaint Brush"
 msgstr "_Nuevo pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:48
-#| msgctxt "brushes-action"
-#| msgid "Create a new brush"
 msgctxt "mypaint-brushes-action"
 msgid "Create a new MyPaint brush"
 msgstr "Crear un nuevo pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:53
-#| msgctxt "brushes-action"
-#| msgid "D_uplicate Brush"
 msgctxt "mypaint-brushes-action"
 msgid "D_uplicate MyPaint Brush"
 msgstr "_Duplicar pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:54
-#| msgctxt "brushes-action"
-#| msgid "Duplicate this brush"
 msgctxt "mypaint-brushes-action"
 msgid "Duplicate this MyPaint brush"
 msgstr "Duplicar este pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:59
-#| msgctxt "brushes-action"
-#| msgid "Copy Brush _Location"
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint Brush _Location"
 msgstr "Copiar la _ubicación del pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:60
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Copy brush file location to clipboard"
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint brush file location to clipboard"
-msgstr "Copiar al portapapeles la ubicación del pincel"
+msgstr "Copiar al portapapeles la ubicación del pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:65
 #, fuzzy
@@ -5021,58 +4984,51 @@ msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
 
 #: ../app/actions/mypaint-brushes-actions.c:66
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Show brush file location in the file manager"
 msgctxt "mypaint-brushes-action"
 msgid "Show MyPaint brush file location in the file manager"
-msgstr "Mostrar la ubicación del pincel en el gestor de archivos"
+msgstr "Mostrar la ubicación del pincel MyPaint en el gestor de archivos"
 
 #: ../app/actions/mypaint-brushes-actions.c:71
-#, fuzzy
 #| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "_Delete MyPaint Brush"
-msgstr "Pincel"
+msgstr "_Eliminar el pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:72
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Delete this brush"
 msgctxt "mypaint-brushes-action"
 msgid "Delete this MyPaint brush"
-msgstr "Eliminar este pincel"
+msgstr "Eliminar este pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:77
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "_Refresh Brushes"
 msgctxt "mypaint-brushes-action"
 msgid "_Refresh MyPaint Brushes"
-msgstr "_Refrescar pinceles"
+msgstr "_Actualizar los pinceles MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:78
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Refresh brushes"
 msgctxt "mypaint-brushes-action"
 msgid "Refresh MyPaint brushes"
-msgstr "Refrescar los pinceles"
+msgstr "Actualizar los pinceles MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:86
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "_Edit Brush..."
 msgctxt "mypaint-brushes-action"
 msgid "_Edit MyPaint Brush..."
-msgstr "_Editar pincel…"
+msgstr "_Editar pincel MyPaint…"
 
 #: ../app/actions/mypaint-brushes-actions.c:87
-#, fuzzy
 #| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
-msgstr "Pincel"
+msgstr "Editar pincel MyPaint"
 
 #: ../app/actions/palette-editor-actions.c:44
 msgctxt "palette-editor-action"
@@ -5222,12 +5178,12 @@ msgstr "Eliminar esta paleta"
 #: ../app/actions/palettes-actions.c:90
 msgctxt "palettes-action"
 msgid "_Refresh Palettes"
-msgstr "_Refrescar paletas"
+msgstr "_Actualizar paletas"
 
 #: ../app/actions/palettes-actions.c:91
 msgctxt "palettes-action"
 msgid "Refresh palettes"
-msgstr "Refrescar paletas"
+msgstr "Actualizar paletas"
 
 #: ../app/actions/palettes-actions.c:99
 msgctxt "palettes-action"
@@ -5315,12 +5271,12 @@ msgstr "Eliminar este patrón"
 #: ../app/actions/patterns-actions.c:83
 msgctxt "patterns-action"
 msgid "_Refresh Patterns"
-msgstr "_Refrescar patrones"
+msgstr "_Actualizar patrones"
 
 #: ../app/actions/patterns-actions.c:84
 msgctxt "patterns-action"
 msgid "Refresh patterns"
-msgstr "Refrescar patrones"
+msgstr "Actualizar patrones"
 
 #: ../app/actions/patterns-actions.c:92
 msgctxt "patterns-action"
@@ -5518,12 +5474,11 @@ msgid "F_lood"
 msgstr ""
 
 #: ../app/actions/select-actions.c:106
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the selection editor"
 msgctxt "select-action"
 msgid "Level the selection's interior"
-msgstr "Abre el editor de selección"
+msgstr "Nivelar el interior de la selección"
 
 #: ../app/actions/select-actions.c:111
 msgctxt "select-action"
@@ -5536,36 +5491,32 @@ msgid "Save the selection to a channel"
 msgstr "Guarda la selección en un canal"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float selection"
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
-msgstr "Selección flotante"
+msgstr "_Rellenar contorno de la selección…"
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Display the selection outline"
 msgctxt "select-action"
 msgid "Fill the selection outline"
-msgstr "Muestra el contorno de la selección"
+msgstr "Rellenar el contorno de la selección"
 
 #: ../app/actions/select-actions.c:123
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float selection"
 msgctxt "select-action"
 msgid "_Fill Selection Outline"
-msgstr "Selección flotante"
+msgstr "_Rellenar contorno de la selección"
 
 #: ../app/actions/select-actions.c:124
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "Stroke the selection with last used values"
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
-msgstr "Trazar la selección con los últimos valores usados"
+msgstr "Rellenar el contorno de la selección con los últimos valores usados"
 
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
@@ -5605,10 +5556,9 @@ msgstr "Encoger selección en"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:212 ../app/actions/select-commands.c:296
-#, fuzzy
 #| msgid "Select a single contiguous area"
 msgid "_Selected areas continue outside the image"
-msgstr "Seleccionar un área contigua simple"
+msgstr "Las á_reas seleccionadas continúan fuera de la imagen"
 
 #: ../app/actions/select-commands.c:215
 msgid "When shrinking, act as if selected areas continued outside the image."
@@ -5647,17 +5597,15 @@ msgstr ""
 #: ../app/actions/select-commands.c:359 ../app/actions/select-commands.c:390
 #: ../app/actions/vectors-commands.c:390 ../app/actions/vectors-commands.c:422
 #: ../app/dialogs/fill-dialog.c:162
-#, fuzzy
 #| msgid "There is no active layer or channel to cut from."
 msgid "There is no active layer or channel to fill."
-msgstr "No hay una capa o canal activo desde donde cortar."
+msgstr "No hay una capa o canal activo para rellenar."
 
 #: ../app/actions/select-commands.c:365
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float selection"
 msgid "Fill Selection Outline"
-msgstr "Selección flotante"
+msgstr "Rellenar contorno de la selección"
 
 #: ../app/actions/select-commands.c:435 ../app/actions/select-commands.c:468
 #: ../app/actions/vectors-commands.c:467 ../app/actions/vectors-commands.c:501
@@ -6000,20 +5948,18 @@ msgstr ""
 "portapapeles"
 
 #: ../app/actions/tool-presets-actions.c:74
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "_Restore Tool Preset"
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
-msgstr "_Restaurar los ajustes prefijados de herramienta"
+msgstr "_Restaurar ajuste prefijado de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:75
-#, fuzzy
 #| msgctxt "tool-presets-action"
 #| msgid "Delete this tool preset"
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
-msgstr "Eliminar este ajuste prefijado de herramienta"
+msgstr "Restaurar este ajuste prefijado de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:80
 msgctxt "tool-presets-action"
@@ -6028,12 +5974,12 @@ msgstr "Eliminar este ajuste prefijado de herramienta"
 #: ../app/actions/tool-presets-actions.c:86
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr "_Refrescar los ajustes prefijados de herramienta"
+msgstr "_Actualizar los ajustes prefijados de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:87
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Refrescar los ajustes prefijados de herramienta"
+msgstr "Actualizar los ajustes prefijados de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:95
 msgctxt "tool-presets-action"
@@ -6196,20 +6142,18 @@ msgid "Lower this path to the bottom"
 msgstr "Bajar esta ruta hasta abajo del todo"
 
 #: ../app/actions/vectors-actions.c:112
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill Path..."
-msgstr "Voltear la ruta"
+msgstr "Rellenar ruta…"
 
 #: ../app/actions/vectors-actions.c:113
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill the path"
-msgstr "Voltear la ruta"
+msgstr "Rellenar la ruta"
 
 #: ../app/actions/vectors-actions.c:118
 #, fuzzy
@@ -7390,46 +7334,46 @@ msgstr ""
 "la ventana de la caja de herramientas. Esto podría afectar la forma en que "
 "su gestor de ventanas decora y maneja estas ventanas."
 
-#: ../app/config/gimprc-blurbs.h:157
+#: ../app/config/gimprc-blurbs.h:145
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr ""
 "Cuando esté activado, el pincel seleccionado se usará para todas las "
 "herramientas."
 
-#: ../app/config/gimprc-blurbs.h:160
+#: ../app/config/gimprc-blurbs.h:148
 msgid "When enabled, the selected dynamics will be used for all tools."
 msgstr ""
 "Cuando esté activado, se usará la dinámica seleccionada para todas las "
 "herramientas."
 
-#: ../app/config/gimprc-blurbs.h:166
+#: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr ""
 "Cuando esté activado, el degradado seleccionado se usará para todas las "
 "herramientas."
 
-#: ../app/config/gimprc-blurbs.h:169
+#: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
 "Cuando esté activado, el patrón seleccionado será usado para todas las "
 "herramientas."
 
-#: ../app/config/gimprc-blurbs.h:183
+#: ../app/config/gimprc-blurbs.h:171
 msgid "Sets the browser used by the help system."
 msgstr "Establece el visor que usará el sistema de ayuda."
 
-#: ../app/config/gimprc-blurbs.h:194
+#: ../app/config/gimprc-blurbs.h:182
 msgid "Sets the text to appear in image window status bars."
 msgstr ""
 "Establece el texto que aparecerá en las barras de estado de las ventanas de "
 "imágenes."
 
-#: ../app/config/gimprc-blurbs.h:197
+#: ../app/config/gimprc-blurbs.h:185
 msgid "Sets the text to appear in image window titles."
 msgstr ""
 "Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
 
-#: ../app/config/gimprc-blurbs.h:200
+#: ../app/config/gimprc-blurbs.h:188
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -7437,24 +7381,24 @@ msgstr ""
 "Cuando esté activado esto asegurará que la imagen se vea completa después de "
 "abrirse, de otro modo será mostrada con una escala de 1:1."
 
-#: ../app/config/gimprc-blurbs.h:204
+#: ../app/config/gimprc-blurbs.h:192
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Establece el nivel de interpolación utilizado para el redimensionado y otras "
 "transformaciones."
 
-#: ../app/config/gimprc-blurbs.h:211
+#: ../app/config/gimprc-blurbs.h:199
 msgid "Specifies the language to use for the user interface."
 msgstr "Establecer el idioma de la interfaz de usuario."
 
-#: ../app/config/gimprc-blurbs.h:214
+#: ../app/config/gimprc-blurbs.h:202
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
 "Cuántos nombres de archivos de imágenes abiertas recientemente se deben "
 "mantener en el menú Archivo."
 
-#: ../app/config/gimprc-blurbs.h:217
+#: ../app/config/gimprc-blurbs.h:205
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -7462,7 +7406,7 @@ msgstr ""
 "Velocidad de las hormigas marchantes en el contorno de la selección. Este "
 "valor está en milisegundos (menos tiempo indica una marcha mas rápida)."
 
-#: ../app/config/gimprc-blurbs.h:221
+#: ../app/config/gimprc-blurbs.h:209
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -7470,7 +7414,7 @@ msgstr ""
 "GIMP advertirá al usuario si realiza un intento de crear una imagen que "
 "podría requerir más memoria que el tamaño especificado aquí."
 
-#: ../app/config/gimprc-blurbs.h:231
+#: ../app/config/gimprc-blurbs.h:219
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -7480,7 +7424,7 @@ msgstr ""
 "establece a 0, se fuerza una consulta al servidor X para obtener la "
 "resolución horizontal y vertical."
 
-#: ../app/config/gimprc-blurbs.h:236
+#: ../app/config/gimprc-blurbs.h:224
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -7490,7 +7434,7 @@ msgstr ""
 "establece a 0, se fuerza una consulta al servidor X para obtener la "
 "resolución horizontal y vertical."
 
-#: ../app/config/gimprc-blurbs.h:241
+#: ../app/config/gimprc-blurbs.h:229
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -7499,7 +7443,7 @@ msgstr ""
 "como activa. Esto solía ser el comportamiento predeterminado en las "
 "versiones más antiguas."
 
-#: ../app/config/gimprc-blurbs.h:250
+#: ../app/config/gimprc-blurbs.h:238
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -7507,12 +7451,12 @@ msgstr ""
 "Establece el tamaño de la vista previa de la navegación disponible en la "
 "esquina inferior derecha de la ventana de la imagen."
 
-#: ../app/config/gimprc-blurbs.h:254
+#: ../app/config/gimprc-blurbs.h:242
 msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr ""
 "Establece cuántos procesadores debe intentar usar simultáneamente GIMP."
 
-#: ../app/config/gimprc-blurbs.h:267
+#: ../app/config/gimprc-blurbs.h:255
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -7526,7 +7470,7 @@ msgstr ""
 "preciso, pero podría ser más lento.  Perversamente en algunos servidores X "
 "al activarse esta opción se obtiene un pintado más rápido."
 
-#: ../app/config/gimprc-blurbs.h:283
+#: ../app/config/gimprc-blurbs.h:271
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -7536,7 +7480,7 @@ msgstr ""
 "Disponer de las vistas previas en el diálogo de capas y canales queda bien, "
 "pero puede ralentizar las cosas al trabajar con imágenes grandes."
 
-#: ../app/config/gimprc-blurbs.h:288
+#: ../app/config/gimprc-blurbs.h:276
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -7544,11 +7488,11 @@ msgstr ""
 "Establece el tamaño de la vista previa usado para las vistas preliminares de "
 "las capas y los canales en los diálogos nuevos creados."
 
-#: ../app/config/gimprc-blurbs.h:292
+#: ../app/config/gimprc-blurbs.h:280
 msgid "Sets the default quick mask color."
 msgstr "Establece el color predeterminado de la máscara rápida."
 
-#: ../app/config/gimprc-blurbs.h:295
+#: ../app/config/gimprc-blurbs.h:283
 #, fuzzy
 #| msgid ""
 #| "When enabled, the image window will automatically resize itself whenever "
@@ -7561,7 +7505,7 @@ msgstr ""
 "Cuando se encuentre activado, la ventana de la imagen se redimensionará "
 "automáticamente cuando cambie el tamaño físico de la imagen."
 
-#: ../app/config/gimprc-blurbs.h:300
+#: ../app/config/gimprc-blurbs.h:288
 #, fuzzy
 #| msgid ""
 #| "When enabled, the image window will automatically resize itself when "
@@ -7573,12 +7517,12 @@ msgstr ""
 "Cuando se encuentre activado, la ventana de la imagen se redimensionará "
 "automáticamente al ampliar o reducir las imágenes."
 
-#: ../app/config/gimprc-blurbs.h:305
+#: ../app/config/gimprc-blurbs.h:293
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Permitir a GIMP intentar restaurar la última sesión guardada en cada inicio."
 
-#: ../app/config/gimprc-blurbs.h:308
+#: ../app/config/gimprc-blurbs.h:296
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -7587,14 +7531,14 @@ msgstr ""
 "abrieron anteriormente en la pantalla. Cuando se encuentre desactivado, las "
 "ventanas aparecerán en la pantalla actualmente usada."
 
-#: ../app/config/gimprc-blurbs.h:313
+#: ../app/config/gimprc-blurbs.h:301
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Recordar la herramienta, el patrón, el color y los pinceles actuales entre "
 "distintas sesiones de GIMP."
 
-#: ../app/config/gimprc-blurbs.h:317
+#: ../app/config/gimprc-blurbs.h:305
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
@@ -7602,17 +7546,17 @@ msgstr ""
 "Mantener un registro permanente de todos los archivos abiertos y guardados "
 "en la lista de documentos recientes."
 
-#: ../app/config/gimprc-blurbs.h:321
+#: ../app/config/gimprc-blurbs.h:309
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "Guardar las posiciones y tamaños de los diálogos principales al salir de "
 "GIMP."
 
-#: ../app/config/gimprc-blurbs.h:324
+#: ../app/config/gimprc-blurbs.h:312
 msgid "Save the tool options when GIMP exits."
 msgstr "Guardar las opciones de herramientas al salir de GIMP."
 
-#: ../app/config/gimprc-blurbs.h:330
+#: ../app/config/gimprc-blurbs.h:318
 #, fuzzy
 #| msgid ""
 #| "When enabled, all brush-based paint tools will show a preview of the "
@@ -7624,7 +7568,7 @@ msgstr ""
 "Cuando está habilitado todas la herramientas de pintura basadas en el pincel "
 "mostrarán una vista previa del contorno del pincel actual."
 
-#: ../app/config/gimprc-blurbs.h:334
+#: ../app/config/gimprc-blurbs.h:322
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -7634,7 +7578,7 @@ msgstr ""
 "a la página de ayuda relacionada. Sin ese botón, la página de ayuda puede "
 "verse al pulsar F1."
 
-#: ../app/config/gimprc-blurbs.h:339
+#: ../app/config/gimprc-blurbs.h:327
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
@@ -7642,7 +7586,7 @@ msgstr ""
 "Cuando se encuentre activado, el cursor se mostrará sobre la imagen cuando "
 "se use una herramienta de pintura."
 
-#: ../app/config/gimprc-blurbs.h:343
+#: ../app/config/gimprc-blurbs.h:331
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -7651,7 +7595,7 @@ msgstr ""
 "Esto también se puede activar con la instrucción «Ver->Mostrar la barra de "
 "estado»."
 
-#: ../app/config/gimprc-blurbs.h:347
+#: ../app/config/gimprc-blurbs.h:335
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -7659,7 +7603,7 @@ msgstr ""
 "Cuando está activado las reglas están visibles de forma predeterminada. Esto "
 "también se puede activar con la instrucción «Ver->Mostrar las reglas»."
 
-#: ../app/config/gimprc-blurbs.h:351
+#: ../app/config/gimprc-blurbs.h:339
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -7668,7 +7612,7 @@ msgstr ""
 "predeterminada. Esto también se puede activar con la instrucción «Ver-"
 ">Mostrar las barras de desplazamiento»."
 
-#: ../app/config/gimprc-blurbs.h:355
+#: ../app/config/gimprc-blurbs.h:343
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -7677,7 +7621,7 @@ msgstr ""
 "Esto también puede puede activarse con la instrucción «Ver->Mostrar la barra "
 "de estado»."
 
-#: ../app/config/gimprc-blurbs.h:359
+#: ../app/config/gimprc-blurbs.h:347
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -7685,7 +7629,7 @@ msgstr ""
 "Cuando está activado la selección es visible de forma predeterminada. Esto "
 "también puede activarse con la instrucción «Ver->Mostrar la selección»."
 
-#: ../app/config/gimprc-blurbs.h:363
+#: ../app/config/gimprc-blurbs.h:351
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -7694,7 +7638,7 @@ msgstr ""
 "predeterminada. Esto también puede activarse con la instrucción «Ver-"
 ">Mostrar el límite de la capa»."
 
-#: ../app/config/gimprc-blurbs.h:367
+#: ../app/config/gimprc-blurbs.h:355
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -7702,7 +7646,7 @@ msgstr ""
 "Cuando está activado las reglas están visibles de forma predeterminada. Esto "
 "también puede activarse con la instrucción «Ver->Mostrar las reglas»."
 
-#: ../app/config/gimprc-blurbs.h:371
+#: ../app/config/gimprc-blurbs.h:359
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -7710,7 +7654,7 @@ msgstr ""
 "Cuando está activado la rejilla es visible de forma predeterminada. Esto "
 "también puede activarse con la instrucción «Ver->Mostrar la rejilla»."
 
-#: ../app/config/gimprc-blurbs.h:375
+#: ../app/config/gimprc-blurbs.h:363
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -7719,52 +7663,52 @@ msgstr ""
 "predeterminada. Esto también puede activarse con la instrucción «Ver-"
 ">Mostrar puntos de muestra»."
 
-#: ../app/config/gimprc-blurbs.h:379
+#: ../app/config/gimprc-blurbs.h:367
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "Presentar una ayuda cuando el puntero pasa por encima de un elemento."
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:370
 msgid "Use GIMP in a single-window mode."
 msgstr "Usar GIMP en modo de ventana única."
 
-#: ../app/config/gimprc-blurbs.h:385
+#: ../app/config/gimprc-blurbs.h:373
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
 "Ocultar empotrables y otras ventanas, dejando únicamente las ventanas de "
 "imagen."
 
-#: ../app/config/gimprc-blurbs.h:388
+#: ../app/config/gimprc-blurbs.h:376
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the pointer information dialog"
 msgid "Enable the N-Point Deformation tool."
 msgstr "Abre el diálogo de información del puntero"
 
-#: ../app/config/gimprc-blurbs.h:391
+#: ../app/config/gimprc-blurbs.h:379
 msgid "Enable the Handle Transform tool."
 msgstr "Activar la herramienta de transformación del tirador."
 
-#: ../app/config/gimprc-blurbs.h:394
+#: ../app/config/gimprc-blurbs.h:382
 msgid "Enable symmetry on painting."
 msgstr "Activar simetría en el pintado."
 
-#: ../app/config/gimprc-blurbs.h:397
+#: ../app/config/gimprc-blurbs.h:385
 msgid "Enable the MyPaint Brush tool."
 msgstr "Activar la herramienta pincel MyPaint."
 
-#: ../app/config/gimprc-blurbs.h:400
+#: ../app/config/gimprc-blurbs.h:388
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the pointer information dialog"
 msgid "Enable the Seamless Clone tool."
 msgstr "Abre el diálogo de información del puntero"
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:391
 msgid "What to do when the space bar is pressed in the image window."
 msgstr ""
 "Qué hacer cuando la barra espaciadora se pulsa en la ventana de imagen."
 
-#: ../app/config/gimprc-blurbs.h:406
+#: ../app/config/gimprc-blurbs.h:394
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -7782,11 +7726,11 @@ msgstr ""
 "una carpeta montada sobre NFS. Por estas razones quizá sea conveniente "
 "colocar su archivo de intercambio en «/tmp»."
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:403
 msgid "When enabled, menus can be torn off."
 msgstr "Cuando se encuentre activado, los menús podrán ser separados."
 
-#: ../app/config/gimprc-blurbs.h:418
+#: ../app/config/gimprc-blurbs.h:406
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -7795,16 +7739,16 @@ msgstr ""
 "elementos del menú presionando una combinación de teclas mientras el "
 "elemento del menú está resaltado."
 
-#: ../app/config/gimprc-blurbs.h:422
+#: ../app/config/gimprc-blurbs.h:410
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Guardar las combinaciones de teclas modificadas al salir de GIMP."
 
-#: ../app/config/gimprc-blurbs.h:425
+#: ../app/config/gimprc-blurbs.h:413
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr ""
 "Restaurar las combinaciones de teclas guardadas en cada inicio de GIMP."
 
-#: ../app/config/gimprc-blurbs.h:428
+#: ../app/config/gimprc-blurbs.h:416
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -7817,12 +7761,12 @@ msgstr ""
 "permanecer, por lo tanto es mejor si esta carpeta no está compartida con "
 "otros usuarios."
 
-#: ../app/config/gimprc-blurbs.h:446
+#: ../app/config/gimprc-blurbs.h:434
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr ""
 "Establece el tamaño de la miniatura que se muestra en el diálogo Abrir."
 
-#: ../app/config/gimprc-blurbs.h:449
+#: ../app/config/gimprc-blurbs.h:437
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -7831,7 +7775,7 @@ msgstr ""
 "archivo que se está previsualizando es más pequeño que el tamaño establecido "
 "aquí."
 
-#: ../app/config/gimprc-blurbs.h:453
+#: ../app/config/gimprc-blurbs.h:441
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -7843,31 +7787,31 @@ msgstr ""
 "con imágenes que no cabrían en la memoria de otra forma. Si tiene mucha RAM, "
 "quizá quiera poner esto a un valor más alto."
 
-#: ../app/config/gimprc-blurbs.h:459
+#: ../app/config/gimprc-blurbs.h:447
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr ""
 "Mostrar los colores de frente y fondo actuales en la caja de herramientas."
 
-#: ../app/config/gimprc-blurbs.h:462
+#: ../app/config/gimprc-blurbs.h:450
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Mostrar los pinceles, patrones y degradados activos en la caja de "
 "herramientas"
 
-#: ../app/config/gimprc-blurbs.h:465
+#: ../app/config/gimprc-blurbs.h:453
 msgid "Show the currently active image in the toolbox."
 msgstr "Mostrar la imagen activa en la caja de herramientas."
 
-#: ../app/config/gimprc-blurbs.h:471
+#: ../app/config/gimprc-blurbs.h:459
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Establece la forma en que se muestra la transparencia en las imágenes."
 
-#: ../app/config/gimprc-blurbs.h:474
+#: ../app/config/gimprc-blurbs.h:462
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 "Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
 
-#: ../app/config/gimprc-blurbs.h:477
+#: ../app/config/gimprc-blurbs.h:465
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -7875,7 +7819,7 @@ msgstr ""
 "Cuando se encuentre activado GIMP no guardará una imagen si no se ha "
 "modificado desde que se abrió."
 
-#: ../app/config/gimprc-blurbs.h:481
+#: ../app/config/gimprc-blurbs.h:469
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -7884,7 +7828,7 @@ msgstr ""
 "niveles de deshacer se mantienen disponibles hasta que se alcanza el límite "
 "de niveles de deshacer."
 
-#: ../app/config/gimprc-blurbs.h:485
+#: ../app/config/gimprc-blurbs.h:473
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -7895,15 +7839,15 @@ msgstr ""
 "configuración sólo pueden deshacerse tantos niveles deshacer como este "
 "configurado."
 
-#: ../app/config/gimprc-blurbs.h:490
+#: ../app/config/gimprc-blurbs.h:478
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Obtiene el tamaño de las vistas previas en el Histórico de deshacer."
 
-#: ../app/config/gimprc-blurbs.h:493
+#: ../app/config/gimprc-blurbs.h:481
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Cuando se encuentre activado, pulsando F1 se abrirá el visor de ayuda."
 
-#: ../app/config/gimprc-blurbs.h:496
+#: ../app/config/gimprc-blurbs.h:484
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Cuando esté activado, usar OpenCL para algunas operaciones."
 
@@ -13383,7 +13327,7 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:327 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
-#: ../app/tools/gimpwarptool.c:577
+#: ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
 msgstr "Los píxeles de la capa activa están bloqueados."
 
@@ -15626,7 +15570,7 @@ msgstr "_Mezcla [Blend]"
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:290
 #: ../app/tools/gimpimagemaptool.c:334 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:584
+#: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "La capa activa no está visible."
 
@@ -15790,7 +15734,7 @@ msgid ""
 "of the cage with a color"
 msgstr "Rellenar la posición original de la jaula con un color sencillo"
 
-#: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1179
+#: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1198
 msgid "Cage Transform"
 msgstr "Transformar rejilla"
 
@@ -15802,15 +15746,15 @@ msgstr "Transformar rejilla: deformar una selección con una rejilla"
 msgid "_Cage Transform"
 msgstr "_Transformar rejilla"
 
-#: ../app/tools/gimpcagetool.c:315 ../app/tools/gimpwarptool.c:317
+#: ../app/tools/gimpcagetool.c:317 ../app/tools/gimpwarptool.c:319
 msgid "Press ENTER to commit the transform"
 msgstr "Pulse INTRO para realizar la transformación"
 
-#: ../app/tools/gimpcagetool.c:1082
+#: ../app/tools/gimpcagetool.c:1101
 msgid "Computing Cage Coefficients"
 msgstr "Calculando coeficientes de Cage"
 
-#: ../app/tools/gimpcagetool.c:1230
+#: ../app/tools/gimpcagetool.c:1249
 msgid "Cage transform"
 msgstr "Transformar rejilla"
 
@@ -18328,37 +18272,37 @@ msgstr "Transformada de deformación: deforma con diferentes herramientas "
 msgid "_Warp Transform"
 msgstr "_Transformar rejilla"
 
-#: ../app/tools/gimpwarptool.c:462 ../app/tools/gimpwarptool.c:474
+#: ../app/tools/gimpwarptool.c:464 ../app/tools/gimpwarptool.c:476
 msgid "Warp Tool Stroke"
 msgstr "Herramienta de deformación de trazo"
 
-#: ../app/tools/gimpwarptool.c:570
+#: ../app/tools/gimpwarptool.c:572
 #, fuzzy
 #| msgid "Cannot paint on layer groups."
 msgid "Cannot warp layer groups."
 msgstr "No se puede pintar sobre un grupo de capas."
 
-#: ../app/tools/gimpwarptool.c:749
+#: ../app/tools/gimpwarptool.c:751
 #, fuzzy
 #| msgid "Cage transform"
 msgid "Warp transform"
 msgstr "Transformar rejilla"
 
-#: ../app/tools/gimpwarptool.c:886
+#: ../app/tools/gimpwarptool.c:888
 msgid "Please add some warp strokes first."
 msgstr "Agregue primero algunos trazos de deformación."
 
-#: ../app/tools/gimpwarptool.c:899 ../app/tools/gimpwarptool.c:935
+#: ../app/tools/gimpwarptool.c:901 ../app/tools/gimpwarptool.c:937
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Renderizando marco %d"
 
-#: ../app/tools/gimpwarptool.c:914 ../app/tools/gimpwarptool.c:943
+#: ../app/tools/gimpwarptool.c:916 ../app/tools/gimpwarptool.c:945
 #, c-format
 msgid "Frame %d"
 msgstr "Marco %d"
 
-#: ../app/tools/gimpwarptool.c:952
+#: ../app/tools/gimpwarptool.c:954
 msgid "Frame"
 msgstr "Marco"
 
@@ -19775,75 +19719,75 @@ msgstr "Progreso"
 msgid "Pick coordinates from the image"
 msgstr "Recoger color de la imagen"
 
-#: ../app/widgets/gimppropgui-constructors.c:301
+#: ../app/widgets/gimppropgui-constructors.c:326
 #, fuzzy
 #| msgctxt "gradient-editor-coloring"
 #| msgid "HSV (clockwise _hue)"
 msgid "Clockwise"
 msgstr "HSV (tono en sentido _horario)"
 
-#: ../app/widgets/gimppropgui-constructors.c:305
+#: ../app/widgets/gimppropgui-constructors.c:330
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Invert Channel"
 msgid "Invert Range"
 msgstr "Invertir el canal"
 
-#: ../app/widgets/gimppropgui-constructors.c:309
+#: ../app/widgets/gimppropgui-constructors.c:334
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Select All"
 msgid "Select All"
 msgstr "Seleccionar todo"
 
-#: ../app/widgets/gimppropgui-constructors.c:387
+#: ../app/widgets/gimppropgui-constructors.c:412
 #, fuzzy
 #| msgid "Source"
 msgid "Source Range"
 msgstr "Origen"
 
-#: ../app/widgets/gimppropgui-constructors.c:398
+#: ../app/widgets/gimppropgui-constructors.c:423
 #, fuzzy
 #| msgid "R_eset Range"
 msgid "Destination Range"
 msgstr "R_einiciar el rango"
 
-#: ../app/widgets/gimppropgui-constructors.c:409
+#: ../app/widgets/gimppropgui-constructors.c:434
 #, fuzzy
 #| msgid "Drag Handle"
 msgid "Gray Handling"
 msgstr "Arrastrar el tirador"
 
-#: ../app/widgets/gimppropgui-constructors.c:547
+#: ../app/widgets/gimppropgui-constructors.c:572
 msgid "Red channel"
 msgstr "Canal rojo"
 
-#: ../app/widgets/gimppropgui-constructors.c:571
+#: ../app/widgets/gimppropgui-constructors.c:596
 msgid "Green channel"
 msgstr "Canal verde"
 
-#: ../app/widgets/gimppropgui-constructors.c:595
+#: ../app/widgets/gimppropgui-constructors.c:620
 msgid "Blue channel"
 msgstr "Canal azul"
 
-#: ../app/widgets/gimppropgui-constructors.c:653
+#: ../app/widgets/gimppropgui-constructors.c:678
 msgid "Frequencies"
 msgstr "Frecuencias"
 
-#: ../app/widgets/gimppropgui-constructors.c:663
+#: ../app/widgets/gimppropgui-constructors.c:688
 #, fuzzy
 #| msgid "Contiguous"
 msgid "Contours"
 msgstr "Contigua"
 
-#: ../app/widgets/gimppropgui-constructors.c:673
+#: ../app/widgets/gimppropgui-constructors.c:698
 #, fuzzy
 #| msgctxt "convolve-type"
 #| msgid "Sharpen"
 msgid "Sharp Edges"
 msgstr "Enfoque"
 
-#: ../app/widgets/gimppropgui-constructors.c:683
+#: ../app/widgets/gimppropgui-constructors.c:708
 #, fuzzy
 #| msgid "Fade Options"
 msgid "Other Options"
@@ -19853,83 +19797,83 @@ msgstr "Opciones de desvanecimiento"
 msgid "New Seed"
 msgstr "Semilla nueva"
 
-#: ../app/widgets/gimppropgui.c:295
+#: ../app/widgets/gimppropgui.c:290
 #, fuzzy
 #| msgid "Pick color from image"
 msgid "Pick color from the image"
 msgstr "Recoger color de la imagen"
 
-#: ../app/widgets/gimppropgui.c:402
+#: ../app/widgets/gimppropgui.c:397
 msgid "This operation has no editable properties"
 msgstr "Esta operación no tiene propiedades editables"
 
-#: ../app/widgets/gimppropgui.c:472
+#: ../app/widgets/gimppropgui.c:467
 msgid "1,700 K – Match flame"
 msgstr "1,700 K – Llama de fósforo"
 
-#: ../app/widgets/gimppropgui.c:473
+#: ../app/widgets/gimppropgui.c:468
 msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1,850 K – Llama de vela, anochecer/amanecer"
 
-#: ../app/widgets/gimppropgui.c:474
+#: ../app/widgets/gimppropgui.c:469
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr "3,000 K – Lámparas blancas fluorescentes compactas suaves (o cálidas)"
 
-#: ../app/widgets/gimppropgui.c:475
+#: ../app/widgets/gimppropgui.c:470
 msgid "3,300 K – Incandescent lamps"
 msgstr "3,300 K – Lámparas incandescentes"
 
-#: ../app/widgets/gimppropgui.c:476
+#: ../app/widgets/gimppropgui.c:471
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr ""
 "3,200 K – Lámparas de estudio, lámparas incandescentes de gran voltaje, etc."
 
-#: ../app/widgets/gimppropgui.c:477
+#: ../app/widgets/gimppropgui.c:472
 msgid "3,350 K – Studio \"CP\" light"
 msgstr "3,350 K – Luz de estudio \"CP\""
 
-#: ../app/widgets/gimppropgui.c:478
+#: ../app/widgets/gimppropgui.c:473
 msgid "4,100 K – Moonlight"
 msgstr "4,100 K – Luz de luna"
 
-#: ../app/widgets/gimppropgui.c:479
+#: ../app/widgets/gimppropgui.c:474
 msgid "5,000 K – D50"
 msgstr "5,000 K – D50"
 
-#: ../app/widgets/gimppropgui.c:480
+#: ../app/widgets/gimppropgui.c:475
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr ""
 "5,000 K – Lámparas fluorescentes compactas de color blanco frío/luz diurna"
 
-#: ../app/widgets/gimppropgui.c:481
+#: ../app/widgets/gimppropgui.c:476
 msgid "5,000 K – Horizon daylight"
 msgstr "5,000 K – Luz diurna del horizonte"
 
-#: ../app/widgets/gimppropgui.c:482
+#: ../app/widgets/gimppropgui.c:477
 msgid "5,500 K – D55"
 msgstr "5,500 K – D55"
 
-#: ../app/widgets/gimppropgui.c:483
+#: ../app/widgets/gimppropgui.c:478
 msgid "5,500 K – Vertical daylight, electronic flash"
 msgstr "5,500 K – Luz diurna vertical, flash electrónico"
 
-#: ../app/widgets/gimppropgui.c:484
+#: ../app/widgets/gimppropgui.c:479
 msgid "6,200 K – Xenon short-arc lamp"
 msgstr "6,200 K – Lámpara de xenón de arco corto"
 
-#: ../app/widgets/gimppropgui.c:485
+#: ../app/widgets/gimppropgui.c:480
 msgid "6,500 K – D65"
 msgstr "6,500 K – D65"
 
-#: ../app/widgets/gimppropgui.c:486
+#: ../app/widgets/gimppropgui.c:481
 msgid "6,500 K – Daylight, overcast"
 msgstr "6,500 K – Luz diurna, nublado"
 
-#: ../app/widgets/gimppropgui.c:487
+#: ../app/widgets/gimppropgui.c:482
 msgid "7,500 K – D75"
 msgstr "7,500 K – D75"
 
-#: ../app/widgets/gimppropgui.c:488
+#: ../app/widgets/gimppropgui.c:483
 msgid "9,300 K"
 msgstr "9,300 K"
 
