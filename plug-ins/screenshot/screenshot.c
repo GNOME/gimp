@@ -130,18 +130,19 @@ static const guint8 screenshot_icon[] =
 #endif
 
 
-static void                query              (void);
-static void                run                (const gchar      *name,
-                                               gint              nparams,
-                                               const GimpParam  *param,
-                                               gint             *nreturn_vals,
-                                               GimpParam       **return_vals);
+static void                query               (void);
+static void                run                 (const gchar      *name,
+                                                gint              nparams,
+                                                const GimpParam  *param,
+                                                gint             *nreturn_vals,
+                                                GimpParam       **return_vals);
 
-static GimpPDBStatusType   shoot              (GdkScreen        *screen,
-                                               gint32           *image_ID);
+static GimpPDBStatusType   shoot               (GdkScreen        *screen,
+                                                gint32           *image_ID);
 
-static gboolean            shoot_dialog       (GdkScreen       **screen);
-static gboolean            shoot_quit_timeout (gpointer          data);
+static gboolean            shoot_dialog        (GdkScreen       **screen);
+static gboolean            shoot_quit_timeout  (gpointer          data);
+static gboolean            shoot_delay_timeout (gpointer          data);
 
 
 /* Global Variables */
@@ -208,13 +209,12 @@ query (void)
                           "passed as a parameter.  The last four parameters "
                           "are optional and can be used to specify the corners "
                           "of the region to be grabbed."
-#ifdef PLATFORM_OSX
-                          "On Mac OS X, when called non-interactively, the plugin"
+                          "On Mac OS X or on gnome-shell, "
+                          "when called non-interactively, the plugin"
                           "only can take screenshots of the entire root window."
                           "Grabbing a window or a region is not supported"
                           "non-interactively. To grab a region or a particular"
                           "window, you need to use the interactive mode."
-#endif
                           ,
                           "Sven Neumann <sven@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>,"
@@ -660,4 +660,28 @@ shoot_quit_timeout (gpointer data)
   gtk_main_quit ();
 
   return FALSE;
+}
+
+
+static gboolean
+shoot_delay_timeout (gpointer data)
+{
+  gint *seconds_left = data;
+
+  (*seconds_left)--;
+
+  if (!*seconds_left)
+    gtk_main_quit ();
+
+  return *seconds_left;
+}
+
+
+/*  public functions  */
+
+void
+screenshot_delay (gint seconds)
+{
+  g_timeout_add (1000, shoot_delay_timeout, &seconds);
+  gtk_main ();
 }

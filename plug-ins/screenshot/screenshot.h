@@ -55,4 +55,7 @@ typedef struct
 } ScreenshotValues;
 
 
+void   screenshot_delay (gint seconds);
+
+
 #endif /* __SCREENSHOT_H__ */
