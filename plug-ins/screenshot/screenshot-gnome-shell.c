@@ -29,16 +29,28 @@
 #include "screenshot-gnome-shell.h"
 
 
+static GDBusProxy *proxy = NULL;
+
+
 gboolean
 screenshot_gnome_shell_available (void)
 {
-  return FALSE;
+  proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                         G_DBUS_PROXY_FLAGS_NONE,
+                                         NULL,
+                                         "org.gnome.Shell.Screenshot",
+                                         "/org/gnome/Shell/Screenshot",
+                                         "org.gnome.Shell.Screenshot",
+                                         NULL, NULL);
+
+  return proxy != NULL;
 }
 
 ScreenshotCapabilities
 screenshot_gnome_shell_get_capabilities (void)
 {
-  return 0;
+  return (SCREENSHOT_CAN_SHOOT_DECORATIONS |
+          SCREENSHOT_CAN_SHOOT_POINTER);
 }
 
 GimpPDBStatusType
@@ -46,5 +58,83 @@ screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
                               GdkScreen        *screen,
                               gint32           *image_ID)
 {
-  return GIMP_PDB_SUCCESS;
+  gchar       *filename;
+  const gchar *method = NULL;
+  GVariant    *args   = NULL;
+  GVariant    *retval;
+  gboolean     success;
+
+  if (shootvals->select_delay > 0)
+    screenshot_delay (shootvals->select_delay);
+
+  filename = g_strdup ("/tmp/gimp-screenshot.png");
+
+  switch (shootvals->shoot_type)
+    {
+    case SHOOT_ROOT:
+      method = "Screenshot";
+      args   = g_variant_new ("(bbs)",
+                              shootvals->show_cursor,
+                              TRUE, /* flash */
+                              filename);
+      break;
+
+    case SHOOT_REGION:
+      retval = g_dbus_proxy_call_sync (proxy, "SelectArea", NULL,
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1, NULL, NULL);
+      g_variant_get (retval, "(iiii)",
+                     &shootvals->x1,
+                     &shootvals->y1,
+                     &shootvals->x2,
+                     &shootvals->y2);
+      g_variant_unref (retval);
+
+      shootvals->x2 += shootvals->x1;
+      shootvals->y2 += shootvals->y1;
+
+      method = "ScreenshotArea";
+      args   = g_variant_new ("(iiiibs)",
+                              shootvals->x1,
+                              shootvals->y1,
+                              shootvals->x2 - shootvals->x1,
+                              shootvals->y2 - shootvals->y1,
+                              TRUE, /* flash */
+                              filename);
+      break;
+
+    case SHOOT_WINDOW:
+      method = "ScreenshotWindow";
+      args   = g_variant_new ("(bbbs)",
+                              shootvals->decorate,
+                              shootvals->show_cursor,
+                              TRUE, /* flash */
+                              filename);
+      break;
+    }
+
+  g_free (filename);
+
+  retval = g_dbus_proxy_call_sync (proxy, method, args,
+                                   G_DBUS_CALL_FLAGS_NONE,
+                                   -1, NULL, NULL);
+
+  g_variant_get (retval, "(bs)",
+                 &success,
+                 &filename);
+
+  g_variant_unref (retval);
+
+  if (success && filename)
+    {
+      *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                                  filename, filename);
+      gimp_image_set_filename (*image_ID, "screenshot.png");
+
+      g_free (filename);
+
+      return GIMP_PDB_SUCCESS;
+    }
+
+  return GIMP_PDB_EXECUTION_ERROR;
 }
