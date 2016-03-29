@@ -15,44 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __SCREENSHOT_H__
-#define __SCREENSHOT_H__
+#ifndef __SCREENSHOT_GNOME_SHELL_H__
+#define __SCREENSHOT_GNOME_SHELL_H__
 
 
-typedef enum
-{
-  SCREENSHOT_BACKEND_NONE,
-  SCREENSHOT_BACKEND_OSX,
-  SCREENSHOT_BACKEND_GNOME_SHELL,
-  SCREENSHOT_BACKEND_X11
-} ScreenshotBackend;
+gboolean               screenshot_gnome_shell_available        (void);
 
-typedef enum
-{
-  SCREENSHOT_CAN_SHOOT_DECORATIONS     = 0x1 << 0,
-  SCREENSHOT_CAN_SHOOT_POINTER         = 0x1 << 1,
-  SCREENSHOT_CAN_PICK_NONINTERACTIVELY = 0x1 << 2
-} ScreenshotCapabilities;
+ScreenshotCapabilities screenshot_gnome_shell_get_capabilities (void);
 
-typedef enum
-{
-  SHOOT_ROOT,
-  SHOOT_REGION,
-  SHOOT_WINDOW
-} ShootType;
-
-typedef struct
-{
-  ShootType  shoot_type;
-  gboolean   decorate;
-  guint      window_id;
-  guint      select_delay;
-  gint       x1;
-  gint       y1;
-  gint       x2;
-  gint       y2;
-  gboolean   show_cursor;
-} ScreenshotValues;
+GimpPDBStatusType      screenshot_gnome_shell_shoot            (ScreenshotValues *shootvals,
+                                                                GdkScreen        *screen,
+                                                                gint32           *image_ID);
 
 
-#endif /* __SCREENSHOT_H__ */
+#endif /* __SCREENSHOT_GNOME_SHELL_H__ */

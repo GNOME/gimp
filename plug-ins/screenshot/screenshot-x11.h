@@ -21,6 +21,8 @@
 
 #ifdef GDK_WINDOWING_X11
 
+gboolean               screenshot_x11_available        (void);
+
 ScreenshotCapabilities screenshot_x11_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_x11_shoot            (ScreenshotValues *shootvals,

@@ -1,6 +1,11 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * Screenshot plug-in
+ * Copyright 1998-2007 Sven Neumann <sven@gimp.org>
+ * Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
+ * Copyright 2016      Michael Natterer <mitch@gimp.org>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,44 +20,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __SCREENSHOT_H__
-#define __SCREENSHOT_H__
+#include "config.h"
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "screenshot.h"
+#include "screenshot-gnome-shell.h"
 
 
-typedef enum
+gboolean
+screenshot_gnome_shell_available (void)
 {
-  SCREENSHOT_BACKEND_NONE,
-  SCREENSHOT_BACKEND_OSX,
-  SCREENSHOT_BACKEND_GNOME_SHELL,
-  SCREENSHOT_BACKEND_X11
-} ScreenshotBackend;
+  return FALSE;
+}
 
-typedef enum
+ScreenshotCapabilities
+screenshot_gnome_shell_get_capabilities (void)
 {
-  SCREENSHOT_CAN_SHOOT_DECORATIONS     = 0x1 << 0,
-  SCREENSHOT_CAN_SHOOT_POINTER         = 0x1 << 1,
-  SCREENSHOT_CAN_PICK_NONINTERACTIVELY = 0x1 << 2
-} ScreenshotCapabilities;
+  return 0;
+}
 
-typedef enum
+GimpPDBStatusType
+screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
+                              GdkScreen        *screen,
+                              gint32           *image_ID)
 {
-  SHOOT_ROOT,
-  SHOOT_REGION,
-  SHOOT_WINDOW
-} ShootType;
-
-typedef struct
-{
-  ShootType  shoot_type;
-  gboolean   decorate;
-  guint      window_id;
-  guint      select_delay;
-  gint       x1;
-  gint       y1;
-  gint       x2;
-  gint       y2;
-  gboolean   show_cursor;
-} ScreenshotValues;
-
-
-#endif /* __SCREENSHOT_H__ */
+  return GIMP_PDB_SUCCESS;
+}

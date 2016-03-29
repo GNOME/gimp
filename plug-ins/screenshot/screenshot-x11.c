@@ -540,10 +540,16 @@ add_cursor_image (gint32      image,
 
 /* The main Screenshot function */
 
+gboolean
+screenshot_x11_available (void)
+{
+  return TRUE;
+}
+
 ScreenshotCapabilities
 screenshot_x11_get_capabilities (void)
 {
-  ScreenshotCapabilities capabilities = 0;
+  ScreenshotCapabilities capabilities = SCREENSHOT_CAN_PICK_NONINTERACTIVELY;
 
 #ifdef HAVE_X11_XMU_WINUTIL_H
   capabilities |= SCREENSHOT_CAN_SHOOT_DECORATIONS;

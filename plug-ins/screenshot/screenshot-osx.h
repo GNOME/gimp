@@ -21,6 +21,8 @@
 
 #ifdef PLATFORM_OSX
 
+gboolean               screenshot_osx_available        (void);
+
 ScreenshotCapabilities screenshot_osx_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_osx_shoot            (ScreenshotValues *shootvals,

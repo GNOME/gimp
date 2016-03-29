@@ -53,6 +53,12 @@
  * This routines works well with X11 and as a navtive build
  */
 
+gboolean
+screenshot_osx_available (void)
+{
+  return TRUE;
+}
+
 ScreenshotCapabilities
 screenshot_osx_get_capabilities (void)
 {
