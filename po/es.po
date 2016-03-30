@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-28 18:21+0000\n"
-"PO-Revision-Date: 2016-03-29 09:15+0200\n"
+"POT-Creation-Date: 2016-03-29 18:26+0000\n"
+"PO-Revision-Date: 2016-03-30 09:00+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -4969,8 +4969,6 @@ msgid "Copy MyPaint Brush _Location"
 msgstr "Copiar la _ubicación del pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:60
-#| msgctxt "brushes-action"
-#| msgid "Copy brush file location to clipboard"
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint brush file location to clipboard"
 msgstr "Copiar al portapapeles la ubicación del pincel MyPaint"
@@ -4984,48 +4982,36 @@ msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
 
 #: ../app/actions/mypaint-brushes-actions.c:66
-#| msgctxt "brushes-action"
-#| msgid "Show brush file location in the file manager"
 msgctxt "mypaint-brushes-action"
 msgid "Show MyPaint brush file location in the file manager"
 msgstr "Mostrar la ubicación del pincel MyPaint en el gestor de archivos"
 
 #: ../app/actions/mypaint-brushes-actions.c:71
-#| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "_Delete MyPaint Brush"
 msgstr "_Eliminar el pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:72
-#| msgctxt "brushes-action"
-#| msgid "Delete this brush"
 msgctxt "mypaint-brushes-action"
 msgid "Delete this MyPaint brush"
 msgstr "Eliminar este pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:77
-#| msgctxt "brushes-action"
-#| msgid "_Refresh Brushes"
 msgctxt "mypaint-brushes-action"
 msgid "_Refresh MyPaint Brushes"
 msgstr "_Actualizar los pinceles MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:78
-#| msgctxt "brushes-action"
-#| msgid "Refresh brushes"
 msgctxt "mypaint-brushes-action"
 msgid "Refresh MyPaint brushes"
 msgstr "Actualizar los pinceles MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:86
-#| msgctxt "brushes-action"
-#| msgid "_Edit Brush..."
 msgctxt "mypaint-brushes-action"
 msgid "_Edit MyPaint Brush..."
 msgstr "_Editar pincel MyPaint…"
 
 #: ../app/actions/mypaint-brushes-actions.c:87
-#| msgid "Paintbrush"
 msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
 msgstr "Editar pincel MyPaint"
@@ -5474,8 +5460,6 @@ msgid "F_lood"
 msgstr ""
 
 #: ../app/actions/select-actions.c:106
-#| msgctxt "dialogs-action"
-#| msgid "Open the selection editor"
 msgctxt "select-action"
 msgid "Level the selection's interior"
 msgstr "Nivelar el interior de la selección"
@@ -5491,29 +5475,21 @@ msgid "Save the selection to a channel"
 msgstr "Guarda la selección en un canal"
 
 #: ../app/actions/select-actions.c:117
-#| msgctxt "undo-type"
-#| msgid "Float selection"
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
 msgstr "_Rellenar contorno de la selección…"
 
 #: ../app/actions/select-actions.c:118
-#| msgctxt "view-action"
-#| msgid "Display the selection outline"
 msgctxt "select-action"
 msgid "Fill the selection outline"
 msgstr "Rellenar el contorno de la selección"
 
 #: ../app/actions/select-actions.c:123
-#| msgctxt "undo-type"
-#| msgid "Float selection"
 msgctxt "select-action"
 msgid "_Fill Selection Outline"
 msgstr "_Rellenar contorno de la selección"
 
 #: ../app/actions/select-actions.c:124
-#| msgctxt "select-action"
-#| msgid "Stroke the selection with last used values"
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
 msgstr "Rellenar el contorno de la selección con los últimos valores usados"
@@ -5556,7 +5532,6 @@ msgstr "Encoger selección en"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:212 ../app/actions/select-commands.c:296
-#| msgid "Select a single contiguous area"
 msgid "_Selected areas continue outside the image"
 msgstr "Las á_reas seleccionadas continúan fuera de la imagen"
 
@@ -5597,13 +5572,10 @@ msgstr ""
 #: ../app/actions/select-commands.c:359 ../app/actions/select-commands.c:390
 #: ../app/actions/vectors-commands.c:390 ../app/actions/vectors-commands.c:422
 #: ../app/dialogs/fill-dialog.c:162
-#| msgid "There is no active layer or channel to cut from."
 msgid "There is no active layer or channel to fill."
 msgstr "No hay una capa o canal activo para rellenar."
 
 #: ../app/actions/select-commands.c:365
-#| msgctxt "undo-type"
-#| msgid "Float selection"
 msgid "Fill Selection Outline"
 msgstr "Rellenar contorno de la selección"
 
@@ -5948,15 +5920,11 @@ msgstr ""
 "portapapeles"
 
 #: ../app/actions/tool-presets-actions.c:74
-#| msgctxt "tool-options-action"
-#| msgid "_Restore Tool Preset"
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
 msgstr "_Restaurar ajuste prefijado de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:75
-#| msgctxt "tool-presets-action"
-#| msgid "Delete this tool preset"
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
 msgstr "Restaurar este ajuste prefijado de herramienta"
@@ -6142,34 +6110,28 @@ msgid "Lower this path to the bottom"
 msgstr "Bajar esta ruta hasta abajo del todo"
 
 #: ../app/actions/vectors-actions.c:112
-#| msgctxt "undo-type"
-#| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill Path..."
 msgstr "Rellenar ruta…"
 
 #: ../app/actions/vectors-actions.c:113
-#| msgctxt "undo-type"
-#| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill the path"
 msgstr "Rellenar la ruta"
 
 #: ../app/actions/vectors-actions.c:118
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill Path"
-msgstr "Voltear la ruta"
+msgstr "Rellenar ruta"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
-msgstr "Trazar la ruta con los últimos valores"
+msgstr "Rellenar la ruta con los últimos valores"
 
 #: ../app/actions/vectors-actions.c:124
 msgctxt "vectors-action"
@@ -6329,11 +6291,10 @@ msgid "New Path Options"
 msgstr "Opciones de ruta nueva"
 
 #: ../app/actions/vectors-commands.c:396
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Path"
 msgid "Fill Path"
-msgstr "Voltear la ruta"
+msgstr "Rellenar ruta"
 
 #: ../app/actions/vectors-commands.c:473 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:1977
@@ -6351,12 +6312,11 @@ msgid "_Zoom"
 msgstr "_Ampliación"
 
 #: ../app/actions/view-actions.c:71
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "_Rotate"
 msgctxt "view-action"
 msgid "_Flip & Rotate"
-msgstr "_Rotar"
+msgstr "_Voltear y rotar"
 
 #: ../app/actions/view-actions.c:72
 msgctxt "view-action"
@@ -6410,20 +6370,19 @@ msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Ajusta la ampliación para que la ventana se use por completo"
 
 #: ../app/actions/view-actions.c:102
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "_Crop to Selection"
 msgctxt "view-action"
 msgid "Zoom to _Selection"
-msgstr "Re_cortar a la selección"
+msgstr "Ampliar a la _selección"
 
 #: ../app/actions/view-actions.c:103
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Adjust the zoom ratio so that the entire window is used"
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
-msgstr "Ajusta la ampliación para que la ventana se use por completo"
+msgstr ""
+"Ajustar la relación de ampliación para que la selección rellene la ventana"
 
 #: ../app/actions/view-actions.c:108
 msgctxt "view-action"
@@ -6436,12 +6395,11 @@ msgid "Restore the previous zoom level"
 msgstr "Recuperar el nivel de ampliación previo"
 
 #: ../app/actions/view-actions.c:114
-#, fuzzy
 #| msgctxt "view-zoom-action"
 #| msgid "Othe_r..."
 msgctxt "view-action"
 msgid "Othe_r..."
-msgstr "Ot_ros…"
+msgstr "Ot_ro…"
 
 #: ../app/actions/view-actions.c:115
 msgctxt "view-action"
@@ -6770,20 +6728,18 @@ msgid "Set a custom zoom factor"
 msgstr "Establece un factor de ampliación personalizado"
 
 #: ../app/actions/view-actions.c:400
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Flip _Horizontally"
 msgctxt "view-action"
 msgid "Flip Horizontally"
-msgstr "Voltear _horizontalmente"
+msgstr "Voltear horizontalmente"
 
 #: ../app/actions/view-actions.c:406
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Flip _Vertically"
 msgctxt "view-action"
 msgid "Flip Vertically"
-msgstr "Voltear _verticalmente"
+msgstr "Voltear verticalmente"
 
 #: ../app/actions/view-actions.c:420
 msgctxt "view-action"
@@ -6825,12 +6781,11 @@ msgstr "Rotar _180°"
 
 # Poner cabeza abajo
 #: ../app/actions/view-actions.c:443
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Turn upside-down"
 msgctxt "view-action"
 msgid "Turn upside-down"
-msgstr "Voltear verticalmente"
+msgstr "Voltear"
 
 #: ../app/actions/view-actions.c:448
 msgctxt "view-action"
@@ -6937,10 +6892,10 @@ msgid "(V) "
 msgstr "(V) "
 
 #: ../app/actions/view-actions.c:924
-#, fuzzy, c-format
+#, c-format
 #| msgid "_Rotate (%d°)"
 msgid "_Flip %s& Rotate (%d°)"
-msgstr "_Rotar (%d°)"
+msgstr "_Voltear %s y rotar (%d°)"
 
 #: ../app/actions/view-commands.c:723
 msgid "Set Canvas Padding Color"
@@ -7029,28 +6984,25 @@ msgid "_Top"
 msgstr "Parte _superior"
 
 #: ../app/actions/windows-actions.c:140
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Raise this path to the top"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
-msgstr "Elevar esta ruta hasta arriba del todo"
+msgstr "Colocar las pestañas en la parte superior"
 
 #: ../app/actions/windows-actions.c:144
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Layer to _Bottom"
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
-msgstr "Capa al _fondo"
+msgstr "Parte _inferior"
 
 #: ../app/actions/windows-actions.c:145
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Lower this path to the bottom"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
-msgstr "Bajar esta ruta hasta abajo del todo"
+msgstr "Colocar las pestañas en la parte inferior"
 
 #: ../app/actions/windows-actions.c:149
 msgctxt "windows-tabs-position-action"
@@ -7211,11 +7163,10 @@ msgid "Could not open '%s' for writing: %s"
 msgstr "No se ha podido abrir «%s» para escritura: %s"
 
 #: ../app/config/gimpconfig-file.c:116
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error parsing '%s': line longer than %"
 msgid "Error parsing '%%s': line longer than %s characters."
-msgstr ""
-"Ocurrió un error al analizar «%s»: la longitud de la línea es mayor de %"
+msgstr "Error al analizar «%%s»: la línea es más larga que %s caracteres."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
 #: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:324
@@ -7493,7 +7444,6 @@ msgid "Sets the default quick mask color."
 msgstr "Establece el color predeterminado de la máscara rápida."
 
 #: ../app/config/gimprc-blurbs.h:283
-#, fuzzy
 #| msgid ""
 #| "When enabled, the image window will automatically resize itself whenever "
 #| "the physical image size changes."
@@ -7502,11 +7452,11 @@ msgid ""
 "physical image size changes. This setting only takes effect in multi-window "
 "mode."
 msgstr ""
-"Cuando se encuentre activado, la ventana de la imagen se redimensionará "
-"automáticamente cuando cambie el tamaño físico de la imagen."
+"Cuando está activado, la ventana de la imagen se redimensionará "
+"automáticamente cuando cambie el tamaño físico de la imagen. Esta "
+"configuración sólo tiene efecto en modo multiventana."
 
 #: ../app/config/gimprc-blurbs.h:288
-#, fuzzy
 #| msgid ""
 #| "When enabled, the image window will automatically resize itself when "
 #| "zooming into and out of images."
@@ -7514,8 +7464,9 @@ msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
 msgstr ""
-"Cuando se encuentre activado, la ventana de la imagen se redimensionará "
-"automáticamente al ampliar o reducir las imágenes."
+"Cuando está activado, la ventana de la imagen se redimensionará "
+"automáticamente cuando se amplíen o reduzcan las imágenes. Esta "
+"configuración sólo tiene efecto en modo multiventana."
 
 #: ../app/config/gimprc-blurbs.h:293
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -7557,7 +7508,6 @@ msgid "Save the tool options when GIMP exits."
 msgstr "Guardar las opciones de herramientas al salir de GIMP."
 
 #: ../app/config/gimprc-blurbs.h:318
-#, fuzzy
 #| msgid ""
 #| "When enabled, all brush-based paint tools will show a preview of the "
 #| "current brush's outline."
@@ -7565,8 +7515,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Cuando está habilitado todas la herramientas de pintura basadas en el pincel "
-"mostrarán una vista previa del contorno del pincel actual."
+"Cuando está activado, todas la herramientas de pintura mostrarán una vista "
+"previa del contorno del pincel actual."
 
 #: ../app/config/gimprc-blurbs.h:322
 msgid ""
@@ -7678,11 +7628,10 @@ msgstr ""
 "imagen."
 
 #: ../app/config/gimprc-blurbs.h:376
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the pointer information dialog"
 msgid "Enable the N-Point Deformation tool."
-msgstr "Abre el diálogo de información del puntero"
+msgstr "Activar la herramienta de deformación N-Point."
 
 #: ../app/config/gimprc-blurbs.h:379
 msgid "Enable the Handle Transform tool."
@@ -7697,11 +7646,10 @@ msgid "Enable the MyPaint Brush tool."
 msgstr "Activar la herramienta pincel MyPaint."
 
 #: ../app/config/gimprc-blurbs.h:388
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the pointer information dialog"
 msgid "Enable the Seamless Clone tool."
-msgstr "Abre el diálogo de información del puntero"
+msgstr "Activar la herramienta de clonado continuo."
 
 #: ../app/config/gimprc-blurbs.h:391
 msgid "What to do when the space bar is pressed in the image window."
