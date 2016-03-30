@@ -27,6 +27,9 @@
 #include <stdlib.h> /* for system() on OSX */
 #include <string.h>
 
+#include <glib.h>
+#include <glib/gstdio.h> /* g_unlink() */
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -37,7 +40,7 @@
 /*
  * Mac OS X uses a rootless X server. This won't let us use
  * gdk_pixbuf_get_from_drawable() and similar function on the root
- * window to get the entire screen contents. With a nytive OS X build
+ * window to get the entire screen contents. With a native OS X build
  * we have to do this without X as well.
  *
  * Since Mac OS X 10.2 a system utility for screencapturing is
@@ -71,10 +74,11 @@ screenshot_osx_shoot (ScreenshotValues *shootvals,
                       GdkScreen        *screen,
                       gint32           *image_ID)
 {
-  gchar *mode    = " ";
-  gchar *delay   = NULL;
-  gchar *cursor  = " ";
-  gchar *command = NULL;
+  const gchar *mode    = " ";
+  const gchar *cursor  = " ";
+  gchar       *delay   = NULL;
+  gchar       *filename;
+  gchar       *command = NULL;
 
   switch (shootvals->shoot_type)
     {
@@ -101,24 +105,35 @@ screenshot_osx_shoot (ScreenshotValues *shootvals,
   if (shootvals->show_cursor)
     cursor = "-C";
 
+  filename = gimp_temp_name ("png");
+
   command = g_strjoin (" ",
                        "/usr/sbin/screencapture",
                        mode,
                        cursor,
                        delay,
-                       "/tmp/screenshot.png",
+                       filename,
                        NULL);
 
-  system ((const char *) command);
-
-  g_free (command);
   g_free (delay);
 
-  *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                              "/tmp/screenshot.png", "/tmp/screenshot.png");
-  gimp_image_set_filename (*image_ID, "screenshot.png");
+  if (system ((const char *) command) == EXIT_SUCCESS)
+    {
+      *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                                  filename, filename);
+      gimp_image_set_filename (*image_ID, "screenshot.png");
 
-  return GIMP_PDB_SUCCESS;
+      g_unlink (filename);
+      g_free (filename);
+      g_free (command);
+
+      return GIMP_PDB_SUCCESS;
+   }
+
+  g_free (command);
+  g_free (filename);
+
+  return GIMP_PDB_EXECUTION_ERROR;
 }
 
 #endif /* PLATFORM_OSX */

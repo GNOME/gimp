@@ -22,6 +22,9 @@
 
 #include "config.h"
 
+#include <glib.h>
+#include <glib/gstdio.h> /* g_unlink() */
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -67,7 +70,7 @@ screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
   if (shootvals->select_delay > 0)
     screenshot_delay (shootvals->select_delay);
 
-  filename = g_strdup ("/tmp/gimp-screenshot.png");
+  filename = gimp_temp_name ("png");
 
   switch (shootvals->shoot_type)
     {
@@ -131,10 +134,13 @@ screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
                                   filename, filename);
       gimp_image_set_filename (*image_ID, "screenshot.png");
 
+      g_unlink (filename);
       g_free (filename);
 
       return GIMP_PDB_SUCCESS;
     }
+
+  g_free (filename);
 
   return GIMP_PDB_EXECUTION_ERROR;
 }
