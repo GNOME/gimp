@@ -98,9 +98,11 @@ static void   gimp_color_selection_scales_changed    (GimpColorSelector  *select
                                                       const GimpRGB      *rgb,
                                                       const GimpHSV      *hsv,
                                                       GimpColorSelection *selection);
+#ifndef GDK_WINDOWING_QUARTZ
 static void   gimp_color_selection_color_picked      (GtkWidget          *widget,
                                                       const GimpRGB      *rgb,
                                                       GimpColorSelection *selection);
+#endif
 static void   gimp_color_selection_entry_changed     (GimpColorHexEntry  *entry,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_channel_changed   (GimpColorSelector  *selector,
@@ -299,6 +301,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_box_pack_start (GTK_BOX (selection->right_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
+#ifndef GDK_WINDOWING_QUARTZ
   /*  The color picker  */
   button = gimp_pick_button_new ();
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -307,6 +310,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   g_signal_connect (button, "color-picked",
                     G_CALLBACK (gimp_color_selection_color_picked),
                     selection);
+#endif
 
   /* The hex triplet entry */
   entry = gimp_color_hex_entry_new ();
@@ -584,6 +588,7 @@ gimp_color_selection_scales_changed (GimpColorSelector  *selector,
   gimp_color_selection_color_changed (selection);
 }
 
+#ifndef GDK_WINDOWING_QUARTZ
 static void
 gimp_color_selection_color_picked (GtkWidget          *widget,
                                    const GimpRGB      *rgb,
@@ -591,6 +596,7 @@ gimp_color_selection_color_picked (GtkWidget          *widget,
 {
   gimp_color_selection_set_color (selection, rgb);
 }
+#endif
 
 static void
 gimp_color_selection_entry_changed (GimpColorHexEntry  *entry,

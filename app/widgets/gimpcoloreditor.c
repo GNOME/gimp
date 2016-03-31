@@ -89,9 +89,11 @@ static void   gimp_color_editor_tab_toggled     (GtkWidget         *widget,
 static void   gimp_color_editor_fg_bg_notify    (GtkWidget         *widget,
                                                  GParamSpec        *pspec,
                                                  GimpColorEditor   *editor);
+#ifndef GDK_WINDOWING_QUARTZ
 static void   gimp_color_editor_color_picked    (GtkWidget         *widget,
                                                  const GimpRGB     *rgb,
                                                  GimpColorEditor   *editor);
+#endif
 static void   gimp_color_editor_entry_changed   (GimpColorHexEntry *entry,
                                                  GimpColorEditor   *editor);
 
@@ -245,6 +247,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
+#ifndef GDK_WINDOWING_QUARTZ
   /*  The color picker  */
   button = gimp_pick_button_new ();
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -253,6 +256,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   g_signal_connect (button, "color-picked",
                     G_CALLBACK (gimp_color_editor_color_picked),
                     editor);
+#endif
 
   /*  The hex triplet entry  */
   editor->hex_entry = gimp_color_hex_entry_new ();
@@ -632,6 +636,7 @@ gimp_color_editor_fg_bg_notify (GtkWidget       *widget,
     }
 }
 
+#ifndef GDK_WINDOWING_QUARTZ
 static void
 gimp_color_editor_color_picked (GtkWidget       *widget,
                                 const GimpRGB   *rgb,
@@ -645,6 +650,7 @@ gimp_color_editor_color_picked (GtkWidget       *widget,
         gimp_context_set_foreground (editor->context, rgb);
     }
 }
+#endif
 
 static void
 gimp_color_editor_entry_changed (GimpColorHexEntry *entry,
