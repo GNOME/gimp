@@ -78,6 +78,7 @@ screenshot_osx_shoot (ScreenshotValues *shootvals,
   const gchar *cursor  = " ";
   gchar       *delay   = NULL;
   gchar       *filename;
+  gchar       *quoted;
   gchar       *command = NULL;
 
   switch (shootvals->shoot_type)
@@ -106,15 +107,17 @@ screenshot_osx_shoot (ScreenshotValues *shootvals,
     cursor = "-C";
 
   filename = gimp_temp_name ("png");
+  quoted   = g_shell_quote (filename);
 
   command = g_strjoin (" ",
                        "/usr/sbin/screencapture",
                        mode,
                        cursor,
                        delay,
-                       filename,
+                       quoted,
                        NULL);
 
+  g_free (quoted);
   g_free (delay);
 
   if (system ((const char *) command) == EXIT_SUCCESS)
