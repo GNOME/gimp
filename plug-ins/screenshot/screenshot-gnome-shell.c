@@ -137,10 +137,16 @@ screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
       g_unlink (filename);
       g_free (filename);
 
+      g_object_unref (proxy);
+      proxy = NULL;
+
       return GIMP_PDB_SUCCESS;
     }
 
   g_free (filename);
+
+  g_object_unref (proxy);
+  proxy = NULL;
 
   return GIMP_PDB_EXECUTION_ERROR;
 }
