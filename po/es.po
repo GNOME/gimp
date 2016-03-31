@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
+# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-29 18:26+0000\n"
-"PO-Revision-Date: 2016-03-30 09:00+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2016-03-30 18:23+0000\n"
+"PO-Revision-Date: 2016-03-30 22:55-0600\n"
+"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -6120,15 +6120,11 @@ msgid "Fill the path"
 msgstr "Rellenar la ruta"
 
 #: ../app/actions/vectors-actions.c:118
-#| msgctxt "undo-type"
-#| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill Path"
 msgstr "Rellenar ruta"
 
 #: ../app/actions/vectors-actions.c:119
-#| msgctxt "vectors-action"
-#| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
 msgstr "Rellenar la ruta con los últimos valores"
@@ -6291,8 +6287,6 @@ msgid "New Path Options"
 msgstr "Opciones de ruta nueva"
 
 #: ../app/actions/vectors-commands.c:396
-#| msgctxt "undo-type"
-#| msgid "Flip Path"
 msgid "Fill Path"
 msgstr "Rellenar ruta"
 
@@ -6312,8 +6306,6 @@ msgid "_Zoom"
 msgstr "_Ampliación"
 
 #: ../app/actions/view-actions.c:71
-#| msgctxt "view-action"
-#| msgid "_Rotate"
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Voltear y rotar"
@@ -6370,15 +6362,11 @@ msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Ajusta la ampliación para que la ventana se use por completo"
 
 #: ../app/actions/view-actions.c:102
-#| msgctxt "image-action"
-#| msgid "_Crop to Selection"
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Ampliar a la _selección"
 
 #: ../app/actions/view-actions.c:103
-#| msgctxt "view-action"
-#| msgid "Adjust the zoom ratio so that the entire window is used"
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr ""
@@ -6395,8 +6383,6 @@ msgid "Restore the previous zoom level"
 msgstr "Recuperar el nivel de ampliación previo"
 
 #: ../app/actions/view-actions.c:114
-#| msgctxt "view-zoom-action"
-#| msgid "Othe_r..."
 msgctxt "view-action"
 msgid "Othe_r..."
 msgstr "Ot_ro…"
@@ -6728,15 +6714,11 @@ msgid "Set a custom zoom factor"
 msgstr "Establece un factor de ampliación personalizado"
 
 #: ../app/actions/view-actions.c:400
-#| msgctxt "drawable-action"
-#| msgid "Flip _Horizontally"
 msgctxt "view-action"
 msgid "Flip Horizontally"
 msgstr "Voltear horizontalmente"
 
 #: ../app/actions/view-actions.c:406
-#| msgctxt "drawable-action"
-#| msgid "Flip _Vertically"
 msgctxt "view-action"
 msgid "Flip Vertically"
 msgstr "Voltear verticalmente"
@@ -6781,8 +6763,6 @@ msgstr "Rotar _180°"
 
 # Poner cabeza abajo
 #: ../app/actions/view-actions.c:443
-#| msgctxt "drawable-action"
-#| msgid "Turn upside-down"
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Voltear"
@@ -6893,7 +6873,6 @@ msgstr "(V) "
 
 #: ../app/actions/view-actions.c:924
 #, c-format
-#| msgid "_Rotate (%d°)"
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Voltear %s y rotar (%d°)"
 
@@ -6984,22 +6963,16 @@ msgid "_Top"
 msgstr "Parte _superior"
 
 #: ../app/actions/windows-actions.c:140
-#| msgctxt "vectors-action"
-#| msgid "Raise this path to the top"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
 msgstr "Colocar las pestañas en la parte superior"
 
 #: ../app/actions/windows-actions.c:144
-#| msgctxt "layers-action"
-#| msgid "Layer to _Bottom"
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
 msgstr "Parte _inferior"
 
 #: ../app/actions/windows-actions.c:145
-#| msgctxt "vectors-action"
-#| msgid "Lower this path to the bottom"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
 msgstr "Colocar las pestañas en la parte inferior"
@@ -7164,7 +7137,6 @@ msgstr "No se ha podido abrir «%s» para escritura: %s"
 
 #: ../app/config/gimpconfig-file.c:116
 #, c-format
-#| msgid "Error parsing '%s': line longer than %"
 msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Error al analizar «%%s»: la línea es más larga que %s caracteres."
 
@@ -7444,9 +7416,6 @@ msgid "Sets the default quick mask color."
 msgstr "Establece el color predeterminado de la máscara rápida."
 
 #: ../app/config/gimprc-blurbs.h:283
-#| msgid ""
-#| "When enabled, the image window will automatically resize itself whenever "
-#| "the physical image size changes."
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -7457,9 +7426,6 @@ msgstr ""
 "configuración sólo tiene efecto en modo multiventana."
 
 #: ../app/config/gimprc-blurbs.h:288
-#| msgid ""
-#| "When enabled, the image window will automatically resize itself when "
-#| "zooming into and out of images."
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
@@ -7508,9 +7474,6 @@ msgid "Save the tool options when GIMP exits."
 msgstr "Guardar las opciones de herramientas al salir de GIMP."
 
 #: ../app/config/gimprc-blurbs.h:318
-#| msgid ""
-#| "When enabled, all brush-based paint tools will show a preview of the "
-#| "current brush's outline."
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -7628,8 +7591,6 @@ msgstr ""
 "imagen."
 
 #: ../app/config/gimprc-blurbs.h:376
-#| msgctxt "dialogs-action"
-#| msgid "Open the pointer information dialog"
 msgid "Enable the N-Point Deformation tool."
 msgstr "Activar la herramienta de deformación N-Point."
 
@@ -7646,8 +7607,6 @@ msgid "Enable the MyPaint Brush tool."
 msgstr "Activar la herramienta pincel MyPaint."
 
 #: ../app/config/gimprc-blurbs.h:388
-#| msgctxt "dialogs-action"
-#| msgid "Open the pointer information dialog"
 msgid "Enable the Seamless Clone tool."
 msgstr "Activar la herramienta de clonado continuo."
 
@@ -8663,19 +8622,17 @@ msgid "Jitter"
 msgstr "Vibración"
 
 #: ../app/core/core-enums.c:1175
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the selection editor"
 msgctxt "image-map-region"
 msgid "Use the selection as input"
-msgstr "Abre el editor de selección"
+msgstr "Usar la selección como entrada"
 
 #: ../app/core/core-enums.c:1176
-#, fuzzy
 #| msgid "Use the online version"
 msgctxt "image-map-region"
 msgid "Use the entire layer as input"
-msgstr "Usar la versión en línea"
+msgstr "Usar toda la capa como entrada"
 
 #: ../app/core/gimp.c:705
 msgid "Initialization"
@@ -8822,37 +8779,36 @@ msgid "No patterns available for this operation."
 msgstr "No hay patrones disponibles para esta operación."
 
 #: ../app/core/gimpbrush-load.c:173
-#, fuzzy, c-format
+#, c-format
 #| msgid "Fatal parse error in brush file '%s': Width = 0."
 msgid "Fatal parse error in brush file: Width = 0."
-msgstr "Error fatal de análisis en el archivo de pincel «%s»: anchura = 0."
+msgstr "Error fatal de análisis en el archivo del pincel : anchura = 0."
 
 #: ../app/core/gimpbrush-load.c:180
-#, fuzzy, c-format
+#, c-format
 #| msgid "Fatal parse error in brush file '%s': Height = 0."
 msgid "Fatal parse error in brush file: Height = 0."
-msgstr "Error fatal de análisis en el archivo de pincel «%s»: altura = 0."
+msgstr "Error fatal de análisis en el archivo del pincel: altura = 0."
 
 #: ../app/core/gimpbrush-load.c:187
-#, fuzzy, c-format
+#, c-format
 #| msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgid "Fatal parse error in brush file: Bytes = 0."
-msgstr "Error fatal de análisis en el archivo de pincel «%s»: bytes = 0."
+msgstr "Error fatal de análisis en el archivo del pincel: bytes = 0."
 
 #: ../app/core/gimpbrush-load.c:212
-#, fuzzy, c-format
+#, c-format
 #| msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: profundidad "
-"desconocida %d."
+"Error fatal de análisis en el archivo del pincel: profundidad desconocida %d."
 
 #: ../app/core/gimpbrush-load.c:224
-#, fuzzy, c-format
+#, c-format
 #| msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: versión desconocida %d."
+"Error fatal de análisis en el archivo del pincel: versión desconocida %d."
 
 #: ../app/core/gimpbrush-load.c:245 ../app/core/gimpbrushgenerated-load.c:125
 #: ../app/core/gimpbrushpipe-load.c:75
@@ -8867,7 +8823,7 @@ msgid "Unnamed"
 msgstr "Sin nombre"
 
 #: ../app/core/gimpbrush-load.c:323
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 #| "GIMP brushes must be GRAY or RGBA."
@@ -8878,12 +8834,14 @@ msgid ""
 "This might be an obsolete GIMP brush file, try loading it as image and save "
 "it again."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: profundidad de pincel "
-"no soportado %d\n"
-"Los pinceles de GIMP deben ser GRAY (GRISES) o RGBA."
+"Error fatal de análisis en el archivo del pincel:\n"
+"profundidad del pincel no soportada %d\n"
+"Los pinceles de GIMP deben ser GRAY o RGBA.\n"
+"Este podría ser un archivo obsoleto de pincel GIMP, trate de cargarlo como "
+"imagen y guárdelo de nuevo."
 
 #: ../app/core/gimpbrush-load.c:370
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 #| "GIMP brushes must be GRAY or RGBA."
@@ -8892,57 +8850,54 @@ msgid ""
 "Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: profundidad de pincel "
-"no soportado %d\n"
-"Los pinceles de GIMP deben ser GRAY (GRISES) o RGBA."
+"Error fatal de análisis en el archivo del pincel:\n"
+"profundidad del pincel no soportada %d\n"
+"Los pinceles de GIMP deben ser GRAY o RGBA."
 
 #: ../app/core/gimpbrush-load.c:446
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Fatal parse error in brush file '%s': unable to decode abr format version "
 #| "%d."
 msgid "Unable to decode abr format version %d."
-msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: imposible decodificar "
-"el formato abr versión %d."
+msgstr "No se puede decodificar el formato abr versión %d."
 
 #: ../app/core/gimpbrush-load.c:644
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: no están soportados "
-"los pinceles anchos."
+"Error fatal de análisis en el archivo del pincel: los pinceles anchos no "
+"están soportados."
 
 #: ../app/core/gimpbrush-load.c:785
-#, fuzzy
 #| msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: el archivo parece "
-"estar truncado."
+"Error fatal de análisis en el archivo del pincel: el archivo parece estar "
+"truncado."
 
 #: ../app/core/gimpbrush-load.c:931
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Fatal parse error in brush file '%s': unable to decode abr format version "
 #| "%d."
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: imposible decodificar "
-"el formato abr versión %d."
+"Error fatal de análisis en el archivo del pincel: no se puede decodificar el "
+"formato abr versión %d."
 
 #: ../app/core/gimpbrush.c:149 ../app/paint/gimppaintoptions.c:219
 msgid "Brush Spacing"
 msgstr "Espaciado del pincel"
 
 #: ../app/core/gimpbrushgenerated-load.c:75
-#, fuzzy, c-format
+#, c-format
 #| msgid "not a GIMP Curves file"
 msgid "Not a GIMP brush file."
-msgstr "no es un archivo de curvas de GIMP"
+msgstr "No es un archivo de pincel GIMP."
 
 #: ../app/core/gimpbrushgenerated-load.c:95
 #, c-format
@@ -9161,10 +9116,9 @@ msgid "Flood Channel"
 msgstr "Voltear el canal"
 
 #: ../app/core/gimpchannel.c:836
-#, fuzzy
 #| msgid "Cannot stroke empty channel."
 msgid "Cannot fill empty channel."
-msgstr "No se puede trazar un canal vacío."
+msgstr "No se puede rellenar un canal vacío."
 
 #: ../app/core/gimpchannel.c:872
 msgid "Cannot stroke empty channel."
@@ -9225,17 +9179,15 @@ msgid "Brush"
 msgstr "Pincel"
 
 #: ../app/core/gimpcontext.c:712
-#, fuzzy
 #| msgid "Paint Dynamics"
 msgid "Paint dynamics"
-msgstr "Dinámica de la pintura"
+msgstr "Dinámicas de la pintura"
 
 #: ../app/core/gimpcontext.c:718 ../app/core/gimpcontext.c:719
 #: ../app/tools/gimpmybrushtool.c:73
-#, fuzzy
 #| msgid "Paintbrush"
 msgid "MyPaint Brush"
-msgstr "Pincel"
+msgstr "Pincel MyPaint"
 
 #: ../app/core/gimpcontext.c:725 ../app/core/gimpcontext.c:726
 #, fuzzy
@@ -9266,10 +9218,10 @@ msgid "Font"
 msgstr "Tipografía"
 
 #: ../app/core/gimpdata.c:537 ../app/core/gimpdata.c:545
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading '%s': %s"
 msgid "Error saving '%s': "
-msgstr "Ocurrió un error al leer «%s»: %s"
+msgstr "Error al guardar «%s»: "
 
 #: ../app/core/gimpdata.c:551
 #, c-format
@@ -9336,10 +9288,10 @@ msgid "Error loading '%s'"
 msgstr "Error al cargar «%s»"
 
 #: ../app/core/gimpdatafactory.c:935 ../app/xcf/xcf.c:330
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not open '%s' for reading: %s"
 msgid "Could not open '%s' for reading: "
-msgstr "No se ha podido abrir «%s» para lectura: %s"
+msgstr "No se ha podido abrir «%s» para lectura: "
 
 #: ../app/core/gimpdatafactory.c:994
 #, c-format
@@ -9429,11 +9381,10 @@ msgid "Output type"
 msgstr "Tipo de salida"
 
 #: ../app/core/gimpfilloptions.c:93
-#, fuzzy
 #| msgctxt "dockable-action"
 #| msgid "_Tab Style"
 msgid "Style"
-msgstr "Es_tilo de pestaña"
+msgstr "Estilo"
 
 #: ../app/core/gimpfilloptions.c:101 ../app/pdb/gimppdbcontext.c:99
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:150
