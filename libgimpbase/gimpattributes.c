@@ -760,15 +760,29 @@ gimp_attributes_from_metadata (GimpAttributes *attributes, GimpMetadata *metadat
 
           interpreted = g_strcmp0 (value, interpreted_value);
 
+          if (!interpreted)
+            {
+              gint length;
+
+              length = strlen (interpreted_value);
+              if (length > 2048)
+                {
+                  g_free (interpreted_value);
+                  interpreted_value = g_strdup_printf ("(Size of value: %d)", length);
+                  interpreted = TRUE;
+                }
+            }
+
           attribute = gimp_attribute_new_string (exif_data[i], value, attrib_type);
           if (gimp_attribute_is_valid (attribute))
             {
               if (no_interpreted)
                 {
                   if (interpreted)
-                    gimp_attribute_set_interpreted_string (attribute, interpreted_value);
+                    {
+                      gimp_attribute_set_interpreted_string (attribute, interpreted_value);
+                    }
                 }
-
               gimp_attributes_add_attribute (new_attributes, attribute);
             }
           else
@@ -853,7 +867,6 @@ gimp_attributes_from_metadata (GimpAttributes *attributes, GimpMetadata *metadat
 
       g_strfreev (iptc_data);
     }
-
   return new_attributes;
 }
 
