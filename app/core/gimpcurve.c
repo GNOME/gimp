@@ -312,7 +312,7 @@ gimp_curve_get_property (GObject    *object,
     case PROP_POINTS:
       {
         GimpValueArray *array = gimp_value_array_new (curve->n_points * 2);
-        GValue          v     = { 0, };
+        GValue          v     = G_VALUE_INIT;
         gint            i;
 
         g_value_init (&v, G_TYPE_DOUBLE);
@@ -339,7 +339,7 @@ gimp_curve_get_property (GObject    *object,
     case PROP_SAMPLES:
       {
         GimpValueArray *array = gimp_value_array_new (curve->n_samples);
-        GValue          v     = { 0, };
+        GValue          v     = G_VALUE_INIT;
         gint            i;
 
         g_value_init (&v, G_TYPE_DOUBLE);

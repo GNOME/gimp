@@ -410,7 +410,7 @@ gimp_device_info_get_property (GObject    *object,
     case PROP_AXES:
       {
         GimpValueArray *array;
-        GValue          enum_value = { 0, };
+        GValue          enum_value = G_VALUE_INIT;
         gint            n_axes;
         gint            i;
 
@@ -436,7 +436,7 @@ gimp_device_info_get_property (GObject    *object,
     case PROP_KEYS:
       {
         GimpValueArray *array;
-        GValue          string_value = { 0, };
+        GValue          string_value = G_VALUE_INIT;
         gint            n_keys;
         gint            i;
 

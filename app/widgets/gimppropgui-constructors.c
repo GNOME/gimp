@@ -177,33 +177,58 @@ _gimp_prop_gui_new_generic (GObject              *config,
         {
           GtkWidget   *widget;
           const gchar *label;
+          gboolean     expand = FALSE;
 
           widget = gimp_prop_widget_new_from_pspec (config, pspec, context,
                                                     create_picker_func,
                                                     picker_creator,
                                                     &label);
 
+          if (GTK_IS_SCROLLED_WINDOW (widget))
+            expand = TRUE;
+
           if (widget && label)
             {
-              GtkWidget *hbox;
               GtkWidget *l;
-
-              hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-              gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-              gtk_widget_show (hbox);
 
               l = gtk_label_new_with_mnemonic (label);
               gtk_misc_set_alignment (GTK_MISC (l), 0.0, 0.5);
-              gtk_size_group_add_widget (label_group, l);
-              gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
               gtk_widget_show (l);
 
-              gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
-              gtk_widget_show (widget);
+              if (GTK_IS_SCROLLED_WINDOW (widget))
+                {
+                  GtkWidget *frame;
+
+                  /* don't set as frame title, it should not be bold */
+                  gtk_box_pack_start (GTK_BOX (main_vbox), l, FALSE, FALSE, 0);
+
+                  frame = gimp_frame_new (NULL);
+                  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+                  gtk_widget_show (frame);
+
+                  gtk_container_add (GTK_CONTAINER (frame), widget);
+                  gtk_widget_show (widget);
+                }
+              else
+                {
+                  GtkWidget *hbox;
+
+                  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+                  gtk_box_pack_start (GTK_BOX (main_vbox), hbox,
+                                      expand, expand, 0);
+                  gtk_widget_show (hbox);
+
+                  gtk_size_group_add_widget (label_group, l);
+                  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+
+                  gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
+                  gtk_widget_show (widget);
+                }
             }
           else if (widget)
             {
-              gtk_box_pack_start (GTK_BOX (main_vbox), widget, FALSE, FALSE, 0);
+              gtk_box_pack_start (GTK_BOX (main_vbox), widget,
+                                  expand, expand, 0);
               gtk_widget_show (widget);
             }
         }

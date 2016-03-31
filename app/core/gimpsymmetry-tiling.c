@@ -204,7 +204,7 @@ gimp_tiling_set_property (GObject      *object,
 
               if (tiling->interval_x <= tiling->shift + G_DOUBLE_EPSILON)
                 {
-                  GValue val = {0,};
+                  GValue val = G_VALUE_INIT;
 
                   g_value_init (&val, G_TYPE_DOUBLE);
                   g_value_set_double (&val, 0.0);
@@ -225,7 +225,7 @@ gimp_tiling_set_property (GObject      *object,
 
               if (tiling->interval_y <= G_DOUBLE_EPSILON)
                 {
-                  GValue val = {0,};
+                  GValue val = G_VALUE_INIT;
 
                   g_value_init (&val, G_TYPE_DOUBLE);
                   g_value_set_double (&val, 0.0);

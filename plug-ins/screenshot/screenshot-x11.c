@@ -54,9 +54,6 @@ static gint32     create_image         (cairo_surface_t  *surface,
                                         cairo_region_t   *shape,
                                         const gchar      *name);
 
-static void       shoot_delay          (gint32            delay);
-static gboolean   shoot_delay_callback (gpointer          data);
-
 
 /* Allow the user to select a window or a region with the mouse */
 
@@ -540,10 +537,16 @@ add_cursor_image (gint32      image,
 
 /* The main Screenshot function */
 
+gboolean
+screenshot_x11_available (void)
+{
+  return TRUE;
+}
+
 ScreenshotCapabilities
 screenshot_x11_get_capabilities (void)
 {
-  ScreenshotCapabilities capabilities = 0;
+  ScreenshotCapabilities capabilities = SCREENSHOT_CAN_PICK_NONINTERACTIVELY;
 
 #ifdef HAVE_X11_XMU_WINUTIL_H
   capabilities |= SCREENSHOT_CAN_SHOOT_DECORATIONS;
@@ -578,7 +581,7 @@ screenshot_x11_shoot (ScreenshotValues *shootvals,
     screen = gdk_screen_get_default ();
 
   if (shootvals->select_delay > 0)
-    shoot_delay (shootvals->select_delay);
+    screenshot_delay (shootvals->select_delay);
 
   if (shootvals->shoot_type != SHOOT_ROOT && ! shootvals->window_id)
     {
@@ -674,29 +677,6 @@ screenshot_x11_shoot (ScreenshotValues *shootvals,
     add_cursor_image (*image_ID, display);
 
   return GIMP_PDB_SUCCESS;
-}
-
-
-/*  delay functions  */
-
-static void
-shoot_delay (gint delay)
-{
-  g_timeout_add (1000, shoot_delay_callback, &delay);
-  gtk_main ();
-}
-
-static gboolean
-shoot_delay_callback (gpointer data)
-{
-  gint *seconds_left = data;
-
-  (*seconds_left)--;
-
-  if (!*seconds_left)
-    gtk_main_quit ();
-
-  return *seconds_left;
 }
 
 #endif /* GDK_WINDOWING_X11 */

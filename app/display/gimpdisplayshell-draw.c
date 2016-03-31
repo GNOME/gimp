@@ -54,7 +54,8 @@ gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
   g_return_if_fail (cr != NULL);
   g_return_if_fail (segs != NULL && n_segs > 0);
 
-  gimp_canvas_set_selection_out_style (shell->canvas, cr);
+  gimp_canvas_set_selection_out_style (shell->canvas, cr,
+                                       shell->offset_x, shell->offset_y);
 
   gimp_cairo_add_segments (cr, segs, n_segs);
   cairo_stroke (cr);
@@ -70,7 +71,8 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
   g_return_if_fail (cr != NULL);
   g_return_if_fail (mask != NULL);
 
-  gimp_canvas_set_selection_in_style (shell->canvas, cr, index);
+  gimp_canvas_set_selection_in_style (shell->canvas, cr, index,
+                                      shell->offset_x, shell->offset_y);
 
   cairo_mask (cr, mask);
 }

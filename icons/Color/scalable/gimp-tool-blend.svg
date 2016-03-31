@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="16"
+   height="16"
+   id="svg2"
+   viewBox="0 0 16 16"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-tool-blend.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="501"
+     inkscape:window-height="405"
+     id="namedview1695"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="183"
+     inkscape:cy="340.3622"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4034-4">
+      <stop
+         id="stop4030"
+         offset="0"
+         style="stop-color:#3465a4;stop-opacity:1;" />
+      <stop
+         id="stop4032"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(192,250.76025)"
+       gradientUnits="userSpaceOnUse"
+       y2="532.36218"
+       x2="380"
+       y1="532.36218"
+       x1="370"
+       id="linearGradient9543"
+       xlink:href="#linearGradient4034-4" />
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(-55.97575,-311.68025)"
+     id="tools">
+    <g
+       id="gimp-tool-blend"
+       transform="translate(-311.02425,-212.68195)">
+      <rect
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:url(#linearGradient9543);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         id="rect4163-5-9"
+         width="10"
+         height="10"
+         x="370"
+         y="527.36218" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#bebebe;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 367.5,524.8622 0,15 15,0 0,-15 z m 2,2 11,0 0,11 -11,0 z"
+         id="rect82180-1-1-9"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

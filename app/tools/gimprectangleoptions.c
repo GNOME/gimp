@@ -1126,12 +1126,12 @@ static void
 gimp_number_pair_entry_history_add (GtkWidget    *entry,
                                     GtkTreeModel *model)
 {
-  GValue               value = { 0, };
-  GtkTreeIter          iter;
-  gboolean             iter_valid;
-  gdouble              left_number;
-  gdouble              right_number;
-  const gchar         *text;
+  GValue       value = G_VALUE_INIT;
+  GtkTreeIter  iter;
+  gboolean     iter_valid;
+  gdouble      left_number;
+  gdouble      right_number;
+  const gchar *text;
 
   text = gtk_entry_get_text (GTK_ENTRY (entry));
   gimp_number_pair_entry_get_values (GIMP_NUMBER_PAIR_ENTRY (entry),

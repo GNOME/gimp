@@ -154,7 +154,7 @@ Type=Threshold
 [22x22/apps]
 Size=22
 Context=Applications
-Type=Fixed
+Type=Threshold
 
 [22x22/categories]
 Size=22

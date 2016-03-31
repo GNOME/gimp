@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-16 17:50+0100\n"
-"PO-Revision-Date: 2016-03-16 17:52+0100\n"
+"POT-Creation-Date: 2016-03-25 23:39+0100\n"
+"PO-Revision-Date: 2016-03-25 23:40+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -3294,7 +3294,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Odświeża listę zainstalowanych czcionek"
 
-#: ../app/actions/gimpgeglprocedure.c:294
+#: ../app/actions/gimpgeglprocedure.c:300
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -11796,19 +11796,19 @@ msgstr "System pomocy"
 
 #: ../app/dialogs/preferences-dialog.c:2108
 msgid "Show _tooltips"
-msgstr "Wyświetlanie po_dpowiedzi"
+msgstr "Po_dpowiedzi"
 
 #: ../app/dialogs/preferences-dialog.c:2111
 msgid "Show help _buttons"
-msgstr "Wyświetlanie przycisków po_mocy"
+msgstr "Przyciski po_mocy"
 
 #: ../app/dialogs/preferences-dialog.c:2124
 msgid "Use the online version"
-msgstr "Używanie wersji sieciowej"
+msgstr "Wersja sieciowa"
 
 #: ../app/dialogs/preferences-dialog.c:2125
 msgid "Use a locally installed copy"
-msgstr "Używanie lokalnie zainstalowanej kopii"
+msgstr "Kopia zainstalowana na komputerze"
 
 #: ../app/dialogs/preferences-dialog.c:2126
 msgid "User manual:"
@@ -11816,11 +11816,11 @@ msgstr "Podręcznik użytkownika:"
 
 #: ../app/dialogs/preferences-dialog.c:2133
 msgid "There's a local installation of the user manual."
-msgstr "Odnaleziono zainstalowaną, lokalną wersję podręcznika użytkownika."
+msgstr "Podręcznik użytkownika jest zainstalowany na komputerze."
 
 #: ../app/dialogs/preferences-dialog.c:2138
 msgid "The user manual is not installed locally."
-msgstr "Podręcznik użytkownika nie został zainstalowany lokalnie."
+msgstr "Podręcznik użytkownika nie jest zainstalowany na komputerze."
 
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:2161
@@ -11829,7 +11829,7 @@ msgstr "Przeglądarka pomocy"
 
 #: ../app/dialogs/preferences-dialog.c:2165
 msgid "H_elp browser to use:"
-msgstr "Używana prz_eglądarka pomocy:"
+msgstr "Prz_eglądarka pomocy:"
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2169
@@ -12424,38 +12424,38 @@ msgstr "Narzędzie rysowania:"
 msgid "_Emulate brush dynamics"
 msgstr "_Emulowanie dynamiki pędzla"
 
-#: ../app/dialogs/tips-dialog.c:88
+#: ../app/dialogs/tips-dialog.c:99
 msgid "The GIMP tips file is empty!"
 msgstr "Plik z poradami programu GIMP jest pusty."
 
-#: ../app/dialogs/tips-dialog.c:92
+#: ../app/dialogs/tips-dialog.c:103
 msgid "The GIMP tips file appears to be missing!"
 msgstr "Nie można odnaleźć pliku z poradami programu GIMP."
 
-#: ../app/dialogs/tips-dialog.c:94
+#: ../app/dialogs/tips-dialog.c:105
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
 "Powinien istnieć plik o nazwie „%s”. Proszę sprawdzić instalację programu."
 
-#: ../app/dialogs/tips-dialog.c:100
+#: ../app/dialogs/tips-dialog.c:111
 msgid "The GIMP tips file could not be parsed!"
 msgstr "Nie można przetworzyć pliku z poradami programu GIMP."
 
-#: ../app/dialogs/tips-dialog.c:128
+#: ../app/dialogs/tips-dialog.c:139
 msgid "GIMP Tip of the Day"
 msgstr "Porada dnia programu GIMP"
 
-#: ../app/dialogs/tips-dialog.c:134
+#: ../app/dialogs/tips-dialog.c:145
 msgid "_Previous Tip"
 msgstr "_Poprzednia porada"
 
-#: ../app/dialogs/tips-dialog.c:140
+#: ../app/dialogs/tips-dialog.c:151
 msgid "_Next Tip"
 msgstr "_Następna porada"
 
 #. a link to the related section in the user manual
-#: ../app/dialogs/tips-dialog.c:193
+#: ../app/dialogs/tips-dialog.c:204
 msgid "Learn more"
 msgstr "Więcej informacji"
 
@@ -12729,7 +12729,7 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
 #: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
-#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:323
+#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:320
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
@@ -12737,9 +12737,9 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/display/gimpdisplayshell-dnd.c:370
 #: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:330 ../app/tools/gimppainttool.c:278
+#: ../app/tools/gimpimagemaptool.c:327 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
-#: ../app/tools/gimpwarptool.c:577
+#: ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
@@ -14832,8 +14832,8 @@ msgstr "_Gradient"
 
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:290
-#: ../app/tools/gimpimagemaptool.c:337 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:584
+#: ../app/tools/gimpimagemaptool.c:334 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
@@ -14993,7 +14993,7 @@ msgstr ""
 "Wypełnienie pierwotnego położenia\n"
 "klatki kolorem"
 
-#: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1179
+#: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1198
 msgid "Cage Transform"
 msgstr "Przekształcenie za pomocą klatki"
 
@@ -15006,15 +15006,15 @@ msgstr ""
 msgid "_Cage Transform"
 msgstr "Przekształcenie za pomocą _klatki"
 
-#: ../app/tools/gimpcagetool.c:315 ../app/tools/gimpwarptool.c:317
+#: ../app/tools/gimpcagetool.c:317 ../app/tools/gimpwarptool.c:319
 msgid "Press ENTER to commit the transform"
 msgstr "Naciśnięcie klawisza Enter zatwierdzi przekształcenie"
 
-#: ../app/tools/gimpcagetool.c:1082
+#: ../app/tools/gimpcagetool.c:1101
 msgid "Computing Cage Coefficients"
 msgstr "Obliczanie współrzędnych klatki"
 
-#: ../app/tools/gimpcagetool.c:1230
+#: ../app/tools/gimpcagetool.c:1249
 msgid "Cage transform"
 msgstr "Przekształcenie za pomocą klatki"
 
@@ -15732,21 +15732,20 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Różdżka"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:354
-#: ../app/tools/gimpgegltool.c:497 ../app/tools/gimpgegltool.c:498
-#: ../app/tools/gimpoperationtool.c:131
+#: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:465
+#: ../app/tools/gimpgegltool.c:466 ../app/tools/gimpoperationtool.c:131
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
-#: ../app/tools/gimpgegltool.c:79
+#: ../app/tools/gimpgegltool.c:73
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "GEGL: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpgegltool.c:80 ../app/tools/gimpoperationtool.c:133
+#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:133
 msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
-#: ../app/tools/gimpgegltool.c:452
+#: ../app/tools/gimpgegltool.c:420
 msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
@@ -16308,22 +16307,22 @@ msgstr "_Zniekształcanie za pomocą wielu punktów"
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Działanie: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpoperationtool.c:348
+#: ../app/tools/gimpoperationtool.c:342
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpoperationtool.c:349
+#: ../app/tools/gimpoperationtool.c:343
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
 
-#: ../app/tools/gimpoperationtool.c:690
+#: ../app/tools/gimpoperationtool.c:684
 #, c-format
 msgid "Aux Input"
 msgstr "Wejście Aux"
 
-#: ../app/tools/gimpoperationtool.c:695
+#: ../app/tools/gimpoperationtool.c:689
 #, c-format
 msgid "Aux%d Input"
 msgstr "Wejście Aux%d"
@@ -17365,33 +17364,33 @@ msgstr "Odkształcanie: zniekształcanie za pomocą innych narzędzi"
 msgid "_Warp Transform"
 msgstr "_Odkształcanie"
 
-#: ../app/tools/gimpwarptool.c:462 ../app/tools/gimpwarptool.c:474
+#: ../app/tools/gimpwarptool.c:464 ../app/tools/gimpwarptool.c:476
 msgid "Warp Tool Stroke"
 msgstr "Krzywa odkształcania"
 
-#: ../app/tools/gimpwarptool.c:570
+#: ../app/tools/gimpwarptool.c:572
 msgid "Cannot warp layer groups."
 msgstr "Nie można odkształcać grup warstw."
 
-#: ../app/tools/gimpwarptool.c:749
+#: ../app/tools/gimpwarptool.c:751
 msgid "Warp transform"
 msgstr "Odkształcanie"
 
-#: ../app/tools/gimpwarptool.c:886
+#: ../app/tools/gimpwarptool.c:888
 msgid "Please add some warp strokes first."
 msgstr "Proszę najpierw dodać krzywe odkształcania."
 
-#: ../app/tools/gimpwarptool.c:899 ../app/tools/gimpwarptool.c:935
+#: ../app/tools/gimpwarptool.c:901 ../app/tools/gimpwarptool.c:937
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Renderowanie klatki %d"
 
-#: ../app/tools/gimpwarptool.c:914 ../app/tools/gimpwarptool.c:943
+#: ../app/tools/gimpwarptool.c:916 ../app/tools/gimpwarptool.c:945
 #, c-format
 msgid "Frame %d"
 msgstr "Klatka %d"
 
-#: ../app/tools/gimpwarptool.c:952
+#: ../app/tools/gimpwarptool.c:954
 msgid "Frame"
 msgstr "Klatka"
 
@@ -17840,11 +17839,11 @@ msgstr "Notacja języka HTML:"
 msgid "Only indexed images have a colormap."
 msgstr "Tylko indeksowane obrazy posiadają paletę kolorów."
 
-#: ../app/widgets/gimpcontainerpopup.c:337
+#: ../app/widgets/gimpcontainerpopup.c:351
 msgid "Smaller Previews"
 msgstr "Mniejsze podglądy"
 
-#: ../app/widgets/gimpcontainerpopup.c:342
+#: ../app/widgets/gimpcontainerpopup.c:356
 msgid "Larger Previews"
 msgstr "Większe podglądy"
 
@@ -18821,79 +18820,79 @@ msgstr "Inne opcje"
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
-#: ../app/widgets/gimppropgui.c:295
+#: ../app/widgets/gimppropgui.c:296
 msgid "Pick color from the image"
 msgstr "Proszę wybrać kolor z obrazu"
 
-#: ../app/widgets/gimppropgui.c:402
+#: ../app/widgets/gimppropgui.c:403
 msgid "This operation has no editable properties"
 msgstr "To działanie nie posiada modyfikowalnych właściwości"
 
-#: ../app/widgets/gimppropgui.c:472
+#: ../app/widgets/gimppropgui.c:473
 msgid "1,700 K – Match flame"
 msgstr "1,700 K – płomień zapałki"
 
-#: ../app/widgets/gimppropgui.c:473
+#: ../app/widgets/gimppropgui.c:474
 msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1,850 K – płomień świecy, zachód/wschód słońca"
 
-#: ../app/widgets/gimppropgui.c:474
+#: ../app/widgets/gimppropgui.c:475
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr "3,000 K – miękkie (lub ciepłe) białe, kompaktowe lampy fluorescencyjne"
 
-#: ../app/widgets/gimppropgui.c:475
+#: ../app/widgets/gimppropgui.c:476
 msgid "3,300 K – Incandescent lamps"
 msgstr "3,300 K – żarówki żarzeniowe"
 
-#: ../app/widgets/gimppropgui.c:476
+#: ../app/widgets/gimppropgui.c:477
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr "3,200 K – oświetlenie studyjne, fotograficzne itp."
 
-#: ../app/widgets/gimppropgui.c:477
+#: ../app/widgets/gimppropgui.c:478
 msgid "3,350 K – Studio \"CP\" light"
 msgstr "3,350 K – studyjne oświetlenie „CP”"
 
-#: ../app/widgets/gimppropgui.c:478
+#: ../app/widgets/gimppropgui.c:479
 msgid "4,100 K – Moonlight"
 msgstr "4,100 K – światło księżyca"
 
-#: ../app/widgets/gimppropgui.c:479
+#: ../app/widgets/gimppropgui.c:480
 msgid "5,000 K – D50"
 msgstr "5,000 K – D50"
 
-#: ../app/widgets/gimppropgui.c:480
+#: ../app/widgets/gimppropgui.c:481
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr "5,000 K – zimne, białe/dzienne, kompaktowe lampy fluorescencyjne"
 
-#: ../app/widgets/gimppropgui.c:481
+#: ../app/widgets/gimppropgui.c:482
 msgid "5,000 K – Horizon daylight"
 msgstr "5,000 K – horyzontalne światło dzienne"
 
-#: ../app/widgets/gimppropgui.c:482
+#: ../app/widgets/gimppropgui.c:483
 msgid "5,500 K – D55"
 msgstr "5,500 K – D55"
 
-#: ../app/widgets/gimppropgui.c:483
+#: ../app/widgets/gimppropgui.c:484
 msgid "5,500 K – Vertical daylight, electronic flash"
 msgstr "5,500 K – wertykalne światło dzienne, elektroniczne światło błyskowe"
 
-#: ../app/widgets/gimppropgui.c:484
+#: ../app/widgets/gimppropgui.c:485
 msgid "6,200 K – Xenon short-arc lamp"
 msgstr "6,200 K – ksenonowa lampa łukowa"
 
-#: ../app/widgets/gimppropgui.c:485
+#: ../app/widgets/gimppropgui.c:486
 msgid "6,500 K – D65"
 msgstr "6,500 K – D65"
 
-#: ../app/widgets/gimppropgui.c:486
+#: ../app/widgets/gimppropgui.c:487
 msgid "6,500 K – Daylight, overcast"
 msgstr "6,500 K – dzienne światło w pochmurny dzień"
 
-#: ../app/widgets/gimppropgui.c:487
+#: ../app/widgets/gimppropgui.c:488
 msgid "7,500 K – D75"
 msgstr "7,500 K – D75"
 
-#: ../app/widgets/gimppropgui.c:488
+#: ../app/widgets/gimppropgui.c:489
 msgid "9,300 K"
 msgstr "9,300 K"
 

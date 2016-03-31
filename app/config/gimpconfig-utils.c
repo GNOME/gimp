@@ -47,7 +47,7 @@ gimp_config_connect_notify (GObject    *src,
           (dest_spec->flags & G_PARAM_WRITABLE)             &&
           (dest_spec->flags & G_PARAM_CONSTRUCT_ONLY) == 0)
         {
-          GValue value = { 0, };
+          GValue value = G_VALUE_INIT;
 
           g_value_init (&value, param_spec->value_type);
 
@@ -128,7 +128,7 @@ gimp_config_connect_full_notify (GObject    *src,
           (dest_spec->flags & G_PARAM_WRITABLE)             &&
           (dest_spec->flags & G_PARAM_CONSTRUCT_ONLY) == 0)
         {
-          GValue value = { 0, };
+          GValue value = G_VALUE_INIT;
 
           g_value_init (&value, param_spec->value_type);
 

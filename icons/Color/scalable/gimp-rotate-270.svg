@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="15.999985"
+   height="16"
+   id="svg2"
+   viewBox="0 0 15.999985 16"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-rotate-270.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview1695"
+     showgrid="false"
+     inkscape:zoom="14.002899"
+     inkscape:cx="-294.58754"
+     inkscape:cy="14.805743"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(33.43671,65.69073)"
+     id="stock">
+    <g
+       id="gimp-rotate-270"
+       style="display:inline"
+       transform="matrix(0,-1,-0.94934818,0,323.14184,-8.6905314)">
+      <rect
+         style="fill:none;stroke:none"
+         id="rect10176-9"
+         width="16"
+         height="16"
+         x="41.000198"
+         y="359" />
+      <path
+         d="m -193.5,142 c -0.17107,0 -0.33226,0.0183 -0.5,0.0312 l 0,2.03125 c 0.16677,-0.0187 0.32822,-0.0625 0.5,-0.0625 2.48528,0 4.5,2.01472 4.5,4.5 0,2.48528 -2.01472,4.5 -4.5,4.5 -0.17178,0 -0.33323,-0.0438 -0.5,-0.0625 l 0,2.03125 c 0.16774,0.013 0.32893,0.0312 0.5,0.0312 3.58985,0 6.5,-2.91014 6.5,-6.5 0,-3.58986 -2.91015,-6.5 -6.5,-6.5 z m -4.5,12 4,4 0,-8 z"
+         style="fill:#f57900;fill-opacity:1;stroke:#ce5c00;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         transform="translate(241.0002,217)"
+         id="path15848-96"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

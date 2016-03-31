@@ -407,7 +407,7 @@ gimp_rc_query (GimpRc      *rc,
   if (prop_spec)
     {
       GString *str   = g_string_new (NULL);
-      GValue   value = { 0, };
+      GValue   value = G_VALUE_INIT;
 
       g_value_init (&value, prop_spec->value_type);
       g_object_get_property (rc_object, prop_spec->name, &value);
@@ -556,7 +556,7 @@ gimp_rc_migrate (GimpRc *rc)
 
       if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
         {
-          GValue value = { 0, };
+          GValue value = G_VALUE_INIT;
 
           g_value_init (&value, pspec->value_type);
 

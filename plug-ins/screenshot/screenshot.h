@@ -21,8 +21,17 @@
 
 typedef enum
 {
-  SCREENSHOT_CAN_SHOOT_DECORATIONS = 0x1 << 0,
-  SCREENSHOT_CAN_SHOOT_POINTER     = 0x1 << 1
+  SCREENSHOT_BACKEND_NONE,
+  SCREENSHOT_BACKEND_OSX,
+  SCREENSHOT_BACKEND_GNOME_SHELL,
+  SCREENSHOT_BACKEND_X11
+} ScreenshotBackend;
+
+typedef enum
+{
+  SCREENSHOT_CAN_SHOOT_DECORATIONS     = 0x1 << 0,
+  SCREENSHOT_CAN_SHOOT_POINTER         = 0x1 << 1,
+  SCREENSHOT_CAN_PICK_NONINTERACTIVELY = 0x1 << 2
 } ScreenshotCapabilities;
 
 typedef enum
@@ -44,6 +53,9 @@ typedef struct
   gint       y2;
   gboolean   show_cursor;
 } ScreenshotValues;
+
+
+void   screenshot_delay (gint seconds);
 
 
 #endif /* __SCREENSHOT_H__ */

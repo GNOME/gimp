@@ -109,7 +109,7 @@ gimp_throbber_action_sync_property (GtkAction  *action,
                                     GtkWidget  *proxy)
 {
   const gchar *property = g_param_spec_get_name (pspec);
-  GValue       value    = { 0, };
+  GValue       value    = G_VALUE_INIT;
 
   g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
   g_object_get_property (G_OBJECT (action), property, &value);

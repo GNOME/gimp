@@ -121,7 +121,8 @@ gimp_canvas_layer_boundary_finalize (GObject *object)
   GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (object);
 
   if (private->layer)
-    g_object_remove_weak_pointer (G_OBJECT (private->layer), (gpointer)&private->layer);
+    g_object_remove_weak_pointer (G_OBJECT (private->layer),
+                                  (gpointer) &private->layer);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -138,10 +139,12 @@ gimp_canvas_layer_boundary_set_property (GObject      *object,
     {
     case PROP_LAYER:
       if (private->layer)
-        g_object_remove_weak_pointer (G_OBJECT (private->layer), (gpointer)&private->layer);
+        g_object_remove_weak_pointer (G_OBJECT (private->layer),
+                                      (gpointer) &private->layer);
       private->layer = g_value_get_object (value); /* don't ref */
       if (private->layer)
-        g_object_add_weak_pointer (G_OBJECT (private->layer), (gpointer)&private->layer);
+        g_object_add_weak_pointer (G_OBJECT (private->layer),
+                                   (gpointer) &private->layer);
       break;
     case PROP_EDIT_MASK:
       private->edit_mask = g_value_get_boolean (value);
@@ -202,9 +205,11 @@ gimp_canvas_layer_boundary_stroke (GimpCanvasItem *item,
                                    cairo_t        *cr)
 {
   GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (item);
+  GimpDisplayShell               *shell   = gimp_canvas_item_get_shell (item);
 
   gimp_canvas_set_layer_style (gimp_canvas_item_get_canvas (item), cr,
-                               private->layer);
+                               private->layer,
+                               shell->offset_x, shell->offset_y);
   cairo_stroke (cr);
 }
 

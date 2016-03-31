@@ -238,8 +238,8 @@ gimp_config_deserialize_property (GimpConfig *config,
   GimpConfigInterface *config_iface = NULL;
   GimpConfigInterface *parent_iface = NULL;
   GParamSpec          *prop_spec;
-  GTokenType           token = G_TOKEN_RIGHT_PAREN;
-  GValue               value = { 0, };
+  GTokenType           token        = G_TOKEN_RIGHT_PAREN;
+  GValue               value        = G_VALUE_INIT;
   guint                old_scope_id;
 
   old_scope_id = g_scanner_set_scope (scanner, 0);
@@ -714,7 +714,7 @@ gimp_config_deserialize_value_array (GValue     *value,
 {
   GimpParamSpecValueArray *array_spec;
   GimpValueArray          *array;
-  GValue                   array_value = { 0, };
+  GValue                   array_value = G_VALUE_INIT;
   gint                     n_values;
   GTokenType               token;
   gint                     i;

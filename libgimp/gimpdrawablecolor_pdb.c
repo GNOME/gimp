@@ -510,7 +510,7 @@ gimp_drawable_invert (gint32 drawable_ID)
  * @channel: The channel to modify.
  * @low_input: Intensity of lowest input.
  * @high_input: Intensity of highest input.
- * @gamma: Gamma correction factor.
+ * @gamma: Gamma adjustment factor.
  * @low_output: Intensity of lowest output.
  * @high_output: Intensity of highest output.
  *

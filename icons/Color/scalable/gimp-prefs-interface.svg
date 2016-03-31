@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="15.999965"
+   height="16.000189"
+   id="svg2"
+   viewBox="0 0 15.999965 16.000189"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-prefs-interface.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview1704"
+     showgrid="false"
+     inkscape:zoom="14.749826"
+     inkscape:cx="-717.57342"
+     inkscape:cy="-317.76471"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3832">
+      <stop
+         stop-color="#ffffff"
+         id="stop3834" />
+      <stop
+         stop-color="#e0e0e0"
+         id="stop3836"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       y2="21.767578"
+       x2="0"
+       y1="11.07259"
+       gradientTransform="matrix(0.81725876,0,0,0.80816964,723.43306,113.20123)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient2034"
+       xlink:href="#linearGradient3832" />
+    <linearGradient
+       y2="21.767578"
+       x2="0"
+       y1="11.07259"
+       gradientTransform="matrix(1.018156,0,0,1,1479.0952,117.20565)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient2791"
+       xlink:href="#linearGradient3832" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(-348.54895,39.084547)"
+     id="preferences">
+    <g
+       id="gimp-prefs-interface"
+       transform="translate(348.54895,-39.08435)">
+      <rect
+         style="color:#000000;fill:url(#linearGradient2034);fill-rule:evenodd;stroke:#396db1;stroke-width:0.99681097"
+         ry="0.54585999"
+         rx="0.53898102"
+         y="2.664619"
+         x="2.354583"
+         height="12.836967"
+         width="13.146976"
+         id="rect3862" />
+      <rect
+         style="color:#000000;fill:#204a87;fill-rule:evenodd"
+         ry="0.109742"
+         rx="0.083873004"
+         y="4.1458068"
+         x="4.8702111"
+         height="0.98746002"
+         width="9.0562601"
+         id="rect3864" />
+      <g
+         transform="matrix(0.49051908,0,0,0.99445692,-2.3478159,-7.8026254)"
+         id="g2785">
+        <rect
+           style="color:#000000;fill:url(#linearGradient2791);fill-rule:evenodd;stroke:#888a85;stroke-width:1.42722297"
+           id="rect2787"
+           width="16.37875"
+           height="12.919584"
+           x="5.5000019"
+           y="8.5595303"
+           rx="2.305059"
+           ry="1.106154" />
+        <rect
+           style="color:#000000;fill:#555753;fill-rule:evenodd"
+           id="rect2789"
+           width="10.41925"
+           height="1.095516"
+           x="8.5608797"
+           y="9.9271889"
+           rx="0.46317899"
+           ry="0.121751" />
+      </g>
+      <ellipse
+         style="color:#000000;fill:#ef2929;fill-rule:evenodd;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         stroke-miterlimit="10"
+         id="path6940"
+         cx="5.876461"
+         cy="5.133266"
+         rx="1.00625"
+         ry="0.98746002" />
+      <ellipse
+         style="color:#000000;fill:#4e9a06;fill-rule:evenodd;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         stroke-miterlimit="10"
+         id="path6942"
+         cx="2.8577099"
+         cy="5.1332669"
+         rx="1.00625"
+         ry="0.98746002" />
+      <ellipse
+         style="color:#000000;fill:#3465a4;fill-rule:evenodd;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         stroke-miterlimit="10"
+         id="path6944"
+         cx="2.8577099"
+         cy="8.0956469"
+         rx="1.00625"
+         ry="0.98746002" />
+      <ellipse
+         style="color:#000000;fill:#888a85;fill-rule:evenodd;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         stroke-miterlimit="10"
+         id="path6946"
+         cx="5.876461"
+         cy="8.0956478"
+         rx="1.00625"
+         ry="0.98746002" />
+      <ellipse
+         style="color:#000000;fill:#c4a000;fill-rule:evenodd;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         stroke-miterlimit="10"
+         id="path6948"
+         cx="5.876462"
+         cy="11.05803"
+         rx="1.00625"
+         ry="0.98746002" />
+      <ellipse
+         style="color:#000000;fill:#f57900;fill-rule:evenodd;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         stroke-miterlimit="10"
+         id="path6950"
+         cx="2.8577099"
+         cy="11.05803"
+         rx="1.00625"
+         ry="0.98746002" />
+    </g>
+  </g>
+</svg>

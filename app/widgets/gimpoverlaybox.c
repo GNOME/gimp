@@ -474,6 +474,11 @@ gimp_overlay_box_scroll (GimpOverlayBox *box,
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
 
   widget = GTK_WIDGET (box);
+
+  /* bug 761118 */
+  if (! gtk_widget_get_realized (widget))
+    return;
+
   window = gtk_widget_get_window (widget);
 
   /*  Undraw all overlays  */

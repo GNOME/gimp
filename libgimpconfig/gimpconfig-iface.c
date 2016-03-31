@@ -201,8 +201,8 @@ gimp_config_iface_equal (GimpConfig *a,
   for (i = 0; equal && i < n_property_specs; i++)
     {
       GParamSpec  *prop_spec;
-      GValue       a_value = { 0, };
-      GValue       b_value = { 0, };
+      GValue       a_value = G_VALUE_INIT;
+      GValue       b_value = G_VALUE_INIT;
 
       prop_spec = property_specs[i];
 

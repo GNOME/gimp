@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="16.000767"
+   height="15.999193"
+   id="svg2"
+   viewBox="0 0 16.000767 15.999193"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-prefs-default-grid.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="501"
+     inkscape:window-height="405"
+     id="namedview1759"
+     showgrid="false"
+     inkscape:zoom="5.7739703"
+     inkscape:cx="-709.04891"
+     inkscape:cy="-292.76197"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       id="linearGradient8340">
+      <stop
+         stop-opacity="0.796078"
+         stop-color="#ffffff"
+         id="stop8342" />
+      <stop
+         stop-opacity="0.215686"
+         stop-color="#ffffff"
+         offset="1"
+         id="stop8344" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3778">
+      <stop
+         stop-color="#ecedea"
+         id="stop3780" />
+      <stop
+         stop-color="#b2b9ab"
+         id="stop3782"
+         offset="1" />
+    </linearGradient>
+    <radialGradient
+       r="20.515612"
+       cy="17.238922"
+       cx="18.212311"
+       gradientTransform="matrix(0.4806692,0,0,0.48066642,744.69049,88.701558)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient8496"
+       xlink:href="#linearGradient3778" />
+    <linearGradient
+       y2="59.09277"
+       x2="28.681103"
+       y1="13.484381"
+       x1="27.334524"
+       gradientTransform="matrix(0.38994752,0,0,0.39143587,746.34274,90.231868)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient8498"
+       xlink:href="#linearGradient8340" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(-370.48815,65.016363)"
+     id="preferences">
+    <g
+       id="gimp-prefs-default-grid"
+       transform="matrix(0.38994752,0,0,0.39143587,363.48971,-80.086216)">
+      <g
+         id="g3614"
+         transform="matrix(2.5644476,0,0,2.5546969,17.948153,38.497875)">
+        <rect
+           style="color:#000000;fill:url(#radialGradient8496);stroke:#888a85;stroke-width:0.39069101"
+           ry="0.48929501"
+           rx="0.487434"
+           y="0.195749"
+           x="0.194943"
+           height="15.608502"
+           width="15.610076"
+           id="rect1908" />
+        <g
+           style="opacity:0.32989699"
+           transform="matrix(0.38994752,0,0,0.39143587,-1.1698734,-0.83176981)"
+           id="g3447">
+          <g
+             transform="matrix(1.3591259,0,0,1.3664158,-13.987082,-15.023047)"
+             id="g3450">
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,5.9625,4.416667)"
+               id="path3069"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3071"
+               transform="matrix(1.6,0,0,1.333333,5.9625,6.416667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,5.9625,8.41667)"
+               id="path3073"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3075"
+               transform="matrix(1.6,0,0,1.333333,5.9625,10.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3079"
+               transform="matrix(1.6,0,0,1.333333,5.9625,14.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,5.9625,16.41667)"
+               id="path3081"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3083"
+               transform="matrix(1.6,0,0,1.333333,5.9625,18.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,5.9625,20.41667)"
+               id="path3085"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,5.9625,24.41667)"
+               id="path3089"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3091"
+               transform="matrix(1.6,0,0,1.333333,5.9625,26.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,5.9625,28.41667)"
+               id="path3093-7"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3105"
+               transform="matrix(1.6,0,0,1.333333,15.9625,4.416667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,15.9625,6.416667)"
+               id="path3107"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3109"
+               transform="matrix(1.6,0,0,1.333333,15.9625,8.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,15.9625,10.41667)"
+               id="path3111"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,15.9625,14.41667)"
+               id="path3115"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3117"
+               transform="matrix(1.6,0,0,1.333333,15.9625,16.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,15.9625,18.41667)"
+               id="path3119"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3121"
+               transform="matrix(1.6,0,0,1.333333,15.9625,20.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3125"
+               transform="matrix(1.6,0,0,1.333333,15.9625,24.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,15.9625,26.41667)"
+               id="path3127"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3129"
+               transform="matrix(1.6,0,0,1.333333,15.9625,28.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,50.70833,6.025)"
+               id="path3261"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3263"
+               transform="matrix(0,1.6,-1.333333,0,48.70833,6.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,46.70833,6.025)"
+               id="path3265"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3267"
+               transform="matrix(0,1.6,-1.333333,0,44.70833,6.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,42.70833,6.025)"
+               id="path3269"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3271"
+               transform="matrix(0,1.6,-1.333333,0,40.70833,6.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,38.70833,6.025)"
+               id="path3273"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3275"
+               transform="matrix(0,1.6,-1.333333,0,36.70833,6.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,34.70833,6.025)"
+               id="path3277"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3279"
+               transform="matrix(0,1.6,-1.333333,0,32.70833,6.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,30.70833,6.025)"
+               id="path3281"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3283"
+               transform="matrix(0,1.6,-1.333333,0,28.70833,6.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,26.70833,6.025)"
+               id="path3285"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3287"
+               transform="matrix(0,1.6,-1.333333,0,24.70833,6.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3297"
+               transform="matrix(0,1.6,-1.333333,0,50.70833,16.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,48.70833,16.025)"
+               id="path3299"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3301"
+               transform="matrix(0,1.6,-1.333333,0,46.70833,16.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,44.70833,16.025)"
+               id="path3303"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3305"
+               transform="matrix(0,1.6,-1.333333,0,42.70833,16.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,40.70833,16.025)"
+               id="path3307"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3309"
+               transform="matrix(0,1.6,-1.333333,0,38.70833,16.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,36.70833,16.025)"
+               id="path3311"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3313"
+               transform="matrix(0,1.6,-1.333333,0,34.70833,16.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,32.70833,16.025)"
+               id="path3315"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3317"
+               transform="matrix(0,1.6,-1.333333,0,30.70833,16.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,28.70833,16.025)"
+               id="path3319"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3321"
+               transform="matrix(0,1.6,-1.333333,0,26.70833,16.025)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(0,1.6,-1.333333,0,24.70833,16.025)"
+               id="path3323"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               id="path3443"
+               transform="matrix(1.6,0,0,1.333333,5.9625,30.41667)"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+            <ellipse
+               style="color:#000000"
+               transform="matrix(1.6,0,0,1.333333,15.9625,30.41667)"
+               id="path3445"
+               cx="10.375"
+               cy="7.5625"
+               rx="0.3125"
+               ry="0.375" />
+          </g>
+        </g>
+        <rect
+           style="color:#000000;opacity:0.860825;fill:none;stroke:url(#linearGradient8498);stroke-width:0.39069101"
+           id="rect3556"
+           width="14.818011"
+           height="14.874558"
+           x="0.58489102"
+           y="0.53825498"
+           rx="0.21170001"
+           ry="0.21250799" />
+      </g>
+      <rect
+         style="color:#000000;opacity:1;fill:none;stroke:#204a87;stroke-width:0.53770202"
+         id="rect3566"
+         width="5.3985438"
+         height="5.3890548"
+         x="5.3034978"
+         y="5.3732119"
+         rx="0.29126301"
+         ry="0.292568"
+         transform="matrix(2.5644476,0,0,2.5546969,17.948153,38.497875)" />
+      <g
+         id="g3445"
+         transform="matrix(1,0,0,1.3706526,23.867791,35.180568)">
+        <path
+           style="color:#000000;fill:#204a87;stroke:#204a87"
+           d="M 25,13.84 25,22"
+           id="path3568"
+           inkscape:connector-curvature="0" />
+        <path
+           style="color:#000000;fill:#204a87"
+           d="m 25,12 -1.707107,2.24 3.414214,0 z"
+           id="path3761"
+           inkscape:connector-curvature="0" />
+        <path
+           style="color:#000000;fill:#204a87"
+           id="path3763"
+           d="m 25,23.1775 -1.707107,-2.24 3.414214,0 z"
+           inkscape:connector-curvature="0" />
+      </g>
+      <g
+         id="g3445-9"
+         transform="matrix(0,0.99619772,-1.3758841,0,62.761326,23.125621)">
+        <path
+           style="color:#000000;fill:#204a87;stroke:#204a87"
+           d="M 25,13.84 25,22"
+           id="path3568-3"
+           inkscape:connector-curvature="0" />
+        <path
+           style="color:#000000;fill:#204a87"
+           d="m 25,12 -1.707107,2.24 3.414214,0 z"
+           id="path3761-0"
+           inkscape:connector-curvature="0" />
+        <path
+           style="color:#000000;fill:#204a87"
+           id="path3763-2"
+           d="m 25,23.1775 -1.707107,-2.24 3.414214,0 z"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+  </g>
+</svg>

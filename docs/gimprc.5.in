@@ -850,7 +850,7 @@ Sets the theme search path.  This is a colon-separated list of folders to
 search.
 
 .TP
-(theme "System")
+(theme "03-Dark")
 
 The name of the theme to use.  This is a string value.
 
@@ -861,7 +861,7 @@ Sets the icon theme search path.  This is a colon-separated list of folders to
 search.
 
 .TP
-(icon-theme "Default")
+(icon-theme "Symbolic")
 
 The name of the icon theme to use.  This is a string value.
 

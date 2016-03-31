@@ -220,7 +220,7 @@ gimp_string_model_lookup (GtkTreeModel *model,
                           const gchar  *id,
                           GtkTreeIter  *iter)
 {
-  GValue    value = { 0, };
+  GValue    value = G_VALUE_INIT;
   gboolean  iter_valid;
 
   /*  This lookup could be backed up by a hash table or some other

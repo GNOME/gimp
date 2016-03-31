@@ -612,7 +612,7 @@ HELP
 	{ name => 'high_input', type => '0.0 <= float <= 1.0',
 	  desc => "Intensity of highest input" },
 	{ name => 'gamma', type => '0.1 <= float <= 10',
-	  desc => 'Gamma correction factor' },
+	  desc => 'Gamma adjustment factor' },
 	{ name => 'low_output', type => '0.0 <= float <= 1.0',
 	  desc => "Intensity of lowest output" },
 	{ name => 'high_output', type => '0.0 <= float <= 1.0',

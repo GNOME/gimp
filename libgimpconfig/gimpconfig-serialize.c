@@ -117,7 +117,7 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
-  GValue         value = { 0, };
+  GValue         value = G_VALUE_INIT;
 
   g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
 
@@ -171,8 +171,8 @@ gimp_config_serialize_property (GimpConfig       *config,
 {
   GimpConfigInterface *config_iface = NULL;
   GimpConfigInterface *parent_iface = NULL;
-  GValue               value   = { 0, };
-  gboolean             success = FALSE;
+  GValue               value        = G_VALUE_INIT;
+  gboolean             success      = FALSE;
 
   if (! (param_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
     return FALSE;
@@ -486,7 +486,7 @@ gimp_config_serialize_value (const GValue *value,
 
   if (g_value_type_transformable (G_VALUE_TYPE (value), G_TYPE_STRING))
     {
-      GValue  tmp_value = { 0, };
+      GValue  tmp_value = G_VALUE_INIT;
 
       g_value_init (&tmp_value, G_TYPE_STRING);
       g_value_transform (value, &tmp_value);

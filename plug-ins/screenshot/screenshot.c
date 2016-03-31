@@ -27,6 +27,7 @@
 
 #include "screenshot.h"
 #include "screenshot-osx.h"
+#include "screenshot-gnome-shell.h"
 #include "screenshot-x11.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -115,6 +116,7 @@ static const guint8 screenshot_icon[] =
 
 
 /* Defines */
+
 #define PLUG_IN_PROC   "plug-in-screenshot"
 #define PLUG_IN_BINARY "screenshot"
 #define PLUG_IN_ROLE   "gimp-screenshot"
@@ -127,6 +129,26 @@ static const guint8 screenshot_icon[] =
 #endif
 #endif
 
+
+static void                query               (void);
+static void                run                 (const gchar      *name,
+                                                gint              nparams,
+                                                const GimpParam  *param,
+                                                gint             *nreturn_vals,
+                                                GimpParam       **return_vals);
+
+static GimpPDBStatusType   shoot               (GdkScreen        *screen,
+                                                gint32           *image_ID);
+
+static gboolean            shoot_dialog        (GdkScreen       **screen);
+static gboolean            shoot_quit_timeout  (gpointer          data);
+static gboolean            shoot_delay_timeout (gpointer          data);
+
+
+/* Global Variables */
+
+static ScreenshotBackend      backend      = SCREENSHOT_BACKEND_NONE;
+static ScreenshotCapabilities capabilities = 0;
 
 static ScreenshotValues shootvals =
 {
@@ -144,25 +166,6 @@ static ScreenshotValues shootvals =
   0,
   FALSE
 };
-
-
-static void                query              (void);
-static void                run                (const gchar      *name,
-                                               gint              nparams,
-                                               const GimpParam  *param,
-                                               gint             *nreturn_vals,
-                                               GimpParam       **return_vals);
-
-static GimpPDBStatusType   shoot              (GdkScreen        *screen,
-                                               gint32           *image_ID);
-
-static gboolean            shoot_dialog       (GdkScreen       **screen);
-static gboolean            shoot_quit_timeout (gpointer          data);
-
-
-/* Global Variables */
-
-static ScreenshotCapabilities capabilities = 0;
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -206,13 +209,12 @@ query (void)
                           "passed as a parameter.  The last four parameters "
                           "are optional and can be used to specify the corners "
                           "of the region to be grabbed."
-#ifdef PLATFORM_OSX
-                          "On Mac OS X, when called non-interactively, the plugin"
+                          "On Mac OS X or on gnome-shell, "
+                          "when called non-interactively, the plugin"
                           "only can take screenshots of the entire root window."
                           "Grabbing a window or a region is not supported"
                           "non-interactively. To grab a region or a particular"
                           "window, you need to use the interactive mode."
-#endif
                           ,
                           "Sven Neumann <sven@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>,"
@@ -256,9 +258,25 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 
 #ifdef PLATFORM_OSX
-  capabilities = screenshot_osx_get_capabilities ();
-#elif defined (GDK_WINDOWING_X11)
-  capabilities = screenshot_x11_get_capabilities ();
+  if (! backend && screenshot_osx_available ())
+    {
+      backend      = SCREENSHOT_BACKEND_OSX;
+      capabilities = screenshot_osx_get_capabilities ();
+    }
+#endif
+
+  if (! backend && screenshot_gnome_shell_available ())
+    {
+      backend      = SCREENSHOT_BACKEND_GNOME_SHELL;
+      capabilities = screenshot_gnome_shell_get_capabilities ();
+    }
+
+#ifdef GDK_WINDOWING_X11
+  if (! backend && screenshot_x11_available ())
+    {
+      backend      = SCREENSHOT_BACKEND_X11;
+      capabilities = screenshot_x11_get_capabilities ();
+    }
 #endif
 
   /* how are we running today? */
@@ -301,11 +319,12 @@ run (const gchar      *name,
       if (! gdk_init_check (NULL, NULL))
         status = GIMP_PDB_CALLING_ERROR;
 
-#ifdef PLATFORM_OSX
-      if (shootvals.shoot_type == SHOOT_WINDOW ||
-          shootvals.shoot_type == SHOOT_REGION)
-        status = GIMP_PDB_CALLING_ERROR;
-#endif
+      if (! (capabilities & SCREENSHOT_CAN_PICK_NONINTERACTIVELY))
+        {
+          if (shootvals.shoot_type == SHOOT_WINDOW ||
+              shootvals.shoot_type == SHOOT_REGION)
+            status = GIMP_PDB_CALLING_ERROR;
+        }
         break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -357,11 +376,16 @@ shoot (GdkScreen *screen,
        gint32    *image_ID)
 {
 #ifdef PLATFORM_OSX
-  return screenshot_osx_shoot (&shootvals, screen, image_ID);
+  if (backend == SCREENSHOT_BACKEND_OSX)
+    return screenshot_osx_shoot (&shootvals, screen, image_ID);
 #endif
 
+  if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
+    return screenshot_gnome_shell_shoot (&shootvals, screen, image_ID);
+
 #ifdef GDK_WINDOWING_X11
-  return screenshot_x11_shoot (&shootvals, screen, image_ID);
+  if (backend == SCREENSHOT_BACKEND_X11)
+    return screenshot_x11_shoot (&shootvals, screen, image_ID);
 #endif
 
   return GIMP_PDB_CALLING_ERROR; /* silence compiler */
@@ -636,4 +660,28 @@ shoot_quit_timeout (gpointer data)
   gtk_main_quit ();
 
   return FALSE;
+}
+
+
+static gboolean
+shoot_delay_timeout (gpointer data)
+{
+  gint *seconds_left = data;
+
+  (*seconds_left)--;
+
+  if (!*seconds_left)
+    gtk_main_quit ();
+
+  return *seconds_left;
+}
+
+
+/*  public functions  */
+
+void
+screenshot_delay (gint seconds)
+{
+  g_timeout_add (1000, shoot_delay_timeout, &seconds);
+  gtk_main ();
 }

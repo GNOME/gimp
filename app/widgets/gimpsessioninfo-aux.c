@@ -87,7 +87,7 @@ gimp_session_info_aux_new_from_props (GObject *object,
       if (pspec)
         {
           GString *str   = g_string_new (NULL);
-          GValue   value = { 0, };
+          GValue   value = G_VALUE_INIT;
 
           g_value_init (&value, pspec->value_type);
           g_object_get_property (object, pspec->name, &value);
@@ -146,7 +146,7 @@ gimp_session_info_aux_set_props (GObject *object,
 
               if (pspec)
                 {
-                  GValue  value = { 0, };
+                  GValue  value = G_VALUE_INIT;
 
                   g_value_init (&value, pspec->value_type);
 
@@ -173,7 +173,7 @@ gimp_session_info_aux_set_props (GObject *object,
                     }
                   else
                     {
-                      GValue  str_value = { 0, };
+                      GValue  str_value = G_VALUE_INIT;
 
                       g_value_init (&str_value, G_TYPE_STRING);
                       g_value_set_static_string (&str_value, aux->value);

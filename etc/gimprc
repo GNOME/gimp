@@ -667,7 +667,7 @@
 
 # The name of the theme to use.  This is a string value.
 # 
-# (theme "System")
+# (theme "03-Dark")
 
 # Sets the icon theme search path.  This is a colon-separated list of folders
 # to search.
@@ -676,7 +676,7 @@
 
 # The name of the icon theme to use.  This is a string value.
 # 
-# (icon-theme "Default")
+# (icon-theme "Symbolic")
 
 # When enabled, pressing F1 will open the help browser.  Possible values are
 # yes and no.

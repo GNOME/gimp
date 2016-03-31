@@ -957,8 +957,8 @@ gimp_global_config_notify (GObject    *global_config,
                            GParamSpec *param_spec,
                            GObject    *edit_config)
 {
-  GValue global_value = { 0, };
-  GValue edit_value   = { 0, };
+  GValue global_value = G_VALUE_INIT;
+  GValue edit_value   = G_VALUE_INIT;
 
   g_value_init (&global_value, param_spec->value_type);
   g_value_init (&edit_value,   param_spec->value_type);
@@ -988,8 +988,8 @@ gimp_edit_config_notify (GObject    *edit_config,
                          GParamSpec *param_spec,
                          GObject    *global_config)
 {
-  GValue edit_value   = { 0, };
-  GValue global_value = { 0, };
+  GValue edit_value   = G_VALUE_INIT;
+  GValue global_value = G_VALUE_INIT;
 
   g_value_init (&edit_value,   param_spec->value_type);
   g_value_init (&global_value, param_spec->value_type);

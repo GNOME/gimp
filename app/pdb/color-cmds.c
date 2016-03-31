@@ -858,7 +858,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("gamma",
                                                     "gamma",
-                                                    "Gamma correction factor",
+                                                    "Gamma adjustment factor",
                                                     0.1, 10, 0.1,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

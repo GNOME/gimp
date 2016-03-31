@@ -193,7 +193,7 @@ gimp_input_device_store_lookup (GimpInputDeviceStore *store,
                                 GtkTreeIter          *iter)
 {
   GtkTreeModel *model = GTK_TREE_MODEL (store);
-  GValue        value = { 0, };
+  GValue        value = G_VALUE_INIT;
   gboolean      iter_valid;
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
@@ -227,7 +227,7 @@ gimp_input_device_store_insert (GimpInputDeviceStore *store,
 {
   GtkTreeModel *model = GTK_TREE_MODEL (store);
   GtkTreeIter   iter;
-  GValue        value = { 0, };
+  GValue        value = G_VALUE_INIT;
   gint          pos   = 0;
   gboolean      iter_valid;
 

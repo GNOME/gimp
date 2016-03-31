@@ -376,7 +376,7 @@ gimp_gegl_config_sync_node (GimpObject *config,
 
       if (gimp_pspec)
         {
-          GValue value = { 0, };
+          GValue value = G_VALUE_INIT;
 
           g_value_init (&value, gimp_pspec->value_type);
 

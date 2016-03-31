@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="15.999957"
+   height="16.00005"
+   id="svg2"
+   viewBox="0 0 15.999957 16.000049"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-controller-midi.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="501"
+     inkscape:window-height="405"
+     id="namedview1699"
+     showgrid="false"
+     inkscape:zoom="14.527331"
+     inkscape:cx="-604.37536"
+     inkscape:cy="-301.55409"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         stop-color="#b4b4b4"
+         id="stop19284" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       x1="231.55"
+       x2="320.70001"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6057"
+       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
+      <stop
+         stop-color="#a11f7c"
+         id="stop6053" />
+      <stop
+         stop-opacity="0.984"
+         stop-color="#541f31"
+         offset="1"
+         id="stop6055" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5487">
+      <stop
+         id="stop5485"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     transform="translate(-179.03394,4.2792453)"
+     id="stock">
+    <g
+       transform="matrix(0.98087881,0,0,0.9849069,234.42701,14.155509)"
+       id="gimp-controller-midi">
+      <g
+         id="g3986"
+         transform="matrix(0.08398631,0,0,0.06605244,-56.694916,-18.891863)">
+        <rect
+           width="187.50739"
+           height="239.23152"
+           x="6"
+           y="6"
+           id="full"
+           style="opacity:1;fill:#ffffff;stroke:#000000;stroke-width:6.7130723;stroke-miterlimit:2;stroke-dasharray:none" />
+        <rect
+           y="6"
+           x="67"
+           style="opacity:1;fill:#ffffff;stroke:#000000;stroke-width:5.37045765;stroke-miterlimit:2;stroke-dasharray:none"
+           height="238"
+           width="62"
+           id="rD" />
+        <rect
+           y="6"
+           x="128"
+           style="opacity:1;fill:#ffffff;stroke:#000000;stroke-width:5.37045765;stroke-miterlimit:2;stroke-dasharray:none"
+           height="238"
+           width="62"
+           id="rE" />
+        <rect
+           y="6"
+           x="46"
+           style="opacity:1;fill:#000000;stroke:#000000;stroke-width:5.37045765;stroke-miterlimit:2;stroke-dasharray:none"
+           height="139"
+           width="42"
+           id="rCs" />
+        <rect
+           y="6"
+           x="106"
+           style="opacity:1;fill:#000000;stroke:#000000;stroke-width:5.37045765;stroke-miterlimit:2;stroke-dasharray:none"
+           height="139"
+           width="42"
+           id="rDs" />
+      </g>
+    </g>
+  </g>
+</svg>

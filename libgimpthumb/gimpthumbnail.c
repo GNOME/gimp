@@ -944,7 +944,7 @@ static void
 gimp_thumbnail_debug_notify (GObject    *object,
                              GParamSpec *pspec)
 {
-  GValue       value = { 0, };
+  GValue       value = G_VALUE_INIT;
   gchar       *str   = NULL;
   const gchar *name;
 
@@ -957,7 +957,7 @@ gimp_thumbnail_debug_notify (GObject    *object,
     }
   else if (g_value_type_transformable (pspec->value_type, G_TYPE_STRING))
     {
-      GValue  tmp = { 0, };
+      GValue  tmp = G_VALUE_INIT;
 
       g_value_init (&tmp, G_TYPE_STRING);
       g_value_transform (&value, &tmp);
