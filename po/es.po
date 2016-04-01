@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-30 18:23+0000\n"
-"PO-Revision-Date: 2016-03-30 22:55-0600\n"
+"POT-Creation-Date: 2016-03-31 18:25+0000\n"
+"PO-Revision-Date: 2016-03-31 19:44-0600\n"
 "Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -806,8 +806,7 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Intersectar este canal con la selección actual"
 
-#: ../app/actions/channels-commands.c:86
-#: ../app/actions/channels-commands.c:403
+#: ../app/actions/channels-commands.c:86 ../app/actions/channels-commands.c:403
 msgid "Channel Attributes"
 msgstr "Atributos del canal"
 
@@ -819,8 +818,7 @@ msgstr "Editar los atributos del canal"
 msgid "Edit Channel Color"
 msgstr "Editar el color del canal"
 
-#: ../app/actions/channels-commands.c:92
-#: ../app/actions/channels-commands.c:124
+#: ../app/actions/channels-commands.c:92 ../app/actions/channels-commands.c:124
 msgid "_Fill opacity:"
 msgstr "Opacidad del _relleno:"
 
@@ -1090,8 +1088,7 @@ msgstr ""
 "La apertura de «%s» ha fallado:\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114
-#: ../app/actions/tool-options-commands.c:74
+#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1963
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
@@ -4276,15 +4273,13 @@ msgstr "Redimensionando"
 msgid "Set Image Print Resolution"
 msgstr "Establecer la resolución de impresión de la imagen"
 
-#: ../app/actions/image-commands.c:566
-#: ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:566 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Volteando"
 
-#: ../app/actions/image-commands.c:590
-#: ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:590 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
@@ -8622,14 +8617,11 @@ msgid "Jitter"
 msgstr "Vibración"
 
 #: ../app/core/core-enums.c:1175
-#| msgctxt "dialogs-action"
-#| msgid "Open the selection editor"
 msgctxt "image-map-region"
 msgid "Use the selection as input"
 msgstr "Usar la selección como entrada"
 
 #: ../app/core/core-enums.c:1176
-#| msgid "Use the online version"
 msgctxt "image-map-region"
 msgid "Use the entire layer as input"
 msgstr "Usar toda la capa como entrada"
@@ -8780,32 +8772,27 @@ msgstr "No hay patrones disponibles para esta operación."
 
 #: ../app/core/gimpbrush-load.c:173
 #, c-format
-#| msgid "Fatal parse error in brush file '%s': Width = 0."
 msgid "Fatal parse error in brush file: Width = 0."
 msgstr "Error fatal de análisis en el archivo del pincel : anchura = 0."
 
 #: ../app/core/gimpbrush-load.c:180
 #, c-format
-#| msgid "Fatal parse error in brush file '%s': Height = 0."
 msgid "Fatal parse error in brush file: Height = 0."
 msgstr "Error fatal de análisis en el archivo del pincel: altura = 0."
 
 #: ../app/core/gimpbrush-load.c:187
 #, c-format
-#| msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "Error fatal de análisis en el archivo del pincel: bytes = 0."
 
 #: ../app/core/gimpbrush-load.c:212
 #, c-format
-#| msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: profundidad desconocida %d."
 
 #: ../app/core/gimpbrush-load.c:224
 #, c-format
-#| msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: versión desconocida %d."
@@ -8824,9 +8811,6 @@ msgstr "Sin nombre"
 
 #: ../app/core/gimpbrush-load.c:323
 #, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
-#| "GIMP brushes must be GRAY or RGBA."
 msgid ""
 "Fatal parse error in brush file:\n"
 "Unsupported brush depth %d\n"
@@ -8842,9 +8826,6 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:370
 #, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
-#| "GIMP brushes must be GRAY or RGBA."
 msgid ""
 "Fatal parse error in brush file:\n"
 "Unsupported brush depth %d\n"
@@ -8856,23 +8837,17 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:446
 #, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': unable to decode abr format version "
-#| "%d."
 msgid "Unable to decode abr format version %d."
 msgstr "No se puede decodificar el formato abr versión %d."
 
 #: ../app/core/gimpbrush-load.c:644
 #, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: los pinceles anchos no "
 "están soportados."
 
 #: ../app/core/gimpbrush-load.c:785
-#| msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: el archivo parece estar "
@@ -8880,9 +8855,6 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:931
 #, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': unable to decode abr format version "
-#| "%d."
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
@@ -8895,7 +8867,6 @@ msgstr "Espaciado del pincel"
 
 #: ../app/core/gimpbrushgenerated-load.c:75
 #, c-format
-#| msgid "not a GIMP Curves file"
 msgid "Not a GIMP brush file."
 msgstr "No es un archivo de pincel GIMP."
 
@@ -9116,7 +9087,6 @@ msgid "Flood Channel"
 msgstr "Voltear el canal"
 
 #: ../app/core/gimpchannel.c:836
-#| msgid "Cannot stroke empty channel."
 msgid "Cannot fill empty channel."
 msgstr "No se puede rellenar un canal vacío."
 
@@ -9179,13 +9149,11 @@ msgid "Brush"
 msgstr "Pincel"
 
 #: ../app/core/gimpcontext.c:712
-#| msgid "Paint Dynamics"
 msgid "Paint dynamics"
 msgstr "Dinámicas de la pintura"
 
 #: ../app/core/gimpcontext.c:718 ../app/core/gimpcontext.c:719
 #: ../app/tools/gimpmybrushtool.c:73
-#| msgid "Paintbrush"
 msgid "MyPaint Brush"
 msgstr "Pincel MyPaint"
 
@@ -9207,10 +9175,9 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: ../app/core/gimpcontext.c:746 ../app/core/gimpcontext.c:747
-#, fuzzy
 #| msgid "Tool Presets"
 msgid "Tool Preset"
-msgstr "Ajustes prefijados de las herramientas"
+msgstr "Ajuste prefijado de herramienta"
 
 #: ../app/core/gimpcontext.c:753 ../app/core/gimpcontext.c:754
 #: ../app/tools/gimptextoptions.c:548
@@ -9219,7 +9186,6 @@ msgstr "Tipografía"
 
 #: ../app/core/gimpdata.c:537 ../app/core/gimpdata.c:545
 #, c-format
-#| msgid "Error reading '%s': %s"
 msgid "Error saving '%s': "
 msgstr "Error al guardar «%s»: "
 
@@ -9289,7 +9255,6 @@ msgstr "Error al cargar «%s»"
 
 #: ../app/core/gimpdatafactory.c:935 ../app/xcf/xcf.c:330
 #, c-format
-#| msgid "Could not open '%s' for reading: %s"
 msgid "Could not open '%s' for reading: "
 msgstr "No se ha podido abrir «%s» para lectura: "
 
@@ -9381,8 +9346,6 @@ msgid "Output type"
 msgstr "Tipo de salida"
 
 #: ../app/core/gimpfilloptions.c:93
-#| msgctxt "dockable-action"
-#| msgid "_Tab Style"
 msgid "Style"
 msgstr "Estilo"
 
@@ -9417,17 +9380,16 @@ msgid "Fill with Pattern"
 msgstr "Rellenar con un patrón"
 
 #: ../app/core/gimpfilloptions.c:376
-#, fuzzy
 #| msgid "Fill with plain color"
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
-msgstr "Rellenar con color sencillo"
+msgstr "Rellenar con color sólido"
 
 #: ../app/core/gimpgradient-load.c:72
-#, fuzzy, c-format
+#, c-format
 #| msgid "not a GIMP Curves file"
 msgid "Not a GIMP gradient file."
-msgstr "no es un archivo de curvas de GIMP"
+msgstr "No es un archivo de degradado GIMP."
 
 #: ../app/core/gimpgradient-load.c:95
 #, c-format
@@ -9445,24 +9407,22 @@ msgid "Corrupt segment %d."
 msgstr "Segmento %d corrupto."
 
 #: ../app/core/gimpgradient-load.c:214 ../app/core/gimpgradient-load.c:224
-#, fuzzy, c-format
+#, c-format
 #| msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgid "Segments do not span the range 0-1."
-msgstr ""
-"El archivo de degradado «%s» está corrompido. Los segmentos no se expanden a "
-"través del rango 0-1."
+msgstr "Los segmentos no abarcan el rango 0-1."
 
 #: ../app/core/gimpgradient-load.c:239
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid empty gradient name"
 msgid "In line %d of gradient file: "
-msgstr "Nombre vacío del degradado no válido"
+msgstr "En la línea %d del archivo de degradado:"
 
 #: ../app/core/gimpgradient-load.c:315
-#, fuzzy, c-format
+#, c-format
 #| msgid "No linear gradients found in '%s'"
 msgid "No linear gradients found."
-msgstr "No se encontraron degradados lineales en «%s»"
+msgstr "No se encontraron degradados lineales."
 
 #: ../app/core/gimpgradient-save.c:211
 #, c-format
@@ -9470,10 +9430,9 @@ msgid "Writing POV file '%s' failed: %s"
 msgstr "Falló al escribir el archivo POV «%s»: %s"
 
 #: ../app/core/gimpgrid.c:86
-#, fuzzy
 #| msgid "Line _style:"
 msgid "Line style"
-msgstr "E_stilo de la línea:"
+msgstr "Estilo de línea"
 
 #: ../app/core/gimpgrid.c:87
 msgid "Line style used for the grid."
@@ -9491,36 +9450,32 @@ msgstr ""
 "guiones dobles."
 
 #: ../app/core/gimpgrid.c:109
-#, fuzzy
 #| msgid "Spacing"
 msgid "Spacing X"
-msgstr "Espaciado"
+msgstr "Espaciado X"
 
 #: ../app/core/gimpgrid.c:110
 msgid "Horizontal spacing of grid lines."
 msgstr "Espacio horizontal de la líneas de la rejilla."
 
 #: ../app/core/gimpgrid.c:116
-#, fuzzy
 #| msgid "Spacing"
 msgid "Spacing Y"
-msgstr "Espaciado"
+msgstr "Espaciado Y"
 
 #: ../app/core/gimpgrid.c:117
 msgid "Vertical spacing of grid lines."
 msgstr "Espacio vertical de las líneas de la rejilla."
 
 #: ../app/core/gimpgrid.c:123
-#, fuzzy
 #| msgid "Spacing"
 msgid "Spacing unit"
-msgstr "Espaciado"
+msgstr "Unidad de espaciado"
 
 #: ../app/core/gimpgrid.c:130
-#, fuzzy
 #| msgid "Offset"
 msgid "Offset X"
-msgstr "Desplazamiento"
+msgstr "Desplazamiento X"
 
 #: ../app/core/gimpgrid.c:131
 msgid ""
@@ -9530,10 +9485,9 @@ msgstr ""
 "número negativo."
 
 #: ../app/core/gimpgrid.c:139
-#, fuzzy
 #| msgid "Offset"
 msgid "Offset Y"
-msgstr "Desplazamiento"
+msgstr "Desplazamiento Y"
 
 #: ../app/core/gimpgrid.c:140
 msgid "Vertical offset of the first grid line; this may be a negative number."
@@ -9542,10 +9496,9 @@ msgstr ""
 "número negativo."
 
 #: ../app/core/gimpgrid.c:148
-#, fuzzy
 #| msgid "Offset"
 msgid "Offset unit"
-msgstr "Desplazamiento"
+msgstr "Unidad de desplazamiento"
 
 #: ../app/core/gimpgrouplayer.c:228
 msgid "Layer Group"
@@ -9681,11 +9634,12 @@ msgid "ICC profile validation failed: "
 msgstr "La validación de perfiles ICC falló:"
 
 #: ../app/core/gimpimage-color-profile.c:252
-#, fuzzy
 #| msgid "Colorize operates only on RGB color layers."
 msgid ""
 "ICC profile validation failed: Color profile is not for GRAY color space"
-msgstr "Colorear sólo funciona sobre capas de color RGB."
+msgstr ""
+"La validación de perfiles ICC falló: el perfil de color no es para el "
+"espacio de color GRAY"
 
 #: ../app/core/gimpimage-color-profile.c:262
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
@@ -9694,16 +9648,15 @@ msgstr ""
 "espacio de color RGB"
 
 #: ../app/core/gimpimage-color-profile.c:397
-#, fuzzy, c-format
+#, c-format
 #| msgid "Revert '%s' to '%s'?"
 msgid "Converting from '%s' to '%s'"
-msgstr "¿Quiere revertir «%s» a «%s»?"
+msgstr "Convirtiendo de «%s» a «%s»"
 
 #: ../app/core/gimpimage-color-profile.c:402
-#, fuzzy
 #| msgid "Color Profile"
 msgid "Color profile conversion"
-msgstr "Perfil de color"
+msgstr "Conversión del perfil de color"
 
 #: ../app/core/gimpimage-colormap.c:65
 #, c-format
@@ -9716,12 +9669,11 @@ msgid "Set Colormap"
 msgstr "Establecer mapa de colores"
 
 #: ../app/core/gimpimage-colormap.c:244
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set Colormap"
 msgctxt "undo-type"
 msgid "Unset Colormap"
-msgstr "Establecer mapa de colores"
+msgstr "Quitar mapa de colores"
 
 #: ../app/core/gimpimage-colormap.c:297
 msgctxt "undo-type"
@@ -9734,12 +9686,11 @@ msgid "Add Color to Colormap"
 msgstr "Añadir color al mapa de colores"
 
 #: ../app/core/gimpimage-convert-precision.c:81
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Convert Image to 8 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit linear integer"
-msgstr "Convertir la imagen a enteros de 8 bit"
+msgstr "Convertir la imagen a entero lineal de 8 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:84
 #, fuzzy
@@ -9750,12 +9701,11 @@ msgid "Convert Image to 8 bit gamma integer"
 msgstr "Convertir la imagen a enteros de 8 bit"
 
 #: ../app/core/gimpimage-convert-precision.c:87
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Convert Image to 16 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear integer"
-msgstr "Convertir imagen a enteros de 16 bits"
+msgstr "Convertir la imagen a entero lineal de 16 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:90
 #, fuzzy
@@ -9766,12 +9716,11 @@ msgid "Convert Image to 16 bit gamma integer"
 msgstr "Convertir imagen a enteros de 16 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:93
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Convert Image to 32 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear integer"
-msgstr "Convertir imagen a enteros de 32 bits"
+msgstr "Convertir la imagen a entero lineal de 32 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:96
 #, fuzzy
@@ -10565,15 +10514,13 @@ msgstr "Líneas medias"
 msgid "Number of points"
 msgstr "Número de líneas"
 
-#: ../app/core/gimpsymmetry-mandala.c:143
-#: ../app/core/gimpsymmetry-mirror.c:145
+#: ../app/core/gimpsymmetry-mandala.c:143 ../app/core/gimpsymmetry-mirror.c:145
 #, fuzzy
 #| msgid "Cage transform"
 msgid "Disable brush transform"
 msgstr "Transformar rejilla"
 
-#: ../app/core/gimpsymmetry-mandala.c:144
-#: ../app/core/gimpsymmetry-mirror.c:146
+#: ../app/core/gimpsymmetry-mandala.c:144 ../app/core/gimpsymmetry-mirror.c:146
 #, fuzzy
 #| msgid "Transformation"
 msgid "Disable brush transformation (faster)"
@@ -11070,8 +11017,7 @@ msgstr "C_onvertir"
 
 #. dithering
 #: ../app/dialogs/convert-precision-dialog.c:185
-#: ../app/dialogs/convert-type-dialog.c:239
-#: ../app/tools/gimpblendoptions.c:119
+#: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:119
 msgid "Dithering"
 msgstr "Difuminado"
 
@@ -11148,8 +11094,7 @@ msgstr "Activar difuminado de las capas de texto"
 msgid "Converting to indexed colors"
 msgstr "Convirtiendo a colores indexados"
 
-#: ../app/dialogs/convert-type-dialog.c:439
-#: ../app/pdb/image-convert-cmds.c:162
+#: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/image-convert-cmds.c:162
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "No se puede convertir a una paleta con más de 256 colores."
 
@@ -12235,8 +12180,7 @@ msgstr "Seleccionar un tema"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2061
-#: ../app/dialogs/preferences-dialog.c:2454
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2454 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Apariencia"
 
@@ -12348,9 +12292,8 @@ msgstr "Resolución de monitor"
 
 # Debe ir en minúsculas por las reglas de estilo
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2218
-#: ../app/display/gimpcursorview.c:207 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2218 ../app/display/gimpcursorview.c:207
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "píxeles"
 
@@ -12856,8 +12799,7 @@ msgstr "Pulse %s para descartar todos los cambios y salir."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Pulse %s para descartar todos los cambios y cerrar todas las imágenes."
 
-#: ../app/dialogs/quit-dialog.c:341
-#: ../app/display/gimpdisplayshell-close.c:179
+#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:179
 msgid "_Discard Changes"
 msgstr "_Descartar cambios"
 
@@ -13132,8 +13074,8 @@ msgstr "Activar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:773
-#: ../app/display/gimpdisplayshell.c:1467 ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:773 ../app/display/gimpdisplayshell.c:1467
+#: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
 
@@ -13912,8 +13854,7 @@ msgid "Aspect Ratio"
 msgstr "Proporción de aspecto"
 
 #: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaciado"
 
@@ -15445,8 +15386,7 @@ msgstr "Sobremuestreo adaptativo"
 msgid "Max depth"
 msgstr "Profundidad máxima"
 
-#: ../app/tools/gimpblendoptions.c:112
-#: ../app/tools/gimpbucketfilloptions.c:126
+#: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:126
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
@@ -15787,18 +15727,15 @@ msgstr "Colorear la imagen"
 msgid "Select Color"
 msgstr "Seleccionar el color"
 
-#: ../app/tools/gimpcolorizetool.c:174
-#: ../app/tools/gimphuesaturationtool.c:312
+#: ../app/tools/gimpcolorizetool.c:174 ../app/tools/gimphuesaturationtool.c:312
 msgid "_Hue"
 msgstr "_Tono"
 
-#: ../app/tools/gimpcolorizetool.c:181
-#: ../app/tools/gimphuesaturationtool.c:326
+#: ../app/tools/gimpcolorizetool.c:181 ../app/tools/gimphuesaturationtool.c:326
 msgid "_Saturation"
 msgstr "_Saturación"
 
-#: ../app/tools/gimpcolorizetool.c:188
-#: ../app/tools/gimphuesaturationtool.c:319
+#: ../app/tools/gimpcolorizetool.c:188 ../app/tools/gimphuesaturationtool.c:319
 msgid "_Lightness"
 msgstr "_Luminosidad"
 
@@ -16796,8 +16733,7 @@ msgid "Resize image window to accommodate new zoom level"
 msgstr ""
 "Redimensionar la ventana de imagen para ajustarse nuevo nivel de ampliación"
 
-#: ../app/tools/gimpmagnifyoptions.c:91
-#: ../app/tools/gimptransformoptions.c:116
+#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
 #: ../app/widgets/gimpdynamicseditor.c:144
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
@@ -17437,8 +17373,7 @@ msgstr "Permitir el difuminado de los límites de la selección"
 msgid "Radius of feathering"
 msgstr "Radio del difuminado"
 
-#: ../app/tools/gimpselectionoptions.c:222
-#: ../app/widgets/gimpbrushselect.c:190
+#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Modo:"
 
