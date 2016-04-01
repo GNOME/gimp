@@ -70,9 +70,10 @@ screenshot_osx_get_capabilities (void)
 }
 
 GimpPDBStatusType
-screenshot_osx_shoot (ScreenshotValues *shootvals,
-                      GdkScreen        *screen,
-                      gint32           *image_ID)
+screenshot_osx_shoot (ScreenshotValues  *shootvals,
+                      GdkScreen         *screen,
+                      gint32            *image_ID,
+                      GError           **error)
 {
   const gchar *mode    = " ";
   const gchar *cursor  = " ";
@@ -106,7 +107,6 @@ screenshot_osx_shoot (ScreenshotValues *shootvals,
     }
 
   delay = g_strdup_printf ("-T %i", shootvals->select_delay);
-
 
   filename = gimp_temp_name ("png");
   quoted   = g_shell_quote (filename);

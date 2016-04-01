@@ -560,9 +560,10 @@ screenshot_x11_get_capabilities (void)
 }
 
 GimpPDBStatusType
-screenshot_x11_shoot (ScreenshotValues *shootvals,
-                      GdkScreen        *screen,
-                      gint32           *image_ID)
+screenshot_x11_shoot (ScreenshotValues  *shootvals,
+                      GdkScreen         *screen,
+                      gint32            *image_ID,
+                      GError           **error)
 {
   GdkDisplay      *display;
   GdkWindow       *window;
@@ -619,7 +620,7 @@ screenshot_x11_shoot (ScreenshotValues *shootvals,
 
       if (! window)
         {
-          g_message (_("Specified window not found"));
+          g_set_error_literal (error, 0, 0, _("Specified window not found"));
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
