@@ -88,23 +88,25 @@ screenshot_osx_shoot (ScreenshotValues *shootvals,
       break;
 
     case SHOOT_WINDOW:
-      mode = "-iwo";
       if (shootvals->decorate)
+        mode = "-iwo";
+      else
         mode = "-iw";
       break;
 
     case SHOOT_ROOT:
       mode = " ";
+      if (shootvals->show_cursor)
+        cursor = "-C";
       break;
 
     default:
+      g_return_val_if_reached (GIMP_PDB_CALLING_ERROR);
       break;
     }
 
   delay = g_strdup_printf ("-T %i", shootvals->select_delay);
 
-  if (shootvals->show_cursor)
-    cursor = "-C";
 
   filename = gimp_temp_name ("png");
   quoted   = g_shell_quote (filename);
