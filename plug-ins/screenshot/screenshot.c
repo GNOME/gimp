@@ -26,9 +26,10 @@
 #include <libgimp/gimpui.h>
 
 #include "screenshot.h"
-#include "screenshot-osx.h"
 #include "screenshot-gnome-shell.h"
+#include "screenshot-osx.h"
 #include "screenshot-x11.h"
+#include "screenshot-win32.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -267,6 +268,14 @@ run (const gchar      *name,
     }
 #endif
 
+#ifdef G_OS_WIN32
+  if (! backend && screenshot_win32_available ())
+    {
+      backend      = SCREENSHOT_BACKEND_WIN32;
+      capabilities = screenshot_win32_get_capabilities ();
+    }
+#endif
+
   if (! backend && screenshot_gnome_shell_available ())
     {
       backend      = SCREENSHOT_BACKEND_GNOME_SHELL;
@@ -387,6 +396,11 @@ shoot (GdkScreen  *screen,
 #ifdef PLATFORM_OSX
   if (backend == SCREENSHOT_BACKEND_OSX)
     return screenshot_osx_shoot (&shootvals, screen, image_ID, error);
+#endif
+
+#ifdef G_OS_WIN32
+  if (backend == SCREENSHOT_BACKEND_WIN32)
+    return screenshot_win32_shoot (&shootvals, screen, image_ID, error);
 #endif
 
   if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
