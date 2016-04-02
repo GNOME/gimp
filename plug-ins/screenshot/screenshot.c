@@ -26,9 +26,10 @@
 #include <libgimp/gimpui.h>
 
 #include "screenshot.h"
-#include "screenshot-osx.h"
 #include "screenshot-gnome-shell.h"
+#include "screenshot-osx.h"
 #include "screenshot-x11.h"
+#include "screenshot-win32.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -138,7 +139,8 @@ static void                run                 (const gchar      *name,
                                                 GimpParam       **return_vals);
 
 static GimpPDBStatusType   shoot               (GdkScreen        *screen,
-                                                gint32           *image_ID);
+                                                gint32           *image_ID,
+                                                GError          **error);
 
 static gboolean            shoot_dialog        (GdkScreen       **screen);
 static gboolean            shoot_quit_timeout  (gpointer          data);
@@ -241,10 +243,11 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[2];
-  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
-  GdkScreen         *screen   = NULL;
+  GdkScreen         *screen = NULL;
   gint32             image_ID;
+  GError            *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -262,6 +265,14 @@ run (const gchar      *name,
     {
       backend      = SCREENSHOT_BACKEND_OSX;
       capabilities = screenshot_osx_get_capabilities ();
+    }
+#endif
+
+#ifdef G_OS_WIN32
+  if (! backend && screenshot_win32_available ())
+    {
+      backend      = SCREENSHOT_BACKEND_WIN32;
+      capabilities = screenshot_win32_get_capabilities ();
     }
 #endif
 
@@ -338,7 +349,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      status = shoot (screen, &image_ID);
+      status = shoot (screen, &image_ID, &error);
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -358,11 +369,17 @@ run (const gchar      *name,
             }
         }
 
-      /* set return values */
       *nreturn_vals = 2;
 
       values[1].type         = GIMP_PDB_IMAGE;
       values[1].data.d_image = image_ID;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -372,20 +389,26 @@ run (const gchar      *name,
 /* The main Screenshot function */
 
 static GimpPDBStatusType
-shoot (GdkScreen *screen,
-       gint32    *image_ID)
+shoot (GdkScreen  *screen,
+       gint32     *image_ID,
+       GError    **error)
 {
 #ifdef PLATFORM_OSX
   if (backend == SCREENSHOT_BACKEND_OSX)
-    return screenshot_osx_shoot (&shootvals, screen, image_ID);
+    return screenshot_osx_shoot (&shootvals, screen, image_ID, error);
+#endif
+
+#ifdef G_OS_WIN32
+  if (backend == SCREENSHOT_BACKEND_WIN32)
+    return screenshot_win32_shoot (&shootvals, screen, image_ID, error);
 #endif
 
   if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
-    return screenshot_gnome_shell_shoot (&shootvals, screen, image_ID);
+    return screenshot_gnome_shell_shoot (&shootvals, screen, image_ID, error);
 
 #ifdef GDK_WINDOWING_X11
   if (backend == SCREENSHOT_BACKEND_X11)
-    return screenshot_x11_shoot (&shootvals, screen, image_ID);
+    return screenshot_x11_shoot (&shootvals, screen, image_ID, error);
 #endif
 
   return GIMP_PDB_CALLING_ERROR; /* silence compiler */

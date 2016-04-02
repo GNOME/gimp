@@ -70,14 +70,16 @@ screenshot_osx_get_capabilities (void)
 }
 
 GimpPDBStatusType
-screenshot_osx_shoot (ScreenshotValues *shootvals,
-                      GdkScreen        *screen,
-                      gint32           *image_ID)
+screenshot_osx_shoot (ScreenshotValues  *shootvals,
+                      GdkScreen         *screen,
+                      gint32            *image_ID,
+                      GError           **error)
 {
   const gchar *mode    = " ";
   const gchar *cursor  = " ";
   gchar       *delay   = NULL;
   gchar       *filename;
+  gchar       *quoted;
   gchar       *command = NULL;
 
   switch (shootvals->shoot_type)
@@ -87,34 +89,37 @@ screenshot_osx_shoot (ScreenshotValues *shootvals,
       break;
 
     case SHOOT_WINDOW:
-      mode = "-iwo";
       if (shootvals->decorate)
+        mode = "-iwo";
+      else
         mode = "-iw";
       break;
 
     case SHOOT_ROOT:
       mode = " ";
+      if (shootvals->show_cursor)
+        cursor = "-C";
       break;
 
     default:
+      g_return_val_if_reached (GIMP_PDB_CALLING_ERROR);
       break;
     }
 
   delay = g_strdup_printf ("-T %i", shootvals->select_delay);
 
-  if (shootvals->show_cursor)
-    cursor = "-C";
-
   filename = gimp_temp_name ("png");
+  quoted   = g_shell_quote (filename);
 
   command = g_strjoin (" ",
                        "/usr/sbin/screencapture",
                        mode,
                        cursor,
                        delay,
-                       filename,
+                       quoted,
                        NULL);
 
+  g_free (quoted);
   g_free (delay);
 
   if (system ((const char *) command) == EXIT_SUCCESS)

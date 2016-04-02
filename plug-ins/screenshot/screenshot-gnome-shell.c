@@ -39,14 +39,31 @@ gboolean
 screenshot_gnome_shell_available (void)
 {
   proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
-                                         G_DBUS_PROXY_FLAGS_NONE,
+                                         G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
                                          NULL,
                                          "org.gnome.Shell.Screenshot",
                                          "/org/gnome/Shell/Screenshot",
                                          "org.gnome.Shell.Screenshot",
                                          NULL, NULL);
 
-  return proxy != NULL;
+  if (proxy)
+    {
+      GError *error = NULL;
+
+      g_dbus_proxy_call_sync (proxy, "org.freedesktop.DBus.Peer.Ping",
+                              NULL,
+                              G_DBUS_CALL_FLAGS_NONE,
+                              -1, NULL, &error);
+      if (! error)
+        return TRUE;
+
+      g_clear_error (&error);
+
+      g_object_unref (proxy);
+      proxy = NULL;
+    }
+
+  return FALSE;
 }
 
 ScreenshotCapabilities
@@ -57,9 +74,10 @@ screenshot_gnome_shell_get_capabilities (void)
 }
 
 GimpPDBStatusType
-screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
-                              GdkScreen        *screen,
-                              gint32           *image_ID)
+screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
+                              GdkScreen         *screen,
+                              gint32            *image_ID,
+                              GError           **error)
 {
   gchar       *filename;
   const gchar *method = NULL;
@@ -85,7 +103,10 @@ screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
     case SHOOT_REGION:
       retval = g_dbus_proxy_call_sync (proxy, "SelectArea", NULL,
                                        G_DBUS_CALL_FLAGS_NONE,
-                                       -1, NULL, NULL);
+                                       -1, NULL, error);
+      if (! retval)
+        goto failure;
+
       g_variant_get (retval, "(iiii)",
                      &shootvals->x1,
                      &shootvals->y1,
@@ -120,7 +141,9 @@ screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
 
   retval = g_dbus_proxy_call_sync (proxy, method, args,
                                    G_DBUS_CALL_FLAGS_NONE,
-                                   -1, NULL, NULL);
+                                   -1, NULL, error);
+  if (! retval)
+    goto failure;
 
   g_variant_get (retval, "(bs)",
                  &success,
@@ -142,6 +165,8 @@ screenshot_gnome_shell_shoot (ScreenshotValues *shootvals,
 
       return GIMP_PDB_SUCCESS;
     }
+
+ failure:
 
   g_free (filename);
 

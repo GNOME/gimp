@@ -27,8 +27,6 @@ endif
 if OS_WIN32
 twain = twain
 win_snap = win-snap
-else
-screenshot = screenshot
 endif
 
 SUBDIRS = \
@@ -58,7 +56,7 @@ SUBDIRS = \
 	metainfo		\
 	pagecurl		\
 	$(print)		\
-	$(screenshot)		\
+	screenshot		\
 	selection-to-path	\
 	$(twain)		\
 	ui			\

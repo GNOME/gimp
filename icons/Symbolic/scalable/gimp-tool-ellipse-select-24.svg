@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="gimp-tool-ellipse-select-24.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
+   inkscape:export-xdpi="98.181816"
+   inkscape:export-ydpi="98.181816">
+  <defs
+     id="defs30573">
+    <linearGradient
+       id="linearGradient19282-4"
+       osb:paint="solid"
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-482.61525,330.965)">
+      <stop
+         style="stop-color:#bebebe;stop-opacity:1;"
+         offset="0"
+         id="stop19284-0" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient10686"
+       x1="-178"
+       y1="48"
+       x2="-166"
+       y2="48"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.3333333,0,0,1.25,241.33333,980.36224)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient9738"
+       x1="-177"
+       y1="48"
+       x2="-166"
+       y2="48"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.6363636,0,0,1.6666557,292.63637,960.36252)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="16"
+     inkscape:cx="-7.400391"
+     inkscape:cy="14.628924"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4369" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1028.3622)">
+    <g
+       id="g9128">
+      <rect
+         y="1028.3622"
+         x="0"
+         height="24"
+         width="24"
+         id="rect4708"
+         style="fill:none;fill-opacity:1;stroke:none;stroke-width:1.5" />
+      <ellipse
+         id="path4710"
+         style="fill:url(#linearGradient10686);fill-opacity:1;stroke:none;stroke-width:1.29099452"
+         cx="12"
+         cy="1040.3623"
+         rx="8"
+         ry="5" />
+      <path
+         sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+         inkscape:connector-curvature="0"
+         id="path4760"
+         d="m 11.181818,1030.362 c -0.554613,0 -1.098474,0.052 -1.636363,0.1042 v 1.6666 c 0.54054,-0.061 1.072472,-0.1043 1.636363,-0.1043 z m 1.636364,0.1042 v 1.6666 c 0.569863,0.059 1.096723,0.1946 1.636363,0.3125 v -1.7188 c -0.537054,-0.1057 -1.074992,-0.2067 -1.636363,-0.2603 z m -4.9090911,0.2082 c -0.5606509,0.1112 -1.1088164,0.254 -1.6363636,0.4168 v 1.7707 c 0.5276782,-0.1829 1.0696909,-0.341 1.6363636,-0.4688 z m 8.1818181,0.4687 v 1.7188 c 0.582496,0.2013 1.112662,0.4627 1.636364,0.7292 v -1.875 c -0.521149,-0.2278 -1.0728,-0.3999 -1.636364,-0.573 z m -11.4545454,0.5728 c -0.5841163,0.2587 -1.11348,0.5635 -1.6363636,0.8853 v 1.9793 c 0.5064055,-0.3787 1.0410055,-0.7379 1.6363636,-1.0416 z m 14.7272724,0.8334 v 2.0312 c 0.618988,0.4589 1.174697,0.9593 1.636364,1.5104 v -2.3438 c -0.499713,-0.4299 -1.0449,-0.8412 -1.636364,-1.1978 z M 21,1044.6328 c -0.461749,0.5574 -1.015871,1.1007 -1.636364,1.5625 v 1.9791 c 0.589075,-0.3602 1.137437,-0.7665 1.636364,-1.1979 z m -18,1.5625 v 1.927 c 0.5229818,0.3219 1.0520182,0.6267 1.6363636,0.8855 v -1.7709 C 4.0381418,1046.9318 3.5073218,1046.5769 3,1046.1953 Z m 14.727273,0.9895 c -0.510529,0.2605 -1.072113,0.4786 -1.636364,0.6771 v 1.7708 c 0.57024,-0.1778 1.108195,-0.391 1.636364,-0.6249 z m -11.4545457,0.7292 v 1.7187 c 0.5326363,0.165 1.0714254,0.3058 1.6363636,0.4168 v -1.6668 c -0.5758527,-0.1239 -1.1026964,-0.2828 -1.6363636,-0.4687 z m 8.1818177,0.4167 c -0.53532,0.118 -1.074207,0.1978 -1.636363,0.2604 v 1.6667 c 0.560994,-0.064 1.094089,-0.1512 1.636363,-0.2605 z m -4.90909,0.2604 v 1.6667 c 0.538461,0.05 1.079607,0.1042 1.636363,0.1042 v -1.6666 c -0.557427,0 -1.100225,-0.047 -1.636363,-0.1043 z"
+         style="fill:url(#linearGradient9738);fill-opacity:1;stroke:none;stroke-width:1.65144014" />
+    </g>
+  </g>
+</svg>

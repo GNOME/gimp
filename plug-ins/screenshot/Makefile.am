@@ -55,4 +55,6 @@ screenshot_SOURCES = \
 	screenshot-osx.c		\
 	screenshot-osx.h		\
 	screenshot-x11.c		\
-	screenshot-x11.h
+	screenshot-x11.h		\
+	screenshot-win32.c		\
+	screenshot-win32.h
