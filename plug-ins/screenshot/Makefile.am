@@ -52,6 +52,7 @@ screenshot_SOURCES = \
 	screenshot.h			\
 	screenshot-gnome-shell.c	\
 	screenshot-gnome-shell.h	\
+	screenshot-icon.h		\
 	screenshot-osx.c		\
 	screenshot-osx.h		\
 	screenshot-x11.c		\
