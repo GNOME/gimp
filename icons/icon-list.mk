@@ -501,56 +501,7 @@ icons22_images = \
 	22/gimp-prefs-tool-options.png		\
 	22/gimp-prefs-toolbox.png		\
 	22/gimp-prefs-window-management.png	\
-	22/gimp-tool-airbrush.png		\
-	22/gimp-tool-align.png			\
-	22/gimp-tool-blend.png			\
-	22/gimp-tool-blur.png			\
-	22/gimp-tool-brightness-contrast.png	\
-	22/gimp-tool-bucket-fill.png		\
-	22/gimp-tool-by-color-select.png	\
-	22/gimp-tool-cage.png			\
-	22/gimp-tool-clone.png			\
-	22/gimp-tool-color-balance.png		\
-	22/gimp-tool-color-picker.png		\
-	22/gimp-tool-colorize.png		\
-	22/gimp-tool-crop.png			\
-	22/gimp-tool-curves.png			\
-	22/gimp-tool-desaturate.png		\
-	22/gimp-tool-dodge.png			\
-	22/gimp-tool-ellipse-select.png		\
-	22/gimp-tool-eraser.png			\
-	22/gimp-tool-flip.png			\
-	22/gimp-tool-foreground-select.png	\
-	22/gimp-tool-free-select.png		\
-	22/gimp-tool-fuzzy-select.png		\
-	22/gimp-tool-handle-transform.png	\
-	22/gimp-tool-heal.png			\
-	22/gimp-tool-hue-saturation.png		\
-	22/gimp-tool-ink.png			\
-	22/gimp-tool-iscissors.png		\
-	22/gimp-tool-levels.png			\
-	22/gimp-tool-measure.png		\
-	22/gimp-tool-move.png			\
-	22/gimp-tool-mypaint-brush.png		\
-	22/gimp-tool-n-point-deformation.png	\
-	22/gimp-tool-paintbrush.png		\
-	22/gimp-tool-path.png			\
-	22/gimp-tool-pencil.png			\
-	22/gimp-tool-perspective-clone.png	\
-	22/gimp-tool-perspective.png		\
-	22/gimp-tool-posterize.png		\
 	22/gimp-tool-preset.png			\
-	22/gimp-tool-rect-select.png		\
-	22/gimp-tool-rotate.png			\
-	22/gimp-tool-scale.png			\
-	22/gimp-tool-seamless-clone.png		\
-	22/gimp-tool-shear.png			\
-	22/gimp-tool-smudge.png			\
-	22/gimp-tool-text.png			\
-	22/gimp-tool-threshold.png		\
-	22/gimp-tool-unified-transform.png	\
-	22/gimp-tool-warp.png			\
-	22/gimp-tool-zoom.png			\
 	22/gimp-wilber.png
 
 icons24_images = \
@@ -605,6 +556,55 @@ icons24_images = \
 	24/gimp-text-dir-rtl.png		\
 	24/gimp-text-layer.png			\
 	24/gimp-toilet-paper.png		\
+	24/gimp-tool-airbrush.png		\
+	24/gimp-tool-align.png			\
+	24/gimp-tool-blend.png			\
+	24/gimp-tool-blur.png			\
+	24/gimp-tool-brightness-contrast.png	\
+	24/gimp-tool-bucket-fill.png		\
+	24/gimp-tool-by-color-select.png	\
+	24/gimp-tool-cage.png			\
+	24/gimp-tool-clone.png			\
+	24/gimp-tool-color-balance.png		\
+	24/gimp-tool-color-picker.png		\
+	24/gimp-tool-colorize.png		\
+	24/gimp-tool-crop.png			\
+	24/gimp-tool-curves.png			\
+	24/gimp-tool-desaturate.png		\
+	24/gimp-tool-dodge.png			\
+	24/gimp-tool-ellipse-select.png		\
+	24/gimp-tool-eraser.png			\
+	24/gimp-tool-flip.png			\
+	24/gimp-tool-foreground-select.png	\
+	24/gimp-tool-free-select.png		\
+	24/gimp-tool-fuzzy-select.png		\
+	24/gimp-tool-handle-transform.png	\
+	24/gimp-tool-heal.png			\
+	24/gimp-tool-hue-saturation.png		\
+	24/gimp-tool-ink.png			\
+	24/gimp-tool-iscissors.png		\
+	24/gimp-tool-levels.png			\
+	24/gimp-tool-measure.png		\
+	24/gimp-tool-move.png			\
+	24/gimp-tool-mypaint-brush.png		\
+	24/gimp-tool-n-point-deformation.png	\
+	24/gimp-tool-paintbrush.png		\
+	24/gimp-tool-path.png			\
+	24/gimp-tool-pencil.png			\
+	24/gimp-tool-perspective-clone.png	\
+	24/gimp-tool-perspective.png		\
+	24/gimp-tool-posterize.png		\
+	24/gimp-tool-rect-select.png		\
+	24/gimp-tool-rotate.png			\
+	24/gimp-tool-scale.png			\
+	24/gimp-tool-seamless-clone.png		\
+	24/gimp-tool-shear.png			\
+	24/gimp-tool-smudge.png			\
+	24/gimp-tool-text.png			\
+	24/gimp-tool-threshold.png		\
+	24/gimp-tool-unified-transform.png	\
+	24/gimp-tool-warp.png			\
+	24/gimp-tool-zoom.png			\
 	24/gimp-tool-options.png		\
 	24/gimp-tools.png			\
 	24/gimp-transparency.png		\
