@@ -6,6 +6,11 @@ icons16dir  = $(gimpdatadir)/icons/Legacy/hicolor/16x16/apps
 icons18dir  = $(gimpdatadir)/icons/Legacy/hicolor/18x18/apps
 icons20dir  = $(gimpdatadir)/icons/Legacy/hicolor/20x20/apps
 icons22dir  = $(gimpdatadir)/icons/Legacy/hicolor/22x22/apps
+# 22x22 tool icons will go in their own directory and we tell GTK+
+# that this directory contains icons for 24x24 requests.
+# This is a special trick to let the theme override the default
+# 24x24 size request.
+tools22dir  = $(gimpdatadir)/icons/Legacy/hicolor/22x22/tools
 icons24dir  = $(gimpdatadir)/icons/Legacy/hicolor/24x24/apps
 icons32dir  = $(gimpdatadir)/icons/Legacy/hicolor/32x32/apps
 icons48dir  = $(gimpdatadir)/icons/Legacy/hicolor/48x48/apps
@@ -277,6 +282,10 @@ icons22_DATA = \
 	22/gimp-prefs-tool-options.png		\
 	22/gimp-prefs-toolbox.png		\
 	22/gimp-prefs-window-management.png	\
+	22/gimp-tool-preset.png			\
+	22/gimp-wilber.png
+
+tools22_DATA = \
 	22/gimp-tool-airbrush.png		\
 	22/gimp-tool-align.png			\
 	22/gimp-tool-blend.png			\
@@ -315,7 +324,6 @@ icons22_DATA = \
 	22/gimp-tool-perspective-clone.png	\
 	22/gimp-tool-perspective.png		\
 	22/gimp-tool-posterize.png		\
-	22/gimp-tool-preset.png			\
 	22/gimp-tool-rect-select.png		\
 	22/gimp-tool-rotate.png			\
 	22/gimp-tool-scale.png			\
@@ -326,8 +334,7 @@ icons22_DATA = \
 	22/gimp-tool-threshold.png		\
 	22/gimp-tool-unified-transform.png	\
 	22/gimp-tool-warp.png			\
-	22/gimp-tool-zoom.png			\
-	22/gimp-wilber.png
+	22/gimp-tool-zoom.png
 
 icons24_DATA = \
 	24/gimp-center.png			\
