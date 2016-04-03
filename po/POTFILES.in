@@ -392,6 +392,7 @@ app/tools/gimpforegroundselecttool.c
 app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimpgegltool.c
+app/tools/gimpguidetool.c
 app/tools/gimphandletransformoptions.c
 app/tools/gimphandletransformtool.c
 app/tools/gimphealtool.c
@@ -429,6 +430,7 @@ app/tools/gimprectangletool.c
 app/tools/gimpregionselectoptions.c
 app/tools/gimpregionselecttool.c
 app/tools/gimprotatetool.c
+app/tools/gimpsamplepointtool.c
 app/tools/gimpscaletool.c
 app/tools/gimpseamlesscloneoptions.c
 app/tools/gimpseamlessclonetool.c

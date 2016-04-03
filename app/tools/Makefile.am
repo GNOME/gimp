@@ -94,6 +94,8 @@ libapptools_a_sources = \
 	gimpfuzzyselecttool.h		\
 	gimpgegltool.c			\
 	gimpgegltool.h			\
+	gimpguidetool.c			\
+	gimpguidetool.h			\
 	gimphandletransformoptions.c	\
 	gimphandletransformoptions.h	\
 	gimphandletransformtool.c	\
@@ -168,6 +170,8 @@ libapptools_a_sources = \
 	gimpregionselecttool.h		\
 	gimprotatetool.c		\
 	gimprotatetool.h		\
+	gimpsamplepointtool.c		\
+	gimpsamplepointtool.h		\
 	gimpscaletool.c			\
 	gimpscaletool.h			\
 	gimpseamlesscloneoptions.c	\

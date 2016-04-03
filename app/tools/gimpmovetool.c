@@ -53,16 +53,12 @@
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpeditselectiontool.h"
+#include "gimpguidetool.h"
 #include "gimpmoveoptions.h"
 #include "gimpmovetool.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
-
-
-#define SWAP_ORIENT(orient) ((orient) == GIMP_ORIENTATION_HORIZONTAL ? \
-                             GIMP_ORIENTATION_VERTICAL : \
-                             GIMP_ORIENTATION_HORIZONTAL)
 
 
 /*  local function prototypes  */
@@ -78,11 +74,6 @@ static void   gimp_move_tool_button_release (GimpTool              *tool,
                                              guint32                time,
                                              GdkModifierType        state,
                                              GimpButtonReleaseType  release_type,
-                                             GimpDisplay           *display);
-static void   gimp_move_tool_motion         (GimpTool              *tool,
-                                             const GimpCoords      *coords,
-                                             guint32                time,
-                                             GdkModifierType        state,
                                              GimpDisplay           *display);
 static gboolean gimp_move_tool_key_press    (GimpTool              *tool,
                                              GdkEventKey           *kevent,
@@ -103,10 +94,6 @@ static void   gimp_move_tool_cursor_update  (GimpTool              *tool,
                                              GimpDisplay           *display);
 
 static void   gimp_move_tool_draw           (GimpDrawTool          *draw_tool);
-
-static void   gimp_move_tool_start_guide    (GimpMoveTool          *move,
-                                             GimpDisplay           *display,
-                                             GimpOrientationType    orientation);
 
 
 G_DEFINE_TYPE (GimpMoveTool, gimp_move_tool, GIMP_TYPE_DRAW_TOOL)
@@ -139,7 +126,6 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
 
   tool_class->button_press   = gimp_move_tool_button_press;
   tool_class->button_release = gimp_move_tool_button_release;
-  tool_class->motion         = gimp_move_tool_motion;
   tool_class->key_press      = gimp_move_tool_key_press;
   tool_class->modifier_key   = gimp_move_tool_modifier_key;
   tool_class->oper_update    = gimp_move_tool_oper_update;
@@ -160,10 +146,6 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 
   move_tool->floating_layer     = NULL;
   move_tool->guide              = NULL;
-
-  move_tool->moving_guide       = FALSE;
-  move_tool->guide_position     = GIMP_GUIDE_POSITION_UNDEFINED;
-  move_tool->guide_orientation  = GIMP_ORIENTATION_UNKNOWN;
 
   move_tool->saved_type         = GIMP_TRANSFORM_TYPE_LAYER;
 
@@ -191,9 +173,6 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
   move->floating_layer     = NULL;
   move->guide              = NULL;
-  move->moving_guide       = FALSE;
-  move->old_active_layer   = NULL;
-  move->old_active_vectors = NULL;
 
   if (! options->move_current)
     {
@@ -229,27 +208,9 @@ gimp_move_tool_button_press (GimpTool            *tool,
                                               FUNSCALEX (shell, snap_distance),
                                               FUNSCALEY (shell, snap_distance))))
             {
-              move->guide             = guide;
-              move->moving_guide      = TRUE;
-              move->guide_position    = gimp_guide_get_position (guide);
-              move->guide_orientation = gimp_guide_get_orientation (guide);
+              move->guide = guide;
 
-              gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-              gimp_tool_control_set_precision   (tool->control,
-                                                 GIMP_CURSOR_PRECISION_PIXEL_BORDER);
-
-              gimp_tool_control_activate (tool->control);
-
-              gimp_display_shell_selection_pause (shell);
-
-              if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
-                gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
-
-              gimp_tool_push_status_length (tool, display,
-                                            _("Move Guide: "),
-                                            SWAP_ORIENT (move->guide_orientation),
-                                            move->guide_position,
-                                            NULL);
+              gimp_guide_tool_start_edit (tool, display, guide);
 
               return;
             }
@@ -396,222 +357,45 @@ gimp_move_tool_button_release (GimpTool              *tool,
                                GimpButtonReleaseType  release_type,
                                GimpDisplay           *display)
 {
-  GimpMoveTool     *move   = GIMP_MOVE_TOOL (tool);
-  GimpGuiConfig    *config = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpDisplayShell *shell  = gimp_display_get_shell (display);
-  GimpImage        *image  = gimp_display_get_image (display);
+  GimpMoveTool  *move   = GIMP_MOVE_TOOL (tool);
+  GimpGuiConfig *config = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage     *image  = gimp_display_get_image (display);
+  gboolean       flush  = FALSE;
 
   gimp_tool_control_halt (tool->control);
 
-  if (move->moving_guide)
+  if (! config->move_tool_changes_active ||
+      (release_type == GIMP_BUTTON_RELEASE_CANCEL))
     {
-      gboolean delete_guide = FALSE;
-      gint     width  = gimp_image_get_width  (image);
-      gint     height = gimp_image_get_height (image);
-
-      gimp_tool_pop_status (tool, display);
-
-      gimp_tool_control_set_scroll_lock (tool->control, FALSE);
-      gimp_tool_control_set_precision   (tool->control,
-                                         GIMP_CURSOR_PRECISION_PIXEL_CENTER);
-
-      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-
-      if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+      if (move->old_active_layer)
         {
-          move->moving_guide      = FALSE;
-          move->guide_position    = GIMP_GUIDE_POSITION_UNDEFINED;
-          move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
+          gimp_image_set_active_layer (image, move->old_active_layer);
+          move->old_active_layer = NULL;
 
-          gimp_display_shell_selection_resume (shell);
-          return;
+          flush = TRUE;
         }
 
-      switch (move->guide_orientation)
+      if (move->old_active_vectors)
         {
-        case GIMP_ORIENTATION_HORIZONTAL:
-          if (move->guide_position == GIMP_GUIDE_POSITION_UNDEFINED ||
-              move->guide_position <  0                             ||
-              move->guide_position >= height)
-            delete_guide = TRUE;
-          break;
+          gimp_image_set_active_vectors (image, move->old_active_vectors);
+          move->old_active_vectors = NULL;
 
-        case GIMP_ORIENTATION_VERTICAL:
-          if (move->guide_position == GIMP_GUIDE_POSITION_UNDEFINED ||
-              move->guide_position <  0                             ||
-              move->guide_position >= width)
-            delete_guide = TRUE;
-          break;
-
-        default:
-          break;
-        }
-
-      if (delete_guide)
-        {
-          if (move->guide)
-            {
-              gimp_image_remove_guide (image, move->guide, TRUE);
-              move->guide = NULL;
-            }
-        }
-      else
-        {
-          if (move->guide)
-            {
-              gimp_image_move_guide (image, move->guide,
-                                     move->guide_position, TRUE);
-            }
-          else
-            {
-              switch (move->guide_orientation)
-                {
-                case GIMP_ORIENTATION_HORIZONTAL:
-                  move->guide = gimp_image_add_hguide (image,
-                                                       move->guide_position,
-                                                       TRUE);
-                  break;
-
-                case GIMP_ORIENTATION_VERTICAL:
-                  move->guide = gimp_image_add_vguide (image,
-                                                       move->guide_position,
-                                                       TRUE);
-                  break;
-
-                default:
-                  g_assert_not_reached ();
-                }
-            }
-        }
-
-      gimp_display_shell_selection_resume (shell);
-      gimp_image_flush (image);
-
-      move->moving_guide      = FALSE;
-      move->guide_position    = GIMP_GUIDE_POSITION_UNDEFINED;
-      move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
-
-      if (move->guide)
-        gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
-    }
-  else
-    {
-      gboolean flush = FALSE;
-
-      if (! config->move_tool_changes_active ||
-          (release_type == GIMP_BUTTON_RELEASE_CANCEL))
-        {
-          if (move->old_active_layer)
-            {
-              gimp_image_set_active_layer (image, move->old_active_layer);
-              move->old_active_layer = NULL;
-
-              flush = TRUE;
-            }
-
-          if (move->old_active_vectors)
-            {
-              gimp_image_set_active_vectors (image, move->old_active_vectors);
-              move->old_active_vectors = NULL;
-
-              flush = TRUE;
-            }
-        }
-
-      if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
-        {
-          if (move->floating_layer)
-            {
-              floating_sel_anchor (move->floating_layer);
-
-              flush = TRUE;
-            }
-        }
-
-      if (flush)
-        gimp_image_flush (image);
-    }
-}
-
-static void
-gimp_move_tool_motion (GimpTool         *tool,
-                       const GimpCoords *coords,
-                       guint32           time,
-                       GdkModifierType   state,
-                       GimpDisplay      *display)
-
-{
-  GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
-
-  if (move->moving_guide)
-    {
-      gint      tx, ty;
-      gboolean  delete_guide = FALSE;
-
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-      gimp_display_shell_transform_xy (shell,
-                                       coords->x, coords->y,
-                                       &tx, &ty);
-
-      if (tx < 0 || tx >= shell->disp_width ||
-          ty < 0 || ty >= shell->disp_height)
-        {
-          move->guide_position = GIMP_GUIDE_POSITION_UNDEFINED;
-
-          delete_guide = TRUE;
-        }
-      else
-        {
-          GimpImage *image  = gimp_display_get_image (display);
-          gint       width  = gimp_image_get_width  (image);
-          gint       height = gimp_image_get_height (image);
-
-          if (move->guide_orientation == GIMP_ORIENTATION_HORIZONTAL)
-            move->guide_position = RINT (coords->y);
-          else
-            move->guide_position = RINT (coords->x);
-
-          switch (move->guide_orientation)
-            {
-            case GIMP_ORIENTATION_HORIZONTAL:
-              if (move->guide_position <  0 ||
-                  move->guide_position >= height)
-                delete_guide = TRUE;
-              break;
-
-            case GIMP_ORIENTATION_VERTICAL:
-              if (move->guide_position <  0 ||
-                  move->guide_position >= width)
-                delete_guide = TRUE;
-              break;
-
-            default:
-              break;
-            }
-        }
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-      gimp_tool_pop_status (tool, display);
-
-      if (delete_guide)
-        {
-          gimp_tool_push_status (tool, display,
-                                 move->guide ?
-                                 _("Remove Guide") : _("Cancel Guide"));
-        }
-      else
-        {
-          gimp_tool_push_status_length (tool, display,
-                                        move->guide ?
-                                        _("Move Guide: ") : _("Add Guide: "),
-                                        SWAP_ORIENT (move->guide_orientation),
-                                        move->guide_position,
-                                        NULL);
+          flush = TRUE;
         }
     }
+
+  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
+    {
+      if (move->floating_layer)
+        {
+          floating_sel_anchor (move->floating_layer);
+
+          flush = TRUE;
+        }
+    }
+
+  if (flush)
+    gimp_image_flush (image);
 }
 
 static gboolean
@@ -846,64 +630,4 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
                                        style);
       gimp_canvas_item_set_highlight (item, TRUE);
     }
-
-  if (move->moving_guide &&
-      move->guide_position != GIMP_GUIDE_POSITION_UNDEFINED)
-    {
-      gimp_draw_tool_add_guide (draw_tool,
-                                move->guide_orientation,
-                                move->guide_position,
-                                GIMP_GUIDE_STYLE_NONE);
-    }
-}
-
-void
-gimp_move_tool_start_hguide (GimpTool    *tool,
-                             GimpDisplay *display)
-{
-  g_return_if_fail (GIMP_IS_MOVE_TOOL (tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-
-  gimp_move_tool_start_guide (GIMP_MOVE_TOOL (tool), display,
-                              GIMP_ORIENTATION_HORIZONTAL);
-}
-
-void
-gimp_move_tool_start_vguide (GimpTool    *tool,
-                             GimpDisplay *display)
-{
-  g_return_if_fail (GIMP_IS_MOVE_TOOL (tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-
-  gimp_move_tool_start_guide (GIMP_MOVE_TOOL (tool), display,
-                              GIMP_ORIENTATION_VERTICAL);
-}
-
-static void
-gimp_move_tool_start_guide (GimpMoveTool        *move,
-                            GimpDisplay         *display,
-                            GimpOrientationType  orientation)
-{
-  GimpTool *tool = GIMP_TOOL (move);
-
-  gimp_display_shell_selection_pause (gimp_display_get_shell (display));
-
-  tool->display = display;
-  gimp_tool_control_activate (tool->control);
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-
-  if (gimp_draw_tool_is_active  (GIMP_DRAW_TOOL (tool)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-
-  move->guide             = NULL;
-  move->moving_guide      = TRUE;
-  move->guide_position    = GIMP_GUIDE_POSITION_UNDEFINED;
-  move->guide_orientation = orientation;
-
-  gimp_tool_set_cursor (tool, display,
-                        GIMP_CURSOR_MOUSE,
-                        GIMP_TOOL_CURSOR_HAND,
-                        GIMP_CURSOR_MODIFIER_MOVE);
-
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (move), display);
 }

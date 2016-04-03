@@ -43,9 +43,9 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "tools/gimpimagemaptool.h"
+#include "tools/gimpguidetool.h"
 #include "tools/gimpmovetool.h"
-#include "tools/gimppainttool.h"
+#include "tools/gimpsamplepointtool.h"
 #include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
 
@@ -1278,10 +1278,10 @@ gimp_display_shell_buffer_hover (GimpMotionBuffer *buffer,
 }
 
 static gboolean
-gimp_display_shell_ruler_button_press (GtkWidget        *widget,
-                                       GdkEventButton   *event,
-                                       GimpDisplayShell *shell,
-                                       gboolean          horizontal)
+gimp_display_shell_ruler_button_press (GtkWidget           *widget,
+                                       GdkEventButton      *event,
+                                       GimpDisplayShell    *shell,
+                                       GimpOrientationType  orientation)
 {
   GimpDisplay *display = shell->display;
 
@@ -1293,34 +1293,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-      GimpTool *active_tool;
-      gboolean  sample_point;
-
-      active_tool  = tool_manager_get_active (display->gimp);
-      sample_point = (event->state & gimp_get_toggle_behavior_mask ());
-
-      if (! ((sample_point && (GIMP_IS_COLOR_TOOL (active_tool) &&
-                               ! GIMP_IS_IMAGE_MAP_TOOL (active_tool) &&
-                               ! (GIMP_IS_PAINT_TOOL (active_tool) &&
-                                  ! GIMP_PAINT_TOOL (active_tool)->pick_colors)))
-
-             ||
-
-             (! sample_point && GIMP_IS_MOVE_TOOL (active_tool))))
-        {
-          GimpToolInfo *tool_info;
-
-          tool_info = gimp_get_tool_info (display->gimp,
-                                          sample_point ?
-                                          "gimp-color-picker-tool" :
-                                          "gimp-move-tool");
-
-          if (tool_info)
-            gimp_context_set_tool (gimp_get_user_context (display->gimp),
-                                   tool_info);
-        }
-
-      active_tool = tool_manager_get_active (display->gimp);
+      GimpTool *active_tool = tool_manager_get_active (display->gimp);
 
       if (active_tool)
         {
@@ -1332,12 +1305,15 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
               if (gimp_display_shell_keyboard_grab (shell,
                                                     (GdkEvent *) event))
                 {
-                  if (sample_point)
-                    gimp_color_tool_start_sample_point (active_tool, display);
-                  else if (horizontal)
-                    gimp_move_tool_start_hguide (active_tool, display);
+                  if (event->state & gimp_get_toggle_behavior_mask ())
+                    {
+                      gimp_sample_point_tool_start_new (active_tool, display);
+                    }
                   else
-                    gimp_move_tool_start_vguide (active_tool, display);
+                    {
+                      gimp_guide_tool_start_new (active_tool, display,
+                                                 orientation);
+                    }
 
                   return TRUE;
                 }
@@ -1357,7 +1333,8 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  return gimp_display_shell_ruler_button_press (widget, event, shell, TRUE);
+  return gimp_display_shell_ruler_button_press (widget, event, shell,
+                                                GIMP_ORIENTATION_HORIZONTAL);
 }
 
 gboolean
@@ -1365,7 +1342,8 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  return gimp_display_shell_ruler_button_press (widget, event, shell, FALSE);
+  return gimp_display_shell_ruler_button_press (widget, event, shell,
+                                                GIMP_ORIENTATION_VERTICAL);
 }
 
 
