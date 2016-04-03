@@ -518,7 +518,8 @@ EXTRA_DIST = \
 	$(icons96_DATA)		\
 	$(icons128_DATA)	\
 	$(icons192_DATA)	\
-	$(icons256_DATA)
+	$(icons256_DATA)	\
+	$(tools22_DATA)
 
 noinst_DATA = \
 	gimp-core-pixbufs.c	\
