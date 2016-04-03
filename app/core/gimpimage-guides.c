@@ -114,6 +114,9 @@ gimp_image_remove_guide (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
+  if (gimp_guide_is_custom (guide))
+    push_undo = FALSE;
+
   if (push_undo)
     gimp_image_undo_push_guide (image, C_("undo-type", "Remove Guide"), guide);
 
@@ -140,6 +143,9 @@ gimp_image_move_guide (GimpImage *image,
     g_return_if_fail (position <= gimp_image_get_height (image));
   else
     g_return_if_fail (position <= gimp_image_get_width (image));
+
+  if (gimp_guide_is_custom (guide))
+    push_undo = FALSE;
 
   if (push_undo)
     gimp_image_undo_push_guide (image, C_("undo-type", "Move Guide"), guide);
