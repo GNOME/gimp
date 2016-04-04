@@ -40,6 +40,10 @@ struct _GimpGuideTool
   GimpGuide           *guide;
   gint                 guide_position;
   GimpOrientationType  guide_orientation;
+
+  /* for live-moving custom guides */
+  gboolean             guide_custom;
+  gint                 guide_old_position;
 };
 
 struct _GimpGuideToolClass

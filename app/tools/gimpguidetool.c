@@ -121,37 +121,24 @@ gimp_guide_tool_button_release (GimpTool              *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
+  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
-      gint     width        = gimp_image_get_width  (image);
-      gint     height       = gimp_image_get_height (image);
-      gboolean delete_guide = FALSE;
+      if (guide_tool->guide_custom)
+        gimp_image_move_guide (image, guide_tool->guide,
+                               guide_tool->guide_old_position, TRUE);
+    }
+  else
+    {
+      gint max_position;
 
-      switch (guide_tool->guide_orientation)
-        {
-        case GIMP_ORIENTATION_HORIZONTAL:
-          if (guide_tool->guide_position == GIMP_GUIDE_POSITION_UNDEFINED ||
-              guide_tool->guide_position <  0                             ||
-              guide_tool->guide_position >= height)
-            {
-              delete_guide = TRUE;
-            }
-          break;
+      if (guide_tool->guide_orientation == GIMP_ORIENTATION_HORIZONTAL)
+        max_position = gimp_image_get_height (image);
+      else
+        max_position = gimp_image_get_width (image);
 
-        case GIMP_ORIENTATION_VERTICAL:
-          if (guide_tool->guide_position == GIMP_GUIDE_POSITION_UNDEFINED ||
-              guide_tool->guide_position <  0                             ||
-              guide_tool->guide_position >= width)
-            {
-              delete_guide = TRUE;
-            }
-          break;
-
-        default:
-          break;
-        }
-
-      if (delete_guide)
+      if (guide_tool->guide_position == GIMP_GUIDE_POSITION_UNDEFINED ||
+          guide_tool->guide_position <  0                             ||
+          guide_tool->guide_position >= max_position)
         {
           if (guide_tool->guide)
             {
@@ -163,8 +150,10 @@ gimp_guide_tool_button_release (GimpTool              *tool,
         {
           if (guide_tool->guide)
             {
-              gimp_image_move_guide (image, guide_tool->guide,
-                                     guide_tool->guide_position, TRUE);
+              /* custom guides are moved live */
+              if (! guide_tool->guide_custom)
+                gimp_image_move_guide (image, guide_tool->guide,
+                                       guide_tool->guide_position, TRUE);
             }
           else
             {
@@ -227,7 +216,9 @@ gimp_guide_tool_motion (GimpTool         *tool,
 {
   GimpGuideTool    *guide_tool   = GIMP_GUIDE_TOOL (tool);
   GimpDisplayShell *shell        = gimp_display_get_shell (display);
+  GimpImage        *image        = gimp_display_get_image (display);
   gboolean          delete_guide = FALSE;
+  gint              max_position;
   gint              tx, ty;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -235,6 +226,11 @@ gimp_guide_tool_motion (GimpTool         *tool,
   gimp_display_shell_transform_xy (shell,
                                    coords->x, coords->y,
                                    &tx, &ty);
+
+  if (guide_tool->guide_orientation == GIMP_ORIENTATION_HORIZONTAL)
+    max_position = gimp_image_get_height (image);
+  else
+    max_position = gimp_image_get_width (image);
 
   if (tx < 0 || tx >= shell->disp_width ||
       ty < 0 || ty >= shell->disp_height)
@@ -245,41 +241,30 @@ gimp_guide_tool_motion (GimpTool         *tool,
     }
   else
     {
-      GimpImage *image  = gimp_display_get_image (display);
-      gint       width  = gimp_image_get_width  (image);
-      gint       height = gimp_image_get_height (image);
-
       if (guide_tool->guide_orientation == GIMP_ORIENTATION_HORIZONTAL)
         guide_tool->guide_position = RINT (coords->y);
       else
         guide_tool->guide_position = RINT (coords->x);
 
-      switch (guide_tool->guide_orientation)
+      if (guide_tool->guide_position <  0 ||
+          guide_tool->guide_position >= max_position)
         {
-        case GIMP_ORIENTATION_HORIZONTAL:
-          if (guide_tool->guide_position <  0 ||
-              guide_tool->guide_position >= height)
-            {
-              delete_guide = TRUE;
-            }
-          break;
-
-        case GIMP_ORIENTATION_VERTICAL:
-          if (guide_tool->guide_position <  0 ||
-              guide_tool->guide_position >= width)
-            {
-              delete_guide = TRUE;
-            }
-          break;
-
-        default:
-          break;
+          delete_guide = TRUE;
         }
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   gimp_tool_pop_status (tool, display);
+
+  /* custom guides are moved live */
+  if (guide_tool->guide_custom &&
+      guide_tool->guide_position != GIMP_GUIDE_POSITION_UNDEFINED)
+    {
+      gimp_image_move_guide (image, guide_tool->guide,
+                             CLAMP (guide_tool->guide_position,
+                                    0, max_position), TRUE);
+    }
 
   if (delete_guide)
     {
@@ -305,10 +290,11 @@ gimp_guide_tool_draw (GimpDrawTool *draw_tool)
 
   if (guide_tool->guide_position != GIMP_GUIDE_POSITION_UNDEFINED)
     {
-      gimp_draw_tool_add_guide (draw_tool,
-                                guide_tool->guide_orientation,
-                                guide_tool->guide_position,
-                                GIMP_GUIDE_STYLE_NONE);
+      if (! guide_tool->guide_custom)
+        gimp_draw_tool_add_guide (draw_tool,
+                                  guide_tool->guide_orientation,
+                                  guide_tool->guide_position,
+                                  GIMP_GUIDE_STYLE_NONE);
     }
 }
 
@@ -331,15 +317,19 @@ gimp_guide_tool_start (GimpTool            *parent_tool,
 
   if (guide)
     {
-      guide_tool->guide             = guide;
-      guide_tool->guide_position    = gimp_guide_get_position (guide);
-      guide_tool->guide_orientation = gimp_guide_get_orientation (guide);
+      guide_tool->guide              = guide;
+      guide_tool->guide_position     = gimp_guide_get_position (guide);
+      guide_tool->guide_orientation  = gimp_guide_get_orientation (guide);
+      guide_tool->guide_custom       = gimp_guide_is_custom (guide);
+      guide_tool->guide_old_position = gimp_guide_get_position (guide);
     }
   else
     {
-      guide_tool->guide             = NULL;
-      guide_tool->guide_position    = GIMP_GUIDE_POSITION_UNDEFINED;
-      guide_tool->guide_orientation = orientation;
+      guide_tool->guide              = NULL;
+      guide_tool->guide_position     = GIMP_GUIDE_POSITION_UNDEFINED;
+      guide_tool->guide_orientation  = orientation;
+      guide_tool->guide_custom       = FALSE;
+      guide_tool->guide_old_position = GIMP_GUIDE_POSITION_UNDEFINED;
     }
 
   gimp_tool_set_cursor (tool, display,
@@ -371,6 +361,7 @@ gimp_guide_tool_start_new (GimpTool            *parent_tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (parent_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (orientation != GIMP_ORIENTATION_UNKNOWN);
 
   gimp_guide_tool_start (parent_tool, display,
                          NULL, orientation);
