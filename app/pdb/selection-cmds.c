@@ -362,10 +362,10 @@ selection_border_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      /* FIXME: "style" and "edge-lock" hardcoded to FEATHERED and TRUE, respectively. */
+      /* FIXME: "style" and "edge-lock" hardcoded to SMOOTH and TRUE, respectively. */
       gimp_channel_border (gimp_image_get_mask (image),
                            radius, radius,
-                           GIMP_CHANNEL_BORDER_STYLE_FEATHERED,
+                           GIMP_CHANNEL_BORDER_STYLE_SMOOTH,
                            TRUE, TRUE);
     }
 
