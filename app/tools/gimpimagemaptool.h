@@ -52,6 +52,8 @@ struct _GimpImageMapTool
 
   GimpImageMap          *image_map;
 
+  GimpGuide             *percent_guide;
+
   /* dialog */
   gboolean               overlay;
   GimpToolGui           *gui;

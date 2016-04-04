@@ -57,6 +57,7 @@ GimpImageMap * gimp_image_map_new         (GimpDrawable         *drawable,
 void           gimp_image_map_set_region  (GimpImageMap         *image_map,
                                            GimpImageMapRegion    region);
 void           gimp_image_map_set_preview (GimpImageMap         *image_map,
+                                           gboolean              enabled,
                                            GimpOrientationType   orientation,
                                            gdouble               percent_visible);
 void           gimp_image_map_set_mode    (GimpImageMap         *image_map,

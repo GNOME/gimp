@@ -63,6 +63,7 @@ struct _GimpImageMap
   gchar                *icon_name;
 
   GimpImageMapRegion    region;
+  gboolean              preview_enabled;
   GimpOrientationType   preview_orientation;
   gdouble               preview_percent;
   gdouble               opacity;
@@ -85,6 +86,7 @@ static void       gimp_image_map_finalize        (GObject             *object);
 
 static void       gimp_image_map_sync_region     (GimpImageMap        *image_map);
 static void       gimp_image_map_sync_preview    (GimpImageMap        *image_map,
+                                                  gboolean             old_enabled,
                                                   GimpOrientationType  old_orientation,
                                                   gdouble              old_percent);
 static void       gimp_image_map_sync_mode       (GimpImageMap        *image_map);
@@ -238,6 +240,7 @@ gimp_image_map_set_region (GimpImageMap       *image_map,
 
 void
 gimp_image_map_set_preview (GimpImageMap        *image_map,
+                            gboolean             enabled,
                             GimpOrientationType  orientation,
                             gdouble              percent)
 {
@@ -245,16 +248,20 @@ gimp_image_map_set_preview (GimpImageMap        *image_map,
 
   percent = CLAMP (percent, 0.0, 1.0);
 
-  if (orientation != image_map->preview_orientation ||
+  if (enabled     != image_map->preview_enabled     ||
+      orientation != image_map->preview_orientation ||
       percent     != image_map->preview_percent)
     {
+      gboolean            old_enabled     = image_map->preview_enabled;
       GimpOrientationType old_orientation = image_map->preview_orientation;
       gdouble             old_percent     = image_map->preview_percent;
 
+      image_map->preview_enabled     = enabled;
       image_map->preview_orientation = orientation;
       image_map->preview_percent     = percent;
 
-      gimp_image_map_sync_preview (image_map, old_orientation, old_percent);
+      gimp_image_map_sync_preview (image_map,
+                                   old_enabled, old_orientation, old_percent);
     }
 }
 
@@ -375,6 +382,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
       gimp_image_map_sync_region (image_map);
       gimp_image_map_sync_preview (image_map,
+                                   image_map->preview_enabled,
                                    image_map->preview_orientation,
                                    image_map->preview_percent);
       gimp_image_map_sync_mode (image_map);
@@ -511,23 +519,28 @@ gimp_image_map_sync_region (GimpImageMap *image_map)
 
 static void
 gimp_image_map_get_preview_rect (GimpImageMap        *image_map,
+                                 gboolean             enabled,
                                  GimpOrientationType  orientation,
                                  gdouble              percent,
                                  GeglRectangle       *rect)
 {
-  rect->x = 0;
-  rect->y = 0;
+  rect->x      = 0;
+  rect->y      = 0;
   rect->width  = gimp_item_get_width  (GIMP_ITEM (image_map->drawable));
   rect->height = gimp_item_get_height (GIMP_ITEM (image_map->drawable));
 
-  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
-    rect->width *= percent;
-  else
-    rect->height *= percent;
- }
+  if (enabled)
+    {
+      if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+        rect->width *= percent;
+      else
+        rect->height *= percent;
+    }
+}
 
 static void
 gimp_image_map_sync_preview (GimpImageMap        *image_map,
+                             gboolean             old_enabled,
                              GimpOrientationType  old_orientation,
                              gdouble              old_percent)
 {
@@ -537,16 +550,20 @@ gimp_image_map_sync_preview (GimpImageMap        *image_map,
       GeglRectangle new_rect;
 
       gimp_image_map_get_preview_rect (image_map,
+                                       old_enabled,
                                        old_orientation,
                                        old_percent,
                                        &old_rect);
 
       gimp_image_map_get_preview_rect (image_map,
+                                       image_map->preview_enabled,
                                        image_map->preview_orientation,
                                        image_map->preview_percent,
                                        &new_rect);
 
-      gimp_applicator_set_preview (image_map->applicator, TRUE, &new_rect);
+      gimp_applicator_set_preview (image_map->applicator,
+                                   image_map->preview_enabled,
+                                   &new_rect);
 
       if (old_rect.width  != new_rect.width ||
           old_rect.height != new_rect.height)
