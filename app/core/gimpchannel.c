@@ -1415,8 +1415,24 @@ gimp_channel_real_border (GimpChannel            *channel,
 {
   gint x1, y1, x2, y2;
 
-  if (radius_x < 0 || radius_y < 0)
-    return;
+  if (radius_x == 0 && radius_y == 0)
+    {
+      /* The relevant GEGL operations require radius_x and radius_y to be > 0.
+       * When both are 0 (currently can only be achieved by the user through
+       * PDB), the effect should be to clear the channel.
+       */
+      gimp_channel_clear (channel,
+                          GIMP_CHANNEL_GET_CLASS (channel)->border_desc,
+                          push_undo);
+      return;
+    }
+  else if (radius_x <= 0 || radius_y <= 0)
+    {
+      /* FIXME: Implement the case where only one of radius_x and radius_y is 0.
+       * Currently, should never happen.
+       */
+      g_return_if_reached();
+    }
 
   if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
