@@ -553,6 +553,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpImageMapRegion;
 
 
+#define GIMP_TYPE_CHANNEL_BORDER_STYLE (gimp_channel_border_style_get_type ())
+
+GType gimp_channel_border_style_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_CHANNEL_BORDER_STYLE_HARD,     /*< desc="Hard"      >*/
+  GIMP_CHANNEL_BORDER_STYLE_SMOOTH,   /*< desc="Smooth"    >*/
+  GIMP_CHANNEL_BORDER_STYLE_FEATHERED /*< desc="Feathered" >*/
+} GimpChannelBorderStyle;
+
+
 /*
  * non-registered enums; register them if needed
  */
