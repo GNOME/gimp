@@ -70,13 +70,13 @@ static void   select_shrink_callback  (GtkWidget *widget,
 
 /*  private variables  */
 
-static gdouble   select_feather_radius    = 5.0;
-static gint      select_grow_pixels       = 1;
-static gint      select_shrink_pixels     = 1;
-static gboolean  select_shrink_edge_lock  = FALSE;
-static gint      select_border_radius     = 5;
-static gboolean  select_border_feather    = FALSE;
-static gboolean  select_border_edge_lock  = FALSE;
+static gdouble                select_feather_radius   = 5.0;
+static gint                   select_grow_pixels      = 1;
+static gint                   select_shrink_pixels    = 1;
+static gboolean               select_shrink_edge_lock = FALSE;
+static gint                   select_border_radius    = 5;
+static GimpChannelBorderStyle select_border_style     = GIMP_CHANNEL_BORDER_STYLE_SMOOTH;
+static gboolean               select_border_edge_lock = FALSE;
 
 
 /*  public functions  */
@@ -260,6 +260,7 @@ select_border_cmd_callback (GtkAction *action,
   GimpDisplay *display;
   GimpImage   *image;
   GtkWidget   *dialog;
+  GtkWidget   *combo;
   GtkWidget   *button;
   gdouble      xres;
   gdouble      yres;
@@ -281,16 +282,17 @@ select_border_cmd_callback (GtkAction *action,
                                 G_OBJECT (image), "disconnect",
                                 select_border_callback, image);
 
-  /* Feather button */
-  button = gtk_check_button_new_with_mnemonic (_("_Feather border"));
+  /* Border style combo */
+  combo = gimp_enum_combo_box_new (GIMP_TYPE_CHANNEL_BORDER_STYLE);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Border style"));
 
-  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
+  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), combo,
                       FALSE, FALSE, 0);
 
-  g_object_set_data (G_OBJECT (dialog), "border-feather-toggle", button);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                select_border_feather);
-  gtk_widget_show (button);
+  g_object_set_data (G_OBJECT (dialog), "border-style-combo", combo);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 select_border_style);
+  gtk_widget_show (combo);
 
   /* Edge lock button */
   button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
@@ -536,17 +538,19 @@ select_border_callback (GtkWidget *widget,
                         gpointer   data)
 {
   GimpImage *image  = GIMP_IMAGE (data);
-  GtkWidget *feather_button = g_object_get_data (G_OBJECT (widget),
-                                                 "border-feather-toggle");
+  GtkWidget *style_combo = g_object_get_data (G_OBJECT (widget),
+                                              "border-style-combo");
   GtkWidget *edge_lock_button = g_object_get_data (G_OBJECT (widget),
                                                    "edge-lock-toggle");
   gdouble    radius_x;
   gdouble    radius_y;
+  gint       border_style;
 
   radius_x = radius_y = select_border_radius = ROUND (size);
 
-  select_border_feather =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (feather_button));
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (style_combo),
+                                     &border_style))
+    select_border_style = (GimpChannelBorderStyle) border_style;
 
   select_border_edge_lock =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (edge_lock_button));
@@ -569,9 +573,7 @@ select_border_callback (GtkWidget *widget,
     }
 
   gimp_channel_border (gimp_image_get_mask (image), radius_x, radius_y,
-                       ! select_border_feather ? GIMP_CHANNEL_BORDER_STYLE_HARD :
-                                                 GIMP_CHANNEL_BORDER_STYLE_FEATHERED,
-                       select_border_edge_lock, TRUE);
+                       select_border_style, select_border_edge_lock, TRUE);
   gimp_image_flush (image);
 }
 
