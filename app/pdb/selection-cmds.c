@@ -362,9 +362,11 @@ selection_border_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      /* FIXME: "feather" and "edge-lock" hardcoded to TRUE */
+      /* FIXME: "style" and "edge-lock" hardcoded to FEATHERED and TRUE, respectively. */
       gimp_channel_border (gimp_image_get_mask (image),
-                           radius, radius, TRUE, TRUE, TRUE);
+                           radius, radius,
+                           GIMP_CHANNEL_BORDER_STYLE_FEATHERED,
+                           TRUE, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

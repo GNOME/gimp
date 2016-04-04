@@ -60,50 +60,50 @@ struct _GimpChannelClass
   GimpDrawableClass  parent_class;
 
   /*  signals  */
-  void     (* color_changed) (GimpChannel         *channel);
+  void     (* color_changed) (GimpChannel             *channel);
 
   /*  virtual functions  */
-  gboolean (* boundary)      (GimpChannel         *channel,
-                              const GimpBoundSeg **segs_in,
-                              const GimpBoundSeg **segs_out,
-                              gint                *num_segs_in,
-                              gint                *num_segs_out,
-                              gint                 x1,
-                              gint                 y1,
-                              gint                 x2,
-                              gint                 y2);
-  gboolean (* is_empty)      (GimpChannel         *channel);
+  gboolean (* boundary)      (GimpChannel             *channel,
+                              const GimpBoundSeg     **segs_in,
+                              const GimpBoundSeg     **segs_out,
+                              gint                    *num_segs_in,
+                              gint                    *num_segs_out,
+                              gint                     x1,
+                              gint                     y1,
+                              gint                     x2,
+                              gint                     y2);
+  gboolean (* is_empty)      (GimpChannel             *channel);
 
-  void     (* feather)       (GimpChannel         *channel,
-                              gdouble              radius_x,
-                              gdouble              radius_y,
-                              gboolean             push_undo);
-  void     (* sharpen)       (GimpChannel         *channel,
-                              gboolean             push_undo);
-  void     (* clear)         (GimpChannel         *channel,
-                              const gchar         *undo_desc,
-                              gboolean             push_undo);
-  void     (* all)           (GimpChannel         *channel,
-                              gboolean             push_undo);
-  void     (* invert)        (GimpChannel         *channel,
-                              gboolean             push_undo);
-  void     (* border)        (GimpChannel         *channel,
-                              gint                 radius_x,
-                              gint                 radius_y,
-                              gboolean             feather,
-                              gboolean             edge_lock,
-                              gboolean             push_undo);
-  void     (* grow)          (GimpChannel         *channel,
-                              gint                 radius_x,
-                              gint                 radius_y,
-                              gboolean             push_undo);
-  void     (* shrink)        (GimpChannel         *channel,
-                              gint                 radius_x,
-                              gint                 radius_y,
-                              gboolean             edge_lock,
-                              gboolean             push_undo);
-  void     (* flood)         (GimpChannel         *channel,
-                              gboolean             push_undo);
+  void     (* feather)       (GimpChannel             *channel,
+                              gdouble                  radius_x,
+                              gdouble                  radius_y,
+                              gboolean                 push_undo);
+  void     (* sharpen)       (GimpChannel             *channel,
+                              gboolean                 push_undo);
+  void     (* clear)         (GimpChannel             *channel,
+                              const gchar             *undo_desc,
+                              gboolean                 push_undo);
+  void     (* all)           (GimpChannel             *channel,
+                              gboolean                 push_undo);
+  void     (* invert)        (GimpChannel             *channel,
+                              gboolean                 push_undo);
+  void     (* border)        (GimpChannel             *channel,
+                              gint                     radius_x,
+                              gint                     radius_y,
+                              GimpChannelBorderStyle   style,
+                              gboolean                 edge_lock,
+                              gboolean                 push_undo);
+  void     (* grow)          (GimpChannel             *channel,
+                              gint                     radius_x,
+                              gint                     radius_y,
+                              gboolean                 push_undo);
+  void     (* shrink)        (GimpChannel             *channel,
+                              gint                     radius_x,
+                              gint                     radius_y,
+                              gboolean                 edge_lock,
+                              gboolean                 push_undo);
+  void     (* flood)         (GimpChannel             *channel,
+                              gboolean                 push_undo);
 
   const gchar *feather_desc;
   const gchar *sharpen_desc;
@@ -162,53 +162,53 @@ void          gimp_channel_push_undo          (GimpChannel       *mask,
 
 /*  selection mask functions  */
 
-GimpChannel * gimp_channel_new_mask           (GimpImage           *image,
-                                               gint                 width,
-                                               gint                 height);
+GimpChannel * gimp_channel_new_mask           (GimpImage              *image,
+                                               gint                    width,
+                                               gint                    height);
 
-gboolean      gimp_channel_boundary           (GimpChannel         *mask,
-                                               const GimpBoundSeg **segs_in,
-                                               const GimpBoundSeg **segs_out,
-                                               gint                *num_segs_in,
-                                               gint                *num_segs_out,
-                                               gint                 x1,
-                                               gint                 y1,
-                                               gint                 x2,
-                                               gint                 y2);
-gboolean      gimp_channel_is_empty           (GimpChannel         *mask);
+gboolean      gimp_channel_boundary           (GimpChannel            *mask,
+                                               const GimpBoundSeg    **segs_in,
+                                               const GimpBoundSeg    **segs_out,
+                                               gint                   *num_segs_in,
+                                               gint                   *num_segs_out,
+                                               gint                    x1,
+                                               gint                    y1,
+                                               gint                    x2,
+                                               gint                    y2);
+gboolean      gimp_channel_is_empty           (GimpChannel            *mask);
 
-void          gimp_channel_feather            (GimpChannel         *mask,
-                                               gdouble              radius_x,
-                                               gdouble              radius_y,
-                                               gboolean             push_undo);
-void          gimp_channel_sharpen            (GimpChannel         *mask,
-                                               gboolean             push_undo);
+void          gimp_channel_feather            (GimpChannel            *mask,
+                                               gdouble                 radius_x,
+                                               gdouble                 radius_y,
+                                               gboolean                push_undo);
+void          gimp_channel_sharpen            (GimpChannel            *mask,
+                                               gboolean                push_undo);
 
-void          gimp_channel_clear              (GimpChannel         *mask,
-                                               const gchar         *undo_desc,
-                                               gboolean             push_undo);
-void          gimp_channel_all                (GimpChannel         *mask,
-                                               gboolean             push_undo);
-void          gimp_channel_invert             (GimpChannel         *mask,
-                                               gboolean             push_undo);
+void          gimp_channel_clear              (GimpChannel            *mask,
+                                               const gchar            *undo_desc,
+                                               gboolean                push_undo);
+void          gimp_channel_all                (GimpChannel            *mask,
+                                               gboolean                push_undo);
+void          gimp_channel_invert             (GimpChannel            *mask,
+                                               gboolean                push_undo);
 
-void          gimp_channel_border             (GimpChannel         *mask,
-                                               gint                 radius_x,
-                                               gint                 radius_y,
-                                               gboolean             feather,
-                                               gboolean             edge_lock,
-                                               gboolean             push_undo);
-void          gimp_channel_grow               (GimpChannel         *mask,
-                                               gint                 radius_x,
-                                               gint                 radius_y,
-                                               gboolean             push_undo);
-void          gimp_channel_shrink             (GimpChannel         *mask,
-                                               gint                 radius_x,
-                                               gint                 radius_y,
-                                               gboolean             edge_lock,
-                                               gboolean             push_undo);
-void          gimp_channel_flood              (GimpChannel         *mask,
-                                               gboolean             push_undo);
+void          gimp_channel_border             (GimpChannel            *mask,
+                                               gint                    radius_x,
+                                               gint                    radius_y,
+                                               GimpChannelBorderStyle  style,
+                                               gboolean                edge_lock,
+                                               gboolean                push_undo);
+void          gimp_channel_grow               (GimpChannel            *mask,
+                                               gint                    radius_x,
+                                               gint                    radius_y,
+                                               gboolean                push_undo);
+void          gimp_channel_shrink             (GimpChannel            *mask,
+                                               gint                    radius_x,
+                                               gint                    radius_y,
+                                               gboolean                edge_lock,
+                                               gboolean                push_undo);
+void          gimp_channel_flood              (GimpChannel            *mask,
+                                               gboolean                push_undo);
 
 
 #endif /* __GIMP_CHANNEL_H__ */

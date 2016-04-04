@@ -569,7 +569,9 @@ select_border_callback (GtkWidget *widget,
     }
 
   gimp_channel_border (gimp_image_get_mask (image), radius_x, radius_y,
-                       select_border_feather, select_border_edge_lock, TRUE);
+                       ! select_border_feather ? GIMP_CHANNEL_BORDER_STYLE_HARD :
+                                                 GIMP_CHANNEL_BORDER_STYLE_FEATHERED,
+                       select_border_edge_lock, TRUE);
   gimp_image_flush (image);
 }
 

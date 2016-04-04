@@ -219,7 +219,7 @@ static void       gimp_channel_real_invert   (GimpChannel         *channel,
 static void       gimp_channel_real_border   (GimpChannel         *channel,
                                               gint                 radius_x,
                                               gint                 radius_y,
-                                              gboolean             feather,
+                                              GimpChannelBorderStyle style,
                                               gboolean             edge_lock,
                                               gboolean             push_undo);
 static void       gimp_channel_real_grow     (GimpChannel         *channel,
@@ -1406,12 +1406,12 @@ gimp_channel_real_invert (GimpChannel *channel,
 }
 
 static void
-gimp_channel_real_border (GimpChannel *channel,
-                          gint         radius_x,
-                          gint         radius_y,
-                          gboolean     feather,
-                          gboolean     edge_lock,
-                          gboolean     push_undo)
+gimp_channel_real_border (GimpChannel            *channel,
+                          gint                    radius_x,
+                          gint                    radius_y,
+                          GimpChannelBorderStyle  style,
+                          gboolean                edge_lock,
+                          gboolean                push_undo)
 {
   gint x1, y1, x2, y2;
 
@@ -1457,10 +1457,7 @@ gimp_channel_real_border (GimpChannel *channel,
                           NULL, NULL,
                           gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                           GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
-                          radius_x, radius_y,
-                          ! feather ? GIMP_CHANNEL_BORDER_STYLE_HARD :
-                                      GIMP_CHANNEL_BORDER_STYLE_FEATHERED,
-                          edge_lock);
+                          radius_x, radius_y, style, edge_lock);
 
   channel->bounds_known = FALSE;
 
@@ -2031,12 +2028,12 @@ gimp_channel_invert (GimpChannel *channel,
 }
 
 void
-gimp_channel_border (GimpChannel *channel,
-                     gint         radius_x,
-                     gint         radius_y,
-                     gboolean     feather,
-                     gboolean     edge_lock,
-                     gboolean     push_undo)
+gimp_channel_border (GimpChannel            *channel,
+                     gint                    radius_x,
+                     gint                    radius_y,
+                     GimpChannelBorderStyle  style,
+                     gboolean                edge_lock,
+                     gboolean                push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
@@ -2044,7 +2041,7 @@ gimp_channel_border (GimpChannel *channel,
     push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->border (channel,
-                                            radius_x, radius_y, feather, edge_lock,
+                                            radius_x, radius_y, style, edge_lock,
                                             push_undo);
 }
 
