@@ -343,15 +343,15 @@ gimp_gegl_apply_feather (GeglBuffer          *src_buffer,
 }
 
 void
-gimp_gegl_apply_border (GeglBuffer          *src_buffer,
-                        GimpProgress        *progress,
-                        const gchar         *undo_desc,
-                        GeglBuffer          *dest_buffer,
-                        const GeglRectangle *dest_rect,
-                        gint                 radius_x,
-                        gint                 radius_y,
-                        gboolean             feather,
-                        gboolean             edge_lock)
+gimp_gegl_apply_border (GeglBuffer             *src_buffer,
+                        GimpProgress           *progress,
+                        const gchar            *undo_desc,
+                        GeglBuffer             *dest_buffer,
+                        const GeglRectangle    *dest_rect,
+                        gint                    radius_x,
+                        gint                    radius_y,
+                        GimpChannelBorderStyle  style,
+                        gboolean                edge_lock)
 {
   GeglNode *node;
 
@@ -359,13 +359,74 @@ gimp_gegl_apply_border (GeglBuffer          *src_buffer,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
-  node = gegl_node_new_child (NULL,
-                              "operation", "gimp:border",
-                              "radius-x",  radius_x,
-                              "radius-y",  radius_y,
-                              "feather",   feather,
-                              "edge-lock", edge_lock,
-                              NULL);
+  switch (style)
+    {
+    case GIMP_CHANNEL_BORDER_STYLE_HARD:
+    case GIMP_CHANNEL_BORDER_STYLE_FEATHERED:
+      {
+        gboolean feather = style == GIMP_CHANNEL_BORDER_STYLE_FEATHERED;
+
+        node = gegl_node_new_child (NULL,
+                                    "operation", "gimp:border",
+                                    "radius-x",  radius_x,
+                                    "radius-y",  radius_y,
+                                    "feather",   feather,
+                                    "edge-lock", edge_lock,
+                                    NULL);
+      }
+      break;
+
+    case GIMP_CHANNEL_BORDER_STYLE_SMOOTH:
+      {
+        GeglNode *input, *output;
+        GeglNode *grow, *shrink, *subtract;
+
+        node   = gegl_node_new ();
+
+        input  = gegl_node_get_input_proxy (node, "input");
+        output = gegl_node_get_output_proxy (node, "output");
+
+        /* Duplicate special-case behavior of "gimp:border". */
+        if (radius_x == 1 && radius_y == 1)
+          {
+            grow   = gegl_node_new_child (node,
+                                          "operation", "gegl:nop",
+                                          NULL);
+            shrink = gegl_node_new_child (node,
+                                          "operation", "gimp:shrink",
+                                          "radius-x",  1,
+                                          "radius-y",  1,
+                                          "edge-lock", edge_lock,
+                                          NULL);
+          }
+        else
+          {
+            grow   = gegl_node_new_child (node,
+                                          "operation", "gimp:grow",
+                                          "radius-x",  radius_x,
+                                          "radius-y",  radius_y,
+                                          NULL);
+            shrink = gegl_node_new_child (node,
+                                          "operation", "gimp:shrink",
+                                          "radius-x",  radius_x + 1,
+                                          "radius-y",  radius_y + 1,
+                                          "edge-lock", edge_lock,
+                                          NULL);
+          }
+
+        subtract = gegl_node_new_child (node,
+                                        "operation", "gegl:subtract",
+                                        NULL);
+
+        gegl_node_link_many (input, grow, subtract, output, NULL);
+        gegl_node_link (input, shrink);
+        gegl_node_connect_to (shrink, "output", subtract, "aux");
+      }
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
                              node, dest_buffer, dest_rect);

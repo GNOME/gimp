@@ -1457,7 +1457,10 @@ gimp_channel_real_border (GimpChannel *channel,
                           NULL, NULL,
                           gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                           GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
-                          radius_x, radius_y, feather, edge_lock);
+                          radius_x, radius_y,
+                          ! feather ? GIMP_CHANNEL_BORDER_STYLE_HARD :
+                                      GIMP_CHANNEL_BORDER_STYLE_FEATHERED,
+                          edge_lock);
 
   channel->bounds_known = FALSE;
 
