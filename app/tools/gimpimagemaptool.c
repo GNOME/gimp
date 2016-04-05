@@ -646,11 +646,32 @@ gimp_image_map_tool_cursor_update (GimpTool         *tool,
                                    GdkModifierType   state,
                                    GimpDisplay      *display)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                  display);
 
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
+      GimpDisplayShell *shell = gimp_display_get_shell (display);
+
+      if (im_tool->image_map     &&
+          im_tool->percent_guide &&
+          gimp_display_shell_get_show_guides (shell))
+        {
+          const gint snap_distance = display->config->snap_distance;
+          gint       position;
+
+          position = gimp_guide_get_position (im_tool->percent_guide);
+
+          if (fabs (coords->x - position) <= FUNSCALEX (shell, snap_distance))
+            {
+              gimp_tool_set_cursor (tool, display,
+                                    GIMP_CURSOR_MOUSE,
+                                    GIMP_TOOL_CURSOR_HAND,
+                                    GIMP_CURSOR_MODIFIER_MOVE);
+            }
+        }
     }
 }
 
