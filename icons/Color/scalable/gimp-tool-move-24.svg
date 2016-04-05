@@ -10,20 +10,18 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="16"
-   height="16"
-   id="svg2"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-move.svg"
-   inkscape:export-filename="/a/home/cc/students/cs/barakitk/Documents/Cage_16_Blue.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90"
-   sodipodi:version="0.32"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   viewBox="0 0 16 16">
+   sodipodi:docname="gimp-tool-move-24.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
+   inkscape:export-xdpi="98.181816"
+   inkscape:export-ydpi="98.181816">
   <defs
-     id="defs4">
+     id="defs30573">
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3204-1"
@@ -33,7 +31,7 @@
        x2="173.83766"
        y2="337.29449"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0292666,0,0,1.0292666,-184.64471,711.74006)" />
+       gradientTransform="matrix(1.5601655,0,0,1.5601655,-280.01145,536.17265)" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient3204-1">
@@ -48,62 +46,57 @@
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
-     bordercolor="#dadada"
-     borderopacity="1"
+     bordercolor="#666666"
+     borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="25.49763"
-     inkscape:cx="8.8426641"
-     inkscape:cy="9.5959207"
+     inkscape:zoom="16"
+     inkscape:cx="1.532679"
+     inkscape:cy="12.128924"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     objecttolerance="20"
-     inkscape:object-nodes="false"
-     inkscape:object-paths="false"
-     inkscape:snap-global="true"
-     inkscape:snap-nodes="false"
-     inkscape:snap-center="false"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
      inkscape:window-width="1920"
      inkscape:window-height="1016"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     showborder="true"
-     borderlayer="true"
-     inkscape:showpageshadow="false"
-     inkscape:snap-bbox="true"
+     inkscape:snap-global="false"
      showguides="true">
     <inkscape:grid
        type="xygrid"
-       id="grid4140"
-       empspacing="5"
-       visible="true"
-       enabled="true"
-       snapvisiblegridlinesonly="true" />
+       id="grid4369" />
   </sodipodi:namedview>
   <metadata
-     id="metadata7">
+     id="metadata30576">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
-            <dc:title>Barak Itkin &lt;lightningismyname@gmail.com&gt;</dc:title>
+            <dc:title>Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:rights>
-          <cc:Agent>
-            <dc:title>Barak Itkin &lt;lightningismyname@gmail.com&gt;</dc:title>
-          </cc:Agent>
-        </dc:rights>
-        <dc:date>July 2010</dc:date>
-        <cc:license
-           rdf:resource="" />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -111,14 +104,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1036.3622)">
+     transform="translate(0,-1028.3622)">
     <path
-       d="m 8,1036.6124 -3.5,2.7498 H 7 v 4 H 3.0000601 l -1.201e-4,-2.5 -2.7497286,3.5 2.7497286,3.368 v -2.368 H 7 v 4 H 4.5 l 3.5,2.7498 3.5,-2.7498 H 9 v -4 h 4 v 2.632 l 2.749789,-3.632 -2.749789,-3.5 v 2.5 H 9 v -4 h 2.5 z"
+       d="m 12.000001,1028.6152 -5.1393836,4.747 H 11 v 6 H 5.000091 L 5,1035.223 l -4.74715261,5.1393 4.74706161,5.1394 v -4.1395 H 11 v 6 H 6.8606174 l 5.1393836,4.7472 5.139382,-4.7472 H 13 v -6 h 6 v 4.1395 l 4.747153,-5.1394 L 19,1035.223 v 4.1392 h -6 v -6 h 4.139383 z"
        id="gimp-tool-move"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccccccccccccccccc"
        stroke-miterlimit="10"
-       style="color:#000000;display:inline;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient8313);stroke-width:0.50044352;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none"
+       style="color:#000000;display:inline;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient8313);stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none"
        inkscape:export-xdpi="123.75011"
        inkscape:export-ydpi="123.75011" />
   </g>
