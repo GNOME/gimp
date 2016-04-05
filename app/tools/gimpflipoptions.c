@@ -132,7 +132,7 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Affect:"));
+  label = gtk_label_new (_("Transform:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -141,7 +141,7 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (box);
 
   /*  tool toggle  */
-  str = g_strdup_printf (_("Flip Type  (%s)"),
+  str = g_strdup_printf (_("Direction  (%s)"),
                          gimp_get_mod_string (toggle_mask));
 
   frame = gimp_prop_enum_radio_frame_new (config, "flip-type",
