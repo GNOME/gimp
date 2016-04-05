@@ -76,120 +76,81 @@
 
 /*  local function prototypes  */
 
-static void      gimp_image_map_tool_class_init     (GimpImageMapToolClass *klass);
-static void      gimp_image_map_tool_base_init      (GimpImageMapToolClass *klass);
+static void      gimp_image_map_tool_constructed    (GObject              *object);
+static void      gimp_image_map_tool_finalize       (GObject              *object);
 
-static void      gimp_image_map_tool_init           (GimpImageMapTool      *im_tool);
+static gboolean  gimp_image_map_tool_initialize     (GimpTool             *tool,
+                                                     GimpDisplay          *display,
+                                                     GError              **error);
+static void      gimp_image_map_tool_control        (GimpTool             *tool,
+                                                     GimpToolAction        action,
+                                                     GimpDisplay          *display);
+static void      gimp_image_map_tool_button_press   (GimpTool             *tool,
+                                                     const GimpCoords     *coords,
+                                                     guint32               time,
+                                                     GdkModifierType       state,
+                                                     GimpButtonPressType   press_type,
+                                                     GimpDisplay          *display);
+static gboolean  gimp_image_map_tool_key_press      (GimpTool             *tool,
+                                                     GdkEventKey          *kevent,
+                                                     GimpDisplay          *display);
+static void      gimp_image_map_tool_cursor_update  (GimpTool             *tool,
+                                                     const GimpCoords     *coords,
+                                                     GdkModifierType       state,
+                                                     GimpDisplay          *display);
+static void      gimp_image_map_tool_options_notify (GimpTool             *tool,
+                                                     GimpToolOptions      *options,
+                                                     const GParamSpec     *pspec);
 
-static void      gimp_image_map_tool_constructed    (GObject               *object);
-static void      gimp_image_map_tool_finalize       (GObject               *object);
+static gboolean  gimp_image_map_tool_pick_color     (GimpColorTool        *color_tool,
+                                                     gint                  x,
+                                                     gint                  y,
+                                                     const Babl          **sample_format,
+                                                     gpointer              pixel,
+                                                     GimpRGB              *color);
+static void      gimp_image_map_tool_color_picked   (GimpColorTool        *color_tool,
+                                                     GimpColorPickState    pick_state,
+                                                     gdouble               x,
+                                                     gdouble               y,
+                                                     const Babl           *sample_format,
+                                                     gpointer              pixel,
+                                                     const GimpRGB        *color);
 
-static gboolean  gimp_image_map_tool_initialize     (GimpTool              *tool,
-                                                     GimpDisplay           *display,
-                                                     GError               **error);
-static void      gimp_image_map_tool_control        (GimpTool              *tool,
-                                                     GimpToolAction         action,
-                                                     GimpDisplay           *display);
-static void      gimp_image_map_tool_button_press   (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     guint32                time,
-                                                     GdkModifierType        state,
-                                                     GimpButtonPressType    press_type,
-                                                     GimpDisplay           *display);
-static gboolean  gimp_image_map_tool_key_press      (GimpTool              *tool,
-                                                     GdkEventKey           *kevent,
-                                                     GimpDisplay           *display);
-static void      gimp_image_map_tool_oper_update    (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     GdkModifierType        state,
-                                                     gboolean               proximity,
-                                                     GimpDisplay           *display);
-static void      gimp_image_map_tool_cursor_update  (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     GdkModifierType        state,
-                                                     GimpDisplay           *display);
-static void      gimp_image_map_tool_options_notify (GimpTool              *tool,
-                                                     GimpToolOptions       *options,
-                                                     const GParamSpec      *pspec);
+static void      gimp_image_map_tool_real_reset     (GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_draw           (GimpDrawTool          *draw_tool);
+static void      gimp_image_map_tool_halt           (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_commit         (GimpImageMapTool     *im_tool);
 
-static gboolean  gimp_image_map_tool_pick_color     (GimpColorTool         *color_tool,
-                                                     gint                   x,
-                                                     gint                   y,
-                                                     const Babl           **sample_format,
-                                                     gpointer               pixel,
-                                                     GimpRGB               *color);
-static void      gimp_image_map_tool_color_picked   (GimpColorTool         *color_tool,
-                                                     GimpColorPickState     pick_state,
-                                                     gdouble                x,
-                                                     gdouble                y,
-                                                     const Babl            *sample_format,
-                                                     gpointer               pixel,
-                                                     const GimpRGB         *color);
+static void      gimp_image_map_tool_map            (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_dialog         (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_dialog_unmap   (GtkWidget            *dialog,
+                                                     GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_reset          (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_create_map     (GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_real_reset     (GimpImageMapTool      *im_tool);
+static void      gimp_image_map_tool_flush          (GimpImageMap         *image_map,
+                                                     GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_config_notify  (GObject              *object,
+                                                     const GParamSpec     *pspec,
+                                                     GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_halt           (GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_commit         (GimpImageMapTool      *im_tool);
+static void      gimp_image_map_tool_add_guide      (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_remove_guide   (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_move_guide     (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_guide_removed  (GimpGuide            *guide,
+                                                     GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_guide_moved    (GimpGuide            *guide,
+                                                     const GParamSpec     *pspec,
+                                                     GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_map            (GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_dialog         (GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_dialog_unmap   (GtkWidget             *dialog,
-                                                     GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_reset          (GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_create_map     (GimpImageMapTool      *im_tool);
-
-static void      gimp_image_map_tool_flush          (GimpImageMap          *image_map,
-                                                     GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_config_notify  (GObject               *object,
-                                                     const GParamSpec      *pspec,
-                                                     GimpImageMapTool      *im_tool);
-
-static void      gimp_image_map_tool_add_guide      (GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_remove_guide   (GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_move_guide     (GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_guide_removed  (GimpGuide             *guide,
-                                                     GimpImageMapTool      *im_tool);
-static void      gimp_image_map_tool_guide_moved    (GimpGuide             *guide,
-                                                     const GParamSpec      *pspec,
-                                                     GimpImageMapTool      *im_tool);
-
-static void      gimp_image_map_tool_response       (GimpToolGui           *gui,
-                                                     gint                   response_id,
-                                                     GimpImageMapTool      *im_tool);
+static void      gimp_image_map_tool_response       (GimpToolGui          *gui,
+                                                     gint                  response_id,
+                                                     GimpImageMapTool     *im_tool);
 
 
-static GimpColorToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpImageMapTool, gimp_image_map_tool, GIMP_TYPE_COLOR_TOOL)
 
-
-GType
-gimp_image_map_tool_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      const GTypeInfo info =
-      {
-        sizeof (GimpImageMapToolClass),
-        (GBaseInitFunc) gimp_image_map_tool_base_init,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_image_map_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpImageMapTool),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_image_map_tool_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_COLOR_TOOL,
-                                     "GimpImageMapTool",
-                                     &info, 0);
-    }
-
-  return type;
-}
+#define parent_class gimp_image_map_tool_parent_class
 
 
 static void
@@ -197,10 +158,7 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass  *draw_class       = GIMP_DRAW_TOOL_CLASS (klass);
   GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructed  = gimp_image_map_tool_constructed;
   object_class->finalize     = gimp_image_map_tool_finalize;
@@ -209,11 +167,8 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   tool_class->control        = gimp_image_map_tool_control;
   tool_class->button_press   = gimp_image_map_tool_button_press;
   tool_class->key_press      = gimp_image_map_tool_key_press;
-  tool_class->oper_update    = gimp_image_map_tool_oper_update;
   tool_class->cursor_update  = gimp_image_map_tool_cursor_update;
   tool_class->options_notify = gimp_image_map_tool_options_notify;
-
-  draw_class->draw           = gimp_image_map_tool_draw;
 
   color_tool_class->pick     = gimp_image_map_tool_pick_color;
   color_tool_class->picked   = gimp_image_map_tool_color_picked;
@@ -228,11 +183,6 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   klass->get_settings_ui     = gimp_image_map_tool_real_get_settings_ui;
   klass->settings_import     = gimp_image_map_tool_real_settings_import;
   klass->settings_export     = gimp_image_map_tool_real_settings_export;
-}
-
-static void
-gimp_image_map_tool_base_init (GimpImageMapToolClass *klass)
-{
 }
 
 static void
@@ -626,21 +576,6 @@ gimp_image_map_tool_key_press (GimpTool    *tool,
 }
 
 static void
-gimp_image_map_tool_oper_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
-                                 GdkModifierType   state,
-                                 gboolean          proximity,
-                                 GimpDisplay      *display)
-{
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
-                                               proximity, display);
-
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-    {
-    }
-}
-
-static void
 gimp_image_map_tool_cursor_update (GimpTool         *tool,
                                    const GimpCoords *coords,
                                    GdkModifierType   state,
@@ -673,12 +608,6 @@ gimp_image_map_tool_cursor_update (GimpTool         *tool,
             }
         }
     }
-}
-
-static void
-gimp_image_map_tool_draw (GimpDrawTool *draw_tool)
-{
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
 static void
