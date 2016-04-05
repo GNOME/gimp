@@ -966,7 +966,10 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                       paint_opacity);
 
           /* dest_buffer -> paint_buf -> dest_buffer */
-          src_buffer = dest_buffer;
+          if (core->comp_buffer)
+            src_buffer = gimp_drawable_get_buffer (drawable);
+          else
+            src_buffer = dest_buffer;
         }
 
       do_layer_blend (src_buffer,
