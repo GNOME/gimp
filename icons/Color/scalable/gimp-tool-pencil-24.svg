@@ -16,7 +16,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-pencila.svg"
+   sodipodi:docname="gimp-tool-pencil-24.svg"
    inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
    inkscape:export-xdpi="98.181816"
    inkscape:export-ydpi="98.181816">
@@ -95,9 +95,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.313709"
-     inkscape:cx="11.379883"
-     inkscape:cy="9.628924"
+     inkscape:zoom="90.509668"
+     inkscape:cx="0.80041432"
+     inkscape:cy="1.1286087"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -119,8 +119,8 @@
      showborder="false"
      inkscape:window-width="1440"
      inkscape:window-height="752"
-     inkscape:window-x="423"
-     inkscape:window-y="195"
+     inkscape:window-x="338"
+     inkscape:window-y="214"
      inkscape:window-maximized="0"
      inkscape:snap-global="false">
     <inkscape:grid
@@ -135,7 +135,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -151,7 +151,7 @@
      transform="translate(0,-1028.3622)">
     <g
        id="g6847"
-       transform="matrix(0.61097507,0,0,0.62122742,14.591352,413.05129)">
+       transform="matrix(0.9086079,0,0,0.92949659,21.763834,95.749942)">
       <g
          transform="translate(-46.930574,993.1747)"
          inkscape:label="Livello 1"
@@ -193,9 +193,9 @@
                  transform="translate(6.39225,12.18459)" />
               <path
                  inkscape:connector-curvature="0"
-                 sodipodi:nodetypes="cccsc"
-                 style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-                 d="m 23.95475,33.68459 -0.90625,2.25 2.34375,-0.65625 c 0.002,-0.03184 0,-0.06141 0,-0.09375 0,-0.802125 -0.645308,-1.459801 -1.4375,-1.5 z"
+                 sodipodi:nodetypes="cccscc"
+                 style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#c8c8c8;stroke-width:0.20563421;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                 d="m 23.982372,33.82642 -0.933872,2.10817 2.328164,-0.74215 c 0.002,-0.03184 0.01558,-0.141504 0.01558,-0.173844 0,-0.802125 -0.514138,-1.376144 -1.30633,-1.416343 z"
                  id="path2283" />
             </g>
           </g>
@@ -204,12 +204,12 @@
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="ccccc"
            id="path4113-1"
-           d="m 42.821682,13.147263 c 1.834152,-0.500531 3.885052,1.651475 3.449911,3.449919 L 48.46699,14.40178 c 1.066511,-2.466563 -1.132252,-4.4097129 -3.494714,-3.494723 z"
+           d="m 42.821682,13.147263 c 1.834152,-0.500531 3.885052,1.651475 3.449911,3.449919 l 2.36589,-2.195402 c 1.066511,-2.466563 -1.302745,-4.4097129 -3.665207,-3.494723 z"
            style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ef2929;fill-opacity:1;fill-rule:nonzero;stroke:#ef2929;stroke-width:0.99999994;marker:none;enable-background:new" />
         <path
            inkscape:connector-curvature="0"
            style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;fill-rule:nonzero;stroke:#888a85;stroke-width:1;marker:none;enable-background:new"
-           d="m 40.561976,15.25084 c 1.936448,-0.528484 4.101732,1.743706 3.642321,3.642586 l 2.317841,-2.31801 c 0.754457,-1.595776 -2.044633,-4.337495 -3.689625,-3.689891 z"
+           d="m 40.50548,15.535402 c 1.936448,-0.528484 4.158228,1.459144 3.698817,3.358024 l 2.317841,-2.31801 c 0.754457,-1.595776 -1.737745,-4.404567 -3.382737,-3.756963 z"
            id="path4095-8"
            sodipodi:nodetypes="ccccc" />
       </g>
