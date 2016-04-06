@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
+# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-04 20:21+0000\n"
-"PO-Revision-Date: 2016-04-05 10:04+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2016-04-05 18:24+0000\n"
+"PO-Revision-Date: 2016-04-05 19:16-0500\n"
+"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -806,8 +806,7 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Intersectar este canal con la selección actual"
 
-#: ../app/actions/channels-commands.c:86
-#: ../app/actions/channels-commands.c:403
+#: ../app/actions/channels-commands.c:86 ../app/actions/channels-commands.c:403
 msgid "Channel Attributes"
 msgstr "Atributos del canal"
 
@@ -819,8 +818,7 @@ msgstr "Editar los atributos del canal"
 msgid "Edit Channel Color"
 msgstr "Editar el color del canal"
 
-#: ../app/actions/channels-commands.c:92
-#: ../app/actions/channels-commands.c:124
+#: ../app/actions/channels-commands.c:92 ../app/actions/channels-commands.c:124
 msgid "_Fill opacity:"
 msgstr "Opacidad del _relleno:"
 
@@ -1090,8 +1088,7 @@ msgstr ""
 "La apertura de «%s» ha fallado:\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114
-#: ../app/actions/tool-options-commands.c:74
+#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1963
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
@@ -4276,15 +4273,13 @@ msgstr "Redimensionando"
 msgid "Set Image Print Resolution"
 msgstr "Establecer la resolución de impresión de la imagen"
 
-#: ../app/actions/image-commands.c:566
-#: ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:566 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Volteando"
 
-#: ../app/actions/image-commands.c:590
-#: ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:590 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
@@ -9084,12 +9079,11 @@ msgid "Shrink Channel"
 msgstr "Achicar el canal"
 
 #: ../app/core/gimpchannel.c:337
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Channel"
 msgctxt "undo-type"
 msgid "Flood Channel"
-msgstr "Voltear el canal"
+msgstr "Inundar canal"
 
 #: ../app/core/gimpchannel.c:836
 msgid "Cannot fill empty channel."
@@ -9678,8 +9672,6 @@ msgid "Convert Image to 8 bit linear integer"
 msgstr "Convertir la imagen a entero lineal de 8 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:84
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 8 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit gamma integer"
 msgstr "Convertir la imagen a entero gamma de 8 bits"
@@ -9690,8 +9682,6 @@ msgid "Convert Image to 16 bit linear integer"
 msgstr "Convertir la imagen a entero lineal de 16 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:90
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma integer"
 msgstr "Convertir la imagen a entero gamma de 16 bits"
@@ -9702,50 +9692,36 @@ msgid "Convert Image to 32 bit linear integer"
 msgstr "Convertir la imagen a entero lineal de 32 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:96
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 32 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma integer"
 msgstr "Convertir la imagen a entero gamma de 32 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:99
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
 msgstr "Convertir la imagen a punto flotante lineal de 16 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:102
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
 msgstr "Convertir la imagen a punto flotante gamma de 16 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:105
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 32 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
 msgstr "Convertir la imagen a punto flotante lineal de 32 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:108
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 32 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
 msgstr "Convertir la imagen a punto flotante gamma de 32 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:111
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit linear floating point"
 msgstr "Convertir la imagen a punto flotante lineal de 64 bits"
 
 #: ../app/core/gimpimage-convert-precision.c:114
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Convertir la imagen a punto flotante gamma de 64 bits"
@@ -10164,7 +10140,6 @@ msgstr "El archivo del pincel MyPaint es excesivamente grande, omitiendo."
 
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
-#| msgid "Failed to resize swap file: %s"
 msgid "Failed to deserialize MyPaint brush."
 msgstr "Falló al deserializar el pincel MyPaint."
 
@@ -10223,7 +10198,6 @@ msgstr ""
 
 #: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:456
 #, c-format
-#| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 "Leyendo el archivo de paleta «%s»: leer %d colores desde el archivo "
@@ -10231,13 +10205,11 @@ msgstr ""
 
 #: ../app/core/gimppalette-load.c:233
 #, c-format
-#| msgid "Unknown type of palette file: %s"
 msgid "In line %d of palette file: "
 msgstr "En la línea %d del archivo de paleta:"
 
 #: ../app/core/gimppalette-load.c:429
 #, c-format
-#| msgid "Could not read header from palette file '%s'"
 msgid "Could not read header from palette file '%s': "
 msgstr "No se ha podido leer la cabecera del archivo de paleta «%s»:"
 
@@ -10250,7 +10222,6 @@ msgid "History Color"
 msgstr "Histórico de color"
 
 #: ../app/core/gimppattern-load.c:60
-#| msgid "File is truncated in line %d"
 msgid "File appears truncated: "
 msgstr "El archivo parecer estar truncado:"
 
@@ -10269,7 +10240,6 @@ msgstr ""
 "Los patrones de GIMP deben ser GRAY o RGB."
 
 #: ../app/core/gimppattern-load.c:103 ../app/core/gimppattern-load.c:141
-#| msgid "File is truncated in line %d"
 msgid "File appears truncated."
 msgstr "El archivo parece estar truncado."
 
@@ -10279,7 +10249,6 @@ msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Cadena UTF-8 no válida en el archivo de patrón «%s»."
 
 #: ../app/core/gimppattern-load.c:152
-#| msgid "Fatal parse error in palette file '%s'"
 msgid "Fatal parse error in pattern file: "
 msgstr "Error fatal de análisis en el archivo de paleta:"
 
@@ -10296,8 +10265,6 @@ msgid "Move Selection"
 msgstr "Mover la selección"
 
 #: ../app/core/gimpselection.c:170
-#| msgctxt "undo-type"
-#| msgid "Float selection"
 msgctxt "undo-type"
 msgid "Fill Selection"
 msgstr "Rellenar selección"
@@ -10348,15 +10315,13 @@ msgid "Shrink Selection"
 msgstr "Encoger selección"
 
 #: ../app/core/gimpselection.c:196
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float Selection"
 msgctxt "undo-type"
 msgid "Flood Selection"
-msgstr "Flotar la selección"
+msgstr "Inundar selección"
 
 #: ../app/core/gimpselection.c:302
-#| msgid "There is no selection to stroke."
 msgid "There is no selection to fill."
 msgstr "No hay ninguna selección que rellenar."
 
@@ -10388,33 +10353,28 @@ msgid "Method"
 msgstr "Método"
 
 #: ../app/core/gimpstrokeoptions.c:164
-#| msgid "Line width:"
 msgid "Line width"
 msgstr "Anchura de la línea"
 
 #: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:141
 #: ../app/tools/gimptextoptions.c:137
-#| msgid "Units"
 msgid "Unit"
 msgstr "Unidad"
 
 #: ../app/core/gimpstrokeoptions.c:178
-#, fuzzy
 #| msgid "_Cap style:"
 msgid "Cap style"
-msgstr "Estilo del extrem_o:"
+msgstr "Estilo del extremo"
 
 #: ../app/core/gimpstrokeoptions.c:185
-#, fuzzy
 #| msgid "_Join style:"
 msgid "Join style"
-msgstr "E_stilo de la unión:"
+msgstr "Estilo de la unión"
 
 #: ../app/core/gimpstrokeoptions.c:192
-#, fuzzy
 #| msgid "_Miter limit:"
 msgid "Miter limit"
-msgstr "Límite del pico [_miter]:"
+msgstr "Límite del pico [miter]"
 
 #: ../app/core/gimpstrokeoptions.c:193
 msgid ""
@@ -10433,10 +10393,9 @@ msgid "Dash offset"
 msgstr "Raya - punto"
 
 #: ../app/core/gimpstrokeoptions.c:224
-#, fuzzy
 #| msgid "_Emulate brush dynamics"
 msgid "Emulate brush dynamics"
-msgstr "_Emular la dinámica del pincel"
+msgstr "Emular las dinámicas del pincel"
 
 #. no undo (or redo) steps available
 #: ../app/core/gimpsymmetry.c:132 ../app/widgets/gimpimagepropview.c:399
@@ -10445,11 +10404,10 @@ msgid "None"
 msgstr "Ninguno"
 
 #: ../app/core/gimpsymmetry.c:145
-#, fuzzy
 #| msgctxt "align-reference-type"
 #| msgid "Active path"
 msgid "Active"
-msgstr "Ruta activa"
+msgstr "Activo"
 
 #: ../app/core/gimpsymmetry.c:146
 msgid "Activate symmetry painting"
@@ -10460,74 +10418,62 @@ msgid "Mandala"
 msgstr "Mandala"
 
 #: ../app/core/gimpsymmetry-mandala.c:119
-#, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Center lines"
 msgid "Center abscisse"
-msgstr "Líneas medias"
+msgstr "Abscisa central"
 
 #: ../app/core/gimpsymmetry-mandala.c:127
-#, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Center lines"
 msgid "Center ordinate"
-msgstr "Líneas medias"
+msgstr "Ordenada central"
 
 #: ../app/core/gimpsymmetry-mandala.c:135
-#, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Number of lines"
 msgid "Number of points"
-msgstr "Número de líneas"
+msgstr "Número de puntos"
 
-#: ../app/core/gimpsymmetry-mandala.c:143
-#: ../app/core/gimpsymmetry-mirror.c:145
-#, fuzzy
+#: ../app/core/gimpsymmetry-mandala.c:143 ../app/core/gimpsymmetry-mirror.c:145
 #| msgid "Cage transform"
 msgid "Disable brush transform"
-msgstr "Transformar rejilla"
+msgstr "Desactivar transformación del pincel"
 
-#: ../app/core/gimpsymmetry-mandala.c:144
-#: ../app/core/gimpsymmetry-mirror.c:146
-#, fuzzy
+#: ../app/core/gimpsymmetry-mandala.c:144 ../app/core/gimpsymmetry-mirror.c:146
 #| msgid "Transformation"
 msgid "Disable brush transformation (faster)"
-msgstr "Transformación"
+msgstr "Desactivar transformación del pincel (más rápido)"
 
 #: ../app/core/gimpsymmetry-mirror.c:114
-#, fuzzy
 #| msgctxt "message-severity"
 #| msgid "Error"
 msgid "Mirror"
-msgstr "Error"
+msgstr "Espejo"
 
 #: ../app/core/gimpsymmetry-mirror.c:121
-#, fuzzy
 #| msgid "Horizontal"
 msgid "Horizontal Mirror"
-msgstr "Horizontal"
+msgstr "Espejo horizontal"
 
 #: ../app/core/gimpsymmetry-mirror.c:129
-#, fuzzy
 #| msgid "Vertical"
 msgid "Vertical Mirror"
-msgstr "Vertical"
+msgstr "Espejo vertical"
 
 #: ../app/core/gimpsymmetry-mirror.c:137
 msgid "Central Symmetry"
 msgstr "Simetría central"
 
 #: ../app/core/gimpsymmetry-mirror.c:153
-#, fuzzy
 #| msgid "Horizontal offset for distribution"
 msgid "Horizontal axis position"
-msgstr "Desplazamiento horizontal para la distribución"
+msgstr "Posición del eje horizontal"
 
 #: ../app/core/gimpsymmetry-mirror.c:161
-#, fuzzy
 #| msgid "Vertical offset for distribution"
 msgid "Vertical axis position"
-msgstr "Desplazamiento vertical para la distribución"
+msgstr "Posición del eje vertical"
 
 #: ../app/core/gimpsymmetry-tiling.c:100
 #, fuzzy
@@ -10536,31 +10482,28 @@ msgid "Tiling"
 msgstr "Escalado"
 
 #: ../app/core/gimpsymmetry-tiling.c:106
-#, fuzzy
 #| msgid "I_nterval:"
 msgid "Interval X"
-msgstr "_Intervalo:"
+msgstr "Intervalo X"
 
 #: ../app/core/gimpsymmetry-tiling.c:107
 msgid "Interval on the X axis (pixels)"
 msgstr "Intervalo en el eje X (píxeles)"
 
 #: ../app/core/gimpsymmetry-tiling.c:114
-#, fuzzy
 #| msgid "I_nterval:"
 msgid "Interval Y"
-msgstr "_Intervalo:"
+msgstr "Intervalo Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:115
 msgid "Interval on the Y axis (pixels)"
 msgstr "Intervalo en el eje Y (píxeles)"
 
 #: ../app/core/gimpsymmetry-tiling.c:122
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Shift..."
 msgid "Shift"
-msgstr "_Desplazamiento…"
+msgstr "Desplazamiento"
 
 #: ../app/core/gimpsymmetry-tiling.c:123
 msgid "X-shift between lines (pixels)"
@@ -10985,8 +10928,7 @@ msgstr "C_onvertir"
 
 #. dithering
 #: ../app/dialogs/convert-precision-dialog.c:185
-#: ../app/dialogs/convert-type-dialog.c:239
-#: ../app/tools/gimpblendoptions.c:119
+#: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:119
 msgid "Dithering"
 msgstr "Difuminado"
 
@@ -11063,8 +11005,7 @@ msgstr "Activar difuminado de las capas de texto"
 msgid "Converting to indexed colors"
 msgstr "Convirtiendo a colores indexados"
 
-#: ../app/dialogs/convert-type-dialog.c:439
-#: ../app/pdb/image-convert-cmds.c:162
+#: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/image-convert-cmds.c:162
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "No se puede convertir a una paleta con más de 256 colores."
 
@@ -12150,8 +12091,7 @@ msgstr "Seleccionar un tema"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2061
-#: ../app/dialogs/preferences-dialog.c:2454
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2454 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Apariencia"
 
@@ -12263,9 +12203,8 @@ msgstr "Resolución de monitor"
 
 # Debe ir en minúsculas por las reglas de estilo
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2218
-#: ../app/display/gimpcursorview.c:207 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2218 ../app/display/gimpcursorview.c:207
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "píxeles"
 
@@ -12771,8 +12710,7 @@ msgstr "Pulse %s para descartar todos los cambios y salir."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Pulse %s para descartar todos los cambios y cerrar todas las imágenes."
 
-#: ../app/dialogs/quit-dialog.c:341
-#: ../app/display/gimpdisplayshell-close.c:179
+#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:179
 msgid "_Discard Changes"
 msgstr "_Descartar cambios"
 
@@ -13047,8 +12985,8 @@ msgstr "Activar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:773
-#: ../app/display/gimpdisplayshell.c:1467 ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:773 ../app/display/gimpdisplayshell.c:1467
+#: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
 
@@ -13827,8 +13765,7 @@ msgid "Aspect Ratio"
 msgstr "Proporción de aspecto"
 
 #: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaciado"
 
@@ -15360,8 +15297,7 @@ msgstr "Sobremuestreo adaptativo"
 msgid "Max depth"
 msgstr "Profundidad máxima"
 
-#: ../app/tools/gimpblendoptions.c:112
-#: ../app/tools/gimpbucketfilloptions.c:126
+#: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:126
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
@@ -15702,18 +15638,15 @@ msgstr "Colorear la imagen"
 msgid "Select Color"
 msgstr "Seleccionar el color"
 
-#: ../app/tools/gimpcolorizetool.c:174
-#: ../app/tools/gimphuesaturationtool.c:312
+#: ../app/tools/gimpcolorizetool.c:174 ../app/tools/gimphuesaturationtool.c:312
 msgid "_Hue"
 msgstr "_Tono"
 
-#: ../app/tools/gimpcolorizetool.c:181
-#: ../app/tools/gimphuesaturationtool.c:326
+#: ../app/tools/gimpcolorizetool.c:181 ../app/tools/gimphuesaturationtool.c:326
 msgid "_Saturation"
 msgstr "_Saturación"
 
-#: ../app/tools/gimpcolorizetool.c:188
-#: ../app/tools/gimphuesaturationtool.c:319
+#: ../app/tools/gimpcolorizetool.c:188 ../app/tools/gimphuesaturationtool.c:319
 msgid "_Lightness"
 msgstr "_Luminosidad"
 
@@ -16082,15 +16015,15 @@ msgstr "Tipo de archivo"
 msgid "Direction of flipping"
 msgstr "Dirección del volteado"
 
-#: ../app/tools/gimpflipoptions.c:135
-msgid "Affect:"
-msgstr "Afectar:"
+#: ../app/tools/gimpflipoptions.c:135 ../app/tools/gimptransformoptions.c:426
+msgid "Transform:"
+msgstr "Transformar:"
 
 #. tool toggle
-#: ../app/tools/gimpflipoptions.c:144
+#: ../app/tools/gimpflipoptions.c:144 ../app/tools/gimpmagnifyoptions.c:191
 #, c-format
-msgid "Flip Type  (%s)"
-msgstr "Tipo de volteo  (%s)"
+msgid "Direction  (%s)"
+msgstr "Dirección (%s)"
 
 #: ../app/tools/gimpfliptool.c:84
 msgid "Flip"
@@ -16717,8 +16650,7 @@ msgid "Resize image window to accommodate new zoom level"
 msgstr ""
 "Redimensionar la ventana de imagen para ajustarse nuevo nivel de ampliación"
 
-#: ../app/tools/gimpmagnifyoptions.c:91
-#: ../app/tools/gimptransformoptions.c:116
+#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
 #: ../app/widgets/gimpdynamicseditor.c:144
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
@@ -16727,12 +16659,6 @@ msgstr "Dirección"
 #: ../app/tools/gimpmagnifyoptions.c:92
 msgid "Direction of magnification"
 msgstr "Dirección de la ampliación"
-
-#. tool toggle
-#: ../app/tools/gimpmagnifyoptions.c:191
-#, c-format
-msgid "Direction  (%s)"
-msgstr "Dirección (%s)"
 
 #: ../app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
@@ -17360,8 +17286,7 @@ msgstr "Permitir el difuminado de los límites de la selección"
 msgid "Radius of feathering"
 msgstr "Radio del difuminado"
 
-#: ../app/tools/gimpselectionoptions.c:222
-#: ../app/widgets/gimpbrushselect.c:190
+#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Modo:"
 
@@ -17694,10 +17619,6 @@ msgstr "Guías"
 #: ../app/tools/gimptransformoptions.c:163
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Tamaño de una celda para un número variable de guías de composición"
-
-#: ../app/tools/gimptransformoptions.c:426
-msgid "Transform:"
-msgstr "Transformar:"
 
 #: ../app/tools/gimptransformoptions.c:490
 #, fuzzy, c-format
@@ -20379,6 +20300,12 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgid "Affect:"
+#~ msgstr "Afectar:"
+
+#~ msgid "Flip Type  (%s)"
+#~ msgstr "Tipo de volteo  (%s)"
 
 #~ msgid "..."
 #~ msgstr "..."
