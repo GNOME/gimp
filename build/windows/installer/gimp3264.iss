@@ -145,7 +145,8 @@ Compression=lzma2/ultra64
 InternalCompressLevel=ultra
 SolidCompression=yes
 LZMAUseSeparateProcess=yes
-LZMANumFastBytes=256
+LZMANumFastBytes=273
+LZMADictionarySize=1048576
 
 #if !defined(REVISION)
 OutputBaseFileName=gimp-{#VERSION}-setup
