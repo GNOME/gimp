@@ -478,7 +478,7 @@ static const GimpEnumActionEntry view_padding_color_actions[] =
     GIMP_HELP_VIEW_PADDING_COLOR },
 
   { "view-padding-color-custom", "gtk-select-color",
-    NC_("view-padding-color", "Select _Custom Color..."), NULL,
+    NC_("view-padding-color", "_Custom Color..."), NULL,
     NC_("view-padding-color", "Use an arbitrary color"),
     GIMP_CANVAS_PADDING_MODE_CUSTOM, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
