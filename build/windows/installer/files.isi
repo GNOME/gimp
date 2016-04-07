@@ -23,5 +23,3 @@ Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs-8.dll"; DestDir: "{app}\bin"; Components:
 Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\bzip2.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\*.dll"; DestDir: "{app}\lib"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
-;Source: "{#DEPS_DIR}\{#DDIR}\lib\bonobo\servers\*"; DestDir: "{app}\lib\bonobo\servers"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#DEPS_DIR}\{#DDIR}\libexec\*.exe"; DestDir: "{app}\libexec"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
