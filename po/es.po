@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-06 18:25+0000\n"
-"PO-Revision-Date: 2016-04-06 21:34-0500\n"
-"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
+"POT-Creation-Date: 2016-04-07 20:53+0000\n"
+"PO-Revision-Date: 2016-04-08 15:14+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 2.91.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -2567,7 +2567,7 @@ msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Salir del programa de manipulación de imágenes de GNU"
 
-#: ../app/actions/file-actions.c:133
+#: ../app/actions/file-actions.c:133 ../app/actions/file-actions.c:314
 msgctxt "file-action"
 msgid "_Save"
 msgstr "_Guardar"
@@ -2611,10 +2611,13 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Guardar esta imagen y cerrar su ventana"
 
-#: ../app/actions/file-actions.c:159
+#: ../app/actions/file-actions.c:159 ../app/actions/file-actions.c:339
+#, fuzzy
+#| msgctxt "file-action"
+#| msgid "Export As..."
 msgctxt "file-action"
-msgid "Export"
-msgstr "Exportar"
+msgid "Export..."
+msgstr "Exportar como…"
 
 #: ../app/actions/file-actions.c:160
 msgctxt "file-action"
@@ -2643,19 +2646,23 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Exportar la imagen a diversos formatos de archivo como PNG o JPEG"
 
-#: ../app/actions/file-actions.c:312
+#: ../app/actions/file-actions.c:320
+#, fuzzy
+#| msgctxt "file-action"
+#| msgid "_Save"
+msgctxt "file-action"
+msgid "_Save..."
+msgstr "_Guardar"
+
+#: ../app/actions/file-actions.c:325
 #, c-format
 msgid "Export to %s"
 msgstr "Exportar a %s"
 
-#: ../app/actions/file-actions.c:318
+#: ../app/actions/file-actions.c:331
 #, c-format
 msgid "Over_write %s"
 msgstr "_Sobreescribir %s"
-
-#: ../app/actions/file-actions.c:325
-msgid "Export"
-msgstr "Exportar"
 
 #: ../app/actions/file-commands.c:124 ../app/actions/file-commands.c:573
 #: ../app/widgets/gimpopendialog.c:66
@@ -6818,8 +6825,11 @@ msgid "Use the dark check color"
 msgstr "Usar el color de los cuadrados oscuros"
 
 #: ../app/actions/view-actions.c:481
+#, fuzzy
+#| msgctxt "view-padding-color"
+#| msgid "Select _Custom Color..."
 msgctxt "view-padding-color"
-msgid "Select _Custom Color..."
+msgid "_Custom Color..."
 msgstr "Seleccionar color _personalizado…"
 
 #: ../app/actions/view-actions.c:482
@@ -10489,24 +10499,18 @@ msgid "X-shift between lines (pixels)"
 msgstr "Desplazamiento X entre líneas (píxeles)"
 
 #: ../app/core/gimpsymmetry-tiling.c:130
-#| msgctxt "vectors-action"
-#| msgid "L_ock strokes"
 msgid "Max strokes X"
 msgstr "Trazos máximos en X"
 
 #: ../app/core/gimpsymmetry-tiling.c:131
-#| msgid "_Maximum number of colors:"
 msgid "Maximum number of strokes on the X axis"
 msgstr "Número máximo de trazos en el eje X"
 
 #: ../app/core/gimpsymmetry-tiling.c:138
-#| msgctxt "vectors-action"
-#| msgid "L_ock strokes"
 msgid "Max strokes Y"
 msgstr "Trazos máximos en Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:139
-#| msgid "_Maximum number of colors:"
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Número máximo de trazos en el eje Y"
 
@@ -10532,7 +10536,6 @@ msgstr ""
 "encuentra en modo de punto por punto."
 
 #: ../app/core/gimptemplate.c:149 ../app/core/gimptemplate.c:157
-#| msgid "Resolution:"
 msgid "Resolution X"
 msgstr "Resolución X"
 
@@ -10545,7 +10548,6 @@ msgid "The vertical image resolution."
 msgstr "La resolución vertical de la imagen."
 
 #: ../app/core/gimptemplate.c:165
-#| msgid "Resolution:"
 msgid "Resolution unit"
 msgstr "Unidad de resolución"
 
@@ -10558,12 +10560,10 @@ msgid "Image type"
 msgstr "Tipo de imagen"
 
 #: ../app/core/gimptemplate.c:179
-#| msgid "Precision:"
 msgid "Precision"
 msgstr "Precisión"
 
 #: ../app/core/gimptemplate.c:186 ../app/tools/gimpbucketfilloptions.c:93
-#| msgid "Fill by"
 msgid "Fill type"
 msgstr "Tipo de relleno"
 
@@ -10572,7 +10572,6 @@ msgid "Comment"
 msgstr "Comentario"
 
 #: ../app/core/gimptemplate.c:200
-#| msgid "File Name:"
 msgid "Filename"
 msgstr "Nombre del archivo"
 
@@ -10589,7 +10588,6 @@ msgid "Apply stored dynamics"
 msgstr "Aplicar la dinámica almacenada"
 
 #: ../app/core/gimptoolpreset.c:168
-#| msgid "Apply stored brush"
 msgid "Apply stored MyPaint brush"
 msgstr "Aplicar el pincel MyPaint almacenado"
 
@@ -10610,7 +10608,6 @@ msgid "Apply stored font"
 msgstr "Aplicar la tipografía almacenada"
 
 #: ../app/core/gimptoolpreset-load.c:64
-#| msgid "Tool Preset Editor"
 msgid "Tool preset file is corrupt."
 msgstr "El archivo de ajustes prefijados de herramienta está corrupto."
 
@@ -10707,7 +10704,6 @@ msgstr ""
 "«commit» %s"
 
 #: ../app/dialogs/action-search-dialog.c:67
-#| msgid "Selection"
 msgid "Search Actions"
 msgstr "Buscar acciones"
 
@@ -10720,45 +10716,34 @@ msgid "Initialize from _selection"
 msgstr "Iniciar a partir de la _selección"
 
 #: ../app/dialogs/color-profile-dialog.c:163
-#| msgid "Select CMYK Color Profile"
 msgid "Convert to ICC Color Profile"
 msgstr "Convertir a perfil de color ICC"
 
 #: ../app/dialogs/color-profile-dialog.c:166
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to a color profile"
 msgstr "Convertir la imagen a un perfil de color"
 
 #: ../app/dialogs/color-profile-dialog.c:180
-#| msgid "Color Profile"
 msgid "Assign ICC Color Profile"
 msgstr "Asignar perfil de color ICC"
 
 #: ../app/dialogs/color-profile-dialog.c:183
-#| msgid "Pick color from image"
 msgid "Assign a color profile to the image"
 msgstr "Asignar un perfil de color a la imagen"
 
 #: ../app/dialogs/color-profile-dialog.c:189
-#| msgctxt "vector-mode"
-#| msgid "Design"
 msgid "_Assign"
 msgstr "_Asignar"
 
 #: ../app/dialogs/color-profile-dialog.c:214
-#| msgid "Color Profile"
 msgid "Current Color Profile"
 msgstr "Perfil de color actual"
 
 #: ../app/dialogs/color-profile-dialog.c:224
-#| msgid "C_onvert"
 msgid "Convert to"
 msgstr "Convertir a"
 
 #: ../app/dialogs/color-profile-dialog.c:224
-#| msgctxt "vector-mode"
-#| msgid "Design"
 msgid "Assign"
 msgstr "Asignar"
 
@@ -10767,22 +10752,19 @@ msgid "Profile _details"
 msgstr "_Detalles del perfil"
 
 #: ../app/dialogs/color-profile-dialog.c:265
-#, fuzzy
 #| msgid "_Display rendering intent:"
 msgid "_Rendering Intent:"
-msgstr "Prueba de renderizado en _pantalla:"
+msgstr "Prueba de _renderizado:"
 
 #: ../app/dialogs/color-profile-dialog.c:281
-#, fuzzy
 #| msgid "Pointer Information"
 msgid "_Black Point Compensation"
-msgstr "Información del puntero"
+msgstr "_Compensación de punto negro"
 
 #: ../app/dialogs/color-profile-dialog.c:304
-#, fuzzy
 #| msgid "Select Rotation Angle"
 msgid "Select destination profile"
-msgstr "Seleccionar el ángulo de rotación"
+msgstr "Seleccionar perfil de destino"
 
 #: ../app/dialogs/color-profile-dialog.c:314
 #, fuzzy, c-format
@@ -10807,16 +10789,15 @@ msgid "Preferred RGB (%s)"
 msgstr "RGB preferido (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:407
-#, fuzzy, c-format
+#, c-format
 #| msgid "Convert Image to %s"
 msgid "Converting to '%s'"
-msgstr "Convertir imagen a %s"
+msgstr "Convertir a «%s»"
 
 #: ../app/dialogs/color-profile-dialog.c:429
-#, fuzzy
 #| msgid "Color Profile"
 msgid "Assign color profile"
-msgstr "Perfil de color"
+msgstr "Asignar perfil de color"
 
 #: ../app/dialogs/color-profile-import-dialog.c:80
 #, fuzzy
@@ -10847,20 +10828,18 @@ msgid "Convert the image to the RGB working space?"
 msgstr "Convertir la imagen al espacio de colores RGB"
 
 #: ../app/dialogs/color-profile-import-dialog.c:94
-#, fuzzy
 #| msgid "Import settings from a file"
 msgid "Import the image from a color profile"
-msgstr "Importar ajustes desde un archivo"
+msgstr "Importar la imagen desde un perfil de color"
 
 #: ../app/dialogs/color-profile-import-dialog.c:99
 msgid "Keep"
 msgstr "Guardar"
 
 #: ../app/dialogs/color-profile-import-dialog.c:100
-#, fuzzy
 #| msgid "C_onvert"
 msgid "Convert"
-msgstr "C_onvertir"
+msgstr "Convertir"
 
 #: ../app/dialogs/color-profile-import-dialog.c:117
 #, c-format
@@ -10921,17 +10900,16 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Gamma perceptual (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:286
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hard light"
 msgid "Linear light"
-msgstr "Claridad fuerte"
+msgstr "Luz lineal"
 
 #: ../app/dialogs/convert-precision-dialog.c:316
-#, fuzzy, c-format
+#, c-format
 #| msgid "Convert Image to %s"
 msgid "Converting image to %s"
-msgstr "Convertir imagen a %s"
+msgstr "Convirtiendo imagen a «%s»"
 
 #: ../app/dialogs/convert-type-dialog.c:128
 msgid "Indexed Color Conversion"
@@ -11172,17 +11150,15 @@ msgstr ""
 "%s"
 
 #: ../app/dialogs/fill-dialog.c:87
-#, fuzzy
 #| msgid "Choose Stroke Style"
 msgid "Choose Fill Style"
-msgstr "Seleccionar el estilo de trazo"
+msgstr "Seleccionar el estilo de relleno"
 
 #: ../app/dialogs/fill-dialog.c:94
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "_File"
 msgid "_Fill"
-msgstr "_Archivo"
+msgstr "_Rellenar"
 
 #: ../app/dialogs/grid-dialog.c:85
 msgid "Configure Grid"
@@ -11683,25 +11659,22 @@ msgid "Snap to Guides"
 msgstr "Ajustar a las guías"
 
 #: ../app/dialogs/preferences-dialog.c:1238
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Sna_p to Grid"
 msgid "Snap to Grid"
-msgstr "Ajustar a la rej_illa"
+msgstr "Ajustar a la rejilla"
 
 #: ../app/dialogs/preferences-dialog.c:1246
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Snap to _Canvas Edges"
 msgid "Snap to Canvas Edges"
-msgstr "Ajustar a los bordes del _lienzo"
+msgstr "Ajustar a los bordes del lienzo"
 
 #: ../app/dialogs/preferences-dialog.c:1249
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Snap t_o Active Path"
 msgid "Snap to Active Path"
-msgstr "Ajustar a la _ruta activa"
+msgstr "Ajustar a la ruta activa"
 
 #: ../app/dialogs/preferences-dialog.c:1324
 msgid "Preferences"
@@ -11852,10 +11825,9 @@ msgid "Experimental Playground"
 msgstr "Entorno experimental"
 
 #: ../app/dialogs/preferences-dialog.c:1587
-#, fuzzy
 #| msgid "Background"
 msgid "Playground"
-msgstr "Fondo"
+msgstr "Entorno"
 
 #: ../app/dialogs/preferences-dialog.c:1592
 #, fuzzy
@@ -11864,17 +11836,15 @@ msgid "Insane Options"
 msgstr "Opciones de desvanecimiento"
 
 #: ../app/dialogs/preferences-dialog.c:1596
-#, fuzzy
 #| msgid "Pointer Information"
 msgid "_N-Point Deformation tool"
-msgstr "Información del puntero"
+msgstr "Herramienta de deformación _N-Point"
 
 #: ../app/dialogs/preferences-dialog.c:1599
-#, fuzzy
 #| msgctxt "tools-action"
 #| msgid "_Transform Tools"
 msgid "_Handle Transform tool"
-msgstr "Herramientas de _transformación"
+msgstr "Herramienta de transformación del _tirador"
 
 #: ../app/dialogs/preferences-dialog.c:1602
 msgid "_Seamless Clone tool"
@@ -12039,16 +12009,14 @@ msgstr "Recargar el tema act_ual"
 #: ../app/dialogs/preferences-dialog.c:1939
 #: ../app/dialogs/preferences-dialog.c:1940
 #: ../app/dialogs/preferences-dialog.c:1980
-#, fuzzy
 #| msgid "Theme"
 msgid "Icon Theme"
-msgstr "Tema"
+msgstr "Tema de iconos"
 
 #: ../app/dialogs/preferences-dialog.c:1945
-#, fuzzy
 #| msgid "Select Theme"
 msgid "Select an Icon Theme"
-msgstr "Seleccionar un tema"
+msgstr "Seleccionar un tema de iconos"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2061
@@ -12267,10 +12235,9 @@ msgid "Resize window on image _size change"
 msgstr "Redimen_sionar la ventana al cambiar el tamaño de la imagen"
 
 #: ../app/dialogs/preferences-dialog.c:2409
-#, fuzzy
 #| msgid "Show active _image"
 msgid "Show entire image"
-msgstr "Mostrar imagen _activa"
+msgstr "Mostrar toda la imagen"
 
 #: ../app/dialogs/preferences-dialog.c:2411
 msgid "Initial zoom _ratio:"
@@ -13033,7 +13000,7 @@ msgstr "Descartar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
 #: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
-#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:307
+#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:310
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "No se pueden modificar píxeles de los grupos de capas."
@@ -13041,7 +13008,7 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 #: ../app/display/gimpdisplayshell-dnd.c:370
 #: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:314 ../app/tools/gimppainttool.c:278
+#: ../app/tools/gimpimagemaptool.c:317 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
 #: ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
@@ -15285,7 +15252,7 @@ msgstr "_Mezcla [Blend]"
 
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:290
-#: ../app/tools/gimpimagemaptool.c:321 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimpimagemaptool.c:324 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "La capa activa no está visible."
@@ -16421,11 +16388,11 @@ msgstr "Modificar el color seleccionado"
 msgid "R_eset Color"
 msgstr "R_establecer el color"
 
-#: ../app/tools/gimpimagemapoptions.c:71
+#: ../app/tools/gimpimagemapoptions.c:72
 msgid "_Preview"
 msgstr "Vista _previa"
 
-#: ../app/tools/gimpimagemapoptions.c:78
+#: ../app/tools/gimpimagemapoptions.c:79
 #, fuzzy
 #| msgid "Split"
 msgid "_Split view"
@@ -20271,6 +20238,13 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgctxt "file-action"
+#~ msgid "Export"
+#~ msgstr "Exportar"
+
+#~ msgid "Export"
+#~ msgstr "Exportar"
 
 #~ msgid "Affect:"
 #~ msgstr "Afectar:"
