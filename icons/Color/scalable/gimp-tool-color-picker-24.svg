@@ -10,45 +10,28 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:export-ydpi="90.000000"
-   inkscape:export-xdpi="90.000000"
-   inkscape:export-filename="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/stock-layers-16.png"
-   width="16"
-   height="16"
-   id="svg11300"
-   sodipodi:version="0.32"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg30571"
+   version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-color-picker.svg"
-   version="1.0"
-   viewBox="0 0 16 16">
-  <sodipodi:namedview
-     inkscape:cy="8.6335628"
-     inkscape:cx="9.5616476"
-     inkscape:zoom="38.973447"
-     inkscape:window-height="1016"
-     inkscape:window-width="1920"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="0.17254902"
-     bordercolor="#666"
-     pagecolor="#ffffff"
-     id="base"
-     inkscape:showpageshadow="false"
-     showborder="true"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:current-layer="layer1"
-     width="16px"
-     height="16px"
-     showgrid="true"
-     inkscape:window-maximized="1"
-     inkscape:document-units="px">
-    <inkscape:grid
-       type="xygrid"
-       id="grid4018" />
-  </sodipodi:namedview>
+   sodipodi:docname="gimp-tool-color-picker-24.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
+   inkscape:export-xdpi="98.181816"
+   inkscape:export-ydpi="98.181816">
   <defs
-     id="defs3">
+     id="defs30573">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4176"
+       id="linearGradient7319"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.45949087,0.45589994,-0.45949087,0.45589994,121.58064,-71.627848)"
+       x1="-37.5"
+       y1="199.3438"
+       x2="-37.5"
+       y2="204.34621" />
     <linearGradient
        id="linearGradient4176"
        inkscape:collect="always">
@@ -61,90 +44,79 @@
          offset="1"
          style="stop-color:#ffffff;stop-opacity:0;" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4176"
-       id="linearGradient7319"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.45949087,0.45589994,-0.45949087,0.45589994,121.58064,-71.627848)"
-       x1="-37.5"
-       y1="199.3438"
-       x2="-37.5"
-       y2="204.34621" />
   </defs>
   <sodipodi:namedview
-     stroke="#ef2929"
-     fill="#eeeeec"
+     id="base"
      pagecolor="#ffffff"
      bordercolor="#666666"
-     borderopacity="0.25490196"
+     borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="-14.198652"
-     inkscape:cy="-5.1663457"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     inkscape:grid-bbox="true"
+     inkscape:zoom="16"
+     inkscape:cx="-5.416016"
+     inkscape:cy="14.628924"
      inkscape:document-units="px"
-     inkscape:showpageshadow="false"
-     inkscape:window-width="872"
-     inkscape:window-height="659"
-     inkscape:window-x="403"
-     inkscape:window-y="296"
-     width="32px"
-     height="32px"
-     id="namedview73" />
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="553"
+     inkscape:window-y="269"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4369" />
+  </sodipodi:namedview>
   <metadata
-     id="metadata4">
+     id="metadata30576">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
         <dc:creator>
           <cc:Agent>
-            <dc:title>Jakub Steiner</dc:title>
+            <dc:title>Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:source>http://jimmac.musichall.cz</dc:source>
-        <cc:license
-           rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/" />
-        <dc:title />
       </cc:Work>
-      <cc:License
-         rdf:about="http://creativecommons.org/licenses/by-sa/2.0/">
-        <cc:permits
-           rdf:resource="http://web.resource.org/cc/Reproduction" />
-        <cc:permits
-           rdf:resource="http://web.resource.org/cc/Distribution" />
-        <cc:requires
-           rdf:resource="http://web.resource.org/cc/Notice" />
-        <cc:requires
-           rdf:resource="http://web.resource.org/cc/Attribution" />
-        <cc:permits
-           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
-        <cc:requires
-           rdf:resource="http://web.resource.org/cc/ShareAlike" />
-      </cc:License>
     </rdf:RDF>
   </metadata>
   <g
-     id="layer1"
      inkscape:label="Layer 1"
-     inkscape:groupmode="layer">
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1028.3622)">
     <g
-       id="g4046">
+       id="g11284">
       <rect
-         style="opacity:0.24267782;fill:#000000;fill-opacity:0;stroke:none;stroke-width:0.64727408;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         style="opacity:0.24267782;fill:#000000;fill-opacity:0;stroke:none;stroke-width:0.97091115;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect6196"
-         width="16"
-         height="15.999969"
+         width="24"
+         height="23.999952"
          x="2.3478142e-07"
-         y="3.5437992e-05" />
+         y="1028.3623" />
       <g
-         transform="matrix(1.0587206,0,0,1.0694961,-0.00950052,-1.2907669)"
+         transform="matrix(1.6362097,0,0,1.6528628,0.80342861,1026.3673)"
          id="g4034">
         <path
            inkscape:connector-curvature="0"
@@ -180,16 +152,16 @@
       <path
          sodipodi:nodetypes="cssac"
          id="path7288"
-         d="m 8.6705471,13.540304 c 0,0.504357 -3.0194544,1.126782 -3.7570064,1.126782 -0.7375519,0 -3.5840877,0.07009 -3.5840877,-0.434269 0,-0.504419 0.2362719,-1.80185 0.9903072,-2.149265 1.9520354,-0.899371 6.3507869,0.952333 6.3507869,1.456752 z"
-         style="fill:#3465a4;fill-opacity:1;stroke:#204a87;stroke-width:0.65890598;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 12.51846,1049.2748 c 0,0.7165 -4.5395795,1.601 -5.6484472,1.601 -1.1088674,0 -5.3884725,0.1 -5.3884725,-0.6171 0,-0.7167 0.3552213,-2.5603 1.4888707,-3.0541 2.9347746,-1.2779 9.548049,1.3533 9.548049,2.0702 z"
+         style="fill:#3465a4;fill-opacity:1;stroke:#204a87;stroke-width:0.96308053;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          inkscape:connector-curvature="0" />
       <ellipse
          id="path7291"
-         style="opacity:1;fill:#ffffff;fill-opacity:0.64806872;stroke:none;stroke-width:0.60472316;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-         cx="3.25"
-         cy="13.25"
-         rx="1.25"
-         ry="1" />
+         style="opacity:1;fill:#ffffff;fill-opacity:0.64806872;stroke:none;stroke-width:0.9070847;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         cx="5.875"
+         cy="1048.8622"
+         rx="1.875"
+         ry="1.5" />
     </g>
   </g>
 </svg>

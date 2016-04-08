@@ -10,15 +10,27 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="16"
-   height="16"
-   viewBox="0 0 16 16"
-   id="svg2"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-ink.svg">
+   sodipodi:docname="gimp-tool-ink-24.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
+   inkscape:export-xdpi="98.181816"
+   inkscape:export-ydpi="98.181816">
   <defs
-     id="defs4">
+     id="defs30573">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient9998"
+       id="linearGradient10000"
+       x1="17.57061"
+       y1="97.398117"
+       x2="36.867012"
+       y2="80.794495"
+       gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient9998">
@@ -30,17 +42,6 @@
          style="stop-color:#babdb6;stop-opacity:0;"
          offset="1"
          id="stop9996" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient578">
-      <stop
-         style="stop-color:#fff2bc;stop-opacity:1;"
-         offset="0.00000000"
-         id="stop579" />
-      <stop
-         style="stop-color:#83560b;stop-opacity:1;"
-         offset="1.00000000"
-         id="stop580" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
@@ -73,14 +74,16 @@
        gradientTransform="matrix(0.02370816,0,0,0.04973789,99.493835,465.57715)"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient9998"
-       id="linearGradient10000"
-       x1="17.57061"
-       y1="97.398117"
-       x2="36.867012"
-       y2="80.794495"
-       gradientUnits="userSpaceOnUse" />
+       id="linearGradient578">
+      <stop
+         style="stop-color:#fff2bc;stop-opacity:1;"
+         offset="0.00000000"
+         id="stop579" />
+      <stop
+         style="stop-color:#83560b;stop-opacity:1;"
+         offset="1.00000000"
+         id="stop580" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -89,45 +92,65 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="30.382378"
-     inkscape:cx="0.63756592"
-     inkscape:cy="6.2163458"
+     inkscape:zoom="16"
+     inkscape:cx="14.604492"
+     inkscape:cy="14.628924"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
      units="px"
-     inkscape:snap-global="false">
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="240"
+     inkscape:window-y="114"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="false"
+     showguides="false">
     <inkscape:grid
        type="xygrid"
-       id="grid3963" />
+       id="grid4369" />
   </sodipodi:namedview>
   <metadata
-     id="metadata7">
+     id="metadata30576">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:creator>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Ebene 1"
+     inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1036.3622)">
+     transform="translate(0,-1028.3622)">
     <g
-       id="g3983"
-       transform="matrix(1.0005201,0,0,0.99947258,-0.00808554,0.54659387)">
+       id="g4668">
       <g
-         transform="matrix(0.23637259,0,0,0.25189156,-0.93185794,1026.9653)"
+         transform="matrix(0.35504325,0,0,0.39136105,-1.4119913,1012.89)"
          id="g3956">
         <path
            d="m 16.377019,66.119448 c -0.787551,0 -1.430217,0.661615 -1.430217,1.470019 v 3.801627 c 0,0.808403 0.643701,1.468954 1.430217,1.468954 h 1.698253 v 5.445027 h -7.37255 c -1.9662897,0 -3.7680327,1.642337 -4.0019177,3.648455 l -1.668241,14.222594 c -0.23492,2.006118 1.181843,3.648455 3.148133,3.648455 H 50.471449 c 1.96629,0 3.382019,-1.642337 3.148134,-3.648455 L 51.952376,81.95353 c -0.235955,-2.006118 -2.036662,-3.648455 -4.002952,-3.648455 h -7.371517 v -5.445027 l 1.288345,-0.680476 C 42.5628,71.81167 42.607497,70.82536 42.752684,70.030141 l 0.690556,-3.782339 z"
@@ -144,7 +167,7 @@
       </g>
       <g
          id="g3998-6"
-         transform="matrix(1.1489146,0.39128117,-0.43088789,1.043159,90.512648,507.93179)">
+         transform="matrix(1.6850637,0.57387823,-0.6319648,1.5299644,133.28426,253.33194)">
         <g
            id="g3975"
            transform="matrix(0.98649834,0,0,0.98649834,1.3898831,6.5108009)">
