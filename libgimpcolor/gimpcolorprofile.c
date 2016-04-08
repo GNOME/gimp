@@ -1243,11 +1243,11 @@ gimp_color_profile_new_gray_srgb_internal (void)
   cmsFreeToneCurve (curve);
 
   gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
-                              "GIMP built-in Grayscale with sRGB TRC");
+                              "GIMP built-in D65 Grayscale with sRGB TRC");
   gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
                               "GIMP");
   gimp_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
-                              "Grayscale with sRGB TRC");
+                              "D65 Grayscale with sRGB TRC");
   gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
                               "Public Domain");
 
@@ -1301,11 +1301,11 @@ gimp_color_profile_new_gray_srgb_linear_internal (void)
   cmsFreeToneCurve (curve);
 
   gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
-                              "GIMP built-in Linear Grayscale");
+                              "GIMP built-in D65 Linear Grayscale");
   gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
                               "GIMP");
   gimp_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
-                              "Linear Grayscale");
+                              "D65 Linear Grayscale");
   gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
                               "Public Domain");
 
