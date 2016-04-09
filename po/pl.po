@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-06 19:40+0200\n"
-"PO-Revision-Date: 2016-04-06 19:42+0200\n"
+"POT-Creation-Date: 2016-04-09 13:32+0200\n"
+"PO-Revision-Date: 2016-04-09 13:33+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -2542,7 +2542,7 @@ msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Kończy działanie programu GIMP"
 
-#: ../app/actions/file-actions.c:133
+#: ../app/actions/file-actions.c:133 ../app/actions/file-actions.c:314
 msgctxt "file-action"
 msgid "_Save"
 msgstr "_Zapisz"
@@ -2586,10 +2586,10 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Zapisuje ten obraz i zamyka jego okno"
 
-#: ../app/actions/file-actions.c:159
+#: ../app/actions/file-actions.c:159 ../app/actions/file-actions.c:339
 msgctxt "file-action"
-msgid "Export"
-msgstr "Wyeksportuj"
+msgid "Export..."
+msgstr "Wyeksportuj…"
 
 #: ../app/actions/file-actions.c:160
 msgctxt "file-action"
@@ -2617,19 +2617,20 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Eksportuje obraz do różnych formatów plików, takich jak PNG i JPEG"
 
-#: ../app/actions/file-actions.c:312
+#: ../app/actions/file-actions.c:320
+msgctxt "file-action"
+msgid "_Save..."
+msgstr "_Zapisz…"
+
+#: ../app/actions/file-actions.c:325
 #, c-format
 msgid "Export to %s"
 msgstr "Wyeksportuj do %s"
 
-#: ../app/actions/file-actions.c:318
+#: ../app/actions/file-actions.c:331
 #, c-format
 msgid "Over_write %s"
 msgstr "_Zastąp %s"
-
-#: ../app/actions/file-actions.c:325
-msgid "Export"
-msgstr "Wyeksportuj"
 
 #: ../app/actions/file-commands.c:124 ../app/actions/file-commands.c:573
 #: ../app/widgets/gimpopendialog.c:66
@@ -5338,13 +5339,13 @@ msgstr "Zamienia zaznaczenie na obramowanie"
 
 #: ../app/actions/select-actions.c:105
 msgctxt "select-action"
-msgid "F_lood"
-msgstr "Za_lanie"
+msgid "Re_move holes"
+msgstr "_Usuń luki"
 
 #: ../app/actions/select-actions.c:106
 msgctxt "select-action"
-msgid "Level the selection's interior"
-msgstr "Wyrównuje wnętrze zaznaczenia"
+msgid "Remove holes from the selection"
+msgstr "Usuwa luki z zaznaczenia"
 
 #: ../app/actions/select-actions.c:111
 msgctxt "select-action"
@@ -6684,8 +6685,8 @@ msgstr "Używa koloru ciemnego pola"
 
 #: ../app/actions/view-actions.c:481
 msgctxt "view-padding-color"
-msgid "Select _Custom Color..."
-msgstr "Wybierz _dowolny kolor…"
+msgid "_Custom Color..."
+msgstr "_Dowolny kolor…"
 
 #: ../app/actions/view-actions.c:482
 msgctxt "view-padding-color"
@@ -10152,8 +10153,8 @@ msgstr "Zmniejszenie zaznaczenia"
 
 #: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
-msgid "Flood Selection"
-msgstr "Zalanie zaznaczenia"
+msgid "Remove Holes"
+msgstr "Usunięcie luk"
 
 #: ../app/core/gimpselection.c:302
 msgid "There is no selection to fill."
@@ -12729,7 +12730,7 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
 #: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
-#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:307
+#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:310
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
@@ -12737,7 +12738,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/display/gimpdisplayshell-dnd.c:370
 #: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:314 ../app/tools/gimppainttool.c:278
+#: ../app/tools/gimpimagemaptool.c:317 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
 #: ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
@@ -14832,7 +14833,7 @@ msgstr "_Gradient"
 
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:290
-#: ../app/tools/gimpimagemaptool.c:321 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimpimagemaptool.c:324 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
@@ -15892,11 +15893,11 @@ msgstr "Dopasowanie zaznaczonego koloru"
 msgid "R_eset Color"
 msgstr "P_rzywróć kolor"
 
-#: ../app/tools/gimpimagemapoptions.c:71
+#: ../app/tools/gimpimagemapoptions.c:72
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: ../app/tools/gimpimagemapoptions.c:78
+#: ../app/tools/gimpimagemapoptions.c:79
 msgid "_Split view"
 msgstr "Po_dzielony widok"
 
