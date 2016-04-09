@@ -186,9 +186,9 @@ is typically /usr.
 
 Most GIMP configuration is read in from the user's init file,
 \fB$HOME\fP/@gimpdir@/gimprc. The system wide equivalent is in
-@sysconfdir@/gimprc. The system wide file is parsed
+@gimpsysconfdir@/gimprc. The system wide file is parsed
 first and the user gimprc can override the system settings.
-@sysconfdir@/gimprc_user is the default gimprc
+@gimpsysconfdir@/gimprc_user is the default gimprc
 placed in users' home directories the first time GIMP is run.
 
 \fB$HOME\fP/@gimpdir@/devicerc - holds settings for input devices
