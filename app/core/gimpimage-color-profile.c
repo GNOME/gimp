@@ -323,7 +323,7 @@ gimp_image_get_builtin_color_profile (GimpImage *image)
         {
           if (! linear_gray_profile)
             {
-              linear_gray_profile = gimp_color_profile_new_gray_srgb_linear ();
+              linear_gray_profile = gimp_color_profile_new_d65_gray_linear ();
               g_object_add_weak_pointer (G_OBJECT (linear_gray_profile),
                                          (gpointer) &linear_gray_profile);
             }
@@ -334,7 +334,7 @@ gimp_image_get_builtin_color_profile (GimpImage *image)
         {
           if (! gray_profile)
             {
-              gray_profile = gimp_color_profile_new_gray_srgb ();
+              gray_profile = gimp_color_profile_new_d65_gray_srgb_trc ();
               g_object_add_weak_pointer (G_OBJECT (gray_profile),
                                          (gpointer) &gray_profile);
             }

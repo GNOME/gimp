@@ -679,8 +679,8 @@ gimp_color_profile_can_gegl_copy (GimpColorProfile *src_profile,
     {
       srgb_profile        = gimp_color_profile_new_rgb_srgb ();
       srgb_linear_profile = gimp_color_profile_new_rgb_srgb_linear ();
-      gray_profile        = gimp_color_profile_new_gray_srgb ();
-      gray_linear_profile = gimp_color_profile_new_gray_srgb_linear ();
+      gray_profile        = gimp_color_profile_new_d65_gray_srgb_trc ();
+      gray_linear_profile = gimp_color_profile_new_d65_gray_linear ();
     }
 
   if ((gimp_color_profile_is_equal (src_profile, srgb_profile)        ||
@@ -692,7 +692,9 @@ gimp_color_profile_can_gegl_copy (GimpColorProfile *src_profile,
        gimp_color_profile_is_equal (dest_profile, srgb_linear_profile) ||
        gimp_color_profile_is_equal (dest_profile, gray_profile)        ||
        gimp_color_profile_is_equal (dest_profile, gray_linear_profile)))
-    return TRUE;
+    {
+      return TRUE;
+    }
 
   return FALSE;
 }

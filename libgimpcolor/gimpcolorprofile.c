@@ -921,7 +921,7 @@ gimp_color_profile_new_from_color_profile (GimpColorProfile *profile,
 }
 
 /**
- * gimp_color_profile_new_srgb_gamma_from_color_profile:
+ * gimp_color_profile_new_srgb_trc_from_color_profile:
  * @profile: a #GimpColorProfile
  *
  * This function creates a new RGB #GimpColorProfile with a sRGB gamma
@@ -933,7 +933,7 @@ gimp_color_profile_new_from_color_profile (GimpColorProfile *profile,
  * Since: 2.10
  **/
 GimpColorProfile *
-gimp_color_profile_new_srgb_gamma_from_color_profile (GimpColorProfile *profile)
+gimp_color_profile_new_srgb_trc_from_color_profile (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
@@ -941,7 +941,7 @@ gimp_color_profile_new_srgb_gamma_from_color_profile (GimpColorProfile *profile)
 }
 
 /**
- * gimp_color_profile_new_linear_gamma_from_color_profile:
+ * gimp_color_profile_new_linear_from_color_profile:
  * @profile: a #GimpColorProfile
  *
  * This function creates a new RGB #GimpColorProfile with a linear TRC
@@ -953,7 +953,7 @@ gimp_color_profile_new_srgb_gamma_from_color_profile (GimpColorProfile *profile)
  * Since: 2.10
  **/
 GimpColorProfile *
-gimp_color_profile_new_linear_gamma_from_color_profile (GimpColorProfile *profile)
+gimp_color_profile_new_linear_from_color_profile (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
@@ -1225,7 +1225,7 @@ gimp_color_profile_new_rgb_adobe (void)
 }
 
 static cmsHPROFILE *
-gimp_color_profile_new_gray_srgb_internal (void)
+gimp_color_profile_new_d65_gray_srgb_trc_internal (void)
 {
   cmsHPROFILE profile;
 
@@ -1255,7 +1255,7 @@ gimp_color_profile_new_gray_srgb_internal (void)
 }
 
 /**
- * gimp_color_profile_new_gray_srgb
+ * gimp_color_profile_new_d65_gray_srgb_trc
  *
  * This function creates a grayscale #GimpColorProfile with an
  * sRGB TRC. See gimp_color_profile_new_srgb().
@@ -1265,7 +1265,7 @@ gimp_color_profile_new_gray_srgb_internal (void)
  * Since: 2.10
  **/
 GimpColorProfile *
-gimp_color_profile_new_gray_srgb (void)
+gimp_color_profile_new_d65_gray_srgb_trc (void)
 {
   static GimpColorProfile *profile = NULL;
 
@@ -1274,7 +1274,7 @@ gimp_color_profile_new_gray_srgb (void)
 
   if (G_UNLIKELY (profile == NULL))
     {
-      cmsHPROFILE lcms_profile = gimp_color_profile_new_gray_srgb_internal ();
+      cmsHPROFILE lcms_profile = gimp_color_profile_new_d65_gray_srgb_trc_internal ();
 
       profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
 
@@ -1287,7 +1287,7 @@ gimp_color_profile_new_gray_srgb (void)
 }
 
 static cmsHPROFILE
-gimp_color_profile_new_gray_srgb_linear_internal (void)
+gimp_color_profile_new_d65_gray_linear_internal (void)
 {
   cmsHPROFILE profile;
 
@@ -1313,7 +1313,7 @@ gimp_color_profile_new_gray_srgb_linear_internal (void)
 }
 
 /**
- * gimp_color_profile_new_gray_srgb_linear_gray:
+ * gimp_color_profile_new_d65_gray_srgb_gray:
  *
  * This function creates a profile for babl_model("Y"). Please
  * somebody write someting smarter here.
@@ -1323,7 +1323,7 @@ gimp_color_profile_new_gray_srgb_linear_internal (void)
  * Since: 2.10
  **/
 GimpColorProfile *
-gimp_color_profile_new_gray_srgb_linear (void)
+gimp_color_profile_new_d65_gray_linear (void)
 {
   static GimpColorProfile *profile = NULL;
 
@@ -1332,7 +1332,7 @@ gimp_color_profile_new_gray_srgb_linear (void)
 
   if (G_UNLIKELY (profile == NULL))
     {
-      cmsHPROFILE lcms_profile = gimp_color_profile_new_gray_srgb_linear_internal ();
+      cmsHPROFILE lcms_profile = gimp_color_profile_new_d65_gray_linear_internal ();
 
       profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
 

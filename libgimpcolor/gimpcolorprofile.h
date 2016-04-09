@@ -68,13 +68,13 @@ GimpColorProfile * gimp_color_profile_new_rgb_srgb          (void);
 GimpColorProfile * gimp_color_profile_new_rgb_srgb_linear   (void);
 GimpColorProfile * gimp_color_profile_new_rgb_adobe         (void);
 
-GimpColorProfile * gimp_color_profile_new_gray_srgb         (void);
-GimpColorProfile * gimp_color_profile_new_gray_srgb_linear  (void);
+GimpColorProfile * gimp_color_profile_new_d65_gray_srgb_trc (void);
+GimpColorProfile * gimp_color_profile_new_d65_gray_linear   (void);
 
 GimpColorProfile *
-     gimp_color_profile_new_srgb_gamma_from_color_profile   (GimpColorProfile  *profile);
+       gimp_color_profile_new_srgb_trc_from_color_profile   (GimpColorProfile  *profile);
 GimpColorProfile *
-     gimp_color_profile_new_linear_gamma_from_color_profile (GimpColorProfile  *profile);
+       gimp_color_profile_new_linear_from_color_profile     (GimpColorProfile  *profile);
 
 GimpColorProfile * gimp_color_profile_new_from_file         (GFile             *file,
                                                              GError           **error);
