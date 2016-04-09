@@ -23,13 +23,6 @@
    inkscape:export-ydpi="98.181816">
   <defs
      id="defs30573">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 12 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="24 : 12 : 1"
-       inkscape:persp3d-origin="12 : 8 : 1"
-       id="perspective9594" />
     <linearGradient
        id="linearGradient19282-4"
        osb:paint="solid"
@@ -238,7 +231,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="16"
-     inkscape:cx="8.8994141"
+     inkscape:cx="-9.7568359"
      inkscape:cy="14.628924"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -261,8 +254,8 @@
      showborder="false"
      inkscape:window-width="1440"
      inkscape:window-height="752"
-     inkscape:window-x="644"
-     inkscape:window-y="233"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:snap-global="false"
      showguides="false">
@@ -278,7 +271,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>

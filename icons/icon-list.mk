@@ -457,7 +457,6 @@ icons20_images = \
 icons22_images = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
-	22/gimp-gegl.png			\
 	22/gimp-histogram.png			\
 	22/gimp-input-device.png		\
 	22/gimp-landscape.png			\
@@ -529,6 +528,7 @@ icons24_images = \
 	24/gimp-display-filter-proof.png	\
 	24/gimp-display-filter.png		\
 	24/gimp-floating-selection.png		\
+	24/gimp-gegl.png			\
 	24/gimp-gravity-east.png		\
 	24/gimp-gravity-north-east.png		\
 	24/gimp-gravity-north-west.png		\

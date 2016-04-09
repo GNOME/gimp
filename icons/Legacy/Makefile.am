@@ -240,7 +240,6 @@ icons20_DATA = \
 icons22_DATA = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
-	22/gimp-gegl.png			\
 	22/gimp-histogram.png			\
 	22/gimp-input-device.png		\
 	22/gimp-letter-spacing.png		\
@@ -286,6 +285,7 @@ icons22_DATA = \
 	22/gimp-wilber.png
 
 tools22_DATA = \
+	22/gimp-gegl.png			\
 	22/gimp-tool-airbrush.png		\
 	22/gimp-tool-align.png			\
 	22/gimp-tool-blend.png			\

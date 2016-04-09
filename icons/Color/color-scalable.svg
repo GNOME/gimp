@@ -62,10 +62,10 @@
      showborder="false"
      inkscape:current-layer="tools"
      inkscape:window-maximized="0"
-     inkscape:window-y="27"
-     inkscape:window-x="0"
-     inkscape:cy="252.83598"
-     inkscape:cx="-158.99168"
+     inkscape:window-y="141"
+     inkscape:window-x="384"
+     inkscape:cy="222.62706"
+     inkscape:cx="185.40283"
      inkscape:zoom="1.324112"
      showgrid="true"
      id="namedview88"
@@ -495,20 +495,6 @@
          id="stop8093"
          stop-color="#a8a8a8"
          stop-opacity="0" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient3181">
-      <stop
-         id="stop3183"
-         stop-color="#f2f2f1" />
-      <stop
-         offset="0.223155"
-         id="stop3187"
-         stop-color="#c5c7c2" />
-      <stop
-         id="stop3185"
-         offset="1"
-         stop-color="#eeeeec" />
     </linearGradient>
     <linearGradient
        id="linearGradient6939">
@@ -1430,24 +1416,6 @@
          stop-color="#b3b3b3"
          stop-opacity="0" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3181"
-       id="linearGradient3191"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.3209315,0,0,0.3209315,21.587316,31.070447)"
-       x1="134.69568"
-       y1="225.71533"
-       x2="136.16916"
-       y2="98.342934" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3173"
-       id="linearGradient3193"
-       gradientUnits="userSpaceOnUse"
-       y1="58.698524"
-       x2="0"
-       y2="97.156609" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient3173">
@@ -12043,7 +12011,7 @@
        x2="173.83766"
        y2="337.29449"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0292666,0,0,1.0292666,-233.51219,41.199283)" />
+       gradientTransform="matrix(1.0292666,0,0,1.0292666,-238.50595,68.610827)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient8437"
@@ -12053,7 +12021,7 @@
        x2="173.83766"
        y2="337.29449"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.5601655,0,0,1.5601655,-137.12325,-111.02637)" />
+       gradientTransform="matrix(1.5601655,0,0,1.5601655,-141.14667,-106.95376)" />
     <linearGradient
        id="linearGradient5058-3-8">
       <stop
@@ -13213,6 +13181,59 @@
        x2="22.871983"
        y2="87.190498"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3181-0"
+       id="linearGradient3261"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.3209315,0,0,0.3209315,21.587316,31.070447)"
+       x1="134.69568"
+       y1="225.71533"
+       x2="136.16916"
+       y2="98.342926" />
+    <linearGradient
+       id="linearGradient3181-0">
+      <stop
+         id="stop3183-4"
+         offset="0"
+         style="stop-color:#f2f2f1;stop-opacity:1" />
+      <stop
+         style="stop-color:#c5c7c2;stop-opacity:1;"
+         offset="0.2231553"
+         id="stop3187-3" />
+      <stop
+         id="stop3185-4"
+         offset="1"
+         style="stop-color:#eeeeec;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3173"
+       id="linearGradient3263"
+       gradientUnits="userSpaceOnUse"
+       x1="55.661797"
+       y1="58.698524"
+       x2="55.661797"
+       y2="97.156609" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3181-0"
+       id="linearGradient3261-0"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.3209315,0,0,0.3209315,21.587316,31.070447)"
+       x1="134.69568"
+       y1="225.71533"
+       x2="136.16916"
+       y2="98.342926" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3173"
+       id="linearGradient3263-0"
+       gradientUnits="userSpaceOnUse"
+       x1="55.661797"
+       y1="58.698524"
+       x2="55.661797"
+       y2="97.156609" />
   </defs>
   <g
      inkscape:groupmode="layer"
@@ -13223,14 +13244,14 @@
     <text
        sodipodi:linespacing="125%"
        id="text6726-6-7"
-       y="152.40091"
+       y="156.21545"
        x="-143.58546"
        text-align="start"
        line-height="125%"
        font-size="12"
        style="font-size:12px;line-height:125%;font-family:'Droid Sans';text-align:start;fill:#ffffff">
       <tspan
-         y="152.40091"
+         y="156.21545"
          x="-143.58546"
          id="tspan6728-5-3"
          sodipodi:role="line">transform tools</tspan>
@@ -13343,7 +13364,7 @@
     </text>
     <g
        id="gimp-tool-bucket-fill"
-       transform="matrix(1.0004824,0,0,0.99884787,-92.504869,343.96638)"
+       transform="matrix(1.0004824,0,0,0.99884787,-96.570198,343.96638)"
        inkscape:export-xdpi="123.74989"
        inkscape:export-ydpi="123.74989">
       <path
@@ -13381,7 +13402,7 @@
     <g
        style="display:inline"
        id="gimp-tool-smudge"
-       transform="matrix(0.66666667,0,0,0.66666667,-1188.2717,199.54369)">
+       transform="matrix(0.66666667,0,0,0.66666667,-1183.8675,200.63444)">
       <path
          sodipodi:nodetypes="csssscsssssssc"
          id="path12305"
@@ -13454,7 +13475,7 @@
     <g
        style="display:inline"
        id="gimp-tool-paintbrush"
-       transform="translate(-387.51592,251.65485)"
+       transform="translate(-383.86752,251.65485)"
        inkscape:export-xdpi="123.75"
        inkscape:export-ydpi="123.75">
       <g
@@ -13524,7 +13545,7 @@
     </g>
     <g
        id="gimp-tool-fuzzy-select"
-       transform="matrix(0.40688076,0,0,0.42358135,-403.87666,202.96246)">
+       transform="matrix(0.40688076,0,0,0.42358135,-408.84288,212.55403)">
       <rect
          transform="rotate(42.254557)"
          ry="2.3471537"
@@ -13562,7 +13583,7 @@
     </g>
     <g
        id="gimp-tool-colorize"
-       transform="matrix(-1,0,0,0.98470451,-76.089422,261.38618)"
+       transform="matrix(-1,0,0,0.98470451,-80.559454,261.38618)"
        inkscape:export-xdpi="123.75"
        inkscape:export-ydpi="123.75">
       <g
@@ -13615,7 +13636,7 @@
     <g
        id="gimp-tool-mypaint-brush"
        inkscape:label="Ebene 1"
-       transform="matrix(1.0039183,0,0,1.0000102,-407.58511,252.60017)"
+       transform="matrix(1.0039183,0,0,1.0000102,-407.16118,252.60017)"
        inkscape:export-xdpi="123.74882"
        inkscape:export-ydpi="123.74882">
       <path
@@ -13684,7 +13705,7 @@
       </g>
     </g>
     <g
-       transform="translate(-113.7117,-775.07307)"
+       transform="translate(-119.15539,-775.07307)"
        id="gimp-tool-color-balance">
       <g
          id="g4151">
@@ -13781,7 +13802,7 @@
          style="opacity:0;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.05907714;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(-136.10815,-752.14845)"
+       transform="translate(-140.12857,-752.14845)"
        id="gimp-tool-threshold"
        inkscape:export-xdpi="132"
        inkscape:export-ydpi="132">
@@ -13890,7 +13911,7 @@
       </g>
     </g>
     <g
-       transform="translate(-93.961435,-753.17167)"
+       transform="translate(-96.55939,-753.17167)"
        id="gimp-tool-levels"
        inkscape:export-xdpi="131.99686"
        inkscape:export-ydpi="131.99686">
@@ -14007,7 +14028,7 @@
     </g>
     <g
        id="gimp-tool-curves"
-       transform="matrix(0.99995086,0,0,1.000051,-58.480162,-776.0315)"
+       transform="matrix(0.99995086,0,0,1.000051,-63.261957,-776.0315)"
        inkscape:export-xdpi="132"
        inkscape:export-ydpi="132">
       <g
@@ -14484,7 +14505,7 @@
          id="rect4557-2" />
     </g>
     <g
-       transform="matrix(0.99378805,0,0,0.99378805,-70.784182,-747.46521)"
+       transform="matrix(0.99378805,0,0,0.99378805,-75.199277,-747.46521)"
        id="gimp-tool-hue-saturation"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96">
@@ -14541,7 +14562,7 @@
     </g>
     <g
        id="gimp-tool-posterize"
-       transform="matrix(1,0,0,1.0000371,-116.38569,-753.06513)"
+       transform="matrix(1,0,0,1.0000371,-119.15539,-753.06513)"
        inkscape:export-xdpi="96.000092"
        inkscape:export-ydpi="96.000092">
       <g
@@ -14590,7 +14611,7 @@
          style="opacity:1;fill:#000000;stroke:none;stroke-width:1.00297415" />
     </g>
     <g
-       transform="translate(-48.844912,-775.07309)"
+       transform="translate(-53.861247,-775.07309)"
        id="gimp-tool-desaturate"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96">
@@ -14625,7 +14646,7 @@
     </g>
     <g
        id="gimp-tool-airbrush"
-       transform="matrix(1.034876,0,0,1.0688698,-453.61784,250.83822)">
+       transform="matrix(1.034876,0,0,1.0688698,-452.56722,250.83822)">
       <g
          transform="matrix(1.0888585,0,0,1.0877507,-1.421504,1.0329828e-4)"
          id="g4074-8">
@@ -14691,7 +14712,7 @@
          style="opacity:1;fill:#729fcf;fill-opacity:1;stroke:#ffffff;stroke-width:0.11440495;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(-113.07509,365.66729)"
+       transform="translate(-119.15515,393.23298)"
        id="gimp-tool-warp">
       <g
          inkscape:label="#g4398"
@@ -14771,11 +14792,11 @@
     <text
        sodipodi:linespacing="125%"
        id="text6726-8-4"
-       y="424.3653"
+       y="425.53061"
        x="-310.89499"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:15px;line-height:125%;font-family:'Droid Sans';-inkscape-font-specification:'Droid Sans Bold';text-align:start;text-anchor:start;display:inline;fill:#ffffff;fill-opacity:1;stroke:none"
        xml:space="preserve"><tspan
-         y="424.3653"
+         y="425.53061"
          x="-310.89499"
          sodipodi:role="line"
          id="tspan6659-7">icon base 24</tspan></text>
@@ -14785,12 +14806,12 @@
        width="24"
        height="24"
        x="-310.31308"
-       y="431.53058"
+       y="432.69589"
        inkscape:transform-center-x="-142.12846"
        inkscape:transform-center-y="78.48885" />
     <g
        style="display:inline"
-       transform="translate(-313.10965,-779.90251)"
+       transform="translate(-312.16019,-779.90251)"
        id="gimp-tool-airbrush-24">
       <rect
          style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1.5;marker:none"
@@ -14969,12 +14990,12 @@
        transform="scale(1.0004375,0.99956269)"
        sodipodi:linespacing="125%"
        id="text6726-6-9-0-0-28-2-7-6-5-8-6"
-       y="153.04639"
+       y="165.91011"
        x="-286.65805"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.00524998px;line-height:125%;font-family:'Droid Sans';text-align:start;text-anchor:start;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.0004375"
        xml:space="preserve"><tspan
          style="stroke-width:1.0004375"
-         y="153.04639"
+         y="165.91011"
          x="-286.65805"
          sodipodi:role="line"
          id="tspan6485-0-0-7-1-3-8-2-7">24px</tspan></text>
@@ -14987,7 +15008,7 @@
        y="428.9704" />
     <g
        style="display:inline"
-       transform="matrix(1.5,0,0,1.5,-314.17422,307.14376)"
+       transform="matrix(1.5,0,0,1.5,-312.16019,309.96776)"
        id="gimp-tool-blur-24">
       <rect
          transform="translate(0,32)"
@@ -15015,7 +15036,7 @@
       </g>
     </g>
     <g
-       transform="translate(-280.69569,-830.68585)"
+       transform="translate(-279.94047,-822.3784)"
        id="gimp-tool-rect-select-24">
       <g
          transform="translate(4.5361327e-7,1.7382813e-5)"
@@ -15291,7 +15312,7 @@
     </g>
     <g
        id="gimp-tool-blur"
-       transform="matrix(1,0,0,0.99969144,-454.42095,333.937)">
+       transform="matrix(1,0,0,0.99969144,-452.00899,333.98258)">
       <g
          inkscape:export-ydpi="123.75"
          inkscape:export-xdpi="123.75"
@@ -15316,7 +15337,7 @@
     </g>
     <g
        id="gimp-tool-rect-select"
-       transform="translate(-425.72248,204.30444)">
+       transform="translate(-429.07686,213.9838)">
       <g
          transform="translate(-41.000198,-217)"
          inkscape:label="gimp-tool-rect-select"
@@ -15675,7 +15696,7 @@
          y="4" />
     </g>
     <g
-       transform="translate(-412.88465,364.41171)"
+       transform="translate(-407.16223,365.96777)"
        id="gimp-tool-eraser">
       <g
          transform="matrix(0.31111111,0,0,0.32,0.13333334,-318.208)"
@@ -15739,7 +15760,7 @@
     </g>
     <g
        id="gimp-tool-eraser-24"
-       transform="matrix(0.99984132,0,0,1,-246.91662,-672.64374)">
+       transform="matrix(0.99984132,0,0,1,-246.91662,-670.39452)">
       <g
          transform="matrix(0.46666667,0,0,0.48,0.19999998,551.0502)"
          id="layer1-7-8">
@@ -15802,7 +15823,7 @@
     </g>
     <g
        id="gimp-tool-perspective"
-       transform="translate(-58.87758,167.42836)">
+       transform="translate(-53.861025,174.42564)">
       <rect
          y="0"
          x="0.020249126"
@@ -15848,7 +15869,7 @@
          sodipodi:nodetypes="ccccccccccccccc" />
     </g>
     <g
-       transform="translate(134.26266,-861.93646)"
+       transform="translate(138.86478,-861.93646)"
        id="gimp-tool-perspective-24">
       <rect
          y="1028.3621"
@@ -15895,7 +15916,7 @@
          sodipodi:nodetypes="ccccccccccccccc" />
     </g>
     <g
-       transform="matrix(1.5000464,0,0,1.5000464,36.546524,383.29874)"
+       transform="matrix(1.5000464,0,0,1.5000464,36.546524,385.23223)"
        id="gimp-tool-warp-24">
       <g
          inkscape:label="#g4398"
@@ -15918,7 +15939,7 @@
     </g>
     <g
        id="gimp-tool-measure-24"
-       transform="matrix(1.0000227,0,0,0.99999972,2.2649044,-611.30856)">
+       transform="matrix(1.0000227,0,0,0.99999972,3.1984901,-611.30856)">
       <g
          style="fill:#729fcf"
          transform="matrix(0.02729045,0,0,0.03086605,13.378976,1009.8836)"
@@ -15949,7 +15970,7 @@
          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.72830057;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(-133.15357,-641.14818)"
+       transform="translate(-140.12838,-611.30889)"
        id="gimp-tool-measure">
       <g
          style="fill:#729fcf"
@@ -15983,7 +16004,7 @@
          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.48548648;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(101.94941,-865.06757)"
+       transform="translate(101.94941,-861.93658)"
        id="gimp-tool-n-point-deformation-24">
       <g
          transform="matrix(1.5286692,0,0,1.3844189,-0.73744585,-406.33558)"
@@ -16035,7 +16056,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="translate(-81.255778,166.32447)"
+       transform="translate(-75.248974,174.42562)"
        id="gimp-tool-n-point-deformation">
       <g
          transform="matrix(1.0066138,0,0,0.92337031,-0.29705342,-956.91062)"
@@ -16087,7 +16108,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="translate(-133.59488,-693.57309)"
+       transform="translate(-140.13236,-693.57309)"
        id="gimp-tool-align">
       <rect
          y="1036.3622"
@@ -16163,7 +16184,7 @@
          style="opacity:1;fill:#fcaf3e;fill-opacity:1;stroke:none;stroke-width:0.48904914;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
     <g
-       transform="translate(3.7747438,-686.07579)"
+       transform="translate(3.197907,-686.07579)"
        id="gimp-tool-align-24">
       <rect
          y="1028.3622"
@@ -16239,7 +16260,7 @@
          style="opacity:1;fill:#fcaf3e;fill-opacity:1;stroke:none;stroke-width:0.5989604;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
     <g
-       transform="translate(-208.44212,-671.72657)"
+       transform="translate(-208.44212,-670.39441)"
        id="gimp-tool-smudge-24">
       <rect
          y="1028.3622"
@@ -16327,7 +16348,7 @@
     </g>
     <g
        id="gimp-tool-path"
-       transform="translate(-69.242169,364.31098)">
+       transform="translate(-75.248973,393.23298)">
       <path
          sodipodi:nodetypes="cc"
          style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.72360283;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -16381,7 +16402,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="matrix(1.0041788,0,0,1.000193,109.07666,-646.38948)"
+       transform="matrix(1.0041788,0,0,1.000193,109.07666,-643.33233)"
        id="gimp-tool-path-24"
        inkscape:export-xdpi="96.018311"
        inkscape:export-ydpi="96.018311">
@@ -16438,7 +16459,7 @@
     </g>
     <g
        id="gimp-tool-unified-transform"
-       transform="translate(-145.5347,187.51367)">
+       transform="translate(-140.12857,202.20873)">
       <rect
          inkscape:transform-center-y="52.3259"
          inkscape:transform-center-x="-94.752306"
@@ -16496,7 +16517,7 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:0.506441;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
     <g
-       transform="translate(2.740277,-835.3261)"
+       transform="translate(3.1987607,-834.15347)"
        id="gimp-tool-unified-transform-24">
       <g
          id="g10605-5">
@@ -16557,7 +16578,7 @@
       </g>
     </g>
     <g
-       transform="translate(143.46702,-687.50942)"
+       transform="translate(138.86479,-687.50942)"
        id="gimp-tool-crop-24">
       <path
          style="display:inline;opacity:1;fill:#3465a4;fill-opacity:1;stroke:#555753;stroke-width:0.68964118;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1"
@@ -16590,7 +16611,7 @@
     </g>
     <g
        id="gimp-tool-crop"
-       transform="matrix(-0.96969697,0,0,-0.96969697,-33.78854,359.5267)">
+       transform="matrix(-0.96969697,0,0,-0.96969697,-38.246443,359.5267)">
       <path
          style="display:inline;opacity:1;fill:#3465a4;fill-opacity:1;stroke:#555753;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1"
          d="m 3.8527647,0.04253241 h -2 v 11.99999959 2 H 15.852764 v -2 H 3.8527647 Z"
@@ -16619,7 +16640,7 @@
          style="display:inline;opacity:1;fill:#3465a4;fill-opacity:1;stroke:#555753;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(-276.50729,-867.46623)"
+       transform="translate(-276.50729,-852.44885)"
        id="gimp-tool-ellipse-select-24">
       <ellipse
          ry="8.0826139"
@@ -16845,7 +16866,7 @@
     </g>
     <g
        id="gimp-tool-ellipse-select"
-       transform="translate(-429.43052,181.38904)">
+       transform="translate(-429.07705,183.91339)">
       <ellipse
          ry="5.3884091"
          rx="7.5108628"
@@ -17069,7 +17090,7 @@
          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.44409898;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(5.2866148,-866.57414)"
+       transform="translate(3.1993312,-861.93656)"
        id="gimp-tool-cage-24">
       <path
          sodipodi:nodetypes="cccccc"
@@ -17199,7 +17220,7 @@
       </g>
     </g>
     <g
-       transform="translate(-147.10327,-871.80542)"
+       transform="translate(-140.12803,-861.93656)"
        id="gimp-tool-cage">
       <path
          d="m 13.482422,1038.7949 -11.0078126,1.7422 v 9.3106 l 5.4316406,-5.9434 5.386719,4.9512 z"
@@ -17329,7 +17350,7 @@
     </g>
     <g
        id="gimp-tool-handle-transform"
-       transform="translate(-101.26458,166.36886)">
+       transform="translate(-96.559454,174.42564)">
       <rect
          y="0"
          x="0"
@@ -17430,7 +17451,7 @@
       </g>
     </g>
     <g
-       transform="translate(73.834113,-866.1011)"
+       transform="translate(73.834113,-861.93656)"
        id="gimp-tool-handle-transform-24">
       <rect
          y="1028.3622"
@@ -17545,7 +17566,7 @@
     </g>
     <g
        id="gimp-tool-fuzzy-select-24"
-       transform="matrix(0.61032046,0,0,0.63537132,-247.21525,195.13886)">
+       transform="matrix(0.61032046,0,0,0.63537132,-246.46003,203.83918)">
       <rect
          transform="rotate(42.254557)"
          ry="2.3471537"
@@ -17582,14 +17603,14 @@
          r="23" />
     </g>
     <path
-       d="m -40.867486,366.07162 -3.5,2.7498 h 2.5 v 4 h -3.99994 l -1.2e-4,-2.5 -2.74973,3.5 2.74973,3.368 v -2.368 h 4.00006 v 4 h -2.5 l 3.5,2.7498 3.5,-2.7498 h -2.5 v -4 h 4 v 2.632 l 2.74979,-3.632 -2.74979,-3.5 v 2.5 h -4 v -4 h 2.5 z"
+       d="m -45.861245,393.48316 -3.5,2.7498 h 2.5 v 4 h -3.99994 l -1.2e-4,-2.5 -2.74973,3.5 2.74973,3.368 v -2.368 h 4.00006 v 4 h -2.5 l 3.5,2.7498 3.5,-2.7498 h -2.5 v -4 h 4 v 2.632 l 2.74979,-3.632 -2.74979,-3.5 v 2.5 h -4 v -4 h 2.5 z"
        id="gimp-tool-move"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccccccccccccccccc"
        stroke-miterlimit="10"
        style="color:#000000;display:inline;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient8313-9);stroke-width:0.50044352;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none" />
     <path
-       d="m 154.88821,381.41618 -5.13939,4.747 h 4.13938 v 6 h -5.99991 l -9e-5,-4.1392 -4.74715,5.1393 4.74706,5.1394 v -4.1395 h 6.00009 v 6 h -4.13938 l 5.13939,4.7472 5.13938,-4.7472 h -4.13939 v -6 h 6 v 4.1395 l 4.74716,-5.1394 -4.74716,-5.1393 v 4.1392 h -6 v -6 h 4.13939 z"
+       d="m 150.86479,385.48879 -5.13939,4.747 h 4.13938 v 6 h -5.99991 l -9e-5,-4.1392 -4.74715,5.1393 4.74706,5.1394 v -4.1395 h 6.00009 v 6 h -4.13938 l 5.13939,4.7472 5.13938,-4.7472 h -4.13939 v -6 h 6 v 4.1395 l 4.74716,-5.1394 -4.74716,-5.1393 v 4.1392 h -6 v -6 h 4.13939 z"
        id="gimp-tool-move-24"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccccccccccccccccc"
@@ -17598,7 +17619,7 @@
        inkscape:export-xdpi="123.75011"
        inkscape:export-ydpi="123.75011" />
     <g
-       transform="translate(-450.64483,-727.08174)"
+       transform="translate(-452.009,-725.45431)"
        id="gimp-tool-clone">
       <rect
          y="1047.9617"
@@ -17635,7 +17656,7 @@
          sodipodi:nodetypes="csccccccsc" />
     </g>
     <g
-       transform="translate(-311.51637,-725.45435)"
+       transform="translate(-312.16019,-725.45435)"
        id="gimp-tool-clone-24">
       <rect
          y="1045.7617"
@@ -17672,7 +17693,7 @@
          sodipodi:nodetypes="csccccccsc" />
     </g>
     <g
-       transform="translate(-210.66623,-728.71793)"
+       transform="translate(-210.66623,-725.45427)"
        id="gimp-tool-seamless-clone-24">
       <g
          transform="matrix(1.4545454,0,0,1.4782495,5.3947981e-6,-503.6396)"
@@ -17750,7 +17771,7 @@
       </g>
     </g>
     <g
-       transform="translate(-244.59085,-726.74054)"
+       transform="translate(-244.59085,-725.2197)"
        id="gimp-tool-perspective-clone-24">
       <g
          transform="matrix(1.5953534,0,0,1.8360301,5.2408167,1032.2383)"
@@ -17811,7 +17832,7 @@
       </g>
     </g>
     <g
-       transform="translate(-379.46335,-726.2279)"
+       transform="translate(-383.86752,-725.45428)"
        id="gimp-tool-seamless-clone">
       <g
          id="g4021-39">
@@ -17888,7 +17909,7 @@
       </g>
     </g>
     <g
-       transform="translate(-405.49,-726.67662)"
+       transform="translate(-407.16139,-725.4543)"
        id="gimp-tool-perspective-clone">
       <g
          transform="matrix(1.0636285,0,0,1.2239686,3.4934589,1038.9468)"
@@ -18078,7 +18099,7 @@
       </g>
     </g>
     <g
-       transform="translate(-384.94043,183.91339)"
+       transform="translate(-383.86752,183.91339)"
        id="gimp-tool-free-select">
       <g
          id="g9796-5">
@@ -18125,7 +18146,7 @@
          sodipodi:nodetypes="ccccc" />
     </g>
     <g
-       transform="matrix(1.5,0,0,1.5,-212.21822,167.07459)"
+       transform="matrix(1.5,0,0,1.5,-212.21822,175.91339)"
        id="gimp-tool-free-select-24">
       <g
          id="g9796-8">
@@ -18172,7 +18193,7 @@
          sodipodi:nodetypes="ccccc" />
     </g>
     <g
-       transform="translate(2.2651511,-775.94739)"
+       transform="translate(3.1987608,-775.94739)"
        id="gimp-tool-brightness-contrast-24">
       <g
          transform="matrix(1.7142857,0,0,1.714277,-1.7142857,-749.9638)"
@@ -18240,7 +18261,7 @@
          style="opacity:1;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:4.51038408;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(-137.22725,-774.66076)"
+       transform="translate(-140.12857,-774.66076)"
        id="gimp-tool-brightness-contrast">
       <g
          transform="matrix(1.1428571,0,0,1.1428571,-1.1428571,-149.19455)"
@@ -18308,7 +18329,7 @@
          style="opacity:1;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:3.00693035;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(-408.35238,183.15831)"
+       transform="translate(-407.1613,183.91339)"
        id="gimp-tool-foreground-select">
       <g
          transform="matrix(-0.98092788,0,0,0.9804097,13.184207,7.8936064)"
@@ -18574,7 +18595,7 @@
       </g>
     </g>
     <g
-       transform="translate(-245.44803,-865.06369)"
+       transform="translate(-245.44803,-852.44881)"
        id="gimp-tool-foreground-select-24">
       <g
          transform="matrix(-1.5126905,0,0,1.5136145,20.177268,1040.0447)"
@@ -18955,7 +18976,7 @@
          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.53427851;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
     <g
-       transform="translate(-310.36729,-862.45127)"
+       transform="translate(-312.16012,-852.44865)"
        id="gimp-tool-by-color-select-24">
       <rect
          y="1029.8622"
@@ -19138,7 +19159,7 @@
       </g>
     </g>
     <g
-       transform="translate(-449.59704,181.7272)"
+       transform="translate(-452.00896,183.91346)"
        id="gimp-tool-by-color-select">
       <rect
          y="1"
@@ -19322,7 +19343,7 @@
       </g>
     </g>
     <g
-       transform="translate(-310.90138,-831.48355)"
+       transform="translate(-312.16019,-822.37842)"
        id="gimp-tool-iscissors-24">
       <rect
          y="1028.3622"
@@ -19333,7 +19354,7 @@
          style="opacity:0;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
       <polygon
          transform="matrix(2.3628035,0,0,1.9869615,-688.10127,1016.8817)"
-         points="295.13281,14.71875 294.73242,13.672852 295.74658,11.960449 297.04443,12.300293 296.39941,13.384766 "
+         points="297.04443,12.300293 296.39941,13.384766 295.13281,14.71875 294.73242,13.672852 295.74658,11.960449 "
          id="polygon45129-7"
          style="fill:#204a87;fill-opacity:1;stroke:#000000;stroke-width:0.13128687;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
@@ -19435,7 +19456,7 @@
     </g>
     <g
        id="gimp-tool-iscissors"
-       transform="translate(-451.5859,202.81689)">
+       transform="translate(-452.009,213.9838)">
       <rect
          y="0"
          x="0"
@@ -19445,7 +19466,7 @@
          style="opacity:0;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
       <polygon
          transform="matrix(1.5752023,0,0,1.324641,-458.73418,-7.6536506)"
-         points="295.74658,11.960449 297.04443,12.300293 296.39941,13.384766 295.13281,14.71875 294.73242,13.672852 "
+         points="295.13281,14.71875 294.73242,13.672852 295.74658,11.960449 297.04443,12.300293 296.39941,13.384766 "
          id="polygon45129-1"
          style="fill:#204a87;fill-opacity:1;stroke:#000200;stroke-width:0.13128687;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
@@ -19560,7 +19581,7 @@
     <g
        style="display:inline"
        id="gimp-tool-heal"
-       transform="matrix(0.90471726,0,0,0.96975072,-326.94979,43.177115)">
+       transform="matrix(0.90471726,0,0,0.96975072,-327.92111,44.265569)">
       <g
          id="g8346-8">
         <g
@@ -19634,7 +19655,7 @@
     </g>
     <g
        id="gimp-tool-heal-24"
-       transform="matrix(1.500001,0,0,1.500001,-280.75202,-1251.7483)">
+       transform="matrix(1.500001,0,0,1.500001,-280.75202,-1251.6363)">
       <g
          inkscape:export-ydpi="123.75"
          inkscape:export-xdpi="123.75"
@@ -19697,7 +19718,7 @@
     </g>
     <g
        id="gimp-tool-flip"
-       transform="matrix(1.0003163,0,0,0.99965723,-125.23871,164.65869)">
+       transform="matrix(1.0003163,0,0,0.99965723,-119.15892,174.42878)">
       <g
          transform="matrix(0.79304787,0,0,1.2913208,-1.3286589,0.3520114)"
          id="g4021">
@@ -19747,7 +19768,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="matrix(1.0000672,0,0,0.99693911,41.244005,-862.25883)"
+       transform="matrix(1.0000672,0,0,0.99693911,41.244005,-858.71542)"
        id="gimp-tool-flip-24">
       <g
          transform="matrix(1.1887071,0,0,1.9865664,-1.9967713,1028.5195)"
@@ -19799,7 +19820,7 @@
     </g>
     <g
        id="gimp-tool-rotate"
-       transform="matrix(0.99896797,0,0,1,-122.67157,188.06209)">
+       transform="matrix(0.99896797,0,0,1,-119.15539,202.20873)">
       <rect
          y="1.3913041"
          x="1.3913044"
@@ -19891,7 +19912,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="translate(-100.76854,189.66415)"
+       transform="translate(-96.559639,202.20869)"
        id="gimp-tool-shear">
       <rect
          y="0.41666636"
@@ -19932,7 +19953,7 @@
     </g>
     <g
        id="gimp-tool-text"
-       transform="matrix(0.99996265,0,0,1.0000006,-137.10574,366.07577)">
+       transform="matrix(0.99996265,0,0,1.0000006,-140.12827,393.23328)">
       <g
          transform="matrix(1.0000371,0,0,1.0320108,0.1499531,0.36212686)"
          id="g4042">
@@ -19974,7 +19995,7 @@
          style="opacity:0;fill:#000000;fill-opacity:1;stroke:#990000;stroke-width:0.2136334;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
     <g
-       transform="translate(4.3547168,-643.12921)"
+       transform="translate(3.1987641,-643.12921)"
        id="gimp-tool-text-24">
       <g
          transform="matrix(1.4999907,0,0,1.5000006,1.4792788e-4,1028.3623)"
@@ -20021,7 +20042,7 @@
       </g>
     </g>
     <g
-       transform="matrix(1.500007,0,0,1.500007,-278.33479,305.80522)"
+       transform="matrix(1.500007,0,0,1.500007,-278.33479,309.96743)"
        id="gimp-tool-dodge-24">
       <ellipse
          ry="4.8952413"
@@ -20070,7 +20091,7 @@
          style="opacity:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.87879938;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <g
-       transform="matrix(1.0030457,0,0,1,-433.23519,333.96777)"
+       transform="matrix(1.0030457,0,0,1,-429.12559,333.96777)"
        id="gimp-tool-dodge">
       <ellipse
          ry="4.8953981"
@@ -20177,7 +20198,7 @@
          ry="1.5" />
     </g>
     <g
-       transform="translate(-71.522833,344.77594)"
+       transform="translate(-75.248974,344.77594)"
        id="gimp-tool-color-picker">
       <rect
          style="opacity:0.24267782;fill:#000000;fill-opacity:0;stroke:none;stroke-width:0.64727408;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -20235,7 +20256,7 @@
          ry="1" />
     </g>
     <g
-       transform="translate(98.990443,-834.86516)"
+       transform="translate(98.990443,-834.15376)"
        id="gimp-tool-scale-24">
       <rect
          transform="scale(-1)"
@@ -20276,7 +20297,7 @@
     </g>
     <g
        id="gimp-tool-scale"
-       transform="translate(-76.950927,187.72897)">
+       transform="translate(-75.248973,202.20837)">
       <rect
          transform="scale(-1)"
          y="-15.671742"
@@ -20315,7 +20336,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="translate(71.886758,-644.14308)"
+       transform="translate(71.886758,-643.12934)"
        id="gimp-tool-zoom-24">
       <path
          inkscape:connector-curvature="0"
@@ -20366,7 +20387,7 @@
       </g>
     </g>
     <g
-       transform="translate(-91.85429,-671.16469)"
+       transform="translate(-96.559467,-643.12927)"
        id="gimp-tool-zoom">
       <path
          inkscape:connector-curvature="0"
@@ -20418,7 +20439,7 @@
     </g>
     <g
        id="gimp-tool-ink"
-       transform="matrix(1.0005201,0,0,0.99947258,-432.52757,-783.93204)">
+       transform="matrix(1.0005201,0,0,0.99947258,-429.08495,-783.93204)">
       <g
          transform="matrix(0.23637259,0,0,0.25189156,-0.93185794,1026.9653)"
          id="g3956">
@@ -20523,6 +20544,50 @@
            sodipodi:nodetypes="csccc"
            inkscape:connector-curvature="0" />
       </g>
+    </g>
+    <g
+       id="gimp-gegl"
+       transform="matrix(0.34940922,0,0,0.348843,-128.67297,406.39723)">
+      <path
+         sodipodi:nodetypes="czcssssssccczz"
+         inkscape:export-ydpi="43.860001"
+         inkscape:export-xdpi="43.860001"
+         inkscape:export-filename="/home/neo/gnomesvn/gimp/themes/Default/images/stock-gegl-22.png"
+         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient3261);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3263);stroke-width:2.87810326;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         d="m 39.438364,78.98461 c 0,12.555369 8.881409,20.915102 22.284682,20.915102 13.491637,0 22.937978,-11.784979 20.148481,-25.811288 H 61.753133 c -6.756335,0 -8.04823,8.751774 -0.840641,8.751774 3.770031,0 4.170667,-2.759741 6.709417,-3.001239 0.916673,-0.0872 3.235452,0.54889 3.384183,2.344955 0.351708,4.247206 -5.004416,6.729844 -9.383338,6.704497 -14.67659,-0.08547 -15.183659,-20.735884 -0.581688,-20.735884 h 18.894843 c -0.0071,-0.01304 -0.01297,-0.02709 -0.02006,-0.04012 h 0.05015 C 76.988508,62.959293 70.884207,56.759235 59.672589,56.914946 48.585947,57.068921 39.438364,66.605927 39.438364,78.98461 Z"
+         id="path3680-4"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 59.710938,59.683594 c -9.51986,0.132216 -17.503907,8.286543 -17.503907,19.300781 0,5.62461 1.92311,10.030672 5.242188,13.148437 3.319078,3.117766 8.147659,4.998047 14.273437,4.998047 11.154936,0 18.816568,-8.80226 17.654297,-20.273437 H 61.753906 c -2.182306,0 -2.817059,1.194107 -2.908203,1.941406 -0.04557,0.373649 0.02563,0.566686 0.207031,0.75586 0.181399,0.189173 0.617973,0.515624 1.859375,0.515624 1.209532,0 1.334583,-0.195439 2.072266,-0.792968 0.737683,-0.597529 2.129654,-1.981725 4.375,-2.195313 1.308364,-0.12446 2.295434,0.126328 3.523437,0.767578 1.228004,0.641251 2.712948,2.054186 2.882813,4.105469 0.274933,3.320075 -1.817729,6.039999 -4.212891,7.533203 -2.395161,1.493204 -5.22582,2.185664 -7.945312,2.169922 -8.637015,-0.0503 -13.852913,-6.619542 -14.023438,-13.097656 -0.08526,-3.239057 0.973929,-6.534381 3.283204,-9.052735 2.309274,-2.518353 5.87053,-4.125 10.173828,-4.125 h 13.332031 c -3.028834,-3.143299 -7.536562,-5.79818 -14.662109,-5.699218 z"
+         inkscape:href="#path3680-4"
+         id="path3189-6"
+         style="display:inline;overflow:visible;visibility:visible;opacity:0.82017547;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:2.87810326;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         xlink:href="#path3680-4"
+         inkscape:original="M 59.671875 56.914062 C 48.585233 57.068038 39.4375 66.605692 39.4375 78.984375 C 39.4375 91.539744 48.319383 99.900391 61.722656 99.900391 C 75.214293 99.900391 84.660591 88.1142 81.871094 74.087891 L 61.753906 74.087891 C 54.997571 74.087891 53.70452 82.839844 60.912109 82.839844 C 64.68214 82.839844 65.082344 80.081342 67.621094 79.839844 C 68.537767 79.752644 70.857128 80.387529 71.005859 82.183594 C 71.357567 86.4308 66.001969 88.914019 61.623047 88.888672 C 46.946457 88.803202 46.439045 68.152344 61.041016 68.152344 L 79.935547 68.152344 C 79.928447 68.139304 79.923106 68.126311 79.916016 68.113281 L 79.966797 68.113281 C 76.989306 62.960167 70.883493 56.758351 59.671875 56.914062 z "
+         inkscape:radius="-2.7695432"
+         sodipodi:type="inkscape:offset" />
+    </g>
+    <g
+       id="gimp-gegl-24"
+       transform="matrix(0.52411218,0,0,0.52326285,16.938669,386.82961)">
+      <path
+         sodipodi:nodetypes="czcssssssccczz"
+         inkscape:export-ydpi="43.860001"
+         inkscape:export-xdpi="43.860001"
+         inkscape:export-filename="/home/neo/gnomesvn/gimp/themes/Default/images/stock-gegl-22.png"
+         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient3261-0);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3263-0);stroke-width:2.87810326;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         d="m 39.438364,78.98461 c 0,12.555369 8.881409,20.915102 22.284682,20.915102 13.491637,0 22.937978,-11.784979 20.148481,-25.811288 H 61.753133 c -6.756335,0 -8.04823,8.751774 -0.840641,8.751774 3.770031,0 4.170667,-2.759741 6.709417,-3.001239 0.916673,-0.0872 3.235452,0.54889 3.384183,2.344955 0.351708,4.247206 -5.004416,6.729844 -9.383338,6.704497 -14.67659,-0.08547 -15.183659,-20.735884 -0.581688,-20.735884 h 18.894843 c -0.0071,-0.01304 -0.01297,-0.02709 -0.02006,-0.04012 h 0.05015 C 76.988508,62.959293 70.884207,56.759235 59.672589,56.914946 48.585947,57.068921 39.438364,66.605927 39.438364,78.98461 Z"
+         id="path3680"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 59.710938,59.683594 c -9.51986,0.132216 -17.503907,8.286543 -17.503907,19.300781 0,5.62461 1.92311,10.030672 5.242188,13.148437 3.319078,3.117766 8.147659,4.998047 14.273437,4.998047 11.154936,0 18.816568,-8.80226 17.654297,-20.273437 H 61.753906 c -2.182306,0 -2.817059,1.194107 -2.908203,1.941406 -0.04557,0.373649 0.02563,0.566686 0.207031,0.75586 0.181399,0.189173 0.617973,0.515624 1.859375,0.515624 1.209532,0 1.334583,-0.195439 2.072266,-0.792968 0.737683,-0.597529 2.129654,-1.981725 4.375,-2.195313 1.308364,-0.12446 2.295434,0.126328 3.523437,0.767578 1.228004,0.641251 2.712948,2.054186 2.882813,4.105469 0.274933,3.320075 -1.817729,6.039999 -4.212891,7.533203 -2.395161,1.493204 -5.22582,2.185664 -7.945312,2.169922 -8.637015,-0.0503 -13.852913,-6.619542 -14.023438,-13.097656 -0.08526,-3.239057 0.973929,-6.534381 3.283204,-9.052735 2.309274,-2.518353 5.87053,-4.125 10.173828,-4.125 h 13.332031 c -3.028834,-3.143299 -7.536562,-5.79818 -14.662109,-5.699218 z"
+         inkscape:href="#path3680"
+         id="path3189"
+         style="display:inline;overflow:visible;visibility:visible;opacity:0.82017547;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:2.87810326;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         xlink:href="#path3680"
+         inkscape:original="M 59.671875 56.914062 C 48.585233 57.068038 39.4375 66.605692 39.4375 78.984375 C 39.4375 91.539744 48.319383 99.900391 61.722656 99.900391 C 75.214293 99.900391 84.660591 88.1142 81.871094 74.087891 L 61.753906 74.087891 C 54.997571 74.087891 53.70452 82.839844 60.912109 82.839844 C 64.68214 82.839844 65.082344 80.081342 67.621094 79.839844 C 68.537767 79.752644 70.857128 80.387529 71.005859 82.183594 C 71.357567 86.4308 66.001969 88.914019 61.623047 88.888672 C 46.946457 88.803202 46.439045 68.152344 61.041016 68.152344 L 79.935547 68.152344 C 79.928447 68.139304 79.923106 68.126311 79.916016 68.113281 L 79.966797 68.113281 C 76.989306 62.960167 70.883493 56.758351 59.671875 56.914062 z "
+         inkscape:radius="-2.7695432"
+         sodipodi:type="inkscape:offset" />
     </g>
   </g>
   <g
@@ -27001,36 +27066,6 @@
          mix-blend-mode="normal"
          isolation="auto"
          style="color:#000000;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#808080;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;color-rendering:auto;image-rendering:auto;shape-rendering:auto" />
-    </g>
-    <g
-       id="gimp-gegl"
-       transform="matrix(1.0509587,0,0,1.0505802,-9.0368954,82.157005)"
-       inkscape:transform-center-x="-0.15490455"
-       inkscape:transform-center-y="7.5875553"
-       inkscape:export-xdpi="123.75059"
-       inkscape:export-ydpi="123.75059">
-      <g
-         transform="matrix(0.34622443,0,0,0.34622443,-13.078503,-19.040042)"
-         id="g8533">
-        <path
-           inkscape:connector-curvature="0"
-           id="path3680"
-           d="m 39.438364,78.98461 c 0,12.555369 8.881409,20.915102 22.284682,20.915102 13.491637,0 23.117859,-13.224031 20.148481,-26.890577 H 61.753133 c -6.756335,0 -7.641725,10.279759 -0.441281,9.958906 3.27827,-0.14608 2.8719,-2.887584 5.41065,-3.129082 0.916673,-0.0872 2.515926,0.369009 2.664657,2.165074 0.351708,4.247206 -3.385483,6.909725 -7.764405,6.884378 -14.67659,-0.08547 -15.183659,-20.915765 -0.581688,-20.915765 h 18.894843 c -0.0071,-0.01304 -0.01297,-0.02709 -0.02006,-0.04012 h 0.05015 C 76.988508,62.779412 70.884207,56.759235 59.672589,56.914946 48.585947,57.068921 39.438364,66.605927 39.438364,78.98461 Z"
-           inkscape:export-filename="/home/neo/gnomesvn/gimp/themes/Default/images/stock-gegl-22.png"
-           inkscape:export-xdpi="43.860001"
-           inkscape:export-ydpi="43.860001"
-           sodipodi:nodetypes="czcssssssccczz"
-           style="fill:url(#linearGradient3191);stroke:url(#linearGradient3193);stroke-linejoin:round" />
-        <path
-           sodipodi:type="inkscape:offset"
-           inkscape:radius="-0.96309054"
-           inkscape:original="M 59.671875 56.914062 C 48.585233 57.068038 39.4375 66.605692 39.4375 78.984375 C 39.4375 91.539744 48.319383 99.900391 61.722656 99.900391 C 75.214293 99.900391 84.840472 86.676312 81.871094 73.009766 L 61.753906 73.009766 C 54.997571 73.009766 54.112056 83.289603 61.3125 82.96875 C 64.59077 82.82267 64.183906 80.081342 66.722656 79.839844 C 67.639329 79.752644 69.237988 80.207841 69.386719 82.003906 C 69.738427 86.251112 66.001969 88.914019 61.623047 88.888672 C 46.946457 88.803202 46.439045 67.972656 61.041016 67.972656 L 79.935547 67.972656 C 79.928447 67.959616 79.923106 67.944671 79.916016 67.931641 L 79.966797 67.931641 C 76.989306 62.778527 70.883493 56.758351 59.671875 56.914062 z "
-           id="path3189"
-           d="m 55.832031,58.34375 c -9.006421,2.092967 -15.314389,10.936848 -15.37074,20.023191 -0.448783,7.93665 4.166765,16.061406 11.80536,18.813581 7.991846,3.234298 18.260432,1.960103 23.873097,-5.039659 4.34548,-4.855974 6.025934,-11.792827 4.866111,-18.168207 -6.91623,0.201371 -13.911152,-0.409382 -20.776512,0.316973 -3.759564,0.861502 -4.011497,7.624167 0.343971,7.599254 3.041328,0.631105 4.297162,-4.31233 7.572437,-2.707155 3.337864,1.091059 2.361518,5.984158 0.305733,7.918094 -4.034633,4.083299 -11.210306,3.283694 -15.278236,-0.428228 -4.088473,-3.71566 -4.988106,-10.594331 -1.596701,-15.080476 2.58332,-3.833173 7.541795,-4.933608 11.940929,-4.581352 4.862663,0 9.725326,0 14.587989,0 C 73.521501,60.0766 64.522704,56.754109 56.434178,58.271929 l -0.40984,0.04888 z m 23.898438,8.666016 c 0.04153,0.03004 0.06658,-0.09892 0,0 z"
-           xlink:href="##path3680"
-           inkscape:href="##path3680"
-           style="opacity:0.49561403;fill:none;stroke:#ffffff" />
-      </g>
     </g>
     <g
        style="display:inline"
@@ -41048,7 +41083,7 @@
     </g>
     <g
        style="display:inline"
-       transform="translate(-103.86769,-994.68158)"
+       transform="translate(-102.13541,-994.68158)"
        id="gimp-tool-desaturate-24">
       <rect
          style="fill:none;stroke:none;stroke-width:1.5"
@@ -41078,7 +41113,7 @@
     </g>
     <g
        style="display:inline"
-       transform="translate(-239.88815,-957.41718)"
+       transform="translate(-237.80144,-957.41718)"
        id="gimp-tool-threshold-24">
       <rect
          y="1028.3622"
@@ -41121,7 +41156,7 @@
     </g>
     <g
        style="display:inline"
-       transform="translate(-203.98498,-959.63728)"
+       transform="translate(-206.22853,-957.20286)"
        id="gimp-tool-hue-saturation-24">
       <rect
          rx="0"
@@ -41462,7 +41497,7 @@
          style="opacity:1;fill:#555753;fill-opacity:1;stroke:none;stroke-width:0.744573;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
     <g
-       transform="translate(-355.14951,-907.89746)"
+       transform="translate(-360.13997,-907.89746)"
        id="gimp-tool-blend">
       <rect
          y="1037.7817"
@@ -41500,7 +41535,7 @@
          style="opacity:1;fill:#555753;fill-opacity:1;stroke:none;stroke-width:0.48223728;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
     <g
-       transform="translate(-200.385,-1051.4258)"
+       transform="translate(-200.385,-1051.1535)"
        id="gimp-tool-rotate-24">
       <rect
          y="1029.9928"

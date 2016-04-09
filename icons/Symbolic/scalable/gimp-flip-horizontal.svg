@@ -14,7 +14,7 @@
    height="16"
    width="15.999845"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.91+devel r"
    sodipodi:docname="gimp-flip-horizontal.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -25,12 +25,12 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="501"
-     inkscape:window-height="405"
+     inkscape:window-width="1051"
+     inkscape:window-height="432"
      id="namedview1521"
      showgrid="false"
      inkscape:zoom="14.75"
-     inkscape:cx="-413.62805"
+     inkscape:cx="-433.86534"
      inkscape:cy="775.39373"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -56,47 +56,6 @@
   </metadata>
   <defs
      id="defs7386">
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient8074">
-      <stop
-         id="stop8072"
-         offset="0"
-         style="stop-color:#be00be;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient7561">
-      <stop
-         id="stop7558"
-         offset="0"
-         style="stop-color:#a5a5a5;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient7548">
-      <stop
-         id="stop7546"
-         offset="0"
-         style="stop-color:#ebebeb;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient7542">
-      <stop
-         id="stop7538"
-         offset="0"
-         style="stop-color:#c9c9c9;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
-       osb:paint="solid"
-       id="linearGradient19282">
-      <stop
-         id="stop19284"
-         offset="0"
-         style="stop-color:#b4b4b4;stop-opacity:1;" />
-    </linearGradient>
     <linearGradient
        gradientTransform="matrix(0.34682586,0,0,0.30620888,-154.37186,-275.32369)"
        osb:paint="solid"
