@@ -28,7 +28,7 @@
 #include "animation-utils.h"
 
 #include "animation.h"
-#include "animationlegacy.h"
+#include "animationanimatic.h"
 
 enum
 {
@@ -63,7 +63,6 @@ struct _AnimationPrivate
 
   /* State of the currently loaded animation. */
   gint         position;
-  gint32       length;
   /* We want to allow animator to set any number as first frame,
    * for frame export capability. */
   guint        start_pos;
@@ -74,8 +73,10 @@ struct _AnimationPrivate
   /* Proxy settings generates a reload. */
   gdouble      proxy_ratio;
 
-  /* Frames are associated to an unused image (used as backend for GEGL buffers). */
   gboolean     loaded;
+
+  gint64       playback_start_time;
+  gint64       frames_played;
 };
 
 
@@ -95,7 +96,7 @@ static void       animation_get_property           (GObject      *object,
 
 /* Base implementation of virtual methods. */
 static gint       animation_real_get_start_position (Animation *animation);
-static gboolean   animation_real_identical_frames   (Animation *animation,
+static gboolean   animation_real_same               (Animation *animation,
                                                      gint       prev_pos,
                                                      gint       next_pos);
 
@@ -253,6 +254,8 @@ animation_class_init (AnimationClass *klass)
    * @animation: the animation.
    * @playback_start: the playback start frame.
    * @playback_stop: the playback last frame.
+   * @first_frame: the first frame.
+   * @length: the full length.
    *
    * The ::playback-range signal is emitted when the playback range is
    * updated.
@@ -265,7 +268,9 @@ animation_class_init (AnimationClass *klass)
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
-                  2,
+                  4,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
                   G_TYPE_INT,
                   G_TYPE_INT);
   /**
@@ -310,7 +315,7 @@ animation_class_init (AnimationClass *klass)
   object_class->get_property = animation_get_property;
 
   klass->get_start_position  = animation_real_get_start_position;
-  klass->identical_frames    = animation_real_identical_frames;
+  klass->same                = animation_real_same;
 
   /**
    * Animation:image:
@@ -339,15 +344,13 @@ animation_init (Animation *animation)
 /************ Public Functions ****************/
 
 Animation *
-animation_new (gint32      image_id,
-               DisposeType disposal)
+animation_new (gint32   image_id,
+               gboolean xsheet)
 {
   Animation *animation;
 
-  /* Right now, only legacy animation type exists. */
-  animation = g_object_new (ANIMATION_TYPE_ANIMATION_LEGACY,
+  animation = g_object_new (ANIMATION_TYPE_ANIMATIC,
                             "image", image_id,
-                            "disposal", disposal,
                             NULL);
   return animation;
 }
@@ -367,6 +370,7 @@ animation_load (Animation *animation,
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
   GeglBuffer       *buffer;
   gint              width, height;
+  gint              length;
 
   priv->loaded = FALSE;
   g_signal_emit (animation, animation_signals[LOADING_START], 0);
@@ -378,17 +382,17 @@ animation_load (Animation *animation,
 
   priv->start_pos = ANIMATION_GET_CLASS (animation)->get_start_position (animation);
   priv->position  = priv->start_pos;
-  priv->length    = ANIMATION_GET_CLASS (animation)->get_length (animation);
+  length    = ANIMATION_GET_CLASS (animation)->get_length (animation);
 
   /* Default playback is the full range of frames. */
   priv->playback_start = priv->position;
-  priv->playback_stop  = priv->position + priv->length - 1;
+  priv->playback_stop  = priv->position + length - 1;
 
   priv->loaded = TRUE;
 
   animation_get_size (animation, &width, &height);
   g_signal_emit (animation, animation_signals[LOADED], 0,
-                 1, priv->length,
+                 1, length,
                  priv->playback_start,
                  priv->playback_stop,
                  width,
@@ -403,13 +407,14 @@ animation_load (Animation *animation,
     g_object_unref (buffer);
 }
 
-DisposeType
-animation_get_disposal (Animation *animation)
+gchar *
+animation_serialize (Animation   *animation)
 {
-  return ANIMATION_GET_CLASS (animation)->get_disposal (animation);
+  return ANIMATION_GET_CLASS (animation)->serialize (animation);
 }
 
-gint animation_get_start_position (Animation *animation)
+gint
+animation_get_start_position (Animation *animation)
 {
   return ANIMATION_GET_CLASS (animation)->get_start_position (animation);
 }
@@ -465,7 +470,7 @@ animation_play (Animation *animation)
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
   gint              duration;
 
-  duration = ANIMATION_GET_CLASS (animation)->time_to_next (animation);
+  duration = (gint) (1000.0 / animation_get_framerate (animation));
 
   if (priv->playback_timer)
     {
@@ -476,11 +481,8 @@ animation_play (Animation *animation)
       g_source_remove (priv->playback_timer);
     }
 
-  if (duration <= 0)
-    {
-      gdouble fps = animation_get_framerate (animation);
-      duration = (gint) (1000.0 / fps);
-    }
+  priv->playback_start_time = g_get_monotonic_time ();
+  priv->frames_played = 1;
 
   priv->playback_timer = g_timeout_add ((guint) duration,
                                         (GSourceFunc) animation_advance_frame_callback,
@@ -508,19 +510,21 @@ animation_next (Animation *animation)
   AnimationPrivate *priv         = ANIMATION_GET_PRIVATE (animation);
   GeglBuffer       *buffer       = NULL;
   gint              previous_pos = priv->position;
+  gboolean          identical;
 
   priv->position = animation_get_playback_start (animation) +
                    ((priv->position - animation_get_playback_start (animation) + 1) %
                     (animation_get_playback_stop (animation) - animation_get_playback_start (animation) + 1));
 
-  if (! ANIMATION_GET_CLASS (animation)->identical_frames (animation,
-                                                           previous_pos,
-                                                           priv->position))
+  identical = ANIMATION_GET_CLASS (animation)->same (animation,
+                                                     previous_pos,
+                                                     priv->position);
+  if (! identical)
     {
       buffer = animation_get_frame (animation, priv->position);
     }
   g_signal_emit (animation, animation_signals[RENDER], 0,
-                 priv->position, buffer, FALSE);
+                 priv->position, buffer, ! identical);
   if (buffer != NULL)
     {
       g_object_unref (buffer);
@@ -533,6 +537,7 @@ animation_prev (Animation *animation)
   AnimationPrivate *priv     = ANIMATION_GET_PRIVATE (animation);
   GeglBuffer       *buffer   = NULL;
   gint              prev_pos = priv->position;
+  gboolean          identical;
 
   if (priv->position == animation_get_playback_start (animation))
     {
@@ -543,14 +548,15 @@ animation_prev (Animation *animation)
       --priv->position;
     }
 
-  if (! ANIMATION_GET_CLASS (animation)->identical_frames (animation,
-                                                           prev_pos,
-                                                           priv->position))
+  identical = ANIMATION_GET_CLASS (animation)->same (animation,
+                                                     prev_pos,
+                                                     priv->position);
+  if (! identical)
     {
       buffer = animation_get_frame (animation, priv->position);
     }
   g_signal_emit (animation, animation_signals[RENDER], 0,
-                 priv->position, buffer, FALSE);
+                 priv->position, buffer, ! identical);
   if (buffer)
     g_object_unref (buffer);
 }
@@ -562,6 +568,7 @@ animation_jump (Animation *animation,
   AnimationPrivate *priv           = ANIMATION_GET_PRIVATE (animation);
   GeglBuffer       *buffer         = NULL;
   gint              prev_pos = priv->position;
+  gboolean          identical;
 
   if (index < priv->playback_start ||
       index > priv->playback_stop)
@@ -569,14 +576,15 @@ animation_jump (Animation *animation,
   else
     priv->position = index;
 
-  if (! ANIMATION_GET_CLASS (animation)->identical_frames (animation,
-                                                           prev_pos,
-                                                           priv->position))
+  identical = ANIMATION_GET_CLASS (animation)->same (animation,
+                                                     prev_pos,
+                                                     priv->position);
+  if (! identical)
     {
       buffer = animation_get_frame (animation, priv->position);
     }
   g_signal_emit (animation, animation_signals[RENDER], 0,
-                 priv->position, buffer, FALSE);
+                 priv->position, buffer, ! identical);
   if (buffer)
     g_object_unref (buffer);
 }
@@ -586,9 +594,12 @@ animation_set_playback_start (Animation *animation,
                               gint       frame_number)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
+  gint              length;
+
+  length = animation_get_length (animation);
 
   if (frame_number < priv->start_pos ||
-      frame_number >= priv->start_pos + priv->length)
+      frame_number >= priv->start_pos + length)
     {
       priv->playback_start = priv->start_pos;
     }
@@ -598,11 +609,12 @@ animation_set_playback_start (Animation *animation,
     }
   if (priv->playback_stop < priv->playback_start)
     {
-      priv->playback_stop = priv->start_pos + priv->length - 1;
+      priv->playback_stop = priv->start_pos + length - 1;
     }
 
   g_signal_emit (animation, animation_signals[PLAYBACK_RANGE], 0,
-                 priv->playback_start, priv->playback_stop);
+                 priv->playback_start, priv->playback_stop,
+                 priv->start_pos, length);
 
   if (priv->position < priv->playback_start ||
       priv->position > priv->playback_stop)
@@ -624,11 +636,14 @@ animation_set_playback_stop (Animation *animation,
                              gint       frame_number)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
+  gint              length;
+
+  length = animation_get_length (animation);
 
   if (frame_number < priv->start_pos ||
-      frame_number >= priv->start_pos + priv->length)
+      frame_number >= priv->start_pos + length)
     {
-      priv->playback_stop = priv->start_pos + priv->length - 1;
+      priv->playback_stop = priv->start_pos + length - 1;
     }
   else
     {
@@ -639,7 +654,8 @@ animation_set_playback_stop (Animation *animation,
       priv->playback_start = priv->start_pos;
     }
   g_signal_emit (animation, animation_signals[PLAYBACK_RANGE], 0,
-                 priv->playback_start, priv->playback_stop);
+                 priv->playback_start, priv->playback_stop,
+                 priv->start_pos, length);
 
   if (priv->position < priv->playback_start ||
       priv->position > priv->playback_stop)
@@ -738,9 +754,9 @@ gint animation_real_get_start_position (Animation *animation)
 }
 
 static gboolean
-animation_real_identical_frames (Animation *animation,
-                                 gint       previous_pos,
-                                 gint       next_pos)
+animation_real_same (Animation *animation,
+                     gint       previous_pos,
+                     gint       next_pos)
 {
   /* By default all frames are supposed different. */
   return (previous_pos == next_pos);
@@ -750,16 +766,34 @@ static gboolean
 animation_advance_frame_callback (Animation *animation)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
-  gint              duration;
+  gint64            duration;
+  gint64            duration_since_start;
+  static gboolean   prev_low_framerate = FALSE;
 
   animation_next (animation);
-  duration = ANIMATION_GET_CLASS (animation)->time_to_next (animation);
+  duration = (gint) (1000.0 / animation_get_framerate (animation));
 
-  if (duration <= 0)
+  duration_since_start = (g_get_monotonic_time () - priv->playback_start_time) / 1000;
+  duration = duration - (duration_since_start - priv->frames_played * duration);
+
+  if (duration < 1)
     {
-      gdouble fps = animation_get_framerate (animation);
-      duration = (gint) (1000.0 / fps);
+      if (prev_low_framerate)
+        {
+          /* Let's only warn the user for several subsequent slow frames. */
+          gdouble real_framerate = (gdouble) priv->frames_played * 1000.0 / duration_since_start;
+          if (real_framerate < priv->framerate)
+            g_signal_emit (animation, animation_signals[LOW_FRAMERATE], 0,
+                           real_framerate);
+        }
+      duration = 1;
+      prev_low_framerate = TRUE;
     }
+  else
+    {
+      prev_low_framerate = FALSE;
+    }
+  priv->frames_played++;
 
   priv->playback_timer = g_timeout_add ((guint) duration,
                                         (GSourceFunc) animation_advance_frame_callback,

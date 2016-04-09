@@ -31,18 +31,6 @@
 typedef struct _Animation      Animation;
 typedef struct _AnimationClass AnimationClass;
 
-typedef enum
-{
-  /* Each layer is combined over the previous frame. */
-  DISPOSE_COMBINE  = 0x00,
-  /* Each layer is a frame. */
-  DISPOSE_REPLACE  = 0x01,
-  /* Custom disposal through timeline. */
-  DISPOSE_XSHEET   = 0x02,
-  /* Keep the current disposal */
-  DISPOSE_KEEP     = 0x03,
-} DisposeType;
-
 struct _Animation
 {
   GObject      parent_instance;
@@ -56,38 +44,36 @@ struct _AnimationClass
   gint         (*get_start_position) (Animation *animation);
 
   /* Defaults to returning FALSE for any different position. */
-  gboolean     (*identical_frames) (Animation *animation,
-                                    gint       prev_pos,
-                                    gint       next_pos);
+  gboolean     (*same)               (Animation *animation,
+                                      gint       prev_pos,
+                                      gint       next_pos);
 
   /* These virtual methods must be implemented by any subclass. */
   void         (*load)          (Animation  *animation,
                                  gdouble     proxy_ratio);
-  DisposeType  (*get_disposal)  (Animation   *animation);
   gint         (*get_length)    (Animation   *animation);
-  gint         (*next)          (Animation   *animation);
-  gint         (*prev)          (Animation   *animation);
 
 
   void         (*get_size)      (Animation   *animation,
                                  gint        *width,
                                  gint        *height);
 
-  gint         (*time_to_next)  (Animation   *animation);
-
   GeglBuffer * (*get_frame)     (Animation   *animation,
                                  gint         pos);
+
+  gchar      * (*serialize)     (Animation   *animation);
 };
 
 GType         animation_get_type (void);
 
 Animation   * animation_new                (gint32       image_id,
-                                            DisposeType  disposal);
+                                            gboolean     xsheet);
 gint32        animation_get_image_id       (Animation   *animation);
 
 void          animation_load               (Animation   *animation,
                                             gdouble      proxy_ratio);
-DisposeType   animation_get_disposal       (Animation   *animation);
+
+gchar       * animation_serialize          (Animation   *animation);
 
 gint          animation_get_start_position (Animation   *animation);
 gint          animation_get_position       (Animation   *animation);

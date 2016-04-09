@@ -31,8 +31,12 @@
 #include <libgimp/gimpui.h>
 
 #include "animation-utils.h"
+
 #include "core/animation.h"
+#include "core/animationanimatic.h"
+
 #include "animation-dialog.h"
+#include "animation-storyboard.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -40,11 +44,10 @@
 #define DITHERTYPE     GDK_RGB_DITHER_NORMAL
 
 /* Settings we cache assuming they may be the user's
- * favorite, like a framerate, or a type of frame disposal.
+ * favorite, like a framerate.
  * These will be used only for image without stored animation. */
 typedef struct
 {
-  DisposeType disposal;
   gdouble     framerate;
 }
 CachedSettings;
@@ -75,7 +78,6 @@ struct _AnimationDialogPrivate
   GtkWidget      *progress_bar;
   GtkWidget      *settings_bar;
 
-  GtkWidget      *disposalcombo;
   GtkWidget      *fpscombo;
   GtkWidget      *zoomcombo;
   GtkWidget      *proxycheckbox;
@@ -98,6 +100,9 @@ struct _AnimationDialogPrivate
   guchar         *shape_drawing_area_data;
   guint           shape_drawing_area_width;
   guint           shape_drawing_area_height;
+
+  /* The hpaned (left is preview, right is layer list. */
+  GtkWidget      *hpaned;
 
   /* The vpaned (bottom is timeline, above is preview). */
   GtkWidget      *vpaned;
@@ -148,8 +153,6 @@ static void        close_callback            (GtkAction        *action,
 static void        help_callback             (GtkAction        *action,
                                               AnimationDialog  *dialog);
 
-static void        disposalcombo_changed     (GtkWidget        *combo,
-                                              AnimationDialog  *dialog);
 static void        fpscombo_activated        (GtkEntry         *combo,
                                               AnimationDialog  *dialog);
 static void        fpscombo_changed          (GtkWidget        *combo,
@@ -206,6 +209,12 @@ static gboolean    popup_menu                (GtkWidget        *widget,
 static void        show_loading_progress     (Animation        *animation,
                                               gdouble           load_rate,
                                               AnimationDialog  *dialog);
+static void        animation_update_progress (Animation        *animation,
+                                              gint              first_frame,
+                                              gint              num_frames,
+                                              gint              playback_start,
+                                              gint              playback_stop,
+                                              AnimationDialog  *dialog);
 static void        block_ui                  (Animation        *animation,
                                               AnimationDialog  *dialog);
 static void        unblock_ui                (Animation        *animation,
@@ -219,6 +228,8 @@ static void        unblock_ui                (Animation        *animation,
 static void        playback_range_changed    (Animation        *animation,
                                               gint              playback_start,
                                               gint              playback_stop,
+                                              gint              start_pos,
+                                              gint              length,
                                               AnimationDialog  *dialog);
 static void        proxy_changed             (Animation        *animation,
                                               gdouble           fps,
@@ -324,7 +335,7 @@ animation_dialog_init (AnimationDialog *dialog)
   priv->shape_drawing_area_height = -1;
 }
 
-/************ Public Functions ****************/
+/**** Public Functions ****/
 
 GtkWidget *
 animation_dialog_new (gint32 image_id)
@@ -335,21 +346,12 @@ animation_dialog_new (gint32 image_id)
   CachedSettings  settings;
 
   /* Acceptable default settings. */
-  settings.disposal  = DISPOSE_COMBINE;
   settings.framerate = 24.0;
 
   /* If we saved any settings globally, use the one from the last run. */
   gimp_get_data (PLUG_IN_PROC, &settings);
 
   /* If this animation has specific settings already, override the global ones. */
-  parasite = gimp_image_get_parasite (image_id, PLUG_IN_PROC "/frame-disposal");
-  if (parasite)
-    {
-      const DisposeType *mode = gimp_parasite_data (parasite);
-
-      settings.disposal = *mode;
-      gimp_parasite_free (parasite);
-    }
   parasite = gimp_image_get_parasite (image_id,
                                       PLUG_IN_PROC "/framerate");
   if (parasite)
@@ -360,7 +362,7 @@ animation_dialog_new (gint32 image_id)
       gimp_parasite_free (parasite);
     }
 
-  animation = animation_new (image_id, settings.disposal);
+  animation = animation_new (image_id, FALSE);
 
   dialog = g_object_new (ANIMATION_TYPE_DIALOG,
                          "type",  GTK_WINDOW_TOPLEVEL,
@@ -375,14 +377,13 @@ animation_dialog_new (gint32 image_id)
   return dialog;
 }
 
-/************ Private Functions ****************/
+/**** Private Functions ****/
 
 static void
 animation_dialog_constructed (GObject *object)
 {
   AnimationDialog        *dialog = ANIMATION_DIALOG (object);
   AnimationDialogPrivate *priv   = GET_PRIVATE (dialog);
-  GtkWidget              *hpaned;
   GtkAdjustment          *adjust;
   GtkWidget              *main_vbox;
   GtkWidget              *upper_bar;
@@ -422,13 +423,13 @@ animation_dialog_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (dialog), priv->vpaned);
   gtk_widget_show (priv->vpaned);
 
-  hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_paned_pack1 (GTK_PANED (priv->vpaned), hpaned, TRUE, TRUE);
-  gtk_widget_show (hpaned);
+  priv->hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_paned_pack1 (GTK_PANED (priv->vpaned), priv->hpaned, TRUE, TRUE);
+  gtk_widget_show (priv->hpaned);
 
   /* Playback vertical box. */
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_paned_pack1 (GTK_PANED (hpaned), main_vbox, TRUE, TRUE);
+  gtk_paned_pack1 (GTK_PANED (priv->hpaned), main_vbox, TRUE, TRUE);
   gtk_widget_show (main_vbox);
 
   /* Upper Bar */
@@ -444,6 +445,7 @@ animation_dialog_constructed (GObject *object)
   /*****************/
   /* Settings box. */
   /*****************/
+
   priv->settings_bar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_paned_add1 (GTK_PANED (hbox), priv->settings_bar);
   gtk_widget_show (priv->settings_bar);
@@ -518,27 +520,6 @@ animation_dialog_constructed (GObject *object)
 
   gtk_box_pack_end (GTK_BOX (priv->settings_bar), priv->fpscombo, FALSE, FALSE, 0);
   gtk_widget_show (priv->fpscombo);
-
-  /* Settings: frame mode. */
-  priv->disposalcombo = gtk_combo_box_text_new ();
-
-  text = g_strdup (_("Cumulative layers (combine)"));
-  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (priv->disposalcombo),
-                                  DISPOSE_COMBINE, text);
-  g_free (text);
-
-  text = g_strdup (_("One frame per layer (replace)"));
-  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (priv->disposalcombo),
-                                  DISPOSE_REPLACE, text);
-  g_free (text);
-
-  g_signal_connect (priv->disposalcombo, "changed",
-                    G_CALLBACK (disposalcombo_changed),
-                    dialog);
-
-  gtk_box_pack_end (GTK_BOX (priv->settings_bar),
-                    priv->disposalcombo, FALSE, FALSE, 0);
-  gtk_widget_show (priv->disposalcombo);
 
   /*************/
   /* View box. */
@@ -762,7 +743,6 @@ animation_dialog_constructed (GObject *object)
 
   preview_width = gimp_image_width (priv->image_id);
   preview_height = gimp_image_height (priv->image_id);
-  /*animation_get_size (priv->animation, &preview_width, &preview_height);*/
   gtk_window_set_default_size (GTK_WINDOW (dialog),
                                MAX (preview_width + 20,
                                     screen_width - 20),
@@ -1145,10 +1125,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                    G_CALLBACK (fpscombo_activated),
                                    dialog);
 
-  g_signal_handlers_block_by_func (priv->disposalcombo,
-                                   G_CALLBACK (disposalcombo_changed),
-                                   dialog);
-
   g_signal_handlers_block_by_func (gtk_bin_get_child (GTK_BIN (priv->zoomcombo)),
                                    G_CALLBACK (zoomcombo_activated),
                                    dialog);
@@ -1211,14 +1187,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      G_CALLBACK (fpscombo_activated),
                                      dialog);
 
-  /* Settings: frame mode. */
-  gtk_combo_box_set_active (GTK_COMBO_BOX (priv->disposalcombo),
-                            animation_get_disposal (priv->animation));
-
-  g_signal_handlers_unblock_by_func (priv->disposalcombo,
-                                     G_CALLBACK (disposalcombo_changed),
-                                     dialog);
-
   /* View: zoom. */
   g_signal_handlers_unblock_by_func (gtk_bin_get_child (GTK_BIN (priv->zoomcombo)),
                                      G_CALLBACK (zoomcombo_activated),
@@ -1241,6 +1209,33 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   g_signal_handlers_unblock_by_func (priv->progress,
                                      G_CALLBACK (progress_button),
                                      dialog);
+
+  /* The layer list. */
+  if (ANIMATION_IS_ANIMATIC (animation))
+    {
+      GtkWidget *scrolled_win;
+      GtkWidget *layer_list;
+      GtkWidget *frame;
+
+      layer_list = gtk_paned_get_child2 (GTK_PANED (priv->hpaned));
+      if (layer_list)
+        gtk_widget_destroy (layer_list);
+
+      frame = gtk_frame_new (_("Storyboard"));
+      gtk_paned_pack2 (GTK_PANED (priv->hpaned), frame,
+                       TRUE, TRUE);
+      gtk_widget_show (frame);
+
+      scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+      gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
+      gtk_widget_show (scrolled_win);
+
+      layer_list = animation_storyboard_new (ANIMATION_ANIMATIC (animation));
+      gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+                                             layer_list);
+
+      gtk_widget_show (layer_list);
+    }
 
   /* Animation. */
   g_signal_connect (priv->animation, "proxy",
@@ -1281,7 +1276,6 @@ animation_dialog_save_settings (AnimationDialog *dialog)
   CachedSettings          cached_settings;
 
   /* First saving in cache for any image. */
-  cached_settings.disposal  = animation_get_disposal (priv->animation);
   cached_settings.framerate = animation_get_framerate (priv->animation);
 
   gimp_set_data (PLUG_IN_PROC, &cached_settings, sizeof (&cached_settings));
@@ -1291,25 +1285,6 @@ animation_dialog_save_settings (AnimationDialog *dialog)
    * current state, do not resave them.
    * This prevents setting the image in a dirty state while it stayed
    * the same. */
-  old_parasite = gimp_image_get_parasite (priv->image_id,
-                                          PLUG_IN_PROC "/frame-disposal");
-  if (! old_parasite ||
-      *(DisposeType *) gimp_parasite_data (old_parasite) != cached_settings.disposal)
-    {
-      GimpParasite *parasite;
-
-      gimp_image_undo_group_start (priv->image_id);
-      undo_step_started = TRUE;
-
-      parasite = gimp_parasite_new (PLUG_IN_PROC "/frame-disposal",
-                                    GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
-                                    sizeof (cached_settings.disposal),
-                                    &cached_settings.disposal);
-      gimp_image_attach_parasite (priv->image_id, parasite);
-      gimp_parasite_free (parasite);
-    }
-  gimp_parasite_free (old_parasite);
-
   old_parasite = gimp_image_get_parasite (priv->image_id, PLUG_IN_PROC "/framerate");
   if (! old_parasite ||
       *(gdouble *) gimp_parasite_data (old_parasite) != cached_settings.framerate)
@@ -1416,38 +1391,6 @@ help_callback (GtkAction           *action,
                AnimationDialog *dialog)
 {
   gimp_standard_help_func (PLUG_IN_PROC, dialog);
-}
-
-/*
- * Callback emitted when the user changes the disposal in UI.
- */
-static void
-disposalcombo_changed (GtkWidget       *combo,
-                       AnimationDialog *dialog)
-{
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  Animation              *animation;
-  DisposeType             disposal;
-
-  disposal = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
-
-  if (! priv->animation ||
-      animation_get_disposal (priv->animation) != disposal)
-    {
-      gdouble proxy;
-
-      if (priv->animation &&
-          animation_is_playing (priv->animation))
-        animation_stop (priv->animation);
-
-      /* Keep same proxy ratio as previously. */
-      proxy = animation_get_proxy (priv->animation);
-
-      animation = animation_new (priv->image_id, disposal);
-      animation_dialog_set_animation (dialog,
-                                      animation);
-      animation_load (animation, proxy);
-    }
 }
 
 /*
@@ -1971,6 +1914,36 @@ show_loading_progress (Animation       *animation,
 }
 
 static void
+animation_update_progress (Animation      *animation,
+                           gint            first_frame,
+                           gint            num_frames,
+                           gint            playback_start,
+                           gint            playback_stop,
+                           AnimationDialog *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  gint frame_spin_size;
+  gint last_frame = num_frames + first_frame - 1;
+
+  frame_spin_size = (gint) (log10 (last_frame - (last_frame % 10))) + 1;
+  gtk_entry_set_width_chars (GTK_ENTRY (priv->startframe_spin), frame_spin_size);
+  gtk_entry_set_width_chars (GTK_ENTRY (priv->endframe_spin), frame_spin_size);
+
+  gtk_adjustment_configure (gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->startframe_spin)),
+                            playback_start,
+                            first_frame,
+                            last_frame,
+                            1.0, 5.0, 0.0);
+  gtk_adjustment_configure (gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->endframe_spin)),
+                            playback_stop,
+                            playback_start,
+                            last_frame,
+                            1.0, 5.0, 0.0);
+
+  update_ui_sensitivity (dialog);
+}
+
+static void
 block_ui (Animation       *animation,
           AnimationDialog *dialog)
 {
@@ -1998,27 +1971,12 @@ unblock_ui (Animation      *animation,
             gint            preview_height,
             AnimationDialog *dialog)
 {
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  gint frame_spin_size;
-  gint last_frame = num_frames + first_frame - 1;
-
-  frame_spin_size = (gint) (log10 (last_frame - (last_frame % 10))) + 1;
-  gtk_entry_set_width_chars (GTK_ENTRY (priv->startframe_spin), frame_spin_size);
-  gtk_entry_set_width_chars (GTK_ENTRY (priv->endframe_spin), frame_spin_size);
-
-  gtk_adjustment_configure (gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->startframe_spin)),
-                            playback_start,
-                            first_frame,
-                            last_frame,
-                            1.0, 5.0, 0.0);
-  gtk_adjustment_configure (gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->endframe_spin)),
-                            playback_stop,
-                            playback_start,
-                            last_frame,
-                            1.0, 5.0, 0.0);
-
-  update_ui_sensitivity (dialog);
-
+  animation_update_progress (animation,
+                             first_frame,
+                             num_frames,
+                             playback_start,
+                             playback_stop,
+                             dialog);
   animation_dialog_refresh (dialog);
 }
 
@@ -2026,11 +1984,20 @@ static void
 playback_range_changed (Animation       *animation,
                         gint             playback_start,
                         gint             playback_stop,
+                        gint             start_pos,
+                        gint             length,
                         AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   GtkAdjustment *startframe_adjust;
   GtkAdjustment *stopframe_adjust;
+
+  animation_update_progress (animation,
+                             start_pos,
+                             length,
+                             playback_start,
+                             playback_stop,
+                             dialog);
 
   startframe_adjust = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->startframe_spin));
   stopframe_adjust  = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->endframe_spin));
@@ -2049,6 +2016,8 @@ playback_range_changed (Animation       *animation,
   g_signal_handlers_unblock_by_func (stopframe_adjust,
                                      G_CALLBACK (endframe_changed),
                                      dialog);
+
+  show_playing_progress (dialog);
 }
 
 static void
@@ -2261,7 +2230,7 @@ da_size_callback (GtkWidget       *drawing_area,
                            allocation->height);
       repaint_da (priv->drawing_area, NULL, dialog);
     }
-  else 
+  else
     {
       /* Update the zoom information. */
       AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
@@ -2590,7 +2559,9 @@ progress_button (GtkWidget       *widget,
       gtk_widget_get_allocation (widget, &allocation);
 
       goto_frame = animation_get_start_position (priv->animation) +
-                  (gint) (event->x / (allocation.width / animation_get_length (priv->animation)));
+        (gint) (event->x /
+                ((gdouble) allocation.width /
+                 (gdouble) animation_get_length (priv->animation)));
 
       animation_jump (priv->animation, goto_frame);
     }
@@ -2610,7 +2581,9 @@ progress_entered (GtkWidget        *widget,
   gtk_widget_get_allocation (widget, &allocation);
 
   goto_frame = animation_get_start_position (priv->animation) +
-               (gint) (event->x / (allocation.width / animation_get_length (priv->animation)));
+               (gint) (event->x /
+                       ((gdouble) allocation.width /
+                        (gdouble) animation_get_length (priv->animation)));
 
   show_goto_progress (dialog, goto_frame);
 
@@ -2629,7 +2602,9 @@ progress_motion (GtkWidget       *widget,
   gtk_widget_get_allocation (widget, &allocation);
 
   goto_frame = animation_get_start_position (priv->animation) +
-               (gint) (event->x / (allocation.width / animation_get_length (priv->animation)));
+               (gint) (event->x /
+                       ((gdouble) allocation.width /
+                        (gdouble) animation_get_length (priv->animation)));
 
   show_goto_progress (dialog, goto_frame);
 

@@ -45,10 +45,12 @@ LDADD = \
 animation_play_SOURCES = \
 	core/animation.h				\
 	core/animation.c				\
-	core/animationlegacy.h				\
-	core/animationlegacy.c				\
+	core/animationanimatic.h		\
+	core/animationanimatic.c		\
 	widgets/animation-dialog.h		\
 	widgets/animation-dialog.c		\
+	widgets/animation-storyboard.h	\
+	widgets/animation-storyboard.c	\
 	animation-utils.h				\
 	animation-utils.c				\
 	animation-play.c
