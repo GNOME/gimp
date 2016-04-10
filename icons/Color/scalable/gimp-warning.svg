@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -14,7 +13,7 @@
    height="16.000025"
    id="svg2"
    viewBox="0 0 16.000446 16.000025"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.91+devel r"
    sodipodi:docname="gimp-warning.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -25,17 +24,21 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="640"
-     inkscape:window-height="480"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
      id="namedview1700"
-     showgrid="false"
-     inkscape:zoom="14.749977"
-     inkscape:cx="-367.08897"
-     inkscape:cy="99.999994"
+     showgrid="true"
+     inkscape:zoom="41.719235"
+     inkscape:cx="4.4860124"
+     inkscape:cy="4.2620797"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg2" />
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3964" />
+  </sodipodi:namedview>
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -55,30 +58,6 @@
   </metadata>
   <defs
      id="defs7386">
-    <linearGradient
-       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
-       osb:paint="solid"
-       id="linearGradient19282">
-      <stop
-         stop-color="#b4b4b4"
-         id="stop19284" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="gradient"
-       x1="231.55"
-       x2="320.70001"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient6057"
-       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
-      <stop
-         stop-color="#a11f7c"
-         id="stop6053" />
-      <stop
-         stop-opacity="0.984"
-         stop-color="#541f31"
-         offset="1"
-         id="stop6055" />
-    </linearGradient>
     <linearGradient
        gradientTransform="translate(601.21892,446.11061)"
        gradientUnits="userSpaceOnUse"
@@ -123,14 +102,6 @@
          offset="1"
          style="stop-color:#ffffff;stop-opacity:0"
          id="stop11227" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient5487">
-      <stop
-         id="stop5485"
-         offset="0"
-         style="stop-color:#888a85;stop-opacity:1;" />
     </linearGradient>
   </defs>
   <g
