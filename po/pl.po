@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-09 13:32+0200\n"
-"PO-Revision-Date: 2016-04-09 13:33+0200\n"
+"POT-Creation-Date: 2016-04-10 20:49+0200\n"
+"PO-Revision-Date: 2016-04-10 20:50+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -5339,7 +5339,7 @@ msgstr "Zamienia zaznaczenie na obramowanie"
 
 #: ../app/actions/select-actions.c:105
 msgctxt "select-action"
-msgid "Re_move holes"
+msgid "Re_move Holes"
 msgstr "_Usuń luki"
 
 #: ../app/actions/select-actions.c:106
@@ -8941,17 +8941,17 @@ msgstr "Nie można wypełniać na obszarze pustego kanału."
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1772
+#: ../app/core/gimpchannel.c:1769
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1826
+#: ../app/core/gimpchannel.c:1823
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1923 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1920 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
