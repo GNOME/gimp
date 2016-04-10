@@ -29,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.627418"
-     inkscape:cx="-3.2950244"
-     inkscape:cy="14.628924"
+     inkscape:cx="10.257461"
+     inkscape:cy="21.699991"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -50,11 +50,11 @@
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
      showborder="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="409"
+     inkscape:window-y="39"
+     inkscape:window-maximized="0"
      inkscape:snap-global="false"
      showguides="true">
     <inkscape:grid
@@ -104,12 +104,12 @@
            x="0"
            y="1028.3622" />
         <rect
-           style="opacity:0.5;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:1.24474406;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+           style="opacity:0.5;fill:#d3d7cf;fill-opacity:1;stroke:#d3d7cf;stroke-width:1.24474406;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
            id="rect4026-3"
-           width="20"
-           height="5"
-           x="2"
-           y="1030.3622" />
+           width="20.486135"
+           height="5.7512398"
+           x="1.7790291"
+           y="1029.9645" />
         <rect
            style="opacity:0.5;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.91469634;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
            id="rect4026-3-2"
@@ -124,8 +124,8 @@
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="ccccc" />
         <path
-           style="opacity:0.5;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:1.17188776;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-           d="m 12,1051.3622 v -6.8182 l 5,-8.1818 v 15 z"
+           style="opacity:0.5;fill:#d3d7cf;fill-opacity:1;stroke:#d3d7cf;stroke-width:1.17188776;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+           d="m 11.779029,1050.8319 -0.04419,-6.2437 5.53033,-8.4028 -4e-6,14.6465 z"
            id="rect4026-8-5"
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="ccccc" />

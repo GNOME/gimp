@@ -71,7 +71,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="16"
-     inkscape:cx="-5.416016"
+     inkscape:cx="-24.072266"
      inkscape:cy="14.628924"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -94,8 +94,8 @@
      showborder="false"
      inkscape:window-width="1440"
      inkscape:window-height="752"
-     inkscape:window-x="486"
-     inkscape:window-y="365"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:snap-global="false">
     <inkscape:grid
@@ -125,7 +125,8 @@
      id="layer1"
      transform="translate(0,-1028.3622)">
     <g
-       id="g11067">
+       id="g11067"
+       transform="matrix(0.99801205,0,0,0.99999904,4.9638691e-4,9.987486e-4)">
       <rect
          y="1028.8623"
          x="0.50006986"

@@ -53,7 +53,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.627416"
-     inkscape:cx="-5.7315175"
+     inkscape:cx="-18.923479"
      inkscape:cy="5.3167397"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -108,7 +108,8 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <g
-       id="g4369">
+       id="g4369"
+       transform="matrix(0.99805039,0,0,0.99805286,0.03118855,2.0179504)">
       <rect
          y="1037.7817"
          x="0.36080682"

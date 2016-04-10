@@ -22,10 +22,10 @@
    viewBox="0 0 16 16">
   <sodipodi:namedview
      inkscape:cy="8.6335628"
-     inkscape:cx="-1.8091372"
+     inkscape:cx="0.33606768"
      inkscape:zoom="28.65233"
-     inkscape:window-height="752"
-     inkscape:window-width="1440"
+     inkscape:window-height="1016"
+     inkscape:window-width="1920"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="0.17254902"
@@ -40,7 +40,7 @@
      width="16px"
      height="16px"
      showgrid="true"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:document-units="px">
     <inkscape:grid
        type="xygrid"
@@ -120,7 +120,7 @@
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccccccc" />
       <path
-         style="display:inline;opacity:1;fill:#3465a4;fill-opacity:1;stroke:#555753;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1"
+         style="display:inline;opacity:1;fill:#729fcf;fill-opacity:1;stroke:#555753;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1"
          d="m 11.852765,11.042532 h 2 v -6.9999999 -2 H 4.8527647 v 2 h 7.0000003 z"
          id="path4160"
          inkscape:connector-curvature="0"
@@ -131,14 +131,14 @@
          height="2"
          width="2"
          id="rect4166"
-         style="display:inline;opacity:1;fill:#3465a4;fill-opacity:1;stroke:#555753;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1" />
+         style="display:inline;opacity:1;fill:#729fcf;fill-opacity:1;stroke:#555753;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1" />
       <rect
          y="14.042532"
          x="11.852764"
          height="2"
          width="2"
          id="rect4168"
-         style="display:inline;opacity:1;fill:#3465a4;fill-opacity:1;stroke:#555753;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1" />
+         style="display:inline;opacity:1;fill:#729fcf;fill-opacity:1;stroke:#555753;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1;stroke-opacity:1" />
     </g>
   </g>
 </svg>

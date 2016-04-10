@@ -10,18 +10,28 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="16"
-   height="16"
-   viewBox="0 0 16 16"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-levels.svg"
+   sodipodi:docname="gimp-tool-levels-24.svg"
    inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
    inkscape:export-xdpi="98.181816"
    inkscape:export-ydpi="98.181816">
   <defs
      id="defs30573">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3950"
+       id="linearGradient3952"
+       x1="3.2986684"
+       y1="1048.0988"
+       x2="19.242971"
+       y2="1048.0988"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0073616,0,0,1.0227088,-2.3712764,-22.704243)" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient3950">
@@ -34,16 +44,6 @@
          offset="1"
          id="stop3948" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3950"
-       id="linearGradient3952"
-       x1="3.2986684"
-       y1="1048.0987"
-       x2="19.242971"
-       y2="1048.0987"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0073616,0,0,1.0227088,-2.3712764,-22.704243)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -52,9 +52,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="37.911892"
-     inkscape:cx="4.671724"
-     inkscape:cy="6.9385257"
+     inkscape:zoom="16"
+     inkscape:cx="-5.416016"
+     inkscape:cy="14.628924"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -74,16 +74,15 @@
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
      showborder="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
-     inkscape:snap-global="false"
-     showguides="true">
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="283"
+     inkscape:window-y="153"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="false">
     <inkscape:grid
        type="xygrid"
-       id="grid3961" />
+       id="grid4369" />
   </sodipodi:namedview>
   <metadata
      id="metadata30576">
@@ -93,7 +92,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -106,10 +105,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1036.3622)">
+     transform="translate(0,-1028.3622)">
     <g
-       id="g4912">
+       id="g6853">
       <g
+         transform="matrix(1.5,0,0,1.4999645,0,-526.14392)"
          id="g4025">
         <g
            id="g10052"
@@ -141,9 +141,9 @@
                  inkscape:rounded="0"
                  inkscape:randomized="0"
                  d="m -9.0839653,1041.3845 -1.6835687,-1.0424 -1.683568,-1.0423 1.744472,-0.9369 1.7444715,-0.9368 -0.060903,1.9792 z"
-                 inkscape:transform-center-x="0.24099411"
-                 inkscape:transform-center-y="-1.0025234"
-                 transform="matrix(0.73866688,-0.38084261,0.44854712,0.62036354,-455.72963,400.4501)" />
+                 inkscape:transform-center-x="0.24106246"
+                 inkscape:transform-center-y="-1.0022868"
+                 transform="matrix(0.73891877,-0.3807533,0.44870008,0.62021805,-455.88582,400.60241)" />
             </g>
           </g>
         </g>
@@ -155,8 +155,8 @@
            id="rect3966-7"
            style="opacity:1;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:0.67533737;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
         <path
-           style="fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:1.38743985"
-           d="m 1,1040.1122 1.4,-1.3749 v 6.8749 l 1.4,-2.7501 1.4,2.7501 v -5.5 h 1.3999997 v 1.375 l 1.3999999,1.3749 v 1.3751 l 1.3999998,1.375 1.3999996,-1.375 v -2.75 l 1.399999,1.3749 v 0 -5.4999 l 1.400003,1.3751 v 2.7499 L 15,1042.8621 v 5.5001 H 1 Z"
+           style="fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:1.44146287"
+           d="m 0.66666667,1039.862 1.46666673,-1.4166 v 7.0834 L 3.6,1042.6953 l 1.4666667,2.8335 v -5.6668 h 1.4666664 v 1.4167 l 1.4666665,1.4166 v 1.4168 l 1.4666665,1.4167 1.4666669,-1.4167 v -2.8334 l 1.466665,1.4166 v 0 -5.6667 l 1.46667,1.4168 v 2.8333 l 1.466666,1.4166 v 5.6669 H 0.66666667 Z"
            id="path5209"
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="cccccccccccccccccccccc" />
@@ -175,9 +175,9 @@
            inkscape:rounded="0"
            inkscape:randomized="0"
            d="m -9.0839653,1041.3845 -1.6835687,-1.0424 -1.683568,-1.0423 1.744472,-0.9369 1.7444715,-0.9368 -0.060903,1.9792 z"
-           inkscape:transform-center-x="0.24104449"
-           inkscape:transform-center-y="-0.99984696"
-           transform="matrix(0.73598715,-0.38073026,0.44691988,0.62018054,-449.02498,402.80802)" />
+           inkscape:transform-center-x="0.2410701"
+           inkscape:transform-center-y="-0.99983053"
+           transform="matrix(0.73605553,-0.38072705,0.4469614,0.62017532,-449.06727,402.81348)" />
         <path
            sodipodi:type="star"
            style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ce5c00;stroke-width:0.68503547;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -193,9 +193,9 @@
            inkscape:rounded="0"
            inkscape:randomized="0"
            d="m -9.0839653,1041.3845 -1.6835687,-1.0424 -1.683568,-1.0423 1.744472,-0.9369 1.7444715,-0.9368 -0.060903,1.9792 z"
-           inkscape:transform-center-x="0.24104449"
-           inkscape:transform-center-y="-0.99984696"
-           transform="matrix(0.73598715,-0.38073026,0.44691988,0.62018054,-443.02498,402.80802)" />
+           inkscape:transform-center-x="0.2410701"
+           inkscape:transform-center-y="-0.99983053"
+           transform="matrix(0.73605553,-0.38072705,0.4469614,0.62017532,-443.06727,402.81348)" />
       </g>
     </g>
   </g>

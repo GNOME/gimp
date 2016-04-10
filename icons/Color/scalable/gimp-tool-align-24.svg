@@ -170,7 +170,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -185,7 +185,8 @@
      id="layer1"
      transform="translate(0,-1028.3622)">
     <g
-       id="g4493">
+       id="g4493"
+       transform="matrix(0.99992933,0,0,-1,0,2080.7244)">
       <rect
          y="1028.3622"
          x="5.7637139e-06"
