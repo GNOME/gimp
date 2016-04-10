@@ -1596,13 +1596,10 @@ static void
 gimp_channel_real_flood (GimpChannel *channel,
                          gboolean     push_undo)
 {
-  gint x1, y1, x2, y2;
+  gint x, y, width, height;
 
-  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (channel), &x, &y, &width, &height))
     return;
-
-  x2 += x1;
-  y2 += y1;
 
   if (gimp_channel_is_empty (channel))
     return;
@@ -1614,9 +1611,9 @@ gimp_channel_real_flood (GimpChannel *channel,
   gimp_gegl_apply_flood (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                          NULL, NULL,
                          gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                         GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+                         GEGL_RECTANGLE (x, y, width, height));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (GIMP_DRAWABLE (channel), x, y, width, height);
 }
 
 
