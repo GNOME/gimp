@@ -242,6 +242,7 @@ scalable_images = \
 	scalable/gimp-zoom-follow-window.svg
 
 vector24_images = \
+	24/gimp-gegl.svg				\
 	24/gimp-tool-airbrush.svg				\
 	24/gimp-tool-align.svg					\
 	24/gimp-tool-blend.svg					\
