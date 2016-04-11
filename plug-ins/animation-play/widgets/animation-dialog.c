@@ -2066,7 +2066,7 @@ framerate_changed (Animation        *animation,
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   gchar                  *text;
 
-  g_signal_handlers_block_by_func (priv->fpscombo, 
+  g_signal_handlers_block_by_func (priv->fpscombo,
                                    G_CALLBACK (fpscombo_changed),
                                    dialog);
   g_signal_handlers_block_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))),
@@ -2075,7 +2075,7 @@ framerate_changed (Animation        *animation,
   text = g_strdup_printf  (_("%g fps"), fps);
   gtk_entry_set_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))), text);
   g_free (text);
-  g_signal_handlers_unblock_by_func (priv->fpscombo, 
+  g_signal_handlers_unblock_by_func (priv->fpscombo,
                                      G_CALLBACK (fpscombo_changed),
                                      dialog);
   g_signal_handlers_unblock_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))),
@@ -2089,12 +2089,7 @@ low_framerate_cb (Animation       *animation,
                   AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GdkColor                gdk_red;
   gchar                  *text;
-
-  gdk_red.red = 65535;
-  gdk_red.green = 0;
-  gdk_red.blue = 0;
 
   g_signal_handlers_block_by_func (priv->fpscombo,
                                    G_CALLBACK (fpscombo_changed),
@@ -2102,17 +2097,35 @@ low_framerate_cb (Animation       *animation,
   g_signal_handlers_block_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))),
                                    G_CALLBACK (fpscombo_activated),
                                    dialog);
-  gtk_widget_modify_text (gtk_bin_get_child (GTK_BIN (priv->fpscombo)), GTK_STATE_NORMAL, &gdk_red);
-  text = g_strdup_printf  (_("%g fps"), real_framerate);
-  gtk_entry_set_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))), text);
+  if (real_framerate >= animation_get_framerate (priv->animation))
+    {
+      /* Reset to normal color. */
+      gtk_widget_modify_text (gtk_bin_get_child (GTK_BIN (priv->fpscombo)), GTK_STATE_NORMAL, NULL);
+      gimp_help_set_help_data (priv->fpscombo, _("Frame Rate"), NULL);
+
+      text = g_strdup_printf  (_("%g fps"), real_framerate);
+      gtk_entry_set_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))), text);
+    }
+  else
+    {
+      GdkColor gdk_red;
+
+      gdk_red.red = 65535;
+      gdk_red.green = 0;
+      gdk_red.blue = 0;
+
+      gtk_widget_modify_text (gtk_bin_get_child (GTK_BIN (priv->fpscombo)), GTK_STATE_NORMAL, &gdk_red);
+      text = g_strdup_printf  (_("%g fps"), real_framerate);
+      gtk_entry_set_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))), text);
+      gtk_widget_set_tooltip_text (priv->fpscombo,
+                                   _ ("Playback is too slow. We would drop a frame if frame dropping were implemented."));
+    }
   g_signal_handlers_unblock_by_func (priv->fpscombo,
                                      G_CALLBACK (fpscombo_changed),
                                      dialog);
   g_signal_handlers_unblock_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))),
                                      G_CALLBACK (fpscombo_activated),
                                      dialog);
-  gtk_widget_set_tooltip_text (priv->fpscombo,
-                               _ ("Playback is too slow. We would drop a frame if frame dropping were implemented."));
 }
 
 /* Rendering Functions */

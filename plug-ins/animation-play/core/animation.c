@@ -279,9 +279,8 @@ animation_class_init (AnimationClass *klass)
    * @actual_fps: the current playback framerate in fps.
    *
    * The ::low-framerate signal is emitted when the playback framerate
-   * is lower than expected.
-   * The @actual_fps is not necessarily meaningful for animation with
-   * various frame duration.
+   * is lower than expected. It is also emitted once when the framerate
+   * comes back to acceptable rate.
    */
   animation_signals[LOW_FRAMERATE] =
     g_signal_new ("low-framerate-playback",
@@ -791,6 +790,12 @@ animation_advance_frame_callback (Animation *animation)
     }
   else
     {
+      if (prev_low_framerate)
+        {
+          /* Let's reset framerate warning. */
+          g_signal_emit (animation, animation_signals[LOW_FRAMERATE], 0,
+                         animation_get_framerate (animation));
+        }
       prev_low_framerate = FALSE;
     }
   priv->frames_played++;
