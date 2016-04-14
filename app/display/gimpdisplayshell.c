@@ -584,6 +584,10 @@ gimp_display_shell_constructed (GObject *object)
   gimp_devices_add_widget (shell->display->gimp, shell->hrule);
   gimp_devices_add_widget (shell->display->gimp, shell->vrule);
 
+  g_signal_connect (shell->canvas, "grab-notify",
+                    G_CALLBACK (gimp_display_shell_canvas_grab_notify),
+                    shell);
+
   g_signal_connect (shell->canvas, "realize",
                     G_CALLBACK (gimp_display_shell_canvas_realize),
                     shell);

@@ -649,7 +649,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
-        state &= ~gimp_display_shell_key_to_state (bevent->button);
+        state &= ~gimp_display_shell_button_to_state (bevent->button);
 
         if (bevent->button == 1)
           {
@@ -1234,6 +1234,36 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 }
 
 void
+gimp_display_shell_canvas_grab_notify (GtkWidget        *canvas,
+                                       gboolean          was_grabbed,
+                                       GimpDisplayShell *shell)
+{
+  GimpDisplay *display;
+  GimpImage   *image;
+  Gimp        *gimp;
+
+  /*  are we in destruction?  */
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return;
+
+  display = shell->display;
+  gimp    = gimp_display_get_gimp (display);
+  image   = gimp_display_get_image (display);
+
+  if (! image)
+    return;
+
+  GIMP_LOG (TOOL_EVENTS, "grab_notify (display %p): was_grabbed = %s",
+            display, was_grabbed ? "TRUE" : "FALSE");
+
+  if (! was_grabbed)
+    {
+      if (! gimp_image_is_empty (image))
+        tool_manager_modifier_state_active (gimp, 0, display);
+    }
+}
+
+void
 gimp_display_shell_buffer_stroke (GimpMotionBuffer *buffer,
                                   const GimpCoords *coords,
                                   guint32           time,
@@ -1359,17 +1389,21 @@ gimp_display_shell_key_to_state (gint key)
     case GDK_KEY_Alt_L:
     case GDK_KEY_Alt_R:
       return GDK_MOD1_MASK;
+
     case GDK_KEY_Shift_L:
     case GDK_KEY_Shift_R:
       return GDK_SHIFT_MASK;
+
     case GDK_KEY_Control_L:
     case GDK_KEY_Control_R:
       return GDK_CONTROL_MASK;
+
 #ifdef GDK_WINDOWING_QUARTZ
     case GDK_KEY_Meta_L:
     case GDK_KEY_Meta_R:
       return GDK_MOD2_MASK;
 #endif
+
     default:
       return 0;
     }
