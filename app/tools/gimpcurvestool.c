@@ -324,42 +324,48 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
                               gboolean          proximity,
                               GimpDisplay      *display)
 {
-  GimpColorPickMode  mode;
-  gchar             *status      = NULL;
-  GdkModifierType    extend_mask = gimp_get_extend_selection_mask ();
-  GdkModifierType    toggle_mask = gimp_get_toggle_behavior_mask ();
-
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
-                                               display);
-
-  gimp_tool_pop_status (tool, display);
-
-  if (state & extend_mask)
+  if (gimp_image_map_tool_on_guide (GIMP_IMAGE_MAP_TOOL (tool),
+                                    coords, display))
     {
-      mode   = GIMP_COLOR_PICK_MODE_PALETTE;
-      status = g_strdup (_("Click to add a control point"));
-    }
-  else if (state & toggle_mask)
-    {
-      mode   = GIMP_COLOR_PICK_MODE_PALETTE;
-      status = g_strdup (_("Click to add control points to all channels"));
+      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                                   display);
     }
   else
     {
-      mode   = GIMP_COLOR_PICK_MODE_NONE;
-      status = gimp_suggest_modifiers (_("Click to locate on curve"),
-                                       (extend_mask | toggle_mask) & ~state,
-                                       _("%s: add control point"),
-                                       _("%s: add control points to all channels"),
-                                       NULL);
+      GimpColorPickMode  mode;
+      gchar             *status      = NULL;
+      GdkModifierType    extend_mask = gimp_get_extend_selection_mask ();
+      GdkModifierType    toggle_mask = gimp_get_toggle_behavior_mask ();
+
+      gimp_tool_pop_status (tool, display);
+
+      if (state & extend_mask)
+        {
+          mode   = GIMP_COLOR_PICK_MODE_PALETTE;
+          status = g_strdup (_("Click to add a control point"));
+        }
+      else if (state & toggle_mask)
+        {
+          mode   = GIMP_COLOR_PICK_MODE_PALETTE;
+          status = g_strdup (_("Click to add control points to all channels"));
+        }
+      else
+        {
+          mode   = GIMP_COLOR_PICK_MODE_NONE;
+          status = gimp_suggest_modifiers (_("Click to locate on curve"),
+                                           (extend_mask | toggle_mask) & ~state,
+                                           _("%s: add control point"),
+                                           _("%s: add control points to all channels"),
+                                           NULL);
+        }
+
+      GIMP_COLOR_TOOL (tool)->pick_mode = mode;
+
+      if (proximity)
+        gimp_tool_push_status (tool, display, "%s", status);
+
+      g_free (status);
     }
-
-  GIMP_COLOR_TOOL (tool)->pick_mode = mode;
-
-  if (proximity)
-    gimp_tool_push_status (tool, display, "%s", status);
-
-  g_free (status);
 }
 
 static void

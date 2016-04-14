@@ -107,15 +107,17 @@ struct _GimpImageMapToolClass
 
 GType       gimp_image_map_tool_get_type         (void) G_GNUC_CONST;
 
-void        gimp_image_map_tool_preview          (GimpImageMapTool *im_tool);
-
 void        gimp_image_map_tool_get_operation    (GimpImageMapTool *im_tool);
+void        gimp_image_map_tool_preview          (GimpImageMapTool *im_tool);
 
 void        gimp_image_map_tool_edit_as          (GimpImageMapTool *im_tool,
                                                   const gchar      *new_tool_id,
                                                   GimpConfig       *config);
 
-/* accessors for derived classes */
+gboolean    gimp_image_map_tool_on_guide         (GimpImageMapTool *im_tool,
+                                                  const GimpCoords *coords,
+                                                  GimpDisplay      *display);
+
 GtkWidget * gimp_image_map_tool_dialog_get_vbox  (GimpImageMapTool *im_tool);
 
 GtkWidget * gimp_image_map_tool_add_color_picker (GimpImageMapTool *im_tool,
