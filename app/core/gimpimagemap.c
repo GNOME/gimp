@@ -64,8 +64,8 @@ struct _GimpImageMap
 
   GimpImageMapRegion    region;
   gboolean              preview_enabled;
-  GimpOrientationType   preview_orientation;
-  gdouble               preview_percent;
+  GimpAlignmentType     preview_alignment;
+  gdouble               preview_position;
   gdouble               opacity;
   GimpLayerModeEffects  paint_mode;
   gboolean              gamma_hack;
@@ -87,8 +87,8 @@ static void       gimp_image_map_finalize        (GObject             *object);
 static void       gimp_image_map_sync_region     (GimpImageMap        *image_map);
 static void       gimp_image_map_sync_preview    (GimpImageMap        *image_map,
                                                   gboolean             old_enabled,
-                                                  GimpOrientationType  old_orientation,
-                                                  gdouble              old_percent);
+                                                  GimpAlignmentType    old_alignment,
+                                                  gdouble              old_position);
 static void       gimp_image_map_sync_mode       (GimpImageMap        *image_map);
 static void       gimp_image_map_sync_affect     (GimpImageMap        *image_map);
 static void       gimp_image_map_sync_gamma_hack (GimpImageMap        *image_map);
@@ -133,11 +133,11 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
 static void
 gimp_image_map_init (GimpImageMap *image_map)
 {
-  image_map->region              = GIMP_IMAGE_MAP_REGION_SELECTION;
-  image_map->preview_orientation = GIMP_ORIENTATION_HORIZONTAL;
-  image_map->preview_percent     = 1.0;
-  image_map->opacity             = GIMP_OPACITY_OPAQUE;
-  image_map->paint_mode          = GIMP_REPLACE_MODE;
+  image_map->region            = GIMP_IMAGE_MAP_REGION_SELECTION;
+  image_map->preview_alignment = GIMP_ALIGN_LEFT;
+  image_map->preview_position  = 1.0;
+  image_map->opacity           = GIMP_OPACITY_OPAQUE;
+  image_map->paint_mode        = GIMP_REPLACE_MODE;
 }
 
 static void
@@ -241,27 +241,31 @@ gimp_image_map_set_region (GimpImageMap       *image_map,
 void
 gimp_image_map_set_preview (GimpImageMap        *image_map,
                             gboolean             enabled,
-                            GimpOrientationType  orientation,
-                            gdouble              percent)
+                            GimpAlignmentType    alignment,
+                            gdouble              position)
 {
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
+  g_return_if_fail (alignment == GIMP_ALIGN_LEFT  ||
+                    alignment == GIMP_ALIGN_RIGHT ||
+                    alignment == GIMP_ALIGN_TOP   ||
+                    alignment == GIMP_ALIGN_BOTTOM);
 
-  percent = CLAMP (percent, 0.0, 1.0);
+  position = CLAMP (position, 0.0, 1.0);
 
-  if (enabled     != image_map->preview_enabled     ||
-      orientation != image_map->preview_orientation ||
-      percent     != image_map->preview_percent)
+  if (enabled   != image_map->preview_enabled   ||
+      alignment != image_map->preview_alignment ||
+      position  != image_map->preview_position)
     {
-      gboolean            old_enabled     = image_map->preview_enabled;
-      GimpOrientationType old_orientation = image_map->preview_orientation;
-      gdouble             old_percent     = image_map->preview_percent;
+      gboolean          old_enabled   = image_map->preview_enabled;
+      GimpAlignmentType old_alignment = image_map->preview_alignment;
+      gdouble           old_position  = image_map->preview_position;
 
-      image_map->preview_enabled     = enabled;
-      image_map->preview_orientation = orientation;
-      image_map->preview_percent     = percent;
+      image_map->preview_enabled   = enabled;
+      image_map->preview_alignment = alignment;
+      image_map->preview_position  = position;
 
       gimp_image_map_sync_preview (image_map,
-                                   old_enabled, old_orientation, old_percent);
+                                   old_enabled, old_alignment, old_position);
     }
 }
 
@@ -383,8 +387,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       gimp_image_map_sync_region (image_map);
       gimp_image_map_sync_preview (image_map,
                                    image_map->preview_enabled,
-                                   image_map->preview_orientation,
-                                   image_map->preview_percent);
+                                   image_map->preview_alignment,
+                                   image_map->preview_position);
       gimp_image_map_sync_mode (image_map);
       gimp_image_map_sync_gamma_hack (image_map);
 
@@ -518,31 +522,56 @@ gimp_image_map_sync_region (GimpImageMap *image_map)
 }
 
 static void
-gimp_image_map_get_preview_rect (GimpImageMap        *image_map,
-                                 gboolean             enabled,
-                                 GimpOrientationType  orientation,
-                                 gdouble              percent,
-                                 GeglRectangle       *rect)
+gimp_image_map_get_preview_rect (GimpImageMap      *image_map,
+                                 gboolean           enabled,
+                                 GimpAlignmentType  alignment,
+                                 gdouble            position,
+                                 GeglRectangle     *rect)
 {
+  gint width;
+  gint height;
+
   rect->x      = 0;
   rect->y      = 0;
   rect->width  = gimp_item_get_width  (GIMP_ITEM (image_map->drawable));
   rect->height = gimp_item_get_height (GIMP_ITEM (image_map->drawable));
 
+  width  = rect->width;
+  height = rect->height;
+
   if (enabled)
     {
-      if (orientation == GIMP_ORIENTATION_HORIZONTAL)
-        rect->width *= percent;
-      else
-        rect->height *= percent;
+      switch (alignment)
+        {
+        case GIMP_ALIGN_LEFT:
+          rect->width *= position;
+          break;
+
+        case GIMP_ALIGN_RIGHT:
+          rect->width *= (1.0 - position);
+          rect->x = width - rect->width;
+          break;
+
+        case GIMP_ALIGN_TOP:
+         rect->height *= position;
+         break;
+
+        case GIMP_ALIGN_BOTTOM:
+          rect->height *= (1.0 - position);
+         rect->y = height - rect->height;
+         break;
+
+        default:
+          g_return_if_reached ();
+        }
     }
 }
 
 static void
-gimp_image_map_sync_preview (GimpImageMap        *image_map,
-                             gboolean             old_enabled,
-                             GimpOrientationType  old_orientation,
-                             gdouble              old_percent)
+gimp_image_map_sync_preview (GimpImageMap      *image_map,
+                             gboolean           old_enabled,
+                             GimpAlignmentType  old_alignment,
+                             gdouble            old_position)
 {
   if (image_map->applicator)
     {
@@ -551,21 +580,23 @@ gimp_image_map_sync_preview (GimpImageMap        *image_map,
 
       gimp_image_map_get_preview_rect (image_map,
                                        old_enabled,
-                                       old_orientation,
-                                       old_percent,
+                                       old_alignment,
+                                       old_position,
                                        &old_rect);
 
       gimp_image_map_get_preview_rect (image_map,
                                        image_map->preview_enabled,
-                                       image_map->preview_orientation,
-                                       image_map->preview_percent,
+                                       image_map->preview_alignment,
+                                       image_map->preview_position,
                                        &new_rect);
 
       gimp_applicator_set_preview (image_map->applicator,
                                    image_map->preview_enabled,
                                    &new_rect);
 
-      if (old_rect.width  != new_rect.width ||
+      if (old_rect.x      != new_rect.x     ||
+          old_rect.y      != new_rect.y     ||
+          old_rect.width  != new_rect.width ||
           old_rect.height != new_rect.height)
         {
           cairo_region_t *region;

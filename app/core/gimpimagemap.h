@@ -58,8 +58,8 @@ void           gimp_image_map_set_region  (GimpImageMap         *image_map,
                                            GimpImageMapRegion    region);
 void           gimp_image_map_set_preview (GimpImageMap         *image_map,
                                            gboolean              enabled,
-                                           GimpOrientationType   orientation,
-                                           gdouble               percent_visible);
+                                           GimpAlignmentType     alignment,
+                                           gdouble               split_position);
 void           gimp_image_map_set_mode    (GimpImageMap         *image_map,
                                            gdouble               opacity,
                                            GimpLayerModeEffects  paint_mode);

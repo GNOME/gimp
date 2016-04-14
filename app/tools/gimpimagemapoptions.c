@@ -34,8 +34,8 @@ enum
   PROP_0,
   PROP_PREVIEW,
   PROP_PREVIEW_SPLIT,
-  PROP_PREVIEW_PERCENT,
-  PROP_PREVIEW_ORIENTATION,
+  PROP_PREVIEW_ALIGNMENT,
+  PROP_PREVIEW_POSITION,
   PROP_REGION,
   PROP_SETTINGS
 };
@@ -82,20 +82,20 @@ gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_PREVIEW_PERCENT,
-                                   g_param_spec_double ("preview-percent",
+  g_object_class_install_property (object_class, PROP_PREVIEW_ALIGNMENT,
+                                   g_param_spec_enum ("preview-alignment",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_ALIGNMENT_TYPE,
+                                                      GIMP_ALIGN_LEFT,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_PREVIEW_POSITION,
+                                   g_param_spec_double ("preview-position",
                                                         NULL, NULL,
                                                         0.0, 1.0, 0.5,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_PREVIEW_ORIENTATION,
-                                   g_param_spec_enum ("preview-orientation",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_ORIENTATION_TYPE,
-                                                      GIMP_ORIENTATION_HORIZONTAL,
-                                                      GIMP_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_REGION,
                                    g_param_spec_enum ("region",
@@ -150,12 +150,12 @@ gimp_image_map_options_set_property (GObject      *object,
       options->preview_split = g_value_get_boolean (value);
       break;
 
-    case PROP_PREVIEW_PERCENT:
-      options->preview_percent = g_value_get_double (value);
+    case PROP_PREVIEW_ALIGNMENT:
+      options->preview_alignment = g_value_get_enum (value);
       break;
 
-    case PROP_PREVIEW_ORIENTATION:
-      options->preview_orientation = g_value_get_enum (value);
+    case PROP_PREVIEW_POSITION:
+      options->preview_position = g_value_get_double (value);
       break;
 
     case PROP_REGION:
@@ -192,12 +192,12 @@ gimp_image_map_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->preview_split);
       break;
 
-    case PROP_PREVIEW_PERCENT:
-      g_value_set_double (value, options->preview_percent);
+    case PROP_PREVIEW_ALIGNMENT:
+      g_value_set_enum (value, options->preview_alignment);
       break;
 
-    case PROP_PREVIEW_ORIENTATION:
-      g_value_set_enum (value, options->preview_orientation);
+    case PROP_PREVIEW_POSITION:
+      g_value_set_double (value, options->preview_position);
       break;
 
     case PROP_REGION:

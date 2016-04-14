@@ -38,8 +38,8 @@ struct _GimpImageMapOptions
 
   gboolean            preview;
   gboolean            preview_split;
-  gdouble             preview_percent;
-  GimpOrientationType preview_orientation;
+  GimpAlignmentType   preview_alignment;
+  gdouble             preview_position;
   GimpImageMapRegion  region;
   GFile              *settings;
 };
