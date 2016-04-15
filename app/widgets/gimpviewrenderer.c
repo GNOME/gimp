@@ -43,7 +43,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
-#include "core/gimppickable.h"
 #include "core/gimptempbuf.h"
 #include "core/gimpviewable.h"
 
@@ -1260,16 +1259,21 @@ gimp_view_renderer_transform_create (GimpViewRenderer *renderer,
 {
   if (GIMP_IS_COLOR_MANAGED (renderer->viewable))
     {
-      GimpColorManaged *managed  = GIMP_COLOR_MANAGED (renderer->viewable);
-      GimpPickable     *pickable = GIMP_PICKABLE (renderer->viewable);
+      GimpColorManaged *managed = GIMP_COLOR_MANAGED (renderer->viewable);
       GimpColorProfile *profile;
+
+      if (G_UNLIKELY (renderer->context == NULL))
+        {
+          g_warning ("%s: renderer->context is NULL", G_STRFUNC);
+          return;
+        }
 
       profile = gimp_color_managed_get_color_profile (managed);
 
       if (profile)
         {
-          GimpImage       *image  = gimp_pickable_get_image (pickable);
-          GimpColorConfig *config = image->gimp->config->color_management;
+          GimpContext     *context = renderer->context;
+          GimpColorConfig *config  = context->gimp->config->color_management;
 
           renderer->profile_src_format  = gegl_buffer_get_format (src_buffer);
           renderer->profile_dest_format = gegl_buffer_get_format (dest_buffer);
