@@ -26,6 +26,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimp-memsize.h"
 #include "gimpbuffer.h"
@@ -33,35 +34,51 @@
 #include "gimptempbuf.h"
 
 
-static void          gimp_buffer_finalize         (GObject       *object);
+static void          gimp_color_managed_iface_init (GimpColorManagedInterface *iface);
 
-static gint64        gimp_buffer_get_memsize      (GimpObject    *object,
-                                                   gint64        *gui_size);
+static void          gimp_buffer_finalize          (GObject           *object);
 
-static gboolean      gimp_buffer_get_size         (GimpViewable  *viewable,
-                                                   gint          *width,
-                                                   gint          *height);
-static void          gimp_buffer_get_preview_size (GimpViewable  *viewable,
-                                                   gint           size,
-                                                   gboolean       is_popup,
-                                                   gboolean       dot_for_dot,
-                                                   gint          *popup_width,
-                                                   gint          *popup_height);
-static gboolean      gimp_buffer_get_popup_size   (GimpViewable  *viewable,
-                                                   gint           width,
-                                                   gint           height,
-                                                   gboolean       dot_for_dot,
-                                                   gint          *popup_width,
-                                                   gint          *popup_height);
-static GimpTempBuf * gimp_buffer_get_new_preview  (GimpViewable  *viewable,
-                                                   GimpContext   *context,
-                                                   gint           width,
-                                                   gint           height);
-static gchar       * gimp_buffer_get_description  (GimpViewable  *viewable,
-                                                   gchar        **tooltip);
+static gint64        gimp_buffer_get_memsize       (GimpObject        *object,
+                                                    gint64            *gui_size);
+
+static gboolean      gimp_buffer_get_size          (GimpViewable      *viewable,
+                                                    gint              *width,
+                                                    gint              *height);
+static void          gimp_buffer_get_preview_size  (GimpViewable      *viewable,
+                                                    gint               size,
+                                                    gboolean           is_popup,
+                                                    gboolean           dot_for_dot,
+                                                    gint              *popup_width,
+                                                    gint              *popup_height);
+static gboolean      gimp_buffer_get_popup_size    (GimpViewable      *viewable,
+                                                    gint               width,
+                                                    gint               height,
+                                                    gboolean           dot_for_dot,
+                                                    gint              *popup_width,
+                                                    gint              *popup_height);
+static GimpTempBuf * gimp_buffer_get_new_preview   (GimpViewable      *viewable,
+                                                    GimpContext       *context,
+                                                    gint               width,
+                                                    gint               height);
+static GdkPixbuf   * gimp_buffer_get_new_pixbuf    (GimpViewable      *viewable,
+                                                    GimpContext       *context,
+                                                    gint               width,
+                                                    gint               height);
+static gchar       * gimp_buffer_get_description   (GimpViewable      *viewable,
+                                                    gchar            **tooltip);
+
+static const guint8 *
+       gimp_buffer_color_managed_get_icc_profile   (GimpColorManaged  *managed,
+                                                    gsize             *len);
+static GimpColorProfile *
+       gimp_buffer_color_managed_get_color_profile (GimpColorManaged  *managed);
+static void
+       gimp_buffer_color_managed_profile_changed   (GimpColorManaged  *managed);
 
 
-G_DEFINE_TYPE (GimpBuffer, gimp_buffer, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE_WITH_CODE (GimpBuffer, gimp_buffer, GIMP_TYPE_VIEWABLE,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                gimp_color_managed_iface_init))
 
 #define parent_class gimp_buffer_parent_class
 
@@ -82,7 +99,16 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   viewable_class->get_preview_size  = gimp_buffer_get_preview_size;
   viewable_class->get_popup_size    = gimp_buffer_get_popup_size;
   viewable_class->get_new_preview   = gimp_buffer_get_new_preview;
+  viewable_class->get_new_pixbuf    = gimp_buffer_get_new_pixbuf;
   viewable_class->get_description   = gimp_buffer_get_description;
+}
+
+static void
+gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
+{
+  iface->get_icc_profile   = gimp_buffer_color_managed_get_icc_profile;
+  iface->get_color_profile = gimp_buffer_color_managed_get_color_profile;
+  iface->profile_changed   = gimp_buffer_color_managed_profile_changed;
 }
 
 static void
@@ -209,7 +235,8 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                                babl_format_has_alpha (format));
   else
     format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                               GIMP_PRECISION_U8_GAMMA,
+                               gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
+                                                    gimp_babl_format_get_linear (format)),
                                babl_format_has_alpha (format));
 
   preview = gimp_temp_buf_new (width, height, format);
@@ -224,6 +251,75 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
   return preview;
 }
 
+static GdkPixbuf *
+gimp_buffer_get_new_pixbuf (GimpViewable *viewable,
+                            GimpContext  *context,
+                            gint          width,
+                            gint          height)
+{
+  GimpBuffer *buffer = GIMP_BUFFER (viewable);
+  GdkPixbuf  *pixbuf;
+  gdouble     scale;
+
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+                           width, height);
+
+  scale = MIN ((gdouble) width  / (gdouble) gimp_buffer_get_width (buffer),
+               (gdouble) height / (gdouble) gimp_buffer_get_height (buffer));
+
+  if (buffer->color_profile)
+    {
+      GimpColorProfile *srgb_profile;
+      GimpTempBuf      *temp_buf;
+      GeglBuffer       *src_buf;
+      GeglBuffer       *dest_buf;
+
+      srgb_profile = gimp_color_profile_new_rgb_srgb ();
+
+      temp_buf = gimp_temp_buf_new (width, height,
+                                    gimp_buffer_get_format (buffer));
+
+      gegl_buffer_get (buffer->buffer,
+                       GEGL_RECTANGLE (0, 0, width, height),
+                       scale,
+                       gimp_temp_buf_get_format (temp_buf),
+                       gimp_temp_buf_get_data (temp_buf),
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+
+      src_buf  = gimp_temp_buf_create_buffer (temp_buf);
+      dest_buf = gimp_pixbuf_create_buffer (pixbuf);
+
+      gimp_temp_buf_unref (temp_buf);
+
+      gimp_gegl_convert_color_profile (src_buf,
+                                       GEGL_RECTANGLE (0, 0, width, height),
+                                       buffer->color_profile,
+                                       dest_buf,
+                                       GEGL_RECTANGLE (0, 0, 0, 0),
+                                       srgb_profile,
+                                       GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                       TRUE,
+                                       NULL);
+
+      g_object_unref (src_buf);
+      g_object_unref (dest_buf);
+
+      g_object_unref (srgb_profile);
+    }
+  else
+    {
+      gegl_buffer_get (buffer->buffer,
+                       GEGL_RECTANGLE (0, 0, width, height),
+                       scale,
+                       gimp_pixbuf_get_format (pixbuf),
+                       gdk_pixbuf_get_pixels (pixbuf),
+                       gdk_pixbuf_get_rowstride (pixbuf),
+                       GEGL_ABYSS_CLAMP);
+    }
+
+  return pixbuf;
+}
+
 static gchar *
 gimp_buffer_get_description (GimpViewable  *viewable,
                              gchar        **tooltip)
@@ -235,6 +331,94 @@ gimp_buffer_get_description (GimpViewable  *viewable,
                           gimp_buffer_get_width (buffer),
                           gimp_buffer_get_height (buffer));
 }
+
+static const guint8 *
+gimp_buffer_color_managed_get_icc_profile (GimpColorManaged *managed,
+                             gsize            *len)
+{
+  GimpBuffer *buffer = GIMP_BUFFER (managed);
+
+  if (buffer->color_profile)
+    return gimp_color_profile_get_icc_profile (buffer->color_profile, len);
+
+  return NULL;
+}
+
+static GimpColorProfile *
+gimp_buffer_color_managed_get_color_profile (GimpColorManaged *managed)
+{
+  GimpBuffer              *buffer              = GIMP_BUFFER (managed);
+  static GimpColorProfile *srgb_profile        = NULL;
+  static GimpColorProfile *linear_rgb_profile  = NULL;
+  static GimpColorProfile *gray_profile        = NULL;
+  static GimpColorProfile *linear_gray_profile = NULL;
+  const  Babl             *format;
+
+  if (buffer->color_profile)
+    return buffer->color_profile;
+
+  format = gimp_buffer_get_format (buffer);
+
+  if (gimp_babl_format_get_base_type (format) == GIMP_GRAY)
+    {
+      if (gimp_babl_format_get_linear (format))
+        {
+          if (! linear_gray_profile)
+            {
+              linear_gray_profile = gimp_color_profile_new_d65_gray_linear ();
+              g_object_add_weak_pointer (G_OBJECT (linear_gray_profile),
+                                         (gpointer) &linear_gray_profile);
+            }
+
+          return linear_gray_profile;
+        }
+      else
+        {
+          if (! gray_profile)
+            {
+              gray_profile = gimp_color_profile_new_d65_gray_srgb_trc ();
+              g_object_add_weak_pointer (G_OBJECT (gray_profile),
+                                         (gpointer) &gray_profile);
+            }
+
+          return gray_profile;
+        }
+    }
+  else
+    {
+      if (gimp_babl_format_get_linear (format))
+        {
+          if (! linear_rgb_profile)
+            {
+              linear_rgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
+              g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
+                                         (gpointer) &linear_rgb_profile);
+            }
+
+          return linear_rgb_profile;
+        }
+      else
+        {
+          if (! srgb_profile)
+            {
+              srgb_profile = gimp_color_profile_new_rgb_srgb ();
+              g_object_add_weak_pointer (G_OBJECT (srgb_profile),
+                                         (gpointer) &srgb_profile);
+            }
+
+          return srgb_profile;
+        }
+    }
+}
+
+static void
+gimp_buffer_color_managed_profile_changed (GimpColorManaged *managed)
+{
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (managed));
+}
+
+
+/*  public functions  */
 
 GimpBuffer *
 gimp_buffer_new (GeglBuffer    *buffer,
