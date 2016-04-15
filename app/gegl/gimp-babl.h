@@ -25,6 +25,7 @@
 void                gimp_babl_init                      (void);
 
 const gchar       * gimp_babl_format_get_description    (const Babl *format);
+GimpColorProfile  * gimp_babl_format_get_color_profile  (const Babl *format);
 
 GimpImageBaseType   gimp_babl_format_get_base_type      (const Babl *format);
 GimpComponentType   gimp_babl_format_get_component_type (const Babl *format);

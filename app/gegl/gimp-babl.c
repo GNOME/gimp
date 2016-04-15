@@ -20,7 +20,11 @@
 
 #include "config.h"
 
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimp-gegl-types.h"
 
@@ -393,6 +397,68 @@ gimp_babl_format_get_description (const Babl *babl)
 
   return g_strconcat ("ERROR: unknown Babl format ",
                       babl_get_name (babl), NULL);
+}
+
+GimpColorProfile *
+gimp_babl_format_get_color_profile (const Babl *format)
+{
+  static GimpColorProfile *srgb_profile        = NULL;
+  static GimpColorProfile *linear_rgb_profile  = NULL;
+  static GimpColorProfile *gray_profile        = NULL;
+  static GimpColorProfile *linear_gray_profile = NULL;
+
+  g_return_val_if_fail (format != NULL, NULL);
+
+  if (gimp_babl_format_get_base_type (format) == GIMP_GRAY)
+    {
+      if (gimp_babl_format_get_linear (format))
+        {
+          if (! linear_gray_profile)
+            {
+              linear_gray_profile = gimp_color_profile_new_d65_gray_linear ();
+              g_object_add_weak_pointer (G_OBJECT (linear_gray_profile),
+                                         (gpointer) &linear_gray_profile);
+            }
+
+          return linear_gray_profile;
+        }
+      else
+        {
+          if (! gray_profile)
+            {
+              gray_profile = gimp_color_profile_new_d65_gray_srgb_trc ();
+              g_object_add_weak_pointer (G_OBJECT (gray_profile),
+                                         (gpointer) &gray_profile);
+            }
+
+          return gray_profile;
+        }
+    }
+  else
+    {
+      if (gimp_babl_format_get_linear (format))
+        {
+          if (! linear_rgb_profile)
+            {
+              linear_rgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
+              g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
+                                         (gpointer) &linear_rgb_profile);
+            }
+
+          return linear_rgb_profile;
+        }
+      else
+        {
+          if (! srgb_profile)
+            {
+              srgb_profile = gimp_color_profile_new_rgb_srgb ();
+              g_object_add_weak_pointer (G_OBJECT (srgb_profile),
+                                         (gpointer) &srgb_profile);
+            }
+
+          return srgb_profile;
+        }
+    }
 }
 
 GimpImageBaseType

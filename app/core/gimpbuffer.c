@@ -347,68 +347,12 @@ gimp_buffer_color_managed_get_icc_profile (GimpColorManaged *managed,
 static GimpColorProfile *
 gimp_buffer_color_managed_get_color_profile (GimpColorManaged *managed)
 {
-  GimpBuffer              *buffer              = GIMP_BUFFER (managed);
-  static GimpColorProfile *srgb_profile        = NULL;
-  static GimpColorProfile *linear_rgb_profile  = NULL;
-  static GimpColorProfile *gray_profile        = NULL;
-  static GimpColorProfile *linear_gray_profile = NULL;
-  const  Babl             *format;
+  GimpBuffer *buffer = GIMP_BUFFER (managed);
 
   if (buffer->color_profile)
     return buffer->color_profile;
 
-  format = gimp_buffer_get_format (buffer);
-
-  if (gimp_babl_format_get_base_type (format) == GIMP_GRAY)
-    {
-      if (gimp_babl_format_get_linear (format))
-        {
-          if (! linear_gray_profile)
-            {
-              linear_gray_profile = gimp_color_profile_new_d65_gray_linear ();
-              g_object_add_weak_pointer (G_OBJECT (linear_gray_profile),
-                                         (gpointer) &linear_gray_profile);
-            }
-
-          return linear_gray_profile;
-        }
-      else
-        {
-          if (! gray_profile)
-            {
-              gray_profile = gimp_color_profile_new_d65_gray_srgb_trc ();
-              g_object_add_weak_pointer (G_OBJECT (gray_profile),
-                                         (gpointer) &gray_profile);
-            }
-
-          return gray_profile;
-        }
-    }
-  else
-    {
-      if (gimp_babl_format_get_linear (format))
-        {
-          if (! linear_rgb_profile)
-            {
-              linear_rgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
-              g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
-                                         (gpointer) &linear_rgb_profile);
-            }
-
-          return linear_rgb_profile;
-        }
-      else
-        {
-          if (! srgb_profile)
-            {
-              srgb_profile = gimp_color_profile_new_rgb_srgb ();
-              g_object_add_weak_pointer (G_OBJECT (srgb_profile),
-                                         (gpointer) &srgb_profile);
-            }
-
-          return srgb_profile;
-        }
-    }
+  return gimp_babl_format_get_color_profile (gimp_buffer_get_format (buffer));
 }
 
 static void
