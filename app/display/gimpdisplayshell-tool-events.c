@@ -1259,7 +1259,14 @@ gimp_display_shell_canvas_grab_notify (GtkWidget        *canvas,
   if (! was_grabbed)
     {
       if (! gimp_image_is_empty (image))
-        tool_manager_modifier_state_active (gimp, 0, display);
+        {
+          GimpTool *active_tool = tool_manager_get_active (gimp);
+
+          if (active_tool && active_tool->focus_display == display)
+            {
+              tool_manager_modifier_state_active (gimp, 0, display);
+            }
+        }
     }
 }
 
