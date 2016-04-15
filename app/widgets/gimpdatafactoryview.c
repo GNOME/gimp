@@ -525,6 +525,18 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
 
       name = g_strstrip (g_strdup (new_name));
 
+      /* We must block the edited callback at this point, because either
+       * the call to gimp_object_take_name() or gtk_tree_store_set() below
+       * will trigger a re-ordering and emission of the rows_reordered signal.
+       * This in turn will stop the editing operation and cause a call to this
+       * very callback function again. Because the order of the rows has
+       * changed by then, "path_str" will point at another item and cause the
+       * name of this item to be changed as well.
+       */
+      g_signal_handlers_block_by_func (cell,
+                                       gimp_data_factory_view_tree_name_edited,
+                                       view);
+
       if (gimp_data_is_writable (data) && strlen (name))
         {
           gimp_object_take_name (GIMP_OBJECT (data), name);
@@ -539,6 +551,10 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
                               -1);
           g_free (name);
         }
+
+      g_signal_handlers_unblock_by_func (cell,
+                                         gimp_data_factory_view_tree_name_edited,
+                                         view);
 
       g_object_unref (renderer);
     }
