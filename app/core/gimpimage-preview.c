@@ -17,16 +17,20 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimpimage-preview.h"
-#include "gimpimage-private.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
@@ -103,6 +107,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 {
   GimpImage   *image = GIMP_IMAGE (viewable);
   const Babl  *format;
+  gboolean     linear;
   GimpTempBuf *buf;
   gdouble      scale_x;
   gdouble      scale_y;
@@ -111,8 +116,11 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
 
   format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
+  linear = gimp_babl_format_get_linear (format);
+
   format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                             GIMP_PRECISION_U8_GAMMA,
+                             gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
+                                                  linear),
                              babl_format_has_alpha (format));
 
   buf = gimp_temp_buf_new (width, height, format);
@@ -125,4 +133,75 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
 
   return buf;
+}
+
+GdkPixbuf *
+gimp_image_get_new_pixbuf (GimpViewable *viewable,
+                           GimpContext  *context,
+                           gint          width,
+                           gint          height)
+{
+  GimpImage          *image = GIMP_IMAGE (viewable);
+  GdkPixbuf          *pixbuf;
+  gdouble             scale_x;
+  gdouble             scale_y;
+  GimpColorTransform  transform;
+  const Babl         *src_format;
+  const Babl         *dest_format;
+
+  scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
+  scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
+
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+                           width, height);
+
+  transform = gimp_image_get_color_transform_to_srgb_u8 (image,
+                                                         &src_format,
+                                                         &dest_format);
+
+  if (transform)
+    {
+      GimpTempBuf *temp_buf;
+      GeglBuffer  *src_buf;
+      GeglBuffer  *dest_buf;
+
+      temp_buf = gimp_temp_buf_new (width, height, src_format);
+
+      gegl_buffer_get (gimp_pickable_get_buffer (GIMP_PICKABLE (image)),
+                       GEGL_RECTANGLE (0, 0, width, height),
+                       MIN (scale_x, scale_y),
+                       gimp_temp_buf_get_format (temp_buf),
+                       gimp_temp_buf_get_data (temp_buf),
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+
+      src_buf  = gimp_temp_buf_create_buffer (temp_buf);
+      dest_buf = gimp_pixbuf_create_buffer (pixbuf);
+
+      gimp_temp_buf_unref (temp_buf);
+
+      gimp_gegl_convert_color_transform (src_buf,
+                                         GEGL_RECTANGLE (0, 0,
+                                                         width, height),
+                                         src_format,
+                                         dest_buf,
+                                         GEGL_RECTANGLE (0, 0, 0, 0),
+                                         dest_format,
+                                         transform,
+                                         NULL);
+
+      g_object_unref (src_buf);
+      g_object_unref (dest_buf);
+    }
+  else
+    {
+      gegl_buffer_get (gimp_pickable_get_buffer (GIMP_PICKABLE (image)),
+                       GEGL_RECTANGLE (0, 0, width, height),
+                       MIN (scale_x, scale_y),
+                       gimp_pixbuf_get_format (pixbuf),
+                       gdk_pixbuf_get_pixels (pixbuf),
+                       gdk_pixbuf_get_rowstride (pixbuf),
+                       GEGL_ABYSS_CLAMP);
+    }
+
+  return pixbuf;
 }

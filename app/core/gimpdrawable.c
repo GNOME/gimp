@@ -245,6 +245,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   viewable_class->get_size           = gimp_drawable_get_size;
   viewable_class->get_new_preview    = gimp_drawable_get_new_preview;
+  viewable_class->get_new_pixbuf     = gimp_drawable_get_new_pixbuf;
 
   filter_class->get_node             = gimp_drawable_get_node;
 

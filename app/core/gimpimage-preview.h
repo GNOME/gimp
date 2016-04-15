@@ -39,6 +39,10 @@ GimpTempBuf * gimp_image_get_new_preview  (GimpViewable *viewable,
                                            GimpContext  *context,
                                            gint          width,
                                            gint          height);
+GdkPixbuf   * gimp_image_get_new_pixbuf   (GimpViewable *viewable,
+                                           GimpContext  *context,
+                                           gint          width,
+                                           gint          height);
 
 
 #endif /* __GIMP_IMAGE_PREVIEW_H__ */
