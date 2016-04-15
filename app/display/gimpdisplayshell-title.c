@@ -239,7 +239,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   const Babl *format = gimp_drawable_get_format (drawable);
 
                   i += print (title, title_len, i, "%s",
-                              gimp_babl_get_description (format));
+                              gimp_babl_format_get_description (format));
                 }
               break;
 

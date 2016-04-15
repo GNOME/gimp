@@ -24,7 +24,7 @@
 
 void                gimp_babl_init                      (void);
 
-const gchar       * gimp_babl_get_description           (const Babl *format);
+const gchar       * gimp_babl_format_get_description    (const Babl *format);
 
 GimpImageBaseType   gimp_babl_format_get_base_type      (const Babl *format);
 GimpComponentType   gimp_babl_format_get_component_type (const Babl *format);

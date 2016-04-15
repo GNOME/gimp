@@ -358,7 +358,7 @@ babl_descriptions[] =
 static GHashTable *babl_description_hash = NULL;
 
 const gchar *
-gimp_babl_get_description (const Babl *babl)
+gimp_babl_format_get_description (const Babl *babl)
 {
   const gchar *description;
 
