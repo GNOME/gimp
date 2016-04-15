@@ -979,8 +979,7 @@ register_selection_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-flood",
                                      "Remove holes from the image's selection",
-                                     "This procedure removes holes from the selection, that can come from selecting a patchy area with the Fuzzy Select Tool. "
-                                     "In technical terms this procedure floods the selection. See the Algorithms page in the developer wiki for details.",
+                                     "This procedure removes holes from the selection, that can come from selecting a patchy area with the Fuzzy Select Tool. In technical terms this procedure floods the selection. See the Algorithms page in the developer wiki for details.",
                                      "Ell",
                                      "Ell",
                                      "2016",
