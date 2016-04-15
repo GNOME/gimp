@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-13 18:25+0000\n"
-"PO-Revision-Date: 2016-04-13 19:39-0500\n"
-"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
+"POT-Creation-Date: 2016-04-14 23:23+0000\n"
+"PO-Revision-Date: 2016-04-15 12:40+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 2.91.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -367,7 +367,7 @@ msgstr "Empotrable"
 #: ../app/actions/actions.c:143 ../app/dialogs/dialogs.c:349
 #: ../app/dialogs/preferences-dialog.c:1421
 msgid "Document History"
-msgstr "Historial del documento"
+msgstr "Histórico del documento"
 
 #: ../app/actions/actions.c:146
 msgid "Drawable"
@@ -1213,12 +1213,12 @@ msgstr "Abre el diálogo de navegación por la presentación"
 #: ../app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
 msgid "Undo _History"
-msgstr "_Historial de deshacer"
+msgstr "_Histórico de deshacer"
 
 #: ../app/actions/dialogs-actions.c:114
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "Abre el diálogo del historial de deshacer"
+msgstr "Abre el diálogo del histórico de deshacer"
 
 #: ../app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
@@ -1394,7 +1394,7 @@ msgstr "Abre el diálogo de imágenes"
 #: ../app/actions/dialogs-actions.c:221
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
-msgstr "_Historial del documento"
+msgstr "_Histórico del documento"
 
 #: ../app/actions/dialogs-actions.c:222
 msgctxt "dialogs-action"
@@ -1789,7 +1789,7 @@ msgstr ""
 
 #: ../app/actions/documents-commands.c:223
 msgid "Clear Document History"
-msgstr "Borrar el histórico del documento"
+msgstr "Vaciar el histórico del documento"
 
 #: ../app/actions/documents-commands.c:246
 msgid "Clear the Recent Documents list?"
@@ -2085,7 +2085,7 @@ msgstr "_Búfer"
 #: ../app/actions/edit-actions.c:70
 msgctxt "edit-action"
 msgid "Undo History Menu"
-msgstr "Menú del historial de deshacer"
+msgstr "Menú del histórico de deshacer"
 
 #: ../app/actions/edit-actions.c:74
 msgctxt "edit-action"
@@ -2131,12 +2131,12 @@ msgstr ""
 #: ../app/actions/edit-actions.c:99
 msgctxt "edit-action"
 msgid "_Clear Undo History"
-msgstr "_Vaciar historial de deshacer"
+msgstr "_Vaciar histórico de deshacer"
 
 #: ../app/actions/edit-actions.c:100
 msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
-msgstr "Eliminar todas las operaciones del historial de deshacer"
+msgstr "Eliminar todas las operaciones del histórico de deshacer"
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
@@ -2338,7 +2338,7 @@ msgstr "_Desvanecer…"
 
 #: ../app/actions/edit-commands.c:152
 msgid "Clear Undo History"
-msgstr "Vaciar historial de deshacer"
+msgstr "Vaciar histórico de deshacer"
 
 #: ../app/actions/edit-commands.c:178
 msgid "Really clear image's undo history?"
@@ -2348,7 +2348,7 @@ msgstr "¿Seguro que quiere vaciar el histórico de deshacer de la imagen?"
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
-"Al limpiar el historial de deshacer de esta imagen se recuperarán %s de "
+"Al limpiar el histórico de deshacer de esta imagen se recuperarán %s de "
 "memoria."
 
 #: ../app/actions/edit-commands.c:221
@@ -10985,7 +10985,7 @@ msgstr "Puntero"
 
 #: ../app/dialogs/dialogs.c:349
 msgid "History"
-msgstr "Historial"
+msgstr "Histórico"
 
 #: ../app/dialogs/dialogs.c:352
 msgid "Image Templates"
@@ -11013,7 +11013,7 @@ msgstr "Deshacer"
 
 #: ../app/dialogs/dialogs.c:393
 msgid "Undo History"
-msgstr "Historial de deshacer"
+msgstr "Histórico de deshacer"
 
 #: ../app/dialogs/dialogs.c:403
 msgid "Navigation"
@@ -11744,10 +11744,8 @@ msgid "Preferred _grayscale profile:"
 msgstr "Perfil _escala de grises preferido:"
 
 #: ../app/dialogs/preferences-dialog.c:1453
-#, fuzzy
-#| msgid "Select RGB Color Profile"
 msgid "Select Grayscale Color Profile"
-msgstr "Seleccionar el perfil de color RGB"
+msgstr "Seleccionar el perfil de color de escala de grises"
 
 #: ../app/dialogs/preferences-dialog.c:1454
 msgid "_CMYK profile:"
@@ -12022,8 +12020,6 @@ msgstr "Mostrar imagen _activa"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:2081
-#, fuzzy
-#| msgid "Tools configuration"
 msgid "Tools Configuration"
 msgstr "Configuración de las herramientas"
 
@@ -12071,26 +12067,20 @@ msgstr "_Visor de ayuda:"
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2169
-#, fuzzy
-#| msgid "Action"
 msgid "Action Search"
-msgstr "Acción"
+msgstr "Acción de búsqueda"
 
 #: ../app/dialogs/preferences-dialog.c:2173
 msgid "Show _unavailable actions"
 msgstr "Mostrar la acciones no _disponibles"
 
 #: ../app/dialogs/preferences-dialog.c:2176
-#, fuzzy
-#| msgid "Maximum _new image size:"
 msgid "Maximum History Size:"
-msgstr "Tamaño máximo de la imagen _nueva:"
+msgstr "Tamaño máximo del histórico:"
 
 #: ../app/dialogs/preferences-dialog.c:2180
-#, fuzzy
-#| msgid "Clear Undo History"
 msgid "Clear Action History"
-msgstr "Vaciar historial de deshacer"
+msgstr "Vaciar el histórico de acciones"
 
 #: ../app/dialogs/preferences-dialog.c:2195
 #: ../app/dialogs/preferences-dialog.c:2196
@@ -12244,10 +12234,8 @@ msgid "Show _brush outline"
 msgstr "Mostrar el contorno del _pincel"
 
 #: ../app/dialogs/preferences-dialog.c:2432
-#, fuzzy
-#| msgid "Show pointer for brush _tools"
 msgid "Show pointer for paint _tools"
-msgstr "Mostrar el puntero de las herramientas de _pincel"
+msgstr "Mostrar el puntero de las herramientas de _pintura"
 
 #: ../app/dialogs/preferences-dialog.c:2438
 msgid "Pointer _mode:"
@@ -12298,10 +12286,8 @@ msgid "Show image size"
 msgstr "Mostrar el tamaño de imagen"
 
 #: ../app/dialogs/preferences-dialog.c:2499
-#, fuzzy
-#| msgid "Show image size"
 msgid "Show drawable size"
-msgstr "Mostrar el tamaño de imagen"
+msgstr "Mostrar tamaño dibujable"
 
 #: ../app/dialogs/preferences-dialog.c:2512
 msgid "Image Title Format"
@@ -12324,16 +12310,12 @@ msgid "Snapping"
 msgstr "Volteando"
 
 #: ../app/dialogs/preferences-dialog.c:2606
-#, fuzzy
-#| msgid "Default Appearance in Normal Mode"
 msgid "Default Behavior in Normal Mode"
-msgstr "Apariencia predeterminada en el modo normal"
+msgstr "Comportamiento predeterminado en el modo normal"
 
 #: ../app/dialogs/preferences-dialog.c:2610
-#, fuzzy
-#| msgid "Default Appearance in Fullscreen Mode"
 msgid "Default Behavior in Fullscreen Mode"
-msgstr "Apariencia predeterminada en el modo de pantalla completa"
+msgstr "Comportamiento predeterminado en el modo de pantalla completa"
 
 #: ../app/dialogs/preferences-dialog.c:2619
 #, fuzzy
@@ -12455,16 +12437,12 @@ msgid "Select Tool Preset Folders"
 msgstr "Seleccionar las carpetas de preajustes"
 
 #: ../app/dialogs/preferences-dialog.c:2774
-#, fuzzy
-#| msgid "Brush Folders"
 msgid "MyPaint Brush Folders"
-msgstr "Carpetas de pinceles"
+msgstr "Carpetas de pinceles MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:2776
-#, fuzzy
-#| msgid "Select Brush Folders"
 msgid "Select MyPaint Brush Folders"
-msgstr "Seleccionar la carpeta de pinceles"
+msgstr "Seleccionar las carpetas de pinceles MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:2778
 msgid "Plug-In Folders"
@@ -12531,22 +12509,16 @@ msgid "Select Theme Folders"
 msgstr "Seleccionar las carpetas de temas"
 
 #: ../app/dialogs/preferences-dialog.c:2802
-#, fuzzy
-#| msgid "Themes"
 msgid "Icon Themes"
-msgstr "Temas"
+msgstr "Temas de iconos"
 
 #: ../app/dialogs/preferences-dialog.c:2802
-#, fuzzy
-#| msgid "Theme Folders"
 msgid "Icon Theme Folders"
-msgstr "Carpetas de temas"
+msgstr "Carpetas de temas de iconos"
 
 #: ../app/dialogs/preferences-dialog.c:2804
-#, fuzzy
-#| msgid "Select Theme Folders"
 msgid "Select Icon Theme Folders"
-msgstr "Seleccionar las carpetas de temas"
+msgstr "Seleccionar las carpetas de temas de iconos"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
@@ -12886,20 +12858,20 @@ msgstr "_Muestra combinada"
 msgid "Access the image menu"
 msgstr "Ir al menú de imagen"
 
-#: ../app/display/gimpdisplayshell.c:650
+#: ../app/display/gimpdisplayshell.c:654
 msgid "Zoom image when window size changes"
 msgstr "Ampliar imagen cuando cambia el tamaño de ventana"
 
-#: ../app/display/gimpdisplayshell.c:679
+#: ../app/display/gimpdisplayshell.c:683
 msgid "Toggle Quick Mask"
 msgstr "Activar máscara rápida"
 
-#: ../app/display/gimpdisplayshell.c:702
+#: ../app/display/gimpdisplayshell.c:706
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:773
-#: ../app/display/gimpdisplayshell.c:1467 ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:777
+#: ../app/display/gimpdisplayshell.c:1471 ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
 
@@ -12982,7 +12954,7 @@ msgstr "Descartar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
 #: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
-#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:310
+#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:314
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "No se pueden modificar píxeles de los grupos de capas."
@@ -12990,7 +12962,7 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 #: ../app/display/gimpdisplayshell-dnd.c:370
 #: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:317 ../app/tools/gimppainttool.c:278
+#: ../app/tools/gimpimagemaptool.c:321 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1836
 #: ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
@@ -13303,9 +13275,6 @@ msgstr "Conservar la luminosidad"
 #: ../app/operations/gimpcolorizeconfig.c:86
 #: ../app/operations/gimphuesaturationconfig.c:101
 #: ../app/operations/gimphuesaturationconfig.c:102
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hue"
 msgid "Hue"
 msgstr "Tono"
 
@@ -13669,12 +13638,10 @@ msgid "Link Aspect Ratio"
 msgstr "Enlazar la proporción de aspecto"
 
 #: ../app/paint/gimppaintoptions.c:247
-#| msgid "Reset aspect ratio to brush's native"
 msgid "Link brush aspect ratio to brush native"
 msgstr "Enlazar la proporción de aspecto del pincel al pincel nativo"
 
 #: ../app/paint/gimppaintoptions.c:253
-#| msgid "Ink Blob Angle"
 msgid "Link Angle"
 msgstr "Ángulo del enlace"
 
@@ -13683,18 +13650,14 @@ msgid "Link brush angle to brush native"
 msgstr "Enlazar el ángulo del pincel al pincel nativo"
 
 #: ../app/paint/gimppaintoptions.c:260
-#| msgctxt "guides-type"
-#| msgid "Line spacing"
 msgid "Link Spacing"
 msgstr "Espaciado del enlace"
 
 #: ../app/paint/gimppaintoptions.c:261
-#| msgid "Reset size to brush's native size"
 msgid "Link brush spacing to brush native"
 msgstr "Enlazar el espaciado del pincel al pincel nativo"
 
 #: ../app/paint/gimppaintoptions.c:267
-#| msgid "Hardness"
 msgid "Link Hardness"
 msgstr "Dureza del enlace"
 
@@ -13867,8 +13830,6 @@ msgstr "Posterizar"
 
 #: ../app/pdb/color-cmds.c:284 ../app/pdb/color-cmds.c:325
 #: ../app/pdb/drawable-color-cmds.c:323
-#, fuzzy
-#| msgid "Desaturate"
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Desaturar"
@@ -13908,11 +13869,9 @@ msgid "Foreground Select"
 msgstr "Selección del frente"
 
 #: ../app/pdb/drawable-color-cmds.c:498
-#, fuzzy
-#| msgid "Hue-Saturation"
 msgctxt "undo-type"
 msgid "Hue-Saturation"
-msgstr "Tono y saturación"
+msgstr "Tono-saturación"
 
 #: ../app/pdb/drawable-color-cmds.c:531
 msgctxt "undo-type"
@@ -14012,19 +13971,16 @@ msgid "Paint dynamics '%s' is not editable"
 msgstr "La dinámica de pintura «%s» no es editable"
 
 #: ../app/pdb/gimppdb-utils.c:172
-#| msgid "Invalid empty brush name"
 msgid "Invalid empty MyPaint brush name"
 msgstr "Nombre vacío del pincel MyPaint no válido"
 
 #: ../app/pdb/gimppdb-utils.c:181
 #, c-format
-#| msgid "Brush '%s' not found"
 msgid "MyPaint brush '%s' not found"
 msgstr "No se encuentra el pincel MyPaint «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:186
 #, c-format
-#| msgid "Brush '%s' is not editable"
 msgid "MyPaint brush '%s' is not editable"
 msgstr "El pincel MyPaint «%s» no es editable"
 
@@ -14227,40 +14183,31 @@ msgid "Smooth edges"
 msgstr "Bordes suavizados"
 
 #: ../app/pdb/gimppdbcontext.c:106
-#| msgctxt "select-action"
-#| msgid "Fea_ther..."
 msgid "Feather"
 msgstr "Difuminar"
 
 #: ../app/pdb/gimppdbcontext.c:113
-#| msgid "Feather edges"
 msgid "Feather radius X"
 msgstr "Difuminar radio X"
 
 #: ../app/pdb/gimppdbcontext.c:120
-#| msgid "Feather edges"
 msgid "Feather radius Y"
 msgstr "Difuminar radio Y"
 
 #: ../app/pdb/gimppdbcontext.c:134
-#| msgid "Selection criterion"
 msgid "Sample criterion"
 msgstr "Criterio de muestra"
 
 #: ../app/pdb/gimppdbcontext.c:142
-#| msgid "Apply Threshold"
 msgid "Sample threshold"
 msgstr "Umbral de la muestra"
 
 #: ../app/pdb/gimppdbcontext.c:149
-#| msgid "Make _transparent"
 msgid "Sample transparent"
 msgstr "Transparencia de la muestra"
 
 #: ../app/pdb/gimppdbcontext.c:156 ../app/tools/gimpbucketfilloptions.c:119
 #: ../app/tools/gimpregionselectoptions.c:104
-#| msgctxt "guides-type"
-#| msgid "Diagonal lines"
 msgid "Diagonal neighbors"
 msgstr "Vecinos diagonales"
 
@@ -14270,7 +14217,6 @@ msgid "Interpolation"
 msgstr "Interpolación"
 
 #: ../app/pdb/gimppdbcontext.c:171
-#| msgid "Transformation"
 msgid "Transform direction"
 msgstr "Dirección de la transformación"
 
@@ -14380,7 +14326,6 @@ msgid "Bump Map"
 msgstr "Mapa de relieve"
 
 #: ../app/pdb/plug-in-compat-cmds.c:313
-#| msgid "Display"
 msgctxt "undo-type"
 msgid "Displace"
 msgstr "Desplazar"
@@ -14403,15 +14348,11 @@ msgid "Antialias"
 msgstr "Alisado"
 
 #: ../app/pdb/plug-in-compat-cmds.c:492
-#| msgctxt "undo-type"
-#| msgid "Apply layer mask"
 msgctxt "undo-type"
 msgid "Apply Canvas"
 msgstr "Aplicar lienzo"
 
 #: ../app/pdb/plug-in-compat-cmds.c:552
-#| msgctxt "undo-type"
-#| msgid "Apply Layer Mask"
 msgctxt "undo-type"
 msgid "Apply Lens"
 msgstr "Aplicar lente"
@@ -14430,14 +14371,11 @@ msgid "Stretch Contrast HSV"
 msgstr "Expansión del contraste HSV"
 
 #: ../app/pdb/plug-in-compat-cmds.c:864
-#| msgid "_Contrast"
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Expansión del contraste"
 
 #: ../app/pdb/plug-in-compat-cmds.c:943
-#| msgctxt "channels-action"
-#| msgid "Channels Menu"
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Mezclador de canal"
@@ -14458,11 +14396,9 @@ msgid "Array 'channels' has only %d members, must have 5"
 msgstr "Arreglo 'canales' tiene solo %d miembros, debe tener 5"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1113
-#, fuzzy
-#| msgid "Transformation Matrix"
 msgctxt "undo-type"
 msgid "Convolution Matrix"
-msgstr "Matriz de transformación"
+msgstr "Matriz de convolución"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1175
 msgctxt "undo-type"
@@ -14477,12 +14413,9 @@ msgid "Deinterlace"
 msgstr "_Desaturar…"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1299
-#, fuzzy
-#| msgctxt "patterns-action"
-#| msgid "D_uplicate Pattern"
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
-msgstr "D_uplicar patrón"
+msgstr "Patrones de difracción"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1454
 msgctxt "undo-type"
@@ -14495,11 +14428,9 @@ msgid "Engrave"
 msgstr "Grabar"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1571
-#, fuzzy
-#| msgid "Color Management"
 msgctxt "undo-type"
 msgid "Color Exchange"
-msgstr "Gestión del color"
+msgstr "Intercambio de color"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1619
 msgctxt "undo-type"
@@ -15172,7 +15103,7 @@ msgstr "_Mezcla [Blend]"
 
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:290
-#: ../app/tools/gimpimagemaptool.c:324 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimpimagemaptool.c:328 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "La capa activa no está visible."
@@ -15710,55 +15641,55 @@ msgstr "Importar curvas"
 msgid "Export Curves"
 msgstr "Exportar curvas"
 
-#: ../app/tools/gimpcurvestool.c:340
+#: ../app/tools/gimpcurvestool.c:345
 msgid "Click to add a control point"
 msgstr "Pulse para añadir un punto de control"
 
-#: ../app/tools/gimpcurvestool.c:345
+#: ../app/tools/gimpcurvestool.c:350
 msgid "Click to add control points to all channels"
 msgstr "Pulse para añadir puntos de control a todos los canales"
 
-#: ../app/tools/gimpcurvestool.c:350
+#: ../app/tools/gimpcurvestool.c:355
 #, fuzzy
 #| msgid "Click to close the curve"
 msgid "Click to locate on curve"
 msgstr "Pulse para cerrar la curva"
 
-#: ../app/tools/gimpcurvestool.c:352
+#: ../app/tools/gimpcurvestool.c:357
 #, fuzzy, c-format
 #| msgid "Click to add a control point"
 msgid "%s: add control point"
 msgstr "Pulse para añadir un punto de control"
 
-#: ../app/tools/gimpcurvestool.c:353
+#: ../app/tools/gimpcurvestool.c:358
 #, fuzzy, c-format
 #| msgid "Click to add control points to all channels"
 msgid "%s: add control points to all channels"
 msgstr "Pulse para añadir puntos de control a todos los canales"
 
-#: ../app/tools/gimpcurvestool.c:405
+#: ../app/tools/gimpcurvestool.c:411
 msgid "Adjust Color Curves"
 msgstr "Ajustar las curvas de color"
 
-#: ../app/tools/gimpcurvestool.c:450 ../app/tools/gimplevelstool.c:363
+#: ../app/tools/gimpcurvestool.c:456 ../app/tools/gimplevelstool.c:363
 msgid "Cha_nnel:"
 msgstr "Ca_nal:"
 
-#: ../app/tools/gimpcurvestool.c:477 ../app/tools/gimplevelstool.c:388
+#: ../app/tools/gimpcurvestool.c:483 ../app/tools/gimplevelstool.c:388
 msgid "R_eset Channel"
 msgstr "R_einiciar el canal"
 
-#: ../app/tools/gimpcurvestool.c:572 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:578 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Tipo de curva:"
 
-#: ../app/tools/gimpcurvestool.c:639 ../app/tools/gimplevelstool.c:662
+#: ../app/tools/gimpcurvestool.c:645 ../app/tools/gimplevelstool.c:662
 #, fuzzy
 #| msgid "Could not read header from '%s': %s"
 msgid "Could not read header: "
 msgstr "No se ha podido leer la cabecera de «%s»: %s"
 
-#: ../app/tools/gimpcurvestool.c:680
+#: ../app/tools/gimpcurvestool.c:686
 msgid "Use _old curves file format"
 msgstr "Usar el formato antigu_o de archivo de curvas"
 
@@ -16317,6 +16248,34 @@ msgstr "Vista _previa"
 #| msgid "Split"
 msgid "_Split view"
 msgstr "Partir"
+
+#: ../app/tools/gimpimagemaptool.c:651
+#, fuzzy
+#| msgid "Click to pick this guide as first item"
+msgid "Click to switch the original and filtered sides"
+msgstr "Pulse para elegir esta guía como primer elemento"
+
+#: ../app/tools/gimpimagemaptool.c:655
+#, fuzzy
+#| msgid "Click to place vertical and horizontal guides"
+msgid "Click to switch between vertical and horizontal"
+msgstr "Pulse para colocar guías verticales y horizontales"
+
+#: ../app/tools/gimpimagemaptool.c:659
+#, fuzzy
+#| msgid "Click to dodge the line"
+msgid "Click to move the split guide"
+msgstr "Pulse para marcar a fuego la línea"
+
+#: ../app/tools/gimpimagemaptool.c:661
+#, c-format
+msgid "%s: switch original and filtered"
+msgstr ""
+
+#: ../app/tools/gimpimagemaptool.c:662
+#, c-format
+msgid "%s: switch horizontal and vertical"
+msgstr ""
 
 #: ../app/tools/gimpimagemaptool-settings.c:81
 msgid "Pre_sets:"
@@ -18270,7 +18229,7 @@ msgstr "(Ninguno)"
 
 #: ../app/widgets/gimpcolordialog.c:153
 msgid "Add the current color to the color history"
-msgstr "Añadir el color actual al historial de colores"
+msgstr "Añadir el color actual al histórico de colores"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:157
 msgid "Available Filters"
