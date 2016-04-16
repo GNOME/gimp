@@ -20,6 +20,11 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_QUARTZ
+#import <AppKit/AppKit.h>
+#include <gdk/gdkquartz.h>
+#endif /* !GDK_WINDOWING_QUARTZ */
+
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -144,6 +149,7 @@ static void      gimp_image_window_get_property        (GObject             *obj
                                                         GValue              *value,
                                                         GParamSpec          *pspec);
 
+static void      gimp_image_window_map                 (GtkWidget           *widget);
 static gboolean  gimp_image_window_delete_event        (GtkWidget           *widget,
                                                         GdkEventAny         *event);
 static gboolean  gimp_image_window_configure_event     (GtkWidget           *widget,
@@ -247,6 +253,7 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
   object_class->set_property       = gimp_image_window_set_property;
   object_class->get_property       = gimp_image_window_get_property;
 
+  widget_class->map                = gimp_image_window_map;
   widget_class->delete_event       = gimp_image_window_delete_event;
   widget_class->configure_event    = gimp_image_window_configure_event;
   widget_class->window_state_event = gimp_image_window_window_state_event;
@@ -519,6 +526,34 @@ gimp_image_window_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_image_window_map (GtkWidget *widget)
+{
+#ifdef GDK_WINDOWING_QUARTZ
+  GdkWindow *gdk_window;
+  NSWindow  *ns_window;
+#endif /* !GDK_WINDOWING_QUARTZ */
+
+  GTK_WIDGET_CLASS (parent_class)->map (widget);
+
+#ifdef GDK_WINDOWING_QUARTZ
+  gdk_window = gtk_widget_get_window (GTK_WIDGET (widget));
+  ns_window = gdk_quartz_window_get_nswindow (gdk_window);
+
+  /* Disable the new-style full screen mode. For now only the "old-style"
+   * full screen mode, via the "View" menu, is supported. In the future, and
+   * as soon as GTK+ has proper support for this, we will migrate to the
+   * new-style full screen mode.
+   */
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
+  ns_window.collectionBehavior |= NSWindowCollectionBehaviorFullScreenAuxiliary;
+#else
+  /* Hard code the define ... */
+  ns_window.collectionBehavior |= 1 << 8;
+#endif
+#endif /* !GDK_WINDOWING_QUARTZ */
 }
 
 static gboolean
