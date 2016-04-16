@@ -29,6 +29,8 @@ GimpContainer * gimp_gegl_config_get_container (GType        config_type);
 
 void            gimp_gegl_config_sync_node     (GimpObject  *config,
                                                 GeglNode    *node);
+void            gimp_gegl_config_connect_node  (GimpObject  *config,
+                                                GeglNode    *node);
 
 
 #endif /* __GIMP_GEGL_CONFIG_ARGH_H__ */
