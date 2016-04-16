@@ -114,166 +114,231 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   object_class->set_property = gimp_display_config_set_property;
   object_class->get_property = gimp_display_config_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_SIZE,
-                                 "transparency-size", TRANSPARENCY_SIZE_BLURB,
-                                 GIMP_TYPE_CHECK_SIZE,
-                                 GIMP_CHECK_SIZE_MEDIUM_CHECKS,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
-                                 "transparency-type", TRANSPARENCY_TYPE_BLURB,
-                                 GIMP_TYPE_CHECK_TYPE,
-                                 GIMP_CHECK_TYPE_GRAY_CHECKS,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SNAP_DISTANCE,
-                                "snap-distance", DEFAULT_SNAP_DISTANCE_BLURB,
-                                1, 255, 8,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
-                                "marching-ants-speed",
-                                MARCHING_ANTS_SPEED_BLURB,
-                                10, 10000, DEFAULT_MARCHING_ANTS_SPEED,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
-                                    "resize-windows-on-zoom",
-                                    RESIZE_WINDOWS_ON_ZOOM_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_RESIZE,
-                                    "resize-windows-on-resize",
-                                    RESIZE_WINDOWS_ON_RESIZE_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
-                                    "default-dot-for-dot",
-                                    DEFAULT_DOT_FOR_DOT_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INITIAL_ZOOM_TO_FIT,
-                                    "initial-zoom-to-fit",
-                                    INITIAL_ZOOM_TO_FIT_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
-                                    "perfect-mouse", PERFECT_MOUSE_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_MODE,
-                                 "cursor-mode", CURSOR_MODE_BLURB,
-                                 GIMP_TYPE_CURSOR_MODE,
-                                 GIMP_CURSOR_MODE_TOOL_ICON,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
-                                    "cursor-updating", CURSOR_UPDATING_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_BRUSH_OUTLINE,
-                                    "show-brush-outline",
-                                    SHOW_BRUSH_OUTLINE_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_PAINT_TOOL_CURSOR,
-                                    "show-paint-tool-cursor",
-                                    SHOW_PAINT_TOOL_CURSOR_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
-                                   "image-title-format",
-                                   IMAGE_TITLE_FORMAT_BLURB,
-                                   GIMP_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
-                                   "image-status-format",
-                                   IMAGE_STATUS_FORMAT_BLURB,
-                                   GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_XRESOLUTION,
-                                       "monitor-xresolution",
-                                       MONITOR_XRESOLUTION_BLURB,
-                                       DEFAULT_MONITOR_RESOLUTION,
-                                       GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_YRESOLUTION,
-                                       "monitor-yresolution",
-                                       MONITOR_YRESOLUTION_BLURB,
-                                       DEFAULT_MONITOR_RESOLUTION,
-                                       GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
-                                    "monitor-resolution-from-windowing-system",
-                                    MONITOR_RES_FROM_GDK_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
-                                 "navigation-preview-size",
-                                 NAVIGATION_PREVIEW_SIZE_BLURB,
-                                 GIMP_TYPE_VIEW_SIZE,
-                                 GIMP_VIEW_SIZE_MEDIUM,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_VIEW,
-                                   "default-view",
-                                   DEFAULT_VIEW_BLURB,
-                                   GIMP_TYPE_DISPLAY_OPTIONS,
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_FULLSCREEN_VIEW,
-                                   "default-fullscreen-view",
-                                   DEFAULT_FULLSCREEN_VIEW_BLURB,
-                                   GIMP_TYPE_DISPLAY_OPTIONS,
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ACTIVATE_ON_FOCUS,
-                                    "activate-on-focus",
-                                    ACTIVATE_ON_FOCUS_BLURB,
-                                    DEFAULT_ACTIVATE_ON_FOCUS,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SPACE_BAR_ACTION,
-                                 "space-bar-action",
-                                 SPACE_BAR_ACTION_BLURB,
-                                 GIMP_TYPE_SPACE_BAR_ACTION,
-                                 GIMP_SPACE_BAR_ACTION_PAN,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_QUALITY,
-                                 "zoom-quality",
-                                 ZOOM_QUALITY_BLURB,
-                                 GIMP_TYPE_ZOOM_QUALITY,
-                                 GIMP_ZOOM_QUALITY_HIGH,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSPARENCY_SIZE,
+                         "transparency-size",
+                         "Transparency size",
+                         TRANSPARENCY_SIZE_BLURB,
+                         GIMP_TYPE_CHECK_SIZE,
+                         GIMP_CHECK_SIZE_MEDIUM_CHECKS,
+                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_EVENT_HISTORY,
-                                    "use-event-history",
-                                    DEFAULT_USE_EVENT_HISTORY_BLURB,
-                                    DEFAULT_USE_EVENT_HISTORY,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
+                         "transparency-type",
+                         "Transparency type",
+                         TRANSPARENCY_TYPE_BLURB,
+                         GIMP_TYPE_CHECK_TYPE,
+                         GIMP_CHECK_TYPE_GRAY_CHECKS,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_SNAP_DISTANCE,
+                        "snap-distance",
+                        "Snap distance",
+                        DEFAULT_SNAP_DISTANCE_BLURB,
+                        1, 255, 8,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
+                        "marching-ants-speed",
+                        "Marching ants speed",
+                        MARCHING_ANTS_SPEED_BLURB,
+                        10, 10000, DEFAULT_MARCHING_ANTS_SPEED,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
+                            "resize-windows-on-zoom",
+                            "Resize windows on zoom",
+                            RESIZE_WINDOWS_ON_ZOOM_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_RESIZE,
+                            "resize-windows-on-resize",
+                            "Resize windows on resize",
+                            RESIZE_WINDOWS_ON_RESIZE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
+                            "default-dot-for-dot",
+                            "Default dot-for-dot",
+                            DEFAULT_DOT_FOR_DOT_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INITIAL_ZOOM_TO_FIT,
+                            "initial-zoom-to-fit",
+                            "Initial zoom-to-fit",
+                            INITIAL_ZOOM_TO_FIT_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
+                            "perfect-mouse",
+                            "Perfect mouse",
+                            PERFECT_MOUSE_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_MODE,
+                         "cursor-mode",
+                         "Cursor mode",
+                         CURSOR_MODE_BLURB,
+                         GIMP_TYPE_CURSOR_MODE,
+                         GIMP_CURSOR_MODE_TOOL_ICON,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
+                            "cursor-updating",
+                            "Cursor updating",
+                            CURSOR_UPDATING_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_BRUSH_OUTLINE,
+                            "show-brush-outline",
+                            "Show brush outline",
+                            SHOW_BRUSH_OUTLINE_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_PAINT_TOOL_CURSOR,
+                            "show-paint-tool-cursor",
+                            "Show paint tool cursor",
+                            SHOW_PAINT_TOOL_CURSOR_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
+                           "image-title-format",
+                           "Image title format",
+                           IMAGE_TITLE_FORMAT_BLURB,
+                           GIMP_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
+                           "image-status-format",
+                           "Image statusbar format",
+                           IMAGE_STATUS_FORMAT_BLURB,
+                           GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_MONITOR_XRESOLUTION,
+                               "monitor-xresolution",
+                               "Monitor resolution X",
+                               MONITOR_XRESOLUTION_BLURB,
+                               DEFAULT_MONITOR_RESOLUTION,
+                               GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_MONITOR_YRESOLUTION,
+                               "monitor-yresolution",
+                               "Monitor resolution Y",
+                               MONITOR_YRESOLUTION_BLURB,
+                               DEFAULT_MONITOR_RESOLUTION,
+                               GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
+                            "monitor-resolution-from-windowing-system",
+                            "Monitor resolution from windowing system",
+                            MONITOR_RES_FROM_GDK_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
+                         "navigation-preview-size",
+                         "Navigation preview size",
+                         NAVIGATION_PREVIEW_SIZE_BLURB,
+                         GIMP_TYPE_VIEW_SIZE,
+                         GIMP_VIEW_SIZE_MEDIUM,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_DEFAULT_VIEW,
+                           "default-view",
+                           "Default view options",
+                           DEFAULT_VIEW_BLURB,
+                           GIMP_TYPE_DISPLAY_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_DEFAULT_FULLSCREEN_VIEW,
+                           "default-fullscreen-view",
+                           "Default fullscreen view options",
+                           DEFAULT_FULLSCREEN_VIEW_BLURB,
+                           GIMP_TYPE_DISPLAY_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ACTIVATE_ON_FOCUS,
+                            "activate-on-focus",
+                            "Activate on focus",
+                            ACTIVATE_ON_FOCUS_BLURB,
+                            DEFAULT_ACTIVATE_ON_FOCUS,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SPACE_BAR_ACTION,
+                         "space-bar-action",
+                         "Space bar action",
+                         SPACE_BAR_ACTION_BLURB,
+                         GIMP_TYPE_SPACE_BAR_ACTION,
+                         GIMP_SPACE_BAR_ACTION_PAN,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ZOOM_QUALITY,
+                         "zoom-quality",
+                         "Zoom quality",
+                         ZOOM_QUALITY_BLURB,
+                         GIMP_TYPE_ZOOM_QUALITY,
+                         GIMP_ZOOM_QUALITY_HIGH,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_EVENT_HISTORY,
+                            "use-event-history",
+                            "Use event history",
+                            DEFAULT_USE_EVENT_HISTORY_BLURB,
+                            DEFAULT_USE_EVENT_HISTORY,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GUIDES,
-                                    "default-snap-to-guides", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GRID,
-                                    "default-snap-to-grid", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_CANVAS,
-                                    "default-snap-to-canvas", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_PATH,
-                                    "default-snap-to-path", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
-                                    "confirm-on-close", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_XOR_COLOR,
-                                "xor-color", NULL,
-                                FALSE, &color,
-                                GIMP_PARAM_STATIC_STRINGS |
-                                GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GUIDES,
+                            "default-snap-to-guides",
+                            NULL, NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_IGNORE);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GRID,
+                            "default-snap-to-grid",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_IGNORE);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_CANVAS,
+                            "default-snap-to-canvas",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_IGNORE);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_PATH,
+                            "default-snap-to-path",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_IGNORE);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
+                            "confirm-on-close",
+                            NULL, NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_IGNORE);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_XOR_COLOR,
+                        "xor-color",
+                        NULL, NULL,
+                        FALSE, &color,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void

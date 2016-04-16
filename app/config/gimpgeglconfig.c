@@ -113,18 +113,23 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
   object_class->set_property = gimp_gegl_config_set_property;
   object_class->get_property = gimp_gegl_config_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TEMP_PATH,
-                                 "temp-path", TEMP_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR,
-                                 "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_SWAP_PATH,
-                                 "swap-path", SWAP_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR,
-                                 "${gimp_dir}",
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_TEMP_PATH,
+                         "temp-path",
+                         "Temp path",
+                         TEMP_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR,
+                         "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_SWAP_PATH,
+                         "swap-path",
+                         "Swap path",
+                         SWAP_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR,
+                         "${gimp_dir}",
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
 
   num_processors = g_get_num_processors ();
 
@@ -134,10 +139,12 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 
   num_processors = MIN (num_processors, GIMP_MAX_NUM_THREADS);
 
-  GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
-                                 "num-processors", NUM_PROCESSORS_BLURB,
-                                 1, GIMP_MAX_NUM_THREADS, num_processors,
-                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
+                         "num-processors",
+                         "Number of processors to use",
+                         NUM_PROCESSORS_BLURB,
+                         1, GIMP_MAX_NUM_THREADS, num_processors,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   memory_size = gimp_get_physical_memory_size ();
 
@@ -149,23 +156,28 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
   else
     memory_size = 1 << 30; /* 1GB */
 
-  GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
-                                    "tile-cache-size", TILE_CACHE_SIZE_BLURB,
-                                    0, GIMP_MAX_MEM_PROCESS,
-                                    memory_size,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_CONFIRM);
+  GIMP_CONFIG_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
+                            "tile-cache-size",
+                            "Tile cach size",
+                            TILE_CACHE_SIZE_BLURB,
+                            0, GIMP_MAX_MEM_PROCESS,
+                            memory_size,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_CONFIRM);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_OPENCL,
-                                    "use-opencl", USE_OPENCL_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_OPENCL,
+                            "use-opencl",
+                            "Use OpenCL",
+                            USE_OPENCL_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
-                                    "stingy-memory-use", NULL,
-                                    FALSE,
-                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
+                            "stingy-memory-use",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
