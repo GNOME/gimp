@@ -843,18 +843,8 @@ static gboolean
 gimp_real_exit (Gimp     *gimp,
                 gboolean  force)
 {
-  GList *image_iter;
-
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
-
-  /* get rid of images without display */
-  while ((image_iter = gimp_get_image_iter (gimp)))
-    {
-      GimpImage *image = image_iter->data;
-
-      g_object_unref (image);
-    }
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
   gimp_modules_unload (gimp);
@@ -1210,7 +1200,8 @@ void
 gimp_exit (Gimp     *gimp,
            gboolean  force)
 {
-  gboolean handled;
+  gboolean  handled;
+  GList    *image_iter;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -1220,6 +1211,18 @@ gimp_exit (Gimp     *gimp,
   g_signal_emit (gimp, gimp_signals[EXIT], 0,
                  force ? TRUE : FALSE,
                  &handled);
+
+  /* Get rid of images without display. We do this *after* handling the
+   * usual exit callbacks, because the things that are torn down there
+   * might have references to these images (for instance GimpActions
+   * in the UI manager).
+   */
+  while ((image_iter = gimp_get_image_iter (gimp)))
+    {
+      GimpImage *image = image_iter->data;
+
+      g_object_unref (image);
+    }
 }
 
 GList *
