@@ -250,6 +250,7 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
           g_object_unref (buffer);
 
           widget = gtk_scrolled_window_new (NULL, NULL);
+          gtk_widget_set_size_request (widget, -1, 150);
           gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
                                                GTK_SHADOW_IN);
           gtk_container_add (GTK_CONTAINER (widget), view);
