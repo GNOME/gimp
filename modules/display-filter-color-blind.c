@@ -247,11 +247,13 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   object_class->get_property     = cdisplay_colorblind_get_property;
   object_class->set_property     = cdisplay_colorblind_set_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DEFICIENCY,
-                                 "deficiency", NULL,
-                                 CDISPLAY_TYPE_COLORBLIND_DEFICIENCY,
-                                 DEFAULT_DEFICIENCY,
-                                 0);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DEFICIENCY,
+                         "deficiency",
+                         _("Deficiency"),
+                         NULL,
+                         CDISPLAY_TYPE_COLORBLIND_DEFICIENCY,
+                         DEFAULT_DEFICIENCY,
+                         0);
 
   display_class->name            = _("Color Deficient Vision");
   display_class->help_id         = "gimp-colordisplay-colorblind";

@@ -119,10 +119,12 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
   object_class->get_property     = cdisplay_gamma_get_property;
   object_class->set_property     = cdisplay_gamma_set_property;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA,
-                                   "gamma", NULL,
-                                   0.01, 10.0, DEFAULT_GAMMA,
-                                   0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_GAMMA,
+                           "gamma",
+                           _("Gamma"),
+                           NULL,
+                           0.01, 10.0, DEFAULT_GAMMA,
+                           0);
 
   display_class->name            = _("Gamma");
   display_class->help_id         = "gimp-colordisplay-gamma";

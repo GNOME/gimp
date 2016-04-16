@@ -126,19 +126,27 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
   object_class->get_property     = cdisplay_proof_get_property;
   object_class->set_property     = cdisplay_proof_set_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTENT,
-                                 "intent", NULL,
-                                 GIMP_TYPE_COLOR_RENDERING_INTENT,
-                                 GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BPC,
-                                    "black-point-compensation", NULL,
-                                    FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PROFILE,
-                                 "profile", NULL,
-                                 GIMP_CONFIG_PATH_FILE, NULL,
-                                 0);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTENT,
+                         "intent",
+                         _("Intent"),
+                         NULL,
+                         GIMP_TYPE_COLOR_RENDERING_INTENT,
+                         GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                         0);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BPC,
+                            "black-point-compensation",
+                            _("Black point compensation"),
+                            NULL,
+                            FALSE,
+                            0);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PROFILE,
+                         "profile",
+                         _("Profile"),
+                         NULL,
+                         GIMP_CONFIG_PATH_FILE, NULL,
+                         0);
 
   display_class->name            = _("Color Proof");
   display_class->help_id         = "gimp-colordisplay-proof";

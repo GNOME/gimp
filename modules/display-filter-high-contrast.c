@@ -119,10 +119,12 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
   object_class->get_property     = cdisplay_contrast_get_property;
   object_class->set_property     = cdisplay_contrast_set_property;
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CONTRAST,
-                                   "contrast", NULL,
-                                   0.01, 10.0, DEFAULT_CONTRAST,
-                                   0);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CONTRAST,
+                           "contrast",
+                           _("Contrast"),
+                           NULL,
+                           0.01, 10.0, DEFAULT_CONTRAST,
+                           0);
 
   display_class->name            = _("Contrast");
   display_class->help_id         = "gimp-colordisplay-contrast";
