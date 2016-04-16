@@ -2,25 +2,35 @@ Some mostly unfinished docs are here.
 
 -Yosh
 
+This document describes the tool PDBGEN.
+
+If you added or modified .pdb files do not run this tool manually but
+run make instead! It will call pdbgen.pl then to generate the files
+into the right output directories.
+
 PDBGEN
 ------------------
 
 What is this?
-It's a tool to automate much of the drudge work of making PDB interfaces
+PDBGEN is a tool to automate much of the drudge work of making PDB interfaces
 to GIMP internals. Right now, it generates PDB description records,
 argument marshallers (with sanity checking) for the app side, as well
 as libgimp wrappers for C plugins. It's written so that extending it
 to provide support for CORBA and other languages suited to static
 autogeneration.
 
-How to invoke pdbgen from the command line:
-Change into the ./tools/pdbgen directory
-  $ ./pdbgen.pl DIRNAME
-where DIRNAME is either "lib" or "app", depending on which set of
-files you want to generate.  The files are written to ./app or ./lib
-in the ./tools/pdbgen directory.  Up to you to diff the file you
-changed and when you're happy copy it into the actual ./app/ or ./lib/
-directory where it gets built.
+Invoking PDBGEN from the command line:
+1. Change into the ./tools/pdbgen directory.
+2. $ ./pdbgen.pl DIRNAME
+where DIRNAME is either "lib" or "app", depending on which set of files
+you want to generate. The files are written into $destdir/app or $destdir/libgimp.
+$destdir is the environment variable destdir. If it's not set,
+then it's the ./tools/pdbgen directory. Make sure the directories
+$destdir/app and $destdir/libgimp already exist and you have write permissions.
+Otherwise the code generator will fail and exit.
+It's up to you to diff the file you changed. When you're happy with
+the generated file, copy it into the actual ./app/ or ./libgimp/ directory
+where it finally gets built.
 
 Anatomy of a PDB descriptor:
 PDB descriptors are Perl code. You define a subroutine, which corresponds
@@ -70,7 +80,7 @@ so it gets a shortcut.
           desc => 'The new display', alias => 'gdisp', init => 1 }
     );
 
-This is a real argument. It has a name, type, description at a minumum.
+This is a real argument. It has a name, type, description at a minimum.
 "alias" lets you use the alias name in your invoker code, but the real
 name is still shown in the ProcRecord. This is useful not only as a
 shorthand, but for grabbing variables defined somewhere else (or constants),
