@@ -127,7 +127,6 @@ static void      gimp_image_map_tool_real_reset     (GimpImageMapTool     *im_to
 static void      gimp_image_map_tool_halt           (GimpImageMapTool     *im_tool);
 static void      gimp_image_map_tool_commit         (GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_map            (GimpImageMapTool     *im_tool);
 static void      gimp_image_map_tool_dialog         (GimpImageMapTool     *im_tool);
 static void      gimp_image_map_tool_dialog_unmap   (GtkWidget            *dialog,
                                                      GimpImageMapTool     *im_tool);
@@ -707,7 +706,7 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
         {
           gimp_tool_control_push_preserve (tool->control, TRUE);
 
-          gimp_image_map_tool_map (im_tool);
+          gimp_image_map_apply (im_tool->image_map, NULL);
 
           gimp_tool_control_pop_preserve (tool->control);
 
@@ -912,7 +911,7 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
       if (! options->preview)
-        gimp_image_map_tool_map (im_tool);
+        gimp_image_map_apply (im_tool->image_map, NULL);
 
       gimp_image_map_commit (im_tool->image_map, GIMP_PROGRESS (tool), TRUE);
       g_object_unref (im_tool->image_map);
@@ -935,15 +934,6 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
 
   tool->display  = NULL;
   tool->drawable = NULL;
-}
-
-static void
-gimp_image_map_tool_map (GimpImageMapTool *im_tool)
-{
-  gimp_gegl_config_sync_node (GIMP_OBJECT (im_tool->config),
-                              im_tool->operation);
-
-  gimp_image_map_apply (im_tool->image_map, NULL);
 }
 
 static void
@@ -1303,6 +1293,8 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *im_tool)
 
   gimp_gegl_config_sync_node (GIMP_OBJECT (im_tool->config),
                               im_tool->operation);
+  gimp_gegl_config_connect_node (GIMP_OBJECT (im_tool->config),
+                                 im_tool->operation);
 
   if (im_tool->gui)
     {
@@ -1358,7 +1350,7 @@ gimp_image_map_tool_preview (GimpImageMapTool *im_tool)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_tool_map (im_tool);
+      gimp_image_map_apply (im_tool->image_map, NULL);
 
       gimp_tool_control_pop_preserve (tool->control);
     }
