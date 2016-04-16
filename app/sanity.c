@@ -506,6 +506,7 @@ sanity_check_gegl_ops (void)
     "gegl:fractal-trace",
     "gegl:gaussian-blur",
     "gegl:gaussian-blur-selective",
+    "gegl:gegl",
     "gegl:grid",
     "gegl:high-pass",
     "gegl:illusion",

@@ -301,7 +301,7 @@ gimp_operation_tool_dialog (GimpImageMapTool *im_tool)
   if (tool->options_gui)
     {
       gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_gui,
-                          FALSE, FALSE, 0);
+                          TRUE, TRUE, 0);
       gtk_widget_show (tool->options_gui);
     }
 }
