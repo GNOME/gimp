@@ -172,72 +172,105 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
   object_class->set_property = gimp_color_config_set_property;
   object_class->get_property = gimp_color_config_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE,
-                                 "mode", COLOR_MANAGEMENT_MODE_BLURB,
-                                 GIMP_TYPE_COLOR_MANAGEMENT_MODE,
-                                 GIMP_COLOR_MANAGEMENT_DISPLAY,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_RGB_PROFILE,
-                                 "rgb-profile", RGB_PROFILE_BLURB,
-                                 GIMP_CONFIG_PATH_FILE, NULL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRAY_PROFILE,
-                                 "gray-profile", GRAY_PROFILE_BLURB,
-                                 GIMP_CONFIG_PATH_FILE, NULL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_CMYK_PROFILE,
-                                 "cmyk-profile", CMYK_PROFILE_BLURB,
-                                 GIMP_CONFIG_PATH_FILE, NULL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_DISPLAY_PROFILE,
-                                 "display-profile", DISPLAY_PROFILE_BLURB,
-                                 GIMP_CONFIG_PATH_FILE, NULL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISPLAY_PROFILE_FROM_GDK,
-                                    "display-profile-from-gdk",
-                                    DISPLAY_PROFILE_FROM_GDK_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PRINTER_PROFILE,
-                                 "printer-profile", PRINTER_PROFILE_BLURB,
-                                 GIMP_CONFIG_PATH_FILE, NULL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DISPLAY_RENDERING_INTENT,
-                                 "display-rendering-intent",
-                                 DISPLAY_RENDERING_INTENT_BLURB,
-                                 GIMP_TYPE_COLOR_RENDERING_INTENT,
-                                 GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISPLAY_USE_BPC,
-                                    "display-use-black-point-compensation",
-                                    DISPLAY_USE_BPC_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SIMULATION_RENDERING_INTENT,
-                                 "simulation-rendering-intent",
-                                 SIMULATION_RENDERING_INTENT_BLURB,
-                                 GIMP_TYPE_COLOR_RENDERING_INTENT,
-                                 GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SIMULATION_USE_BPC,
-                                    "simulation-use-black-point-compensation",
-                                    SIMULATION_USE_BPC_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SIMULATION_GAMUT_CHECK,
-                                    "simulation-gamut-check",
-                                    SIMULATION_GAMUT_CHECK_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_OUT_OF_GAMUT_COLOR,
-                                "out-of-gamut-color",
-                                OUT_OF_GAMUT_COLOR_BLURB,
-                                FALSE, &color,
-                                GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DISPLAY_MODULE,
-                                   "display-module", NULL,
-                                   "CdisplayLcms",
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MODE,
+                         "mode",
+                         _("Mode of operation"),
+                         COLOR_MANAGEMENT_MODE_BLURB,
+                         GIMP_TYPE_COLOR_MANAGEMENT_MODE,
+                         GIMP_COLOR_MANAGEMENT_DISPLAY,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_RGB_PROFILE,
+                         "rgb-profile",
+                         _("Preferred RGB profile"),
+                         RGB_PROFILE_BLURB,
+                         GIMP_CONFIG_PATH_FILE, NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_GRAY_PROFILE,
+                         "gray-profile",
+                         _("Preferred grayscale profile"),
+                         GRAY_PROFILE_BLURB,
+                         GIMP_CONFIG_PATH_FILE, NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_CMYK_PROFILE,
+                         "cmyk-profile",
+                         _("CMYK profile"),
+                         CMYK_PROFILE_BLURB,
+                         GIMP_CONFIG_PATH_FILE, NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_DISPLAY_PROFILE,
+                         "display-profile",
+                         _("Monitor profile"),
+                         DISPLAY_PROFILE_BLURB,
+                         GIMP_CONFIG_PATH_FILE, NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DISPLAY_PROFILE_FROM_GDK,
+                            "display-profile-from-gdk",
+                            _("Use the system monitor profile"),
+                            DISPLAY_PROFILE_FROM_GDK_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PRINTER_PROFILE,
+                         "printer-profile",
+                         _("Print simulation profile"),
+                         PRINTER_PROFILE_BLURB,
+                         GIMP_CONFIG_PATH_FILE, NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DISPLAY_RENDERING_INTENT,
+                         "display-rendering-intent",
+                         _("Display rendering intent"),
+                         DISPLAY_RENDERING_INTENT_BLURB,
+                         GIMP_TYPE_COLOR_RENDERING_INTENT,
+                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DISPLAY_USE_BPC,
+                            "display-use-black-point-compensation",
+                            _("Use black point compensation for the display"),
+                            DISPLAY_USE_BPC_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SIMULATION_RENDERING_INTENT,
+                         "simulation-rendering-intent",
+                         _("Softproof rendering intent"),
+                         SIMULATION_RENDERING_INTENT_BLURB,
+                         GIMP_TYPE_COLOR_RENDERING_INTENT,
+                         GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_USE_BPC,
+                            "simulation-use-black-point-compensation",
+                            _("Use black point compensation for softproofing"),
+                            SIMULATION_USE_BPC_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_GAMUT_CHECK,
+                            "simulation-gamut-check",
+                            _("Mark out of gamut colors"),
+                            SIMULATION_GAMUT_CHECK_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_OUT_OF_GAMUT_COLOR,
+                        "out-of-gamut-color",
+                        _("Out of gammut warning color"),
+                        OUT_OF_GAMUT_COLOR_BLURB,
+                        FALSE, &color,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DISPLAY_MODULE,
+                           "display-module",
+                           NULL, NULL,
+                           "CdisplayLcms",
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
