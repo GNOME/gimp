@@ -1212,6 +1212,9 @@ gimp_exit (Gimp     *gimp,
                  force ? TRUE : FALSE,
                  &handled);
 
+  if (handled)
+    return;
+
   /* Get rid of images without display. We do this *after* handling the
    * usual exit callbacks, because the things that are torn down there
    * might have references to these images (for instance GimpActions
