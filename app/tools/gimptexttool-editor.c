@@ -802,8 +802,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         }
       else if (count > 0)
         {
-	  if (! gtk_text_iter_forward_visible_word_ends (&cursor, count))
-	    gtk_text_iter_forward_to_line_end (&cursor);
+          if (! gtk_text_iter_forward_visible_word_ends (&cursor, count))
+            gtk_text_iter_forward_to_line_end (&cursor);
         }
       break;
 
@@ -1115,7 +1115,7 @@ gimp_text_tool_select_all (GimpTextTool *text_tool,
       GtkTextIter cursor;
 
       gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
-					gtk_text_buffer_get_insert (buffer));
+                                        gtk_text_buffer_get_insert (buffer));
       gtk_text_buffer_move_mark_by_name (buffer, "selection_bound", &cursor);
     }
 
