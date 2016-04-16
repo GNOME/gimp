@@ -71,8 +71,8 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
   path = gimp_config_build_data_path ("fractalexplorer");
   GIMP_CONFIG_PROP_PATH (object_class,
                          PROP_FRACTALEXPLORER_PATH,
-                         "Fractal Explorer path",
                          "fractalexplorer-path",
+                         "Fractal Explorer path",
                          FRACTALEXPLORER_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS);
