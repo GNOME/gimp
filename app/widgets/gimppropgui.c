@@ -40,6 +40,7 @@
 #include "core/gimpcontext.h"
 
 #include "gimpcolorpanel.h"
+#include "gimpmessagebox.h"
 #include "gimpspinscale.h"
 #include "gimppropgui.h"
 #include "gimppropgui-constructors.h"
@@ -56,7 +57,10 @@ static GtkWidget * gimp_prop_kelvin_presets_new      (GObject       *config,
                                                       const gchar   *property_name);
 static void        gimp_prop_widget_new_seed_clicked (GtkButton     *button,
                                                       GtkAdjustment *adj);
-
+static gboolean    gimp_prop_string_to_boolean       (GBinding      *binding,
+                                                      const GValue  *from_value,
+                                                      GValue        *to_value,
+                                                      gpointer       user_data);
 
 /*  public functions  */
 
@@ -227,6 +231,8 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
     }
   else if (G_IS_PARAM_SPEC_STRING (pspec))
     {
+      *label = g_param_spec_get_nick (pspec);
+
       if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
         {
           widget =
@@ -249,12 +255,33 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
           gtk_container_add (GTK_CONTAINER (widget), view);
           gtk_widget_show (view);
         }
+      else if (HAS_KEY (pspec, "error", "true"))
+        {
+          GtkWidget *l;
+
+          widget = gimp_message_box_new (GIMP_STOCK_WILBER_EEK);
+          gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (widget), "%s",
+                                             *label);
+          gimp_message_box_set_text (GIMP_MESSAGE_BOX (widget), "%s", "");
+
+          l = GIMP_MESSAGE_BOX (widget)->label[1];
+
+          g_object_bind_property (config, pspec->name,
+                                  l,  "label",
+                                  G_BINDING_SYNC_CREATE);
+          g_object_bind_property_full (config, pspec->name,
+                                       widget, "visible",
+                                       G_BINDING_SYNC_CREATE,
+                                       gimp_prop_string_to_boolean,
+                                       NULL,
+                                       NULL, NULL);
+          *label = NULL;
+        }
       else
         {
           widget = gimp_prop_entry_new (config, pspec->name, -1);
         }
 
-      *label = g_param_spec_get_nick (pspec);
     }
   else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
     {
@@ -533,4 +560,17 @@ gimp_prop_widget_new_seed_clicked (GtkButton     *button,
                                       gtk_adjustment_get_upper (adj));
 
   gtk_adjustment_set_value (adj, value);
+}
+
+static gboolean
+gimp_prop_string_to_boolean (GBinding     *binding,
+                             const GValue *from_value,
+                             GValue       *to_value,
+                             gpointer      user_data)
+{
+  const gchar *string = g_value_get_string (from_value);
+
+  g_value_set_boolean (to_value, string && *string);
+
+  return TRUE;
 }
