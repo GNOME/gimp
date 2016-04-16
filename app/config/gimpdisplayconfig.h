@@ -49,7 +49,6 @@ struct _GimpDisplayConfig
   gboolean            resize_windows_on_resize;
   gboolean            default_dot_for_dot;
   gboolean            initial_zoom_to_fit;
-  gboolean            perfect_mouse;
   GimpCursorMode      cursor_mode;
   gboolean            cursor_updating;
   gboolean            show_brush_outline;

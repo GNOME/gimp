@@ -42,9 +42,6 @@ _("Specifies how the area around the image should be drawn.")
 #define COLOR_PROFILE_POLICY_BLURB \
 _("How to handle embedded color profiles when opening a file.")
 
-#define CURSOR_FORMAT_BLURB \
-_("Sets the pixel format to use for mouse pointers.")
-
 #define CURSOR_MODE_BLURB \
 _("Sets the type of mouse pointers to use.")
 
@@ -250,13 +247,6 @@ _("Sets how many processors GIMP should try to use simultaneously.")
 "Sets the pattern search path."
 
 #define PATTERN_PATH_WRITABLE_BLURB ""
-
-#define PERFECT_MOUSE_BLURB \
-_("When enabled, the X server is queried for the mouse's current position " \
-  "on each motion event, rather than relying on the position hint.  This " \
-  "means painting with large brushes should be more accurate, but it may " \
-  "be slower.  Conversely, on some X servers enabling this option results " \
-  "in faster painting.")
 
 #define FILTER_HISTORY_SIZE_BLURB \
 "How many recently used filters and plug-ins to keep on the Filters menu."

@@ -325,21 +325,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                          DEFAULT_HELP_BROWSER,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  /* As a default, we hide unavailable actions. */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS,
-                            "search-show-unavailable-actions",
-                            "Show unavailable actions",
-                            SEARCH_SHOW_UNAVAILABLE_BLURB,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_INT (object_class, PROP_ACTION_HISTORY_SIZE,
-                        "action-history-size",
-                        "Action history size",
-                        ACTION_HISTORY_SIZE_BLURB,
-                        0, 1000, 100,
-                        GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USER_MANUAL_ONLINE,
                             "user-manual-online",
                             "User manual online",
@@ -353,6 +338,20 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                            USER_MANUAL_ONLINE_URI_BLURB,
                            DEFAULT_USER_MANUAL_ONLINE_URI,
                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS,
+                            "search-show-unavailable-actions",
+                            "Show unavailable actions",
+                            SEARCH_SHOW_UNAVAILABLE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_ACTION_HISTORY_SIZE,
+                        "action-history-size",
+                        "Action history size",
+                        ACTION_HISTORY_SIZE_BLURB,
+                        0, 1000, 100,
+                        GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_DOCK_WINDOW_HINT,
                          "dock-window-hint",
@@ -430,7 +429,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   /*  only for backward compatibility:  */
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
                          "cursor-format",
-                         NULL, CURSOR_FORMAT_BLURB,
+                         NULL, NULL,
                          GIMP_TYPE_CURSOR_FORMAT,
                          GIMP_CURSOR_FORMAT_PIXBUF,
                          GIMP_PARAM_STATIC_STRINGS |
@@ -503,7 +502,6 @@ gimp_gui_config_finalize (GObject *object)
   g_free (gui_config->icon_theme_path);
   g_free (gui_config->icon_theme);
   g_free (gui_config->help_locales);
-  g_free (gui_config->web_browser);
   g_free (gui_config->user_manual_online_uri);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -605,18 +603,18 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_HELP_BROWSER:
       gui_config->help_browser = g_value_get_enum (value);
       break;
-    case PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS:
-      gui_config->search_show_unavailable = g_value_get_boolean (value);
-      break;
-    case PROP_ACTION_HISTORY_SIZE:
-      gui_config->action_history_size = g_value_get_int (value);
-      break;
     case PROP_USER_MANUAL_ONLINE:
       gui_config->user_manual_online = g_value_get_boolean (value);
       break;
     case PROP_USER_MANUAL_ONLINE_URI:
       g_free (gui_config->user_manual_online_uri);
       gui_config->user_manual_online_uri = g_value_dup_string (value);
+      break;
+    case PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS:
+      gui_config->search_show_unavailable = g_value_get_boolean (value);
+      break;
+    case PROP_ACTION_HISTORY_SIZE:
+      gui_config->action_history_size = g_value_get_int (value);
       break;
     case PROP_DOCK_WINDOW_HINT:
       gui_config->dock_window_hint = g_value_get_enum (value);
@@ -756,17 +754,17 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_HELP_BROWSER:
       g_value_set_enum (value, gui_config->help_browser);
       break;
-    case PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS:
-      g_value_set_boolean (value, gui_config->search_show_unavailable);
-      break;
-    case PROP_ACTION_HISTORY_SIZE:
-      g_value_set_int (value, gui_config->action_history_size);
-      break;
     case PROP_USER_MANUAL_ONLINE:
       g_value_set_boolean (value, gui_config->user_manual_online);
       break;
     case PROP_USER_MANUAL_ONLINE_URI:
       g_value_set_string (value, gui_config->user_manual_online_uri);
+      break;
+    case PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS:
+      g_value_set_boolean (value, gui_config->search_show_unavailable);
+      break;
+    case PROP_ACTION_HISTORY_SIZE:
+      g_value_set_int (value, gui_config->action_history_size);
       break;
     case PROP_DOCK_WINDOW_HINT:
       g_value_set_enum (value, gui_config->dock_window_hint);

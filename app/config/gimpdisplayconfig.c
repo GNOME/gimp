@@ -172,13 +172,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
-                            "perfect-mouse",
-                            "Perfect mouse",
-                            PERFECT_MOUSE_BLURB,
-                            TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_MODE,
                          "cursor-mode",
                          "Cursor mode",
@@ -339,6 +332,12 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                         FALSE, &color,
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_CONFIG_PARAM_IGNORE);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
+                            "perfect-mouse",
+                            NULL, NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -410,9 +409,6 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_INITIAL_ZOOM_TO_FIT:
       display_config->initial_zoom_to_fit = g_value_get_boolean (value);
       break;
-    case PROP_PERFECT_MOUSE:
-      display_config->perfect_mouse = g_value_get_boolean (value);
-      break;
     case PROP_CURSOR_MODE:
       display_config->cursor_mode = g_value_get_enum (value);
       break;
@@ -475,6 +471,7 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_DEFAULT_SNAP_TO_PATH:
     case PROP_CONFIRM_ON_CLOSE:
     case PROP_XOR_COLOR:
+    case PROP_PERFECT_MOUSE:
       /* ignored */
       break;
 
@@ -517,9 +514,6 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_INITIAL_ZOOM_TO_FIT:
       g_value_set_boolean (value, display_config->initial_zoom_to_fit);
-      break;
-    case PROP_PERFECT_MOUSE:
-      g_value_set_boolean (value, display_config->perfect_mouse);
       break;
     case PROP_CURSOR_MODE:
       g_value_set_enum (value, display_config->cursor_mode);
@@ -576,6 +570,7 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_DEFAULT_SNAP_TO_PATH:
     case PROP_CONFIRM_ON_CLOSE:
     case PROP_XOR_COLOR:
+    case PROP_PERFECT_MOUSE:
       /* ignored */
       break;
 
