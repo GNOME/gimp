@@ -718,6 +718,7 @@
       <menu action="filters-generic-menu" name="Generic">
         <menuitem action="filters-convolution-matrix" />
         <menuitem action="filters-distance-map" />
+        <menuitem action="filters-gegl-graph" />
         <menuitem action="drawable-dilate" />
         <menuitem action="drawable-erode" />
       </menu>
