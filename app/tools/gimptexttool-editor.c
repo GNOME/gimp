@@ -95,8 +95,6 @@ static void     gimp_text_tool_xy_to_iter         (GimpTextTool    *text_tool,
                                                    gdouble          y,
                                                    GtkTextIter     *iter);
 
-static void     gimp_text_tool_im_preedit_start   (GtkIMContext    *context,
-                                                   GimpTextTool    *text_tool);
 static void     gimp_text_tool_im_preedit_end     (GtkIMContext    *context,
                                                    GimpTextTool    *text_tool);
 static void     gimp_text_tool_im_preedit_changed (GtkIMContext    *context,
@@ -127,9 +125,6 @@ gimp_text_tool_editor_init (GimpTextTool *text_tool)
   text_tool->overwrite_mode = FALSE;
   text_tool->x_pos          = -1;
 
-  g_signal_connect (text_tool->im_context, "preedit-start",
-                    G_CALLBACK (gimp_text_tool_im_preedit_start),
-                    text_tool);
   g_signal_connect (text_tool->im_context, "preedit-end",
                     G_CALLBACK (gimp_text_tool_im_preedit_end),
                     text_tool);
@@ -585,7 +580,7 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
 }
 
 void
-gimp_text_tool_editor_update_im_rect (GimpTextTool *text_tool)
+gimp_text_tool_editor_update_im_cursor (GimpTextTool *text_tool)
 {
   GimpDisplayShell *shell;
   PangoRectangle    rect = { 0, };
@@ -605,16 +600,6 @@ gimp_text_tool_editor_update_im_rect (GimpTextTool *text_tool)
   rect.y += off_y;
 
   gimp_display_shell_transform_xy (shell, rect.x, rect.y, &rect.x, &rect.y);
-
-  if (text_tool->preedit_overlay)
-    {
-      GtkRequisition requisition;
-
-      gtk_widget_size_request (text_tool->preedit_overlay, &requisition);
-
-      rect.width  = requisition.width;
-      rect.height = requisition.height;
-    }
 
   gtk_im_context_set_cursor_location (text_tool->im_context,
                                       (GdkRectangle *) &rect);
@@ -1346,73 +1331,18 @@ gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_im_preedit_start (GtkIMContext *context,
-                                 GimpTextTool *text_tool)
-{
-  GimpTool         *tool  = GIMP_TOOL (text_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  GtkStyle         *style = gtk_widget_get_style (shell->canvas);
-  GtkWidget        *frame;
-  GtkWidget        *ebox;
-  PangoRectangle    cursor_rect = { 0, };
-  gint              off_x, off_y;
-
-  if (text_tool->text)
-    gimp_text_tool_editor_get_cursor_rect (text_tool,
-                                           text_tool->overwrite_mode,
-                                           &cursor_rect);
-
-  g_object_get (text_tool, "x1", &off_x, "y1", &off_y, NULL);
-
-  text_tool->preedit_overlay = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (text_tool->preedit_overlay),
-                             GTK_SHADOW_OUT);
-  gimp_display_shell_add_overlay (shell,
-                                  text_tool->preedit_overlay,
-                                  cursor_rect.x + off_x,
-                                  cursor_rect.y + off_y,
-                                  GIMP_HANDLE_ANCHOR_NORTH_WEST, 0, 0);
-  gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
-                                      text_tool->preedit_overlay, 0.7);
-  gtk_widget_show (text_tool->preedit_overlay);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (text_tool->preedit_overlay), frame);
-  gtk_widget_show (frame);
-
-  ebox = gtk_event_box_new ();
-  gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
-                        &style->base[GTK_STATE_NORMAL]);
-  gtk_container_add (GTK_CONTAINER (frame), ebox);
-  gtk_widget_show (ebox);
-
-  text_tool->preedit_label = gtk_label_new (NULL);
-  gtk_widget_modify_bg (text_tool->preedit_label, GTK_STATE_NORMAL,
-                        &style->text[GTK_STATE_NORMAL]);
-  gtk_misc_set_padding (GTK_MISC (text_tool->preedit_label), 2, 2);
-  gtk_container_add (GTK_CONTAINER (ebox), text_tool->preedit_label);
-  gtk_widget_show (text_tool->preedit_label);
-
-  gimp_text_tool_editor_update_im_rect (text_tool);
-}
-
-static void
 gimp_text_tool_im_preedit_end (GtkIMContext *context,
                                GimpTextTool *text_tool)
 {
-  if (text_tool->preedit_overlay)
-    {
-      gtk_widget_destroy (text_tool->preedit_overlay);
-      text_tool->preedit_overlay = NULL;
-      text_tool->preedit_label   = NULL;
-    }
+  gimp_text_tool_delete_selection (text_tool);
 }
 
 static void
 gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                                    GimpTextTool *text_tool)
 {
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+
   if (text_tool->preedit_string)
     g_free (text_tool->preedit_string);
 
@@ -1420,18 +1350,31 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                                      &text_tool->preedit_string, NULL,
                                      &text_tool->preedit_cursor);
 
+  gimp_text_tool_delete_selection (text_tool);
+
   if (text_tool->preedit_string && *text_tool->preedit_string)
     {
-      if (! text_tool->preedit_overlay)
-        gimp_text_tool_im_preedit_start (context, text_tool);
+      GtkTextIter start;
+      GtkTextIter end;
+      gint        line;
+      gint        pos;
 
-      gtk_label_set_text (GTK_LABEL (text_tool->preedit_label),
-                          text_tool->preedit_string);
-    }
-  else
-    {
-      /* an empty string marks the end of preedit */
-      gimp_text_tool_im_preedit_end (context, text_tool);
+      /* Get current position. */
+      gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                        gtk_text_buffer_get_insert (buffer));
+      pos  = gtk_text_iter_get_line_index (&start);
+      line = gtk_text_iter_get_line (&start);
+
+      /* Insert the preedit text at current cursor position. */
+      gimp_text_tool_enter_text (text_tool, text_tool->preedit_string);
+
+      /* Get the new position. */
+      gtk_text_buffer_get_iter_at_mark (buffer, &end,
+                                        gtk_text_buffer_get_insert (buffer));
+
+      /* Select the preedit text. */
+      gtk_text_buffer_get_iter_at_line_index (buffer, &start, line, pos);
+      gtk_text_buffer_select_range (buffer, &start, &end);
     }
 }
 

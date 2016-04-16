@@ -77,9 +77,6 @@ struct _GimpTextTool
   GtkIMContext   *im_context;
   gboolean        needs_im_reset;
 
-  GtkWidget      *preedit_overlay;
-  GtkWidget      *preedit_label;
-
   gchar          *preedit_string;
   gint            preedit_cursor;
 

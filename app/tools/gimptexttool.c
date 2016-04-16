@@ -784,7 +784,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       ! text_tool->layer ||
       ! text_tool->layer->text)
     {
-      gimp_text_tool_editor_update_im_rect (text_tool);
+      gimp_text_tool_editor_update_im_cursor (text_tool);
 
       return;
     }
@@ -821,7 +821,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       gimp_canvas_item_set_highlight (item, TRUE);
     }
 
-  gimp_text_tool_editor_update_im_rect (text_tool);
+  gimp_text_tool_editor_update_im_cursor (text_tool);
 }
 
 static void
