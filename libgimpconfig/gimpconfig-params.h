@@ -173,6 +173,8 @@ G_BEGIN_DECLS
 
 /*  deprecated macros, they all lack the "nick" parameter  */
 
+#ifndef GIMP_DISABLE_DEPRECATED
+
 #define GIMP_CONFIG_INSTALL_PROP_BOOLEAN(class, id, name, blurb, default, flags) \
   GIMP_CONFIG_PROP_BOOLEAN(class, id, name, NULL, blurb, default, flags);
 
@@ -217,6 +219,8 @@ G_BEGIN_DECLS
 
 #define GIMP_CONFIG_INSTALL_PROP_POINTER(class, id, name, blurb, flags) \
   GIMP_CONFIG_PROP_POINTER(class, id, name, NULL, blurb, flags)
+
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS
