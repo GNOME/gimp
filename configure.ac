@@ -1979,28 +1979,6 @@ fi
 
 AM_CONDITIONAL(PLATFORM_OSX_QUARTZ, test "x$gtk_mac_integration_ok" = xyes)
 
-####################################
-# Check for Mac OS X TWAIN framework
-####################################
-
-AC_ARG_WITH(mac-twain,  [  --without-mac-twain     don't build the Mac TWAIN plug-in])
-
-mac_twain_ok=no
-if test "x$with_mac_twain" != xno; then
-  AC_MSG_CHECKING([for Mac OS X TWAIN support])
-  AC_PREPROC_IFELSE(
-    [AC_LANG_SOURCE([[
-#include <Carbon/Carbon.h>
-#include <TWAIN/TWAIN.h>
-#ifdef __x86_64__
-#error Please somebody port this to non-deprecated and non-removed APIs
-#endif]])],
-    [mac_twain_ok=yes])
-  AC_MSG_RESULT($mac_twain_ok)
-fi
-
-AM_CONDITIONAL(HAVE_MAC_TWAIN, test "x$mac_twain_ok" = xyes)
-
 
 ##########################################################
 # Determine where to install the desktop & mime info files
@@ -2517,7 +2495,6 @@ Optional Plug-Ins:
   Python 2:            $enable_python
   Script-Fu:           $have_script_fu
   SVG:                 $have_librsvg
-  TWAIN (MacOS X):     $mac_twain_ok
   TWAIN (Win32):       $os_win32
   Webpage:             $have_webkit
   WMF:                 $have_libwmf

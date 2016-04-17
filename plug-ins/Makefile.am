@@ -20,10 +20,6 @@ if BUILD_SCRIPT_FU
 script_fu = script-fu
 endif
 
-if HAVE_MAC_TWAIN
-twain = twain
-endif
-
 if OS_WIN32
 twain = twain
 win_snap = win-snap
