@@ -21,6 +21,8 @@
 
 void   gimp_fonts_init  (Gimp *gimp);
 void   gimp_fonts_load  (Gimp *gimp);
+void   gimp_fonts_load_with_status (Gimp               *gimp,
+                                    GimpInitStatusFunc  status_callback);
 void   gimp_fonts_reset (Gimp *gimp);
 
 
