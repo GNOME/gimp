@@ -89,8 +89,8 @@ gimp_fonts_load_thread (GimpFontsLoadFuncData *data)
 }
 
 void
-gimp_fonts_load_with_status (Gimp               *gimp,
-                             GimpInitStatusFunc  status_callback)
+gimp_fonts_load (Gimp               *gimp,
+                 GimpInitStatusFunc  status_callback)
 {
   FcConfig *config;
   GFile    *fonts_conf;
@@ -146,8 +146,8 @@ gimp_fonts_load_with_status (Gimp               *gimp,
       g_mutex_lock (&data.mutex);
 
       end_time = g_get_monotonic_time () + 0.1 * G_TIME_SPAN_SECOND;
-      while (!data.caching_complete)
-        if (!g_cond_wait_until (&data.cond, &data.mutex, end_time))
+      while (! data.caching_complete)
+        if (! g_cond_wait_until (&data.cond, &data.mutex, end_time))
           {
             status_callback (NULL, NULL, 0.6);
 
@@ -159,19 +159,15 @@ gimp_fonts_load_with_status (Gimp               *gimp,
       g_thread_join (cache_thread);
     }
   else
-    gimp_fonts_load_func (config);
+    {
+      gimp_fonts_load_func (config);
+    }
 
   gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
 
  cleanup:
   gimp_container_thaw (GIMP_CONTAINER (gimp->fonts));
   gimp_unset_busy (gimp);
-}
-
-void
-gimp_fonts_load (Gimp *gimp)
-{
-  gimp_fonts_load_with_status (gimp, NULL);
 }
 
 void

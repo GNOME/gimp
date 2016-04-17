@@ -21,7 +21,8 @@ sub fonts_refresh {
 
     $help = <<'HELP';
 This procedure retrieves all fonts currently in the user's font path
-and updates the font dialogs accordingly.
+and updates the font dialogs accordingly. Depending on the amount
+of fonts on the system, this can take considerable time.
 HELP
 
     &neo_pdb_misc('2003');
@@ -29,7 +30,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_fonts_load (gimp);
+  gimp_fonts_load (gimp, NULL);
 }
 CODE
     );

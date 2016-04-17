@@ -40,7 +40,8 @@
  * Refresh current fonts. This function always succeeds.
  *
  * This procedure retrieves all fonts currently in the user's font path
- * and updates the font dialogs accordingly.
+ * and updates the font dialogs accordingly. Depending on the amount of
+ * fonts on the system, this can take considerable time.
  *
  * Returns: TRUE on success.
  **/

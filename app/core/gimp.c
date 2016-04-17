@@ -1119,7 +1119,7 @@ gimp_restore (Gimp               *gimp,
   /*  initialize the list of fonts  */
   status_callback (NULL, _("Fonts (this may take a while)"), 0.6);
   if (! gimp->no_fonts)
-    gimp_fonts_load_with_status (gimp, status_callback);
+    gimp_fonts_load (gimp, status_callback);
 
   /*  initialize the color history   */
   gimp_palettes_load (gimp);
