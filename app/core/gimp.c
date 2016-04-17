@@ -975,7 +975,7 @@ gimp_restore (Gimp               *gimp,
   /*  initialize the list of fonts  */
   status_callback (NULL, _("Fonts (this may take a while)"), 0.6);
   if (! gimp->no_fonts)
-    gimp_fonts_load (gimp);
+    gimp_fonts_load_with_status (gimp, status_callback);
 
   /*  initialize the list of gimp tool presets if we have a GUI  */
   if (! gimp->no_interface)
