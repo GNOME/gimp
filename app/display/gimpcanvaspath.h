@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program Copyright (C) 1995
  * Spencer Kimball and Peter Mattis
  *
- * gimpcanvaspolygon.h
+ * gimpcanvaspath.h
  * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_POLYGON_H__
+#ifndef __GIMP_CANVAS_PATH_H__
 #define __GIMP_CANVAS_PATH_H__
 
 
