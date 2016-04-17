@@ -350,7 +350,6 @@ load_image (const gchar  *filename,
           exif_data_unref (exif_data);
           exif_data = NULL;
         }
-#endif
 
       /* Step 5.2: check for XMP metadata in APP1 markers (after EXIF) */
       for (marker = cinfo.marker_list; marker; marker = marker->next)
@@ -389,6 +388,7 @@ load_image (const gchar  *filename,
               g_free (xmp_packet);
             }
         }
+#endif
 
       /* Step 5.3: check for an embedded ICC profile in APP2 markers */
       jpeg_icc_read_profile (&cinfo, &profile, &profile_size);
