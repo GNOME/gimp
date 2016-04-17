@@ -30,9 +30,12 @@
 
 #include "config.h"
 
+#include <gegl.h>
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include <libgimpcolor/gimpcolor.h>
 #include <libgimpmath/gimpmath.h>
 
 #include "gimpcolorwheel.h"
@@ -346,8 +349,6 @@ gimp_color_wheel_size_allocate (GtkWidget     *widget,
 
 
 /* Utility functions */
-
-#define INTENSITY(r, g, b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11)
 
 /* Converts from HSV to RGB */
 static void
@@ -875,7 +876,7 @@ paint_ring (GimpColorWheel *wheel,
   b = 1.0;
   hsv_to_rgb (&r, &g, &b);
 
-  if (INTENSITY (r, g, b) > 0.5)
+  if (GIMP_RGB_LUMINANCE (r, g, b) > 0.5)
     cairo_set_source_rgb (source_cr, 0., 0., 0.);
   else
     cairo_set_source_rgb (source_cr, 1., 1., 1.);
@@ -1099,7 +1100,7 @@ paint_triangle (GimpColorWheel *wheel,
   b = priv->v;
   hsv_to_rgb (&r, &g, &b);
 
-  if (INTENSITY (r, g, b) > 0.5)
+  if (GIMP_RGB_LUMINANCE (r, g, b) > 0.5)
     {
       detail = "colorwheel_light";
       cairo_set_source_rgb (cr, 0., 0., 0.);
