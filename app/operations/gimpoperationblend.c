@@ -944,7 +944,11 @@ gradient_put_pixel (gint      x,
       r = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
       g = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
       b = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-      a = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+
+      if (color->a > 0.0 && color->a < 1.0)
+        a = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+      else
+        a = color->a;
 
       *dest++ = MAX (r, 0.0);
       *dest++ = MAX (g, 0.0);
@@ -1119,7 +1123,11 @@ gimp_operation_blend_process (GeglOperation       *operation,
                     r = color.r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
                     g = color.g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
                     b = color.b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-                    a = color.a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+
+                    if (color.a > 0.0 && color.a < 1.0)
+                      a = color.a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+                    else
+                      a = color.a;
 
                     *dest++ = MAX (r, 0.0);
                     *dest++ = MAX (g, 0.0);
