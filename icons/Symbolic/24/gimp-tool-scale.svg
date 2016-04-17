@@ -17,7 +17,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-scale-24.svg"
+   sodipodi:docname="gimp-tool-scale.svg"
    inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
    inkscape:export-xdpi="98.181816"
    inkscape:export-ydpi="98.181816">
@@ -61,8 +61,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="16"
-     inkscape:cx="6.0219708"
-     inkscape:cy="14.628924"
+     inkscape:cx="-12.009279"
+     inkscape:cy="13.972674"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -100,7 +100,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -115,7 +115,8 @@
      id="layer1"
      transform="translate(0,-1028.3622)">
     <g
-       id="g9075">
+       id="g9075"
+       transform="matrix(1,0,0,-1,0,2080.7244)">
       <rect
          y="1028.3622"
          x="4e-06"
@@ -140,8 +141,9 @@
       <path
          id="rect9060"
          transform="translate(0,1028.3622)"
-         d="M 9 11 L 9 11.111328 L 11.873047 13.882812 L 7 18.835938 L 9.3183594 21 L 14.154297 16.085938 L 17 18.832031 L 17 11 L 9 11 z "
-         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+         d="m 9,11 v 0.111328 L 11.873047,13.882812 7,18.835938 9.3183594,21 14.154297,16.085938 17,18.832031 V 11 Z"
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         inkscape:connector-curvature="0" />
     </g>
   </g>
 </svg>
