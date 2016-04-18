@@ -708,7 +708,7 @@ do_curl_effect (gint32 drawable_id)
   GeglBuffer   *curl_buffer;
   gint32        curl_layer_id;
   GimpRGB      *grad_samples = NULL;
-  gint          width, height, bpp;
+  gint          width, height, n_ch;
   GeglRectangle *roi;
   GeglBufferIterator *iter;
   const Babl         *format;
@@ -735,8 +735,8 @@ do_curl_effect (gint32 drawable_id)
 
   width  = gegl_buffer_get_width (curl_buffer);
   height = gegl_buffer_get_height (curl_buffer);
-  format = gegl_buffer_get_format (curl_buffer);
-  bpp    = babl_format_get_bytes_per_pixel (format);
+  format = babl_format ("R'G'B'A float");
+  n_ch   = babl_format_get_n_components (format);
 
   iter = gegl_buffer_iterator_new (curl_buffer,
                                    GEGL_RECTANGLE (0, 0, width, height), 0,
@@ -771,10 +771,10 @@ do_curl_effect (gint32 drawable_id)
   /* Main loop */
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar *dest;
+      gfloat *dest;
 
       roi = &iter->roi[0];
-      dest = iter->data[0];
+      dest = (gfloat *) iter->data[0];
 
       for (y1 = roi->y; y1 < roi->y + roi->height; y1++)
         {
@@ -853,8 +853,12 @@ do_curl_effect (gint32 drawable_id)
                     }
                 }
 
-              gimp_rgba_get_pixel (&color, format, dest);
-              dest += bpp;
+              dest[0] = color.r;
+              dest[1] = color.g;
+              dest[2] = color.b;
+              dest[3] = color.a;
+
+              dest += n_ch;
             }
         }
       progress += roi->width * roi->height;
@@ -879,14 +883,14 @@ clear_curled_region (gint32 drawable_id)
   gint          x = 0;
   gint          y = 0;
   guint         x1, y1;
-  guchar       *dest, *src;
+  gfloat       *dest, *src;
   guint         progress, max_progress;
   GeglBuffer   *buf;
   GeglBuffer   *shadow_buf;
   GeglRectangle *roi;
   GeglBufferIterator *iter;
   const Babl   *format;
-  gint          width, height, bpp;
+  gint          width, height, bpp, n_ch;
   gint          buf_index;
 
   max_progress = 2 * sel_width * sel_height;
@@ -896,22 +900,26 @@ clear_curled_region (gint32 drawable_id)
   shadow_buf = gimp_drawable_get_shadow_buffer (drawable_id);
   width  = gegl_buffer_get_width (buf);
   height = gegl_buffer_get_height (buf);
-  format = gegl_buffer_get_format (buf);
+
+  format = babl_format ("R'G'B'A float");
   bpp    = babl_format_get_bytes_per_pixel (format);
+  n_ch   = babl_format_get_n_components (format);
 
   iter = gegl_buffer_iterator_new (shadow_buf,
-                                   GEGL_RECTANGLE (0, 0, width, height), 0, format,
+                                   GEGL_RECTANGLE (0, 0, width, height), 0,
+                                   format,
                                    GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-  buf_index = gegl_buffer_iterator_add (iter, buf, NULL, 0, format,
+  buf_index = gegl_buffer_iterator_add (iter, buf, NULL, 0,
+                                        format,
                                         GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      GimpRGB color;
-
       roi  = &iter->roi[0];
       dest = iter->data[0];
       src  = iter->data[buf_index];
+
+      memcpy (dest, src, roi->width * roi->height * bpp);
 
       for (y1 = roi->y; y1 < roi->y + roi->height; y1++)
         {
@@ -935,21 +943,20 @@ clear_curled_region (gint32 drawable_id)
                   break;
                 }
 
-              gimp_rgba_set_pixel (&color, format, src);
-
               if (right_of_diagr (x, y) ||
                   (right_of_diagm (x, y) &&
                    below_diagb (x, y) &&
                    !inside_circle (x, y)))
                 {
                   /* Right of the curl: Alpha = 0 */
-                  color.a = 0.0;
+                  dest[0] = src[0];
+                  dest[1] = src[1];
+                  dest[2] = src[2];
+                  dest[3] = 0.0;
                 }
 
-              gimp_rgba_get_pixel (&color, format, dest);
-
-              dest += bpp;
-              src += bpp;
+              dest += n_ch;
+              src += n_ch;
             }
         }
 
