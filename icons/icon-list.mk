@@ -168,6 +168,7 @@ scalable_images = \
 	scalable/gimp-shape-diamond.svg			\
 	scalable/gimp-shape-square.svg			\
 	scalable/gimp-swap-colors.svg			\
+	scalable/gimp-symmetry.svg			\
 	scalable/gimp-template.svg			\
 	scalable/gimp-text-dir-ltr.svg			\
 	scalable/gimp-text-dir-rtl.svg			\
