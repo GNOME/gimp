@@ -24,29 +24,29 @@
 
 #include "openexr-wrapper.h"
 
-#define LOAD_PROC          "file-exr-load"
-#define PLUG_IN_BINARY     "file-exr"
-#define PLUG_IN_ROLE       "gimp-file-exr"
-#define PLUG_IN_VERSION    "0.0.0"
+#define LOAD_PROC       "file-exr-load"
+#define PLUG_IN_BINARY  "file-exr"
+#define PLUG_IN_VERSION "0.0.0"
 
 
 /*
  * Declare some local functions.
  */
-static void     query       (void);
-static void     run         (const gchar      *name,
-                             gint              nparams,
-                             const GimpParam  *param,
-                             gint             *nreturn_vals,
-                             GimpParam       **return_vals);
+static void     query      (void);
+static void     run        (const gchar      *name,
+                            gint              nparams,
+                            const GimpParam  *param,
+                            gint             *nreturn_vals,
+                            GimpParam       **return_vals);
 
-static gint32    load_image (const gchar      *filename,
-                             gboolean          interactive,
-                             GError          **error);
+static gint32   load_image (const gchar      *filename,
+                            gboolean          interactive,
+                            GError          **error);
+
+
 /*
  * Some global variables.
  */
-
 const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -57,6 +57,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 
 MAIN ()
+
 
 static void
 query (void)
@@ -152,30 +153,29 @@ load_image (const gchar  *filename,
             gboolean      interactive,
             GError      **error)
 {
-  gint32 status = -1;
-  EXRLoader *loader;
-  int width;
-  int height;
-  gboolean has_alpha;
+  EXRLoader        *loader;
+  gint              width;
+  gint              height;
+  gboolean          has_alpha;
   GimpImageBaseType image_type;
-  GimpPrecision image_precision;
-  gint32 image = -1;
-  GimpImageType layer_type;
-  int layer;
-  const Babl *format;
-  GeglBuffer *buffer = NULL;
-  int bpp;
-  int tile_height;
-  gchar *pixels = NULL;
-  int begin;
-  int end;
-  int num;
+  GimpPrecision     image_precision;
+  gint32            image = -1;
+  GimpImageType     layer_type;
+  gint32            layer;
+  const Babl       *format;
+  GeglBuffer       *buffer = NULL;
+  gint              bpp;
+  gint              tile_height;
+  gchar            *pixels = NULL;
+  gint              begin;
+  gint32            success = FALSE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   loader = exr_loader_new (filename);
-  if (!loader)
+
+  if (! loader)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s' for reading"),
@@ -183,8 +183,9 @@ load_image (const gchar  *filename,
       goto out;
     }
 
-  width = exr_loader_get_width (loader);
+  width  = exr_loader_get_width (loader);
   height = exr_loader_get_height (loader);
+
   if ((width < 1) || (height < 1))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -255,13 +256,17 @@ load_image (const gchar  *filename,
 
   for (begin = 0; begin < height; begin += tile_height)
     {
-      int retval;
-      int i;
+      gint end;
+      gint num;
+      gint i;
+
       end = MIN (begin + tile_height, height);
       num = end - begin;
 
       for (i = 0; i < num; i++)
         {
+          gint retval;
+
           retval = exr_loader_read_pixel_row (loader,
                                               pixels + (i * width * bpp),
                                               bpp, begin + i);
@@ -306,17 +311,11 @@ load_image (const gchar  *filename,
 
   gimp_progress_update (1.0);
 
-  status = image;
+  success = TRUE;
 
  out:
   if (buffer)
     g_object_unref (buffer);
-
-  if ((status != image) && (image != -1))
-    {
-      /* This should clean up any associated layers too. */
-      gimp_image_delete (image);
-    }
 
   if (pixels)
     g_free (pixels);
@@ -324,5 +323,11 @@ load_image (const gchar  *filename,
   if (loader)
     exr_loader_unref (loader);
 
-  return status;
+  if (success)
+    return image;
+
+  if (image != -1)
+    gimp_image_delete (image);
+
+  return -1;
 }
