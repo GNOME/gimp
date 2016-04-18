@@ -2326,6 +2326,7 @@ build/windows/gimp.rc
 build/windows/gimp-plug-ins.rc
 plug-ins/Makefile
 plug-ins/file-bmp/Makefile
+plug-ins/file-darktable/Makefile
 plug-ins/file-exr/Makefile
 plug-ins/file-faxg3/Makefile
 plug-ins/file-fits/Makefile

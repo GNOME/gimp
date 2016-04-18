@@ -1,0 +1,63 @@
+--[[
+    This file is part of darktable,
+    copyright (c) 2015-2016 Tobias Ellinghaus
+
+    darktable is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    darktable is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with darktable.  If not, see <http://www.gnu.org/licenses/>.
+]]
+
+--[[
+EXPORT ON EXIT
+exports all (but at most 1) images from the database to tmp_dir/out.exr when darktable exits
+
+
+USAGE
+* require this file from your main lua config file
+* or: use --luacmd "dofile('/path/to/this/file.lua')"
+
+
+]]
+
+local dt = require "darktable"
+
+local min_api_version = "2.1.0"
+if dt.configuration.api_version_string < min_api_version then
+  dt.print("the exit export script requires at least darktable version 1.7.0")
+  dt.print_error("the exit export script requires at least darktable version 1.7.0")
+  return
+end
+
+dt.register_event("exit", function()
+  -- safegurad against someone using this with their library containing 50k images
+  if #dt.database > 1 then
+    dt.print_error("too many images, not exporting")
+    return
+  end
+
+  -- change the view first to force writing of the history stack
+  dt.gui.current_view(dt.gui.views.lighttable)
+  -- now export
+  local format = dt.new_format("exr")
+  format.max_width = 0
+  format.max_height = 0
+  -- let's have the export in a loop so we could easily support > 1 images
+  for _, image in ipairs(dt.database) do
+    local filename = dt.configuration.tmp_dir.."/out."..format.extension
+    dt.print_error("exporting `"..tostring(image).."' to `"..filename.."'")
+    format:write_image(image, filename)
+  end
+end)
+
+--
+-- vim: shiftwidth=2 expandtab tabstop=2 cindent syntax=lua
+-- kate: hl Lua;

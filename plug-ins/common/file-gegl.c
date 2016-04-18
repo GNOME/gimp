@@ -84,19 +84,6 @@ static const FileFormat file_formats[] =
   },
 
   {
-    N_("NEF image"),
-    "image/x-nikon-nef",
-    "nef",
-    "",
-
-    "file-nef-load",
-    "Loads NEF images using GEGL",
-    "This procedure loads images in NEF format, using gegl:load",
-
-    NULL, NULL, NULL /* no NEF saving */
-  },
-
-  {
     N_("WebP image"),
     "image/webp",
     "webp",

@@ -5,6 +5,7 @@ help_browser = help-browser
 endif
 
 if HAVE_OPENEXR
+file_darktable = file-darktable
 file_exr = file-exr
 endif
 
@@ -29,6 +30,7 @@ SUBDIRS = \
 	$(script_fu)		\
 	$(pygimp)		\
 	file-bmp		\
+	$(file_darktable)	\
 	$(file_exr)		\
 	file-faxg3		\
 	file-fits		\
