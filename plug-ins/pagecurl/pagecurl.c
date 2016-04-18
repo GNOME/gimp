@@ -124,7 +124,7 @@ static void       init_calculation     (gint32            drawable_id);
 static gint32     do_curl_effect       (gint32            drawable_id);
 static void       clear_curled_region  (gint32            drawable_id);
 static gint32     page_curl            (gint32            drawable_id);
-static guchar   * get_gradient_samples (gint32            drawable_id,
+static GimpRGB  * get_gradient_samples (gint32            drawable_id,
                                         gboolean          reverse);
 
 
@@ -170,8 +170,8 @@ static gdouble diagm_slope;
 
 /* User-configured parameters */
 
-static guchar fore_color[3];
-static guchar back_color[3];
+static GimpRGB fg_color;
+static GimpRGB bg_color;
 
 
 /***** Functions *****/
@@ -629,7 +629,6 @@ init_calculation (gint32 drawable_id)
   GimpVector2  v1, v2;
   gint32      *image_layers;
   gint32       nlayers;
-  GimpRGB      color;
 
   gimp_layer_add_alpha (drawable_id);
 
@@ -691,11 +690,8 @@ init_calculation (gint32 drawable_id)
 
   /* Colors */
 
-  gimp_context_get_foreground (&color);
-  gimp_rgb_get_uchar (&color, &fore_color[0], &fore_color[1], &fore_color[2]);
-
-  gimp_context_get_background (&color);
-  gimp_rgb_get_uchar (&color, &back_color[0], &back_color[1], &back_color[2]);
+  gimp_context_get_foreground (&fg_color);
+  gimp_context_get_background (&bg_color);
 }
 
 static gint32
@@ -704,16 +700,14 @@ do_curl_effect (gint32 drawable_id)
   gint          x = 0;
   gint          y = 0;
   gboolean      color_image;
-  gint          x1, y1, k;
-  guint         alpha_pos, progress, max_progress;
+  gint          x1, y1;
+  guint         progress, max_progress;
   gdouble       intensity, alpha;
   GimpVector2   v, dl, dr;
   gdouble       dl_mag, dr_mag, angle, factor;
-  guchar        fore_grayval, back_grayval;
-  guchar       *gradsamp;
   GeglBuffer   *curl_buffer;
   gint32        curl_layer_id;
-  guchar       *grad_samples  = NULL;
+  GimpRGB      *grad_samples = NULL;
   gint          width, height, bpp;
   GeglRectangle *roi;
   GeglBufferIterator *iter;
@@ -746,7 +740,7 @@ do_curl_effect (gint32 drawable_id)
 
   iter = gegl_buffer_iterator_new (curl_buffer,
                                    GEGL_RECTANGLE (0, 0, width, height), 0,
-                                   babl_format ("R'G'B'A u8"),
+                                   format,
                                    GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   /* Init shade_under */
@@ -757,15 +751,6 @@ do_curl_effect (gint32 drawable_id)
                     -(sel_height - right_tangent.y));
   dr_mag = gimp_vector2_length (&dr);
   alpha = acos (gimp_vector2_inner_product (&dl, &dr) / (dl_mag * dr_mag));
-
-  /* Init shade_curl */
-
-  fore_grayval = GIMP_RGB_LUMINANCE (fore_color[0],
-                                     fore_color[1],
-                                     fore_color[2]) + 0.5;
-  back_grayval = GIMP_RGB_LUMINANCE (back_color[0],
-                                     back_color[1],
-                                     back_color[2]) + 0.5;
 
   /* Gradient Samples */
   switch (curl.colors)
@@ -783,19 +768,18 @@ do_curl_effect (gint32 drawable_id)
   max_progress = 2 * sel_width * sel_height;
   progress = 0;
 
-  alpha_pos = bpp - 1;
-
   /* Main loop */
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar *pp, *dest;
+      guchar *dest;
 
       roi = &iter->roi[0];
       dest = iter->data[0];
 
       for (y1 = roi->y; y1 < roi->y + roi->height; y1++)
         {
-          pp = dest;
+          GimpRGB color;
+
           for (x1 = roi->x; x1 < roi->x + roi->width; x1++)
             {
               /* Map coordinates to get the curl correct... */
@@ -813,18 +797,16 @@ do_curl_effect (gint32 drawable_id)
                 }
 
               if (left_of_diagl (x, y))
-                { /* uncurled region */
-                  for (k = 0; k <= alpha_pos; k++)
-                    pp[k] = 0;
+                { /* uncurled region: transparent black */
+                  gimp_rgba_set (&color, 0, 0, 0, 0);
                 }
               else if (right_of_diagr (x, y) ||
                        (right_of_diagm (x, y) &&
                         below_diagb (x, y) &&
                         !inside_circle (x, y)))
                 {
-                  /* curled region */
-                  for (k = 0; k <= alpha_pos; k++)
-                    pp[k] = 0;
+                  /* curled region: transparent black */
+                  gimp_rgba_set (&color, 0, 0, 0, 0);
                 }
               else
                 {
@@ -837,75 +819,49 @@ do_curl_effect (gint32 drawable_id)
                     {
                       /* Below the curl. */
                       factor = angle / alpha;
-                      for (k = 0; k < alpha_pos; k++)
-                        pp[k] = 0;
-
-                      pp[alpha_pos] = (curl.shade ?
-                                       (guchar) ((float) 255 * (float) factor) :
-                                       0);
+                      gimp_rgba_set (&color, 0, 0, 0, curl.shade ? factor : 0);
                     }
                   else
                     {
+                      GimpRGB *gradrgb;
+
                       /* On the curl */
                       switch (curl.colors)
                         {
                         case CURL_COLORS_FG_BG:
                           intensity = pow (sin (G_PI * angle / alpha), 1.5);
-                          if (color_image)
-                            {
-                              pp[0] = (intensity * back_color[0] +
-                                       (1.0 - intensity) * fore_color[0]);
-                              pp[1] = (intensity * back_color[1] +
-                                       (1.0 - intensity) * fore_color[1]);
-                              pp[2] = (intensity * back_color[2] +
-                                       (1.0 - intensity) * fore_color[2]);
-                            }
-                          else
-                            pp[0] = (intensity * back_grayval +
-                                     (1 - intensity) * fore_grayval);
-
-                          pp[alpha_pos] = (guchar) ((double) 255.99 *
-                                                    (1.0 - intensity *
-                                                     (1.0 - curl.opacity)));
+                          gimp_rgba_set (&color,
+                                         intensity * bg_color.r + (1.0 - intensity) * fg_color.r,
+                                         intensity * bg_color.g + (1.0 - intensity) * fg_color.g,
+                                         intensity * bg_color.b + (1.0 - intensity) * fg_color.b,
+                                         (1.0 - intensity * (1.0 - curl.opacity)));
                           break;
 
                         case CURL_COLORS_GRADIENT:
                         case CURL_COLORS_GRADIENT_REVERSE:
                           /* Calculate position in Gradient */
-                          intensity =
-                            (angle/alpha) + sin (G_PI*2 * angle/alpha) * 0.075;
+                          intensity = (angle/alpha) + sin (G_PI*2 * angle/alpha) * 0.075;
+
+                          gradrgb = grad_samples + ((guint) (intensity * NGRADSAMPLES));
 
                           /* Check boundaries */
                           intensity = CLAMP (intensity, 0.0, 1.0);
-                          gradsamp  = (grad_samples +
-                                       ((guint) (intensity * NGRADSAMPLES)) *
-                                       bpp);
-
-                          if (color_image)
-                            {
-                              pp[0] = gradsamp[0];
-                              pp[1] = gradsamp[1];
-                              pp[2] = gradsamp[2];
-                            }
-                          else
-                            pp[0] = gradsamp[0];
-
-                          pp[alpha_pos] =
-                            (guchar) ((double) gradsamp[alpha_pos] *
-                                      (1.0 - intensity * (1.0 - curl.opacity)));
+                          color = *gradrgb;
+                          color.a = gradrgb->a * (1.0 - intensity * (1.0 - curl.opacity));
                           break;
                         }
                     }
                 }
-              pp += bpp;
+
+              gimp_rgba_get_pixel (&color, format, dest);
+              dest += bpp;
             }
-          dest = pp;
         }
       progress += roi->width * roi->height;
       gimp_progress_update ((double) progress / (double) max_progress);
     }
 
-  gimp_progress_update (1.0);
+  gimp_progress_update (0.5);
   gegl_buffer_flush (curl_buffer);
   gimp_drawable_merge_shadow (curl_layer_id, FALSE);
   gimp_drawable_update (curl_layer_id, 0, 0, width, height);
@@ -923,15 +879,15 @@ clear_curled_region (gint32 drawable_id)
   gint          x = 0;
   gint          y = 0;
   guint         x1, y1;
-  guchar       *dest, *pp, *src, *sp;
-  guint         alpha_pos, progress, max_progress;
+  guchar       *dest, *src;
+  guint         progress, max_progress;
   GeglBuffer   *buf;
   GeglBuffer   *shadow_buf;
   GeglRectangle *roi;
   GeglBufferIterator *iter;
   const Babl   *format;
   gint          width, height, bpp;
-  gint          i, buf_index;
+  gint          buf_index;
 
   max_progress = 2 * sel_width * sel_height;
   progress = max_progress / 2;
@@ -944,26 +900,21 @@ clear_curled_region (gint32 drawable_id)
   bpp    = babl_format_get_bytes_per_pixel (format);
 
   iter = gegl_buffer_iterator_new (shadow_buf,
-                                   GEGL_RECTANGLE (0, 0, width, height), 0,
-                                   babl_format ("R'G'B'A u8"),
+                                   GEGL_RECTANGLE (0, 0, width, height), 0, format,
                                    GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-  buf_index = gegl_buffer_iterator_add (iter, buf, NULL,
-                                        0, babl_format ("R'G'B'A u8"),
+  buf_index = gegl_buffer_iterator_add (iter, buf, NULL, 0, format,
                                         GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  alpha_pos = bpp - 1;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      roi = &iter->roi[0];
+      GimpRGB color;
+
+      roi  = &iter->roi[0];
       dest = iter->data[0];
       src  = iter->data[buf_index];
 
       for (y1 = roi->y; y1 < roi->y + roi->height; y1++)
         {
-          pp = dest;
-          sp = src;
-
           for (x1 = roi->x; x1 < roi->x + roi->width; x1++)
             {
               /* Map coordinates to get the curl correct... */
@@ -984,28 +935,22 @@ clear_curled_region (gint32 drawable_id)
                   break;
                 }
 
-              for (i = 0; i < alpha_pos; i++)
-                pp[i] = sp[i];
+              gimp_rgba_set_pixel (&color, format, src);
 
               if (right_of_diagr (x, y) ||
                   (right_of_diagm (x, y) &&
                    below_diagb (x, y) &&
                    !inside_circle (x, y)))
                 {
-                  /* Right of the curl */
-                  pp[alpha_pos] = 0;
-                }
-              else
-                {
-                  pp[alpha_pos] = sp[alpha_pos];
+                  /* Right of the curl: Alpha = 0 */
+                  color.a = 0.0;
                 }
 
-              pp += bpp;
-              sp += bpp;
+              gimp_rgba_get_pixel (&color, format, dest);
+
+              dest += bpp;
+              src += bpp;
             }
-
-          dest = pp;
-          src = sp;
         }
 
       progress += roi->width * roi->height;
@@ -1045,47 +990,32 @@ page_curl (gint32 drawable_id)
   Each sample has (gimp_drawable_bpp (drawable_id)) bytes.
   "ripped" from gradmap.c.
  */
-static guchar *
+static GimpRGB *
 get_gradient_samples (gint32    drawable_id,
                       gboolean  reverse)
 {
   gchar   *gradient_name;
-  gint     n_f_samples;
-  gdouble *f_samples, *f_samp;    /* float samples */
-  guchar  *b_samples, *b_samp;    /* byte samples */
-  gint     bpp, color, has_alpha, alpha;
-  gint     i, j;
+  gint     n_d_samples;
+  gdouble *d_samples = NULL;
+  GimpRGB *rgba;
+  gint     i;
 
   gradient_name = gimp_context_get_gradient ();
 
   gimp_gradient_get_uniform_samples (gradient_name, NGRADSAMPLES, reverse,
-                                     &n_f_samples, &f_samples);
+                                     &n_d_samples, &d_samples);
+
+  rgba = g_new0 (GimpRGB, NGRADSAMPLES);
+  for (i = 0; i < NGRADSAMPLES; i++)
+    {
+      gimp_rgba_set (rgba + i,
+                     d_samples[i*4 + 0],
+                     d_samples[i*4 + 1],
+                     d_samples[i*4 + 2],
+                     d_samples[i*4 + 3]);
+    }
 
   g_free (gradient_name);
 
-  bpp       = gimp_drawable_bpp (drawable_id);
-  color     = gimp_drawable_is_rgb (drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable_id);
-  alpha     = (has_alpha ? bpp - 1 : bpp);
-
-  b_samples = g_new (guchar, NGRADSAMPLES * bpp);
-
-  for (i = 0; i < NGRADSAMPLES; i++)
-    {
-      b_samp = &b_samples[i * bpp];
-      f_samp = &f_samples[i * 4];
-
-      if (color)
-        for (j = 0; j < 3; j++)
-          b_samp[j] = f_samp[j] * 255;
-      else
-        b_samp[0] = GIMP_RGB_LUMINANCE (f_samp[0], f_samp[1], f_samp[2]) * 255;
-
-      if (has_alpha)
-        b_samp[alpha] = f_samp[3] * 255;
-    }
-
-  g_free (f_samples);
-
-  return b_samples;
+  return rgba;
 }
