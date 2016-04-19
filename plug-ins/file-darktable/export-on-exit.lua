@@ -18,13 +18,14 @@
 
 --[[
 EXPORT ON EXIT
-exports all (but at most 1) images from the database to tmp_dir/out.exr when darktable exits
+exports all (but at most 1) images from the database to prefs setting "lua/export_on_exit/export_filename"
+when darktable exits
 
 
 USAGE
 * require this file from your main lua config file
 * or: use --luacmd "dofile('/path/to/this/file.lua')"
-
+* and make sure to set the export filename
 
 ]]
 
@@ -36,6 +37,8 @@ if dt.configuration.api_version_string < min_api_version then
   dt.print_error("the exit export script requires at least darktable version 1.7.0")
   return
 end
+
+local export_filename = dt.preferences.read("export_on_exit", "export_filename", "string")
 
 dt.register_event("exit", function()
   -- safegurad against someone using this with their library containing 50k images
@@ -52,9 +55,8 @@ dt.register_event("exit", function()
   format.max_height = 0
   -- let's have the export in a loop so we could easily support > 1 images
   for _, image in ipairs(dt.database) do
-    local filename = dt.configuration.tmp_dir.."/out."..format.extension
-    dt.print_error("exporting `"..tostring(image).."' to `"..filename.."'")
-    format:write_image(image, filename)
+    dt.print_error("exporting `"..tostring(image).."' to `"..export_filename.."'")
+    format:write_image(image, export_filename)
   end
 end)
 

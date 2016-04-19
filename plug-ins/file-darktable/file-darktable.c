@@ -213,25 +213,25 @@ load_image (const gchar  *filename,
             GimpRunMode   run_mode,
             GError      **error)
 {
-  gint32  image_ID     = -1;
-  GFile  *lua_file     = gimp_data_directory_file ("file-darktable",
-                                                   "export-on-exit.lua",
-                                                   NULL);
-  gchar  *lua_script   = g_file_get_path (lua_file);
-  gchar  *lua_quoted   = g_shell_quote (lua_script);
-  gchar  *tempdir      = g_strdup ("/tmp/dt4gimp_XXXXXX");
-  gchar  *lua_cmd      = g_strdup_printf ("dofile(%s)", lua_quoted);
-  gchar  *filename_in  = g_strdup (filename);
-  gchar  *filename_out = NULL;
+  gint32  image_ID        = -1;
+  GFile  *lua_file        = gimp_data_directory_file ("file-darktable",
+                                                      "export-on-exit.lua",
+                                                      NULL);
+  gchar  *lua_script      = g_file_get_path (lua_file);
+  gchar  *lua_quoted      = g_shell_quote (lua_script);
+  gchar  *filename_out    = gimp_temp_name ("exr");
+  gchar  *export_filename = g_strdup_printf ("lua/export_on_exit/export_filename=%s", filename_out);
+  gchar  *lua_cmd         = g_strdup_printf ("dofile(%s)", lua_quoted);
+  gchar  *filename_in     = g_strdup (filename);
 
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gchar *argv[] =
     {
       "darktable",
       "--library", ":memory:",
-      "--tmpdir",  tempdir,
       "--luacmd",  lua_cmd,
       "--conf",    "plugins/lighttable/export/iccprofile=linear_rec709_rgb",
+      "--conf",    export_filename,
       filename_in,
       NULL
     };
@@ -239,22 +239,10 @@ load_image (const gchar  *filename,
   g_object_unref (lua_file);
   g_free (lua_script);
 
-  if ( ! g_mkdtemp (tempdir))
-    {
-      g_free (tempdir);
-      g_free (lua_quoted);
-      g_free (lua_cmd);
-      g_free (filename_in);
-      return -1;
-    }
-
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  /* keep the filename in sync with the .lua file! */
-  filename_out = g_build_filename (tempdir, "out.exr", NULL);
-
-  if (g_spawn_sync (tempdir,
+  if (g_spawn_sync (NULL,
                     argv,
                     NULL,
                     G_SPAWN_STDOUT_TO_DEV_NULL |
@@ -273,12 +261,11 @@ load_image (const gchar  *filename,
     }
 
   g_unlink (filename_out);
-  g_rmdir (tempdir);
-  g_free (tempdir);
   g_free (lua_quoted);
   g_free (lua_cmd);
   g_free (filename_in);
   g_free (filename_out);
+  g_free (export_filename);
 
   gimp_progress_update (1.0);
 
