@@ -145,6 +145,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/tiff");
+  gimp_register_file_handler_uri (LOAD_PROC);
   gimp_register_magic_load_handler (LOAD_PROC,
                                     "tif,tiff",
                                     "",
@@ -165,6 +166,7 @@ query (void)
                           save_args_old, NULL);
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/tiff");
+  gimp_register_file_handler_uri (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "tif,tiff", "");
 
   gimp_install_procedure (SAVE2_PROC,
@@ -207,7 +209,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      GFile *file = g_file_new_for_path (param[1].data.d_string);
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
       TIFF  *tif;
 
       tif = tiff_open (file, "r", &error);
@@ -456,7 +458,7 @@ run (const gchar      *name,
           GFile *file;
           gint   saved_bpp;
 
-          file = g_file_new_for_path (param[3].data.d_string);
+          file = g_file_new_for_uri (param[3].data.d_string);
 
           if (save_image (file, &tsvals,
                           image, drawable, orig_image, image_comment,
