@@ -544,6 +544,8 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
+
+  gegl_exit ();
 }
 
 static gint32
