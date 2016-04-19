@@ -36,7 +36,7 @@ gboolean   load_dialog (TIFF               *tif,
                         const gchar        *help_id,
                         TiffSelectedPages  *pages);
 
-gint32     load_image  (const gchar        *filename,
+gint32     load_image  (GFile              *file,
                         TIFF               *tif,
                         TiffSelectedPages  *pages,
                         gboolean           *resolution_loaded,

@@ -41,10 +41,12 @@ static void   tiff_error   (const gchar *module,
 
 
 TIFF *
-tiff_open (const gchar  *filename,
+tiff_open (GFile        *file,
            const gchar  *mode,
            GError      **error)
 {
+  gchar *filename = g_file_get_path (file);
+
   TIFFSetWarningHandler (tiff_warning);
   TIFFSetErrorHandler (tiff_error);
 

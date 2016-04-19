@@ -218,7 +218,7 @@ load_dialog (TIFF              *tif,
 }
 
 gint32
-load_image (const gchar        *filename,
+load_image (GFile              *file,
             TIFF               *tif,
             TiffSelectedPages  *pages,
             gboolean           *resolution_loaded,
@@ -234,7 +234,7 @@ load_image (const gchar        *filename,
   gint   li;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /* We will loop through the all pages in case of multipage TIFF
    * and load every page as a separate layer.
@@ -370,14 +370,14 @@ load_image (const gchar        *filename,
       if (! TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
         {
           g_message ("Could not get image width from '%s'",
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
           return -1;
         }
 
       if (! TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
         {
           g_message ("Could not get image length from '%s'",
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
           return -1;
         }
 
@@ -393,14 +393,14 @@ load_image (const gchar        *filename,
             {
               g_message ("Could not get photometric from '%s'. "
                          "Image is CCITT compressed, assuming min-is-white",
-                         filename);
+                         gimp_file_get_utf8_name (file));
               photomet = PHOTOMETRIC_MINISWHITE;
             }
           else
             {
               g_message ("Could not get photometric from '%s'. "
                          "Assuming min-is-black",
-                         filename);
+                         gimp_file_get_utf8_name (file));
 
               /* old AppleScan software misses out the photometric tag
                * (and incidentally assumes min-is-white, but xv
@@ -429,7 +429,7 @@ load_image (const gchar        *filename,
           /* assuming unassociated alpha if unspecified */
           g_message ("alpha channel type not defined for file %s. "
                      "Assuming alpha is not premultiplied",
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
           alpha = TRUE;
           tsvals.save_transp_pixels = TRUE;
           extra--;
@@ -704,7 +704,8 @@ load_image (const gchar        *filename,
 
           if (pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             {
-              gchar *fname = g_strdup_printf ("%s-%d", filename, ilayer);
+              gchar *fname = g_strdup_printf ("%s-%d", g_file_get_uri (file),
+                                              ilayer);
 
               gimp_image_set_filename (image, fname);
               g_free (fname);
@@ -714,7 +715,8 @@ load_image (const gchar        *filename,
             }
           else if (pages->o_pages != pages->n_pages)
             {
-              gchar *fname = g_strdup_printf (_("%s-%d-of-%d-pages"), filename,
+              gchar *fname = g_strdup_printf (_("%s-%d-of-%d-pages"),
+                                              g_file_get_uri (file),
                                               pages->n_pages, pages->o_pages);
 
               gimp_image_set_filename (image, fname);
@@ -722,7 +724,7 @@ load_image (const gchar        *filename,
             }
           else
             {
-              gimp_image_set_filename (image, filename);
+              gimp_image_set_filename (image, g_file_get_uri (file));
             }
         }
 
@@ -883,7 +885,7 @@ load_image (const gchar        *filename,
                                   &redmap, &greenmap, &bluemap))
                 {
                   g_message ("Could not get colormaps from '%s'",
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
                   return -1;
                 }
 
