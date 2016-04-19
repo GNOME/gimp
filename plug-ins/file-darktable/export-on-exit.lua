@@ -1,5 +1,5 @@
 --[[
-    This file is part of darktable,
+    This file is part of GIMP,
     copyright (c) 2015-2016 Tobias Ellinghaus
 
     darktable is free software: you can redistribute it and/or modify
