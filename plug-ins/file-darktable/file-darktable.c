@@ -32,10 +32,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC      "file-darktable-load"
-#define PLUG_IN_BINARY "file-darktable"
-
-
 typedef struct _FileFormat FileFormat;
 
 struct _FileFormat
@@ -68,7 +64,7 @@ static const FileFormat file_formats[] =
     N_("Canon CR2 raw"),
     "image/x-canon-cr2",
     "cr2",
-    "0,string,\\x49\\x49\\x2a\\x00\\x10\\x00\\x00\\x00\\x43\\x52",
+    "0,string,II*\\0\\x10\\0\\0\\0CR",
 
     "file-cr2-load",
     "Load files in the CR2 raw format via darktable",
@@ -219,10 +215,9 @@ load_image (const gchar  *filename,
                                                       NULL);
   gchar  *lua_script      = g_file_get_path (lua_file);
   gchar  *lua_quoted      = g_shell_quote (lua_script);
+  gchar  *lua_cmd         = g_strdup_printf ("dofile(%s)", lua_quoted);
   gchar  *filename_out    = gimp_temp_name ("exr");
   gchar  *export_filename = g_strdup_printf ("lua/export_on_exit/export_filename=%s", filename_out);
-  gchar  *lua_cmd         = g_strdup_printf ("dofile(%s)", lua_quoted);
-  gchar  *filename_in     = g_strdup (filename);
 
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gchar *argv[] =
@@ -232,12 +227,13 @@ load_image (const gchar  *filename,
       "--luacmd",  lua_cmd,
       "--conf",    "plugins/lighttable/export/iccprofile=linear_rec709_rgb",
       "--conf",    export_filename,
-      filename_in,
+      (gchar *) filename,
       NULL
     };
 
   g_object_unref (lua_file);
   g_free (lua_script);
+  g_free (lua_quoted);
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -261,9 +257,7 @@ load_image (const gchar  *filename,
     }
 
   g_unlink (filename_out);
-  g_free (lua_quoted);
   g_free (lua_cmd);
-  g_free (filename_in);
   g_free (filename_out);
   g_free (export_filename);
 
