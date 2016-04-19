@@ -225,7 +225,7 @@ load_image (const gchar  *filename,
       "darktable",
       "--library", ":memory:",
       "--luacmd",  lua_cmd,
-      "--conf",    "plugins/lighttable/export/iccprofile=linear_rec709_rgb",
+      "--conf",    "plugins/lighttable/export/icctype=3",
       "--conf",    export_filename,
       (gchar *) filename,
       NULL
