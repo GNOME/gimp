@@ -157,6 +157,9 @@ gimp_fonts_load (Gimp               *gimp,
 
       g_mutex_unlock (&data.mutex);
       g_thread_join (cache_thread);
+
+      g_mutex_clear (&data.mutex);
+      g_cond_clear (&data.cond);
     }
   else
     {
