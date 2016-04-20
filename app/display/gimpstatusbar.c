@@ -701,19 +701,7 @@ gimp_statusbar_update (GimpStatusbar *statusbar)
   GimpStatusbarMsg *msg = NULL;
 
   if (statusbar->messages)
-    {
-      msg = statusbar->messages->data;
-
-      /*  only allow progress messages while the progress is active  */
-      if (statusbar->progress_active)
-        {
-          guint context_id = gimp_statusbar_get_context_id (statusbar,
-                                                            "progress");
-
-          if (context_id != msg->context_id)
-            return;
-        }
-    }
+    msg = statusbar->messages->data;
 
   if (msg && msg->text)
     {
@@ -1503,10 +1491,18 @@ gimp_statusbar_add_message (GimpStatusbar *statusbar,
 
   /*  find the position at which to insert the new message  */
   position = 0;
-  /*  temporary messages are in front of all other messages  */
-  if (statusbar->temp_timeout_id &&
-      context_id != statusbar->temp_context_id)
-    position++;
+  /*  progress messages are always at the front of the list  */
+  if (! (statusbar->progress_active &&
+         context_id == gimp_statusbar_get_context_id (statusbar, "progress")))
+    {
+      if (statusbar->progress_active)
+        position++;
+
+      /*  temporary messages are in front of all other non-progress messages  */
+      if (statusbar->temp_timeout_id &&
+          context_id != statusbar->temp_context_id)
+        position++;
+    }
 
   statusbar->messages = g_slist_insert (statusbar->messages, msg, position);
 
