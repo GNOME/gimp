@@ -96,8 +96,8 @@ plug-ins/common/van-gogh-lic.c
 plug-ins/common/warp.c
 plug-ins/common/web-browser.c
 plug-ins/common/web-page.c
-plug-ins/file-bmp/bmp-read.c
-plug-ins/file-bmp/bmp-write.c
+plug-ins/file-bmp/bmp-load.c
+plug-ins/file-bmp/bmp-save.c
 plug-ins/file-bmp/bmp.c
 plug-ins/file-darktable/file-darktable.c
 plug-ins/file-exr/file-exr.c
