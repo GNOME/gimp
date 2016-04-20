@@ -1344,6 +1344,72 @@ gimp_color_profile_new_d65_gray_linear (void)
   return gimp_color_profile_new_from_icc_profile (data, length, NULL);
 }
 
+static cmsHPROFILE *
+gimp_color_profile_new_d50_gray_lab_trc_internal (void)
+{
+  cmsHPROFILE profile;
+
+  /* white point is D50 from the ICC profile illuminant specs */
+  cmsCIExyY whitepoint = {0.345702915, 0.358538597, 1.0};
+
+  cmsFloat64Number lab_parameters[5] =
+    { 3.0, 1.0 / 1.16,  0.16 / 1.16, 2700.0 / 24389.0, 0.08000  };
+
+  cmsToneCurve *curve = cmsBuildParametricToneCurve (NULL, 4,
+                                                     lab_parameters);
+
+  profile = cmsCreateGrayProfile (&whitepoint, curve);
+
+  cmsFreeToneCurve (curve);
+
+  gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                              "GIMP built-in D50 Grayscale with LAB L TRC");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
+                              "GIMP");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
+                              "D50 Grayscale with LAB L TRC");
+  gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
+                              "Public Domain");
+
+  return profile;
+}
+
+
+/**
+ * gimp_color_profile_new_d50_gray_lab_trc
+ *
+ * This function creates a grayscale #GimpColorProfile with the
+ * D50 ICC profile illuminant as the profile white point and the
+ * LAB companding curve as the TRC.
+ *
+ * Return value: a gray profile with the D50 ICC profile illuminant
+ * as the profile white point and the LAB companding curve as the TRC.
+ * as the TRC.
+ *
+ * Since: 2.10
+ **/
+GimpColorProfile *
+gimp_color_profile_new_d50_gray_lab_trc (void)
+{
+  static GimpColorProfile *profile = NULL;
+
+  const guint8 *data;
+  gsize         length;
+
+  if (G_UNLIKELY (profile == NULL))
+    {
+      cmsHPROFILE lcms_profile = gimp_color_profile_new_d50_gray_lab_trc_internal ();
+
+      profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
+
+      cmsCloseProfile (lcms_profile);
+    }
+
+  data = gimp_color_profile_get_icc_profile (profile, &length);
+
+  return gimp_color_profile_new_from_icc_profile (data, length, NULL);
+}
+
 /**
  * gimp_color_profile_get_format:
  * @format:      a #Babl format

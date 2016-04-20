@@ -70,6 +70,7 @@ GimpColorProfile * gimp_color_profile_new_rgb_adobe         (void);
 
 GimpColorProfile * gimp_color_profile_new_d65_gray_srgb_trc (void);
 GimpColorProfile * gimp_color_profile_new_d65_gray_linear   (void);
+GimpColorProfile * gimp_color_profile_new_d50_gray_lab_trc  (void);
 
 GimpColorProfile *
        gimp_color_profile_new_srgb_trc_from_color_profile   (GimpColorProfile  *profile);
