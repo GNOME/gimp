@@ -19,6 +19,7 @@
 #ifndef __BMP_H__
 #define __BMP_H__
 
+
 #define LOAD_PROC      "file-bmp-load"
 #define SAVE_PROC      "file-bmp-save"
 #define PLUG_IN_BINARY "file-bmp"
@@ -33,19 +34,7 @@
 #define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
 
 
-gint32             ReadBMP   (const gchar  *filename,
-                              GError      **error);
-GimpPDBStatusType  WriteBMP  (const gchar  *filename,
-                              gint32        image,
-                              gint32        drawable_ID,
-                              GError      **error);
-
-
-extern       gboolean  interactive;
-extern       gboolean  lastvals;
-extern const gchar    *filename;
-
-extern struct Bitmap_File_Head_Struct
+typedef struct _Bitmap_File_Head
 {
   gchar    zzMagic[2];  /* 00 "BM" */
   gulong   bfSize;      /* 02 */
@@ -55,7 +44,7 @@ extern struct Bitmap_File_Head_Struct
   gulong   biSize;      /* 0E */
 } Bitmap_File_Head;
 
-extern struct Bitmap_Head_Struct
+typedef struct _Bitmap_Head
 {
   glong    biWidth;     /* 12 */
   glong    biHeight;    /* 16 */
@@ -76,5 +65,6 @@ typedef struct _Bitmap_Channel
   guint32 shiftin;
   gfloat  max_value;
 } Bitmap_Channel;
+
 
 #endif /* __BMP_H__ */

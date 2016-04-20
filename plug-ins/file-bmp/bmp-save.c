@@ -37,8 +37,10 @@
 #include <libgimp/gimpui.h>
 
 #include "bmp.h"
+#include "bmp-save.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 typedef enum
 {
@@ -49,18 +51,6 @@ typedef enum
   RGBA_8888,
   RGBX_8888
 } RGBMode;
-
-static struct
-{
-  RGBMode rgb_format;
-  gint    use_run_length_encoding;
-
-  /* Whether or not to write BITMAPV5HEADER color space data */
-  gint    dont_write_color_space_data;
-} BMPSaveData;
-
-static gint    cur_progress = 0;
-static gint    max_progress = 0;
 
 
 static  void      write_image     (FILE   *f,
@@ -77,6 +67,19 @@ static  void      write_image     (FILE   *f,
                                    gint    color_space_size);
 
 static  gboolean  save_dialog     (gint    channels);
+
+
+static struct
+{
+  RGBMode rgb_format;
+  gint    use_run_length_encoding;
+
+  /* Whether or not to write BITMAPV5HEADER color space data */
+  gint    dont_write_color_space_data;
+} BMPSaveData;
+
+static Bitmap_File_Head bitmap_file_head;
+static Bitmap_Head      bitmap_head;
 
 
 static void
@@ -142,10 +145,11 @@ warning_dialog (const gchar *primary,
 }
 
 GimpPDBStatusType
-WriteBMP (const gchar  *filename,
-          gint32        image,
-          gint32        drawable_ID,
-          GError      **error)
+save_image (const gchar  *filename,
+            gint32        image,
+            gint32        drawable_ID,
+            GimpRunMode   run_mode,
+            GError      **error)
 {
   FILE          *outfile;
   gint           Red[MAXCOLORS];
@@ -194,9 +198,10 @@ WriteBMP (const gchar  *filename,
       break;
 
     case GIMP_GRAYA_IMAGE:
-      if (interactive && !warning_dialog (_("Cannot export indexed image with "
-                                            "transparency in BMP file format."),
-                                          _("Alpha channel will be ignored.")))
+      if (run_mode == GIMP_RUN_INTERACTIVE &&
+          ! warning_dialog (_("Cannot export indexed image with "
+                              "transparency in BMP file format."),
+                            _("Alpha channel will be ignored.")))
         return GIMP_PDB_CANCEL;
 
      /* fallthrough */
@@ -226,9 +231,10 @@ WriteBMP (const gchar  *filename,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      if (interactive && !warning_dialog (_("Cannot export indexed image with "
-                                            "transparency in BMP file format."),
-                                          _("Alpha channel will be ignored.")))
+      if (run_mode == GIMP_RUN_INTERACTIVE &&
+          ! warning_dialog (_("Cannot export indexed image with "
+                              "transparency in BMP file format."),
+                            _("Alpha channel will be ignored.")))
         return GIMP_PDB_CANCEL;
 
      /* fallthrough */
@@ -266,20 +272,25 @@ WriteBMP (const gchar  *filename,
   BMPSaveData.dont_write_color_space_data = 0;
   mask_info_size = 0;
 
-  if (interactive || lastvals)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
       gimp_get_data (SAVE_PROC, &BMPSaveData);
     }
 
-  if ((BitsPerPixel == 8 || BitsPerPixel == 4) && interactive)
+  if (run_mode == GIMP_RUN_INTERACTIVE &&
+      (BitsPerPixel == 8 ||
+       BitsPerPixel == 4))
     {
       if (! save_dialog (1))
         return GIMP_PDB_CANCEL;
     }
   else if ((BitsPerPixel == 24 || BitsPerPixel == 32))
     {
-      if (interactive && !save_dialog (channels))
-        return GIMP_PDB_CANCEL;
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        {
+          if (! save_dialog (channels))
+            return GIMP_PDB_CANCEL;
+        }
 
       /* mask_info_size is only set to non-zero for 16- and 32-bpp */
       switch (BMPSaveData.rgb_format)
@@ -338,9 +349,6 @@ WriteBMP (const gchar  *filename,
 
   g_object_unref (buffer);
 
-  cur_progress = 0;
-  max_progress = drawable_height;
-
   /* Now, we need some further information ... */
   cols = drawable_width;
   rows = drawable_height;
@@ -361,34 +369,40 @@ WriteBMP (const gchar  *filename,
   else
     color_space_size = 0;
 
-  Bitmap_File_Head.bfSize    = (0x36 + MapSize + (rows * SpZeile) +
+  bitmap_file_head.bfSize    = (0x36 + MapSize + (rows * SpZeile) +
                                 mask_info_size + color_space_size);
-  Bitmap_File_Head.zzHotX    =  0;
-  Bitmap_File_Head.zzHotY    =  0;
-  Bitmap_File_Head.bfOffs    = (0x36 + MapSize +
+  bitmap_file_head.zzHotX    =  0;
+  bitmap_file_head.zzHotY    =  0;
+  bitmap_file_head.bfOffs    = (0x36 + MapSize +
                                 mask_info_size + color_space_size);
-  Bitmap_File_Head.biSize    =  40 + mask_info_size + color_space_size;
+  bitmap_file_head.biSize    =  40 + mask_info_size + color_space_size;
 
-  Bitmap_Head.biWidth  = cols;
-  Bitmap_Head.biHeight = rows;
-  Bitmap_Head.biPlanes = 1;
-  Bitmap_Head.biBitCnt = BitsPerPixel;
+  bitmap_head.biWidth  = cols;
+  bitmap_head.biHeight = rows;
+  bitmap_head.biPlanes = 1;
+  bitmap_head.biBitCnt = BitsPerPixel;
 
   if (BMPSaveData.use_run_length_encoding == 0)
-  {
-    if (mask_info_size > 0)
-      Bitmap_Head.biCompr = 3; /* BI_BITFIELDS */
-    else
-      Bitmap_Head.biCompr = 0; /* BI_RGB */
-  }
+    {
+      if (mask_info_size > 0)
+        bitmap_head.biCompr = 3; /* BI_BITFIELDS */
+      else
+        bitmap_head.biCompr = 0; /* BI_RGB */
+    }
   else if (BitsPerPixel == 8)
-    Bitmap_Head.biCompr = 1;
+    {
+      bitmap_head.biCompr = 1;
+    }
   else if (BitsPerPixel == 4)
-    Bitmap_Head.biCompr = 2;
+    {
+      bitmap_head.biCompr = 2;
+    }
   else
-    Bitmap_Head.biCompr = 0;
+    {
+      bitmap_head.biCompr = 0;
+    }
 
-  Bitmap_Head.biSizeIm = SpZeile * rows;
+  bitmap_head.biSizeIm = SpZeile * rows;
 
   {
     gdouble xresolution;
@@ -409,46 +423,50 @@ WriteBMP (const gchar  *filename,
          *
          * We add 0.5 for proper rounding.
          */
-        Bitmap_Head.biXPels = (long int) (xresolution * 100.0 / 2.54 + 0.5);
-        Bitmap_Head.biYPels = (long int) (yresolution * 100.0 / 2.54 + 0.5);
+        bitmap_head.biXPels = (long int) (xresolution * 100.0 / 2.54 + 0.5);
+        bitmap_head.biYPels = (long int) (yresolution * 100.0 / 2.54 + 0.5);
       }
   }
 
   if (BitsPerPixel <= 8)
-    Bitmap_Head.biClrUsed = colors;
+    bitmap_head.biClrUsed = colors;
   else
-    Bitmap_Head.biClrUsed = 0;
+    bitmap_head.biClrUsed = 0;
 
-  Bitmap_Head.biClrImp = Bitmap_Head.biClrUsed;
+  bitmap_head.biClrImp = bitmap_head.biClrUsed;
 
 #ifdef DEBUG
-  printf("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, Comp: %u, Zeile: %u\n",
-         (int)Bitmap_File_Head.bfSize,(int)Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,(int)Bitmap_Head.biWidth,
-         (int)Bitmap_Head.biHeight, (int)Bitmap_Head.biCompr,SpZeile);
+  printf ("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, Comp: %u, Zeile: %u\n",
+          (int)bitmap_file_head.bfSize,
+          (int)bitmap_head.biClrUsed,
+          bitmap_head.biBitCnt,
+          (int)bitmap_head.biWidth,
+          (int)bitmap_head.biHeight,
+          (int)bitmap_head.biCompr,SpZeile);
 #endif
 
   /* And now write the header and the colormap (if any) to disk */
 
   Write (outfile, "BM", 2);
 
-  FromL (Bitmap_File_Head.bfSize, &puffer[0x00]);
-  FromS (Bitmap_File_Head.zzHotX, &puffer[0x04]);
-  FromS (Bitmap_File_Head.zzHotY, &puffer[0x06]);
-  FromL (Bitmap_File_Head.bfOffs, &puffer[0x08]);
-  FromL (Bitmap_File_Head.biSize, &puffer[0x0C]);
+  FromL (bitmap_file_head.bfSize, &puffer[0x00]);
+  FromS (bitmap_file_head.zzHotX, &puffer[0x04]);
+  FromS (bitmap_file_head.zzHotY, &puffer[0x06]);
+  FromL (bitmap_file_head.bfOffs, &puffer[0x08]);
+  FromL (bitmap_file_head.biSize, &puffer[0x0C]);
 
   Write (outfile, puffer, 16);
 
-  FromL (Bitmap_Head.biWidth, &puffer[0x00]);
-  FromL (Bitmap_Head.biHeight, &puffer[0x04]);
-  FromS (Bitmap_Head.biPlanes, &puffer[0x08]);
-  FromS (Bitmap_Head.biBitCnt, &puffer[0x0A]);
-  FromL (Bitmap_Head.biCompr, &puffer[0x0C]);
-  FromL (Bitmap_Head.biSizeIm, &puffer[0x10]);
-  FromL (Bitmap_Head.biXPels, &puffer[0x14]);
-  FromL (Bitmap_Head.biYPels, &puffer[0x18]);
-  FromL (Bitmap_Head.biClrUsed, &puffer[0x1C]);
-  FromL (Bitmap_Head.biClrImp, &puffer[0x20]);
+  FromL (bitmap_head.biWidth, &puffer[0x00]);
+  FromL (bitmap_head.biHeight, &puffer[0x04]);
+  FromS (bitmap_head.biPlanes, &puffer[0x08]);
+  FromS (bitmap_head.biBitCnt, &puffer[0x0A]);
+  FromL (bitmap_head.biCompr, &puffer[0x0C]);
+  FromL (bitmap_head.biSizeIm, &puffer[0x10]);
+  FromL (bitmap_head.biXPels, &puffer[0x14]);
+  FromL (bitmap_head.biYPels, &puffer[0x18]);
+  FromL (bitmap_head.biClrUsed, &puffer[0x1C]);
+  FromL (bitmap_head.biClrImp, &puffer[0x20]);
 
   Write (outfile, puffer, 36);
 
@@ -597,9 +615,14 @@ write_image (FILE   *f,
   gint    xpos, ypos, i, j, rowstride, length, thiswidth;
   gint    breite, k;
   guchar  n, r, g, b, a;
+  gint    cur_progress;
+  gint    max_progress;
 
   xpos = 0;
   rowstride = width * channels;
+
+  cur_progress = 0;
+  max_progress = height;
 
   /* We'll begin with the 16/24/32 bit Bitmaps, they are easy :-) */
 

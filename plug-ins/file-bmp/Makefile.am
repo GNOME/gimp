@@ -26,8 +26,10 @@ libexec_PROGRAMS = file-bmp
 file_bmp_SOURCES = \
 	bmp.c		\
 	bmp.h		\
-	bmp-read.c	\
-	bmp-write.c
+	bmp-load.c	\
+	bmp-load.h	\
+	bmp-save.c	\
+	bmp-save.h
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
