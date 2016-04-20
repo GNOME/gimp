@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-18 18:36+0000\n"
-"PO-Revision-Date: 2016-04-18 21:19-0500\n"
+"POT-Creation-Date: 2016-04-19 18:23+0000\n"
+"PO-Revision-Date: 2016-04-19 20:47-0500\n"
 "Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -1487,7 +1487,6 @@ msgid "_About"
 msgstr "A_cerca de"
 
 #: ../app/actions/dialogs-actions.c:287
-#, fuzzy
 #| msgctxt "help-action"
 #| msgid "_Search and Run a Command"
 msgctxt "dialogs-action"
@@ -1495,7 +1494,6 @@ msgid "_Search and Run a Command"
 msgstr "_Buscar y ejecutar un comando"
 
 #: ../app/actions/dialogs-actions.c:288
-#, fuzzy
 #| msgctxt "help-action"
 #| msgid "Search commands by keyword, and run them"
 msgctxt "dialogs-action"
@@ -2612,12 +2610,11 @@ msgid "Save this image and close its window"
 msgstr "Guardar esta imagen y cerrar su ventana"
 
 #: ../app/actions/file-actions.c:159 ../app/actions/file-actions.c:339
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Export As..."
 msgctxt "file-action"
 msgid "Export..."
-msgstr "Exportar como…"
+msgstr "Exportar…"
 
 #: ../app/actions/file-actions.c:160
 msgctxt "file-action"
@@ -2647,12 +2644,11 @@ msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Exportar la imagen a diversos formatos de archivo como PNG o JPEG"
 
 #: ../app/actions/file-actions.c:320
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "_Save"
 msgctxt "file-action"
 msgid "_Save..."
-msgstr "_Guardar"
+msgstr "_Guardar…"
 
 #: ../app/actions/file-actions.c:325
 #, c-format
@@ -2740,7 +2736,6 @@ msgstr ""
 "%s"
 
 #: ../app/actions/filters-actions.c:55
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "Filte_rs"
 msgctxt "filters-action"
@@ -2763,7 +2758,6 @@ msgid "_Noise"
 msgstr "_Ruido"
 
 #: ../app/actions/filters-actions.c:63
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "Edge-De_tect"
 msgctxt "filters-action"
@@ -2771,7 +2765,6 @@ msgid "Edge-De_tect"
 msgstr "Detectar _bordes"
 
 #: ../app/actions/filters-actions.c:65
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "En_hance"
 msgctxt "filters-action"
@@ -2784,7 +2777,6 @@ msgid "C_ombine"
 msgstr "C_ombinar"
 
 #: ../app/actions/filters-actions.c:69
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Generic"
 msgctxt "filters-action"
@@ -2792,15 +2784,13 @@ msgid "_Generic"
 msgstr "_Genérico"
 
 #: ../app/actions/filters-actions.c:71
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Light and Shadow"
 msgctxt "filters-action"
 msgid "_Light and Shadow"
-msgstr "_Luces y sombras"
+msgstr "_Luz y sombra"
 
 #: ../app/actions/filters-actions.c:73
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Distorts"
 msgctxt "filters-action"
@@ -2808,7 +2798,6 @@ msgid "_Distorts"
 msgstr "Dis_torsiones"
 
 #: ../app/actions/filters-actions.c:75
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Artistic"
 msgctxt "filters-action"
@@ -2821,7 +2810,6 @@ msgid "_Decor"
 msgstr "_Decorativos"
 
 #: ../app/actions/filters-actions.c:79
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "_Map"
 msgctxt "filters-action"
@@ -2834,7 +2822,6 @@ msgid "_Render"
 msgstr "_Renderizado"
 
 #: ../app/actions/filters-actions.c:83
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Clouds"
 msgctxt "filters-action"
@@ -2842,7 +2829,6 @@ msgid "_Clouds"
 msgstr "_Nubes"
 
 #: ../app/actions/filters-actions.c:85
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Fractals"
 msgctxt "filters-action"
@@ -2850,7 +2836,6 @@ msgid "_Fractals"
 msgstr "_Fractales"
 
 #: ../app/actions/filters-actions.c:87
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Nature"
 msgctxt "filters-action"
@@ -2863,7 +2848,6 @@ msgid "N_oise"
 msgstr "_Ruido"
 
 #: ../app/actions/filters-actions.c:91
-#, fuzzy
 #| msgid "_Pattern"
 msgctxt "filters-action"
 msgid "_Pattern"
@@ -2878,7 +2862,6 @@ msgid "_Web"
 msgstr "_Web"
 
 #: ../app/actions/filters-actions.c:95
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "An_imation"
 msgctxt "filters-action"
@@ -2978,7 +2961,6 @@ msgid "_Deinterlace..."
 msgstr "_Desentrelazar…"
 
 #: ../app/actions/filters-actions.c:191
-#, fuzzy
 #| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "_Desaturate..."
@@ -3351,8 +3333,6 @@ msgid "W_ind..."
 msgstr "_V_iento…"
 
 #: ../app/actions/filters-actions.c:539
-#| msgctxt "plug-in-action"
-#| msgid "Re_peat Last"
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "R_epetir el último"
@@ -3364,8 +3344,6 @@ msgstr ""
 "Volver a ejecutar el último filtro utilizado con la misma configuración"
 
 #: ../app/actions/filters-actions.c:546
-#| msgctxt "plug-in-action"
-#| msgid "R_e-Show Last"
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Volver a mostrar el último"
@@ -3900,7 +3878,6 @@ msgid "_Mode"
 msgstr "_Modo"
 
 #: ../app/actions/image-actions.c:60
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "_Precision"
 msgctxt "image-action"
@@ -4987,8 +4964,6 @@ msgid "Copy MyPaint brush file location to clipboard"
 msgstr "Copiar al portapapeles la ubicación del pincel MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:65
-#| msgctxt "brushes-action"
-#| msgid "Show in _File Manager"
 msgctxt "mypaint-brushes-action"
 msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
@@ -5467,14 +5442,11 @@ msgid "Replace the selection by its border"
 msgstr "Reemplazar la selección por su borde"
 
 #: ../app/actions/select-actions.c:105
-#| msgid "Remove Controller"
 msgctxt "select-action"
 msgid "Re_move Holes"
 msgstr "_Eliminar huecos"
 
 #: ../app/actions/select-actions.c:106
-#| msgctxt "select-action"
-#| msgid "Remove fuzziness from the selection"
 msgctxt "select-action"
 msgid "Remove holes from the selection"
 msgstr "Eliminar los huecos de la selección"
@@ -5925,8 +5897,6 @@ msgid "Show in _File Manager"
 msgstr "Mostrar en el gestor de _archivos"
 
 #: ../app/actions/tool-presets-actions.c:69
-#| msgctxt "tool-presets-action"
-#| msgid "Copy tool preset file location to clipboard"
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
 msgstr ""
@@ -6832,8 +6802,6 @@ msgid "Use the dark check color"
 msgstr "Usar el color de los cuadrados oscuros"
 
 #: ../app/actions/view-actions.c:481
-#| msgctxt "view-padding-color"
-#| msgid "Select _Custom Color..."
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "Color p_ersonalizado…"
@@ -7825,7 +7793,7 @@ msgstr "Alfa"
 #: ../app/core/core-enums.c:270
 msgctxt "histogram-channel"
 msgid "Luminance"
-msgstr ""
+msgstr "Luminosidad"
 
 #: ../app/core/core-enums.c:271
 msgctxt "histogram-channel"
@@ -8961,8 +8929,6 @@ msgid "Select by Color"
 msgstr "Seleccionar por color"
 
 #: ../app/core/gimpchannel-select.c:616
-#| msgctxt "undo-type"
-#| msgid "Select by Color"
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Seleccionar por color indexado"
@@ -9120,8 +9086,6 @@ msgid "Foreground"
 msgstr "Frente"
 
 #: ../app/core/gimpcontext.c:674 ../app/core/gimpgrid.c:94
-#| msgctxt "fill-type"
-#| msgid "Foreground color"
 msgid "Foreground color"
 msgstr "Color de frente"
 
@@ -9130,8 +9094,6 @@ msgid "Background"
 msgstr "Fondo"
 
 #: ../app/core/gimpcontext.c:681 ../app/core/gimpgrid.c:101
-#| msgctxt "fill-type"
-#| msgid "Background color"
 msgid "Background color"
 msgstr "Color de fondo"
 
@@ -9160,8 +9122,6 @@ msgid "MyPaint Brush"
 msgstr "Pincel MyPaint"
 
 #: ../app/core/gimpcontext.c:725 ../app/core/gimpcontext.c:726
-#| msgctxt "fill-style"
-#| msgid "Pattern"
 msgid "Pattern"
 msgstr "Patrón"
 
@@ -10317,8 +10277,6 @@ msgid "Shrink Selection"
 msgstr "Encoger selección"
 
 #: ../app/core/gimpselection.c:196
-#| msgctxt "undo-type"
-#| msgid "Remove item"
 msgctxt "undo-type"
 msgid "Remove Holes"
 msgstr "Eliminar huecos"
@@ -10544,8 +10502,6 @@ msgstr "Unidad de resolución"
 
 #. serialized name
 #: ../app/core/gimptemplate.c:172
-#| msgctxt "undo-type"
-#| msgid "Image type"
 msgid "Image type"
 msgstr "Tipo de imagen"
 
@@ -14388,7 +14344,6 @@ msgid "Cubism"
 msgstr "Cubismo"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1220
-#| msgid "_Desaturate..."
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Desentrelazar"
@@ -14429,7 +14384,6 @@ msgid "Noise HSV"
 msgstr "Ruido HSV"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2120 ../app/pdb/plug-in-compat-cmds.c:2180
-#| msgid "Color Profile"
 msgid "Set color profile"
 msgstr "Establecer perfil de color"
 
@@ -14445,14 +14399,11 @@ msgstr "Laplace"
 
 # Location lo traducimos por lugar (Serrador)
 #: ../app/pdb/plug-in-compat-cmds.c:2348
-#| msgctxt "filters-action"
-#| msgid "Lens Distortion..."
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Distorsión de lente"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2388
-#| msgid "File Name:"
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Mosaico sin costura"
@@ -14463,7 +14414,6 @@ msgid "Maze"
 msgstr "Laberinto"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2538 ../app/pdb/plug-in-compat-cmds.c:2622
-#| msgid "Motion only"
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Desenfoque de movimiento"
@@ -14539,8 +14489,6 @@ msgid "Noisify"
 msgstr "R_uido"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3505
-#| msgctxt "undo-type"
-#| msgid "Gaussian Blur"
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Desenfoque gaussiano selectivo"
@@ -14556,8 +14504,6 @@ msgid "Shift"
 msgstr "Desplazar"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3695
-#| msgctxt "gradient-editor-blending"
-#| msgid "_Sinusoidal"
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Seno"
@@ -15138,8 +15084,6 @@ msgid "Edit these Settings as Levels"
 msgstr "Editar estos ajustes como niveles"
 
 #: ../app/tools/gimpbucketfilloptions.c:100
-#| msgctxt "undo-type"
-#| msgid "Float selection"
 msgid "Fill selection"
 msgstr "Rellenar selección"
 
