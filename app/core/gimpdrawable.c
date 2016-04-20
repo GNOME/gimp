@@ -776,7 +776,7 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpPrecision      new_precision,
                                  gint               layer_dither_type,
                                  gint               mask_dither_type,
-                                 gboolean           convert_type,
+                                 gboolean           convert_profile,
                                  gboolean           push_undo,
                                  GimpProgress      *progress)
 {
