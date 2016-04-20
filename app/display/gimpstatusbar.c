@@ -122,6 +122,14 @@ static guint    gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
                                                    const gchar       *context);
 static gboolean gimp_statusbar_temp_timeout       (GimpStatusbar     *statusbar);
 
+static void     gimp_statusbar_add_message        (GimpStatusbar     *statusbar,
+                                                   guint              context_id,
+                                                   const gchar       *icon_name,
+                                                   const gchar       *format,
+                                                   va_list            args,
+                                                   gboolean           move_to_front) G_GNUC_PRINTF (4, 0);
+static void     gimp_statusbar_remove_message     (GimpStatusbar     *statusbar,
+                                                   guint              context_id);
 static void     gimp_statusbar_msg_free           (GimpStatusbarMsg  *msg);
 
 static gchar *  gimp_statusbar_vprintf            (const gchar       *format,
@@ -865,55 +873,18 @@ gimp_statusbar_push_valist (GimpStatusbar *statusbar,
                             const gchar   *format,
                             va_list        args)
 {
-  GimpStatusbarMsg *msg;
-  guint             context_id;
-  GSList           *list;
-  gchar            *message;
+  guint context_id;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
-  message = gimp_statusbar_vprintf (format, args);
-
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 
-  if (statusbar->messages)
-    {
-      msg = statusbar->messages->data;
-
-      if (msg->context_id == context_id && strcmp (msg->text, message) == 0)
-        {
-          g_free (message);
-          return;
-        }
-    }
-
-  for (list = statusbar->messages; list; list = g_slist_next (list))
-    {
-      msg = list->data;
-
-      if (msg->context_id == context_id)
-        {
-          statusbar->messages = g_slist_remove (statusbar->messages, msg);
-          gimp_statusbar_msg_free (msg);
-
-          break;
-        }
-    }
-
-  msg = g_slice_new (GimpStatusbarMsg);
-
-  msg->context_id = context_id;
-  msg->icon_name  = g_strdup (icon_name);
-  msg->text       = message;
-
-  if (statusbar->temp_timeout_id)
-    statusbar->messages = g_slist_insert (statusbar->messages, msg, 1);
-  else
-    statusbar->messages = g_slist_prepend (statusbar->messages, msg);
-
-  gimp_statusbar_update (statusbar);
+  gimp_statusbar_add_message (statusbar,
+                              context_id,
+                              icon_name, format, args,
+                              /*  move_to_front =  */ TRUE);
 }
 
 void
@@ -1084,56 +1055,18 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
                                const gchar   *format,
                                va_list        args)
 {
-  GimpStatusbarMsg *msg;
-  GSList           *list;
-  guint             context_id;
-  gchar            *message;
+  guint context_id;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
-  message = gimp_statusbar_vprintf (format, args);
-
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 
-  for (list = statusbar->messages; list; list = g_slist_next (list))
-    {
-      msg = list->data;
-
-      if (msg->context_id == context_id)
-        {
-          if (strcmp (msg->text, message) == 0)
-            {
-              g_free (message);
-              return;
-            }
-
-          g_free (msg->icon_name);
-          msg->icon_name = g_strdup (icon_name);
-
-          g_free (msg->text);
-          msg->text = message;
-
-          if (list == statusbar->messages)
-            gimp_statusbar_update (statusbar);
-
-          return;
-        }
-    }
-
-  msg = g_slice_new (GimpStatusbarMsg);
-
-  msg->context_id = context_id;
-  msg->icon_name  = g_strdup (icon_name);
-  msg->text       = message;
-
-  if (statusbar->temp_timeout_id)
-    statusbar->messages = g_slist_insert (statusbar->messages, msg, 1);
-  else
-    statusbar->messages = g_slist_prepend (statusbar->messages, msg);
-
-  gimp_statusbar_update (statusbar);
+  gimp_statusbar_add_message (statusbar,
+                              context_id,
+                              icon_name, format, args,
+                              /*  move_to_front =  */ FALSE);
 }
 
 const gchar *
@@ -1165,28 +1098,15 @@ void
 gimp_statusbar_pop (GimpStatusbar *statusbar,
                     const gchar   *context)
 {
-  GSList *list;
-  guint   context_id;
+  guint context_id;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
 
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 
-  for (list = statusbar->messages; list; list = list->next)
-    {
-      GimpStatusbarMsg *msg = list->data;
-
-      if (msg->context_id == context_id)
-        {
-          statusbar->messages = g_slist_remove (statusbar->messages, msg);
-          gimp_statusbar_msg_free (msg);
-
-          break;
-        }
-    }
-
-  gimp_statusbar_update (statusbar);
+  gimp_statusbar_remove_message (statusbar,
+                                 context_id);
 }
 
 void
@@ -1210,9 +1130,6 @@ gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
                                  const gchar         *format,
                                  va_list              args)
 {
-  GimpStatusbarMsg *msg = NULL;
-  gchar            *message;
-
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (severity <= GIMP_MESSAGE_WARNING);
   g_return_if_fail (format != NULL);
@@ -1220,8 +1137,6 @@ gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
   /*  don't accept a message if we are already displaying a more severe one  */
   if (statusbar->temp_timeout_id && statusbar->temp_severity > severity)
     return;
-
-  message = gimp_statusbar_vprintf (format, args);
 
   if (statusbar->temp_timeout_id)
     g_source_remove (statusbar->temp_timeout_id);
@@ -1232,38 +1147,10 @@ gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
 
   statusbar->temp_severity = severity;
 
-  if (statusbar->messages)
-    {
-      msg = statusbar->messages->data;
-
-      if (msg->context_id == statusbar->temp_context_id)
-        {
-          if (strcmp (msg->text, message) == 0)
-            {
-              g_free (message);
-              return;
-            }
-
-          g_free (msg->icon_name);
-          msg->icon_name = g_strdup (icon_name);
-
-          g_free (msg->text);
-          msg->text = message;
-
-          gimp_statusbar_update (statusbar);
-          return;
-        }
-    }
-
-  msg = g_slice_new (GimpStatusbarMsg);
-
-  msg->context_id = statusbar->temp_context_id;
-  msg->icon_name  = g_strdup (icon_name);
-  msg->text       = message;
-
-  statusbar->messages = g_slist_prepend (statusbar->messages, msg);
-
-  gimp_statusbar_update (statusbar);
+  gimp_statusbar_add_message (statusbar,
+                              statusbar->temp_context_id,
+                              icon_name, format, args,
+                              /*  move_to_front =  */ TRUE);
 }
 
 void
@@ -1275,19 +1162,9 @@ gimp_statusbar_pop_temp (GimpStatusbar *statusbar)
     {
       g_source_remove (statusbar->temp_timeout_id);
       statusbar->temp_timeout_id = 0;
-    }
 
-  if (statusbar->messages)
-    {
-      GimpStatusbarMsg *msg = statusbar->messages->data;
-
-      if (msg->context_id == statusbar->temp_context_id)
-        {
-          statusbar->messages = g_slist_remove (statusbar->messages, msg);
-          gimp_statusbar_msg_free (msg);
-
-          gimp_statusbar_update (statusbar);
-        }
+      gimp_statusbar_remove_message (statusbar,
+                                     statusbar->temp_context_id);
     }
 }
 
@@ -1561,9 +1438,105 @@ gimp_statusbar_temp_timeout (GimpStatusbar *statusbar)
 {
   gimp_statusbar_pop_temp (statusbar);
 
-  statusbar->temp_timeout_id = 0;
-
   return FALSE;
+}
+
+static void
+gimp_statusbar_add_message (GimpStatusbar *statusbar,
+                            guint          context_id,
+                            const gchar   *icon_name,
+                            const gchar   *format,
+                            va_list        args,
+                            gboolean       move_to_front)
+{
+  gchar            *message;
+  GSList           *list;
+  GimpStatusbarMsg *msg;
+  gint              position;
+
+  message = gimp_statusbar_vprintf (format, args);
+
+  for (list = statusbar->messages; list; list = g_slist_next (list))
+    {
+      msg = list->data;
+
+      if (msg->context_id == context_id)
+        {
+          gboolean is_front_message = (list == statusbar->messages);
+
+          if ((is_front_message || ! move_to_front) &&
+              strcmp (msg->text, message) == 0)
+            {
+              g_free (message);
+              return;
+            }
+
+          if (move_to_front)
+            {
+              statusbar->messages = g_slist_remove (statusbar->messages, msg);
+              gimp_statusbar_msg_free (msg);
+
+              break;
+            }
+          else
+            {
+              g_free (msg->icon_name);
+              msg->icon_name = g_strdup (icon_name);
+
+              g_free (msg->text);
+              msg->text = message;
+
+              if (is_front_message)
+                gimp_statusbar_update (statusbar);
+
+              return;
+            }
+        }
+    }
+
+  msg = g_slice_new (GimpStatusbarMsg);
+
+  msg->context_id = context_id;
+  msg->icon_name  = g_strdup (icon_name);
+  msg->text       = message;
+
+  /*  find the position at which to insert the new message  */
+  position = 0;
+  /*  temporary messages are in front of all other messages  */
+  if (statusbar->temp_timeout_id &&
+      context_id != statusbar->temp_context_id)
+    position++;
+
+  statusbar->messages = g_slist_insert (statusbar->messages, msg, position);
+
+  if (position == 0)
+    gimp_statusbar_update (statusbar);
+}
+
+static void
+gimp_statusbar_remove_message (GimpStatusbar *statusbar,
+                               guint          context_id)
+{
+  GSList   *list;
+  gboolean  needs_update = FALSE;
+
+  for (list = statusbar->messages; list; list = g_slist_next (list))
+    {
+      GimpStatusbarMsg *msg = list->data;
+
+      if (msg->context_id == context_id)
+        {
+          needs_update = (list == statusbar->messages);
+
+          statusbar->messages = g_slist_remove (statusbar->messages, msg);
+          gimp_statusbar_msg_free (msg);
+
+          break;
+        }
+    }
+
+  if (needs_update)
+    gimp_statusbar_update (statusbar);
 }
 
 static void
