@@ -7,12 +7,8 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:export-ydpi="90.000000"
-   inkscape:export-xdpi="90.000000"
-   inkscape:export-filename="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/stock-layers-16.png"
    width="16"
    height="16"
    id="svg11300"
@@ -23,7 +19,7 @@
    viewBox="0 0 16 16">
   <sodipodi:namedview
      inkscape:cy="5.3740829"
-     inkscape:cx="-2.1017185"
+     inkscape:cx="17.78496"
      inkscape:zoom="15.839749"
      inkscape:window-height="752"
      inkscape:window-width="1440"
@@ -37,7 +33,7 @@
      showborder="true"
      inkscape:window-x="240"
      inkscape:window-y="130"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="svg11300"
      width="16px"
      height="16px"
      showgrid="true"
@@ -50,74 +46,7 @@
        id="grid4042" />
   </sodipodi:namedview>
   <defs
-     id="defs3">
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient14241"
-       id="linearGradient14247"
-       x1="1222.094"
-       y1="772.9375"
-       x2="1222"
-       y2="775.03229"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.78126981,0,0,0.71967831,-937.91472,-541.88902)" />
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient14241">
-      <stop
-         style="stop-color:#3465a4;stop-opacity:1;"
-         offset="0"
-         id="stop14243" />
-      <stop
-         style="stop-color:#3465a4;stop-opacity:0;"
-         offset="1"
-         id="stop14245" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient14233"
-       id="linearGradient14239"
-       x1="1221"
-       y1="773.07867"
-       x2="1221"
-       y2="774.5011"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.78126981,0,0,0.71967831,-937.91472,-541.88902)" />
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient14233">
-      <stop
-         style="stop-color:#204a87;stop-opacity:1;"
-         offset="0"
-         id="stop14235" />
-      <stop
-         style="stop-color:#204a87;stop-opacity:0;"
-         offset="1"
-         id="stop14237" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient14224"
-       id="linearGradient14231"
-       x1="1219.125"
-       y1="772.78131"
-       x2="1219.125"
-       y2="775.06262"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.71404489,0,0,0.71741984,-856.1356,-540.14446)" />
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient14224">
-      <stop
-         style="stop-color:#729fcf;stop-opacity:1;"
-         offset="0"
-         id="stop14226" />
-      <stop
-         style="stop-color:#729fcf;stop-opacity:0;"
-         offset="1"
-         id="stop14229" />
-    </linearGradient>
-  </defs>
+     id="defs3" />
   <sodipodi:namedview
      stroke="#ef2929"
      fill="#eeeeec"
@@ -209,7 +138,7 @@
          id="rect14215"
          style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:#edd400;fill-opacity:1;fill-rule:evenodd;stroke:#c4a000;stroke-width:0.79999995;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
       <rect
-         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:#edd400;fill-opacity:1;fill-rule:evenodd;stroke:#fce94f;stroke-width:0.83333331;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:#edd400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.83333331;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
          id="rect14220"
          width="1.6666667"
          height="1.6666666"
@@ -219,10 +148,10 @@
          sodipodi:nodetypes="cccccc"
          id="rect14217"
          d="m 9.374921,15.525071 v -5.151746 c 0,-0.348396 1.085963,-1.3486041 1.464099,-1.3486041 h 3.321959 c 0.378135,0 1.4641,1.0002081 1.4641,1.3486041 v 5.151746"
-         style="display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient14247);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient14239);stroke-width:0.74984193;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         style="display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:0.74984193;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
          inkscape:connector-curvature="0" />
       <path
-         style="display:inline;overflow:visible;visibility:visible;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient14231);stroke-width:0.71573037;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         style="display:inline;overflow:visible;visibility:visible;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#729fcf;stroke-width:0.71573037;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
          d="m 10.357865,15.542127 v -4.977243 c 0,-0.266451 0.552671,-0.8070261 0.847572,-0.8070261 h 2.589126 c 0.294902,0 0.847571,0.5405751 0.847571,0.8070261 v 4.977243"
          id="path14222"
          sodipodi:nodetypes="cccccc"

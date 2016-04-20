@@ -7,7 +7,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="24"
@@ -16,34 +15,9 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-sheer-24.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
-   inkscape:export-xdpi="98.181816"
-   inkscape:export-ydpi="98.181816">
+   sodipodi:docname="gimp-tool-shear-24.svg">
   <defs
-     id="defs30573">
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient8471"
-       id="linearGradient9200"
-       gradientUnits="userSpaceOnUse"
-       x1="509"
-       y1="1416"
-       x2="509"
-       y2="1404"
-       gradientTransform="matrix(1.2500176,0,0,1.2500176,-633.25934,-726.66285)" />
-    <linearGradient
-       id="linearGradient8471">
-      <stop
-         style="stop-color:#5382b9;stop-opacity:1"
-         offset="0"
-         id="stop8473" />
-      <stop
-         style="stop-color:#3565a5;stop-opacity:1"
-         offset="1"
-         id="stop8475" />
-    </linearGradient>
-  </defs>
+     id="defs30573" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -52,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="16"
-     inkscape:cx="-5.416016"
-     inkscape:cy="14.628924"
+     inkscape:cx="-5.875152"
+     inkscape:cy="13.972674"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -91,7 +65,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -113,17 +87,17 @@
          height="13.750195"
          width="13.750194"
          id="rect7753"
-         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient9200);fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:1.25001764;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
+         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:1.25001764;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
       <rect
-         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.25987065;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.2;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.22486496;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.2;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
          id="rect8339"
-         width="11.152885"
-         height="11.524782"
-         x="4.921133"
-         y="1029.9529" />
+         width="10.775135"
+         height="11.275135"
+         x="5.1124325"
+         y="1029.9746" />
       <rect
          transform="matrix(1,0,0.34330205,0.93922506,0,0)"
-         style="display:inline;overflow:visible;visibility:visible;opacity:0.55;fill:#4877b1;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:1.29771316;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         style="display:inline;overflow:visible;visibility:visible;opacity:0.5;fill:#4877b1;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:1.29771316;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
          id="rect8343"
          width="13.494514"
          height="17.867273"
@@ -136,7 +110,7 @@
          height="15.477943"
          width="11.009772"
          id="rect8345"
-         style="display:inline;overflow:visible;visibility:visible;opacity:0.55;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.289132;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.54736843;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
+         style="display:inline;overflow:visible;visibility:visible;opacity:0.5;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.289132;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.54736843;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
       <path
          sodipodi:nodetypes="cccccccc"
          id="path8347"

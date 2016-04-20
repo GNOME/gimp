@@ -16,33 +16,9 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-perspective-clone-24.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
-   inkscape:export-xdpi="98.181816"
-   inkscape:export-ydpi="98.181816">
+   sodipodi:docname="gimp-tool-perspective-clone-24.svg">
   <defs
      id="defs30573">
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient8471"
-       id="linearGradient9200"
-       gradientUnits="userSpaceOnUse"
-       x1="509"
-       y1="1416"
-       x2="509"
-       y2="1404"
-       gradientTransform="matrix(0.8399018,0,0,0.8399018,-425.83021,-1178.3404)" />
-    <linearGradient
-       id="linearGradient8471">
-      <stop
-         style="stop-color:#5382b9;stop-opacity:1"
-         offset="0"
-         id="stop8473" />
-      <stop
-         style="stop-color:#3565a5;stop-opacity:1"
-         offset="1"
-         id="stop8475" />
-    </linearGradient>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3201"
@@ -143,7 +119,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.313709"
-     inkscape:cx="-19.897621"
+     inkscape:cx="13.292202"
      inkscape:cy="8.378924"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -209,7 +185,7 @@
            inkscape:connector-curvature="0"
            id="rect7753"
            d="m 5.7189725,-0.01339635 c 1.2846443,-0.0287939 3.7901154,-0.04380822 3.7901154,-0.04380822 L 11.338675,10.54064 H 2.7762904 c 0,0 2.2985252,-7.9357853 2.9426821,-10.55403635 z"
-           style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient9200);fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:0.58429432;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
+           style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:0.58429432;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
         <g
            id="g4073">
           <path
