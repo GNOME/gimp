@@ -56,6 +56,7 @@ gimp_drawable_foreground_extract (GimpDrawable      *drawable,
   GeglBuffer    *buffer;
   GeglProcessor *processor;
   gdouble        value;
+  gint           off_x, off_y;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (trimap), NULL);
@@ -98,12 +99,37 @@ gimp_drawable_foreground_extract (GimpDrawable      *drawable,
                                           NULL);
     }
 
-  gegl_node_connect_to (input_node,   "output",
-                        matting_node, "input");
-  gegl_node_connect_to (trimap_node,  "output",
-                        matting_node, "aux");
-  gegl_node_connect_to (matting_node, "output",
-                        output_node,  "input");
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+  if (off_x || off_y)
+    {
+      GeglNode *pre;
+      GeglNode *post;
+
+      pre = gegl_node_new_child (gegl,
+                                 "operation", "gegl:translate",
+                                 "x", -1.0 * off_x,
+                                 "y", -1.0 * off_y,
+                                 NULL);
+      post = gegl_node_new_child (gegl,
+                                  "operation", "gegl:translate",
+                                  "x", 1.0 * off_x,
+                                  "y", 1.0 * off_y,
+                                  NULL);
+
+      gegl_node_connect_to (trimap_node,   "output", pre, "input");
+      gegl_node_connect_to (pre,  "output", matting_node, "aux");
+      gegl_node_link_many (input_node, matting_node, post, output_node, NULL);
+    }
+  else
+    {
+      gegl_node_connect_to (input_node,   "output",
+                            matting_node, "input");
+      gegl_node_connect_to (trimap_node,  "output",
+                            matting_node, "aux");
+      gegl_node_connect_to (matting_node, "output",
+                            output_node,  "input");
+    }
 
   processor = gegl_node_new_processor (output_node, NULL);
 
