@@ -1465,7 +1465,8 @@ gimp_statusbar_add_message (GimpStatusbar *statusbar,
           gboolean is_front_message = (list == statusbar->messages);
 
           if ((is_front_message || ! move_to_front) &&
-              strcmp (msg->text, message) == 0)
+              strcmp (msg->text, message) == 0      &&
+              g_strcmp0 (msg->icon_name, icon_name) == 0)
             {
               g_free (message);
               return;
