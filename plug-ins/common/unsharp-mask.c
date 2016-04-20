@@ -552,7 +552,7 @@ unsharp_mask (GimpDrawable *drawable,
 
   unsharp_region (&srcPR, &destPR, drawable->bpp,
                   radius, amount,
-                  x1, x1 + width, y1, y1 + width,
+                  x1, x1 + width, y1, y1 + height,
                   TRUE);
 
   gimp_drawable_flush (drawable);
