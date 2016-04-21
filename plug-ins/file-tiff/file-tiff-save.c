@@ -524,7 +524,8 @@ save_image (GFile        *file,
     }
 
   /* Set TIFF parameters. */
-  TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
+  if (tsvals->save_thumbnail)
+    TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
   TIFFSetField (tif, TIFFTAG_SUBFILETYPE, 0);
   TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, cols);
   TIFFSetField (tif, TIFFTAG_IMAGELENGTH, rows);
