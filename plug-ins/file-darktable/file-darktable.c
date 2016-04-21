@@ -111,8 +111,33 @@ query (void)
 
   gint i;
 
-  // TODO: check if darktable is installed
-  gboolean have_darktable = TRUE;
+  /* check if darktable is installed */
+  /* TODO: allow setting the location of the executable in preferences */
+  gboolean have_darktable = FALSE;
+  gchar *argv[] = { "darktable", "--version", NULL };
+  gchar *darktable_stdout = NULL;
+
+  if (g_spawn_sync (NULL,
+                    argv,
+                    NULL,
+                    G_SPAWN_STDERR_TO_DEV_NULL |
+                    G_SPAWN_SEARCH_PATH,
+                    NULL,
+                    NULL,
+                    &darktable_stdout,
+                    NULL,
+                    NULL,
+                    NULL))
+    {
+      int n, major, minor, patch;
+      char *lua_support;
+      n = sscanf (darktable_stdout, "this is darktable %d.%d.%d", &major, &minor, &patch);
+      lua_support = g_strstr_len (darktable_stdout, -1, "Lua support enabled");
+      if (n == 3 && ((major == 1 && minor >= 7) || major >= 2) && lua_support)
+        have_darktable = TRUE;
+    }
+
+  g_free (darktable_stdout);
 
   if (! have_darktable)
     return;
