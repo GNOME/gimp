@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-19 18:23+0000\n"
-"PO-Revision-Date: 2016-04-19 20:47-0500\n"
+"POT-Creation-Date: 2016-04-20 18:23+0000\n"
+"PO-Revision-Date: 2016-04-20 21:12-0500\n"
 "Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -1487,15 +1487,11 @@ msgid "_About"
 msgstr "A_cerca de"
 
 #: ../app/actions/dialogs-actions.c:287
-#| msgctxt "help-action"
-#| msgid "_Search and Run a Command"
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "_Buscar y ejecutar un comando"
 
 #: ../app/actions/dialogs-actions.c:288
-#| msgctxt "help-action"
-#| msgid "Search commands by keyword, and run them"
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Buscar comandos por palabra clave y ejecutarlos"
@@ -2610,8 +2606,6 @@ msgid "Save this image and close its window"
 msgstr "Guardar esta imagen y cerrar su ventana"
 
 #: ../app/actions/file-actions.c:159 ../app/actions/file-actions.c:339
-#| msgctxt "file-action"
-#| msgid "Export As..."
 msgctxt "file-action"
 msgid "Export..."
 msgstr "Exportar…"
@@ -2644,8 +2638,6 @@ msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Exportar la imagen a diversos formatos de archivo como PNG o JPEG"
 
 #: ../app/actions/file-actions.c:320
-#| msgctxt "file-action"
-#| msgid "_Save"
 msgctxt "file-action"
 msgid "_Save..."
 msgstr "_Guardar…"
@@ -2736,8 +2728,6 @@ msgstr ""
 "%s"
 
 #: ../app/actions/filters-actions.c:55
-#| msgctxt "plug-in-action"
-#| msgid "Filte_rs"
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "_Filtros"
@@ -2758,15 +2748,11 @@ msgid "_Noise"
 msgstr "_Ruido"
 
 #: ../app/actions/filters-actions.c:63
-#| msgctxt "plug-in-action"
-#| msgid "Edge-De_tect"
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "Detectar _bordes"
 
 #: ../app/actions/filters-actions.c:65
-#| msgctxt "plug-in-action"
-#| msgid "En_hance"
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "Real_zar"
@@ -2777,29 +2763,21 @@ msgid "C_ombine"
 msgstr "C_ombinar"
 
 #: ../app/actions/filters-actions.c:69
-#| msgctxt "plug-in-action"
-#| msgid "_Generic"
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Genérico"
 
 #: ../app/actions/filters-actions.c:71
-#| msgctxt "plug-in-action"
-#| msgid "_Light and Shadow"
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Luz y sombra"
 
 #: ../app/actions/filters-actions.c:73
-#| msgctxt "plug-in-action"
-#| msgid "_Distorts"
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Dis_torsiones"
 
 #: ../app/actions/filters-actions.c:75
-#| msgctxt "plug-in-action"
-#| msgid "_Artistic"
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Artísticos"
@@ -2810,8 +2788,6 @@ msgid "_Decor"
 msgstr "_Decorativos"
 
 #: ../app/actions/filters-actions.c:79
-#| msgctxt "image-action"
-#| msgid "_Map"
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Mapa"
@@ -2822,22 +2798,16 @@ msgid "_Render"
 msgstr "_Renderizado"
 
 #: ../app/actions/filters-actions.c:83
-#| msgctxt "plug-in-action"
-#| msgid "_Clouds"
 msgctxt "filters-action"
 msgid "_Clouds"
 msgstr "_Nubes"
 
 #: ../app/actions/filters-actions.c:85
-#| msgctxt "plug-in-action"
-#| msgid "_Fractals"
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fractales"
 
 #: ../app/actions/filters-actions.c:87
-#| msgctxt "plug-in-action"
-#| msgid "_Nature"
 msgctxt "filters-action"
 msgid "_Nature"
 msgstr "_Naturaleza"
@@ -2848,7 +2818,6 @@ msgid "N_oise"
 msgstr "_Ruido"
 
 #: ../app/actions/filters-actions.c:91
-#| msgid "_Pattern"
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Patrón"
@@ -2862,8 +2831,6 @@ msgid "_Web"
 msgstr "_Web"
 
 #: ../app/actions/filters-actions.c:95
-#| msgctxt "plug-in-action"
-#| msgid "An_imation"
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "Anima_ción"
@@ -2961,7 +2928,6 @@ msgid "_Deinterlace..."
 msgstr "_Desentrelazar…"
 
 #: ../app/actions/filters-actions.c:191
-#| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "_Desaturar…"
@@ -3135,12 +3101,11 @@ msgid "_Hurl..."
 msgstr "Des_ordenar…"
 
 #: ../app/actions/filters-actions.c:351
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "_Print Size..."
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
-msgstr "Tamaño de la im_presión…"
+msgstr "Ruido _Perlin…"
 
 #: ../app/actions/filters-actions.c:356
 msgctxt "filters-action"
@@ -3266,12 +3231,11 @@ msgid "_Stretch Contrast HSV..."
 msgstr "_Expansión del contraste HSV"
 
 #: ../app/actions/filters-actions.c:476
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Super_nova..."
 msgctxt "filters-action"
 msgid "Super_nova..."
-msgstr "_Supernova..."
+msgstr "_Supernova…"
 
 #: ../app/actions/filters-actions.c:481
 msgctxt "filters-action"
@@ -3878,8 +3842,6 @@ msgid "_Mode"
 msgstr "_Modo"
 
 #: ../app/actions/image-actions.c:60
-#| msgctxt "image-action"
-#| msgid "_Precision"
 msgctxt "image-action"
 msgid "Pr_ecision"
 msgstr "_Precisión"
@@ -9079,7 +9041,6 @@ msgid "Selection Mask"
 msgstr "Máscara de selección"
 
 #: ../app/core/gimpcontext.c:673
-#, fuzzy
 #| msgctxt "active-color"
 #| msgid "Foreground"
 msgid "Foreground"
@@ -9253,7 +9214,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Ecualizar"
 
-#: ../app/core/gimpdrawable-foreground-extract.c:65
+#: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
 msgstr "Calculando alfa de píxeles desconocidos."
 
@@ -14992,7 +14953,6 @@ msgid "Click to add this path to the list"
 msgstr "Pulse para añadir esta ruta a la lista"
 
 #: ../app/tools/gimpblendoptions.c:100
-#, fuzzy
 #| msgid "Adaptive supersampling"
 msgid "Adaptive Supersampling"
 msgstr "Sobremuestreo adaptativo"
@@ -15179,12 +15139,13 @@ msgid "Select by Color"
 msgstr "Seleccionar por color"
 
 #: ../app/tools/gimpcageoptions.c:77
-#, fuzzy
 #| msgid "Fill the original position of the cage with a plain color"
 msgid ""
 "Fill the original position\n"
 "of the cage with a color"
-msgstr "Rellenar la posición original de la jaula con un color sencillo"
+msgstr ""
+"Rellenar la posición original\n"
+"de la jaula con un color"
 
 #: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1198
 msgid "Cage Transform"
@@ -15378,10 +15339,9 @@ msgstr ""
 "capas visibles"
 
 #: ../app/tools/gimpcolorpickeroptions.c:77
-#, fuzzy
 #| msgid "Pick Mode  (%s)"
 msgid "Pick Mode"
-msgstr "Modo de selección  (%s)"
+msgstr "Modo de selección"
 
 #: ../app/tools/gimpcolorpickeroptions.c:78
 msgid "Choose what color picker will do"
@@ -15568,22 +15528,21 @@ msgid "Click to add control points to all channels"
 msgstr "Pulse para añadir puntos de control a todos los canales"
 
 #: ../app/tools/gimpcurvestool.c:355
-#, fuzzy
 #| msgid "Click to close the curve"
 msgid "Click to locate on curve"
-msgstr "Pulse para cerrar la curva"
+msgstr "Pulse para situar sobre la curva"
 
 #: ../app/tools/gimpcurvestool.c:357
-#, fuzzy, c-format
+#, c-format
 #| msgid "Click to add a control point"
 msgid "%s: add control point"
-msgstr "Pulse para añadir un punto de control"
+msgstr "%s: añadir punto de control"
 
 #: ../app/tools/gimpcurvestool.c:358
-#, fuzzy, c-format
+#, c-format
 #| msgid "Click to add control points to all channels"
 msgid "%s: add control points to all channels"
-msgstr "Pulse para añadir puntos de control a todos los canales"
+msgstr "%s: añadir puntos de control a todos los canales"
 
 #: ../app/tools/gimpcurvestool.c:411
 msgid "Adjust Color Curves"
@@ -15602,10 +15561,9 @@ msgid "Curve _type:"
 msgstr "_Tipo de curva:"
 
 #: ../app/tools/gimpcurvestool.c:645 ../app/tools/gimplevelstool.c:662
-#, fuzzy
 #| msgid "Could not read header from '%s': %s"
 msgid "Could not read header: "
-msgstr "No se ha podido leer la cabecera de «%s»: %s"
+msgstr "No se ha podido leer la cabecera:"
 
 #: ../app/tools/gimpcurvestool.c:686
 msgid "Use _old curves file format"
@@ -15711,10 +15669,9 @@ msgid "Anti erase  (%s)"
 msgstr "Antiborrado  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:67
-#, fuzzy
 #| msgid "File Type"
 msgid "Flip Type"
-msgstr "Tipo de archivo"
+msgstr "Tipo de volteo"
 
 #: ../app/tools/gimpflipoptions.c:68
 msgid "Direction of flipping"
@@ -15764,10 +15721,9 @@ msgid "Flip"
 msgstr "Voltear"
 
 #: ../app/tools/gimpforegroundselectoptions.c:84
-#, fuzzy
 #| msgid "Paint Mode"
 msgid "Draw Mode"
-msgstr "Modo de pintura"
+msgstr "Modo de dibujo"
 
 #: ../app/tools/gimpforegroundselectoptions.c:85
 msgid ""
@@ -15778,10 +15734,9 @@ msgstr ""
 "exclusión de la selección"
 
 #: ../app/tools/gimpforegroundselectoptions.c:93
-#, fuzzy
 #| msgid "Stroke Path"
 msgid "Stroke width"
-msgstr "Trazar ruta"
+msgstr "Anchura del trazo"
 
 #: ../app/tools/gimpforegroundselectoptions.c:94
 msgid "Size of the brush used for refinements"
@@ -15824,11 +15779,10 @@ msgid "Iterations"
 msgstr "Iteraciones"
 
 #: ../app/tools/gimpforegroundselectoptions.c:131
-#, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Number of lines"
 msgid "Number of iterations to perform"
-msgstr "Número de líneas"
+msgstr "Número de iteraciones para representar"
 
 #: ../app/tools/gimpforegroundselectoptions.c:300
 #, fuzzy
@@ -15851,47 +15805,41 @@ msgid "F_oreground Select"
 msgstr "Selección del _frente"
 
 #: ../app/tools/gimpforegroundselecttool.c:303
-#, fuzzy
 #| msgid "Foreground Select"
 msgid "Dialog for foreground select"
-msgstr "Selección del frente"
+msgstr "Diálogo para la selección del frente"
 
 #: ../app/tools/gimpforegroundselecttool.c:319
-#, fuzzy
 #| msgid "_Preview"
 msgid "_Preview mask"
-msgstr "Vista _previa"
+msgstr "Máscara de _vista previa"
 
 #: ../app/tools/gimpforegroundselecttool.c:330
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Select foreground"
 msgid "Select foreground pixels"
-msgstr "Seleccionar primer plano"
+msgstr "Seleccionar píxeles del frente"
 
 #: ../app/tools/gimpforegroundselecttool.c:598
 msgid "Roughly outline the object to extract"
 msgstr "Dibuje un círculo aproximado alrededor del objeto que quiere extraer"
 
 #: ../app/tools/gimpforegroundselecttool.c:619
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Select foreground"
 msgid "Selecting foreground,"
-msgstr "Seleccionar primer plano"
+msgstr "Seleccionando frente,"
 
 #: ../app/tools/gimpforegroundselecttool.c:621
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Select foreground"
 msgid "Selecting background,"
-msgstr "Seleccionar primer plano"
+msgstr "Seleccionando fondo,"
 
 #: ../app/tools/gimpforegroundselecttool.c:623
-#, fuzzy
 #| msgid "Selection"
 msgid "Selecting unknown,"
-msgstr "Selección"
+msgstr "Seleccionando desconocido,"
 
 #: ../app/tools/gimpforegroundselecttool.c:626
 #, fuzzy
