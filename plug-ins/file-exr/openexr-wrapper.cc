@@ -18,6 +18,8 @@
 
 #include <string>
 
+#include "exr-attribute-blob.h"
+
 using namespace Imf;
 using namespace Imf::RgbaYca;
 using namespace Imath;
@@ -240,6 +242,36 @@ struct _EXRLoader
     return profile;
   }
 
+  gchar *getComment() const {
+    char *result = NULL;
+    const Imf::StringAttribute *comment = file_.header().findTypedAttribute<Imf::StringAttribute>("comment");
+    if (comment)
+      result = g_strdup (comment->value().c_str());
+    return result;
+  }
+
+  guchar *getExif(guint *size) const {
+    guchar jpeg_exif[] = "Exif\0\0";
+    guchar *exif_data = NULL;
+    *size = 0;
+
+    const Imf::BlobAttribute *exif = file_.header().findTypedAttribute<Imf::BlobAttribute>("exif");
+
+    if (exif)
+      {
+        exif_data = (guchar *)(exif->value().data.get());
+        *size = exif->value().size;
+        // darktable appends a jpg-compatible exif00 string, so get rid of that again:
+        if ( ! memcmp (jpeg_exif, exif_data, sizeof(jpeg_exif)))
+          {
+            *size -= 6;
+            exif_data += 6;
+          }
+      }
+
+    return (guchar *)g_memdup (exif_data, *size);
+  }
+
   size_t refcount_;
   InputFile file_;
   const Box2i data_window_;
@@ -259,6 +291,7 @@ exr_loader_new (const char *filename)
   // Don't let any exceptions propagate to the C layer.
   try
     {
+      Imf::BlobAttribute::registerAttributeType();
       file = new EXRLoader(filename);
     }
   catch (...)
@@ -344,6 +377,19 @@ cmsHPROFILE
 exr_loader_get_icc_profile (EXRLoader *loader)
 {
   return loader->getICCProfile ();
+}
+
+gchar *
+exr_loader_get_comment (EXRLoader *loader)
+{
+  return loader->getComment ();
+}
+
+guchar *
+exr_loader_get_exif (EXRLoader *loader,
+                     guint *size)
+{
+  return loader->getExif (size);
 }
 
 int

@@ -32,17 +32,18 @@
 /*
  * Declare some local functions.
  */
-static void     query      (void);
-static void     run        (const gchar      *name,
-                            gint              nparams,
-                            const GimpParam  *param,
-                            gint             *nreturn_vals,
-                            GimpParam       **return_vals);
+static void     query                 (void);
+static void     run                   (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *param,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
 
-static gint32   load_image (const gchar      *filename,
-                            gboolean          interactive,
-                            GError          **error);
+static gint32   load_image            (const gchar      *filename,
+                                       gboolean          interactive,
+                                       GError          **error);
 
+static void exr_load_sanitize_comment (gchar *comment);
 
 /*
  * Some global variables.
@@ -169,6 +170,10 @@ load_image (const gchar  *filename,
   gchar            *pixels = NULL;
   gint              begin;
   gint32            success = FALSE;
+  gchar            *comment;
+  guchar           *exif_data;
+  guint             exif_size;
+
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -309,6 +314,49 @@ load_image (const gchar  *filename,
         }
     }
 
+  /* try to read the file comment */
+  comment = exr_loader_get_comment (loader);
+  if (comment)
+    {
+      GimpParasite *parasite;
+
+      exr_load_sanitize_comment (comment);
+      parasite = gimp_parasite_new ("gimp-comment",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (comment) + 1,
+                                    comment);
+      gimp_image_attach_parasite (image, parasite);
+      gimp_parasite_free (parasite);
+
+      g_free (comment);
+    }
+
+  /* check if the image contains Exif data and read it */
+  exif_data = exr_loader_get_exif (loader, &exif_size);
+  if (exif_data)
+    {
+      GimpMetadata *metadata = gimp_image_get_metadata (image);
+
+      if (metadata)
+        g_object_ref (metadata);
+      else
+        metadata = gimp_metadata_new ();
+
+      if (gimp_metadata_set_from_exif (metadata,
+                                       exif_data,
+                                       exif_size,
+                                       NULL))
+        {
+          gimp_image_set_metadata (image, metadata);
+        }
+
+      g_object_unref (metadata);
+      g_free (exif_data);
+    }
+
+  // TODO: also read XMP data
+
+
   gimp_progress_update (1.0);
 
   success = TRUE;
@@ -330,4 +378,20 @@ load_image (const gchar  *filename,
     gimp_image_delete (image);
 
   return -1;
+}
+
+/* copy & pasted from file-jpeg/jpeg-load.c */
+static void
+exr_load_sanitize_comment (gchar *comment)
+{
+  if (! g_utf8_validate (comment, -1, NULL))
+  {
+    gchar *c;
+
+    for (c = comment; *c; c++)
+    {
+      if (*c > 126 || (*c < 32 && *c != '\t' && *c != '\n' && *c != '\r'))
+        *c = '?';
+    }
+  }
 }
