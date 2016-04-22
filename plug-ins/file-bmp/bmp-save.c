@@ -78,27 +78,6 @@ static struct
   gint    dont_write_color_space_data;
 } BMPSaveData;
 
-static Bitmap_File_Head bitmap_file_head;
-static Bitmap_Head      bitmap_head;
-
-
-static void
-FromL (gint32  wert,
-       guchar *bopuffer)
-{
-  bopuffer[0] = (wert)         & 0xff;
-  bopuffer[1] = (wert >> 0x08) & 0xff;
-  bopuffer[2] = (wert >> 0x10) & 0xff;
-  bopuffer[3] = (wert >> 0x18) & 0xff;
-}
-
-static void
-FromS (gint16  wert,
-       guchar *bopuffer)
-{
-  bopuffer[0] = (wert)         & 0xff;
-  bopuffer[1] = (wert >> 0x08) & 0xff;
-}
 
 static void
 write_color_map (FILE *f,
@@ -151,25 +130,26 @@ save_image (const gchar  *filename,
             GimpRunMode   run_mode,
             GError      **error)
 {
-  FILE          *outfile;
-  gint           Red[MAXCOLORS];
-  gint           Green[MAXCOLORS];
-  gint           Blue[MAXCOLORS];
-  guchar        *cmap;
-  gint           rows, cols, Spcols, channels, MapSize, SpZeile;
-  glong          BitsPerPixel;
-  gint           colors;
-  guchar        *pixels;
-  GeglBuffer    *buffer;
-  const Babl    *format;
-  GimpImageType  drawable_type;
-  gint           drawable_width;
-  gint           drawable_height;
-  guchar         puffer[128];
-  gint           i;
-  gint           mask_info_size;
-  gint           color_space_size;
-  guint32        Mask[4];
+  FILE           *outfile;
+  BitmapFileHead  bitmap_file_head;
+  BitmapHead      bitmap_head;
+  gint            Red[MAXCOLORS];
+  gint            Green[MAXCOLORS];
+  gint            Blue[MAXCOLORS];
+  guchar         *cmap;
+  gint            rows, cols, Spcols, channels, MapSize, SpZeile;
+  glong           BitsPerPixel;
+  gint            colors;
+  guchar         *pixels;
+  GeglBuffer     *buffer;
+  const Babl     *format;
+  GimpImageType    drawable_type;
+  gint            drawable_width;
+  gint            drawable_height;
+  gint            i;
+  gint            mask_info_size;
+  gint            color_space_size;
+  guint32         Mask[4];
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
@@ -284,7 +264,8 @@ save_image (const gchar  *filename,
       if (! save_dialog (1))
         return GIMP_PDB_CANCEL;
     }
-  else if ((BitsPerPixel == 24 || BitsPerPixel == 32))
+  else if (BitsPerPixel == 24 ||
+           BitsPerPixel == 32)
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
@@ -299,23 +280,23 @@ save_image (const gchar  *filename,
           BitsPerPixel = 24;
           break;
         case RGBA_8888:
-          BitsPerPixel = 32;
+          BitsPerPixel   = 32;
           mask_info_size = 16;
           break;
         case RGBX_8888:
-          BitsPerPixel = 32;
+          BitsPerPixel   = 32;
           mask_info_size = 16;
           break;
         case RGB_565:
-          BitsPerPixel = 16;
+          BitsPerPixel   = 16;
           mask_info_size = 16;
           break;
         case RGBA_5551:
-          BitsPerPixel = 16;
+          BitsPerPixel   = 16;
           mask_info_size = 16;
           break;
         case RGB_555:
-          BitsPerPixel = 16;
+          BitsPerPixel   = 16;
           mask_info_size = 16;
           break;
         default:
@@ -449,26 +430,26 @@ save_image (const gchar  *filename,
 
   Write (outfile, "BM", 2);
 
-  FromL (bitmap_file_head.bfSize, &puffer[0x00]);
-  FromS (bitmap_file_head.zzHotX, &puffer[0x04]);
-  FromS (bitmap_file_head.zzHotY, &puffer[0x06]);
-  FromL (bitmap_file_head.bfOffs, &puffer[0x08]);
-  FromL (bitmap_file_head.biSize, &puffer[0x0C]);
+  bitmap_file_head.bfSize = GUINT32_TO_LE (bitmap_file_head.bfSize);
+  bitmap_file_head.zzHotX = GUINT16_TO_LE (bitmap_file_head.zzHotX);
+  bitmap_file_head.zzHotY = GUINT16_TO_LE (bitmap_file_head.zzHotY);
+  bitmap_file_head.bfOffs = GUINT32_TO_LE (bitmap_file_head.bfOffs);
+  bitmap_file_head.biSize = GUINT32_TO_LE (bitmap_file_head.biSize);
 
-  Write (outfile, puffer, 16);
+  Write (outfile, &bitmap_file_head.bfSize, 16);
 
-  FromL (bitmap_head.biWidth, &puffer[0x00]);
-  FromL (bitmap_head.biHeight, &puffer[0x04]);
-  FromS (bitmap_head.biPlanes, &puffer[0x08]);
-  FromS (bitmap_head.biBitCnt, &puffer[0x0A]);
-  FromL (bitmap_head.biCompr, &puffer[0x0C]);
-  FromL (bitmap_head.biSizeIm, &puffer[0x10]);
-  FromL (bitmap_head.biXPels, &puffer[0x14]);
-  FromL (bitmap_head.biYPels, &puffer[0x18]);
-  FromL (bitmap_head.biClrUsed, &puffer[0x1C]);
-  FromL (bitmap_head.biClrImp, &puffer[0x20]);
+  bitmap_head.biWidth   = GINT32_TO_LE  (bitmap_head.biWidth);
+  bitmap_head.biHeight  = GINT32_TO_LE  (bitmap_head.biHeight);
+  bitmap_head.biPlanes  = GUINT16_TO_LE (bitmap_head.biPlanes);
+  bitmap_head.biBitCnt  = GUINT16_TO_LE (bitmap_head.biBitCnt);
+  bitmap_head.biCompr   = GUINT32_TO_LE (bitmap_head.biCompr);
+  bitmap_head.biSizeIm  = GUINT32_TO_LE (bitmap_head.biSizeIm);
+  bitmap_head.biXPels   = GUINT32_TO_LE (bitmap_head.biXPels);
+  bitmap_head.biYPels   = GUINT32_TO_LE (bitmap_head.biYPels);
+  bitmap_head.biClrUsed = GUINT32_TO_LE (bitmap_head.biClrUsed);
+  bitmap_head.biClrImp  = GUINT32_TO_LE (bitmap_head.biClrImp);
 
-  Write (outfile, puffer, 36);
+  Write (outfile, &bitmap_head, 36);
 
   if (mask_info_size > 0)
     {
@@ -512,46 +493,49 @@ save_image (const gchar  *filename,
           break;
         }
 
-      FromL (Mask[0], &puffer[0x00]);
-      FromL (Mask[1], &puffer[0x04]);
-      FromL (Mask[2], &puffer[0x08]);
-      FromL (Mask[3], &puffer[0x0C]);
-      Write (outfile, puffer, mask_info_size);
+      Mask[0] = GUINT32_TO_LE (Mask[0]);
+      Mask[1] = GUINT32_TO_LE (Mask[1]);
+      Mask[2] = GUINT32_TO_LE (Mask[2]);
+      Mask[3] = GUINT32_TO_LE (Mask[3]);
+
+      Write (outfile, &Mask, mask_info_size);
     }
 
   if (! BMPSaveData.dont_write_color_space_data)
     {
+      guint32 buf[0x11];
+
       /* Write V5 color space fields */
 
       /* bV5CSType = LCS_sRGB */
-      FromL (0x73524742, &puffer[0x00]);
+      buf[0x00] = GUINT32_TO_LE (0x73524742);
 
       /* bV5Endpoints is set to 0 (ignored) */
-      for (i = 0; i < 0x24; i++)
-        puffer[0x04 + i] = 0x00;
+      for (i = 0; i < 0x09; i++)
+        buf[i + 1] = 0x00;
 
       /* bV5GammaRed is set to 0 (ignored) */
-      FromL (0x0, &puffer[0x28]);
+      buf[0x0a] = GUINT32_TO_LE (0x0);
 
       /* bV5GammaGreen is set to 0 (ignored) */
-      FromL (0x0, &puffer[0x2c]);
+      buf[0x0b] = GUINT32_TO_LE (0x0);
 
       /* bV5GammaBlue is set to 0 (ignored) */
-      FromL (0x0, &puffer[0x30]);
+      buf[0x0c] = GUINT32_TO_LE (0x0);
 
       /* bV5Intent = LCS_GM_GRAPHICS */
-      FromL (0x00000002, &puffer[0x34]);
+      buf[0x0d] = GUINT32_TO_LE (0x00000002);
 
       /* bV5ProfileData is set to 0 (ignored) */
-      FromL (0x0, &puffer[0x38]);
+      buf[0x0e] = GUINT32_TO_LE (0x0);
 
       /* bV5ProfileSize is set to 0 (ignored) */
-      FromL (0x0, &puffer[0x3c]);
+      buf[0x0f] = GUINT32_TO_LE (0x0);
 
       /* bV5Reserved = 0 */
-      FromL (0x0, &puffer[0x40]);
+      buf[0x10] = GUINT32_TO_LE (0x0);
 
-      Write (outfile, puffer, color_space_size);
+      Write (outfile, buf, color_space_size);
     }
 
   write_color_map (outfile, Red, Green, Blue, MapSize);
@@ -573,25 +557,38 @@ save_image (const gchar  *filename,
   return GIMP_PDB_SUCCESS;
 }
 
-static inline void Make565(guchar r, guchar g, guchar b, guchar *buf)
+static inline void
+Make565 (guchar  r,
+         guchar  g,
+         guchar  b,
+         guchar *buf)
 {
-    gint p;
-    p = (((gint)(r / 255.0 * 31.0 + 0.5))<<11) |
-        (((gint)(g / 255.0 * 63.0 + 0.5))<<5)  |
-         ((gint)(b / 255.0 * 31.0 + 0.5));
-    buf[0] = (guchar)(p & 0xff);
-    buf[1] = (guchar)(p>>8);
+  gint p;
+
+  p = ((((gint) (r / 255.0 * 31.0 + 0.5)) << 11) |
+       (((gint) (g / 255.0 * 63.0 + 0.5)) <<  5) |
+       (((gint) (b / 255.0 * 31.0 + 0.5))));
+
+  buf[0] = (guchar) (p & 0xff);
+  buf[1] = (guchar) (p >> 8);
 }
 
-static inline void Make5551(guchar r, guchar g, guchar b, guchar a, guchar *buf)
+static inline void
+Make5551 (guchar  r,
+          guchar  g,
+          guchar  b,
+          guchar  a,
+          guchar *buf)
 {
-    gint p;
-    p = (((gint)(r / 255.0 * 31.0 + 0.5))<<10) |
-        (((gint)(g / 255.0 * 31.0 + 0.5))<<5)  |
-         ((gint)(b / 255.0 * 31.0 + 0.5))      |
-         ((gint)(a / 255.0 + 0.5)<<15);
-    buf[0] = (guchar)(p & 0xff);
-    buf[1] = (guchar)(p>>8);
+  gint p;
+
+  p = ((((gint) (r / 255.0 * 31.0 + 0.5)) << 10) |
+       (((gint) (g / 255.0 * 31.0 + 0.5)) <<  5) |
+       (((gint) (b / 255.0 * 31.0 + 0.5)))       |
+       (((gint) (a / 255.0 +  0.5)        << 15)));
+
+  buf[0] = (guchar) (p & 0xff);
+  buf[1] = (guchar) (p >> 8);
 }
 
 static void
@@ -609,7 +606,7 @@ write_image (FILE   *f,
              gint    color_space_size)
 {
   guchar  buf[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0 };
-  guchar  puffer[8];
+  guint32 uint32buf;
   guchar *temp, v;
   guchar *row, *ketten;
   gint    xpos, ypos, i, j, rowstride, length, thiswidth;
@@ -771,6 +768,7 @@ write_image (FILE   *f,
                 breite = width / (8 / bpp);
                 if (width % (8 / bpp))
                   breite++;
+
                 /* then check for strings of equal bytes */
                 for (i = 0; i < breite; i += j)
                   {
@@ -844,6 +842,7 @@ write_image (FILE   *f,
                         length += 2;
                       }
                   }
+
                 Write (f, &buf[14], 2);          /* End of row */
                 length += 2;
 
@@ -852,16 +851,19 @@ write_image (FILE   *f,
                   gimp_progress_update ((gdouble) cur_progress /
                                         (gdouble) max_progress);
               }
+
             fseek (f, -2, SEEK_CUR);     /* Overwrite last End of row ... */
             Write (f, &buf[12], 2);      /* ... with End of file */
 
             fseek (f, 0x22, SEEK_SET);            /* Write length of image */
-            FromL (length, puffer);
-            Write (f, puffer, 4);
+            uint32buf = GUINT32_TO_LE (length);
+            Write (f, &uint32buf, 4);
+
             fseek (f, 0x02, SEEK_SET);            /* Write length of file */
             length += (0x36 + MapSize + mask_info_size + color_space_size);
-            FromL (length, puffer);
-            Write (f, puffer, 4);
+            uint32buf = GUINT32_TO_LE (length);
+            Write (f, &uint32buf, 4);
+
             g_free (ketten);
             g_free (row);
             break;

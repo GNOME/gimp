@@ -44,72 +44,71 @@
 #endif
 
 
-static gint32 ReadImage (FILE                  *fd,
-                         const gchar           *filename,
-                         gint                   width,
-                         gint                   height,
-                         guchar                 cmap[256][3],
-                         gint                   ncols,
-                         gint                   bpp,
-                         gint                   compression,
-                         gint                   rowbytes,
-                         gboolean               gray,
-                         const Bitmap_Channel  *masks,
-                         GError               **error);
-
-
-static Bitmap_File_Head bitmap_file_head;
-static Bitmap_Head      bitmap_head;
+static gint32 ReadImage (FILE                 *fd,
+                         const gchar          *filename,
+                         gint                  width,
+                         gint                  height,
+                         guchar                cmap[256][3],
+                         gint                  ncols,
+                         gint                  bpp,
+                         gint                  compression,
+                         gint                  rowbytes,
+                         gboolean              gray,
+                         const BitmapChannel  *masks,
+                         GError              **error);
 
 
 static void
-setMasksDefault (gushort         biBitCnt,
-                 Bitmap_Channel *masks)
+setMasksDefault (gushort        biBitCnt,
+                 BitmapChannel *masks)
 {
   switch (biBitCnt)
     {
     case 32:
-      masks[0].mask     = 0x00ff0000;
-      masks[0].shiftin  = 16;
-      masks[0].max_value= (gfloat)255.0;
-      masks[1].mask     = 0x0000ff00;
-      masks[1].shiftin  = 8;
-      masks[1].max_value= (gfloat)255.0;
-      masks[2].mask     = 0x000000ff;
-      masks[2].shiftin  = 0;
-      masks[2].max_value= (gfloat)255.0;
-      masks[3].mask     = 0x00000000;
-      masks[3].shiftin  = 0;
-      masks[3].max_value= (gfloat)0.0;
+      masks[0].mask      = 0x00ff0000;
+      masks[0].shiftin   = 16;
+      masks[0].max_value = (gfloat)255.0;
+      masks[1].mask      = 0x0000ff00;
+      masks[1].shiftin   = 8;
+      masks[1].max_value = (gfloat)255.0;
+      masks[2].mask      = 0x000000ff;
+      masks[2].shiftin   = 0;
+      masks[2].max_value = (gfloat)255.0;
+      masks[3].mask      = 0x00000000;
+      masks[3].shiftin   = 0;
+      masks[3].max_value = (gfloat)0.0;
       break;
+
     case 24:
-      masks[0].mask     = 0xff0000;
-      masks[0].shiftin  = 16;
-      masks[0].max_value= (gfloat)255.0;
-      masks[1].mask     = 0x00ff00;
-      masks[1].shiftin  = 8;
-      masks[1].max_value= (gfloat)255.0;
-      masks[2].mask     = 0x0000ff;
-      masks[2].shiftin  = 0;
-      masks[2].max_value= (gfloat)255.0;
-      masks[3].mask     = 0x0;
-      masks[3].shiftin  = 0;
-      masks[3].max_value= (gfloat)0.0;
+      masks[0].mask      = 0xff0000;
+      masks[0].shiftin   = 16;
+      masks[0].max_value = (gfloat)255.0;
+      masks[1].mask      = 0x00ff00;
+      masks[1].shiftin   = 8;
+      masks[1].max_value = (gfloat)255.0;
+      masks[2].mask      = 0x0000ff;
+      masks[2].shiftin   = 0;
+      masks[2].max_value = (gfloat)255.0;
+      masks[3].mask      = 0x0;
+      masks[3].shiftin   = 0;
+      masks[3].max_value = (gfloat)0.0;
       break;
+
     case 16:
-      masks[0].mask     = 0x7c00;
-      masks[0].shiftin  = 10;
-      masks[0].max_value= (gfloat)31.0;
-      masks[1].mask     = 0x03e0;
-      masks[1].shiftin  = 5;
-      masks[1].max_value= (gfloat)31.0;
-      masks[2].mask     = 0x001f;
-      masks[2].shiftin  = 0;
-      masks[2].max_value= (gfloat)31.0;
-      masks[3].mask     = 0x0;
-      masks[3].shiftin  = 0;
-      masks[3].max_value= (gfloat)0.0;
+      masks[0].mask      = 0x7c00;
+      masks[0].shiftin   = 10;
+      masks[0].max_value = (gfloat)31.0;
+      masks[1].mask      = 0x03e0;
+      masks[1].shiftin   = 5;
+      masks[1].max_value = (gfloat)31.0;
+      masks[2].mask      = 0x001f;
+      masks[2].shiftin   = 0;
+      masks[2].max_value = (gfloat)31.0;
+      masks[3].mask      = 0x0;
+      masks[3].shiftin   = 0;
+      masks[3].max_value = (gfloat)0.0;
       break;
+
     default:
       break;
     }
@@ -134,13 +133,14 @@ ReadColorMap (FILE     *fd,
               gint      size,
               gboolean *gray)
 {
-  gint   i;
-  guchar rgb[4];
+  gint i;
 
   *gray = (number > 2);
 
   for (i = 0; i < number ; i++)
     {
+      guchar rgb[4];
+
       if (! ReadOK (fd, rgb, size))
         {
           g_message (_("Bad colormap"));
@@ -152,26 +152,30 @@ ReadColorMap (FILE     *fd,
       buffer[i][0] = rgb[2];
       buffer[i][1] = rgb[1];
       buffer[i][2] = rgb[0];
-      *gray = ((*gray) && (rgb[0]==rgb[1]) && (rgb[1]==rgb[2]));
+
+      *gray = ((*gray) && (rgb[0] == rgb[1]) && (rgb[1] == rgb[2]));
     }
 
   return TRUE;
 }
 
 static gboolean
-ReadChannelMasks (guint32        *tmp,
-                  Bitmap_Channel *masks,
-                  guint           channels)
+ReadChannelMasks (guint32       *tmp,
+                  BitmapChannel *masks,
+                  guint          channels)
 {
-  guint32 mask;
-  gint   i, nbits, offset, bit;
+  gint i;
 
   for (i = 0; i < channels; i++)
     {
+      guint32 mask;
+      gint    nbits, offset, bit;
+
       mask = tmp[i];
       masks[i].mask = mask;
       nbits = 0;
       offset = -1;
+
       for (bit = 0; bit < 32; bit++)
         {
           if (mask & 1)
@@ -180,10 +184,12 @@ ReadChannelMasks (guint32        *tmp,
               if (offset == -1)
                 offset = bit;
             }
+
           mask = mask >> 1;
         }
-      masks[i].shiftin = offset;
-      masks[i].max_value = (gfloat)((1<<(nbits))-1);
+
+      masks[i].shiftin   = offset;
+      masks[i].max_value = (gfloat) ((1 << nbits) - 1);
 
 #ifdef DEBUG
       g_print ("Channel %d mask %08x in %d max_val %d\n",
@@ -198,14 +204,16 @@ gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  FILE          *fd;
-  guchar         buffer[124];
-  gint           ColormapSize, rowbytes, Maps;
-  gboolean       gray = FALSE;
-  guchar         ColorMap[256][3];
-  gint32         image_ID = -1;
-  gchar          magick[2];
-  Bitmap_Channel masks[4];
+  FILE           *fd;
+  BitmapFileHead  bitmap_file_head;
+  BitmapHead      bitmap_head;
+  guchar          buffer[124];
+  gint            ColormapSize, rowbytes, Maps;
+  gboolean        gray = FALSE;
+  guchar          ColorMap[256][3];
+  gint32          image_ID = -1;
+  gchar           magick[2];
+  BitmapChannel   masks[4];
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -351,9 +359,9 @@ load_image (const gchar  *filename,
               goto out;
             }
 
-          bitmap_head.masks[0] = ToL(&buffer[0x00]);
-          bitmap_head.masks[1] = ToL(&buffer[0x04]);
-          bitmap_head.masks[2] = ToL(&buffer[0x08]);
+          bitmap_head.masks[0] = ToL (&buffer[0x00]);
+          bitmap_head.masks[1] = ToL (&buffer[0x04]);
+          bitmap_head.masks[2] = ToL (&buffer[0x08]);
 
           ReadChannelMasks (&bitmap_head.masks[0], masks, 3);
         }
@@ -370,7 +378,7 @@ load_image (const gchar  *filename,
         {
           /* BI_ALPHABITFIELDS, etc. */
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Unsupported compression (%lu) in BMP file from '%s'"),
+                       _("Unsupported compression (%u) in BMP file from '%s'"),
                        bitmap_head.biCompr,
                        gimp_filename_to_utf8 (filename));
         }
@@ -392,20 +400,20 @@ load_image (const gchar  *filename,
           goto out;
         }
 
-      bitmap_head.biWidth   =ToL (&buffer[0x00]);       /* 12 */
-      bitmap_head.biHeight  =ToL (&buffer[0x04]);       /* 16 */
-      bitmap_head.biPlanes  =ToS (&buffer[0x08]);       /* 1A */
-      bitmap_head.biBitCnt  =ToS (&buffer[0x0A]);       /* 1C */
-      bitmap_head.biCompr   =ToL (&buffer[0x0C]);       /* 1E */
-      bitmap_head.biSizeIm  =ToL (&buffer[0x10]);       /* 22 */
-      bitmap_head.biXPels   =ToL (&buffer[0x14]);       /* 26 */
-      bitmap_head.biYPels   =ToL (&buffer[0x18]);       /* 2A */
-      bitmap_head.biClrUsed =ToL (&buffer[0x1C]);       /* 2E */
-      bitmap_head.biClrImp  =ToL (&buffer[0x20]);       /* 32 */
-      bitmap_head.masks[0]  =ToL (&buffer[0x24]);       /* 36 */
-      bitmap_head.masks[1]  =ToL (&buffer[0x28]);       /* 3A */
-      bitmap_head.masks[2]  =ToL (&buffer[0x2C]);       /* 3E */
-      bitmap_head.masks[3]  =ToL (&buffer[0x30]);       /* 42 */
+      bitmap_head.biWidth   = ToL (&buffer[0x00]);       /* 12 */
+      bitmap_head.biHeight  = ToL (&buffer[0x04]);       /* 16 */
+      bitmap_head.biPlanes  = ToS (&buffer[0x08]);       /* 1A */
+      bitmap_head.biBitCnt  = ToS (&buffer[0x0A]);       /* 1C */
+      bitmap_head.biCompr   = ToL (&buffer[0x0C]);       /* 1E */
+      bitmap_head.biSizeIm  = ToL (&buffer[0x10]);       /* 22 */
+      bitmap_head.biXPels   = ToL (&buffer[0x14]);       /* 26 */
+      bitmap_head.biYPels   = ToL (&buffer[0x18]);       /* 2A */
+      bitmap_head.biClrUsed = ToL (&buffer[0x1C]);       /* 2E */
+      bitmap_head.biClrImp  = ToL (&buffer[0x20]);       /* 32 */
+      bitmap_head.masks[0]  = ToL (&buffer[0x24]);       /* 36 */
+      bitmap_head.masks[1]  = ToL (&buffer[0x28]);       /* 3A */
+      bitmap_head.masks[2]  = ToL (&buffer[0x2C]);       /* 3E */
+      bitmap_head.masks[3]  = ToL (&buffer[0x30]);       /* 42 */
 
       Maps = 4;
       ReadChannelMasks (&bitmap_head.masks[0], masks, 4);
@@ -554,7 +562,7 @@ load_image (const gchar  *filename,
    * word length (32 bits == 4 bytes)
    */
 
-  rowbytes= ((bitmap_head.biWidth * bitmap_head.biBitCnt - 1) / 32) * 4 + 4;
+  rowbytes = ((bitmap_head.biWidth * bitmap_head.biBitCnt - 1) / 32) * 4 + 4;
 
 #ifdef DEBUG
   printf ("\nSize: %lu, Colors: %lu, Bits: %hu, Width: %ld, Height: %ld, "
@@ -627,18 +635,18 @@ out:
 }
 
 static gint32
-ReadImage (FILE                  *fd,
-           const gchar           *filename,
-           gint                   width,
-           gint                   height,
-           guchar                 cmap[256][3],
-           gint                   ncols,
-           gint                   bpp,
-           gint                   compression,
-           gint                   rowbytes,
-           gboolean               gray,
-           const Bitmap_Channel  *masks,
-           GError               **error)
+ReadImage (FILE                 *fd,
+           const gchar          *filename,
+           gint                  width,
+           gint                  height,
+           guchar                cmap[256][3],
+           gint                  ncols,
+           gint                  bpp,
+           gint                  compression,
+           gint                  rowbytes,
+           gboolean              gray,
+           const BitmapChannel  *masks,
+           GError              **error)
 {
   guchar             v, n;
   gint               xpos = 0;
@@ -749,6 +757,7 @@ ReadImage (FILE                  *fd,
         while (ReadOK (fd, row_buf, rowbytes))
           {
             temp = dest + (ypos * rowstride);
+
             for (xpos= 0; xpos < width; ++xpos)
               {
                 px32 = ToL(&row_buf[xpos*4]);
@@ -758,9 +767,12 @@ ReadImage (FILE                  *fd,
                 if (channels > 3)
                   *(temp++) = ((px32 & masks[3].mask) >> masks[3].shiftin) * 255.0 / masks[3].max_value + 0.5;
               }
+
             if (ypos == 0)
               break;
+
             --ypos; /* next line */
+
             cur_progress++;
             if ((cur_progress % 5) == 0)
               gimp_progress_update ((gdouble) cur_progress /
@@ -774,15 +786,19 @@ ReadImage (FILE                  *fd,
         while (ReadOK (fd, row_buf, rowbytes))
           {
             temp = dest + (ypos * rowstride);
+
             for (xpos= 0; xpos < width; ++xpos)
               {
                 *(temp++) = row_buf[xpos * 3 + 2];
                 *(temp++) = row_buf[xpos * 3 + 1];
                 *(temp++) = row_buf[xpos * 3];
               }
+
             if (ypos == 0)
               break;
+
             --ypos; /* next line */
+
             cur_progress++;
             if ((cur_progress % 5) == 0)
               gimp_progress_update ((gdouble) cur_progress /
@@ -796,6 +812,7 @@ ReadImage (FILE                  *fd,
         while (ReadOK (fd, row_buf, rowbytes))
           {
             temp = dest + (ypos * rowstride);
+
             for (xpos= 0; xpos < width; ++xpos)
               {
                 rgb= ToS(&row_buf[xpos * 2]);
@@ -805,9 +822,12 @@ ReadImage (FILE                  *fd,
                 if (channels > 3)
                   *(temp++) = ((rgb & masks[3].mask) >> masks[3].shiftin) * 255.0 / masks[3].max_value + 0.5;
               }
+
             if (ypos == 0)
               break;
+
             --ypos; /* next line */
+
             cur_progress++;
             if ((cur_progress % 5) == 0)
               gimp_progress_update ((gdouble) cur_progress /
@@ -832,11 +852,14 @@ ReadImage (FILE                  *fd,
                     if (gray)
                       *temp = cmap[*temp][0];
                   }
+
                 if (xpos == width)
                   {
                     fread (row_buf, rowbytes - 1 - (width * bpp - 1) / 8, 1, fd);
+
                     if (ypos == 0)
                       break;
+
                     ypos--;
                     xpos = 0;
 
@@ -845,6 +868,7 @@ ReadImage (FILE                  *fd,
                       gimp_progress_update ((gdouble) cur_progress /
                                             (gdouble) max_progress);
                   }
+
                 if (ypos < 0)
                   break;
               }
@@ -865,9 +889,9 @@ ReadImage (FILE                  *fd,
                   /* Count + Color - record */
                   {
                     /* encoded mode run -
-                         row_buf[0] == run_length
-                         row_buf[1] == pixel data
-                    */
+                     *   row_buf[0] == run_length
+                     *   row_buf[1] == pixel data
+                     */
                     for (j = 0;
                          ((guchar) j < row_buf[0]) && (xpos < width);)
                       {
@@ -888,11 +912,13 @@ ReadImage (FILE                  *fd,
                           }
                       }
                   }
+
                 if ((row_buf[0] == 0) && (row_buf[1] > 2))
                   /* uncompressed record */
                   {
                     n = row_buf[1];
                     total_bytes_read = 0;
+
                     for (j = 0; j < n; j += (8 / bpp))
                       {
                         /* read the next byte in the record */
@@ -901,6 +927,7 @@ ReadImage (FILE                  *fd,
                             g_message (_("The bitmap ends unexpectedly."));
                             break;
                           }
+
                         total_bytes_read++;
 
                         /* read all pixels from that byte */
@@ -925,8 +952,9 @@ ReadImage (FILE                  *fd,
 
                     /* absolute mode runs are padded to 16-bit alignment */
                     if (total_bytes_read % 2)
-                      fread(&v, 1, 1, fd);
+                      fread (&v, 1, 1, fd);
                   }
+
                 if ((row_buf[0] == 0) && (row_buf[1] == 0))
                   /* Line end */
                   {
@@ -938,11 +966,13 @@ ReadImage (FILE                  *fd,
                       gimp_progress_update ((gdouble) cur_progress /
                                             (gdouble)  max_progress);
                   }
+
                 if ((row_buf[0] == 0) && (row_buf[1] == 1))
                   /* Bitmap end */
                   {
                     break;
                   }
+
                 if ((row_buf[0] == 0) && (row_buf[1] == 2))
                   /* Deltarecord */
                   {
@@ -951,6 +981,7 @@ ReadImage (FILE                  *fd,
                         g_message (_("The bitmap ends unexpectedly."));
                         break;
                       }
+
                     xpos += row_buf[0];
                     ypos -= row_buf[1];
                   }

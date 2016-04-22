@@ -34,37 +34,37 @@
 #define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
 
 
-typedef struct _Bitmap_File_Head
+typedef struct
 {
   gchar    zzMagic[2];  /* 00 "BM" */
-  gulong   bfSize;      /* 02 */
-  gushort  zzHotX;      /* 06 */
-  gushort  zzHotY;      /* 08 */
-  gulong   bfOffs;      /* 0A */
-  gulong   biSize;      /* 0E */
-} Bitmap_File_Head;
+  guint32  bfSize;      /* 02 */
+  guint16  zzHotX;      /* 06 */
+  guint16  zzHotY;      /* 08 */
+  guint32  bfOffs;      /* 0A */
+  guint32  biSize;      /* 0E */
+} BitmapFileHead;
 
-typedef struct _Bitmap_Head
+typedef struct
 {
-  glong    biWidth;     /* 12 */
-  glong    biHeight;    /* 16 */
-  gushort  biPlanes;    /* 1A */
-  gushort  biBitCnt;    /* 1C */
-  gulong   biCompr;     /* 1E */
-  gulong   biSizeIm;    /* 22 */
-  gulong   biXPels;     /* 26 */
-  gulong   biYPels;     /* 2A */
-  gulong   biClrUsed;   /* 2E */
-  gulong   biClrImp;    /* 32 */
+  gint32   biWidth;     /* 12 */
+  gint32   biHeight;    /* 16 */
+  guint16  biPlanes;    /* 1A */
+  guint16  biBitCnt;    /* 1C */
+  guint32  biCompr;     /* 1E */
+  guint32  biSizeIm;    /* 22 */
+  guint32  biXPels;     /* 26 */
+  guint32  biYPels;     /* 2A */
+  guint32  biClrUsed;   /* 2E */
+  guint32  biClrImp;    /* 32 */
   guint32  masks[4];    /* 36 */
-} Bitmap_Head;
+} BitmapHead;
 
-typedef struct _Bitmap_Channel
+typedef struct
 {
   guint32 mask;
   guint32 shiftin;
   gfloat  max_value;
-} Bitmap_Channel;
+} BitmapChannel;
 
 
 #endif /* __BMP_H__ */
