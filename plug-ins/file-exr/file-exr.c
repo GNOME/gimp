@@ -171,8 +171,12 @@ load_image (const gchar  *filename,
   gint              begin;
   gint32            success = FALSE;
   gchar            *comment;
+  GimpMetadata     *metadata;
+  gboolean          have_metadata = FALSE;
   guchar           *exif_data;
   guint             exif_size;
+  guchar           *xmp_data;
+  guint             xmp_size;
 
 
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -331,31 +335,49 @@ load_image (const gchar  *filename,
       g_free (comment);
     }
 
+  metadata = gimp_image_get_metadata (image);
+
+  if (metadata)
+    g_object_ref (metadata);
+  else
+    metadata = gimp_metadata_new ();
+
   /* check if the image contains Exif data and read it */
   exif_data = exr_loader_get_exif (loader, &exif_size);
   if (exif_data)
     {
-      GimpMetadata *metadata = gimp_image_get_metadata (image);
-
-      if (metadata)
-        g_object_ref (metadata);
-      else
-        metadata = gimp_metadata_new ();
-
       if (gimp_metadata_set_from_exif (metadata,
                                        exif_data,
                                        exif_size,
                                        NULL))
         {
-          gimp_image_set_metadata (image, metadata);
+          have_metadata = TRUE;
         }
 
-      g_object_unref (metadata);
       g_free (exif_data);
     }
 
-  // TODO: also read XMP data
+  /* try to read the Xmp data */
+  xmp_data = exr_loader_get_xmp (loader, &xmp_size);
+  if (xmp_data)
+    {
+      // FIXME:
+      // gimp_metadata_set_from_xmp skips the first 10 bytes.
+      // working around that like this might not be the right thing to do!
+      if (gimp_metadata_set_from_xmp (metadata,
+                                      xmp_data - 10,
+                                      xmp_size + 10,
+                                      NULL))
+        {
+          have_metadata = TRUE;
+        }
+      g_free (xmp_data);
+    }
 
+  if (have_metadata)
+    gimp_image_set_metadata (image, metadata);
+
+  g_object_unref (metadata);
 
   gimp_progress_update (1.0);
 

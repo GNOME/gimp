@@ -272,6 +272,18 @@ struct _EXRLoader
     return (guchar *)g_memdup (exif_data, *size);
   }
 
+  guchar *getXmp(guint *size) const {
+    guchar *result = NULL;
+    *size = 0;
+    const Imf::StringAttribute *xmp = file_.header().findTypedAttribute<Imf::StringAttribute>("xmp");
+    if (xmp)
+      {
+        *size = xmp->value().size();
+        result = (guchar *) g_memdup (xmp->value().data(), *size);
+      }
+    return result;
+  }
+
   size_t refcount_;
   InputFile file_;
   const Box2i data_window_;
@@ -390,6 +402,13 @@ exr_loader_get_exif (EXRLoader *loader,
                      guint *size)
 {
   return loader->getExif (size);
+}
+
+guchar *
+exr_loader_get_xmp (EXRLoader *loader,
+                    guint *size)
+{
+  return loader->getXmp (size);
 }
 
 int

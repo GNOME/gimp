@@ -60,6 +60,10 @@ guchar *
 exr_loader_get_exif (EXRLoader *loader,
                      guint *size);
 
+guchar *
+exr_loader_get_xmp (EXRLoader *loader,
+                    guint *size);
+
 int
 exr_loader_read_pixel_row (EXRLoader *loader,
                            char *pixels,
