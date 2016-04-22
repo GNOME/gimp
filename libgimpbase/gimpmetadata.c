@@ -622,15 +622,16 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
   GByteArray   *exif_bytes;
   GimpMetadata *exif_metadata;
   guint8        data_size[2] = { 0, };
+  const guint8  eoi[2] = { 0xff, 0xd9 };
 
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (exif_data != NULL, FALSE);
   g_return_val_if_fail (exif_data_length > 0, FALSE);
-  g_return_val_if_fail (exif_data_length < 65536, FALSE);
+  g_return_val_if_fail (exif_data_length + 2 < 65536, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  data_size[0] = (exif_data_length & 0xFF00) >> 8;
-  data_size[1] = (exif_data_length & 0x00FF);
+  data_size[0] = ((exif_data_length + 2) & 0xFF00) >> 8;
+  data_size[1] = ((exif_data_length + 2) & 0x00FF);
 
   exif_bytes = g_byte_array_new ();
   exif_bytes = g_byte_array_append (exif_bytes,
@@ -639,6 +640,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
                                     data_size, 2);
   exif_bytes = g_byte_array_append (exif_bytes,
                                     (guint8 *) exif_data, exif_data_length);
+  exif_bytes = g_byte_array_append (exif_bytes, eoi, 2);
 
   exif_metadata = gimp_metadata_new ();
 
