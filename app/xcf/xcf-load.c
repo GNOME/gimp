@@ -321,13 +321,23 @@ xcf_load_image (Gimp     *gimp,
                                        "gimp-metadata");
   if (parasite)
     {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+      GimpImagePrivate *private    = GIMP_IMAGE_GET_PRIVATE (image);
+      const gchar      *xmp_data   = gimp_parasite_data (parasite);
+      gint              xmp_length = gimp_parasite_data_size (parasite);
 
       if (has_metadata)
         {
           g_printerr ("xcf-load: inconsistent metadata discovered: XCF file "
                       "has both 'gimp-image-metadata' and 'gimp-metadata' "
                       "parasites, dropping old 'gimp-metadata'\n");
+        }
+      else if (xmp_length < 14 ||
+               strncmp (xmp_data, "GIMP_XMP_1", 10) != 0)
+        {
+          gimp_message (gimp, G_OBJECT (info->progress),
+                        GIMP_MESSAGE_WARNING,
+                        _("Corrupt 'gimp-metadata' parasite discovered.\n"
+                          "XMP data could not be migrated."));
         }
       else
         {
@@ -340,8 +350,8 @@ xcf_load_image (Gimp     *gimp,
             metadata = gimp_metadata_new ();
 
           if (! gimp_metadata_set_from_xmp (metadata,
-                                            gimp_parasite_data (parasite),
-                                            gimp_parasite_data_size (parasite),
+                                            (const guint8 *) xmp_data + 10,
+                                            xmp_length - 10,
                                             &my_error))
             {
               gimp_message (gimp, G_OBJECT (info->progress),

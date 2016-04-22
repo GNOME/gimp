@@ -361,16 +361,14 @@ load_image (const gchar  *filename,
   xmp_data = exr_loader_get_xmp (loader, &xmp_size);
   if (xmp_data)
     {
-      // FIXME:
-      // gimp_metadata_set_from_xmp skips the first 10 bytes.
-      // working around that like this might not be the right thing to do!
       if (gimp_metadata_set_from_xmp (metadata,
-                                      xmp_data - 10,
-                                      xmp_size + 10,
+                                      xmp_data,
+                                      xmp_size,
                                       NULL))
         {
           have_metadata = TRUE;
         }
+
       g_free (xmp_data);
     }
 
@@ -407,13 +405,13 @@ static void
 exr_load_sanitize_comment (gchar *comment)
 {
   if (! g_utf8_validate (comment, -1, NULL))
-  {
-    gchar *c;
-
-    for (c = comment; *c; c++)
     {
-      if (*c > 126 || (*c < 32 && *c != '\t' && *c != '\n' && *c != '\r'))
-        *c = '?';
+      gchar *c;
+
+      for (c = comment; *c; c++)
+        {
+          if (*c > 126 || (*c < 32 && *c != '\t' && *c != '\n' && *c != '\r'))
+            *c = '?';
+        }
     }
-  }
 }

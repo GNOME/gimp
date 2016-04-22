@@ -694,9 +694,6 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
   g_return_val_if_fail (xmp_data_length > 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  xmp_data        += 10;
-  xmp_data_length -= 10;
-
   xmp_metadata = gimp_metadata_new ();
 
   if (! gexiv2_metadata_open_buf (xmp_metadata,
