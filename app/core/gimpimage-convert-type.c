@@ -830,8 +830,6 @@ gimp_image_convert_type (GimpImage               *image,
   /*  Convert to indexed?  Build histogram if necessary.  */
   if (new_type == GIMP_INDEXED)
     {
-      gint i;
-
       rgb_to_lab_fish = babl_fish (babl_format ("R'G'B' float"),
                                    babl_format ("CIE Lab float"));
       lab_to_rgb_fish = babl_fish (babl_format ("CIE Lab float"),
@@ -901,14 +899,17 @@ gimp_image_convert_type (GimpImage               *image,
           ! needs_quantize     &&
           palette_type == GIMP_MAKE_PALETTE)
         {
-          /* If this is an RGB image, and the user wanted a custom-built
-           *  generated palette, and this image has no more colors than
-           *  the user asked for, we don't need the first pass (quantization).
+          gint i;
+
+          /*  If this is an RGB image, and the user wanted a
+           *  custom-built generated palette, and this image has no
+           *  more colors than the user asked for, we don't need the
+           *  first pass (quantization).
            *
-           * There's also no point in dithering, since there's no error to
-           *  spread.  So we destroy the old quantobj and make a new one
-           *  with the remapping function set to a special LUT-based
-           *  no-dither remapper.
+           *  There's also no point in dithering, since there's no
+           *  error to spread.  So we destroy the old quantobj and
+           *  make a new one with the remapping function set to a
+           *  special LUT-based no-dither remapper.
            */
 
           quantobj->delete_func (quantobj);
@@ -937,34 +938,19 @@ gimp_image_convert_type (GimpImage               *image,
         qsort (quantobj->cmap,
                quantobj->actual_number_of_colors, sizeof (Color),
                color_quicksort);
-    }
 
-  if (progress)
-    gimp_progress_set_text_literal (progress,
-                                    _("Converting to indexed colors (stage 3)"));
+      if (progress)
+        gimp_progress_set_text_literal (progress,
+                                        _("Converting to indexed colors (stage 3)"));
 
-  /* Initialise data which must persist across indexed layer iterations */
-  switch (new_type)
-    {
-    case GIMP_INDEXED:
+      /* Initialise data which must persist across indexed layer iterations */
       if (quantobj->second_pass_init)
         quantobj->second_pass_init (quantobj);
-      break;
-    default:
-      break;
-    }
 
-  /*  Set the generated palette on the image, we need it to convert
-   *  the layers. We optionally remove duplicate entries after the
-   *  layer conversion.
-   */
-  switch (new_type)
-    {
-    case GIMP_RGB:
-    case GIMP_GRAY:
-      break;
-
-    case GIMP_INDEXED:
+      /*  Set the generated palette on the image, we need it to
+       *  convert the layers. We optionally remove duplicate entries
+       *  after the layer conversion.
+       */
       {
         guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
         gint   i, j;
@@ -979,7 +965,6 @@ gimp_image_convert_type (GimpImage               *image,
         gimp_image_set_colormap (image, colormap,
                                  quantobj->actual_number_of_colors, TRUE);
       }
-      break;
     }
 
   /*  Convert all layers  */
