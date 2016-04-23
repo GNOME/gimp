@@ -669,7 +669,12 @@ gimp_brush_transform_mask (GimpBrush *brush,
                                         NULL);
 
           gegl_node_link_many (source, op, target, NULL);
-          gegl_node_process (target);
+          gegl_node_blit (target, 1.0,
+                          GEGL_RECTANGLE (0, 0,
+                                          gegl_buffer_get_width (buffer),
+                                          gegl_buffer_get_height (buffer)),
+                          NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+
 
           g_object_unref (graph);
           g_object_unref (buffer);
@@ -743,7 +748,11 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                                         NULL);
 
           gegl_node_link_many (source, op, target, NULL);
-          gegl_node_process (target);
+          gegl_node_blit (target, 1.0,
+                          GEGL_RECTANGLE (0, 0,
+                                          gegl_buffer_get_width (buffer),
+                                          gegl_buffer_get_height (buffer)),
+                          NULL, NULL, 0, GEGL_BLIT_DEFAULT);
 
           g_object_unref (graph);
           g_object_unref (buffer);
