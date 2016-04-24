@@ -658,61 +658,72 @@ file_check_magic_list (GSList       *magics_list,
       else
         found = (single_match_val != FILE_MATCH_NONE);
 
-      if (match_val == FILE_MATCH_NONE)
+      if (found)
         {
-          /* if we have no match yet, this is it in any case */
-
-          match_val = single_match_val;
-        }
-      else if (single_match_val != FILE_MATCH_NONE)
-        {
-          /* else if we have a match on this one, combine it with the
-           * existing return value
-           */
-
-          if (single_match_val == FILE_MATCH_SIZE)
+          if (match_val == FILE_MATCH_NONE)
             {
-              /* if we already have a magic match, simply increase
-               * that by one to indicate "better match", not perfect
-               * but better than losing the additional size match
-               * entirely
-               */
-              if (match_val != FILE_MATCH_SIZE)
-                match_val += 1;
+              /* if we have no match yet, this is it in any case */
+
+              match_val = single_match_val;
             }
-          else
+          else if (single_match_val != FILE_MATCH_NONE)
             {
-              /* if we already have a magic match, simply add to its
-               * length; otherwise if we already have a size match,
-               * combine it with this match, see comment above
+              /* else if we have a match on this one, combine it with the
+               * existing return value
                */
-              if (match_val != FILE_MATCH_SIZE)
-                match_val += single_match_val;
+
+              if (single_match_val == FILE_MATCH_SIZE)
+                {
+                  /* if we already have a magic match, simply increase
+                   * that by one to indicate "better match", not perfect
+                   * but better than losing the additional size match
+                   * entirely
+                   */
+                  if (match_val != FILE_MATCH_SIZE)
+                    match_val += 1;
+                }
               else
-                match_val = single_match_val + 1;
-           }
+                {
+                  /* if we already have a magic match, simply add to its
+                   * length; otherwise if we already have a size match,
+                   * combine it with this match, see comment above
+                   */
+                  if (match_val != FILE_MATCH_SIZE)
+                    match_val += single_match_val;
+                  else
+                    match_val = single_match_val + 1;
+                }
+            }
         }
-
-      if (best_match_val == FILE_MATCH_NONE)
+      else
         {
-          /* if we have no best match yet, this is it */
-
-          best_match_val = match_val;
-        }
-      else if (match_val != FILE_MATCH_NONE)
-        {
-          /* otherwise if this was a match, update the best match, note
-           * that by using MAX we will not overwrite a magic match
-           * with a size match
-           */
-
-          best_match_val = MAX (best_match_val, match_val);
+          match_val = FILE_MATCH_NONE;
         }
 
       and = (strchr (offset, '&') != NULL);
 
       if (! and)
-        match_val = FILE_MATCH_NONE;
+        {
+          /* when done with this 'and' list, update best_match_val */
+
+          if (best_match_val == FILE_MATCH_NONE)
+            {
+              /* if we have no best match yet, this is it */
+
+              best_match_val = match_val;
+            }
+          else if (match_val != FILE_MATCH_NONE)
+            {
+              /* otherwise if this was a match, update the best match, note
+               * that by using MAX we will not overwrite a magic match
+               * with a size match
+               */
+
+              best_match_val = MAX (best_match_val, match_val);
+            }
+
+          match_val = FILE_MATCH_NONE;
+        }
     }
 
   return best_match_val;
