@@ -32,18 +32,19 @@
 /*
  * Declare some local functions.
  */
-static void     query                 (void);
-static void     run                   (const gchar      *name,
-                                       gint              nparams,
-                                       const GimpParam  *param,
-                                       gint             *nreturn_vals,
-                                       GimpParam       **return_vals);
+static void     query            (void);
+static void     run              (const gchar      *name,
+                                  gint              nparams,
+                                  const GimpParam  *param,
+                                  gint             *nreturn_vals,
+                                  GimpParam       **return_vals);
 
-static gint32   load_image            (const gchar      *filename,
-                                       gboolean          interactive,
-                                       GError          **error);
+static gint32   load_image       (const gchar      *filename,
+                                  gboolean          interactive,
+                                  GError          **error);
 
-static void exr_load_sanitize_comment (gchar *comment);
+static void     sanitize_comment (gchar            *comment);
+
 
 /*
  * Some global variables.
@@ -91,7 +92,9 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-exr");
   gimp_register_magic_load_handler (LOAD_PROC,
-                                    "exr", "", "0,lelong,20000630");
+                                    "exr",
+                                    "",
+                                    "0,long,0x762f3101");
 }
 
 static void
@@ -324,7 +327,7 @@ load_image (const gchar  *filename,
     {
       GimpParasite *parasite;
 
-      exr_load_sanitize_comment (comment);
+      sanitize_comment (comment);
       parasite = gimp_parasite_new ("gimp-comment",
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (comment) + 1,
@@ -402,7 +405,7 @@ load_image (const gchar  *filename,
 
 /* copy & pasted from file-jpeg/jpeg-load.c */
 static void
-exr_load_sanitize_comment (gchar *comment)
+sanitize_comment (gchar *comment)
 {
   if (! g_utf8_validate (comment, -1, NULL))
     {
