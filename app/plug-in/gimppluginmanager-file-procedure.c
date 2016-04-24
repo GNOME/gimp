@@ -40,9 +40,10 @@
 
 typedef enum
 {
-  FILE_MATCH_NONE,
-  FILE_MATCH_MAGIC,
-  FILE_MATCH_SIZE
+  /*  positive values indicate the lenght of a matching magic  */
+
+  FILE_MATCH_NONE = 0,
+  FILE_MATCH_SIZE = -1
 } FileMatchType;
 
 
@@ -116,11 +117,13 @@ file_procedure_find (GSList  *procs,
   /* Then look for magics, but not on remote files */
   if (g_file_is_native (file))
     {
-      GSList       *list;
-      GInputStream *input     = NULL;
-      gboolean      opened    = FALSE;
-      gsize         head_size = 0;
-      guchar        head[256];
+      GSList              *list;
+      GInputStream        *input     = NULL;
+      gboolean             opened    = FALSE;
+      gsize                head_size = 0;
+      guchar               head[256];
+      FileMatchType        best_match_val = FILE_MATCH_NONE;
+      GimpPlugInProcedure *best_file_proc = NULL;
 
       for (list = procs; list; list = g_slist_next (list))
         {
@@ -172,24 +175,28 @@ file_procedure_find (GSList  *procs,
                     }
                   else if (match_val != FILE_MATCH_NONE)
                     {
-                      g_object_unref (input);
+                      g_printerr ("magic match %d on %s\n",
+                                  match_val,
+                                  gimp_object_get_name (file_proc));
 
-                      return file_proc;
+                      if (match_val > best_match_val)
+                        {
+                          best_match_val = match_val;
+                          best_file_proc = file_proc;
+                        }
                     }
                 }
             }
         }
 
       if (input)
-        {
-#if 0
-          if (ferror (ifp))
-            g_set_error_literal (error, G_FILE_ERROR,
-                                 g_file_error_from_errno (errno),
-                                 g_strerror (errno));
-#endif
+        g_object_unref (input);
 
-          g_object_unref (input);
+      if (best_file_proc)
+        {
+          g_printerr ("best magic match on %s\n",
+                      gimp_object_get_name (best_file_proc));
+          return best_file_proc;
         }
     }
 
@@ -414,7 +421,7 @@ file_check_single_magic (const gchar  *offset,
   FileMatchType found = FILE_MATCH_NONE;
   glong         offs;
   gulong        num_testval;
-  gulong        num_operatorval;
+  gulong        num_operator_val;
   gint          numbytes, k;
   const gchar  *num_operator_ptr;
   gchar         num_operator;
@@ -461,18 +468,20 @@ file_check_single_magic (const gchar  *offset,
       if (g_ascii_isdigit (num_operator_ptr[1]))
         {
           if (num_operator_ptr[1] != '0')      /* decimal */
-            sscanf (num_operator_ptr+1, "%lu", &num_operatorval);
+            sscanf (num_operator_ptr+1, "%lu", &num_operator_val);
           else if (num_operator_ptr[2] == 'x') /* hexadecimal */
-            sscanf (num_operator_ptr+3, "%lx", &num_operatorval);
+            sscanf (num_operator_ptr+3, "%lx", &num_operator_val);
           else                                 /* octal */
-            sscanf (num_operator_ptr+2, "%lo", &num_operatorval);
+            sscanf (num_operator_ptr+2, "%lo", &num_operator_val);
 
           num_operator = *num_operator_ptr;
         }
     }
 
-  if (numbytes > 0)   /* Numerical test ? */
+  if (numbytes > 0)
     {
+      /* Numerical test */
+
       gchar   num_test = '=';
       gulong  fileval  = 0;
 
@@ -489,8 +498,10 @@ file_check_single_magic (const gchar  *offset,
       if (errno != 0)
         return FILE_MATCH_NONE;
 
-      if (numbytes == 5)    /* Check for file size ? */
+      if (numbytes == 5)
         {
+          /* Check for file size */
+
           GFileInfo *info = g_file_query_info (file,
                                                G_FILE_ATTRIBUTE_STANDARD_SIZE,
                                                G_FILE_QUERY_INFO_NONE,
@@ -502,13 +513,17 @@ file_check_single_magic (const gchar  *offset,
           g_object_unref (info);
         }
       else if (offs >= 0 &&
-               (offs + numbytes <= headsize)) /* We have it in memory ? */
+               (offs + numbytes <= headsize))
         {
+           /* We have it in memory */
+
           for (k = 0; k < numbytes; k++)
             fileval = (fileval << 8) | (glong) file_head[offs + k];
         }
-      else   /* Read it from file */
+      else
         {
+          /* Read it from file */
+
           if (! g_seekable_seek (G_SEEKABLE (input), offs,
                                  (offs >= 0) ? G_SEEK_SET : G_SEEK_END,
                                  NULL, NULL))
@@ -532,20 +547,31 @@ file_check_single_magic (const gchar  *offset,
         }
 
       if (num_operator == '&')
-        fileval &= num_operatorval;
+        fileval &= num_operator_val;
 
       if (num_test == '<')
-        found = (fileval < num_testval);
+        {
+          if (fileval < num_testval)
+            found = numbytes;
+        }
       else if (num_test == '>')
-        found = (fileval > num_testval);
+        {
+          if (fileval > num_testval)
+            found = numbytes;
+        }
       else
-        found = (fileval == num_testval);
+        {
+          if (fileval == num_testval)
+            found = numbytes;
+        }
 
       if (found && (numbytes == 5))
         found = FILE_MATCH_SIZE;
     }
-  else if (numbytes == 0) /* String test */
+  else if (numbytes == 0)
     {
+       /* String test */
+
       gchar mem_testval[256];
 
       file_convert_string (value,
@@ -556,20 +582,23 @@ file_check_single_magic (const gchar  *offset,
         return FILE_MATCH_NONE;
 
       if (offs >= 0 &&
-          (offs + numbytes <= headsize)) /* We have it in memory ? */
+          (offs + numbytes <= headsize))
         {
-          found = (memcmp (mem_testval, file_head + offs, numbytes) == 0);
+          /* We have it in memory */
+
+          if (memcmp (mem_testval, file_head + offs, numbytes) == 0)
+            found = numbytes;
         }
-      else   /* Read it from file */
+      else
         {
+          /* Read it from file */
+
           if (! g_seekable_seek (G_SEEKABLE (input), offs,
                                  (offs >= 0) ? G_SEEK_SET : G_SEEK_END,
                                  NULL, NULL))
             return FILE_MATCH_NONE;
 
-          found = FILE_MATCH_MAGIC;
-
-          for (k = 0; found && (k < numbytes); k++)
+          for (k = 0; k < numbytes; k++)
             {
               guchar  byte;
               GError *error = NULL;
@@ -579,12 +608,15 @@ file_check_single_magic (const gchar  *offset,
               if (error)
                 {
                   g_clear_error (&error);
+
                   return FILE_MATCH_NONE;
                 }
 
               if (byte != mem_testval[k])
-                found = FILE_MATCH_NONE;
+                return FILE_MATCH_NONE;
             }
+
+          found = numbytes;
         }
     }
 
@@ -599,36 +631,89 @@ file_check_magic_list (GSList       *magics_list,
                        GInputStream *input)
 
 {
-  const gchar   *offset;
-  const gchar   *type;
-  const gchar   *value;
-  gboolean       and   = FALSE;
-  gboolean       found = FALSE;
-  FileMatchType  match_val;
+  gboolean      and            = FALSE;
+  gboolean      found          = FALSE;
+  FileMatchType best_match_val = FILE_MATCH_NONE;
+  FileMatchType match_val      = FILE_MATCH_NONE;
 
-  while (magics_list)
+  for (; magics_list; magics_list = magics_list->next)
     {
-      if ((offset      = magics_list->data) == NULL) break;
-      if ((magics_list = magics_list->next) == NULL) break;
-      if ((type        = magics_list->data) == NULL) break;
-      if ((magics_list = magics_list->next) == NULL) break;
-      if ((value       = magics_list->data) == NULL) break;
+      const gchar   *offset;
+      const gchar   *type;
+      const gchar   *value;
+      FileMatchType  single_match_val = FILE_MATCH_NONE;
 
-      magics_list = magics_list->next;
+      if ((offset      = magics_list->data) == NULL) return FILE_MATCH_NONE;
+      if ((magics_list = magics_list->next) == NULL) return FILE_MATCH_NONE;
+      if ((type        = magics_list->data) == NULL) return FILE_MATCH_NONE;
+      if ((magics_list = magics_list->next) == NULL) return FILE_MATCH_NONE;
+      if ((value       = magics_list->data) == NULL) return FILE_MATCH_NONE;
 
-      match_val = file_check_single_magic (offset, type, value,
-                                           head, headsize,
-                                           file, input);
+      single_match_val = file_check_single_magic (offset, type, value,
+                                                  head, headsize,
+                                                  file, input);
+
       if (and)
-        found = found && (match_val != FILE_MATCH_NONE);
+        found = found && (single_match_val != FILE_MATCH_NONE);
       else
-        found = (match_val != FILE_MATCH_NONE);
+        found = (single_match_val != FILE_MATCH_NONE);
+
+      if (match_val == FILE_MATCH_NONE)
+        {
+          /* if we have no match yet, this is it in any case */
+
+          match_val = single_match_val;
+        }
+      else if (single_match_val != FILE_MATCH_NONE)
+        {
+          /* else if we have a match on this one, combine it with the
+           * existing return value
+           */
+
+          if (single_match_val == FILE_MATCH_SIZE)
+            {
+              /* if we already have a magic match, simply increase
+               * that by one to indicate "better match", not perfect
+               * but better than losing the additional size match
+               * entirely
+               */
+              if (match_val != FILE_MATCH_SIZE)
+                match_val += 1;
+            }
+          else
+            {
+              /* if we already have a magic match, simply add to its
+               * length; otherwise if we already have a size match,
+               * combine it with this match, see comment above
+               */
+              if (match_val != FILE_MATCH_SIZE)
+                match_val += single_match_val;
+              else
+                match_val = single_match_val + 1;
+           }
+        }
+
+      if (best_match_val == FILE_MATCH_NONE)
+        {
+          /* if we have no best match yet, this is it */
+
+          best_match_val = match_val;
+        }
+      else if (match_val != FILE_MATCH_NONE)
+        {
+          /* otherwise if this was a match, update the best match, note
+           * that by using MAX we will not overwrite a magic match
+           * with a size match
+           */
+
+          best_match_val = MAX (best_match_val, match_val);
+        }
 
       and = (strchr (offset, '&') != NULL);
 
-      if (! and && found)
-        return match_val;
+      if (! and)
+        match_val = FILE_MATCH_NONE;
     }
 
-  return FILE_MATCH_NONE;
+  return best_match_val;
 }
