@@ -75,7 +75,7 @@ static const FileFormat file_formats[] =
     N_("Nikon NEF raw"),
     " image/x-nikon-nef ",
     "nef",
-    "",
+    "0,string,MM\\0*\\0\\0\\0\\010,0,string,II*\\0\\010\\0\\0\\0",
 
     "file-nef-load",
     "Load files in the NEF raw format via darktable",
