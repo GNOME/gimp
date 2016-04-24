@@ -29,7 +29,7 @@
 
 
 #define TILE_WIDTH  gimp_tile_width()
-#define TILE_HEIGHT gimp_tile_width()
+#define TILE_HEIGHT gimp_tile_height()
 
 
 struct _GimpTileBackendPluginPrivate
