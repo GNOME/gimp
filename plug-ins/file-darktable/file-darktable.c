@@ -64,7 +64,7 @@ static const FileFormat file_formats[] =
     N_("Canon CR2 raw"),
     "image/x-canon-cr2",
     "cr2",
-    "0,string,II*\\0\\x10\\0\\0\\0CR",
+    "0,string,II*\\0\\020\\0\\0\\0CR",
 
     "file-cr2-load",
     "Load files in the CR2 raw format via darktable",
@@ -94,6 +94,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 MAIN ()
 
+
 static void
 query (void)
 {
@@ -109,13 +110,13 @@ query (void)
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
 
-  gint i;
-
-  /* check if darktable is installed */
-  /* TODO: allow setting the location of the executable in preferences */
-  gboolean have_darktable = FALSE;
-  gchar *argv[] = { "darktable", "--version", NULL };
-  gchar *darktable_stdout = NULL;
+  /* check if darktable is installed
+   * TODO: allow setting the location of the executable in preferences
+   */
+  gchar    *argv[]           = { "darktable", "--version", NULL };
+  gchar    *darktable_stdout = NULL;
+  gboolean  have_darktable   = FALSE;
+  gint      i;
 
   if (g_spawn_sync (NULL,
                     argv,
@@ -129,15 +130,24 @@ query (void)
                     NULL,
                     NULL))
     {
-      int n, major, minor, patch;
-      char *lua_support;
-      n = sscanf (darktable_stdout, "this is darktable %d.%d.%d", &major, &minor, &patch);
-      lua_support = g_strstr_len (darktable_stdout, -1, "Lua support enabled");
-      if (n == 3 && ((major == 1 && minor >= 7) || major >= 2) && lua_support)
-        have_darktable = TRUE;
-    }
+      gint major, minor, patch;
 
-  g_free (darktable_stdout);
+      if (sscanf (darktable_stdout,
+                  "this is darktable %d.%d.%d",
+                  &major, &minor, &patch) == 3)
+        {
+          if (((major == 1 && minor >= 7) || major >= 2))
+            {
+              if (g_strstr_len (darktable_stdout, -1,
+                                "Lua support enabled"))
+                {
+                  have_darktable = TRUE;
+                }
+            }
+        }
+
+      g_free (darktable_stdout);
+    }
 
   if (! have_darktable)
     return;
