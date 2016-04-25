@@ -43,8 +43,8 @@ local export_filename = dt.preferences.read("export_on_exit", "export_filename",
 dt.register_event("exit", function()
   -- safegurad against someone using this with their library containing 50k images
   if #dt.database > 1 then
-    dt.print_error("too many images, not exporting")
-    return
+    dt.print_error("too many images, only exporting the first")
+--     return
   end
 
   -- change the view first to force writing of the history stack
@@ -57,6 +57,7 @@ dt.register_event("exit", function()
   for _, image in ipairs(dt.database) do
     dt.print_error("exporting `"..tostring(image).."' to `"..export_filename.."'")
     format:write_image(image, export_filename)
+    break -- only export one image. see above for the reason
   end
 end)
 
