@@ -44,19 +44,28 @@ struct _FileFormat
   const gchar *load_proc;
   const gchar *load_blurb;
   const gchar *load_help;
+
+  const gchar *load_thumb_proc;
+  const gchar *load_thumb_blurb;
+  const gchar *load_thumb_help;
 };
 
 
-static void     query      (void);
-static void     run        (const gchar      *name,
-                            gint              nparams,
-                            const GimpParam  *param,
-                            gint             *nreturn_vals,
-                            GimpParam       **return_vals);
-static gint32   load_image (const gchar      *filename,
-                            GimpRunMode       run_mode,
-                            GError          **error);
+static void     query                (void);
+static void     run                  (const gchar      *name,
+                                      gint              nparams,
+                                      const GimpParam  *param,
+                                      gint             *nreturn_vals,
+                                      GimpParam       **return_vals);
+static gint32   load_image           (const gchar      *filename,
+                                      GimpRunMode       run_mode,
+                                      GError          **error);
 
+static gint32   load_thumbnail_image (const gchar      *filename,
+                                      gint             thumb_size,
+                                      gint             *width,
+                                      gint             *height,
+                                      GError          **error);
 
 static const FileFormat file_formats[] =
 {
@@ -68,7 +77,11 @@ static const FileFormat file_formats[] =
 
     "file-cr2-load",
     "Load files in the CR2 raw format via darktable",
-    "This plug-in loads files in Canon's raw CR2 format by calling darktable."
+    "This plug-in loads files in Canon's raw CR2 format by calling darktable.",
+
+    "file-cr2-load-thumb",
+    "Load thumbnail from a CR2 raw image via darktable",
+    "This plug-in loads a thumbnail from Canon's raw CR2 images by calling darktable-cli."
   },
 
   {
@@ -79,7 +92,11 @@ static const FileFormat file_formats[] =
 
     "file-nef-load",
     "Load files in the NEF raw format via darktable",
-    "This plug-in loads files in Nikon's raw NEF format by calling darktable."
+    "This plug-in loads files in Nikon's raw NEF format by calling darktable.",
+
+    "file-nef-load-thumb",
+    "Load thumbnail from a NEF raw image via darktable",
+    "This plug-in loads a thumbnail from Nikon's raw NEF images by calling darktable-cli."
   }
 };
 
@@ -108,6 +125,19 @@ query (void)
   static const GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
+  };
+
+  static const GimpParamDef thumb_args[] =
+  {
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
+    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
+  };
+
+  static const GimpParamDef thumb_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
+    { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"     },
+    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
   };
 
   /* check if darktable is installed
@@ -175,6 +205,21 @@ query (void)
                                         format->extensions,
                                         "",
                                         format->magic);
+
+      gimp_install_procedure (format->load_thumb_proc,
+                              format->load_thumb_blurb,
+                              format->load_thumb_help,
+                              "Tobias Ellinghaus",
+                              "Tobias Ellinghaus",
+                              "2016",
+                              NULL,
+                              NULL,
+                              GIMP_PLUGIN,
+                              G_N_ELEMENTS (thumb_args),
+                              G_N_ELEMENTS (thumb_return_vals),
+                              thumb_args, thumb_return_vals);
+
+      gimp_register_thumbnail_loader (format->load_proc, format->load_thumb_proc);
     }
 }
 
@@ -185,7 +230,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[2];
+  static GimpParam   values[6];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
   gint               image_ID;
@@ -216,6 +261,39 @@ run (const gchar      *name,
               *nreturn_vals = 2;
               values[1].type         = GIMP_PDB_IMAGE;
               values[1].data.d_image = image_ID;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+
+          break;
+        }
+      else if (format->load_thumb_proc
+               && ! strcmp (name, format->load_thumb_proc))
+        {
+          gint width  = 0;
+          gint height = 0;
+
+          image_ID = load_thumbnail_image (param[0].data.d_string,
+                                           param[1].data.d_int32,
+                                           &width,
+                                           &height,
+                                           &error);
+
+          if (image_ID != -1)
+            {
+              *nreturn_vals = 6;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+              values[2].type         = GIMP_PDB_INT32;
+              values[2].data.d_int32 = width;
+              values[3].type         = GIMP_PDB_INT32;
+              values[3].data.d_int32 = height;
+              values[4].type         = GIMP_PDB_INT32;
+              values[4].data.d_int32 = GIMP_RGB_IMAGE;
+              values[5].type         = GIMP_PDB_INT32;
+              values[5].data.d_int32 = 1; /* num_layers */
             }
           else
             {
@@ -297,6 +375,67 @@ load_image (const gchar  *filename,
   g_free (export_filename);
 
   gimp_progress_update (1.0);
+
+  return image_ID;
+}
+
+static gint32
+load_thumbnail_image (const gchar   *filename,
+                      gint           thumb_size,
+                      gint          *width,
+                      gint          *height,
+                      GError       **error)
+{
+  gint32  image_ID     = -1;
+  gchar  *filename_out = gimp_temp_name ("jpg");
+  gchar  *size         = g_strdup_printf ("%d", thumb_size);
+
+  gchar *argv[] =
+    {
+      "darktable-cli",
+      (gchar *) filename, filename_out,
+      "--width",          size,
+      "--height",         size,
+      "--hq",             "false",
+      "--core",
+      "--conf",           "plugins/lighttable/export/icctype=3",
+      NULL
+    };
+
+  gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
+  if (g_spawn_sync (NULL,
+                    argv,
+                    NULL,
+                    G_SPAWN_STDOUT_TO_DEV_NULL |
+                    G_SPAWN_STDERR_TO_DEV_NULL |
+                    G_SPAWN_SEARCH_PATH,
+                    NULL,
+                    NULL,
+                    NULL,
+                    NULL,
+                    NULL,
+                    error))
+    {
+      gimp_progress_update (0.5);
+
+      image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                                 filename_out,
+                                 filename_out);
+      if (image_ID != -1)
+        {
+          /* is this needed for thumbnails? */
+          gimp_image_set_filename (image_ID, filename);
+          *width = *height = thumb_size; // TODO
+        }
+    }
+
+  gimp_progress_update (1.0);
+
+  g_unlink (filename_out);
+  g_free (filename_out);
+  g_free (size);
 
   return image_ID;
 }
