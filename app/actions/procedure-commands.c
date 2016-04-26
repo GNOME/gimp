@@ -37,6 +37,28 @@
 
 
 GimpValueArray *
+procedure_commands_get_run_mode_arg (GimpProcedure *procedure)
+{
+  GimpValueArray *args;
+  gint            n_args = 0;
+
+  args = gimp_procedure_get_arguments (procedure);
+
+  /* initialize the first argument  */
+  if (gimp_value_array_length (args) > n_args &&
+      GIMP_IS_PARAM_SPEC_INT32 (procedure->args[n_args]))
+    {
+      g_value_set_int (gimp_value_array_index (args, n_args),
+                       GIMP_RUN_INTERACTIVE);
+      n_args++;
+    }
+
+  gimp_value_array_truncate (args, n_args);
+
+  return args;
+}
+
+GimpValueArray *
 procedure_commands_get_data_args (GimpProcedure *procedure,
                                   GimpObject    *object)
 {
