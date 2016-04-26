@@ -1482,6 +1482,21 @@ gimp_color_profile_get_format (const Babl *format,
       gray   = TRUE;
       linear = FALSE;
     }
+  else if (babl_format_is_palette (format))
+    {
+      if (has_alpha)
+        {
+          *lcms_format = TYPE_RGBA_8;
+
+          return babl_format ("R'G'B'A u8");
+        }
+      else
+        {
+          *lcms_format = TYPE_RGB_8;
+
+          return babl_format ("R'G'B' u8");
+        }
+    }
   else
     {
       g_printerr ("format: %s\n"
