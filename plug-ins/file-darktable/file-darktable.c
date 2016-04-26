@@ -386,9 +386,16 @@ load_thumbnail_image (const gchar   *filename,
                       gint          *height,
                       GError       **error)
 {
-  gint32  image_ID     = -1;
-  gchar  *filename_out = gimp_temp_name ("jpg");
-  gchar  *size         = g_strdup_printf ("%d", thumb_size);
+  gint32  image_ID         = -1;
+  gchar  *filename_out     = gimp_temp_name ("jpg");
+  gchar  *size             = g_strdup_printf ("%d", thumb_size);
+  GFile  *lua_file         = gimp_data_directory_file ("file-darktable",
+                                                       "get-size.lua",
+                                                       NULL);
+  gchar  *lua_script       = g_file_get_path (lua_file);
+  gchar  *lua_quoted       = g_shell_quote (lua_script);
+  gchar  *lua_cmd          = g_strdup_printf ("dofile(%s)", lua_quoted);
+  gchar  *darktable_stdout = NULL;
 
   gchar *argv[] =
     {
@@ -399,21 +406,27 @@ load_thumbnail_image (const gchar   *filename,
       "--hq",             "false",
       "--core",
       "--conf",           "plugins/lighttable/export/icctype=3",
+      "--luacmd",         lua_cmd,
       NULL
     };
+
+  g_object_unref (lua_file);
+  g_free (lua_script);
+  g_free (lua_quoted);
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              gimp_filename_to_utf8 (filename));
 
+  *width = *height = thumb_size;
+
   if (g_spawn_sync (NULL,
                     argv,
                     NULL,
-                    G_SPAWN_STDOUT_TO_DEV_NULL |
                     G_SPAWN_STDERR_TO_DEV_NULL |
                     G_SPAWN_SEARCH_PATH,
                     NULL,
                     NULL,
-                    NULL,
+                    &darktable_stdout,
                     NULL,
                     NULL,
                     error))
@@ -425,9 +438,17 @@ load_thumbnail_image (const gchar   *filename,
                                  filename_out);
       if (image_ID != -1)
         {
+          /* the size reported by raw files isn't precise,
+           * but it should be close enough to get an idea.
+           */
+          gchar *start_of_size = g_strstr_len (darktable_stdout,
+                                               -1,
+                                               "[dt4gimp]");
+          if (start_of_size)
+            sscanf (start_of_size, "[dt4gimp] %d %d", width, height);
+
           /* is this needed for thumbnails? */
           gimp_image_set_filename (image_ID, filename);
-          *width = *height = thumb_size; // TODO
         }
     }
 
@@ -436,6 +457,8 @@ load_thumbnail_image (const gchar   *filename,
   g_unlink (filename_out);
   g_free (filename_out);
   g_free (size);
+  g_free (lua_cmd);
+  g_free (darktable_stdout);
 
   return image_ID;
 }

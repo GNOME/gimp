@@ -39,6 +39,7 @@ file_darktable_LDADD = \
 	$(file_darktable_RC)
 
 filedarktabledata_DATA = \
-	export-on-exit.lua
+	export-on-exit.lua	\
+	get-size.lua
 
 EXTRA_DIST = $(filedarktabledata_DATA)
