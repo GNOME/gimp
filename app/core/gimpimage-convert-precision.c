@@ -53,6 +53,7 @@ gimp_image_convert_precision (GimpImage     *image,
                               GimpProgress  *progress)
 {
   GimpColorProfile *old_profile;
+  GimpColorProfile *new_profile = NULL;
   const Babl       *old_format;
   const Babl       *new_format;
   GList            *all_drawables;
@@ -134,6 +135,39 @@ gimp_image_convert_precision (GimpImage     *image,
 
   new_format = gimp_image_get_layer_format (image, FALSE);
 
+  if (old_profile &&
+      gimp_babl_format_get_linear (old_format) !=
+      gimp_babl_format_get_linear (new_format))
+    {
+      GimpColorProfile *new_profile;
+
+      /* when converting between linear and gamma, we create a new
+       * profile using the original profile's chromacities and
+       * whitepoint, but a linear/sRGB-gamma TRC.
+       */
+
+      if (gimp_babl_format_get_linear (new_format))
+        {
+          new_profile =
+            gimp_color_profile_new_linear_from_color_profile (old_profile);
+        }
+      else
+        {
+          new_profile =
+            gimp_color_profile_new_srgb_trc_from_color_profile (old_profile);
+        }
+
+      /* if a new profile cannot be be generated, convert to the
+       * builtin profile, which is better than leaving the user with
+       * broken colors
+       */
+      if (! new_profile)
+        {
+          new_profile = gimp_image_get_builtin_color_profile (image);
+          g_object_ref (new_profile);
+        }
+    }
+
   for (list = all_drawables, nth_drawable = 0;
        list;
        list = g_list_next (list), nth_drawable++)
@@ -153,38 +187,18 @@ gimp_image_convert_precision (GimpImage     *image,
       gimp_drawable_convert_type (drawable, image,
                                   gimp_drawable_get_base_type (drawable),
                                   precision,
+                                  new_profile,
                                   dither_type,
                                   mask_dither_type,
-                                  old_profile != NULL,
                                   TRUE, sub_progress);
     }
 
   g_list_free (all_drawables);
 
-  if (old_profile &&
-      gimp_babl_format_get_linear (old_format) !=
-      gimp_babl_format_get_linear (new_format))
+  if (old_profile)
     {
-      GimpColorProfile *new_profile;
-
-      /* the comments in gimp_layer_convert_type() explain the logic
-       * here
-       */
-      if (gimp_babl_format_get_linear (new_format))
-        {
-          new_profile =
-            gimp_color_profile_new_linear_from_color_profile (old_profile);
-        }
-      else
-        {
-          new_profile =
-            gimp_color_profile_new_srgb_trc_from_color_profile (old_profile);
-        }
-
       gimp_image_set_color_profile (image, new_profile, NULL);
-
-      if (new_profile)
-        g_object_unref (new_profile);
+      g_object_unref (new_profile);
     }
 
   /*  convert the selection mask  */

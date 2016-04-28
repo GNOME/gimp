@@ -19,7 +19,6 @@
 
 #include <cairo.h>
 #include <gegl.h>
-#include <gegl-plugin.h> /* gegl_operation_invalidate() */
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -152,9 +151,9 @@ static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     const Babl        *new_format,
                                                     GimpImageBaseType  new_base_type,
                                                     GimpPrecision      new_precision,
+                                                    GimpColorProfile  *dest_profile,
                                                     gint               layer_dither_type,
                                                     gint               mask_dither_type,
-                                                    gboolean           convert_profile,
                                                     gboolean           push_undo,
                                                     GimpProgress      *progress);
 
@@ -765,7 +764,7 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
 }
 
 /* FIXME: this default impl is currently unused because no subclass
- * chins up. the goal is to handle the almost identical subclass code
+ * chains up. the goal is to handle the almost identical subclass code
  * here again.
  */
 static void
@@ -774,9 +773,9 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  const Babl        *new_format,
                                  GimpImageBaseType  new_base_type,
                                  GimpPrecision      new_precision,
+                                 GimpColorProfile  *dest_profile,
                                  gint               layer_dither_type,
                                  gint               mask_dither_type,
-                                 gboolean           convert_profile,
                                  gboolean           push_undo,
                                  GimpProgress      *progress)
 {
@@ -1244,9 +1243,9 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImage         *dest_image,
                             GimpImageBaseType  new_base_type,
                             GimpPrecision      new_precision,
+                            GimpColorProfile  *dest_profile,
                             gint               layer_dither_type,
                             gint               mask_dither_type,
-                            gboolean           convert_profile,
                             gboolean           push_undo,
                             GimpProgress      *progress)
 {
@@ -1256,7 +1255,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable) ||
                     new_precision != gimp_drawable_get_precision (drawable) ||
-                    convert_profile);
+                    dest_profile);
+  g_return_if_fail (dest_profile == NULL || GIMP_IS_COLOR_PROFILE (dest_profile));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
@@ -1271,9 +1271,9 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                                                     new_format,
                                                     new_base_type,
                                                     new_precision,
+                                                    dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,
-                                                    convert_profile,
                                                     push_undo,
                                                     progress);
 

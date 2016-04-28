@@ -171,9 +171,9 @@ static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  const Babl         *new_format,
                                                  GimpImageBaseType   new_base_type,
                                                  GimpPrecision       new_precision,
+                                                 GimpColorProfile   *dest_profile,
                                                  gint                layer_dither_type,
                                                  gint                mask_dither_type,
-                                                 gboolean            convert_profile,
                                                  gboolean            push_undo,
                                                  GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
@@ -791,7 +791,7 @@ gimp_layer_convert (GimpItem  *item,
   GimpImageBaseType  new_base_type;
   GimpPrecision      old_precision;
   GimpPrecision      new_precision;
-  gboolean           convert_profile;
+  GimpColorProfile  *dest_profile = NULL;
 
   old_base_type = gimp_drawable_get_base_type (drawable);
   new_base_type = gimp_image_get_base_type (dest_image);
@@ -799,20 +799,24 @@ gimp_layer_convert (GimpItem  *item,
   old_precision = gimp_drawable_get_precision (drawable);
   new_precision = gimp_image_get_precision (dest_image);
 
-  convert_profile = (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
-                     /*  FIXME: this is the wrong check, need
-                      *  something like file import conversion config
-                      */
-                     (config->mode != GIMP_COLOR_MANAGEMENT_OFF));
+  if (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
+      /*  FIXME: this is the wrong check, need
+       *  something like file import conversion config
+       */
+      (config->mode != GIMP_COLOR_MANAGEMENT_OFF))
+    {
+      dest_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
+    }
 
   if (old_base_type != new_base_type ||
       old_precision != new_precision ||
-      convert_profile)
+      dest_profile)
     {
       gimp_drawable_convert_type (drawable, dest_image,
                                   new_base_type, new_precision,
+                                  dest_profile,
                                   0, 0,
-                                  convert_profile,
                                   FALSE, NULL);
     }
 
@@ -1065,17 +1069,15 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          const Babl        *new_format,
                          GimpImageBaseType  new_base_type,
                          GimpPrecision      new_precision,
+                         GimpColorProfile  *dest_profile,
                          gint               layer_dither_type,
                          gint               mask_dither_type,
-                         gboolean           convert_profile,
                          gboolean           push_undo,
                          GimpProgress      *progress)
 {
   GimpLayer        *layer = GIMP_LAYER (drawable);
   GeglBuffer       *src_buffer;
   GeglBuffer       *dest_buffer;
-  GimpColorProfile *src_profile  = NULL;
-  GimpColorProfile *dest_profile = NULL;
 
   if (layer_dither_type == 0)
     {
@@ -1105,79 +1107,11 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
                      new_format);
 
-  if (convert_profile)
+  if (dest_profile)
     {
-      GimpImage *src_image = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpColorProfile *src_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
 
-      if (src_image != dest_image)
-        {
-          src_profile =
-            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
-
-          dest_profile =
-            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
-          g_object_ref (dest_profile);
-        }
-      else if (gimp_image_get_color_profile (src_image))
-        {
-          const Babl *src_format = gimp_drawable_get_format (drawable);
-
-          if (gimp_babl_format_get_linear (src_format) !=
-              gimp_babl_format_get_linear (new_format))
-            {
-              /* when converting between linear and gamma, we create a
-               * new profile using the original profile's chromacities
-               * and whitepoint, but a linear/sRGB-gamma TRC.
-               * gimp_image_convert_precision() will use the same
-               * profile.
-               */
-
-              src_profile =
-                gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
-
-              if (gimp_babl_format_get_linear (new_format))
-                {
-                  dest_profile =
-                    gimp_color_profile_new_linear_from_color_profile (src_profile);
-                }
-              else
-                {
-                  dest_profile =
-                    gimp_color_profile_new_srgb_trc_from_color_profile (src_profile);
-                }
-
-              /* if a new profile cannot be be generated, convert to
-               * the builtin profile, which is better than leaving the
-               * user with broken colors
-               */
-              if (! dest_profile)
-                {
-                  dest_profile =
-                    gimp_image_get_builtin_color_profile (dest_image);
-                  g_object_ref (dest_profile);
-                }
-            }
-          else if (gimp_drawable_get_base_type (drawable) != new_base_type &&
-                   (gimp_drawable_get_base_type (drawable) == GIMP_GRAY ||
-                    new_base_type                          == GIMP_GRAY))
-            {
-              /* when converting to/from GRAY, convert to the new
-               * type's builtin profile because the conversion will
-               * get rid of the profile, see gimp_image_convert_type().
-               */
-
-              src_profile =
-                gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
-
-              dest_profile =
-                gimp_image_get_builtin_color_profile (dest_image);
-              g_object_ref (dest_profile);
-           }
-        }
-    }
-
-  if (src_profile && dest_profile)
-    {
       gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                        dest_buffer, NULL, dest_profile,
                                        GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
@@ -1187,9 +1121,6 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
     {
       gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
     }
-
-  if (dest_profile)
-    g_object_unref (dest_profile);
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
 
@@ -1201,8 +1132,8 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
     {
       gimp_drawable_convert_type (GIMP_DRAWABLE (layer->mask), dest_image,
                                   GIMP_GRAY, new_precision,
+                                  NULL,
                                   layer_dither_type, mask_dither_type,
-                                  convert_profile,
                                   push_undo, NULL);
     }
 }

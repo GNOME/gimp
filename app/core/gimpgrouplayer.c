@@ -141,9 +141,9 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
                                                       const Babl        *new_format,
                                                       GimpImageBaseType  new_base_type,
                                                       GimpPrecision      new_precision,
+                                                      GimpColorProfile  *dest_profile,
                                                       gint               layer_dither_type,
                                                       gint               mask_dither_type,
-                                                      gboolean           convert_profile,
                                                       gboolean           push_undo,
                                                       GimpProgress      *progress);
 
@@ -881,9 +881,9 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                const Babl        *new_format /* unused */,
                                GimpImageBaseType  new_base_type,
                                GimpPrecision      new_precision,
+                               GimpColorProfile  *dest_profile,
                                gint               layer_dither_type,
                                gint               mask_dither_type,
-                               gboolean           convert_profile,
                                gboolean           push_undo,
                                GimpProgress      *progress)
 {
@@ -927,8 +927,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
     {
       gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
                                   GIMP_GRAY, new_precision,
-                                  layer_dither_type, mask_dither_type,
-                                  convert_profile,
+                                  NULL, layer_dither_type, mask_dither_type,
                                   push_undo, progress);
     }
 }

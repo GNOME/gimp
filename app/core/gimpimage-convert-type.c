@@ -766,7 +766,8 @@ gimp_image_convert_type (GimpImage               *image,
   GimpImageBaseType  old_type;
   GList             *all_layers;
   GList             *list;
-  const gchar       *undo_desc = NULL;
+  const gchar       *undo_desc    = NULL;
+  GimpColorProfile  *dest_profile = NULL;
   gint               nth_layer;
   gint               n_layers;
 
@@ -826,6 +827,18 @@ gimp_image_convert_type (GimpImage               *image,
   old_type = gimp_image_get_base_type (image);
 
   g_object_set (image, "base-type", new_type, NULL);
+
+  if (gimp_image_get_color_profile (image))
+    {
+      if (old_type == GIMP_GRAY ||
+          new_type == GIMP_GRAY)
+        {
+          /* when converting to/from GRAY, convert to the new
+           * type's builtin profile.
+           */
+          dest_profile = gimp_image_get_builtin_color_profile (image);
+        }
+    }
 
   /*  Convert to indexed?  Build histogram if necessary.  */
   if (new_type == GIMP_INDEXED)
@@ -1021,7 +1034,7 @@ gimp_image_convert_type (GimpImage               *image,
         {
           gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image, new_type,
                                       gimp_drawable_get_precision (GIMP_DRAWABLE (layer)),
-                                      0, 0, TRUE,
+                                      dest_profile, 0, 0,
                                       TRUE, NULL);
         }
     }
@@ -1077,9 +1090,7 @@ gimp_image_convert_type (GimpImage               *image,
       break;
     }
 
-  /*  When converting to/from GRAY, remove the profile.
-   *  gimp_layer_convert_type() has converted the layers to
-   *  new_type's builtin profile.
+  /*  When converting to/from GRAY, set the new profile.
    */
   switch (new_type)
     {
@@ -1088,7 +1099,7 @@ gimp_image_convert_type (GimpImage               *image,
       if (old_type == GIMP_GRAY)
         {
           if (gimp_image_get_color_profile (image))
-            gimp_image_set_color_profile (image, NULL, NULL);
+            gimp_image_set_color_profile (image, dest_profile, NULL);
           else
             gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
         }
@@ -1096,7 +1107,7 @@ gimp_image_convert_type (GimpImage               *image,
 
     case GIMP_GRAY:
       if (gimp_image_get_color_profile (image))
-        gimp_image_set_color_profile (image, NULL, NULL);
+        gimp_image_set_color_profile (image, dest_profile, NULL);
       else
         gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
       break;
