@@ -135,6 +135,7 @@ class _ReadLine(object):
 
         self.ps = ''
         self.in_raw_input = False
+        self.in_modal_raw_input = False
         self.run_on_raw_input = None
         self.tab_pressed = 0
         self.history = _ReadLine.History()
@@ -173,6 +174,23 @@ class _ReadLine(object):
             run_now = self.run_on_raw_input
             self.run_on_raw_input = None
             self.buffer.insert_at_cursor(run_now + '\n')
+
+    def modal_raw_input(self, text):
+        '''Starts raw input in modal mode. The event loop is spinned until
+        the input is committed. Returns the text entered after the prompt.'''
+        orig_ps = self.ps
+
+        self.raw_input(text)
+        self.in_modal_raw_input = True
+
+        while self.in_modal_raw_input:
+            gtk.main_iteration()
+
+        self.ps = orig_ps
+        self.in_modal_raw_input = False
+        self.in_raw_input = False
+
+        return self.modal_raw_input_result
 
     # Each time the insert mark is modified, move the cursor to it.
     def on_buf_mark_set(self, buffer, iter, mark):
@@ -470,9 +488,15 @@ class _ReadLine(object):
         self.__move_cursor_to(end)
         self.freeze_undo()
         self.__insert(end, "\n")
-        self.in_raw_input = False
+
         self.history.commit(text)
-        self.do_raw_input(text)
+        if self.in_modal_raw_input:
+            self.in_modal_raw_input = False
+            self.modal_raw_input_result = text
+        else:
+            self.in_raw_input = False
+            self.do_raw_input(text)
+
         self.thaw_undo()
 
     def do_raw_input(self, text):
@@ -487,6 +511,12 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
 
         code.InteractiveInterpreter.__init__(self, locals)
         self.locals["__console__"] = self
+
+        # The builtin raw_input function reads from stdin, we don't want
+        # this. Therefore, replace this function with our own modal raw
+        # input function.
+        exec "import __builtin__" in self.locals
+        self.locals['__builtin__'].__dict__['raw_input'] = lambda text: self.modal_raw_input(text)
 
         self.start_script = start_script
         self.completer = completer
