@@ -538,12 +538,6 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
         else:
             self.emit("command", code)
 
-    def exec_command(self, command):
-        if self._get_line():
-            self._commit()
-        self.buffer.insert_at_cursor(command)
-        self._commit()
-
     def complete_attr(self, start, end):
         try:
             obj = eval(start, self.locals)
