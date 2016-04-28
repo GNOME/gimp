@@ -305,10 +305,12 @@ class _ReadLine(object):
 
     def __get_cursor(self):
         return self.buffer.get_iter_at_mark(self.cursor)
+
     def __get_start(self):
         iter = self.__get_cursor()
         iter.set_line_offset(len(self.ps))
         return iter
+
     def __get_end(self):
         iter = self.__get_cursor()
         if not iter.ends_line():
