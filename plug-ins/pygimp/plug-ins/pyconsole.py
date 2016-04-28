@@ -149,6 +149,9 @@ class _ReadLine(object):
         except: pass
 
     def raw_input(self, ps=None):
+        '''Show prompt 'ps' and enter input mode until the current input
+        is committed.'''
+
         if ps:
             self.ps = ps
         else:
@@ -171,6 +174,7 @@ class _ReadLine(object):
             self.run_on_raw_input = None
             self.buffer.insert_at_cursor(run_now + '\n')
 
+    # Each time the insert mark is modified, move the cursor to it.
     def on_buf_mark_set(self, buffer, iter, mark):
         if mark is not buffer.get_insert():
             return
@@ -186,9 +190,13 @@ class _ReadLine(object):
         self.buffer.insert(iter, text)
         self.do_insert = False
 
+    # Make sure that text insertions while in text input mode are properly
+    # committed to the history.
     def on_buf_insert(self, buf, iter, text, len):
+        # Bail out if not in input mode.
         if not self.in_raw_input or self.do_insert or not len:
             return
+
         buf.stop_emission("insert-text")
         lines = text.splitlines()
         need_eol = False
@@ -236,6 +244,8 @@ class _ReadLine(object):
             end = line_end
         self.__delete(start, end)
 
+    # We overload the key press event handler to handle "special keys"
+    # when in input mode to make history browsing, completions, etc. work.
     def do_key_press_event(self, event, parent_type):
         if not self.in_raw_input:
             return parent_type.do_key_press_event(self, event)
@@ -290,6 +300,7 @@ class _ReadLine(object):
         else:
             handled = False
 
+        # Handle ordinary keys
         if not handled:
             return parent_type.do_key_press_event(self, event)
         else:
@@ -304,20 +315,26 @@ class _ReadLine(object):
         self.scroll_to_mark(self.cursor, 0.2)
 
     def __get_cursor(self):
+        '''Returns an iterator at the current cursor position.'''
         return self.buffer.get_iter_at_mark(self.cursor)
 
     def __get_start(self):
+        '''Returns an iterator at the start of the input on the current
+        cursor line.'''
+
         iter = self.__get_cursor()
         iter.set_line_offset(len(self.ps))
         return iter
 
     def __get_end(self):
+        '''Returns an iterator at the end of the cursor line.'''
         iter = self.__get_cursor()
         if not iter.ends_line():
             iter.forward_to_line_end()
         return iter
 
     def __get_text(self, start, end):
+        '''Get text between 'start' and 'end' markers.'''
         return self.buffer.get_text(start, end, False)
 
     def __move_cursor_to(self, iter):
@@ -426,21 +443,30 @@ class _ReadLine(object):
         return None
 
     def _get_line(self):
+        '''Return the current input behind the prompt.'''
         start = self.__get_start()
         end = self.__get_end()
         return self.buffer.get_text(start, end, False)
 
     def __replace_line(self, new_text):
+        '''Replace the current input with 'new_text' '''
         start = self.__get_start()
         end = self.__get_end()
         self.__delete(start, end)
         self.__insert(end, new_text)
 
     def _commit(self):
+        '''Commit the input entered on the current line.'''
+
+        # Find iterator and end of cursor line.
         end = self.__get_cursor()
         if not end.ends_line():
             end.forward_to_line_end()
+
+        # Get text at current line.
         text = self._get_line()
+
+        # Move cursor to the end of the line, insert new line.
         self.__move_cursor_to(end)
         self.freeze_undo()
         self.__insert(end, "\n")
