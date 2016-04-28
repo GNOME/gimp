@@ -379,9 +379,9 @@ save_uchar (GOutputStream  *output,
         }
     }
 
-  if (d < 33 || d > 126)
+  if (d < 33 || (d >= 48 && d <= 57)  || d > 126)
     {
-      if (! print (output, error, "\\%o", d))
+      if (! print (output, error, "\\%03o", d))
         return FALSE;
 
       *c += 1 + 1 + (d > 7) + (d > 63);
@@ -710,7 +710,7 @@ save_image (GFile   *file,
             success = print (output, error, "\\b");
           else if (*p == '\f')
             success = print (output, error, "\\f");
-          else if (*p >= 32 && *p <= 126)
+          else if (( *p >= 32 && *p <= 47 ) || (*p >= 58 && *p <= 126))
             success = print (output, error, "%c", *p);
           else
             success = print (output, error, "\\%03o", *p);
