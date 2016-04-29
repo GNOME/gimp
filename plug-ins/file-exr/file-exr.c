@@ -302,22 +302,13 @@ load_image (const gchar  *filename,
    */
   if (image_type == GIMP_RGB)
     {
-      cmsHPROFILE lcms_profile;
+      GimpColorProfile *profile;
 
-      lcms_profile = exr_loader_get_icc_profile (loader);
-      if (lcms_profile)
+      profile = exr_loader_get_profile (loader);
+      if (profile)
         {
-          GimpColorProfile *profile;
-
-          profile = gimp_color_profile_new_from_lcms_profile (lcms_profile,
-                                                              NULL);
-          cmsCloseProfile (lcms_profile);
-
-          if (profile)
-            {
-              gimp_image_set_color_profile (image, profile);
-              g_object_unref (profile);
-            }
+          gimp_image_set_color_profile (image, profile);
+          g_object_unref (profile);
         }
     }
 
