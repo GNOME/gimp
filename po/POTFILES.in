@@ -141,6 +141,7 @@ app/core/gimpimage.c
 app/core/gimpimage-arrange.c
 app/core/gimpimage-color-profile.c
 app/core/gimpimage-colormap.c
+app/core/gimpimage-convert-indexed.c
 app/core/gimpimage-convert-precision.c
 app/core/gimpimage-convert-type.c
 app/core/gimpimage-crop.c

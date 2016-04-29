@@ -19,27 +19,10 @@
 #define __GIMP_IMAGE_CONVERT_TYPE_H__
 
 
-#define MAXNUMCOLORS 256
-
-
-gboolean   gimp_image_convert_type      (GimpImage               *image,
-                                         GimpImageBaseType        new_type,
-                                         /* The following params used only for
-                                          * new_type == GIMP_INDEXED
-                                          */
-                                         gint                     num_cols,
-                                         GimpConvertDitherType    dither,
-                                         gboolean                 alpha_dither,
-                                         gboolean                 text_layer_dither,
-                                         gboolean                 remove_dups,
-                                         GimpConvertPaletteType   palette_type,
-                                         GimpPalette             *custom_palette,
-                                         GimpProgress            *progress,
-                                         GError                 **error);
-
-void  gimp_image_convert_type_set_dither_matrix (const guchar *matrix,
-                                                 gint          width,
-                                                 gint          height);
+gboolean   gimp_image_convert_type (GimpImage          *image,
+                                    GimpImageBaseType   new_type,
+                                    GimpProgress       *progress,
+                                    GError            **error);
 
 
 #endif  /*  __GIMP_IMAGE_CONVERT_TYPE_H__  */

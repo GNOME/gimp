@@ -29,7 +29,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-convert-type.h"
+#include "core/gimpimage-convert-indexed.h"
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 #include "core/gimpprogress.h"
@@ -309,16 +309,15 @@ convert_dialog_response (GtkWidget     *widget,
                                       _("Converting to indexed colors"));
 
       /*  Convert the image to indexed color  */
-      if (! gimp_image_convert_type (dialog->image,
-                                     GIMP_INDEXED,
-                                     dialog->num_colors,
-                                     dialog->dither_type,
-                                     dialog->alpha_dither,
-                                     dialog->text_layer_dither,
-                                     dialog->remove_dups,
-                                     dialog->palette_type,
-                                     dialog->custom_palette,
-                                     progress, &error))
+      if (! gimp_image_convert_indexed (dialog->image,
+                                        dialog->num_colors,
+                                        dialog->dither_type,
+                                        dialog->alpha_dither,
+                                        dialog->text_layer_dither,
+                                        dialog->remove_dups,
+                                        dialog->palette_type,
+                                        dialog->custom_palette,
+                                        progress, &error))
         {
           gimp_message_literal (dialog->image->gimp, G_OBJECT (dialog->dialog),
                                 GIMP_MESSAGE_WARNING, error->message);
