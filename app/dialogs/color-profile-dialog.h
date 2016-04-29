@@ -22,15 +22,20 @@
 #define __COLOR_PROFILE_DIALOG_H__
 
 
-GtkWidget * color_profile_assign_dialog_new  (GimpImage    *image,
-                                              GimpContext  *context,
-                                              GtkWidget    *parent,
-                                              GimpProgress *progress);
+typedef enum
+{
+  COLOR_PROFILE_DIALOG_ASSIGN_PROFILE,
+  COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE,
+  COLOR_PROFILE_DIALOG_CONVERT_TO_RGB,
+  COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY
+} ColorProfileDialogType;
 
-GtkWidget * color_profile_convert_dialog_new (GimpImage    *image,
-                                              GimpContext  *context,
-                                              GtkWidget    *parent,
-                                              GimpProgress *progress);
+
+GtkWidget * color_profile_dialog_new (ColorProfileDialogType  dialog_type,
+                                      GimpImage              *image,
+                                      GimpContext            *context,
+                                      GtkWidget              *parent,
+                                      GimpProgress           *progress);
 
 
 #endif  /*  __COLOR_PROFILE_DIALOG_H__  */

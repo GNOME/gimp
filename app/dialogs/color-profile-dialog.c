@@ -58,28 +58,23 @@ typedef struct
   GtkWidget                *combo;
   GtkWidget                *dest_view;
 
+  ColorProfileDialogType    dialog_type;
   GimpImage                *image;
   GimpProgress             *progress;
   GimpColorConfig          *config;
-  gboolean                  convert;
 
   GimpColorRenderingIntent  intent;
   gboolean                  bpc;
 } ProfileDialog;
 
 
-static ProfileDialog * color_profile_dialog_new      (GimpImage     *image,
-                                                      GimpContext   *context,
-                                                      GtkWidget     *parent,
-                                                      GimpProgress  *progress,
-                                                      gboolean       convert);
-static GtkWidget     * color_profile_combo_box_new   (ProfileDialog *dialog);
-static void            color_profile_dialog_response (GtkWidget     *widget,
-                                                      gint           response_id,
-                                                      ProfileDialog *dialog);
-static void            color_profile_dest_changed    (GtkWidget     *combo,
-                                                      ProfileDialog *dialog);
-static void            color_profile_dialog_free     (ProfileDialog *dialog);
+static GtkWidget * color_profile_combo_box_new   (ProfileDialog *dialog);
+static void        color_profile_dialog_response (GtkWidget     *widget,
+                                                  gint           response_id,
+                                                  ProfileDialog *dialog);
+static void        color_profile_dest_changed    (GtkWidget     *combo,
+                                                  ProfileDialog *dialog);
+static void        color_profile_dialog_free     (ProfileDialog *dialog);
 
 
 /*  defaults  */
@@ -91,40 +86,11 @@ static gboolean                 saved_bpc    = FALSE;
 /*  public functions  */
 
 GtkWidget *
-color_profile_assign_dialog_new (GimpImage    *image,
-                                 GimpContext  *context,
-                                 GtkWidget    *parent,
-                                 GimpProgress *progress)
-{
-  ProfileDialog *dialog;
-
-  dialog = color_profile_dialog_new (image, context, parent, progress, FALSE);
-
-  return dialog ? dialog->dialog : NULL;
-}
-
-GtkWidget *
-color_profile_convert_dialog_new (GimpImage    *image,
-                                  GimpContext  *context,
-                                  GtkWidget    *parent,
-                                  GimpProgress *progress)
-{
-  ProfileDialog *dialog;
-
-  dialog = color_profile_dialog_new (image, context, parent, progress, TRUE);
-
-  return dialog ? dialog->dialog : NULL;
-}
-
-
-/*  private functions  */
-
-static ProfileDialog *
-color_profile_dialog_new (GimpImage    *image,
-                          GimpContext  *context,
-                          GtkWidget    *parent,
-                          GimpProgress *progress,
-                          gboolean      convert)
+color_profile_dialog_new (ColorProfileDialogType  dialog_type,
+                          GimpImage              *image,
+                          GimpContext            *context,
+                          GtkWidget              *parent,
+                          GimpProgress           *progress)
 {
   ProfileDialog    *dialog;
   GtkWidget        *frame;
@@ -140,10 +106,10 @@ color_profile_dialog_new (GimpImage    *image,
 
   dialog = g_slice_new0 (ProfileDialog);
 
-  dialog->image    = image;
-  dialog->progress = progress;
-  dialog->config   = image->gimp->config->color_management;
-  dialog->convert  = convert;
+  dialog->dialog_type = dialog_type;
+  dialog->image       = image;
+  dialog->progress    = progress;
+  dialog->config      = image->gimp->config->color_management;
 
   if (saved_intent == -1)
     {
@@ -156,25 +122,9 @@ color_profile_dialog_new (GimpImage    *image,
       dialog->bpc    = saved_bpc;
     }
 
-  if (convert)
+  switch (dialog_type)
     {
-      dialog->dialog =
-        gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
-                                  _("Convert to ICC Color Profile"),
-                                  "gimp-image-color-profile-convert",
-                                  NULL,
-                                  _("Convert the image to a color profile"),
-                                  parent,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT,
-
-                                  GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_CONVERT, GTK_RESPONSE_OK,
-
-                                  NULL);
-    }
-  else
-    {
+    case COLOR_PROFILE_DIALOG_ASSIGN_PROFILE:
       dialog->dialog =
         gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                                   _("Assign ICC Color Profile"),
@@ -189,6 +139,30 @@ color_profile_dialog_new (GimpImage    *image,
                                   _("_Assign"),     GTK_RESPONSE_OK,
 
                                   NULL);
+      break;
+
+    case COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE:
+      dialog->dialog =
+        gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+                                  _("Convert to ICC Color Profile"),
+                                  "gimp-image-color-profile-convert",
+                                  NULL,
+                                  _("Convert the image to a color profile"),
+                                  parent,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT,
+
+                                  GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_CONVERT, GTK_RESPONSE_OK,
+
+                                  NULL);
+      break;
+
+    case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
+      break;
+
+    case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
+      break;
     }
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
@@ -221,7 +195,8 @@ color_profile_dialog_new (GimpImage    *image,
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
-  frame = gimp_frame_new (convert ? _("Convert to") : _("Assign"));
+  frame = gimp_frame_new (dialog_type == COLOR_PROFILE_DIALOG_ASSIGN_PROFILE ?
+                          _("Assign") : _("Convert to"));
   gtk_box_pack_start (GTK_BOX (dialog->main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -247,7 +222,7 @@ color_profile_dialog_new (GimpImage    *image,
 
   color_profile_dest_changed (dialog->combo, dialog);
 
-  if (convert)
+  if (dialog_type != COLOR_PROFILE_DIALOG_ASSIGN_PROFILE)
     {
       GtkWidget *vbox;
       GtkWidget *hbox;
@@ -288,8 +263,11 @@ color_profile_dialog_new (GimpImage    *image,
                         &dialog->bpc);
     }
 
-  return dialog;
+  return dialog->dialog;
 }
+
+
+/*  private functions  */
 
 static GtkWidget *
 color_profile_combo_box_new (ProfileDialog *dialog)
@@ -396,50 +374,63 @@ color_profile_dialog_response (GtkWidget     *widget,
 
       if (success)
         {
-          if (dialog->convert)
+          switch (dialog->dialog_type)
             {
-              GimpProgress *progress;
-              const gchar  *label;
+            case COLOR_PROFILE_DIALOG_ASSIGN_PROFILE:
+              {
+                gimp_image_undo_group_start (dialog->image,
+                                             GIMP_UNDO_GROUP_PARASITE_ATTACH,
+                                             _("Assign color profile"));
 
-              label = gimp_color_profile_get_label (dest_profile);
+                success = gimp_image_set_color_profile (dialog->image,
+                                                        dest_profile,
+                                                        &error);
 
-              progress = gimp_progress_start (dialog->progress, FALSE,
-                                              _("Converting to '%s'"), label);
+                /*  omg...  */
+                if (success)
+                  gimp_image_parasite_detach (dialog->image,
+                                              "icc-profile-name");
 
-              success = gimp_image_convert_color_profile (dialog->image,
-                                                          dest_profile,
-                                                          dialog->intent,
-                                                          dialog->bpc,
-                                                          progress,
-                                                          &error);
+                gimp_image_undo_group_end (dialog->image);
 
-              if (progress)
-                gimp_progress_end (progress);
+                if (! success)
+                  gimp_image_undo (dialog->image);
+              }
+              break;
 
-              if (success)
-                {
-                  saved_intent = dialog->intent;
-                  saved_bpc    = dialog->bpc;
-                }
-            }
-          else
-            {
-              gimp_image_undo_group_start (dialog->image,
-                                           GIMP_UNDO_GROUP_PARASITE_ATTACH,
-                                           _("Assign color profile"));
+            case COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE:
+              {
+                GimpProgress *progress;
+                const gchar  *label;
 
-              success = gimp_image_set_color_profile (dialog->image,
-                                                      dest_profile,
-                                                      &error);
+                label = gimp_color_profile_get_label (dest_profile);
 
-              /*  omg...  */
-              if (success)
-                gimp_image_parasite_detach (dialog->image, "icc-profile-name");
+                progress = gimp_progress_start (dialog->progress, FALSE,
+                                                _("Converting to '%s'"), label);
 
-              gimp_image_undo_group_end (dialog->image);
+                success = gimp_image_convert_color_profile (dialog->image,
+                                                            dest_profile,
+                                                            dialog->intent,
+                                                            dialog->bpc,
+                                                            progress,
+                                                            &error);
 
-              if (! success)
-                gimp_image_undo (dialog->image);
+                if (progress)
+                  gimp_progress_end (progress);
+
+                if (success)
+                  {
+                    saved_intent = dialog->intent;
+                    saved_bpc    = dialog->bpc;
+                  }
+              }
+              break;
+
+            case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
+              break;
+
+            case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
+              break;
             }
 
           if (success)

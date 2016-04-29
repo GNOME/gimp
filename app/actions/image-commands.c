@@ -330,10 +330,11 @@ image_color_profile_assign_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
-      dialog = color_profile_assign_dialog_new (image,
-                                                action_data_get_context (data),
-                                                widget,
-                                                GIMP_PROGRESS (display));
+      dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_ASSIGN_PROFILE,
+                                         image,
+                                         action_data_get_context (data),
+                                         widget,
+                                         GIMP_PROGRESS (display));
 
       g_object_set_data (G_OBJECT (image),
                          IMAGE_PROFILE_ASSIGN_DIALOG_KEY, dialog);
@@ -369,10 +370,11 @@ image_color_profile_convert_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
-      dialog = color_profile_convert_dialog_new (image,
-                                                 action_data_get_context (data),
-                                                 widget,
-                                                 GIMP_PROGRESS (display));
+      dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE,
+                                         image,
+                                         action_data_get_context (data),
+                                         widget,
+                                         GIMP_PROGRESS (display));
 
       g_object_set_data (G_OBJECT (image),
                          IMAGE_PROFILE_CONVERT_DIALOG_KEY, dialog);
