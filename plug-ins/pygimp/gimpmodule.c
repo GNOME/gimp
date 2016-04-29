@@ -1703,7 +1703,7 @@ pygimp_export_image (PyObject *self, PyObject *args, PyObject *kwargs)
                          "the \"capabilities\" (4th) parameter must be set with "
                          "a combination of the "
                          "EXPORT_CAN_HANDLE_*/EXPORT_NEEDS_ALPHA values. "
-                         "(check develeloper documentation on the C function "
+                         "(check developer documentation on the C function "
                          "gimp_export_image for details)" 
                          );
         return NULL;
