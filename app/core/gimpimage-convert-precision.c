@@ -225,10 +225,10 @@ gimp_image_convert_precision (GimpImage     *image,
     g_object_unref (buffer);
 
     nth_drawable++;
-
-    if (sub_progress)
-      gimp_progress_set_value (sub_progress, 1.0);
   }
+
+  if (sub_progress)
+    gimp_progress_set_value (sub_progress, 1.0);
 
   gimp_image_undo_group_end (image);
 
