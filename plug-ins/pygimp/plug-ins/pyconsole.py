@@ -692,6 +692,19 @@ def ConsoleType(t=gtk.TextView):
         def do_key_press_event(self, event):
             return _Console.do_key_press_event(self, event, t)
 
+        def get_default_size(self):
+            context = self.get_pango_context()
+            metrics = context.get_metrics(context.get_font_description(),
+                                          context.get_language())
+            width = metrics.get_approximate_char_width()
+            height = metrics.get_ascent() + metrics.get_descent()
+
+            # Default to a 80x40 console
+            width = pango.PIXELS(int(width * 80 * 1.05))
+            height = pango.PIXELS(height * 40)
+
+            return width, height
+
     if gtk.pygtk_version[1] < 8:
         gobject.type_register(console_type)
 
@@ -710,7 +723,11 @@ def _make_window():
                       use_rlcompleter=False,
                       start_script="from gtk import *\n")
     swin.add(console)
-    window.set_default_size(500, 400)
+
+    width, height = console.get_default_size()
+    sb_width, sb_height = swin.get_vscrollbar().size_request()
+
+    window.set_default_size(width + sb_width, height)
     window.show_all()
 
     if not gtk.main_level():
