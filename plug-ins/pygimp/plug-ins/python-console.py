@@ -82,7 +82,13 @@ def do_console():
 
             scrl_win.add(self.cons)
 
-            self.set_default_size(500, 500)
+            width, height = self.cons.get_default_size()
+            sb_width, sb_height = scrl_win.get_vscrollbar().size_request()
+
+            # Account for scrollbar width and border width to ensure
+            # the text view gets a width of 80 characters. We don't care
+            # so much whether the height will be exactly 40 characters.
+            self.set_default_size(width + sb_width + 2 * 12, height)
 
         def response(self, dialog, response_id):
             if response_id == RESPONSE_BROWSE:
