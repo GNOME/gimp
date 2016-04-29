@@ -385,13 +385,17 @@ class _ReadLine(object):
         self.__delete(iter, end)
 
     def __get_width(self):
+        '''Estimate the number of characters that will fit in the area
+        currently allocated to this widget.'''
+
         if not (self.flags() & gtk.REALIZED):
             return 80
-        layout = pango.Layout(self.get_pango_context())
-        letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        layout.set_text(letters)
-        pix_width = layout.get_pixel_size()[0]
-        return self.allocation.width * len(letters) / pix_width
+
+        context = self.get_pango_context()
+        metrics = context.get_metrics(context.get_font_description(),
+                                      context.get_language())
+        pix_width = metrics.get_approximate_char_width()
+        return self.allocation.width * pango.SCALE / pix_width
 
     def __print_completions(self, completions):
         line_start = self.__get_text(self.__get_start(), self.__get_cursor())
