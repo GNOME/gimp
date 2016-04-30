@@ -240,41 +240,17 @@ gimp_image_validate_color_profile (GimpImage        *image,
                                    gboolean         *is_builtin,
                                    GError          **error)
 {
+  const Babl *format;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (gimp_image_get_base_type (image) == GIMP_GRAY)
-    {
-      if (! gimp_color_profile_is_gray (profile))
-        {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                               _("ICC profile validation failed: "
-                                 "Color profile is not for GRAY color space"));
-          return FALSE;
-        }
-    }
-  else
-    {
-      if (! gimp_color_profile_is_rgb (profile))
-        {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                               _("ICC profile validation failed: "
-                                 "Color profile is not for RGB color space"));
-          return FALSE;
-        }
-    }
+  format = gimp_image_get_layer_format (image, TRUE);
 
-  if (is_builtin)
-    {
-      GimpColorProfile *builtin;
-
-      builtin = gimp_image_get_builtin_color_profile (image);
-
-      *is_builtin = gimp_color_profile_is_equal (profile, builtin);
-    }
-
-  return TRUE;
+  return gimp_image_validate_color_profile_by_format (format,
+                                                      profile, is_builtin,
+                                                      error);
 }
 
 GimpColorProfile *
@@ -302,6 +278,49 @@ gimp_image_set_color_profile (GimpImage         *image,
     data = gimp_color_profile_get_icc_profile (profile, &length);
 
   return gimp_image_set_icc_profile (image, data, length, error);
+}
+
+gboolean
+gimp_image_validate_color_profile_by_format (const Babl         *format,
+                                             GimpColorProfile   *profile,
+                                             gboolean           *is_builtin,
+                                             GError            **error)
+{
+  g_return_val_if_fail (format != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_babl_format_get_base_type (format) == GIMP_GRAY)
+    {
+      if (! gimp_color_profile_is_gray (profile))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("ICC profile validation failed: "
+                                 "Color profile is not for grayscale color space"));
+          return FALSE;
+        }
+    }
+  else
+    {
+      if (! gimp_color_profile_is_rgb (profile))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("ICC profile validation failed: "
+                                 "Color profile is not for RGB color space"));
+          return FALSE;
+        }
+    }
+
+  if (is_builtin)
+    {
+      GimpColorProfile *builtin;
+
+      builtin = gimp_babl_format_get_color_profile (format);
+
+      *is_builtin = gimp_color_profile_is_equal (profile, builtin);
+    }
+
+  return TRUE;
 }
 
 GimpColorProfile *

@@ -54,6 +54,12 @@ gboolean             gimp_image_set_color_profile      (GimpImage           *ima
                                                         GimpColorProfile    *profile,
                                                         GError             **error);
 
+gboolean             gimp_image_validate_color_profile_by_format
+                                                       (const Babl          *format,
+                                                        GimpColorProfile    *profile,
+                                                        gboolean            *is_builtin,
+                                                        GError             **error);
+
 GimpColorProfile   * gimp_image_get_builtin_color_profile
                                                        (GimpImage           *image);
 
