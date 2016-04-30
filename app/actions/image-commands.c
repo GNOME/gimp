@@ -195,7 +195,7 @@ image_convert_base_type_cmd_callback (GtkAction *action,
       if (dialog)
         gtk_widget_destroy (dialog);
 
-      if (! gimp_image_convert_type (image, value, NULL, &error))
+      if (! gimp_image_convert_type (image, value, NULL, NULL, &error))
         {
           gimp_message_literal (image->gimp,
                                 G_OBJECT (widget), GIMP_MESSAGE_WARNING,

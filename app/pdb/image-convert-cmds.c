@@ -64,7 +64,7 @@ image_convert_rgb_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error))
         {
-          success = gimp_image_convert_type (image, GIMP_RGB, NULL, error);
+          success = gimp_image_convert_type (image, GIMP_RGB, NULL, NULL, error);
         }
       else
         {
@@ -93,7 +93,7 @@ image_convert_grayscale_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
         {
-          success = gimp_image_convert_type (image, GIMP_GRAY, NULL, error);
+          success = gimp_image_convert_type (image, GIMP_GRAY, NULL, NULL, error);
         }
       else
         {
@@ -292,8 +292,8 @@ register_image_convert_procs (GimpPDB *pdb)
                                "gimp-image-convert-grayscale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-grayscale",
-                                     "Convert specified image to grayscale (256 intensity levels)",
-                                     "This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels). This process requires an image in RGB or Indexed color mode.",
+                                     "Convert specified image to grayscale",
+                                     "This procedure converts the specified image to grayscale. This process requires an image in RGB or Indexed color mode.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
