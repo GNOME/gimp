@@ -25,6 +25,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimp.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
