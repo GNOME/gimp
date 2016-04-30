@@ -400,6 +400,14 @@
   (gtype-id "GIMP_TYPE_ZOOM_PREVIEW")
 )
 
+;; Interfaces
+
+(define-interface ColorManaged
+  (in-module "Gimp")
+  (c-name "GimpColorManaged")
+  (gtype-id "GIMP_TYPE_COLOR_MANAGED")
+)
+
 ;; Enumerations and flags ...
 
 (define-enum IntStoreColumns
