@@ -72,7 +72,8 @@ enum
 
 /*  local function prototypes  */
 
-static void  gimp_drawable_pickable_iface_init (GimpPickableInterface *iface);
+static void       gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
+static void       gimp_pickable_iface_init         (GimpPickableInterface     *iface);
 
 static void       gimp_drawable_dispose            (GObject           *object);
 static void       gimp_drawable_finalize           (GObject           *object);
@@ -129,6 +130,13 @@ static void       gimp_drawable_transform          (GimpItem          *item,
                                                     GimpInterpolationType interpolation_type,
                                                     GimpTransformResize clip_result,
                                                     GimpProgress      *progress);
+
+static const guint8 *
+                  gimp_drawable_get_icc_profile    (GimpColorManaged  *managed,
+                                                    gsize             *len);
+static GimpColorProfile *
+                  gimp_drawable_get_color_profile  (GimpColorManaged  *managed);
+static void       gimp_drawable_profile_changed    (GimpColorManaged  *managed);
 
 static gboolean   gimp_drawable_get_pixel_at       (GimpPickable      *pickable,
                                                     gint               x,
@@ -196,8 +204,10 @@ static void       gimp_drawable_fs_update          (GimpLayer         *fs,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_drawable_pickable_iface_init))
+                                                gimp_pickable_iface_init))
 
 #define parent_class gimp_drawable_parent_class
 
@@ -289,7 +299,15 @@ gimp_drawable_init (GimpDrawable *drawable)
 /* sorry for the evil casts */
 
 static void
-gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
+gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
+{
+  iface->get_icc_profile   = gimp_drawable_get_icc_profile;
+  iface->get_color_profile = gimp_drawable_get_color_profile;
+  iface->profile_changed   = gimp_drawable_profile_changed;
+}
+
+static void
+gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->get_image             = (GimpImage     * (*) (GimpPickable *pickable)) gimp_item_get_image;
   iface->get_format            = (const Babl    * (*) (GimpPickable *pickable)) gimp_drawable_get_format;
@@ -712,6 +730,29 @@ gimp_drawable_transform (GimpItem               *item,
                                      new_off_x, new_off_y, FALSE);
       g_object_unref (buffer);
     }
+}
+
+static const guint8 *
+gimp_drawable_get_icc_profile (GimpColorManaged *managed,
+                               gsize            *len)
+{
+  GimpColorProfile *profile = gimp_color_managed_get_color_profile (managed);
+
+  return gimp_color_profile_get_icc_profile (profile, len);
+}
+
+static GimpColorProfile *
+gimp_drawable_get_color_profile (GimpColorManaged *managed)
+{
+  const Babl *format = gimp_drawable_get_format (GIMP_DRAWABLE (managed));
+
+  return gimp_babl_format_get_color_profile (format);
+}
+
+static void
+gimp_drawable_profile_changed (GimpColorManaged *managed)
+{
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (managed));
 }
 
 static gboolean
