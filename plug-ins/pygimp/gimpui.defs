@@ -49,6 +49,13 @@
   (gtype-id "GIMP_TYPE_COLOR_BUTTON")
 )
 
+(define-object ColorConfig
+  (in-module "Gimp")
+  (parent "GObject")
+  (c-name "GimpColorConfig")
+  (gtype-id "GIMP_TYPE_COLOR_CONFIG")
+)
+
 (define-object ColorDisplay
   (in-module "Gimp")
   (parent "GObject")
