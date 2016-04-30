@@ -370,7 +370,7 @@ image_actions_update (GimpActionGroup *group,
         {
           gimp_action_group_set_action_active (group, "image-convert-linear",
                                                TRUE);
-       }
+        }
       else
         {
           gimp_action_group_set_action_active (group, "image-convert-gamma",
@@ -390,8 +390,25 @@ image_actions_update (GimpActionGroup *group,
       profile = (gimp_image_get_color_profile (image) != NULL);
     }
 
+#define SET_LABEL(action,label) \
+        gimp_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+
+  if (profile)
+    {
+      SET_LABEL ("image-convert-rgb",
+                 C_("image-convert-action", "_RGB..."));
+      SET_LABEL ("image-convert-grayscale",
+                 C_("image-convert-action", "_Grayscale..."));
+    }
+  else
+    {
+      SET_LABEL ("image-convert-rgb",
+                 C_("image-convert-action", "_RGB"));
+      SET_LABEL ("image-convert-grayscale",
+                 C_("image-convert-action", "_Grayscale"));
+    }
 
   SET_SENSITIVE ("image-convert-rgb",       image);
   SET_SENSITIVE ("image-convert-grayscale", image);
@@ -430,5 +447,6 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-configure-grid",      image);
   SET_SENSITIVE ("image-properties",          image);
 
+#undef SET_LABEL
 #undef SET_SENSITIVE
 }
