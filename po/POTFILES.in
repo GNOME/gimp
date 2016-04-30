@@ -192,8 +192,8 @@ app/dialogs/action-search-dialog.c
 app/dialogs/channel-options-dialog.c
 app/dialogs/color-profile-dialog.c
 app/dialogs/color-profile-import-dialog.c
+app/dialogs/convert-indexed-dialog.c
 app/dialogs/convert-precision-dialog.c
-app/dialogs/convert-type-dialog.c
 app/dialogs/data-delete-dialog.c
 app/dialogs/dialogs-constructors.c
 app/dialogs/dialogs.c

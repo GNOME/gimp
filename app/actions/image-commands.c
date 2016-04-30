@@ -57,8 +57,8 @@
 #include "display/gimpdisplayshell.h"
 
 #include "dialogs/color-profile-dialog.h"
+#include "dialogs/convert-indexed-dialog.h"
 #include "dialogs/convert-precision-dialog.h"
-#include "dialogs/convert-type-dialog.h"
 #include "dialogs/grid-dialog.h"
 #include "dialogs/image-merge-layers-dialog.h"
 #include "dialogs/image-new-dialog.h"
@@ -223,10 +223,10 @@ image_convert_base_type_cmd_callback (GtkAction *action,
       break;
 
     case GIMP_INDEXED:
-      dialog = convert_type_dialog_new (image,
-                                        action_data_get_context (data),
-                                        widget,
-                                        GIMP_PROGRESS (display));
+      dialog = convert_indexed_dialog_new (image,
+                                           action_data_get_context (data),
+                                           widget,
+                                           GIMP_PROGRESS (display));
       break;
     }
 
