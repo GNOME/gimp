@@ -134,6 +134,20 @@
   )
 )
 
+(define-enum ImageType
+  (in-module "Gimp")
+  (c-name "GimpImageType")
+  (gtype-id "GIMP_TYPE_IMAGE_TYPE")
+  (values
+    '("rgb" "GIMP_RGB_IMAGE")
+    '("rgba" "GIMP_RGBA_IMAGE")
+    '("gray" "GIMP_GRAY_IMAGE")
+    '("graya" "GIMP_GRAYA_IMAGE")
+    '("indexed" "GIMP_INDEXED_IMAGE")
+    '("indexeda" "GIMP_INDEXEDA_IMAGE")
+  )
+)
+
 (define-enum LayerModeEffects
   (in-module "Gimp")
   (c-name "GimpLayerModeEffects")
