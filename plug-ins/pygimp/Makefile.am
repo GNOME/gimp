@@ -132,6 +132,7 @@ pygimp_PYTHON = \
 pygimp_DATA = pygimp-logo.png
 
 codegen_files = \
+	gimp-types.defs		\
 	gimpcolor-types.defs	\
 	gimpenums-types.defs	\
 	gimpthumb.defs		\
@@ -164,7 +165,7 @@ EXTRA_DIST = \
 	$(pygimp_DATA)		\
 	$(codegen_files)
 
-gimpui.c: gimpui.defs gimpui.override gimpcolor-types.defs gimpenums-types.defs
+gimpui.c: gimpui.defs gimpui.override gimp-types.defs gimpcolor-types.defs gimpenums-types.defs
 
 gimpthumb.c: gimpthumb.defs gimpthumb.override
 
@@ -176,6 +177,7 @@ CLEANFILES = gimpui.c gimpthumb.c
 	    --override $*.override \
 	    --register $(PYGTK_DEFSDIR)/gdk-types.defs \
 	    --register $(PYGTK_DEFSDIR)/gtk-types.defs \
+	    --register gimp-types.defs \
 	    --register gimpcolor-types.defs \
 	    --register gimpenums-types.defs \
 	    --prefix $* $*.defs) > gen-$*.c \
