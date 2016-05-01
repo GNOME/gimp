@@ -5,6 +5,7 @@
 #
 # Pedro Barreira <almufado@gmail.com>, 2010.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
+# Tiago Santos <tiagofsantos81@sapo.pt>, 2015, 2016.
 #
 msgid ""
 msgstr ""
@@ -8955,6 +8956,7 @@ msgstr ""
 "Pedro Barreira (Tradução e revisão) \n"
 "Duarte Loreto (committer)\n"
 "Pedro Albuquerque <palbuquerque73@gmail.com>\n"
+"Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "\n"
 "Launchpad Contributions:\n"
 " Pedro Barreira https://launchpad.net/~almufadado\n"
