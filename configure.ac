@@ -62,6 +62,7 @@ m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.36.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [2.10.4])
+m4_define([pycairo_required_version], [1.0.2])
 m4_define([poppler_required_version], [0.12.4])
 m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
@@ -1905,6 +1906,9 @@ if test "x$enable_python" != xno; then
   PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
   AC_SUBST(PYGTK_DEFSDIR)
   AC_MSG_RESULT($PYGTK_DEFSDIR)
+
+  PKG_CHECK_MODULES(PYCAIRO, pycairo >= pycairo_required_version,,
+                    [pycheck_error([PyCairo pycairo_required_version or newer], [it])])
 
   GIMP_DETECT_CFLAGS(PYGIMP_EXTRA_CFLAGS, '-fno-strict-aliasing')
   AC_SUBST(PYGIMP_EXTRA_CFLAGS)

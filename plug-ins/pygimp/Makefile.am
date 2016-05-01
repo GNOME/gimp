@@ -25,6 +25,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
 	$(PYTHON_INCLUDES)	\
 	$(PYGTK_CFLAGS)		\
+	$(PYCAIRO_CFLAGS)	\
 	$(GTK_CFLAGS)		\
 	$(GEGL_CFLAGS)
 
