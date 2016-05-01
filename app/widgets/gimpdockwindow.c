@@ -1040,7 +1040,7 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
         {
           GList *list;
 
-          for (list = GIMP_LIST (display_container)->list;
+          for (list = GIMP_LIST (display_container)->queue->head;
                list;
                list = g_list_next (list))
             {

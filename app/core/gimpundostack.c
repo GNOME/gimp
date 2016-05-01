@@ -101,7 +101,7 @@ gimp_undo_stack_pop (GimpUndo            *undo,
   GimpUndoStack *stack = GIMP_UNDO_STACK (undo);
   GList         *list;
 
-  for (list = GIMP_LIST (stack->undos)->list;
+  for (list = GIMP_LIST (stack->undos)->queue->head;
        list;
        list = g_list_next (list))
     {
@@ -118,7 +118,7 @@ gimp_undo_stack_free (GimpUndo     *undo,
   GimpUndoStack *stack = GIMP_UNDO_STACK (undo);
   GList         *list;
 
-  for (list = GIMP_LIST (stack->undos)->list;
+  for (list = GIMP_LIST (stack->undos)->queue->head;
        list;
        list = g_list_next (list))
     {

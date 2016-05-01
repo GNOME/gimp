@@ -145,6 +145,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/tiff");
+  gimp_register_file_handler_uri (LOAD_PROC);
   gimp_register_magic_load_handler (LOAD_PROC,
                                     "tif,tiff",
                                     "",
@@ -165,6 +166,7 @@ query (void)
                           save_args_old, NULL);
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/tiff");
+  gimp_register_file_handler_uri (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "tif,tiff", "");
 
   gimp_install_procedure (SAVE2_PROC,
@@ -207,10 +209,10 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      const gchar *filename = param[1].data.d_string;
-      TIFF        *tif;
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+      TIFF  *tif;
 
-      tif = tiff_open (filename, "r", &error);
+      tif = tiff_open (file, "r", &error);
 
       if (tif)
         {
@@ -226,7 +228,7 @@ run (const gchar      *name,
             {
               g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("TIFF '%s' does not contain any directories"),
-                           gimp_filename_to_utf8 (filename));
+                           gimp_file_get_utf8_name (file));
 
               status = GIMP_PDB_EXECUTION_ERROR;
             }
@@ -277,10 +279,7 @@ run (const gchar      *name,
 
                   if (image > 0)
                     {
-                      GFile        *file;
                       GimpMetadata *metadata;
-
-                      file = g_file_new_for_path (param[1].data.d_string);
 
                       metadata = gimp_image_metadata_load_prepare (image,
                                                                    "image/tiff",
@@ -300,8 +299,6 @@ run (const gchar      *name,
                           g_object_unref (metadata);
                         }
 
-                      g_object_unref (file);
-
                       *nreturn_vals = 2;
                       values[1].type         = GIMP_PDB_IMAGE;
                       values[1].data.d_image = image;
@@ -310,6 +307,7 @@ run (const gchar      *name,
                     {
                       status = GIMP_PDB_EXECUTION_ERROR;
                     }
+
                 }
               else
                 {
@@ -323,6 +321,8 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
+
+      g_object_unref (file);
     }
   else if ((strcmp (name, SAVE_PROC)  == 0) ||
            (strcmp (name, SAVE2_PROC) == 0))
@@ -456,15 +456,17 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          gint saved_bpp;
+          GFile *file;
+          gint   saved_bpp;
 
-          if (save_image (param[3].data.d_string, &tsvals,
+          file = g_file_new_for_uri (param[3].data.d_string);
+
+          if (save_image (file, &tsvals,
                           image, drawable, orig_image, image_comment,
                           &saved_bpp, &error))
             {
               if (attributes)
                 {
-                  GFile *file;
 
                   /* See bug 758909: clear TIFFTAG_MIN/MAXSAMPLEVALUE because
                    * exiv2 saves them with wrong type and the original values
@@ -493,12 +495,10 @@ run (const gchar      *name,
                   /* never save metadata thumbnails for TIFF, see bug #729952 */
                   metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
-                  file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (image,
                                                    "image/tiff",
                                                    attributes, metadata_flags,
                                                    file, NULL);
-                  g_object_unref (file);
                 }
 
               /*  Store mvals data  */
@@ -508,6 +508,8 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+          g_object_unref (file);
         }
 
       if (export == GIMP_EXPORT_EXPORT)

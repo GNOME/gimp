@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -8,120 +9,106 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg30571"
    version="1.1"
-   width="16"
-   height="16"
-   id="svg2"
-   viewBox="0 0 16 16"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-gravity-west.svg">
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="gimp-gravity-west.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
+   inkscape:export-xdpi="98.181816"
+   inkscape:export-ydpi="98.181816">
+  <defs
+     id="defs30573" />
   <sodipodi:namedview
+     id="base"
      pagecolor="#ffffff"
      bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:window-width="501"
-     inkscape:window-height="405"
-     id="namedview1697"
-     showgrid="false"
-     inkscape:zoom="14.75"
-     inkscape:cx="-375.97346"
-     inkscape:cy="242.16065"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:zoom="26.807756"
+     inkscape:cx="7.7954805"
+     inkscape:cy="7.1945305"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="349"
+     inkscape:window-y="310"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg2" />
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3946" />
+  </sodipodi:namedview>
   <metadata
-     id="metadata90">
+     id="metadata30576">
     <rdf:RDF>
-      <cc:Work>
+      <cc:Work
+         rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
-        <dc:contributor>
+        <dc:title></dc:title>
+        <dc:creator>
           <cc:Agent>
-            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+            <dc:title>Klaus Staedtler</dc:title>
           </cc:Agent>
-        </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        </dc:creator>
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <defs
-     id="defs7386">
-    <linearGradient
-       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
-       osb:paint="solid"
-       id="linearGradient19282">
-      <stop
-         stop-color="#b4b4b4"
-         id="stop19284" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="gradient"
-       x1="231.55"
-       x2="320.70001"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient6057"
-       gradientTransform="matrix(0.01502614,0,0,0.01468232,2.9686133,1037.3257)">
-      <stop
-         stop-color="#a11f7c"
-         id="stop6053" />
-      <stop
-         stop-opacity="0.984"
-         stop-color="#541f31"
-         offset="1"
-         id="stop6055" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient5487">
-      <stop
-         id="stop5485"
-         offset="0"
-         style="stop-color:#888a85;stop-opacity:1;" />
-    </linearGradient>
-  </defs>
   <g
-     style="display:inline"
-     transform="translate(-87.949212,-61.840904)"
-     id="stock">
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1028.3622)">
     <g
-       id="gimp-gravity-west"
-       style="display:inline"
-       transform="matrix(0,1,1,0,-371.05079,-19.159296)">
-      <g
-         id="g1039-5"
-         transform="matrix(0,-1,1,0,-357.9998,636.0002)">
-        <rect
-           style="fill:none;stroke:none"
-           id="rect12130-9"
-           width="16"
-           height="16"
-           x="161.0002"
-           y="439"
-           rx="0.5"
-           ry="0.5" />
-        <path
-           id="path12132-3"
-           transform="matrix(0,1,-1,0,168.0002,451)"
-           d="M -3.9765625,-4 -8,0 l 3.0019531,0 0.00391,5 2,0 L -3.03125,0 0,0 Z"
-           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           inkscape:connector-curvature="0" />
-        <rect
-           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="rect12136-7"
-           width="2"
-           height="12"
-           x="-68"
-           y="224"
-           transform="translate(241.0002,217)" />
-      </g>
+       id="g3984"
+       transform="matrix(0,1,1,0,-1028.3622,1028.3622)">
+      <rect
+         transform="rotate(-90)"
+         style="fill:none;stroke:none;stroke-width:1.5"
+         id="rect12130"
+         width="24"
+         height="24"
+         x="-1052.3622"
+         y="0"
+         rx="0.75"
+         ry="0" />
+      <path
+         sodipodi:nodetypes="cccccccc"
+         inkscape:connector-curvature="0"
+         id="path12132"
+         d="m 12.039422,1036.8774 -6.110674,5.8281 h 4.559276 l 0.006,7.2846 h 3.03754 l -0.05637,-7.2846 h 4.603736 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.74377549;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.80000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect12136"
+         width="3.2"
+         height="19.200001"
+         x="-1033.9622"
+         y="2.4000001"
+         transform="rotate(-90)" />
     </g>
   </g>
 </svg>

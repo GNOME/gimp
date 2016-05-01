@@ -1062,7 +1062,7 @@ gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
                 "image-mimetype",   mime_type,
                 "image-width",      gimp_image_get_width  (image),
                 "image-height",     gimp_image_get_height (image),
-                "image-type",       gimp_babl_get_description (format),
+                "image-type",       gimp_babl_format_get_description (format),
                 "image-num-layers", gimp_image_get_n_layers (image),
                 NULL);
 }
@@ -1098,7 +1098,7 @@ gimp_thumbnail_set_info (GimpThumbnail *thumbnail,
 
   if (format)
     g_object_set (thumbnail,
-                  "image-type", gimp_babl_get_description (format),
+                  "image-type", gimp_babl_format_get_description (format),
                   NULL);
 
   if (num_layers != -1)

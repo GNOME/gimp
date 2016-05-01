@@ -535,6 +535,9 @@ gimp_levels_config_input_from_color (GimpHistogramChannel  channel,
 
     case GIMP_HISTOGRAM_RGB:
       return MIN (MIN (color->r, color->g), color->b);
+
+    case GIMP_HISTOGRAM_LUMINANCE:
+      return GIMP_RGB_LUMINANCE (color->r, color->g, color->b);
     }
 
   return 0.0;

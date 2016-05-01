@@ -403,10 +403,10 @@ explorer (GimpDrawable * drawable)
   gint          height;
   gint          bpp;
   gint          row;
-  gint          x1;
-  gint          y1;
-  gint          x2;
-  gint          y2;
+  gint          x;
+  gint          y;
+  gint          w;
+  gint          h;
   guchar       *src_row;
   guchar       *dest_row;
 
@@ -416,7 +416,8 @@ explorer (GimpDrawable * drawable)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x, &y, &w, &h))
+    return;
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -426,8 +427,8 @@ explorer (GimpDrawable * drawable)
   bpp  = drawable->bpp;
 
   /*  allocate row buffers  */
-  src_row  = g_new (guchar, bpp * (x2 - x1));
-  dest_row = g_new (guchar, bpp * (x2 - x1));
+  src_row  = g_new (guchar, bpp * w);
+  dest_row = g_new (guchar, bpp * w);
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
@@ -448,28 +449,28 @@ explorer (GimpDrawable * drawable)
                                             colormap[i].b);
     }
 
-  for (row = y1; row < y2; row++)
+  for (row = y; row < y + h; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x, row, w);
 
       explorer_render_row (src_row,
                            dest_row,
                            row,
-                           (x2 - x1),
+                           w,
                            bpp);
 
       /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x, row, w);
 
       if ((row % 10) == 0)
-        gimp_progress_update ((double) row / (double) (y2 - y1));
+        gimp_progress_update ((double) row / (double) h);
     }
   gimp_progress_update (1.0);
 
   /*  update the processed region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x, y, w, h);
 
   g_free (src_row);
   g_free (dest_row);

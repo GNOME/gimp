@@ -32,6 +32,7 @@ AM_CPPFLAGS = \
 libexec_PROGRAMS = file-exr
 
 file_exr_SOURCES = \
+	exr-attribute-blob.h	\
 	file-exr.c		\
 	openexr-wrapper.cc	\
 	openexr-wrapper.h

@@ -50,6 +50,11 @@ static const GimpRGB guide_mandala_normal_bg = { 0.0, 1.0, 1.0, 1.0 };
 static const GimpRGB guide_mandala_active_fg = { 0.0, 1.0, 1.0, 1.0 };
 static const GimpRGB guide_mandala_active_bg = { 1.0, 0.0, 0.0, 1.0 };
 
+static const GimpRGB guide_split_normal_fg   = { 1.0, 1.0, 1.0, 1.0 };
+static const GimpRGB guide_split_normal_bg   = { 1.0, 0.0, 1.0, 1.0 };
+static const GimpRGB guide_split_active_fg   = { 1.0, 0.0, 1.0, 1.0 };
+static const GimpRGB guide_split_active_bg   = { 1.0, 0.0, 0.0, 1.0 };
+
 /* Styles for other canvas items. */
 static const GimpRGB sample_point_normal = { 0.0, 0.5, 1.0, 1.0 };
 static const GimpRGB sample_point_active = { 1.0, 0.0, 0.0, 1.0 };
@@ -114,6 +119,7 @@ gimp_canvas_set_guide_style (GtkWidget      *canvas,
       active_bg  = guide_active_bg;
       line_width = 1.0;
       break;
+
     case GIMP_GUIDE_STYLE_MIRROR:
       normal_fg  = guide_mirror_normal_fg;
       normal_bg  = guide_mirror_normal_bg;
@@ -121,6 +127,7 @@ gimp_canvas_set_guide_style (GtkWidget      *canvas,
       active_bg  = guide_mirror_active_bg;
       line_width = 1.0;
       break;
+
     case GIMP_GUIDE_STYLE_MANDALA:
       normal_fg  = guide_mandala_normal_fg;
       normal_bg  = guide_mandala_normal_bg;
@@ -128,6 +135,15 @@ gimp_canvas_set_guide_style (GtkWidget      *canvas,
       active_bg  = guide_mandala_active_bg;
       line_width = 1.0;
       break;
+
+    case GIMP_GUIDE_STYLE_SPLIT_VIEW:
+      normal_fg  = guide_split_normal_fg;
+      normal_bg  = guide_split_normal_bg;
+      active_fg  = guide_split_active_fg;
+      active_bg  = guide_split_active_bg;
+      line_width = 1.0;
+      break;
+
     default: /* GIMP_GUIDE_STYLE_NONE */
       /* This should not happen. */
       g_return_if_reached ();

@@ -28,10 +28,7 @@
 
 #include "config.h"
 
-#include <errno.h>
 #include <string.h>
-
-#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -84,14 +81,15 @@ static void     run                    (const gchar      *name,
                                         gint             *nreturn_vals,
                                         GimpParam       **return_vals);
 
-static gboolean  save_image            (const gchar      *filename,
+static gboolean  save_image            (GFile            *file,
                                         gint32            image_ID,
                                         gint32            drawable_ID,
                                         gint32            orig_image_ID,
                                         GError          **error);
 
-static GimpPDBStatusType sanity_check  (const gchar      *filename,
+static GimpPDBStatusType sanity_check  (GFile            *file,
                                         gint32           *image_ID,
+                                        GimpRunMode       run_mode,
                                         GError          **error);
 static gboolean bad_bounds_dialog      (void);
 
@@ -99,11 +97,9 @@ static gboolean save_dialog            (gint32            image_ID);
 static void     comment_entry_callback (GtkTextBuffer    *buffer);
 
 
-static GimpRunMode   run_mode;
-static GimpParasite *comment_parasite   = NULL;
-static gboolean      comment_was_edited = FALSE;
-static gchar        *globalcomment      = NULL;
-static gint          Interlace; /* For compression code */
+static gboolean  comment_was_edited = FALSE;
+static gchar    *globalcomment      = NULL;
+static gint      Interlace; /* For compression code */
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -133,8 +129,8 @@ MAIN ()
     { GIMP_PDB_INT32,    "run-mode",        "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" }, \
     { GIMP_PDB_IMAGE,    "image",           "Image to export" }, \
     { GIMP_PDB_DRAWABLE, "drawable",        "Drawable to export" }, \
-    { GIMP_PDB_STRING,   "filename",        "The name of the file to export the image in" }, \
-    { GIMP_PDB_STRING,   "raw-filename",    "The name entered" }, \
+    { GIMP_PDB_STRING,   "uri",             "The name of the URI to export the image in" }, \
+    { GIMP_PDB_STRING,   "raw-uri",         "The name of the URI to export the image in" }, \
     { GIMP_PDB_INT32,    "interlace",       "Try to export as interlaced" }, \
     { GIMP_PDB_INT32,    "loop",            "(animated gif) loop infinitely" }, \
     { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between framese in milliseconds" }, \
@@ -195,6 +191,9 @@ query (void)
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/gif");
   gimp_register_save_handler (SAVE_PROC, "gif", "");
+  gimp_register_file_handler_uri (SAVE_PROC);
+
+  gimp_register_file_handler_uri (SAVE2_PROC);
 }
 
 static void
@@ -204,10 +203,11 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
-  GError           *error  = NULL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -220,28 +220,31 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, SAVE_PROC) == 0 || strcmp (name, SAVE2_PROC) == 0)
+  if (strcmp (name, SAVE_PROC)  == 0 ||
+      strcmp (name, SAVE2_PROC) == 0)
     {
-      const gchar *filename;
-      gint32       image_ID, sanitized_image_ID = 0;
-      gint32       drawable_ID;
-      gint32       orig_image_ID;
+      GFile  *file;
+      gint32  image_ID;
+      gint32  orig_image_ID;
+      gint32  sanitized_image_ID = 0;
+      gint32  drawable_ID;
 
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
-      filename    = param[3].data.d_string;
+      file        = g_file_new_for_uri (param[3].data.d_string);
 
       if (run_mode == GIMP_RUN_INTERACTIVE ||
           run_mode == GIMP_RUN_WITH_LAST_VALS)
         gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      status = sanity_check (filename, &image_ID, &error);
+      status = sanity_check (file, &image_ID, run_mode, &error);
 
       /* Get the export options */
       if (status == GIMP_PDB_SUCCESS)
         {
           /* If the sanity check succeeded, the image_ID will point to
-           * a duplicate image to delete later. */
+           * a duplicate image to delete later.
+           */
           sanitized_image_ID = image_ID;
 
           switch (run_mode)
@@ -273,8 +276,8 @@ run (const gchar      *name,
                   gsvals.default_dispose = param[8].data.d_int32;
                   if (nparams == 12)
                     {
-                      gsvals.as_animation = (param[9].data.d_int32) ? TRUE : FALSE;
-                      gsvals.always_use_default_delay = (param[10].data.d_int32) ? TRUE : FALSE;
+                      gsvals.as_animation               = (param[9].data.d_int32) ? TRUE : FALSE;
+                      gsvals.always_use_default_delay   = (param[10].data.d_int32) ? TRUE : FALSE;
                       gsvals.always_use_default_dispose = (param[11].data.d_int32) ? TRUE : FALSE;
                     }
                 }
@@ -300,7 +303,7 @@ run (const gchar      *name,
                 {
                   GimpExportCapabilities capabilities =
                     GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                    GIMP_EXPORT_CAN_HANDLE_GRAY |
+                    GIMP_EXPORT_CAN_HANDLE_GRAY    |
                     GIMP_EXPORT_CAN_HANDLE_ALPHA;
 
                   if (gsvals.as_animation)
@@ -323,7 +326,7 @@ run (const gchar      *name,
             }
 
           /* Write the image to file */
-          if (save_image (param[3].data.d_string,
+          if (save_image (file,
                           image_ID, drawable_ID, orig_image_ID,
                           &error))
             {
@@ -340,6 +343,8 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
+
+      g_object_unref (file);
     }
 
   if (status != GIMP_PDB_SUCCESS && error)
@@ -380,84 +385,109 @@ run (const gchar      *name,
 /*
  * Pointer to function returning an int
  */
-typedef int (*ifunptr) (int, int);
+typedef gint (* ifunptr) (gint x,
+                          gint y);
 
 
-static gint find_unused_ia_color           (const guchar *pixels,
-                                            gint          numpixels,
-                                            gint          num_indices,
-                                            gint         *colors);
+static gint find_unused_ia_color           (const guchar  *pixels,
+                                            gint           numpixels,
+                                            gint           num_indices,
+                                            gint          *colors);
 
-static void special_flatten_indexed_alpha  (guchar      *pixels,
-                                            gint         transparent,
-                                            gint         numpixels);
+static void special_flatten_indexed_alpha  (guchar        *pixels,
+                                            gint           transparent,
+                                            gint           numpixels);
 
-static gint colors_to_bpp                  (int          colors);
-static gint bpp_to_colors                  (int          bpp);
-static gint get_pixel                      (int          x,
-                                            int          y);
-static gint gif_next_pixel                 (ifunptr      getpixel);
+static gint colors_to_bpp                  (gint           colors);
+static gint bpp_to_colors                  (gint           bpp);
+static gint get_pixel                      (gint           x,
+                                            gint           y);
+static gint gif_next_pixel                 (ifunptr        getpixel);
 static void bump_pixel                     (void);
 
-static void gif_encode_header              (FILE        *fp,
-                                            gboolean     gif89,
-                                            int          GWidth,
-                                            int          GHeight,
-                                            int          Background,
-                                            int          BitsPerPixel,
-                                            int          Red[],
-                                            int          Green[],
-                                            int          Blue[],
-                                            ifunptr      get_pixel);
-static void gif_encode_graphic_control_ext (FILE        *fp,
-                                            int          Disposal,
-                                            int          Delay89,
-                                            int          NumFramesInImage,
-                                            int          GWidth,
-                                            int          GHeight,
-                                            int          Transparent,
-                                            int          BitsPerPixel,
-                                            ifunptr      get_pixel);
-static void gif_encode_image_data          (FILE        *fp,
-                                            int          GWidth,
-                                            int          GHeight,
-                                            int          GInterlace,
-                                            int          BitsPerPixel,
-                                            ifunptr      get_pixel,
-                                            gint         offset_x,
-                                            gint         offset_y);
-static void gif_encode_close               (FILE        *fp);
-static void gif_encode_loop_ext            (FILE        *fp,
-                                            guint        num_loops);
-static void gif_encode_comment_ext         (FILE        *fp,
-                                            const gchar *comment);
+static gboolean gif_encode_header              (GOutputStream  *output,
+                                                gboolean        gif89,
+                                                gint            width,
+                                                gint            height,
+                                                gint            background,
+                                                gint            bpp,
+                                                gint           *red,
+                                                gint           *green,
+                                                gint           *blue,
+                                                ifunptr         get_pixel,
+                                                GError        **error);
+static gboolean gif_encode_graphic_control_ext (GOutputStream  *output,
+                                                gint            disposal,
+                                                gint            delay89,
+                                                gint            n_frames,
+                                                gint            width,
+                                                gint            height,
+                                                gint            transparent,
+                                                gint            bpp,
+                                                ifunptr         get_pixel,
+                                                GError        **error);
+static gboolean gif_encode_image_data          (GOutputStream  *output,
+                                                gint            width,
+                                                gint            height,
+                                                gint            interlace,
+                                                gint            bpp,
+                                                ifunptr         get_pixel,
+                                                gint            offset_x,
+                                                gint            offset_y,
+                                                GError        **error);
+static gboolean gif_encode_close               (GOutputStream  *output,
+                                                GError        **error);
+static gboolean gif_encode_loop_ext            (GOutputStream  *output,
+                                                guint           n_loops,
+                                                GError        **error);
+static gboolean gif_encode_comment_ext         (GOutputStream  *output,
+                                                const gchar    *comment,
+                                                GError        **error);
 
 static gint     rowstride;
 static guchar  *pixels;
 static gint     cur_progress;
 static gint     max_progress;
 
-static void compress        (int      init_bits,
-                             FILE    *outfile,
-                             ifunptr  ReadValue);
-static void no_compress     (int      init_bits,
-                             FILE    *outfile,
-                             ifunptr  ReadValue);
-static void rle_compress    (int      init_bits,
-                             FILE    *outfile,
-                             ifunptr  ReadValue);
-static void normal_compress (int      init_bits,
-                             FILE    *outfile,
-                             ifunptr  ReadValue);
+static gboolean compress        (GOutputStream *output,
+                                 gint           init_bits,
+                                 ifunptr        ReadValue,
+                                 GError        **error);
+static gboolean no_compress     (GOutputStream *output,
+                                 gint           init_bits,
+                                 ifunptr        ReadValue,
+                                 GError        **error);
+static gboolean rle_compress    (GOutputStream *output,
+                                 gint           init_bits,
+                                 ifunptr        ReadValue,
+                                 GError        **error);
+static gboolean normal_compress (GOutputStream *output,
+                                 gint           init_bits,
+                                 ifunptr        ReadValue,
+                                 GError        **error);
 
-static void put_word        (int      w,
-                             FILE    *fp);
-static void output          (gint     code);
-static void cl_block        (void);
-static void cl_hash         (glong    hsize);
-static void char_init       (void);
-static void char_out        (int      c);
-static void flush_char      (void);
+static gboolean put_byte        (GOutputStream  *output,
+                                 guchar          b,
+                                 GError        **error);
+static gboolean put_word        (GOutputStream  *output,
+                                 gint            w,
+                                 GError        **error);
+static gboolean put_string      (GOutputStream  *output,
+                                 const gchar    *s,
+                                 GError        **error);
+static gboolean output_code     (GOutputStream  *output,
+                                 gint            code,
+                                 GError        **error);
+static gboolean cl_block        (GOutputStream  *output,
+                                 GError        **error);
+static void     cl_hash         (glong           hsize);
+
+static void     char_init       (void);
+static gboolean char_out        (GOutputStream  *output,
+                                 gint            c,
+                                 GError        **error);
+static gboolean char_flush      (GOutputStream  *output,
+                                 GError        **error);
 
 
 static gint
@@ -494,9 +524,10 @@ find_unused_ia_color (const guchar *pixels,
         }
     }
 
-  /* Couldn't find an unused color index within the number of
-     bits per pixel we wanted.  Will have to increment the number
-     of colors in the image and assign a transparent pixel there. */
+  /* Couldn't find an unused color index within the number of bits per
+   * pixel we wanted.  Will have to increment the number of colors in
+   * the image and assign a transparent pixel there.
+   */
   if (*colors < 256)
     {
       (*colors)++;
@@ -520,8 +551,9 @@ special_flatten_indexed_alpha (guchar *pixels,
 {
   guint32 i;
 
-  /* Each transparent pixel in the image is mapped to a uniform value for
-     encoding, if image already has <=255 colors */
+  /* Each transparent pixel in the image is mapped to a uniform value
+   * for encoding, if image already has <=255 colors
+   */
 
   if (transparent == -1) /* tough, no indices left for the trans. index */
     {
@@ -554,7 +586,7 @@ parse_ms_tag (const gchar *str)
 
   length = strlen (str);
 
-find_another_bra:
+ find_another_bra:
 
   while ((offset < length) && (str[offset] != '('))
     offset++;
@@ -576,8 +608,8 @@ find_another_bra:
   if (length - offset <= 2)
     return(-3);
 
-  if ((g_ascii_toupper (str[offset]) != 'M')
-      || (g_ascii_toupper (str[offset+1]) != 'S'))
+  if ((g_ascii_toupper (str[offset])     != 'M') ||
+      (g_ascii_toupper (str[offset + 1]) != 'S'))
     return -4;
 
   return sum;
@@ -590,24 +622,27 @@ parse_disposal_tag (const gchar *str)
   gint offset = 0;
   gint length;
 
-  length = strlen(str);
+  length = strlen (str);
 
   while ((offset + 9) <= length)
     {
-      if (strncmp(&str[offset], "(combine)", 9) == 0)
-        return(0x01);
-      if (strncmp(&str[offset], "(replace)", 9) == 0)
-        return(0x02);
+      if (strncmp (&str[offset], "(combine)", 9) == 0)
+        return 0x01;
+
+      if (strncmp (&str[offset], "(replace)", 9) == 0)
+        return 0x02 ;
+
       offset++;
     }
 
-  return (gsvals.default_dispose);
+  return gsvals.default_dispose;
 }
 
 
 static GimpPDBStatusType
-sanity_check (const gchar  *filename,
+sanity_check (GFile        *file,
               gint32       *image_ID,
+              GimpRunMode   run_mode,
               GError      **error)
 {
   gint32 *layers;
@@ -625,7 +660,7 @@ sanity_check (const gchar  *filename,
                    _("Unable to export '%s'.  "
                    "The GIF file format does not support images that are "
                    "more than %d pixels wide or tall."),
-                   gimp_filename_to_utf8 (filename), G_MAXUSHORT);
+                   gimp_file_get_utf8_name (file), G_MAXUSHORT);
 
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -675,22 +710,24 @@ sanity_check (const gchar  *filename,
 
 
 static gboolean
-save_image (const gchar *filename,
-            gint32       image_ID,
-            gint32       drawable_ID,
-            gint32       orig_image_ID,
-            GError     **error)
+save_image (GFile   *file,
+            gint32   image_ID,
+            gint32   drawable_ID,
+            gint32   orig_image_ID,
+            GError **error)
 {
   GeglBuffer    *buffer;
   GimpImageType  drawable_type;
   const Babl    *format = NULL;
-  FILE          *outfile;
+  GOutputStream *output;
   gint           Red[MAXCOLORS];
   gint           Green[MAXCOLORS];
   gint           Blue[MAXCOLORS];
   guchar        *cmap;
   guint          rows, cols;
-  gint           BitsPerPixel, liberalBPP = 0, useBPP = 0;
+  gint           BitsPerPixel;
+  gint           liberalBPP = 0;
+  gint           useBPP     = 0;
   gint           colors;
   gint           i;
   gint           transparent;
@@ -713,19 +750,20 @@ save_image (const gchar *filename,
   /* Save the comment back to the ImageID, if appropriate */
   if (globalcomment != NULL && comment_was_edited)
     {
-      comment_parasite = gimp_parasite_new ("gimp-comment",
-                                            GIMP_PARASITE_PERSISTENT,
-                                            strlen (globalcomment) + 1,
-                                            (void*) globalcomment);
-      gimp_image_attach_parasite (orig_image_ID, comment_parasite);
-      gimp_parasite_free (comment_parasite);
-      comment_parasite = NULL;
+      GimpParasite *parasite;
+
+      parasite = gimp_parasite_new ("gimp-comment",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (globalcomment) + 1,
+                                    (gpointer) globalcomment);
+      gimp_image_attach_parasite (orig_image_ID, parasite);
+      gimp_parasite_free (parasite);
     }
 
   /* The GIF spec says 7bit ASCII for the comment block. */
   if (gsvals.save_comment && globalcomment)
     {
-      const gchar *c   = globalcomment;
+      const gchar *c = globalcomment;
       gint         len;
 
       for (len = strlen (c); len; c++, len--)
@@ -748,9 +786,10 @@ save_image (const gchar *filename,
 
   drawable_type = gimp_drawable_type (layers[0]);
 
-  /* If the image has multiple layers (i.e. will be animated), a comment,
-     or transparency, then it must be encoded as a GIF89a file, not a vanilla
-     GIF87a. */
+  /* If the image has multiple layers (i.e. will be animated), a
+   * comment, or transparency, then it must be encoded as a GIF89a
+   * file, not a vanilla GIF87a.
+   */
   if (nlayers > 1)
     is_gif89 = TRUE;
 
@@ -803,14 +842,16 @@ save_image (const gchar *filename,
 
 
   /* find earliest index in palette which is closest to the background
-     color, and ATTEMPT to use that as the GIF's default background color. */
+   * color, and ATTEMPT to use that as the GIF's default background
+   * color.
+   */
   for (i = 255; i >= 0; --i)
     {
       guint local_error = 0;
 
-      local_error += (Red[i] - bgred)     * (Red[i] - bgred);
+      local_error += (Red[i]   - bgred)   * (Red[i]   - bgred);
       local_error += (Green[i] - bggreen) * (Green[i] - bggreen);
-      local_error += (Blue[i] - bgblue)   * (Blue[i] - bgblue);
+      local_error += (Blue[i]  - bgblue)  * (Blue[i]  - bgblue);
 
       if (local_error <= best_error)
         {
@@ -822,16 +863,27 @@ save_image (const gchar *filename,
 
   /* init the progress meter */
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
 
   /* open the destination file for writing */
-  outfile = g_fopen (filename, "wb");
-  if (!outfile)
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (output)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      GDataOutputStream *data_output;
+
+      data_output = g_data_output_stream_new (output);
+      g_object_unref (output);
+
+      g_data_output_stream_set_byte_order (data_output,
+                                           G_DATA_STREAM_BYTE_ORDER_LITTLE_ENDIAN);
+
+      output = G_OUTPUT_STREAM (data_output);
+    }
+  else
+    {
       return FALSE;
     }
 
@@ -840,9 +892,11 @@ save_image (const gchar *filename,
 
   if (colors < 256)
     {
-      /* we keep track of how many bits we promised to have in liberalBPP,
-         so that we don't accidentally come under this when doing
-         clever transparency stuff where we can re-use wasted indices. */
+      /* we keep track of how many bits we promised to have in
+       * liberalBPP, so that we don't accidentally come under this
+       * when doing clever transparency stuff where we can re-use
+       * wasted indices.
+       */
       liberalBPP = BitsPerPixel =
         colors_to_bpp (colors + ((drawable_type==GIMP_INDEXEDA_IMAGE) ? 1 : 0));
     }
@@ -860,19 +914,24 @@ save_image (const gchar *filename,
   cols = gimp_image_width (image_ID);
   rows = gimp_image_height (image_ID);
   Interlace = gsvals.interlace;
-  gif_encode_header (outfile, is_gif89, cols, rows, bgindex,
-                     BitsPerPixel, Red, Green, Blue, get_pixel);
+  if (! gif_encode_header (output, is_gif89, cols, rows, bgindex,
+                           BitsPerPixel, Red, Green, Blue, get_pixel,
+                           error))
+    return FALSE;
 
 
-  /* If the image has multiple layers it'll be made into an
-     animated GIF, so write out the infinite-looping extension */
+  /* If the image has multiple layers it'll be made into an animated
+   * GIF, so write out the infinite-looping extension
+   */
   if ((nlayers > 1) && (gsvals.loop))
-    gif_encode_loop_ext (outfile, 0);
+    if (! gif_encode_loop_ext (output, 0, error))
+      return FALSE;
 
   /* Write comment extension - mustn't be written before the looping ext. */
   if (gsvals.save_comment && globalcomment)
     {
-      gif_encode_comment_ext (outfile, globalcomment);
+      if (! gif_encode_comment_ext (output, globalcomment, error))
+        return FALSE;
     }
 
 
@@ -904,7 +963,8 @@ save_image (const gchar *filename,
           (drawable_type == GIMP_GRAYA_IMAGE))
         {
           /* Try to find an entry which isn't actually used in the
-             image, for a transparency index. */
+           * image, for a transparency index.
+           */
 
           transparent =
             find_unused_ia_color (pixels,
@@ -925,9 +985,10 @@ save_image (const gchar *filename,
 
       if (BitsPerPixel != liberalBPP)
         {
-          /* We were able to re-use an index within the existing bitspace,
-             whereas the estimate in the header was pessimistic but still
-             needs to be upheld... */
+          /* We were able to re-use an index within the existing
+           * bitspace, whereas the estimate in the header was
+           * pessimistic but still needs to be upheld...
+           */
 #ifdef GIFDEBUG
           static gboolean onceonly = FALSE;
 
@@ -969,27 +1030,34 @@ save_image (const gchar *filename,
             {
               static gboolean onceonly = FALSE;
 
-              if (!onceonly)
+              if (! onceonly)
                 {
                   g_message (_("Delay inserted to prevent evil "
                                "CPU-sucking animation."));
                   onceonly = TRUE;
                 }
+
               Delay89 = 1;
             }
 
-          gif_encode_graphic_control_ext (outfile, Disposal, Delay89, nlayers,
-                                          cols, rows,
-                                          transparent,
-                                          useBPP,
-                                          get_pixel);
+          if (! gif_encode_graphic_control_ext (output,
+                                                Disposal, Delay89, nlayers,
+                                                cols, rows,
+                                                transparent,
+                                                useBPP,
+                                                get_pixel,
+                                                error))
+            return FALSE;
         }
 
-      gif_encode_image_data (outfile, cols, rows,
-                             (rows > 4) ? gsvals.interlace : 0,
-                             useBPP,
-                             get_pixel,
-                             offset_x, offset_y);
+      if (! gif_encode_image_data (output, cols, rows,
+                                   (rows > 4) ? gsvals.interlace : 0,
+                                   useBPP,
+                                   get_pixel,
+                                   offset_x, offset_y,
+                                   error))
+        return FALSE;
+
       gimp_progress_update (1.0);
 
       g_object_unref (buffer);
@@ -997,9 +1065,10 @@ save_image (const gchar *filename,
       g_free (pixels);
     }
 
-  g_free(layers);
+  g_free (layers);
 
-  gif_encode_close (outfile);
+  if (! gif_encode_close (output, error))
+    return FALSE;
 
   return TRUE;
 }
@@ -1144,7 +1213,7 @@ file_gif_combo_box_int_init (GtkBuilder  *builder,
   return combo;
 }
 
-static gint
+static gboolean
 save_dialog (gint32 image_ID)
 {
   GtkBuilder    *builder = NULL;
@@ -1265,7 +1334,7 @@ save_dialog (gint32 image_ID)
 }
 
 static int
-colors_to_bpp (int colors)
+colors_to_bpp (gint colors)
 {
   gint bpp;
 
@@ -1295,7 +1364,7 @@ colors_to_bpp (int colors)
 }
 
 static int
-bpp_to_colors (int bpp)
+bpp_to_colors (gint bpp)
 {
   gint colors;
 
@@ -1312,9 +1381,9 @@ bpp_to_colors (int bpp)
 
 
 
-static int
-get_pixel (int x,
-           int y)
+static gint
+get_pixel (gint x,
+           gint y)
 {
   return *(pixels + (rowstride * (long) y) + (long) x);
 }
@@ -1404,10 +1473,10 @@ bump_pixel (void)
 /*
  * Return the next pixel from the image
  */
-static int
+static gint
 gif_next_pixel (ifunptr getpixel)
 {
-  int r;
+  gint r;
 
   if (CountDown == 0)
     return EOF;
@@ -1423,23 +1492,24 @@ gif_next_pixel (ifunptr getpixel)
 
 /* public */
 
-static void
-gif_encode_header (FILE     *fp,
-                   gboolean  gif89,
-                   int       GWidth,
-                   int       GHeight,
-                   int       Background,
-                   int       BitsPerPixel,
-                   int       Red[],
-                   int       Green[],
-                   int       Blue[],
-                   ifunptr   get_pixel)
+static gboolean
+gif_encode_header (GOutputStream *output,
+                   gboolean       gif89,
+                   gint           GWidth,
+                   gint           GHeight,
+                   gint           Background,
+                   gint           BitsPerPixel,
+                   gint           Red[],
+                   gint           Green[],
+                   gint           Blue[],
+                   ifunptr        get_pixel,
+                   GError       **error)
 {
-  int B;
-  int RWidth, RHeight;
-  int Resolution;
-  int ColorMapSize;
-  int i;
+  gint B;
+  gint RWidth, RHeight;
+  gint Resolution;
+  gint ColorMapSize;
+  gint i;
 
   ColorMapSize = 1 << BitsPerPixel;
 
@@ -1466,13 +1536,15 @@ gif_encode_header (FILE     *fp,
   /*
    * Write the Magic header
    */
-  fwrite (gif89 ? "GIF89a" : "GIF87a", 1, 6, fp);
+  if (! put_string (output, gif89 ? "GIF89a" : "GIF87a", error))
+    return FALSE;
 
   /*
    * Write out the screen width and height
    */
-  put_word (RWidth, fp);
-  put_word (RHeight, fp);
+  if (! put_word (output, RWidth,  error) ||
+      ! put_word (output, RHeight, error))
+    return FALSE;
 
   /*
    * Indicate that there is a global color map
@@ -1492,40 +1564,47 @@ gif_encode_header (FILE     *fp,
   /*
    * Write it out
    */
-  fputc (B, fp);
+  if (! put_byte (output, B, error))
+    return FALSE;
 
   /*
    * Write out the Background color
    */
-  fputc (Background, fp);
+  if (! put_byte (output, Background, error))
+    return FALSE;
 
   /*
    * Byte of 0's (future expansion)
    */
-  fputc (0, fp);
+  if (! put_byte (output, 0, error))
+    return FALSE;
 
   /*
    * Write out the Global Color Map
    */
   for (i = 0; i < ColorMapSize; i++)
     {
-      fputc (Red[i], fp);
-      fputc (Green[i], fp);
-      fputc (Blue[i], fp);
+      if (! put_byte (output, Red[i],   error) ||
+          ! put_byte (output, Green[i], error) ||
+          ! put_byte (output, Blue[i],  error))
+        return FALSE;
     }
+
+  return TRUE;
 }
 
 
-static void
-gif_encode_graphic_control_ext (FILE    *fp,
-                                int      Disposal,
-                                int      Delay89,
-                                int      NumFramesInImage,
-                                int      GWidth,
-                                int      GHeight,
-                                int      Transparent,
-                                int      BitsPerPixel,
-                                ifunptr  get_pixel)
+static gboolean
+gif_encode_graphic_control_ext (GOutputStream *output,
+                                int            Disposal,
+                                int            Delay89,
+                                int            NumFramesInImage,
+                                int            GWidth,
+                                int            GHeight,
+                                int            Transparent,
+                                int            BitsPerPixel,
+                                ifunptr        get_pixel,
+                                GError       **error)
 {
   Width = GWidth;
   Height = GHeight;
@@ -1551,52 +1630,63 @@ gif_encode_graphic_control_ext (FILE    *fp,
   if ( (Transparent >= 0) || (NumFramesInImage > 1) )
     {
       /* Extension Introducer - fixed. */
-      fputc ('!', fp);
+      if (! put_byte (output, '!', error))
+        return FALSE;
+
       /* Graphic Control Label - fixed. */
-      fputc (0xf9, fp);
+      if (! put_byte (output, 0xf9, error))
+        return FALSE;
+
       /* Block Size - fixed. */
-      fputc (4, fp);
+      if (! put_byte (output, 4, error))
+        return FALSE;
 
       /* Packed Fields - XXXdddut (d=disposal, u=userInput, t=transFlag) */
       /*                    s8421                                        */
-      fputc ( ((Transparent >= 0) ? 0x01 : 0x00) /* TRANSPARENCY */
+      if (! put_byte (output,
+                      ((Transparent >= 0) ? 0x01 : 0x00) /* TRANSPARENCY */
 
-              /* DISPOSAL */
-              | ((NumFramesInImage > 1) ? (Disposal << 2) : 0x00 ),
-              /* 0x03 or 0x01 build frames cumulatively */
-              /* 0x02 clears frame before drawing */
-              /* 0x00 'don't care' */
+                      /* DISPOSAL */
+                      | ((NumFramesInImage > 1) ? (Disposal << 2) : 0x00 ),
+                      /* 0x03 or 0x01 build frames cumulatively */
+                      /* 0x02 clears frame before drawing */
+                      /* 0x00 'don't care' */
 
-              fp);
+                      error))
+        return FALSE;
 
-      fputc (Delay89 & 255, fp);
-      fputc ((Delay89 >> 8) & 255, fp);
+      if (! put_word (output, Delay89, error))
+        return FALSE;
 
-      fputc (Transparent, fp);
-      fputc (0, fp);
+      if (! put_byte (output, Transparent, error) ||
+          ! put_byte (output, 0, error))
+        return FALSE;
     }
+
+  return TRUE;
 }
 
 
-static void
-gif_encode_image_data (FILE    *fp,
-                       int      GWidth,
-                       int      GHeight,
-                       int      GInterlace,
-                       int      BitsPerPixel,
-                       ifunptr  get_pixel,
-                       gint     offset_x,
-                       gint     offset_y)
+static gboolean
+gif_encode_image_data (GOutputStream *output,
+                       int            GWidth,
+                       int            GHeight,
+                       int            GInterlace,
+                       int            BitsPerPixel,
+                       ifunptr        get_pixel,
+                       gint           offset_x,
+                       gint           offset_y,
+                       GError       **error)
 {
-  int LeftOfs, TopOfs;
-  int InitCodeSize;
+  gint LeftOfs, TopOfs;
+  gint InitCodeSize;
 
   Interlace = GInterlace;
 
-  Width = GWidth;
-  Height = GHeight;
-  LeftOfs = (int) offset_x;
-  TopOfs = (int) offset_y;
+  Width   = GWidth;
+  Height  = GHeight;
+  LeftOfs = (gint) offset_x;
+  TopOfs  = (gint) offset_y;
 
   /*
    * Calculate number of bits we are expecting
@@ -1624,39 +1714,50 @@ gif_encode_image_data (FILE    *fp,
   /*
    * Write an Image separator
    */
-  fputc (',', fp);
+  if (! put_byte (output, ',', error))
+    return FALSE;
 
   /*
    * Write the Image header
    */
 
-  put_word (LeftOfs, fp);
-  put_word (TopOfs, fp);
-  put_word (Width, fp);
-  put_word (Height, fp);
+  if (! put_word (output, LeftOfs, error) ||
+      ! put_word (output, TopOfs,  error) ||
+      ! put_word (output, Width,   error) ||
+      ! put_word (output, Height,  error))
+    return FALSE;
 
   /*
    * Write out whether or not the image is interlaced
    */
   if (Interlace)
-    fputc (0x40, fp);
+    {
+      if (! put_byte (output, 0x40, error))
+        return FALSE;
+    }
   else
-    fputc (0x00, fp);
+    {
+      if (! put_byte (output, 0x00, error))
+        return FALSE;
+    }
 
   /*
    * Write out the initial code size
    */
-  fputc (InitCodeSize, fp);
+  if (! put_byte (output, InitCodeSize, error))
+    return FALSE;
 
   /*
    * Go and actually compress the data
    */
-  compress (InitCodeSize + 1, fp, get_pixel);
+  if (! compress (output, InitCodeSize + 1, get_pixel, error))
+    return FALSE;
 
   /*
    * Write out a Zero-length packet (to end the series)
    */
-  fputc (0, fp);
+  if (! put_byte (output, 0, error))
+    return FALSE;
 
 #if 0
   /***************************/
@@ -1679,73 +1780,97 @@ gif_encode_image_data (FILE    *fp,
    */
   curx = cury = 0;
 #endif
+
+  return TRUE;
 }
 
 
-static void
-gif_encode_close (FILE *fp)
+static gboolean
+gif_encode_close (GOutputStream  *output,
+                  GError        **error)
 {
   /*
    * Write the GIF file terminator
    */
-  fputc (';', fp);
+  if (! put_byte (output, ';', error))
+    return FALSE;
 
   /*
    * And close the file
    */
-  fclose (fp);
+  return g_output_stream_close (output, NULL, error);
 }
 
 
-static void
-gif_encode_loop_ext (FILE  *fp,
-                     guint  num_loops)
+static gboolean
+gif_encode_loop_ext (GOutputStream  *output,
+                     guint           num_loops,
+                     GError        **error)
 {
-  fputc(0x21, fp);
-  fputc(0xff, fp);
-  fputc(0x0b, fp);
-  fputs("NETSCAPE2.0", fp);
-  fputc(0x03, fp);
-  fputc(0x01, fp);
-  put_word(num_loops, fp);
-  fputc(0x00, fp);
+  return (put_byte   (output, 0x21, error) &&
+          put_byte   (output, 0xff, error) &&
+          put_byte   (output, 0x0b, error) &&
+          put_string (output, "NETSCAPE2.0", error) &&
+          put_byte   (output, 0x03, error) &&
+          put_byte   (output, 0x01, error) &&
+          put_word   (output, num_loops, error) &&
+          put_byte   (output, 0x00, error));
 
   /* NOTE: num_loops == 0 means 'loop infinitely' */
 }
 
 
-static void
-gif_encode_comment_ext (FILE        *fp,
-                        const gchar *comment)
+static gboolean
+gif_encode_comment_ext (GOutputStream  *output,
+                        const gchar    *comment,
+                        GError        **error)
 {
   if (!comment || !*comment)
-    return;
+    return TRUE;
 
   if (strlen (comment) > 240)
     {
       g_printerr ("GIF: warning:"
                   "comment too large - comment block not written.\n");
-      return;
+      return TRUE;
     }
 
-  fputc (0x21, fp);
-  fputc (0xfe, fp);
-  fputc (strlen (comment), fp);
-  fputs (comment, fp);
-  fputc (0x00, fp);
+  return (put_byte   (output, 0x21, error) &&
+          put_byte   (output, 0xfe, error) &&
+          put_byte   (output, strlen (comment), error) &&
+          put_string (output, comment, error) &&
+          put_byte   (output, 0x00, error));
 }
 
 
-
 /*
- * Write out a word to the GIF file
+ * Write stuff to the GIF file
  */
-static void
-put_word (int   w,
-          FILE *fp)
+static gboolean
+put_byte (GOutputStream  *output,
+          guchar          b,
+          GError        **error)
 {
-  fputc (w & 0xff, fp);
-  fputc ((w / 256) & 0xff, fp);
+  return g_data_output_stream_put_byte (G_DATA_OUTPUT_STREAM (output),
+                                        b, NULL, error);
+}
+
+static gboolean
+put_word (GOutputStream  *output,
+          gint            w,
+          GError        **error)
+{
+  return g_data_output_stream_put_int16 (G_DATA_OUTPUT_STREAM (output),
+                                         w, NULL, error);
+}
+
+static gboolean
+put_string (GOutputStream  *output,
+            const gchar    *s,
+            GError        **error)
+{
+  return g_data_output_stream_put_string (G_DATA_OUTPUT_STREAM (output),
+                                          s, NULL, error);
 }
 
 
@@ -1762,9 +1887,9 @@ put_word (int   w,
  * General DEFINEs
  */
 
-#define GIF_BITS    12
+#define GIF_BITS   12
 
-#define HSIZE  5003                /* 80% occupancy */
+#define HSIZE    5003                /* 80% occupancy */
 
 /*
  * GIF Image compression - modified 'compress'
@@ -1780,9 +1905,9 @@ put_word (int   w,
  *
  */
 
-static int n_bits;                /* number of bits/code */
-static int maxbits = GIF_BITS;        /* user settable max # bits/code */
-static gint maxcode;        /* maximum code, given n_bits */
+static gint n_bits;                /* number of bits/code */
+static gint maxbits = GIF_BITS;    /* user settable max # bits/code */
+static gint maxcode;               /* maximum code, given n_bits */
 static gint maxmaxcode = (gint) 1 << GIF_BITS;        /* should NEVER generate this code */
 #ifdef COMPATIBLE                /* But wrong! */
 #define MAXCODE(Mn_bits)        ((gint) 1 << (Mn_bits) - 1)
@@ -1790,8 +1915,8 @@ static gint maxmaxcode = (gint) 1 << GIF_BITS;        /* should NEVER generate t
 #define MAXCODE(Mn_bits)        (((gint) 1 << (Mn_bits)) - 1)
 #endif /*COMPATIBLE */
 
-static glong htab[HSIZE];
-static unsigned short codetab[HSIZE];
+static glong   htab[HSIZE];
+static gushort codetab[HSIZE];
 #define HashTabOf(i)       htab[i]
 #define CodeTabOf(i)    codetab[i]
 
@@ -1806,11 +1931,11 @@ static gint free_ent = 0;        /* first unused entry */
  * block compression parameters -- after all codes are used up,
  * and compression rate changes, start over.
  */
-static int clear_flg = 0;
+static gint  clear_flg = 0;
 
-static int offset;
-static long int in_count = 1;        /* length of input */
-static long int out_count = 0;        /* # of codes output (for debugging) */
+static gint  offset;
+static glong in_count  = 1;        /* length of input */
+static glong out_count = 0;        /* # of codes output (for debugging) */
 
 /*
  * compress stdin to stdout
@@ -1828,12 +1953,10 @@ static long int out_count = 0;        /* # of codes output (for debugging) */
  * questions about this implementation to ames!jaw.
  */
 
-static gint  g_init_bits;
-static FILE *g_outfile;
+static gint g_init_bits;
 
-static int ClearCode;
-static int EOFCode;
-
+static gint ClearCode;
+static gint EOFCode;
 
 static gulong cur_accum;
 static gint   cur_bits;
@@ -1848,38 +1971,37 @@ static gulong masks[] =
 };
 
 
-static void
-compress (int      init_bits,
-          FILE    *outfile,
-          ifunptr  ReadValue)
+static gboolean
+compress (GOutputStream  *output,
+          gint            init_bits,
+          ifunptr         ReadValue,
+          GError        **error)
 {
   if (FALSE)
-    no_compress (init_bits, outfile, ReadValue);
+    return no_compress (output, init_bits, ReadValue, error);
   else if (FALSE)
-    rle_compress (init_bits, outfile, ReadValue);
+    return rle_compress (output, init_bits, ReadValue, error);
   else
-    normal_compress (init_bits, outfile, ReadValue);
+    return normal_compress (output, init_bits, ReadValue, error);
 }
 
-static void
-no_compress (int      init_bits,
-             FILE    *outfile,
-             ifunptr  ReadValue)
+static gboolean
+no_compress (GOutputStream  *output,
+             gint            init_bits,
+             ifunptr         ReadValue,
+             GError        **error)
 {
-  long fcode;
-  gint i /* = 0 */ ;
-  int c;
-  gint ent;
-  gint hsize_reg;
-  int hshift;
-
+  glong fcode;
+  gint  i /* = 0 */ ;
+  gint  c;
+  gint  ent;
+  gint  hsize_reg;
+  gint  hshift;
 
   /*
    * Set up the globals:  g_init_bits - initial number of bits
-   *                      g_outfile   - pointer to output file
    */
   g_init_bits = init_bits;
-  g_outfile = outfile;
 
   cur_bits = 0;
   cur_accum = 0;
@@ -1902,7 +2024,7 @@ no_compress (int      init_bits,
   maxcode = MAXCODE (n_bits);
 
 
-  char_init ();
+  char_init();
 
   ent = gif_next_pixel (ReadValue);
 
@@ -1914,8 +2036,8 @@ no_compress (int      init_bits,
   hsize_reg = hsize;
   cl_hash ((glong) hsize_reg);        /* clear hash table */
 
-  output ((gint) ClearCode);
-
+  if (! output_code (output, (gint) ClearCode, error))
+    return FALSE;
 
   while ((c = gif_next_pixel (ReadValue)) != EOF)
     {
@@ -1924,7 +2046,9 @@ no_compress (int      init_bits,
       fcode = (long) (((long) c << maxbits) + ent);
       i = (((gint) c << hshift) ^ ent);        /* xor hashing */
 
-      output ((gint) ent);
+      if (! output_code (output, (gint) ent, error))
+        return FALSE;
+
       ++out_count;
       ent = c;
 
@@ -1934,37 +2058,44 @@ no_compress (int      init_bits,
           HashTabOf (i) = fcode;
         }
       else
-        cl_block ();
+        {
+          if (! cl_block (output, error))
+            return FALSE;
+        }
     }
 
   /*
    * Put out the final code.
    */
-  output ((gint) ent);
+  if (! output_code (output, (gint) ent, error))
+    return FALSE;
+
   ++out_count;
-  output ((gint) EOFCode);
+
+  if (! output_code (output, (gint) EOFCode, error))
+    return FALSE;
+
+  return TRUE;
 }
 
-static void
-rle_compress (int      init_bits,
-              FILE    *outfile,
-              ifunptr  ReadValue)
+static gboolean
+rle_compress (GOutputStream  *output,
+              gint            init_bits,
+              ifunptr         ReadValue,
+              GError        **error)
 {
-  long fcode;
-  gint i /* = 0 */ ;
-  int c, last;
-  gint ent;
-  gint disp;
-  gint hsize_reg;
-  int hshift;
-
+  glong fcode;
+  gint  i /* = 0 */ ;
+  gint  c, last;
+  gint  ent;
+  gint  disp;
+  gint  hsize_reg;
+  gint  hshift;
 
   /*
    * Set up the globals:  g_init_bits - initial number of bits
-   *                      g_outfile   - pointer to output file
    */
   g_init_bits = init_bits;
-  g_outfile = outfile;
 
   cur_bits = 0;
   cur_accum = 0;
@@ -1999,8 +2130,8 @@ rle_compress (int      init_bits,
   hsize_reg = hsize;
   cl_hash ((glong) hsize_reg);        /* clear hash table */
 
-  output ((gint) ClearCode);
-
+  if (! output_code (output, (gint) ClearCode, error))
+    return FALSE;
 
 
   while ((c = gif_next_pixel (ReadValue)) != EOF)
@@ -2035,7 +2166,9 @@ rle_compress (int      init_bits,
           goto probe;
         }
     nomatch:
-      output ((gint) ent);
+      if (! output_code (output, (gint) ent, error))
+        return FALSE;
+
       ++out_count;
       last = ent = c;
       if (free_ent < maxmaxcode)
@@ -2044,37 +2177,44 @@ rle_compress (int      init_bits,
           HashTabOf (i) = fcode;
         }
       else
-        cl_block ();
+        {
+          if (! cl_block (output, error))
+            return FALSE;
+        }
     }
 
   /*
    * Put out the final code.
    */
-  output ((gint) ent);
+  if (! output_code (output, (gint) ent, error))
+    return FALSE;
+
   ++out_count;
-  output ((gint) EOFCode);
+
+  if (! output_code (output, (gint) EOFCode, error))
+    return FALSE;
+
+  return TRUE;
 }
 
-static void
-normal_compress (int      init_bits,
-                 FILE    *outfile,
-                 ifunptr  ReadValue)
+static gboolean
+normal_compress (GOutputStream  *output,
+                 gint            init_bits,
+                 ifunptr         ReadValue,
+                 GError        **error)
 {
-  long fcode;
-  gint i /* = 0 */ ;
-  int c;
-  gint ent;
-  gint disp;
-  gint hsize_reg;
-  int hshift;
-
+  glong fcode;
+  gint  i /* = 0 */ ;
+  gint  c;
+  gint  ent;
+  gint  disp;
+  gint  hsize_reg;
+  gint  hshift;
 
   /*
    * Set up the globals:  g_init_bits - initial number of bits
-   *                      g_outfile   - pointer to output file
    */
   g_init_bits = init_bits;
-  g_outfile = outfile;
 
   cur_bits = 0;
   cur_accum = 0;
@@ -2097,7 +2237,7 @@ normal_compress (int      init_bits,
   maxcode = MAXCODE (n_bits);
 
 
-  char_init ();
+  char_init();
 
   ent = gif_next_pixel (ReadValue);
 
@@ -2109,7 +2249,8 @@ normal_compress (int      init_bits,
   hsize_reg = hsize;
   cl_hash ((glong) hsize_reg);        /* clear hash table */
 
-  output ((gint) ClearCode);
+  if (! output_code (output, (gint) ClearCode, error))
+    return FALSE;
 
 
   while ((c = gif_next_pixel (ReadValue)) != EOF)
@@ -2141,7 +2282,9 @@ normal_compress (int      init_bits,
       if ((long) HashTabOf (i) > 0)
         goto probe;
     nomatch:
-      output ((gint) ent);
+      if (! output_code (output, (gint) ent, error))
+        return FALSE;
+
       ++out_count;
       ent = c;
       if (free_ent < maxmaxcode)
@@ -2150,15 +2293,24 @@ normal_compress (int      init_bits,
           HashTabOf (i) = fcode;
         }
       else
-        cl_block ();
+        {
+          if (! cl_block (output, error))
+            return FALSE;
+        }
     }
 
   /*
    * Put out the final code.
    */
-  output ((gint) ent);
+  if (! output_code (output, (gint) ent, error))
+    return FALSE;
+
   ++out_count;
-  output ((gint) EOFCode);
+
+  if (! output_code (output, (gint) EOFCode, error))
+    return FALSE;
+
+  return TRUE;
 }
 
 
@@ -2179,8 +2331,10 @@ normal_compress (int      init_bits,
  * code in turn.  When the buffer fills up empty it and start over.
  */
 
-static void
-output (gint code)
+static gboolean
+output_code (GOutputStream  *output,
+             gint            code,
+             GError        **error)
 {
   cur_accum &= masks[cur_bits];
 
@@ -2193,7 +2347,9 @@ output (gint code)
 
   while (cur_bits >= 8)
     {
-      char_out ((unsigned int) (cur_accum & 0xff));
+      if (! char_out (output, (guchar) (cur_accum & 0xff), error))
+        return FALSE;
+
       cur_accum >>= 8;
       cur_bits -= 8;
     }
@@ -2206,14 +2362,11 @@ output (gint code)
     {
       if (clear_flg)
         {
-
           maxcode = MAXCODE (n_bits = g_init_bits);
           clear_flg = 0;
-
         }
       else
         {
-
           ++n_bits;
           if (n_bits == maxbits)
             maxcode = maxmaxcode;
@@ -2229,37 +2382,37 @@ output (gint code)
        */
       while (cur_bits > 0)
         {
-          char_out ((unsigned int) (cur_accum & 0xff));
+          if (! char_out (output, (guchar) (cur_accum & 0xff), error))
+            return FALSE;
+
           cur_accum >>= 8;
           cur_bits -= 8;
         }
 
-      flush_char ();
-
-      fflush (g_outfile);
-
-      if (ferror (g_outfile))
-        g_message (_("Error writing output file."));
+      if (! char_flush (output, error))
+        return FALSE;
     }
+
+  return TRUE;
 }
 
 /*
  * Clear out the hash table
  */
-static void
-cl_block (void)                        /* table clear for block compress */
+static gboolean
+cl_block (GOutputStream  *output,
+          GError        **error) /* table clear for block compress */
 {
   cl_hash ((glong) hsize);
   free_ent = ClearCode + 2;
   clear_flg = 1;
 
-  output ((gint) ClearCode);
+  return output_code (output, (gint) ClearCode, error);
 }
 
 static void
 cl_hash (glong hsize)        /* reset code table */
 {
-
   glong *htab_p = htab + hsize;
 
   long i;
@@ -2294,9 +2447,7 @@ cl_hash (glong hsize)        /* reset code table */
 
 
 /******************************************************************************
- *
  * GIF Specific routines
- *
  ******************************************************************************/
 
 /*
@@ -2322,26 +2473,39 @@ static char accum[256];
  * Add a character to the end of the current packet, and if it is 254
  * characters, flush the packet to disk.
  */
-static void
-char_out (int c)
+static gboolean
+char_out (GOutputStream  *output,
+          gint            c,
+          GError        **error)
 {
   accum[a_count++] = c;
+
   if (a_count >= 254)
-    flush_char ();
+    return char_flush (output, error);
+
+  return TRUE;
 }
 
 /*
  * Flush the packet to disk, and reset the accumulator
  */
-static void
-flush_char (void)
+static gboolean
+char_flush (GOutputStream  *output,
+            GError        **error)
 {
   if (a_count > 0)
     {
-      fputc (a_count, g_outfile);
-      fwrite (accum, 1, a_count, g_outfile);
+      if (! put_byte (output, a_count, error))
+        return FALSE;
+
+      if (! g_output_stream_write_all (output, accum, a_count,
+                                       NULL, NULL, error))
+        return FALSE;
+
       a_count = 0;
     }
+
+  return TRUE;
 }
 
 

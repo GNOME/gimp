@@ -92,9 +92,9 @@ static void       gimp_selection_convert_type  (GimpDrawable        *drawable,
                                                 const Babl          *new_format,
                                                 GimpImageBaseType    new_base_type,
                                                 GimpPrecision        new_precision,
+                                                GimpColorProfile    *dest_profile,
                                                 gint                 layer_dither_type,
                                                 gint                 mask_dither_type,
-                                                gboolean             convert_profile,
                                                 gboolean             push_undo,
                                                 GimpProgress        *progress);
 static void gimp_selection_invalidate_boundary (GimpDrawable        *drawable);
@@ -193,7 +193,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   channel_class->border_desc          = C_("undo-type", "Border Selection");
   channel_class->grow_desc            = C_("undo-type", "Grow Selection");
   channel_class->shrink_desc          = C_("undo-type", "Shrink Selection");
-  channel_class->flood_desc           = C_("undo-type", "Flood Selection");
+  channel_class->flood_desc           = C_("undo-type", "Remove Holes");
 }
 
 static void
@@ -356,9 +356,9 @@ gimp_selection_convert_type (GimpDrawable      *drawable,
                              const Babl        *new_format,
                              GimpImageBaseType  new_base_type,
                              GimpPrecision      new_precision,
+                             GimpColorProfile  *dest_profile,
                              gint               layer_dither_type,
                              gint               mask_dither_type,
-                             gboolean           convert_profile,
                              gboolean           push_undo,
                              GimpProgress      *progress)
 {
@@ -368,9 +368,9 @@ gimp_selection_convert_type (GimpDrawable      *drawable,
                                                     new_format,
                                                     new_base_type,
                                                     new_precision,
+                                                    dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,
-                                                    convert_profile,
                                                     push_undo,
                                                     progress);
 }

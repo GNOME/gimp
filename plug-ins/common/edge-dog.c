@@ -458,13 +458,11 @@ dog (gint32        image_ID,
   gint32        layer1;
   gint32        layer2;
   gint          width, height;
-  gint          x1, y1, x2, y2;
+  gint          x1, y1;
   guchar        maxval = 255;
 
-  gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
-
-  width  = (x2 - x1);
-  height = (y2 - y1);
+  if (! gimp_drawable_mask_intersect (drawable_id, &x1, &y1, &width, &height))
+    return;
 
   gimp_drawable_flush (drawable);
 
@@ -522,17 +520,13 @@ compute_difference (GimpDrawable *drawable,
   gint         bpp;
   gpointer     pr;
   gint         x, y, k;
-  gint         x1, y1, x2, y2;
+  gint         x1, y1;
   gboolean     has_alpha;
 
   *maxval = 0;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  width  = (x2 - x1);
-  height = (y2 - y1);
-
-  if (width < 1 || height < 1)
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &width, &height))
     return;
 
   bpp = drawable->bpp;
@@ -607,7 +601,8 @@ normalize_invert (GimpDrawable *drawable,
   gint         bpp;
   gpointer     pr;
   gint         x, y, k;
-  gint         x1, y1, x2, y2;
+  gint         x1, y1;
+  gint         width, height;
   gboolean     has_alpha;
   gdouble      factor;
 
@@ -617,7 +612,10 @@ normalize_invert (GimpDrawable *drawable,
   else
     factor = 1.0;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &width, &height))
+    return;
+
   bpp = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
@@ -690,7 +688,7 @@ gauss_rle (GimpDrawable *drawable,
   gint    *buf, *bb;
   gint     pixels;
   gint     total = 1;
-  gint     x1, y1, x2, y2;
+  gint     x1, y1;
   gint     i, row, col, b;
   gint     start, end;
   gdouble  progress, max_progress;
@@ -704,12 +702,8 @@ gauss_rle (GimpDrawable *drawable,
   if (radius <= 0.0)
     return;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  width  = (x2 - x1);
-  height = (y2 - y1);
-
-  if (width < 1 || height < 1)
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &width, &height))
     return;
 
   bytes = drawable->bpp;
@@ -748,7 +742,7 @@ gauss_rle (GimpDrawable *drawable,
 
   for (col = 0; col < width; col++)
     {
-      gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
+      gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, height);
 
       if (has_alpha)
         multiply_alpha (src, height, bytes);
@@ -800,7 +794,7 @@ gauss_rle (GimpDrawable *drawable,
       if (has_alpha)
         separate_alpha (dest, height, bytes);
 
-      gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
+      gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, height);
 
       if (show_progress)
         {
@@ -819,7 +813,7 @@ gauss_rle (GimpDrawable *drawable,
   /*  Now the horizontal pass  */
   for (row = 0; row < height; row++)
     {
-      gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
+      gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, width);
       if (has_alpha)
         multiply_alpha (src, width, bytes);
 
@@ -869,7 +863,7 @@ gauss_rle (GimpDrawable *drawable,
       if (has_alpha)
         separate_alpha (dest, width, bytes);
 
-      gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
+      gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, width);
 
       if (show_progress)
         {
@@ -883,7 +877,7 @@ gauss_rle (GimpDrawable *drawable,
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 
   /*  free buffers  */
   g_free (buf);

@@ -503,12 +503,12 @@ gimp_selection_shrink (gint32 image_ID,
  * gimp_selection_flood:
  * @image_ID: The image.
  *
- * Flood the image's selection
+ * Remove holes from the image's selection
  *
- * This procedure floods the selection. Flooding assigns to each pixel
- * of the selection mask the minimum of the maxima of all paths from
- * that pixel to the outside, as if the selection mask were a height
- * map of a terrain flooded with water.
+ * This procedure removes holes from the selection, that can come from
+ * selecting a patchy area with the Fuzzy Select Tool. In technical
+ * terms this procedure floods the selection. See the Algorithms page
+ * in the developer wiki for details.
  *
  * Returns: TRUE on success.
  *

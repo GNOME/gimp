@@ -156,7 +156,7 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_SAVE },
 
   { "file-export", NULL,
-    NC_("file-action", "Export"), "<primary>E",
+    NC_("file-action", "Export..."), "<primary>E",
     NC_("file-action", "Export the image again"),
     GIMP_SAVE_MODE_EXPORT, FALSE,
     GIMP_HELP_FILE_EXPORT },
@@ -307,6 +307,19 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-copy-location",        file || source || export);
   SET_SENSITIVE ("file-show-in-file-manager", file || source || export);
 
+  if (file)
+    {
+      gimp_action_group_set_action_label (group,
+                                          "file-save",
+                                          C_("file-action", "_Save"));
+    }
+  else
+    {
+      gimp_action_group_set_action_label (group,
+                                          "file-save",
+                                          C_("file-action", "_Save..."));
+    }
+
   if (export)
     {
       gchar *label = file_actions_create_label (_("Export to %s"), export);
@@ -322,7 +335,8 @@ file_actions_update (GimpActionGroup *group,
   else
     {
       gimp_action_group_set_action_label (group,
-                                          "file-export", _("Export"));
+                                          "file-export",
+                                          C_("file-action", "Export..."));
     }
 
   /*  needed for the empty display  */

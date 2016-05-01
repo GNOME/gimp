@@ -93,7 +93,7 @@ static gdouble isteps = 20.0;
 static gboolean source_drw_has_alpha = FALSE;
 
 static gint    effect_width, effect_height;
-static gint    border_x1, border_y1, border_x2, border_y2;
+static gint    border_x, border_y, border_w, border_h;
 
 static GtkWidget *dialog;
 
@@ -444,8 +444,8 @@ rgb_to_hsl (GimpDrawable     *drawable,
 
   maxc = drawable->width * drawable->height;
 
-  gimp_pixel_rgn_init (&region, drawable, border_x1, border_y1,
-                       border_x2 - border_x1, border_y2 - border_y1, FALSE, FALSE);
+  gimp_pixel_rgn_init (&region, drawable, border_x, border_y,
+                       border_w, border_h, FALSE, FALSE);
 
   themap = g_new (guchar, maxc);
 
@@ -496,14 +496,12 @@ compute_lic (GimpDrawable *drawable,
   GimpPixelRgn src_rgn, dest_rgn;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       border_x1, border_y1,
-                       border_x2 - border_x1,
-                       border_y2 - border_y1, FALSE, FALSE);
+                       border_x, border_y,
+                       border_w, border_h, FALSE, FALSE);
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       border_x1, border_y1,
-                       border_x2 - border_x1,
-                       border_y2 - border_y1, TRUE, TRUE);
+                       border_x, border_y,
+                       border_w, border_h, TRUE, TRUE);
 
   for (ycount = 0; ycount < src_rgn.h; ycount++)
     {
@@ -563,8 +561,9 @@ compute_image (GimpDrawable *drawable)
 
   /* Get some useful info on the input drawable */
   /* ========================================== */
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &border_x1, &border_y1, &border_x2, &border_y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &border_x, &border_y, &border_w, &border_h))
+    return;
 
   gimp_progress_init (_("Van Gogh (LIC)"));
 
@@ -609,8 +608,8 @@ compute_image (GimpDrawable *drawable)
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, border_x1, border_y1,
-                        border_x2 - border_x1, border_y2 - border_y1);
+  gimp_drawable_update (drawable->drawable_id, border_x, border_y,
+                        border_w, border_h);
 
   gimp_displays_flush ();
 }

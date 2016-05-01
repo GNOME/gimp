@@ -14,7 +14,7 @@
    height="16"
    width="16.000002"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.91+devel r"
    sodipodi:docname="gimp-tool-scale.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -29,9 +29,9 @@
      inkscape:window-height="480"
      id="namedview1509"
      showgrid="false"
-     inkscape:zoom="14.75"
-     inkscape:cx="-170.65366"
-     inkscape:cy="-77.24984"
+     inkscape:zoom="5.2149125"
+     inkscape:cx="-38.610166"
+     inkscape:cy="6.1060922"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
@@ -135,7 +135,7 @@
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     transform="translate(-9.0201784,-205.18505)"
+     transform="matrix(1,0,0,-1,-9.0201784,221.18505)"
      style="display:inline"
      id="tools">
     <g
@@ -161,12 +161,12 @@
          rx="0.46966994" />
       <path
          style="fill:url(#linearGradient7279);fill-opacity:1;stroke:none"
-         d="m 127.83353,197 c -0.46166,0 -0.83333,0.38229 -0.83333,0.85714 l 0,3.42857 0,0.85715 c 0,0.47485 0.37167,0.85714 0.83333,0.85714 l 5.83334,0 2.5,0 c 0.46166,0 0.83333,-0.38229 0.83333,-0.85714 l 0,-3.42857 0,-0.85715 c 0,-0.47485 -0.37167,-0.85714 -0.83333,-0.85714 l -5.83334,0 z"
+         d="m 127.83353,197 c -0.46166,0 -0.83333,0.38229 -0.83333,0.85714 v 3.42857 0.85715 c 0,0.47485 0.37167,0.85714 0.83333,0.85714 h 5.83334 2.5 c 0.46166,0 0.83333,-0.38229 0.83333,-0.85714 v -3.42857 -0.85715 c 0,-0.47485 -0.37167,-0.85714 -0.83333,-0.85714 h -5.83334 z"
          id="rect4718"
          inkscape:connector-curvature="0" />
       <path
          style="fill:url(#linearGradient7267);fill-opacity:1;stroke:none"
-         d="m 127.0002,205 2,2 -3,3 1,1 1,-1 2,-2 2,2 0,-5 -3,0 z"
+         d="m 127.0002,205 2,2 -3,3 1,1 1,-1 2,-2 2,2 v -5 h -3 z"
          id="path10525"
          inkscape:connector-curvature="0" />
     </g>

@@ -224,7 +224,8 @@ drawable_curves_explicit_invoker (GimpProcedure         *procedure,
           (num_values <= 4096) &&
           (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
           (! gimp_drawable_is_gray (drawable) ||
-           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
+           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
+          channel != GIMP_HISTOGRAM_LUMINANCE)
         {
           GObject *config = gimp_curves_config_new_explicit (channel,
                                                              values,
@@ -271,7 +272,8 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
           ! (num_points & 1) &&
           (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
           (! gimp_drawable_is_gray (drawable) ||
-           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
+           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
+          channel != GIMP_HISTOGRAM_LUMINANCE)
         {
           GObject *config = gimp_curves_config_new_spline (channel,
                                                            points,
@@ -572,7 +574,8 @@ drawable_levels_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
           (! gimp_drawable_is_gray (drawable) ||
-           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
+           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
+          channel != GIMP_HISTOGRAM_LUMINANCE)
         {
           GObject *config = g_object_new (GIMP_TYPE_LEVELS_CONFIG,
                                           "channel", channel,

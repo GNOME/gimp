@@ -168,6 +168,7 @@ scalable_images = \
 	scalable/gimp-shape-diamond.svg			\
 	scalable/gimp-shape-square.svg			\
 	scalable/gimp-swap-colors.svg			\
+	scalable/gimp-symmetry.svg			\
 	scalable/gimp-template.svg			\
 	scalable/gimp-text-dir-ltr.svg			\
 	scalable/gimp-text-dir-rtl.svg			\
@@ -240,6 +241,57 @@ scalable_images = \
 	scalable/gimp-wilber-eek.svg			\
 	scalable/gimp-wilber-outline.svg		\
 	scalable/gimp-zoom-follow-window.svg
+
+vector24_images = \
+	24/gimp-gegl.svg					\
+	24/gimp-tool-airbrush.svg				\
+	24/gimp-tool-align.svg					\
+	24/gimp-tool-blend.svg					\
+	24/gimp-tool-blur.svg					\
+	24/gimp-tool-brightness-contrast.svg	\
+	24/gimp-tool-bucket-fill.svg			\
+	24/gimp-tool-by-color-select.svg		\
+	24/gimp-tool-cage.svg					\
+	24/gimp-tool-clone.svg					\
+	24/gimp-tool-color-balance.svg			\
+	24/gimp-tool-color-picker.svg			\
+	24/gimp-tool-colorize.svg				\
+	24/gimp-tool-crop.svg					\
+	24/gimp-tool-curves.svg					\
+	24/gimp-tool-desaturate.svg				\
+	24/gimp-tool-dodge.svg					\
+	24/gimp-tool-eraser.svg					\
+	24/gimp-tool-ellipse-select.svg			\
+	24/gimp-tool-flip.svg					\
+	24/gimp-tool-foreground-select.svg		\
+	24/gimp-tool-free-select.svg			\
+	24/gimp-tool-fuzzy-select.svg			\
+	24/gimp-tool-handle-transform.svg		\
+	24/gimp-tool-heal.svg					\
+	24/gimp-tool-hue-saturation.svg			\
+	24/gimp-tool-ink.svg					\
+	24/gimp-tool-iscissors.svg				\
+	24/gimp-tool-levels.svg					\
+	24/gimp-tool-mypaint-brush.svg			\
+	24/gimp-tool-measure.svg				\
+	24/gimp-tool-n-point-deformation.svg	\
+	24/gimp-tool-paintbrush.svg				\
+	24/gimp-tool-path.svg					\
+	24/gimp-tool-pencil.svg					\
+	24/gimp-tool-perspective.svg			\
+	24/gimp-tool-perspective-clone.svg		\
+	24/gimp-tool-posterize.svg				\
+	24/gimp-tool-rect-select.svg			\
+	24/gimp-tool-rotate.svg					\
+	24/gimp-tool-scale.svg					\
+	24/gimp-tool-seamless-clone.svg			\
+	24/gimp-tool-shear.svg					\
+	24/gimp-tool-smudge.svg					\
+	24/gimp-tool-threshold.svg				\
+	24/gimp-tool-unified-transform.svg		\
+	24/gimp-tool-text.svg					\
+	24/gimp-tool-warp.svg					\
+	24/gimp-tool-zoom.svg
 
 icons12_images = \
 	12/gimp-close.png			\
@@ -457,7 +509,6 @@ icons20_images = \
 icons22_images = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
-	22/gimp-gegl.png			\
 	22/gimp-histogram.png			\
 	22/gimp-input-device.png		\
 	22/gimp-landscape.png			\
@@ -501,56 +552,7 @@ icons22_images = \
 	22/gimp-prefs-tool-options.png		\
 	22/gimp-prefs-toolbox.png		\
 	22/gimp-prefs-window-management.png	\
-	22/gimp-tool-airbrush.png		\
-	22/gimp-tool-align.png			\
-	22/gimp-tool-blend.png			\
-	22/gimp-tool-blur.png			\
-	22/gimp-tool-brightness-contrast.png	\
-	22/gimp-tool-bucket-fill.png		\
-	22/gimp-tool-by-color-select.png	\
-	22/gimp-tool-cage.png			\
-	22/gimp-tool-clone.png			\
-	22/gimp-tool-color-balance.png		\
-	22/gimp-tool-color-picker.png		\
-	22/gimp-tool-colorize.png		\
-	22/gimp-tool-crop.png			\
-	22/gimp-tool-curves.png			\
-	22/gimp-tool-desaturate.png		\
-	22/gimp-tool-dodge.png			\
-	22/gimp-tool-ellipse-select.png		\
-	22/gimp-tool-eraser.png			\
-	22/gimp-tool-flip.png			\
-	22/gimp-tool-foreground-select.png	\
-	22/gimp-tool-free-select.png		\
-	22/gimp-tool-fuzzy-select.png		\
-	22/gimp-tool-handle-transform.png	\
-	22/gimp-tool-heal.png			\
-	22/gimp-tool-hue-saturation.png		\
-	22/gimp-tool-ink.png			\
-	22/gimp-tool-iscissors.png		\
-	22/gimp-tool-levels.png			\
-	22/gimp-tool-measure.png		\
-	22/gimp-tool-move.png			\
-	22/gimp-tool-mypaint-brush.png		\
-	22/gimp-tool-n-point-deformation.png	\
-	22/gimp-tool-paintbrush.png		\
-	22/gimp-tool-path.png			\
-	22/gimp-tool-pencil.png			\
-	22/gimp-tool-perspective-clone.png	\
-	22/gimp-tool-perspective.png		\
-	22/gimp-tool-posterize.png		\
 	22/gimp-tool-preset.png			\
-	22/gimp-tool-rect-select.png		\
-	22/gimp-tool-rotate.png			\
-	22/gimp-tool-scale.png			\
-	22/gimp-tool-seamless-clone.png		\
-	22/gimp-tool-shear.png			\
-	22/gimp-tool-smudge.png			\
-	22/gimp-tool-text.png			\
-	22/gimp-tool-threshold.png		\
-	22/gimp-tool-unified-transform.png	\
-	22/gimp-tool-warp.png			\
-	22/gimp-tool-zoom.png			\
 	22/gimp-wilber.png
 
 icons24_images = \
@@ -578,6 +580,7 @@ icons24_images = \
 	24/gimp-display-filter-proof.png	\
 	24/gimp-display-filter.png		\
 	24/gimp-floating-selection.png		\
+	24/gimp-gegl.png			\
 	24/gimp-gravity-east.png		\
 	24/gimp-gravity-north-east.png		\
 	24/gimp-gravity-north-west.png		\
@@ -605,6 +608,55 @@ icons24_images = \
 	24/gimp-text-dir-rtl.png		\
 	24/gimp-text-layer.png			\
 	24/gimp-toilet-paper.png		\
+	24/gimp-tool-airbrush.png		\
+	24/gimp-tool-align.png			\
+	24/gimp-tool-blend.png			\
+	24/gimp-tool-blur.png			\
+	24/gimp-tool-brightness-contrast.png	\
+	24/gimp-tool-bucket-fill.png		\
+	24/gimp-tool-by-color-select.png	\
+	24/gimp-tool-cage.png			\
+	24/gimp-tool-clone.png			\
+	24/gimp-tool-color-balance.png		\
+	24/gimp-tool-color-picker.png		\
+	24/gimp-tool-colorize.png		\
+	24/gimp-tool-crop.png			\
+	24/gimp-tool-curves.png			\
+	24/gimp-tool-desaturate.png		\
+	24/gimp-tool-dodge.png			\
+	24/gimp-tool-ellipse-select.png		\
+	24/gimp-tool-eraser.png			\
+	24/gimp-tool-flip.png			\
+	24/gimp-tool-foreground-select.png	\
+	24/gimp-tool-free-select.png		\
+	24/gimp-tool-fuzzy-select.png		\
+	24/gimp-tool-handle-transform.png	\
+	24/gimp-tool-heal.png			\
+	24/gimp-tool-hue-saturation.png		\
+	24/gimp-tool-ink.png			\
+	24/gimp-tool-iscissors.png		\
+	24/gimp-tool-levels.png			\
+	24/gimp-tool-measure.png		\
+	24/gimp-tool-move.png			\
+	24/gimp-tool-mypaint-brush.png		\
+	24/gimp-tool-n-point-deformation.png	\
+	24/gimp-tool-paintbrush.png		\
+	24/gimp-tool-path.png			\
+	24/gimp-tool-pencil.png			\
+	24/gimp-tool-perspective-clone.png	\
+	24/gimp-tool-perspective.png		\
+	24/gimp-tool-posterize.png		\
+	24/gimp-tool-rect-select.png		\
+	24/gimp-tool-rotate.png			\
+	24/gimp-tool-scale.png			\
+	24/gimp-tool-seamless-clone.png		\
+	24/gimp-tool-shear.png			\
+	24/gimp-tool-smudge.png			\
+	24/gimp-tool-text.png			\
+	24/gimp-tool-threshold.png		\
+	24/gimp-tool-unified-transform.png	\
+	24/gimp-tool-warp.png			\
+	24/gimp-tool-zoom.png			\
 	24/gimp-tool-options.png		\
 	24/gimp-tools.png			\
 	24/gimp-transparency.png		\
@@ -714,8 +766,12 @@ icons256_images = \
 	256/gimp-wilber-outline.png
 
 if ENABLE_VECTOR_ICONS
+icons24dir  = $(iconsdir)/24x24/apps
 icons64dir  = $(iconsdir)/64x64/apps
 scalabledir = $(iconsdir)/scalable/apps
+
+icons24_DATA = \
+	$(vector24_images)
 
 icons64_DATA = \
 	64/gimp-frame.png		\

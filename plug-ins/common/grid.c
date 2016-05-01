@@ -393,10 +393,16 @@ grid (gint32        image_ID,
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &sx1, &sy1, &sx2, &sy2);
+      gint w, h;
 
-      gimp_pixel_rgn_init (&destPR,
-                           drawable, 0, 0, sx2 - sx1, sy2 - sy1, TRUE, TRUE);
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &sx1, &sy1, &w, &h))
+	return;
+
+      sx2 = sx1 + w;
+      sy2 = sy1 + h;
+
+      gimp_pixel_rgn_init (&destPR, drawable, 0, 0, w, h, TRUE, TRUE);
     }
 
   gimp_pixel_rgn_init (&srcPR,

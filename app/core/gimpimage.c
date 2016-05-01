@@ -550,6 +550,7 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_preview_size    = gimp_image_get_preview_size;
   viewable_class->get_popup_size      = gimp_image_get_popup_size;
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
+  viewable_class->get_new_pixbuf      = gimp_image_get_new_pixbuf;
   viewable_class->get_description     = gimp_image_get_description;
 
   klass->mode_changed                 = gimp_image_real_mode_changed;

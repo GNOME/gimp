@@ -195,6 +195,8 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 static void
@@ -251,8 +253,8 @@ run (const gchar      *name,
       case GIMP_RUN_WITH_LAST_VALS:
         gimp_get_data (PLUG_IN_PROC, &mapvals);
         check_drawables (drawable);
-        image_setup (drawable, FALSE);
-        compute_image ();
+        if (image_setup (drawable, FALSE))
+          compute_image ();
         break;
 
       case GIMP_RUN_NONINTERACTIVE:
@@ -309,8 +311,8 @@ run (const gchar      *name,
               mapvals.cylindermap_id[i] = param[47+i].data.d_drawable;
 
             check_drawables (drawable);
-            image_setup (drawable, FALSE);
-            compute_image ();
+            if (image_setup (drawable, FALSE))
+              compute_image ();
           }
         break;
     }

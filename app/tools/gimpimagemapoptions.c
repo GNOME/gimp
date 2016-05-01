@@ -33,6 +33,9 @@ enum
 {
   PROP_0,
   PROP_PREVIEW,
+  PROP_PREVIEW_SPLIT,
+  PROP_PREVIEW_ALIGNMENT,
+  PROP_PREVIEW_POSITION,
   PROP_REGION,
   PROP_SETTINGS
 };
@@ -70,6 +73,29 @@ gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
                             NULL,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT,
+                                   g_param_spec_boolean ("preview-split",
+                                                         _("_Split view"),
+                                                         NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_PREVIEW_ALIGNMENT,
+                                   g_param_spec_enum ("preview-alignment",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_ALIGNMENT_TYPE,
+                                                      GIMP_ALIGN_LEFT,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_PREVIEW_POSITION,
+                                   g_param_spec_double ("preview-position",
+                                                        NULL, NULL,
+                                                        0.0, 1.0, 0.5,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_REGION,
                                    g_param_spec_enum ("region",
@@ -120,6 +146,18 @@ gimp_image_map_options_set_property (GObject      *object,
       options->preview = g_value_get_boolean (value);
       break;
 
+    case PROP_PREVIEW_SPLIT:
+      options->preview_split = g_value_get_boolean (value);
+      break;
+
+    case PROP_PREVIEW_ALIGNMENT:
+      options->preview_alignment = g_value_get_enum (value);
+      break;
+
+    case PROP_PREVIEW_POSITION:
+      options->preview_position = g_value_get_double (value);
+      break;
+
     case PROP_REGION:
       options->region = g_value_get_enum (value);
       break;
@@ -148,6 +186,18 @@ gimp_image_map_options_get_property (GObject    *object,
     {
     case PROP_PREVIEW:
       g_value_set_boolean (value, options->preview);
+      break;
+
+    case PROP_PREVIEW_SPLIT:
+      g_value_set_boolean (value, options->preview_split);
+      break;
+
+    case PROP_PREVIEW_ALIGNMENT:
+      g_value_set_enum (value, options->preview_alignment);
+      break;
+
+    case PROP_PREVIEW_POSITION:
+      g_value_set_double (value, options->preview_position);
       break;
 
     case PROP_REGION:

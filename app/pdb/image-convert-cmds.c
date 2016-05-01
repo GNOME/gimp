@@ -28,6 +28,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage-convert-indexed.h"
 #include "core/gimpimage-convert-precision.h"
 #include "core/gimpimage-convert-type.h"
 #include "core/gimpimage.h"
@@ -63,9 +64,7 @@ image_convert_rgb_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error))
         {
-          success = gimp_image_convert_type (image, GIMP_RGB,
-                                             0, 0, FALSE, FALSE, FALSE, 0, NULL,
-                                             NULL, error);
+          success = gimp_image_convert_type (image, GIMP_RGB, NULL, NULL, error);
         }
       else
         {
@@ -94,9 +93,7 @@ image_convert_grayscale_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
         {
-          success = gimp_image_convert_type (image, GIMP_GRAY,
-                                             0, 0, FALSE, FALSE, FALSE, 0, NULL,
-                                             NULL, error);
+          success = gimp_image_convert_type (image, GIMP_GRAY, NULL, NULL, error);
         }
       else
         {
@@ -175,11 +172,11 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
         }
 
       if (success)
-        success = gimp_image_convert_type (image, GIMP_INDEXED,
-                                           num_cols, dither_type,
-                                           alpha_dither, FALSE, remove_unused,
-                                           palette_type, pal,
-                                           NULL, error);
+        success = gimp_image_convert_indexed (image,
+                                              num_cols, dither_type,
+                                              alpha_dither, FALSE, remove_unused,
+                                              palette_type, pal,
+                                              NULL, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -209,7 +206,7 @@ image_convert_set_dither_matrix_invoker (GimpProcedure         *procedure,
     {
       if (width == 0 || height == 0 || matrix_length == width * height)
         {
-          gimp_image_convert_type_set_dither_matrix (matrix, width, height);
+          gimp_image_convert_indexed_set_dither_matrix (matrix, width, height);
         }
       else
         {
@@ -295,8 +292,8 @@ register_image_convert_procs (GimpPDB *pdb)
                                "gimp-image-convert-grayscale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-grayscale",
-                                     "Convert specified image to grayscale (256 intensity levels)",
-                                     "This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels). This process requires an image in RGB or Indexed color mode.",
+                                     "Convert specified image to grayscale",
+                                     "This procedure converts the specified image to grayscale. This process requires an image in RGB or Indexed color mode.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

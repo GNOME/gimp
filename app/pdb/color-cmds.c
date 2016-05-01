@@ -126,6 +126,7 @@ levels_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          channel != GIMP_HISTOGRAM_LUMINANCE &&
           (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
           (! gimp_drawable_is_gray (drawable) ||
            channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
@@ -423,7 +424,8 @@ curves_spline_invoker (GimpProcedure         *procedure,
           ! (num_points & 1) &&
           (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
           (! gimp_drawable_is_gray (drawable) ||
-           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
+           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA)  &&
+           channel != GIMP_HISTOGRAM_LUMINANCE)
         {
           GObject *config = gimp_curves_config_new_spline_cruft (channel,
                                                                  control_pts,
@@ -470,7 +472,8 @@ curves_explicit_invoker (GimpProcedure         *procedure,
           (num_bytes == 256) &&
           (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
           (! gimp_drawable_is_gray (drawable) ||
-           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
+           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
+           channel != GIMP_HISTOGRAM_LUMINANCE)
         {
           GObject *config = gimp_curves_config_new_explicit_cruft (channel,
                                                                    curve,

@@ -13,15 +13,15 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-25 11:19+0000\n"
-"PO-Revision-Date: 2016-01-30 11:03+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
+"POT-Creation-Date: 2016-04-29 06:28+0000\n"
+"PO-Revision-Date: 2016-04-29 09:37+0200\n"
+"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.8.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
@@ -1219,12 +1219,12 @@ msgstr "Metaadatok betöltése csak helyi fájlokból lehetséges"
 msgid "Can save metadata only to local files"
 msgstr "Metaadatok mentése csak helyi fájlokba lehetséges"
 
-#: ../libgimpbase/gimpmetadata.c:656
+#: ../libgimpbase/gimpmetadata.c:658
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Az Exif adatok feldolgozása nem sikerült."
 
-#: ../libgimpbase/gimpmetadata.c:710
+#: ../libgimpbase/gimpmetadata.c:709
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Az XMP adatok feldolgozása nem sikerült."
@@ -1343,8 +1343,8 @@ msgid ""
 "device profile. "
 msgstr ""
 "A képének színteréből egy másik színtérhez való színhelyesség-ellenőrzéshez "
-"használandó színprofil, beleértve a színhelyesség-ellenőrzést egy nyomtatóhoz "
-"vagy más kimeneti eszköz profiljához."
+"használandó színprofil, beleértve a színhelyesség-ellenőrzést egy "
+"nyomtatóhoz vagy más kimeneti eszköz profiljához."
 
 #: ../libgimpconfig/gimpcolorconfig.c:81
 msgid ""
@@ -1394,20 +1394,72 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "A színskálán kívüli színek megjelölésére használandó szín."
 
-#: ../libgimpconfig/gimpcolorconfig.c:431
-#: ../libgimpconfig/gimpcolorconfig.c:565
+#: ../libgimpconfig/gimpcolorconfig.c:177
+msgid "Mode of operation"
+msgstr "Működési mód"
+
+#: ../libgimpconfig/gimpcolorconfig.c:185
+msgid "Preferred RGB profile"
+msgstr "Előnyben részesített RGB profil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:192
+msgid "Preferred grayscale profile"
+msgstr "Előnyben részesített szürkeárnyalatos profil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:199
+msgid "CMYK profile"
+msgstr "CMYK profil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:206
+msgid "Monitor profile"
+msgstr "Monitorprofil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:213
+msgid "Use the system monitor profile"
+msgstr "A rendszermonitor profiljának használata"
+
+#: ../libgimpconfig/gimpcolorconfig.c:220
+msgid "Print simulation profile"
+msgstr "Nyomtatásszimulációs profil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:227
+msgid "Display rendering intent"
+msgstr "Képernyős megjelenítési cél"
+
+#: ../libgimpconfig/gimpcolorconfig.c:235
+msgid "Use black point compensation for the display"
+msgstr "Feketepont-kompenzáció használata a megjelenítőhöz"
+
+#: ../libgimpconfig/gimpcolorconfig.c:242
+msgid "Softproof rendering intent"
+msgstr "Próbanyomat-megjelenítési cél"
+
+#: ../libgimpconfig/gimpcolorconfig.c:250
+msgid "Use black point compensation for softproofing"
+msgstr "Feketepont-kompenzáció használata a próbanyomathoz"
+
+#: ../libgimpconfig/gimpcolorconfig.c:257
+msgid "Mark out of gamut colors"
+msgstr "A színskálán kívüli színek megjelölése"
+
+#: ../libgimpconfig/gimpcolorconfig.c:264
+msgid "Out of gammut warning color"
+msgstr "A színskálán kívül esés figyelmeztető színe"
+
+#: ../libgimpconfig/gimpcolorconfig.c:464
+#: ../libgimpconfig/gimpcolorconfig.c:598
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "A(z) „%s” színprofil nem RGB színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig.c:462
-#: ../libgimpconfig/gimpcolorconfig.c:606
+#: ../libgimpconfig/gimpcolorconfig.c:495
+#: ../libgimpconfig/gimpcolorconfig.c:639
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "A(z) „%s” színprofil nem szürkeárnyalatos színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig.c:493
-#: ../libgimpconfig/gimpcolorconfig.c:647
+#: ../libgimpconfig/gimpcolorconfig.c:526
+#: ../libgimpconfig/gimpcolorconfig.c:680
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "A(z) „%s” színprofil nem CMYK színtérhez való."
@@ -1826,7 +1878,7 @@ msgstr "Négyzetek mérete"
 msgid "Check Style"
 msgstr "Négyzetek stílusa"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1971
+#: ../libgimpwidgets/gimppropwidgets.c:2110
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2041,11 +2093,11 @@ msgstr "Profil: %s"
 msgid "Watercolor style color selector"
 msgstr "Vízfestmény stílusú színválasztó"
 
-#: ../modules/color-selector-water.c:118
+#: ../modules/color-selector-water.c:113
 msgid "Watercolor"
 msgstr "Vízfestmény"
 
-#: ../modules/color-selector-water.c:188
+#: ../modules/color-selector-water.c:183
 msgid "Pressure"
 msgstr "Nyomás"
 
@@ -2412,11 +2464,15 @@ msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 "Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
 
-#: ../modules/display-filter-color-blind.c:256
+#: ../modules/display-filter-color-blind.c:252
+msgid "Deficiency"
+msgstr "Probléma"
+
+#: ../modules/display-filter-color-blind.c:258
 msgid "Color Deficient Vision"
 msgstr "Színérzékelési probléma"
 
-#: ../modules/display-filter-color-blind.c:417
+#: ../modules/display-filter-color-blind.c:419
 msgid "Color _deficiency type:"
 msgstr "Színérzékelési probléma _típusa:"
 
@@ -2424,11 +2480,11 @@ msgstr "Színérzékelési probléma _típusa:"
 msgid "Gamma color display filter"
 msgstr "„Gamma” színmegjelenítési szűrő"
 
-#: ../modules/display-filter-gamma.c:127
+#: ../modules/display-filter-gamma.c:124 ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-gamma.c:224
+#: ../modules/display-filter-gamma.c:226
 msgid "_Gamma:"
 msgstr "G_amma:"
 
@@ -2436,11 +2492,12 @@ msgstr "G_amma:"
 msgid "High Contrast color display filter"
 msgstr "„Magas kontraszt” színmegjelenítési szűrő"
 
-#: ../modules/display-filter-high-contrast.c:127
+#: ../modules/display-filter-high-contrast.c:124
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "Kontraszt"
 
-#: ../modules/display-filter-high-contrast.c:224
+#: ../modules/display-filter-high-contrast.c:226
 msgid "Contrast c_ycles:"
 msgstr "Kontraszt_ciklusok:"
 
@@ -2484,23 +2541,35 @@ msgstr "Nincs"
 msgid "Color proof filter using ICC color profile"
 msgstr "ICC színprofilt használó „színes próbanyomat” szűrő"
 
-#: ../modules/display-filter-proof.c:143
+#: ../modules/display-filter-proof.c:131
+msgid "Intent"
+msgstr "Cél"
+
+#: ../modules/display-filter-proof.c:139
+msgid "Black point compensation"
+msgstr "Feketepont-kompenzáció"
+
+#: ../modules/display-filter-proof.c:146
+msgid "Profile"
+msgstr "Profil"
+
+#: ../modules/display-filter-proof.c:151
 msgid "Color Proof"
 msgstr "Színes próbanyomat"
 
-#: ../modules/display-filter-proof.c:296
+#: ../modules/display-filter-proof.c:304
 msgid "Choose an ICC Color Profile"
 msgstr "Válasszon egy ICC színprofilt"
 
-#: ../modules/display-filter-proof.c:316
+#: ../modules/display-filter-proof.c:324
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:322
+#: ../modules/display-filter-proof.c:330
 msgid "_Intent:"
 msgstr "_Cél:"
 
-#: ../modules/display-filter-proof.c:327
+#: ../modules/display-filter-proof.c:335
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
 

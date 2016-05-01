@@ -1398,7 +1398,8 @@ pygimp_user_directory(PyObject *self, PyObject *args, PyObject *kwargs)
     if (pyg_enum_get_value(GIMP_TYPE_USER_DIRECTORY, py_type, (gpointer)&type))
         return NULL;
 
-    user_dir = g_get_user_special_dir(type);
+    /* GimpUserDirectory and GUserDirectory are compatible */
+    user_dir = g_get_user_special_dir((GUserDirectory)type);
 
     if (user_dir) {
         ret = PyString_FromString(user_dir);
@@ -1685,7 +1686,7 @@ pygimp_export_image (PyObject *self, PyObject *args, PyObject *kwargs)
     PyGimpDrawable *drw = NULL;
     gchar *format_name = NULL;
     unsigned int capabilities = -1;
-    GimpExportCapabilities result;
+    GimpExportReturn result;
     gint32  img_id;
     gint32  drw_id;
     PyObject *return_values;
@@ -1702,7 +1703,7 @@ pygimp_export_image (PyObject *self, PyObject *args, PyObject *kwargs)
                          "the \"capabilities\" (4th) parameter must be set with "
                          "a combination of the "
                          "EXPORT_CAN_HANDLE_*/EXPORT_NEEDS_ALPHA values. "
-                         "(check develeloper documentation on the C function "
+                         "(check developer documentation on the C function "
                          "gimp_export_image for details)" 
                          );
         return NULL;

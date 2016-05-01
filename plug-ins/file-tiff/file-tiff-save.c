@@ -255,7 +255,7 @@ save_paths (TIFF   *tif,
  */
 
 gboolean
-save_image (const gchar  *filename,
+save_image (GFile        *file,
             TiffSaveVals *tsvals,
             gint32        image,
             gint32        layer,
@@ -312,7 +312,7 @@ save_image (const gchar  *filename,
   rowsperstrip = tile_height;
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   drawable_type = gimp_drawable_type (layer);
   buffer        = gimp_drawable_get_buffer (layer);
@@ -512,19 +512,20 @@ save_image (const gchar  *filename,
         }
     }
 
-  tif = tiff_open (filename, "w", error);
+  tif = tiff_open (file, "w", error);
 
   if (! tif)
     {
       if (! error)
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      _("Could not open '%s' for writing: %s"),
-                     gimp_filename_to_utf8 (filename), g_strerror (errno));
+                     gimp_file_get_utf8_name (file), g_strerror (errno));
       goto out;
     }
 
   /* Set TIFF parameters. */
-  TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
+  if (tsvals->save_thumbnail)
+    TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
   TIFFSetField (tif, TIFFTAG_SUBFILETYPE, 0);
   TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, cols);
   TIFFSetField (tif, TIFFTAG_IMAGELENGTH, rows);
@@ -551,7 +552,7 @@ save_image (const gchar  *filename,
     }
 
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
-  TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, filename);
+  TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, g_file_get_path (file));
   TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, samplesperpixel);
   TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip);
   /* TIFFSetField( tif, TIFFTAG_STRIPBYTECOUNTS, rows / rowsperstrip ); */
@@ -776,7 +777,7 @@ save_image (const gchar  *filename,
               *p++ = *thumb_pixels++; /* r */
               *p++ = *thumb_pixels++; /* g */
               *p++ = *thumb_pixels++; /* b */
-              *thumb_pixels++;
+              thumb_pixels++;
             }
 
           TIFFWriteScanline (tif, buf, y, 0);

@@ -41,7 +41,7 @@ gint    imgtype,width,height,in_channels,out_channels,image_id;
 GimpRGB  background;
 gdouble oldtreshold;
 
-gint border_x1, border_y1, border_x2, border_y2;
+gint border_x, border_y, border_w, border_h;
 
 /******************/
 /* Implementation */
@@ -153,7 +153,7 @@ gint
 checkbounds (gint x,
              gint y)
 {
-  if (x < border_x1 || y < border_y1 || x >= border_x2 || y >= border_y2)
+  if (x < border_x || y < border_y || x >= border_x + border_w || y >= border_y + border_h)
     return FALSE;
   else
     return TRUE;
@@ -361,8 +361,9 @@ image_setup (GimpDrawable *drawable,
   input_drawable  = drawable;
   output_drawable = drawable;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &border_x1, &border_y1, &border_x2, &border_y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &border_x, &border_y,
+                                      &border_w, &border_h))
+    return FALSE;
 
   width  = input_drawable->width;
   height = input_drawable->height;

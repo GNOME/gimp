@@ -355,11 +355,12 @@ pluginCore (piArgs *argp)
       gimp_image_insert_layer (argp->image, nl, -1, 0);
     }
 
-  gimp_drawable_mask_bounds (drw->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  if (! gimp_drawable_mask_intersect (drw->drawable_id,
+                                      &sel_x1, &sel_y1, &width, &height))
+    return success;
 
-  width  = sel_x2 - sel_x1;
-  height = sel_y2 - sel_y1;
+  sel_x2 = sel_x1 + width;
+  sel_y2 = sel_y1 + height;
 
   src = g_new (guchar, width * height * bpp);
   dst = g_new (guchar, width * height * 4);

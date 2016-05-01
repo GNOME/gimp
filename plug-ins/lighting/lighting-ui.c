@@ -1118,9 +1118,8 @@ main_dialog (GimpDrawable *drawable)
     gdk_cursor_unref (cursor);
   }
 
-  image_setup (drawable, TRUE);
-
-  preview_compute ();
+  if (image_setup (drawable, TRUE))
+    preview_compute ();
 
   if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)
     run = TRUE;

@@ -7,6 +7,7 @@
  */
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "openexr-wrapper.h"
 
@@ -18,9 +19,20 @@
 
 #include <string>
 
+#include "exr-attribute-blob.h"
+
 using namespace Imf;
 using namespace Imf::RgbaYca;
 using namespace Imath;
+
+static bool XYZ_equal(cmsCIEXYZ *a, cmsCIEXYZ *b)
+{
+  static const double epsilon = 0.0001;
+  // Y is encoding the luminance, we normalize that for comparison
+  return fabs ((a->X / a->Y * b->Y) - b->X) < epsilon &&
+         fabs ((a->Y / a->Y * b->Y) - b->Y) < epsilon &&
+         fabs ((a->Z / a->Y * b->Y) - b->Z) < epsilon;
+}
 
 struct _EXRLoader
 {
@@ -170,12 +182,20 @@ struct _EXRLoader
     return has_alpha_ ? 1 : 0;
   }
 
-  cmsHPROFILE getICCProfile() const {
+  GimpColorProfile *getProfile() const {
     Chromaticities chromaticities;
     float whiteLuminance = 1.0;
 
-    cmsHPROFILE profile = NULL;
+    GimpColorProfile *linear_srgb_profile;
+    cmsHPROFILE linear_srgb_lcms;
 
+    GimpColorProfile *profile;
+    cmsHPROFILE lcms_profile;
+
+    cmsCIEXYZ *gimp_r_XYZ, *gimp_g_XYZ, *gimp_b_XYZ, *gimp_w_XYZ;
+    cmsCIEXYZ exr_r_XYZ, exr_g_XYZ, exr_b_XYZ, exr_w_XYZ;
+
+    // get the color information from the EXR
     if (hasChromaticities (file_.header ()))
       chromaticities = Imf::chromaticities (file_.header ());
     else
@@ -193,6 +213,7 @@ struct _EXRLoader
     std::cout << "hasWhiteLuminance: "
               << hasWhiteLuminance (file_.header ())
               << std::endl;
+    std::cout << whiteLuminance << std::endl;
     std::cout << chromaticities.red << std::endl;
     std::cout << chromaticities.green << std::endl;
     std::cout << chromaticities.blue << std::endl;
@@ -200,7 +221,6 @@ struct _EXRLoader
     std::cout << std::endl;
 #endif
 
-    // TODO: maybe factor this out into libgimpcolor/gimpcolorprofile.h ?
     cmsCIExyY whitePoint = { chromaticities.white.x,
                              chromaticities.white.y,
                              whiteLuminance };
@@ -214,30 +234,104 @@ struct _EXRLoader
                                           chromaticities.blue.y,
                                           whiteLuminance } };
 
+    // get the primaries + wp from GIMP's internal linear sRGB profile
+    linear_srgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
+    linear_srgb_lcms = gimp_color_profile_get_lcms_profile (linear_srgb_profile);
+
+    gimp_r_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigRedColorantTag);
+    gimp_g_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigGreenColorantTag);
+    gimp_b_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigBlueColorantTag);
+    gimp_w_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigMediaWhitePointTag);
+
+    cmsxyY2XYZ(&exr_r_XYZ, &CameraPrimaries.Red);
+    cmsxyY2XYZ(&exr_g_XYZ, &CameraPrimaries.Green);
+    cmsxyY2XYZ(&exr_b_XYZ, &CameraPrimaries.Blue);
+    cmsxyY2XYZ(&exr_w_XYZ, &whitePoint);
+
+    // ... and check if the data stored in the EXR matches GIMP's internal profile
+    bool exr_is_linear_srgb = XYZ_equal (&exr_r_XYZ, gimp_r_XYZ) &&
+                              XYZ_equal (&exr_g_XYZ, gimp_g_XYZ) &&
+                              XYZ_equal (&exr_b_XYZ, gimp_b_XYZ) &&
+                              XYZ_equal (&exr_w_XYZ, gimp_w_XYZ);
+
+    // using GIMP's linear sRGB profile allows to skip the conversion popup
+    if (exr_is_linear_srgb)
+      return linear_srgb_profile;
+
+    // nope, it's something else. Clean up and build a new profile
+    g_object_unref (linear_srgb_profile);
+
+    // TODO: maybe factor this out into libgimpcolor/gimpcolorprofile.h ?
     double Parameters[2] = { 1.0, 0.0 };
     cmsToneCurve *Gamma[3];
     Gamma[0] = Gamma[1] = Gamma[2] = cmsBuildParametricToneCurve(0,
                                                                  1,
                                                                  Parameters);
-    profile = cmsCreateRGBProfile (&whitePoint, &CameraPrimaries, Gamma);
+    lcms_profile = cmsCreateRGBProfile (&whitePoint, &CameraPrimaries, Gamma);
     cmsFreeToneCurve (Gamma[0]);
-    if (profile == NULL) return NULL;
+    if (lcms_profile == NULL) return NULL;
 
-    cmsSetProfileVersion (profile, 2.1);
+//     cmsSetProfileVersion (lcms_profile, 2.1);
     cmsMLU *mlu0 = cmsMLUalloc (NULL, 1);
     cmsMLUsetASCII (mlu0, "en", "US", "(GIMP internal)");
     cmsMLU *mlu1 = cmsMLUalloc(NULL, 1);
     cmsMLUsetASCII (mlu1, "en", "US", "color profile from EXR chromaticities");
     cmsMLU *mlu2 = cmsMLUalloc(NULL, 1);
     cmsMLUsetASCII (mlu2, "en", "US", "color profile from EXR chromaticities");
-    cmsWriteTag (profile, cmsSigDeviceMfgDescTag, mlu0);
-    cmsWriteTag (profile, cmsSigDeviceModelDescTag, mlu1);
-    cmsWriteTag (profile, cmsSigProfileDescriptionTag, mlu2);
+    cmsWriteTag (lcms_profile, cmsSigDeviceMfgDescTag, mlu0);
+    cmsWriteTag (lcms_profile, cmsSigDeviceModelDescTag, mlu1);
+    cmsWriteTag (lcms_profile, cmsSigProfileDescriptionTag, mlu2);
     cmsMLUfree (mlu0);
     cmsMLUfree (mlu1);
     cmsMLUfree (mlu2);
 
+    profile = gimp_color_profile_new_from_lcms_profile (lcms_profile,
+                                                        NULL);
+    cmsCloseProfile (lcms_profile);
+
     return profile;
+  }
+
+  gchar *getComment() const {
+    char *result = NULL;
+    const Imf::StringAttribute *comment = file_.header().findTypedAttribute<Imf::StringAttribute>("comment");
+    if (comment)
+      result = g_strdup (comment->value().c_str());
+    return result;
+  }
+
+  guchar *getExif(guint *size) const {
+    guchar jpeg_exif[] = "Exif\0\0";
+    guchar *exif_data = NULL;
+    *size = 0;
+
+    const Imf::BlobAttribute *exif = file_.header().findTypedAttribute<Imf::BlobAttribute>("exif");
+
+    if (exif)
+      {
+        exif_data = (guchar *)(exif->value().data.get());
+        *size = exif->value().size;
+        // darktable appends a jpg-compatible exif00 string, so get rid of that again:
+        if ( ! memcmp (jpeg_exif, exif_data, sizeof(jpeg_exif)))
+          {
+            *size -= 6;
+            exif_data += 6;
+          }
+      }
+
+    return (guchar *)g_memdup (exif_data, *size);
+  }
+
+  guchar *getXmp(guint *size) const {
+    guchar *result = NULL;
+    *size = 0;
+    const Imf::StringAttribute *xmp = file_.header().findTypedAttribute<Imf::StringAttribute>("xmp");
+    if (xmp)
+      {
+        *size = xmp->value().size();
+        result = (guchar *) g_memdup (xmp->value().data(), *size);
+      }
+    return result;
   }
 
   size_t refcount_;
@@ -259,6 +353,7 @@ exr_loader_new (const char *filename)
   // Don't let any exceptions propagate to the C layer.
   try
     {
+      Imf::BlobAttribute::registerAttributeType();
       file = new EXRLoader(filename);
     }
   catch (...)
@@ -340,10 +435,30 @@ exr_loader_has_alpha (EXRLoader *loader)
   return loader->hasAlpha();
 }
 
-cmsHPROFILE
-exr_loader_get_icc_profile (EXRLoader *loader)
+GimpColorProfile *
+exr_loader_get_profile (EXRLoader *loader)
 {
-  return loader->getICCProfile ();
+  return loader->getProfile ();
+}
+
+gchar *
+exr_loader_get_comment (EXRLoader *loader)
+{
+  return loader->getComment ();
+}
+
+guchar *
+exr_loader_get_exif (EXRLoader *loader,
+                     guint *size)
+{
+  return loader->getExif (size);
+}
+
+guchar *
+exr_loader_get_xmp (EXRLoader *loader,
+                    guint *size)
+{
+  return loader->getXmp (size);
 }
 
 int

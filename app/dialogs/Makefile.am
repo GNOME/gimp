@@ -30,10 +30,10 @@ libappdialogs_a_sources = \
 	color-profile-dialog.h		\
 	color-profile-import-dialog.c	\
 	color-profile-import-dialog.h	\
+	convert-indexed-dialog.c	\
+	convert-indexed-dialog.h	\
 	convert-precision-dialog.c	\
 	convert-precision-dialog.h	\
-	convert-type-dialog.c		\
-	convert-type-dialog.h		\
 	data-delete-dialog.c		\
 	data-delete-dialog.h		\
 	fade-dialog.c			\

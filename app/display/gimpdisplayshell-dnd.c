@@ -382,7 +382,7 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
       gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
 
       gimp_text_layer_set (GIMP_TEXT_LAYER (drawable), NULL,
-                           "color", color,
+                           "color", &color,
                            NULL);
     }
   else

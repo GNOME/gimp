@@ -4,10 +4,6 @@
  * Craig Setera <setera@home.com>
  * 03/31/1999
  *
- * Updated for Mac OS X support
- * Brion Vibber <brion@pobox.com>
- * 07/22/2004
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -25,24 +21,6 @@
 #ifndef _TW_PLATFORM_H
 #define _TW_PLATFORM_H
 
-#ifdef __APPLE__
-
-/* Mac OS X */
-
-#include <Carbon/Carbon.h>
-#include <TWAIN/TWAIN.h>
-
-#define DEBUG_LOGFILE "/tmp/twain.log"
-#define DUMP_FILE "/tmp/twaincap.bin"
-#define DUMP_NAME "dtwain"
-#define READDUMP_NAME "rtwain"
-
-#define _stricmp strcasecmp
-
-#else
-
-/* Win32 */
-
 #include <windows.h>
 #include "twain.h"
 
@@ -55,7 +33,5 @@
 
 /* Windows uses separate entry point */
 #define TWAIN_ALTERNATE_MAIN
-
-#endif
 
 #endif

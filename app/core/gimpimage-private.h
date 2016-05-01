@@ -57,10 +57,17 @@ struct _GimpImagePrivate
   const Babl        *babl_palette_rgba;     /*  palette's RGBA Babl format   */
 
   GimpColorProfile  *color_profile;         /*  image's color profile        */
-  GimpColorTransform transform_to_srgb;     /*  from layer pixels to sRGB    */
-  GimpColorTransform transform_from_srgb;   /*  from sRGB to layer pixels    */
-  const Babl        *transform_layer_format;/*  layer format for transforms  */
-  const Babl        *transform_srgb_format; /*  sRGB format for transforms   */
+
+  /*  Cached color transforms: from layer to sRGB u8 and double, and back    */
+  GimpColorTransform transform_to_srgb_u8;
+  GimpColorTransform transform_from_srgb_u8;
+  GimpColorTransform transform_to_srgb_double;
+  GimpColorTransform transform_from_srgb_double;
+
+  /*  Babl formats for above transforms: layer, sRGB u8, sRGB double         */
+  const Babl        *transform_layer_format;
+  const Babl        *transform_srgb_u8_format;
+  const Babl        *transform_srgb_double_format;
 
   GimpMetadata      *metadata;              /*  image's metadata             */
 

@@ -270,8 +270,8 @@ run (const gchar      *name,
               break;
 
               case GIMP_RUN_WITH_LAST_VALS:
-                image_setup (drawable, FALSE);
-                compute_image ();
+                if (image_setup (drawable, FALSE))
+                  compute_image ();
                 gimp_displays_flush ();
                 break;
 
@@ -305,8 +305,8 @@ run (const gchar      *name,
                     mapvals.transparent_background     = (gint) param[23].data.d_int32;
 
                     check_drawables ();
-                    image_setup (drawable, FALSE);
-                    compute_image ();
+                    if (image_setup (drawable, FALSE))
+                      compute_image ();
                   }
               default:
                 break;

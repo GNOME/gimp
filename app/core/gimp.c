@@ -265,7 +265,10 @@ gimp_init (Gimp *gimp)
   gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
                                "named buffers");
 
-  gimp->tool_info_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
+  gimp->tool_info_list = g_object_new (GIMP_TYPE_LIST,
+                                       "children-type", GIMP_TYPE_TOOL_INFO,
+                                       "append",        TRUE,
+                                       NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
                                "tool infos");
 
@@ -843,18 +846,8 @@ static gboolean
 gimp_real_exit (Gimp     *gimp,
                 gboolean  force)
 {
-  GList *image_iter;
-
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
-
-  /* get rid of images without display */
-  while ((image_iter = gimp_get_image_iter (gimp)))
-    {
-      GimpImage *image = image_iter->data;
-
-      g_object_unref (image);
-    }
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
   gimp_modules_unload (gimp);
@@ -1129,7 +1122,7 @@ gimp_restore (Gimp               *gimp,
   /*  initialize the list of fonts  */
   status_callback (NULL, _("Fonts (this may take a while)"), 0.6);
   if (! gimp->no_fonts)
-    gimp_fonts_load (gimp);
+    gimp_fonts_load (gimp, status_callback);
 
   /*  initialize the color history   */
   gimp_palettes_load (gimp);
@@ -1210,7 +1203,8 @@ void
 gimp_exit (Gimp     *gimp,
            gboolean  force)
 {
-  gboolean handled;
+  gboolean  handled;
+  GList    *image_iter;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -1220,6 +1214,21 @@ gimp_exit (Gimp     *gimp,
   g_signal_emit (gimp, gimp_signals[EXIT], 0,
                  force ? TRUE : FALSE,
                  &handled);
+
+  if (handled)
+    return;
+
+  /* Get rid of images without display. We do this *after* handling the
+   * usual exit callbacks, because the things that are torn down there
+   * might have references to these images (for instance GimpActions
+   * in the UI manager).
+   */
+  while ((image_iter = gimp_get_image_iter (gimp)))
+    {
+      GimpImage *image = image_iter->data;
+
+      g_object_unref (image);
+    }
 }
 
 GList *
@@ -1227,7 +1236,7 @@ gimp_get_image_iter (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  return GIMP_LIST (gimp->images)->list;
+  return GIMP_LIST (gimp->images)->queue->head;
 }
 
 GList *
@@ -1235,7 +1244,7 @@ gimp_get_display_iter (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  return GIMP_LIST (gimp->displays)->list;
+  return GIMP_LIST (gimp->displays)->queue->head;
 }
 
 GList *
@@ -1251,7 +1260,7 @@ gimp_get_paint_info_iter (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  return GIMP_LIST (gimp->paint_info_list)->list;
+  return GIMP_LIST (gimp->paint_info_list)->queue->head;
 }
 
 GList *
@@ -1259,7 +1268,7 @@ gimp_get_tool_info_iter (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  return GIMP_LIST (gimp->tool_info_list)->list;
+  return GIMP_LIST (gimp->tool_info_list)->queue->head;
 }
 
 void

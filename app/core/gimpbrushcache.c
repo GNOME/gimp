@@ -258,6 +258,8 @@ gimp_brush_cache_add (GimpBrushCache *cache,
 {
   GList              *iter;
   GimpBrushCacheUnit *unit;
+  GList              *last   = NULL;
+  gint                length = 0;
 
   g_return_if_fail (GIMP_IS_BRUSH_CACHE (cache));
   g_return_if_fail (data != NULL);
@@ -268,15 +270,18 @@ gimp_brush_cache_add (GimpBrushCache *cache,
 
       if (data == unit->data)
         return;
+
+      length++;
+      last = iter;
     }
 
-  if (g_list_length (cache->cached_units) > MAX_CACHED_DATA &&
-      (iter = g_list_last (cache->cached_units)))
+  if (length > MAX_CACHED_DATA)
     {
-      unit = iter->data;
+      unit = last->data;
 
       cache->data_destroy (unit->data);
-      cache->cached_units = g_list_delete_link (cache->cached_units, iter);
+      cache->cached_units = g_list_delete_link (cache->cached_units, last);
+      g_free (unit);
     }
 
   unit = g_new0 (GimpBrushCacheUnit, 1);

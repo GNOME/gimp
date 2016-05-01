@@ -23,7 +23,7 @@
 #define __FILE_TIFF_IO_H__
 
 
-TIFF * tiff_open (const gchar  *filename,
+TIFF * tiff_open (GFile        *file,
                   const gchar  *mode,
                   GError      **error);
 

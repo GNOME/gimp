@@ -43,9 +43,9 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "tools/gimpimagemaptool.h"
+#include "tools/gimpguidetool.h"
 #include "tools/gimpmovetool.h"
-#include "tools/gimppainttool.h"
+#include "tools/gimpsamplepointtool.h"
 #include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
 
@@ -649,7 +649,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
-        state &= ~gimp_display_shell_key_to_state (bevent->button);
+        state &= ~gimp_display_shell_button_to_state (bevent->button);
 
         if (bevent->button == 1)
           {
@@ -1234,6 +1234,43 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 }
 
 void
+gimp_display_shell_canvas_grab_notify (GtkWidget        *canvas,
+                                       gboolean          was_grabbed,
+                                       GimpDisplayShell *shell)
+{
+  GimpDisplay *display;
+  GimpImage   *image;
+  Gimp        *gimp;
+
+  /*  are we in destruction?  */
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return;
+
+  display = shell->display;
+  gimp    = gimp_display_get_gimp (display);
+  image   = gimp_display_get_image (display);
+
+  if (! image)
+    return;
+
+  GIMP_LOG (TOOL_EVENTS, "grab_notify (display %p): was_grabbed = %s",
+            display, was_grabbed ? "TRUE" : "FALSE");
+
+  if (! was_grabbed)
+    {
+      if (! gimp_image_is_empty (image))
+        {
+          GimpTool *active_tool = tool_manager_get_active (gimp);
+
+          if (active_tool && active_tool->focus_display == display)
+            {
+              tool_manager_modifier_state_active (gimp, 0, display);
+            }
+        }
+    }
+}
+
+void
 gimp_display_shell_buffer_stroke (GimpMotionBuffer *buffer,
                                   const GimpCoords *coords,
                                   guint32           time,
@@ -1278,10 +1315,10 @@ gimp_display_shell_buffer_hover (GimpMotionBuffer *buffer,
 }
 
 static gboolean
-gimp_display_shell_ruler_button_press (GtkWidget        *widget,
-                                       GdkEventButton   *event,
-                                       GimpDisplayShell *shell,
-                                       gboolean          horizontal)
+gimp_display_shell_ruler_button_press (GtkWidget           *widget,
+                                       GdkEventButton      *event,
+                                       GimpDisplayShell    *shell,
+                                       GimpOrientationType  orientation)
 {
   GimpDisplay *display = shell->display;
 
@@ -1293,34 +1330,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-      GimpTool *active_tool;
-      gboolean  sample_point;
-
-      active_tool  = tool_manager_get_active (display->gimp);
-      sample_point = (event->state & gimp_get_toggle_behavior_mask ());
-
-      if (! ((sample_point && (GIMP_IS_COLOR_TOOL (active_tool) &&
-                               ! GIMP_IS_IMAGE_MAP_TOOL (active_tool) &&
-                               ! (GIMP_IS_PAINT_TOOL (active_tool) &&
-                                  ! GIMP_PAINT_TOOL (active_tool)->pick_colors)))
-
-             ||
-
-             (! sample_point && GIMP_IS_MOVE_TOOL (active_tool))))
-        {
-          GimpToolInfo *tool_info;
-
-          tool_info = gimp_get_tool_info (display->gimp,
-                                          sample_point ?
-                                          "gimp-color-picker-tool" :
-                                          "gimp-move-tool");
-
-          if (tool_info)
-            gimp_context_set_tool (gimp_get_user_context (display->gimp),
-                                   tool_info);
-        }
-
-      active_tool = tool_manager_get_active (display->gimp);
+      GimpTool *active_tool = tool_manager_get_active (display->gimp);
 
       if (active_tool)
         {
@@ -1332,12 +1342,15 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
               if (gimp_display_shell_keyboard_grab (shell,
                                                     (GdkEvent *) event))
                 {
-                  if (sample_point)
-                    gimp_color_tool_start_sample_point (active_tool, display);
-                  else if (horizontal)
-                    gimp_move_tool_start_hguide (active_tool, display);
+                  if (event->state & gimp_get_toggle_behavior_mask ())
+                    {
+                      gimp_sample_point_tool_start_new (active_tool, display);
+                    }
                   else
-                    gimp_move_tool_start_vguide (active_tool, display);
+                    {
+                      gimp_guide_tool_start_new (active_tool, display,
+                                                 orientation);
+                    }
 
                   return TRUE;
                 }
@@ -1357,7 +1370,8 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  return gimp_display_shell_ruler_button_press (widget, event, shell, TRUE);
+  return gimp_display_shell_ruler_button_press (widget, event, shell,
+                                                GIMP_ORIENTATION_HORIZONTAL);
 }
 
 gboolean
@@ -1365,7 +1379,8 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  return gimp_display_shell_ruler_button_press (widget, event, shell, FALSE);
+  return gimp_display_shell_ruler_button_press (widget, event, shell,
+                                                GIMP_ORIENTATION_VERTICAL);
 }
 
 
@@ -1381,17 +1396,21 @@ gimp_display_shell_key_to_state (gint key)
     case GDK_KEY_Alt_L:
     case GDK_KEY_Alt_R:
       return GDK_MOD1_MASK;
+
     case GDK_KEY_Shift_L:
     case GDK_KEY_Shift_R:
       return GDK_SHIFT_MASK;
+
     case GDK_KEY_Control_L:
     case GDK_KEY_Control_R:
       return GDK_CONTROL_MASK;
+
 #ifdef GDK_WINDOWING_QUARTZ
     case GDK_KEY_Meta_L:
     case GDK_KEY_Meta_R:
       return GDK_MOD2_MASK;
 #endif
+
     default:
       return 0;
     }

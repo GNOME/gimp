@@ -246,7 +246,7 @@ gimp_device_editor_constructed (GObject *object)
                                 G_CALLBACK (gimp_device_editor_device_changed),
                                 editor);
 
-  for (list = GIMP_LIST (devices)->list;
+  for (list = GIMP_LIST (devices)->queue->head;
        list;
        list = g_list_next (list))
     {

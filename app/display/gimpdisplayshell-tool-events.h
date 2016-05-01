@@ -26,6 +26,10 @@ gboolean   gimp_display_shell_events                  (GtkWidget        *widget,
 gboolean   gimp_display_shell_canvas_tool_events      (GtkWidget        *widget,
                                                        GdkEvent         *event,
                                                        GimpDisplayShell *shell);
+void       gimp_display_shell_canvas_grab_notify      (GtkWidget        *widget,
+                                                       gboolean          was_grabbed,
+                                                       GimpDisplayShell *shell);
+
 void       gimp_display_shell_buffer_stroke           (GimpMotionBuffer *buffer,
                                                        const GimpCoords *coords,
                                                        guint32           time,

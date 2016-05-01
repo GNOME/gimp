@@ -16,6 +16,7 @@ plug-ins/color-rotate
 plug-ins/common
 plug-ins/file-bmp
 plug-ins/file-compressor
+plug-ins/file-darktable
 plug-ins/file-exr
 plug-ins/file-faxg3
 plug-ins/file-fits

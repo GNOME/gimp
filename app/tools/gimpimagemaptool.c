@@ -32,6 +32,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -43,7 +44,9 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
+#include "core/gimpguide.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
 #include "core/gimplist.h"
@@ -58,9 +61,12 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-appearance.h"
+#include "display/gimpdisplayshell-transform.h"
 #include "display/gimptoolgui.h"
 
 #include "gimpcoloroptions.h"
+#include "gimpguidetool.h"
 #include "gimpimagemaptool.h"
 #include "gimpimagemaptool-settings.h"
 #include "gimptoolcontrol.h"
@@ -71,94 +77,85 @@
 
 /*  local function prototypes  */
 
-static void      gimp_image_map_tool_class_init     (GimpImageMapToolClass *klass);
-static void      gimp_image_map_tool_base_init      (GimpImageMapToolClass *klass);
+static void      gimp_image_map_tool_constructed    (GObject              *object);
+static void      gimp_image_map_tool_finalize       (GObject              *object);
 
-static void      gimp_image_map_tool_init           (GimpImageMapTool *im_tool);
+static gboolean  gimp_image_map_tool_initialize     (GimpTool             *tool,
+                                                     GimpDisplay          *display,
+                                                     GError              **error);
+static void      gimp_image_map_tool_control        (GimpTool             *tool,
+                                                     GimpToolAction        action,
+                                                     GimpDisplay          *display);
+static void      gimp_image_map_tool_button_press   (GimpTool             *tool,
+                                                     const GimpCoords     *coords,
+                                                     guint32               time,
+                                                     GdkModifierType       state,
+                                                     GimpButtonPressType   press_type,
+                                                     GimpDisplay          *display);
+static gboolean  gimp_image_map_tool_key_press      (GimpTool             *tool,
+                                                     GdkEventKey          *kevent,
+                                                     GimpDisplay          *display);
+static void      gimp_image_map_tool_oper_update    (GimpTool             *tool,
+                                                     const GimpCoords     *coords,
+                                                     GdkModifierType       state,
+                                                     gboolean              proximity,
+                                                     GimpDisplay          *display);
+static void      gimp_image_map_tool_cursor_update  (GimpTool             *tool,
+                                                     const GimpCoords     *coords,
+                                                     GdkModifierType       state,
+                                                     GimpDisplay          *display);
+static void      gimp_image_map_tool_options_notify (GimpTool             *tool,
+                                                     GimpToolOptions      *options,
+                                                     const GParamSpec     *pspec);
 
-static void      gimp_image_map_tool_constructed    (GObject          *object);
-static void      gimp_image_map_tool_finalize       (GObject          *object);
+static gboolean  gimp_image_map_tool_pick_color     (GimpColorTool        *color_tool,
+                                                     gint                  x,
+                                                     gint                  y,
+                                                     const Babl          **sample_format,
+                                                     gpointer              pixel,
+                                                     GimpRGB              *color);
+static void      gimp_image_map_tool_color_picked   (GimpColorTool        *color_tool,
+                                                     GimpColorPickState    pick_state,
+                                                     gdouble               x,
+                                                     gdouble               y,
+                                                     const Babl           *sample_format,
+                                                     gpointer              pixel,
+                                                     const GimpRGB        *color);
 
-static gboolean  gimp_image_map_tool_initialize     (GimpTool         *tool,
-                                                     GimpDisplay      *display,
-                                                     GError          **error);
-static void      gimp_image_map_tool_control        (GimpTool         *tool,
-                                                     GimpToolAction    action,
-                                                     GimpDisplay      *display);
-static gboolean  gimp_image_map_tool_key_press      (GimpTool         *tool,
-                                                     GdkEventKey      *kevent,
-                                                     GimpDisplay      *display);
-static void      gimp_image_map_tool_options_notify (GimpTool         *tool,
-                                                     GimpToolOptions  *options,
-                                                     const GParamSpec *pspec);
+static void      gimp_image_map_tool_real_reset     (GimpImageMapTool     *im_tool);
 
-static gboolean  gimp_image_map_tool_pick_color     (GimpColorTool    *color_tool,
-                                                     gint              x,
-                                                     gint              y,
-                                                     const Babl      **sample_format,
-                                                     gpointer          pixel,
-                                                     GimpRGB          *color);
-static void      gimp_image_map_tool_color_picked   (GimpColorTool    *color_tool,
-                                                     GimpColorPickState pick_state,
-                                                     gdouble           x,
-                                                     gdouble           y,
-                                                     const Babl       *sample_format,
-                                                     gpointer          pixel,
-                                                     const GimpRGB    *color);
+static void      gimp_image_map_tool_halt           (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_commit         (GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_real_reset     (GimpImageMapTool *im_tool);
+static void      gimp_image_map_tool_dialog         (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_dialog_unmap   (GtkWidget            *dialog,
+                                                     GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_reset          (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_create_map     (GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_halt           (GimpImageMapTool *im_tool);
-static void      gimp_image_map_tool_commit         (GimpImageMapTool *im_tool);
+static void      gimp_image_map_tool_flush          (GimpImageMap         *image_map,
+                                                     GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_config_notify  (GObject              *object,
+                                                     const GParamSpec     *pspec,
+                                                     GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_map            (GimpImageMapTool *im_tool);
-static void      gimp_image_map_tool_dialog         (GimpImageMapTool *im_tool);
-static void      gimp_image_map_tool_dialog_unmap   (GtkWidget        *dialog,
-                                                     GimpImageMapTool *im_tool);
-static void      gimp_image_map_tool_reset          (GimpImageMapTool *im_tool);
-static void      gimp_image_map_tool_create_map     (GimpImageMapTool *im_tool);
+static void      gimp_image_map_tool_add_guide      (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_remove_guide   (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_move_guide     (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_guide_removed  (GimpGuide            *guide,
+                                                     GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_guide_moved    (GimpGuide            *guide,
+                                                     const GParamSpec     *pspec,
+                                                     GimpImageMapTool     *im_tool);
 
-static void      gimp_image_map_tool_flush          (GimpImageMap     *image_map,
-                                                     GimpImageMapTool *im_tool);
-static void      gimp_image_map_tool_config_notify  (GObject          *object,
-                                                     const GParamSpec *pspec,
-                                                     GimpImageMapTool *im_tool);
-
-static void      gimp_image_map_tool_response       (GimpToolGui      *gui,
-                                                     gint              response_id,
-                                                     GimpImageMapTool *im_tool);
+static void      gimp_image_map_tool_response       (GimpToolGui          *gui,
+                                                     gint                  response_id,
+                                                     GimpImageMapTool     *im_tool);
 
 
-static GimpColorToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpImageMapTool, gimp_image_map_tool, GIMP_TYPE_COLOR_TOOL)
 
-
-GType
-gimp_image_map_tool_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      const GTypeInfo info =
-      {
-        sizeof (GimpImageMapToolClass),
-        (GBaseInitFunc) gimp_image_map_tool_base_init,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_image_map_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpImageMapTool),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_image_map_tool_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_COLOR_TOOL,
-                                     "GimpImageMapTool",
-                                     &info, 0);
-    }
-
-  return type;
-}
+#define parent_class gimp_image_map_tool_parent_class
 
 
 static void
@@ -168,14 +165,15 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->constructed  = gimp_image_map_tool_constructed;
   object_class->finalize     = gimp_image_map_tool_finalize;
 
   tool_class->initialize     = gimp_image_map_tool_initialize;
   tool_class->control        = gimp_image_map_tool_control;
+  tool_class->button_press   = gimp_image_map_tool_button_press;
   tool_class->key_press      = gimp_image_map_tool_key_press;
+  tool_class->oper_update    = gimp_image_map_tool_oper_update;
+  tool_class->cursor_update  = gimp_image_map_tool_cursor_update;
   tool_class->options_notify = gimp_image_map_tool_options_notify;
 
   color_tool_class->pick     = gimp_image_map_tool_pick_color;
@@ -191,11 +189,6 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   klass->get_settings_ui     = gimp_image_map_tool_real_get_settings_ui;
   klass->settings_import     = gimp_image_map_tool_real_settings_import;
   klass->settings_export     = gimp_image_map_tool_real_settings_export;
-}
-
-static void
-gimp_image_map_tool_base_init (GimpImageMapToolClass *klass)
-{
 }
 
 static void
@@ -349,6 +342,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
     {
       GimpImageMapToolClass *klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (im_tool);
       GtkWidget             *vbox;
+      GtkWidget             *hbox;
       GtkWidget             *toggle;
       gchar                 *operation_name;
 
@@ -427,11 +421,24 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                         G_CALLBACK (gamma_hack),
                         im_tool);
 
-      /*  The preview toggle  */
+      /*  The preview and split view toggles  */
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+      gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview", NULL);
-      gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_widget_show (toggle);
+
+      toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
+                                           "preview-split", NULL);
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+      gtk_widget_show (toggle);
+
+      g_object_bind_property (G_OBJECT (tool_info->tool_options), "preview",
+                              toggle,                             "sensitive",
+                              G_BINDING_SYNC_CREATE);
 
       /*  The area combo  */
       gegl_node_get (im_tool->operation,
@@ -470,8 +477,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   gimp_tool_gui_show (im_tool->gui);
 
   im_tool->drawable = drawable;
-
   gimp_image_map_tool_create_map (im_tool);
+
   gimp_image_map_tool_preview (im_tool);
 
   return TRUE;
@@ -500,6 +507,84 @@ gimp_image_map_tool_control (GimpTool       *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+}
+
+static void
+gimp_image_map_tool_button_press (GimpTool            *tool,
+                                  const GimpCoords    *coords,
+                                  guint32              time,
+                                  GdkModifierType      state,
+                                  GimpButtonPressType  press_type,
+                                  GimpDisplay         *display)
+{
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+
+  if (! gimp_image_map_tool_on_guide (im_tool, coords, display))
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                    press_type, display);
+    }
+  else
+    {
+      GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
+
+      if (state & gimp_get_extend_selection_mask ())
+        {
+          GimpAlignmentType alignment;
+
+          /* switch side */
+          switch (options->preview_alignment)
+            {
+            case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_RIGHT;  break;
+            case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_LEFT;   break;
+            case GIMP_ALIGN_TOP:    alignment = GIMP_ALIGN_BOTTOM; break;
+            case GIMP_ALIGN_BOTTOM: alignment = GIMP_ALIGN_TOP;    break;
+            default:
+              g_return_if_reached ();
+            }
+
+          g_object_set (options, "preview-alignment", alignment, NULL);
+        }
+      else if (state & gimp_get_toggle_behavior_mask ())
+        {
+          GimpItem          *item = GIMP_ITEM (im_tool->drawable);
+          GimpAlignmentType  alignment;
+          gdouble            position;
+
+          /* switch orientation */
+          switch (options->preview_alignment)
+            {
+            case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_TOP;    break;
+            case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_BOTTOM; break;
+            case GIMP_ALIGN_TOP:    alignment = GIMP_ALIGN_LEFT;   break;
+            case GIMP_ALIGN_BOTTOM: alignment = GIMP_ALIGN_RIGHT;  break;
+            default:
+              g_return_if_reached ();
+            }
+
+          if (alignment == GIMP_ALIGN_LEFT ||
+              alignment == GIMP_ALIGN_RIGHT)
+            {
+              position = ((coords->x - gimp_item_get_offset_x (item)) /
+                          gimp_item_get_width (item));
+            }
+          else
+            {
+              position = ((coords->y - gimp_item_get_offset_y (item)) /
+                          gimp_item_get_height (item));
+            }
+
+          g_object_set (options,
+                        "preview-alignment", alignment,
+                        "preview-position",  CLAMP (position, 0.0, 1.0),
+                        NULL);
+        }
+      else
+        {
+          gimp_guide_tool_start_edit (tool, display,
+                                      im_tool->percent_guide);
+        }
+    }
 }
 
 static gboolean
@@ -539,6 +624,74 @@ gimp_image_map_tool_key_press (GimpTool    *tool,
 }
 
 static void
+gimp_image_map_tool_oper_update (GimpTool         *tool,
+                                 const GimpCoords *coords,
+                                 GdkModifierType   state,
+                                 gboolean          proximity,
+                                 GimpDisplay      *display)
+{
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+
+  gimp_tool_pop_status (tool, display);
+
+  if (! gimp_image_map_tool_on_guide (im_tool, coords, display))
+    {
+      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
+                                                   proximity, display);
+    }
+  else
+    {
+      GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
+      GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
+      gchar           *status      = NULL;
+
+      if (state & extend_mask)
+        {
+          status = g_strdup (_("Click to switch the original and filtered sides"));
+        }
+      else if (state & toggle_mask)
+        {
+          status = g_strdup (_("Click to switch between vertical and horizontal"));
+        }
+      else
+        {
+          status = gimp_suggest_modifiers (_("Click to move the split guide"),
+                                           (extend_mask | toggle_mask) & ~state,
+                                           _("%s: switch original and filtered"),
+                                           _("%s: switch horizontal and vertical"),
+                                           NULL);
+        }
+
+      if (proximity)
+        gimp_tool_push_status (tool, display, "%s", status);
+
+      g_free (status);
+    }
+}
+
+static void
+gimp_image_map_tool_cursor_update (GimpTool         *tool,
+                                   const GimpCoords *coords,
+                                   GdkModifierType   state,
+                                   GimpDisplay      *display)
+{
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+
+  if (! gimp_image_map_tool_on_guide (im_tool, coords, display))
+    {
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+                                                     display);
+    }
+  else
+    {
+      gimp_tool_set_cursor (tool, display,
+                            GIMP_CURSOR_MOUSE,
+                            GIMP_TOOL_CURSOR_HAND,
+                            GIMP_CURSOR_MODIFIER_MOVE);
+    }
+}
+
+static void
 gimp_image_map_tool_options_notify (GimpTool         *tool,
                                     GimpToolOptions  *options,
                                     const GParamSpec *pspec)
@@ -553,9 +706,12 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
         {
           gimp_tool_control_push_preserve (tool->control, TRUE);
 
-          gimp_image_map_tool_map (im_tool);
+          gimp_image_map_apply (im_tool->image_map, NULL);
 
           gimp_tool_control_pop_preserve (tool->control);
+
+          if (im_options->preview_split)
+            gimp_image_map_tool_add_guide (im_tool);
         }
       else
         {
@@ -564,7 +720,84 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
           gimp_image_map_abort (im_tool->image_map);
 
           gimp_tool_control_pop_preserve (tool->control);
+
+          if (im_options->preview_split)
+            gimp_image_map_tool_remove_guide (im_tool);
         }
+    }
+  else if (! strcmp (pspec->name, "preview-split") &&
+           im_tool->image_map)
+    {
+      if (im_options->preview_split)
+        {
+          GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+          GimpItem         *item  = GIMP_ITEM (im_tool->drawable);
+          gint              x, y, width, height;
+
+          gimp_display_shell_untransform_viewport (shell,
+                                                   &x, &y, &width, &height);
+
+          if (gimp_rectangle_intersect (gimp_item_get_offset_x (item),
+                                        gimp_item_get_offset_y (item),
+                                        gimp_item_get_width  (item),
+                                        gimp_item_get_height (item),
+                                        x, y, width, height,
+                                        &x, &y, &width, &height))
+            {
+              gdouble position;
+
+              if (im_options->preview_alignment == GIMP_ALIGN_LEFT ||
+                  im_options->preview_alignment == GIMP_ALIGN_RIGHT)
+                {
+                  position = ((gdouble) ((x + width / 2) -
+                                         gimp_item_get_offset_x (item)) /
+                              (gdouble) gimp_item_get_width (item));
+                }
+              else
+                {
+                  position = ((gdouble) ((y + height / 2) -
+                                         gimp_item_get_offset_y (item)) /
+                              (gdouble) gimp_item_get_height (item));
+                }
+
+              g_object_set (options,
+                            "preview-position", CLAMP (position, 0.0, 1.0),
+                            NULL);
+
+            }
+        }
+
+      gimp_image_map_set_preview (im_tool->image_map,
+                                  im_options->preview_split,
+                                  im_options->preview_alignment,
+                                  im_options->preview_position);
+
+      if (im_options->preview_split)
+        gimp_image_map_tool_add_guide (im_tool);
+      else
+        gimp_image_map_tool_remove_guide (im_tool);
+    }
+  else if (! strcmp (pspec->name, "preview-alignment") &&
+           im_tool->image_map)
+    {
+      gimp_image_map_set_preview (im_tool->image_map,
+                                  im_options->preview_split,
+                                  im_options->preview_alignment,
+                                  im_options->preview_position);
+
+      if (im_options->preview_split)
+        gimp_image_map_tool_move_guide (im_tool);
+    }
+  else if (! strcmp (pspec->name, "preview-position") &&
+           im_tool->image_map)
+    {
+      gimp_image_map_set_preview (im_tool->image_map,
+                                  im_options->preview_split,
+                                  im_options->preview_alignment,
+                                  im_options->preview_position);
+
+      if (im_options->preview_split)
+        gimp_image_map_tool_move_guide (im_tool);
     }
   else if (! strcmp (pspec->name, "region") &&
            im_tool->image_map)
@@ -656,6 +889,8 @@ gimp_image_map_tool_halt (GimpImageMapTool *im_tool)
       im_tool->image_map = NULL;
 
       gimp_tool_control_pop_preserve (tool->control);
+
+      gimp_image_map_tool_remove_guide (im_tool);
     }
 
   tool->drawable = NULL;
@@ -676,13 +911,15 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
       if (! options->preview)
-        gimp_image_map_tool_map (im_tool);
+        gimp_image_map_apply (im_tool->image_map, NULL);
 
       gimp_image_map_commit (im_tool->image_map, GIMP_PROGRESS (tool), TRUE);
       g_object_unref (im_tool->image_map);
       im_tool->image_map = NULL;
 
       gimp_tool_control_pop_preserve (tool->control);
+
+      gimp_image_map_tool_remove_guide (im_tool);
 
       gimp_image_flush (gimp_display_get_image (tool->display));
 
@@ -697,15 +934,6 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
 
   tool->display  = NULL;
   tool->drawable = NULL;
-}
-
-static void
-gimp_image_map_tool_map (GimpImageMapTool *im_tool)
-{
-  gimp_gegl_config_sync_node (GIMP_OBJECT (im_tool->config),
-                              im_tool->operation);
-
-  gimp_image_map_apply (im_tool->image_map, NULL);
 }
 
 static void
@@ -783,6 +1011,155 @@ gimp_image_map_tool_config_notify (GObject          *object,
 }
 
 static void
+gimp_image_map_tool_add_guide (GimpImageMapTool *im_tool)
+{
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (im_tool);
+  GimpItem            *item;
+  GimpImage           *image;
+  GimpOrientationType  orientation;
+  gint                 position;
+
+  if (im_tool->percent_guide)
+    return;
+
+  item = GIMP_ITEM (im_tool->drawable);
+  image = gimp_item_get_image (item);
+
+  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_alignment == GIMP_ALIGN_RIGHT)
+    {
+      orientation = GIMP_ORIENTATION_VERTICAL;
+
+      position = (gimp_item_get_offset_x (item) +
+                  gimp_item_get_width (item) *
+                  options->preview_position);
+    }
+  else
+    {
+      orientation = GIMP_ORIENTATION_HORIZONTAL;
+
+      position = (gimp_item_get_offset_y (item) +
+                  gimp_item_get_height (item) *
+                  options->preview_position);
+    }
+
+  im_tool->percent_guide = gimp_guide_custom_new (orientation,
+                                                  image->gimp->next_guide_ID++,
+                                                  GIMP_GUIDE_STYLE_SPLIT_VIEW);
+
+  gimp_image_add_guide (image, im_tool->percent_guide, position);
+
+  g_signal_connect (im_tool->percent_guide, "removed",
+                    G_CALLBACK (gimp_image_map_tool_guide_removed),
+                    im_tool);
+  g_signal_connect (im_tool->percent_guide, "notify::position",
+                    G_CALLBACK (gimp_image_map_tool_guide_moved),
+                    im_tool);
+}
+
+static void
+gimp_image_map_tool_remove_guide (GimpImageMapTool *im_tool)
+{
+  GimpImage *image;
+
+  if (! im_tool->percent_guide)
+    return;
+
+  image = gimp_item_get_image (GIMP_ITEM (im_tool->drawable));
+
+  gimp_image_remove_guide (image, im_tool->percent_guide, FALSE);
+}
+
+static void
+gimp_image_map_tool_move_guide (GimpImageMapTool *im_tool)
+{
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (im_tool);
+  GimpItem            *item;
+  GimpOrientationType  orientation;
+  gint                 position;
+
+  if (! im_tool->percent_guide)
+    return;
+
+  item = GIMP_ITEM (im_tool->drawable);
+
+  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_alignment == GIMP_ALIGN_RIGHT)
+    {
+      orientation = GIMP_ORIENTATION_VERTICAL;
+
+      position = (gimp_item_get_offset_x (item) +
+                  gimp_item_get_width (item) *
+                  options->preview_position);
+    }
+  else
+    {
+      orientation = GIMP_ORIENTATION_HORIZONTAL;
+
+      position = (gimp_item_get_offset_y (item) +
+                  gimp_item_get_height (item) *
+                  options->preview_position);
+    }
+
+  if (orientation != gimp_guide_get_orientation (im_tool->percent_guide) ||
+      position    != gimp_guide_get_position (im_tool->percent_guide))
+    {
+      gimp_guide_set_orientation (im_tool->percent_guide, orientation);
+      gimp_image_move_guide (gimp_item_get_image (item),
+                             im_tool->percent_guide, position, FALSE);
+    }
+}
+
+static void
+gimp_image_map_tool_guide_removed (GimpGuide        *guide,
+                                   GimpImageMapTool *im_tool)
+{
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (im_tool);
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (im_tool->percent_guide),
+                                        gimp_image_map_tool_guide_removed,
+                                        im_tool);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (im_tool->percent_guide),
+                                        gimp_image_map_tool_guide_moved,
+                                        im_tool);
+
+  g_object_unref (im_tool->percent_guide);
+  im_tool->percent_guide = NULL;
+
+  g_object_set (options,
+                "preview-split", FALSE,
+                NULL);
+}
+
+static void
+gimp_image_map_tool_guide_moved (GimpGuide        *guide,
+                                 const GParamSpec *pspec,
+                                 GimpImageMapTool *im_tool)
+{
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (im_tool);
+  GimpItem            *item    = GIMP_ITEM (im_tool->drawable);
+  gdouble              position;
+
+  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_alignment == GIMP_ALIGN_RIGHT)
+    {
+      position = ((gdouble) (gimp_guide_get_position (guide) -
+                             gimp_item_get_offset_x (item)) /
+                  (gdouble) gimp_item_get_width (item));
+    }
+  else
+    {
+      position = ((gdouble) (gimp_guide_get_position (guide) -
+                             gimp_item_get_offset_y (item)) /
+                  (gdouble) gimp_item_get_height (item));
+    }
+
+  g_object_set (options,
+                "preview-position", CLAMP (position, 0.0, 1.0),
+                NULL);
+}
+
+static void
 gimp_image_map_tool_response (GimpToolGui      *gui,
                               gint              response_id,
                               GimpImageMapTool *im_tool)
@@ -805,6 +1182,9 @@ gimp_image_map_tool_response (GimpToolGui      *gui,
       break;
     }
 }
+
+
+/*  public functions  */
 
 void
 gimp_image_map_tool_get_operation (GimpImageMapTool *im_tool)
@@ -913,6 +1293,8 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *im_tool)
 
   gimp_gegl_config_sync_node (GIMP_OBJECT (im_tool->config),
                               im_tool->operation);
+  gimp_gegl_config_connect_node (GIMP_OBJECT (im_tool->config),
+                                 im_tool->operation);
 
   if (im_tool->gui)
     {
@@ -939,6 +1321,11 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *im_tool)
 
   g_free (operation_name);
 
+  g_object_set (GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (im_tool),
+                "preview-split",    FALSE,
+                "preview-position", 0.5,
+                NULL);
+
   if (im_tool->config)
     g_signal_connect_object (im_tool->config, "notify",
                              G_CALLBACK (gimp_image_map_tool_config_notify),
@@ -963,7 +1350,7 @@ gimp_image_map_tool_preview (GimpImageMapTool *im_tool)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_tool_map (im_tool);
+      gimp_image_map_apply (im_tool->image_map, NULL);
 
       gimp_tool_control_pop_preserve (tool->control);
     }
@@ -1000,6 +1387,45 @@ gimp_image_map_tool_edit_as (GimpImageMapTool *im_tool,
   GIMP_IMAGE_MAP_TOOL (new_tool)->default_config = g_object_ref (config);
 
   gimp_image_map_tool_reset (GIMP_IMAGE_MAP_TOOL (new_tool));
+}
+
+gboolean
+gimp_image_map_tool_on_guide (GimpImageMapTool *im_tool,
+                              const GimpCoords *coords,
+                              GimpDisplay      *display)
+{
+  GimpDisplayShell *shell;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (im_tool), FALSE);
+  g_return_val_if_fail (coords != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+
+  shell = gimp_display_get_shell (display);
+
+  if (im_tool->image_map     &&
+      im_tool->percent_guide &&
+      gimp_display_shell_get_show_guides (shell))
+    {
+      const gint          snap_distance = display->config->snap_distance;
+      GimpOrientationType orientation;
+      gint                position;
+
+      orientation = gimp_guide_get_orientation (im_tool->percent_guide);
+      position    = gimp_guide_get_position (im_tool->percent_guide);
+
+      if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+        {
+          if (fabs (coords->y - position) <= FUNSCALEY (shell, snap_distance))
+            return TRUE;
+        }
+      else
+        {
+          if (fabs (coords->x - position) <= FUNSCALEX (shell, snap_distance))
+            return TRUE;
+        }
+    }
+
+  return FALSE;
 }
 
 GtkWidget *

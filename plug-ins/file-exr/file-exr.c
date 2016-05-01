@@ -24,29 +24,31 @@
 
 #include "openexr-wrapper.h"
 
-#define LOAD_PROC          "file-exr-load"
-#define PLUG_IN_BINARY     "file-exr"
-#define PLUG_IN_ROLE       "gimp-file-exr"
-#define PLUG_IN_VERSION    "0.0.0"
+#define LOAD_PROC       "file-exr-load"
+#define PLUG_IN_BINARY  "file-exr"
+#define PLUG_IN_VERSION "0.0.0"
 
 
 /*
  * Declare some local functions.
  */
-static void     query       (void);
-static void     run         (const gchar      *name,
-                             gint              nparams,
-                             const GimpParam  *param,
-                             gint             *nreturn_vals,
-                             GimpParam       **return_vals);
+static void     query            (void);
+static void     run              (const gchar      *name,
+                                  gint              nparams,
+                                  const GimpParam  *param,
+                                  gint             *nreturn_vals,
+                                  GimpParam       **return_vals);
 
-static gint32    load_image (const gchar      *filename,
-                             gboolean          interactive,
-                             GError          **error);
+static gint32   load_image       (const gchar      *filename,
+                                  gboolean          interactive,
+                                  GError          **error);
+
+static void     sanitize_comment (gchar            *comment);
+
+
 /*
  * Some global variables.
  */
-
 const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -57,6 +59,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 
 MAIN ()
+
 
 static void
 query (void)
@@ -89,7 +92,9 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-exr");
   gimp_register_magic_load_handler (LOAD_PROC,
-                                    "exr", "", "0,lelong,20000630");
+                                    "exr",
+                                    "",
+                                    "0,long,0x762f3101");
 }
 
 static void
@@ -152,30 +157,37 @@ load_image (const gchar  *filename,
             gboolean      interactive,
             GError      **error)
 {
-  gint32 status = -1;
-  EXRLoader *loader;
-  int width;
-  int height;
-  gboolean has_alpha;
+  EXRLoader        *loader;
+  gint              width;
+  gint              height;
+  gboolean          has_alpha;
   GimpImageBaseType image_type;
-  GimpPrecision image_precision;
-  gint32 image = -1;
-  GimpImageType layer_type;
-  int layer;
-  const Babl *format;
-  GeglBuffer *buffer = NULL;
-  int bpp;
-  int tile_height;
-  gchar *pixels = NULL;
-  int begin;
-  int end;
-  int num;
+  GimpPrecision     image_precision;
+  gint32            image = -1;
+  GimpImageType     layer_type;
+  gint32            layer;
+  const Babl       *format;
+  GeglBuffer       *buffer = NULL;
+  gint              bpp;
+  gint              tile_height;
+  gchar            *pixels = NULL;
+  gint              begin;
+  gint32            success = FALSE;
+  gchar            *comment;
+  GimpMetadata     *metadata;
+  gboolean          have_metadata = FALSE;
+  guchar           *exif_data;
+  guint             exif_size;
+  guchar           *xmp_data;
+  guint             xmp_size;
+
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   loader = exr_loader_new (filename);
-  if (!loader)
+
+  if (! loader)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s' for reading"),
@@ -183,8 +195,9 @@ load_image (const gchar  *filename,
       goto out;
     }
 
-  width = exr_loader_get_width (loader);
+  width  = exr_loader_get_width (loader);
   height = exr_loader_get_height (loader);
+
   if ((width < 1) || (height < 1))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -255,13 +268,17 @@ load_image (const gchar  *filename,
 
   for (begin = 0; begin < height; begin += tile_height)
     {
-      int retval;
-      int i;
+      gint end;
+      gint num;
+      gint i;
+
       end = MIN (begin + tile_height, height);
       num = end - begin;
 
       for (i = 0; i < num; i++)
         {
+          gint retval;
+
           retval = exr_loader_read_pixel_row (loader,
                                               pixels + (i * width * bpp),
                                               bpp, begin + i);
@@ -285,38 +302,82 @@ load_image (const gchar  *filename,
    */
   if (image_type == GIMP_RGB)
     {
-      cmsHPROFILE lcms_profile;
+      GimpColorProfile *profile;
 
-      lcms_profile = exr_loader_get_icc_profile (loader);
-      if (lcms_profile)
+      profile = exr_loader_get_profile (loader);
+      if (profile)
         {
-          GimpColorProfile *profile;
-
-          profile = gimp_color_profile_new_from_lcms_profile (lcms_profile,
-                                                              NULL);
-          cmsCloseProfile (lcms_profile);
-
-          if (profile)
-            {
-              gimp_image_set_color_profile (image, profile);
-              g_object_unref (profile);
-            }
+          gimp_image_set_color_profile (image, profile);
+          g_object_unref (profile);
         }
     }
 
+  /* try to read the file comment */
+  comment = exr_loader_get_comment (loader);
+  if (comment)
+    {
+      GimpParasite *parasite;
+
+      sanitize_comment (comment);
+      parasite = gimp_parasite_new ("gimp-comment",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (comment) + 1,
+                                    comment);
+      gimp_image_attach_parasite (image, parasite);
+      gimp_parasite_free (parasite);
+
+      g_free (comment);
+    }
+
+  metadata = gimp_image_get_metadata (image);
+
+  if (metadata)
+    g_object_ref (metadata);
+  else
+    metadata = gimp_metadata_new ();
+
+  /* check if the image contains Exif data and read it */
+  exif_data = exr_loader_get_exif (loader, &exif_size);
+  if (exif_data)
+    {
+      if (gimp_metadata_set_from_exif (metadata,
+                                       exif_data,
+                                       exif_size,
+                                       NULL))
+        {
+          have_metadata = TRUE;
+        }
+
+      g_free (exif_data);
+    }
+
+  /* try to read the Xmp data */
+  xmp_data = exr_loader_get_xmp (loader, &xmp_size);
+  if (xmp_data)
+    {
+      if (gimp_metadata_set_from_xmp (metadata,
+                                      xmp_data,
+                                      xmp_size,
+                                      NULL))
+        {
+          have_metadata = TRUE;
+        }
+
+      g_free (xmp_data);
+    }
+
+  if (have_metadata)
+    gimp_image_set_metadata (image, metadata);
+
+  g_object_unref (metadata);
+
   gimp_progress_update (1.0);
 
-  status = image;
+  success = TRUE;
 
  out:
   if (buffer)
     g_object_unref (buffer);
-
-  if ((status != image) && (image != -1))
-    {
-      /* This should clean up any associated layers too. */
-      gimp_image_delete (image);
-    }
 
   if (pixels)
     g_free (pixels);
@@ -324,5 +385,27 @@ load_image (const gchar  *filename,
   if (loader)
     exr_loader_unref (loader);
 
-  return status;
+  if (success)
+    return image;
+
+  if (image != -1)
+    gimp_image_delete (image);
+
+  return -1;
+}
+
+/* copy & pasted from file-jpeg/jpeg-load.c */
+static void
+sanitize_comment (gchar *comment)
+{
+  if (! g_utf8_validate (comment, -1, NULL))
+    {
+      gchar *c;
+
+      for (c = comment; *c; c++)
+        {
+          if (*c > 126 || (*c < 32 && *c != '\t' && *c != '\n' && *c != '\r'))
+            *c = '?';
+        }
+    }
 }

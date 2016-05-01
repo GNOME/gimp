@@ -837,6 +837,7 @@ levels_update_input_bar (GimpLevelsTool *tool)
     case GIMP_HISTOGRAM_VALUE:
     case GIMP_HISTOGRAM_ALPHA:
     case GIMP_HISTOGRAM_RGB:
+    case GIMP_HISTOGRAM_LUMINANCE:
       {
         guchar v[256];
         gint   i;
@@ -932,6 +933,9 @@ levels_menu_sensitivity (gint      value,
       return gimp_drawable_has_alpha (drawable);
 
     case GIMP_HISTOGRAM_RGB:
+      return FALSE;
+
+    case GIMP_HISTOGRAM_LUMINANCE:
       return FALSE;
     }
 

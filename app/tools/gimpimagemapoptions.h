@@ -37,6 +37,9 @@ struct _GimpImageMapOptions
   GimpToolOptions     parent_instance;
 
   gboolean            preview;
+  gboolean            preview_split;
+  GimpAlignmentType   preview_alignment;
+  gdouble             preview_position;
   GimpImageMapRegion  region;
   GFile              *settings;
 };

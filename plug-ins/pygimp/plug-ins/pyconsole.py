@@ -135,6 +135,7 @@ class _ReadLine(object):
 
         self.ps = ''
         self.in_raw_input = False
+        self.in_modal_raw_input = False
         self.run_on_raw_input = None
         self.tab_pressed = 0
         self.history = _ReadLine.History()
@@ -149,6 +150,9 @@ class _ReadLine(object):
         except: pass
 
     def raw_input(self, ps=None):
+        '''Show prompt 'ps' and enter input mode until the current input
+        is committed.'''
+
         if ps:
             self.ps = ps
         else:
@@ -171,6 +175,24 @@ class _ReadLine(object):
             self.run_on_raw_input = None
             self.buffer.insert_at_cursor(run_now + '\n')
 
+    def modal_raw_input(self, text):
+        '''Starts raw input in modal mode. The event loop is spinned until
+        the input is committed. Returns the text entered after the prompt.'''
+        orig_ps = self.ps
+
+        self.raw_input(text)
+        self.in_modal_raw_input = True
+
+        while self.in_modal_raw_input:
+            gtk.main_iteration()
+
+        self.ps = orig_ps
+        self.in_modal_raw_input = False
+        self.in_raw_input = False
+
+        return self.modal_raw_input_result
+
+    # Each time the insert mark is modified, move the cursor to it.
     def on_buf_mark_set(self, buffer, iter, mark):
         if mark is not buffer.get_insert():
             return
@@ -186,9 +208,13 @@ class _ReadLine(object):
         self.buffer.insert(iter, text)
         self.do_insert = False
 
+    # Make sure that text insertions while in text input mode are properly
+    # committed to the history.
     def on_buf_insert(self, buf, iter, text, len):
+        # Bail out if not in input mode.
         if not self.in_raw_input or self.do_insert or not len:
             return
+
         buf.stop_emission("insert-text")
         lines = text.splitlines()
         need_eol = False
@@ -236,6 +262,8 @@ class _ReadLine(object):
             end = line_end
         self.__delete(start, end)
 
+    # We overload the key press event handler to handle "special keys"
+    # when in input mode to make history browsing, completions, etc. work.
     def do_key_press_event(self, event, parent_type):
         if not self.in_raw_input:
             return parent_type.do_key_press_event(self, event)
@@ -290,6 +318,7 @@ class _ReadLine(object):
         else:
             handled = False
 
+        # Handle ordinary keys
         if not handled:
             return parent_type.do_key_press_event(self, event)
         else:
@@ -304,18 +333,26 @@ class _ReadLine(object):
         self.scroll_to_mark(self.cursor, 0.2)
 
     def __get_cursor(self):
+        '''Returns an iterator at the current cursor position.'''
         return self.buffer.get_iter_at_mark(self.cursor)
+
     def __get_start(self):
+        '''Returns an iterator at the start of the input on the current
+        cursor line.'''
+
         iter = self.__get_cursor()
         iter.set_line_offset(len(self.ps))
         return iter
+
     def __get_end(self):
+        '''Returns an iterator at the end of the cursor line.'''
         iter = self.__get_cursor()
         if not iter.ends_line():
             iter.forward_to_line_end()
         return iter
 
     def __get_text(self, start, end):
+        '''Get text between 'start' and 'end' markers.'''
         return self.buffer.get_text(start, end, False)
 
     def __move_cursor_to(self, iter):
@@ -348,13 +385,17 @@ class _ReadLine(object):
         self.__delete(iter, end)
 
     def __get_width(self):
+        '''Estimate the number of characters that will fit in the area
+        currently allocated to this widget.'''
+
         if not (self.flags() & gtk.REALIZED):
             return 80
-        layout = pango.Layout(self.get_pango_context())
-        letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        layout.set_text(letters)
-        pix_width = layout.get_pixel_size()[0]
-        return self.allocation.width * len(letters) / pix_width
+
+        context = self.get_pango_context()
+        metrics = context.get_metrics(context.get_font_description(),
+                                      context.get_language())
+        pix_width = metrics.get_approximate_char_width()
+        return self.allocation.width * pango.SCALE / pix_width
 
     def __print_completions(self, completions):
         line_start = self.__get_text(self.__get_start(), self.__get_cursor())
@@ -424,27 +465,42 @@ class _ReadLine(object):
         return None
 
     def _get_line(self):
+        '''Return the current input behind the prompt.'''
         start = self.__get_start()
         end = self.__get_end()
         return self.buffer.get_text(start, end, False)
 
     def __replace_line(self, new_text):
+        '''Replace the current input with 'new_text' '''
         start = self.__get_start()
         end = self.__get_end()
         self.__delete(start, end)
         self.__insert(end, new_text)
 
     def _commit(self):
+        '''Commit the input entered on the current line.'''
+
+        # Find iterator and end of cursor line.
         end = self.__get_cursor()
         if not end.ends_line():
             end.forward_to_line_end()
+
+        # Get text at current line.
         text = self._get_line()
+
+        # Move cursor to the end of the line, insert new line.
         self.__move_cursor_to(end)
         self.freeze_undo()
         self.__insert(end, "\n")
-        self.in_raw_input = False
+
         self.history.commit(text)
-        self.do_raw_input(text)
+        if self.in_modal_raw_input:
+            self.in_modal_raw_input = False
+            self.modal_raw_input_result = text
+        else:
+            self.in_raw_input = False
+            self.do_raw_input(text)
+
         self.thaw_undo()
 
     def do_raw_input(self, text):
@@ -459,6 +515,12 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
 
         code.InteractiveInterpreter.__init__(self, locals)
         self.locals["__console__"] = self
+
+        # The builtin raw_input function reads from stdin, we don't want
+        # this. Therefore, replace this function with our own modal raw
+        # input function.
+        exec "import __builtin__" in self.locals
+        self.locals['__builtin__'].__dict__['raw_input'] = lambda text: self.modal_raw_input(text)
 
         self.start_script = start_script
         self.completer = completer
@@ -537,12 +599,6 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
             self.do_command(code)
         else:
             self.emit("command", code)
-
-    def exec_command(self, command):
-        if self._get_line():
-            self._commit()
-        self.buffer.insert_at_cursor(command)
-        self._commit()
 
     def complete_attr(self, start, end):
         try:
@@ -636,6 +692,19 @@ def ConsoleType(t=gtk.TextView):
         def do_key_press_event(self, event):
             return _Console.do_key_press_event(self, event, t)
 
+        def get_default_size(self):
+            context = self.get_pango_context()
+            metrics = context.get_metrics(context.get_font_description(),
+                                          context.get_language())
+            width = metrics.get_approximate_char_width()
+            height = metrics.get_ascent() + metrics.get_descent()
+
+            # Default to a 80x40 console
+            width = pango.PIXELS(int(width * 80 * 1.05))
+            height = pango.PIXELS(height * 40)
+
+            return width, height
+
     if gtk.pygtk_version[1] < 8:
         gobject.type_register(console_type)
 
@@ -654,7 +723,11 @@ def _make_window():
                       use_rlcompleter=False,
                       start_script="from gtk import *\n")
     swin.add(console)
-    window.set_default_size(500, 400)
+
+    width, height = console.get_default_size()
+    sb_width, sb_height = swin.get_vscrollbar().size_request()
+
+    window.set_default_size(width + sb_width, height)
     window.show_all()
 
     if not gtk.main_level():

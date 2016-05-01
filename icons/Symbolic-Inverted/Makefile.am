@@ -36,6 +36,10 @@ scalable/%.svg: ../Symbolic/scalable/%.svg ../../tools/invert-svg
 	mkdir -p scalable && \
 	$(top_builddir)/tools/invert-svg $< $@
 
+24/%.svg: ../Symbolic/24/%.svg ../../tools/invert-svg
+	mkdir -p scalable && \
+	$(top_builddir)/tools/invert-svg $< $@
+
 # We are basically repeating the same rule for every subdirectory, which
 # is very dirty. But this is the only way we found to have a rule
 # dependency correctly tied to the image with same name in Symbolic/.

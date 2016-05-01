@@ -57,8 +57,8 @@
 #include "display/gimpdisplayshell.h"
 
 #include "dialogs/color-profile-dialog.h"
+#include "dialogs/convert-indexed-dialog.h"
 #include "dialogs/convert-precision-dialog.h"
-#include "dialogs/convert-type-dialog.h"
 #include "dialogs/grid-dialog.h"
 #include "dialogs/image-merge-layers-dialog.h"
 #include "dialogs/image-new-dialog.h"
@@ -188,43 +188,58 @@ image_convert_base_type_cmd_callback (GtkAction *action,
   dialog = g_object_get_data (G_OBJECT (image),
                               IMAGE_CONVERT_TYPE_DIALOG_KEY);
 
+  if (dialog)
+    {
+      gtk_widget_destroy (dialog);
+      dialog = NULL;
+    }
+
   switch (value)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      if (dialog)
-        gtk_widget_destroy (dialog);
+      if (gimp_image_get_color_profile (image))
+        {
+          ColorProfileDialogType dialog_type;
 
-      if (! gimp_image_convert_type (image, value,
-                                     0, 0, FALSE, FALSE, FALSE, 0, NULL,
-                                     NULL, &error))
+          if (value == GIMP_RGB)
+            dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_RGB;
+          else
+            dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY;
+
+          dialog = color_profile_dialog_new (dialog_type,
+                                             image,
+                                             action_data_get_context (data),
+                                             widget,
+                                             GIMP_PROGRESS (display));
+        }
+      else if (! gimp_image_convert_type (image, value, NULL, NULL, &error))
         {
           gimp_message_literal (image->gimp,
                                 G_OBJECT (widget), GIMP_MESSAGE_WARNING,
                                 error->message);
           g_clear_error (&error);
-          return;
         }
       break;
 
     case GIMP_INDEXED:
-      if (! dialog)
-        {
-          dialog = convert_type_dialog_new (image,
-                                            action_data_get_context (data),
-                                            widget,
-                                            GIMP_PROGRESS (display));
+      dialog = convert_indexed_dialog_new (image,
+                                           action_data_get_context (data),
+                                           widget,
+                                           GIMP_PROGRESS (display));
+      break;
+    }
 
-          g_object_set_data (G_OBJECT (image),
-                             IMAGE_CONVERT_TYPE_DIALOG_KEY, dialog);
+  if (dialog)
+    {
+      g_object_set_data (G_OBJECT (image),
+                         IMAGE_CONVERT_TYPE_DIALOG_KEY, dialog);
 
-          g_signal_connect_object (dialog, "destroy",
-                                   G_CALLBACK (image_convert_type_dialog_unset),
-                                   image, G_CONNECT_SWAPPED);
-        }
+      g_signal_connect_object (dialog, "destroy",
+                               G_CALLBACK (image_convert_type_dialog_unset),
+                               image, G_CONNECT_SWAPPED);
 
       gtk_window_present (GTK_WINDOW (dialog));
-      break;
     }
 
   /*  always flush, also when only the indexed dialog was shown, so the
@@ -332,10 +347,11 @@ image_color_profile_assign_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
-      dialog = color_profile_assign_dialog_new (image,
-                                                action_data_get_context (data),
-                                                widget,
-                                                GIMP_PROGRESS (display));
+      dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_ASSIGN_PROFILE,
+                                         image,
+                                         action_data_get_context (data),
+                                         widget,
+                                         GIMP_PROGRESS (display));
 
       g_object_set_data (G_OBJECT (image),
                          IMAGE_PROFILE_ASSIGN_DIALOG_KEY, dialog);
@@ -371,10 +387,11 @@ image_color_profile_convert_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
-      dialog = color_profile_convert_dialog_new (image,
-                                                 action_data_get_context (data),
-                                                 widget,
-                                                 GIMP_PROGRESS (display));
+      dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE,
+                                         image,
+                                         action_data_get_context (data),
+                                         widget,
+                                         GIMP_PROGRESS (display));
 
       g_object_set_data (G_OBJECT (image),
                          IMAGE_PROFILE_CONVERT_DIALOG_KEY, dialog);

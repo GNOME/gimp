@@ -42,10 +42,6 @@ struct _GimpMoveTool
   GimpLayer           *floating_layer;
   GimpGuide           *guide;
 
-  gboolean             moving_guide;
-  gint                 guide_position;
-  GimpOrientationType  guide_orientation;
-
   GimpTransformType    saved_type;
 
   GimpLayer           *old_active_layer;

@@ -35,7 +35,7 @@ typedef struct
 } TiffSaveVals;
 
 
-gboolean  save_image  (const gchar  *filename,
+gboolean  save_image  (GFile        *file,
                        TiffSaveVals *tsvals,
                        gint32        image,
                        gint32        drawable,

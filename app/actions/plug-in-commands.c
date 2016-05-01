@@ -78,6 +78,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
   switch (procedure->proc_type)
     {
     case GIMP_EXTENSION:
+      args = procedure_commands_get_run_mode_arg (procedure);
       break;
 
     case GIMP_PLUGIN:

@@ -218,6 +218,8 @@ libappcore_a_sources = \
 	gimpimage-color-profile.h		\
 	gimpimage-colormap.c			\
 	gimpimage-colormap.h			\
+	gimpimage-convert-indexed.c		\
+	gimpimage-convert-indexed.h		\
 	gimpimage-convert-fsdither.h		\
 	gimpimage-convert-data.h		\
 	gimpimage-convert-precision.c		\

@@ -5,14 +5,14 @@
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2015.
-# Aviary.pl <gnomepl@aviary.pl>, 2011-2015.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
+# Aviary.pl <gnomepl@aviary.pl>, 2011-2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-20 17:35+0100\n"
-"PO-Revision-Date: 2015-12-20 17:37+0100\n"
+"POT-Creation-Date: 2016-04-17 15:49+0200\n"
+"PO-Revision-Date: 2016-04-17 15:50+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -25,22 +25,22 @@ msgstr ""
 "X-Poedit-Country: Poland\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1167
+#: ../libgimp/gimp.c:1204
 msgid "success"
 msgstr "powodzenie"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1171
+#: ../libgimp/gimp.c:1208
 msgid "execution error"
 msgstr "błąd wykonania"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1175
+#: ../libgimp/gimp.c:1212
 msgid "calling error"
 msgstr "błąd wywołania"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1179
+#: ../libgimp/gimp.c:1216
 msgid "cancelled"
 msgstr "anulowano"
 
@@ -1394,20 +1394,72 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Kolor używany do oznaczania kolorów, które są poza skalą."
 
-#: ../libgimpconfig/gimpcolorconfig.c:431
-#: ../libgimpconfig/gimpcolorconfig.c:565
+#: ../libgimpconfig/gimpcolorconfig.c:177
+msgid "Mode of operation"
+msgstr "Tryb działania"
+
+#: ../libgimpconfig/gimpcolorconfig.c:185
+msgid "Preferred RGB profile"
+msgstr "Preferowany profil RGB"
+
+#: ../libgimpconfig/gimpcolorconfig.c:192
+msgid "Preferred grayscale profile"
+msgstr "Preferowany profil odcieni szarości"
+
+#: ../libgimpconfig/gimpcolorconfig.c:199
+msgid "CMYK profile"
+msgstr "Profil CMYK"
+
+#: ../libgimpconfig/gimpcolorconfig.c:206
+msgid "Monitor profile"
+msgstr "Profil monitora"
+
+#: ../libgimpconfig/gimpcolorconfig.c:213
+msgid "Use the system monitor profile"
+msgstr "Systemowy profil monitora"
+
+#: ../libgimpconfig/gimpcolorconfig.c:220
+msgid "Print simulation profile"
+msgstr "Profil symulacji wydruku"
+
+#: ../libgimpconfig/gimpcolorconfig.c:227
+msgid "Display rendering intent"
+msgstr "Sposób odwzorowania barw ekranu"
+
+#: ../libgimpconfig/gimpcolorconfig.c:235
+msgid "Use black point compensation for the display"
+msgstr "Kompensacja czarnego punktu dla ekranu"
+
+#: ../libgimpconfig/gimpcolorconfig.c:242
+msgid "Softproof rendering intent"
+msgstr "Sposób odwzorowania barw wydruku"
+
+#: ../libgimpconfig/gimpcolorconfig.c:250
+msgid "Use black point compensation for softproofing"
+msgstr "Kompensacja czarnego punktu dla softproofingu"
+
+#: ../libgimpconfig/gimpcolorconfig.c:257
+msgid "Mark out of gamut colors"
+msgstr "Wyróżnienie kolorów spoza skali"
+
+#: ../libgimpconfig/gimpcolorconfig.c:264
+msgid "Out of gammut warning color"
+msgstr "Kolor ostrzeżenia kolorów spoza skali"
+
+#: ../libgimpconfig/gimpcolorconfig.c:464
+#: ../libgimpconfig/gimpcolorconfig.c:598
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:462
-#: ../libgimpconfig/gimpcolorconfig.c:606
+#: ../libgimpconfig/gimpcolorconfig.c:495
+#: ../libgimpconfig/gimpcolorconfig.c:639
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów szarości."
 
-#: ../libgimpconfig/gimpcolorconfig.c:493
-#: ../libgimpconfig/gimpcolorconfig.c:647
+#: ../libgimpconfig/gimpcolorconfig.c:526
+#: ../libgimpconfig/gimpcolorconfig.c:680
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów CMYK."
@@ -1672,80 +1724,80 @@ msgstr "Wybór pliku"
 msgid "Press F1 for more help"
 msgstr "Naciśnięcie klawisza F1 wyświetli pomoc"
 
-#: ../libgimpwidgets/gimpicons.c:60
+#: ../libgimpwidgets/gimpicons.c:61
 msgid "Anchor"
 msgstr "Zakotwicz"
 
-#: ../libgimpwidgets/gimpicons.c:61
+#: ../libgimpwidgets/gimpicons.c:62
 msgid "C_enter"
 msgstr "Wyśrodk_uj"
 
-#: ../libgimpwidgets/gimpicons.c:62
+#: ../libgimpwidgets/gimpicons.c:63
 msgid "_Duplicate"
 msgstr "_Duplikuj"
 
-#: ../libgimpwidgets/gimpicons.c:63
+#: ../libgimpwidgets/gimpicons.c:64
 msgid "_Edit"
 msgstr "_Modyfikuj"
 
-#: ../libgimpwidgets/gimpicons.c:64
+#: ../libgimpwidgets/gimpicons.c:65
 msgid "Linked"
 msgstr "Przyłączony"
 
-#: ../libgimpwidgets/gimpicons.c:65
+#: ../libgimpwidgets/gimpicons.c:66
 msgid "Paste as New"
 msgstr "Wklej jako nowy"
 
-#: ../libgimpwidgets/gimpicons.c:66
+#: ../libgimpwidgets/gimpicons.c:67
 msgid "Paste Into"
 msgstr "Wklej do"
 
-#: ../libgimpwidgets/gimpicons.c:67
+#: ../libgimpwidgets/gimpicons.c:68
 msgid "_Reset"
 msgstr "_Przywróć"
 
-#: ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpicons.c:69
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../libgimpwidgets/gimpicons.c:107 ../libgimpwidgets/gimpicons.c:111
+#: ../libgimpwidgets/gimpicons.c:108 ../libgimpwidgets/gimpicons.c:112
 msgid "_Stroke"
 msgstr "Ry_suj"
 
-#: ../libgimpwidgets/gimpicons.c:123
+#: ../libgimpwidgets/gimpicons.c:124
 msgid "L_etter Spacing"
 msgstr "Odstępy międzyz_nakowe"
 
-#: ../libgimpwidgets/gimpicons.c:124
+#: ../libgimpwidgets/gimpicons.c:125
 msgid "L_ine Spacing"
 msgstr "Odstępy między_wierszowe"
 
-#: ../libgimpwidgets/gimpicons.c:140
+#: ../libgimpwidgets/gimpicons.c:141
 msgid "Re_size"
 msgstr "Zmień _rozmiar"
 
-#: ../libgimpwidgets/gimpicons.c:141 ../libgimpwidgets/gimpicons.c:276
+#: ../libgimpwidgets/gimpicons.c:142 ../libgimpwidgets/gimpicons.c:277
 msgid "_Scale"
 msgstr "Prze_skaluj"
 
-#: ../libgimpwidgets/gimpicons.c:248
+#: ../libgimpwidgets/gimpicons.c:249
 msgid "Cr_op"
 msgstr "K_adruj"
 
-#: ../libgimpwidgets/gimpicons.c:256
+#: ../libgimpwidgets/gimpicons.c:257
 msgid "_Select"
 msgstr "_Zaznacz"
 
-#: ../libgimpwidgets/gimpicons.c:259 ../libgimpwidgets/gimpicons.c:271
-#: ../libgimpwidgets/gimpicons.c:282
+#: ../libgimpwidgets/gimpicons.c:260 ../libgimpwidgets/gimpicons.c:272
+#: ../libgimpwidgets/gimpicons.c:283
 msgid "_Transform"
 msgstr "_Przekształć"
 
-#: ../libgimpwidgets/gimpicons.c:275
+#: ../libgimpwidgets/gimpicons.c:276
 msgid "_Rotate"
 msgstr "O_bróć"
 
-#: ../libgimpwidgets/gimpicons.c:278
+#: ../libgimpwidgets/gimpicons.c:279
 msgid "_Shear"
 msgstr "_Zetnij"
 
@@ -1823,7 +1875,7 @@ msgstr "Rozmiar szachownicy"
 msgid "Check Style"
 msgstr "Wygląd szachownicy"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1971
+#: ../libgimpwidgets/gimppropwidgets.c:2110
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2039,11 +2091,11 @@ msgstr "Profil: %s"
 msgid "Watercolor style color selector"
 msgstr "Wybór koloru oparty na akwareli"
 
-#: ../modules/color-selector-water.c:118
+#: ../modules/color-selector-water.c:113
 msgid "Watercolor"
 msgstr "Akwarela"
 
-#: ../modules/color-selector-water.c:188
+#: ../modules/color-selector-water.c:183
 msgid "Pressure"
 msgstr "Nacisk"
 
@@ -2409,11 +2461,15 @@ msgstr "Tritanopia (nierozróżnianie niebieskiego)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filtr symulujący ślepotę barw (algorytm Brettela-Vienota-Mollona)"
 
-#: ../modules/display-filter-color-blind.c:256
+#: ../modules/display-filter-color-blind.c:252
+msgid "Deficiency"
+msgstr "Ślepota barw"
+
+#: ../modules/display-filter-color-blind.c:258
 msgid "Color Deficient Vision"
 msgstr "Ślepota barw"
 
-#: ../modules/display-filter-color-blind.c:417
+#: ../modules/display-filter-color-blind.c:419
 msgid "Color _deficiency type:"
 msgstr "Typ ślepoty _barw:"
 
@@ -2421,11 +2477,11 @@ msgstr "Typ ślepoty _barw:"
 msgid "Gamma color display filter"
 msgstr "Filtr wyświetlania kolorów z korekcją gamma"
 
-#: ../modules/display-filter-gamma.c:127
+#: ../modules/display-filter-gamma.c:124 ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-gamma.c:224
+#: ../modules/display-filter-gamma.c:226
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -2433,11 +2489,12 @@ msgstr "_Gamma:"
 msgid "High Contrast color display filter"
 msgstr "Filtr wyświetlania kolorów z wysokim kontrastem"
 
-#: ../modules/display-filter-high-contrast.c:127
+#: ../modules/display-filter-high-contrast.c:124
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../modules/display-filter-high-contrast.c:224
+#: ../modules/display-filter-high-contrast.c:226
 msgid "Contrast c_ycles:"
 msgstr "_Cykle kontrastu:"
 
@@ -2481,22 +2538,34 @@ msgstr "Brak"
 msgid "Color proof filter using ICC color profile"
 msgstr "Filtr korygujący kolory używając profilu ICC"
 
-#: ../modules/display-filter-proof.c:143
+#: ../modules/display-filter-proof.c:131
+msgid "Intent"
+msgstr "Pożądany efekt"
+
+#: ../modules/display-filter-proof.c:139
+msgid "Black point compensation"
+msgstr "Kompensacja czarnego punktu"
+
+#: ../modules/display-filter-proof.c:146
+msgid "Profile"
+msgstr "Profil"
+
+#: ../modules/display-filter-proof.c:151
 msgid "Color Proof"
 msgstr "Korekcja kolorów"
 
-#: ../modules/display-filter-proof.c:296
+#: ../modules/display-filter-proof.c:304
 msgid "Choose an ICC Color Profile"
 msgstr "Wybór profilu kolorów ICC"
 
-#: ../modules/display-filter-proof.c:316
+#: ../modules/display-filter-proof.c:324
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:322
+#: ../modules/display-filter-proof.c:330
 msgid "_Intent:"
 msgstr "Pożądany _efekt:"
 
-#: ../modules/display-filter-proof.c:327
+#: ../modules/display-filter-proof.c:335
 msgid "_Black Point Compensation"
 msgstr "Kompensacja _czarnego punktu"

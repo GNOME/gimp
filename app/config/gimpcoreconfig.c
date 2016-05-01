@@ -155,77 +155,107 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   object_class->set_property = gimp_core_config_set_property;
   object_class->get_property = gimp_core_config_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
-                                   "language", LANGUAGE_BLURB,
-                                   NULL,  /* take from environment */
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION_TYPE,
-                                 "interpolation-type",
-                                 INTERPOLATION_TYPE_BLURB,
-                                 GIMP_TYPE_INTERPOLATION_TYPE,
-                                 GIMP_INTERPOLATION_CUBIC,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_THRESHOLD,
-                                "default-threshold", DEFAULT_THRESHOLD_BLURB,
-                                0, 255, 15,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_LANGUAGE,
+                           "language",
+                           "Language",
+                           LANGUAGE_BLURB,
+                           NULL,  /* take from environment */
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_RESTART);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION_TYPE,
+                         "interpolation-type",
+                         "Interpolation",
+                         INTERPOLATION_TYPE_BLURB,
+                         GIMP_TYPE_INTERPOLATION_TYPE,
+                         GIMP_INTERPOLATION_CUBIC,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_DEFAULT_THRESHOLD,
+                        "default-threshold",
+                        "Default threshold",
+                        DEFAULT_THRESHOLD_BLURB,
+                        0, 255, 15,
+                        GIMP_PARAM_STATIC_STRINGS);
 
   path = gimp_config_build_plug_in_path ("plug-ins");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
-                                 "plug-in-path", PLUG_IN_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
+                         "plug-in-path",
+                         "Plug-In path",
+                         PLUG_IN_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_plug_in_path ("modules");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
-                                 "module-path", MODULE_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_MODULE_PATH,
+                         "module-path",
+                         "Module path",
+                         MODULE_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_plug_in_path ("interpreters");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_INTERPRETER_PATH,
-                                 "interpreter-path", INTERPRETER_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_INTERPRETER_PATH,
+                         "interpreter-path",
+                         "Interpreter path",
+                         INTERPRETER_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_plug_in_path ("environ");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ENVIRON_PATH,
-                                 "environ-path", ENVIRON_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_ENVIRON_PATH,
+                         "environ-path",
+                         "Environment path",
+                         ENVIRON_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_data_path ("brushes");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH,
-                                 "brush-path", BRUSH_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_BRUSH_PATH,
+                         "brush-path",
+                         "Brush path",
+                         BRUSH_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_writable_path ("brushes");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH_WRITABLE,
-                                 "brush-path-writable",
-                                 BRUSH_PATH_WRITABLE_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_BRUSH_PATH_WRITABLE,
+                         "brush-path-writable",
+                         "Writable brush path",
+                         BRUSH_PATH_WRITABLE_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_data_path ("dynamics");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_DYNAMICS_PATH,
-                                 "dynamics-path", DYNAMICS_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_DYNAMICS_PATH,
+                         "dynamics-path",
+                         "Dynamics path",
+                         DYNAMICS_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+
+  path = gimp_config_build_writable_path ("dynamics");
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_DYNAMICS_PATH_WRITABLE,
+                         "dynamics-path-writable",
+                         "Writable dynamics path",
+                         DYNAMICS_PATH_WRITABLE_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
 #if 0
@@ -244,11 +274,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 #endif
                        "~/.mypaint/brushes",
                        NULL);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH,
-                                 "mypaint-brush-path", MYPAINT_BRUSH_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH,
+                         "mypaint-brush-path",
+                         "MyPaint brush path",
+                         MYPAINT_BRUSH_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 #if 0
   g_free (dir1);
@@ -261,180 +293,237 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 #endif
                        "~/.mypaint/brushes",
                        NULL);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH_WRITABLE,
-                                 "mypaint-brush-path-writable",
-                                 MYPAINT_BRUSH_PATH_WRITABLE_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH_WRITABLE,
+                         "mypaint-brush-path-writable",
+                         "Writable MyPaint brush path",
+                         MYPAINT_BRUSH_PATH_WRITABLE_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 #if 0
   g_free (dir2);
 #endif
 
-  path = gimp_config_build_writable_path ("dynamics");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_DYNAMICS_PATH_WRITABLE,
-                                 "dynamics-path-writable",
-                                 DYNAMICS_PATH_WRITABLE_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
-  g_free (path);
-
   path = gimp_config_build_data_path ("patterns");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
-                                 "pattern-path", PATTERN_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PATTERN_PATH,
+                         "pattern-path",
+                         "Pattern path",
+                         PATTERN_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_writable_path ("patterns");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH_WRITABLE,
-                                 "pattern-path-writable",
-                                 PATTERN_PATH_WRITABLE_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PATTERN_PATH_WRITABLE,
+                         "pattern-path-writable",
+                         "Writable pattern path",
+                         PATTERN_PATH_WRITABLE_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_data_path ("palettes");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH,
-                                 "palette-path", PALETTE_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PALETTE_PATH,
+                         "palette-path",
+                         "Palette path",
+                         PALETTE_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_writable_path ("palettes");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH_WRITABLE,
-                                 "palette-path-writable",
-                                 PALETTE_PATH_WRITABLE_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PALETTE_PATH_WRITABLE,
+                         "palette-path-writable",
+                         "Writable palette path",
+                         PALETTE_PATH_WRITABLE_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_data_path ("gradients");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
-                                 "gradient-path", GRADIENT_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_GRADIENT_PATH,
+                         "gradient-path",
+                         "Gradient path",
+                         GRADIENT_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_writable_path ("gradients");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH_WRITABLE,
-                                 "gradient-path-writable",
-                                 GRADIENT_PATH_WRITABLE_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_GRADIENT_PATH_WRITABLE,
+                         "gradient-path-writable",
+                         "Writable gradient path",
+                         GRADIENT_PATH_WRITABLE_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_data_path ("tool-presets");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TOOL_PRESET_PATH,
-                                 "tool-preset-path", TOOL_PRESET_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_TOOL_PRESET_PATH,
+                         "tool-preset-path",
+                         "Tool preset path",
+                         TOOL_PRESET_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_writable_path ("tool-presets");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TOOL_PRESET_PATH_WRITABLE,
-                                 "tool-preset-path-writable",
-                                 TOOL_PRESET_PATH_WRITABLE_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_TOOL_PRESET_PATH_WRITABLE,
+                         "tool-preset-path-writable",
+                         "Writable tool preset path",
+                         TOOL_PRESET_PATH_WRITABLE_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
   path = gimp_config_build_data_path ("fonts");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH,
-                                 "font-path", FONT_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_CONFIRM);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_FONT_PATH,
+                         "font-path",
+                         "Font path",
+                         FONT_PATH_BLURB,
+                         GIMP_CONFIG_PATH_DIR_LIST, path,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH_WRITABLE,
-                                 "font-path-writable", NULL,
-                                 GIMP_CONFIG_PATH_DIR_LIST, NULL,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_FONT_PATH_WRITABLE,
+                         "font-path-writable",
+                         "Writable font path",
+                         NULL,
+                         GIMP_CONFIG_PATH_DIR_LIST, NULL,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
-                                   "default-brush", DEFAULT_BRUSH_BLURB,
-                                   DEFAULT_BRUSH,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_DYNAMICS,
-                                   "default-dynamics", DEFAULT_DYNAMICS_BLURB,
-                                   DEFAULT_DYNAMICS,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_MYPAINT_BRUSH,
-                                   "default-mypaint-brush", DEFAULT_MYPAINT_BRUSH_BLURB,
-                                   DEFAULT_MYPAINT_BRUSH,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
-                                   "default-pattern", DEFAULT_PATTERN_BLURB,
-                                   DEFAULT_PATTERN,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PALETTE,
-                                   "default-palette", DEFAULT_PALETTE_BLURB,
-                                   DEFAULT_PALETTE,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_GRADIENT,
-                                   "default-gradient", DEFAULT_GRADIENT_BLURB,
-                                   DEFAULT_GRADIENT,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_TOOL_PRESET,
-                                   "default-tool-preset", DEFAULT_TOOL_PRESET_BLURB,
-                                   DEFAULT_TOOL_PRESET,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_FONT,
-                                   "default-font", DEFAULT_FONT_BLURB,
-                                   DEFAULT_FONT,
-                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
+                           "default-brush",
+                           "Default brush",
+                           DEFAULT_BRUSH_BLURB,
+                           DEFAULT_BRUSH,
+                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_BRUSH,
-                                    "global-brush", GLOBAL_BRUSH_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_DYNAMICS,
-                                    "global-dynamics", GLOBAL_DYNAMICS_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_PATTERN,
-                                    "global-pattern", GLOBAL_PATTERN_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_PALETTE,
-                                    "global-palette", GLOBAL_PALETTE_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_GRADIENT,
-                                    "global-gradient", GLOBAL_GRADIENT_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_FONT,
-                                    "global-font", GLOBAL_FONT_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_IMAGE,
-                                   "default-image", DEFAULT_IMAGE_BLURB,
-                                   GIMP_TYPE_TEMPLATE,
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_GRID,
-                                   "default-grid", DEFAULT_GRID_BLURB,
-                                   GIMP_TYPE_GRID,
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_UNDO_LEVELS,
-                                "undo-levels", UNDO_LEVELS_BLURB,
-                                0, 1 << 20, 5,
-                                GIMP_PARAM_STATIC_STRINGS |
-                                GIMP_CONFIG_PARAM_CONFIRM);
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_DYNAMICS,
+                           "default-dynamics",
+                           "Default dynamics",
+                           DEFAULT_DYNAMICS_BLURB,
+                           DEFAULT_DYNAMICS,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_MYPAINT_BRUSH,
+                           "default-mypaint-brush",
+                           "Default MyPaint brush",
+                           DEFAULT_MYPAINT_BRUSH_BLURB,
+                           DEFAULT_MYPAINT_BRUSH,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
+                           "default-pattern",
+                           "Default pattern",
+                           DEFAULT_PATTERN_BLURB,
+                           DEFAULT_PATTERN,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_PALETTE,
+                           "default-palette",
+                           "Default palette",
+                           DEFAULT_PALETTE_BLURB,
+                           DEFAULT_PALETTE,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_GRADIENT,
+                           "default-gradient",
+                           "Default gradient",
+                           DEFAULT_GRADIENT_BLURB,
+                           DEFAULT_GRADIENT,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_TOOL_PRESET,
+                           "default-tool-preset",
+                           "Default tool preset",
+                           DEFAULT_TOOL_PRESET_BLURB,
+                           DEFAULT_TOOL_PRESET,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_FONT,
+                           "default-font",
+                           "Default font",
+                           DEFAULT_FONT_BLURB,
+                           DEFAULT_FONT,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GLOBAL_BRUSH,
+                            "global-brush",
+                            "Global brush",
+                            GLOBAL_BRUSH_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GLOBAL_DYNAMICS,
+                            "global-dynamics",
+                            "Global dynamics",
+                            GLOBAL_DYNAMICS_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GLOBAL_PATTERN,
+                            "global-pattern",
+                            "Global pattern",
+                            GLOBAL_PATTERN_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GLOBAL_PALETTE,
+                            "global-palette",
+                            "Global palette",
+                            GLOBAL_PALETTE_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GLOBAL_GRADIENT,
+                            "global-gradient",
+                            "Global gradient",
+                            GLOBAL_GRADIENT_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GLOBAL_FONT,
+                            "global-font",
+                            "Global font",
+                            GLOBAL_FONT_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_DEFAULT_IMAGE,
+                           "default-image",
+                           "Default image",
+                           DEFAULT_IMAGE_BLURB,
+                           GIMP_TYPE_TEMPLATE,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_DEFAULT_GRID,
+                           "default-grid",
+                           "Default grid",
+                           DEFAULT_GRID_BLURB,
+                           GIMP_TYPE_GRID,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_UNDO_LEVELS,
+                        "undo-levels",
+                        "Undo levels",
+                        UNDO_LEVELS_BLURB,
+                        0, 1 << 20, 5,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_CONFIG_PARAM_CONFIRM);
 
   undo_size = gimp_get_physical_memory_size ();
 
@@ -443,81 +532,115 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   else
     undo_size = 1 << 26; /* 64GB */
 
-  GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_UNDO_SIZE,
-                                    "undo-size", UNDO_SIZE_BLURB,
-                                    0, GIMP_MAX_MEMSIZE, undo_size,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_CONFIRM);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_UNDO_PREVIEW_SIZE,
-                                 "undo-preview-size", UNDO_PREVIEW_SIZE_BLURB,
-                                 GIMP_TYPE_VIEW_SIZE,
-                                 GIMP_VIEW_SIZE_LARGE,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FILTER_HISTORY_SIZE,
-                                "plug-in-history-size", /* compat name */
-                                FILTER_HISTORY_SIZE_BLURB,
-                                0, 256, 10,
-                                GIMP_PARAM_STATIC_STRINGS |
-                                GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
-                                 PROP_PLUGINRC_PATH,
-                                 "pluginrc-path", PLUGINRC_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_FILE,
-                                 "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc",
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_LAYER_PREVIEWS,
-                                    "layer-previews", LAYER_PREVIEWS_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_LAYER_PREVIEW_SIZE,
-                                 "layer-preview-size", LAYER_PREVIEW_SIZE_BLURB,
-                                 GIMP_TYPE_VIEW_SIZE,
-                                 GIMP_VIEW_SIZE_MEDIUM,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_THUMBNAIL_SIZE,
-                                 "thumbnail-size", THUMBNAIL_SIZE_BLURB,
-                                 GIMP_TYPE_THUMBNAIL_SIZE,
-                                 GIMP_THUMBNAIL_SIZE_NORMAL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_THUMBNAIL_FILESIZE_LIMIT,
-                                    "thumbnail-filesize-limit",
-                                    THUMBNAIL_FILESIZE_LIMIT_BLURB,
-                                    0, GIMP_MAX_MEMSIZE, 1 << 22,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_COLOR_MANAGEMENT,
-                                   "color-management", COLOR_MANAGEMENT_BLURB,
-                                   GIMP_TYPE_COLOR_CONFIG,
-                                   GIMP_PARAM_STATIC_STRINGS |
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_COLOR_PROFILE_POLICY,
-                                 "color-profile-policy",
-                                 COLOR_PROFILE_POLICY_BLURB,
-                                 GIMP_TYPE_COLOR_PROFILE_POLICY,
-                                 GIMP_COLOR_PROFILE_POLICY_ASK,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
-                                    "save-document-history",
-                                    SAVE_DOCUMENT_HISTORY_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_QUICK_MASK_COLOR,
-                                "quick-mask-color", QUICK_MASK_COLOR_BLURB,
-                                TRUE, &red,
-                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_MEMSIZE (object_class, PROP_UNDO_SIZE,
+                            "undo-size",
+                            "Undo size",
+                            UNDO_SIZE_BLURB,
+                            0, GIMP_MAX_MEMSIZE, undo_size,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_CONFIRM);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_UNDO_PREVIEW_SIZE,
+                         "undo-preview-size",
+                         "Undo preview size",
+                         UNDO_PREVIEW_SIZE_BLURB,
+                         GIMP_TYPE_VIEW_SIZE,
+                         GIMP_VIEW_SIZE_LARGE,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_FILTER_HISTORY_SIZE,
+                        "plug-in-history-size", /* compat name */
+                        "Filter history size",
+                        FILTER_HISTORY_SIZE_BLURB,
+                        0, 256, 10,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_CONFIG_PARAM_RESTART);
+
+  GIMP_CONFIG_PROP_PATH (object_class,
+                         PROP_PLUGINRC_PATH,
+                         "pluginrc-path",
+                         "plugninrc path",
+                         PLUGINRC_PATH_BLURB,
+                         GIMP_CONFIG_PATH_FILE,
+                         "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc",
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_PREVIEWS,
+                            "layer-previews",
+                            "Layer previews",
+                            LAYER_PREVIEWS_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_PREVIEW_SIZE,
+                         "layer-preview-size",
+                         "Layer preview size",
+                         LAYER_PREVIEW_SIZE_BLURB,
+                         GIMP_TYPE_VIEW_SIZE,
+                         GIMP_VIEW_SIZE_MEDIUM,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_THUMBNAIL_SIZE,
+                         "thumbnail-size",
+                         "Thumbnail size",
+                         THUMBNAIL_SIZE_BLURB,
+                         GIMP_TYPE_THUMBNAIL_SIZE,
+                         GIMP_THUMBNAIL_SIZE_NORMAL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_MEMSIZE (object_class, PROP_THUMBNAIL_FILESIZE_LIMIT,
+                            "thumbnail-filesize-limit",
+                            "Thumbnail file size limie",
+                            THUMBNAIL_FILESIZE_LIMIT_BLURB,
+                            0, GIMP_MAX_MEMSIZE, 1 << 22,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_COLOR_MANAGEMENT,
+                           "color-management",
+                           "Color management",
+                           COLOR_MANAGEMENT_BLURB,
+                           GIMP_TYPE_COLOR_CONFIG,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_COLOR_PROFILE_POLICY,
+                         "color-profile-policy",
+                         "Color profile policy",
+                         COLOR_PROFILE_POLICY_BLURB,
+                         GIMP_TYPE_COLOR_PROFILE_POLICY,
+                         GIMP_COLOR_PROFILE_POLICY_ASK,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
+                            "save-document-history",
+                            "Save document history",
+                            SAVE_DOCUMENT_HISTORY_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_QUICK_MASK_COLOR,
+                        "quick-mask-color",
+                        "Quick mask color",
+                        QUICK_MASK_COLOR_BLURB,
+                        TRUE, &red,
+                        GIMP_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
-                                    "install-colormap", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MIN_COLORS,
-                                "min-colors", NULL,
-                                27, 256, 144,
-                                GIMP_PARAM_STATIC_STRINGS |
-                                GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
+                            "install-colormap",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_IGNORE);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_MIN_COLORS,
+                        "min-colors",
+                        NULL, NULL,
+                        27, 256, 144,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void

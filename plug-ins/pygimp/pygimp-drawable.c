@@ -481,7 +481,6 @@ drw_transform_flip(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     gimp_context_push ();
     gimp_context_set_transform_direction (transform_direction);
     gimp_context_set_interpolation (interpolation);
-    gimp_context_set_transform_recursion (recursion_level);
     gimp_context_set_transform_resize (clip_result);
 
     id = gimp_item_transform_flip (self->ID, x0, y0, x1, y1);
@@ -572,7 +571,6 @@ drw_transform_perspective(PyGimpDrawable *self, PyObject *args, PyObject *kwargs
     gimp_context_push ();
     gimp_context_set_transform_direction (transform_direction);
     gimp_context_set_interpolation (interpolation);
-    gimp_context_set_transform_recursion (recursion_level);
     gimp_context_set_transform_resize (clip_result);
 
     id = gimp_item_transform_perspective (self->ID,
@@ -638,7 +636,6 @@ drw_transform_rotate(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     gimp_context_push ();
     gimp_context_set_transform_direction (transform_direction);
     gimp_context_set_interpolation (interpolation);
-    gimp_context_set_transform_recursion (recursion_level);
     gimp_context_set_transform_resize (clip_result);
 
     id = gimp_item_transform_rotate (self->ID, angle, auto_center,
@@ -732,7 +729,6 @@ drw_transform_scale(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     gimp_context_push ();
     gimp_context_set_transform_direction (transform_direction);
     gimp_context_set_interpolation (interpolation);
-    gimp_context_set_transform_recursion (recursion_level);
     gimp_context_set_transform_resize (clip_result);
 
     id = gimp_item_transform_scale (self->ID, x0, y0, x1, y1);
@@ -794,7 +790,6 @@ drw_transform_shear(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     gimp_context_push ();
     gimp_context_set_transform_direction (transform_direction);
     gimp_context_set_interpolation (interpolation);
-    gimp_context_set_transform_recursion (recursion_level);
     gimp_context_set_transform_resize (clip_result);
 
     id = gimp_item_transform_shear (self->ID, shear_type, magnitude);
@@ -859,7 +854,6 @@ drw_transform_2d(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     gimp_context_push ();
     gimp_context_set_transform_direction (transform_direction);
     gimp_context_set_interpolation (interpolation);
-    gimp_context_set_transform_recursion (recursion_level);
     gimp_context_set_transform_resize (clip_result);
 
     id = gimp_item_transform_2d (self->ID, source_x, source_y,
@@ -931,7 +925,6 @@ drw_transform_matrix(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     gimp_context_push ();
     gimp_context_set_transform_direction (transform_direction);
     gimp_context_set_interpolation (interpolation);
-    gimp_context_set_transform_recursion (recursion_level);
     gimp_context_set_transform_resize (clip_result);
 
     id = gimp_item_transform_matrix (self->ID,
@@ -1190,6 +1183,16 @@ drw_get_mask_bounds(PyGimpDrawable *self, void *closure)
 }
 
 static PyObject *
+drw_get_mask_intersect(PyGimpDrawable *self, void *closure)
+{
+    gint x, y, w, h;
+
+    if(!gimp_drawable_mask_intersect(self->ID, &x, &y, &w, &h))
+      return Py_BuildValue("");
+    return Py_BuildValue("(iiii)", x, y, w, h);
+}
+
+static PyObject *
 drw_get_offsets(PyGimpDrawable *self, void *closure)
 {
     gint x, y;
@@ -1302,6 +1305,7 @@ static  PyGetSetDef drw_getsets[] = {
     { "is_indexed", (getter)drw_get_is_indexed, (setter)0 },
     { "is_layer_mask", (getter)drw_get_is_layer_mask, (setter)0 },
     { "mask_bounds", (getter)drw_get_mask_bounds, (setter)0 },
+    { "mask_intersect", (getter)drw_get_mask_intersect, (setter)0 },
     { "offsets", (getter)drw_get_offsets, (setter)0 },
     { "type", (getter)drw_get_type, (setter)0 },
     { "type_with_alpha", (getter)drw_get_type_with_alpha, (setter)0 },

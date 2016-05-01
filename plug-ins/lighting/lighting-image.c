@@ -347,6 +347,9 @@ gint
 image_setup (GimpDrawable *drawable,
 	     gint          interactive)
 {
+  gint		w, h;
+  gboolean      ret;
+
   compute_maps ();
 
   /* Get some useful info on the input drawable */
@@ -355,8 +358,14 @@ image_setup (GimpDrawable *drawable,
   input_drawable  = drawable;
   output_drawable = drawable;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &border_x1, &border_y1, &border_x2, &border_y2);
+  ret = gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &border_x1, &border_y1, &w, &h);
+
+  border_x2 = border_x1 + w;
+  border_y2 = border_y1 + h;
+
+  if (! ret)
+    return FALSE;
 
   width  = input_drawable->width;
   height = input_drawable->height;

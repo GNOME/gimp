@@ -219,6 +219,7 @@ gimp_guide_style_get_type (void)
     { GIMP_GUIDE_STYLE_NORMAL, "GIMP_GUIDE_STYLE_NORMAL", "normal" },
     { GIMP_GUIDE_STYLE_MIRROR, "GIMP_GUIDE_STYLE_MIRROR", "mirror" },
     { GIMP_GUIDE_STYLE_MANDALA, "GIMP_GUIDE_STYLE_MANDALA", "mandala" },
+    { GIMP_GUIDE_STYLE_SPLIT_VIEW, "GIMP_GUIDE_STYLE_SPLIT_VIEW", "split-view" },
     { 0, NULL, NULL }
   };
 
@@ -228,6 +229,7 @@ gimp_guide_style_get_type (void)
     { GIMP_GUIDE_STYLE_NORMAL, "GIMP_GUIDE_STYLE_NORMAL", NULL },
     { GIMP_GUIDE_STYLE_MIRROR, "GIMP_GUIDE_STYLE_MIRROR", NULL },
     { GIMP_GUIDE_STYLE_MANDALA, "GIMP_GUIDE_STYLE_MANDALA", NULL },
+    { GIMP_GUIDE_STYLE_SPLIT_VIEW, "GIMP_GUIDE_STYLE_SPLIT_VIEW", NULL },
     { 0, NULL, NULL }
   };
 
@@ -253,6 +255,7 @@ gimp_histogram_channel_get_type (void)
     { GIMP_HISTOGRAM_GREEN, "GIMP_HISTOGRAM_GREEN", "green" },
     { GIMP_HISTOGRAM_BLUE, "GIMP_HISTOGRAM_BLUE", "blue" },
     { GIMP_HISTOGRAM_ALPHA, "GIMP_HISTOGRAM_ALPHA", "alpha" },
+    { GIMP_HISTOGRAM_LUMINANCE, "GIMP_HISTOGRAM_LUMINANCE", "luminance" },
     { GIMP_HISTOGRAM_RGB, "GIMP_HISTOGRAM_RGB", "rgb" },
     { 0, NULL, NULL }
   };
@@ -264,6 +267,7 @@ gimp_histogram_channel_get_type (void)
     { GIMP_HISTOGRAM_GREEN, NC_("histogram-channel", "Green"), NULL },
     { GIMP_HISTOGRAM_BLUE, NC_("histogram-channel", "Blue"), NULL },
     { GIMP_HISTOGRAM_ALPHA, NC_("histogram-channel", "Alpha"), NULL },
+    { GIMP_HISTOGRAM_LUMINANCE, NC_("histogram-channel", "Luminance"), NULL },
     { GIMP_HISTOGRAM_RGB, NC_("histogram-channel", "RGB"), NULL },
     { 0, NULL, NULL }
   };

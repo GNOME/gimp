@@ -19,6 +19,7 @@
 #define __PROCEDURE_COMMANDS_H__
 
 
+GimpValueArray * procedure_commands_get_run_mode_arg (GimpProcedure  *procedure);
 GimpValueArray * procedure_commands_get_data_args    (GimpProcedure  *procedure,
                                                       GimpObject     *object);
 GimpValueArray * procedure_commands_get_image_args   (GimpProcedure  *procedure,

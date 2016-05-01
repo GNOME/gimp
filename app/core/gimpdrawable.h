@@ -66,9 +66,9 @@ struct _GimpDrawableClass
                                            const Babl           *new_format,
                                            GimpImageBaseType     new_base_type,
                                            GimpPrecision         new_precision,
+                                           GimpColorProfile     *dest_profile,
                                            gint                  layer_dither_type,
                                            gint                  mask_dither_type,
-                                           gboolean              convert_profile,
                                            gboolean              push_undo,
                                            GimpProgress         *progress);
   void          (* apply_buffer)          (GimpDrawable         *drawable,
@@ -144,9 +144,9 @@ void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImage          *dest_image,
                                                   GimpImageBaseType   new_base_type,
                                                   GimpPrecision       new_precision,
+                                                  GimpColorProfile   *dest_profile,
                                                   gint                layer_dither_type,
                                                   gint                mask_dither_type,
-                                                  gboolean            convert_profile,
                                                   gboolean            push_undo,
                                                   GimpProgress       *progress);
 

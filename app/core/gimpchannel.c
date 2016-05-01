@@ -149,9 +149,9 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               const Babl        *new_format,
                                               GimpImageBaseType  new_base_type,
                                               GimpPrecision      new_precision,
+                                              GimpColorProfile  *dest_profile,
                                               gint               layer_dither_type,
                                               gint               mask_dither_type,
-                                              gboolean           convert_profile,
                                               gboolean           push_undo,
                                               GimpProgress      *progress);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
@@ -583,7 +583,7 @@ gimp_channel_convert (GimpItem  *item,
     {
       gimp_drawable_convert_type (drawable, dest_image, GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
-                                  0, 0, FALSE,
+                                  NULL, 0, 0,
                                   FALSE, NULL);
     }
 
@@ -959,9 +959,9 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
                            const Babl        *new_format,
                            GimpImageBaseType  new_base_type,
                            GimpPrecision      new_precision,
+                           GimpColorProfile  *dest_profile,
                            gint               layer_dither_type,
                            gint               mask_dither_type,
-                           gboolean           convert_profile,
                            gboolean           push_undo,
                            GimpProgress      *progress)
 {
@@ -1610,13 +1610,10 @@ static void
 gimp_channel_real_flood (GimpChannel *channel,
                          gboolean     push_undo)
 {
-  gint x1, y1, x2, y2;
+  gint x, y, width, height;
 
-  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (channel), &x, &y, &width, &height))
     return;
-
-  x2 += x1;
-  y2 += y1;
 
   if (gimp_channel_is_empty (channel))
     return;
@@ -1628,9 +1625,9 @@ gimp_channel_real_flood (GimpChannel *channel,
   gimp_gegl_apply_flood (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                          NULL, NULL,
                          gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                         GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+                         GEGL_RECTANGLE (x, y, width, height));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (GIMP_DRAWABLE (channel), x, y, width, height);
 }
 
 

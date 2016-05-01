@@ -287,15 +287,18 @@ gimp_guide_removed (GimpGuide *guide)
   g_signal_emit (guide, gimp_guide_signals[REMOVED], 0);
 }
 
-
 GimpGuideStyle
 gimp_guide_get_style (GimpGuide *guide)
 {
+  g_return_val_if_fail (GIMP_IS_GUIDE (guide), GIMP_GUIDE_STYLE_NONE);
+
   return guide->priv->style;
 }
 
 gboolean
 gimp_guide_is_custom (GimpGuide *guide)
 {
-  return (guide->priv->style != GIMP_GUIDE_STYLE_NORMAL);
+  g_return_val_if_fail (GIMP_IS_GUIDE (guide), FALSE);
+
+  return guide->priv->style != GIMP_GUIDE_STYLE_NORMAL;
 }

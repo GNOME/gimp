@@ -50,8 +50,19 @@ exr_loader_get_image_type (EXRLoader *loader);
 int
 exr_loader_has_alpha (EXRLoader *loader);
 
-cmsHPROFILE
-exr_loader_get_icc_profile (EXRLoader *loader);
+GimpColorProfile *
+exr_loader_get_profile (EXRLoader *loader);
+
+gchar *
+exr_loader_get_comment (EXRLoader *loader);
+
+guchar *
+exr_loader_get_exif (EXRLoader *loader,
+                     guint *size);
+
+guchar *
+exr_loader_get_xmp (EXRLoader *loader,
+                    guint *size);
 
 int
 exr_loader_read_pixel_row (EXRLoader *loader,

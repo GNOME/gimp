@@ -36,6 +36,21 @@
 #include "gimp-gegl-utils.h"
 
 
+/*  local function prototypes  */
+
+static void   gimp_gegl_config_config_sync   (GObject          *config,
+                                              const GParamSpec *gimp_pspec,
+                                              GeglNode         *node);
+static void   gimp_gegl_config_config_notify (GObject          *config,
+                                              const GParamSpec *gimp_pspec,
+                                              GeglNode         *node);
+static void   gimp_gegl_config_node_notify   (GeglNode         *node,
+                                              const GParamSpec *gegl_pspec,
+                                              GObject          *config);
+
+
+/*  public functions  */
+
 static GHashTable *
 gimp_gegl_config_get_type_table (void)
 {
@@ -405,4 +420,193 @@ gimp_gegl_config_sync_node (GimpObject *config,
     }
 
   g_free (pspecs);
+}
+
+void
+gimp_gegl_config_connect_node (GimpObject *config,
+                               GeglNode   *node)
+{
+  GParamSpec **pspecs;
+  gchar       *operation;
+  guint        n_pspecs;
+  gint         i;
+
+  g_return_if_fail (GIMP_IS_OBJECT (config));
+  g_return_if_fail (GEGL_IS_NODE (node));
+
+  gegl_node_get (node,
+                 "operation", &operation,
+                 NULL);
+
+  g_return_if_fail (operation != NULL);
+
+  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
+  g_free (operation);
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+
+      /*  if the operation has an object property of the config's
+       *  type, connect it to a special callback and done
+       */
+      if (G_IS_PARAM_SPEC_OBJECT (pspec) &&
+          pspec->value_type == G_TYPE_FROM_INSTANCE (config))
+        {
+          g_signal_connect_object (config, "notify",
+                                   G_CALLBACK (gimp_gegl_config_config_sync),
+                                   node, 0);
+          g_free (pspecs);
+          return;
+        }
+    }
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *gegl_pspec = pspecs[i];
+      GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                             gegl_pspec->name);
+
+      if (gimp_pspec)
+        {
+          gchar *notify_name = g_strconcat ("notify::", gimp_pspec->name, NULL);
+
+          g_signal_connect_object (config, notify_name,
+                                   G_CALLBACK (gimp_gegl_config_config_notify),
+                                   node, 0);
+
+          g_signal_connect_object (node, notify_name,
+                                   G_CALLBACK (gimp_gegl_config_node_notify),
+                                   config, 0);
+
+          g_free (notify_name);
+        }
+    }
+
+  g_free (pspecs);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_gegl_config_config_sync (GObject          *config,
+                              const GParamSpec *gimp_pspec,
+                              GeglNode         *node)
+{
+  gimp_gegl_config_sync_node (GIMP_OBJECT (config), node);
+}
+
+static void
+gimp_gegl_config_config_notify (GObject          *config,
+                                const GParamSpec *gimp_pspec,
+                                GeglNode         *node)
+{
+  GParamSpec *gegl_pspec = gegl_node_find_property (node, gimp_pspec->name);
+
+  if (gegl_pspec)
+    {
+      GValue value = G_VALUE_INIT;
+      gulong handler;
+
+      g_value_init (&value, gimp_pspec->value_type);
+      g_object_get_property (config, gimp_pspec->name, &value);
+
+      if (GEGL_IS_PARAM_SPEC_COLOR (gegl_pspec))
+        {
+          GimpRGB    gimp_color;
+          GeglColor *gegl_color;
+
+          gimp_value_get_rgb (&value, &gimp_color);
+          g_value_unset (&value);
+
+          gegl_color = gimp_gegl_color_new (&gimp_color);
+
+          g_value_init (&value, gegl_pspec->value_type);
+          g_value_take_object (&value, gegl_color);
+        }
+
+      handler = g_signal_handler_find (node,
+                                       G_SIGNAL_MATCH_DETAIL |
+                                       G_SIGNAL_MATCH_FUNC   |
+                                       G_SIGNAL_MATCH_DATA,
+                                       0,
+                                       g_quark_from_string (gegl_pspec->name),
+                                       NULL,
+                                       gimp_gegl_config_node_notify,
+                                       config);
+
+      if (handler)
+        g_signal_handler_block (node, handler);
+
+      gegl_node_set_property (node, gegl_pspec->name, &value);
+      g_value_unset (&value);
+
+      if (handler)
+        g_signal_handler_unblock (node, handler);
+
+    }
+}
+
+static void
+gimp_gegl_config_node_notify (GeglNode         *node,
+                              const GParamSpec *gegl_pspec,
+                              GObject          *config)
+{
+  GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                         gegl_pspec->name);
+
+  if (gimp_pspec)
+    {
+      GValue value = G_VALUE_INIT;
+      gulong handler;
+
+      g_value_init (&value, gegl_pspec->value_type);
+      gegl_node_get_property (node, gegl_pspec->name, &value);
+
+      if (GEGL_IS_PARAM_SPEC_COLOR (gegl_pspec))
+        {
+          GeglColor *gegl_color;
+          GimpRGB    gimp_color;
+
+          gegl_color = g_value_dup_object (&value);
+          g_value_unset (&value);
+
+          if (gegl_color)
+            {
+              gegl_color_get_rgba (gegl_color,
+                                   &gimp_color.r,
+                                   &gimp_color.g,
+                                   &gimp_color.b,
+                                   &gimp_color.a);
+              g_object_unref (gegl_color);
+            }
+          else
+            {
+              gimp_rgba_set (&gimp_color, 0.0, 0.0, 0.0, 1.0);
+            }
+
+          g_value_init (&value, gimp_pspec->value_type);
+          gimp_value_set_rgb (&value, &gimp_color);
+        }
+
+      handler = g_signal_handler_find (config,
+                                       G_SIGNAL_MATCH_DETAIL |
+                                       G_SIGNAL_MATCH_FUNC   |
+                                       G_SIGNAL_MATCH_DATA,
+                                       0,
+                                       g_quark_from_string (gimp_pspec->name),
+                                       NULL,
+                                       gimp_gegl_config_config_notify,
+                                       node);
+
+      if (handler)
+        g_signal_handler_block (config, handler);
+
+      g_object_set_property (config, gimp_pspec->name, &value);
+      g_value_unset (&value);
+
+      if (handler)
+        g_signal_handler_unblock (config, handler);
+    }
 }

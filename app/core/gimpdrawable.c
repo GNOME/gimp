@@ -19,7 +19,6 @@
 
 #include <cairo.h>
 #include <gegl.h>
-#include <gegl-plugin.h> /* gegl_operation_invalidate() */
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -73,7 +72,8 @@ enum
 
 /*  local function prototypes  */
 
-static void  gimp_drawable_pickable_iface_init (GimpPickableInterface *iface);
+static void       gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
+static void       gimp_pickable_iface_init         (GimpPickableInterface     *iface);
 
 static void       gimp_drawable_dispose            (GObject           *object);
 static void       gimp_drawable_finalize           (GObject           *object);
@@ -93,10 +93,10 @@ static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
                                                     gint              *width,
                                                     gint              *height);
 
+static void       gimp_drawable_visibility_changed (GimpFilter        *filter);
 static GeglNode * gimp_drawable_get_node           (GimpFilter        *filter);
 
 static void       gimp_drawable_removed            (GimpItem          *item);
-static void       gimp_drawable_visibility_changed (GimpItem          *item);
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
                                                     GType              new_type);
 static void       gimp_drawable_scale              (GimpItem          *item,
@@ -131,6 +131,13 @@ static void       gimp_drawable_transform          (GimpItem          *item,
                                                     GimpTransformResize clip_result,
                                                     GimpProgress      *progress);
 
+static const guint8 *
+                  gimp_drawable_get_icc_profile    (GimpColorManaged  *managed,
+                                                    gsize             *len);
+static GimpColorProfile *
+                  gimp_drawable_get_color_profile  (GimpColorManaged  *managed);
+static void       gimp_drawable_profile_changed    (GimpColorManaged  *managed);
+
 static gboolean   gimp_drawable_get_pixel_at       (GimpPickable      *pickable,
                                                     gint               x,
                                                     gint               y,
@@ -152,9 +159,9 @@ static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     const Babl        *new_format,
                                                     GimpImageBaseType  new_base_type,
                                                     GimpPrecision      new_precision,
+                                                    GimpColorProfile  *dest_profile,
                                                     gint               layer_dither_type,
                                                     gint               mask_dither_type,
-                                                    gboolean           convert_profile,
                                                     gboolean           push_undo,
                                                     GimpProgress      *progress);
 
@@ -197,8 +204,10 @@ static void       gimp_drawable_fs_update          (GimpLayer         *fs,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_drawable_pickable_iface_init))
+                                                gimp_pickable_iface_init))
 
 #define parent_class gimp_drawable_parent_class
 
@@ -245,11 +254,12 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   viewable_class->get_size           = gimp_drawable_get_size;
   viewable_class->get_new_preview    = gimp_drawable_get_new_preview;
+  viewable_class->get_new_pixbuf     = gimp_drawable_get_new_pixbuf;
 
+  filter_class->visibility_changed   = gimp_drawable_visibility_changed;
   filter_class->get_node             = gimp_drawable_get_node;
 
   item_class->removed                = gimp_drawable_removed;
-  item_class->visibility_changed     = gimp_drawable_visibility_changed;
   item_class->duplicate              = gimp_drawable_duplicate;
   item_class->scale                  = gimp_drawable_scale;
   item_class->resize                 = gimp_drawable_resize;
@@ -289,7 +299,15 @@ gimp_drawable_init (GimpDrawable *drawable)
 /* sorry for the evil casts */
 
 static void
-gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
+gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
+{
+  iface->get_icc_profile   = gimp_drawable_get_icc_profile;
+  iface->get_color_profile = gimp_drawable_get_color_profile;
+  iface->profile_changed   = gimp_drawable_profile_changed;
+}
+
+static void
+gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->get_image             = (GimpImage     * (*) (GimpPickable *pickable)) gimp_item_get_image;
   iface->get_format            = (const Babl    * (*) (GimpPickable *pickable)) gimp_drawable_get_format;
@@ -399,6 +417,40 @@ gimp_drawable_get_size (GimpViewable *viewable,
   return TRUE;
 }
 
+static void
+gimp_drawable_visibility_changed (GimpFilter *filter)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (filter);
+  GeglNode     *node;
+
+  /*  don't use gimp_filter_get_node() because that would create
+   *  the node.
+   */
+  node = gimp_filter_peek_node (filter);
+
+  if (node)
+    {
+      GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
+      GeglNode *output = gegl_node_get_output_proxy (node, "output");
+
+      if (gimp_filter_get_visible (filter))
+        {
+          gegl_node_connect_to (input,                        "output",
+                                drawable->private->mode_node, "input");
+          gegl_node_connect_to (drawable->private->mode_node, "output",
+                                output,                       "input");
+        }
+      else
+        {
+          gegl_node_disconnect (drawable->private->mode_node, "input");
+
+          /* The rest handled by GimpFilter */
+        }
+    }
+
+  GIMP_FILTER_CLASS (parent_class)->visibility_changed (filter);
+}
+
 static GeglNode *
 gimp_drawable_get_node (GimpFilter *filter)
 {
@@ -419,7 +471,7 @@ gimp_drawable_get_node (GimpFilter *filter)
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  if (gimp_item_get_visible (GIMP_ITEM (drawable)))
+  if (gimp_filter_get_visible (filter))
     {
       gegl_node_connect_to (input,                        "output",
                             drawable->private->mode_node, "input");
@@ -428,8 +480,7 @@ gimp_drawable_get_node (GimpFilter *filter)
     }
   else
     {
-      gegl_node_connect_to (input,  "output",
-                            output, "input");
+      /* Handled by GimpFilter */
     }
 
   return node;
@@ -444,44 +495,6 @@ gimp_drawable_removed (GimpItem *item)
 
   if (GIMP_ITEM_CLASS (parent_class)->removed)
     GIMP_ITEM_CLASS (parent_class)->removed (item);
-}
-
-static void
-gimp_drawable_visibility_changed (GimpItem *item)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglNode     *node;
-
-  /*  don't use gimp_filter_get_node() because that would create
-   *  the node.
-   */
-  node = gimp_filter_peek_node (GIMP_FILTER (item));
-
-  if (node)
-    {
-      GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
-      GeglNode *output = gegl_node_get_output_proxy (node, "output");
-
-      if (gimp_item_get_visible (item))
-        {
-          gegl_node_connect_to (input,                        "output",
-                                drawable->private->mode_node, "input");
-          gegl_node_connect_to (drawable->private->mode_node, "output",
-                                output,                       "input");
-        }
-      else
-        {
-          gegl_node_disconnect (drawable->private->mode_node, "input");
-
-          gegl_node_connect_to (input,  "output",
-                                output, "input");
-        }
-
-      /* FIXME: chain up again when above floating sel special case is gone */
-      return;
-    }
-
-  GIMP_ITEM_CLASS (parent_class)->visibility_changed (item);
 }
 
 static GimpItem *
@@ -714,6 +727,29 @@ gimp_drawable_transform (GimpItem               *item,
     }
 }
 
+static const guint8 *
+gimp_drawable_get_icc_profile (GimpColorManaged *managed,
+                               gsize            *len)
+{
+  GimpColorProfile *profile = gimp_color_managed_get_color_profile (managed);
+
+  return gimp_color_profile_get_icc_profile (profile, len);
+}
+
+static GimpColorProfile *
+gimp_drawable_get_color_profile (GimpColorManaged *managed)
+{
+  const Babl *format = gimp_drawable_get_format (GIMP_DRAWABLE (managed));
+
+  return gimp_babl_format_get_color_profile (format);
+}
+
+static void
+gimp_drawable_profile_changed (GimpColorManaged *managed)
+{
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (managed));
+}
+
 static gboolean
 gimp_drawable_get_pixel_at (GimpPickable *pickable,
                             gint          x,
@@ -764,7 +800,7 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
 }
 
 /* FIXME: this default impl is currently unused because no subclass
- * chins up. the goal is to handle the almost identical subclass code
+ * chains up. the goal is to handle the almost identical subclass code
  * here again.
  */
 static void
@@ -773,9 +809,9 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  const Babl        *new_format,
                                  GimpImageBaseType  new_base_type,
                                  GimpPrecision      new_precision,
+                                 GimpColorProfile  *dest_profile,
                                  gint               layer_dither_type,
                                  gint               mask_dither_type,
-                                 gboolean           convert_type,
                                  gboolean           push_undo,
                                  GimpProgress      *progress)
 {
@@ -1243,9 +1279,9 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImage         *dest_image,
                             GimpImageBaseType  new_base_type,
                             GimpPrecision      new_precision,
+                            GimpColorProfile  *dest_profile,
                             gint               layer_dither_type,
                             gint               mask_dither_type,
-                            gboolean           convert_profile,
                             gboolean           push_undo,
                             GimpProgress      *progress)
 {
@@ -1255,7 +1291,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable) ||
                     new_precision != gimp_drawable_get_precision (drawable) ||
-                    convert_profile);
+                    dest_profile);
+  g_return_if_fail (dest_profile == NULL || GIMP_IS_COLOR_PROFILE (dest_profile));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
@@ -1270,9 +1307,9 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                                                     new_format,
                                                     new_base_type,
                                                     new_precision,
+                                                    dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,
-                                                    convert_profile,
                                                     push_undo,
                                                     progress);
 

@@ -145,6 +145,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
 }
 
 static void
@@ -536,7 +537,7 @@ unsharp_mask (GimpDrawable *drawable,
               gdouble       amount)
 {
   GimpPixelRgn srcPR, destPR;
-  gint         x1, y1, x2, y2;
+  gint         x1, y1, width, height;
 
   /* initialize pixel regions */
   gimp_pixel_rgn_init (&srcPR, drawable,
@@ -545,16 +546,18 @@ unsharp_mask (GimpDrawable *drawable,
                        0, 0, drawable->width, drawable->height, TRUE, TRUE);
 
   /* Get the input */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &width, &height))
+    return;
 
   unsharp_region (&srcPR, &destPR, drawable->bpp,
                   radius, amount,
-                  x1, x2, y1, y2,
+                  x1, x1 + width, y1, y1 + height,
                   TRUE);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 }
 
 /* Perform an unsharp mask on the region, given a source region, dest.

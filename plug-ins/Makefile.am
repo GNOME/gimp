@@ -5,6 +5,7 @@ help_browser = help-browser
 endif
 
 if HAVE_OPENEXR
+file_darktable = file-darktable
 file_exr = file-exr
 endif
 
@@ -20,10 +21,6 @@ if BUILD_SCRIPT_FU
 script_fu = script-fu
 endif
 
-if HAVE_MAC_TWAIN
-twain = twain
-endif
-
 if OS_WIN32
 twain = twain
 win_snap = win-snap
@@ -33,6 +30,7 @@ SUBDIRS = \
 	$(script_fu)		\
 	$(pygimp)		\
 	file-bmp		\
+	$(file_darktable)	\
 	$(file_exr)		\
 	file-faxg3		\
 	file-fits		\
