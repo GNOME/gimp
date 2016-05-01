@@ -2035,3 +2035,29 @@ _wrap_gimp_color_display_stack_convert_surface(PyGObject *self, PyObject *args,
   Py_INCREF(Py_None);
   return Py_None;
 }
+%%
+override gimp_zoom_preview_get_source noargs
+static PyObject *
+_wrap_gimp_zoom_preview_get_source(PyGObject *self)
+{
+  gint width, height, bpp;
+  guchar *image;
+  PyObject *pyimage;
+
+  image = gimp_zoom_preview_get_source(GIMP_ZOOM_PREVIEW(self->obj),
+                                       &width, &height, &bpp);
+
+  if (image)
+    {
+      pyimage = PyByteArray_FromStringAndSize((const char *)image,
+                                              width * height * bpp);
+      g_free (image);
+    }
+  else
+    {
+      Py_INCREF(Py_None);
+      pyimage = Py_None;
+    }
+
+  return Py_BuildValue("(Niii)", pyimage, width, height, bpp);
+}
