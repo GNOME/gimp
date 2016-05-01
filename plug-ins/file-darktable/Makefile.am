@@ -27,7 +27,8 @@ AM_CPPFLAGS = \
 libexec_PROGRAMS = file-darktable
 
 file_darktable_SOURCES = \
-	file-darktable.c
+	file-darktable.c	\
+	file-formats.h
 
 file_darktable_LDADD = \
 	$(libgimp)		\
