@@ -54,8 +54,7 @@ static GimpPlugInProcedure * file_proc_find_by_prefix    (GSList       *procs,
                                                           gboolean      skip_magic);
 static GimpPlugInProcedure * file_proc_find_by_extension (GSList       *procs,
                                                           GFile        *file,
-                                                          gboolean      skip_magic,
-                                                          gboolean      uri_procs_only);
+                                                          gboolean      skip_magic);
 static GimpPlugInProcedure * file_proc_find_by_name      (GSList       *procs,
                                                           GFile        *file,
                                                           gboolean      skip_magic);
@@ -93,23 +92,8 @@ file_procedure_find (GSList  *procs,
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  /* First, check magicless prefixes/suffixes: */
-
-  if (! file_proc_find_by_extension (procs, file, FALSE, TRUE))
-    {
-      /* If there is not any (with or without magic) file proc that
-       * can load the file by extension directly, try to find a proc
-       * that can load the prefix
-       */
-      file_proc = file_proc_find_by_prefix (procs, file, TRUE);
-    }
-  else
-    {
-      /* Otherwise try to find a magicless file proc that handles the
-       * extension
-       */
-      file_proc = file_proc_find_by_extension (procs, file, TRUE, FALSE);
-    }
+  /* First, check magicless prefixes/suffixes */
+  file_proc = file_proc_find_by_name (procs, file, TRUE);
 
   if (file_proc)
     return file_proc;
@@ -237,7 +221,7 @@ file_procedure_find_by_extension (GSList *procs,
 {
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
-  return file_proc_find_by_extension (procs, file, FALSE, FALSE);
+  return file_proc_find_by_extension (procs, file, FALSE);
 }
 
 GimpPlugInProcedure *
@@ -298,8 +282,7 @@ file_proc_find_by_prefix (GSList   *procs,
 static GimpPlugInProcedure *
 file_proc_find_by_extension (GSList   *procs,
                              GFile    *file,
-                             gboolean  skip_magic,
-                             gboolean  uri_procs_only)
+                             gboolean  skip_magic)
 {
   gchar *ext = gimp_file_get_extension (file);
 
@@ -310,9 +293,6 @@ file_proc_find_by_extension (GSList   *procs,
       for (p = procs; p; p = g_slist_next (p))
         {
           GimpPlugInProcedure *proc = p->data;
-
-          if (uri_procs_only && ! proc->handles_uri)
-            continue;
 
           if (skip_magic && proc->magics_list)
             continue;
@@ -340,13 +320,10 @@ file_proc_find_by_name (GSList   *procs,
 {
   GimpPlugInProcedure *proc;
 
-  proc = file_proc_find_by_extension (procs, file, skip_magic, TRUE);
+  proc = file_proc_find_by_prefix (procs, file, skip_magic);
 
   if (! proc)
-    proc = file_proc_find_by_prefix (procs, file, skip_magic);
-
-  if (! proc)
-    proc = file_proc_find_by_extension (procs, file, skip_magic, FALSE);
+    proc = file_proc_find_by_extension (procs, file, skip_magic);
 
   return proc;
 }
