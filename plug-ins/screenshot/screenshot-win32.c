@@ -36,7 +36,7 @@
 
 #include "screenshot.h"
 #include "screenshot-win32.h"
-#include "resource.h"
+#include "screenshot-win32-resource.h"
 
 #include "libgimp/stdplugins-intl.h"
 
