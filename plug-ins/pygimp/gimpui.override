@@ -4,6 +4,9 @@ headers
 #define NO_IMPORT_PYGOBJECT
 #include <pygobject.h>
 
+#include <pycairo.h>
+extern Pycairo_CAPI_t *Pycairo_CAPI;
+
 #define GIMP_DISABLE_DEPRECATION_WARNINGS
 #include <libgimp/gimp.h>
 #undef GIMP_DISABLE_DEPRECATED
@@ -1987,4 +1990,48 @@ _wrap_gimp_ruler_get_range(PyGObject *self)
     gimp_ruler_get_range(GIMP_RULER(self->obj), &lower, &upper, &max_size);
 
     return Py_BuildValue("(ddd)", lower, upper, max_size);
+}
+%%
+override gimp_color_display_convert_surface kwargs
+static PyObject *
+_wrap_gimp_color_display_convert_surface(PyGObject *self, PyObject *args,
+                                         PyObject *kwargs)
+{
+  PycairoSurface *pysurface;
+
+  static char *kwlist[] = { "surface", NULL };
+
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                   "O!:GimpColorDisplay.convert_surface",
+                                   kwlist,
+                                   &PycairoSurface_Type, &pysurface))
+    return NULL;
+
+  gimp_color_display_convert_surface(GIMP_COLOR_DISPLAY(self->obj),
+                                     pysurface->surface);
+
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+%%
+override gimp_color_display_stack_convert_surface kwargs
+static PyObject *
+_wrap_gimp_color_display_stack_convert_surface(PyGObject *self, PyObject *args,
+                                               PyObject *kwargs)
+{
+  PycairoSurface *pysurface;
+
+  static char *kwlist[] = { "surface", NULL };
+
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                   "O!:GimpColorDisplayStack.convert_surface",
+                                   kwlist,
+                                   &PycairoSurface_Type, &pysurface))
+    return NULL;
+
+  gimp_color_display_stack_convert_surface(GIMP_COLOR_DISPLAY_STACK(self->obj),
+                                           pysurface->surface);
+
+  Py_INCREF(Py_None);
+  return Py_None;
 }
