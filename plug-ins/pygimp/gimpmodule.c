@@ -21,6 +21,7 @@
 #endif
 
 #undef GIMP_DISABLE_DEPRECATED
+#define GIMP_DISABLE_DEPRECATION_WARNINGS
 #include "pygimp.h"
 
 #include "pygimpcolor-api.h"

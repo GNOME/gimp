@@ -23,6 +23,7 @@
 #define NO_IMPORT_PYGOBJECT
 #include <pygobject.h>
 
+#define GIMP_DISABLE_DEPRECATION_WARNINGS
 #include "pygimp.h"
 
 #define NO_IMPORT_PYGIMPCOLOR
