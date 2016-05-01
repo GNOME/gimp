@@ -265,7 +265,10 @@ gimp_init (Gimp *gimp)
   gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
                                "named buffers");
 
-  gimp->tool_info_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
+  gimp->tool_info_list = g_object_new (GIMP_TYPE_LIST,
+                                       "children-type", GIMP_TYPE_TOOL_INFO,
+                                       "append",        TRUE,
+                                       NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
                                "tool infos");
 

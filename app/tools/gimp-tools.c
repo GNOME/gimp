@@ -120,73 +120,72 @@ gimp_tools_init (Gimp *gimp)
 {
   GimpToolRegisterFunc register_funcs[] =
   {
-    /*  register tools in reverse order  */
+    /*  selection tools */
 
-    /*  color tools  */
-    gimp_operation_tool_register,
-    gimp_gegl_tool_register,
-    gimp_curves_tool_register,
-    gimp_levels_tool_register,
-    gimp_threshold_tool_register,
-    gimp_brightness_contrast_tool_register,
-    gimp_colorize_tool_register,
-    gimp_hue_saturation_tool_register,
-    gimp_color_balance_tool_register,
-
-    /*  paint tools  */
-
-    gimp_dodge_burn_tool_register,
-    gimp_smudge_tool_register,
-    gimp_convolve_tool_register,
-    gimp_perspective_clone_tool_register,
-    gimp_heal_tool_register,
-    gimp_clone_tool_register,
-    gimp_mybrush_tool_register,
-    gimp_ink_tool_register,
-    gimp_airbrush_tool_register,
-    gimp_eraser_tool_register,
-    gimp_paintbrush_tool_register,
-    gimp_pencil_tool_register,
-    gimp_blend_tool_register,
-    gimp_bucket_fill_tool_register,
-    gimp_text_tool_register,
-    gimp_seamless_clone_tool_register,
-
-    /*  transform tools  */
-
-    gimp_n_point_deformation_tool_register,
-    gimp_warp_tool_register,
-    gimp_cage_tool_register,
-    gimp_flip_tool_register,
-    gimp_perspective_tool_register,
-    gimp_handle_transform_tool_register,
-    gimp_shear_tool_register,
-    gimp_scale_tool_register,
-    gimp_rotate_tool_register,
-    gimp_unified_transform_tool_register,
-    gimp_crop_tool_register,
-    gimp_align_tool_register,
-    gimp_move_tool_register,
-
-    /*  non-modifying tools  */
-
-    gimp_measure_tool_register,
-    gimp_magnify_tool_register,
-    gimp_color_picker_tool_register,
+    gimp_rectangle_select_tool_register,
+    gimp_ellipse_select_tool_register,
+    gimp_free_select_tool_register,
+    gimp_fuzzy_select_tool_register,
+    gimp_by_color_select_tool_register,
+    gimp_iscissors_tool_register,
+    gimp_foreground_select_tool_register,
 
     /*  path tool */
 
     gimp_vector_tool_register,
 
-    /*  selection tools */
+    /*  non-modifying tools  */
 
-    gimp_foreground_select_tool_register,
-    gimp_iscissors_tool_register,
-    gimp_by_color_select_tool_register,
-    gimp_fuzzy_select_tool_register,
-    gimp_free_select_tool_register,
-    gimp_ellipse_select_tool_register,
-    gimp_rectangle_select_tool_register
+    gimp_color_picker_tool_register,
+    gimp_magnify_tool_register,
+    gimp_measure_tool_register,
+
+    /*  transform tools  */
+
+    gimp_move_tool_register,
+    gimp_align_tool_register,
+    gimp_crop_tool_register,
+    gimp_unified_transform_tool_register,
+    gimp_rotate_tool_register,
+    gimp_scale_tool_register,
+    gimp_shear_tool_register,
+    gimp_handle_transform_tool_register,
+    gimp_perspective_tool_register,
+    gimp_flip_tool_register,
+    gimp_cage_tool_register,
+    gimp_warp_tool_register,
+    gimp_n_point_deformation_tool_register,
+
+    /*  paint tools  */
+
+    gimp_seamless_clone_tool_register,
+    gimp_text_tool_register,
+    gimp_bucket_fill_tool_register,
+    gimp_blend_tool_register,
+    gimp_pencil_tool_register,
+    gimp_paintbrush_tool_register,
+    gimp_eraser_tool_register,
+    gimp_airbrush_tool_register,
+    gimp_ink_tool_register,
+    gimp_mybrush_tool_register,
+    gimp_clone_tool_register,
+    gimp_heal_tool_register,
+    gimp_perspective_clone_tool_register,
+    gimp_convolve_tool_register,
+    gimp_smudge_tool_register,
+    gimp_dodge_burn_tool_register,
+
+    /*  color tools  */
+
+    gimp_color_balance_tool_register,
+    gimp_hue_saturation_tool_register,
+    gimp_colorize_tool_register,
+    gimp_brightness_contrast_tool_register,
+    gimp_threshold_tool_register,
+    gimp_levels_tool_register,
+    gimp_curves_tool_register,
+    gimp_gegl_tool_register,
+    gimp_operation_tool_register
   };
 
   GList *default_order = NULL;
@@ -264,7 +263,10 @@ gimp_tools_restore (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
+  gimp_list = g_object_new (GIMP_TYPE_LIST,
+                            "children-type", GIMP_TYPE_TOOL_INFO,
+                            "append",        TRUE,
+                            NULL);
 
   file = gimp_directory_file ("toolrc", NULL);
 
@@ -277,15 +279,11 @@ gimp_tools_restore (Gimp *gimp)
       gint n = gimp_container_get_n_children (gimp->tool_info_list);
       gint i;
 
-      gimp_list_reverse (GIMP_LIST (gimp_list));
-
       for (list = GIMP_LIST (gimp_list)->queue->head, i = 0;
            list;
            list = g_list_next (list), i++)
         {
-          const gchar *name;
-
-          name = gimp_object_get_name (list->data);
+          const gchar *name = gimp_object_get_name (list->data);
 
           object = gimp_container_get_child_by_name (gimp->tool_info_list,
                                                      name);
