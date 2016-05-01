@@ -10,11 +10,7 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 if OS_WIN32
 mwindows = -mwindows
-endif
-
-if HAVE_WINDRES
-include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
-screenshot_RC = screenshot.rc.o
+screenshot_RC = screenshot-win32res.o
 endif
 
 AM_LDFLAGS = $(mwindows)
@@ -57,5 +53,18 @@ screenshot_SOURCES = \
 	screenshot-osx.h		\
 	screenshot-x11.c		\
 	screenshot-x11.h		\
+	screenshot-win32.rc		\
 	screenshot-win32.c		\
 	screenshot-win32.h
+
+if OS_WIN32
+EXTRA_DIST = \
+	resource.h	\
+	select.cur	\
+	small.ico	\
+	screenshot-win32.ico	\
+	screenshot-win32.rc 
+	
+screenshot-win32res.o: screenshot-win32.rc select.cur small.ico screenshot-win32.ico
+	$(WINDRES) $(srcdir)/screenshot-win32.rc screenshot-win32res.o
+endif
