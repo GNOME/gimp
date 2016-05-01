@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * gimplist.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2016 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ struct _GimpList
 {
   GimpContainer  parent_instance;
 
-  GList         *list;
+  GQueue        *queue;
   gboolean       unique_names;
   GCompareFunc   sort_func;
   gboolean       append;

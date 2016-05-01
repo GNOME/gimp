@@ -139,7 +139,7 @@ windows_menu_setup (GimpUIManager *manager,
                            G_CALLBACK (windows_menu_recent_remove),
                            manager, 0);
 
-  for (list = g_list_last (GIMP_LIST (global_recent_docks)->list);
+  for (list = g_list_last (GIMP_LIST (global_recent_docks)->queue->head);
        list;
        list = g_list_previous (list))
     {

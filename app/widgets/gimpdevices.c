@@ -99,7 +99,7 @@ gimp_devices_restore (Gimp *gimp)
 
   user_context = gimp_get_user_context (gimp);
 
-  for (list = GIMP_LIST (manager)->list;
+  for (list = GIMP_LIST (manager)->queue->head;
        list;
        list = g_list_next (list))
     {

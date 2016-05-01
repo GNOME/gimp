@@ -318,7 +318,7 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
                                 GimpDataForeachFunc  callback,
                                 gpointer             user_data)
 {
-  GList *list = GIMP_LIST (factory->priv->container)->list;
+  GList *list = GIMP_LIST (factory->priv->container)->queue->head;
 
   if (skip_internal)
     {
@@ -427,7 +427,7 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
   if (gimp_container_is_empty (factory->priv->container))
     return;
 
-  for (list = GIMP_LIST (factory->priv->container)->list;
+  for (list = GIMP_LIST (factory->priv->container)->queue->head;
        list;
        list = g_list_next (list))
     {

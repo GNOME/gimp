@@ -201,7 +201,7 @@ tool_options_actions_update_presets (GimpActionGroup *group,
       entry.value_variable = FALSE;
       entry.help_id        = help_id;
 
-      for (list = GIMP_LIST (presets)->list, i = 0;
+      for (list = GIMP_LIST (presets)->queue->head, i = 0;
            list;
            list = g_list_next (list), i++)
         {

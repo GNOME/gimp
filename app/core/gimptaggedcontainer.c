@@ -156,7 +156,7 @@ gimp_tagged_container_clear (GimpContainer *container)
   GimpTaggedContainer   *tagged_container   = GIMP_TAGGED_CONTAINER (container);
   GList                 *list;
 
-  for (list = GIMP_LIST (filtered_container->src_container)->list;
+  for (list = GIMP_LIST (filtered_container->src_container)->queue->head;
        list;
        list = g_list_next (list))
     {
@@ -242,7 +242,7 @@ gimp_tagged_container_src_thaw (GimpFilteredContainer *filtered_container)
 {
   GList *list;
 
-  for (list = GIMP_LIST (filtered_container->src_container)->list;
+  for (list = GIMP_LIST (filtered_container->src_container)->queue->head;
        list;
        list = g_list_next (list))
     {

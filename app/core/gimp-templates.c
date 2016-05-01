@@ -124,7 +124,7 @@ gimp_templates_migrate_get_child_by_name (const GimpContainer *container,
   GimpObject *retval = NULL;
   GList      *glist;
 
-  for (glist = list->list; glist; glist = g_list_next (glist))
+  for (glist = list->queue->head; glist; glist = g_list_next (glist))
     {
       GimpObject *object = glist->data;
       gchar      *str1   = g_ascii_strdown (gimp_object_get_name (object), -1);

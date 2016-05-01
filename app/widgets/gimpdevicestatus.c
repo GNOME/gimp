@@ -155,7 +155,7 @@ gimp_device_status_constructed (GObject *object)
 
   devices = GIMP_CONTAINER (gimp_devices_get_manager (status->gimp));
 
-  for (list = GIMP_LIST (devices)->list; list; list = list->next)
+  for (list = GIMP_LIST (devices)->queue->head; list; list = list->next)
     gimp_device_status_device_add (devices, list->data, status);
 
   g_signal_connect_object (devices, "add",

@@ -815,7 +815,7 @@ gimp_item_get_container_iter (GimpItem *item)
   container = gimp_item_get_container (item);
 
   if (container)
-    return GIMP_LIST (container)->list;
+    return GIMP_LIST (container)->queue->head;
 
   return NULL;
 }

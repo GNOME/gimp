@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * gimplist.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2016 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 
 #include "core-types.h"
 
+#include "gimp-memsize.h"
 #include "gimplist.h"
 
 
@@ -39,6 +40,7 @@ enum
 };
 
 
+static void         gimp_list_finalize           (GObject             *object);
 static void         gimp_list_set_property       (GObject             *object,
                                                   guint                property_id,
                                                   const GValue        *value,
@@ -89,6 +91,7 @@ gimp_list_class_init (GimpListClass *klass)
   GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpContainerClass *container_class   = GIMP_CONTAINER_CLASS (klass);
 
+  object_class->finalize              = gimp_list_finalize;
   object_class->set_property          = gimp_list_set_property;
   object_class->get_property          = gimp_list_get_property;
 
@@ -128,10 +131,24 @@ gimp_list_class_init (GimpListClass *klass)
 static void
 gimp_list_init (GimpList *list)
 {
-  list->list         = NULL;
+  list->queue        = g_queue_new ();
   list->unique_names = FALSE;
   list->sort_func    = NULL;
   list->append       = FALSE;
+}
+
+static void
+gimp_list_finalize (GObject *object)
+{
+  GimpList *list = GIMP_LIST (object);
+
+  if (list->queue)
+    {
+      g_queue_free (list->queue);
+      list->queue = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -193,20 +210,30 @@ gimp_list_get_memsize (GimpObject *object,
   GimpList *list    = GIMP_LIST (object);
   gint64    memsize = 0;
 
-  memsize += (gimp_container_get_n_children (GIMP_CONTAINER (list)) *
-              sizeof (GList));
-
   if (gimp_container_get_policy (GIMP_CONTAINER (list)) ==
       GIMP_CONTAINER_POLICY_STRONG)
     {
-      GList *glist;
-
-      for (glist = list->list; glist; glist = g_list_next (glist))
-        memsize += gimp_object_get_memsize (GIMP_OBJECT (glist->data), gui_size);
+      memsize += gimp_g_queue_get_memsize_foreach (list->queue,
+                                                   (GimpMemsizeFunc) gimp_object_get_memsize,
+                                                   gui_size);
+    }
+  else
+    {
+      memsize += gimp_g_queue_get_memsize (list->queue, 0);
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static gint
+gimp_list_sort_func (gconstpointer a,
+                     gconstpointer b,
+                     gpointer      user_data)
+{
+  GCompareFunc func = user_data;
+
+  return func (a, b);
 }
 
 static void
@@ -224,11 +251,18 @@ gimp_list_add (GimpContainer *container,
                       list);
 
   if (list->sort_func)
-    list->list = g_list_insert_sorted (list->list, object, list->sort_func);
+    {
+      g_queue_insert_sorted (list->queue, object, gimp_list_sort_func,
+                             list->sort_func);
+    }
   else if (list->append)
-    list->list = g_list_append (list->list, object);
+    {
+      g_queue_push_tail (list->queue, object);
+    }
   else
-    list->list = g_list_prepend (list->list, object);
+    {
+      g_queue_push_head (list->queue, object);
+    }
 
   GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
 }
@@ -244,7 +278,7 @@ gimp_list_remove (GimpContainer *container,
                                           gimp_list_object_renamed,
                                           list);
 
-  list->list = g_list_remove (list->list, object);
+  g_queue_remove (list->queue, object);
 
   GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
 }
@@ -256,12 +290,12 @@ gimp_list_reorder (GimpContainer *container,
 {
   GimpList *list = GIMP_LIST (container);
 
-  list->list = g_list_remove (list->list, object);
+  g_queue_remove (list->queue, object);
 
   if (new_index == gimp_container_get_n_children (container) - 1)
-    list->list = g_list_append (list->list, object);
+    g_queue_push_tail (list->queue, object);
   else
-    list->list = g_list_insert (list->list, object, new_index);
+    g_queue_push_nth (list->queue, object, new_index);
 }
 
 static void
@@ -269,8 +303,8 @@ gimp_list_clear (GimpContainer *container)
 {
   GimpList *list = GIMP_LIST (container);
 
-  while (list->list)
-    gimp_container_remove (container, list->list->data);
+  while (g_queue_peek_head (list->queue))
+    gimp_container_remove (container, g_queue_peek_head (list->queue));
 }
 
 static gboolean
@@ -279,7 +313,7 @@ gimp_list_have (const GimpContainer *container,
 {
   GimpList *list = GIMP_LIST (container);
 
-  return g_list_find (list->list, object) ? TRUE : FALSE;
+  return g_queue_find (list->queue, object) ? TRUE : FALSE;
 }
 
 static void
@@ -289,7 +323,7 @@ gimp_list_foreach (const GimpContainer *container,
 {
   GimpList *list = GIMP_LIST (container);
 
-  g_list_foreach (list->list, func, user_data);
+  g_queue_foreach (list->queue, func, user_data);
 }
 
 static GimpObject *
@@ -299,7 +333,7 @@ gimp_list_get_child_by_name (const GimpContainer *container,
   GimpList *list = GIMP_LIST (container);
   GList    *glist;
 
-  for (glist = list->list; glist; glist = g_list_next (glist))
+  for (glist = list->queue->head; glist; glist = g_list_next (glist))
     {
       GimpObject *object = glist->data;
 
@@ -315,14 +349,8 @@ gimp_list_get_child_by_index (const GimpContainer *container,
                               gint                 index)
 {
   GimpList *list = GIMP_LIST (container);
-  GList    *glist;
 
-  glist = g_list_nth (list->list, index);
-
-  if (glist)
-    return (GimpObject *) glist->data;
-
-  return NULL;
+  return g_queue_peek_nth (list->queue, index);
 }
 
 static gint
@@ -331,7 +359,7 @@ gimp_list_get_child_index (const GimpContainer *container,
 {
   GimpList *list = GIMP_LIST (container);
 
-  return g_list_index (list->list, (gpointer) object);
+  return g_queue_index (list->queue, (gpointer) object);
 }
 
 /**
@@ -416,7 +444,7 @@ gimp_list_reverse (GimpList *list)
   if (gimp_container_get_n_children (GIMP_CONTAINER (list)) > 1)
     {
       gimp_container_freeze (GIMP_CONTAINER (list));
-      list->list = g_list_reverse (list->list);
+      g_queue_reverse (list->queue);
       gimp_container_thaw (GIMP_CONTAINER (list));
     }
 }
@@ -480,7 +508,7 @@ gimp_list_sort (GimpList     *list,
   if (gimp_container_get_n_children (GIMP_CONTAINER (list)) > 1)
     {
       gimp_container_freeze (GIMP_CONTAINER (list));
-      list->list = g_list_sort (list->list, sort_func);
+      g_queue_sort (list->queue, gimp_list_sort_func, sort_func);
       gimp_container_thaw (GIMP_CONTAINER (list));
     }
 }
@@ -512,7 +540,7 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
   if (! name)
     return;
 
-  for (list = gimp_list->list; list; list = g_list_next (list))
+  for (list = gimp_list->queue->head; list; list = g_list_next (list))
     {
       GimpObject  *object2 = list->data;
       const gchar *name2   = gimp_object_get_name (object2);
@@ -563,7 +591,7 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
 
           new_name = g_strdup_printf ("%s #%d", name, unique_ext);
 
-          for (list = gimp_list->list; list; list = g_list_next (list))
+          for (list = gimp_list->queue->head; list; list = g_list_next (list))
             {
               GimpObject  *object2 = list->data;
               const gchar *name2   = gimp_object_get_name (object2);
@@ -605,9 +633,9 @@ gimp_list_object_renamed (GimpObject *object,
       gint   old_index;
       gint   new_index = 0;
 
-      old_index = g_list_index (list->list, object);
+      old_index = g_queue_index (list->queue, object);
 
-      for (glist = list->list; glist; glist = g_list_next (glist))
+      for (glist = list->queue->head; glist; glist = g_list_next (glist))
         {
           GimpObject *object2 = GIMP_OBJECT (glist->data);
 

@@ -222,7 +222,7 @@ windows_actions_setup (GimpActionGroup *group)
                            G_CALLBACK (windows_actions_recent_remove),
                            group, 0);
 
-  for (list = GIMP_LIST (global_recent_docks)->list;
+  for (list = GIMP_LIST (global_recent_docks)->queue->head;
        list;
        list = g_list_next (list))
     {

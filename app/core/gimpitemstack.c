@@ -118,7 +118,7 @@ gimp_item_stack_get_n_items (GimpItemStack *stack)
 
   g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), 0);
 
-  for (list = GIMP_LIST (stack)->list; list; list = g_list_next (list))
+  for (list = GIMP_LIST (stack)->queue->head; list; list = g_list_next (list))
     {
       GimpItem      *item = list->data;
       GimpContainer *children;
@@ -141,7 +141,7 @@ gimp_item_stack_is_flat (GimpItemStack *stack)
 
   g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), TRUE);
 
-  for (list = GIMP_LIST (stack)->list; list; list = g_list_next (list))
+  for (list = GIMP_LIST (stack)->queue->head; list; list = g_list_next (list))
     {
       GimpViewable *viewable = list->data;
 
@@ -157,7 +157,7 @@ gimp_item_stack_get_item_iter (GimpItemStack *stack)
 {
   g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
 
-  return GIMP_LIST (stack)->list;
+  return GIMP_LIST (stack)->queue->head;
 }
 
 GList *
@@ -168,7 +168,7 @@ gimp_item_stack_get_item_list (GimpItemStack *stack)
 
   g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
 
-  for (list = GIMP_LIST (stack)->list;
+  for (list = GIMP_LIST (stack)->queue->head;
        list;
        list = g_list_next (list))
     {
@@ -205,7 +205,7 @@ gimp_item_stack_get_item_by_tattoo (GimpItemStack *stack,
 
   g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
 
-  for (list = GIMP_LIST (stack)->list; list; list = g_list_next (list))
+  for (list = GIMP_LIST (stack)->queue->head; list; list = g_list_next (list))
     {
       GimpItem      *item = list->data;
       GimpContainer *children;

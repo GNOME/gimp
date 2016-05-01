@@ -352,7 +352,6 @@ convert_dialog_palette_box (IndexedDialog *dialog)
 {
   Gimp        *gimp = dialog->image->gimp;
   GList       *list;
-  GimpPalette *palette;
   GimpPalette *web_palette   = NULL;
   gboolean     default_found = FALSE;
 
@@ -376,11 +375,11 @@ convert_dialog_palette_box (IndexedDialog *dialog)
   g_object_weak_ref (G_OBJECT (dialog->dialog),
                      (GWeakNotify) g_object_unref, dialog->container);
 
-  for (list = GIMP_LIST (dialog->container)->list;
+  for (list = GIMP_LIST (dialog->container)->queue->head;
        list;
        list = g_list_next (list))
     {
-      palette = list->data;
+      GimpPalette *palette = list->data;
 
       /* Preferentially, the initial default is 'Web' if available */
       if (web_palette == NULL &&
@@ -401,7 +400,7 @@ convert_dialog_palette_box (IndexedDialog *dialog)
       if (web_palette)
         dialog->custom_palette = web_palette;
       else
-        dialog->custom_palette = GIMP_LIST (dialog->container)->list->data;
+        dialog->custom_palette = GIMP_LIST (dialog->container)->queue->head->data;
     }
 
   gimp_context_set_palette (dialog->context, dialog->custom_palette);

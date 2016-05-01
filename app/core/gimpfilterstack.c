@@ -224,7 +224,7 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
   if (stack->graph)
     return stack->graph;
 
-  for (list = GIMP_LIST (stack)->list;
+  for (list = GIMP_LIST (stack)->queue->head;
        list;
        list = g_list_next (list))
     {

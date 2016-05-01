@@ -409,7 +409,7 @@ gimp_pdb_context_reset (GimpConfig *config)
   GimpPDBContext *context = GIMP_PDB_CONTEXT (config);
   GList          *list;
 
-  for (list = GIMP_LIST (context->paint_options_list)->list;
+  for (list = GIMP_LIST (context->paint_options_list)->queue->head;
        list;
        list = g_list_next (list))
     {
@@ -462,7 +462,7 @@ gimp_pdb_context_new (Gimp        *gimp,
     }
   else
     {
-      for (list = GIMP_LIST (GIMP_PDB_CONTEXT (parent)->paint_options_list)->list;
+      for (list = GIMP_LIST (GIMP_PDB_CONTEXT (parent)->paint_options_list)->queue->head;
            list;
            list = g_list_next (list))
         {
@@ -508,7 +508,7 @@ gimp_pdb_context_get_brush_options (GimpPDBContext *context)
 
   g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
 
-  for (list = GIMP_LIST (context->paint_options_list)->list;
+  for (list = GIMP_LIST (context->paint_options_list)->queue->head;
        list;
        list = g_list_next (list))
     {

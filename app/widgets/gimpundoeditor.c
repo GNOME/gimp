@@ -262,7 +262,7 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
                                     NULL);
 
   /*  the list prepends its items, so first add the redo items...  */
-  for (list = GIMP_LIST (redo_stack->undos)->list;
+  for (list = GIMP_LIST (redo_stack->undos)->queue->head;
        list;
        list = g_list_next (list))
     {
@@ -273,7 +273,7 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
   gimp_list_reverse (GIMP_LIST (editor->container));
 
   /*  ...then add the undo items in descending order...  */
-  for (list = GIMP_LIST (undo_stack->undos)->list;
+  for (list = GIMP_LIST (undo_stack->undos)->queue->head;
        list;
        list = g_list_next (list))
     {

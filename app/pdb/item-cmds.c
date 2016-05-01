@@ -419,7 +419,7 @@ item_get_children_invoker (GimpProcedure         *procedure,
 
               child_ids = g_new (gint32, num_children);
 
-              for (list = GIMP_LIST (children)->list, i = 0;
+              for (list = GIMP_LIST (children)->queue->head, i = 0;
                    list;
                    list = g_list_next (list), i++)
                 {

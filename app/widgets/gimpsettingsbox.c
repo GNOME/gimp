@@ -916,7 +916,7 @@ gimp_settings_box_truncate_list (GimpSettingsBox *box,
   GList                  *list;
   gint                    n_recent = 0;
 
-  list = GIMP_LIST (private->container)->list;
+  list = GIMP_LIST (private->container)->queue->head;
   while (list)
     {
       GimpConfig *config = list->data;
@@ -1001,7 +1001,7 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
 
   private = GET_PRIVATE (box);
 
-  for (list = GIMP_LIST (private->container)->list;
+  for (list = GIMP_LIST (private->container)->queue->head;
        list;
        list = g_list_next (list))
     {

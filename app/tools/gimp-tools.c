@@ -279,7 +279,7 @@ gimp_tools_restore (Gimp *gimp)
 
       gimp_list_reverse (GIMP_LIST (gimp_list));
 
-      for (list = GIMP_LIST (gimp_list)->list, i = 0;
+      for (list = GIMP_LIST (gimp_list)->queue->head, i = 0;
            list;
            list = g_list_next (list), i++)
         {
