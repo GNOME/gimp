@@ -53,7 +53,6 @@
 enum
 {
   REMOVED,
-  VISIBILITY_CHANGED,
   LINKED_CHANGED,
   LOCK_CONTENT_CHANGED,
   LOCK_POSITION_CHANGED,
@@ -69,7 +68,6 @@ enum
   PROP_HEIGHT,
   PROP_OFFSET_X,
   PROP_OFFSET_Y,
-  PROP_VISIBLE,
   PROP_LINKED,
   PROP_LOCK_CONTENT,
   PROP_LOCK_POSITION
@@ -90,7 +88,6 @@ struct _GimpItemPrivate
   gint              width, height;      /*  size in pixels           */
   gint              offset_x, offset_y; /*  pixel offset in image    */
 
-  guint             visible       : 1;  /*  control visibility       */
   guint             linked        : 1;  /*  control linkage          */
   guint             lock_content  : 1;  /*  content editability      */
   guint             lock_position : 1;  /*  content movability       */
@@ -120,8 +117,6 @@ static void       gimp_item_get_property            (GObject        *object,
 
 static gint64     gimp_item_get_memsize             (GimpObject     *object,
                                                      gint64         *gui_size);
-
-static void       gimp_item_real_visibility_changed (GimpItem       *item);
 
 static gboolean   gimp_item_real_is_content_locked  (const GimpItem *item);
 static gboolean   gimp_item_real_is_position_locked (const GimpItem *item);
@@ -181,15 +176,6 @@ gimp_item_class_init (GimpItemClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  gimp_item_signals[VISIBILITY_CHANGED] =
-    g_signal_new ("visibility-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpItemClass, visibility_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
   gimp_item_signals[LINKED_CHANGED] =
     g_signal_new ("linked-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -228,7 +214,6 @@ gimp_item_class_init (GimpItemClass *klass)
   viewable_class->get_popup_size   = gimp_item_get_popup_size;
 
   klass->removed                   = NULL;
-  klass->visibility_changed        = gimp_item_real_visibility_changed;
   klass->linked_changed            = NULL;
   klass->lock_content_changed      = NULL;
   klass->lock_position_changed     = NULL;
@@ -295,11 +280,6 @@ gimp_item_class_init (GimpItemClass *klass)
                                                      GIMP_MAX_IMAGE_SIZE, 0,
                                                      GIMP_PARAM_READABLE));
 
-  g_object_class_install_property (object_class, PROP_VISIBLE,
-                                   g_param_spec_boolean ("visible", NULL, NULL,
-                                                         TRUE,
-                                                         GIMP_PARAM_READABLE));
-
   g_object_class_install_property (object_class, PROP_LINKED,
                                    g_param_spec_boolean ("linked", NULL, NULL,
                                                          FALSE,
@@ -335,7 +315,6 @@ gimp_item_init (GimpItem *item)
   private->height        = 0;
   private->offset_x      = 0;
   private->offset_y      = 0;
-  private->visible       = TRUE;
   private->linked        = FALSE;
   private->lock_content  = FALSE;
   private->lock_position = FALSE;
@@ -428,9 +407,6 @@ gimp_item_get_property (GObject    *object,
     case PROP_OFFSET_Y:
       g_value_set_int (value, private->offset_y);
       break;
-    case PROP_VISIBLE:
-      g_value_set_boolean (value, private->visible);
-      break;
     case PROP_LINKED:
       g_value_set_boolean (value, private->linked);
       break;
@@ -459,28 +435,6 @@ gimp_item_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
-}
-
-static void
-gimp_item_real_visibility_changed (GimpItem *item)
-{
-  GeglNode *node = gimp_filter_peek_node (GIMP_FILTER (item));
-
-  if (node)
-    {
-      if (gimp_item_get_visible (item))
-        {
-          /* Leave this up to subclasses */
-        }
-      else
-        {
-          GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
-          GeglNode *output = gegl_node_get_output_proxy (node, "output");
-
-          gegl_node_connect_to (input,  "output",
-                                output, "input");
-        }
-    }
 }
 
 static gboolean
@@ -2089,11 +2043,7 @@ gimp_item_set_visible (GimpItem *item,
             gimp_image_undo_push_item_visibility (image, NULL, item);
         }
 
-      GET_PRIVATE (item)->visible = visible;
-
-      g_signal_emit (item, gimp_item_signals[VISIBILITY_CHANGED], 0);
-
-      g_object_notify (G_OBJECT (item), "visible");
+      gimp_filter_set_visible (GIMP_FILTER (item), visible);
     }
 }
 
@@ -2102,7 +2052,7 @@ gimp_item_get_visible (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return GET_PRIVATE (item)->visible;
+  return gimp_filter_get_visible (GIMP_FILTER (item));
 }
 
 gboolean
@@ -2110,17 +2060,7 @@ gimp_item_is_visible (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  if (gimp_item_get_visible (item))
-    {
-      GimpItem *parent = gimp_item_get_parent (item);
-
-      if (parent)
-        return gimp_item_is_visible (parent);
-
-      return TRUE;
-    }
-
-  return FALSE;
+  return gimp_filter_is_visible (GIMP_FILTER (item));
 }
 
 void

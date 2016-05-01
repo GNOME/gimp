@@ -93,10 +93,10 @@ static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
                                                     gint              *width,
                                                     gint              *height);
 
+static void       gimp_drawable_visibility_changed (GimpFilter        *filter);
 static GeglNode * gimp_drawable_get_node           (GimpFilter        *filter);
 
 static void       gimp_drawable_removed            (GimpItem          *item);
-static void       gimp_drawable_visibility_changed (GimpItem          *item);
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
                                                     GType              new_type);
 static void       gimp_drawable_scale              (GimpItem          *item,
@@ -256,10 +256,10 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   viewable_class->get_new_preview    = gimp_drawable_get_new_preview;
   viewable_class->get_new_pixbuf     = gimp_drawable_get_new_pixbuf;
 
+  filter_class->visibility_changed   = gimp_drawable_visibility_changed;
   filter_class->get_node             = gimp_drawable_get_node;
 
   item_class->removed                = gimp_drawable_removed;
-  item_class->visibility_changed     = gimp_drawable_visibility_changed;
   item_class->duplicate              = gimp_drawable_duplicate;
   item_class->scale                  = gimp_drawable_scale;
   item_class->resize                 = gimp_drawable_resize;
@@ -417,6 +417,40 @@ gimp_drawable_get_size (GimpViewable *viewable,
   return TRUE;
 }
 
+static void
+gimp_drawable_visibility_changed (GimpFilter *filter)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (filter);
+  GeglNode     *node;
+
+  /*  don't use gimp_filter_get_node() because that would create
+   *  the node.
+   */
+  node = gimp_filter_peek_node (filter);
+
+  if (node)
+    {
+      GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
+      GeglNode *output = gegl_node_get_output_proxy (node, "output");
+
+      if (gimp_filter_get_visible (filter))
+        {
+          gegl_node_connect_to (input,                        "output",
+                                drawable->private->mode_node, "input");
+          gegl_node_connect_to (drawable->private->mode_node, "output",
+                                output,                       "input");
+        }
+      else
+        {
+          gegl_node_disconnect (drawable->private->mode_node, "input");
+
+          /* The rest handled by GimpFilter */
+        }
+    }
+
+  GIMP_FILTER_CLASS (parent_class)->visibility_changed (filter);
+}
+
 static GeglNode *
 gimp_drawable_get_node (GimpFilter *filter)
 {
@@ -437,7 +471,7 @@ gimp_drawable_get_node (GimpFilter *filter)
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  if (gimp_item_get_visible (GIMP_ITEM (drawable)))
+  if (gimp_filter_get_visible (filter))
     {
       gegl_node_connect_to (input,                        "output",
                             drawable->private->mode_node, "input");
@@ -446,8 +480,7 @@ gimp_drawable_get_node (GimpFilter *filter)
     }
   else
     {
-      gegl_node_connect_to (input,  "output",
-                            output, "input");
+      /* Handled by GimpFilter */
     }
 
   return node;
@@ -462,44 +495,6 @@ gimp_drawable_removed (GimpItem *item)
 
   if (GIMP_ITEM_CLASS (parent_class)->removed)
     GIMP_ITEM_CLASS (parent_class)->removed (item);
-}
-
-static void
-gimp_drawable_visibility_changed (GimpItem *item)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglNode     *node;
-
-  /*  don't use gimp_filter_get_node() because that would create
-   *  the node.
-   */
-  node = gimp_filter_peek_node (GIMP_FILTER (item));
-
-  if (node)
-    {
-      GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
-      GeglNode *output = gegl_node_get_output_proxy (node, "output");
-
-      if (gimp_item_get_visible (item))
-        {
-          gegl_node_connect_to (input,                        "output",
-                                drawable->private->mode_node, "input");
-          gegl_node_connect_to (drawable->private->mode_node, "output",
-                                output,                       "input");
-        }
-      else
-        {
-          gegl_node_disconnect (drawable->private->mode_node, "input");
-
-          gegl_node_connect_to (input,  "output",
-                                output, "input");
-        }
-
-      /* FIXME: chain up again when above floating sel special case is gone */
-      return;
-    }
-
-  GIMP_ITEM_CLASS (parent_class)->visibility_changed (item);
 }
 
 static GimpItem *

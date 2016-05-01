@@ -43,7 +43,6 @@ struct _GimpItemClass
 
   /*  signals  */
   void            (* removed)               (GimpItem            *item);
-  void            (* visibility_changed)    (GimpItem            *item);
   void            (* linked_changed)        (GimpItem            *item);
   void            (* lock_content_changed)  (GimpItem            *item);
   void            (* lock_position_changed) (GimpItem            *item);
