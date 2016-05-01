@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-23 14:18+0200\n"
-"PO-Revision-Date: 2016-04-23 14:19+0200\n"
+"POT-Creation-Date: 2016-05-01 12:40+0200\n"
+"PO-Revision-Date: 2016-05-01 12:42+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -330,7 +330,7 @@ msgstr "Bufory"
 msgid "Channels"
 msgstr "Kanały"
 
-#: ../app/actions/actions.c:122 ../app/dialogs/convert-type-dialog.c:177
+#: ../app/actions/actions.c:122 ../app/dialogs/convert-indexed-dialog.c:177
 #: ../app/dialogs/dialogs.c:377
 msgid "Colormap"
 msgstr "Paleta kolorów"
@@ -4003,7 +4003,7 @@ msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Wyświetla informacje o tym obrazie"
 
-#: ../app/actions/image-actions.c:173
+#: ../app/actions/image-actions.c:173 ../app/actions/image-actions.c:408
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
@@ -4013,7 +4013,7 @@ msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Konwertuje obraz do przestrzeni kolorów RGB"
 
-#: ../app/actions/image-actions.c:178
+#: ../app/actions/image-actions.c:178 ../app/actions/image-actions.c:410
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Odcienie _szarości"
@@ -4163,55 +4163,65 @@ msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Obraca obraz o 90 stopni w lewo"
 
-#: ../app/actions/image-commands.c:424
+#: ../app/actions/image-actions.c:401
+msgctxt "image-convert-action"
+msgid "_RGB..."
+msgstr "_RGB…"
+
+#: ../app/actions/image-actions.c:403
+msgctxt "image-convert-action"
+msgid "_Grayscale..."
+msgstr "Odcienie _szarości…"
+
+#: ../app/actions/image-commands.c:441
 msgid "Set Image Canvas Size"
 msgstr "Ustawienie wymiarów płótna obrazu"
 
-#: ../app/actions/image-commands.c:453 ../app/actions/image-commands.c:477
-#: ../app/actions/image-commands.c:818
+#: ../app/actions/image-commands.c:470 ../app/actions/image-commands.c:494
+#: ../app/actions/image-commands.c:835
 msgid "Resizing"
 msgstr "Zmienianie wymiarów"
 
-#: ../app/actions/image-commands.c:504
+#: ../app/actions/image-commands.c:521
 msgid "Set Image Print Resolution"
 msgstr "Ustaw rozdzielczość drukowania"
 
-#: ../app/actions/image-commands.c:566 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:583 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Odbijanie"
 
-#: ../app/actions/image-commands.c:590 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:607 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:616 ../app/actions/layers-commands.c:703
+#: ../app/actions/image-commands.c:633 ../app/actions/layers-commands.c:703
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
-#: ../app/actions/image-commands.c:650
+#: ../app/actions/image-commands.c:667
 msgid "Cannot crop because the image has no content."
 msgstr "Nie można wykadrować, ponieważ obraz nie posiada zawartości."
 
-#: ../app/actions/image-commands.c:656
+#: ../app/actions/image-commands.c:673
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ obraz jest już wykadrowany do zawartości."
 
-#: ../app/actions/image-commands.c:866
+#: ../app/actions/image-commands.c:883
 msgid "Change Print Size"
 msgstr "Zmień rozmiar wydruku"
 
-#: ../app/actions/image-commands.c:907
+#: ../app/actions/image-commands.c:924
 msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:918 ../app/actions/layers-commands.c:1198
+#: ../app/actions/image-commands.c:935 ../app/actions/layers-commands.c:1198
 #: ../app/dialogs/preferences-dialog.c:1645
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -4776,7 +4786,7 @@ msgstr "Atrybuty warstwy"
 msgid "Edit Layer Attributes"
 msgstr "Modyfikacja atrybutów warstwy"
 
-#: ../app/actions/layers-commands.c:258 ../app/core/gimplayer.c:323
+#: ../app/actions/layers-commands.c:258 ../app/core/gimplayer.c:319
 msgid "Layer"
 msgstr "Warstwa"
 
@@ -5173,11 +5183,11 @@ msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
 msgstr "Przywraca wszystkie wtyczki do ich ustawień domyślnych"
 
-#: ../app/actions/plug-in-commands.c:166
+#: ../app/actions/plug-in-commands.c:167
 msgid "Reset all Filters"
 msgstr "Przywracanie wszystkich filtrów"
 
-#: ../app/actions/plug-in-commands.c:185
+#: ../app/actions/plug-in-commands.c:186
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Na pewno przywrócić domyślne wartości dla wszystkich filtrów?"
 
@@ -8775,7 +8785,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Zmiękczone zaznaczenie prostokątne"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:331
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:327
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Zaznaczenie z kanału alfa"
@@ -9094,7 +9104,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:530
+#: ../app/core/gimpdrawable.c:547
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
@@ -9157,7 +9167,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:951 ../app/core/gimplayer.c:330
+#: ../app/core/gimpdrawable-transform.c:951 ../app/core/gimplayer.c:326
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
@@ -9442,25 +9452,25 @@ msgstr ""
 msgid "ICC profile validation failed: "
 msgstr "Sprawdzenie poprawności profilu ICC się nie powiodło: "
 
-#: ../app/core/gimpimage-color-profile.c:252
+#: ../app/core/gimpimage-color-profile.c:298
 msgid ""
-"ICC profile validation failed: Color profile is not for GRAY color space"
+"ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "Sprawdzenie poprawności profilu ICC się nie powiodło: profil kolorów nie "
-"jest przeznaczony dla przestrzeni kolorów szarości"
+"jest przeznaczony dla przestrzeni kolorów odcieni szarości"
 
-#: ../app/core/gimpimage-color-profile.c:262
+#: ../app/core/gimpimage-color-profile.c:308
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Sprawdzenie poprawności profilu ICC się nie powiodło: profil kolorów nie "
 "jest przeznaczony dla przestrzeni kolorów RGB"
 
-#: ../app/core/gimpimage-color-profile.c:344
+#: ../app/core/gimpimage-color-profile.c:363
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Konwertowanie z „%s” do „%s”"
 
-#: ../app/core/gimpimage-color-profile.c:349
+#: ../app/core/gimpimage-color-profile.c:368
 msgid "Color profile conversion"
 msgstr "Konwersja profilu kolorów"
 
@@ -9489,95 +9499,95 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Dodanie koloru do palety kolorów"
 
-#: ../app/core/gimpimage-convert-precision.c:81
+#: ../app/core/gimpimage-convert-indexed.c:789
+msgid "Cannot convert image: palette is empty."
+msgstr "Nie można konwertować obrazu: paleta jest pusta."
+
+#: ../app/core/gimpimage-convert-indexed.c:803
+msgctxt "undo-type"
+msgid "Convert Image to Indexed"
+msgstr "Konwersja obrazu do trybu indeksowanego"
+
+#: ../app/core/gimpimage-convert-indexed.c:884
+msgid "Converting to indexed colors (stage 2)"
+msgstr "Konwertowanie do kolorów indeksowanych (poziom 2)"
+
+#: ../app/core/gimpimage-convert-indexed.c:932
+msgid "Converting to indexed colors (stage 3)"
+msgstr "Konwertowanie do kolorów indeksowanych (poziom 3)"
+
+#: ../app/core/gimpimage-convert-precision.c:82
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit linear integer"
 msgstr "Konwersja obrazu do trybu 8-bitowego (liniowego, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:84
+#: ../app/core/gimpimage-convert-precision.c:85
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit gamma integer"
 msgstr "Konwersja obrazu do trybu 8-bitowego (gamma, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:87
+#: ../app/core/gimpimage-convert-precision.c:88
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear integer"
 msgstr "Konwersja obrazu do trybu 16-bitowego (liniowego, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:90
+#: ../app/core/gimpimage-convert-precision.c:91
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma integer"
 msgstr "Konwersja obrazu do trybu 16-bitowego (gamma, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:93
+#: ../app/core/gimpimage-convert-precision.c:94
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear integer"
 msgstr "Konwersja obrazu do trybu 32-bitowego (liniowego, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:96
+#: ../app/core/gimpimage-convert-precision.c:97
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma integer"
 msgstr "Konwersja obrazu do trybu 32-bitowego (gamma, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:99
+#: ../app/core/gimpimage-convert-precision.c:100
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
 msgstr ""
 "Konwersja obrazu do trybu 16-bitowego (liniowego, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:102
+#: ../app/core/gimpimage-convert-precision.c:103
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
 msgstr "Konwersja obrazu do trybu 16-bitowego (gamma, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:105
+#: ../app/core/gimpimage-convert-precision.c:106
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
 msgstr ""
 "Konwersja obrazu do trybu 32-bitowego (liniowego, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:108
+#: ../app/core/gimpimage-convert-precision.c:109
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
 msgstr "Konwersja obrazu do trybu 32-bitowego (gamma, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:111
+#: ../app/core/gimpimage-convert-precision.c:112
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit linear floating point"
 msgstr ""
 "Konwersja obrazu do trybu 64-bitowego (liniowego, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:114
+#: ../app/core/gimpimage-convert-precision.c:115
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Konwersja obrazu do trybu 64-bitowego (gamma, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-type.c:791
-msgid "Cannot convert image: palette is empty."
-msgstr "Nie można konwertować obrazu: paleta jest pusta."
-
-#: ../app/core/gimpimage-convert-type.c:805
+#: ../app/core/gimpimage-convert-type.c:83
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
 msgstr "Konwersja obrazu do RGB"
 
-#: ../app/core/gimpimage-convert-type.c:809
+#: ../app/core/gimpimage-convert-type.c:87
 msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Konwersja obrazu do odcieni szarości"
-
-#: ../app/core/gimpimage-convert-type.c:813
-msgctxt "undo-type"
-msgid "Convert Image to Indexed"
-msgstr "Konwersja obrazu do trybu indeksowanego"
-
-#: ../app/core/gimpimage-convert-type.c:898
-msgid "Converting to indexed colors (stage 2)"
-msgstr "Konwertowanie do kolorów indeksowanych (poziom 2)"
-
-#: ../app/core/gimpimage-convert-type.c:944
-msgid "Converting to indexed colors (stage 3)"
-msgstr "Konwertowanie do kolorów indeksowanych (poziom 3)"
 
 #: ../app/core/gimpimage-crop.c:71
 msgctxt "undo-type"
@@ -9796,7 +9806,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:844
+#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:842
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -9809,76 +9819,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Oderwane zaznaczenie na warstwę"
 
-#: ../app/core/gimplayer.c:324
+#: ../app/core/gimplayer.c:320
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Zmiana nazwy warstwy"
 
-#: ../app/core/gimplayer.c:325
+#: ../app/core/gimplayer.c:321
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Przesunięcie warstwy"
 
-#: ../app/core/gimplayer.c:326
+#: ../app/core/gimplayer.c:322
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Skalowanie warstwy"
 
-#: ../app/core/gimplayer.c:327
+#: ../app/core/gimplayer.c:323
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Zmiana wymiarów warstwy"
 
-#: ../app/core/gimplayer.c:328
+#: ../app/core/gimplayer.c:324
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Odbicie warstwy"
 
-#: ../app/core/gimplayer.c:329
+#: ../app/core/gimplayer.c:325
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Obrót warstwy"
 
-#: ../app/core/gimplayer.c:332
+#: ../app/core/gimplayer.c:328
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Zmiana pozycji warstwy"
 
-#: ../app/core/gimplayer.c:333
+#: ../app/core/gimplayer.c:329
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Podniesienie warstwy"
 
-#: ../app/core/gimplayer.c:334
+#: ../app/core/gimplayer.c:330
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Podniesienie warstwy na wierzch"
 
-#: ../app/core/gimplayer.c:335
+#: ../app/core/gimplayer.c:331
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Obniżenie warstwy"
 
-#: ../app/core/gimplayer.c:336
+#: ../app/core/gimplayer.c:332
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Obniżenie warstwy na dno"
 
-#: ../app/core/gimplayer.c:337
+#: ../app/core/gimplayer.c:333
 msgid "Layer cannot be raised higher."
 msgstr "Nie można bardziej podnieść warstwy."
 
-#: ../app/core/gimplayer.c:338
+#: ../app/core/gimplayer.c:334
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:566 ../app/core/gimplayer.c:1503
+#: ../app/core/gimplayer.c:560 ../app/core/gimplayer.c:1413
 #: ../app/core/gimplayermask.c:262
 #, c-format
 msgid "%s mask"
 msgstr "maska %s"
 
-#: ../app/core/gimplayer.c:605
+#: ../app/core/gimplayer.c:599
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -9887,60 +9897,60 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1406
+#: ../app/core/gimplayer.c:1316
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1417
+#: ../app/core/gimplayer.c:1327
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1423
+#: ../app/core/gimplayer.c:1333
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1554
+#: ../app/core/gimplayer.c:1464
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: ../app/core/gimplayer.c:1705
+#: ../app/core/gimplayer.c:1615
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1706
+#: ../app/core/gimplayer.c:1616
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/gimplayer.c:1811
+#: ../app/core/gimplayer.c:1721
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Włączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1812
+#: ../app/core/gimplayer.c:1722
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Wyłączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1891
+#: ../app/core/gimplayer.c:1801
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1967
+#: ../app/core/gimplayer.c:1877
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:1999
+#: ../app/core/gimplayer.c:1909
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:2019
+#: ../app/core/gimplayer.c:1929
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
@@ -10519,82 +10529,108 @@ msgstr "_Nazwa kanału:"
 msgid "Initialize from _selection"
 msgstr "Inicjowanie z _zaznaczenia"
 
-#: ../app/dialogs/color-profile-dialog.c:163
-msgid "Convert to ICC Color Profile"
-msgstr "Konwertuj do profilu koloru ICC"
-
-#: ../app/dialogs/color-profile-dialog.c:166
-msgid "Convert the image to a color profile"
-msgstr "Konwertuj obraz do profilu kolorów"
-
-#: ../app/dialogs/color-profile-dialog.c:180
+#: ../app/dialogs/color-profile-dialog.c:136
 msgid "Assign ICC Color Profile"
 msgstr "Przydziel profil kolorów ICC"
 
-#: ../app/dialogs/color-profile-dialog.c:183
+#: ../app/dialogs/color-profile-dialog.c:139
 msgid "Assign a color profile to the image"
 msgstr "Przydziel profil kolorów do obrazu"
 
-#: ../app/dialogs/color-profile-dialog.c:189
+#: ../app/dialogs/color-profile-dialog.c:145
 msgid "_Assign"
 msgstr "_Przydziel"
 
-#: ../app/dialogs/color-profile-dialog.c:214
+#: ../app/dialogs/color-profile-dialog.c:156
+msgid "Convert to ICC Color Profile"
+msgstr "Konwertuj do profilu koloru ICC"
+
+#: ../app/dialogs/color-profile-dialog.c:159
+msgid "Convert the image to a color profile"
+msgstr "Konwertuj obraz do profilu kolorów"
+
+#: ../app/dialogs/color-profile-dialog.c:176
+msgid "RGB Conversion"
+msgstr "Konwersja do RGB"
+
+#: ../app/dialogs/color-profile-dialog.c:179
+msgid "Convert Image to RGB"
+msgstr "Konwertuj obraz do RGB"
+
+#: ../app/dialogs/color-profile-dialog.c:198
+msgid "Grayscale Conversion"
+msgstr "Konwersja do odcieni szarości"
+
+#: ../app/dialogs/color-profile-dialog.c:201
+msgid "Convert Image to Grayscale"
+msgstr "Konwertuj obraz do odcieni szarości"
+
+#: ../app/dialogs/color-profile-dialog.c:238
 msgid "Current Color Profile"
 msgstr "Bieżący profil kolorów"
 
-#: ../app/dialogs/color-profile-dialog.c:224
-msgid "Convert to"
-msgstr "Konwertuj do"
-
-#: ../app/dialogs/color-profile-dialog.c:224
+#: ../app/dialogs/color-profile-dialog.c:249
 msgid "Assign"
 msgstr "Przydziel"
 
-#: ../app/dialogs/color-profile-dialog.c:236
+#: ../app/dialogs/color-profile-dialog.c:249
+msgid "Convert to"
+msgstr "Konwertuj do"
+
+#: ../app/dialogs/color-profile-dialog.c:261
 msgid "Profile _details"
 msgstr "_Szczegóły profilu"
 
-#: ../app/dialogs/color-profile-dialog.c:265
+#: ../app/dialogs/color-profile-dialog.c:290
 msgid "_Rendering Intent:"
 msgstr "Sposób _odwzorowania barw:"
 
-#: ../app/dialogs/color-profile-dialog.c:281
+#: ../app/dialogs/color-profile-dialog.c:306
 msgid "_Black Point Compensation"
 msgstr "Kompensacja _czarnego punktu"
 
-#: ../app/dialogs/color-profile-dialog.c:304
+#: ../app/dialogs/color-profile-dialog.c:334
 msgid "Select destination profile"
 msgstr "Wybór profilu docelowego"
 
-#: ../app/dialogs/color-profile-dialog.c:314
+#: ../app/dialogs/color-profile-dialog.c:363
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Wbudowany profil odcieni szarości (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:321
+#: ../app/dialogs/color-profile-dialog.c:370
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Wbudowany profil RGB (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:337
+#: ../app/dialogs/color-profile-dialog.c:388
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Preferowany profil odcieni szarości (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:342
+#: ../app/dialogs/color-profile-dialog.c:395
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Preferowany profil RGB (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:407
+#: ../app/dialogs/color-profile-dialog.c:457
+msgid "Assign color profile"
+msgstr "Przydziel profil kolorów"
+
+#: ../app/dialogs/color-profile-dialog.c:483
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Konwertowanie do „%s”"
 
-#: ../app/dialogs/color-profile-dialog.c:429
-msgid "Assign color profile"
-msgstr "Przydziel profil kolorów"
+#: ../app/dialogs/color-profile-dialog.c:511
+#, c-format
+msgid "Converting to RGB (%s)"
+msgstr "Konwertowanie do RGB (%s)"
+
+#: ../app/dialogs/color-profile-dialog.c:533
+#, c-format
+msgid "Converting to grayscale (%s)"
+msgstr "Konwertowanie do odcieni szarości (%s)"
 
 #: ../app/dialogs/color-profile-import-dialog.c:80
 msgid "Convert to Grayscale Working Space?"
@@ -10633,6 +10669,61 @@ msgstr "Obraz „%s” posiada osadzony profil kolorów"
 msgid "_Don't ask me again"
 msgstr "_Bez pytania ponownie"
 
+#: ../app/dialogs/convert-indexed-dialog.c:128
+msgid "Indexed Color Conversion"
+msgstr "Konwersja do trybu indeksowanego"
+
+#: ../app/dialogs/convert-indexed-dialog.c:131
+msgid "Convert Image to Indexed Colors"
+msgstr "Konwersja obrazu do trybu indeksowanego"
+
+#: ../app/dialogs/convert-indexed-dialog.c:141
+#: ../app/dialogs/convert-precision-dialog.c:154
+msgid "C_onvert"
+msgstr "K_onwertuj"
+
+#: ../app/dialogs/convert-indexed-dialog.c:193
+msgid "_Maximum number of colors:"
+msgstr "_Maksymalna liczba kolorów:"
+
+#: ../app/dialogs/convert-indexed-dialog.c:222
+msgid "_Remove unused colors from colormap"
+msgstr "_Usunięcie nieużywanych kolorów z palety kolorów"
+
+#. dithering
+#: ../app/dialogs/convert-indexed-dialog.c:239
+#: ../app/dialogs/convert-precision-dialog.c:185
+#: ../app/tools/gimpblendoptions.c:119
+msgid "Dithering"
+msgstr "Dithering"
+
+#: ../app/dialogs/convert-indexed-dialog.c:251
+msgid "Color _dithering:"
+msgstr "_Ditherowanie kolorów:"
+
+#: ../app/dialogs/convert-indexed-dialog.c:266
+msgid "Enable dithering of _transparency"
+msgstr "D_ithering przezroczystości"
+
+#: ../app/dialogs/convert-indexed-dialog.c:278
+msgid "Enable dithering of text layers"
+msgstr "Dithering warstw tekstowych"
+
+#: ../app/dialogs/convert-indexed-dialog.c:289
+#: ../app/dialogs/convert-precision-dialog.c:243
+msgid "Dithering text layers will make them uneditable"
+msgstr ""
+"Dithering warstw tekstowych spowoduje, że nie będzie można ich modyfikować"
+
+#: ../app/dialogs/convert-indexed-dialog.c:309
+msgid "Converting to indexed colors"
+msgstr "Konwertowanie na kolory indeksowane"
+
+#: ../app/dialogs/convert-indexed-dialog.c:438
+#: ../app/pdb/image-convert-cmds.c:159
+msgid "Cannot convert to a palette with more than 256 colors."
+msgstr "Nie można konwertować na paletę z więcej niż 256 kolorami."
+
 #: ../app/dialogs/convert-precision-dialog.c:135
 #, c-format
 msgid "Convert Image to %s"
@@ -10642,17 +10733,6 @@ msgstr "Konwertuj obraz do %s"
 msgid "Precision Conversion"
 msgstr "Konwersja dokładności"
 
-#: ../app/dialogs/convert-precision-dialog.c:154
-#: ../app/dialogs/convert-type-dialog.c:141
-msgid "C_onvert"
-msgstr "K_onwertuj"
-
-#. dithering
-#: ../app/dialogs/convert-precision-dialog.c:185
-#: ../app/dialogs/convert-type-dialog.c:239 ../app/tools/gimpblendoptions.c:119
-msgid "Dithering"
-msgstr "Dithering"
-
 #: ../app/dialogs/convert-precision-dialog.c:204
 msgid "_Layers:"
 msgstr "_Warstwy:"
@@ -10660,12 +10740,6 @@ msgstr "_Warstwy:"
 #: ../app/dialogs/convert-precision-dialog.c:226
 msgid "_Text Layers:"
 msgstr "W_arstwy tekstowe:"
-
-#: ../app/dialogs/convert-precision-dialog.c:243
-#: ../app/dialogs/convert-type-dialog.c:289
-msgid "Dithering text layers will make them uneditable"
-msgstr ""
-"Dithering warstw tekstowych spowoduje, że nie będzie można ich modyfikować"
 
 #: ../app/dialogs/convert-precision-dialog.c:252
 msgid "_Channels and Masks:"
@@ -10690,42 +10764,6 @@ msgstr "Liniowe światło"
 #, c-format
 msgid "Converting image to %s"
 msgstr "Konwertowanie obrazu do %s"
-
-#: ../app/dialogs/convert-type-dialog.c:128
-msgid "Indexed Color Conversion"
-msgstr "Konwersja do trybu indeksowanego"
-
-#: ../app/dialogs/convert-type-dialog.c:131
-msgid "Convert Image to Indexed Colors"
-msgstr "Konwersja obrazu do trybu indeksowanego"
-
-#: ../app/dialogs/convert-type-dialog.c:193
-msgid "_Maximum number of colors:"
-msgstr "_Maksymalna liczba kolorów:"
-
-#: ../app/dialogs/convert-type-dialog.c:222
-msgid "_Remove unused colors from colormap"
-msgstr "_Usunięcie nieużywanych kolorów z palety kolorów"
-
-#: ../app/dialogs/convert-type-dialog.c:251
-msgid "Color _dithering:"
-msgstr "_Ditherowanie kolorów:"
-
-#: ../app/dialogs/convert-type-dialog.c:266
-msgid "Enable dithering of _transparency"
-msgstr "D_ithering przezroczystości"
-
-#: ../app/dialogs/convert-type-dialog.c:278
-msgid "Enable dithering of text layers"
-msgstr "Dithering warstw tekstowych"
-
-#: ../app/dialogs/convert-type-dialog.c:309
-msgid "Converting to indexed colors"
-msgstr "Konwertowanie na kolory indeksowane"
-
-#: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/image-convert-cmds.c:162
-msgid "Cannot convert to a palette with more than 256 colors."
-msgstr "Nie można konwertować na paletę z więcej niż 256 kolorami."
 
 #: ../app/dialogs/data-delete-dialog.c:82
 msgid "Delete Object"
@@ -14496,7 +14534,7 @@ msgstr "Środowisko wtyczek"
 msgid "Failed to run plug-in \"%s\""
 msgstr "Uruchomienie wtyczki „%s” się nie powiodło"
 
-#: ../app/plug-in/gimppluginmanager-file-procedure.c:212
+#: ../app/plug-in/gimppluginmanager-file-procedure.c:219
 msgid "Unknown file type"
 msgstr "Nieznany typ pliku"
 
