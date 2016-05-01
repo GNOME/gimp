@@ -31,21 +31,25 @@
 
 /*  local function prototypes  */
 
-static void   gimp_filter_stack_constructed (GObject         *object);
-static void   gimp_filter_stack_finalize    (GObject         *object);
+static void   gimp_filter_stack_constructed      (GObject         *object);
+static void   gimp_filter_stack_finalize         (GObject         *object);
 
-static void   gimp_filter_stack_add         (GimpContainer   *container,
-                                             GimpObject      *object);
-static void   gimp_filter_stack_remove      (GimpContainer   *container,
-                                             GimpObject      *object);
-static void   gimp_filter_stack_reorder     (GimpContainer   *container,
-                                             GimpObject      *object,
-                                             gint             new_index);
+static void   gimp_filter_stack_add              (GimpContainer   *container,
+                                                  GimpObject      *object);
+static void   gimp_filter_stack_remove           (GimpContainer   *container,
+                                                  GimpObject      *object);
+static void   gimp_filter_stack_reorder          (GimpContainer   *container,
+                                                  GimpObject      *object,
+                                                  gint             new_index);
 
-static void   gimp_filter_stack_add_node    (GimpFilterStack *stack,
-                                             GimpFilter      *filter);
-static void   gimp_filter_stack_remove_node (GimpFilterStack *stack,
-                                             GimpFilter      *filter);
+static void   gimp_filter_stack_add_node         (GimpFilterStack *stack,
+                                                  GimpFilter      *filter);
+static void   gimp_filter_stack_remove_node      (GimpFilterStack *stack,
+                                                  GimpFilter      *filter);
+static void   gimp_filter_stack_update_last_node (GimpFilterStack *stack);
+
+static void   gimp_filter_stack_filter_visible   (GimpFilter      *filter,
+                                                  GimpFilterStack *stack);
 
 
 G_DEFINE_TYPE (GimpFilterStack, gimp_filter_stack, GIMP_TYPE_LIST);
@@ -81,6 +85,10 @@ gimp_filter_stack_constructed (GObject *object)
 
   g_assert (g_type_is_a (gimp_container_get_children_type (container),
                          GIMP_TYPE_FILTER));
+
+  gimp_container_add_handler (container, "visibility-changed",
+                              G_CALLBACK (gimp_filter_stack_filter_visible),
+                              container);
 }
 
 static void
@@ -103,14 +111,10 @@ gimp_filter_stack_add (GimpContainer *container,
 {
   GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
   GimpFilter      *filter = GIMP_FILTER (object);
-  gint             n_children;
-
-  n_children = gimp_container_get_n_children (container);
-
-  if (n_children == 0)
-    gimp_filter_set_is_last_node (filter, TRUE);
 
   GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
+
+  gimp_filter_stack_update_last_node (stack);
 
   if (stack->graph)
     {
@@ -125,7 +129,6 @@ gimp_filter_stack_remove (GimpContainer *container,
 {
   GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
   GimpFilter      *filter = GIMP_FILTER (object);
-  gint             n_children;
 
   if (stack->graph)
     {
@@ -136,16 +139,7 @@ gimp_filter_stack_remove (GimpContainer *container,
   GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
 
   gimp_filter_set_is_last_node (filter, FALSE);
-
-  n_children = gimp_container_get_n_children (container);
-
-  if (n_children > 0)
-    {
-      GimpFilter *last_node = (GimpFilter *)
-        gimp_container_get_child_by_index (container, n_children - 1);
-
-      gimp_filter_set_is_last_node (last_node, TRUE);
-    }
+  gimp_filter_stack_update_last_node (stack);
 }
 
 static void
@@ -155,40 +149,13 @@ gimp_filter_stack_reorder (GimpContainer *container,
 {
   GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
   GimpFilter      *filter = GIMP_FILTER (object);
-  gint             n_children;
-  gint             old_index;
-
-  n_children = gimp_container_get_n_children (container);
-  old_index  = gimp_container_get_child_index (container, object);
 
   if (stack->graph)
     gimp_filter_stack_remove_node (stack, filter);
 
-  if (old_index == n_children -1)
-    {
-      gimp_filter_set_is_last_node (filter, FALSE);
-    }
-  else if (new_index == n_children - 1)
-    {
-      GimpFilter *last_node = (GimpFilter *)
-        gimp_container_get_child_by_index (container, n_children - 1);
-
-      gimp_filter_set_is_last_node (last_node, FALSE);
-    }
-
   GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 
-  if (new_index == n_children - 1)
-    {
-      gimp_filter_set_is_last_node (filter, TRUE);
-    }
-  else if (old_index == n_children - 1)
-    {
-      GimpFilter *last_node = (GimpFilter *)
-        gimp_container_get_child_by_index (container, n_children - 1);
-
-      gimp_filter_set_is_last_node (last_node, TRUE);
-    }
+  gimp_filter_stack_update_last_node (stack);
 
   if (stack->graph)
     gimp_filter_stack_add_node (stack, filter);
@@ -365,4 +332,35 @@ gimp_filter_stack_remove_node (GimpFilterStack *stack,
 
   gegl_node_connect_to (node_below, "output",
                         node_above, "input");
+}
+
+static void
+gimp_filter_stack_update_last_node (GimpFilterStack *stack)
+{
+  GList    *list;
+  gboolean  found_last = FALSE;
+
+  for (list = GIMP_LIST (stack)->queue->tail;
+       list;
+       list = g_list_previous (list))
+    {
+      GimpFilter *filter = list->data;
+
+      if (! found_last && gimp_filter_get_visible (filter))
+        {
+          gimp_filter_set_is_last_node (filter, TRUE);
+          found_last = TRUE;
+        }
+      else
+        {
+          gimp_filter_set_is_last_node (filter, FALSE);
+        }
+    }
+}
+
+static void
+gimp_filter_stack_filter_visible (GimpFilter      *filter,
+                                  GimpFilterStack *stack)
+{
+  gimp_filter_stack_update_last_node (stack);
 }
