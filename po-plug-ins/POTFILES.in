@@ -100,6 +100,7 @@ plug-ins/file-bmp/bmp-load.c
 plug-ins/file-bmp/bmp-save.c
 plug-ins/file-bmp/bmp.c
 plug-ins/file-darktable/file-darktable.c
+plug-ins/file-darktable/file-formats.h
 plug-ins/file-exr/file-exr.c
 plug-ins/file-faxg3/faxg3.c
 plug-ins/file-fits/fits.c
@@ -216,6 +217,7 @@ plug-ins/print/print-draw-page.c
 plug-ins/print/print-page-layout.c
 plug-ins/print/print.c
 plug-ins/screenshot/screenshot.c
+plug-ins/screenshot/screenshot-win32.c
 plug-ins/screenshot/screenshot-x11.c
 plug-ins/selection-to-path/pxl-outline.c
 plug-ins/selection-to-path/selection-to-path.c
