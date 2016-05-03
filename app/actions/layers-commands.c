@@ -24,6 +24,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -349,14 +350,17 @@ void
 layers_new_from_visible_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  GimpImage    *image;
-  GimpLayer    *layer;
-  GimpPickable *pickable;
+  GimpImage        *image;
+  GimpLayer        *layer;
+  GimpPickable     *pickable;
+  GimpColorProfile *profile;
   return_if_no_image (image, data);
 
   pickable = GIMP_PICKABLE (image);
 
   gimp_pickable_flush (pickable);
+
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
   layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
                                            image,
@@ -365,7 +369,7 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                            _("Visible"),
                                            GIMP_OPACITY_OPAQUE,
                                            GIMP_NORMAL_MODE,
-                                           NULL /* same image */);
+                                           profile);
 
   gimp_image_add_layer (image, layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
