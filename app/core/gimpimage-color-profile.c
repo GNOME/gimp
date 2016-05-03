@@ -403,16 +403,9 @@ gimp_image_import_color_profile (GimpImage    *image,
                                  GimpProgress *progress,
                                  gboolean      interactive)
 {
-  GimpColorConfig *config;
-
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-
-  config = image->gimp->config->color_management;
-
-  if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
-    return;
 
   if (gimp_image_get_color_profile (image))
     {
@@ -445,8 +438,11 @@ gimp_image_import_color_profile (GimpImage    *image,
 
       if (policy == GIMP_COLOR_PROFILE_POLICY_CONVERT)
         {
-          GimpColorRenderingIntent  intent;
-          gboolean                  bpc;
+          GimpColorConfig           *config;
+          GimpColorRenderingIntent   intent;
+          gboolean                   bpc;
+
+          config = image->gimp->config->color_management;
 
           if (! dest_profile)
             {
