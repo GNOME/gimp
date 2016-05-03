@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-20 18:23+0000\n"
-"PO-Revision-Date: 2016-04-20 21:12-0500\n"
+"POT-Creation-Date: 2016-04-21 18:35+0000\n"
+"PO-Revision-Date: 2016-04-21 19:57-0500\n"
 "Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -3101,8 +3101,6 @@ msgid "_Hurl..."
 msgstr "Des_ordenar…"
 
 #: ../app/actions/filters-actions.c:351
-#| msgctxt "image-action"
-#| msgid "_Print Size..."
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Ruido _Perlin…"
@@ -3231,8 +3229,6 @@ msgid "_Stretch Contrast HSV..."
 msgstr "_Expansión del contraste HSV"
 
 #: ../app/actions/filters-actions.c:476
-#| msgctxt "filters-action"
-#| msgid "_Super_nova..."
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "_Supernova…"
@@ -8120,7 +8116,8 @@ msgstr "Grande (256x256)"
 #: ../app/core/core-enums.c:873
 msgctxt "undo-type"
 msgid "<<invalid>>"
-msgstr "<<inválido>>"
+msgstr "<<no válido>>"
+
 
 #: ../app/core/core-enums.c:874
 msgctxt "undo-type"
@@ -9041,8 +9038,6 @@ msgid "Selection Mask"
 msgstr "Máscara de selección"
 
 #: ../app/core/gimpcontext.c:673
-#| msgctxt "active-color"
-#| msgid "Foreground"
 msgid "Foreground"
 msgstr "Frente"
 
@@ -14953,7 +14948,6 @@ msgid "Click to add this path to the list"
 msgstr "Pulse para añadir esta ruta a la lista"
 
 #: ../app/tools/gimpblendoptions.c:100
-#| msgid "Adaptive supersampling"
 msgid "Adaptive Supersampling"
 msgstr "Sobremuestreo adaptativo"
 
@@ -15139,7 +15133,6 @@ msgid "Select by Color"
 msgstr "Seleccionar por color"
 
 #: ../app/tools/gimpcageoptions.c:77
-#| msgid "Fill the original position of the cage with a plain color"
 msgid ""
 "Fill the original position\n"
 "of the cage with a color"
@@ -15339,7 +15332,6 @@ msgstr ""
 "capas visibles"
 
 #: ../app/tools/gimpcolorpickeroptions.c:77
-#| msgid "Pick Mode  (%s)"
 msgid "Pick Mode"
 msgstr "Modo de selección"
 
@@ -15528,19 +15520,16 @@ msgid "Click to add control points to all channels"
 msgstr "Pulse para añadir puntos de control a todos los canales"
 
 #: ../app/tools/gimpcurvestool.c:355
-#| msgid "Click to close the curve"
 msgid "Click to locate on curve"
 msgstr "Pulse para situar sobre la curva"
 
 #: ../app/tools/gimpcurvestool.c:357
 #, c-format
-#| msgid "Click to add a control point"
 msgid "%s: add control point"
 msgstr "%s: añadir punto de control"
 
 #: ../app/tools/gimpcurvestool.c:358
 #, c-format
-#| msgid "Click to add control points to all channels"
 msgid "%s: add control points to all channels"
 msgstr "%s: añadir puntos de control a todos los canales"
 
@@ -15561,7 +15550,6 @@ msgid "Curve _type:"
 msgstr "_Tipo de curva:"
 
 #: ../app/tools/gimpcurvestool.c:645 ../app/tools/gimplevelstool.c:662
-#| msgid "Could not read header from '%s': %s"
 msgid "Could not read header: "
 msgstr "No se ha podido leer la cabecera:"
 
@@ -15669,7 +15657,6 @@ msgid "Anti erase  (%s)"
 msgstr "Antiborrado  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:67
-#| msgid "File Type"
 msgid "Flip Type"
 msgstr "Tipo de volteo"
 
@@ -15721,7 +15708,6 @@ msgid "Flip"
 msgstr "Voltear"
 
 #: ../app/tools/gimpforegroundselectoptions.c:84
-#| msgid "Paint Mode"
 msgid "Draw Mode"
 msgstr "Modo de dibujo"
 
@@ -15734,7 +15720,6 @@ msgstr ""
 "exclusión de la selección"
 
 #: ../app/tools/gimpforegroundselectoptions.c:93
-#| msgid "Stroke Path"
 msgid "Stroke width"
 msgstr "Anchura del trazo"
 
@@ -15779,8 +15764,6 @@ msgid "Iterations"
 msgstr "Iteraciones"
 
 #: ../app/tools/gimpforegroundselectoptions.c:131
-#| msgctxt "guides-type"
-#| msgid "Number of lines"
 msgid "Number of iterations to perform"
 msgstr "Número de iteraciones para representar"
 
@@ -15805,18 +15788,14 @@ msgid "F_oreground Select"
 msgstr "Selección del _frente"
 
 #: ../app/tools/gimpforegroundselecttool.c:303
-#| msgid "Foreground Select"
 msgid "Dialog for foreground select"
 msgstr "Diálogo para la selección del frente"
 
 #: ../app/tools/gimpforegroundselecttool.c:319
-#| msgid "_Preview"
 msgid "_Preview mask"
 msgstr "Máscara de _vista previa"
 
 #: ../app/tools/gimpforegroundselecttool.c:330
-#| msgctxt "undo-type"
-#| msgid "Select foreground"
 msgid "Select foreground pixels"
 msgstr "Seleccionar píxeles del frente"
 
@@ -15825,19 +15804,14 @@ msgid "Roughly outline the object to extract"
 msgstr "Dibuje un círculo aproximado alrededor del objeto que quiere extraer"
 
 #: ../app/tools/gimpforegroundselecttool.c:619
-#| msgctxt "undo-type"
-#| msgid "Select foreground"
 msgid "Selecting foreground,"
 msgstr "Seleccionando frente,"
 
 #: ../app/tools/gimpforegroundselecttool.c:621
-#| msgctxt "undo-type"
-#| msgid "Select foreground"
 msgid "Selecting background,"
 msgstr "Seleccionando fondo,"
 
 #: ../app/tools/gimpforegroundselecttool.c:623
-#| msgid "Selection"
 msgid "Selecting unknown,"
 msgstr "Seleccionando desconocido,"
 
@@ -15852,10 +15826,9 @@ msgid "press Escape to exit preview or Enter to apply."
 msgstr "Presione Esc para salir de la vista previa o Intro para aplicar."
 
 #: ../app/tools/gimpforegroundselecttool.c:1219
-#, fuzzy
 #| msgid "Paint Dynamics"
 msgid "Paint mask"
-msgstr "Dinámica de la pintura"
+msgstr "Máscara de pintura"
 
 #: ../app/tools/gimpfreeselecttool.c:197
 msgid ""
@@ -16252,40 +16225,34 @@ msgid "Export Levels"
 msgstr "Exportar niveles"
 
 #: ../app/tools/gimplevelstool.c:291
-#, fuzzy
 #| msgid "Click to add control points to all channels"
 msgid "Pick black point for all channels"
-msgstr "Pulse para añadir puntos de control a todos los canales"
+msgstr "Seleccionar punto negro para todos los canales"
 
 #: ../app/tools/gimplevelstool.c:293
-#, fuzzy
 #| msgid "Click-Drag to move the selected pixels"
 msgid "Pick black point for the selected channel"
-msgstr "Pulse y arrastre para mover los píxeles seleccionados"
+msgstr "Seleccionar punto negro para el canal seleccionado"
 
 #: ../app/tools/gimplevelstool.c:300
-#, fuzzy
 #| msgid "Click to add control points to all channels"
 msgid "Pick gray point for all channels"
-msgstr "Pulse para añadir puntos de control a todos los canales"
+msgstr "Seleccionar punto gris para todos los canales"
 
 #: ../app/tools/gimplevelstool.c:302
-#, fuzzy
 #| msgid "Click-Drag to move the selected pixels"
 msgid "Pick gray point for the selected channel"
-msgstr "Pulse y arrastre para mover los píxeles seleccionados"
+msgstr "Seleccionar punto gris para el canal seleccionado"
 
 #: ../app/tools/gimplevelstool.c:309
-#, fuzzy
 #| msgid "Click to add control points to all channels"
 msgid "Pick white point for all channels"
-msgstr "Pulse para añadir puntos de control a todos los canales"
+msgstr "Seleccionar punto blanco para todos los canales"
 
 #: ../app/tools/gimplevelstool.c:311
-#, fuzzy
 #| msgid "Click-Drag to move the selected pixels"
 msgid "Pick white point for the selected channel"
-msgstr "Pulse y arrastre para mover los píxeles seleccionados"
+msgstr "Seleccionar punto blanco para el canal seleccionado"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:407
@@ -16309,10 +16276,9 @@ msgid "_Auto Input Levels"
 msgstr "Niveles de entrada"
 
 #: ../app/tools/gimplevelstool.c:594
-#, fuzzy
 #| msgid "Adjust levels automatically"
 msgid "Adjust levels for all channels automatically"
-msgstr "Ajustar los niveles automáticamente"
+msgstr "Ajustar automáticamente los niveles para todos los canales"
 
 #: ../app/tools/gimplevelstool.c:621
 msgid "Edit these Settings as Curves"
@@ -16479,16 +16445,14 @@ msgid "The active channel's position is locked."
 msgstr "La posición del canal activo está bloqueado."
 
 #: ../app/tools/gimpmybrushtool.c:74
-#, fuzzy
 #| msgid "Paintbrush Tool: Paint smooth strokes using a brush"
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
-msgstr "Herramienta pincel: pintar trazos de bordes suaves mediante un pincel"
+msgstr "Herramienta pincel MyPaint: usar pinceles MyPaint en GIMP"
 
 #: ../app/tools/gimpmybrushtool.c:75
-#, fuzzy
 #| msgid "_Paintbrush"
 msgid "M_yPaint Brush"
-msgstr "_Pincel"
+msgstr "_Pincel MyPaint"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:77
 #: ../app/tools/gimpnpointdeformationoptions.c:78
@@ -16520,10 +16484,9 @@ msgstr ""
 
 #: ../app/tools/gimpnpointdeformationoptions.c:112
 #: ../app/tools/gimpnpointdeformationoptions.c:113
-#, fuzzy
 #| msgid "Show _tooltips"
 msgid "Show lattice"
-msgstr "Mostrar _consejos"
+msgstr "Mostrar cuadrícula"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
 #: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:518
@@ -16538,10 +16501,9 @@ msgstr "Rígido (Borrador)"
 #: ../app/tools/gimpnpointdeformationtool.c:158
 #: ../app/tools/gimpnpointdeformationtool.c:1014
 #: ../app/tools/gimpnpointdeformationtool.c:1018
-#, fuzzy
 #| msgid "Pointer Information"
 msgid "N-Point Deformation"
-msgstr "Información del puntero"
+msgstr "Deformación N-Point"
 
 #: ../app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
@@ -16550,26 +16512,25 @@ msgstr ""
 "usando puntos"
 
 #: ../app/tools/gimpnpointdeformationtool.c:161
-#, fuzzy
 #| msgid "Pointer Information"
 msgid "_N-Point Deformation"
-msgstr "Información del puntero"
+msgstr "Deformación _N-Point"
 
 #: ../app/tools/gimpoperationtool.c:132
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Herramienta de operación: utilizar una operación GEGL arbitraria"
 
 #: ../app/tools/gimpoperationtool.c:342
-#, fuzzy, c-format
+#, c-format
 #| msgid "Import Threshold Settings"
 msgid "Import '%s' Settings"
-msgstr "Importar los ajustes de umbral"
+msgstr "Importar los ajustes «%s»"
 
 #: ../app/tools/gimpoperationtool.c:343
-#, fuzzy, c-format
+#, c-format
 #| msgid "Export Threshold Settings"
 msgid "Export '%s' Settings"
-msgstr "Exportar los ajustes de umbral"
+msgstr "Exportar los ajustes «%s»"
 
 #: ../app/tools/gimpoperationtool.c:684
 #, c-format
@@ -16602,24 +16563,21 @@ msgid "Reset angle to zero"
 msgstr "Restablecer el ángulo a cero"
 
 #: ../app/tools/gimppaintoptions-gui.c:189
-#, fuzzy
 #| msgid "Reset size to brush's native size"
 msgid "Reset spacing to brush's native spacing"
-msgstr "Reiniciar tamaño al tamaño nativo del pincel"
+msgstr "Restablecer espaciado al espaciado nativo del pincel"
 
 #: ../app/tools/gimppaintoptions-gui.c:197
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgid "Reset hardness to default"
-msgstr "Reiniciar con los valores predeterminados"
+msgstr "Restablecer dureza a los valores predeterminados"
 
 #: ../app/tools/gimppaintoptions-gui.c:205
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgid "Reset force to default"
-msgstr "Reiniciar con los valores predeterminados"
+msgstr "Restablecer fuerza a los valores predeterminados"
 
 #: ../app/tools/gimppaintoptions-gui.c:250
 msgid "Lock brush size to zoom"
@@ -16846,10 +16804,9 @@ msgid "Selection criterion"
 msgstr "Criterio de selección"
 
 #: ../app/tools/gimpregionselectoptions.c:127
-#, fuzzy
 #| msgid "Paint Mode"
 msgid "Draw mask"
-msgstr "Modo de pintura"
+msgstr "Máscara de dibujo"
 
 #: ../app/tools/gimpregionselectoptions.c:128
 #, fuzzy
@@ -16924,10 +16881,9 @@ msgid "Scale to %d x %d"
 msgstr "Escalar a %d x %d"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:72
-#, fuzzy
 #| msgid "Re-_center Segment's Midpoint"
 msgid "Refinement scale"
-msgstr "Re_centrar punto medio del segmento"
+msgstr "Escala de refinamiento"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:73
 msgid ""
