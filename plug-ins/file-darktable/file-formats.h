@@ -32,10 +32,6 @@ struct _FileFormat
   const gchar *load_proc;
   const gchar *load_blurb;
   const gchar *load_help;
-
-  const gchar *load_thumb_proc;
-  const gchar *load_thumb_blurb;
-  const gchar *load_thumb_help;
 };
 
 /* some magic numbers taken from http://www.garykessler.net/library/file_sigs.html
@@ -55,11 +51,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-canon-load",
     "Load files in the Canon raw formats via darktable",
-    "This plug-in loads files in Canon's raw formats by calling darktable.",
-
-    "file-raw-canon-load-thumb",
-    "Load thumbnail from a Canon raw image via darktable",
-    "This plug-in loads a thumbnail from Canon's raw images by calling darktable-cli."
+    "This plug-in loads files in Canon's raw formats by calling darktable."
   },
 
   {
@@ -70,11 +62,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-nikon-load",
     "Load files in the Nikon raw formats via darktable",
-    "This plug-in loads files in Nikon's raw formats by calling darktable.",
-
-    "file-raw-nef-load-thumb",
-    "Load thumbnail from a Nikon raw image via darktable",
-    "This plug-in loads a thumbnail from Nikon's raw images by calling darktable-cli."
+    "This plug-in loads files in Nikon's raw formats by calling darktable."
   },
 
   {
@@ -85,11 +73,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-hasselblad-load",
     "Load files in the Hasselblad raw formats via darktable",
-    "This plug-in loads files in Hasselblad's raw formats by calling darktable.",
-
-    "file-hasselblad-load-thumb",
-    "Load thumbnail from a Hasselblad raw image via darktable",
-    "This plug-in loads a thumbnail from Hasselblad raw images by calling darktable-cli."
+    "This plug-in loads files in Hasselblad's raw formats by calling darktable."
   },
 
   {
@@ -100,11 +84,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-sony-load",
     "Load files in the Sony raw formats via darktable",
-    "This plug-in loads files in Sony's raw formats by calling darktable.",
-
-    "file-raw-sony-load-thumb",
-    "Load thumbnail from a Sony raw image via darktable",
-    "This plug-in loads a thumbnail from Sony raw images by calling darktable-cli."
+    "This plug-in loads files in Sony's raw formats by calling darktable."
   },
 
   {
@@ -115,11 +95,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-bay-load",
     "Load files in the BAY raw format via darktable",
-    "This plug-in loads files in Casio's raw BAY format by calling darktable.",
-
-    "file-raw-bay-load-thumb",
-    "Load thumbnail from a BAY raw image via darktable",
-    "This plug-in loads a thumbnail from Casio's raw BAY images by calling darktable-cli."
+    "This plug-in loads files in Casio's raw BAY format by calling darktable."
   },
 
   {
@@ -130,11 +106,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-cine-load",
     "Load files in the CINE raw format via darktable",
-    "This plug-in loads files in Phantom Software's raw CINE format by calling darktable.",
-
-    "file-raw-cine-load-thumb",
-    "Load thumbnail from a CINE raw image via darktable",
-    "This plug-in loads a thumbnail from Phantom Software's raw CINE images by calling darktable-cli."
+    "This plug-in loads files in Phantom Software's raw CINE format by calling darktable."
   },
 
   {
@@ -145,11 +117,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-sinar-load",
     "Load files in the Sinar raw formats via darktable",
-    "This plug-in loads files in Sinar's raw formats by calling darktable.",
-
-    "file-raw-sinar-load-thumb",
-    "Load thumbnail from a Sinar raw image via darktable",
-    "This plug-in loads a thumbnail from Sinar raw images by calling darktable-cli."
+    "This plug-in loads files in Sinar's raw formats by calling darktable."
   },
 
   {
@@ -161,11 +129,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-kodak-load",
     "Load files in the Kodak raw formats via darktable",
-    "This plug-in loads files in Kodak's raw formats by calling darktable.",
-
-    "file-raw-kodak-load-thumb",
-    "Load thumbnail from a Kodak raw image via darktable",
-    "This plug-in loads a thumbnail from Kodak raw images by calling darktable-cli."
+    "This plug-in loads files in Kodak's raw formats by calling darktable."
   },
 
   {
@@ -176,11 +140,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-dng-load",
     "Load files in the DNG raw format via darktable",
-    "This plug-in loads files in the Adobe Digital Negative DNG format by calling darktable.",
-
-    "file-raw-dng-load-thumb",
-    "Load thumbnail from a DNG raw image via darktable",
-    "This plug-in loads a thumbnail from Adobe's Digital Negative DNG images by calling darktable-cli."
+    "This plug-in loads files in the Adobe Digital Negative DNG format by calling darktable."
   },
 
   {
@@ -191,11 +151,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-erf-load",
     "Load files in the ERF raw format via darktable",
-    "This plug-in loads files in Epson's raw ERF format by calling darktable.",
-
-    "file-raw-erf-load-thumb",
-    "Load thumbnail from an ERF raw image via darktable",
-    "This plug-in loads a thumbnail from Epson's raw ERF images by calling darktable-cli."
+    "This plug-in loads files in Epson's raw ERF format by calling darktable."
   },
 
   {
@@ -206,11 +162,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-phaseone-load",
     "Load files in the Phase One raw formats via darktable",
-    "This plug-in loads files in Phase One's raw formats by calling darktable.",
-
-    "file-raw-phaseone-load-thumb",
-    "Load thumbnail from a Phase One raw image via darktable",
-    "This plug-in loads a thumbnail from Phase One's raw images by calling darktable-cli."
+    "This plug-in loads files in Phase One's raw formats by calling darktable."
   },
 
   {
@@ -221,11 +173,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-minolta-load",
     "Load files in the Minolta raw formats via darktable",
-    "This plug-in loads files in Minolta's raw formats by calling darktable.",
-
-    "file-raw-minolta-load-thumb",
-    "Load thumbnail from a Minolta raw image via darktable",
-    "This plug-in loads a thumbnail from Minolta raw images by calling darktable-cli."
+    "This plug-in loads files in Minolta's raw formats by calling darktable."
   },
 
   {
@@ -235,11 +183,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-mef-load",
     "Load files in the MEF raw format via darktable",
-    "This plug-in loads files in Mamiya's raw MEF format by calling darktable.",
-
-    "file-raw-mef-load-thumb",
-    "Load thumbnail from a MEF raw image via darktable",
-    "This plug-in loads a thumbnail from Mamiya's raw MEF images by calling darktable-cli."
+    "This plug-in loads files in Mamiya's raw MEF format by calling darktable."
   },
 
   {
@@ -250,11 +194,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-mos-load",
     "Load files in the MOS raw format via darktable",
-    "This plug-in loads files in Leaf's raw MOS format by calling darktable.",
-
-    "file-raw-mos-load-thumb",
-    "Load thumbnail from a MOS raw image via darktable",
-    "This plug-in loads a thumbnail from Leaf's raw MOS images by calling darktable-cli."
+    "This plug-in loads files in Leaf's raw MOS format by calling darktable."
   },
 
   {
@@ -265,11 +205,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-orf-load",
     "Load files in the ORF raw format via darktable",
-    "This plug-in loads files in Olympus' raw ORF format by calling darktable.",
-
-    "file-raw-orf-load-thumb",
-    "Load thumbnail from an ORF raw image via darktable",
-    "This plug-in loads a thumbnail from Olympus' raw ORF images by calling darktable-cli."
+    "This plug-in loads files in Olympus' raw ORF format by calling darktable."
   },
 
   {
@@ -280,11 +216,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-pef-load",
     "Load files in the PEF raw format via darktable",
-    "This plug-in loads files in Pentax' raw PEF format by calling darktable.",
-
-    "file-raw-pef-load-thumb",
-    "Load thumbnail from a PEF raw image via darktable",
-    "This plug-in loads a thumbnail from Pentax' raw PEF images by calling darktable-cli."
+    "This plug-in loads files in Pentax' raw PEF format by calling darktable."
   },
 
   {
@@ -295,11 +227,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-pxn-load",
     "Load files in the PXN raw format via darktable",
-    "This plug-in loads files in Logitech's raw PXN format by calling darktable.",
-
-    "file-raw-pxn-load-thumb",
-    "Load thumbnail from a PXN raw image via darktable",
-    "This plug-in loads a thumbnail from Logitech's raw PXN images by calling darktable-cli."
+    "This plug-in loads files in Logitech's raw PXN format by calling darktable."
   },
 
   {
@@ -310,11 +238,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-qtk-load",
     "Load files in the QTK raw format via darktable",
-    "This plug-in loads files in Apple's QuickTake QTK raw format by calling darktable.",
-
-    "file-raw-qtk-load-thumb",
-    "Load thumbnail from a QTK raw image via darktable",
-    "This plug-in loads a thumbnail from Apple's QuickTake QTK raw images by calling darktable-cli."
+    "This plug-in loads files in Apple's QuickTake QTK raw format by calling darktable."
   },
 
   {
@@ -325,11 +249,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-raf-load",
     "Load files in the RAF raw format via darktable",
-    "This plug-in loads files in Fujifilm's raw RAF format by calling darktable.",
-
-    "file-raw-raf-load-thumb",
-    "Load thumbnail from a RAF raw image via darktable",
-    "This plug-in loads a thumbnail from Fujifilm's raw RAF images by calling darktable-cli."
+    "This plug-in loads files in Fujifilm's raw RAF format by calling darktable."
   },
 
   {
@@ -340,11 +260,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-panasonic-load",
     "Load files in the Panasonic raw formats via darktable",
-    "This plug-in loads files in Panasonic's raw formats by calling darktable.",
-
-    "file-raw-panasonic-load-thumb",
-    "Load thumbnail from a Panasonic raw image via darktable",
-    "This plug-in loads a thumbnail from Panasonic's raw images by calling darktable-cli."
+    "This plug-in loads files in Panasonic's raw formats by calling darktable."
   },
 
   {
@@ -355,11 +271,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-rdc-load",
     "Load files in the RDC raw format via darktable",
-    "This plug-in loads files in Digital Foto Maker's raw RDC format by calling darktable.",
-
-    "file-raw-rdc-load-thumb",
-    "Load thumbnail from a RDC raw image via darktable",
-    "This plug-in loads a thumbnail from Digital Foto Maker's raw RDC images by calling darktable-cli."
+    "This plug-in loads files in Digital Foto Maker's raw RDC format by calling darktable."
   },
 
   {
@@ -370,11 +282,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-rwl-load",
     "Load files in the RWL raw format via darktable",
-    "This plug-in loads files in Leica's raw RWL format by calling darktable.",
-
-    "file-raw-rwl-load-thumb",
-    "Load thumbnail from a RWL raw image via darktable",
-    "This plug-in loads a thumbnail from Leica's raw RWL images by calling darktable-cli."
+    "This plug-in loads files in Leica's raw RWL format by calling darktable."
   },
 
   {
@@ -385,11 +293,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-srw-load",
     "Load files in the SRW raw format via darktable",
-    "This plug-in loads files in Samsung's raw SRW format by calling darktable.",
-
-    "file-raw-srw-load-thumb",
-    "Load thumbnail from a SRW raw image via darktable",
-    "This plug-in loads a thumbnail from Samsung's raw SRW images by calling darktable-cli."
+    "This plug-in loads files in Samsung's raw SRW format by calling darktable."
   },
 
   {
@@ -400,11 +304,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-x3f-load",
     "Load files in the X3F raw format via darktable",
-    "This plug-in loads files in Sigma's raw X3F format by calling darktable.",
-
-    "file-raw-x3f-load-thumb",
-    "Load thumbnail from a X3F raw image via darktable",
-    "This plug-in loads a thumbnail from Sigma's raw X3F images by calling darktable-cli."
+    "This plug-in loads files in Sigma's raw X3F format by calling darktable."
   },
 
   {
@@ -415,11 +315,7 @@ static const FileFormat file_formats[] =
 
     "file-raw-ari-load",
     "Load files in the ARI raw format via darktable",
-    "This plug-in loads files in Arriflex' raw ARI format by calling darktable.",
-
-    "file-raw-ari-load-thumb",
-    "Load thumbnail from an ARI raw image via darktable",
-    "This plug-in loads a thumbnail from Arriflex' raw ARI images by calling darktable-cli."
+    "This plug-in loads files in Arriflex' raw ARI format by calling darktable."
   }
 
 };

@@ -33,6 +33,8 @@
 
 #include "file-formats.h"
 
+#define LOAD_THUMB_PROC "file-raw-load-thumb"
+
 static void     query                (void);
 static void     run                  (const gchar      *name,
                                       gint              nparams,
@@ -130,6 +132,19 @@ query (void)
   if (! have_darktable)
     return;
 
+  gimp_install_procedure (LOAD_THUMB_PROC,
+                          "Load thumbnail from a raw image via darktable",
+                          "This plug-in loads a thumbnail from a raw image by calling darktable-cli.",
+                          "Tobias Ellinghaus",
+                          "Tobias Ellinghaus",
+                          "2016",
+                          NULL,
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (thumb_args),
+                          G_N_ELEMENTS (thumb_return_vals),
+                          thumb_args, thumb_return_vals);
+
   for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
     {
       const FileFormat *format = &file_formats[i];
@@ -149,30 +164,12 @@ query (void)
 
       gimp_register_file_handler_mime (format->load_proc,
                                        format->mime_type);
-      if (format->magic)
-        gimp_register_magic_load_handler (format->load_proc,
-                                          format->extensions,
-                                          "",
-                                          format->magic);
-      else
-        gimp_register_load_handler (format->load_proc,
-                                    format->extensions,
-                                    "");
+      gimp_register_magic_load_handler (format->load_proc,
+                                        format->extensions,
+                                        "",
+                                        format->magic);
 
-      gimp_install_procedure (format->load_thumb_proc,
-                              format->load_thumb_blurb,
-                              format->load_thumb_help,
-                              "Tobias Ellinghaus",
-                              "Tobias Ellinghaus",
-                              "2016",
-                              NULL,
-                              NULL,
-                              GIMP_PLUGIN,
-                              G_N_ELEMENTS (thumb_args),
-                              G_N_ELEMENTS (thumb_return_vals),
-                              thumb_args, thumb_return_vals);
-
-      gimp_register_thumbnail_loader (format->load_proc, format->load_thumb_proc);
+      gimp_register_thumbnail_loader (format->load_proc, LOAD_THUMB_PROC);
     }
 }
 
@@ -222,8 +219,7 @@ run (const gchar      *name,
 
           break;
         }
-      else if (format->load_thumb_proc
-               && ! strcmp (name, format->load_thumb_proc))
+      else if (! strcmp (name, LOAD_THUMB_PROC))
         {
           gint width  = 0;
           gint height = 0;
@@ -285,6 +281,8 @@ load_image (const gchar  *filename,
   gchar  *filename_out    = gimp_temp_name ("exr");
   gchar  *export_filename = g_strdup_printf ("lua/export_on_exit/export_filename=%s", filename_out);
 
+  gchar *darktable_stdout = NULL;
+
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gchar *argv[] =
     {
@@ -307,12 +305,12 @@ load_image (const gchar  *filename,
   if (g_spawn_sync (NULL,
                     argv,
                     NULL,
-                    G_SPAWN_STDOUT_TO_DEV_NULL |
+//                     G_SPAWN_STDOUT_TO_DEV_NULL |
                     G_SPAWN_STDERR_TO_DEV_NULL |
                     G_SPAWN_SEARCH_PATH,
                     NULL,
                     NULL,
-                    NULL,
+                    &darktable_stdout,
                     NULL,
                     NULL,
                     error))
@@ -321,6 +319,9 @@ load_image (const gchar  *filename,
       if (image_ID != -1)
         gimp_image_set_filename (image_ID, filename);
     }
+
+// if (darktable_stdout) printf ("%s\n", darktable_stdout);
+  g_free(darktable_stdout);
 
   g_unlink (filename_out);
   g_free (lua_cmd);
