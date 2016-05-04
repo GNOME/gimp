@@ -184,9 +184,10 @@ gimp_color_profile_new_from_file (GFile   *file,
 
   if (path)
     {
-      GMappedFile  *mapped;
+      GMappedFile *mapped;
 
       mapped = g_mapped_file_new (path, FALSE, error);
+      g_free (path);
 
       if (! mapped)
         return NULL;
@@ -521,7 +522,7 @@ gimp_color_profile_get_copyright (GimpColorProfile *profile)
  * string that can be used to label the profile in a user interface.
  *
  * Unlike gimp_color_profile_get_description(), this function always
- * returns a string (as a fallback, it returns "(unnamed profile)".
+ * returns a string (as a fallback, it returns "(unnamed profile)").
  *
  * Return value: the @profile's label. The returned value belongs to
  *               @profile and must not be modified or freed.
