@@ -359,6 +359,37 @@ gimp_color_profile_new_from_lcms_profile (gpointer   lcms_profile,
 }
 
 /**
+ * gimp_color_profile_save_to_file:
+ * profile: a #GimpColorProfile
+ * @file:   a #GFile
+ * @error:  return location for #GError
+ *
+ * This function saves @profile to @file as ICC profile.
+ *
+ * Return value: %TRUE on success, %FALSE if an error occured.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_profile_save_to_file (GimpColorProfile  *profile,
+                                 GFile             *file,
+                                 GError           **error)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  return g_file_replace_contents (file,
+                                  (const gchar *) profile->priv->data,
+                                  profile->priv->length,
+                                  NULL, FALSE,
+                                  G_FILE_CREATE_NONE,
+                                  NULL,
+                                  NULL,
+                                  error);
+}
+
+/**
  * gimp_color_profile_get_icc_profile:
  * @profile: a #GimpColorProfile
  * @length:  return location for the number of bytes

@@ -51,6 +51,7 @@ EXPORTS
 	gimp_color_profile_new_rgb_srgb
 	gimp_color_profile_new_rgb_srgb_linear
 	gimp_color_profile_new_srgb_trc_from_color_profile
+	gimp_color_profile_save_to_file
 	gimp_hsl_get_type
 	gimp_hsl_set
 	gimp_hsl_set_alpha
