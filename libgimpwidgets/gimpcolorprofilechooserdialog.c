@@ -146,7 +146,16 @@ gimp_color_profile_chooser_dialog_new (const gchar *title)
                        NULL);
 }
 
-/* Add shortcut for default ICC profile location */
+/* Add shortcuts for default ICC profile locations */
+static gboolean
+add_shortcut (GimpColorProfileChooserDialog *dialog,
+              const gchar                   *folder)
+{
+  return (g_file_test (folder, G_FILE_TEST_IS_DIR) &&
+          gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                                folder, NULL));
+}
+
 static void
 gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *dialog)
 {
@@ -160,19 +169,17 @@ gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *d
 
     folder = g_strconcat (prefix, "\\system32\\spool\\drivers\\color", NULL);
 
-    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            folder, NULL);
+    add_shortcut (dialog, folder);
 
     g_free (folder);
   }
+#elif defined(PLATFORM_OSX)
+  {
+    add_shortcut (dialog, "/Library/ColorSync/Profiles");
+  }
 #else
   {
-    const gchar folder[] = "/usr/share/color/icc";
-
-    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            folder, NULL);
+    add_shortcut (dialog, "/usr/share/color/icc");
   }
 #endif
 }
