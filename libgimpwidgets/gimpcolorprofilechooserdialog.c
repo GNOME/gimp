@@ -137,15 +137,6 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
                     NULL);
 }
 
-GtkWidget *
-gimp_color_profile_chooser_dialog_new (const gchar *title)
-{
-
-  return g_object_new (GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
-                       "title", title,
-                       NULL);
-}
-
 /* Add shortcuts for default ICC profile locations */
 static gboolean
 add_shortcut (GimpColorProfileChooserDialog *dialog,
