@@ -23,6 +23,10 @@
 
 #include <string.h>
 
+#ifdef PLATFORM_OSX
+#include <AppKit/AppKit.h>
+#endif
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -86,20 +90,6 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
 
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-profile-chooser-dialog");
 
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
-                          NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_ACCEPT,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
-
-  gimp_color_profile_chooser_dialog_add_shortcut (dialog);
-
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("All files (*.*)"));
   gtk_file_filter_add_pattern (filter, "*");
@@ -155,6 +145,34 @@ gimp_color_profile_chooser_dialog_new (const gchar          *title,
   if (parent)
     gtk_window_set_transient_for (GTK_WINDOW (dialog), parent);
 
+  if (gtk_file_chooser_get_action (GTK_FILE_CHOOSER (dialog)) ==
+      GTK_FILE_CHOOSER_ACTION_SAVE)
+    {
+      gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
+                              NULL);
+
+      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                      TRUE);
+    }
+  else
+    {
+      gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
+                              NULL);
+    }
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_ACCEPT,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
+
+  gimp_color_profile_chooser_dialog_add_shortcut (GIMP_COLOR_PROFILE_CHOOSER_DIALOG (dialog));
+
   return dialog;
 }
 
@@ -171,6 +189,9 @@ add_shortcut (GimpColorProfileChooserDialog *dialog,
 static void
 gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *dialog)
 {
+  gboolean save = (gtk_file_chooser_get_action (GTK_FILE_CHOOSER (dialog)) ==
+                   GTK_FILE_CHOOSER_ACTION_SAVE);
+
 #ifdef G_OS_WIN32
   {
     const gchar *prefix = g_getenv ("SystemRoot");
@@ -187,11 +208,67 @@ gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *d
   }
 #elif defined(PLATFORM_OSX)
   {
-    add_shortcut (dialog, "/Library/ColorSync/Profiles");
+    NSAutoreleasePool *pool;
+    NSArray           *path;
+    NSString          *library_dir;
+    gchar             *folder;
+    gboolean           folder_set = FALSE;
+
+    pool = [[NSAutoreleasePool alloc] init];
+
+    if (save)
+      {
+        path = NSSearchPathForDirectoriesInDomains (NSLibraryDirectory,
+                                                    NSUserDomainMask, YES);
+        library_dir = [path objectAtIndex:0];
+
+        folder = g_build_filename ([library_dir UTF8String],
+                                   "ColorSync", "Profiles", NULL);
+
+        foldet_set = add_shortcut (dialog, folder);
+        g_free (folder);
+      }
+
+    if (! folder_set)
+      {
+        path = NSSearchPathForDirectoriesInDomains (NSLibraryDirectory,
+                                                    NSSystemDomainMask, YES);
+        library_dir = [path objectAtIndex:0];
+
+        folder = g_build_filename ([library_dir UTF8String],
+                                   "ColorSync", "Profiles", NULL);
+
+        add_shortcut (dialog, folder);
+        g_free (folder);
+      }
+
+    [pool drain];
   }
 #else
   {
-    add_shortcut (dialog, "/usr/share/color/icc");
+    gboolean folder_set = FALSE;
+
+    if (save)
+      {
+        gchar *folder = g_build_filename (g_get_user_data_dir (),
+                                          "color", "icc", NULL);
+
+        folder_set = add_shortcut (dialog, folder);
+
+        if (! folder_set)
+          {
+            g_free (folder);
+            folder = g_build_filename (g_get_home_dir (),
+                                       ".color", "icc", NULL);
+
+            folder_set = add_shortcut (dialog, folder);
+          }
+
+        g_free (folder);
+      }
+
+    if (! folder_set)
+      add_shortcut (dialog, "/usr/share/color/icc");
   }
 #endif
 }

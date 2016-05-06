@@ -6,12 +6,14 @@ libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
-endif
-
-if PLATFORM_WIN32
 libgdi32 = -lgdi32
 else
 libm = -lm
+endif
+
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
 endif
 
 if OS_WIN32
@@ -56,7 +58,8 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
 	$(LCMS_CFLAGS)				\
-	-I$(includedir)
+	-I$(includedir)				\
+	$(xobjective_c)
 
 lib_LTLIBRARIES = libgimpwidgets-@GIMP_API_VERSION@.la
 
@@ -264,7 +267,8 @@ libgimpwidgetsinclude_HEADERS = \
 libgimpwidgets_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
-	$(libgimpwidgets_export_symbols)
+	$(libgimpwidgets_export_symbols)	\
+	$(framework_cocoa)
 
 EXTRA_libgimpwidgets_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpwidgets_def)
 
