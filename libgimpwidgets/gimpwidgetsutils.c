@@ -400,16 +400,15 @@ gimp_widget_get_color_profile (GtkWidget *widget)
   }
 #elif defined GDK_WINDOWING_QUARTZ
   {
-    CMProfileRef prof = NULL;
+    CGColorSpaceRef space = NULL;
 
-    CMGetProfileByAVID (monitor, &prof);
+    space = CGDisplayCopyColorSpace (monitor);
 
-    if (prof)
+    if (space)
       {
         CFDataRef data;
 
-        data = CMProfileCopyICCData (NULL, prof);
-        CMCloseProfile (prof);
+        data = CGColorSpaceCopyICCProfile (space);
 
         if (data)
           {
@@ -429,6 +428,8 @@ gimp_widget_get_color_profile (GtkWidget *widget)
             g_free (buffer);
             CFRelease (data);
           }
+
+        CFRelease (space);
       }
   }
 #elif defined G_OS_WIN32
