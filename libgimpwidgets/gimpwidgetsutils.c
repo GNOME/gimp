@@ -421,7 +421,7 @@ gimp_widget_get_color_profile (GtkWidget *widget)
             CFDataGetBytes (data, CFRangeMake (0, CFDataGetLength (data)),
                             buffer);
 
-            profile = gimp_color_profile_new_from_icc_profile (data,
+            profile = gimp_color_profile_new_from_icc_profile (buffer,
                                                                CFDataGetLength (data),
                                                                NULL);
 
