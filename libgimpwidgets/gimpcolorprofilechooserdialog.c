@@ -138,12 +138,24 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
 }
 
 GtkWidget *
-gimp_color_profile_chooser_dialog_new (const gchar *title)
+gimp_color_profile_chooser_dialog_new (const gchar          *title,
+                                       GtkWindow            *parent,
+                                       GtkFileChooserAction  action)
 {
+  GtkWidget *dialog;
 
-  return g_object_new (GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
-                       "title", title,
-                       NULL);
+  g_return_val_if_fail (title != NULL, NULL);
+  g_return_val_if_fail (parent == NULL || GTK_IS_WINDOW (parent), NULL);
+
+  dialog = g_object_new (GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
+                         "title",  title,
+                         "action", action,
+                         NULL);
+
+  if (parent)
+    gtk_window_set_transient_for (GTK_WINDOW (dialog), parent);
+
+  return dialog;
 }
 
 /* Add shortcuts for default ICC profile locations */

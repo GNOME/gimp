@@ -887,11 +887,14 @@ prefs_profile_combo_box_new (GObject      *config,
                              const gchar  *label,
                              const gchar  *property_name)
 {
-  GtkWidget *dialog = gimp_color_profile_chooser_dialog_new (label);
+  GtkWidget *dialog;
   GtkWidget *combo;
   gchar     *path;
   gchar     *notify_name;
   GFile     *file = NULL;
+
+  dialog = gimp_color_profile_chooser_dialog_new (label, NULL,
+                                                  GTK_FILE_CHOOSER_ACTION_OPEN);
 
   g_object_get (config, property_name, &path, NULL);
 

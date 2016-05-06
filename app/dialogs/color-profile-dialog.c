@@ -331,7 +331,9 @@ color_profile_combo_box_new (ProfileDialog *dialog)
   GError           *error = NULL;
 
   chooser =
-    gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
+    gimp_color_profile_chooser_dialog_new (_("Select Destination Profile"),
+                                           NULL,
+                                           GTK_FILE_CHOOSER_ACTION_OPEN);
 
   history = gimp_personal_rc_file ("profilerc");
   combo = gimp_color_profile_combo_box_new (chooser, history);

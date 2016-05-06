@@ -301,7 +301,9 @@ cdisplay_proof_configure (GimpColorDisplay *display)
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 
-  dialog = gimp_color_profile_chooser_dialog_new (_("Choose an ICC Color Profile"));
+  dialog = gimp_color_profile_chooser_dialog_new (_("Choose an ICC Color Profile"),
+                                                  NULL,
+                                                  GTK_FILE_CHOOSER_ACTION_OPEN);
 
   history = gimp_personal_rc_file ("profilerc");
   combo = gimp_color_profile_combo_box_new (dialog, history);
