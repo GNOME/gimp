@@ -802,7 +802,7 @@ static void   prefs_profile_combo_notify (GObject                  *config,
                                           const GParamSpec         *param_spec,
                                           GimpColorProfileComboBox *combo);
 
-static void
+  static void
 prefs_profile_combo_changed (GimpColorProfileComboBox *combo,
                              GObject                  *config)
 {
@@ -887,15 +887,11 @@ prefs_profile_combo_box_new (GObject      *config,
                              const gchar  *label,
                              const gchar  *property_name)
 {
-  GtkWidget *dialog;
+  GtkWidget *dialog = gimp_color_profile_chooser_dialog_new (label);
   GtkWidget *combo;
   gchar     *path;
   gchar     *notify_name;
   GFile     *file = NULL;
-
-  dialog = g_object_new (GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
-                         "title", label,
-                         NULL);
 
   g_object_get (config, property_name, &path, NULL);
 

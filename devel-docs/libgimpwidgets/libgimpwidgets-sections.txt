@@ -205,6 +205,7 @@ GIMP_COLOR_SELECTION_GET_CLASS
 <SECTION>
 <FILE>gimpcolorprofilechooserdialog</FILE>
 <TITLE>GimpColorProfileChooserDialog</TITLE>
+gimp_color_profile_chooser_dialog_new
 <SUBSECTION Standard>
 GIMP_COLOR_PROFILE_CHOOSER_DIALOG
 GIMP_COLOR_PROFILE_CHOOSER_DIALOG_CLASS
