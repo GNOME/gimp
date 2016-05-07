@@ -225,7 +225,7 @@ gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *d
         folder = g_build_filename ([library_dir UTF8String],
                                    "ColorSync", "Profiles", NULL);
 
-        foldet_set = add_shortcut (dialog, folder);
+        folder_set = add_shortcut (dialog, folder);
         g_free (folder);
       }
 
