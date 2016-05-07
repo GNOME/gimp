@@ -155,6 +155,7 @@
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN      "gimp-image-color-profile-assign"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT     "gimp-image-color-profile-convert"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD     "gimp-image-color-profile-discard"
+#define GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE        "gimp-image-color-profile-save"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_IMPORT      "gimp-image-color-profile-import"
 #define GIMP_HELP_IMAGE_GRID                      "gimp-image-grid"
 #define GIMP_HELP_IMAGE_PROPERTIES                "gimp-image-properties"

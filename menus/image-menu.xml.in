@@ -355,6 +355,8 @@
         <menuitem action="image-color-profile-assign" />
         <menuitem action="image-color-profile-convert" />
         <menuitem action="image-color-profile-discard" />
+        <separator />
+        <menuitem action="image-color-profile-save" />
      </menu>
       <separator />
       <menu action="image-transform-menu" name="Transform">

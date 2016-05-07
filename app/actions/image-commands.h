@@ -38,6 +38,8 @@ void   image_color_profile_convert_cmd_callback (GtkAction *action,
                                                  gpointer   data);
 void   image_color_profile_discard_cmd_callback (GtkAction *action,
                                                  gpointer   data);
+void   image_color_profile_save_cmd_callback    (GtkAction *action,
+                                                 gpointer   data);
 
 void   image_resize_cmd_callback                (GtkAction *action,
                                                  gpointer   data);

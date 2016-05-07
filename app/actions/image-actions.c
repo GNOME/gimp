@@ -94,6 +94,12 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_color_profile_discard_cmd_callback),
     GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD },
 
+  { "image-color-profile-save", NULL,
+    NC_("image-action", "_Save Color Profile to File..."), NULL,
+    NC_("image-action", "Save the image's color profile to an ICC file"),
+    G_CALLBACK (image_color_profile_save_cmd_callback),
+    GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE },
+
   { "image-resize", GIMP_STOCK_RESIZE,
     NC_("image-action", "Can_vas Size..."), NULL,
     NC_("image-action", "Adjust the image dimensions"),
@@ -427,6 +433,7 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-color-profile-assign",  image);
   SET_SENSITIVE ("image-color-profile-convert", image);
   SET_SENSITIVE ("image-color-profile-discard", image && profile);
+  SET_SENSITIVE ("image-color-profile-save",    image);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);
