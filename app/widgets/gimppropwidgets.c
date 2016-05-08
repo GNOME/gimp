@@ -916,10 +916,10 @@ gimp_prop_angle_dial_new (GObject     *config,
 }
 
 GtkWidget *
-gimp_prop_angle_range_dial_new  (GObject     *config,
-                                 const gchar *alpha_property_name,
-                                 const gchar *beta_property_name,
-                                 const gchar *clockwise_property_name)
+gimp_prop_angle_range_dial_new (GObject     *config,
+                                const gchar *alpha_property_name,
+                                const gchar *beta_property_name,
+                                const gchar *clockwise_property_name)
 {
   GParamSpec *alpha_param_spec;
   GParamSpec *beta_param_spec;
@@ -971,9 +971,9 @@ gimp_prop_angle_range_dial_new  (GObject     *config,
 }
 
 GtkWidget *
-gimp_prop_polar_new  (GObject     *config,
-                      const gchar *angle_property_name,
-                      const gchar *radius_property_name)
+gimp_prop_polar_new (GObject     *config,
+                     const gchar *angle_property_name,
+                     const gchar *radius_property_name)
 {
   GParamSpec *angle_param_spec;
   GParamSpec *radius_param_spec;
@@ -1597,25 +1597,32 @@ static void   gimp_prop_profile_combo_notify   (GObject                  *config
                                                 GimpColorProfileComboBox *combo);
 
 GtkWidget *
-gimp_prop_profile_combo_box_new  (GObject      *config,
-                                  const gchar  *property_name,
-                                  GtkListStore *profile_store,
-                                  const gchar  *dialog_title)
+gimp_prop_profile_combo_box_new (GObject      *config,
+                                 const gchar  *property_name,
+                                 GtkListStore *profile_store,
+                                 const gchar  *dialog_title)
 {
   GParamSpec *param_spec;
   GtkWidget  *dialog;
   GtkWidget  *combo;
   GFile      *file = NULL;
 
-  param_spec = check_param_spec_w (config, property_name,
-                                   G_TYPE_PARAM_STRING, G_STRFUNC);
-  if (! param_spec)
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                             property_name);
+
+  if (param_spec && G_IS_PARAM_SPEC_STRING (param_spec))
+    {
+      param_spec = check_param_spec_w (config, property_name,
+                                       G_TYPE_PARAM_STRING, G_STRFUNC);
+    }
+  else
     {
       param_spec = check_param_spec_w (config, property_name,
                                        G_TYPE_PARAM_OBJECT, G_STRFUNC);
-      if (! param_spec)
-        return NULL;
     }
+
+  if (! param_spec)
+    return NULL;
 
   dialog = gimp_color_profile_chooser_dialog_new (dialog_title, NULL,
                                                   GTK_FILE_CHOOSER_ACTION_OPEN);
@@ -1638,10 +1645,18 @@ gimp_prop_profile_combo_box_new  (GObject      *config,
     }
 
   if (profile_store)
-    combo = gimp_color_profile_combo_box_new_with_model (dialog,
-                                                         GTK_TREE_MODEL (profile_store));
+    {
+      combo = gimp_color_profile_combo_box_new_with_model (dialog,
+                                                           GTK_TREE_MODEL (profile_store));
+    }
   else
-    combo = gimp_color_profile_combo_box_new (dialog, /* FIXME */ NULL);
+    {
+      gchar *filename;
+
+      filename = gimp_personal_rc_file ("profilerc");
+      combo = gimp_color_profile_combo_box_new (dialog, filename);
+      g_free (filename);
+    }
 
   gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                                 file, NULL);
@@ -2037,7 +2052,7 @@ check_param_spec_w (GObject     *object,
   if (param_spec &&
       (param_spec->flags & G_PARAM_WRITABLE) == 0)
     {
-      g_warning ("%s: property '%s' of %s is writable",
+      g_warning ("%s: property '%s' of %s is not writable",
                  strloc,
                  param_spec->name,
                  g_type_name (param_spec->owner_type));
