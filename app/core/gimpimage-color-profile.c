@@ -418,6 +418,7 @@ gimp_image_convert_color_profile (GimpImage                *image,
       break;
     }
 
+  gimp_image_set_is_color_managed (image, TRUE, TRUE);
   gimp_image_set_color_profile (image, dest_profile, NULL);
   /*  omg...  */
   gimp_image_parasite_detach (image, "icc-profile-name");
