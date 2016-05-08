@@ -798,141 +798,6 @@ prefs_table_new (gint          rows,
   return table;
 }
 
-static void   prefs_profile_combo_notify (GObject                  *config,
-                                          const GParamSpec         *param_spec,
-                                          GimpColorProfileComboBox *combo);
-
-  static void
-prefs_profile_combo_changed (GimpColorProfileComboBox *combo,
-                             GObject                  *config)
-{
-  GFile *file = gimp_color_profile_combo_box_get_active_file (combo);
-  gchar *path = NULL;
-
-  if (file)
-    path = g_file_get_path (file);
-
-  if (! path)
-    g_signal_handlers_block_by_func (config,
-                                     prefs_profile_combo_notify,
-                                     combo);
-
-  g_object_set (config,
-                g_object_get_data (G_OBJECT (combo), "property-name"), path,
-                NULL);
-
-  if (! path)
-    g_signal_handlers_unblock_by_func (config,
-                                       prefs_profile_combo_notify,
-                                       combo);
-
-  g_free (path);
-
-  if (file)
-    g_object_unref (file);
-}
-
-static void
-prefs_profile_combo_notify (GObject                  *config,
-                            const GParamSpec         *param_spec,
-                            GimpColorProfileComboBox *combo)
-{
-  gchar *path;
-  GFile *file = NULL;
-
-  g_object_get (config,
-                param_spec->name, &path,
-                NULL);
-
-  if (path)
-    {
-      file = g_file_new_for_path (path);
-      g_free (path);
-    }
-
-  g_signal_handlers_block_by_func (combo,
-                                   prefs_profile_combo_changed,
-                                   config);
-
-  gimp_color_profile_combo_box_set_active_file (combo, file, NULL);
-
-  g_signal_handlers_unblock_by_func (combo,
-                                     prefs_profile_combo_changed,
-                                     config);
-
-  if (file)
-    g_object_unref (file);
-}
-
-static void
-prefs_profile_combo_add_tooltip (GtkWidget   *combo,
-                                 GObject     *config,
-                                 const gchar *property_name)
-{
-  GParamSpec  *param_spec;
-  const gchar *blurb;
-
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
-  blurb = g_param_spec_get_blurb (param_spec);
-
-  if (blurb)
-    gimp_help_set_help_data (combo, blurb, NULL);
-}
-
-static GtkWidget *
-prefs_profile_combo_box_new (GObject      *config,
-                             GtkListStore *store,
-                             const gchar  *label,
-                             const gchar  *property_name)
-{
-  GtkWidget *dialog;
-  GtkWidget *combo;
-  gchar     *path;
-  gchar     *notify_name;
-  GFile     *file = NULL;
-
-  dialog = gimp_color_profile_chooser_dialog_new (label, NULL,
-                                                  GTK_FILE_CHOOSER_ACTION_OPEN);
-
-  g_object_get (config, property_name, &path, NULL);
-
-  if (path)
-    {
-      file = g_file_new_for_path (path);
-      g_free (path);
-    }
-
-  combo = gimp_color_profile_combo_box_new_with_model (dialog,
-                                                       GTK_TREE_MODEL (store));
-
-  g_object_set_data (G_OBJECT (combo),
-                     "property-name", (gpointer) property_name);
-
-  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                                file, NULL);
-
-  if (file)
-    g_object_unref (file);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (prefs_profile_combo_changed),
-                    config);
-
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (prefs_profile_combo_notify),
-                           combo, 0);
-
-  g_free (notify_name);
-
-  prefs_profile_combo_add_tooltip (combo, config, property_name);
-
-  return combo;
-}
-
 static GtkWidget *
 prefs_button_add (const gchar *icon_name,
                   const gchar *label,
@@ -1483,10 +1348,10 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (profiles); i++)
       {
-        button = prefs_profile_combo_box_new (color_config,
-                                              store,
-                                              gettext (profiles[i].fs_label),
-                                              profiles[i].property_name);
+        button = gimp_prop_profile_combo_box_new (color_config,
+                                                  profiles[i].property_name,
+                                                  store,
+                                                  gettext (profiles[i].fs_label));
 
         gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                                    gettext (profiles[i].label), 0.0, 0.5,

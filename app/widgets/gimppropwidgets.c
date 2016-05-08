@@ -68,11 +68,11 @@ static GParamSpec * find_param_spec    (GObject     *object,
                                         const gchar *strloc);
 static GParamSpec * check_param_spec   (GObject     *object,
                                         const gchar *property_name,
-                                        GType         type,
+                                        GType        type,
                                         const gchar *strloc);
 static GParamSpec * check_param_spec_w (GObject     *object,
                                         const gchar *property_name,
-                                        GType         type,
+                                        GType        type,
                                         const gchar *strloc);
 
 static void         connect_notify     (GObject     *config,
@@ -1583,6 +1583,173 @@ gimp_prop_language_entry_notify (GObject    *config,
                                      config);
 
   g_free (value);
+}
+
+
+/***********************/
+/*  profile combo box  */
+/***********************/
+
+static void   gimp_prop_profile_combo_callback (GimpColorProfileComboBox *combo,
+                                                GObject                  *config);
+static void   gimp_prop_profile_combo_notify   (GObject                  *config,
+                                                const GParamSpec         *param_spec,
+                                                GimpColorProfileComboBox *combo);
+
+GtkWidget *
+gimp_prop_profile_combo_box_new  (GObject      *config,
+                                  const gchar  *property_name,
+                                  GtkListStore *profile_store,
+                                  const gchar  *dialog_title)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *dialog;
+  GtkWidget  *combo;
+  GFile      *file = NULL;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_STRING, G_STRFUNC);
+  if (! param_spec)
+    {
+      param_spec = check_param_spec_w (config, property_name,
+                                       G_TYPE_PARAM_OBJECT, G_STRFUNC);
+      if (! param_spec)
+        return NULL;
+    }
+
+  dialog = gimp_color_profile_chooser_dialog_new (dialog_title, NULL,
+                                                  GTK_FILE_CHOOSER_ACTION_OPEN);
+
+  if (G_IS_PARAM_SPEC_STRING (param_spec))
+    {
+      gchar *path;
+
+      g_object_get (config, property_name, &path, NULL);
+
+      if (path)
+        {
+          file = g_file_new_for_path (path);
+          g_free (path);
+        }
+    }
+  else
+    {
+      g_object_get (config, property_name, &file, NULL);
+    }
+
+  if (profile_store)
+    combo = gimp_color_profile_combo_box_new_with_model (dialog,
+                                                         GTK_TREE_MODEL (profile_store));
+  else
+    combo = gimp_color_profile_combo_box_new (dialog, /* FIXME */ NULL);
+
+  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                                file, NULL);
+
+  if (file)
+    g_object_unref (file);
+
+  set_param_spec (G_OBJECT (combo), combo, param_spec);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_prop_profile_combo_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_profile_combo_notify),
+                  combo);
+
+  return combo;
+}
+
+static void
+gimp_prop_profile_combo_callback (GimpColorProfileComboBox *combo,
+                                  GObject                  *config)
+{
+  GParamSpec *param_spec;
+  GFile      *file;
+
+  param_spec = get_param_spec (G_OBJECT (combo));
+  if (! param_spec)
+    return;
+
+  file = gimp_color_profile_combo_box_get_active_file (combo);
+
+  if (! file)
+    g_signal_handlers_block_by_func (config,
+                                     gimp_prop_profile_combo_notify,
+                                     combo);
+
+  if (G_IS_PARAM_SPEC_STRING (param_spec))
+    {
+      gchar *path = NULL;
+
+      if (file)
+        path = g_file_get_path (file);
+
+      g_object_set (config,
+                    param_spec->name, path,
+                    NULL);
+
+      g_free (path);
+    }
+  else
+    {
+      g_object_set (config,
+                    param_spec->name, file,
+                    NULL);
+    }
+
+  if (! file)
+    g_signal_handlers_unblock_by_func (config,
+                                       gimp_prop_profile_combo_notify,
+                                       combo);
+
+  if (file)
+    g_object_unref (file);
+}
+
+static void
+gimp_prop_profile_combo_notify (GObject                  *config,
+                                const GParamSpec         *param_spec,
+                                GimpColorProfileComboBox *combo)
+{
+  GFile *file = NULL;
+
+  if (G_IS_PARAM_SPEC_STRING (param_spec))
+    {
+      gchar *path;
+
+      g_object_get (config,
+                    param_spec->name, &path,
+                    NULL);
+
+      if (path)
+        {
+          file = g_file_new_for_path (path);
+          g_free (path);
+        }
+    }
+  else
+    {
+      g_object_get (config,
+                    param_spec->name, &file,
+                    NULL);
+
+    }
+
+  g_signal_handlers_block_by_func (combo,
+                                   gimp_prop_profile_combo_callback,
+                                   config);
+
+  gimp_color_profile_combo_box_set_active_file (combo, file, NULL);
+
+  g_signal_handlers_unblock_by_func (combo,
+                                     gimp_prop_profile_combo_callback,
+                                     config);
+
+  if (file)
+    g_object_unref (file);
 }
 
 
