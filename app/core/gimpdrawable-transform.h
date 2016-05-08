@@ -28,6 +28,7 @@ GeglBuffer  * gimp_drawable_transform_buffer_affine (GimpDrawable           *dra
                                                      GimpTransformDirection  direction,
                                                      GimpInterpolationType   interpolation_type,
                                                      GimpTransformResize     clip_result,
+                                                     GimpColorProfile      **buffer_profile,
                                                      gint                   *new_offset_x,
                                                      gint                   *new_offset_y,
                                                      GimpProgress           *progress);
@@ -39,6 +40,7 @@ GeglBuffer  * gimp_drawable_transform_buffer_flip   (GimpDrawable           *dra
                                                      GimpOrientationType     flip_type,
                                                      gdouble                 axis,
                                                      gboolean                clip_result,
+                                                     GimpColorProfile      **buffer_profile,
                                                      gint                   *new_offset_x,
                                                      gint                   *new_offset_y);
 
@@ -51,6 +53,7 @@ GeglBuffer  * gimp_drawable_transform_buffer_rotate (GimpDrawable           *dra
                                                      gdouble                 center_x,
                                                      gdouble                 center_y,
                                                      gboolean                clip_result,
+                                                     GimpColorProfile      **buffer_profile,
                                                      gint                   *new_offset_x,
                                                      gint                   *new_offset_y);
 
@@ -82,6 +85,7 @@ GeglBuffer   * gimp_drawable_transform_cut          (GimpDrawable           *dra
                                                      gboolean               *new_layer);
 GimpDrawable * gimp_drawable_transform_paste        (GimpDrawable           *drawable,
                                                      GeglBuffer             *buffer,
+                                                     GimpColorProfile       *buffer_profile,
                                                      gint                    offset_x,
                                                      gint                    offset_y,
                                                      gboolean                new_layer);

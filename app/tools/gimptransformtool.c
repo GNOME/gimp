@@ -134,6 +134,7 @@ static GeglBuffer *
                                                              GeglBuffer            *orig_buffer,
                                                              gint                   orig_offset_x,
                                                              gint                   orig_offset_y,
+                                                             GimpColorProfile     **buffer_profile,
                                                              gint                  *new_offset_x,
                                                              gint                  *new_offset_y);
 static void      gimp_transform_tool_real_draw_gui          (GimpTransformTool     *tr_tool,
@@ -1256,6 +1257,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GeglBuffer        *orig_buffer,
                                     gint               orig_offset_x,
                                     gint               orig_offset_y,
+                                    GimpColorProfile **buffer_profile,
                                     gint              *new_offset_x,
                                     gint              *new_offset_y)
 {
@@ -1291,6 +1293,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                    options->direction,
                                                    options->interpolation,
                                                    clip,
+                                                   buffer_profile,
                                                    new_offset_x,
                                                    new_offset_y,
                                                    progress);
@@ -1345,6 +1348,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GeglBuffer           *new_buffer;
   gint                  new_offset_x;
   gint                  new_offset_y;
+  GimpColorProfile     *buffer_profile;
   gchar                *undo_desc      = NULL;
   gboolean              new_layer      = FALSE;
   GError               *error          = NULL;
@@ -1403,6 +1407,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
                                                                    orig_buffer,
                                                                    orig_offset_x,
                                                                    orig_offset_y,
+                                                                   &buffer_profile,
                                                                    &new_offset_x,
                                                                    &new_offset_y);
 
@@ -1417,7 +1422,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
           /*  paste the new transformed image to the image...also implement
            *  undo...
            */
-          gimp_drawable_transform_paste (tool->drawable, new_buffer,
+          gimp_drawable_transform_paste (tool->drawable,
+                                         new_buffer, buffer_profile,
                                          new_offset_x, new_offset_y,
                                          new_layer);
           g_object_unref (new_buffer);

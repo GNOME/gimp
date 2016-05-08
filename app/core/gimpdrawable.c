@@ -642,10 +642,11 @@ gimp_drawable_flip (GimpItem            *item,
                     gdouble              axis,
                     gboolean             clip_result)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglBuffer   *buffer;
-  gint          off_x, off_y;
-  gint          new_off_x, new_off_y;
+  GimpDrawable     *drawable = GIMP_DRAWABLE (item);
+  GeglBuffer       *buffer;
+  GimpColorProfile *buffer_profile;
+  gint              off_x, off_y;
+  gint              new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
@@ -654,11 +655,12 @@ gimp_drawable_flip (GimpItem            *item,
                                                 off_x, off_y,
                                                 flip_type, axis,
                                                 clip_result,
+                                                &buffer_profile,
                                                 &new_off_x, &new_off_y);
 
   if (buffer)
     {
-      gimp_drawable_transform_paste (drawable, buffer,
+      gimp_drawable_transform_paste (drawable, buffer, buffer_profile,
                                      new_off_x, new_off_y, FALSE);
       g_object_unref (buffer);
     }
@@ -672,10 +674,11 @@ gimp_drawable_rotate (GimpItem         *item,
                       gdouble           center_y,
                       gboolean          clip_result)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglBuffer   *buffer;
-  gint          off_x, off_y;
-  gint          new_off_x, new_off_y;
+  GimpDrawable     *drawable = GIMP_DRAWABLE (item);
+  GeglBuffer       *buffer;
+  GimpColorProfile *buffer_profile;
+  gint              off_x, off_y;
+  gint              new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
@@ -684,11 +687,12 @@ gimp_drawable_rotate (GimpItem         *item,
                                                   off_x, off_y,
                                                   rotate_type, center_x, center_y,
                                                   clip_result,
+                                                  &buffer_profile,
                                                   &new_off_x, &new_off_y);
 
   if (buffer)
     {
-      gimp_drawable_transform_paste (drawable, buffer,
+      gimp_drawable_transform_paste (drawable, buffer, buffer_profile,
                                      new_off_x, new_off_y, FALSE);
       g_object_unref (buffer);
     }
@@ -703,10 +707,11 @@ gimp_drawable_transform (GimpItem               *item,
                          GimpTransformResize     clip_result,
                          GimpProgress           *progress)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglBuffer   *buffer;
-  gint          off_x, off_y;
-  gint          new_off_x, new_off_y;
+  GimpDrawable     *drawable = GIMP_DRAWABLE (item);
+  GeglBuffer       *buffer;
+  GimpColorProfile *buffer_profile;
+  gint              off_x, off_y;
+  gint              new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
@@ -716,12 +721,13 @@ gimp_drawable_transform (GimpItem               *item,
                                                   matrix, direction,
                                                   interpolation_type,
                                                   clip_result,
+                                                  &buffer_profile,
                                                   &new_off_x, &new_off_y,
                                                   progress);
 
   if (buffer)
     {
-      gimp_drawable_transform_paste (drawable, buffer,
+      gimp_drawable_transform_paste (drawable, buffer, buffer_profile,
                                      new_off_x, new_off_y, FALSE);
       g_object_unref (buffer);
     }
