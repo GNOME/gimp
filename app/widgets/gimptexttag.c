@@ -95,3 +95,18 @@ gimp_text_tag_get_color (GtkTextTag *tag,
 
   gdk_color_free (gdk_color);
 }
+
+void
+gimp_text_tag_get_bg_color (GtkTextTag *tag,
+                            GimpRGB    *color)
+{
+  GdkColor *gdk_color;
+
+  g_object_get (tag,
+                GIMP_TEXT_PROP_NAME_BG_COLOR, &gdk_color,
+                NULL);
+
+  gimp_rgb_set_gdk_color (color, gdk_color);
+
+  gdk_color_free (gdk_color);
+}
