@@ -17,10 +17,11 @@
 
 #include "config.h"
 
-#include <string.h>
-
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -851,11 +852,12 @@ gimp_selection_float (GimpSelection *selection,
                       gint           off_y,
                       GError       **error)
 {
-  GimpImage  *image;
-  GimpLayer  *layer;
-  GeglBuffer *buffer;
-  gint        x1, y1;
-  gint        x2, y2;
+  GimpImage        *image;
+  GimpLayer        *layer;
+  GeglBuffer       *buffer;
+  GimpColorProfile *profile;
+  gint              x1, y1;
+  gint              x2, y2;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -884,6 +886,8 @@ gimp_selection_float (GimpSelection *selection,
                                    cut_image, FALSE, TRUE,
                                    &x1, &y1, NULL);
 
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+
   /*  Clear the selection  */
   gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);
 
@@ -896,7 +900,7 @@ gimp_selection_float (GimpSelection *selection,
                                            _("Floated Layer"),
                                            GIMP_OPACITY_OPAQUE,
                                            GIMP_NORMAL_MODE,
-                                           NULL /* same image */);
+                                           profile);
 
   /*  Set the offsets  */
   gimp_item_set_offset (GIMP_ITEM (layer), x1 + off_x, y1 + off_y);
