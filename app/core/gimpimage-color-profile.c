@@ -495,113 +495,6 @@ gimp_image_import_color_profile (GimpImage    *image,
     }
 }
 
-
-/*  private functions  */
-
-static void
-gimp_image_convert_profile_layers (GimpImage                *image,
-                                   GimpColorProfile         *src_profile,
-                                   GimpColorProfile         *dest_profile,
-                                   GimpColorRenderingIntent  intent,
-                                   gboolean                  bpc,
-                                   GimpProgress             *progress)
-{
-  GList *layers;
-  GList *list;
-  gint   n_drawables  = 0;
-  gint   nth_drawable = 0;
-
-  layers = gimp_image_get_layer_list (image);
-
-  for (list = layers; list; list = g_list_next (list))
-    {
-      if (! gimp_viewable_get_children (list->data))
-        n_drawables++;
-    }
-
-  for (list = layers; list; list = g_list_next (list))
-    {
-      GimpDrawable *drawable     = list->data;
-      GimpProgress *sub_progress = NULL;
-
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-        continue;
-
-      if (progress)
-        {
-          sub_progress = gimp_sub_progress_new (progress);
-          gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
-                                      nth_drawable, n_drawables);
-        }
-
-      nth_drawable++;
-
-      gimp_drawable_push_undo (drawable, NULL, NULL,
-                               0, 0,
-                               gimp_item_get_width  (GIMP_ITEM (drawable)),
-                               gimp_item_get_height (GIMP_ITEM (drawable)));
-
-      gimp_gegl_convert_color_profile (gimp_drawable_get_buffer (drawable),
-                                       NULL,
-                                       src_profile,
-                                       gimp_drawable_get_buffer (drawable),
-                                       NULL,
-                                       dest_profile,
-                                       intent, bpc,
-                                       sub_progress);
-
-      gimp_drawable_update (drawable, 0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (drawable)),
-                            gimp_item_get_height (GIMP_ITEM (drawable)));
-
-      if (sub_progress)
-        g_object_unref (sub_progress);
-    }
-
-  g_list_free (layers);
-}
-
-static void
-gimp_image_convert_profile_colormap (GimpImage                *image,
-                                     GimpColorProfile         *src_profile,
-                                     GimpColorProfile         *dest_profile,
-                                     GimpColorRenderingIntent  intent,
-                                     gboolean                  bpc,
-                                     GimpProgress             *progress)
-{
-  cmsHPROFILE         src_lcms;
-  cmsHPROFILE         dest_lcms;
-  guchar             *cmap;
-  gint                n_colors;
-  GimpColorTransform  transform;
-
-  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
-  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
-
-  n_colors = gimp_image_get_colormap_size (image);
-  cmap     = g_memdup (gimp_image_get_colormap (image), n_colors * 3);
-
-  transform = cmsCreateTransform (src_lcms,  TYPE_RGB_8,
-                                  dest_lcms, TYPE_RGB_8,
-                                  intent,
-                                  cmsFLAGS_NOOPTIMIZE |
-                                  (bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0));
-
-  if (transform)
-    {
-      cmsDoTransform (transform, cmap, cmap, n_colors);
-      cmsDeleteTransform (transform);
-
-      gimp_image_set_colormap (image, cmap, n_colors, TRUE);
-    }
-  else
-    {
-      g_warning ("cmsCreateTransform() failed!");
-    }
-
-  g_free (cmap);
-}
-
 GimpColorTransform
 gimp_image_get_color_transform_to_srgb_u8 (GimpImage   *image,
                                            const Babl **pixel_format,
@@ -841,4 +734,111 @@ _gimp_image_update_color_profile (GimpImage          *image,
     }
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+}
+
+
+/*  private functions  */
+
+static void
+gimp_image_convert_profile_layers (GimpImage                *image,
+                                   GimpColorProfile         *src_profile,
+                                   GimpColorProfile         *dest_profile,
+                                   GimpColorRenderingIntent  intent,
+                                   gboolean                  bpc,
+                                   GimpProgress             *progress)
+{
+  GList *layers;
+  GList *list;
+  gint   n_drawables  = 0;
+  gint   nth_drawable = 0;
+
+  layers = gimp_image_get_layer_list (image);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      if (! gimp_viewable_get_children (list->data))
+        n_drawables++;
+    }
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpDrawable *drawable     = list->data;
+      GimpProgress *sub_progress = NULL;
+
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        continue;
+
+      if (progress)
+        {
+          sub_progress = gimp_sub_progress_new (progress);
+          gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                      nth_drawable, n_drawables);
+        }
+
+      nth_drawable++;
+
+      gimp_drawable_push_undo (drawable, NULL, NULL,
+                               0, 0,
+                               gimp_item_get_width  (GIMP_ITEM (drawable)),
+                               gimp_item_get_height (GIMP_ITEM (drawable)));
+
+      gimp_gegl_convert_color_profile (gimp_drawable_get_buffer (drawable),
+                                       NULL,
+                                       src_profile,
+                                       gimp_drawable_get_buffer (drawable),
+                                       NULL,
+                                       dest_profile,
+                                       intent, bpc,
+                                       sub_progress);
+
+      gimp_drawable_update (drawable, 0, 0,
+                            gimp_item_get_width  (GIMP_ITEM (drawable)),
+                            gimp_item_get_height (GIMP_ITEM (drawable)));
+
+      if (sub_progress)
+        g_object_unref (sub_progress);
+    }
+
+  g_list_free (layers);
+}
+
+static void
+gimp_image_convert_profile_colormap (GimpImage                *image,
+                                     GimpColorProfile         *src_profile,
+                                     GimpColorProfile         *dest_profile,
+                                     GimpColorRenderingIntent  intent,
+                                     gboolean                  bpc,
+                                     GimpProgress             *progress)
+{
+  cmsHPROFILE         src_lcms;
+  cmsHPROFILE         dest_lcms;
+  guchar             *cmap;
+  gint                n_colors;
+  GimpColorTransform  transform;
+
+  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
+  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
+
+  n_colors = gimp_image_get_colormap_size (image);
+  cmap     = g_memdup (gimp_image_get_colormap (image), n_colors * 3);
+
+  transform = cmsCreateTransform (src_lcms,  TYPE_RGB_8,
+                                  dest_lcms, TYPE_RGB_8,
+                                  intent,
+                                  cmsFLAGS_NOOPTIMIZE |
+                                  (bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0));
+
+  if (transform)
+    {
+      cmsDoTransform (transform, cmap, cmap, n_colors);
+      cmsDeleteTransform (transform);
+
+      gimp_image_set_colormap (image, cmap, n_colors, TRUE);
+    }
+  else
+    {
+      g_warning ("cmsCreateTransform() failed!");
+    }
+
+  g_free (cmap);
 }
