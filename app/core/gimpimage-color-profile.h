@@ -25,6 +25,11 @@
 #define GIMP_ICC_PROFILE_PARASITE_NAME "icc-profile"
 
 
+gboolean             gimp_image_get_is_color_managed   (GimpImage           *image);
+void                 gimp_image_set_is_color_managed   (GimpImage           *image,
+                                                        gboolean             is_color_managed,
+                                                        gboolean             push_undo);
+
 gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,
                                                         const GimpParasite  *icc_parasite,
                                                         gboolean            *is_builtin,

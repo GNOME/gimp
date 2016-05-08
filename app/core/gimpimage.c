@@ -692,6 +692,8 @@ gimp_image_init (GimpImage *image)
   private->n_colors            = 0;
   private->palette             = NULL;
 
+  private->is_color_managed    = TRUE;
+
   private->metadata            = NULL;
 
   private->dirty               = 1;

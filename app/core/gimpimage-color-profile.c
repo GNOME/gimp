@@ -47,6 +47,7 @@
 #include "gimpimage-colormap.h"
 #include "gimpimage-private.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimpprogress.h"
 #include "gimpsubprogress.h"
 
@@ -70,6 +71,38 @@ static void   gimp_image_convert_profile_colormap (GimpImage                *ima
 
 
 /*  public functions  */
+
+gboolean
+gimp_image_get_is_color_managed (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->is_color_managed;
+}
+
+void
+gimp_image_set_is_color_managed (GimpImage *image,
+                                 gboolean   is_color_managed,
+                                 gboolean   push_undo)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  is_color_managed = is_color_managed ? TRUE : FALSE;
+
+  if (is_color_managed != private->is_color_managed)
+    {
+      if (push_undo)
+        gimp_image_undo_push_image_color_managed (image, NULL);
+
+      private->is_color_managed = is_color_managed;
+
+      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+    }
+}
 
 gboolean
 gimp_image_validate_icc_parasite (GimpImage           *image,
