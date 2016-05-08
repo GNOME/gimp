@@ -62,8 +62,10 @@ typedef struct _AuxInput AuxInput;
 
 struct _AuxInput
 {
-  GeglNode  *node;
-  GtkWidget *box;
+  GimpOperationTool *tool;
+  gchar             *pad;
+  GeglNode          *node;
+  GtkWidget         *box;
 };
 
 
@@ -552,9 +554,15 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
 static void
 gimp_operation_tool_aux_input_notify (GimpBufferSourceBox *box,
                                       const GParamSpec    *pspec,
-                                      GimpOperationTool   *tool)
+                                      AuxInput            *input)
 {
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
+  /* emit "notify" so GimpImageMapTool will update its preview
+   *
+   * FIXME: this is a bad hack that should go away once GimpImageMap
+   * and GimpImageMapTool are refactored to be more filter-ish.
+   */
+  g_signal_emit_by_name (GIMP_IMAGE_MAP_TOOL (input->tool)->config,
+                         "notify", NULL);
 }
 
 static AuxInput *
@@ -566,6 +574,8 @@ gimp_operation_tool_aux_input_new (GimpOperationTool *tool,
   AuxInput    *input = g_slice_new (AuxInput);
   GimpContext *context;
 
+  input->tool = tool;
+  input->pad  = g_strdup (input_pad);
   input->node = gegl_node_new_child (NULL,
                                      "operation", "gegl:buffer-source",
                                      NULL);
@@ -579,10 +589,10 @@ gimp_operation_tool_aux_input_new (GimpOperationTool *tool,
 
   g_signal_connect (input->box, "notify::pickable",
                     G_CALLBACK (gimp_operation_tool_aux_input_notify),
-                    tool);
+                    input);
   g_signal_connect (input->box, "notify::enabled",
                     G_CALLBACK (gimp_operation_tool_aux_input_notify),
-                    tool);
+                    input);
 
   return input;
 }
@@ -598,6 +608,7 @@ gimp_operation_tool_aux_input_clear (AuxInput *input)
 static void
 gimp_operation_tool_aux_input_free (AuxInput *input)
 {
+  g_free (input->pad);
   g_object_unref (input->node);
   gtk_widget_destroy (input->box);
 
@@ -681,11 +692,13 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       if (aux == 1)
         {
           g_snprintf (pad,   sizeof (pad),   "aux");
+          /* don't translate "Aux" */
           g_snprintf (label, sizeof (label), _("Aux Input"));
         }
       else
         {
           g_snprintf (pad,   sizeof (pad),   "aux%d", aux);
+          /* don't translate "Aux" */
           g_snprintf (label, sizeof (label), _("Aux%d Input"), aux);
         }
 
