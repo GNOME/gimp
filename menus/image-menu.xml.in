@@ -352,6 +352,8 @@
         <separator />
       </menu>
       <menu action="image-color-management-menu" name="Color Management">
+        <menuitem action="image-color-management-enabled" />
+        <separator />
         <menuitem action="image-color-profile-assign" />
         <menuitem action="image-color-profile-convert" />
         <menuitem action="image-color-profile-discard" />

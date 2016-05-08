@@ -326,6 +326,23 @@ image_convert_gamma_cmd_callback (GtkAction *action,
   gimp_image_flush (image);
 }
 
+void
+image_color_management_enabled_cmd_callback (GtkAction *action,
+                                             gpointer   data)
+{
+  GimpImage *image;
+  gboolean   enabled;
+  return_if_no_image (image, data);
+
+  enabled = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (enabled != gimp_image_get_is_color_managed (image))
+    {
+      gimp_image_set_is_color_managed (image, enabled, TRUE);
+      gimp_image_flush (image);
+    }
+}
+
 static void
 image_profile_assign_dialog_unset (GimpImage *image)
 {

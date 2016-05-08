@@ -19,61 +19,63 @@
 #define __IMAGE_COMMANDS_H__
 
 
-void   image_new_cmd_callback                   (GtkAction *action,
-                                                 gpointer   data);
+void   image_new_cmd_callback                      (GtkAction *action,
+                                                    gpointer   data);
 
-void   image_convert_base_type_cmd_callback     (GtkAction *action,
-                                                 GtkAction *current,
-                                                 gpointer   data);
-void   image_convert_precision_cmd_callback     (GtkAction *action,
-                                                 GtkAction *current,
-                                                 gpointer   data);
-void   image_convert_gamma_cmd_callback         (GtkAction *action,
-                                                 GtkAction *current,
-                                                 gpointer   data);
+void   image_convert_base_type_cmd_callback        (GtkAction *action,
+                                                    GtkAction *current,
+                                                    gpointer   data);
+void   image_convert_precision_cmd_callback        (GtkAction *action,
+                                                    GtkAction *current,
+                                                    gpointer   data);
+void   image_convert_gamma_cmd_callback            (GtkAction *action,
+                                                    GtkAction *current,
+                                                    gpointer   data);
 
-void   image_color_profile_assign_cmd_callback  (GtkAction *action,
-                                                 gpointer   data);
-void   image_color_profile_convert_cmd_callback (GtkAction *action,
-                                                 gpointer   data);
-void   image_color_profile_discard_cmd_callback (GtkAction *action,
-                                                 gpointer   data);
-void   image_color_profile_save_cmd_callback    (GtkAction *action,
-                                                 gpointer   data);
+void   image_color_management_enabled_cmd_callback (GtkAction *action,
+                                                    gpointer   data);
+void   image_color_profile_assign_cmd_callback     (GtkAction *action,
+                                                    gpointer   data);
+void   image_color_profile_convert_cmd_callback    (GtkAction *action,
+                                                    gpointer   data);
+void   image_color_profile_discard_cmd_callback    (GtkAction *action,
+                                                    gpointer   data);
+void   image_color_profile_save_cmd_callback       (GtkAction *action,
+                                                    gpointer   data);
 
-void   image_resize_cmd_callback                (GtkAction *action,
-                                                 gpointer   data);
-void   image_resize_to_layers_cmd_callback      (GtkAction *action,
-                                                 gpointer   data);
-void   image_resize_to_selection_cmd_callback   (GtkAction *action,
-                                                 gpointer   data);
-void   image_print_size_cmd_callback            (GtkAction *action,
-                                                 gpointer   data);
-void   image_scale_cmd_callback                 (GtkAction *action,
-                                                 gpointer   data);
-void   image_flip_cmd_callback                  (GtkAction *action,
-                                                 gint       value,
-                                                 gpointer   data);
-void   image_rotate_cmd_callback                (GtkAction *action,
-                                                 gint       value,
-                                                 gpointer   data);
-void   image_crop_to_selection_cmd_callback     (GtkAction *action,
-                                                 gpointer   data);
-void   image_crop_to_content_cmd_callback       (GtkAction *action,
-                                                 gpointer   data);
+void   image_resize_cmd_callback                   (GtkAction *action,
+                                                    gpointer   data);
+void   image_resize_to_layers_cmd_callback         (GtkAction *action,
+                                                    gpointer   data);
+void   image_resize_to_selection_cmd_callback      (GtkAction *action,
+                                                    gpointer   data);
+void   image_print_size_cmd_callback               (GtkAction *action,
+                                                    gpointer   data);
+void   image_scale_cmd_callback                    (GtkAction *action,
+                                                    gpointer   data);
+void   image_flip_cmd_callback                     (GtkAction *action,
+                                                    gint       value,
+                                                    gpointer   data);
+void   image_rotate_cmd_callback                   (GtkAction *action,
+                                                    gint       value,
+                                                    gpointer   data);
+void   image_crop_to_selection_cmd_callback        (GtkAction *action,
+                                                    gpointer   data);
+void   image_crop_to_content_cmd_callback          (GtkAction *action,
+                                                    gpointer   data);
 
-void   image_duplicate_cmd_callback             (GtkAction *action,
-                                                 gpointer   data);
+void   image_duplicate_cmd_callback                (GtkAction *action,
+                                                    gpointer   data);
 
-void   image_merge_layers_cmd_callback          (GtkAction *action,
-                                                 gpointer   data);
-void   image_flatten_image_cmd_callback         (GtkAction *action,
-                                                 gpointer   data);
+void   image_merge_layers_cmd_callback             (GtkAction *action,
+                                                    gpointer   data);
+void   image_flatten_image_cmd_callback            (GtkAction *action,
+                                                    gpointer   data);
 
-void   image_configure_grid_cmd_callback        (GtkAction *action,
-                                                 gpointer   data);
-void   image_properties_cmd_callback            (GtkAction *action,
-                                                 gpointer   data);
+void   image_configure_grid_cmd_callback           (GtkAction *action,
+                                                    gpointer   data);
+void   image_properties_cmd_callback               (GtkAction *action,
+                                                    gpointer   data);
 
 
 #endif /* __IMAGE_COMMANDS_H__ */

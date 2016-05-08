@@ -152,6 +152,7 @@
 #define GIMP_HELP_IMAGE_DUPLICATE                 "gimp-image-duplicate"
 #define GIMP_HELP_IMAGE_MERGE_LAYERS              "gimp-image-merge-layers"
 #define GIMP_HELP_IMAGE_FLATTEN                   "gimp-image-flatten"
+#define GIMP_HELP_IMAGE_COLOR_MANAGEMENT_ENABLED  "gimp-image-color-management-enabled"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN      "gimp-image-color-profile-assign"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT     "gimp-image-color-profile-convert"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD     "gimp-image-color-profile-discard"
