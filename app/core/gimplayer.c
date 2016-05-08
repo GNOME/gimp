@@ -31,14 +31,11 @@
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h" /* FIXME profile convert config */
-
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 
-#include "gimp.h" /* FIXME profile convert config */
 #include "gimpboundary.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
@@ -779,8 +776,6 @@ gimp_layer_convert (GimpItem  *item,
 {
   GimpLayer         *layer    = GIMP_LAYER (item);
   GimpDrawable      *drawable = GIMP_DRAWABLE (item);
-  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (layer));
-  GimpColorConfig   *config   = image->gimp->config->color_management;
   GimpImageBaseType  old_base_type;
   GimpImageBaseType  new_base_type;
   GimpPrecision      old_precision;
@@ -794,10 +789,7 @@ gimp_layer_convert (GimpItem  *item,
   new_precision = gimp_image_get_precision (dest_image);
 
   if (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
-      /*  FIXME: this is the wrong check, need
-       *  something like file import conversion config
-       */
-      (config->mode != GIMP_COLOR_MANAGEMENT_OFF))
+      gimp_image_get_is_color_managed (dest_image))
     {
       dest_profile =
         gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
@@ -1069,9 +1061,9 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          gboolean           push_undo,
                          GimpProgress      *progress)
 {
-  GimpLayer        *layer = GIMP_LAYER (drawable);
-  GeglBuffer       *src_buffer;
-  GeglBuffer       *dest_buffer;
+  GimpLayer  *layer = GIMP_LAYER (drawable);
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
 
   if (layer_dither_type == 0)
     {
