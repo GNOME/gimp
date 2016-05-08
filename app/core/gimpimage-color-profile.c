@@ -440,7 +440,8 @@ gimp_image_import_color_profile (GimpImage    *image,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (gimp_image_get_color_profile (image))
+  if (gimp_image_get_is_color_managed (image) &&
+      gimp_image_get_color_profile (image))
     {
       GimpColorProfilePolicy  policy;
       GimpColorProfile       *dest_profile = NULL;
