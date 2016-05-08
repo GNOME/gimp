@@ -161,6 +161,29 @@ image_new_cmd_callback (GtkAction *action,
     }
 }
 
+void
+image_duplicate_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpDisplay      *display;
+  GimpImage        *image;
+  GimpDisplayShell *shell;
+  GimpImage        *new_image;
+  return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
+  shell = gimp_display_get_shell (display);
+
+  new_image = gimp_image_duplicate (image);
+
+  gimp_create_display (new_image->gimp, new_image, shell->unit,
+                       gimp_zoom_model_get_factor (shell->zoom),
+                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
+                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
+
+  g_object_unref (new_image);
+}
+
 static void
 image_convert_type_dialog_unset (GimpImage *image)
 {
@@ -781,29 +804,6 @@ image_crop_to_content_cmd_callback (GtkAction *action,
                             _("Cannot crop because the image is already cropped to its content."));
       break;
     }
-}
-
-void
-image_duplicate_cmd_callback (GtkAction *action,
-                              gpointer   data)
-{
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDisplayShell *shell;
-  GimpImage        *new_image;
-  return_if_no_display (display, data);
-
-  image = gimp_display_get_image (display);
-  shell = gimp_display_get_shell (display);
-
-  new_image = gimp_image_duplicate (image);
-
-  gimp_create_display (new_image->gimp, new_image, shell->unit,
-                       gimp_zoom_model_get_factor (shell->zoom),
-                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
-                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
-
-  g_object_unref (new_image);
 }
 
 void

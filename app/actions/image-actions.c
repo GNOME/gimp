@@ -76,6 +76,12 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_new_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
+  { "image-duplicate", GIMP_STOCK_DUPLICATE,
+    NC_("image-action", "_Duplicate"), "<primary>D",
+    NC_("image-action", "Create a duplicate of this image"),
+    G_CALLBACK (image_duplicate_cmd_callback),
+    GIMP_HELP_IMAGE_DUPLICATE },
+
   { "image-color-profile-assign", NULL,
     NC_("image-action", "_Assign Color Profile..."), NULL,
     NC_("image-action", "Set a color profile on the image"),
@@ -141,12 +147,6 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "Crop the image to the extents of its content (remove empty borders from the image)"),
     G_CALLBACK (image_crop_to_content_cmd_callback),
     GIMP_HELP_IMAGE_CROP },
-
-  { "image-duplicate", GIMP_STOCK_DUPLICATE,
-    NC_("image-action", "_Duplicate"), "<primary>D",
-    NC_("image-action", "Create a duplicate of this image"),
-    G_CALLBACK (image_duplicate_cmd_callback),
-    GIMP_HELP_IMAGE_DUPLICATE },
 
   { "image-merge-layers", NULL,
     NC_("image-action", "Merge Visible _Layers..."), "<primary>M",
@@ -419,6 +419,8 @@ image_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
+  SET_SENSITIVE ("image-duplicate", image);
+
   if (profile)
     {
       SET_LABEL ("image-convert-rgb",
@@ -469,7 +471,6 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-scale",               image);
   SET_SENSITIVE ("image-crop-to-selection",   image && sel);
   SET_SENSITIVE ("image-crop-to-content",     image);
-  SET_SENSITIVE ("image-duplicate",           image);
   SET_SENSITIVE ("image-merge-layers",        image && !aux && lp);
   SET_SENSITIVE ("image-flatten",             image && !aux && lp);
   SET_SENSITIVE ("image-configure-grid",      image);

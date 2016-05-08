@@ -126,6 +126,7 @@
 
 
 #define GIMP_HELP_IMAGE_DIALOG                    "gimp-image-dialog"
+#define GIMP_HELP_IMAGE_DUPLICATE                 "gimp-image-duplicate"
 #define GIMP_HELP_IMAGE_CONVERT_RGB               "gimp-image-convert-rgb"
 #define GIMP_HELP_IMAGE_CONVERT_GRAYSCALE         "gimp-image-convert-grayscale"
 #define GIMP_HELP_IMAGE_CONVERT_INDEXED           "gimp-image-convert-indexed"
@@ -149,7 +150,6 @@
 #define GIMP_HELP_IMAGE_SCALE                     "gimp-image-scale"
 #define GIMP_HELP_IMAGE_SCALE_WARNING             "gimp-image-scale-warning"
 #define GIMP_HELP_IMAGE_CROP                      "gimp-image-crop"
-#define GIMP_HELP_IMAGE_DUPLICATE                 "gimp-image-duplicate"
 #define GIMP_HELP_IMAGE_MERGE_LAYERS              "gimp-image-merge-layers"
 #define GIMP_HELP_IMAGE_FLATTEN                   "gimp-image-flatten"
 #define GIMP_HELP_IMAGE_COLOR_MANAGEMENT_ENABLED  "gimp-image-color-management-enabled"
