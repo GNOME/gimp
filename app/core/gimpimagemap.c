@@ -235,6 +235,9 @@ gimp_image_map_set_region (GimpImageMap       *image_map,
       image_map->region = region;
 
       gimp_image_map_sync_region (image_map);
+
+      if (gimp_image_map_is_filtering (image_map))
+        gimp_image_map_update_drawable (image_map, &image_map->filter_area);
     }
 }
 
@@ -283,6 +286,9 @@ gimp_image_map_set_mode (GimpImageMap         *image_map,
       image_map->paint_mode = paint_mode;
 
       gimp_image_map_sync_mode (image_map);
+
+      if (gimp_image_map_is_filtering (image_map))
+        gimp_image_map_update_drawable (image_map, &image_map->filter_area);
     }
 }
 
@@ -297,6 +303,9 @@ gimp_image_map_set_gamma_hack (GimpImageMap *image_map,
       image_map->gamma_hack = gamma_hack;
 
       gimp_image_map_sync_gamma_hack (image_map);
+
+      if (gimp_image_map_is_filtering (image_map))
+        gimp_image_map_update_drawable (image_map, &image_map->filter_area);
     }
 }
 
