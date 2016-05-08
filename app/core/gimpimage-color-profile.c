@@ -510,10 +510,18 @@ gimp_image_get_color_transform_to_srgb_u8 (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  *pixel_format   = private->transform_layer_format;
-  *srgb_u8_format = private->transform_srgb_u8_format;
+  if (private->is_color_managed)
+    {
+      *pixel_format   = private->transform_layer_format;
+      *srgb_u8_format = private->transform_srgb_u8_format;
 
-  return private->transform_to_srgb_u8;
+      return private->transform_to_srgb_u8;
+    }
+
+  *pixel_format   = NULL;
+  *srgb_u8_format = NULL;
+
+  return NULL;
 }
 
 GimpColorTransform
@@ -529,10 +537,18 @@ gimp_image_get_color_transform_from_srgb_u8 (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  *pixel_format   = private->transform_layer_format;
-  *srgb_u8_format = private->transform_srgb_u8_format;
+  if (private->is_color_managed)
+    {
+      *pixel_format   = private->transform_layer_format;
+      *srgb_u8_format = private->transform_srgb_u8_format;
 
-  return private->transform_from_srgb_u8;
+      return private->transform_from_srgb_u8;
+    }
+
+  *pixel_format   = NULL;
+  *srgb_u8_format = NULL;
+
+  return NULL;
 }
 
 GimpColorTransform
@@ -548,10 +564,18 @@ gimp_image_get_color_transform_to_srgb_double (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  *pixel_format       = private->transform_layer_format;
-  *srgb_double_format = private->transform_srgb_double_format;
+  if (private->is_color_managed)
+    {
+      *pixel_format       = private->transform_layer_format;
+      *srgb_double_format = private->transform_srgb_double_format;
 
-  return private->transform_to_srgb_double;
+      return private->transform_to_srgb_double;
+    }
+
+  *pixel_format       = NULL;
+  *srgb_double_format = NULL;
+
+  return NULL;
 }
 
 GimpColorTransform
@@ -567,10 +591,18 @@ gimp_image_get_color_transform_from_srgb_double (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  *pixel_format       = private->transform_layer_format;
-  *srgb_double_format = private->transform_srgb_double_format;
+  if (private->is_color_managed)
+    {
+      *pixel_format       = private->transform_layer_format;
+      *srgb_double_format = private->transform_srgb_double_format;
 
-  return private->transform_from_srgb_double;
+      return private->transform_from_srgb_double;
+    }
+
+  *pixel_format       = NULL;
+  *srgb_double_format = NULL;
+
+  return NULL;
 }
 
 void
@@ -581,7 +613,8 @@ gimp_image_color_profile_pixel_to_srgb (GimpImage  *image,
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->transform_to_srgb_double)
+  if (private->is_color_managed &&
+      private->transform_to_srgb_double)
     {
       guchar srgb_pixel[32];
 
