@@ -236,7 +236,8 @@ gimp_config_serialize_property (GimpConfig       *config,
 
   if (! success)
     {
-      if (G_VALUE_HOLDS_OBJECT (&value))
+      if (G_VALUE_HOLDS_OBJECT (&value) &&
+          G_VALUE_TYPE (&value) != G_TYPE_FILE)
         {
           GimpConfigInterface *config_iface = NULL;
           GimpConfig          *prop_object;
@@ -475,6 +476,30 @@ gimp_config_serialize_value (const GValue *value,
                                                  str, TRUE))
                 return FALSE;
             }
+        }
+      else
+        {
+          g_string_append (str, "NULL");
+        }
+
+      return TRUE;
+    }
+
+  if (G_VALUE_TYPE (value) == G_TYPE_FILE)
+    {
+      GFile *file = g_value_get_object (value);
+
+      if (file)
+        {
+          gchar *parse_name = g_file_get_parse_name (file);
+
+          if (escaped)
+            gimp_config_string_append_escaped (str, parse_name);
+          else
+            g_string_append (str, parse_name);
+
+          g_free (parse_name);
+          g_object_unref (file);
         }
       else
         {
