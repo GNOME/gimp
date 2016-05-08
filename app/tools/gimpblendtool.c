@@ -632,8 +632,6 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
       gimp_image_map_set_mode (blend_tool->image_map,
                                gimp_context_get_opacity (context),
                                gimp_context_get_paint_mode (context));
-
-      gimp_image_map_apply (blend_tool->image_map, NULL);
     }
 }
 
