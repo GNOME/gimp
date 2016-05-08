@@ -187,8 +187,6 @@ gimp_image_map_tool_settings_import (GimpSettingsBox  *box,
 
   g_object_unref (input);
 
-  gimp_image_map_tool_preview (im_tool);
-
   g_object_set (GIMP_TOOL_GET_OPTIONS (im_tool),
                 "settings", file,
                 NULL);

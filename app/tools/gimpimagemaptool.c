@@ -132,6 +132,7 @@ static void      gimp_image_map_tool_dialog_unmap   (GtkWidget            *dialo
                                                      GimpImageMapTool     *im_tool);
 static void      gimp_image_map_tool_reset          (GimpImageMapTool     *im_tool);
 static void      gimp_image_map_tool_create_map     (GimpImageMapTool     *im_tool);
+static void      gimp_image_map_tool_preview        (GimpImageMapTool     *im_tool);
 
 static void      gimp_image_map_tool_flush          (GimpImageMap         *image_map,
                                                      GimpImageMapTool     *im_tool);
@@ -993,6 +994,22 @@ gimp_image_map_tool_create_map (GimpImageMapTool *im_tool)
 }
 
 static void
+gimp_image_map_tool_preview (GimpImageMapTool *im_tool)
+{
+  GimpTool            *tool    = GIMP_TOOL (im_tool);
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
+
+  if (im_tool->image_map && options->preview)
+    {
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
+      gimp_image_map_apply (im_tool->image_map, NULL);
+
+      gimp_tool_control_pop_preserve (tool->control);
+    }
+}
+
+static void
 gimp_image_map_tool_flush (GimpImageMap     *image_map,
                            GimpImageMapTool *im_tool)
 {
@@ -1332,27 +1349,9 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *im_tool)
                              G_OBJECT (im_tool), 0);
 
   if (GIMP_TOOL (im_tool)->drawable)
-    gimp_image_map_tool_create_map (im_tool);
-}
-
-void
-gimp_image_map_tool_preview (GimpImageMapTool *im_tool)
-{
-  GimpTool            *tool;
-  GimpImageMapOptions *options;
-
-  g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (im_tool));
-
-  tool    = GIMP_TOOL (im_tool);
-  options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
-
-  if (im_tool->image_map && options->preview)
     {
-      gimp_tool_control_push_preserve (tool->control, TRUE);
-
-      gimp_image_map_apply (im_tool->image_map, NULL);
-
-      gimp_tool_control_pop_preserve (tool->control);
+      gimp_image_map_tool_create_map (im_tool);
+      gimp_image_map_tool_preview (im_tool);
     }
 }
 

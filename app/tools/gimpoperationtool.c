@@ -753,8 +753,5 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     }
 
   if (GIMP_TOOL (tool)->drawable)
-    {
-      gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable);
-      gimp_image_map_tool_preview (im_tool);
-    }
+    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable);
 }
