@@ -1629,9 +1629,15 @@ gimp_prop_profile_combo_box_new (GObject      *config,
 
   if (G_IS_PARAM_SPEC_STRING (param_spec))
     {
+      gchar *value;
       gchar *path;
 
-      g_object_get (config, property_name, &path, NULL);
+      g_object_get (config,
+                    property_name, &value,
+                    NULL);
+
+      path = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+      g_free (value);
 
       if (path)
         {
@@ -1733,11 +1739,15 @@ gimp_prop_profile_combo_notify (GObject                  *config,
 
   if (G_IS_PARAM_SPEC_STRING (param_spec))
     {
+      gchar *value;
       gchar *path;
 
       g_object_get (config,
-                    param_spec->name, &path,
+                    param_spec->name, &value,
                     NULL);
+
+      path = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+      g_free (value);
 
       if (path)
         {
