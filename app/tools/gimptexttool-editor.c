@@ -533,6 +533,27 @@ gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
 void
 gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
 {
+  /* Cancel any ungoing preedit on reset. */
+  if (text_tool->preedit_string && *text_tool->preedit_string)
+    {
+      GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+      GtkTextIter    start;
+      GtkTextIter    end;
+
+      gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                        text_tool->preedit_start);
+      gtk_text_buffer_get_iter_at_mark (buffer, &end,
+                                        text_tool->preedit_end);
+      gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
+
+      g_free (text_tool->preedit_string);
+      text_tool->preedit_string = NULL;
+      gtk_text_buffer_delete_mark (buffer, text_tool->preedit_start);
+      gtk_text_buffer_delete_mark (buffer, text_tool->preedit_end);
+      text_tool->preedit_start = NULL;
+      text_tool->preedit_end = NULL;
+    }
+
   if (text_tool->needs_im_reset)
     {
       text_tool->needs_im_reset = FALSE;
@@ -1342,40 +1363,148 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                                    GimpTextTool *text_tool)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  PangoAttrList *attrs;
 
   if (text_tool->preedit_string)
-    g_free (text_tool->preedit_string);
+    {
+      if (*text_tool->preedit_string)
+        {
+          GtkTextIter start;
+          GtkTextIter end;
 
-  gtk_im_context_get_preedit_string (context,
-                                     &text_tool->preedit_string, NULL,
-                                     &text_tool->preedit_cursor);
+          gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                            text_tool->preedit_start);
+          gtk_text_buffer_get_iter_at_mark (buffer, &end,
+                                            text_tool->preedit_end);
+          gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
+
+          gtk_text_buffer_delete_mark (buffer, text_tool->preedit_start);
+          gtk_text_buffer_delete_mark (buffer, text_tool->preedit_end);
+          text_tool->preedit_start = NULL;
+          text_tool->preedit_end = NULL;
+        }
+      g_free (text_tool->preedit_string);
+      text_tool->preedit_string = NULL;
+    }
 
   gimp_text_tool_delete_selection (text_tool);
 
+  gtk_im_context_get_preedit_string (context,
+                                     &text_tool->preedit_string, &attrs,
+                                     &text_tool->preedit_cursor);
   if (text_tool->preedit_string && *text_tool->preedit_string)
     {
-      GtkTextIter start;
-      GtkTextIter end;
-      gint        line;
-      gint        pos;
+      PangoAttrIterator *attr_iter;
+      GtkTextIter        iter;
+      gint               i;
 
-      /* Get current position. */
-      gtk_text_buffer_get_iter_at_mark (buffer, &start,
+      /* Save the preedit start position. */
+      gtk_text_buffer_get_iter_at_mark (buffer, &iter,
                                         gtk_text_buffer_get_insert (buffer));
-      pos  = gtk_text_iter_get_line_index (&start);
-      line = gtk_text_iter_get_line (&start);
+      text_tool->preedit_start = gtk_text_buffer_create_mark (buffer,
+                                                              "preedit-start",
+                                                              &iter, TRUE);
 
-      /* Insert the preedit text at current cursor position. */
-      gimp_text_tool_enter_text (text_tool, text_tool->preedit_string);
+      /* Loop through chunks of preedit text with different attributes. */
+      attr_iter = pango_attr_list_get_iterator (attrs);
+      do
+        {
+          gint attr_start;
+          gint attr_end;
 
-      /* Get the new position. */
-      gtk_text_buffer_get_iter_at_mark (buffer, &end,
+          pango_attr_iterator_range (attr_iter, &attr_start, &attr_end);
+          if (attr_start < strlen (text_tool->preedit_string))
+            {
+              GSList      *attrs_pos;
+              GtkTextMark *start_mark;
+              GtkTextIter  start;
+              GtkTextIter  end;
+
+              gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                                gtk_text_buffer_get_insert (buffer));
+              start_mark = gtk_text_buffer_create_mark (buffer,
+                                                        NULL,
+                                                        &start, TRUE);
+
+              gtk_text_buffer_begin_user_action (buffer);
+
+              /* Insert the preedit chunk at current cursor position. */
+              gtk_text_buffer_insert_at_cursor (GTK_TEXT_BUFFER (text_tool->buffer),
+                                                text_tool->preedit_string + attr_start,
+                                                attr_end - attr_start);
+              gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                                start_mark);
+              gtk_text_buffer_delete_mark (buffer, start_mark);
+              gtk_text_buffer_get_iter_at_mark (buffer, &end,
+                                                gtk_text_buffer_get_insert (buffer));
+
+              /* Apply text attributes to preedit text. */
+              attrs_pos = pango_attr_iterator_get_attrs (attr_iter);
+              while (attrs_pos)
+                {
+                  PangoAttribute *attr = attrs_pos->data;
+
+                  if (attr)
+                    {
+                      switch (attr->klass->type)
+                        {
+                        case PANGO_ATTR_UNDERLINE:
+                          gtk_text_buffer_apply_tag (buffer,
+                                                     text_tool->buffer->underline_tag,
+                                                     &start, &end);
+                          break;
+                        case PANGO_ATTR_BACKGROUND:
+                        case PANGO_ATTR_FOREGROUND:
+                            {
+                              PangoAttrColor *color_attr = (PangoAttrColor *) attr;
+                              GimpRGB         color;
+
+                              color.r = (gdouble) color_attr->color.red / 65535.0;
+                              color.g = (gdouble) color_attr->color.green / 65535.0;
+                              color.b = (gdouble) color_attr->color.blue / 65535.0;
+
+                              if (attr->klass->type == PANGO_ATTR_BACKGROUND)
+                                {
+                                  gimp_text_buffer_set_bg_color (text_tool->buffer,
+                                                                 &start, &end,
+                                                                 &color);
+                                }
+                              else
+                                {
+                                  gimp_text_buffer_set_color (text_tool->buffer,
+                                                              &start, &end,
+                                                              &color);
+                                }
+                            }
+                          break;
+                        default:
+                          /* Unsupported tags. */
+                          break;
+                        }
+                    }
+                  attrs_pos = attrs_pos->next;
+                }
+              gtk_text_buffer_end_user_action (buffer);
+            }
+        }
+      while (pango_attr_iterator_next (attr_iter));
+
+      /* Save the preedit end position. */
+      gtk_text_buffer_get_iter_at_mark (buffer, &iter,
                                         gtk_text_buffer_get_insert (buffer));
+      text_tool->preedit_end = gtk_text_buffer_create_mark (buffer,
+                                                            "preedit-end",
+                                                            &iter, TRUE);
 
-      /* Select the preedit text. */
-      gtk_text_buffer_get_iter_at_line_index (buffer, &start, line, pos);
-      gtk_text_buffer_select_range (buffer, &start, &end);
+      /* Move the cursor to the expected location. */
+      gtk_text_buffer_get_iter_at_mark (buffer, &iter, text_tool->preedit_start);
+      for (i = 0; i < text_tool->preedit_cursor; i++)
+        gtk_text_iter_forward_char (&iter);
+      gtk_text_buffer_place_cursor (buffer, &iter);
+
+      pango_attr_iterator_destroy (attr_iter);
     }
+  pango_attr_list_unref (attrs);
 }
 
 static void
@@ -1383,7 +1512,27 @@ gimp_text_tool_im_commit (GtkIMContext *context,
                           const gchar  *str,
                           GimpTextTool *text_tool)
 {
+  if (text_tool->preedit_string && *text_tool->preedit_string)
+    {
+      GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+      GtkTextIter    start;
+      GtkTextIter    end;
+
+      gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                        text_tool->preedit_start);
+      gtk_text_buffer_get_iter_at_mark (buffer, &end,
+                                        text_tool->preedit_end);
+      gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
+
+      gtk_text_buffer_delete_mark (buffer, text_tool->preedit_start);
+      gtk_text_buffer_delete_mark (buffer, text_tool->preedit_end);
+      text_tool->preedit_start = NULL;
+      text_tool->preedit_end = NULL;
+    }
   gimp_text_tool_enter_text (text_tool, str);
+
+  g_free (text_tool->preedit_string);
+  text_tool->preedit_string = NULL;
 }
 
 static gboolean

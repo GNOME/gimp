@@ -79,6 +79,8 @@ struct _GimpTextTool
 
   gchar          *preedit_string;
   gint            preedit_cursor;
+  GtkTextMark    *preedit_start;
+  GtkTextMark    *preedit_end;
 
   gboolean        overwrite_mode;
   gint            x_pos;
