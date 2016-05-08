@@ -31,6 +31,7 @@
 
 #include "gimpbuffer.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimplayer.h"
 #include "gimplayer-new.h"
 
