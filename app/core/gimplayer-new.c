@@ -26,12 +26,9 @@
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
 
-#include "gimp.h"
 #include "gimpbuffer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
@@ -204,11 +201,6 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
       g_free (icc_data);
     }
 
-  if (! profile && gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB)
-    {
-      profile = gimp_color_profile_new_rgb_srgb ();
-    }
-
   gimp_layer_new_convert_buffer (layer, buffer, profile, NULL);
 
   if (profile)
@@ -230,24 +222,24 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
 {
   GimpDrawable     *drawable    = GIMP_DRAWABLE (layer);
   GimpImage        *image       = gimp_item_get_image (GIMP_ITEM (layer));
-  GimpColorConfig  *config      = image->gimp->config->color_management;
   GeglBuffer       *dest_buffer = gimp_drawable_get_buffer (drawable);
   GimpColorProfile *dest_profile;
 
-  dest_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
-
-  if (! src_profile  ||
-      ! dest_profile ||
-
-      /*  FIXME: this is the wrong check, need something like file import
-       *  conversion config
-       */
-      config->mode == GIMP_COLOR_MANAGEMENT_OFF)
+  if (! gimp_image_get_is_color_managed (image))
     {
       gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
       return;
     }
+
+  if (! src_profile)
+    {
+      const Babl *src_format = gegl_buffer_get_format (src_buffer);
+
+      src_profile = gimp_babl_format_get_color_profile (src_format);
+    }
+
+  dest_profile =
+    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
 
   gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                    dest_buffer, NULL, dest_profile,
