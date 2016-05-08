@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-23 14:18+0200\n"
-"PO-Revision-Date: 2016-04-23 14:19+0200\n"
+"POT-Creation-Date: 2016-05-08 14:20+0200\n"
+"PO-Revision-Date: 2016-05-08 14:21+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -345,13 +345,14 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-xbm.c:904
 #: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:257
 #: ../plug-ins/common/tile.c:354 ../plug-ins/file-bmp/bmp-load.c:734
-#: ../plug-ins/file-exr/file-exr.c:255 ../plug-ins/file-faxg3/faxg3.c:525
+#: ../plug-ins/file-exr/file-exr.c:258 ../plug-ins/file-faxg3/faxg3.c:525
 #: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
 #: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
-#: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/map-object/map-object-apply.c:252
+#: ../plug-ins/screenshot/screenshot-win32.c:242 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
 msgstr "Tło"
@@ -2021,8 +2022,8 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-darktable/file-darktable.c:263
-#: ../plug-ins/file-exr/file-exr.c:182 ../plug-ins/file-faxg3/faxg3.c:218
+#: ../plug-ins/file-darktable/file-darktable.c:302
+#: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:642
 #: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-sgi/sgi.c:325 ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2261,7 +2262,7 @@ msgstr "Opis:"
 msgid "Spacing:"
 msgstr "Odstęp:"
 
-#: ../plug-ins/common/file-gegl.c:73 ../plug-ins/file-exr/file-exr.c:85
+#: ../plug-ins/common/file-gegl.c:73 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
 msgstr "Obraz OpenEXR"
 
@@ -3038,7 +3039,7 @@ msgstr "Błąd podczas odczytywania pliku „%s”. Plik może być uszkodzony."
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Nieznany model kolorów w pliku PNG „%s”."
 
-#: ../plug-ins/common/file-png.c:1038 ../plug-ins/file-exr/file-exr.c:248
+#: ../plug-ins/common/file-png.c:1038 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Nie można utworzyć nowego obrazu dla „%s”: %s"
@@ -6310,35 +6311,134 @@ msgstr "32 bity"
 msgid "Windows BMP image"
 msgstr "Obraz BMP systemu Windows"
 
-#: ../plug-ins/file-darktable/file-darktable.c:64
-msgid "Canon CR2 raw"
-msgstr "Obraz Raw CR2 firmy Canon"
+#: ../plug-ins/file-darktable/file-darktable.c:371
+#: ../plug-ins/file-ico/ico-load.c:720 ../plug-ins/file-jpeg/jpeg-load.c:501
+#: ../plug-ins/file-psd/psd-thumb-load.c:74
+#, c-format
+msgid "Opening thumbnail for '%s'"
+msgstr "Otwieranie miniatury dla „%s”"
 
-#: ../plug-ins/file-darktable/file-darktable.c:75
-msgid "Nikon NEF raw"
-msgstr "Obraz Raw NEF firmy Nikon"
+#: ../plug-ins/file-darktable/file-formats.h:43
+msgid "Canon raw"
+msgstr "Obraz Raw firmy Canon"
 
-#: ../plug-ins/file-exr/file-exr.c:190
+#: ../plug-ins/file-darktable/file-formats.h:58
+msgid "Nikon raw"
+msgstr "Obraz Raw firmy Nikon"
+
+#: ../plug-ins/file-darktable/file-formats.h:69
+msgid "Hasselblad raw"
+msgstr "Obraz Raw firmy Hasselblad"
+
+#: ../plug-ins/file-darktable/file-formats.h:80
+msgid "Sony raw"
+msgstr "Obraz Raw firmy Sony"
+
+#: ../plug-ins/file-darktable/file-formats.h:91
+msgid "Casio BAY raw"
+msgstr "Obraz Raw BAY firmy Casio"
+
+#: ../plug-ins/file-darktable/file-formats.h:102
+msgid "Phantom Software CINE raw"
+msgstr "Obraz Raw CINE firmy Phantom Software"
+
+#: ../plug-ins/file-darktable/file-formats.h:113
+msgid "Sinar raw"
+msgstr "Obraz Raw firmy Sinar"
+
+#: ../plug-ins/file-darktable/file-formats.h:124
+msgid "Kodak raw"
+msgstr "Obraz Raw firmy Kodak"
+
+#: ../plug-ins/file-darktable/file-formats.h:136
+msgid "Adobe DNG Digital Negative raw"
+msgstr "Cyfrowy negatyw Raw DNG firmy Adobe"
+
+#: ../plug-ins/file-darktable/file-formats.h:147
+msgid "Epson ERF raw"
+msgstr "Obraz Raw ERF firmy Epson"
+
+#: ../plug-ins/file-darktable/file-formats.h:158
+msgid "Phase One raw"
+msgstr "Obraz Raw firmy Phase One"
+
+#: ../plug-ins/file-darktable/file-formats.h:169
+msgid "Minolta raw"
+msgstr "Obraz Raw firmy Minolta"
+
+#: ../plug-ins/file-darktable/file-formats.h:180
+msgid "Mamiya MEF raw"
+msgstr "Obraz Raw MEF firmy Mamiya"
+
+#: ../plug-ins/file-darktable/file-formats.h:190
+msgid "Leaf MOS raw"
+msgstr "Obraz Raw MOS firmy Leaf"
+
+#: ../plug-ins/file-darktable/file-formats.h:201
+msgid "Olympus ORF raw"
+msgstr "Obraz Raw ORF firmy Olympus"
+
+#: ../plug-ins/file-darktable/file-formats.h:212
+msgid "Pentax PEF raw"
+msgstr "Obraz Raw PEF firmy Pentax"
+
+#: ../plug-ins/file-darktable/file-formats.h:223
+msgid "Logitech PXN raw"
+msgstr "Obraz Raw PXN firmy Logitech"
+
+#: ../plug-ins/file-darktable/file-formats.h:234
+msgid "Apple QuickTake QTK raw"
+msgstr "Obraz Raw QTK QuickTake firmy Apple"
+
+#: ../plug-ins/file-darktable/file-formats.h:245
+msgid "Fujifilm RAF raw"
+msgstr "Obraz Raw RAF firmy Fujifilm"
+
+#: ../plug-ins/file-darktable/file-formats.h:256
+msgid "Panasonic raw"
+msgstr "Obraz Raw firmy Panasonic"
+
+#: ../plug-ins/file-darktable/file-formats.h:267
+msgid "Digital Foto Maker RDC raw"
+msgstr "Obraz Raw RDC firmy Digital Foto Maker"
+
+#: ../plug-ins/file-darktable/file-formats.h:278
+msgid "Leica RWL raw"
+msgstr "Obraz Raw RWL firmy Leica"
+
+#: ../plug-ins/file-darktable/file-formats.h:289
+msgid "Samsung SRW raw"
+msgstr "Obraz Raw SRW firmy Samsung"
+
+#: ../plug-ins/file-darktable/file-formats.h:300
+msgid "Sigma X3F raw"
+msgstr "Obraz Raw X3F firmy Sigma"
+
+#: ../plug-ins/file-darktable/file-formats.h:311
+msgid "Arriflex ARI raw"
+msgstr "Obraz Raw ARI firmy Arriflex"
+
+#: ../plug-ins/file-exr/file-exr.c:193
 #, c-format
 msgid "Error opening file '%s' for reading"
 msgstr "Błąd podczas otwierania pliku „%s” do odczytu"
 
-#: ../plug-ins/file-exr/file-exr.c:201
+#: ../plug-ins/file-exr/file-exr.c:204
 #, c-format
 msgid "Error querying image dimensions from '%s'"
 msgstr "Błąd podczas odpytywania wymiarów obrazu z pliku „%s”"
 
-#: ../plug-ins/file-exr/file-exr.c:221
+#: ../plug-ins/file-exr/file-exr.c:224
 #, c-format
 msgid "Error querying image precision from '%s'"
 msgstr "Błąd podczas odpytywania dokładności obrazu z pliku „%s”"
 
-#: ../plug-ins/file-exr/file-exr.c:238
+#: ../plug-ins/file-exr/file-exr.c:241
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "Błąd podczas odpytywania typu obrazu z pliku „%s”"
 
-#: ../plug-ins/file-exr/file-exr.c:285
+#: ../plug-ins/file-exr/file-exr.c:288
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Błąd podczas odczytywania danych pikseli z pliku „%s”"
@@ -6471,12 +6571,6 @@ msgstr "Skompresowane (PNG)"
 #, c-format
 msgid "Icon #%i"
 msgstr "Ikona #%i"
-
-#: ../plug-ins/file-ico/ico-load.c:720 ../plug-ins/file-jpeg/jpeg-load.c:501
-#: ../plug-ins/file-psd/psd-thumb-load.c:74
-#, c-format
-msgid "Opening thumbnail for '%s'"
-msgstr "Otwieranie miniatury dla „%s”"
 
 #: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
 msgid "Microsoft Windows icon"
@@ -10846,6 +10940,11 @@ msgstr "Opóźnienie"
 msgid "seconds"
 msgstr "sekund"
 
+#: ../plug-ins/screenshot/screenshot-win32.c:229
+#: ../plug-ins/win-snap/winsnap.c:1149
+msgid "No data captured"
+msgstr "Nie pobrano danych"
+
 #: ../plug-ins/screenshot/screenshot-x11.c:95
 msgid "Error selecting the window"
 msgstr "Błąd podczas wybierania okna"
@@ -11160,7 +11259,3 @@ msgstr "Przechwytuje obraz okna lub pulpitu"
 #: ../plug-ins/win-snap/winsnap.c:1001
 msgid "_Screen Shot..."
 msgstr "_Zrzut ekranu…"
-
-#: ../plug-ins/win-snap/winsnap.c:1149
-msgid "No data captured"
-msgstr "Nie pobrano danych"
