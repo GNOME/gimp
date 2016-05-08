@@ -288,7 +288,6 @@ gamma_hack (GtkToggleButton  *button,
     {
       gimp_image_map_set_gamma_hack (im_tool->image_map,
                                      gtk_toggle_button_get_active (button));
-      gimp_image_map_tool_preview (im_tool);
     }
 }
 
@@ -479,8 +478,6 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
   im_tool->drawable = drawable;
   gimp_image_map_tool_create_map (im_tool);
-
-  gimp_image_map_tool_preview (im_tool);
 
   return TRUE;
 }
@@ -804,7 +801,6 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
            im_tool->image_map)
     {
       gimp_image_map_set_region (im_tool->image_map, im_options->region);
-      gimp_image_map_tool_preview (im_tool);
     }
 }
 
@@ -991,6 +987,8 @@ gimp_image_map_tool_create_map (GimpImageMapTool *im_tool)
   g_signal_connect (im_tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
                     im_tool);
+
+  gimp_image_map_tool_preview (im_tool);
 }
 
 static void
@@ -1187,7 +1185,6 @@ gimp_image_map_tool_response (GimpToolGui      *gui,
     {
     case RESPONSE_RESET:
       gimp_image_map_tool_reset (im_tool);
-      gimp_image_map_tool_preview (im_tool);
       break;
 
     case GTK_RESPONSE_OK:
@@ -1349,10 +1346,7 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *im_tool)
                              G_OBJECT (im_tool), 0);
 
   if (GIMP_TOOL (im_tool)->drawable)
-    {
-      gimp_image_map_tool_create_map (im_tool);
-      gimp_image_map_tool_preview (im_tool);
-    }
+    gimp_image_map_tool_create_map (im_tool);
 }
 
 void
