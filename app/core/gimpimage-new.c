@@ -90,11 +90,12 @@ gimp_image_new_from_template (Gimp         *gimp,
                               GimpTemplate *template,
                               GimpContext  *context)
 {
-  GimpImage   *image;
-  GimpLayer   *layer;
-  gint         width, height;
-  gboolean     has_alpha;
-  const gchar *comment;
+  GimpImage         *image;
+  GimpLayer         *layer;
+  GimpColorProfile  *profile;
+  gint               width, height;
+  gboolean           has_alpha;
+  const gchar       *comment;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
@@ -127,6 +128,14 @@ gimp_image_new_from_template (Gimp         *gimp,
                              gimp_template_get_resolution_x (template),
                              gimp_template_get_resolution_y (template));
   gimp_image_set_unit (image, gimp_template_get_resolution_unit (template));
+
+  gimp_image_set_is_color_managed (image,
+                                   gimp_template_get_color_managed (template),
+                                   FALSE);
+  profile = gimp_template_get_color_profile (template);
+  gimp_image_set_color_profile (image, profile, NULL);
+  if (profile)
+    g_object_unref (profile);
 
   width  = gimp_image_get_width (image);
   height = gimp_image_get_height (image);

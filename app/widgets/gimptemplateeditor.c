@@ -142,6 +142,7 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *xres;
   GtkWidget                 *yres;
   GtkWidget                 *combo;
+  GtkWidget                 *toggle;
   GtkWidget                 *scrolled_window;
   GtkWidget                 *text_view;
   GtkTextBuffer             *text_buffer;
@@ -393,10 +394,27 @@ gimp_template_editor_constructed (GObject *object)
                              _("_Precision:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
+  toggle = gimp_prop_check_button_new (G_OBJECT (template),
+                                       "color-managed",
+                                       _("Color manage this image"));
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+                             NULL, 0.0, 0.5,
+                             toggle, 1, FALSE);
+
+  combo = gimp_prop_profile_combo_box_new (G_OBJECT (template),
+                                           "color-profile",
+                                           NULL,
+                                           _("Choose A Color Profile"));
+  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                         NULL, NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
+                             _("Color _profile:"), 0.0, 0.5,
+                             combo, 1, FALSE);
+
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
                                         0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
                              _("_Fill with:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
@@ -406,7 +424,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
                              _("Comme_nt:"), 0.0, 0.0,
                              scrolled_window, 1, FALSE);
 

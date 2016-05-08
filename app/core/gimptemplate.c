@@ -23,10 +23,12 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -53,6 +55,8 @@ enum
   PROP_RESOLUTION_UNIT,
   PROP_BASE_TYPE,
   PROP_PRECISION,
+  PROP_COLOR_MANAGED,
+  PROP_COLOR_PROFILE,
   PROP_FILL_TYPE,
   PROP_COMMENT,
   PROP_FILENAME
@@ -73,6 +77,9 @@ struct _GimpTemplatePrivate
 
   GimpImageBaseType  base_type;
   GimpPrecision      precision;
+
+  gboolean           color_managed;
+  GFile             *color_profile;
 
   GimpFillType       fill_type;
 
@@ -181,6 +188,20 @@ gimp_template_class_init (GimpTemplateClass *klass)
                          GIMP_TYPE_PRECISION, GIMP_PRECISION_U8_GAMMA,
                          GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_MANAGED,
+                            "color-managed",
+                            _("Color managed"),
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_COLOR_PROFILE,
+                           "color-profile",
+                           _("Color profile"),
+                           NULL,
+                           G_TYPE_FILE,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_TYPE,
                          "fill-type",
                          _("Fill type"),
@@ -264,6 +285,14 @@ gimp_template_set_property (GObject      *object,
     case PROP_PRECISION:
       private->precision = g_value_get_enum (value);
       break;
+    case PROP_COLOR_MANAGED:
+      private->color_managed = g_value_get_boolean (value);
+      break;
+    case PROP_COLOR_PROFILE:
+      if (private->color_profile)
+        g_object_unref (private->color_profile);
+      private->color_profile = g_value_dup_object (value);
+      break;
     case PROP_FILL_TYPE:
       private->fill_type = g_value_get_enum (value);
       break;
@@ -316,6 +345,12 @@ gimp_template_get_property (GObject    *object,
       break;
     case PROP_PRECISION:
       g_value_set_enum (value, private->precision);
+      break;
+    case PROP_COLOR_MANAGED:
+      g_value_set_boolean (value, private->color_managed);
+      break;
+    case PROP_COLOR_PROFILE:
+      g_value_set_object (value, private->color_profile);
       break;
     case PROP_FILL_TYPE:
       g_value_set_enum (value, private->fill_type);
@@ -478,6 +513,29 @@ gimp_template_get_precision (GimpTemplate *template)
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_PRECISION_U8_GAMMA);
 
   return GET_PRIVATE (template)->precision;
+}
+
+gboolean
+gimp_template_get_color_managed (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+
+  return GET_PRIVATE (template)->color_managed;
+}
+
+GimpColorProfile *
+gimp_template_get_color_profile (GimpTemplate *template)
+{
+  GimpTemplatePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+
+  private = GET_PRIVATE (template);
+
+  if (private->color_profile)
+    return gimp_color_profile_new_from_file (private->color_profile, NULL);
+
+  return NULL;
 }
 
 GimpFillType
