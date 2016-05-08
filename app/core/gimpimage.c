@@ -1446,10 +1446,11 @@ gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
 static GimpColorProfile *
 gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
 {
-  GimpImage        *image = GIMP_IMAGE (managed);
-  GimpColorProfile *profile;
+  GimpImage        *image   = GIMP_IMAGE (managed);
+  GimpColorProfile *profile = NULL;
 
-  profile = gimp_image_get_color_profile (image);
+  if (gimp_image_get_is_color_managed (image))
+    profile = gimp_image_get_color_profile (image);
 
   if (! profile)
     profile = gimp_image_get_builtin_color_profile (image);
