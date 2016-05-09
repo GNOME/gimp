@@ -44,7 +44,7 @@
 #include "tools/gimpcoloroptions.h"
 #include "tools/gimpforegroundselectoptions.h"
 #include "tools/gimprectangleoptions.h"
-#include "tools/gimpimagemaptool.h"
+#include "tools/gimptool.h"
 #include "tools/gimptoolcontrol.h"
 #include "tools/gimptransformoptions.h"
 #include "tools/gimpwarpoptions.h"

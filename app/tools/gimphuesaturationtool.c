@@ -40,8 +40,8 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimpfilteroptions.h"
 #include "gimphuesaturationtool.h"
-#include "gimpimagemapoptions.h"
 
 #include "gimp-intl.h"
 
@@ -52,20 +52,20 @@
 
 /*  local function prototypes  */
 
-static void       gimp_hue_saturation_tool_constructed   (GObject          *object);
+static void       gimp_hue_saturation_tool_constructed   (GObject         *object);
 
-static gboolean   gimp_hue_saturation_tool_initialize    (GimpTool         *tool,
-                                                          GimpDisplay      *display,
-                                                          GError          **error);
+static gboolean   gimp_hue_saturation_tool_initialize    (GimpTool        *tool,
+                                                          GimpDisplay     *display,
+                                                          GError         **error);
 
-static gchar    * gimp_hue_saturation_tool_get_operation (GimpImageMapTool *im_tool,
-                                                          gchar           **title,
-                                                          gchar           **description,
-                                                          gchar           **undo_desc,
-                                                          gchar           **icon_name,
-                                                          gchar           **help_id);
-static void       gimp_hue_saturation_tool_dialog        (GimpImageMapTool *im_tool);
-static void       gimp_hue_saturation_tool_reset         (GimpImageMapTool *im_tool);
+static gchar    * gimp_hue_saturation_tool_get_operation (GimpFilterTool  *filter_tool,
+                                                          gchar          **title,
+                                                          gchar          **description,
+                                                          gchar          **undo_desc,
+                                                          gchar          **icon_name,
+                                                          gchar          **help_id);
+static void       gimp_hue_saturation_tool_dialog        (GimpFilterTool  *filter_tool);
+static void       gimp_hue_saturation_tool_reset         (GimpFilterTool  *filter_tool);
 
 static void       hue_saturation_config_notify           (GObject               *object,
                                                           GParamSpec            *pspec,
@@ -74,13 +74,13 @@ static void       hue_saturation_config_notify           (GObject               
 static void       hue_saturation_update_color_areas      (GimpHueSaturationTool *hs_tool);
 
 static void       hue_saturation_range_callback          (GtkWidget             *widget,
-                                                          GimpImageMapTool      *im_tool);
+                                                          GimpFilterTool        *filter_tool);
 static void       hue_saturation_range_reset_callback    (GtkWidget             *widget,
-                                                          GimpImageMapTool      *hs_tool);
+                                                          GimpFilterTool        *hs_tool);
 
 
 G_DEFINE_TYPE (GimpHueSaturationTool, gimp_hue_saturation_tool,
-               GIMP_TYPE_IMAGE_MAP_TOOL)
+               GIMP_TYPE_FILTER_TOOL)
 
 #define parent_class gimp_hue_saturation_tool_parent_class
 
@@ -90,7 +90,7 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data)
 {
   (* callback) (GIMP_TYPE_HUE_SATURATION_TOOL,
-                GIMP_TYPE_IMAGE_MAP_OPTIONS, NULL,
+                GIMP_TYPE_FILTER_OPTIONS, NULL,
                 0,
                 "gimp-hue-saturation-tool",
                 _("Hue-Saturation"),
@@ -104,21 +104,21 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 {
-  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
-  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  GObjectClass        *object_class      = G_OBJECT_CLASS (klass);
+  GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
+  GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->constructed          = gimp_hue_saturation_tool_constructed;
+  object_class->constructed              = gimp_hue_saturation_tool_constructed;
 
-  tool_class->initialize             = gimp_hue_saturation_tool_initialize;
+  tool_class->initialize                 = gimp_hue_saturation_tool_initialize;
 
-  im_tool_class->settings_name       = "hue-saturation";
-  im_tool_class->import_dialog_title = _("Import Hue-Saturation Settings");
-  im_tool_class->export_dialog_title = _("Export Hue-Saturation Settings");
+  filter_tool_class->settings_name       = "hue-saturation";
+  filter_tool_class->import_dialog_title = _("Import Hue-Saturation Settings");
+  filter_tool_class->export_dialog_title = _("Export Hue-Saturation Settings");
 
-  im_tool_class->get_operation       = gimp_hue_saturation_tool_get_operation;
-  im_tool_class->dialog              = gimp_hue_saturation_tool_dialog;
-  im_tool_class->reset               = gimp_hue_saturation_tool_reset;
+  filter_tool_class->get_operation       = gimp_hue_saturation_tool_get_operation;
+  filter_tool_class->dialog              = gimp_hue_saturation_tool_dialog;
+  filter_tool_class->reset               = gimp_hue_saturation_tool_reset;
 }
 
 static void
@@ -131,7 +131,7 @@ gimp_hue_saturation_tool_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_signal_connect_object (GIMP_IMAGE_MAP_TOOL (object)->config, "notify",
+  g_signal_connect_object (GIMP_FILTER_TOOL (object)->config, "notify",
                            G_CALLBACK (hue_saturation_config_notify),
                            object, 0);
 }
@@ -158,12 +158,12 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
 }
 
 static gchar *
-gimp_hue_saturation_tool_get_operation (GimpImageMapTool  *im_tool,
-                                        gchar            **title,
-                                        gchar            **description,
-                                        gchar            **undo_desc,
-                                        gchar            **icon_name,
-                                        gchar            **help_id)
+gimp_hue_saturation_tool_get_operation (GimpFilterTool  *filter_tool,
+                                        gchar          **title,
+                                        gchar          **description,
+                                        gchar          **undo_desc,
+                                        gchar          **icon_name,
+                                        gchar          **help_id)
 {
   *description = g_strdup (_("Adjust Hue / Lightness / Saturation"));
 
@@ -176,10 +176,10 @@ gimp_hue_saturation_tool_get_operation (GimpImageMapTool  *im_tool,
 /***************************/
 
 static void
-gimp_hue_saturation_tool_dialog (GimpImageMapTool *im_tool)
+gimp_hue_saturation_tool_dialog (GimpFilterTool *filter_tool)
 {
-  GimpHueSaturationTool   *hs_tool = GIMP_HUE_SATURATION_TOOL (im_tool);
-  GimpHueSaturationConfig *config  = GIMP_HUE_SATURATION_CONFIG (im_tool->config);
+  GimpHueSaturationTool   *hs_tool = GIMP_HUE_SATURATION_TOOL (filter_tool);
+  GimpHueSaturationConfig *config  = GIMP_HUE_SATURATION_CONFIG (filter_tool->config);
   GtkWidget               *main_vbox;
   GtkWidget               *frame;
   GtkWidget               *vbox;
@@ -211,7 +211,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *im_tool)
     { N_("_M"),      N_("Magenta"),           3, 2, 4, 2 }
   };
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
+  main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
   frame = gimp_frame_new (_("Select Primary Color to Adjust"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
@@ -293,7 +293,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *im_tool)
   gtk_widget_show (table);
 
   /* Create the 'Overlap' option slider */
-  scale = gimp_prop_spin_scale_new (im_tool->config, "overlap",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "overlap",
                                     _("_Overlap"), 0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -308,21 +308,21 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *im_tool)
   gtk_widget_show (vbox);
 
   /*  Create the hue scale widget  */
-  scale = gimp_prop_spin_scale_new (im_tool->config, "hue",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "hue",
                                     _("_Hue"), 1.0 / 180.0, 15.0 / 180.0, 0);
   gimp_prop_widget_set_factor (scale, 180.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Create the lightness scale widget  */
-  scale = gimp_prop_spin_scale_new (im_tool->config, "lightness",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "lightness",
                                     _("_Lightness"), 0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Create the saturation scale widget  */
-  scale = gimp_prop_spin_scale_new (im_tool->config, "saturation",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "saturation",
                                     _("_Saturation"), 0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -347,32 +347,32 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *im_tool)
 }
 
 static void
-gimp_hue_saturation_tool_reset (GimpImageMapTool *im_tool)
+gimp_hue_saturation_tool_reset (GimpFilterTool *filter_tool)
 {
   GimpHueRange range;
 
-  g_object_freeze_notify (im_tool->config);
+  g_object_freeze_notify (filter_tool->config);
 
-  g_object_get (im_tool->config,
+  g_object_get (filter_tool->config,
                 "range", &range,
                 NULL);
 
-  if (im_tool->default_config)
+  if (filter_tool->default_config)
     {
-      gimp_config_copy (GIMP_CONFIG (im_tool->default_config),
-                        GIMP_CONFIG (im_tool->config),
+      gimp_config_copy (GIMP_CONFIG (filter_tool->default_config),
+                        GIMP_CONFIG (filter_tool->config),
                         0);
     }
   else
     {
-      gimp_config_reset (GIMP_CONFIG (im_tool->config));
+      gimp_config_reset (GIMP_CONFIG (filter_tool->config));
     }
 
-  g_object_set (im_tool->config,
+  g_object_set (filter_tool->config,
                 "range", range,
                 NULL);
 
-  g_object_thaw_notify (im_tool->config);
+  g_object_thaw_notify (filter_tool->config);
 }
 
 static void
@@ -407,8 +407,8 @@ hue_saturation_update_color_areas (GimpHueSaturationTool *hs_tool)
     { 1.0,   0, 1.0, }
   };
 
-  GimpImageMapTool        *im_tool = GIMP_IMAGE_MAP_TOOL (hs_tool);
-  GimpHueSaturationConfig *config  = GIMP_HUE_SATURATION_CONFIG (im_tool->config);
+  GimpFilterTool          *filter_tool = GIMP_FILTER_TOOL (hs_tool);
+  GimpHueSaturationConfig *config      = GIMP_HUE_SATURATION_CONFIG (filter_tool->config);
   gint                     i;
 
   for (i = 0; i < 6; i++)
@@ -424,23 +424,23 @@ hue_saturation_update_color_areas (GimpHueSaturationTool *hs_tool)
 }
 
 static void
-hue_saturation_range_callback (GtkWidget        *widget,
-                               GimpImageMapTool *im_tool)
+hue_saturation_range_callback (GtkWidget      *widget,
+                               GimpFilterTool *filter_tool)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       GimpHueRange range;
 
       gimp_radio_button_update (widget, &range);
-      g_object_set (im_tool->config,
+      g_object_set (filter_tool->config,
                     "range", range,
                     NULL);
     }
 }
 
 static void
-hue_saturation_range_reset_callback (GtkWidget        *widget,
-                                     GimpImageMapTool *im_tool)
+hue_saturation_range_reset_callback (GtkWidget      *widget,
+                                     GimpFilterTool *filter_tool)
 {
-  gimp_hue_saturation_config_reset_range (GIMP_HUE_SATURATION_CONFIG (im_tool->config));
+  gimp_hue_saturation_config_reset_range (GIMP_HUE_SATURATION_CONFIG (filter_tool->config));
 }

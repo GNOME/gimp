@@ -19,7 +19,7 @@
 #define __GIMP_HUE_SATURATION_TOOL_H__
 
 
-#include "gimpimagemaptool.h"
+#include "gimpfiltertool.h"
 
 
 #define GIMP_TYPE_HUE_SATURATION_TOOL            (gimp_hue_saturation_tool_get_type ())
@@ -35,16 +35,16 @@ typedef struct _GimpHueSaturationToolClass GimpHueSaturationToolClass;
 
 struct _GimpHueSaturationTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpFilterTool  parent_instance;
 
   /*  dialog  */
-  GtkWidget        *range_radio;
-  GtkWidget        *hue_range_color_area[6];
+  GtkWidget      *range_radio;
+  GtkWidget      *hue_range_color_area[6];
 };
 
 struct _GimpHueSaturationToolClass
 {
-  GimpImageMapToolClass  parent_class;
+  GimpFilterToolClass  parent_class;
 };
 
 

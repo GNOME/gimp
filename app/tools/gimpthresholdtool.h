@@ -19,7 +19,7 @@
 #define __GIMP_THRESHOLD_TOOL_H__
 
 
-#include "gimpimagemaptool.h"
+#include "gimpfiltertool.h"
 
 
 #define GIMP_TYPE_THRESHOLD_TOOL            (gimp_threshold_tool_get_type ())
@@ -35,7 +35,7 @@ typedef struct _GimpThresholdToolClass GimpThresholdToolClass;
 
 struct _GimpThresholdTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpFilterTool    parent_instance;
 
   /*  dialog  */
   GimpHistogram    *histogram;
@@ -44,7 +44,7 @@ struct _GimpThresholdTool
 
 struct _GimpThresholdToolClass
 {
-  GimpImageMapToolClass  parent_class;
+  GimpFilterToolClass  parent_class;
 };
 
 

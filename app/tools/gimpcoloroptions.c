@@ -54,7 +54,7 @@ static void   gimp_color_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpColorOptions, gimp_color_options,
-               GIMP_TYPE_IMAGE_MAP_OPTIONS)
+               GIMP_TYPE_FILTER_OPTIONS)
 
 
 static void

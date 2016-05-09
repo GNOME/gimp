@@ -338,7 +338,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 
       if (settings)
         {
-          GObject *tool_config = GIMP_IMAGE_MAP_TOOL (active_tool)->config;
+          GObject *tool_config = GIMP_FILTER_TOOL (active_tool)->config;
 
           gimp_config_copy (GIMP_CONFIG (settings),
                             GIMP_CONFIG (tool_config), 0);

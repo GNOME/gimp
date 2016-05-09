@@ -40,32 +40,32 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpcolorbalancetool.h"
-#include "gimpimagemapoptions.h"
+#include "gimpfilteroptions.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-static gboolean   gimp_color_balance_tool_initialize    (GimpTool         *tool,
-                                                         GimpDisplay      *display,
-                                                         GError          **error);
+static gboolean   gimp_color_balance_tool_initialize    (GimpTool        *tool,
+                                                         GimpDisplay     *display,
+                                                         GError         **error);
 
-static gchar    * gimp_color_balance_tool_get_operation (GimpImageMapTool *im_tool,
-                                                         gchar           **title,
-                                                         gchar           **description,
-                                                         gchar           **undo_desc,
-                                                         gchar           **icon_name,
-                                                         gchar           **help_id);
-static void       gimp_color_balance_tool_dialog        (GimpImageMapTool *im_tool);
-static void       gimp_color_balance_tool_reset         (GimpImageMapTool *im_tool);
+static gchar    * gimp_color_balance_tool_get_operation (GimpFilterTool  *filter_tool,
+                                                         gchar          **title,
+                                                         gchar          **description,
+                                                         gchar          **undo_desc,
+                                                         gchar          **icon_name,
+                                                         gchar          **help_id);
+static void       gimp_color_balance_tool_dialog        (GimpFilterTool  *filter_tool);
+static void       gimp_color_balance_tool_reset         (GimpFilterTool  *filter_tool);
 
-static void       color_balance_range_reset_callback    (GtkWidget        *widget,
-                                                         GimpImageMapTool *im_tool);
+static void       color_balance_range_reset_callback    (GtkWidget       *widget,
+                                                         GimpFilterTool  *filter_tool);
 
 
 G_DEFINE_TYPE (GimpColorBalanceTool, gimp_color_balance_tool,
-               GIMP_TYPE_IMAGE_MAP_TOOL)
+               GIMP_TYPE_FILTER_TOOL)
 
 #define parent_class gimp_color_balance_tool_parent_class
 
@@ -75,7 +75,7 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
                                   gpointer                  data)
 {
   (* callback) (GIMP_TYPE_COLOR_BALANCE_TOOL,
-                GIMP_TYPE_IMAGE_MAP_OPTIONS, NULL,
+                GIMP_TYPE_FILTER_OPTIONS, NULL,
                 0,
                 "gimp-color-balance-tool",
                 _("Color Balance"),
@@ -89,18 +89,18 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 {
-  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
-  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
+  GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  tool_class->initialize             = gimp_color_balance_tool_initialize;
+  tool_class->initialize                 = gimp_color_balance_tool_initialize;
 
-  im_tool_class->settings_name       = "color-balance";
-  im_tool_class->import_dialog_title = _("Import Color Balance Settings");
-  im_tool_class->export_dialog_title = _("Export Color Balance Settings");
+  filter_tool_class->settings_name       = "color-balance";
+  filter_tool_class->import_dialog_title = _("Import Color Balance Settings");
+  filter_tool_class->export_dialog_title = _("Export Color Balance Settings");
 
-  im_tool_class->get_operation       = gimp_color_balance_tool_get_operation;
-  im_tool_class->dialog              = gimp_color_balance_tool_dialog;
-  im_tool_class->reset               = gimp_color_balance_tool_reset;
+  filter_tool_class->get_operation       = gimp_color_balance_tool_get_operation;
+  filter_tool_class->dialog              = gimp_color_balance_tool_dialog;
+  filter_tool_class->reset               = gimp_color_balance_tool_reset;
 }
 
 static void
@@ -130,12 +130,12 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
 }
 
 static gchar *
-gimp_color_balance_tool_get_operation (GimpImageMapTool  *im_tool,
-                                       gchar            **title,
-                                       gchar            **description,
-                                       gchar            **undo_desc,
-                                       gchar            **icon_name,
-                                       gchar            **help_id)
+gimp_color_balance_tool_get_operation (GimpFilterTool  *filter_tool,
+                                       gchar          **title,
+                                       gchar          **description,
+                                       gchar          **undo_desc,
+                                       gchar          **icon_name,
+                                       gchar          **help_id)
 {
   *description = g_strdup (_("Adjust Color Balance"));
 
@@ -179,9 +179,9 @@ create_levels_scale (GObject     *config,
 }
 
 static void
-gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
+gimp_color_balance_tool_dialog (GimpFilterTool *filter_tool)
 {
-  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
+  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (filter_tool);
   GtkWidget            *main_vbox;
   GtkWidget            *vbox;
   GtkWidget            *hbox;
@@ -189,9 +189,9 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget            *button;
   GtkWidget            *frame;
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+  main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
-  frame = gimp_prop_enum_radio_frame_new (image_map_tool->config, "range",
+  frame = gimp_prop_enum_radio_frame_new (filter_tool->config, "range",
                                           _("Select Range to Adjust"),
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -212,15 +212,15 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  create_levels_scale (image_map_tool->config, "cyan-red",
+  create_levels_scale (filter_tool->config, "cyan-red",
                        _("Cyan"), _("Red"),
                        table, 0);
 
-  create_levels_scale (image_map_tool->config, "magenta-green",
+  create_levels_scale (filter_tool->config, "magenta-green",
                        _("Magenta"), _("Green"),
                        table, 1);
 
-  create_levels_scale (image_map_tool->config, "yellow-blue",
+  create_levels_scale (filter_tool->config, "yellow-blue",
                        _("Yellow"), _("Blue"),
                        table, 2);
 
@@ -236,7 +236,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (color_balance_range_reset_callback),
                     cb_tool);
 
-  button = gimp_prop_check_button_new (image_map_tool->config,
+  button = gimp_prop_check_button_new (filter_tool->config,
                                        "preserve-luminosity",
                                        _("Preserve _luminosity"));
   gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
@@ -244,24 +244,24 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
 }
 
 static void
-gimp_color_balance_tool_reset (GimpImageMapTool *im_tool)
+gimp_color_balance_tool_reset (GimpFilterTool *filter_tool)
 {
   GimpTransferMode range;
 
-  g_object_get (im_tool->config,
+  g_object_get (filter_tool->config,
                 "range", &range,
                 NULL);
 
-  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (im_tool);
+  GIMP_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
 
-  g_object_set (im_tool->config,
+  g_object_set (filter_tool->config,
                 "range", range,
                 NULL);
 }
 
 static void
-color_balance_range_reset_callback (GtkWidget        *widget,
-                                    GimpImageMapTool *im_tool)
+color_balance_range_reset_callback (GtkWidget      *widget,
+                                    GimpFilterTool *filter_tool)
 {
-  gimp_color_balance_config_reset_range (GIMP_COLOR_BALANCE_CONFIG (im_tool->config));
+  gimp_color_balance_config_reset_range (GIMP_COLOR_BALANCE_CONFIG (filter_tool->config));
 }

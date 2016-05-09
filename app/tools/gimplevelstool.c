@@ -65,62 +65,62 @@
 
 /*  local function prototypes  */
 
-static void       gimp_levels_tool_constructed    (GObject           *object);
-static void       gimp_levels_tool_finalize       (GObject           *object);
+static void       gimp_levels_tool_constructed    (GObject          *object);
+static void       gimp_levels_tool_finalize       (GObject          *object);
 
-static gboolean   gimp_levels_tool_initialize     (GimpTool          *tool,
-                                                   GimpDisplay       *display,
-                                                   GError           **error);
+static gboolean   gimp_levels_tool_initialize     (GimpTool         *tool,
+                                                   GimpDisplay      *display,
+                                                   GError          **error);
 
-static gchar    * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
-                                                   gchar            **title,
-                                                   gchar            **description,
-                                                   gchar            **undo_desc,
-                                                   gchar            **icon_name,
-                                                   gchar            **help_id);
-static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
-static void       gimp_levels_tool_reset          (GimpImageMapTool  *im_tool);
-static gboolean   gimp_levels_tool_settings_import(GimpImageMapTool  *im_tool,
-                                                   GInputStream      *input,
-                                                   GError           **error);
-static gboolean   gimp_levels_tool_settings_export(GimpImageMapTool  *im_tool,
-                                                   GOutputStream     *output,
-                                                   GError           **error);
-static void       gimp_levels_tool_color_picked   (GimpImageMapTool  *im_tool,
-                                                   gpointer           identifier,
-                                                   gdouble            x,
-                                                   gdouble            y,
-                                                   const Babl        *sample_format,
-                                                   const GimpRGB     *color);
+static gchar    * gimp_levels_tool_get_operation  (GimpFilterTool   *filter_tool,
+                                                   gchar           **title,
+                                                   gchar           **description,
+                                                   gchar           **undo_desc,
+                                                   gchar           **icon_name,
+                                                   gchar           **help_id);
+static void       gimp_levels_tool_dialog         (GimpFilterTool   *filter_tool);
+static void       gimp_levels_tool_reset          (GimpFilterTool   *filter_tool);
+static gboolean   gimp_levels_tool_settings_import(GimpFilterTool   *filter_tool,
+                                                   GInputStream     *input,
+                                                   GError          **error);
+static gboolean   gimp_levels_tool_settings_export(GimpFilterTool   *filter_tool,
+                                                   GOutputStream    *output,
+                                                   GError          **error);
+static void       gimp_levels_tool_color_picked   (GimpFilterTool   *filter_tool,
+                                                   gpointer          identifier,
+                                                   gdouble           x,
+                                                   gdouble           y,
+                                                   const Babl       *sample_format,
+                                                   const GimpRGB    *color);
 
-static void       gimp_levels_tool_export_setup   (GimpSettingsBox   *settings_box,
+static void       gimp_levels_tool_export_setup   (GimpSettingsBox  *settings_box,
                                                    GtkFileChooserDialog *dialog,
-                                                   gboolean           export,
-                                                   GimpLevelsTool    *tool);
-static void       gimp_levels_tool_config_notify  (GObject           *object,
-                                                   GParamSpec        *pspec,
-                                                   GimpLevelsTool    *tool);
+                                                   gboolean          export,
+                                                   GimpLevelsTool   *tool);
+static void       gimp_levels_tool_config_notify  (GObject          *object,
+                                                   GParamSpec       *pspec,
+                                                   GimpLevelsTool   *tool);
 
-static void       levels_update_input_bar         (GimpLevelsTool    *tool);
+static void       levels_update_input_bar         (GimpLevelsTool   *tool);
 
-static void       levels_channel_callback         (GtkWidget         *widget,
-                                                   GimpImageMapTool  *im_tool);
-static void       levels_channel_reset_callback   (GtkWidget         *widget,
-                                                   GimpImageMapTool  *im_tool);
+static void       levels_channel_callback         (GtkWidget        *widget,
+                                                   GimpFilterTool   *filter_tool);
+static void       levels_channel_reset_callback   (GtkWidget        *widget,
+                                                   GimpFilterTool   *filter_tool);
 
-static gboolean   levels_menu_sensitivity         (gint               value,
-                                                   gpointer           data);
+static gboolean   levels_menu_sensitivity         (gint              value,
+                                                   gpointer          data);
 
-static void       levels_stretch_callback         (GtkWidget         *widget,
-                                                   GimpLevelsTool    *tool);
-static void       levels_linear_gamma_changed     (GtkAdjustment     *adjustment,
-                                                   GimpLevelsTool    *tool);
+static void       levels_stretch_callback         (GtkWidget        *widget,
+                                                   GimpLevelsTool   *tool);
+static void       levels_linear_gamma_changed     (GtkAdjustment    *adjustment,
+                                                   GimpLevelsTool   *tool);
 
-static void       levels_to_curves_callback       (GtkWidget         *widget,
-                                                   GimpImageMapTool  *im_tool);
+static void       levels_to_curves_callback       (GtkWidget        *widget,
+                                                   GimpFilterTool   *filter_tool);
 
 
-G_DEFINE_TYPE (GimpLevelsTool, gimp_levels_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
+G_DEFINE_TYPE (GimpLevelsTool, gimp_levels_tool, GIMP_TYPE_FILTER_TOOL)
 
 #define parent_class gimp_levels_tool_parent_class
 
@@ -145,25 +145,25 @@ gimp_levels_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 {
-  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
-  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  GObjectClass        *object_class      = G_OBJECT_CLASS (klass);
+  GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
+  GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->constructed          = gimp_levels_tool_constructed;
-  object_class->finalize             = gimp_levels_tool_finalize;
+  object_class->constructed              = gimp_levels_tool_constructed;
+  object_class->finalize                 = gimp_levels_tool_finalize;
 
-  tool_class->initialize             = gimp_levels_tool_initialize;
+  tool_class->initialize                 = gimp_levels_tool_initialize;
 
-  im_tool_class->settings_name       = "levels";
-  im_tool_class->import_dialog_title = _("Import Levels");
-  im_tool_class->export_dialog_title = _("Export Levels");
+  filter_tool_class->settings_name       = "levels";
+  filter_tool_class->import_dialog_title = _("Import Levels");
+  filter_tool_class->export_dialog_title = _("Export Levels");
 
-  im_tool_class->get_operation       = gimp_levels_tool_get_operation;
-  im_tool_class->dialog              = gimp_levels_tool_dialog;
-  im_tool_class->reset               = gimp_levels_tool_reset;
-  im_tool_class->settings_import     = gimp_levels_tool_settings_import;
-  im_tool_class->settings_export     = gimp_levels_tool_settings_export;
-  im_tool_class->color_picked        = gimp_levels_tool_color_picked;
+  filter_tool_class->get_operation       = gimp_levels_tool_get_operation;
+  filter_tool_class->dialog              = gimp_levels_tool_dialog;
+  filter_tool_class->reset               = gimp_levels_tool_reset;
+  filter_tool_class->settings_import     = gimp_levels_tool_settings_import;
+  filter_tool_class->settings_export     = gimp_levels_tool_settings_export;
+  filter_tool_class->color_picked        = gimp_levels_tool_color_picked;
 }
 
 static void
@@ -177,7 +177,7 @@ gimp_levels_tool_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_signal_connect_object (GIMP_IMAGE_MAP_TOOL (object)->config, "notify",
+  g_signal_connect_object (GIMP_FILTER_TOOL (object)->config, "notify",
                            G_CALLBACK (gimp_levels_tool_config_notify),
                            object, 0);
 }
@@ -257,12 +257,12 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 }
 
 static gchar *
-gimp_levels_tool_get_operation (GimpImageMapTool  *im_tool,
-                                gchar            **title,
-                                gchar            **description,
-                                gchar            **undo_desc,
-                                gchar            **icon_name,
-                                gchar            **help_id)
+gimp_levels_tool_get_operation (GimpFilterTool  *filter_tool,
+                                gchar          **title,
+                                gchar          **description,
+                                gchar          **undo_desc,
+                                gchar          **icon_name,
+                                gchar          **help_id)
 {
   *description = g_strdup (_("Adjust Color Levels"));
 
@@ -315,18 +315,18 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
       return NULL;
     }
 
-  return gimp_image_map_tool_add_color_picker (GIMP_IMAGE_MAP_TOOL (tool),
-                                               GUINT_TO_POINTER (value),
-                                               icon_name,
-                                               help);
+  return gimp_filter_tool_add_color_picker (GIMP_FILTER_TOOL (tool),
+                                            GUINT_TO_POINTER (value),
+                                            icon_name,
+                                            help);
 }
 
 static void
-gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
+gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
 {
-  GimpLevelsTool   *tool         = GIMP_LEVELS_TOOL (im_tool);
-  GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (im_tool);
-  GimpLevelsConfig *config       = GIMP_LEVELS_CONFIG (im_tool->config);
+  GimpLevelsTool   *tool         = GIMP_LEVELS_TOOL (filter_tool);
+  GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (filter_tool);
+  GimpLevelsConfig *config       = GIMP_LEVELS_CONFIG (filter_tool->config);
   GtkListStore     *store;
   GtkWidget        *main_vbox;
   GtkWidget        *frame_vbox;
@@ -345,11 +345,11 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
   GtkWidget        *handle_bar;
   gint              border;
 
-  g_signal_connect (im_tool->settings_box, "file-dialog-setup",
+  g_signal_connect (filter_tool->settings_box, "file-dialog-setup",
                     G_CALLBACK (gimp_levels_tool_export_setup),
-                    im_tool);
+                    filter_tool);
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
+  main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
   /*  The combo box for selecting channels  */
   main_frame = gimp_frame_new (NULL);
@@ -470,7 +470,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
   gtk_widget_show (button);
 
   tool->low_input_spinbutton = spinbutton =
-    gimp_prop_spin_button_new (im_tool->config, "low-input",
+    gimp_prop_spin_button_new (filter_tool->config, "low-input",
                                0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -480,7 +480,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
                                   tool->low_input);
 
   /*  input gamma spin  */
-  spinbutton = gimp_prop_spin_button_new (im_tool->config, "gamma",
+  spinbutton = gimp_prop_spin_button_new (filter_tool->config, "gamma",
                                           0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
@@ -507,7 +507,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  spinbutton = gimp_prop_spin_button_new (im_tool->config, "high-input",
+  spinbutton = gimp_prop_spin_button_new (filter_tool->config, "high-input",
                                           0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -556,7 +556,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
 
   /*  low output spin  */
   tool->low_output_spinbutton = spinbutton =
-    gimp_prop_spin_button_new (im_tool->config, "low-output",
+    gimp_prop_spin_button_new (filter_tool->config, "low-output",
                                0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -566,7 +566,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
 
   /*  high output spin  */
   tool->high_output_spinbutton = spinbutton =
-    gimp_prop_spin_button_new (im_tool->config, "high-output",
+    gimp_prop_spin_button_new (filter_tool->config, "high-output",
                                0.01, 0.1, 1);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -631,27 +631,27 @@ gimp_levels_tool_dialog (GimpImageMapTool *im_tool)
 }
 
 static void
-gimp_levels_tool_reset (GimpImageMapTool *im_tool)
+gimp_levels_tool_reset (GimpFilterTool *filter_tool)
 {
   GimpHistogramChannel channel;
 
-  g_object_get (im_tool->config,
+  g_object_get (filter_tool->config,
                 "channel", &channel,
                 NULL);
 
-  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (im_tool);
+  GIMP_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
 
-  g_object_set (im_tool->config,
+  g_object_set (filter_tool->config,
                 "channel", channel,
                 NULL);
 }
 
 static gboolean
-gimp_levels_tool_settings_import (GimpImageMapTool  *im_tool,
-                                  GInputStream      *input,
-                                  GError           **error)
+gimp_levels_tool_settings_import (GimpFilterTool  *filter_tool,
+                                  GInputStream    *input,
+                                  GError         **error)
 {
-  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (im_tool->config);
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (filter_tool->config);
   gchar             header[64];
   gsize             bytes_read;
 
@@ -668,25 +668,25 @@ gimp_levels_tool_settings_import (GimpImageMapTool  *im_tool,
   if (g_str_has_prefix (header, "# GIMP Levels File\n"))
     return gimp_levels_config_load_cruft (config, input, error);
 
-  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (im_tool,
-                                                                    input,
-                                                                    error);
+  return GIMP_FILTER_TOOL_CLASS (parent_class)->settings_import (filter_tool,
+                                                                 input,
+                                                                 error);
 }
 
 static gboolean
-gimp_levels_tool_settings_export (GimpImageMapTool  *im_tool,
-                                  GOutputStream     *output,
-                                  GError           **error)
+gimp_levels_tool_settings_export (GimpFilterTool  *filter_tool,
+                                  GOutputStream   *output,
+                                  GError         **error)
 {
-  GimpLevelsTool   *tool   = GIMP_LEVELS_TOOL (im_tool);
-  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (im_tool->config);
+  GimpLevelsTool   *tool   = GIMP_LEVELS_TOOL (filter_tool);
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (filter_tool->config);
 
   if (tool->export_old_format)
     return gimp_levels_config_save_cruft (config, output, error);
 
-  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (im_tool,
-                                                                    output,
-                                                                    error);
+  return GIMP_FILTER_TOOL_CLASS (parent_class)->settings_export (filter_tool,
+                                                                 output,
+                                                                 error);
 }
 
 static void
@@ -712,16 +712,16 @@ levels_input_adjust_by_color (GimpLevelsConfig     *config,
 }
 
 static void
-gimp_levels_tool_color_picked (GimpImageMapTool *color_tool,
-                               gpointer          identifier,
-                               gdouble           x,
-                               gdouble           y,
-                               const Babl       *sample_format,
-                               const GimpRGB    *color)
+gimp_levels_tool_color_picked (GimpFilterTool *color_tool,
+                               gpointer        identifier,
+                               gdouble         x,
+                               gdouble         y,
+                               const Babl     *sample_format,
+                               const GimpRGB  *color)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (color_tool);
-  GimpLevelsConfig *config  = GIMP_LEVELS_CONFIG (im_tool->config);
-  guint             value   = GPOINTER_TO_UINT (identifier);
+  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (color_tool);
+  GimpLevelsConfig *config      = GIMP_LEVELS_CONFIG (filter_tool->config);
+  guint             value       = GPOINTER_TO_UINT (identifier);
 
   if (value & PICK_ALL_CHANNELS &&
       gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)
@@ -827,8 +827,8 @@ gimp_levels_tool_config_notify (GObject        *object,
 static void
 levels_update_input_bar (GimpLevelsTool *tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
-  GimpLevelsConfig *config  = GIMP_LEVELS_CONFIG (im_tool->config);
+  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpLevelsConfig *config      = GIMP_LEVELS_CONFIG (filter_tool->config);
 
   switch (config->channel)
     {
@@ -890,10 +890,10 @@ levels_update_input_bar (GimpLevelsTool *tool)
 }
 
 static void
-levels_channel_callback (GtkWidget        *widget,
-                         GimpImageMapTool *im_tool)
+levels_channel_callback (GtkWidget      *widget,
+                         GimpFilterTool *filter_tool)
 {
-  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (im_tool->config);
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (filter_tool->config);
   gint              value;
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value) &&
@@ -906,10 +906,10 @@ levels_channel_callback (GtkWidget        *widget,
 }
 
 static void
-levels_channel_reset_callback (GtkWidget        *widget,
-                               GimpImageMapTool *im_tool)
+levels_channel_reset_callback (GtkWidget      *widget,
+                               GimpFilterTool *filter_tool)
 {
-  gimp_levels_config_reset_channel (GIMP_LEVELS_CONFIG (im_tool->config));
+  gimp_levels_config_reset_channel (GIMP_LEVELS_CONFIG (filter_tool->config));
 }
 
 static gboolean
@@ -946,11 +946,11 @@ static void
 levels_stretch_callback (GtkWidget      *widget,
                          GimpLevelsTool *tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
 
-  gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (im_tool->config),
+  gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (filter_tool->config),
                               tool->histogram,
-                              gimp_drawable_is_rgb (im_tool->drawable));
+                              gimp_drawable_is_rgb (filter_tool->drawable));
 }
 
 static void
@@ -977,17 +977,17 @@ levels_linear_gamma_changed (GtkAdjustment  *adjustment,
 }
 
 static void
-levels_to_curves_callback (GtkWidget        *widget,
-                           GimpImageMapTool *im_tool)
+levels_to_curves_callback (GtkWidget      *widget,
+                           GimpFilterTool *filter_tool)
 {
-  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (im_tool->config);
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (filter_tool->config);
   GimpCurvesConfig *curves;
 
   curves = gimp_levels_config_to_curves_config (config);
 
-  gimp_image_map_tool_edit_as (im_tool,
-                               "gimp-curves-tool",
-                               GIMP_CONFIG (curves));
+  gimp_filter_tool_edit_as (filter_tool,
+                            "gimp-curves-tool",
+                            GIMP_CONFIG (curves));
 
   g_object_unref (curves);
 }

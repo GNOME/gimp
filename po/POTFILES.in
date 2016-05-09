@@ -386,6 +386,9 @@ app/tools/gimpdodgeburntool.c
 app/tools/gimpeditselectiontool.c
 app/tools/gimpellipseselecttool.c
 app/tools/gimperasertool.c
+app/tools/gimpfilteroptions.c
+app/tools/gimpfiltertool.c
+app/tools/gimpfiltertool-settings.c
 app/tools/gimpflipoptions.c
 app/tools/gimpfliptool.c
 app/tools/gimpforegroundselectoptions.c
@@ -399,9 +402,6 @@ app/tools/gimphandletransformtool.c
 app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
-app/tools/gimpimagemapoptions.c
-app/tools/gimpimagemaptool.c
-app/tools/gimpimagemaptool-settings.c
 app/tools/gimpinkoptions-gui.c
 app/tools/gimpinktool.c
 app/tools/gimpiscissorsoptions.c

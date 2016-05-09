@@ -19,7 +19,7 @@
 #define __GIMP_CURVES_TOOL_H__
 
 
-#include "gimpimagemaptool.h"
+#include "gimpfiltertool.h"
 
 
 #define GIMP_TYPE_CURVES_TOOL            (gimp_curves_tool_get_type ())
@@ -34,7 +34,7 @@ typedef struct _GimpCurvesToolClass GimpCurvesToolClass;
 
 struct _GimpCurvesTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpFilterTool  parent_instance;
 
   /* dialog */
   gdouble           picked_color[5];
@@ -51,7 +51,7 @@ struct _GimpCurvesTool
 
 struct _GimpCurvesToolClass
 {
-  GimpImageMapToolClass  parent_class;
+  GimpFilterToolClass  parent_class;
 };
 
 

@@ -46,26 +46,26 @@
 
 /*  local function prototypes  */
 
-static gboolean   gimp_colorize_tool_initialize    (GimpTool         *tool,
-                                                    GimpDisplay      *display,
-                                                    GError          **error);
+static gboolean   gimp_colorize_tool_initialize    (GimpTool        *tool,
+                                                    GimpDisplay     *display,
+                                                    GError         **error);
 
-static gchar    * gimp_colorize_tool_get_operation (GimpImageMapTool *im_tool,
-                                                    gchar           **title,
-                                                    gchar           **description,
-                                                    gchar           **undo_desc,
-                                                    gchar           **icon_name,
-                                                    gchar           **help_id);
-static void       gimp_colorize_tool_dialog        (GimpImageMapTool *im_tool);
-static void       gimp_colorize_tool_color_picked  (GimpImageMapTool *im_tool,
-                                                    gpointer          identifier,
-                                                    gdouble           x,
-                                                    gdouble           y,
-                                                    const Babl       *sample_format,
-                                                    const GimpRGB    *color);
+static gchar    * gimp_colorize_tool_get_operation (GimpFilterTool  *filter_tool,
+                                                    gchar          **title,
+                                                    gchar          **description,
+                                                    gchar          **undo_desc,
+                                                    gchar          **icon_name,
+                                                    gchar          **help_id);
+static void       gimp_colorize_tool_dialog        (GimpFilterTool  *filter_tool);
+static void       gimp_colorize_tool_color_picked  (GimpFilterTool  *filter_tool,
+                                                    gpointer         identifier,
+                                                    gdouble          x,
+                                                    gdouble          y,
+                                                    const Babl      *sample_format,
+                                                    const GimpRGB   *color);
 
 
-G_DEFINE_TYPE (GimpColorizeTool, gimp_colorize_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
+G_DEFINE_TYPE (GimpColorizeTool, gimp_colorize_tool, GIMP_TYPE_FILTER_TOOL)
 
 #define parent_class gimp_colorize_tool_parent_class
 
@@ -90,18 +90,18 @@ gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
 {
-  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
-  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  GimpToolClass         *tool_class        = GIMP_TOOL_CLASS (klass);
+  GimpFilterToolClass   *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  tool_class->initialize             = gimp_colorize_tool_initialize;
+  tool_class->initialize                 = gimp_colorize_tool_initialize;
 
-  im_tool_class->settings_name       = "colorize";
-  im_tool_class->import_dialog_title = _("Import Colorize Settings");
-  im_tool_class->export_dialog_title = _("Export Colorize Settings");
+  filter_tool_class->settings_name       = "colorize";
+  filter_tool_class->import_dialog_title = _("Import Colorize Settings");
+  filter_tool_class->export_dialog_title = _("Export Colorize Settings");
 
-  im_tool_class->get_operation       = gimp_colorize_tool_get_operation;
-  im_tool_class->dialog              = gimp_colorize_tool_dialog;
-  im_tool_class->color_picked        = gimp_colorize_tool_color_picked;
+  filter_tool_class->get_operation       = gimp_colorize_tool_get_operation;
+  filter_tool_class->dialog              = gimp_colorize_tool_dialog;
+  filter_tool_class->color_picked        = gimp_colorize_tool_color_picked;
 }
 
 static void
@@ -131,12 +131,12 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
 }
 
 static gchar *
-gimp_colorize_tool_get_operation (GimpImageMapTool  *im_tool,
-                                  gchar            **title,
-                                  gchar            **description,
-                                  gchar            **undo_desc,
-                                  gchar            **icon_name,
-                                  gchar            **help_id)
+gimp_colorize_tool_get_operation (GimpFilterTool  *filter_tool,
+                                  gchar          **title,
+                                  gchar          **description,
+                                  gchar          **undo_desc,
+                                  gchar          **icon_name,
+                                  gchar          **help_id)
 {
   *description = g_strdup (_("Colorize the Image"));
 
@@ -149,9 +149,9 @@ gimp_colorize_tool_get_operation (GimpImageMapTool  *im_tool,
 /***************************/
 
 static void
-gimp_colorize_tool_dialog (GimpImageMapTool *im_tool)
+gimp_colorize_tool_dialog (GimpFilterTool *filter_tool)
 {
-  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (im_tool);
+  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (filter_tool);
   GtkWidget        *main_vbox;
   GtkWidget        *frame;
   GtkWidget        *vbox;
@@ -159,7 +159,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *im_tool)
   GtkWidget        *hbox;
   GtkWidget        *button;
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
+  main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
   frame = gimp_frame_new (_("Select Color"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -170,21 +170,21 @@ gimp_colorize_tool_dialog (GimpImageMapTool *im_tool)
   gtk_widget_show (vbox);
 
   /*  Create the hue scale widget  */
-  scale = gimp_prop_spin_scale_new (im_tool->config, "hue",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "hue",
                                     _("_Hue"), 1.0 / 360.0, 15.0 / 360.0, 0);
   gimp_prop_widget_set_factor (scale, 360.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Create the saturation scale widget  */
-  scale = gimp_prop_spin_scale_new (im_tool->config, "saturation",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "saturation",
                                     _("_Saturation"), 0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Create the lightness scale widget  */
-  scale = gimp_prop_spin_scale_new (im_tool->config, "lightness",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "lightness",
                                     _("_Lightness"), 0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -195,7 +195,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *im_tool)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gimp_prop_color_button_new (im_tool->config, "color",
+  button = gimp_prop_color_button_new (filter_tool->config, "color",
                                        _("Colorize Color"),
                                        128, 24,
                                        GIMP_COLOR_AREA_FLAT);
@@ -205,21 +205,21 @@ gimp_colorize_tool_dialog (GimpImageMapTool *im_tool)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gimp_image_map_tool_add_color_picker (im_tool,
-                                                 "colorize",
-                                                 GIMP_STOCK_COLOR_PICKER_GRAY,
-                                                 _("Pick color from image"));
+  button = gimp_filter_tool_add_color_picker (filter_tool,
+                                              "colorize",
+                                              GIMP_STOCK_COLOR_PICKER_GRAY,
+                                              _("Pick color from image"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 }
 
 static void
-gimp_colorize_tool_color_picked (GimpImageMapTool *im_tool,
-                                 gpointer          identifier,
-                                 gdouble           x,
-                                 gdouble           y,
-                                 const Babl       *sample_format,
-                                 const GimpRGB    *color)
+gimp_colorize_tool_color_picked (GimpFilterTool *filter_tool,
+                                 gpointer        identifier,
+                                 gdouble         x,
+                                 gdouble         y,
+                                 const Babl     *sample_format,
+                                 const GimpRGB  *color)
 {
-  g_object_set (im_tool->config, "color", color, NULL);
+  g_object_set (filter_tool->config, "color", color, NULL);
 }

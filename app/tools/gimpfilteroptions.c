@@ -24,7 +24,7 @@
 
 #include "tools-types.h"
 
-#include "gimpimagemapoptions.h"
+#include "gimpfilteroptions.h"
 
 #include "gimp-intl.h"
 
@@ -41,31 +41,31 @@ enum
 };
 
 
-static void   gimp_image_map_options_finalize     (GObject      *object);
-static void   gimp_image_map_options_set_property (GObject      *object,
-                                                   guint         property_id,
-                                                   const GValue *value,
-                                                   GParamSpec   *pspec);
-static void   gimp_image_map_options_get_property (GObject      *object,
-                                                   guint         property_id,
-                                                   GValue       *value,
-                                                   GParamSpec   *pspec);
+static void   gimp_filter_options_finalize     (GObject      *object);
+static void   gimp_filter_options_set_property (GObject      *object,
+                                                guint         property_id,
+                                                const GValue *value,
+                                                GParamSpec   *pspec);
+static void   gimp_filter_options_get_property (GObject      *object,
+                                                guint         property_id,
+                                                GValue       *value,
+                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpImageMapOptions, gimp_image_map_options,
+G_DEFINE_TYPE (GimpFilterOptions, gimp_filter_options,
                GIMP_TYPE_TOOL_OPTIONS)
 
-#define parent_class gimp_image_map_options_parent_class
+#define parent_class gimp_filter_options_parent_class
 
 
 static void
-gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
+gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_image_map_options_finalize;
-  object_class->set_property = gimp_image_map_options_set_property;
-  object_class->get_property = gimp_image_map_options_get_property;
+  object_class->finalize     = gimp_filter_options_finalize;
+  object_class->set_property = gimp_filter_options_set_property;
+  object_class->get_property = gimp_filter_options_get_property;
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREVIEW,
                             "preview",
@@ -113,14 +113,14 @@ gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
 }
 
 static void
-gimp_image_map_options_init (GimpImageMapOptions *options)
+gimp_filter_options_init (GimpFilterOptions *options)
 {
 }
 
 static void
-gimp_image_map_options_finalize (GObject *object)
+gimp_filter_options_finalize (GObject *object)
 {
-  GimpImageMapOptions *options = GIMP_IMAGE_MAP_OPTIONS (object);
+  GimpFilterOptions *options = GIMP_FILTER_OPTIONS (object);
 
   if (options->settings)
     {
@@ -133,12 +133,12 @@ gimp_image_map_options_finalize (GObject *object)
 
 
 static void
-gimp_image_map_options_set_property (GObject      *object,
-                                     guint         property_id,
-                                     const GValue *value,
-                                     GParamSpec   *pspec)
+gimp_filter_options_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
 {
-  GimpImageMapOptions *options = GIMP_IMAGE_MAP_OPTIONS (object);
+  GimpFilterOptions *options = GIMP_FILTER_OPTIONS (object);
 
   switch (property_id)
     {
@@ -175,12 +175,12 @@ gimp_image_map_options_set_property (GObject      *object,
 }
 
 static void
-gimp_image_map_options_get_property (GObject    *object,
-                                     guint       property_id,
-                                     GValue     *value,
-                                     GParamSpec *pspec)
+gimp_filter_options_get_property (GObject    *object,
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
 {
-  GimpImageMapOptions *options = GIMP_IMAGE_MAP_OPTIONS (object);
+  GimpFilterOptions *options = GIMP_FILTER_OPTIONS (object);
 
   switch (property_id)
     {

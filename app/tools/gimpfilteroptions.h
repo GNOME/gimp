@@ -15,24 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_MAP_OPTIONS_H__
-#define __GIMP_IMAGE_MAP_OPTIONS_H__
+#ifndef __GIMP_FILTER_OPTIONS_H__
+#define __GIMP_FILTER_OPTIONS_H__
 
 
 #include "core/gimptooloptions.h"
 
 
-#define GIMP_TYPE_IMAGE_MAP_OPTIONS            (gimp_image_map_options_get_type ())
-#define GIMP_IMAGE_MAP_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_MAP_OPTIONS, GimpImageMapOptions))
-#define GIMP_IMAGE_MAP_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_MAP_OPTIONS, GimpImageMapOptionsClass))
-#define GIMP_IS_IMAGE_MAP_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_MAP_OPTIONS))
-#define GIMP_IS_IMAGE_MAP_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_MAP_OPTIONS))
-#define GIMP_IMAGE_MAP_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_MAP_OPTIONS, GimpImageMapOptionsClass))
+#define GIMP_TYPE_FILTER_OPTIONS            (gimp_filter_options_get_type ())
+#define GIMP_FILTER_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILTER_OPTIONS, GimpFilterOptions))
+#define GIMP_FILTER_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILTER_OPTIONS, GimpFilterOptionsClass))
+#define GIMP_IS_FILTER_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILTER_OPTIONS))
+#define GIMP_IS_FILTER_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILTER_OPTIONS))
+#define GIMP_FILTER_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILTER_OPTIONS, GimpFilterOptionsClass))
 
 
-typedef struct _GimpToolOptionsClass  GimpImageMapOptionsClass;
+typedef struct _GimpToolOptionsClass  GimpFilterOptionsClass;
 
-struct _GimpImageMapOptions
+struct _GimpFilterOptions
 {
   GimpToolOptions     parent_instance;
 
@@ -45,7 +45,7 @@ struct _GimpImageMapOptions
 };
 
 
-GType  gimp_image_map_options_get_type (void) G_GNUC_CONST;
+GType   gimp_filter_options_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_IMAGE_MAP_OPTIONS_H__ */
+#endif /* __GIMP_FILTER_OPTIONS_H__ */

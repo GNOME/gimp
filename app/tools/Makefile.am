@@ -78,6 +78,12 @@ libapptools_a_sources = \
 	gimpellipseselecttool.h		\
 	gimperasertool.c		\
 	gimperasertool.h		\
+	gimpfilteroptions.c		\
+	gimpfilteroptions.h		\
+	gimpfiltertool.c		\
+	gimpfiltertool.h		\
+	gimpfiltertool-settings.c	\
+	gimpfiltertool-settings.h	\
 	gimpflipoptions.c		\
 	gimpflipoptions.h		\
 	gimpfliptool.c			\
@@ -106,12 +112,6 @@ libapptools_a_sources = \
 	gimphistogramoptions.h		\
 	gimphuesaturationtool.c		\
 	gimphuesaturationtool.h		\
-	gimpimagemapoptions.c		\
-	gimpimagemapoptions.h		\
-	gimpimagemaptool.c		\
-	gimpimagemaptool.h		\
-	gimpimagemaptool-settings.c	\
-	gimpimagemaptool-settings.h	\
 	gimpinkoptions-gui.c		\
 	gimpinkoptions-gui.h		\
 	gimpinktool.c			\

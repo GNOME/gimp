@@ -49,10 +49,10 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_gegl_tool_dialog            (GimpImageMapTool *im_tool);
+static void   gimp_gegl_tool_dialog            (GimpFilterTool *filter_tool);
 
-static void   gimp_gegl_tool_operation_changed (GtkWidget        *widget,
-                                                GimpGeglTool     *tool);
+static void   gimp_gegl_tool_operation_changed (GtkWidget      *widget,
+                                                GimpGeglTool   *tool);
 
 
 G_DEFINE_TYPE (GimpGeglTool, gimp_gegl_tool, GIMP_TYPE_OPERATION_TOOL)
@@ -80,9 +80,9 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_gegl_tool_class_init (GimpGeglToolClass *klass)
 {
-  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  im_tool_class->dialog = gimp_gegl_tool_dialog;
+  filter_tool_class->dialog = gimp_gegl_tool_dialog;
 }
 
 static void
@@ -326,10 +326,10 @@ gimp_get_geglopclasses (void)
 /*****************/
 
 static void
-gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
+gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
 {
-  GimpGeglTool      *tool   = GIMP_GEGL_TOOL (image_map_tool);
-  GimpOperationTool *o_tool = GIMP_OPERATION_TOOL (image_map_tool);
+  GimpGeglTool      *tool   = GIMP_GEGL_TOOL (filter_tool);
+  GimpOperationTool *o_tool = GIMP_OPERATION_TOOL (filter_tool);
   GtkListStore      *store;
   GtkCellRenderer   *cell;
   GtkWidget         *main_vbox;
@@ -338,9 +338,9 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   GList             *opclasses;
   GList             *iter;
 
-  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->dialog (image_map_tool);
+  GIMP_FILTER_TOOL_CLASS (parent_class)->dialog (filter_tool);
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+  main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
   /*  The operation combo box  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
