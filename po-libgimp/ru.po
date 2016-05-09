@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-16 05:45+0300\n"
-"PO-Revision-Date: 2016-01-10 06:08+0300\n"
+"POT-Creation-Date: 2016-05-10 01:08+0300\n"
+"PO-Revision-Date: 2016-05-10 01:11+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -24,22 +24,22 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.7\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1167
+#: ../libgimp/gimp.c:1204
 msgid "success"
 msgstr "успешно"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1171
+#: ../libgimp/gimp.c:1208
 msgid "execution error"
 msgstr "ошибка выполнения"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1175
+#: ../libgimp/gimp.c:1212
 msgid "calling error"
 msgstr "ошибка вызова"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1179
+#: ../libgimp/gimp.c:1216
 msgid "cancelled"
 msgstr "отменено"
 
@@ -251,7 +251,7 @@ msgstr "Выбор градиента"
 
 #: ../libgimp/gimpimagemetadata.c:605
 msgid "Background"
-msgstr ""
+msgstr "Фон"
 
 #: ../libgimp/gimpimagemetadata.c:796
 #, c-format
@@ -272,11 +272,11 @@ msgstr ""
 
 #: ../libgimp/gimpimagemetadata.c:878
 msgid "This image contains Exif orientation metadata."
-msgstr ""
+msgstr "Это изображение содержит метаданные Exif об ориентации."
 
 #: ../libgimp/gimpimagemetadata.c:896
 msgid "Would you like to rotate the image?"
-msgstr ""
+msgstr "Повернуть изображение?"
 
 #: ../libgimp/gimpimagemetadata.c:908
 msgid "_Don't ask me again"
@@ -936,12 +936,12 @@ msgstr ""
 #: ../libgimpbase/gimpbaseenums.c:1118
 msgctxt "orientation-type"
 msgid "Horizontal"
-msgstr ""
+msgstr "По горизонтали"
 
 #: ../libgimpbase/gimpbaseenums.c:1119
 msgctxt "orientation-type"
 msgid "Vertical"
-msgstr ""
+msgstr "По вертикали"
 
 #: ../libgimpbase/gimpbaseenums.c:1120
 msgctxt "orientation-type"
@@ -1238,12 +1238,12 @@ msgstr ""
 msgid "Can save metadata only to local files"
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:656
+#: ../libgimpbase/gimpmetadata.c:658
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Не удалось разобрать данные Exif."
 
-#: ../libgimpbase/gimpmetadata.c:710
+#: ../libgimpbase/gimpmetadata.c:709
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Не удалось разобрать данные XMP."
@@ -1277,34 +1277,34 @@ msgstr ""
 msgid "Calling ShowItems failed: "
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:252
+#: ../libgimpcolor/gimpcolorprofile.c:253
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' не похож на цветовой ICC-профиль"
 
-#: ../libgimpcolor/gimpcolorprofile.c:298
+#: ../libgimpcolor/gimpcolorprofile.c:299
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Данные не похожи на ICC-профиль"
 
-#: ../libgimpcolor/gimpcolorprofile.c:355
+#: ../libgimpcolor/gimpcolorprofile.c:356
 msgid "Could not save color profile to memory"
 msgstr "Не удалось сохранить цветовой профиль в память"
 
-#: ../libgimpcolor/gimpcolorprofile.c:542
+#: ../libgimpcolor/gimpcolorprofile.c:574
 msgid "(unnamed profile)"
 msgstr "(безымянный профиль)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:584
+#: ../libgimpcolor/gimpcolorprofile.c:616
 #, c-format
 msgid "Model: %s"
 msgstr "Модель: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:593
+#: ../libgimpcolor/gimpcolorprofile.c:625
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Производитель: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:602
+#: ../libgimpcolor/gimpcolorprofile.c:634
 #, c-format
 msgid "Copyright: %s"
 msgstr "Авторские права: %s"
@@ -1394,21 +1394,74 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Цвет, используемый для пометки цветов вне цветового охвата."
 
-#: ../libgimpconfig/gimpcolorconfig.c:431
-#: ../libgimpconfig/gimpcolorconfig.c:565
+#: ../libgimpconfig/gimpcolorconfig.c:177
+#, fuzzy
+msgid "Mode of operation"
+msgstr "Режим обработки:"
+
+#: ../libgimpconfig/gimpcolorconfig.c:185
+msgid "Preferred RGB profile"
+msgstr "Предпочитаемый профиль RGB"
+
+#: ../libgimpconfig/gimpcolorconfig.c:192
+msgid "Preferred grayscale profile"
+msgstr "Предпочитаемый профиль градаций серого"
+
+#: ../libgimpconfig/gimpcolorconfig.c:199
+msgid "CMYK profile"
+msgstr "Профиль CMYK"
+
+#: ../libgimpconfig/gimpcolorconfig.c:206
+msgid "Monitor profile"
+msgstr "Профиль монитора"
+
+#: ../libgimpconfig/gimpcolorconfig.c:213
+msgid "Use the system monitor profile"
+msgstr "Использовать системный профиль монитора"
+
+#: ../libgimpconfig/gimpcolorconfig.c:220
+msgid "Print simulation profile"
+msgstr "Профиль имитации принтера"
+
+#: ../libgimpconfig/gimpcolorconfig.c:227
+msgid "Display rendering intent"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:235
+msgid "Use black point compensation for the display"
+msgstr "Использовать компенсацию чёрной точки при выводе на монитор"
+
+#: ../libgimpconfig/gimpcolorconfig.c:242
+msgid "Softproof rendering intent"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:250
+msgid "Use black point compensation for softproofing"
+msgstr "Использовать компенсацию чёрной точки при программной цветопробе"
+
+#: ../libgimpconfig/gimpcolorconfig.c:257
+msgid "Mark out of gamut colors"
+msgstr "Пометить цвета вне цветового охвата"
+
+#: ../libgimpconfig/gimpcolorconfig.c:264
+msgid "Out of gamut warning color"
+msgstr "Цвет маркировки тонов вне цветового охвата"
+
+#: ../libgimpconfig/gimpcolorconfig.c:464
+#: ../libgimpconfig/gimpcolorconfig.c:598
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Цветовой профиль '%s' не предназначен для пространства RGB"
 
-#: ../libgimpconfig/gimpcolorconfig.c:462
-#: ../libgimpconfig/gimpcolorconfig.c:606
+#: ../libgimpconfig/gimpcolorconfig.c:495
+#: ../libgimpconfig/gimpcolorconfig.c:639
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr ""
 "Цветовой профиль '%s' не предназначен для пространства в градациях серого."
 
-#: ../libgimpconfig/gimpcolorconfig.c:493
-#: ../libgimpconfig/gimpcolorconfig.c:647
+#: ../libgimpconfig/gimpcolorconfig.c:526
+#: ../libgimpconfig/gimpcolorconfig.c:680
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Цветовой профиль '%s' не предназначен для пространства CMYK."
@@ -1448,28 +1501,28 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Абсолютная колориметрическая"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:110
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "значение для маркера %s не является корректной строкой в UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:452
+#: ../libgimpconfig/gimpconfig-deserialize.c:464
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "ожидалось 'yes' или 'no' для булевого маркёра %s, получено '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:526
+#: ../libgimpconfig/gimpconfig-deserialize.c:538
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неверное значение '%s' для маркёра %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:541
+#: ../libgimpconfig/gimpconfig-deserialize.c:553
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неверное значение '%ld' для маркёра %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:610
+#: ../libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при синтаксическом разборе маркёра '%s': %s"
@@ -1588,20 +1641,20 @@ msgstr "_Чёрный"
 msgid "_White"
 msgstr "_Белый"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
 msgid "All files (*.*)"
 msgstr "Все файлы (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:109
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Цветовой ICC-профиль (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:216
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:312
 #: ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "Папка"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:221
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:317
 msgid "Not a regular file."
 msgstr ""
 
@@ -1675,80 +1728,80 @@ msgstr "Выбрать файл"
 msgid "Press F1 for more help"
 msgstr "Нажмите F1 для получения полной справки"
 
-#: ../libgimpwidgets/gimpicons.c:60
+#: ../libgimpwidgets/gimpicons.c:61
 msgid "Anchor"
 msgstr "Прикрепить"
 
-#: ../libgimpwidgets/gimpicons.c:61
+#: ../libgimpwidgets/gimpicons.c:62
 msgid "C_enter"
 msgstr "Центр"
 
-#: ../libgimpwidgets/gimpicons.c:62
+#: ../libgimpwidgets/gimpicons.c:63
 msgid "_Duplicate"
 msgstr "Сделать копию"
 
-#: ../libgimpwidgets/gimpicons.c:63
+#: ../libgimpwidgets/gimpicons.c:64
 msgid "_Edit"
 msgstr "Исправить"
 
-#: ../libgimpwidgets/gimpicons.c:64
+#: ../libgimpwidgets/gimpicons.c:65
 msgid "Linked"
 msgstr "Связанные"
 
-#: ../libgimpwidgets/gimpicons.c:65
+#: ../libgimpwidgets/gimpicons.c:66
 msgid "Paste as New"
 msgstr "Вставить как новое"
 
-#: ../libgimpwidgets/gimpicons.c:66
+#: ../libgimpwidgets/gimpicons.c:67
 msgid "Paste Into"
 msgstr "Вставить в"
 
-#: ../libgimpwidgets/gimpicons.c:67
+#: ../libgimpwidgets/gimpicons.c:68
 msgid "_Reset"
 msgstr "_Сбросить"
 
-#: ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpicons.c:69
 msgid "Visible"
 msgstr "Видимый"
 
-#: ../libgimpwidgets/gimpicons.c:107 ../libgimpwidgets/gimpicons.c:111
+#: ../libgimpwidgets/gimpicons.c:108 ../libgimpwidgets/gimpicons.c:112
 msgid "_Stroke"
 msgstr "_Обвести"
 
-#: ../libgimpwidgets/gimpicons.c:123
+#: ../libgimpwidgets/gimpicons.c:124
 msgid "L_etter Spacing"
 msgstr "М_ежбуквенное расстояние"
 
-#: ../libgimpwidgets/gimpicons.c:124
+#: ../libgimpwidgets/gimpicons.c:125
 msgid "L_ine Spacing"
 msgstr "_Интерлиньяж"
 
-#: ../libgimpwidgets/gimpicons.c:140
+#: ../libgimpwidgets/gimpicons.c:141
 msgid "Re_size"
 msgstr "_Изменить"
 
-#: ../libgimpwidgets/gimpicons.c:141 ../libgimpwidgets/gimpicons.c:276
+#: ../libgimpwidgets/gimpicons.c:142 ../libgimpwidgets/gimpicons.c:277
 msgid "_Scale"
 msgstr "Из_менить"
 
-#: ../libgimpwidgets/gimpicons.c:248
+#: ../libgimpwidgets/gimpicons.c:249
 msgid "Cr_op"
 msgstr "_Обрезать"
 
-#: ../libgimpwidgets/gimpicons.c:256
+#: ../libgimpwidgets/gimpicons.c:257
 msgid "_Select"
 msgstr "В_ыбрать"
 
-#: ../libgimpwidgets/gimpicons.c:259 ../libgimpwidgets/gimpicons.c:271
-#: ../libgimpwidgets/gimpicons.c:282
+#: ../libgimpwidgets/gimpicons.c:260 ../libgimpwidgets/gimpicons.c:272
+#: ../libgimpwidgets/gimpicons.c:283
 msgid "_Transform"
 msgstr "_Преобразовать"
 
-#: ../libgimpwidgets/gimpicons.c:275
+#: ../libgimpwidgets/gimpicons.c:276
 msgid "_Rotate"
 msgstr "_Повернуть"
 
-#: ../libgimpwidgets/gimpicons.c:278
+#: ../libgimpwidgets/gimpicons.c:279
 msgid "_Shear"
 msgstr "Н_аклонить"
 
@@ -1825,7 +1878,7 @@ msgstr "Размер клеток"
 msgid "Check Style"
 msgstr "Стиль клеток"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1971
+#: ../libgimpwidgets/gimppropwidgets.c:2110
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2040,11 +2093,11 @@ msgstr "Профиль: %s"
 msgid "Watercolor style color selector"
 msgstr "Тип выбора цвета - акварель"
 
-#: ../modules/color-selector-water.c:118
+#: ../modules/color-selector-water.c:113
 msgid "Watercolor"
 msgstr "Акварель"
 
-#: ../modules/color-selector-water.c:188
+#: ../modules/color-selector-water.c:183
 msgid "Pressure"
 msgstr "Давление"
 
@@ -2411,11 +2464,15 @@ msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 "Фильтр, моделирующий невосприятие цвета (алгоритм Бреттеля-Виенота-Моллона)"
 
-#: ../modules/display-filter-color-blind.c:256
+#: ../modules/display-filter-color-blind.c:252
+msgid "Deficiency"
+msgstr ""
+
+#: ../modules/display-filter-color-blind.c:258
 msgid "Color Deficient Vision"
 msgstr "Зрение со сниженным цветовосприятием"
 
-#: ../modules/display-filter-color-blind.c:417
+#: ../modules/display-filter-color-blind.c:419
 msgid "Color _deficiency type:"
 msgstr "_Тип сниженного цветовосприятия:"
 
@@ -2423,11 +2480,11 @@ msgstr "_Тип сниженного цветовосприятия:"
 msgid "Gamma color display filter"
 msgstr "Фильтр цветовой гаммы"
 
-#: ../modules/display-filter-gamma.c:127
+#: ../modules/display-filter-gamma.c:124 ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "Гамма"
 
-#: ../modules/display-filter-gamma.c:224
+#: ../modules/display-filter-gamma.c:226
 msgid "_Gamma:"
 msgstr "_Гамма:"
 
@@ -2435,11 +2492,12 @@ msgstr "_Гамма:"
 msgid "High Contrast color display filter"
 msgstr "Фильтр повышенного контраста"
 
-#: ../modules/display-filter-high-contrast.c:127
+#: ../modules/display-filter-high-contrast.c:124
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "Контраст"
 
-#: ../modules/display-filter-high-contrast.c:224
+#: ../modules/display-filter-high-contrast.c:226
 msgid "Contrast c_ycles:"
 msgstr "_Степень контраста:"
 
@@ -2483,23 +2541,35 @@ msgstr "Без"
 msgid "Color proof filter using ICC color profile"
 msgstr "Фильтр настройки цветопередачи, использующий ICC-профиль"
 
-#: ../modules/display-filter-proof.c:143
+#: ../modules/display-filter-proof.c:131
+msgid "Intent"
+msgstr "Цветопередача"
+
+#: ../modules/display-filter-proof.c:139
+msgid "Black point compensation"
+msgstr "Компенсация чёрной точки"
+
+#: ../modules/display-filter-proof.c:146
+msgid "Profile"
+msgstr "Профиль"
+
+#: ../modules/display-filter-proof.c:151
 msgid "Color Proof"
 msgstr "Настройка цветопередачи"
 
-#: ../modules/display-filter-proof.c:296
+#: ../modules/display-filter-proof.c:304
 msgid "Choose an ICC Color Profile"
 msgstr "Выберите ICC-профиль"
 
-#: ../modules/display-filter-proof.c:316
+#: ../modules/display-filter-proof.c:326
 msgid "_Profile:"
 msgstr "_Профиль:"
 
-#: ../modules/display-filter-proof.c:322
+#: ../modules/display-filter-proof.c:332
 msgid "_Intent:"
 msgstr "_Цветопередача:"
 
-#: ../modules/display-filter-proof.c:327
+#: ../modules/display-filter-proof.c:337
 msgid "_Black Point Compensation"
 msgstr "Компенсация _чёрной точки"
 
