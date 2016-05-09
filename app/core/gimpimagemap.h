@@ -19,7 +19,7 @@
 #define __GIMP_IMAGE_MAP_H__
 
 
-#include "gimpobject.h"
+#include "gimpfilter.h"
 
 
 #define GIMP_TYPE_IMAGE_MAP            (gimp_image_map_get_type ())
@@ -34,7 +34,7 @@ typedef struct _GimpImageMapClass  GimpImageMapClass;
 
 struct _GimpImageMapClass
 {
-  GimpObjectClass  parent_class;
+  GimpFilterClass  parent_class;
 
   void (* flush) (GimpImageMap *image_map);
 };

@@ -203,7 +203,6 @@ gimp_image_map_tool_init (GimpImageMapTool *im_tool)
                                      GIMP_DIRTY_IMAGE           |
                                      GIMP_DIRTY_IMAGE_STRUCTURE |
                                      GIMP_DIRTY_DRAWABLE        |
-                                     GIMP_DIRTY_SELECTION       |
                                      GIMP_DIRTY_ACTIVE_DRAWABLE);
 }
 
