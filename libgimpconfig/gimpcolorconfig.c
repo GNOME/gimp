@@ -261,7 +261,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
 
   GIMP_CONFIG_PROP_RGB (object_class, PROP_OUT_OF_GAMUT_COLOR,
                         "out-of-gamut-color",
-                        _("Out of gammut warning color"),
+                        _("Out of gamut warning color"),
                         OUT_OF_GAMUT_COLOR_BLURB,
                         FALSE, &color,
                         GIMP_PARAM_STATIC_STRINGS);
