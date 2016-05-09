@@ -701,22 +701,14 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
     {
       if (im_options->preview)
         {
-          gimp_tool_control_push_preserve (tool->control, TRUE);
-
           gimp_image_map_apply (im_tool->image_map, NULL);
-
-          gimp_tool_control_pop_preserve (tool->control);
 
           if (im_options->preview_split)
             gimp_image_map_tool_add_guide (im_tool);
         }
       else
         {
-          gimp_tool_control_push_preserve (tool->control, TRUE);
-
           gimp_image_map_abort (im_tool->image_map);
-
-          gimp_tool_control_pop_preserve (tool->control);
 
           if (im_options->preview_split)
             gimp_image_map_tool_remove_guide (im_tool);
@@ -878,13 +870,9 @@ gimp_image_map_tool_halt (GimpImageMapTool *im_tool)
 
   if (im_tool->image_map)
     {
-      gimp_tool_control_push_preserve (tool->control, TRUE);
-
       gimp_image_map_abort (im_tool->image_map);
       g_object_unref (im_tool->image_map);
       im_tool->image_map = NULL;
-
-      gimp_tool_control_pop_preserve (tool->control);
 
       gimp_image_map_tool_remove_guide (im_tool);
     }
@@ -904,10 +892,10 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
     {
       GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
 
-      gimp_tool_control_push_preserve (tool->control, TRUE);
-
       if (! options->preview)
         gimp_image_map_apply (im_tool->image_map, NULL);
+
+      gimp_tool_control_push_preserve (tool->control, TRUE);
 
       gimp_image_map_commit (im_tool->image_map, GIMP_PROGRESS (tool), TRUE);
       g_object_unref (im_tool->image_map);
@@ -998,11 +986,7 @@ gimp_image_map_tool_preview (GimpImageMapTool *im_tool)
 
   if (im_tool->image_map && options->preview)
     {
-      gimp_tool_control_push_preserve (tool->control, TRUE);
-
       gimp_image_map_apply (im_tool->image_map, NULL);
-
-      gimp_tool_control_pop_preserve (tool->control);
     }
 }
 
