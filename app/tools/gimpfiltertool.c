@@ -132,7 +132,6 @@ static void      gimp_filter_tool_dialog_unmap   (GtkWidget           *dialog,
                                                   GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_create_map     (GimpFilterTool      *filter_tool);
-static void      gimp_filter_tool_preview        (GimpFilterTool      *filter_tool);
 
 static void      gimp_filter_tool_flush          (GimpImageMap        *image_map,
                                                   GimpFilterTool      *filter_tool);
@@ -976,19 +975,8 @@ gimp_filter_tool_create_map (GimpFilterTool *filter_tool)
                     G_CALLBACK (gimp_filter_tool_flush),
                     filter_tool);
 
-  gimp_filter_tool_preview (filter_tool);
-}
-
-static void
-gimp_filter_tool_preview (GimpFilterTool *filter_tool)
-{
-  GimpTool          *tool    = GIMP_TOOL (filter_tool);
-  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (tool);
-
-  if (filter_tool->image_map && options->preview)
-    {
-      gimp_image_map_apply (filter_tool->image_map, NULL);
-    }
+  if (options->preview)
+    gimp_image_map_apply (filter_tool->image_map, NULL);
 }
 
 static void
@@ -1006,7 +994,10 @@ gimp_filter_tool_config_notify (GObject          *object,
                                 const GParamSpec *pspec,
                                 GimpFilterTool   *filter_tool)
 {
-  gimp_filter_tool_preview (filter_tool);
+  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+
+  if (filter_tool->image_map && options->preview)
+    gimp_image_map_apply (filter_tool->image_map, NULL);
 }
 
 static void
