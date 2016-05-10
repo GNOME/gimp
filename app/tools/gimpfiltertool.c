@@ -912,7 +912,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool)
           GimpGuiConfig *config = GIMP_GUI_CONFIG (tool->tool_info->gimp->config);
 
           gimp_settings_box_add_current (GIMP_SETTINGS_BOX (filter_tool->settings_box),
-                                         config->image_map_tool_max_recent);
+                                         config->filter_tool_max_recent);
         }
     }
 

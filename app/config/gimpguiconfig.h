@@ -42,7 +42,7 @@ struct _GimpGuiConfig
   GimpDisplayConfig    parent_instance;
 
   gboolean             move_tool_changes_active;
-  gint                 image_map_tool_max_recent;
+  gint                 filter_tool_max_recent;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;
   gboolean             save_session_info;
