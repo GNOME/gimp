@@ -34,10 +34,8 @@ typedef struct _GimpBrushTool                GimpBrushTool;
 typedef struct _GimpColorTool                GimpColorTool;
 typedef struct _GimpDrawTool                 GimpDrawTool;
 typedef struct _GimpFilterTool               GimpFilterTool;
-typedef struct _GimpForegroundSelectToolUndo GimpForegroundSelectToolUndo;
 typedef struct _GimpPaintTool                GimpPaintTool;
 typedef struct _GimpTransformTool            GimpTransformTool;
-typedef struct _GimpTransformToolUndo        GimpTransformToolUndo;
 
 typedef struct _GimpColorOptions             GimpColorOptions;
 typedef struct _GimpFilterOptions            GimpFilterOptions;
