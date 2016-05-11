@@ -278,17 +278,6 @@ gimp_filter_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
-gamma_hack (GtkToggleButton *button,
-            GimpFilterTool  *filter_tool)
-{
-  if (filter_tool->filter)
-    {
-      gimp_image_map_set_gamma_hack (filter_tool->filter,
-                                     gtk_toggle_button_get_active (button));
-    }
-}
-
 #define RESPONSE_RESET 1
 
 static gboolean
@@ -411,13 +400,10 @@ gimp_filter_tool_initialize (GimpTool     *tool,
         }
 
       /*  The gamma hack toggle  */
-      toggle = gtk_check_button_new_with_label ("Gamma hack (temp hack, please ignore)");
+      toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
+                                           "gamma-hack", NULL);
       gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
-
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gamma_hack),
-                        filter_tool);
 
       /*  The preview and split view toggles  */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
@@ -792,6 +778,12 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
     {
       gimp_image_map_set_region (filter_tool->filter,
                                  filter_options->region);
+    }
+  else if (! strcmp (pspec->name, "gamma-hack") &&
+           filter_tool->filter)
+    {
+      gimp_image_map_set_gamma_hack (filter_tool->filter,
+                                     filter_options->gamma_hack);
     }
 }
 

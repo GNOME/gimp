@@ -37,6 +37,7 @@ enum
   PROP_PREVIEW_ALIGNMENT,
   PROP_PREVIEW_POSITION,
   PROP_REGION,
+  PROP_GAMMA_HACK,
   PROP_SETTINGS
 };
 
@@ -105,6 +106,14 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_GAMMA_HACK,
+                                   g_param_spec_boolean ("gamma-hack",
+                                                         "Gamma hack (temp hack, please ignore)",
+                                                         NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_SETTINGS,
                                    g_param_spec_object ("settings",
                                                         NULL, NULL,
@@ -162,6 +171,10 @@ gimp_filter_options_set_property (GObject      *object,
       options->region = g_value_get_enum (value);
       break;
 
+    case PROP_GAMMA_HACK:
+      options->gamma_hack = g_value_get_boolean (value);
+      break;
+
     case PROP_SETTINGS:
       if (options->settings)
         g_object_unref (options->settings);
@@ -202,6 +215,10 @@ gimp_filter_options_get_property (GObject    *object,
 
     case PROP_REGION:
       g_value_set_enum (value, options->region);
+      break;
+
+    case PROP_GAMMA_HACK:
+      g_value_set_boolean (value, options->gamma_hack);
       break;
 
     case PROP_SETTINGS:
