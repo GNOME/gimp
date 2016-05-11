@@ -77,30 +77,22 @@ gimp_gegl_progress_callback (GObject      *object,
                              gdouble       value,
                              GimpProgress *progress)
 {
-  const gchar *text;
-
-  text = g_object_get_data (object, "gimp-progress-text");
-
-  if (text)
+  if (value == 0.0)
     {
-      if (value == 0.0)
-        {
-          if (gimp_progress_is_active (progress))
-            gimp_progress_set_text (progress, "%s", text);
-          else
-            gimp_progress_start (progress, FALSE, "%s", text);
+      const gchar *text = g_object_get_data (object, "gimp-progress-text");
 
-          return;
-        }
-      else if (value == 1.0)
-        {
-          gimp_progress_end (progress);
-
-          return;
-        }
+      if (gimp_progress_is_active (progress))
+        gimp_progress_set_text (progress, "%s", text);
+      else
+        gimp_progress_start (progress, FALSE, "%s", text);
     }
+  else
+    {
+      gimp_progress_set_value (progress, value);
 
-  gimp_progress_set_value (progress, value);
+      if (value == 1.0)
+        gimp_progress_end (progress);
+    }
 }
 
 void
@@ -110,15 +102,15 @@ gimp_gegl_progress_connect (GeglNode     *node,
 {
   g_return_if_fail (GEGL_IS_NODE (node));
   g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (text != NULL);
 
   g_signal_connect (node, "progress",
                     G_CALLBACK (gimp_gegl_progress_callback),
                     progress);
 
-  if (text)
-    g_object_set_data_full (G_OBJECT (node),
-                            "gimp-progress-text", g_strdup (text),
-                            (GDestroyNotify) g_free);
+  g_object_set_data_full (G_OBJECT (node),
+                          "gimp-progress-text", g_strdup (text),
+                          (GDestroyNotify) g_free);
 }
 
 gboolean
