@@ -975,11 +975,8 @@ gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
                                   &x, &y, &width, &height))
     return;
 
-  gimp_progress_start (GIMP_PROGRESS (blend_tool), FALSE,
-                       _("Calculating distance map"));
-
   blend_tool->dist_buffer =
-    gimp_drawable_blend_shapeburst_distmap (tool->drawable, TRUE,
+    gimp_drawable_blend_shapeburst_distmap (tool->drawable, FALSE,
                                             GEGL_RECTANGLE (x, y, width, height),
                                             GIMP_PROGRESS (blend_tool));
 
