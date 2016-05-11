@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-17 15:49+0200\n"
-"PO-Revision-Date: 2016-04-17 15:50+0200\n"
+"POT-Creation-Date: 2016-05-11 18:24+0200\n"
+"PO-Revision-Date: 2016-05-11 18:25+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1219,12 +1219,12 @@ msgstr "Można wczytywać metadane tylko z plików lokalnych"
 msgid "Can save metadata only to local files"
 msgstr "Można zapisywać metadane tylko do plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:656
+#: ../libgimpbase/gimpmetadata.c:658
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Przetworzenie danych Exif się nie powiodło."
 
-#: ../libgimpbase/gimpmetadata.c:710
+#: ../libgimpbase/gimpmetadata.c:709
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Przetworzenie danych XMP się nie powiodło."
@@ -1258,34 +1258,34 @@ msgstr "Połączenie z „org.freedesktop.FileManager1” się nie powiodło: "
 msgid "Calling ShowItems failed: "
 msgstr "Wywołanie „ShowItems” się nie powiodło: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:252
+#: ../libgimpcolor/gimpcolorprofile.c:253
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "„%s” nie jest profilem kolorów ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:298
+#: ../libgimpcolor/gimpcolorprofile.c:299
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Dane nie są profilem kolorów ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:355
+#: ../libgimpcolor/gimpcolorprofile.c:356
 msgid "Could not save color profile to memory"
 msgstr "Nie można zapisać profilu kolorów w pamięci"
 
-#: ../libgimpcolor/gimpcolorprofile.c:542
+#: ../libgimpcolor/gimpcolorprofile.c:574
 msgid "(unnamed profile)"
 msgstr "(profil bez nazwy)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:584
+#: ../libgimpcolor/gimpcolorprofile.c:616
 #, c-format
 msgid "Model: %s"
 msgstr "Model: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:593
+#: ../libgimpcolor/gimpcolorprofile.c:625
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Producent: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:602
+#: ../libgimpcolor/gimpcolorprofile.c:634
 #, c-format
 msgid "Copyright: %s"
 msgstr "Prawa autorskie: %s"
@@ -1443,7 +1443,7 @@ msgid "Mark out of gamut colors"
 msgstr "Wyróżnienie kolorów spoza skali"
 
 #: ../libgimpconfig/gimpcolorconfig.c:264
-msgid "Out of gammut warning color"
+msgid "Out of gamut warning color"
 msgstr "Kolor ostrzeżenia kolorów spoza skali"
 
 #: ../libgimpconfig/gimpcolorconfig.c:464
@@ -1499,29 +1499,29 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Bezwzględny kolorymetryczny"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:110
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "wartość tokenu %s nie jest prawidłowym tekstem UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:452
+#: ../libgimpconfig/gimpconfig-deserialize.c:464
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "oczekiwano wartości „yes” lub „no” tokenu logicznego %s, otrzymano „%s”"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:526
+#: ../libgimpconfig/gimpconfig-deserialize.c:538
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "nieprawidłowa wartość „%s” tokenu %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:541
+#: ../libgimpconfig/gimpconfig-deserialize.c:553
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "nieprawidłowa wartość „%ld” tokenu %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:610
+#: ../libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "podczas przetwarzaniu tokenu „%s”: %s"
@@ -1637,20 +1637,20 @@ msgstr "_Czarny"
 msgid "_White"
 msgstr "_Biały"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
 msgid "All files (*.*)"
 msgstr "Wszystkie pliki (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:109
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil kolorów ICC (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:216
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:312
 #: ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "Katalog"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:221
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:317
 msgid "Not a regular file."
 msgstr "Nie jest zwykłym plikiem."
 
@@ -2558,14 +2558,14 @@ msgstr "Korekcja kolorów"
 msgid "Choose an ICC Color Profile"
 msgstr "Wybór profilu kolorów ICC"
 
-#: ../modules/display-filter-proof.c:324
+#: ../modules/display-filter-proof.c:326
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:330
+#: ../modules/display-filter-proof.c:332
 msgid "_Intent:"
 msgstr "Pożądany _efekt:"
 
-#: ../modules/display-filter-proof.c:335
+#: ../modules/display-filter-proof.c:337
 msgid "_Black Point Compensation"
 msgstr "Kompensacja _czarnego punktu"
