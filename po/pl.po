@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-25 23:32+0100\n"
-"PO-Revision-Date: 2016-03-25 23:33+0100\n"
+"POT-Creation-Date: 2016-05-11 18:28+0200\n"
+"PO-Revision-Date: 2016-05-11 18:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -7447,7 +7447,7 @@ msgstr "Nie można utworzyć katalogu „%s”: %s"
 
 #: ../app/core/gimp.c:595
 msgid "Initialization"
-msgstr "Inicjalizacja"
+msgstr "Inicjacja"
 
 #. register all internal procedures
 #: ../app/core/gimp.c:696
@@ -10988,7 +10988,7 @@ msgstr "default:LTR"
 msgid "Documents"
 msgstr "Dokumenty"
 
-#: ../app/gui/splash.c:115
+#: ../app/gui/splash.c:112
 msgid "GIMP Startup"
 msgstr "Uruchamianie programu GIMP"
 
@@ -11619,7 +11619,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Anulowano"
 
-#: ../app/plug-in/gimpplugin.c:643
+#: ../app/plug-in/gimpplugin.c:648
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -14549,7 +14549,7 @@ msgstr "Usuwa „%s” z listy aktywnych filtrów"
 msgid "No filter selected"
 msgstr "Nie zaznaczono filtru"
 
-#: ../app/widgets/gimpcoloreditor.c:260
+#: ../app/widgets/gimpcoloreditor.c:264
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -15383,7 +15383,7 @@ msgstr "Kanał:"
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
 msgid "Use default comment"
-msgstr "Użycie domyślnego komentarza"
+msgstr "Wstaw domyślny komentarz"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid ""
