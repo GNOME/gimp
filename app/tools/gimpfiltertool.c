@@ -40,6 +40,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "gegl/gimp-gegl-config.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
@@ -966,6 +967,10 @@ gimp_filter_tool_create_map (GimpFilterTool *filter_tool)
   g_signal_connect (filter_tool->filter, "flush",
                     G_CALLBACK (gimp_filter_tool_flush),
                     filter_tool);
+
+  gimp_gegl_progress_connect (filter_tool->operation,
+                              GIMP_PROGRESS (filter_tool),
+                              filter_tool->undo_desc);
 
   if (options->preview)
     gimp_image_map_apply (filter_tool->filter, NULL);
