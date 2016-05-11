@@ -78,31 +78,33 @@ struct _GimpImageMap
 };
 
 
-static void       gimp_image_map_dispose         (GObject             *object);
-static void       gimp_image_map_finalize        (GObject             *object);
+static void       gimp_image_map_dispose          (GObject             *object);
+static void       gimp_image_map_finalize         (GObject             *object);
 
-static void       gimp_image_map_sync_region     (GimpImageMap        *image_map);
-static void       gimp_image_map_sync_preview    (GimpImageMap        *image_map,
-                                                  gboolean             old_enabled,
-                                                  GimpAlignmentType    old_alignment,
-                                                  gdouble              old_position);
-static void       gimp_image_map_sync_mode       (GimpImageMap        *image_map);
-static void       gimp_image_map_sync_affect     (GimpImageMap        *image_map);
-static void       gimp_image_map_sync_mask       (GimpImageMap        *image_map);
-static void       gimp_image_map_sync_gamma_hack (GimpImageMap        *image_map);
+static void       gimp_image_map_sync_region      (GimpImageMap        *image_map);
+static void       gimp_image_map_sync_preview     (GimpImageMap        *image_map,
+                                                   gboolean             old_enabled,
+                                                   GimpAlignmentType    old_alignment,
+                                                   gdouble              old_position);
+static void       gimp_image_map_sync_mode        (GimpImageMap        *image_map);
+static void       gimp_image_map_sync_affect      (GimpImageMap        *image_map);
+static void       gimp_image_map_sync_mask        (GimpImageMap        *image_map);
+static void       gimp_image_map_sync_gamma_hack  (GimpImageMap        *image_map);
 
-static gboolean   gimp_image_map_is_filtering    (GimpImageMap        *image_map);
-static gboolean   gimp_image_map_add_filter      (GimpImageMap        *image_map);
-static gboolean   gimp_image_map_remove_filter   (GimpImageMap        *image_map);
+static gboolean   gimp_image_map_is_filtering     (GimpImageMap        *image_map);
+static gboolean   gimp_image_map_add_filter       (GimpImageMap        *image_map);
+static gboolean   gimp_image_map_remove_filter    (GimpImageMap        *image_map);
 
-static void       gimp_image_map_update_drawable (GimpImageMap        *image_map,
-                                                  const GeglRectangle *area);
+static void       gimp_image_map_update_drawable  (GimpImageMap        *image_map,
+                                                   const GeglRectangle *area);
 
-static void       gimp_image_map_affect_changed  (GimpImage           *image,
-                                                  GimpChannelType      channel,
-                                                  GimpImageMap        *image_map);
-static void       gimp_image_map_mask_changed    (GimpImage           *image,
-                                                  GimpImageMap        *image_map);
+static void       gimp_image_map_affect_changed   (GimpImage           *image,
+                                                   GimpChannelType      channel,
+                                                   GimpImageMap        *image_map);
+static void       gimp_image_map_mask_changed     (GimpImage           *image,
+                                                   GimpImageMap        *image_map);
+static void       gimp_image_map_drawable_removed (GimpDrawable        *drawable,
+                                                   GimpImageMap        *image_map);
 
 
 G_DEFINE_TYPE (GimpImageMap, gimp_image_map, GIMP_TYPE_FILTER)
@@ -146,10 +148,7 @@ gimp_image_map_dispose (GObject *object)
   GimpImageMap *image_map = GIMP_IMAGE_MAP (object);
 
   if (image_map->drawable)
-    {
-      gimp_image_map_remove_filter (image_map);
-      gimp_viewable_preview_thaw (GIMP_VIEWABLE (image_map->drawable));
-    }
+    gimp_image_map_remove_filter (image_map);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -201,8 +200,6 @@ gimp_image_map_new (GimpDrawable *drawable,
 
   image_map->drawable  = g_object_ref (drawable);
   image_map->operation = g_object_ref (operation);
-
-  gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
   filter_node = gimp_filter_get_node (GIMP_FILTER (image_map));
 
@@ -341,50 +338,11 @@ void
 gimp_image_map_apply (GimpImageMap        *image_map,
                       const GeglRectangle *area)
 {
-  GeglRectangle update_area;
-
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
-
-  /*  Make sure the drawable is still valid  */
-  if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
-    {
-      gimp_image_map_remove_filter (image_map);
-      return;
-    }
-
-  /*  The application should occur only within selection bounds  */
-  if (! gimp_item_mask_intersect (GIMP_ITEM (image_map->drawable),
-                                  &image_map->filter_area.x,
-                                  &image_map->filter_area.y,
-                                  &image_map->filter_area.width,
-                                  &image_map->filter_area.height))
-    {
-      return;
-    }
-
-  /* Only update "area" because only that has changed */
-  if (! area)
-    {
-      update_area = image_map->filter_area;
-    }
-  else if (! gimp_rectangle_intersect (area->x,
-                                       area->y,
-                                       area->width,
-                                       area->height,
-                                       image_map->filter_area.x,
-                                       image_map->filter_area.y,
-                                       image_map->filter_area.width,
-                                       image_map->filter_area.height,
-                                       &update_area.x,
-                                       &update_area.y,
-                                       &update_area.width,
-                                       &update_area.height))
-    {
-      return;
-    }
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (image_map->drawable)));
 
   gimp_image_map_add_filter (image_map);
-  gimp_image_map_update_drawable (image_map, &update_area);
+  gimp_image_map_update_drawable (image_map, area);
 }
 
 gboolean
@@ -395,6 +353,8 @@ gimp_image_map_commit (GimpImageMap *image_map,
   gboolean success = TRUE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE_MAP (image_map), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (image_map->drawable)),
+                        FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
   if (gimp_image_map_is_filtering (image_map))
@@ -615,6 +575,12 @@ gimp_image_map_sync_mask (GimpImageMap *image_map)
       gimp_applicator_set_mask_offset (image_map->applicator,
                                        -offset_x, -offset_y);
     }
+
+  gimp_item_mask_intersect (GIMP_ITEM (image_map->drawable),
+                            &image_map->filter_area.x,
+                            &image_map->filter_area.y,
+                            &image_map->filter_area.width,
+                            &image_map->filter_area.height);
 }
 
 static void
@@ -672,6 +638,9 @@ gimp_image_map_add_filter (GimpImageMap *image_map)
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
+      gimp_viewable_preview_freeze (GIMP_VIEWABLE (image_map->drawable));
+
+      gimp_image_map_sync_mask (image_map);
       gimp_image_map_sync_region (image_map);
       gimp_image_map_sync_preview (image_map,
                                    image_map->preview_enabled,
@@ -679,7 +648,6 @@ gimp_image_map_add_filter (GimpImageMap *image_map)
                                    image_map->preview_position);
       gimp_image_map_sync_mode (image_map);
       gimp_image_map_sync_affect (image_map);
-      gimp_image_map_sync_mask (image_map);
       gimp_image_map_sync_gamma_hack (image_map);
 
       gimp_drawable_add_filter (image_map->drawable,
@@ -690,6 +658,9 @@ gimp_image_map_add_filter (GimpImageMap *image_map)
                         image_map);
       g_signal_connect (image, "mask-changed",
                         G_CALLBACK (gimp_image_map_mask_changed),
+                        image_map);
+      g_signal_connect (image_map->drawable, "removed",
+                        G_CALLBACK (gimp_image_map_drawable_removed),
                         image_map);
 
       return TRUE;
@@ -705,6 +676,9 @@ gimp_image_map_remove_filter (GimpImageMap *image_map)
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
+      g_signal_handlers_disconnect_by_func (image_map->drawable,
+                                            gimp_image_map_drawable_removed,
+                                            image_map);
       g_signal_handlers_disconnect_by_func (image,
                                             gimp_image_map_mask_changed,
                                             image_map);
@@ -714,6 +688,8 @@ gimp_image_map_remove_filter (GimpImageMap *image_map)
 
       gimp_drawable_remove_filter (image_map->drawable,
                                    GIMP_FILTER (image_map));
+
+      gimp_viewable_preview_thaw (GIMP_VIEWABLE (image_map->drawable));
 
       return TRUE;
     }
@@ -725,17 +701,39 @@ static void
 gimp_image_map_update_drawable (GimpImageMap        *image_map,
                                 const GeglRectangle *area)
 {
-  if (! area)
-    area = &image_map->filter_area;
+  GeglRectangle update_area;
 
-  if (area->width  > 0 &&
-      area->height > 0)
+  if (area)
+    {
+      if (! gimp_rectangle_intersect (area->x,
+                                      area->y,
+                                      area->width,
+                                      area->height,
+                                      image_map->filter_area.x,
+                                      image_map->filter_area.y,
+                                      image_map->filter_area.width,
+                                      image_map->filter_area.height,
+                                      &update_area.x,
+                                      &update_area.y,
+                                      &update_area.width,
+                                      &update_area.height))
+        {
+          return;
+        }
+    }
+  else
+    {
+      update_area = image_map->filter_area;
+    }
+
+  if (update_area.width  > 0 &&
+      update_area.height > 0)
     {
       gimp_drawable_update (image_map->drawable,
-                            area->x,
-                            area->y,
-                            area->width,
-                            area->height);
+                            update_area.x,
+                            update_area.y,
+                            update_area.width,
+                            update_area.height);
 
       g_signal_emit (image_map, image_map_signals[FLUSH], 0);
     }
@@ -757,14 +755,14 @@ gimp_image_map_mask_changed (GimpImage    *image,
   gimp_image_map_update_drawable (image_map, NULL);
 
   gimp_image_map_sync_mask (image_map);
-
-  gimp_item_mask_intersect (GIMP_ITEM (image_map->drawable),
-                            &image_map->filter_area.x,
-                            &image_map->filter_area.y,
-                            &image_map->filter_area.width,
-                            &image_map->filter_area.height);
-
   gimp_image_map_sync_region (image_map);
 
   gimp_image_map_update_drawable (image_map, NULL);
+}
+
+static void
+gimp_image_map_drawable_removed (GimpDrawable *drawable,
+                                 GimpImageMap *image_map)
+{
+  gimp_image_map_remove_filter (image_map);
 }
