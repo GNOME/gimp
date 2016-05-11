@@ -36,7 +36,7 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
-#include "gimpdrawable-filter.h"
+#include "gimpdrawable-filters.h"
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-private.h"
 #include "gimpdrawable-shadow.h"

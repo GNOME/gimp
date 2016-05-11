@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawable-filter.c
+ * gimpdrawable-filters.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 
 #include "gimp-utils.h"
 #include "gimpdrawable.h"
-#include "gimpdrawable-filter.h"
+#include "gimpdrawable-filters.h"
 #include "gimpdrawable-private.h"
 #include "gimpdrawableundo.h"
 #include "gimpfilter.h"

@@ -25,7 +25,7 @@
 #include "core-types.h"
 
 #include "gimpboundary.h"
-#include "gimpdrawable-filter.h"
+#include "gimpdrawable-filters.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"

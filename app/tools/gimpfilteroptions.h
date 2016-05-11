@@ -34,16 +34,16 @@ typedef struct _GimpToolOptionsClass  GimpFilterOptionsClass;
 
 struct _GimpFilterOptions
 {
-  GimpToolOptions     parent_instance;
+  GimpToolOptions    parent_instance;
 
-  gboolean            preview;
-  gboolean            preview_split;
-  GimpAlignmentType   preview_alignment;
-  gdouble             preview_position;
-  GimpImageMapRegion  region;
-  gboolean            gamma_hack;
+  gboolean           preview;
+  gboolean           preview_split;
+  GimpAlignmentType  preview_alignment;
+  gdouble            preview_position;
+  GimpFilterRegion   region;
+  gboolean           gamma_hack;
 
-  GFile              *settings;
+  GFile             *settings;
 };
 
 

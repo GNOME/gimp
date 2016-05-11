@@ -1167,19 +1167,19 @@ gimp_dynamics_output_type_get_type (void)
 }
 
 GType
-gimp_image_map_region_get_type (void)
+gimp_filter_region_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_IMAGE_MAP_REGION_SELECTION, "GIMP_IMAGE_MAP_REGION_SELECTION", "selection" },
-    { GIMP_IMAGE_MAP_REGION_DRAWABLE, "GIMP_IMAGE_MAP_REGION_DRAWABLE", "drawable" },
+    { GIMP_FILTER_REGION_SELECTION, "GIMP_FILTER_REGION_SELECTION", "selection" },
+    { GIMP_FILTER_REGION_DRAWABLE, "GIMP_FILTER_REGION_DRAWABLE", "drawable" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_IMAGE_MAP_REGION_SELECTION, NC_("image-map-region", "Use the selection as input"), NULL },
-    { GIMP_IMAGE_MAP_REGION_DRAWABLE, NC_("image-map-region", "Use the entire layer as input"), NULL },
+    { GIMP_FILTER_REGION_SELECTION, NC_("filter-region", "Use the selection as input"), NULL },
+    { GIMP_FILTER_REGION_DRAWABLE, NC_("filter-region", "Use the entire layer as input"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -1187,8 +1187,8 @@ gimp_image_map_region_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpImageMapRegion", values);
-      gimp_type_set_translation_context (type, "image-map-region");
+      type = g_enum_register_static ("GimpFilterRegion", values);
+      gimp_type_set_translation_context (type, "filter-region");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

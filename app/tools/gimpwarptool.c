@@ -32,8 +32,8 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 #include "core/gimplayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
@@ -108,14 +108,14 @@ static void       gimp_warp_tool_commit             (GimpWarpTool          *wt);
 static gboolean   gimp_warp_tool_stroke_timer       (GimpWarpTool          *wt);
 
 static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
-static void       gimp_warp_tool_create_image_map   (GimpWarpTool          *wt,
+static void       gimp_warp_tool_create_filter      (GimpWarpTool          *wt,
                                                      GimpDrawable          *drawable);
 static void       gimp_warp_tool_update_stroke      (GimpWarpTool          *wt,
                                                      GeglNode              *node);
 static void       gimp_warp_tool_stroke_changed     (GeglPath              *stroke,
                                                      const GeglRectangle   *roi,
                                                      GimpWarpTool          *wt);
-static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *image_map,
+static void       gimp_warp_tool_filter_flush       (GimpDrawableFilter    *filter,
                                                      GimpTool              *tool);
 static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt,
                                                      GeglNode              *op);
@@ -603,7 +603,7 @@ gimp_warp_tool_start (GimpWarpTool *wt,
 
   wt->coords_buffer = gegl_buffer_new (&bbox, format);
 
-  gimp_warp_tool_create_image_map (wt, drawable);
+  gimp_warp_tool_create_filter (wt, drawable);
 
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (wt)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (wt), display);
@@ -639,11 +639,11 @@ gimp_warp_tool_halt (GimpWarpTool *wt)
       wt->render_node = NULL;
     }
 
-  if (wt->image_map)
+  if (wt->filter)
     {
-      gimp_image_map_abort (wt->image_map);
-      g_object_unref (wt->image_map);
-      wt->image_map = NULL;
+      gimp_drawable_filter_abort (wt->filter);
+      g_object_unref (wt->filter);
+      wt->filter = NULL;
 
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
@@ -675,13 +675,13 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
 {
   GimpTool *tool = GIMP_TOOL (wt);
 
-  if (wt->image_map)
+  if (wt->filter)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool), FALSE);
-      g_object_unref (wt->image_map);
-      wt->image_map = NULL;
+      gimp_drawable_filter_commit (wt->filter, GIMP_PROGRESS (tool), FALSE);
+      g_object_unref (wt->filter);
+      wt->filter = NULL;
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -741,25 +741,25 @@ gimp_warp_tool_create_graph (GimpWarpTool *wt)
 }
 
 static void
-gimp_warp_tool_create_image_map (GimpWarpTool *wt,
-                                 GimpDrawable *drawable)
+gimp_warp_tool_create_filter (GimpWarpTool *wt,
+                              GimpDrawable *drawable)
 {
   if (! wt->graph)
     gimp_warp_tool_create_graph (wt);
 
-  wt->image_map = gimp_image_map_new (drawable,
-                                      _("Warp transform"),
-                                      wt->graph,
-                                      GIMP_STOCK_TOOL_WARP);
+  wt->filter = gimp_drawable_filter_new (drawable,
+                                         _("Warp transform"),
+                                         wt->graph,
+                                         GIMP_STOCK_TOOL_WARP);
 
-  gimp_image_map_set_region (wt->image_map, GIMP_IMAGE_MAP_REGION_DRAWABLE);
+  gimp_drawable_filter_set_region (wt->filter, GIMP_FILTER_REGION_DRAWABLE);
 
 #if 0
-  g_object_set (wt->image_map, "gegl-caching", TRUE, NULL);
+  g_object_set (wt->filter, "gegl-caching", TRUE, NULL);
 #endif
 
-  g_signal_connect (wt->image_map, "flush",
-                    G_CALLBACK (gimp_warp_tool_image_map_flush),
+  g_signal_connect (wt->filter, "flush",
+                    G_CALLBACK (gimp_warp_tool_filter_flush),
                     wt);
 }
 
@@ -797,7 +797,7 @@ gimp_warp_tool_update_stroke (GimpWarpTool *wt,
               bbox.width, bbox.height);
 #endif
 
-      gimp_image_map_apply (wt->image_map, &bbox);
+      gimp_drawable_filter_apply (wt->filter, &bbox);
     }
 }
 
@@ -820,12 +820,12 @@ gimp_warp_tool_stroke_changed (GeglPath            *path,
               update_region.width, update_region.height);
 #endif
 
-  gimp_image_map_apply (wt->image_map, &update_region);
+  gimp_drawable_filter_apply (wt->filter, &update_region);
 }
 
 static void
-gimp_warp_tool_image_map_flush (GimpImageMap *image_map,
-                                GimpTool     *tool)
+gimp_warp_tool_filter_flush (GimpDrawableFilter *filter,
+                             GimpTool           *tool)
 {
   GimpImage *image = gimp_display_get_image (tool->display);
 
@@ -890,11 +890,11 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
     }
 
   /*  get rid of the image map so we can use wt->graph  */
-  if (wt->image_map)
+  if (wt->filter)
     {
-      gimp_image_map_abort (wt->image_map);
-      g_object_unref (wt->image_map);
-      wt->image_map = NULL;
+      gimp_drawable_filter_abort (wt->filter);
+      g_object_unref (wt->filter);
+      wt->filter = NULL;
     }
 
   gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
@@ -966,8 +966,8 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
   gimp_progress_end (GIMP_PROGRESS (tool));
 
   /*  recreate the image map  */
-  gimp_warp_tool_create_image_map (wt, tool->drawable);
-  gimp_image_map_apply (wt->image_map, NULL);
+  gimp_warp_tool_create_filter (wt, tool->drawable);
+  gimp_drawable_filter_apply (wt->filter, NULL);
 
   widget = GTK_WIDGET (gimp_display_get_shell (tool->display));
   gimp_create_display (orig_image->gimp, image, GIMP_UNIT_PIXEL, 1.0,

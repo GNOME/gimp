@@ -143,8 +143,8 @@ libappcore_a_sources = \
 	gimpdrawable-equalize.h			\
 	gimpdrawable-fill.c			\
 	gimpdrawable-fill.h			\
-	gimpdrawable-filter.c			\
-	gimpdrawable-filter.h			\
+	gimpdrawable-filters.c			\
+	gimpdrawable-filters.h			\
 	gimpdrawable-foreground-extract.c	\
 	gimpdrawable-foreground-extract.h	\
 	gimpdrawable-histogram.c		\
@@ -164,6 +164,8 @@ libappcore_a_sources = \
 	gimpdrawable-stroke.h			\
 	gimpdrawable-transform.c		\
 	gimpdrawable-transform.h		\
+	gimpdrawablefilter.c			\
+	gimpdrawablefilter.h			\
 	gimpdrawablemodundo.c			\
 	gimpdrawablemodundo.h			\
 	gimpdrawablestack.c			\
@@ -273,8 +275,6 @@ libappcore_a_sources = \
 	gimpimageundo.h				\
 	gimpimagefile.c				\
 	gimpimagefile.h				\
-	gimpimagemap.c				\
-	gimpimagemap.h				\
 	gimpitem.c				\
 	gimpitem.h				\
 	gimpitem-exclusive.c			\

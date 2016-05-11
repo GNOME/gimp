@@ -36,10 +36,10 @@
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-blend.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
@@ -143,9 +143,9 @@ static void   gimp_blend_tool_set_gradient        (GimpBlendTool         *blend_
 
 static gboolean gimp_blend_tool_is_shapeburst     (GimpBlendTool         *blend_tool);
 
-static void   gimp_blend_tool_create_image_map    (GimpBlendTool         *blend_tool,
+static void   gimp_blend_tool_create_filter       (GimpBlendTool         *blend_tool,
                                                    GimpDrawable          *drawable);
-static void   gimp_blend_tool_image_map_flush     (GimpImageMap          *image_map,
+static void   gimp_blend_tool_filter_flush        (GimpDrawableFilter    *filter,
                                                    GimpTool              *tool);
 
 
@@ -359,7 +359,7 @@ gimp_blend_tool_button_press (GimpTool            *tool,
       blend_tool->grabbed_point != POINT_INIT_MODE)
     {
       gimp_blend_tool_update_graph (blend_tool);
-      gimp_image_map_apply (blend_tool->image_map, NULL);
+      gimp_drawable_filter_apply (blend_tool->filter, NULL);
     }
 
   gimp_tool_control_activate (tool->control);
@@ -462,7 +462,7 @@ gimp_blend_tool_motion (GimpTool         *tool,
   gimp_blend_tool_update_items (blend_tool);
 
   gimp_blend_tool_update_graph (blend_tool);
-  gimp_image_map_apply (blend_tool->image_map, NULL);
+  gimp_drawable_filter_apply (blend_tool->filter, NULL);
 }
 
 static void
@@ -547,7 +547,7 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
       gimp_blend_tool_update_items (blend_tool);
 
       gimp_blend_tool_update_graph (blend_tool);
-      gimp_image_map_apply (blend_tool->image_map, NULL);
+      gimp_drawable_filter_apply (blend_tool->filter, NULL);
     }
   else if (key == GDK_MOD1_MASK)
     {
@@ -600,8 +600,8 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
     {
       gimp_blend_tool_set_gradient (blend_tool, context->gradient);
 
-      if (blend_tool->image_map)
-        gimp_image_map_apply (blend_tool->image_map, NULL);
+      if (blend_tool->filter)
+        gimp_drawable_filter_apply (blend_tool->filter, NULL);
     }
   else if (blend_tool->render_node &&
            gegl_node_find_property (blend_tool->render_node, pspec->name))
@@ -623,15 +623,15 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
           gimp_blend_tool_update_graph (blend_tool);
         }
 
-      gimp_image_map_apply (blend_tool->image_map, NULL);
+      gimp_drawable_filter_apply (blend_tool->filter, NULL);
     }
-  else if (blend_tool->image_map &&
+  else if (blend_tool->filter &&
            (! strcmp (pspec->name, "opacity") ||
             ! strcmp (pspec->name, "paint-mode")))
     {
-      gimp_image_map_set_mode (blend_tool->image_map,
-                               gimp_context_get_opacity (context),
-                               gimp_context_get_paint_mode (context));
+      gimp_drawable_filter_set_mode (blend_tool->filter,
+                                     gimp_context_get_opacity (context),
+                                     gimp_context_get_paint_mode (context));
     }
 }
 
@@ -865,7 +865,7 @@ gimp_blend_tool_start (GimpBlendTool *blend_tool,
   tool->display  = display;
   tool->drawable = drawable;
 
-  gimp_blend_tool_create_image_map (blend_tool, drawable);
+  gimp_blend_tool_create_filter (blend_tool, drawable);
 
   /* Initially sync all of the properties */
   gimp_gegl_config_sync_node (GIMP_OBJECT (options), blend_tool->render_node);
@@ -904,11 +904,11 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
       blend_tool->dist_buffer = NULL;
     }
 
-  if (blend_tool->image_map)
+  if (blend_tool->filter)
     {
-      gimp_image_map_abort (blend_tool->image_map);
-      g_object_unref (blend_tool->image_map);
-      blend_tool->image_map = NULL;
+      gimp_drawable_filter_abort (blend_tool->filter);
+      g_object_unref (blend_tool->filter);
+      blend_tool->filter = NULL;
 
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
@@ -925,11 +925,12 @@ gimp_blend_tool_commit (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
-  if (blend_tool->image_map)
+  if (blend_tool->filter)
     {
-      gimp_image_map_commit (blend_tool->image_map, GIMP_PROGRESS (tool), FALSE);
-      g_object_unref (blend_tool->image_map);
-      blend_tool->image_map = NULL;
+      gimp_drawable_filter_commit (blend_tool->filter,
+                                   GIMP_PROGRESS (tool), FALSE);
+      g_object_unref (blend_tool->filter);
+      blend_tool->filter = NULL;
 
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
@@ -1093,7 +1094,7 @@ gimp_blend_tool_update_graph (GimpBlendTool *blend_tool)
 static void
 gimp_blend_tool_gradient_dirty (GimpBlendTool *blend_tool)
 {
-  if (! blend_tool->image_map)
+  if (! blend_tool->filter)
     return;
 
   /* Set a property on the node. Otherwise it will cache and refuse to update */
@@ -1101,8 +1102,8 @@ gimp_blend_tool_gradient_dirty (GimpBlendTool *blend_tool)
                  "gradient", blend_tool->gradient,
                  NULL);
 
-  /* Update the image_map */
-  gimp_image_map_apply (blend_tool->image_map, NULL);
+  /* Update the filter */
+  gimp_drawable_filter_apply (blend_tool->filter, NULL);
 }
 
 static void
@@ -1164,8 +1165,8 @@ gimp_blend_tool_is_shapeburst (GimpBlendTool *blend_tool)
 /* image map stuff */
 
 static void
-gimp_blend_tool_create_image_map (GimpBlendTool *blend_tool,
-                                  GimpDrawable  *drawable)
+gimp_blend_tool_create_filter (GimpBlendTool *blend_tool,
+                               GimpDrawable  *drawable)
 {
   GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
   GimpContext      *context = GIMP_CONTEXT (options);
@@ -1173,26 +1174,26 @@ gimp_blend_tool_create_image_map (GimpBlendTool *blend_tool,
   if (! blend_tool->graph)
     gimp_blend_tool_create_graph (blend_tool);
 
-  blend_tool->image_map = gimp_image_map_new (drawable,
-                                              C_("undo-type", "Blend"),
-                                              blend_tool->graph,
-                                              GIMP_STOCK_TOOL_BLEND);
+  blend_tool->filter = gimp_drawable_filter_new (drawable,
+                                                 C_("undo-type", "Blend"),
+                                                 blend_tool->graph,
+                                                 GIMP_STOCK_TOOL_BLEND);
 
-  gimp_image_map_set_region (blend_tool->image_map,
-                             GIMP_IMAGE_MAP_REGION_DRAWABLE);
+  gimp_drawable_filter_set_region (blend_tool->filter,
+                                   GIMP_FILTER_REGION_DRAWABLE);
 
-  g_signal_connect (blend_tool->image_map, "flush",
-                    G_CALLBACK (gimp_blend_tool_image_map_flush),
+  g_signal_connect (blend_tool->filter, "flush",
+                    G_CALLBACK (gimp_blend_tool_filter_flush),
                     blend_tool);
 
-  gimp_image_map_set_mode (blend_tool->image_map,
-                           gimp_context_get_opacity (context),
-                           gimp_context_get_paint_mode (context));
+  gimp_drawable_filter_set_mode (blend_tool->filter,
+                                 gimp_context_get_opacity (context),
+                                 gimp_context_get_paint_mode (context));
 }
 
 static void
-gimp_blend_tool_image_map_flush (GimpImageMap *image_map,
-                                 GimpTool     *tool)
+gimp_blend_tool_filter_flush (GimpDrawableFilter *filter,
+                              GimpTool           *tool)
 {
   GimpImage *image = gimp_display_get_image (tool->display);
 

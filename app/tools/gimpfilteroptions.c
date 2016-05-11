@@ -101,8 +101,8 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
   g_object_class_install_property (object_class, PROP_REGION,
                                    g_param_spec_enum ("region",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_IMAGE_MAP_REGION,
-                                                      GIMP_IMAGE_MAP_REGION_SELECTION,
+                                                      GIMP_TYPE_FILTER_REGION,
+                                                      GIMP_FILTER_REGION_SELECTION,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 

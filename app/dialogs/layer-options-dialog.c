@@ -26,7 +26,7 @@
 #include "dialogs-types.h"
 
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable-filter.h"
+#include "core/gimpdrawable-filters.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 

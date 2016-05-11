@@ -55,7 +55,7 @@ struct _GimpSeamlessCloneTool
   gint            tool_state;     /* The current state in the tool's
                                    * state machine */
 
-  GimpImageMap   *image_map;      /* The image map object which renders
+  GimpDrawableFilter *filter;     /* The filter object which renders
                                    * the live preview, and commits it
                                    * when at the end */
 

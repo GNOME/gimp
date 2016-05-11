@@ -186,11 +186,11 @@ typedef struct _GimpMandala         GimpMandala;
 /*  misc objects  */
 
 typedef struct _GimpBuffer          GimpBuffer;
+typedef struct _GimpDrawableFilter  GimpDrawableFilter;
 typedef struct _GimpEnvironTable    GimpEnvironTable;
 typedef struct _GimpGuide           GimpGuide;
 typedef struct _GimpHistogram       GimpHistogram;
 typedef struct _GimpIdTable         GimpIdTable;
-typedef struct _GimpImageMap        GimpImageMap;
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpInterpreterDB   GimpInterpreterDB;
 typedef struct _GimpParasiteList    GimpParasiteList;

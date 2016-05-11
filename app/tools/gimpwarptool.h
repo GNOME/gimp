@@ -39,22 +39,22 @@ typedef struct _GimpWarpToolClass GimpWarpToolClass;
 
 struct _GimpWarpTool
 {
-  GimpDrawTool    parent_instance;
+  GimpDrawTool        parent_instance;
 
-  gdouble         cursor_x;      /* Hold the cursor x position */
-  gdouble         cursor_y;      /* Hold the cursor y position */
+  gdouble             cursor_x;      /* Hold the cursor x position */
+  gdouble             cursor_y;      /* Hold the cursor y position */
 
-  GeglBuffer     *coords_buffer; /* Gegl buffer where coordinates are stored */
+  GeglBuffer         *coords_buffer; /* Buffer where coordinates are stored */
 
-  GeglNode       *graph;         /* Top level GeglNode */
-  GeglNode       *render_node;   /* Gegl node to render the transformation */
+  GeglNode           *graph;         /* Top level GeglNode */
+  GeglNode           *render_node;   /* Node to render the transformation */
 
-  GeglPath       *current_stroke;
-  guint           stroke_timer;
+  GeglPath           *current_stroke;
+  guint               stroke_timer;
 
-  GimpImageMap   *image_map;
+  GimpDrawableFilter *filter;
 
-  GList          *redo_stack;
+  GList              *redo_stack;
 };
 
 struct _GimpWarpToolClass

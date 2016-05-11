@@ -38,7 +38,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs-duplicate.h"
 #include "core/gimppickable.h"
@@ -396,7 +395,7 @@ gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
 
           switch (options->region)
             {
-            case GIMP_IMAGE_MAP_REGION_SELECTION:
+            case GIMP_FILTER_REGION_SELECTION:
               if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
                                             &off_x, &off_y, &width, &height))
                 {
@@ -405,7 +404,7 @@ gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
                 }
               break;
 
-            case GIMP_IMAGE_MAP_REGION_DRAWABLE:
+            case GIMP_FILTER_REGION_DRAWABLE:
               width  = gimp_item_get_width  (GIMP_ITEM (drawable));
               height = gimp_item_get_height (GIMP_ITEM (drawable));
               break;
