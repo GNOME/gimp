@@ -232,7 +232,7 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
   else
     shapeburst = gegl_node_new_child (NULL,
                                       "operation", "gegl:distance-transform",
-                                      "normalize", FALSE,
+                                      "normalize", TRUE,
                                       NULL);
 
   if (progress)
