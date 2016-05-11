@@ -108,25 +108,17 @@ gimp_gegl_progress_connect (GeglNode     *node,
                             GimpProgress *progress,
                             const gchar  *text)
 {
-  GObject *operation = NULL;
-
   g_return_if_fail (GEGL_IS_NODE (node));
   g_return_if_fail (GIMP_IS_PROGRESS (progress));
 
-  g_object_get (node, "gegl-operation", &operation, NULL);
-
-  g_return_if_fail (operation != NULL);
-
-  g_signal_connect (operation, "progress",
+  g_signal_connect (node, "progress",
                     G_CALLBACK (gimp_gegl_progress_callback),
                     progress);
 
   if (text)
-    g_object_set_data_full (operation,
+    g_object_set_data_full (G_OBJECT (node),
                             "gimp-progress-text", g_strdup (text),
                             (GDestroyNotify) g_free);
-
-  g_object_unref (operation);
 }
 
 gboolean
