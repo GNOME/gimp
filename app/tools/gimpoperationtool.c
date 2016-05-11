@@ -350,7 +350,7 @@ gimp_operation_tool_get_settings_ui (GimpFilterTool  *filter_tool,
                                                             file,
                                                             import_title,
                                                             export_title,
-                                                            "help-foo",
+                                                            file_dialog_help_id,
                                                             NULL, /* sic */
                                                             settings_box);
 
