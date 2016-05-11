@@ -133,7 +133,7 @@ static void      gimp_filter_tool_dialog_unmap   (GtkWidget           *dialog,
 static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_create_map     (GimpFilterTool      *filter_tool);
 
-static void      gimp_filter_tool_flush          (GimpImageMap        *image_map,
+static void      gimp_filter_tool_flush          (GimpImageMap        *filter,
                                                   GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_config_notify  (GObject             *object,
                                                   const GParamSpec    *pspec,
@@ -282,9 +282,9 @@ static void
 gamma_hack (GtkToggleButton *button,
             GimpFilterTool  *filter_tool)
 {
-  if (filter_tool->image_map)
+  if (filter_tool->filter)
     {
-      gimp_image_map_set_gamma_hack (filter_tool->image_map,
+      gimp_image_map_set_gamma_hack (filter_tool->filter,
                                      gtk_toggle_button_get_active (button));
     }
 }
@@ -696,25 +696,25 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
   GimpFilterOptions *filter_options = GIMP_FILTER_OPTIONS (options);
 
   if (! strcmp (pspec->name, "preview") &&
-      filter_tool->image_map)
+      filter_tool->filter)
     {
       if (filter_options->preview)
         {
-          gimp_image_map_apply (filter_tool->image_map, NULL);
+          gimp_image_map_apply (filter_tool->filter, NULL);
 
           if (filter_options->preview_split)
             gimp_filter_tool_add_guide (filter_tool);
         }
       else
         {
-          gimp_image_map_abort (filter_tool->image_map);
+          gimp_image_map_abort (filter_tool->filter);
 
           if (filter_options->preview_split)
             gimp_filter_tool_remove_guide (filter_tool);
         }
     }
   else if (! strcmp (pspec->name, "preview-split") &&
-           filter_tool->image_map)
+           filter_tool->filter)
     {
       if (filter_options->preview_split)
         {
@@ -755,7 +755,7 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
             }
         }
 
-      gimp_image_map_set_preview (filter_tool->image_map,
+      gimp_image_map_set_preview (filter_tool->filter,
                                   filter_options->preview_split,
                                   filter_options->preview_alignment,
                                   filter_options->preview_position);
@@ -766,9 +766,9 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
         gimp_filter_tool_remove_guide (filter_tool);
     }
   else if (! strcmp (pspec->name, "preview-alignment") &&
-           filter_tool->image_map)
+           filter_tool->filter)
     {
-      gimp_image_map_set_preview (filter_tool->image_map,
+      gimp_image_map_set_preview (filter_tool->filter,
                                   filter_options->preview_split,
                                   filter_options->preview_alignment,
                                   filter_options->preview_position);
@@ -777,9 +777,9 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
         gimp_filter_tool_move_guide (filter_tool);
     }
   else if (! strcmp (pspec->name, "preview-position") &&
-           filter_tool->image_map)
+           filter_tool->filter)
     {
-      gimp_image_map_set_preview (filter_tool->image_map,
+      gimp_image_map_set_preview (filter_tool->filter,
                                   filter_options->preview_split,
                                   filter_options->preview_alignment,
                                   filter_options->preview_position);
@@ -788,9 +788,9 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
         gimp_filter_tool_move_guide (filter_tool);
     }
   else if (! strcmp (pspec->name, "region") &&
-           filter_tool->image_map)
+           filter_tool->filter)
     {
-      gimp_image_map_set_region (filter_tool->image_map,
+      gimp_image_map_set_region (filter_tool->filter,
                                  filter_options->region);
     }
 }
@@ -868,11 +868,11 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
   if (filter_tool->gui)
     gimp_tool_gui_hide (filter_tool->gui);
 
-  if (filter_tool->image_map)
+  if (filter_tool->filter)
     {
-      gimp_image_map_abort (filter_tool->image_map);
-      g_object_unref (filter_tool->image_map);
-      filter_tool->image_map = NULL;
+      gimp_image_map_abort (filter_tool->filter);
+      g_object_unref (filter_tool->filter);
+      filter_tool->filter = NULL;
 
       gimp_filter_tool_remove_guide (filter_tool);
     }
@@ -888,18 +888,18 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool)
   if (filter_tool->gui)
     gimp_tool_gui_hide (filter_tool->gui);
 
-  if (filter_tool->image_map)
+  if (filter_tool->filter)
     {
       GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (tool);
 
       if (! options->preview)
-        gimp_image_map_apply (filter_tool->image_map, NULL);
+        gimp_image_map_apply (filter_tool->filter, NULL);
 
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (filter_tool->image_map, GIMP_PROGRESS (tool), TRUE);
-      g_object_unref (filter_tool->image_map);
-      filter_tool->image_map = NULL;
+      gimp_image_map_commit (filter_tool->filter, GIMP_PROGRESS (tool), TRUE);
+      g_object_unref (filter_tool->filter);
+      filter_tool->filter = NULL;
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -956,31 +956,31 @@ gimp_filter_tool_create_map (GimpFilterTool *filter_tool)
 {
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
 
-  if (filter_tool->image_map)
+  if (filter_tool->filter)
     {
-      gimp_image_map_abort (filter_tool->image_map);
-      g_object_unref (filter_tool->image_map);
+      gimp_image_map_abort (filter_tool->filter);
+      g_object_unref (filter_tool->filter);
     }
 
   g_assert (filter_tool->operation);
 
-  filter_tool->image_map = gimp_image_map_new (filter_tool->drawable,
-                                               filter_tool->undo_desc,
-                                               filter_tool->operation,
-                                               filter_tool->icon_name);
+  filter_tool->filter = gimp_image_map_new (filter_tool->drawable,
+                                            filter_tool->undo_desc,
+                                            filter_tool->operation,
+                                            filter_tool->icon_name);
 
-  gimp_image_map_set_region (filter_tool->image_map, options->region);
+  gimp_image_map_set_region (filter_tool->filter, options->region);
 
-  g_signal_connect (filter_tool->image_map, "flush",
+  g_signal_connect (filter_tool->filter, "flush",
                     G_CALLBACK (gimp_filter_tool_flush),
                     filter_tool);
 
   if (options->preview)
-    gimp_image_map_apply (filter_tool->image_map, NULL);
+    gimp_image_map_apply (filter_tool->filter, NULL);
 }
 
 static void
-gimp_filter_tool_flush (GimpImageMap   *image_map,
+gimp_filter_tool_flush (GimpImageMap   *filter,
                         GimpFilterTool *filter_tool)
 {
   GimpTool  *tool  = GIMP_TOOL (filter_tool);
@@ -996,8 +996,8 @@ gimp_filter_tool_config_notify (GObject          *object,
 {
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
 
-  if (filter_tool->image_map && options->preview)
-    gimp_image_map_apply (filter_tool->image_map, NULL);
+  if (filter_tool->filter && options->preview)
+    gimp_image_map_apply (filter_tool->filter, NULL);
 }
 
 static void
@@ -1189,11 +1189,11 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
 
   tool_info = GIMP_TOOL (filter_tool)->tool_info;
 
-  if (filter_tool->image_map)
+  if (filter_tool->filter)
     {
-      gimp_image_map_abort (filter_tool->image_map);
-      g_object_unref (filter_tool->image_map);
-      filter_tool->image_map = NULL;
+      gimp_image_map_abort (filter_tool->filter);
+      g_object_unref (filter_tool->filter);
+      filter_tool->filter = NULL;
     }
 
   if (filter_tool->operation)
@@ -1371,7 +1371,7 @@ gimp_filter_tool_on_guide (GimpFilterTool   *filter_tool,
 
   shell = gimp_display_get_shell (display);
 
-  if (filter_tool->image_map     &&
+  if (filter_tool->filter        &&
       filter_tool->percent_guide &&
       gimp_display_shell_get_show_guides (shell))
     {

@@ -50,7 +50,7 @@ struct _GimpFilterTool
   gchar                 *icon_name;
   gchar                 *help_id;
 
-  GimpImageMap          *image_map;
+  GimpImageMap          *filter;
 
   GimpGuide             *percent_guide;
 
