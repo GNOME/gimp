@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-05-10 18:27+0000\n"
-"PO-Revision-Date: 2016-05-10 21:45-0500\n"
+"POT-Creation-Date: 2016-05-11 23:54+0000\n"
+"PO-Revision-Date: 2016-05-11 22:45-0500\n"
 "Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -3270,8 +3270,6 @@ msgid "Vi_deo Degradation..."
 msgstr "_Degradación del vídeo…"
 
 #: ../app/actions/filters-actions.c:516
-#| msgctxt "palettes-action"
-#| msgid "_Edit Palette..."
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Viñeta…"
@@ -3937,8 +3935,6 @@ msgid "Remove the image's color profile"
 msgstr "Eliminar el perfil de color de la imagen"
 
 #: ../app/actions/image-actions.c:104
-#| msgctxt "error-console-action"
-#| msgid "_Save Error Log to File..."
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
 msgstr "_Guardar el perfil de color en un archivo…"
@@ -4066,7 +4062,6 @@ msgid "Display information about this image"
 msgstr "Muestra información sobre esta imagen"
 
 #: ../app/actions/image-actions.c:179
-#| msgid "Color Management"
 msgctxt "image-action"
 msgid "_Enable Color Management"
 msgstr "_Activar gestión del color"
@@ -4240,15 +4235,11 @@ msgid "Rotate the image 90 degrees to the left"
 msgstr "Rota la imagen 90 grados a la izquierda"
 
 #: ../app/actions/image-actions.c:427
-#| msgctxt "image-convert-action"
-#| msgid "_RGB"
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB…"
 
 #: ../app/actions/image-actions.c:429
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Escala de gr_ises…"
@@ -4260,7 +4251,6 @@ msgid "Saving color profile failed: %s"
 msgstr "Falló al escribir el archivo de curvas: "
 
 #: ../app/actions/image-commands.c:525
-#| msgid "Color Profile"
 msgid "Save Color Profile"
 msgstr "Guardar perfil de color"
 
@@ -5557,8 +5547,6 @@ msgid "Border selection by"
 msgstr "Selección de borde en"
 
 #: ../app/actions/select-commands.c:287
-#| msgctxt "undo-type"
-#| msgid "Reorder item"
 msgid "Border style"
 msgstr "Estilo de borde"
 
@@ -8612,12 +8600,18 @@ msgid "Jitter"
 msgstr "Vibración"
 
 #: ../app/core/core-enums.c:1181
-msgctxt "image-map-region"
+#, fuzzy
+#| msgctxt "image-map-region"
+#| msgid "Use the selection as input"
+msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Usar la selección como entrada"
 
 #: ../app/core/core-enums.c:1182
-msgctxt "image-map-region"
+#, fuzzy
+#| msgctxt "image-map-region"
+#| msgid "Use the entire layer as input"
+msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Usar toda la capa como entrada"
 
@@ -9272,12 +9266,12 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Redimensionar"
 
-#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1180
+#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1178
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Mezclar"
 
-#: ../app/core/gimpdrawable-blend.c:180 ../app/tools/gimpblendtool.c:979
+#: ../app/core/gimpdrawable-blend.c:240
 msgid "Calculating distance map"
 msgstr "Calculando mapa de distancias"
 
@@ -10557,7 +10551,6 @@ msgid "Color managed"
 msgstr "Gestión del color"
 
 #: ../app/core/gimptemplate.c:200
-#| msgid "Color Profile"
 msgid "Color profile"
 msgstr "Perfil de color"
 
@@ -10734,24 +10727,18 @@ msgid "Convert the image to a color profile"
 msgstr "Convertir la imagen a un perfil de color"
 
 #: ../app/dialogs/color-profile-dialog.c:176
-#| msgid "Precision Conversion"
 msgid "RGB Conversion"
 msgstr "Conversión RGB"
 
 #: ../app/dialogs/color-profile-dialog.c:179
-#| msgctxt "undo-type"
-#| msgid "Convert Image to RGB"
 msgid "Convert Image to RGB"
 msgstr "Convertir la imagen a RGB"
 
 #: ../app/dialogs/color-profile-dialog.c:198
-#| msgid "Precision Conversion"
 msgid "Grayscale Conversion"
 msgstr "Conversión escala de grises"
 
 #: ../app/dialogs/color-profile-dialog.c:201
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Grayscale"
 msgid "Convert Image to Grayscale"
 msgstr "Convertir la imagen a escala de grises"
 
@@ -10780,7 +10767,6 @@ msgid "_Black Point Compensation"
 msgstr "_Compensación de punto negro"
 
 #: ../app/dialogs/color-profile-dialog.c:334
-#| msgid "Select destination profile"
 msgid "Select Destination Profile"
 msgstr "Seleccionar perfil destino"
 
@@ -10817,38 +10803,27 @@ msgstr "Convertir a «%s»"
 
 #: ../app/dialogs/color-profile-dialog.c:517
 #, c-format
-#| msgid "Converting to '%s'"
 msgid "Converting to RGB (%s)"
 msgstr "Convertir a RGB (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:539
 #, c-format
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to grayscale"
 msgid "Converting to grayscale (%s)"
 msgstr "Convertir a escala de grises (%s)"
 
 #: ../app/dialogs/color-profile-import-dialog.c:80
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to RGB workspace"
 msgid "Convert to Grayscale Working Space?"
 msgstr "¿Convertir al espacio de trabajo escala de grises?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:81
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to the grayscale working space?"
 msgstr "¿Convertir la imagen al espacio de trabajo escala de grises?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:85
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to RGB workspace"
 msgid "Convert to RGB Working Space?"
 msgstr "¿Convertir al espacio de trabajo RGB?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:86
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to the RGB working space?"
 msgstr "¿Convertir la imagen al espacio de trabajo RGB?"
 
@@ -12976,7 +12951,7 @@ msgstr "Descartar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
 #: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
-#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpfiltertool.c:311
+#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpfiltertool.c:301
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "No se pueden modificar píxeles de los grupos de capas."
@@ -12984,7 +12959,7 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 #: ../app/display/gimpdisplayshell-dnd.c:370
 #: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpfiltertool.c:318 ../app/tools/gimppainttool.c:278
+#: ../app/tools/gimpfiltertool.c:308 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1842
 #: ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
@@ -13385,7 +13360,7 @@ msgstr ""
 "Calcular un conjunto de búfer de coeficientes para la herramienta «jaula» de "
 "GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:124
+#: ../app/operations/gimpoperationcagetransform.c:105
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
@@ -13393,11 +13368,11 @@ msgstr ""
 "Convertir un conjunto de búfer de coeficientes a un búfer de coordenadas "
 "para la herramienta «jaula» de GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:146
+#: ../app/operations/gimpoperationcagetransform.c:127
 msgid "Fill with plain color"
 msgstr "Rellenar con color sencillo"
 
-#: ../app/operations/gimpoperationcagetransform.c:147
+#: ../app/operations/gimpoperationcagetransform.c:128
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Rellenar la posición original de la jaula con un color sencillo"
 
@@ -14545,25 +14520,22 @@ msgid "Red Eye Removal"
 msgstr "Eliminar ojos rojos"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3157
-#, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Hurl"
-msgstr "Aleatorio"
+msgstr "Desordenar aleatoriamente"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3210
-#, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Pick"
-msgstr "Aleatorio"
+msgstr "Escoger aleatoriamente"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3263
-#, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Slur"
-msgstr "Aleatorio"
+msgstr "Derretir aleatoriamente"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3338
 msgctxt "undo-type"
@@ -15111,7 +15083,7 @@ msgid "Blen_d"
 msgstr "_Mezcla [Blend]"
 
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
-#: ../app/tools/gimpfiltertool.c:325
+#: ../app/tools/gimpfiltertool.c:315
 #: ../app/tools/gimpforegroundselecttool.c:290
 #: ../app/tools/gimppainttool.c:285 ../app/tools/gimptransformtool.c:1850
 #: ../app/tools/gimpwarptool.c:586
@@ -15122,17 +15094,17 @@ msgstr "La capa activa no está visible."
 msgid "No gradient available for use with this tool."
 msgstr "No hay degradados disponibles para usar con esta herramienta."
 
-#: ../app/tools/gimpblendtool.c:951 ../app/tools/gimppainttool.c:655
+#: ../app/tools/gimpblendtool.c:952 ../app/tools/gimppainttool.c:655
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s para ángulos restringidos"
 
-#: ../app/tools/gimpblendtool.c:952
+#: ../app/tools/gimpblendtool.c:953
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s para mover toda la línea"
 
-#: ../app/tools/gimpblendtool.c:956
+#: ../app/tools/gimpblendtool.c:957
 msgid "Blend: "
 msgstr "Mezcla: "
 
@@ -15791,40 +15763,37 @@ msgstr "%s para recoger un color de fondo"
 msgid "Anti erase  (%s)"
 msgstr "Antiborrado  (%s)"
 
-#: ../app/tools/gimpfilteroptions.c:72
+#: ../app/tools/gimpfilteroptions.c:73
 msgid "_Preview"
 msgstr "Vista _previa"
 
-#: ../app/tools/gimpfilteroptions.c:79
+#: ../app/tools/gimpfilteroptions.c:80
 #, fuzzy
 #| msgid "Split"
 msgid "_Split view"
 msgstr "Partir"
 
-#: ../app/tools/gimpfiltertool.c:646
-#, fuzzy
+#: ../app/tools/gimpfiltertool.c:633
 #| msgid "Click to pick this guide as first item"
 msgid "Click to switch the original and filtered sides"
-msgstr "Pulse para elegir esta guía como primer elemento"
+msgstr "Pulse para cambiar los lados originales y filtrados"
 
-#: ../app/tools/gimpfiltertool.c:650
-#, fuzzy
+#: ../app/tools/gimpfiltertool.c:637
 #| msgid "Click to place vertical and horizontal guides"
 msgid "Click to switch between vertical and horizontal"
-msgstr "Pulse para colocar guías verticales y horizontales"
+msgstr "Pulse para cambiar entre vertical y horizontal"
 
-#: ../app/tools/gimpfiltertool.c:654
-#, fuzzy
+#: ../app/tools/gimpfiltertool.c:641
 #| msgid "Click to dodge the line"
 msgid "Click to move the split guide"
-msgstr "Pulse para marcar a fuego la línea"
+msgstr "Pulse para mover la guía de división"
 
-#: ../app/tools/gimpfiltertool.c:656
+#: ../app/tools/gimpfiltertool.c:643
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:657
+#: ../app/tools/gimpfiltertool.c:644
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr ""
@@ -15928,10 +15897,9 @@ msgid "Matting engine to use"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:117
-#, fuzzy
 #| msgid "Number of _processors to use:"
 msgid "Number of downsampled levels to use"
-msgstr "Número de _procesadores que usar:"
+msgstr "Número de niveles de submuestreo que usar"
 
 #: ../app/tools/gimpforegroundselectoptions.c:123
 msgid "Active levels"
@@ -15950,10 +15918,9 @@ msgid "Number of iterations to perform"
 msgstr "Número de iteraciones para representar"
 
 #: ../app/tools/gimpforegroundselectoptions.c:300
-#, fuzzy
 #| msgid "Reset size to brush's native size"
 msgid "Reset stroke width native size"
-msgstr "Reiniciar tamaño al tamaño nativo del pincel"
+msgstr "Reiniciar tamaño nativo de la anchura del trazo"
 
 #: ../app/tools/gimpforegroundselecttool.c:187
 msgid "Foreground Select"
@@ -16065,7 +16032,7 @@ msgid "Fuzzy Select"
 msgstr "Selección difusa"
 
 #: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:466
-#: ../app/tools/gimpgegltool.c:467 ../app/tools/gimpoperationtool.c:133
+#: ../app/tools/gimpgegltool.c:467 ../app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
 msgstr "Operación de GEGL"
 
@@ -16074,7 +16041,7 @@ msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "Herramienta GEGL: utilice una operación GEGL arbitraria"
 
 # Location lo traducimos por lugar (Serrador)
-#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:135
+#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:134
 msgid "_GEGL Operation..."
 msgstr "Operación _GEGL…"
 
@@ -16108,38 +16075,32 @@ msgid "Add handles and transform the image"
 msgstr "Añadir tiradores y transformar la imagen"
 
 #: ../app/tools/gimphandletransformoptions.c:172
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Transform Channel"
 msgid "Move transform handles"
-msgstr "Transformar el canal"
+msgstr "Mover los tiradores de transformación"
 
 #: ../app/tools/gimphandletransformoptions.c:177
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Remove Parasite from Image"
 msgid "Remove transform handles"
-msgstr "Eliminar el parásito de la imagen"
+msgstr "Eliminar los tiradores de transformación"
 
 #: ../app/tools/gimphandletransformtool.c:164
-#| msgid "Cage Transform"
 msgid "Handle Transform"
 msgstr "Transformar tirador"
 
 #: ../app/tools/gimphandletransformtool.c:165
-#| msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
 "Herramienta de transformación del tirador: deformar la capa, selección o "
 "ruta con tiradores"
 
 #: ../app/tools/gimphandletransformtool.c:167
-#| msgid "_Cage Transform"
 msgid "_Handle Transform"
 msgstr "_Transformar tirador"
 
 #: ../app/tools/gimphandletransformtool.c:199
-#| msgid "Transformation"
 msgid "Handle transformation"
 msgstr "Transformación del tirador"
 
@@ -16149,7 +16110,6 @@ msgid "Transformation Matrix"
 msgstr "Matriz de transformación"
 
 #: ../app/tools/gimphandletransformtool.c:678
-#| msgid "Cage transform"
 msgctxt "undo-type"
 msgid "Handle transform"
 msgstr "Transformar tirador"
@@ -16393,10 +16353,9 @@ msgid "All Channels"
 msgstr "Todos los canales"
 
 #: ../app/tools/gimplevelstool.c:591
-#, fuzzy
 #| msgid "Input Levels"
 msgid "_Auto Input Levels"
-msgstr "Niveles de entrada"
+msgstr "Niveles de _entrada automáticos"
 
 #: ../app/tools/gimplevelstool.c:594
 msgid "Adjust levels for all channels automatically"
@@ -16633,28 +16592,28 @@ msgstr ""
 msgid "_N-Point Deformation"
 msgstr "Deformación _N-Point"
 
-#: ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpoperationtool.c:133
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Herramienta de operación: utilizar una operación GEGL arbitraria"
 
-#: ../app/tools/gimpoperationtool.c:344
+#: ../app/tools/gimpoperationtool.c:343
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importar los ajustes «%s»"
 
-#: ../app/tools/gimpoperationtool.c:345
+#: ../app/tools/gimpoperationtool.c:344
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportar los ajustes «%s»"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:696
+#: ../app/tools/gimpoperationtool.c:695
 #, c-format
 msgid "Aux Input"
 msgstr "Entrada auxiliar"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:702
+#: ../app/tools/gimpoperationtool.c:701
 #, c-format
 msgid "Aux%d Input"
 msgstr "Entrada auxiliar%d"
@@ -16920,10 +16879,9 @@ msgid "Draw mask"
 msgstr "Máscara de dibujo"
 
 #: ../app/tools/gimpregionselectoptions.c:128
-#, fuzzy
 #| msgid "Click-Drag to move the selection mask"
 msgid "Draw the selected region's mask"
-msgstr "Pulse y arrastre para mover la máscara de selección"
+msgstr "Dibujar la máscara de la región seleccionada"
 
 #: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
@@ -17016,11 +16974,10 @@ msgid "_Seamless Clone"
 msgstr "_Clonado continuo"
 
 #: ../app/tools/gimpseamlessclonetool.c:801
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Fill the selection using the foreground color"
 msgid "Cloning the foreground object"
-msgstr "Rellenar la selección utilizando el color de frente"
+msgstr "Clonar el objeto de frente"
 
 #: ../app/tools/gimpselectionoptions.c:87
 msgid "Feather edges"
@@ -17146,10 +17103,9 @@ msgid "Font size"
 msgstr "Tamaño de la tipografía"
 
 #: ../app/tools/gimptextoptions.c:157
-#, fuzzy
 #| msgid "Hinting:"
 msgid "Hinting"
-msgstr "Hinting:"
+msgstr "Hinting"
 
 #: ../app/tools/gimptextoptions.c:158
 msgid ""
@@ -17164,27 +17120,24 @@ msgstr ""
 "El idioma del texto puede afectar a la forma en que el texto se renderiza."
 
 #: ../app/tools/gimptextoptions.c:182
-#, fuzzy
 #| msgid "Justify:"
 msgid "Justify"
-msgstr "Justificar:"
+msgstr "Justificar"
 
 #: ../app/tools/gimptextoptions.c:183
 msgid "Text alignment"
 msgstr "Alineación del texto"
 
 #: ../app/tools/gimptextoptions.c:190
-#, fuzzy
 #| msgid "Iterations"
 msgid "Indentation"
-msgstr "Iteraciones"
+msgstr "Sangría"
 
 #: ../app/tools/gimptextoptions.c:191
 msgid "Indentation of the first line"
 msgstr "Sangrado de la primera línea"
 
 #: ../app/tools/gimptextoptions.c:198
-#, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Line spacing"
 msgid "Line spacing"
@@ -17195,21 +17148,19 @@ msgid "Adjust line spacing"
 msgstr "Modificar el espaciado de las líneas"
 
 #: ../app/tools/gimptextoptions.c:206
-#, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Line spacing"
 msgid "Letter spacing"
-msgstr "Espaciado de las líneas"
+msgstr "Espaciado de las letras"
 
 #: ../app/tools/gimptextoptions.c:207
 msgid "Adjust letter spacing"
 msgstr "Modificar el espaciado de las letras"
 
 #: ../app/tools/gimptextoptions.c:214
-#, fuzzy
 #| msgid "Box:"
 msgid "Box"
-msgstr "Caja:"
+msgstr "Caja"
 
 #: ../app/tools/gimptextoptions.c:215
 msgid ""
@@ -17370,30 +17321,30 @@ msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Tamaño de una celda para un número variable de guías de composición"
 
 #: ../app/tools/gimptransformoptions.c:490
-#, fuzzy, c-format
+#, c-format
 #| msgid "15 degrees  (%s)"
 msgid "15 degrees (%s)"
-msgstr "15 grados  (%s)"
+msgstr "15 grados (%s)"
 
 #: ../app/tools/gimptransformoptions.c:491
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Limitar los pasos de rotación a 15 grados"
 
 #: ../app/tools/gimptransformoptions.c:496
-#, fuzzy, c-format
+#, c-format
 #| msgid "Keep aspect  (%s)"
 msgid "Keep aspect (%s)"
-msgstr "Mantener proporción  (%s)"
+msgstr "Mantener proporción (%s)"
 
 #: ../app/tools/gimptransformoptions.c:497
 msgid "Keep the original aspect ratio"
 msgstr "Mantener la relación de aspecto original"
 
 #: ../app/tools/gimptransformoptions.c:515
-#, fuzzy, c-format
+#, c-format
 #| msgid "Anti erase  (%s)"
 msgid "Constrain (%s)"
-msgstr "Antiborrado  (%s)"
+msgstr "Restringir (%s)"
 
 #: ../app/tools/gimptransformoptions.c:516
 msgid "Move"
@@ -17451,10 +17402,10 @@ msgid "Pivot"
 msgstr "Pivote"
 
 #: ../app/tools/gimptransformoptions.c:538
-#, fuzzy, c-format
+#, c-format
 #| msgid "Type  (%s)"
 msgid "Snap (%s)"
-msgstr "Tipo  (%s)"
+msgstr "Ajustar (%s)"
 
 #: ../app/tools/gimptransformoptions.c:539
 #, c-format
