@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-05-11 23:54+0000\n"
-"PO-Revision-Date: 2016-05-11 22:45-0500\n"
+"POT-Creation-Date: 2016-05-12 18:31+0000\n"
+"PO-Revision-Date: 2016-05-12 18:04-0500\n"
 "Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -14520,19 +14520,16 @@ msgid "Red Eye Removal"
 msgstr "Eliminar ojos rojos"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3157
-#| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Desordenar aleatoriamente"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3210
-#| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Escoger aleatoriamente"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3263
-#| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Derretir aleatoriamente"
@@ -15774,17 +15771,14 @@ msgid "_Split view"
 msgstr "Partir"
 
 #: ../app/tools/gimpfiltertool.c:633
-#| msgid "Click to pick this guide as first item"
 msgid "Click to switch the original and filtered sides"
 msgstr "Pulse para cambiar los lados originales y filtrados"
 
 #: ../app/tools/gimpfiltertool.c:637
-#| msgid "Click to place vertical and horizontal guides"
 msgid "Click to switch between vertical and horizontal"
 msgstr "Pulse para cambiar entre vertical y horizontal"
 
 #: ../app/tools/gimpfiltertool.c:641
-#| msgid "Click to dodge the line"
 msgid "Click to move the split guide"
 msgstr "Pulse para mover la guía de división"
 
@@ -15897,7 +15891,6 @@ msgid "Matting engine to use"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:117
-#| msgid "Number of _processors to use:"
 msgid "Number of downsampled levels to use"
 msgstr "Número de niveles de submuestreo que usar"
 
@@ -15918,7 +15911,6 @@ msgid "Number of iterations to perform"
 msgstr "Número de iteraciones para representar"
 
 #: ../app/tools/gimpforegroundselectoptions.c:300
-#| msgid "Reset size to brush's native size"
 msgid "Reset stroke width native size"
 msgstr "Reiniciar tamaño nativo de la anchura del trazo"
 
@@ -16075,14 +16067,10 @@ msgid "Add handles and transform the image"
 msgstr "Añadir tiradores y transformar la imagen"
 
 #: ../app/tools/gimphandletransformoptions.c:172
-#| msgctxt "undo-type"
-#| msgid "Transform Channel"
 msgid "Move transform handles"
 msgstr "Mover los tiradores de transformación"
 
 #: ../app/tools/gimphandletransformoptions.c:177
-#| msgctxt "undo-type"
-#| msgid "Remove Parasite from Image"
 msgid "Remove transform handles"
 msgstr "Eliminar los tiradores de transformación"
 
@@ -16353,7 +16341,6 @@ msgid "All Channels"
 msgstr "Todos los canales"
 
 #: ../app/tools/gimplevelstool.c:591
-#| msgid "Input Levels"
 msgid "_Auto Input Levels"
 msgstr "Niveles de _entrada automáticos"
 
@@ -16879,7 +16866,6 @@ msgid "Draw mask"
 msgstr "Máscara de dibujo"
 
 #: ../app/tools/gimpregionselectoptions.c:128
-#| msgid "Click-Drag to move the selection mask"
 msgid "Draw the selected region's mask"
 msgstr "Dibujar la máscara de la región seleccionada"
 
@@ -16974,8 +16960,6 @@ msgid "_Seamless Clone"
 msgstr "_Clonado continuo"
 
 #: ../app/tools/gimpseamlessclonetool.c:801
-#| msgctxt "edit-action"
-#| msgid "Fill the selection using the foreground color"
 msgid "Cloning the foreground object"
 msgstr "Clonar el objeto de frente"
 
@@ -17103,7 +17087,6 @@ msgid "Font size"
 msgstr "Tamaño de la tipografía"
 
 #: ../app/tools/gimptextoptions.c:157
-#| msgid "Hinting:"
 msgid "Hinting"
 msgstr "Hinting"
 
@@ -17120,7 +17103,6 @@ msgstr ""
 "El idioma del texto puede afectar a la forma en que el texto se renderiza."
 
 #: ../app/tools/gimptextoptions.c:182
-#| msgid "Justify:"
 msgid "Justify"
 msgstr "Justificar"
 
@@ -17129,7 +17111,6 @@ msgid "Text alignment"
 msgstr "Alineación del texto"
 
 #: ../app/tools/gimptextoptions.c:190
-#| msgid "Iterations"
 msgid "Indentation"
 msgstr "Sangría"
 
@@ -17138,8 +17119,6 @@ msgid "Indentation of the first line"
 msgstr "Sangrado de la primera línea"
 
 #: ../app/tools/gimptextoptions.c:198
-#| msgctxt "guides-type"
-#| msgid "Line spacing"
 msgid "Line spacing"
 msgstr "Espaciado de las líneas"
 
@@ -17148,8 +17127,6 @@ msgid "Adjust line spacing"
 msgstr "Modificar el espaciado de las líneas"
 
 #: ../app/tools/gimptextoptions.c:206
-#| msgctxt "guides-type"
-#| msgid "Line spacing"
 msgid "Letter spacing"
 msgstr "Espaciado de las letras"
 
@@ -17158,7 +17135,6 @@ msgid "Adjust letter spacing"
 msgstr "Modificar el espaciado de las letras"
 
 #: ../app/tools/gimptextoptions.c:214
-#| msgid "Box:"
 msgid "Box"
 msgstr "Caja"
 
@@ -17322,7 +17298,6 @@ msgstr "Tamaño de una celda para un número variable de guías de composición"
 
 #: ../app/tools/gimptransformoptions.c:490
 #, c-format
-#| msgid "15 degrees  (%s)"
 msgid "15 degrees (%s)"
 msgstr "15 grados (%s)"
 
@@ -17332,7 +17307,6 @@ msgstr "Limitar los pasos de rotación a 15 grados"
 
 #: ../app/tools/gimptransformoptions.c:496
 #, c-format
-#| msgid "Keep aspect  (%s)"
 msgid "Keep aspect (%s)"
 msgstr "Mantener proporción (%s)"
 
@@ -17342,7 +17316,6 @@ msgstr "Mantener la relación de aspecto original"
 
 #: ../app/tools/gimptransformoptions.c:515
 #, c-format
-#| msgid "Anti erase  (%s)"
 msgid "Constrain (%s)"
 msgstr "Restringir (%s)"
 
@@ -17403,7 +17376,6 @@ msgstr "Pivote"
 
 #: ../app/tools/gimptransformoptions.c:538
 #, c-format
-#| msgid "Type  (%s)"
 msgid "Snap (%s)"
 msgstr "Ajustar (%s)"
 
@@ -18283,10 +18255,9 @@ msgid "Enabled"
 msgstr "Activado"
 
 #: ../app/widgets/gimpcontrollerinfo.c:119
-#, fuzzy
 #| msgid "_Grab event"
 msgid "Debug events"
-msgstr "_Capturar un evento"
+msgstr "Depurar eventos"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
 #: ../app/widgets/gimpcontrollerkeyboard.c:73
@@ -18593,10 +18564,9 @@ msgstr ""
 "predeterminados."
 
 #: ../app/widgets/gimpdeviceinfo.c:163
-#, fuzzy
 #| msgid "Pressure"
 msgid "Pressure curve"
-msgstr "Presión"
+msgstr "Curva de presión"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:141
 #: ../app/widgets/gimpdynamicseditor.c:142
@@ -19147,20 +19117,18 @@ msgstr "Puede soltar aquí los cuadros de diálogo empotrables"
 
 #: ../app/widgets/gimppickablepopup.c:206
 #: ../app/widgets/gimppickablepopup.c:432
-#, fuzzy
 #| msgid "Select an operation from the list above"
 msgid "Select an image in the left pane"
-msgstr "Seleccionar una operación de la lista de arriba"
+msgstr "Seleccionar una imagen en el panel izquierdo"
 
 #: ../app/widgets/gimpprogressdialog.c:223
 msgid "Progress"
 msgstr "Progreso"
 
 #: ../app/widgets/gimppropgui-constructors.c:168
-#, fuzzy
 #| msgid "Pick color from image"
 msgid "Pick coordinates from the image"
-msgstr "Recoger color de la imagen"
+msgstr "Recoger coordenadas de la imagen"
 
 #: ../app/widgets/gimppropgui-constructors.c:326
 #, fuzzy
@@ -19170,30 +19138,26 @@ msgid "Clockwise"
 msgstr "HSV (tono en sentido _horario)"
 
 #: ../app/widgets/gimppropgui-constructors.c:330
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Invert Channel"
 msgid "Invert Range"
-msgstr "Invertir el canal"
+msgstr "Invertir rango"
 
 #: ../app/widgets/gimppropgui-constructors.c:334
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Select All"
 msgid "Select All"
 msgstr "Seleccionar todo"
 
 #: ../app/widgets/gimppropgui-constructors.c:412
-#, fuzzy
 #| msgid "Source"
 msgid "Source Range"
-msgstr "Origen"
+msgstr "Rango fuente"
 
 #: ../app/widgets/gimppropgui-constructors.c:423
-#, fuzzy
 #| msgid "R_eset Range"
 msgid "Destination Range"
-msgstr "R_einiciar el rango"
+msgstr "Rango de destino"
 
 #: ../app/widgets/gimppropgui-constructors.c:434
 #, fuzzy
@@ -19218,30 +19182,26 @@ msgid "Frequencies"
 msgstr "Frecuencias"
 
 #: ../app/widgets/gimppropgui-constructors.c:688
-#, fuzzy
 #| msgid "Contiguous"
 msgid "Contours"
-msgstr "Contigua"
+msgstr "Contornos"
 
 #: ../app/widgets/gimppropgui-constructors.c:698
-#, fuzzy
 #| msgctxt "convolve-type"
 #| msgid "Sharpen"
 msgid "Sharp Edges"
-msgstr "Enfoque"
+msgstr "Bordes afilados"
 
 #: ../app/widgets/gimppropgui-constructors.c:708
-#, fuzzy
 #| msgid "Fade Options"
 msgid "Other Options"
-msgstr "Opciones de desvanecimiento"
+msgstr "Otras opciones"
 
 #: ../app/widgets/gimppropgui.c:117
 msgid "New Seed"
 msgstr "Semilla nueva"
 
 #: ../app/widgets/gimppropgui.c:318
-#, fuzzy
 #| msgid "Pick color from image"
 msgid "Pick color from the image"
 msgstr "Recoger color de la imagen"
@@ -19475,23 +19435,20 @@ msgid "_Precision:"
 msgstr "_Precisión:"
 
 #: ../app/widgets/gimptemplateeditor.c:399
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Save this image"
 msgid "Color manage this image"
-msgstr "Guardar esta imagen"
+msgstr "Gestionar el color de esta imagen"
 
 #: ../app/widgets/gimptemplateeditor.c:407
-#, fuzzy
 #| msgid "Current Color Profile"
 msgid "Choose A Color Profile"
-msgstr "Perfil de color actual"
+msgstr "Elegir un perfil de color"
 
 #: ../app/widgets/gimptemplateeditor.c:411
-#, fuzzy
 #| msgid "Color Profile"
 msgid "Color _profile:"
-msgstr "Perfil de color"
+msgstr "_Perfil de color:"
 
 #: ../app/widgets/gimptemplateeditor.c:418
 msgid "_Fill with:"
@@ -19530,12 +19487,10 @@ msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "El elemento más externo dentro del texto debe ser <markup>, no <%s>"
 
 #: ../app/widgets/gimptextbuffer.c:1449
-#, fuzzy, c-format
+#, c-format
 #| msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgid "Input file '%s' appears truncated: %s"
-msgstr ""
-"Error fatal de análisis en el archivo de patrón «%s»: el archivo parece "
-"estar truncado."
+msgstr "El archivo de entrada «%s» parece estar truncado: %s"
 
 #: ../app/widgets/gimptextbuffer.c:1467
 #, c-format
@@ -19758,10 +19713,9 @@ msgid "Open the dynamics selection dialog"
 msgstr "Abrir el diálogo de selección de dinámica"
 
 #: ../app/widgets/gimpviewablebox.c:219
-#, fuzzy
 #| msgid "Open the brush selection dialog"
 msgid "Open the MyPaint brush selection dialog"
-msgstr "Abrir el diálogo de selección de pincel"
+msgstr "Abrir el diálogo de selección de pincel MyPaint"
 
 #: ../app/widgets/gimpviewablebox.c:282
 msgid "Open the pattern selection dialog"
@@ -19946,10 +19900,10 @@ msgid "Error writing '%s': "
 msgstr "Error al escribir «%s»: "
 
 #: ../app/xcf/xcf.c:420
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading '%s': %s"
 msgid "Error creating '%s': "
-msgstr "Ocurrió un error al leer «%s»: %s"
+msgstr "Ocurrió un error al crear «%s»:"
 
 #: ../app/xcf/xcf-load.c:302
 #, c-format
@@ -20012,16 +19966,14 @@ msgid "Invalid UTF-8 string in XCF file"
 msgstr "Cadena UTF-8 no válida en el archivo XCF"
 
 #: ../app/xcf/xcf-seek.c:45
-#, fuzzy
 #| msgid "Could not seek in XCF file: %s"
 msgid "Could not seek in XCF file: "
-msgstr "No se ha podido desplazarse dentro del archivo XCF: %s"
+msgstr "No se ha podido buscar en el archivo XCF:"
 
 #: ../app/xcf/xcf-write.c:99
-#, fuzzy
 #| msgid "Error writing XCF: %s"
 msgid "Error writing XCF: "
-msgstr "Ocurrió un error al escribir XCF: %s"
+msgstr "Ocurrió un error al escribir XCF:"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
