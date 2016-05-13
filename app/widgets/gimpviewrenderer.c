@@ -29,6 +29,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -67,6 +68,7 @@ struct _GimpViewRendererPrivate
   GdkPixbuf          *pixbuf;
   gchar              *bg_icon_name;
 
+  GimpColorConfig    *color_config;
   GimpColorTransform  profile_transform;
   const Babl         *profile_src_format;
   const Babl         *profile_dest_format;
@@ -197,6 +199,9 @@ gimp_view_renderer_dispose (GObject *object)
 
   if (renderer->context)
     gimp_view_renderer_set_context (renderer, NULL);
+
+  if (renderer->priv->color_config)
+    gimp_view_renderer_set_color_config (renderer, NULL);
 
   gimp_view_renderer_remove_idle (renderer);
 
@@ -563,6 +568,28 @@ gimp_view_renderer_set_background (GimpViewRenderer *renderer,
     {
       g_object_unref (renderer->priv->pattern);
       renderer->priv->pattern = NULL;
+    }
+}
+
+void
+gimp_view_renderer_set_color_config (GimpViewRenderer *renderer,
+                                     GimpColorConfig  *color_config)
+{
+  g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
+  g_return_if_fail (color_config == NULL || GIMP_IS_COLOR_CONFIG (color_config));
+
+  if (color_config != renderer->priv->color_config)
+    {
+      if (renderer->priv->color_config)
+        g_object_unref (renderer->priv->color_config);
+
+      renderer->priv->color_config = color_config;
+
+      if (renderer->priv->color_config)
+        g_object_ref (renderer->priv->color_config);
+
+      if (renderer->viewable)
+        gimp_view_renderer_profile_changed (renderer, renderer->viewable);
     }
 }
 
@@ -1281,10 +1308,13 @@ gimp_view_renderer_transform_create (GimpViewRenderer *renderer,
 
       if (profile)
         {
-          GimpContext     *context = renderer->context;
-          GimpColorConfig *config  = context->gimp->config->color_management;
+          GimpColorConfig *config = renderer->priv->color_config;
+
+          if (! config)
+            config = renderer->context->gimp->config->color_management;
 
           renderer->priv->profile_src_format  = gegl_buffer_get_format (src_buffer);
+
           renderer->priv->profile_dest_format = gegl_buffer_get_format (dest_buffer);
 
           renderer->priv->profile_transform =
