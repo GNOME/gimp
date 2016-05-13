@@ -19,7 +19,7 @@
 #define __GIMP_FILTER_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "gimpcoloroptions.h"
 
 
 #define GIMP_TYPE_FILTER_OPTIONS            (gimp_filter_options_get_type ())
@@ -30,20 +30,25 @@
 #define GIMP_FILTER_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILTER_OPTIONS, GimpFilterOptionsClass))
 
 
-typedef struct _GimpToolOptionsClass  GimpFilterOptionsClass;
+typedef struct _GimpFilterOptionsClass GimpFilterOptionsClass;
 
 struct _GimpFilterOptions
 {
-  GimpToolOptions    parent_instance;
+  GimpColorOptions    parent_instance;
 
-  gboolean           preview;
-  gboolean           preview_split;
-  GimpAlignmentType  preview_alignment;
-  gdouble            preview_position;
-  GimpFilterRegion   region;
-  gboolean           gamma_hack;
+  gboolean            preview;
+  gboolean            preview_split;
+  GimpAlignmentType   preview_alignment;
+  gdouble             preview_position;
+  GimpFilterRegion    region;
+  gboolean            gamma_hack;
 
-  GFile             *settings;
+  GFile              *settings;
+};
+
+struct _GimpFilterOptionsClass
+{
+  GimpColorOptionsClass  parent_instance;
 };
 
 

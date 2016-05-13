@@ -19,7 +19,7 @@
 #define __GIMP_COLOR_OPTIONS_H__
 
 
-#include "gimpfilteroptions.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_COLOR_OPTIONS            (gimp_color_options_get_type ())
@@ -30,20 +30,20 @@
 #define GIMP_COLOR_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_OPTIONS, GimpColorOptionsClass))
 
 
-typedef struct _GimpColorOptionsClass  GimpColorOptionsClass;
+typedef struct _GimpColorOptionsClass GimpColorOptionsClass;
 
 struct _GimpColorOptions
 {
-  GimpFilterOptions  parent_instance;
+  GimpToolOptions  parent_instance;
 
-  gboolean           sample_merged;
-  gboolean           sample_average;
-  gdouble            average_radius;
+  gboolean         sample_merged;
+  gboolean         sample_average;
+  gdouble          average_radius;
 };
 
 struct _GimpColorOptionsClass
 {
-  GimpFilterOptionsClass  parent_instance;
+  GimpToolOptionsClass  parent_instance;
 };
 
 

@@ -66,7 +66,7 @@
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimptoolgui.h"
 
-#include "gimpcoloroptions.h"
+#include "gimpfilteroptions.h"
 #include "gimpfiltertool.h"
 #include "gimpfiltertool-settings.h"
 #include "gimpguidetool.h"

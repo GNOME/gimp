@@ -54,7 +54,7 @@ static void   gimp_filter_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpFilterOptions, gimp_filter_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+               GIMP_TYPE_COLOR_OPTIONS)
 
 #define parent_class gimp_filter_options_parent_class
 

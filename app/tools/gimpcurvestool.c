@@ -541,8 +541,10 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_container_add (GTK_CONTAINER (frame), tool->graph);
   gtk_widget_show (tool->graph);
 
-  gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
-                                       GIMP_HISTOGRAM_VIEW (tool->graph));
+  g_object_bind_property (G_OBJECT (tool_options), "histogram-scale",
+                          G_OBJECT (tool->graph),  "histogram-scale",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_BIDIRECTIONAL);
 
   /*  The bottom color bar  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);

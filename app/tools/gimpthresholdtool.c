@@ -27,7 +27,6 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
-#include "core/gimperror.h"
 #include "core/gimphistogram.h"
 #include "core/gimpimage.h"
 
@@ -39,6 +38,7 @@
 
 #include "gimphistogramoptions.h"
 #include "gimpthresholdtool.h"
+#include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 
@@ -84,7 +84,7 @@ gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
 {
   (* callback) (GIMP_TYPE_THRESHOLD_TOOL,
                 GIMP_TYPE_HISTOGRAM_OPTIONS,
-                gimp_histogram_options_gui,
+                NULL,
                 0,
                 "gimp-threshold-tool",
                 _("Threshold"),
@@ -231,8 +231,10 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
                     t_tool);
 
-  gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
-                                       t_tool->histogram_box->view);
+  g_object_bind_property (G_OBJECT (tool_options),                "histogram-scale",
+                          G_OBJECT (t_tool->histogram_box->view), "histogram-scale",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_BIDIRECTIONAL);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);

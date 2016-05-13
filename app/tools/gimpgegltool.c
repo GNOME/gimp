@@ -32,7 +32,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 
-#include "gimpcoloroptions.h"
+#include "gimpfilteroptions.h"
 #include "gimpgegltool.h"
 
 #include "gimp-intl.h"
@@ -65,7 +65,7 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_GEGL_TOOL,
-                GIMP_TYPE_COLOR_OPTIONS,
+                GIMP_TYPE_FILTER_OPTIONS,
                 gimp_color_options_gui,
                 0,
                 "gimp-gegl-tool",

@@ -19,7 +19,7 @@
 #define __GIMP_HISTOGRAM_OPTIONS_H__
 
 
-#include "gimpcoloroptions.h"
+#include "gimpfilteroptions.h"
 
 
 #define GIMP_TYPE_HISTOGRAM_OPTIONS            (gimp_histogram_options_get_type ())
@@ -30,22 +30,23 @@
 #define GIMP_HISTOGRAM_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM_OPTIONS, GimpHistogramOptionsClass))
 
 
-typedef struct _GimpHistogramOptions  GimpHistogramOptions;
-typedef         GimpColorOptionsClass GimpHistogramOptionsClass;
+typedef struct _GimpHistogramOptions      GimpHistogramOptions;
+typedef struct _GimpHistogramOptionsClass GimpHistogramOptionsClass;
 
 struct _GimpHistogramOptions
 {
-  GimpColorOptions    parent_instance;
+  GimpFilterOptions    parent_instance;
 
   GimpHistogramScale  scale;
 };
 
+struct _GimpHistogramOptionsClass
+{
+  GimpFilterOptionsClass  parent_class;
+};
 
-GType       gimp_histogram_options_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_histogram_options_gui          (GimpToolOptions      *tool_options);
-void        gimp_histogram_options_connect_view (GimpHistogramOptions *options,
-                                                 GimpHistogramView    *view);
+GType   gimp_histogram_options_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_HISTOGRAM_OPTIONS_H__ */

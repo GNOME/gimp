@@ -51,7 +51,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimptoolgui.h"
 
-#include "gimpcoloroptions.h"
+#include "gimpfilteroptions.h"
 #include "gimpoperationtool.h"
 
 #include "gimp-intl.h"
@@ -124,7 +124,7 @@ gimp_operation_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_OPERATION_TOOL,
-                GIMP_TYPE_COLOR_OPTIONS,
+                GIMP_TYPE_FILTER_OPTIONS,
                 gimp_color_options_gui,
                 GIMP_CONTEXT_PROP_MASK_FOREGROUND |
                 GIMP_CONTEXT_PROP_MASK_BACKGROUND,

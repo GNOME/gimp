@@ -425,8 +425,10 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (vbox2), tool->histogram_view, TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (tool->histogram_view));
 
-  gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
-                                       GIMP_HISTOGRAM_VIEW (tool->histogram_view));
+  g_object_bind_property (G_OBJECT (tool_options),         "histogram-scale",
+                          G_OBJECT (tool->histogram_view), "histogram-scale",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_BIDIRECTIONAL);
 
   g_object_get (tool->histogram_view, "border-width", &border, NULL);
 

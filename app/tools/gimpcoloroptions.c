@@ -27,7 +27,6 @@
 
 #include "widgets/gimppropwidgets.h"
 
-#include "gimphistogramoptions.h"
 #include "gimpcoloroptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -54,7 +53,7 @@ static void   gimp_color_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpColorOptions, gimp_color_options,
-               GIMP_TYPE_FILTER_OPTIONS)
+               GIMP_TYPE_TOOL_OPTIONS)
 
 
 static void
@@ -146,15 +145,10 @@ GtkWidget *
 gimp_color_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *frame;
   GtkWidget *scale;
   GtkWidget *button;
-
-  if (GIMP_IS_HISTOGRAM_OPTIONS (tool_options))
-    vbox = gimp_histogram_options_gui (tool_options);
-  else
-    vbox = gimp_tool_options_gui (tool_options);
 
   /*  the sample average options  */
   frame = gimp_frame_new (NULL);
