@@ -20,12 +20,9 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
-
-#include "config/gimpcoreconfig.h"
 
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
@@ -83,11 +80,9 @@ gimp_display_shell_has_filter (GimpDisplayShell *shell)
 }
 
 GimpColorDisplayStack *
-gimp_display_shell_filter_new (GimpDisplayShell *shell,
-                               GimpColorConfig  *config)
+gimp_display_shell_filter_new (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
 
 #if 0
   /*  disabled because we use gimpdisplayshell-profile now, keep

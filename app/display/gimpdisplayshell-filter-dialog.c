@@ -25,10 +25,8 @@
 
 #include "display-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "core/gimp.h"
-#include "core/gimpimage.h"
+#include "core/gimpviewable.h"
 
 #include "widgets/gimpcolordisplayeditor.h"
 #include "widgets/gimphelp-ids.h"
@@ -65,15 +63,13 @@ static void gimp_display_shell_filter_dialog_free     (ColorDisplayDialog *cdd);
 GtkWidget *
 gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 {
-  GimpDisplayConfig  *config;
   GimpImage          *image;
   ColorDisplayDialog *cdd;
   GtkWidget          *editor;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
-  config = shell->display->config;
-  image  = gimp_display_get_image (shell->display);
+  image = gimp_display_get_image (shell->display);
 
   cdd = g_slice_new0 (ColorDisplayDialog);
 
@@ -123,7 +119,7 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
     }
 
   editor = gimp_color_display_editor_new (shell->filter_stack,
-                                          GIMP_CORE_CONFIG (config)->color_management,
+                                          gimp_display_shell_get_color_config (shell),
                                           GIMP_COLOR_MANAGED (shell));
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (cdd->dialog))),

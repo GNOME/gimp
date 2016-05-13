@@ -150,6 +150,8 @@ struct _GimpDisplayShell
   GtkWidget         *nav_popup;        /*  navigation popup                   */
   GtkWidget         *grid_dialog;      /*  grid configuration dialog          */
 
+  GimpColorConfig   *color_config;     /*  color management settings          */
+
   GimpColorTransform profile_transform;
   const Babl        *profile_src_format;
   const Babl        *profile_dest_format;
@@ -252,6 +254,9 @@ void              gimp_display_shell_move_overlay  (GimpDisplayShell   *shell,
 
 GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
 GimpStatusbar   * gimp_display_shell_get_statusbar (GimpDisplayShell   *shell);
+
+GimpColorConfig * gimp_display_shell_get_color_config
+                                                   (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_present       (GimpDisplayShell   *shell);
 
