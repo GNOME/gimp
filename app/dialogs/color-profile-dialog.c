@@ -117,8 +117,8 @@ color_profile_dialog_new (ColorProfileDialogType  dialog_type,
 
   if (saved_intent == -1)
     {
-      dialog->intent = dialog->config->display_intent;
-      dialog->bpc    = (dialog->intent == GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
+      dialog->intent = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+      dialog->bpc    = TRUE;
     }
   else
     {
