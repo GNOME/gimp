@@ -617,18 +617,20 @@ tool_manager_select_tool (Gimp     *gimp,
   /*  reset the previously selected tool, but only if it is not only
    *  temporarily pushed to the tool stack
    */
-  if (tool_manager->active_tool &&
-      ! (tool_manager->tool_stack &&
-         tool_manager->active_tool == tool_manager->tool_stack->data))
+  if (tool_manager->active_tool)
     {
-      GimpTool    *active_tool = tool_manager->active_tool;
-      GimpDisplay *display;
+      if (! tool_manager->tool_stack ||
+          tool_manager->active_tool != tool_manager->tool_stack->data)
+        {
+          GimpTool    *active_tool = tool_manager->active_tool;
+          GimpDisplay *display;
 
-      /*  NULL image returns any display (if there is any)  */
-      display = gimp_tool_has_image (active_tool, NULL);
+          /*  NULL image returns any display (if there is any)  */
+          display = gimp_tool_has_image (active_tool, NULL);
 
-      tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
-      tool_manager_focus_display_active (gimp, NULL);
+          tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
+          tool_manager_focus_display_active (gimp, NULL);
+        }
 
       g_object_unref (tool_manager->active_tool);
     }
