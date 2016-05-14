@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 18:24+0200\n"
-"PO-Revision-Date: 2016-05-11 18:25+0200\n"
+"POT-Creation-Date: 2016-05-14 15:34+0300\n"
+"PO-Revision-Date: 2016-05-14 15:35+0300\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -8502,12 +8502,12 @@ msgid "Jitter"
 msgstr "Drganie"
 
 #: ../app/core/core-enums.c:1181
-msgctxt "image-map-region"
+msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Użycie zaznaczenia jako wejścia"
 
 #: ../app/core/core-enums.c:1182
-msgctxt "image-map-region"
+msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Użycie całej warstwy jako wejścia"
 
@@ -9157,12 +9157,12 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1180
+#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1178
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Gradient"
 
-#: ../app/core/gimpdrawable-blend.c:180 ../app/tools/gimpblendtool.c:979
+#: ../app/core/gimpdrawable-blend.c:240
 msgid "Calculating distance map"
 msgstr "Obliczanie mapy odległości"
 
@@ -10804,7 +10804,7 @@ msgstr "_Kanały i maski:"
 #. gamma
 #: ../app/dialogs/convert-precision-dialog.c:272
 #: ../app/operations/gimplevelsconfig.c:112
-#: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:486
+#: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:488
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -12696,23 +12696,23 @@ msgstr "W"
 msgid "_Sample Merged"
 msgstr "Próbkowanie w_szystkich warstw"
 
-#: ../app/display/gimpdisplayshell.c:539
+#: ../app/display/gimpdisplayshell.c:541
 msgid "Access the image menu"
 msgstr "Dostęp do menu obrazu"
 
-#: ../app/display/gimpdisplayshell.c:654
+#: ../app/display/gimpdisplayshell.c:656
 msgid "Zoom image when window size changes"
 msgstr "Zmiana powiększenia przy zmianie wymiarów okna"
 
-#: ../app/display/gimpdisplayshell.c:683
+#: ../app/display/gimpdisplayshell.c:685
 msgid "Toggle Quick Mask"
 msgstr "Przełącz szybką maskę"
 
-#: ../app/display/gimpdisplayshell.c:706
+#: ../app/display/gimpdisplayshell.c:708
 msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
-#: ../app/display/gimpdisplayshell.c:777 ../app/display/gimpdisplayshell.c:1471
+#: ../app/display/gimpdisplayshell.c:778 ../app/display/gimpdisplayshell.c:1486
 #: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
@@ -12815,7 +12815,7 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362
 #: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
-#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpfiltertool.c:300
+#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpfiltertool.c:301
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
@@ -12823,7 +12823,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/display/gimpdisplayshell-dnd.c:370
 #: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpfiltertool.c:307 ../app/tools/gimppainttool.c:278
+#: ../app/tools/gimpfiltertool.c:308 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1842
 #: ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
@@ -12854,11 +12854,11 @@ msgstr "Upuszczone warstwy"
 msgid "Dropped Buffer"
 msgstr "Upuszczony bufor"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:83
+#: ../app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
 msgstr "Filtry wyświetlania kolorów"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:86
+#: ../app/display/gimpdisplayshell-filter-dialog.c:82
 msgid "Configure Color Display Filters"
 msgstr "Konfiguracja filtrów wyświetlania kolorów"
 
@@ -12872,7 +12872,7 @@ msgstr "Zapisano obraz do „%s”"
 msgid "Image exported to '%s'"
 msgstr "Wyeksportowano obraz do „%s”"
 
-#: ../app/display/gimpdisplayshell-layer-select.c:122
+#: ../app/display/gimpdisplayshell-layer-select.c:125
 msgid "Layer Select"
 msgstr "Wybór warstwy"
 
@@ -13219,7 +13219,7 @@ msgstr "Zapisanie pliku poziomów się nie powiodło: "
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr "Oblicza zestaw współczynnika bufora dla narzędzia klatki programu GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:124
+#: ../app/operations/gimpoperationcagetransform.c:105
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
@@ -13227,11 +13227,11 @@ msgstr ""
 "Konwertuje zestaw współczynnika bufora na współczynnik bufora dla narzędzia "
 "klatki programu GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:146
+#: ../app/operations/gimpoperationcagetransform.c:127
 msgid "Fill with plain color"
 msgstr "Wypełnij zwykłym kolorem"
 
-#: ../app/operations/gimpoperationcagetransform.c:147
+#: ../app/operations/gimpoperationcagetransform.c:128
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Wypełnienie pierwotnego położenia klatki prostym kolorem"
 
@@ -13428,7 +13428,7 @@ msgstr "MyBrush"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli programu MyPaint dla tego narzędzia."
 
-#: ../app/paint/gimpmybrushoptions.c:85 ../app/tools/gimpcoloroptions.c:84
+#: ../app/paint/gimpmybrushoptions.c:85 ../app/tools/gimpcoloroptions.c:83
 #: ../app/tools/gimprectangleselectoptions.c:92
 #: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
 msgid "Radius"
@@ -13633,7 +13633,7 @@ msgid "Alignment"
 msgstr "Wyrównanie"
 
 #: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:127
-#: ../app/tools/gimpbucketfilloptions.c:113 ../app/tools/gimpcoloroptions.c:70
+#: ../app/tools/gimpbucketfilloptions.c:113 ../app/tools/gimpcoloroptions.c:69
 #: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
 msgstr "Próbkowanie wszystkich warstw"
@@ -14921,7 +14921,7 @@ msgid "Blen_d"
 msgstr "_Gradient"
 
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
-#: ../app/tools/gimpfiltertool.c:314
+#: ../app/tools/gimpfiltertool.c:315
 #: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1850 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
@@ -14931,17 +14931,17 @@ msgstr "Aktywna warstwa jest niewidoczna."
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:951 ../app/tools/gimppainttool.c:655
+#: ../app/tools/gimpblendtool.c:952 ../app/tools/gimppainttool.c:655
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
 
-#: ../app/tools/gimpblendtool.c:952
+#: ../app/tools/gimpblendtool.c:953
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s przesunie całą linię"
 
-#: ../app/tools/gimpblendtool.c:956
+#: ../app/tools/gimpblendtool.c:957
 msgid "Blend: "
 msgstr "Gradient: "
 
@@ -15256,11 +15256,11 @@ msgstr "Kolor barwienia"
 msgid "Pick color from image"
 msgstr "Wybór koloru z obrazu"
 
-#: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:69
+#: ../app/tools/gimpcoloroptions.c:76 ../app/tools/gimpcolorpickeroptions.c:69
 msgid "Sample average"
 msgstr "Próbowanie średniej kolorów"
 
-#: ../app/tools/gimpcoloroptions.c:85
+#: ../app/tools/gimpcoloroptions.c:84
 msgid "Color Picker Average Radius"
 msgstr "Promień średniego pobrania koloru"
 
@@ -15480,15 +15480,15 @@ msgstr "Ka_nał:"
 msgid "R_eset Channel"
 msgstr "_Przywróć kanał"
 
-#: ../app/tools/gimpcurvestool.c:578 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:580 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Typ krzywej:"
 
-#: ../app/tools/gimpcurvestool.c:645 ../app/tools/gimplevelstool.c:662
+#: ../app/tools/gimpcurvestool.c:647 ../app/tools/gimplevelstool.c:664
 msgid "Could not read header: "
 msgstr "Nie można odczytać nagłówka: "
 
-#: ../app/tools/gimpcurvestool.c:686
+#: ../app/tools/gimpcurvestool.c:688
 msgid "Use _old curves file format"
 msgstr "Użycie _starego formatu pliku krzywych"
 
@@ -15595,24 +15595,24 @@ msgstr "_Podgląd"
 msgid "_Split view"
 msgstr "Po_dzielony widok"
 
-#: ../app/tools/gimpfiltertool.c:632
+#: ../app/tools/gimpfiltertool.c:633
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:636
+#: ../app/tools/gimpfiltertool.c:637
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:640
+#: ../app/tools/gimpfiltertool.c:641
 msgid "Click to move the split guide"
 msgstr "Kliknięcie przesunie prowadnicę podziału"
 
-#: ../app/tools/gimpfiltertool.c:642
+#: ../app/tools/gimpfiltertool.c:643
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:643
+#: ../app/tools/gimpfiltertool.c:644
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
@@ -15846,7 +15846,7 @@ msgid "Fuzzy Select"
 msgstr "Różdżka"
 
 #: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:466
-#: ../app/tools/gimpgegltool.c:467 ../app/tools/gimpoperationtool.c:133
+#: ../app/tools/gimpgegltool.c:467 ../app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -15854,7 +15854,7 @@ msgstr "Działanie biblioteki GEGL"
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "GEGL: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:135
+#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:134
 msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
@@ -15945,7 +15945,7 @@ msgstr "%s ustawi nowe źródło usuwania nieregularności"
 msgid "Click to set a new heal source"
 msgstr "Kliknięcie ustawi nowe źródło usuwania nieregularności"
 
-#: ../app/tools/gimphistogramoptions.c:69
+#: ../app/tools/gimphistogramoptions.c:63
 msgid "Histogram Scale"
 msgstr "Skala histogramu"
 
@@ -16150,28 +16150,28 @@ msgid "Input Levels"
 msgstr "Poziomy wejściowe"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:521
+#: ../app/tools/gimplevelstool.c:523
 msgid "Output Levels"
 msgstr "Poziomy wyjściowe"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:579
+#: ../app/tools/gimplevelstool.c:581
 msgid "All Channels"
 msgstr "Wszystkie kanały"
 
-#: ../app/tools/gimplevelstool.c:591
+#: ../app/tools/gimplevelstool.c:593
 msgid "_Auto Input Levels"
 msgstr "_Automatyczne poziomy wejściowe"
 
-#: ../app/tools/gimplevelstool.c:594
+#: ../app/tools/gimplevelstool.c:596
 msgid "Adjust levels for all channels automatically"
 msgstr "Dopasowuje poziomy automatycznie dla wszystkich kanałów"
 
-#: ../app/tools/gimplevelstool.c:621
+#: ../app/tools/gimplevelstool.c:623
 msgid "Edit these Settings as Curves"
 msgstr "Modyfikuje te ustawienia jako krzywe"
 
-#: ../app/tools/gimplevelstool.c:772
+#: ../app/tools/gimplevelstool.c:774
 msgid "Use _old levels file format"
 msgstr "Użycie _starego formatu pliku poziomów"
 
@@ -16397,28 +16397,28 @@ msgstr ""
 msgid "_N-Point Deformation"
 msgstr "_Zniekształcanie za pomocą wielu punktów"
 
-#: ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpoperationtool.c:133
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Działanie: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpoperationtool.c:344
+#: ../app/tools/gimpoperationtool.c:343
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpoperationtool.c:345
+#: ../app/tools/gimpoperationtool.c:344
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:696
+#: ../app/tools/gimpoperationtool.c:695
 #, c-format
 msgid "Aux Input"
 msgstr "Wejście Aux"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:702
+#: ../app/tools/gimpoperationtool.c:701
 #, c-format
 msgid "Aux%d Input"
 msgstr "Wejście Aux%d"
@@ -17046,11 +17046,11 @@ msgstr "Eksportowanie ustawień progowania"
 msgid "Apply Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpthresholdtool.c:241
+#: ../app/tools/gimpthresholdtool.c:243
 msgid "_Auto"
 msgstr "_Automatycznie"
 
-#: ../app/tools/gimpthresholdtool.c:243
+#: ../app/tools/gimpthresholdtool.c:245
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automatyczne dopasowanie optymalnego progu binaryzacji"
 
