@@ -960,6 +960,27 @@ prefs_language_combo_box_add (GObject      *config,
 #endif
 
 static GtkWidget *
+prefs_profile_combo_box_add (GObject      *config,
+                             const gchar  *property_name,
+                             GtkListStore *profile_store,
+                             const gchar  *dialog_title,
+                             const gchar  *label,
+                             GtkTable     *table,
+                             gint          table_row,
+                             GtkSizeGroup *group)
+{
+  GtkWidget *combo = gimp_prop_profile_combo_box_new (config,
+                                                      property_name,
+                                                      profile_store,
+                                                      dialog_title);
+
+  if (combo)
+    prefs_widget_add_aligned (combo, label, table, table_row, FALSE, group);
+
+  return combo;
+}
+
+static GtkWidget *
 prefs_spin_button_add (GObject      *config,
                        const gchar  *property_name,
                        gdouble       step_increment,
@@ -1304,40 +1325,14 @@ prefs_dialog_new (Gimp       *gimp,
                                   NULL,
                                   &top_iter);
 
-  table = prefs_table_new (11, GTK_CONTAINER (vbox));
-
   {
-    static const struct
-    {
-      const gchar *label;
-      const gchar *fs_label;
-      const gchar *property_name;
-    }
-    profiles[] =
-    {
-      { N_("Preferred _RGB profile:"),
-        N_("Select RGB Color Profile"),       "rgb-profile"     },
-      { N_("Preferred _grayscale profile:"),
-        N_("Select Grayscale Color Profile"), "gray-profile"    },
-      { N_("_CMYK profile:"),
-        N_("Select CMYK Color Profile"),      "cmyk-profile"    },
-      { N_("_Monitor profile:"),
-        N_("Select Monitor Color Profile"),   "display-profile" },
-      { N_("_Print simulation profile:"),
-        N_("Select Printer Color Profile"),   "printer-profile" }
-    };
-
     GObject      *color_config;
     GtkListStore *store;
     gchar        *filename;
     gint          row = 0;
 
     g_object_get (object, "color-management", &color_config, NULL);
-
-    prefs_enum_combo_box_add (color_config, "mode", 0, 0,
-                              _("_Mode of operation:"),
-                              GTK_TABLE (table), row++, NULL);
-    gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
+    g_object_unref (color_config);
 
     filename = gimp_personal_rc_file ("profilerc");
     store = gimp_color_profile_store_new (filename);
@@ -1346,72 +1341,79 @@ prefs_dialog_new (Gimp       *gimp,
     gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (store),
                                        NULL, NULL);
 
-    for (i = 0; i < G_N_ELEMENTS (profiles); i++)
-      {
-        button = gimp_prop_profile_combo_box_new (color_config,
-                                                  profiles[i].property_name,
-                                                  store,
-                                                  gettext (profiles[i].fs_label));
+    size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                   gettext (profiles[i].label), 0.0, 0.5,
-                                   button, 1, FALSE);
+    table = prefs_table_new (1, GTK_CONTAINER (vbox));
 
+    prefs_enum_combo_box_add (color_config, "mode", 0, 0,
+                              _("Image display _mode:"),
+                              GTK_TABLE (table), row++, NULL);
 
-        if (i == 3) /* display profile */
-          {
-            gtk_table_set_row_spacing (GTK_TABLE (table), row - 2, 12);
+    /*  Color Managed Display  */
+    vbox2 = prefs_frame_new (_("Color Managed Display"), GTK_CONTAINER (vbox),
+                             FALSE);
 
-            button =
-              gimp_prop_check_button_new (color_config,
-                                          "display-profile-from-gdk",
-                                          _("_Try to use the system monitor "
-                                            "profile"));
+    table = prefs_table_new (4, GTK_CONTAINER (vbox2));
+    row = 0;
 
-            gtk_table_attach_defaults (GTK_TABLE (table),
-                                       button, 1, 2, row, row + 1);
-            gtk_widget_show (button);
-            row++;
+    prefs_profile_combo_box_add (color_config,
+                                 "display-profile",
+                                 store,
+                                 _("Select Monitor Color Profile"),
+                                 _("_Monitor profile:"),
+                                 GTK_TABLE (table), row++, size_group);
 
-            prefs_enum_combo_box_add (color_config,
-                                      "display-rendering-intent", 0, 0,
-                                      _("_Display rendering intent:"),
-                                      GTK_TABLE (table), row++, NULL);
+    button = gimp_prop_check_button_new (color_config,
+                                         "display-profile-from-gdk",
+                                         _("_Try to use the system monitor "
+                                           "profile"));
 
-            button =
-              gimp_prop_check_button_new (color_config,
-                                          "display-use-black-point-compensation",
-                                          _("Use _black point compensation for "
-                                            "the display"));
+    gtk_table_attach_defaults (GTK_TABLE (table),
+                               button, 1, 2, row, row + 1);
+    gtk_widget_show (button);
+    row++;
 
-            gtk_table_attach_defaults (GTK_TABLE (table),
-                                       button, 1, 2, row, row + 1);
-            gtk_widget_show (button);
-            gtk_table_set_row_spacing (GTK_TABLE (table), row, 12);
-            row++;
-          }
+    prefs_enum_combo_box_add (color_config,
+                              "display-rendering-intent", 0, 0,
+                              _("_Rendering intent:"),
+                              GTK_TABLE (table), row++, size_group);
 
-        if (i == 4) /* printer profile */
-          {
-            prefs_enum_combo_box_add (color_config,
-                                      "simulation-rendering-intent", 0, 0,
-                                      _("_Softproof rendering intent:"),
-                                      GTK_TABLE (table), row++, NULL);
+    button = gimp_prop_check_button_new (color_config,
+                                         "display-use-black-point-compensation",
+                                         _("Use _black point compensation"));
 
-            button =
-              gimp_prop_check_button_new (color_config,
-                                          "simulation-use-black-point-compensation",
-                                          _("Use black _point compensation "
-                                            "for softproofing"));
+    gtk_table_attach_defaults (GTK_TABLE (table),
+                               button, 1, 2, row, row + 1);
+    gtk_widget_show (button);
 
-            gtk_table_attach_defaults (GTK_TABLE (table),
-                                       button, 1, 2, row, row + 1);
-            gtk_widget_show (button);
-            row++;
-          }
-      }
+    /*  Print Simulation (Softproofing)  */
+    vbox2 = prefs_frame_new (_("Print Simulation (Softproofing)"),
+                             GTK_CONTAINER (vbox),
+                             FALSE);
 
-    g_object_unref (store);
+    table = prefs_table_new (4, GTK_CONTAINER (vbox2));
+    row = 0;
+
+    prefs_profile_combo_box_add (color_config,
+                                 "printer-profile",
+                                 store,
+                                 _("Select Printer Color Profile"),
+                                 _("_Print simulation profile:"),
+                                 GTK_TABLE (table), row++, size_group);
+
+    prefs_enum_combo_box_add (color_config,
+                              "simulation-rendering-intent", 0, 0,
+                              _("Re_ndering intent:"),
+                              GTK_TABLE (table), row++, size_group);
+
+    button = gimp_prop_check_button_new (color_config,
+                                         "simulation-use-black-point-compensation",
+                                         _("Use black _point compensation"));
+
+    gtk_table_attach_defaults (GTK_TABLE (table),
+                               button, 1, 2, row, row + 1);
+    gtk_widget_show (button);
+    row++;
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, row, row + 1);
@@ -1434,13 +1436,48 @@ prefs_dialog_new (Gimp       *gimp,
     gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                   gimp_get_user_context (gimp));
 
-    gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
+    /*  Preferred profiles  */
+    vbox2 = prefs_frame_new (_("Preferred Profiles"), GTK_CONTAINER (vbox),
+                             FALSE);
+
+    table = prefs_table_new (3, GTK_CONTAINER (vbox2));
+    row = 0;
+
+    prefs_profile_combo_box_add (color_config,
+                                 "rgb-profile",
+                                 store,
+                                 _("Select Preferred RGB Color Profile"),
+                                 _("_RGB profile:"),
+                                 GTK_TABLE (table), row++, size_group);
+
+    prefs_profile_combo_box_add (color_config,
+                                 "gray-profile",
+                                 store,
+                                 _("Select Preferred Grayscale Color Profile"),
+                                 ("_Grayscale profile:"),
+                                 GTK_TABLE (table), row++, size_group);
+
+    prefs_profile_combo_box_add (color_config,
+                                 "cmyk-profile",
+                                 store,
+                                 _("Select CMYK Color Profile"),
+                                 _("_CMYK profile:"),
+                                 GTK_TABLE (table), row++, size_group);
+
+    /*  Policies  */
+    vbox2 = prefs_frame_new (_("Policies"), GTK_CONTAINER (vbox),
+                             FALSE);
+
+    table = prefs_table_new (3, GTK_CONTAINER (vbox2));
+    row = 0;
 
     button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                        _("File Open behaviour:"),
-                                       GTK_TABLE (table), row++, NULL);
+                                       GTK_TABLE (table), row++, size_group);
 
-    g_object_unref (color_config);
+    g_object_unref (size_group);
+
+    g_object_unref (store);
   }
 
 
