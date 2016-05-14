@@ -1454,7 +1454,7 @@ prefs_dialog_new (Gimp       *gimp,
                                  "gray-profile",
                                  store,
                                  _("Select Preferred Grayscale Color Profile"),
-                                 ("_Grayscale profile:"),
+                                 _("_Grayscale profile:"),
                                  GTK_TABLE (table), row++, size_group);
 
     prefs_profile_combo_box_add (color_config,
