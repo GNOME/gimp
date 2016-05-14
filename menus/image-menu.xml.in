@@ -301,6 +301,13 @@
       <separator />
       <menuitem action="view-navigation-window" />
       <menuitem action="view-display-filters" />
+      <menu action="view-color-management-menu" name="Color Management">
+        <menuitem action="view-color-management-mode-off" />
+        <menuitem action="view-color-management-mode-display" />
+        <menuitem action="view-color-management-mode-softproof" />
+        <separator />
+        <menuitem action="view-color-management-reset" />
+      </menu>
       <separator />
       <menuitem action="view-show-selection" />
       <menuitem action="view-show-layer-boundary" />
