@@ -405,7 +405,7 @@ gimp_display_shell_constructed (GObject *object)
   config = shell->display->config;
   image  = gimp_display_get_image (shell->display);
 
-  shell->color_config = g_object_ref (GIMP_CORE_CONFIG (config)->color_management);
+  gimp_display_shell_profile_init (shell);
 
   if (image)
     {
@@ -817,13 +817,7 @@ gimp_display_shell_dispose (GObject *object)
       shell->checkerboard = NULL;
     }
 
-  if (shell->color_config)
-    {
-      g_object_unref (shell->color_config);
-      shell->color_config = NULL;
-    }
-
-  gimp_display_shell_profile_dispose (shell);
+  gimp_display_shell_profile_finalize (shell);
 
   if (shell->filter_buffer)
     {

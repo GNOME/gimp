@@ -151,6 +151,7 @@ struct _GimpDisplayShell
   GtkWidget         *grid_dialog;      /*  grid configuration dialog          */
 
   GimpColorConfig   *color_config;     /*  color management settings          */
+  gboolean           color_config_set; /*  settings changed from defaults     */
 
   GimpColorTransform profile_transform;
   const Babl        *profile_src_format;

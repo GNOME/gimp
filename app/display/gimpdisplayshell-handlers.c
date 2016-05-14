@@ -22,6 +22,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -167,6 +168,9 @@ static void   gimp_display_shell_ants_speed_notify_handler  (GObject          *c
 static void   gimp_display_shell_quality_notify_handler     (GObject          *config,
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
+static void  gimp_display_shell_color_config_notify_handler (GObject          *config,
+                                                             GParamSpec       *param_spec,
+                                                             GimpDisplayShell *shell);
 
 
 /*  public functions  */
@@ -174,17 +178,23 @@ static void   gimp_display_shell_quality_notify_handler     (GObject          *c
 void
 gimp_display_shell_connect (GimpDisplayShell *shell)
 {
-  GimpImage     *image;
-  GimpContainer *vectors;
-  GList         *list;
+  GimpImage         *image;
+  GimpContainer     *vectors;
+  GimpDisplayConfig *config;
+  GimpColorConfig   *color_config;
+  GList             *list;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
 
-  image   = gimp_display_get_image (shell->display);
-  vectors = gimp_image_get_vectors (image);
+  image = gimp_display_get_image (shell->display);
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  vectors = gimp_image_get_vectors (image);
+
+  config       = shell->display->config;
+  color_config = GIMP_CORE_CONFIG (config)->color_management;
 
   g_signal_connect (image, "clean",
                     G_CALLBACK (gimp_display_shell_clean_dirty_handler),
@@ -298,71 +308,78 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
       gimp_display_shell_vectors_add_handler (vectors, list->data, shell);
     }
 
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::transparency-size",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::transparency-type",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
 
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::image-title-format",
                     G_CALLBACK (gimp_display_shell_title_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::image-status-format",
                     G_CALLBACK (gimp_display_shell_title_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::navigation-preview-size",
                     G_CALLBACK (gimp_display_shell_nav_size_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::monitor-resolution-from-windowing-system",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::monitor-xresolution",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::monitor-yresolution",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
 
-  g_signal_connect (shell->display->config->default_view,
+  g_signal_connect (config->default_view,
                     "notify::padding-mode",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config->default_view,
+  g_signal_connect (config->default_view,
                     "notify::padding-color",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config->default_fullscreen_view,
+  g_signal_connect (config->default_fullscreen_view,
                     "notify::padding-mode",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (shell->display->config->default_fullscreen_view,
+  g_signal_connect (config->default_fullscreen_view,
                     "notify::padding-color",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
 
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::marching-ants-speed",
                     G_CALLBACK (gimp_display_shell_ants_speed_notify_handler),
                     shell);
 
-  g_signal_connect (shell->display->config,
+  g_signal_connect (config,
                     "notify::zoom-quality",
                     G_CALLBACK (gimp_display_shell_quality_notify_handler),
+                    shell);
+
+  g_signal_connect (color_config, "notify",
+                    G_CALLBACK (gimp_display_shell_color_config_notify_handler),
                     shell);
 
   gimp_display_shell_invalidate_preview_handler (image, shell);
   gimp_display_shell_quick_mask_changed_handler (image, shell);
   gimp_display_shell_profile_changed_handler    (GIMP_COLOR_MANAGED (image),
                                                  shell);
+  gimp_display_shell_color_config_notify_handler (G_OBJECT (color_config),
+                                                  NULL, /* sync all */
+                                                  shell);
 
   gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                         gimp_image_get_active_layer (image));
@@ -371,9 +388,11 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 void
 gimp_display_shell_disconnect (GimpDisplayShell *shell)
 {
-  GimpImage     *image;
-  GimpContainer *vectors;
-  GList         *list;
+  GimpImage         *image;
+  GimpContainer     *vectors;
+  GimpDisplayConfig *config;
+  GimpColorConfig   *color_config;
+  GList             *list;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
@@ -384,33 +403,41 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   vectors = gimp_image_get_vectors (image);
 
+  config       = shell->display->config;
+  color_config = GIMP_CORE_CONFIG (config)->color_management;
+
   gimp_display_shell_icon_update_stop (shell);
 
   gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                         NULL);
 
-  g_signal_handlers_disconnect_by_func (shell->display->config,
+  g_signal_handlers_disconnect_by_func (color_config,
+                                        gimp_display_shell_color_config_notify_handler,
+                                        shell);
+  shell->color_config_set = FALSE;
+
+  g_signal_handlers_disconnect_by_func (config,
                                         gimp_display_shell_quality_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (shell->display->config,
+  g_signal_handlers_disconnect_by_func (config,
                                         gimp_display_shell_ants_speed_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (shell->display->config->default_fullscreen_view,
+  g_signal_handlers_disconnect_by_func (config->default_fullscreen_view,
                                         gimp_display_shell_padding_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (shell->display->config->default_view,
+  g_signal_handlers_disconnect_by_func (config->default_view,
                                         gimp_display_shell_padding_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (shell->display->config,
+  g_signal_handlers_disconnect_by_func (config,
                                         gimp_display_shell_monitor_res_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (shell->display->config,
+  g_signal_handlers_disconnect_by_func (config,
                                         gimp_display_shell_nav_size_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (shell->display->config,
+  g_signal_handlers_disconnect_by_func (config,
                                         gimp_display_shell_title_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (shell->display->config,
+  g_signal_handlers_disconnect_by_func (config,
                                         gimp_display_shell_check_notify_handler,
                                         shell);
 
@@ -1088,4 +1115,42 @@ gimp_display_shell_quality_notify_handler (GObject          *config,
                                            GimpDisplayShell *shell)
 {
   gimp_display_shell_expose_full (shell);
+}
+
+static void
+gimp_display_shell_color_config_notify_handler (GObject          *config,
+                                                GParamSpec       *param_spec,
+                                                GimpDisplayShell *shell)
+{
+  if (param_spec)
+    {
+      gboolean copy = TRUE;
+
+      if (! strcmp (param_spec->name, "mode"))
+        {
+          if (shell->color_config_set)
+            copy = FALSE;
+        }
+
+      if (copy)
+        {
+          GValue value = G_VALUE_INIT;
+
+          g_value_init (&value, param_spec->value_type);
+
+          g_object_get_property (config,
+                                 param_spec->name, &value);
+          g_object_set_property (G_OBJECT (shell->color_config),
+                                 param_spec->name, &value);
+
+          g_value_unset (&value);
+        }
+    }
+  else
+    {
+      gimp_config_copy (GIMP_CONFIG (config),
+                        GIMP_CONFIG (shell->color_config),
+                        0);
+      shell->color_config_set = FALSE;
+    }
 }

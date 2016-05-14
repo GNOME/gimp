@@ -30,6 +30,8 @@
 
 #include "display-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "gegl/gimp-babl.h"
 
 #include "core/gimpimage.h"
@@ -37,6 +39,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-actions.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-profile.h"
 #include "gimpdisplayxfer.h"
@@ -44,24 +47,41 @@
 #include "gimp-intl.h"
 
 
+/*  local function prototypes  */
+
+static void   gimp_display_shell_profile_free        (GimpDisplayShell *shell);
+
+static void   gimp_display_shell_color_config_notify (GimpColorConfig  *config,
+                                                      const GParamSpec *pspec,
+                                                      GimpDisplayShell *shell);
+
+
+/*  public functions  */
+
 void
-gimp_display_shell_profile_dispose (GimpDisplayShell *shell)
+gimp_display_shell_profile_init (GimpDisplayShell *shell)
 {
-  if (shell->profile_transform)
+  GimpColorConfig *color_config;
+
+  color_config = GIMP_CORE_CONFIG (shell->display->config)->color_management;
+
+  shell->color_config = gimp_config_duplicate (GIMP_CONFIG (color_config));
+
+  g_signal_connect (shell->color_config, "notify",
+                    G_CALLBACK (gimp_display_shell_color_config_notify),
+                    shell);
+}
+
+void
+gimp_display_shell_profile_finalize (GimpDisplayShell *shell)
+{
+  if (shell->color_config)
     {
-      cmsDeleteTransform (shell->profile_transform);
-      shell->profile_transform   = NULL;
-      shell->profile_src_format  = NULL;
-      shell->profile_dest_format = NULL;
+      g_object_unref (shell->color_config);
+      shell->color_config = NULL;
     }
 
-  if (shell->profile_buffer)
-    {
-      g_object_unref (shell->profile_buffer);
-      shell->profile_buffer = NULL;
-      shell->profile_data   = NULL;
-      shell->profile_stride = 0;
-    }
+  gimp_display_shell_profile_free (shell);
 }
 
 void
@@ -72,7 +92,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   const Babl       *src_format;
   const Babl       *dest_format;
 
-  gimp_display_shell_profile_dispose (shell);
+  gimp_display_shell_profile_free (shell);
 
   image = gimp_display_get_image (shell->display);
 
@@ -200,4 +220,56 @@ gimp_display_shell_profile_convert_buffer (GimpDisplayShell *shell,
                       src_data, dest_data,
                       iter->length);
     }
+}
+
+
+/*  private functions  */
+
+static void
+gimp_display_shell_profile_free (GimpDisplayShell *shell)
+{
+  if (shell->profile_transform)
+    {
+      cmsDeleteTransform (shell->profile_transform);
+      shell->profile_transform   = NULL;
+      shell->profile_src_format  = NULL;
+      shell->profile_dest_format = NULL;
+    }
+
+  if (shell->profile_buffer)
+    {
+      g_object_unref (shell->profile_buffer);
+      shell->profile_buffer = NULL;
+      shell->profile_data   = NULL;
+      shell->profile_stride = 0;
+    }
+}
+
+static void
+gimp_display_shell_color_config_notify (GimpColorConfig  *config,
+                                        const GParamSpec *pspec,
+                                        GimpDisplayShell *shell)
+{
+  if (! strcmp (pspec->name, "mode"))
+    {
+      const gchar *action = NULL;
+
+      switch (config->mode)
+        {
+        case GIMP_COLOR_MANAGEMENT_OFF:
+          action = "view-color-management-mode-off";
+          break;
+
+        case GIMP_COLOR_MANAGEMENT_DISPLAY:
+          action = "view-color-management-mode-display";
+          break;
+        case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
+          action = "view-color-management-mode-softproof";
+          break;
+        }
+
+      gimp_display_shell_set_action_active (shell, action, TRUE);
+    }
+
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 }

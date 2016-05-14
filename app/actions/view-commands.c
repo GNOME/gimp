@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -483,6 +484,47 @@ view_display_filters_cmd_callback (GtkAction *action,
     }
 
   gtk_window_present (GTK_WINDOW (shell->filters_dialog));
+}
+
+void
+view_color_management_reset_cmd_callback (GtkAction *action,
+                                          gpointer   data)
+{
+  GimpDisplayShell *shell;
+  GimpColorConfig  *global_config;
+  GimpColorConfig  *shell_config;
+  return_if_no_shell (shell, data);
+
+  global_config = GIMP_CORE_CONFIG (shell->display->config)->color_management;
+  shell_config  = gimp_display_shell_get_color_config (shell);
+
+  gimp_config_copy (GIMP_CONFIG (global_config),
+                    GIMP_CONFIG (shell_config),
+                    0);
+  shell->color_config_set = FALSE;
+}
+
+void
+view_color_management_mode_cmd_callback (GtkAction *action,
+                                         GtkAction *current,
+                                         gpointer   data)
+{
+  GimpDisplayShell        *shell;
+  GimpColorConfig         *color_config;
+  GimpColorManagementMode  value;
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+
+  if (value != color_config->mode)
+    {
+      g_object_set (color_config,
+                    "mode", value,
+                    NULL);
+      shell->color_config_set = TRUE;
+    }
 }
 
 void

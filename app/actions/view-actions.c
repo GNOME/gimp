@@ -22,6 +22,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -70,6 +71,10 @@ static const GimpActionEntry view_actions[] =
   { "view-zoom-menu",           NULL, NC_("view-action", "_Zoom")          },
   { "view-rotate-menu",         NULL, NC_("view-action", "_Flip & Rotate") },
   { "view-padding-color-menu",  NULL, NC_("view-action", "_Padding Color") },
+
+  { "view-color-management-menu", NULL,
+    NC_("view-action", "_Color Management") },
+
   { "view-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
     NC_("view-action", "Move to Screen"), NULL, NULL, NULL,
     GIMP_HELP_VIEW_CHANGE_SCREEN },
@@ -127,6 +132,13 @@ static const GimpActionEntry view_actions[] =
     NC_("view-action", "Configure filters applied to this view"),
     G_CALLBACK (view_display_filters_cmd_callback),
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
+
+  { "view-color-management-reset", GIMP_STOCK_RESET,
+    NC_("view-action", "As in _Preferences"), NULL,
+    NC_("view-action",
+        "Reset color management to what's configured in preferences"),
+    G_CALLBACK (view_color_management_reset_cmd_callback),
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-shrink-wrap", "zoom-fit-best",
     NC_("view-action", "Shrink _Wrap"), "<primary>J",
@@ -457,6 +469,27 @@ static const GimpEnumActionEntry view_rotate_relative_actions[] =
     GIMP_HELP_VIEW_ROTATE_345 }
 };
 
+static const GimpRadioActionEntry view_color_management_mode_actions[] =
+{
+  { "view-color-management-mode-off", NULL,
+    NC_("view-action", "_No Color Management"), NULL,
+    NC_("view-action", "Don't color manage this view"),
+    GIMP_COLOR_MANAGEMENT_OFF,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "view-color-management-mode-display", NULL,
+    NC_("view-action", "_Color Managed Display"), NULL,
+    NC_("view-action", "Color manage this view"),
+    GIMP_COLOR_MANAGEMENT_DISPLAY,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "view-color-management-mode-softproof", NULL,
+    NC_("view-action", "_Print Simulation"), NULL,
+    NC_("view-action", "Use this view for softproofing"),
+    GIMP_COLOR_MANAGEMENT_SOFTPROOF,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT }
+};
+
 static const GimpEnumActionEntry view_padding_color_actions[] =
 {
   { "view-padding-color-theme", NULL,
@@ -607,6 +640,13 @@ view_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (view_rotate_relative_actions),
                                       G_CALLBACK (view_rotate_relative_cmd_callback));
 
+  gimp_action_group_add_radio_actions (group, "view-action",
+                                       view_color_management_mode_actions,
+                                       G_N_ELEMENTS (view_color_management_mode_actions),
+                                       NULL,
+                                       GIMP_COLOR_MANAGEMENT_DISPLAY,
+                                       G_CALLBACK (view_color_management_mode_cmd_callback));
+
   gimp_action_group_add_enum_actions (group, "view-padding-color",
                                       view_padding_color_actions,
                                       G_N_ELEMENTS (view_padding_color_actions),
@@ -657,6 +697,7 @@ view_actions_update (GimpActionGroup *group,
   GimpImage          *image             = NULL;
   GimpDisplayShell   *shell             = NULL;
   GimpDisplayOptions *options           = NULL;
+  GimpColorConfig    *color_config      = NULL;
   gchar              *label             = NULL;
   gboolean            fullscreen        = FALSE;
   gboolean            revert_enabled    = FALSE;   /* able to revert zoom? */
@@ -666,6 +707,7 @@ view_actions_update (GimpActionGroup *group,
   if (display)
     {
       GimpImageWindow *window;
+      const gchar     *action = NULL;
 
       image  = gimp_display_get_image (display);
       shell  = gimp_display_get_shell (display);
@@ -682,6 +724,24 @@ view_actions_update (GimpActionGroup *group,
 
       flip_horizontally = shell->flip_horizontally;
       flip_vertically   = shell->flip_vertically;
+
+      color_config = gimp_display_shell_get_color_config (shell);
+
+      switch (color_config->mode)
+        {
+        case GIMP_COLOR_MANAGEMENT_OFF:
+          action = "view-color-management-mode-off";
+          break;
+
+        case GIMP_COLOR_MANAGEMENT_DISPLAY:
+          action = "view-color-management-mode-display";
+          break;
+        case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
+          action = "view-color-management-mode-softproof";
+          break;
+        }
+
+      gimp_action_group_set_action_active (group, action, TRUE);
     }
 
 #define SET_ACTIVE(action,condition) \
@@ -764,6 +824,11 @@ view_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("view-navigation-window", image);
   SET_SENSITIVE ("view-display-filters",   image);
+
+  SET_SENSITIVE ("view-color-management-mode-off",       image);
+  SET_SENSITIVE ("view-color-management-mode-display",   image);
+  SET_SENSITIVE ("view-color-management-mode-softproof", image);
+  SET_SENSITIVE ("view-color-management-reset",          image);
 
   SET_SENSITIVE ("view-show-selection",      image);
   SET_ACTIVE    ("view-show-selection",      display && options->show_selection);
