@@ -84,6 +84,8 @@ libappdisplay_a_sources = \
 	gimpdisplay-handlers.h			\
 	gimpdisplayshell.c			\
 	gimpdisplayshell.h			\
+	gimpdisplayshell-actions.c		\
+	gimpdisplayshell-actions.h		\
 	gimpdisplayshell-appearance.c		\
 	gimpdisplayshell-appearance.h		\
 	gimpdisplayshell-autoscroll.c		\
