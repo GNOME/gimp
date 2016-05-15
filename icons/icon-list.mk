@@ -244,7 +244,7 @@ scalable_images = \
 
 vector24_images = \
 	24/gimp-gegl.svg				\
-	24/gimp-move-to.screen.svg			\
+	24/gimp-move-to-screen.svg			\
 	24/gimp-print-resolution.svg			\
 	24/gimp-resize.svg				\
 	24/gimp-scale					\
