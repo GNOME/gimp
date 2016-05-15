@@ -15,10 +15,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-print-resolution-24.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/gimp-hfill.png"
-   inkscape:export-xdpi="98.181816"
-   inkscape:export-ydpi="98.181816">
+   sodipodi:docname="gimp-print-resolution.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -30,7 +27,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="16"
      inkscape:cx="1.246903"
-     inkscape:cy="13.831305"
+     inkscape:cy="14.237555"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -67,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
