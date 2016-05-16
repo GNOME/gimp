@@ -244,6 +244,7 @@ scalable_images = \
 
 vector24_images = \
 	24/gimp-gegl.svg				\
+	24/gimp-grid.svg				\
 	24/gimp-move-to-screen.svg			\
 	24/gimp-print-resolution.svg			\
 	24/gimp-resize.svg				\
@@ -279,6 +280,7 @@ vector24_images = \
 	24/gimp-tool-mypaint-brush.svg			\
 	24/gimp-tool-measure.svg			\
 	24/gimp-tool-n-point-deformation.svg		\
+	24/gimp-tool-options.svg			\
 	24/gimp-tool-paintbrush.svg			\
 	24/gimp-tool-path.svg				\
 	24/gimp-tool-pencil.svg				\
@@ -585,6 +587,7 @@ icons24_images = \
 	24/gimp-display-filter.png		\
 	24/gimp-floating-selection.png		\
 	24/gimp-gegl.png			\
+	24/gimp-grid.png			\
 	24/gimp-gravity-east.png		\
 	24/gimp-gravity-north-east.png		\
 	24/gimp-gravity-north-west.png		\
