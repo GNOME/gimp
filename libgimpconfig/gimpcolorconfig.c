@@ -51,7 +51,7 @@
 
 
 #define COLOR_MANAGEMENT_MODE_BLURB \
-  _("Mode of operation for color management.")
+  _("How images are displayed on screen.")
 
 #define DISPLAY_PROFILE_BLURB \
   _("The color profile of your (primary) monitor.")
