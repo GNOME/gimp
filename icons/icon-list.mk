@@ -247,11 +247,15 @@ vector24_images = \
 	24/gimp-grid.svg				\
 	24/gimp-image.svg				\
 	24/gimp-images.svg				\
+	24/gimp-layer.svg				\
+	24/gimp-layer-mask.svg				\
+	24/gimp-layers.svg				\
 	24/gimp-move-to-screen.svg			\
 	24/gimp-print-resolution.svg			\
 	24/gimp-resize.svg				\
 	24/gimp-scale					\
 	24/gimp-symmetry.svg				\
+	24/gimp-text-layer.svg				\
 	24/gimp-tool-airbrush.svg			\
 	24/gimp-tool-align.svg				\
 	24/gimp-tool-blend.svg				\

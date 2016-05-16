@@ -50,9 +50,9 @@
      id="namedview88"
      showgrid="true"
      inkscape:zoom="1.1847467"
-     inkscape:cx="1174.3083"
-     inkscape:cy="92.407435"
-     inkscape:window-x="468"
+     inkscape:cx="1141.6043"
+     inkscape:cy="86.92103"
+     inkscape:window-x="56"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:current-layer="stock"
@@ -33401,6 +33401,153 @@
            id="rect10683-8"
            inkscape:connector-curvature="0" />
       </g>
+    </g>
+    <g
+       transform="matrix(0.99912557,0,0,1,611.92439,-1094.3862)"
+       id="gimp-layer-24">
+      <rect
+         rx="0"
+         y="1028.3622"
+         x="0"
+         height="24"
+         width="24"
+         id="rect28186-4-36"
+         style="fill:none;stroke:none;stroke-width:1.5" />
+      <rect
+         y="1028.3622"
+         x="0"
+         height="24"
+         width="24"
+         id="rect6884-23"
+         style="opacity:0.3;fill:none;stroke:none;stroke-width:1.5" />
+      <g
+         inkscape:label="gimp-layers"
+         id="gimp-layers-2"
+         style="display:inline"
+         transform="matrix(1.5,0,0,1.5,-61.500297,369.86224)">
+        <rect
+           style="fill:none;stroke:none"
+           id="rect11958"
+           width="16"
+           height="16"
+           x="41.000198"
+           y="439" />
+      </g>
+      <path
+         sodipodi:nodetypes="ccccc"
+         d="m 6,1035.3622 -6,10 h 18 l 6,-10 z"
+         id="path8"
+         inkscape:connector-curvature="0"
+         style="fill:#bebebe;stroke-width:1.58620834" />
+      <path
+         sodipodi:nodetypes="cccccccc"
+         id="path8-4"
+         d="m 24,1028.3625 -18,-3e-4 -6,9 h 2.5 l 3.5,-4.953 15,-0.094 3,-3.9528 z"
+         style="opacity:0.3;fill:#bebebe;stroke-width:1.50482082"
+         inkscape:connector-curvature="0" />
+      <path
+         sodipodi:nodetypes="ccccccc"
+         id="path8-4-3"
+         d="m 24,1043.3622 h -2.5 l -3.5,5 H 3.6525 l -3.6525,4 h 18 z"
+         style="opacity:0.3;fill:#bebebe;stroke-width:1.50483346"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="matrix(0.99912557,0,0,1,611.59564,-1062.473)"
+       id="gimp-layer-mask-24">
+      <rect
+         rx="0"
+         y="1028.3622"
+         x="0"
+         height="24"
+         width="24"
+         id="rect28186-4-28"
+         style="fill:none;stroke:none;stroke-width:1.5" />
+      <rect
+         style="fill:none;stroke:none;stroke-width:1.5"
+         id="rect13518"
+         width="24"
+         height="24"
+         x="0"
+         y="1028.3622" />
+      <path
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.5"
+         d="m 16.5,1042.3622 -6,3 H 9 l -3.75,-1.875 -1.265625,1.875 -3.984375,6 h 18 l 6,-9 z"
+         id="path13520"
+         inkscape:connector-curvature="0" />
+      <path
+         sodipodi:nodetypes="cscscccccccccccccccc"
+         inkscape:connector-curvature="0"
+         id="path3826"
+         d="m 3,1029.3622 v 7.5087 c 0,2.6653 3.1219512,4.8927 6.9756098,6.4913 C 13.926829,1041.7636 17,1039.959 17,1036.9678 v -7.6056 z m 1.5609756,3.1004 h 4.6829269 v 1.5501 1.5502 l -3.1219513,-1.5502 z m 6.2439024,0 h 4.682927 l -1.560976,1.5501 -3.121951,1.5502 z m -4.6829268,4.6505 h 7.8048778 c -3.863218,6.9593 -7.8048778,0 -7.8048778,0 z"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.55556107;marker:none" />
+    </g>
+    <g
+       id="gimp-layers-24"
+       transform="matrix(1.4986883,0,0,1.5,607.81597,-1556.2128)">
+      <rect
+         rx="0"
+         y="1036.3622"
+         x="0"
+         height="16"
+         width="16"
+         id="rect28186-4-07"
+         style="fill:none;stroke:none" />
+      <rect
+         y="1036.3622"
+         x="0"
+         height="16"
+         width="16"
+         id="rect6884-99"
+         style="opacity:0.3;fill:none;stroke:none" />
+      <rect
+         y="1036.3622"
+         x="3.642578e-07"
+         height="16"
+         width="16"
+         id="rect11958-62"
+         style="fill:none;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="path11960"
+         d="m 0,1052.3622 3.4285714,-4 H 16 l -3.428571,4 z"
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.23442674" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.23442674"
+         d="m 0,1046.3622 3.4285714,-4 H 16 l -3.428571,4 z"
+         id="path11962"
+         inkscape:connector-curvature="0" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="path11964"
+         d="m 0,1040.3622 3.4285714,-4 H 16 l -3.428571,4 z"
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.23442674" />
+    </g>
+    <g
+       transform="matrix(0.99912557,0,0,1,605.8595,-998.67307)"
+       id="gimp-text-layer-24">
+      <rect
+         y="1028.3622"
+         x="0"
+         height="24"
+         width="24"
+         id="rect11723"
+         style="opacity:0.3;fill:none;stroke:none;stroke-width:1.5" />
+      <path
+         sodipodi:nodetypes="ccccccccccccc"
+         inkscape:connector-curvature="0"
+         id="path11725"
+         d="m 1.5,1040.3622 -1.5,11 22.40625,-0.098 1.59375,-10.9011 -4,-9e-4 1.9375,5 H 15 l -1,-5 h -2 l -1.5,5 H 3.9375 l 1.0625,-5 z"
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.53529894" />
+      <path
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.53312325"
+         d="M 10.999991,1029.3622 6,1043.3622 h 3.000013 l 1.533029,-5 h 4.533044 l 1.933901,5 H 20 l -4.999991,-14 z m 1.894011,2.2848 1.699892,5.7152 h -3.399783 z"
+         id="path11731"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccccccccc" />
     </g>
   </g>
   <text
