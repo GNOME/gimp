@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-10 01:08+0300\n"
-"PO-Revision-Date: 2016-05-10 01:11+0300\n"
+"POT-Creation-Date: 2016-05-14 17:56+0300\n"
+"PO-Revision-Date: 2016-05-17 01:11+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -625,32 +625,32 @@ msgstr "Текстура"
 #: ../libgimpbase/gimpbaseenums.c:369
 msgctxt "component-type"
 msgid "8-bit integer"
-msgstr ""
+msgstr "8bit целочисленное"
 
 #: ../libgimpbase/gimpbaseenums.c:370
 msgctxt "component-type"
 msgid "16-bit integer"
-msgstr ""
+msgstr "16bit целочисленное"
 
 #: ../libgimpbase/gimpbaseenums.c:371
 msgctxt "component-type"
 msgid "32-bit integer"
-msgstr ""
+msgstr "32bit целочисленное"
 
 #: ../libgimpbase/gimpbaseenums.c:372
 msgctxt "component-type"
 msgid "16-bit floating point"
-msgstr ""
+msgstr "16bit с плавающей точкой"
 
 #: ../libgimpbase/gimpbaseenums.c:373
 msgctxt "component-type"
 msgid "32-bit floating point"
-msgstr ""
+msgstr "32bit с плавающей точкой"
 
 #: ../libgimpbase/gimpbaseenums.c:374
 msgctxt "component-type"
 msgid "64-bit floating point"
-msgstr ""
+msgstr "64bit с плавающей точкой"
 
 #: ../libgimpbase/gimpbaseenums.c:405
 msgctxt "convert-palette-type"
@@ -1433,7 +1433,7 @@ msgstr "Использовать компенсацию чёрной точки 
 
 #: ../libgimpconfig/gimpcolorconfig.c:242
 msgid "Softproof rendering intent"
-msgstr ""
+msgstr "Цветопередача при программной цветопробе"
 
 #: ../libgimpconfig/gimpcolorconfig.c:250
 msgid "Use black point compensation for softproofing"
