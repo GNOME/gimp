@@ -250,25 +250,83 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
                                         const GParamSpec *pspec,
                                         GimpDisplayShell *shell)
 {
-  if (! strcmp (pspec->name, "mode"))
+  if (! strcmp (pspec->name, "mode")                                    ||
+      ! strcmp (pspec->name, "display-rendering-intent")                ||
+      ! strcmp (pspec->name, "display-use-black-point-compensation")    ||
+      ! strcmp (pspec->name, "simulation-rendering-intent")             ||
+      ! strcmp (pspec->name, "simulation-use-black-point-compensation") ||
+      ! strcmp (pspec->name, "simulation-gamut-check"))
     {
-      const gchar *action = NULL;
+      GimpColorRenderingIntent intent  = GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL;
+      gboolean                 managed = TRUE;
+      gboolean                 bpc     = TRUE;
+      const gchar             *action  = NULL;
+
+#define SET_SENSITIVE(action, sensitive) \
+      gimp_display_shell_set_action_sensitive (shell, action, sensitive);
+
+#define SET_ACTIVE(action, active) \
+      gimp_display_shell_set_action_active (shell, action, active);
 
       switch (config->mode)
         {
         case GIMP_COLOR_MANAGEMENT_OFF:
-          action = "view-color-management-mode-off";
+          action  = "view-color-management-mode-off";
+          managed = FALSE;
           break;
 
         case GIMP_COLOR_MANAGEMENT_DISPLAY:
           action = "view-color-management-mode-display";
+          intent = config->display_intent;
+          bpc    = config->display_use_black_point_compensation;
           break;
+
         case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
           action = "view-color-management-mode-softproof";
+          intent = config->simulation_intent;
+          bpc    = config->simulation_use_black_point_compensation;
           break;
         }
 
-      gimp_display_shell_set_action_active (shell, action, TRUE);
+      SET_ACTIVE (action, TRUE);
+
+      switch (intent)
+        {
+        case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
+          action = "view-color-management-intent-perceptual";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+          action = "view-color-management-intent-relative-colorimetric";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_SATURATION:
+          action = "view-color-management-intent-saturation";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+          action = "view-color-management-intent-absolute-colorimetric";
+          break;
+        }
+
+      SET_SENSITIVE ("view-color-management-intent-perceptual",
+                     managed);
+      SET_SENSITIVE ("view-color-management-intent-relative-colorimetric",
+                     managed);
+      SET_SENSITIVE ("view-color-management-intent-saturation",
+                     managed);
+      SET_SENSITIVE ("view-color-management-intent-absolute-colorimetric",
+                     managed);
+
+      SET_ACTIVE (action, TRUE);
+
+      SET_SENSITIVE ("view-color-management-black-point-compensation", managed);
+      SET_ACTIVE    ("view-color-management-black-point-compensation", bpc);
+
+      SET_SENSITIVE ("view-color-management-gamut-check",
+                     config->mode == GIMP_COLOR_MANAGEMENT_SOFTPROOF);
+      SET_ACTIVE    ("view-color-management-gamut-check",
+                     config->simulation_gamut_check);
     }
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));

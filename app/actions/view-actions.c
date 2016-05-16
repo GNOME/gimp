@@ -162,6 +162,21 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_DOT_FOR_DOT },
 
+  { "view-color-management-black-point-compensation", NULL,
+    NC_("view-action", "_Black Point Compensation"), NULL,
+    NC_("view-action", "Use black point compentation"),
+    G_CALLBACK (view_color_management_bpc_cmd_callback),
+    TRUE,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "view-color-management-gamut-check", NULL,
+    NC_("view-action", "_Mark Out Of Gamut Colors"), NULL,
+    NC_("view-action", "When softproofing, mark colors which cannot "
+        "be represented in the target color space"),
+    G_CALLBACK (view_color_management_gamut_check_cmd_callback),
+    FALSE,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
   { "view-show-selection", NULL,
     NC_("view-action", "Show _Selection"), "<primary>T",
     NC_("view-action", "Display the selection outline"),
@@ -490,6 +505,33 @@ static const GimpRadioActionEntry view_color_management_mode_actions[] =
     GIMP_HELP_VIEW_COLOR_MANAGEMENT }
 };
 
+static const GimpRadioActionEntry view_color_management_intent_actions[] =
+{
+  { "view-color-management-intent-perceptual", NULL,
+    NC_("view-action", "_Perceptual"), NULL,
+    NC_("view-action", "Rendering intent is percptual"),
+    GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "view-color-management-intent-relative-colorimetric", NULL,
+    NC_("view-action", "_Relative Colorimetric"), NULL,
+    NC_("view-action", "Rendering intent is relative colorimetic"),
+    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "view-color-management-intent-saturation", NULL,
+    NC_("view-action", "_Saturation"), NULL,
+    NC_("view-action", "Rendering intent is saturation"),
+    GIMP_COLOR_RENDERING_INTENT_SATURATION,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "view-color-management-intent-absolute-colorimetric", NULL,
+    NC_("view-action", "_Absolute Colorimetric"), NULL,
+    NC_("view-action", "Rendering intent is absolute colorimetic"),
+    GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT }
+};
+
 static const GimpEnumActionEntry view_padding_color_actions[] =
 {
   { "view-padding-color-theme", NULL,
@@ -647,6 +689,13 @@ view_actions_setup (GimpActionGroup *group)
                                        GIMP_COLOR_MANAGEMENT_DISPLAY,
                                        G_CALLBACK (view_color_management_mode_cmd_callback));
 
+  gimp_action_group_add_radio_actions (group, "view-action",
+                                       view_color_management_intent_actions,
+                                       G_N_ELEMENTS (view_color_management_intent_actions),
+                                       NULL,
+                                       GIMP_COLOR_MANAGEMENT_DISPLAY,
+                                       G_CALLBACK (view_color_management_intent_cmd_callback));
+
   gimp_action_group_add_enum_actions (group, "view-padding-color",
                                       view_padding_color_actions,
                                       G_N_ELEMENTS (view_padding_color_actions),
@@ -703,11 +752,15 @@ view_actions_update (GimpActionGroup *group,
   gboolean            revert_enabled    = FALSE;   /* able to revert zoom? */
   gboolean            flip_horizontally = FALSE;
   gboolean            flip_vertically   = FALSE;
+  gboolean            cm                = FALSE;
+  gboolean            sp                = FALSE;
 
   if (display)
     {
-      GimpImageWindow *window;
-      const gchar     *action = NULL;
+      GimpImageWindow          *window;
+      GimpColorRenderingIntent  intent = GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL;
+      gboolean                  bpc    = TRUE;
+      const gchar              *action = NULL;
 
       image  = gimp_display_get_image (display);
       shell  = gimp_display_get_shell (display);
@@ -735,13 +788,51 @@ view_actions_update (GimpActionGroup *group,
 
         case GIMP_COLOR_MANAGEMENT_DISPLAY:
           action = "view-color-management-mode-display";
+          intent = color_config->display_intent;
+          bpc    = color_config->display_use_black_point_compensation;
+
+          cm = TRUE;
           break;
+
         case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
           action = "view-color-management-mode-softproof";
+          intent = color_config->simulation_intent;
+          bpc    = color_config->simulation_use_black_point_compensation;
+
+          cm = TRUE;
+          sp = TRUE;
           break;
         }
 
       gimp_action_group_set_action_active (group, action, TRUE);
+
+      switch (intent)
+        {
+        case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
+          action = "view-color-management-intent-perceptual";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+          action = "view-color-management-intent-relative-colorimetric";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_SATURATION:
+          action = "view-color-management-intent-saturation";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+          action = "view-color-management-intent-absolute-colorimetric";
+          break;
+        }
+
+      gimp_action_group_set_action_active (group, action, TRUE);
+
+      gimp_action_group_set_action_active (group,
+                                           "view-color-management-black-point-compensation",
+                                           bpc);
+      gimp_action_group_set_action_active (group,
+                                           "view-color-management-gamut-check",
+                                           color_config->simulation_gamut_check);
     }
 
 #define SET_ACTIVE(action,condition) \
@@ -825,10 +916,16 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-navigation-window", image);
   SET_SENSITIVE ("view-display-filters",   image);
 
-  SET_SENSITIVE ("view-color-management-mode-off",       image);
-  SET_SENSITIVE ("view-color-management-mode-display",   image);
-  SET_SENSITIVE ("view-color-management-mode-softproof", image);
-  SET_SENSITIVE ("view-color-management-reset",          image);
+  SET_SENSITIVE ("view-color-management-mode-off",                     image);
+  SET_SENSITIVE ("view-color-management-mode-display",                 image);
+  SET_SENSITIVE ("view-color-management-mode-softproof",               image);
+  SET_SENSITIVE ("view-color-management-intent-perceptual",            cm);
+  SET_SENSITIVE ("view-color-management-intent-relative-colorimetric", cm);
+  SET_SENSITIVE ("view-color-management-intent-saturation",            cm);
+  SET_SENSITIVE ("view-color-management-intent-absolute-colorimetric", cm);
+  SET_SENSITIVE ("view-color-management-black-point-compensation",     cm);
+  SET_SENSITIVE ("view-color-management-gamut-check",                  sp);
+  SET_SENSITIVE ("view-color-management-reset",                        image);
 
   SET_SENSITIVE ("view-show-selection",      image);
   SET_ACTIVE    ("view-show-selection",      display && options->show_selection);

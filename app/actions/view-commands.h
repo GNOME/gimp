@@ -74,6 +74,14 @@ void   view_color_management_reset_cmd_callback (GtkAction *action,
 void   view_color_management_mode_cmd_callback  (GtkAction *action,
                                                  GtkAction *current,
                                                  gpointer   data);
+void   view_color_management_intent_cmd_callback(GtkAction *action,
+                                                 GtkAction *current,
+                                                 gpointer   data);
+void   view_color_management_bpc_cmd_callback   (GtkAction *action,
+                                                 gpointer   data);
+void   view_color_management_gamut_check_cmd_callback
+                                                (GtkAction *action,
+                                                 gpointer   data);
 
 void   view_toggle_selection_cmd_callback       (GtkAction *action,
                                                  gpointer   data);

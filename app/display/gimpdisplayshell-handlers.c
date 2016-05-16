@@ -1126,7 +1126,12 @@ gimp_display_shell_color_config_notify_handler (GObject          *config,
     {
       gboolean copy = TRUE;
 
-      if (! strcmp (param_spec->name, "mode"))
+      if (! strcmp (param_spec->name, "mode")                                 ||
+          ! strcmp (param_spec->name, "display-rendering-intent")             ||
+          ! strcmp (param_spec->name, "display-use-black-point-compensation") ||
+          ! strcmp (param_spec->name, "simulation-rendering-intent")          ||
+          ! strcmp (param_spec->name, "simulation-use-black-point-compensation") ||
+          ! strcmp (param_spec->name, "simulation-gamut-check"))
         {
           if (shell->color_config_set)
             copy = FALSE;

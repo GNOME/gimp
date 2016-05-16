@@ -306,6 +306,14 @@
         <menuitem action="view-color-management-mode-display" />
         <menuitem action="view-color-management-mode-softproof" />
         <separator />
+        <menuitem action="view-color-management-intent-perceptual" />
+        <menuitem action="view-color-management-intent-relative-colorimetric" />
+        <menuitem action="view-color-management-intent-saturation" />
+        <menuitem action="view-color-management-intent-absolute-colorimetric" />
+        <separator />
+        <menuitem action="view-color-management-black-point-compensation" />
+        <menuitem action="view-color-management-gamut-check" />
+        <separator />
         <menuitem action="view-color-management-reset" />
       </menu>
       <separator />
