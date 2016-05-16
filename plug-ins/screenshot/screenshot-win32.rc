@@ -1,6 +1,6 @@
 //Microsoft Developer Studio generated resource script.
 //
-#include "resource.h"
+#include "screenshot-win32-resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 SNAPPY                  ICON    DISCARDABLE     "screenshot-win32.ico"
-SMALL                   ICON    DISCARDABLE     "small.ico"
+SMALL                   ICON    DISCARDABLE     "screenshot-win32-small.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -90,7 +90,7 @@ END
 // Cursor
 //
 
-IDC_SELECT              CURSOR  DISCARDABLE     "select.cur"
+IDC_SELECT              CURSOR  DISCARDABLE     "screenshot-win32-select.cur"
 
 #ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
