@@ -47,9 +47,8 @@ enum
 
 typedef struct
 {
-  GtkAction   *action;
-  const gchar *name;
-  gint         count;
+  gchar *action_name;
+  gint   count;
 } GimpActionHistoryItem;
 
 static struct
@@ -59,7 +58,7 @@ static struct
 
 
 static GimpActionHistoryItem *
-            gimp_action_history_item_new          (GtkAction             *action,
+            gimp_action_history_item_new          (const gchar           *action_name,
                                                    gint                   count);
 static void gimp_action_history_item_free         (GimpActionHistoryItem *item);
 
@@ -75,7 +74,6 @@ void
 gimp_action_history_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
-  GimpUIManager *manager;
   GFile         *file;
   GScanner      *scanner;
   GTokenType     token;
@@ -103,8 +101,6 @@ gimp_action_history_init (Gimp *gimp)
   if (! scanner)
     return;
 
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
-
   g_scanner_scope_add_symbol (scanner, 0, "history-item",
                               GINT_TO_POINTER (HISTORY_ITEM));
 
@@ -123,37 +119,33 @@ gimp_action_history_init (Gimp *gimp)
         case G_TOKEN_SYMBOL:
           if (scanner->value.v_symbol == GINT_TO_POINTER (HISTORY_ITEM))
             {
-              GtkAction *action;
-              gchar     *name;
+              gchar *action_name;
 
               token = G_TOKEN_STRING;
 
               if (g_scanner_peek_next_token (scanner) != token)
                 break;
 
-              if (! gimp_scanner_parse_string (scanner, &name))
+              if (! gimp_scanner_parse_string (scanner, &action_name))
                 break;
-
-              action = gimp_ui_manager_find_action (manager, NULL, name);
-              g_free (name);
 
               token = G_TOKEN_INT;
 
-              if (g_scanner_peek_next_token (scanner) != token)
-                break;
-
-              if (! gimp_scanner_parse_int (scanner, &count))
-                break;
-
-              if (action)
+              if (g_scanner_peek_next_token (scanner) != token ||
+                  ! gimp_scanner_parse_int (scanner, &count))
                 {
-                  history.items =
-                    g_list_insert_sorted (history.items,
-                                          gimp_action_history_item_new (action, count),
-                                          (GCompareFunc) gimp_action_history_init_compare_func);
-
-                  n_items++;
+                  g_free (action_name);
+                  break;
                 }
+
+              history.items =
+                g_list_insert_sorted (history.items,
+                                      gimp_action_history_item_new (action_name, count),
+                                      (GCompareFunc) gimp_action_history_init_compare_func);
+
+              n_items++;
+
+              g_free (action_name);
             }
           token = G_TOKEN_RIGHT_PAREN;
           break;
@@ -227,7 +219,7 @@ gimp_action_history_exit (Gimp *gimp)
       item = actions->data;
 
       gimp_config_writer_open (writer, "history-item");
-      gimp_config_writer_string (writer, item->name);
+      gimp_config_writer_string (writer, item->action_name);
       gimp_config_writer_printf (writer, "%d", item->count - min_count);
       gimp_config_writer_close (writer);
     }
@@ -259,6 +251,7 @@ gimp_action_history_search (Gimp                *gimp,
                             const gchar         *keyword)
 {
   GimpGuiConfig *config;
+  GimpUIManager *manager;
   GList         *actions;
   GList         *result = NULL;
   gint           i;
@@ -266,14 +259,19 @@ gimp_action_history_search (Gimp                *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (match_func != NULL, NULL);
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config  = GIMP_GUI_CONFIG (gimp->config);
+  manager = gimp_ui_managers_from_name ("<Image>")->data;
 
   for (actions = history.items, i = 0;
        actions && i < config->action_history_size;
        actions = g_list_next (actions), i++)
     {
       GimpActionHistoryItem *item   = actions->data;
-      GtkAction             *action = item->action;
+      GtkAction             *action;
+
+      action = gimp_ui_manager_find_action (manager, NULL, item->action_name);
+      if (action == NULL)
+        continue;
 
       if (! gtk_action_is_sensitive (action) &&
           ! config->search_show_unavailable)
@@ -326,7 +324,7 @@ gimp_action_history_activate_callback (GtkAction *action,
     {
       GimpActionHistoryItem *item = actions->data;
 
-      if (g_strcmp0 (action_name, item->name) == 0)
+      if (g_strcmp0 (action_name, item->action_name) == 0)
         {
           GimpActionHistoryItem *next_item;
 
@@ -375,7 +373,7 @@ gimp_action_history_activate_callback (GtkAction *action,
   /* If we are here, this action is not logged yet. */
   history.items =
     g_list_insert_sorted (history.items,
-                          gimp_action_history_item_new (action, 1),
+                          gimp_action_history_item_new (action_name, 1),
                           (GCompareFunc) gimp_action_history_compare_func);
 }
 
@@ -383,14 +381,13 @@ gimp_action_history_activate_callback (GtkAction *action,
 /*  private functions  */
 
 static GimpActionHistoryItem *
-gimp_action_history_item_new (GtkAction *action,
-                              gint       count)
+gimp_action_history_item_new (const gchar *action_name,
+                              gint         count)
 {
   GimpActionHistoryItem *item = g_new0 (GimpActionHistoryItem, 1);
 
-  item->action = g_object_ref (action);
-  item->name   = gtk_action_get_name (action);
-  item->count  = count;
+  item->action_name = g_strdup (action_name);
+  item->count       = count;
 
   return item;
 }
@@ -398,7 +395,7 @@ gimp_action_history_item_new (GtkAction *action,
 static void
 gimp_action_history_item_free (GimpActionHistoryItem *item)
 {
-  g_object_unref (item->action);
+  g_free (item->action_name);
   g_free (item);
 }
 
