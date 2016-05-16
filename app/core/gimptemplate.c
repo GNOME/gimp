@@ -191,7 +191,10 @@ gimp_template_class_init (GimpTemplateClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_MANAGED,
                             "color-managed",
                             _("Color managed"),
-                            NULL,
+                            _("Whether the image is color managed. "
+                              "Disabling color management is equivalent to "
+                              "choosing a built-in sRGB profile. Better "
+                              "leave color management enabled."),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 

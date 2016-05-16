@@ -177,7 +177,9 @@ static const GimpToggleActionEntry image_toggle_actions[] =
 {
   { "image-color-management-enabled", NULL,
     NC_("image-action", "_Enable Color Management"), NULL,
-    NC_("image-action", "Whether the image is color managed"),
+    NC_("image-action", "Whether the image is color managed. Disabling "
+        "color management is equivalent to assigning a built-in sRGB "
+        "color profile. Better leave color management enabled."),
     G_CALLBACK (image_color_management_enabled_cmd_callback),
     TRUE,
     GIMP_HELP_IMAGE_COLOR_MANAGEMENT_ENABLED }
