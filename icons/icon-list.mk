@@ -243,6 +243,15 @@ scalable_images = \
 	scalable/gimp-zoom-follow-window.svg
 
 vector24_images = \
+	24/gimp-center.svg				\
+	24/gimp-channel.svg				\
+	24/gimp-channel-alpha.svg			\
+	24/gimp-channel-blue.svg			\
+	24/gimp-channel-gray.svg			\
+	24/gimp-channel-green.svg			\
+	24/gimp-channel-indexed.svg			\
+	24/gimp-channel-red.svg				\
+	24/gimp-channels.svg				\
 	24/gimp-gegl.svg				\
 	24/gimp-grid.svg				\
 	24/gimp-image.svg				\
