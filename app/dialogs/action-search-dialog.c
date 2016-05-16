@@ -268,7 +268,7 @@ one_matched:
         }
     }
 
-  if (! matched && g_utf8_strlen (key_tokens[0], -1) > 2 &&
+  if (! matched && key_tokens[0] && g_utf8_strlen (key_tokens[0], -1) > 2 &&
       gtk_action_get_tooltip (action) != NULL)
     {
       gchar    **tooltip_tokens;
