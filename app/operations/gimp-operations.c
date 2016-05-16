@@ -38,6 +38,7 @@
 #include "gimpoperationflood.h"
 #include "gimpoperationgrow.h"
 #include "gimpoperationhistogramsink.h"
+#include "gimpoperationcomposecrop.h"
 #include "gimpoperationmaskcomponents.h"
 #include "gimpoperationscalarmultiply.h"
 #include "gimpoperationsemiflatten.h"
@@ -103,6 +104,7 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_BORDER);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
+  g_type_class_ref (GIMP_TYPE_OPERATION_COMPOSE_CROP);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_FLOOD);
   g_type_class_ref (GIMP_TYPE_OPERATION_GROW);

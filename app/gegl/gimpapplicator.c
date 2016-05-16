@@ -499,20 +499,23 @@ gimp_applicator_set_preview (GimpApplicator      *applicator,
           if (! applicator->preview_enabled)
             {
               gegl_node_set (applicator->preview_crop_node,
-                             "operation", "gegl:crop",
-                             "x",         (gdouble) rect->x,
-                             "y",         (gdouble) rect->y,
-                             "width",     (gdouble) rect->width,
-                             "height",    (gdouble) rect->height,
+                             "operation", "gimp:compose-crop",
+                             "x",         rect->x,
+                             "y",         rect->y,
+                             "width",     rect->width,
+                             "height",    rect->height,
                              NULL);
+
+              gegl_node_connect_to (applicator->input_node,        "output",
+                                    applicator->preview_crop_node, "aux");
             }
           else
             {
               gegl_node_set (applicator->preview_crop_node,
-                             "x",      (gdouble) rect->x,
-                             "y",      (gdouble) rect->y,
-                             "width",  (gdouble) rect->width,
-                             "height", (gdouble) rect->height,
+                             "x",      rect->x,
+                             "y",      rect->y,
+                             "width",  rect->width,
+                             "height", rect->height,
                              NULL);
             }
         }
@@ -520,6 +523,7 @@ gimp_applicator_set_preview (GimpApplicator      *applicator,
         {
           GeglBuffer *cache;
 
+          gegl_node_disconnect (applicator->preview_crop_node, "aux");
           gegl_node_set (applicator->preview_crop_node,
                          "operation", "gegl:nop",
                          NULL);
