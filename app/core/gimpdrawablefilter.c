@@ -530,8 +530,9 @@ gimp_drawable_filter_sync_preview (GimpDrawableFilter *filter,
 static void
 gimp_drawable_filter_sync_mode (GimpDrawableFilter *filter)
 {
+  gimp_applicator_set_opacity (filter->applicator,
+                               filter->opacity);
   gimp_applicator_set_mode (filter->applicator,
-                            filter->opacity,
                             filter->paint_mode);
 }
 

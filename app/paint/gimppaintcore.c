@@ -898,8 +898,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                         core->paint_buffer_x,
                                         core->paint_buffer_y);
 
-      gimp_applicator_set_mode (core->applicator,
-                                image_opacity, paint_mode);
+      gimp_applicator_set_opacity (core->applicator, image_opacity);
+      gimp_applicator_set_mode (core->applicator, paint_mode);
 
       /*  apply the paint area to the image  */
       gimp_applicator_blit (core->applicator,

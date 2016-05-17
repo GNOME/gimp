@@ -639,9 +639,8 @@ gimp_image_merge_layers (GimpImage     *image,
                                         - (x1 - off_x),
                                         - (y1 - off_y));
 
-      gimp_applicator_set_mode (applicator,
-                                gimp_layer_get_opacity (layer),
-                                mode);
+      gimp_applicator_set_opacity (applicator, gimp_layer_get_opacity (layer));
+      gimp_applicator_set_mode (applicator, mode);
 
       gimp_applicator_blit (applicator,
                             GEGL_RECTANGLE (0, 0,
