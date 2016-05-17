@@ -252,6 +252,7 @@ vector24_images = \
 	24/gimp-channel-indexed.svg			\
 	24/gimp-channel-red.svg				\
 	24/gimp-channels.svg				\
+	24/gimp-colormap.svg				\
 	24/gimp-gegl.svg				\
 	24/gimp-grid.svg				\
 	24/gimp-image.svg				\
@@ -313,7 +314,9 @@ vector24_images = \
 	24/gimp-tool-unified-transform.svg		\
 	24/gimp-tool-text.svg				\
 	24/gimp-tool-warp.svg				\
-	24/gimp-tool-zoom.svg
+	24/gimp-tool-zoom.svg				\
+	24/gimp-transparency.svg			\
+	24/gimp-web.svg
 
 icons12_images = \
 	12/gimp-close.png			\
