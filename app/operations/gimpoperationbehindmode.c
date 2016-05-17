@@ -93,28 +93,35 @@ gimp_operation_behind_mode_process_pixels (gfloat              *in,
 
   while (samples--)
     {
-      gfloat value = opacity;
+      gfloat src1_alpha = in[ALPHA];
+      gfloat src2_alpha = layer[ALPHA] * opacity;
+      gfloat new_alpha;
       gint   b;
 
       if (has_mask)
-        value *= *mask;
+        src2_alpha *= *mask;
 
-      out[ALPHA] = in[ALPHA] + (1.0 - in[ALPHA]) * layer[ALPHA] * value;
+      new_alpha = src2_alpha + (1.0 - src2_alpha) * src1_alpha;
 
-      if (out[ALPHA])
+      if (new_alpha)
         {
+          gfloat ratio = in[ALPHA] / new_alpha;
+          gfloat compl_ratio = 1.0f - ratio;
+
           for (b = RED; b < ALPHA; b++)
             {
-              out[b] = (in[b] * in[ALPHA] + layer[b] * value * layer[ALPHA] * value * (1.0 - in[ALPHA])) / out[ALPHA];
+              out[b] = in[b] * ratio + layer[b] * compl_ratio;
             }
         }
       else
         {
-          for (b = RED; b <= ALPHA; b++)
+          for (b = RED; b < ALPHA; b++)
             {
-              out[b] = in[b];
+              out[b] = layer[b];
             }
         }
+
+      out[ALPHA] = new_alpha;
 
       in    += 4;
       layer += 4;
