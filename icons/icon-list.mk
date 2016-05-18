@@ -253,6 +253,7 @@ vector24_images = \
 	24/gimp-channel-red.svg				\
 	24/gimp-channels.svg				\
 	24/gimp-colormap.svg				\
+	24/gimp-floating-selection.svg			\
 	24/gimp-gegl.svg				\
 	24/gimp-grid.svg				\
 	24/gimp-image.svg				\
@@ -261,9 +262,11 @@ vector24_images = \
 	24/gimp-layer-mask.svg				\
 	24/gimp-layers.svg				\
 	24/gimp-move-to-screen.svg			\
+	24/gimp-navigation.svg				\
 	24/gimp-print-resolution.svg			\
 	24/gimp-resize.svg				\
 	24/gimp-scale					\
+	24/gimp-selection.svg				\
 	24/gimp-symmetry.svg				\
 	24/gimp-text-layer.svg				\
 	24/gimp-tool-airbrush.svg			\
@@ -626,10 +629,12 @@ icons24_images = \
 	24/gimp-layer.png			\
 	24/gimp-layers.png			\
 	24/gimp-move-to-screen.png		\
+	24/gimp-navigation.png			\
 	24/gimp-print-resolution.png		\
 	24/gimp-resize.png			\
 	24/gimp-sample-point.png		\
 	24/gimp-scale.png			\
+	24/gimp-selection.png			\
 	24/gimp-symmetry.png			\
 	24/gimp-template.png			\
 	24/gimp-text-dir-ltr.png		\
