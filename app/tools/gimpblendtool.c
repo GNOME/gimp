@@ -608,6 +608,7 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
     {
       /* Sync any property changes on the config object that match the op */
       GValue value = G_VALUE_INIT;
+
       g_value_init (&value, pspec->value_type);
 
       g_object_get_property (G_OBJECT (options), pspec->name, &value);
@@ -626,11 +627,15 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
       gimp_drawable_filter_apply (blend_tool->filter, NULL);
     }
   else if (blend_tool->filter &&
-           (! strcmp (pspec->name, "opacity") ||
-            ! strcmp (pspec->name, "paint-mode")))
+           ! strcmp (pspec->name, "opacity"))
+    {
+      gimp_drawable_filter_set_opacity (blend_tool->filter,
+                                        gimp_context_get_opacity (context));
+    }
+  else if (blend_tool->filter &&
+           ! strcmp (pspec->name, "paint-mode"))
     {
       gimp_drawable_filter_set_mode (blend_tool->filter,
-                                     gimp_context_get_opacity (context),
                                      gimp_context_get_paint_mode (context));
     }
 }
@@ -1181,14 +1186,14 @@ gimp_blend_tool_create_filter (GimpBlendTool *blend_tool,
 
   gimp_drawable_filter_set_region (blend_tool->filter,
                                    GIMP_FILTER_REGION_DRAWABLE);
+  gimp_drawable_filter_set_opacity (blend_tool->filter,
+                                    gimp_context_get_opacity (context));
+  gimp_drawable_filter_set_mode (blend_tool->filter,
+                                 gimp_context_get_paint_mode (context));
 
   g_signal_connect (blend_tool->filter, "flush",
                     G_CALLBACK (gimp_blend_tool_filter_flush),
                     blend_tool);
-
-  gimp_drawable_filter_set_mode (blend_tool->filter,
-                                 gimp_context_get_opacity (context),
-                                 gimp_context_get_paint_mode (context));
 }
 
 static void

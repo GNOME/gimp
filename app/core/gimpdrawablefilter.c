@@ -86,6 +86,7 @@ static void       gimp_drawable_filter_sync_preview     (GimpDrawableFilter  *fi
                                                          gboolean             old_enabled,
                                                          GimpAlignmentType    old_alignment,
                                                          gdouble              old_position);
+static void       gimp_drawable_filter_sync_opacity     (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_mode        (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_affect      (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_mask        (GimpDrawableFilter  *filter);
@@ -298,16 +299,30 @@ gimp_drawable_filter_set_preview (GimpDrawableFilter  *filter,
 }
 
 void
+gimp_drawable_filter_set_opacity (GimpDrawableFilter *filter,
+                                  gdouble             opacity)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (opacity != filter->opacity)
+    {
+      filter->opacity = opacity;
+
+      gimp_drawable_filter_sync_opacity (filter);
+
+      if (gimp_drawable_filter_is_filtering (filter))
+        gimp_drawable_filter_update_drawable (filter, NULL);
+    }
+}
+
+void
 gimp_drawable_filter_set_mode (GimpDrawableFilter   *filter,
-                               gdouble               opacity,
                                GimpLayerModeEffects  paint_mode)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
 
-  if (opacity    != filter->opacity ||
-      paint_mode != filter->paint_mode)
+  if (paint_mode != filter->paint_mode)
     {
-      filter->opacity    = opacity;
       filter->paint_mode = paint_mode;
 
       gimp_drawable_filter_sync_mode (filter);
@@ -528,10 +543,15 @@ gimp_drawable_filter_sync_preview (GimpDrawableFilter *filter,
 }
 
 static void
-gimp_drawable_filter_sync_mode (GimpDrawableFilter *filter)
+gimp_drawable_filter_sync_opacity (GimpDrawableFilter *filter)
 {
   gimp_applicator_set_opacity (filter->applicator,
                                filter->opacity);
+}
+
+static void
+gimp_drawable_filter_sync_mode (GimpDrawableFilter *filter)
+{
   gimp_applicator_set_mode (filter->applicator,
                             filter->paint_mode);
 }
@@ -647,6 +667,7 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
                                          filter->preview_enabled,
                                          filter->preview_alignment,
                                          filter->preview_position);
+      gimp_drawable_filter_sync_opacity (filter);
       gimp_drawable_filter_sync_mode (filter);
       gimp_drawable_filter_sync_affect (filter);
       gimp_drawable_filter_sync_gamma_hack (filter);

@@ -61,8 +61,9 @@ void       gimp_drawable_filter_set_preview    (GimpDrawableFilter   *filter,
                                                 gboolean              enabled,
                                                 GimpAlignmentType     alignment,
                                                 gdouble               split_position);
+void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter   *filter,
+                                                gdouble               opacity);
 void       gimp_drawable_filter_set_mode       (GimpDrawableFilter   *filter,
-                                                gdouble               opacity,
                                                 GimpLayerModeEffects  paint_mode);
 
 void       gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter   *filter,
