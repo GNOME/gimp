@@ -164,7 +164,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
 
   { "view-color-management-black-point-compensation", NULL,
     NC_("view-action", "_Black Point Compensation"), NULL,
-    NC_("view-action", "Use black point compentation"),
+    NC_("view-action", "Use black point compensation"),
     G_CALLBACK (view_color_management_bpc_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
@@ -509,13 +509,13 @@ static const GimpRadioActionEntry view_color_management_intent_actions[] =
 {
   { "view-color-management-intent-perceptual", NULL,
     NC_("view-action", "_Perceptual"), NULL,
-    NC_("view-action", "Rendering intent is percptual"),
+    NC_("view-action", "Rendering intent is perceptual"),
     GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-color-management-intent-relative-colorimetric", NULL,
     NC_("view-action", "_Relative Colorimetric"), NULL,
-    NC_("view-action", "Rendering intent is relative colorimetic"),
+    NC_("view-action", "Rendering intent is relative colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
@@ -527,7 +527,7 @@ static const GimpRadioActionEntry view_color_management_intent_actions[] =
 
   { "view-color-management-intent-absolute-colorimetric", NULL,
     NC_("view-action", "_Absolute Colorimetric"), NULL,
-    NC_("view-action", "Rendering intent is absolute colorimetic"),
+    NC_("view-action", "Rendering intent is absolute colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT }
 };
