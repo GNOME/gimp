@@ -22,6 +22,7 @@
 
 #include "core-types.h"
 
+#include "gimpdrawable-floating-selection.h"
 #include "gimpfloatingselundo.h"
 #include "gimpimage.h"
 #include "gimplayer.h"

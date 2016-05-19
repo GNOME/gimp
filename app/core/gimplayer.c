@@ -40,6 +40,7 @@
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
+#include "gimpdrawable-floating-selection.h"
 #include "gimperror.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimage-undo.h"

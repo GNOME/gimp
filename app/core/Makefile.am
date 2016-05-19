@@ -145,6 +145,8 @@ libappcore_a_sources = \
 	gimpdrawable-fill.h			\
 	gimpdrawable-filters.c			\
 	gimpdrawable-filters.h			\
+	gimpdrawable-floating-selection.c	\
+	gimpdrawable-floating-selection.h	\
 	gimpdrawable-foreground-extract.c	\
 	gimpdrawable-foreground-extract.h	\
 	gimpdrawable-histogram.c		\

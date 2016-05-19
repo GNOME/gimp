@@ -220,12 +220,5 @@ gint          gimp_drawable_get_component_index  (const GimpDrawable *drawable,
 
 const guchar  * gimp_drawable_get_colormap       (const GimpDrawable *drawable);
 
-GimpLayer    * gimp_drawable_get_floating_sel    (const GimpDrawable *drawable);
-void           gimp_drawable_attach_floating_sel (GimpDrawable       *drawable,
-                                                  GimpLayer          *floating_sel);
-void           gimp_drawable_detach_floating_sel (GimpDrawable       *drawable);
-GimpFilter *
-           gimp_drawable_get_floating_sel_filter (GimpDrawable       *drawable);
-
 
 #endif /* __GIMP_DRAWABLE_H__ */
