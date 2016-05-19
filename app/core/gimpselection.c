@@ -46,7 +46,7 @@
 #include "gimp-intl.h"
 
 
-static gboolean   gimp_selection_is_attached   (const GimpItem      *item);
+static gboolean   gimp_selection_is_attached   (GimpItem            *item);
 static GimpItemTree * gimp_selection_get_tree  (GimpItem            *item);
 static void       gimp_selection_translate     (GimpItem            *item,
                                                 gint                 offset_x,
@@ -203,7 +203,7 @@ gimp_selection_init (GimpSelection *selection)
 }
 
 static gboolean
-gimp_selection_is_attached (const GimpItem *item)
+gimp_selection_is_attached (GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
           gimp_image_get_mask (gimp_item_get_image (item)) ==

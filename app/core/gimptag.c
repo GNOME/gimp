@@ -213,8 +213,8 @@ gimp_tag_get_hash (GimpTag *tag)
  * Return value: TRUE if tags are equal, FALSE otherwise.
  **/
 gboolean
-gimp_tag_equals (const GimpTag *tag,
-                 const GimpTag *other)
+gimp_tag_equals (GimpTag *tag,
+                 GimpTag *other)
 {
   g_return_val_if_fail (GIMP_IS_TAG (tag), FALSE);
   g_return_val_if_fail (GIMP_IS_TAG (other), FALSE);

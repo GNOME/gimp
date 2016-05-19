@@ -146,7 +146,7 @@ static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               width,
                                                     gint               height);
 
-static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
+static gint64  gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
                                                     GimpComponentType  component_type,
                                                     gint               width,
                                                     gint               height);
@@ -768,10 +768,10 @@ gimp_drawable_real_update (GimpDrawable *drawable,
 }
 
 static gint64
-gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
-                                     GimpComponentType   component_type,
-                                     gint                width,
-                                     gint                height)
+gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
+                                     GimpComponentType  component_type,
+                                     gint               width,
+                                     gint               height)
 {
   GimpImage  *image  = gimp_item_get_image (GIMP_ITEM (drawable));
   gboolean    linear = gimp_drawable_get_linear (drawable);
@@ -959,10 +959,10 @@ gimp_drawable_new (GType          type,
 }
 
 gint64
-gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
-                                GimpComponentType   component_type,
-                                gint                width,
-                                gint                height)
+gimp_drawable_estimate_memsize (GimpDrawable      *drawable,
+                                GimpComponentType  component_type,
+                                gint               width,
+                                gint               height)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
 
@@ -1006,8 +1006,8 @@ gimp_drawable_invalidate_boundary (GimpDrawable *drawable)
 }
 
 void
-gimp_drawable_get_active_components (const GimpDrawable *drawable,
-                                     gboolean           *active)
+gimp_drawable_get_active_components (GimpDrawable *drawable,
+                                     gboolean     *active)
 {
   GimpDrawableClass *drawable_class;
 
@@ -1021,7 +1021,7 @@ gimp_drawable_get_active_components (const GimpDrawable *drawable,
 }
 
 GimpComponentMask
-gimp_drawable_get_active_mask (const GimpDrawable *drawable)
+gimp_drawable_get_active_mask (GimpDrawable *drawable)
 {
   GimpDrawableClass *drawable_class;
 
@@ -1297,7 +1297,7 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 }
 
 const Babl *
-gimp_drawable_get_format (const GimpDrawable *drawable)
+gimp_drawable_get_format (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
@@ -1305,7 +1305,7 @@ gimp_drawable_get_format (const GimpDrawable *drawable)
 }
 
 const Babl *
-gimp_drawable_get_format_with_alpha (const GimpDrawable *drawable)
+gimp_drawable_get_format_with_alpha (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
@@ -1316,7 +1316,7 @@ gimp_drawable_get_format_with_alpha (const GimpDrawable *drawable)
 }
 
 const Babl *
-gimp_drawable_get_format_without_alpha (const GimpDrawable *drawable)
+gimp_drawable_get_format_without_alpha (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
@@ -1327,7 +1327,7 @@ gimp_drawable_get_format_without_alpha (const GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_get_linear (const GimpDrawable *drawable)
+gimp_drawable_get_linear (GimpDrawable *drawable)
 {
   const Babl *format;
 
@@ -1339,7 +1339,7 @@ gimp_drawable_get_linear (const GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_has_alpha (const GimpDrawable *drawable)
+gimp_drawable_has_alpha (GimpDrawable *drawable)
 {
   const Babl *format;
 
@@ -1351,7 +1351,7 @@ gimp_drawable_has_alpha (const GimpDrawable *drawable)
 }
 
 GimpImageBaseType
-gimp_drawable_get_base_type (const GimpDrawable *drawable)
+gimp_drawable_get_base_type (GimpDrawable *drawable)
 {
   const Babl *format;
 
@@ -1363,7 +1363,7 @@ gimp_drawable_get_base_type (const GimpDrawable *drawable)
 }
 
 GimpComponentType
-gimp_drawable_get_component_type (const GimpDrawable *drawable)
+gimp_drawable_get_component_type (GimpDrawable *drawable)
 {
   const Babl *format;
 
@@ -1375,7 +1375,7 @@ gimp_drawable_get_component_type (const GimpDrawable *drawable)
 }
 
 GimpPrecision
-gimp_drawable_get_precision (const GimpDrawable *drawable)
+gimp_drawable_get_precision (GimpDrawable *drawable)
 {
   const Babl *format;
 
@@ -1387,7 +1387,7 @@ gimp_drawable_get_precision (const GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_is_rgb (const GimpDrawable *drawable)
+gimp_drawable_is_rgb (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
@@ -1395,7 +1395,7 @@ gimp_drawable_is_rgb (const GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_is_gray (const GimpDrawable *drawable)
+gimp_drawable_is_gray (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
@@ -1403,7 +1403,7 @@ gimp_drawable_is_gray (const GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_is_indexed (const GimpDrawable *drawable)
+gimp_drawable_is_indexed (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
@@ -1411,8 +1411,8 @@ gimp_drawable_is_indexed (const GimpDrawable *drawable)
 }
 
 const Babl *
-gimp_drawable_get_component_format (const GimpDrawable *drawable,
-                                    GimpChannelType     channel)
+gimp_drawable_get_component_format (GimpDrawable    *drawable,
+                                    GimpChannelType  channel)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
@@ -1452,8 +1452,8 @@ gimp_drawable_get_component_format (const GimpDrawable *drawable,
 }
 
 gint
-gimp_drawable_get_component_index (const GimpDrawable *drawable,
-                                   GimpChannelType     channel)
+gimp_drawable_get_component_index (GimpDrawable    *drawable,
+                                   GimpChannelType  channel)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
@@ -1477,7 +1477,7 @@ gimp_drawable_get_component_index (const GimpDrawable *drawable,
 }
 
 const guchar *
-gimp_drawable_get_colormap (const GimpDrawable *drawable)
+gimp_drawable_get_colormap (GimpDrawable *drawable)
 {
   GimpImage *image;
 

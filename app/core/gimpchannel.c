@@ -76,7 +76,7 @@ static gchar  * gimp_channel_get_description (GimpViewable      *viewable,
 
 static GeglNode * gimp_channel_get_node      (GimpFilter        *filter);
 
-static gboolean   gimp_channel_is_attached   (const GimpItem    *item);
+static gboolean   gimp_channel_is_attached   (GimpItem          *item);
 static GimpItemTree * gimp_channel_get_tree  (GimpItem          *item);
 static gboolean   gimp_channel_bounds        (GimpItem          *item,
                                               gdouble           *x,
@@ -153,10 +153,10 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               gboolean           push_undo,
                                               GimpProgress      *progress);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
-static void gimp_channel_get_active_components (const GimpDrawable *drawable,
+static void gimp_channel_get_active_components (GimpDrawable       *drawable,
                                                 gboolean           *active);
 static GimpComponentMask
-                  gimp_channel_get_active_mask (const GimpDrawable *drawable);
+                  gimp_channel_get_active_mask (GimpDrawable      *drawable);
 
 static void      gimp_channel_apply_buffer   (GimpDrawable        *drawable,
                                               GeglBuffer          *buffer,
@@ -475,7 +475,7 @@ gimp_channel_get_node (GimpFilter *filter)
 }
 
 static gboolean
-gimp_channel_is_attached (const GimpItem *item)
+gimp_channel_is_attached (GimpItem *item)
 {
   GimpImage *image = gimp_item_get_image (item);
 
@@ -988,8 +988,8 @@ gimp_channel_invalidate_boundary (GimpDrawable *drawable)
 }
 
 static void
-gimp_channel_get_active_components (const GimpDrawable *drawable,
-                                    gboolean           *active)
+gimp_channel_get_active_components (GimpDrawable *drawable,
+                                    gboolean     *active)
 {
   /*  Make sure that the alpha channel is not valid.  */
   active[GRAY]    = TRUE;
@@ -997,7 +997,7 @@ gimp_channel_get_active_components (const GimpDrawable *drawable,
 }
 
 static GimpComponentMask
-gimp_channel_get_active_mask (const GimpDrawable *drawable)
+gimp_channel_get_active_mask (GimpDrawable *drawable)
 {
   /*  Return all, because that skips the component mask op when painting  */
   return GIMP_COMPONENT_MASK_ALL;
@@ -1804,8 +1804,8 @@ gimp_channel_set_color (GimpChannel   *channel,
 }
 
 void
-gimp_channel_get_color (const GimpChannel *channel,
-                        GimpRGB           *color)
+gimp_channel_get_color (GimpChannel *channel,
+                        GimpRGB     *color)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
@@ -1814,7 +1814,7 @@ gimp_channel_get_color (const GimpChannel *channel,
 }
 
 gdouble
-gimp_channel_get_opacity (const GimpChannel *channel)
+gimp_channel_get_opacity (GimpChannel *channel)
 {
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), GIMP_OPACITY_TRANSPARENT);
 

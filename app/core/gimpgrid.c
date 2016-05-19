@@ -307,7 +307,7 @@ gimp_grid_parasite_name (void)
 }
 
 GimpParasite *
-gimp_grid_to_parasite (const GimpGrid *grid)
+gimp_grid_to_parasite (GimpGrid *grid)
 {
   GimpParasite *parasite;
   gchar        *str;

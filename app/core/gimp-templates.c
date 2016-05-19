@@ -117,8 +117,8 @@ gimp_templates_save (Gimp *gimp)
  *  and dpi/ppi-insensitive
  */
 static GimpObject *
-gimp_templates_migrate_get_child_by_name (const GimpContainer *container,
-                                          const gchar         *name)
+gimp_templates_migrate_get_child_by_name (GimpContainer *container,
+                                          const gchar   *name)
 {
   GimpList   *list   = GIMP_LIST (container);
   GimpObject *retval = NULL;

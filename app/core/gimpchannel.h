@@ -141,12 +141,12 @@ GimpChannel * gimp_channel_new_from_component (GimpImage         *image,
 
 GimpChannel * gimp_channel_get_parent         (GimpChannel       *channel);
 
-gdouble       gimp_channel_get_opacity        (const GimpChannel *channel);
+gdouble       gimp_channel_get_opacity        (GimpChannel       *channel);
 void          gimp_channel_set_opacity        (GimpChannel       *channel,
                                                gdouble            opacity,
                                                gboolean           push_undo);
 
-void          gimp_channel_get_color          (const GimpChannel *channel,
+void          gimp_channel_get_color          (GimpChannel       *channel,
                                                GimpRGB           *color);
 void          gimp_channel_set_color          (GimpChannel       *channel,
                                                const GimpRGB     *color,

@@ -266,7 +266,7 @@ gimp_pattern_get_standard (GimpContext *context)
 }
 
 GimpTempBuf *
-gimp_pattern_get_mask (const GimpPattern *pattern)
+gimp_pattern_get_mask (GimpPattern *pattern)
 {
   g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
 
@@ -274,7 +274,7 @@ gimp_pattern_get_mask (const GimpPattern *pattern)
 }
 
 GeglBuffer *
-gimp_pattern_create_buffer (const GimpPattern *pattern)
+gimp_pattern_create_buffer (GimpPattern *pattern)
 {
   g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
 

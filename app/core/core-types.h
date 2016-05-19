@@ -241,15 +241,15 @@ typedef void * GimpBezierDesc;
 
 /*  functions  */
 
-typedef void     (* GimpInitStatusFunc)    (const gchar      *text1,
-                                            const gchar      *text2,
-                                            gdouble           percentage);
+typedef void     (* GimpInitStatusFunc)    (const gchar *text1,
+                                            const gchar *text2,
+                                            gdouble      percentage);
 
-typedef gboolean (* GimpObjectFilterFunc)  (const GimpObject *object,
-                                            gpointer          user_data);
+typedef gboolean (* GimpObjectFilterFunc)  (GimpObject  *object,
+                                            gpointer     user_data);
 
-typedef gint64   (* GimpMemsizeFunc)       (gpointer          instance,
-                                            gint64           *gui_size);
+typedef gint64   (* GimpMemsizeFunc)       (gpointer     instance,
+                                            gint64      *gui_size);
 
 
 /*  structs  */

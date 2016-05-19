@@ -38,9 +38,9 @@
 #include "gimp-intl.h"
 
 
-static gboolean        gimp_layer_mask_is_attached        (const GimpItem    *item);
-static gboolean        gimp_layer_mask_is_content_locked  (const GimpItem    *item);
-static gboolean        gimp_layer_mask_is_position_locked (const GimpItem    *item);
+static gboolean        gimp_layer_mask_is_attached        (GimpItem          *item);
+static gboolean        gimp_layer_mask_is_content_locked  (GimpItem          *item);
+static gboolean        gimp_layer_mask_is_position_locked (GimpItem          *item);
 static GimpItemTree  * gimp_layer_mask_get_tree           (GimpItem          *item);
 static GimpItem      * gimp_layer_mask_duplicate          (GimpItem          *item,
                                                            GType              new_type);
@@ -94,7 +94,7 @@ gimp_layer_mask_init (GimpLayerMask *layer_mask)
 }
 
 static gboolean
-gimp_layer_mask_is_content_locked (const GimpItem *item)
+gimp_layer_mask_is_content_locked (GimpItem *item)
 {
   GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
   GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
@@ -106,7 +106,7 @@ gimp_layer_mask_is_content_locked (const GimpItem *item)
 }
 
 static gboolean
-gimp_layer_mask_is_position_locked (const GimpItem *item)
+gimp_layer_mask_is_position_locked (GimpItem *item)
 {
   GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
   GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
@@ -118,7 +118,7 @@ gimp_layer_mask_is_position_locked (const GimpItem *item)
 }
 
 static gboolean
-gimp_layer_mask_is_attached (const GimpItem *item)
+gimp_layer_mask_is_attached (GimpItem *item)
 {
   GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
   GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
@@ -266,7 +266,7 @@ gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
 }
 
 GimpLayer *
-gimp_layer_mask_get_layer (const GimpLayerMask *layer_mask)
+gimp_layer_mask_get_layer (GimpLayerMask *layer_mask)
 {
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), NULL);
 

@@ -68,7 +68,7 @@ static void       gimp_vectors_finalize      (GObject           *object);
 static gint64     gimp_vectors_get_memsize   (GimpObject        *object,
                                               gint64            *gui_size);
 
-static gboolean   gimp_vectors_is_attached   (const GimpItem    *item);
+static gboolean   gimp_vectors_is_attached   (GimpItem          *item);
 static GimpItemTree * gimp_vectors_get_tree  (GimpItem          *item);
 static gboolean   gimp_vectors_bounds        (GimpItem          *item,
                                               gdouble           *x,
@@ -140,29 +140,29 @@ static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
                                                      GimpStroke        *stroke);
 static void       gimp_vectors_real_stroke_remove   (GimpVectors       *vectors,
                                                      GimpStroke        *stroke);
-static GimpStroke * gimp_vectors_real_stroke_get    (const GimpVectors *vectors,
+static GimpStroke * gimp_vectors_real_stroke_get    (GimpVectors       *vectors,
                                                      const GimpCoords  *coord);
-static GimpStroke *gimp_vectors_real_stroke_get_next(const GimpVectors *vectors,
-                                                     const GimpStroke  *prev);
-static gdouble gimp_vectors_real_stroke_get_length  (const GimpVectors *vectors,
-                                                     const GimpStroke  *prev);
-static GimpAnchor * gimp_vectors_real_anchor_get    (const GimpVectors *vectors,
+static GimpStroke *gimp_vectors_real_stroke_get_next(GimpVectors       *vectors,
+                                                     GimpStroke        *prev);
+static gdouble gimp_vectors_real_stroke_get_length  (GimpVectors       *vectors,
+                                                     GimpStroke        *prev);
+static GimpAnchor * gimp_vectors_real_anchor_get    (GimpVectors       *vectors,
                                                      const GimpCoords  *coord,
                                                      GimpStroke       **ret_stroke);
 static void       gimp_vectors_real_anchor_delete   (GimpVectors       *vectors,
                                                      GimpAnchor        *anchor);
-static gdouble    gimp_vectors_real_get_length      (const GimpVectors *vectors,
+static gdouble    gimp_vectors_real_get_length      (GimpVectors       *vectors,
                                                      const GimpAnchor  *start);
-static gdouble    gimp_vectors_real_get_distance    (const GimpVectors *vectors,
+static gdouble    gimp_vectors_real_get_distance    (GimpVectors       *vectors,
                                                      const GimpCoords  *coord);
-static gint       gimp_vectors_real_interpolate     (const GimpVectors *vectors,
-                                                     const GimpStroke  *stroke,
+static gint       gimp_vectors_real_interpolate     (GimpVectors       *vectors,
+                                                     GimpStroke        *stroke,
                                                      gdouble            precision,
                                                      gint               max_points,
                                                      GimpCoords        *ret_coords);
 
-static GimpBezierDesc * gimp_vectors_make_bezier      (const GimpVectors *vectors);
-static GimpBezierDesc * gimp_vectors_real_make_bezier (const GimpVectors *vectors);
+static GimpBezierDesc * gimp_vectors_make_bezier      (GimpVectors     *vectors);
+static GimpBezierDesc * gimp_vectors_real_make_bezier (GimpVectors     *vectors);
 
 
 G_DEFINE_TYPE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM)
@@ -317,7 +317,7 @@ gimp_vectors_get_memsize (GimpObject *object,
 }
 
 static gboolean
-gimp_vectors_is_attached (const GimpItem *item)
+gimp_vectors_is_attached (GimpItem *item)
 {
   GimpImage *image = gimp_item_get_image (item);
 
@@ -795,8 +795,8 @@ gimp_vectors_thaw (GimpVectors *vectors)
 }
 
 void
-gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
-                           GimpVectors       *dest_vectors)
+gimp_vectors_copy_strokes (GimpVectors *src_vectors,
+                           GimpVectors *dest_vectors)
 {
   g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
   g_return_if_fail (GIMP_IS_VECTORS (dest_vectors));
@@ -816,8 +816,8 @@ gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
 
 
 void
-gimp_vectors_add_strokes (const GimpVectors *src_vectors,
-                          GimpVectors       *dest_vectors)
+gimp_vectors_add_strokes (GimpVectors *src_vectors,
+                          GimpVectors *dest_vectors)
 {
   GList *stroke;
 
@@ -910,7 +910,7 @@ gimp_vectors_real_stroke_remove (GimpVectors *vectors,
 }
 
 gint
-gimp_vectors_get_n_strokes (const GimpVectors *vectors)
+gimp_vectors_get_n_strokes (GimpVectors *vectors)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0);
 
@@ -919,8 +919,8 @@ gimp_vectors_get_n_strokes (const GimpVectors *vectors)
 
 
 GimpStroke *
-gimp_vectors_stroke_get (const GimpVectors *vectors,
-                         const GimpCoords  *coord)
+gimp_vectors_stroke_get (GimpVectors      *vectors,
+                         const GimpCoords *coord)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
 
@@ -928,8 +928,8 @@ gimp_vectors_stroke_get (const GimpVectors *vectors,
 }
 
 static GimpStroke *
-gimp_vectors_real_stroke_get (const GimpVectors *vectors,
-                              const GimpCoords  *coord)
+gimp_vectors_real_stroke_get (GimpVectors      *vectors,
+                              const GimpCoords *coord)
 {
   GimpStroke *minstroke = NULL;
   gdouble     mindist   = G_MAXDOUBLE;
@@ -957,8 +957,8 @@ gimp_vectors_real_stroke_get (const GimpVectors *vectors,
 }
 
 GimpStroke *
-gimp_vectors_stroke_get_by_ID (const GimpVectors *vectors,
-                               gint               id)
+gimp_vectors_stroke_get_by_ID (GimpVectors *vectors,
+                               gint         id)
 {
   GList *list;
 
@@ -975,8 +975,8 @@ gimp_vectors_stroke_get_by_ID (const GimpVectors *vectors,
 
 
 GimpStroke *
-gimp_vectors_stroke_get_next (const GimpVectors *vectors,
-                              const GimpStroke  *prev)
+gimp_vectors_stroke_get_next (GimpVectors *vectors,
+                              GimpStroke  *prev)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
 
@@ -984,8 +984,8 @@ gimp_vectors_stroke_get_next (const GimpVectors *vectors,
 }
 
 static GimpStroke *
-gimp_vectors_real_stroke_get_next (const GimpVectors *vectors,
-                                   const GimpStroke  *prev)
+gimp_vectors_real_stroke_get_next (GimpVectors *vectors,
+                                   GimpStroke  *prev)
 {
   if (! prev)
     {
@@ -1003,8 +1003,8 @@ gimp_vectors_real_stroke_get_next (const GimpVectors *vectors,
 
 
 gdouble
-gimp_vectors_stroke_get_length (const GimpVectors *vectors,
-                                const GimpStroke  *stroke)
+gimp_vectors_stroke_get_length (GimpVectors *vectors,
+                                GimpStroke  *stroke)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
@@ -1013,8 +1013,8 @@ gimp_vectors_stroke_get_length (const GimpVectors *vectors,
 }
 
 static gdouble
-gimp_vectors_real_stroke_get_length (const GimpVectors *vectors,
-                                     const GimpStroke  *stroke)
+gimp_vectors_real_stroke_get_length (GimpVectors *vectors,
+                                     GimpStroke  *stroke)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
@@ -1024,7 +1024,7 @@ gimp_vectors_real_stroke_get_length (const GimpVectors *vectors,
 
 
 GimpAnchor *
-gimp_vectors_anchor_get (const GimpVectors *vectors,
+gimp_vectors_anchor_get (GimpVectors       *vectors,
                          const GimpCoords  *coord,
                          GimpStroke       **ret_stroke)
 {
@@ -1035,7 +1035,7 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
 }
 
 static GimpAnchor *
-gimp_vectors_real_anchor_get (const GimpVectors *vectors,
+gimp_vectors_real_anchor_get (GimpVectors       *vectors,
                               const GimpCoords  *coord,
                               GimpStroke       **ret_stroke)
 {
@@ -1106,8 +1106,8 @@ gimp_vectors_anchor_select (GimpVectors *vectors,
 
 
 gdouble
-gimp_vectors_get_length (const GimpVectors *vectors,
-                         const GimpAnchor  *start)
+gimp_vectors_get_length (GimpVectors      *vectors,
+                         const GimpAnchor *start)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
 
@@ -1115,8 +1115,8 @@ gimp_vectors_get_length (const GimpVectors *vectors,
 }
 
 static gdouble
-gimp_vectors_real_get_length (const GimpVectors *vectors,
-                              const GimpAnchor  *start)
+gimp_vectors_real_get_length (GimpVectors      *vectors,
+                              const GimpAnchor *start)
 {
   g_printerr ("gimp_vectors_get_length: default implementation\n");
 
@@ -1125,8 +1125,8 @@ gimp_vectors_real_get_length (const GimpVectors *vectors,
 
 
 gdouble
-gimp_vectors_get_distance (const GimpVectors *vectors,
-                           const GimpCoords  *coord)
+gimp_vectors_get_distance (GimpVectors      *vectors,
+                           const GimpCoords *coord)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
 
@@ -1134,8 +1134,8 @@ gimp_vectors_get_distance (const GimpVectors *vectors,
 }
 
 static gdouble
-gimp_vectors_real_get_distance (const GimpVectors *vectors,
-                                const GimpCoords  *coord)
+gimp_vectors_real_get_distance (GimpVectors      *vectors,
+                                const GimpCoords *coord)
 {
   g_printerr ("gimp_vectors_get_distance: default implementation\n");
 
@@ -1143,11 +1143,11 @@ gimp_vectors_real_get_distance (const GimpVectors *vectors,
 }
 
 gint
-gimp_vectors_interpolate (const GimpVectors *vectors,
-                          const GimpStroke  *stroke,
-                          gdouble            precision,
-                          gint               max_points,
-                          GimpCoords        *ret_coords)
+gimp_vectors_interpolate (GimpVectors *vectors,
+                          GimpStroke  *stroke,
+                          gdouble      precision,
+                          gint         max_points,
+                          GimpCoords  *ret_coords)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0);
 
@@ -1157,11 +1157,11 @@ gimp_vectors_interpolate (const GimpVectors *vectors,
 }
 
 static gint
-gimp_vectors_real_interpolate (const GimpVectors *vectors,
-                               const GimpStroke  *stroke,
-                               gdouble            precision,
-                               gint               max_points,
-                               GimpCoords        *ret_coords)
+gimp_vectors_real_interpolate (GimpVectors *vectors,
+                               GimpStroke  *stroke,
+                               gdouble      precision,
+                               gint         max_points,
+                               GimpCoords  *ret_coords)
 {
   g_printerr ("gimp_vectors_interpolate: default implementation\n");
 
@@ -1182,13 +1182,13 @@ gimp_vectors_get_bezier (GimpVectors *vectors)
 }
 
 static GimpBezierDesc *
-gimp_vectors_make_bezier (const GimpVectors *vectors)
+gimp_vectors_make_bezier (GimpVectors *vectors)
 {
   return GIMP_VECTORS_GET_CLASS (vectors)->make_bezier (vectors);
 }
 
 static GimpBezierDesc *
-gimp_vectors_real_make_bezier (const GimpVectors *vectors)
+gimp_vectors_real_make_bezier (GimpVectors *vectors)
 {
   GimpStroke     *stroke;
   GArray         *cmd_array;

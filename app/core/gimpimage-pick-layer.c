@@ -31,9 +31,9 @@
 
 
 GimpLayer *
-gimp_image_pick_layer (const GimpImage *image,
-                       gint             x,
-                       gint             y)
+gimp_image_pick_layer (GimpImage *image,
+                       gint       x,
+                       gint       y)
 {
   GList *all_layers;
   GList *list;
@@ -64,9 +64,9 @@ gimp_image_pick_layer (const GimpImage *image,
 }
 
 GimpLayer *
-gimp_image_pick_layer_by_bounds (const GimpImage *image,
-                                 gint             x,
-                                 gint             y)
+gimp_image_pick_layer_by_bounds (GimpImage *image,
+                                 gint       x,
+                                 gint       y)
 {
   GList *all_layers;
   GList *list;
@@ -106,9 +106,9 @@ gimp_image_pick_layer_by_bounds (const GimpImage *image,
 }
 
 GimpTextLayer *
-gimp_image_pick_text_layer (const GimpImage *image,
-                            gint             x,
-                            gint             y)
+gimp_image_pick_text_layer (GimpImage *image,
+                            gint       x,
+                            gint       y)
 {
   GList *all_layers;
   GList *list;

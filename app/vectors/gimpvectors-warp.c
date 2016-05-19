@@ -40,22 +40,22 @@
 #define DX      2.0
 
 
-static void gimp_stroke_warp_point   (const GimpStroke  *stroke,
-                                      gdouble            x,
-                                      gdouble            y,
-                                      GimpCoords        *point_warped,
-                                      gdouble            y_offset);
+static void   gimp_stroke_warp_point   (GimpStroke  *stroke,
+                                        gdouble      x,
+                                        gdouble      y,
+                                        GimpCoords  *point_warped,
+                                        gdouble      y_offset);
 
-static void gimp_vectors_warp_stroke (const GimpVectors *vectors,
-                                      GimpStroke        *stroke,
-                                      gdouble            y_offset);
+static void   gimp_vectors_warp_stroke (GimpVectors *vectors,
+                                        GimpStroke  *stroke,
+                                        gdouble      y_offset);
 
 
 void
-gimp_vectors_warp_point (const GimpVectors *vectors,
-                         GimpCoords        *point,
-                         GimpCoords        *point_warped,
-                         gdouble            y_offset)
+gimp_vectors_warp_point (GimpVectors *vectors,
+                         GimpCoords  *point,
+                         GimpCoords  *point_warped,
+                         gdouble      y_offset)
 {
   gdouble     x      = point->x;
   gdouble     y      = point->y;
@@ -88,11 +88,11 @@ gimp_vectors_warp_point (const GimpVectors *vectors,
 }
 
 static void
-gimp_stroke_warp_point (const GimpStroke *stroke,
-                        gdouble           x,
-                        gdouble           y,
-                        GimpCoords       *point_warped,
-                        gdouble           y_offset)
+gimp_stroke_warp_point (GimpStroke *stroke,
+                        gdouble     x,
+                        gdouble     y,
+                        GimpCoords *point_warped,
+                        gdouble     y_offset)
 {
   GimpCoords point_zero  = { 0, };
   GimpCoords point_minus = { 0, };
@@ -135,9 +135,9 @@ gimp_stroke_warp_point (const GimpStroke *stroke,
 }
 
 static void
-gimp_vectors_warp_stroke (const GimpVectors *vectors,
-                          GimpStroke        *stroke,
-                          gdouble            y_offset)
+gimp_vectors_warp_stroke (GimpVectors *vectors,
+                          GimpStroke  *stroke,
+                          gdouble      y_offset)
 {
   GList *list;
 
@@ -152,9 +152,9 @@ gimp_vectors_warp_stroke (const GimpVectors *vectors,
 }
 
 void
-gimp_vectors_warp_vectors (const GimpVectors *vectors,
-                           GimpVectors       *vectors_in,
-                           gdouble            y_offset)
+gimp_vectors_warp_vectors (GimpVectors *vectors,
+                           GimpVectors *vectors_in,
+                           gdouble      y_offset)
 {
   GList *list;
 

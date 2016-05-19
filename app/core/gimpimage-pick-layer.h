@@ -19,15 +19,15 @@
 #define __GIMP_IMAGE_PICK_LAYER_H__
 
 
-GimpLayer     * gimp_image_pick_layer           (const GimpImage *image,
-                                                 gint             x,
-                                                 gint             y);
-GimpLayer     * gimp_image_pick_layer_by_bounds (const GimpImage *image,
-                                                 gint             x,
-                                                 gint             y);
-GimpTextLayer * gimp_image_pick_text_layer      (const GimpImage *image,
-                                                 gint             x,
-                                                 gint             y);
+GimpLayer     * gimp_image_pick_layer           (GimpImage *image,
+                                                 gint       x,
+                                                 gint       y);
+GimpLayer     * gimp_image_pick_layer_by_bounds (GimpImage *image,
+                                                 gint       x,
+                                                 gint       y);
+GimpTextLayer * gimp_image_pick_text_layer      (GimpImage *image,
+                                                 gint       x,
+                                                 gint       y);
 
 
 #endif /* __GIMP_IMAGE_PICK_LAYER_H__ */

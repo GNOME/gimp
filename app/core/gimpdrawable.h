@@ -53,14 +53,14 @@ struct _GimpDrawableClass
   void          (* alpha_changed)         (GimpDrawable         *drawable);
 
   /*  virtual functions  */
-  gint64        (* estimate_memsize)      (const GimpDrawable   *drawable,
+  gint64        (* estimate_memsize)      (GimpDrawable         *drawable,
                                            GimpComponentType     component_type,
                                            gint                  width,
                                            gint                  height);
   void          (* invalidate_boundary)   (GimpDrawable         *drawable);
-  void          (* get_active_components) (const GimpDrawable   *drawable,
+  void          (* get_active_components) (GimpDrawable         *drawable,
                                            gboolean             *active);
-  GimpComponentMask (* get_active_mask)   (const GimpDrawable   *drawable);
+  GimpComponentMask (* get_active_mask)   (GimpDrawable         *drawable);
   void          (* convert_type)          (GimpDrawable         *drawable,
                                            GimpImage            *dest_image,
                                            const Babl           *new_format,
@@ -123,7 +123,7 @@ GimpDrawable  * gimp_drawable_new                (GType               type,
                                                   gint                height,
                                                   const Babl         *format);
 
-gint64          gimp_drawable_estimate_memsize   (const GimpDrawable *drawable,
+gint64          gimp_drawable_estimate_memsize   (GimpDrawable       *drawable,
                                                   GimpComponentType   component_type,
                                                   gint                width,
                                                   gint                height);
@@ -136,9 +136,9 @@ void            gimp_drawable_update             (GimpDrawable       *drawable,
 void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
 
 void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
-void         gimp_drawable_get_active_components (const GimpDrawable *drawable,
+void         gimp_drawable_get_active_components (GimpDrawable       *drawable,
                                                   gboolean           *active);
-GimpComponentMask gimp_drawable_get_active_mask  (const GimpDrawable *drawable);
+GimpComponentMask gimp_drawable_get_active_mask  (GimpDrawable       *drawable);
 
 void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImage          *dest_image,
@@ -199,26 +199,25 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   gint                width,
                                                   gint                height);
 
-const Babl    * gimp_drawable_get_format         (const GimpDrawable *drawable);
-const Babl    * gimp_drawable_get_format_with_alpha
-                                                 (const GimpDrawable *drawable);
-const Babl    * gimp_drawable_get_format_without_alpha
-                                                 (const GimpDrawable *drawable);
-gboolean        gimp_drawable_get_linear         (const GimpDrawable *drawable);
-gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);
-GimpImageBaseType gimp_drawable_get_base_type    (const GimpDrawable *drawable);
-GimpComponentType gimp_drawable_get_component_type(const GimpDrawable *drawable);
-GimpPrecision   gimp_drawable_get_precision      (const GimpDrawable *drawable);
-gboolean        gimp_drawable_is_rgb             (const GimpDrawable *drawable);
-gboolean        gimp_drawable_is_gray            (const GimpDrawable *drawable);
-gboolean        gimp_drawable_is_indexed         (const GimpDrawable *drawable);
+const Babl      * gimp_drawable_get_format           (GimpDrawable    *drawable);
+const Babl      * gimp_drawable_get_format_with_alpha(GimpDrawable    *drawable);
+const Babl      * gimp_drawable_get_format_without_alpha
+                                                     (GimpDrawable    *drawable);
+gboolean          gimp_drawable_get_linear           (GimpDrawable    *drawable);
+gboolean          gimp_drawable_has_alpha            (GimpDrawable    *drawable);
+GimpImageBaseType gimp_drawable_get_base_type        (GimpDrawable    *drawable);
+GimpComponentType gimp_drawable_get_component_type   (GimpDrawable    *drawable);
+GimpPrecision     gimp_drawable_get_precision        (GimpDrawable    *drawable);
+gboolean          gimp_drawable_is_rgb               (GimpDrawable    *drawable);
+gboolean          gimp_drawable_is_gray              (GimpDrawable    *drawable);
+gboolean          gimp_drawable_is_indexed           (GimpDrawable    *drawable);
 
-const Babl  * gimp_drawable_get_component_format (const GimpDrawable *drawable,
-                                                  GimpChannelType     channel);
-gint          gimp_drawable_get_component_index  (const GimpDrawable *drawable,
-                                                  GimpChannelType     channel);
+const Babl      * gimp_drawable_get_component_format (GimpDrawable    *drawable,
+                                                      GimpChannelType  channel);
+gint              gimp_drawable_get_component_index  (GimpDrawable    *drawable,
+                                                      GimpChannelType  channel);
 
-const guchar  * gimp_drawable_get_colormap       (const GimpDrawable *drawable);
+const guchar    * gimp_drawable_get_colormap         (GimpDrawable    *drawable);
 
 
 #endif /* __GIMP_DRAWABLE_H__ */

@@ -51,7 +51,7 @@ static void        gimp_temporary_procedure_execute_async (GimpProcedure  *proce
                                                            GimpValueArray *args,
                                                            GimpObject     *display);
 
-static GFile     * gimp_temporary_procedure_get_file      (const GimpPlugInProcedure *procedure);
+static GFile     * gimp_temporary_procedure_get_file      (GimpPlugInProcedure *procedure);
 
 
 G_DEFINE_TYPE (GimpTemporaryProcedure, gimp_temporary_procedure,
@@ -131,7 +131,7 @@ gimp_temporary_procedure_execute_async (GimpProcedure  *procedure,
 }
 
 static GFile *
-gimp_temporary_procedure_get_file (const GimpPlugInProcedure *procedure)
+gimp_temporary_procedure_get_file (GimpPlugInProcedure *procedure)
 {
   return GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in->file;
 }

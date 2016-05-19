@@ -110,35 +110,35 @@ GimpImage     * gimp_image_new                   (Gimp               *gimp,
                                                   GimpImageBaseType   base_type,
                                                   GimpPrecision       precision);
 
-gint64          gimp_image_estimate_memsize      (const GimpImage    *image,
+gint64          gimp_image_estimate_memsize      (GimpImage          *image,
                                                   GimpComponentType   component_type,
                                                   gint                width,
                                                   gint                height);
 
-GimpImageBaseType  gimp_image_get_base_type      (const GimpImage    *image);
-GimpComponentType  gimp_image_get_component_type (const GimpImage    *image);
-GimpPrecision      gimp_image_get_precision      (const GimpImage    *image);
+GimpImageBaseType  gimp_image_get_base_type      (GimpImage          *image);
+GimpComponentType  gimp_image_get_component_type (GimpImage          *image);
+GimpPrecision      gimp_image_get_precision      (GimpImage          *image);
 
-const Babl    * gimp_image_get_format            (const GimpImage    *image,
+const Babl    * gimp_image_get_format            (GimpImage          *image,
                                                   GimpImageBaseType   base_type,
                                                   GimpPrecision       precision,
                                                   gboolean            with_alpha);
-const Babl    * gimp_image_get_layer_format      (const GimpImage    *image,
+const Babl    * gimp_image_get_layer_format      (GimpImage          *image,
                                                   gboolean            with_alpha);
-const Babl    * gimp_image_get_channel_format    (const GimpImage    *image);
-const Babl    * gimp_image_get_mask_format       (const GimpImage    *image);
+const Babl    * gimp_image_get_channel_format    (GimpImage          *image);
+const Babl    * gimp_image_get_mask_format       (GimpImage          *image);
 
-gint            gimp_image_get_ID                (const GimpImage    *image);
+gint            gimp_image_get_ID                (GimpImage          *image);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
                                                   gint                id);
 
-GFile         * gimp_image_get_file              (const GimpImage    *image);
-GFile         * gimp_image_get_untitled_file     (const GimpImage    *image);
-GFile         * gimp_image_get_file_or_untitled  (const GimpImage    *image);
-GFile         * gimp_image_get_imported_file     (const GimpImage    *image);
-GFile         * gimp_image_get_exported_file     (const GimpImage    *image);
-GFile         * gimp_image_get_save_a_copy_file  (const GimpImage    *image);
-GFile         * gimp_image_get_any_file          (const GimpImage    *image);
+GFile         * gimp_image_get_file              (GimpImage          *image);
+GFile         * gimp_image_get_untitled_file     (GimpImage          *image);
+GFile         * gimp_image_get_file_or_untitled  (GimpImage          *image);
+GFile         * gimp_image_get_imported_file     (GimpImage          *image);
+GFile         * gimp_image_get_exported_file     (GimpImage          *image);
+GFile         * gimp_image_get_save_a_copy_file  (GimpImage          *image);
+GFile         * gimp_image_get_any_file          (GimpImage          *image);
 
 void            gimp_image_set_file              (GimpImage          *image,
                                                   GFile              *file);
@@ -154,15 +154,15 @@ const gchar   * gimp_image_get_display_path      (GimpImage          *image);
 
 void            gimp_image_set_load_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
-GimpPlugInProcedure * gimp_image_get_load_proc   (const GimpImage    *image);
+GimpPlugInProcedure * gimp_image_get_load_proc   (GimpImage          *image);
 void            gimp_image_set_save_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
-GimpPlugInProcedure * gimp_image_get_save_proc   (const GimpImage    *image);
+GimpPlugInProcedure * gimp_image_get_save_proc   (GimpImage          *image);
 void            gimp_image_saved                 (GimpImage          *image,
                                                   GFile              *file);
 void            gimp_image_set_export_proc       (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
-GimpPlugInProcedure * gimp_image_get_export_proc (const GimpImage    *image);
+GimpPlugInProcedure * gimp_image_get_export_proc (GimpImage          *image);
 void            gimp_image_exported              (GimpImage          *image,
                                                   GFile              *file);
 
@@ -173,60 +173,60 @@ gint            gimp_image_get_xcf_version       (GimpImage          *image,
 
 void            gimp_image_set_xcf_compat_mode   (GimpImage          *image,
                                                   gboolean            compat_mode);
-gboolean        gimp_image_get_xcf_compat_mode   (const GimpImage    *image);
+gboolean        gimp_image_get_xcf_compat_mode   (GimpImage          *image);
 
 void            gimp_image_set_resolution        (GimpImage          *image,
                                                   gdouble             xres,
                                                   gdouble             yres);
-void            gimp_image_get_resolution        (const GimpImage    *image,
+void            gimp_image_get_resolution        (GimpImage          *image,
                                                   gdouble            *xres,
                                                   gdouble            *yres);
 void            gimp_image_resolution_changed    (GimpImage          *image);
 
 void            gimp_image_set_unit              (GimpImage          *image,
                                                   GimpUnit            unit);
-GimpUnit        gimp_image_get_unit              (const GimpImage    *image);
+GimpUnit        gimp_image_get_unit              (GimpImage          *image);
 void            gimp_image_unit_changed          (GimpImage          *image);
 
-gint            gimp_image_get_width             (const GimpImage    *image);
-gint            gimp_image_get_height            (const GimpImage    *image);
+gint            gimp_image_get_width             (GimpImage          *image);
+gint            gimp_image_get_height            (GimpImage          *image);
 
-gboolean        gimp_image_has_alpha             (const GimpImage    *image);
-gboolean        gimp_image_is_empty              (const GimpImage    *image);
+gboolean        gimp_image_has_alpha             (GimpImage          *image);
+gboolean        gimp_image_is_empty              (GimpImage          *image);
 
 void           gimp_image_set_floating_selection (GimpImage          *image,
                                                   GimpLayer          *floating_sel);
-GimpLayer    * gimp_image_get_floating_selection (const GimpImage    *image);
+GimpLayer    * gimp_image_get_floating_selection (GimpImage          *image);
 void       gimp_image_floating_selection_changed (GimpImage          *image);
 
-GimpChannel   * gimp_image_get_mask              (const GimpImage    *image);
+GimpChannel   * gimp_image_get_mask              (GimpImage          *image);
 void            gimp_image_mask_changed          (GimpImage          *image);
 
 
 /*  image components  */
 
-const Babl    * gimp_image_get_component_format  (const GimpImage    *image,
+const Babl    * gimp_image_get_component_format  (GimpImage          *image,
                                                   GimpChannelType     channel);
-gint            gimp_image_get_component_index   (const GimpImage    *image,
+gint            gimp_image_get_component_index   (GimpImage          *image,
                                                   GimpChannelType     channel);
 
 void            gimp_image_set_component_active  (GimpImage          *image,
                                                   GimpChannelType     type,
                                                   gboolean            active);
-gboolean        gimp_image_get_component_active  (const GimpImage    *image,
+gboolean        gimp_image_get_component_active  (GimpImage          *image,
                                                   GimpChannelType     type);
-void            gimp_image_get_active_array      (const GimpImage    *image,
+void            gimp_image_get_active_array      (GimpImage          *image,
                                                   gboolean           *components);
-GimpComponentMask gimp_image_get_active_mask     (const GimpImage    *image);
+GimpComponentMask gimp_image_get_active_mask     (GimpImage          *image);
 
 void            gimp_image_set_component_visible (GimpImage          *image,
                                                   GimpChannelType     type,
                                                   gboolean            visible);
-gboolean        gimp_image_get_component_visible (const GimpImage    *image,
+gboolean        gimp_image_get_component_visible (GimpImage          *image,
                                                   GimpChannelType     type);
-void            gimp_image_get_visible_array     (const GimpImage    *image,
+void            gimp_image_get_visible_array     (GimpImage          *image,
                                                   gboolean           *components);
-GimpComponentMask gimp_image_get_visible_mask    (const GimpImage    *image);
+GimpComponentMask gimp_image_get_visible_mask    (GimpImage          *image);
 
 
 /*  emitting image signals  */
@@ -274,9 +274,9 @@ gint            gimp_image_clean                 (GimpImage          *image,
                                                   GimpDirtyMask       dirty_mask);
 void            gimp_image_clean_all             (GimpImage          *image);
 void            gimp_image_export_clean_all      (GimpImage          *image);
-gint            gimp_image_is_dirty              (const GimpImage    *image);
-gboolean        gimp_image_is_export_dirty       (const GimpImage    *image);
-gint64          gimp_image_get_dirty_time        (const GimpImage    *image);
+gint            gimp_image_is_dirty              (GimpImage          *image);
+gboolean        gimp_image_is_export_dirty       (GimpImage          *image);
+gint64          gimp_image_get_dirty_time        (GimpImage          *image);
 
 
 /*  flush this image's displays  */
@@ -286,23 +286,23 @@ void            gimp_image_flush                 (GimpImage          *image);
 
 /*  display / instance counters  */
 
-gint            gimp_image_get_display_count     (const GimpImage    *image);
+gint            gimp_image_get_display_count     (GimpImage          *image);
 void            gimp_image_inc_display_count     (GimpImage          *image);
 void            gimp_image_dec_display_count     (GimpImage          *image);
 
-gint            gimp_image_get_instance_count    (const GimpImage    *image);
+gint            gimp_image_get_instance_count    (GimpImage          *image);
 void            gimp_image_inc_instance_count    (GimpImage          *image);
 
 
 /*  parasites  */
 
-const GimpParasite * gimp_image_parasite_find    (const GimpImage    *image,
+const GimpParasite * gimp_image_parasite_find    (GimpImage          *image,
                                                   const gchar        *name);
-gchar        ** gimp_image_parasite_list         (const GimpImage    *image,
+gchar        ** gimp_image_parasite_list         (GimpImage          *image,
                                                   gint               *count);
-gboolean        gimp_image_parasite_validate     (GimpImage           *image,
-                                                  const GimpParasite  *parasite,
-                                                  GError             **error);
+gboolean        gimp_image_parasite_validate     (GimpImage          *image,
+                                                  const GimpParasite *parasite,
+                                                  GError            **error);
 void            gimp_image_parasite_attach       (GimpImage          *image,
                                                   const GimpParasite *parasite);
 void            gimp_image_parasite_detach       (GimpImage          *image,
@@ -319,35 +319,35 @@ GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *image);
 
 /*  projection  */
 
-GimpProjection * gimp_image_get_projection       (const GimpImage    *image);
+GimpProjection * gimp_image_get_projection       (GimpImage          *image);
 
 
 /*  layers / channels / vectors  */
 
-GimpItemTree  * gimp_image_get_layer_tree        (const GimpImage    *image);
-GimpItemTree  * gimp_image_get_channel_tree      (const GimpImage    *image);
-GimpItemTree  * gimp_image_get_vectors_tree      (const GimpImage    *image);
+GimpItemTree  * gimp_image_get_layer_tree        (GimpImage          *image);
+GimpItemTree  * gimp_image_get_channel_tree      (GimpImage          *image);
+GimpItemTree  * gimp_image_get_vectors_tree      (GimpImage          *image);
 
-GimpContainer * gimp_image_get_layers            (const GimpImage    *image);
-GimpContainer * gimp_image_get_channels          (const GimpImage    *image);
-GimpContainer * gimp_image_get_vectors           (const GimpImage    *image);
+GimpContainer * gimp_image_get_layers            (GimpImage          *image);
+GimpContainer * gimp_image_get_channels          (GimpImage          *image);
+GimpContainer * gimp_image_get_vectors           (GimpImage          *image);
 
-gint            gimp_image_get_n_layers          (const GimpImage    *image);
-gint            gimp_image_get_n_channels        (const GimpImage    *image);
-gint            gimp_image_get_n_vectors         (const GimpImage    *image);
+gint            gimp_image_get_n_layers          (GimpImage          *image);
+gint            gimp_image_get_n_channels        (GimpImage          *image);
+gint            gimp_image_get_n_vectors         (GimpImage          *image);
 
-GList         * gimp_image_get_layer_iter        (const GimpImage    *image);
-GList         * gimp_image_get_channel_iter      (const GimpImage    *image);
-GList         * gimp_image_get_vectors_iter      (const GimpImage    *image);
+GList         * gimp_image_get_layer_iter        (GimpImage          *image);
+GList         * gimp_image_get_channel_iter      (GimpImage          *image);
+GList         * gimp_image_get_vectors_iter      (GimpImage          *image);
 
-GList         * gimp_image_get_layer_list        (const GimpImage    *image);
-GList         * gimp_image_get_channel_list      (const GimpImage    *image);
-GList         * gimp_image_get_vectors_list      (const GimpImage    *image);
+GList         * gimp_image_get_layer_list        (GimpImage          *image);
+GList         * gimp_image_get_channel_list      (GimpImage          *image);
+GList         * gimp_image_get_vectors_list      (GimpImage          *image);
 
-GimpDrawable  * gimp_image_get_active_drawable   (const GimpImage    *image);
-GimpLayer     * gimp_image_get_active_layer      (const GimpImage    *image);
-GimpChannel   * gimp_image_get_active_channel    (const GimpImage    *image);
-GimpVectors   * gimp_image_get_active_vectors    (const GimpImage    *image);
+GimpDrawable  * gimp_image_get_active_drawable   (GimpImage          *image);
+GimpLayer     * gimp_image_get_active_layer      (GimpImage          *image);
+GimpChannel   * gimp_image_get_active_channel    (GimpImage          *image);
+GimpVectors   * gimp_image_get_active_vectors    (GimpImage          *image);
 
 GimpLayer     * gimp_image_set_active_layer      (GimpImage          *image,
                                                   GimpLayer          *layer);
@@ -357,18 +357,18 @@ GimpChannel   * gimp_image_unset_active_channel  (GimpImage          *image);
 GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *image,
                                                   GimpVectors        *vectors);
 
-GimpLayer     * gimp_image_get_layer_by_tattoo   (const GimpImage    *image,
+GimpLayer     * gimp_image_get_layer_by_tattoo   (GimpImage          *image,
                                                   GimpTattoo          tattoo);
-GimpChannel   * gimp_image_get_channel_by_tattoo (const GimpImage    *image,
+GimpChannel   * gimp_image_get_channel_by_tattoo (GimpImage          *image,
                                                   GimpTattoo          tattoo);
-GimpVectors   * gimp_image_get_vectors_by_tattoo (const GimpImage    *image,
+GimpVectors   * gimp_image_get_vectors_by_tattoo (GimpImage          *image,
                                                   GimpTattoo          tattoo);
 
-GimpLayer     * gimp_image_get_layer_by_name     (const GimpImage    *image,
+GimpLayer     * gimp_image_get_layer_by_name     (GimpImage          *image,
                                                   const gchar        *name);
-GimpChannel   * gimp_image_get_channel_by_name   (const GimpImage    *image,
+GimpChannel   * gimp_image_get_channel_by_name   (GimpImage          *image,
                                                   const gchar        *name);
-GimpVectors   * gimp_image_get_vectors_by_name   (const GimpImage    *image,
+GimpVectors   * gimp_image_get_vectors_by_name   (GimpImage          *image,
                                                   const gchar        *name);
 
 gboolean        gimp_image_reorder_item          (GimpImage          *image,

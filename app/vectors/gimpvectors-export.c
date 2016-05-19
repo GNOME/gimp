@@ -36,13 +36,13 @@
 #include "gimp-intl.h"
 
 
-static GString * gimp_vectors_export            (const GimpImage   *image,
-                                                 const GimpVectors *vectors);
-static void      gimp_vectors_export_image_size (const GimpImage   *image,
-                                                 GString           *str);
-static void      gimp_vectors_export_path       (const GimpVectors *vectors,
-                                                 GString           *str);
-static gchar   * gimp_vectors_export_path_data  (const GimpVectors *vectors);
+static GString * gimp_vectors_export            (GimpImage   *image,
+                                                 GimpVectors *vectors);
+static void      gimp_vectors_export_image_size (GimpImage   *image,
+                                                 GString     *str);
+static void      gimp_vectors_export_path       (GimpVectors *vectors,
+                                                 GString     *str);
+static gchar   * gimp_vectors_export_path_data  (GimpVectors *vectors);
 
 
 /**
@@ -58,10 +58,10 @@ static gchar   * gimp_vectors_export_path_data  (const GimpVectors *vectors);
  *               %FALSE if there was an error writing the file
  **/
 gboolean
-gimp_vectors_export_file (const GimpImage    *image,
-                          const GimpVectors  *vectors,
-                          GFile              *file,
-                          GError            **error)
+gimp_vectors_export_file (GimpImage    *image,
+                          GimpVectors  *vectors,
+                          GFile        *file,
+                          GError      **error)
 {
   GOutputStream *output;
   GString       *string;
@@ -108,8 +108,8 @@ gimp_vectors_export_file (const GimpImage    *image,
  * Return value: a %NUL-terminated string that holds a complete XML document
  **/
 gchar *
-gimp_vectors_export_string (const GimpImage    *image,
-                            const GimpVectors  *vectors)
+gimp_vectors_export_string (GimpImage   *image,
+                            GimpVectors *vectors)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
@@ -118,8 +118,8 @@ gimp_vectors_export_string (const GimpImage    *image,
 }
 
 static GString *
-gimp_vectors_export (const GimpImage   *image,
-                     const GimpVectors *vectors)
+gimp_vectors_export (GimpImage   *image,
+                     GimpVectors *vectors)
 {
   GString *str = g_string_new (NULL);
 
@@ -161,8 +161,8 @@ gimp_vectors_export (const GimpImage   *image,
 }
 
 static void
-gimp_vectors_export_image_size (const GimpImage *image,
-                                GString         *str)
+gimp_vectors_export_image_size (GimpImage *image,
+                                GString   *str)
 {
   GimpUnit     unit;
   const gchar *abbrev;
@@ -201,8 +201,8 @@ gimp_vectors_export_image_size (const GimpImage *image,
 }
 
 static void
-gimp_vectors_export_path (const GimpVectors *vectors,
-                          GString           *str)
+gimp_vectors_export_path (GimpVectors *vectors,
+                          GString     *str)
 {
   const gchar *name = gimp_object_get_name (vectors);
   gchar       *data = gimp_vectors_export_path_data (vectors);
@@ -224,7 +224,7 @@ gimp_vectors_export_path (const GimpVectors *vectors,
 #define NEWLINE "\n           "
 
 static gchar *
-gimp_vectors_export_path_data (const GimpVectors *vectors)
+gimp_vectors_export_path_data (GimpVectors *vectors)
 {
   GString  *str;
   GList    *strokes;

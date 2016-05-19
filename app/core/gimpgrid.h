@@ -74,7 +74,7 @@ void           gimp_grid_get_offset             (GimpGrid           *grid,
                                                  gdouble            *yoffset);
 
 const gchar  * gimp_grid_parasite_name          (void) G_GNUC_CONST;
-GimpParasite * gimp_grid_to_parasite            (const GimpGrid     *grid);
+GimpParasite * gimp_grid_to_parasite            (GimpGrid           *grid);
 GimpGrid     * gimp_grid_from_parasite          (const GimpParasite *parasite);
 
 

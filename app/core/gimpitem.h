@@ -49,9 +49,9 @@ struct _GimpItemClass
 
   /*  virtual functions  */
   void            (* unset_removed)      (GimpItem               *item);
-  gboolean        (* is_attached)        (const GimpItem         *item);
-  gboolean        (* is_content_locked)  (const GimpItem         *item);
-  gboolean        (* is_position_locked) (const GimpItem         *item);
+  gboolean        (* is_attached)        (GimpItem               *item);
+  gboolean        (* is_content_locked)  (GimpItem               *item);
+  gboolean        (* is_position_locked) (GimpItem               *item);
   GimpItemTree  * (* get_tree)           (GimpItem               *item);
   gboolean        (* bounds)             (GimpItem               *item,
                                           gdouble                *x,
@@ -155,12 +155,12 @@ GimpItem      * gimp_item_new                (GType               type,
                                               gint                height);
 
 void            gimp_item_removed            (GimpItem           *item);
-gboolean        gimp_item_is_removed         (const GimpItem     *item);
+gboolean        gimp_item_is_removed         (GimpItem           *item);
 void            gimp_item_unset_removed      (GimpItem           *item);
 
-gboolean        gimp_item_is_attached        (const GimpItem     *item);
+gboolean        gimp_item_is_attached        (GimpItem           *item);
 
-GimpItem      * gimp_item_get_parent         (const GimpItem     *item);
+GimpItem      * gimp_item_get_parent         (GimpItem           *item);
 
 GimpItemTree  * gimp_item_get_tree           (GimpItem           *item);
 GimpContainer * gimp_item_get_container      (GimpItem           *item);
@@ -189,13 +189,13 @@ gboolean        gimp_item_rename             (GimpItem           *item,
                                               const gchar        *new_name,
                                               GError            **error);
 
-gint            gimp_item_get_width          (const GimpItem     *item);
-gint            gimp_item_get_height         (const GimpItem     *item);
+gint            gimp_item_get_width          (GimpItem           *item);
+gint            gimp_item_get_height         (GimpItem           *item);
 void            gimp_item_set_size           (GimpItem           *item,
                                               gint                width,
                                               gint                height);
 
-void            gimp_item_get_offset         (const GimpItem     *item,
+void            gimp_item_get_offset         (GimpItem           *item,
                                               gint               *offset_x,
                                               gint               *offset_y);
 void            gimp_item_set_offset         (GimpItem           *item,
@@ -209,7 +209,7 @@ void            gimp_item_translate          (GimpItem           *item,
                                               gint                offset_y,
                                               gboolean            push_undo);
 
-gboolean        gimp_item_check_scaling      (const GimpItem     *item,
+gboolean        gimp_item_check_scaling      (GimpItem           *item,
                                               gint                new_width,
                                               gint                new_height);
 void            gimp_item_scale              (GimpItem           *item,
@@ -288,11 +288,11 @@ gint            gimp_item_get_ID             (GimpItem           *item);
 GimpItem      * gimp_item_get_by_ID          (Gimp               *gimp,
                                               gint                id);
 
-GimpTattoo      gimp_item_get_tattoo         (const GimpItem     *item);
+GimpTattoo      gimp_item_get_tattoo         (GimpItem           *item);
 void            gimp_item_set_tattoo         (GimpItem           *item,
                                               GimpTattoo          tattoo);
 
-GimpImage     * gimp_item_get_image          (const GimpItem     *item);
+GimpImage     * gimp_item_get_image          (GimpItem           *item);
 void            gimp_item_set_image          (GimpItem           *item,
                                               GimpImage          *image);
 
@@ -301,7 +301,7 @@ void            gimp_item_replace_item       (GimpItem           *item,
 
 void               gimp_item_set_parasites   (GimpItem           *item,
                                               GimpParasiteList   *parasites);
-GimpParasiteList * gimp_item_get_parasites   (const GimpItem     *item);
+GimpParasiteList * gimp_item_get_parasites   (GimpItem           *item);
 
 gboolean        gimp_item_parasite_validate  (GimpItem           *item,
                                               const GimpParasite *parasite,
@@ -312,35 +312,35 @@ void            gimp_item_parasite_attach    (GimpItem           *item,
 void            gimp_item_parasite_detach    (GimpItem           *item,
                                               const gchar        *name,
                                               gboolean            push_undo);
-const GimpParasite * gimp_item_parasite_find (const GimpItem     *item,
+const GimpParasite * gimp_item_parasite_find (GimpItem           *item,
                                               const gchar        *name);
-gchar        ** gimp_item_parasite_list      (const GimpItem     *item,
+gchar        ** gimp_item_parasite_list      (GimpItem           *item,
                                               gint               *count);
 
 void            gimp_item_set_visible        (GimpItem           *item,
                                               gboolean            visible,
                                               gboolean            push_undo);
-gboolean        gimp_item_get_visible        (const GimpItem     *item);
-gboolean        gimp_item_is_visible         (const GimpItem     *item);
+gboolean        gimp_item_get_visible        (GimpItem           *item);
+gboolean        gimp_item_is_visible         (GimpItem           *item);
 
 void            gimp_item_set_linked         (GimpItem           *item,
                                               gboolean            linked,
                                               gboolean            push_undo);
-gboolean        gimp_item_get_linked         (const GimpItem     *item);
+gboolean        gimp_item_get_linked         (GimpItem           *item);
 
 void            gimp_item_set_lock_content   (GimpItem           *item,
                                               gboolean            lock_content,
                                               gboolean            push_undo);
-gboolean        gimp_item_get_lock_content   (const GimpItem     *item);
-gboolean        gimp_item_can_lock_content   (const GimpItem     *item);
-gboolean        gimp_item_is_content_locked  (const GimpItem     *item);
+gboolean        gimp_item_get_lock_content   (GimpItem           *item);
+gboolean        gimp_item_can_lock_content   (GimpItem           *item);
+gboolean        gimp_item_is_content_locked  (GimpItem           *item);
 
 void            gimp_item_set_lock_position  (GimpItem          *item,
                                               gboolean           lock_position,
                                               gboolean           push_undo);
-gboolean        gimp_item_get_lock_position  (const GimpItem    *item);
-gboolean        gimp_item_can_lock_position  (const GimpItem    *item);
-gboolean        gimp_item_is_position_locked (const GimpItem    *item);
+gboolean        gimp_item_get_lock_position  (GimpItem          *item);
+gboolean        gimp_item_can_lock_position  (GimpItem          *item);
+gboolean        gimp_item_is_position_locked (GimpItem          *item);
 
 gboolean        gimp_item_mask_bounds        (GimpItem           *item,
                                               gint               *x1,

@@ -160,7 +160,7 @@ GimpContext * gimp_context_new               (Gimp                *gimp,
                                               const gchar         *name,
                                               GimpContext         *template);
 
-GimpContext * gimp_context_get_parent        (const GimpContext   *context);
+GimpContext * gimp_context_get_parent        (GimpContext         *context);
 void          gimp_context_set_parent        (GimpContext         *context,
                                               GimpContext         *parent);
 

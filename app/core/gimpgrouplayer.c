@@ -90,7 +90,7 @@ static gboolean        gimp_group_layer_get_expanded (GimpViewable    *viewable)
 static void            gimp_group_layer_set_expanded (GimpViewable    *viewable,
                                                       gboolean         expanded);
 
-static gboolean  gimp_group_layer_is_position_locked (const GimpItem  *item);
+static gboolean  gimp_group_layer_is_position_locked (GimpItem        *item);
 static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
                                                       GType            new_type);
 static void            gimp_group_layer_convert      (GimpItem        *item,
@@ -132,7 +132,7 @@ static void            gimp_group_layer_transform    (GimpItem        *item,
                                                       GimpTransformResize clip_result,
                                                       GimpProgress    *progress);
 
-static gint64      gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
+static gint64      gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
                                                       GimpComponentType  component_type,
                                                       gint               width,
                                                       gint               height);
@@ -414,7 +414,7 @@ gimp_group_layer_set_expanded (GimpViewable *viewable,
 }
 
 static gboolean
-gimp_group_layer_is_position_locked (const GimpItem *item)
+gimp_group_layer_is_position_locked (GimpItem *item)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (item);
   GList                 *list;
@@ -811,10 +811,10 @@ gimp_group_layer_transform (GimpItem               *item,
 }
 
 static gint64
-gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
-                                   GimpComponentType   component_type,
-                                   gint                width,
-                                   gint                height)
+gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
+                                   GimpComponentType  component_type,
+                                   gint               width,
+                                   gint               height)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
   GList                 *list;

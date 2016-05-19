@@ -158,7 +158,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
 }
 
 gboolean
-gimp_image_get_quick_mask_state (const GimpImage *image)
+gimp_image_get_quick_mask_state (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
@@ -182,8 +182,8 @@ gimp_image_set_quick_mask_color (GimpImage     *image,
 }
 
 void
-gimp_image_get_quick_mask_color (const GimpImage *image,
-                                 GimpRGB         *color)
+gimp_image_get_quick_mask_color (GimpImage *image,
+                                 GimpRGB   *color)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (color != NULL);
@@ -192,7 +192,7 @@ gimp_image_get_quick_mask_color (const GimpImage *image,
 }
 
 GimpChannel *
-gimp_image_get_quick_mask (const GimpImage *image)
+gimp_image_get_quick_mask (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -220,7 +220,7 @@ gimp_image_quick_mask_invert (GimpImage *image)
 }
 
 gboolean
-gimp_image_get_quick_mask_inverted (const GimpImage *image)
+gimp_image_get_quick_mask_inverted (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 

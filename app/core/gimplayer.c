@@ -106,7 +106,7 @@ static GeglNode * gimp_layer_get_node           (GimpFilter         *filter);
 
 static void       gimp_layer_removed            (GimpItem           *item);
 static void       gimp_layer_unset_removed      (GimpItem           *item);
-static gboolean   gimp_layer_is_attached        (const GimpItem     *item);
+static gboolean   gimp_layer_is_attached        (GimpItem           *item);
 static GimpItemTree * gimp_layer_get_tree       (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type);
@@ -160,7 +160,7 @@ static void       gimp_layer_to_selection       (GimpItem           *item,
                                                  gdouble             feather_radius_y);
 
 static void       gimp_layer_alpha_changed      (GimpDrawable       *drawable);
-static gint64     gimp_layer_estimate_memsize   (const GimpDrawable *drawable,
+static gint64     gimp_layer_estimate_memsize   (GimpDrawable       *drawable,
                                                  GimpComponentType   component_type,
                                                  gint                width,
                                                  gint                height);
@@ -175,10 +175,10 @@ static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  gboolean            push_undo,
                                                  GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
-static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
+static void    gimp_layer_get_active_components (GimpDrawable       *drawable,
                                                  gboolean           *active);
 static GimpComponentMask
-               gimp_layer_get_active_mask       (const GimpDrawable *drawable);
+               gimp_layer_get_active_mask       (GimpDrawable       *drawable);
 static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
                                                  gboolean            push_undo,
                                                  const gchar        *undo_desc,
@@ -708,7 +708,7 @@ gimp_layer_unset_removed (GimpItem *item)
 }
 
 static gboolean
-gimp_layer_is_attached (const GimpItem *item)
+gimp_layer_is_attached (GimpItem *item)
 {
   GimpImage *image = gimp_item_get_image (item);
 
@@ -1031,10 +1031,10 @@ gimp_layer_alpha_changed (GimpDrawable *drawable)
 }
 
 static gint64
-gimp_layer_estimate_memsize (const GimpDrawable *drawable,
-                             GimpComponentType   component_type,
-                             gint                width,
-                             gint                height)
+gimp_layer_estimate_memsize (GimpDrawable      *drawable,
+                             GimpComponentType  component_type,
+                             gint               width,
+                             gint               height)
 {
   GimpLayer *layer   = GIMP_LAYER (drawable);
   gint64     memsize = 0;
@@ -1153,8 +1153,8 @@ gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 }
 
 static void
-gimp_layer_get_active_components (const GimpDrawable *drawable,
-                                  gboolean           *active)
+gimp_layer_get_active_components (GimpDrawable *drawable,
+                                  gboolean     *active)
 {
   GimpLayer  *layer  = GIMP_LAYER (drawable);
   GimpImage  *image  = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -1168,7 +1168,7 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 }
 
 static GimpComponentMask
-gimp_layer_get_active_mask (const GimpDrawable *drawable)
+gimp_layer_get_active_mask (GimpDrawable *drawable)
 {
   GimpLayer         *layer = GIMP_LAYER (drawable);
   GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -1277,7 +1277,7 @@ gimp_layer_get_parent (GimpLayer *layer)
 }
 
 GimpLayerMask *
-gimp_layer_get_mask (const GimpLayer *layer)
+gimp_layer_get_mask (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
@@ -1384,7 +1384,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
 }
 
 GimpLayerMask *
-gimp_layer_create_mask (const GimpLayer *layer,
+gimp_layer_create_mask (GimpLayer       *layer,
                         GimpAddMaskType  add_mask_type,
                         GimpChannel     *channel)
 {
@@ -1745,7 +1745,7 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
 }
 
 gboolean
-gimp_layer_get_apply_mask (const GimpLayer *layer)
+gimp_layer_get_apply_mask (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (layer->mask, FALSE);
@@ -1769,7 +1769,7 @@ gimp_layer_set_edit_mask (GimpLayer *layer,
 }
 
 gboolean
-gimp_layer_get_edit_mask (const GimpLayer *layer)
+gimp_layer_get_edit_mask (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (layer->mask, FALSE);
@@ -1834,7 +1834,7 @@ gimp_layer_set_show_mask (GimpLayer *layer,
 }
 
 gboolean
-gimp_layer_get_show_mask (const GimpLayer *layer)
+gimp_layer_get_show_mask (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (layer->mask, FALSE);
@@ -1935,7 +1935,7 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
 /**********************/
 
 GimpDrawable *
-gimp_layer_get_floating_sel_drawable (const GimpLayer *layer)
+gimp_layer_get_floating_sel_drawable (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
@@ -1971,7 +1971,7 @@ gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
 }
 
 gboolean
-gimp_layer_is_floating_sel (const GimpLayer *layer)
+gimp_layer_is_floating_sel (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
@@ -2012,7 +2012,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
 }
 
 gdouble
-gimp_layer_get_opacity (const GimpLayer *layer)
+gimp_layer_get_opacity (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_OPACITY_OPAQUE);
 
@@ -2051,7 +2051,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
 }
 
 GimpLayerModeEffects
-gimp_layer_get_mode (const GimpLayer *layer)
+gimp_layer_get_mode (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_NORMAL_MODE);
 
@@ -2085,7 +2085,7 @@ gimp_layer_set_lock_alpha (GimpLayer *layer,
 }
 
 gboolean
-gimp_layer_get_lock_alpha (const GimpLayer *layer)
+gimp_layer_get_lock_alpha (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
@@ -2093,7 +2093,7 @@ gimp_layer_get_lock_alpha (const GimpLayer *layer)
 }
 
 gboolean
-gimp_layer_can_lock_alpha (const GimpLayer *layer)
+gimp_layer_can_lock_alpha (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 

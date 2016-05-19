@@ -61,15 +61,15 @@ GimpBuffer       * gimp_buffer_new_from_pixbuf   (GdkPixbuf        *pixbuf,
                                                   gint              offset_x,
                                                   gint              offset_y);
 
-gint               gimp_buffer_get_width         (const GimpBuffer *buffer);
-gint               gimp_buffer_get_height        (const GimpBuffer *buffer);
-const Babl       * gimp_buffer_get_format        (const GimpBuffer *buffer);
+gint               gimp_buffer_get_width         (GimpBuffer       *buffer);
+gint               gimp_buffer_get_height        (GimpBuffer       *buffer);
+const Babl       * gimp_buffer_get_format        (GimpBuffer       *buffer);
 
-GeglBuffer       * gimp_buffer_get_buffer        (const GimpBuffer *buffer);
+GeglBuffer       * gimp_buffer_get_buffer        (GimpBuffer       *buffer);
 
 void               gimp_buffer_set_color_profile (GimpBuffer       *buffer,
                                                   GimpColorProfile *profile);
-GimpColorProfile * gimp_buffer_get_color_profile (const GimpBuffer *buffer);
+GimpColorProfile * gimp_buffer_get_color_profile (GimpBuffer       *buffer);
 
 
 #endif /* __GIMP_BUFFER_H__ */

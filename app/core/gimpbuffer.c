@@ -436,7 +436,7 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
 }
 
 gint
-gimp_buffer_get_width (const GimpBuffer *buffer)
+gimp_buffer_get_width (GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
 
@@ -444,7 +444,7 @@ gimp_buffer_get_width (const GimpBuffer *buffer)
 }
 
 gint
-gimp_buffer_get_height (const GimpBuffer *buffer)
+gimp_buffer_get_height (GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
 
@@ -452,7 +452,7 @@ gimp_buffer_get_height (const GimpBuffer *buffer)
 }
 
 const Babl *
-gimp_buffer_get_format (const GimpBuffer *buffer)
+gimp_buffer_get_format (GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 
@@ -460,7 +460,7 @@ gimp_buffer_get_format (const GimpBuffer *buffer)
 }
 
 GeglBuffer *
-gimp_buffer_get_buffer (const GimpBuffer *buffer)
+gimp_buffer_get_buffer (GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 
@@ -490,7 +490,7 @@ gimp_buffer_set_color_profile (GimpBuffer       *buffer,
 }
 
 GimpColorProfile *
-gimp_buffer_get_color_profile (const GimpBuffer *buffer)
+gimp_buffer_get_color_profile (GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 

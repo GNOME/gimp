@@ -59,9 +59,9 @@ static void    gimp_stroke_finalize                  (GObject      *object);
 static gint64  gimp_stroke_get_memsize               (GimpObject   *object,
                                                       gint64       *gui_size);
 
-static GimpAnchor * gimp_stroke_real_anchor_get      (const GimpStroke *stroke,
+static GimpAnchor * gimp_stroke_real_anchor_get      (GimpStroke       *stroke,
                                                       const GimpCoords *coord);
-static GimpAnchor * gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
+static GimpAnchor * gimp_stroke_real_anchor_get_next (GimpStroke       *stroke,
                                                       const GimpAnchor *prev);
 static void         gimp_stroke_real_anchor_select   (GimpStroke       *stroke,
                                                       GimpAnchor       *anchor,
@@ -122,17 +122,17 @@ gboolean     gimp_stroke_real_connect_stroke (GimpStroke          *stroke,
                                               GimpAnchor          *neighbor);
 
 
-static gboolean     gimp_stroke_real_is_empty        (const GimpStroke *stroke);
+static gboolean     gimp_stroke_real_is_empty        (GimpStroke       *stroke);
 
-static gdouble      gimp_stroke_real_get_length      (const GimpStroke *stroke,
-                                                      const gdouble     precision);
-static gdouble      gimp_stroke_real_get_distance    (const GimpStroke *stroke,
+static gdouble      gimp_stroke_real_get_length      (GimpStroke       *stroke,
+                                                      gdouble           precision);
+static gdouble      gimp_stroke_real_get_distance    (GimpStroke       *stroke,
                                                       const GimpCoords *coord);
-static GArray *     gimp_stroke_real_interpolate     (const GimpStroke *stroke,
+static GArray *     gimp_stroke_real_interpolate     (GimpStroke       *stroke,
                                                       gdouble           precision,
                                                       gboolean         *closed);
-static GimpStroke * gimp_stroke_real_duplicate       (const GimpStroke *stroke);
-static GimpBezierDesc * gimp_stroke_real_make_bezier (const GimpStroke *stroke);
+static GimpStroke * gimp_stroke_real_duplicate       (GimpStroke       *stroke);
+static GimpBezierDesc * gimp_stroke_real_make_bezier (GimpStroke       *stroke);
 
 static void         gimp_stroke_real_translate       (GimpStroke       *stroke,
                                                       gdouble           offset_x,
@@ -140,29 +140,29 @@ static void         gimp_stroke_real_translate       (GimpStroke       *stroke,
 static void         gimp_stroke_real_scale           (GimpStroke       *stroke,
                                                       gdouble           scale_x,
                                                       gdouble           scale_y);
-static void         gimp_stroke_real_rotate          (GimpStroke *stroke,
-                                                      gdouble     center_x,
-                                                      gdouble     center_y,
-                                                      gdouble     angle);
-static void         gimp_stroke_real_flip            (GimpStroke          *stroke,
-                                                      GimpOrientationType  flip_type,
-                                                      gdouble              axis);
-static void         gimp_stroke_real_flip_free       (GimpStroke          *stroke,
-                                                      gdouble              x1,
-                                                      gdouble              y1,
-                                                      gdouble              x2,
-                                                      gdouble              y2);
+static void         gimp_stroke_real_rotate          (GimpStroke       *stroke,
+                                                      gdouble           center_x,
+                                                      gdouble           center_y,
+                                                      gdouble           angle);
+static void         gimp_stroke_real_flip            (GimpStroke       *stroke,
+                                                      GimpOrientationType flip_type,
+                                                      gdouble           axis);
+static void         gimp_stroke_real_flip_free       (GimpStroke       *stroke,
+                                                      gdouble           x1,
+                                                      gdouble           y1,
+                                                      gdouble           x2,
+                                                      gdouble           y2);
 static void         gimp_stroke_real_transform       (GimpStroke        *stroke,
                                                       const GimpMatrix3 *matrix);
 
-static GList    * gimp_stroke_real_get_draw_anchors  (const GimpStroke *stroke);
-static GList    * gimp_stroke_real_get_draw_controls (const GimpStroke *stroke);
-static GArray   * gimp_stroke_real_get_draw_lines    (const GimpStroke *stroke);
-static GArray *  gimp_stroke_real_control_points_get (const GimpStroke *stroke,
+static GList    * gimp_stroke_real_get_draw_anchors  (GimpStroke       *stroke);
+static GList    * gimp_stroke_real_get_draw_controls (GimpStroke       *stroke);
+static GArray   * gimp_stroke_real_get_draw_lines    (GimpStroke       *stroke);
+static GArray *  gimp_stroke_real_control_points_get (GimpStroke       *stroke,
                                                       gboolean         *ret_closed);
-static gboolean   gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
-                                                      const gdouble     dist,
-                                                      const gdouble     precision,
+static gboolean   gimp_stroke_real_get_point_at_dist (GimpStroke       *stroke,
+                                                      gdouble           dist,
+                                                      gdouble           precision,
                                                       GimpCoords       *position,
                                                       gdouble          *slope);
 
@@ -366,7 +366,7 @@ gimp_stroke_set_ID (GimpStroke *stroke,
 }
 
 gint
-gimp_stroke_get_ID (const GimpStroke *stroke)
+gimp_stroke_get_ID (GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), -1);
 
@@ -375,7 +375,7 @@ gimp_stroke_get_ID (const GimpStroke *stroke)
 
 
 GimpAnchor *
-gimp_stroke_anchor_get (const GimpStroke *stroke,
+gimp_stroke_anchor_get (GimpStroke       *stroke,
                         const GimpCoords *coord)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
@@ -385,7 +385,7 @@ gimp_stroke_anchor_get (const GimpStroke *stroke,
 
 
 gdouble
-gimp_stroke_nearest_point_get (const GimpStroke *stroke,
+gimp_stroke_nearest_point_get (GimpStroke       *stroke,
                                const GimpCoords *coord,
                                const gdouble     precision,
                                GimpCoords       *ret_point,
@@ -408,14 +408,14 @@ gimp_stroke_nearest_point_get (const GimpStroke *stroke,
 }
 
 gdouble
-gimp_stroke_nearest_tangent_get   (const GimpStroke      *stroke,
-                                   const GimpCoords      *coords1,
-                                   const GimpCoords      *coords2,
-                                   gdouble                precision,
-                                   GimpCoords            *nearest,
-                                   GimpAnchor           **ret_segment_start,
-                                   GimpAnchor           **ret_segment_end,
-                                   gdouble               *ret_pos)
+gimp_stroke_nearest_tangent_get (GimpStroke            *stroke,
+                                 const GimpCoords      *coords1,
+                                 const GimpCoords      *coords2,
+                                 gdouble                precision,
+                                 GimpCoords            *nearest,
+                                 GimpAnchor           **ret_segment_start,
+                                 GimpAnchor           **ret_segment_end,
+                                 gdouble               *ret_pos)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
   g_return_val_if_fail (coords1 != NULL, FALSE);
@@ -434,14 +434,14 @@ gimp_stroke_nearest_tangent_get   (const GimpStroke      *stroke,
 }
 
 gdouble
-gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
-                                      const GimpCoords      *coords1,
-                                      const GimpCoords      *direction,
-                                      gdouble                precision,
-                                      GimpCoords            *nearest,
-                                      GimpAnchor           **ret_segment_start,
-                                      GimpAnchor           **ret_segment_end,
-                                      gdouble               *ret_pos)
+gimp_stroke_nearest_intersection_get (GimpStroke        *stroke,
+                                      const GimpCoords  *coords1,
+                                      const GimpCoords  *direction,
+                                      gdouble            precision,
+                                      GimpCoords        *nearest,
+                                      GimpAnchor       **ret_segment_start,
+                                      GimpAnchor       **ret_segment_end,
+                                      gdouble           *ret_pos)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
   g_return_val_if_fail (coords1 != NULL, FALSE);
@@ -460,7 +460,7 @@ gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
 }
 
 static GimpAnchor *
-gimp_stroke_real_anchor_get (const GimpStroke *stroke,
+gimp_stroke_real_anchor_get (GimpStroke       *stroke,
                              const GimpCoords *coord)
 {
   gdouble     dx, dy;
@@ -506,7 +506,7 @@ gimp_stroke_real_anchor_get (const GimpStroke *stroke,
 
 
 GimpAnchor *
-gimp_stroke_anchor_get_next (const GimpStroke *stroke,
+gimp_stroke_anchor_get_next (GimpStroke       *stroke,
                              const GimpAnchor *prev)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
@@ -515,7 +515,7 @@ gimp_stroke_anchor_get_next (const GimpStroke *stroke,
 }
 
 static GimpAnchor *
-gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
+gimp_stroke_real_anchor_get_next (GimpStroke       *stroke,
                                   const GimpAnchor *prev)
 {
   GList *list;
@@ -878,7 +878,7 @@ gimp_stroke_real_connect_stroke (GimpStroke *stroke,
 }
 
 gboolean
-gimp_stroke_is_empty (const GimpStroke *stroke)
+gimp_stroke_is_empty (GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
 
@@ -886,15 +886,15 @@ gimp_stroke_is_empty (const GimpStroke *stroke)
 }
 
 static gboolean
-gimp_stroke_real_is_empty (const GimpStroke *stroke)
+gimp_stroke_real_is_empty (GimpStroke *stroke)
 {
   return g_queue_is_empty (stroke->anchors);
 }
 
 
 gdouble
-gimp_stroke_get_length (const GimpStroke *stroke,
-                        const gdouble     precision)
+gimp_stroke_get_length (GimpStroke *stroke,
+                        gdouble     precision)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
 
@@ -902,8 +902,8 @@ gimp_stroke_get_length (const GimpStroke *stroke,
 }
 
 static gdouble
-gimp_stroke_real_get_length (const GimpStroke *stroke,
-                             const gdouble     precision)
+gimp_stroke_real_get_length (GimpStroke *stroke,
+                             gdouble     precision)
 {
   GArray     *points;
   gint        i;
@@ -934,8 +934,8 @@ gimp_stroke_real_get_length (const GimpStroke *stroke,
 
 
 gdouble
-gimp_stroke_get_distance (const GimpStroke *stroke,
-                          const GimpCoords  *coord)
+gimp_stroke_get_distance (GimpStroke       *stroke,
+                          const GimpCoords *coord)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
 
@@ -943,8 +943,8 @@ gimp_stroke_get_distance (const GimpStroke *stroke,
 }
 
 static gdouble
-gimp_stroke_real_get_distance (const GimpStroke *stroke,
-                               const GimpCoords  *coord)
+gimp_stroke_real_get_distance (GimpStroke       *stroke,
+                               const GimpCoords *coord)
 {
   g_printerr ("gimp_stroke_get_distance: default implementation\n");
 
@@ -953,9 +953,9 @@ gimp_stroke_real_get_distance (const GimpStroke *stroke,
 
 
 GArray *
-gimp_stroke_interpolate (const GimpStroke *stroke,
-                         gdouble           precision,
-                         gboolean         *ret_closed)
+gimp_stroke_interpolate (GimpStroke *stroke,
+                         gdouble     precision,
+                         gboolean   *ret_closed)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -964,9 +964,9 @@ gimp_stroke_interpolate (const GimpStroke *stroke,
 }
 
 static GArray *
-gimp_stroke_real_interpolate (const GimpStroke  *stroke,
-                              gdouble            precision,
-                              gboolean          *ret_closed)
+gimp_stroke_real_interpolate (GimpStroke *stroke,
+                              gdouble     precision,
+                              gboolean   *ret_closed)
 {
   g_printerr ("gimp_stroke_interpolate: default implementation\n");
 
@@ -974,7 +974,7 @@ gimp_stroke_real_interpolate (const GimpStroke  *stroke,
 }
 
 GimpStroke *
-gimp_stroke_duplicate (const GimpStroke *stroke)
+gimp_stroke_duplicate (GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -982,7 +982,7 @@ gimp_stroke_duplicate (const GimpStroke *stroke)
 }
 
 static GimpStroke *
-gimp_stroke_real_duplicate (const GimpStroke *stroke)
+gimp_stroke_real_duplicate (GimpStroke *stroke)
 {
   GimpStroke *new_stroke;
   GList      *list;
@@ -1006,7 +1006,7 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
 
 
 GimpBezierDesc *
-gimp_stroke_make_bezier (const GimpStroke *stroke)
+gimp_stroke_make_bezier (GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -1014,7 +1014,7 @@ gimp_stroke_make_bezier (const GimpStroke *stroke)
 }
 
 static GimpBezierDesc *
-gimp_stroke_real_make_bezier (const GimpStroke *stroke)
+gimp_stroke_real_make_bezier (GimpStroke *stroke)
 {
   g_printerr ("gimp_stroke_make_bezier: default implementation\n");
 
@@ -1102,9 +1102,9 @@ gimp_stroke_real_rotate (GimpStroke *stroke,
 }
 
 void
-gimp_stroke_flip   (GimpStroke          *stroke,
-                    GimpOrientationType  flip_type,
-                    gdouble                axis)
+gimp_stroke_flip (GimpStroke          *stroke,
+                  GimpOrientationType  flip_type,
+                  gdouble              axis)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
 
@@ -1112,9 +1112,9 @@ gimp_stroke_flip   (GimpStroke          *stroke,
 }
 
 static void
-gimp_stroke_real_flip   (GimpStroke          *stroke,
-                         GimpOrientationType  flip_type,
-                         gdouble              axis)
+gimp_stroke_real_flip (GimpStroke          *stroke,
+                       GimpOrientationType  flip_type,
+                       gdouble              axis)
 {
   GimpMatrix3  matrix;
 
@@ -1124,11 +1124,11 @@ gimp_stroke_real_flip   (GimpStroke          *stroke,
 }
 
 void
-gimp_stroke_flip_free   (GimpStroke          *stroke,
-                         gdouble              x1,
-                         gdouble              y1,
-                         gdouble              x2,
-                         gdouble              y2)
+gimp_stroke_flip_free (GimpStroke *stroke,
+                       gdouble     x1,
+                       gdouble     y1,
+                       gdouble     x2,
+                       gdouble     y2)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
 
@@ -1136,11 +1136,11 @@ gimp_stroke_flip_free   (GimpStroke          *stroke,
 }
 
 static void
-gimp_stroke_real_flip_free   (GimpStroke          *stroke,
-                              gdouble              x1,
-                              gdouble              y1,
-                              gdouble              x2,
-                              gdouble              y2)
+gimp_stroke_real_flip_free (GimpStroke *stroke,
+                            gdouble     x1,
+                            gdouble     y1,
+                            gdouble     x2,
+                            gdouble     y2)
 {
   /* x, y, width and height parameter in gimp_transform_matrix_flip_free are unused */
   GimpMatrix3  matrix;
@@ -1180,7 +1180,7 @@ gimp_stroke_real_transform (GimpStroke        *stroke,
 
 
 GList *
-gimp_stroke_get_draw_anchors (const GimpStroke  *stroke)
+gimp_stroke_get_draw_anchors (GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -1188,7 +1188,7 @@ gimp_stroke_get_draw_anchors (const GimpStroke  *stroke)
 }
 
 static GList *
-gimp_stroke_real_get_draw_anchors (const GimpStroke  *stroke)
+gimp_stroke_real_get_draw_anchors (GimpStroke *stroke)
 {
   GList *list;
   GList *ret_list = NULL;
@@ -1204,7 +1204,7 @@ gimp_stroke_real_get_draw_anchors (const GimpStroke  *stroke)
 
 
 GList *
-gimp_stroke_get_draw_controls (const GimpStroke  *stroke)
+gimp_stroke_get_draw_controls (GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -1212,7 +1212,7 @@ gimp_stroke_get_draw_controls (const GimpStroke  *stroke)
 }
 
 static GList *
-gimp_stroke_real_get_draw_controls (const GimpStroke  *stroke)
+gimp_stroke_real_get_draw_controls (GimpStroke *stroke)
 {
   GList *list;
   GList *ret_list = NULL;
@@ -1253,7 +1253,7 @@ gimp_stroke_real_get_draw_controls (const GimpStroke  *stroke)
 
 
 GArray *
-gimp_stroke_get_draw_lines (const GimpStroke  *stroke)
+gimp_stroke_get_draw_lines (GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -1261,7 +1261,7 @@ gimp_stroke_get_draw_lines (const GimpStroke  *stroke)
 }
 
 static GArray *
-gimp_stroke_real_get_draw_lines (const GimpStroke  *stroke)
+gimp_stroke_real_get_draw_lines (GimpStroke *stroke)
 {
   GList  *list;
   GArray *ret_lines = NULL;
@@ -1303,8 +1303,8 @@ gimp_stroke_real_get_draw_lines (const GimpStroke  *stroke)
 }
 
 GArray *
-gimp_stroke_control_points_get (const GimpStroke *stroke,
-                                gboolean         *ret_closed)
+gimp_stroke_control_points_get (GimpStroke *stroke,
+                                gboolean   *ret_closed)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -1313,12 +1313,12 @@ gimp_stroke_control_points_get (const GimpStroke *stroke,
 }
 
 static GArray *
-gimp_stroke_real_control_points_get (const GimpStroke *stroke,
-                                     gboolean         *ret_closed)
+gimp_stroke_real_control_points_get (GimpStroke *stroke,
+                                     gboolean   *ret_closed)
 {
-  guint num_anchors;
+  guint   num_anchors;
   GArray *ret_array;
-  GList *list;
+  GList  *list;
 
   num_anchors = g_queue_get_length (stroke->anchors);
   ret_array = g_array_sized_new (FALSE, FALSE,
@@ -1336,28 +1336,28 @@ gimp_stroke_real_control_points_get (const GimpStroke *stroke,
 }
 
 gboolean
-gimp_stroke_get_point_at_dist (const GimpStroke *stroke,
-                               const gdouble     dist,
-                               const gdouble     precision,
-                               GimpCoords       *position,
-                               gdouble          *slope)
+gimp_stroke_get_point_at_dist (GimpStroke *stroke,
+                               gdouble     dist,
+                               gdouble     precision,
+                               GimpCoords *position,
+                               gdouble    *slope)
 {
-   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
 
-   return GIMP_STROKE_GET_CLASS (stroke)->get_point_at_dist (stroke,
-                                                             dist,
-                                                             precision,
-                                                             position,
-                                                             slope);
+  return GIMP_STROKE_GET_CLASS (stroke)->get_point_at_dist (stroke,
+                                                            dist,
+                                                            precision,
+                                                            position,
+                                                            slope);
 }
 
 
 static gboolean
-gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
-                                    const gdouble     dist,
-                                    const gdouble     precision,
-                                    GimpCoords       *position,
-                                    gdouble          *slope)
+gimp_stroke_real_get_point_at_dist (GimpStroke *stroke,
+                                    gdouble     dist,
+                                    gdouble     precision,
+                                    GimpCoords *position,
+                                    gdouble    *slope)
 {
   GArray     *points;
   gint        i;

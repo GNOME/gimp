@@ -128,18 +128,18 @@ const GimpBezierDesc * gimp_brush_transform_boundary (GimpBrush        *brush,
                                                       gint             *width,
                                                       gint             *height);
 
-GimpTempBuf          * gimp_brush_get_mask           (const GimpBrush  *brush);
-GimpTempBuf          * gimp_brush_get_pixmap         (const GimpBrush  *brush);
+GimpTempBuf          * gimp_brush_get_mask           (GimpBrush        *brush);
+GimpTempBuf          * gimp_brush_get_pixmap         (GimpBrush        *brush);
 
-gint                   gimp_brush_get_width          (const GimpBrush  *brush);
-gint                   gimp_brush_get_height         (const GimpBrush  *brush);
+gint                   gimp_brush_get_width          (GimpBrush        *brush);
+gint                   gimp_brush_get_height         (GimpBrush        *brush);
 
-gint                   gimp_brush_get_spacing        (const GimpBrush  *brush);
+gint                   gimp_brush_get_spacing        (GimpBrush        *brush);
 void                   gimp_brush_set_spacing        (GimpBrush        *brush,
                                                       gint              spacing);
 
-GimpVector2            gimp_brush_get_x_axis         (const GimpBrush  *brush);
-GimpVector2            gimp_brush_get_y_axis         (const GimpBrush  *brush);
+GimpVector2            gimp_brush_get_x_axis         (GimpBrush        *brush);
+GimpVector2            gimp_brush_get_y_axis         (GimpBrush        *brush);
 
 
 #endif /* __GIMP_BRUSH_H__ */

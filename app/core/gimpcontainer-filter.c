@@ -59,7 +59,7 @@ gimp_container_filter_foreach_func (GimpObject                 *object,
  * Returns: a weak #GimpContainer filled with matching objects.
  **/
 GimpContainer *
-gimp_container_filter (const GimpContainer  *container,
+gimp_container_filter (GimpContainer        *container,
                        GimpObjectFilterFunc  filter,
                        gpointer              user_data)
 {
@@ -93,8 +93,8 @@ gimp_container_filter (const GimpContainer  *container,
 
 
 static gboolean
-gimp_object_filter_by_name (const GimpObject *object,
-                            const GRegex     *regex)
+gimp_object_filter_by_name (GimpObject   *object,
+                            const GRegex *regex)
 {
   return g_regex_match (regex, gimp_object_get_name (object), 0, NULL);
 }
@@ -111,9 +111,9 @@ gimp_object_filter_by_name (const GimpObject *object,
  * Returns: a weak #GimpContainer filled with matching objects.
  **/
 GimpContainer *
-gimp_container_filter_by_name (const GimpContainer  *container,
-                               const gchar          *regexp,
-                               GError              **error)
+gimp_container_filter_by_name (GimpContainer  *container,
+                               const gchar    *regexp,
+                               GError        **error)
 {
   GimpContainer *result;
   GRegex        *regex;
@@ -140,9 +140,9 @@ gimp_container_filter_by_name (const GimpContainer  *container,
 
 
 gchar **
-gimp_container_get_filtered_name_array (const GimpContainer  *container,
-                                        const gchar          *regexp,
-                                        gint                 *length)
+gimp_container_get_filtered_name_array (GimpContainer *container,
+                                        const gchar   *regexp,
+                                        gint          *length)
 {
   GimpContainer *weak;
   GError        *error = NULL;
