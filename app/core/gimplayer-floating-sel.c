@@ -26,6 +26,7 @@
 
 #include "gimpboundary.h"
 #include "gimpdrawable-filters.h"
+#include "gimpdrawable-floating-selection.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
