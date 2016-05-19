@@ -253,6 +253,7 @@ vector24_images = \
 	24/gimp-channel-red.svg				\
 	24/gimp-channels.svg				\
 	24/gimp-colormap.svg				\
+	24/gimp-error.svg				\
 	24/gimp-floating-selection.svg			\
 	24/gimp-gegl.svg				\
 	24/gimp-grid.svg				\
@@ -264,6 +265,7 @@ vector24_images = \
 	24/gimp-move-to-screen.svg			\
 	24/gimp-navigation.svg				\
 	24/gimp-print-resolution.svg			\
+	24/gimp-question.svg				\
 	24/gimp-resize.svg				\
 	24/gimp-scale					\
 	24/gimp-selection.svg				\
@@ -319,6 +321,7 @@ vector24_images = \
 	24/gimp-tool-warp.svg				\
 	24/gimp-tool-zoom.svg				\
 	24/gimp-transparency.svg			\
+	24/gimp-warning.svg				\
 	24/gimp-web.svg
 
 icons12_images = \
@@ -371,6 +374,7 @@ icons16_images = \
 	16/gimp-duplicate.png				\
 	16/gimp-dynamics.png				\
 	16/gimp-edit.png				\
+	16/gimp-error.png				\
 	16/gimp-flip-horizontal.png			\
 	16/gimp-flip-vertical.png			\
 	16/gimp-floating-selection.png			\
@@ -430,13 +434,14 @@ icons16_images = \
 	16/gimp-prefs-folders-tool-plug-ins.png		\
 	16/gimp-prefs-folders-tool-presets.png		\
 	16/gimp-prefs-folders-tools.png			\
-	16/gimp-prefs-icon-theme.png		\
+	16/gimp-prefs-icon-theme.png			\
 	16/gimp-prefs-image-windows.png			\
 	16/gimp-prefs-interface.png			\
 	16/gimp-prefs-theme.png				\
 	16/gimp-prefs-toolbox.png			\
 	16/gimp-prefs-window-management.png		\
 	16/gimp-print-resolution.png			\
+	16/gimp-question.png				\
 	16/gimp-reset.png				\
 	16/gimp-reshow-filter.png			\
 	16/gimp-resize.png				\
@@ -607,6 +612,7 @@ icons24_images = \
 	24/gimp-display-filter-lcms.png		\
 	24/gimp-display-filter-proof.png	\
 	24/gimp-display-filter.png		\
+	24/gimp-error.png			\
 	24/gimp-floating-selection.png		\
 	24/gimp-gegl.png			\
 	24/gimp-grid.png			\
@@ -631,6 +637,7 @@ icons24_images = \
 	24/gimp-move-to-screen.png		\
 	24/gimp-navigation.png			\
 	24/gimp-print-resolution.png		\
+	24/gimp-question.png			\
 	24/gimp-resize.png			\
 	24/gimp-sample-point.png		\
 	24/gimp-scale.png			\

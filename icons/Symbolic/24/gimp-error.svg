@@ -9,24 +9,25 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="16"
-   height="16"
-   viewBox="0 0 16 16"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-question.svg">
+   sodipodi:docname="gimp-error-24.svg">
   <defs
      id="defs30573">
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient7762"
-       x1="145.99527"
-       y1="525.49762"
-       x2="152"
-       y2="525.49762"
-       gradientUnits="userSpaceOnUse" />
+       id="linearGradient6839"
+       x1="162.0627"
+       y1="406.96875"
+       x2="176.0002"
+       y2="406.96875"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0523169,0,0,1.0523169,-8.8744499,-21.26009)" />
     <linearGradient
        id="linearGradient19282-4"
        osb:paint="solid"
@@ -36,24 +37,6 @@
          offset="0"
          id="stop19284-0" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient19282-4"
-       id="linearGradient7774"
-       x1="148"
-       y1="531"
-       x2="150"
-       y2="531"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient19282-4"
-       id="linearGradient7768"
-       x1="-100"
-       y1="310"
-       x2="-84"
-       y2="310"
-       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -118,28 +101,26 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1036.3622)">
+     transform="translate(0,-1028.3622)">
     <g
-       transform="translate(-141.00018,517.3622)"
-       style="display:inline"
-       id="gimp-question"
-       inkscape:label="gimp-question">
+       transform="matrix(1.5,0,0,1.5,-241.5003,429.8622)"
+       style="display:inline;stroke:none"
+       id="gimp-error"
+       inkscape:label="gimp-error">
+      <rect
+         y="399"
+         x="161.0002"
+         height="16"
+         width="16"
+         id="rect34534"
+         style="fill:none;stroke:none" />
       <path
          inkscape:connector-curvature="0"
-         id="path27972"
-         d="m 148.8125,522 c 1.64243,-0.092 3.0955,1.17008 3.1875,2.8125 -1e-4,1.40136 -0.37771,1.92177 -1.59375,2.84375 -0.19093,0.14364 -0.3256,0.2506 -0.375,0.3125 C 149.98185,528.03085 150,528.002 150,528 c 0.007,0.52831 -0.47163,1 -1,1 -0.52837,0 -1.007,-0.47169 -1,-1 0,-0.50239 0.22424,-0.94342 0.46875,-1.25 0.24451,-0.30663 0.4913,-0.51638 0.71875,-0.6875 0.20405,-0.16056 0.46083,-0.38454 0.6875,-0.65625 0.0935,-0.1121 0.129,-0.30766 0.125,-0.4375 v -0.0312 c -0.0316,-0.56324 -0.49926,-0.9691 -1.0625,-0.9375 -0.56324,0.0316 -0.9691,0.43676 -0.9375,1 h -2 c -0.092,-1.64243 1.17007,-2.9079 2.8125,-3 z"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7762);fill-opacity:1;stroke:none;stroke-width:2;marker:none" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path19592"
-         d="m 149,530 c 0.55228,0 1,0.44772 1,1 0,0.55228 -0.44772,1 -1,1 -0.55228,0 -1,-0.44772 -1,-1 0,-0.55228 0.44772,-1 1,-1 z"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7774);fill-opacity:1;stroke:none;stroke-width:2;marker:none" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path27976"
-         transform="translate(241.0002,217)"
-         d="m -92,302 c -4.418278,0 -8,3.58172 -8,8 0,4.41828 3.581722,8 8,8 4.418278,0 8,-3.58172 8,-8 0,-4.41828 -3.581722,-8 -8,-8 z m 0,2 c 3.313708,0 6,2.68629 6,6 0,3.31371 -2.686292,6 -6,6 -3.313708,0 -6,-2.68629 -6,-6 0,-3.31371 2.686292,-6 6,-6 z"
-         style="fill:url(#linearGradient7768);fill-opacity:1;stroke:none" />
+         class="error"
+         id="path10839-3"
+         d="m 169.0002,399.66666 c -4.05486,0 -7.33333,3.27847 -7.33333,7.33334 0,4.05486 3.27847,7.33333 7.33333,7.33333 4.05486,0 7.33334,-3.27847 7.33334,-7.33333 0,-4.05487 -3.27848,-7.33334 -7.33334,-7.33334 z m -4.66667,6.00001 h 9.33334 v 2.66666 h -9.33334 z"
+         style="color:#bebebe;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Andale Mono';-inkscape-font-specification:'Andale Mono';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient6839);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.87443936;marker:none;enable-background:new"
+         sodipodi:nodetypes="sssssccccc" />
     </g>
   </g>
 </svg>

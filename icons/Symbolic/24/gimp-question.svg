@@ -9,13 +9,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="16"
-   height="16"
-   viewBox="0 0 16 16"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-question.svg">
+   sodipodi:docname="gimp-question-24.svg">
   <defs
      id="defs30573">
     <linearGradient
@@ -63,7 +63,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="16"
-     inkscape:cx="-18.8125"
+     inkscape:cx="-0.91168478"
      inkscape:cy="12.488086"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -118,9 +118,9 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1036.3622)">
+     transform="translate(0,-1028.3622)">
     <g
-       transform="translate(-141.00018,517.3622)"
+       transform="matrix(1.5,0,0,1.5,-211.50028,249.8622)"
        style="display:inline"
        id="gimp-question"
        inkscape:label="gimp-question">
