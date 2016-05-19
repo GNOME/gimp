@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 18:24+0200\n"
-"PO-Revision-Date: 2016-05-11 18:25+0200\n"
+"POT-Creation-Date: 2016-05-19 16:00+0200\n"
+"PO-Revision-Date: 2016-05-19 16:01+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1298,8 +1298,8 @@ msgstr "Prawa autorskie: %s"
 #. * Color management settings.
 #. *
 #: ../libgimpconfig/gimpcolorconfig.c:54
-msgid "Mode of operation for color management."
-msgstr "Tryb zarządzania kolorami."
+msgid "How images are displayed on screen."
+msgstr "Jak obrazy są wyświetlane na ekranie."
 
 #: ../libgimpconfig/gimpcolorconfig.c:57
 msgid "The color profile of your (primary) monitor."

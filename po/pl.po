@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-14 15:34+0300\n"
-"PO-Revision-Date: 2016-05-14 15:35+0300\n"
+"POT-Creation-Date: 2016-05-19 16:00+0200\n"
+"PO-Revision-Date: 2016-05-19 16:01+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -317,7 +317,7 @@ msgstr "Edytor pędzli"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:113 ../app/core/gimp.c:1093
-#: ../app/dialogs/dialogs.c:328 ../app/dialogs/preferences-dialog.c:2614
+#: ../app/dialogs/dialogs.c:328 ../app/dialogs/preferences-dialog.c:2651
 msgid "Brushes"
 msgstr "Pędzle"
 
@@ -361,7 +361,7 @@ msgstr "Element dokowalny"
 
 #. Document History
 #: ../app/actions/actions.c:143 ../app/dialogs/dialogs.c:349
-#: ../app/dialogs/preferences-dialog.c:1289
+#: ../app/dialogs/preferences-dialog.c:1310
 msgid "Document History"
 msgstr "Historia dokumentów"
 
@@ -395,7 +395,7 @@ msgid "Filters"
 msgstr "Filtry"
 
 #: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:343
-#: ../app/dialogs/preferences-dialog.c:2634
+#: ../app/dialogs/preferences-dialog.c:2671
 msgid "Fonts"
 msgstr "Czcionki"
 
@@ -406,12 +406,12 @@ msgstr "Edytor gradientów"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:173 ../app/core/gimp.c:1118
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2630
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2667
 msgid "Gradients"
 msgstr "Gradienty"
 
 #: ../app/actions/actions.c:176 ../app/core/gimp.c:1133
-#: ../app/dialogs/dialogs.c:360 ../app/dialogs/preferences-dialog.c:2638
+#: ../app/dialogs/dialogs.c:360 ../app/dialogs/preferences-dialog.c:2675
 msgid "Tool Presets"
 msgstr "Ustawienia narzędzia"
 
@@ -440,7 +440,7 @@ msgstr "Warstwy"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:194 ../app/core/gimp.c:1103
-#: ../app/dialogs/dialogs.c:331 ../app/dialogs/preferences-dialog.c:2642
+#: ../app/dialogs/dialogs.c:331 ../app/dialogs/preferences-dialog.c:2679
 msgid "MyPaint Brushes"
 msgstr "Pędzle programu MyPaint"
 
@@ -451,23 +451,23 @@ msgstr "Edytor palety"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:200 ../app/core/gimp.c:1113
-#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2626
+#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2663
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:203 ../app/core/gimp.c:1108
-#: ../app/dialogs/dialogs.c:334 ../app/dialogs/preferences-dialog.c:2622
+#: ../app/dialogs/dialogs.c:334 ../app/dialogs/preferences-dialog.c:2659
 msgid "Patterns"
 msgstr "Desenie"
 
-#: ../app/actions/actions.c:206 ../app/dialogs/preferences-dialog.c:2646
+#: ../app/actions/actions.c:206 ../app/dialogs/preferences-dialog.c:2683
 msgid "Plug-Ins"
 msgstr "Wtyczki"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:406
-#: ../app/dialogs/preferences-dialog.c:1589
+#: ../app/dialogs/preferences-dialog.c:1626
 msgid "Quick Mask"
 msgstr "Szybka maska"
 
@@ -1489,8 +1489,8 @@ msgid "Search commands by keyword, and run them"
 msgstr "Wyszukuje polecenia według słów kluczowych, i je wykonuje"
 
 #: ../app/actions/dialogs-actions.c:351
-#: ../app/dialogs/preferences-dialog.c:1920
-#: ../app/dialogs/preferences-dialog.c:1921 ../app/widgets/gimptoolbox.c:533
+#: ../app/dialogs/preferences-dialog.c:1957
+#: ../app/dialogs/preferences-dialog.c:1958 ../app/widgets/gimptoolbox.c:533
 msgid "Toolbox"
 msgstr "Przybornik"
 
@@ -4020,175 +4020,181 @@ msgstr "Z_arządzanie kolorami"
 
 #: ../app/actions/image-actions.c:180
 msgctxt "image-action"
-msgid "Whether the image is color managed"
-msgstr "Czy obraz posiada zarządzanie kolorami"
+msgid ""
+"Whether the image is color managed. Disabling color management is equivalent "
+"to assigning a built-in sRGB color profile. Better leave color management "
+"enabled."
+msgstr ""
+"Czy zarządzać kolorami obrazu. Wyłączenie zarządzania kolorami jest równe "
+"przydzieleniu wbudowanego profilu kolorów sRGB. Zalecane jest włączenie "
+"zarządzania kolorami."
 
-#: ../app/actions/image-actions.c:189 ../app/actions/image-actions.c:434
+#: ../app/actions/image-actions.c:191 ../app/actions/image-actions.c:436
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../app/actions/image-actions.c:190
+#: ../app/actions/image-actions.c:192
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Konwertuje obraz do przestrzeni kolorów RGB"
 
-#: ../app/actions/image-actions.c:194 ../app/actions/image-actions.c:436
+#: ../app/actions/image-actions.c:196 ../app/actions/image-actions.c:438
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Odcienie _szarości"
 
-#: ../app/actions/image-actions.c:195
+#: ../app/actions/image-actions.c:197
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Konwertuje obraz do odcieni szarości"
 
-#: ../app/actions/image-actions.c:199
+#: ../app/actions/image-actions.c:201
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "_Indeksowany…"
 
-#: ../app/actions/image-actions.c:200
+#: ../app/actions/image-actions.c:202
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Konwertuje obraz do trybu koloru indeksowanego"
 
-#: ../app/actions/image-actions.c:207
+#: ../app/actions/image-actions.c:209
 msgctxt "image-convert-action"
 msgid "8 bit integer"
 msgstr "8-bitowa (stałoprzecinkowa)"
 
-#: ../app/actions/image-actions.c:209
+#: ../app/actions/image-actions.c:211
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Konwertuje obraz do trybu 8-bitowego (stałoprzecinkowego)"
 
-#: ../app/actions/image-actions.c:213
+#: ../app/actions/image-actions.c:215
 msgctxt "image-convert-action"
 msgid "16 bit integer"
 msgstr "16-bitowa (stałoprzecinkowa)"
 
-#: ../app/actions/image-actions.c:215
+#: ../app/actions/image-actions.c:217
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Konwertuje obraz do trybu 16-bitowego (stałoprzecinkowego)"
 
-#: ../app/actions/image-actions.c:219
+#: ../app/actions/image-actions.c:221
 msgctxt "image-convert-action"
 msgid "32 bit integer"
 msgstr "32-bitowa (stałoprzecinkowa)"
 
-#: ../app/actions/image-actions.c:221
+#: ../app/actions/image-actions.c:223
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Konwertuje obraz do trybu 32-bitowego (stałoprzecinkowego)"
 
-#: ../app/actions/image-actions.c:225
+#: ../app/actions/image-actions.c:227
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
 msgstr "16-bitowa (zmiennoprzecinkowa)"
 
-#: ../app/actions/image-actions.c:227
+#: ../app/actions/image-actions.c:229
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Konwertuje obraz do trybu 16-bitowego (zmiennoprzecinkowego)"
 
-#: ../app/actions/image-actions.c:231
+#: ../app/actions/image-actions.c:233
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
 msgstr "32-bitowa (zmiennoprzecinkowa)"
 
-#: ../app/actions/image-actions.c:233
+#: ../app/actions/image-actions.c:235
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Konwertuje obraz do trybu 32-bitowego (zmiennoprzecinkowego)"
 
-#: ../app/actions/image-actions.c:237
+#: ../app/actions/image-actions.c:239
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
 msgstr "64-bitowa (zmiennoprzecinkowa)"
 
-#: ../app/actions/image-actions.c:239
+#: ../app/actions/image-actions.c:241
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
 msgstr "Konwertuje obraz do trybu 64-bitowego (zmiennoprzecinkowego)"
 
-#: ../app/actions/image-actions.c:246
+#: ../app/actions/image-actions.c:248
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
 msgstr "Gamma percepcyjna (sRGB)"
 
-#: ../app/actions/image-actions.c:248
+#: ../app/actions/image-actions.c:250
 msgctxt "image-convert-action"
 msgid "Convert the image to preceptual (sRGB) gamma"
 msgstr "Konwertuje obraz do trybu gammy percepcyjnej (sRGB)"
 
-#: ../app/actions/image-actions.c:252
+#: ../app/actions/image-actions.c:254
 msgctxt "image-convert-action"
 msgid "Linear light"
 msgstr "Światło liniowe"
 
-#: ../app/actions/image-actions.c:254
+#: ../app/actions/image-actions.c:256
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
 msgstr "Konwertuje obraz do trybu światła liniowego"
 
-#: ../app/actions/image-actions.c:261
+#: ../app/actions/image-actions.c:263
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "Odbij po_ziomo"
 
-#: ../app/actions/image-actions.c:262
+#: ../app/actions/image-actions.c:264
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Odbija obraz poziomo"
 
-#: ../app/actions/image-actions.c:267
+#: ../app/actions/image-actions.c:269
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "Odbij p_ionowo"
 
-#: ../app/actions/image-actions.c:268
+#: ../app/actions/image-actions.c:270
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Odbija obraz pionowo"
 
-#: ../app/actions/image-actions.c:276
+#: ../app/actions/image-actions.c:278
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Obróć o 90° w p_rawo"
 
-#: ../app/actions/image-actions.c:277
+#: ../app/actions/image-actions.c:279
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Obraca obraz o 90 stopni w prawo"
 
-#: ../app/actions/image-actions.c:282
+#: ../app/actions/image-actions.c:284
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "Obróć o _180°"
 
-#: ../app/actions/image-actions.c:283
+#: ../app/actions/image-actions.c:285
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Odwraca obraz do góry nogami"
 
-#: ../app/actions/image-actions.c:288
+#: ../app/actions/image-actions.c:290
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Obróć o 90° w _lewo"
 
-#: ../app/actions/image-actions.c:289
+#: ../app/actions/image-actions.c:291
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Obraca obraz o 90 stopni w lewo"
 
-#: ../app/actions/image-actions.c:427
+#: ../app/actions/image-actions.c:429
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB…"
 
-#: ../app/actions/image-actions.c:429
+#: ../app/actions/image-actions.c:431
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Odcienie _szarości…"
@@ -4251,7 +4257,7 @@ msgstr "Skalowanie obrazu"
 
 #. Scaling
 #: ../app/actions/image-commands.c:1043 ../app/actions/layers-commands.c:1202
-#: ../app/dialogs/preferences-dialog.c:1513
+#: ../app/dialogs/preferences-dialog.c:1550
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
@@ -6211,586 +6217,697 @@ msgstr "Wypełnij ścieżkę"
 msgid "Stroke Path"
 msgstr "Rysuj wzdłuż ścieżki"
 
-#: ../app/actions/view-actions.c:69
+#: ../app/actions/view-actions.c:70
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Widok"
 
-#: ../app/actions/view-actions.c:70
+#: ../app/actions/view-actions.c:71
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Powiększenie"
 
-#: ../app/actions/view-actions.c:71
+#: ../app/actions/view-actions.c:72
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Odbij i obróć"
 
-#: ../app/actions/view-actions.c:72
+#: ../app/actions/view-actions.c:73
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "Kolor _wyściółki"
 
-#: ../app/actions/view-actions.c:74
+#: ../app/actions/view-actions.c:76
+msgctxt "view-action"
+msgid "_Color Management"
+msgstr "Zarządzanie _kolorami"
+
+#: ../app/actions/view-actions.c:79
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Przenieś na ekran"
 
-#: ../app/actions/view-actions.c:78
+#: ../app/actions/view-actions.c:83
 msgctxt "view-action"
 msgid "_New View"
 msgstr "_Nowy widok"
 
-#: ../app/actions/view-actions.c:79
+#: ../app/actions/view-actions.c:84
 msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "Tworzy nowy widok tego obrazu"
 
-#: ../app/actions/view-actions.c:84
+#: ../app/actions/view-actions.c:89
 msgctxt "view-action"
 msgid "_Close View"
 msgstr "Za_mknij widok"
 
-#: ../app/actions/view-actions.c:85
+#: ../app/actions/view-actions.c:90
 msgctxt "view-action"
 msgid "Close the active image view"
 msgstr "Zamyka aktywny widok obrazu"
 
-#: ../app/actions/view-actions.c:90
+#: ../app/actions/view-actions.c:95
 msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "_Cały obraz w oknie"
 
-#: ../app/actions/view-actions.c:91
+#: ../app/actions/view-actions.c:96
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Dopasowuje powiększenie tak, aby obraz był w pełni widoczny"
 
-#: ../app/actions/view-actions.c:96
+#: ../app/actions/view-actions.c:101
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "_Dopasuj okno"
 
-#: ../app/actions/view-actions.c:97
+#: ../app/actions/view-actions.c:102
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Dopasowuje powiększenie do okna"
 
-#: ../app/actions/view-actions.c:102
+#: ../app/actions/view-actions.c:107
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Powiększ do _zaznaczenia"
 
-#: ../app/actions/view-actions.c:103
+#: ../app/actions/view-actions.c:108
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr "Dopasowuje powiększenie do zaznaczenia"
 
-#: ../app/actions/view-actions.c:108
+#: ../app/actions/view-actions.c:113
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Przyw_róć powiększenie"
 
-#: ../app/actions/view-actions.c:109
+#: ../app/actions/view-actions.c:114
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Przywraca poprzednie powiększenie"
 
-#: ../app/actions/view-actions.c:114
+#: ../app/actions/view-actions.c:119
 msgctxt "view-action"
 msgid "Othe_r..."
 msgstr "_Inne…"
 
-#: ../app/actions/view-actions.c:115
+#: ../app/actions/view-actions.c:120
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Ustawia dowolny kąt obrotu"
 
-#: ../app/actions/view-actions.c:120
+#: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Okno n_awigacyjne"
 
-#: ../app/actions/view-actions.c:121
+#: ../app/actions/view-actions.c:126
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Wyświetla okno podglądu dla tego obrazu"
 
-#: ../app/actions/view-actions.c:126
+#: ../app/actions/view-actions.c:131
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "_Filtry wyświetlania…"
 
-#: ../app/actions/view-actions.c:127
+#: ../app/actions/view-actions.c:132
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Konfiguruje filtry stosowane w tym widoku"
 
-#: ../app/actions/view-actions.c:132
+#: ../app/actions/view-actions.c:137
+msgctxt "view-action"
+msgid "As in _Preferences"
+msgstr "_Zgodnie z preferencjami"
+
+#: ../app/actions/view-actions.c:139
+msgctxt "view-action"
+msgid "Reset color management to what's configured in preferences"
+msgstr ""
+"Ustawia zarządzanie kolorami na takie, jakie było skonfigurowane w "
+"preferencjach"
+
+#: ../app/actions/view-actions.c:144
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "Dop_asuj okno"
 
-#: ../app/actions/view-actions.c:133
+#: ../app/actions/view-actions.c:145
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Zmniejsza okno obrazu do wymiarów wyświetlanego obrazu"
 
-#: ../app/actions/view-actions.c:138
+#: ../app/actions/view-actions.c:150
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "_Otwórz ekran…"
 
-#: ../app/actions/view-actions.c:139
+#: ../app/actions/view-actions.c:151
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Łączy z innym ekranem"
 
-#: ../app/actions/view-actions.c:147
+#: ../app/actions/view-actions.c:159
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_Punkt do punktu"
 
-#: ../app/actions/view-actions.c:148
+#: ../app/actions/view-actions.c:160
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Piksel na ekranie, reprezentuje piksel na obrazie"
 
-#: ../app/actions/view-actions.c:154
+#: ../app/actions/view-actions.c:166
+msgctxt "view-action"
+msgid "_Black Point Compensation"
+msgstr "Kompensacja _czarnego punktu"
+
+#: ../app/actions/view-actions.c:167
+msgctxt "view-action"
+msgid "Use black point compensation"
+msgstr "Używa kompensacji czarnego punktu"
+
+#: ../app/actions/view-actions.c:173
+msgctxt "view-action"
+msgid "_Mark Out Of Gamut Colors"
+msgstr "_Wyróżnienie kolorów spoza skali"
+
+#: ../app/actions/view-actions.c:174
+msgctxt "view-action"
+msgid ""
+"When softproofing, mark colors which cannot be represented in the target "
+"color space"
+msgstr ""
+"Wyróżnianie kolorów podczas softproofingu, których nie można oddać w "
+"docelowej przestrzeni kolorów"
+
+#: ../app/actions/view-actions.c:181
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Wyświetlanie _zaznaczenia"
 
-#: ../app/actions/view-actions.c:155
+#: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Wyświetla krawędź zaznaczenia"
 
-#: ../app/actions/view-actions.c:161
+#: ../app/actions/view-actions.c:188
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Wyświetlanie g_ranic warstwy"
 
-#: ../app/actions/view-actions.c:162
+#: ../app/actions/view-actions.c:189
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Wyświetla ramkę wokół aktywnej warstwy"
 
-#: ../app/actions/view-actions.c:168
+#: ../app/actions/view-actions.c:195
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "Wyświetlanie pr_owadnic"
 
-#: ../app/actions/view-actions.c:169
+#: ../app/actions/view-actions.c:196
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Wyświetla prowadnice obrazu"
 
-#: ../app/actions/view-actions.c:175
+#: ../app/actions/view-actions.c:202
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Wyświetlanie _siatki"
 
-#: ../app/actions/view-actions.c:176
+#: ../app/actions/view-actions.c:203
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Wyświetla siatkę obrazu"
 
-#: ../app/actions/view-actions.c:182
+#: ../app/actions/view-actions.c:209
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Wyświetlanie punktów wzorcowych"
 
-#: ../app/actions/view-actions.c:183
+#: ../app/actions/view-actions.c:210
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Wyświetla kolorowe punkty wzorcowe obrazu"
 
-#: ../app/actions/view-actions.c:189
+#: ../app/actions/view-actions.c:216
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "Przyciąganie do pro_wadnic"
 
-#: ../app/actions/view-actions.c:190
+#: ../app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Przyciąga wybrane narzędzie do prowadnic"
 
-#: ../app/actions/view-actions.c:196
+#: ../app/actions/view-actions.c:223
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Przyciąganie do si_atki"
 
-#: ../app/actions/view-actions.c:197
+#: ../app/actions/view-actions.c:224
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Przyciąga wybrane narzędzie do siatki"
 
-#: ../app/actions/view-actions.c:203
+#: ../app/actions/view-actions.c:230
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Przy_ciąganie do krawędzi płótna"
 
-#: ../app/actions/view-actions.c:204
+#: ../app/actions/view-actions.c:231
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Przyciąga wybrane narzędzie do krawędzi płótna"
 
-#: ../app/actions/view-actions.c:210
+#: ../app/actions/view-actions.c:237
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Przyciąganie d_o aktywnej ścieżki"
 
-#: ../app/actions/view-actions.c:211
+#: ../app/actions/view-actions.c:238
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Przyciąga wybrane narzędzie do aktywnej ścieżki"
 
-#: ../app/actions/view-actions.c:217
+#: ../app/actions/view-actions.c:244
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Wyświetlanie paska _menu"
 
-#: ../app/actions/view-actions.c:218
+#: ../app/actions/view-actions.c:245
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Wyświetla pasek menu tego okna"
 
-#: ../app/actions/view-actions.c:224
+#: ../app/actions/view-actions.c:251
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Wyświetlanie _linijek"
 
-#: ../app/actions/view-actions.c:225
+#: ../app/actions/view-actions.c:252
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Wyświetla linijki tego okna"
 
-#: ../app/actions/view-actions.c:231
+#: ../app/actions/view-actions.c:258
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Wyświetlanie pas_ków przewijania"
 
-#: ../app/actions/view-actions.c:232
+#: ../app/actions/view-actions.c:259
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Wyświetla paski przewijania tego okna"
 
-#: ../app/actions/view-actions.c:238
+#: ../app/actions/view-actions.c:265
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Wyświetlanie paska _stanu"
 
-#: ../app/actions/view-actions.c:239
+#: ../app/actions/view-actions.c:266
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Wyświetla pasek stanu tego okna"
 
-#: ../app/actions/view-actions.c:245
+#: ../app/actions/view-actions.c:272
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "P_ełny ekran"
 
-#: ../app/actions/view-actions.c:246
+#: ../app/actions/view-actions.c:273
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Przełącza na pełny ekran"
 
-#: ../app/actions/view-actions.c:270
+#: ../app/actions/view-actions.c:297
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "_Dalej"
 
-#: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
+#: ../app/actions/view-actions.c:298 ../app/actions/view-actions.c:310
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Zmniejszenie"
 
-#: ../app/actions/view-actions.c:276
+#: ../app/actions/view-actions.c:303
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Bliżej"
 
-#: ../app/actions/view-actions.c:277 ../app/actions/view-actions.c:289
+#: ../app/actions/view-actions.c:304 ../app/actions/view-actions.c:316
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Powiększenie"
 
-#: ../app/actions/view-actions.c:282
+#: ../app/actions/view-actions.c:309
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Dalej"
 
-#: ../app/actions/view-actions.c:288
+#: ../app/actions/view-actions.c:315
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Bliżej"
 
-#: ../app/actions/view-actions.c:307 ../app/actions/view-actions.c:313
+#: ../app/actions/view-actions.c:334 ../app/actions/view-actions.c:340
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6∶1  (1600%)"
 
-#: ../app/actions/view-actions.c:308 ../app/actions/view-actions.c:314
+#: ../app/actions/view-actions.c:335 ../app/actions/view-actions.c:341
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Powiększenie 16∶1"
 
-#: ../app/actions/view-actions.c:319 ../app/actions/view-actions.c:325
+#: ../app/actions/view-actions.c:346 ../app/actions/view-actions.c:352
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8∶1  (800%)"
 
-#: ../app/actions/view-actions.c:320 ../app/actions/view-actions.c:326
+#: ../app/actions/view-actions.c:347 ../app/actions/view-actions.c:353
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Powiększenie 8∶1"
 
-#: ../app/actions/view-actions.c:331 ../app/actions/view-actions.c:337
+#: ../app/actions/view-actions.c:358 ../app/actions/view-actions.c:364
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4∶1  (400%)"
 
-#: ../app/actions/view-actions.c:332 ../app/actions/view-actions.c:338
+#: ../app/actions/view-actions.c:359 ../app/actions/view-actions.c:365
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Powiększenie 4∶1"
 
-#: ../app/actions/view-actions.c:343 ../app/actions/view-actions.c:349
+#: ../app/actions/view-actions.c:370 ../app/actions/view-actions.c:376
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2∶1  (200%)"
 
-#: ../app/actions/view-actions.c:344 ../app/actions/view-actions.c:350
+#: ../app/actions/view-actions.c:371 ../app/actions/view-actions.c:377
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Powiększenie 2∶1"
 
-#: ../app/actions/view-actions.c:355 ../app/actions/view-actions.c:361
+#: ../app/actions/view-actions.c:382 ../app/actions/view-actions.c:388
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1∶1  (100%)"
 
-#: ../app/actions/view-actions.c:356 ../app/actions/view-actions.c:362
+#: ../app/actions/view-actions.c:383 ../app/actions/view-actions.c:389
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Powiększenie 1∶1"
 
-#: ../app/actions/view-actions.c:367
+#: ../app/actions/view-actions.c:394
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1∶_2  (50%)"
 
-#: ../app/actions/view-actions.c:368
+#: ../app/actions/view-actions.c:395
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Powiększenie 1∶2"
 
-#: ../app/actions/view-actions.c:373
+#: ../app/actions/view-actions.c:400
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1∶_4  (25%)"
 
-#: ../app/actions/view-actions.c:374
+#: ../app/actions/view-actions.c:401
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Powiększenie 1∶4"
 
-#: ../app/actions/view-actions.c:379
+#: ../app/actions/view-actions.c:406
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1∶_8  (12,5%)"
 
-#: ../app/actions/view-actions.c:380
+#: ../app/actions/view-actions.c:407
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Powiększenie 1∶8"
 
-#: ../app/actions/view-actions.c:385
+#: ../app/actions/view-actions.c:412
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1∶1_6  (6,25%)"
 
-#: ../app/actions/view-actions.c:386
+#: ../app/actions/view-actions.c:413
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Powiększenie 1∶16"
 
-#: ../app/actions/view-actions.c:391
+#: ../app/actions/view-actions.c:418
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "_Inne…"
 
-#: ../app/actions/view-actions.c:392
+#: ../app/actions/view-actions.c:419
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Ustawienie dowolnego powiększenia"
 
-#: ../app/actions/view-actions.c:400
+#: ../app/actions/view-actions.c:427
 msgctxt "view-action"
 msgid "Flip Horizontally"
 msgstr "Odbij poziomo"
 
-#: ../app/actions/view-actions.c:406
+#: ../app/actions/view-actions.c:433
 msgctxt "view-action"
 msgid "Flip Vertically"
 msgstr "Odbij pionowo"
 
-#: ../app/actions/view-actions.c:420
+#: ../app/actions/view-actions.c:447
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
 msgstr "_Przywróć odbicie i obracanie"
 
-#: ../app/actions/view-actions.c:422
+#: ../app/actions/view-actions.c:449
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "Przywraca odbicie i kąt obrotu do 0°"
 
-#: ../app/actions/view-actions.c:430
+#: ../app/actions/view-actions.c:457
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Obróć o 15° w _prawo"
 
-#: ../app/actions/view-actions.c:431
+#: ../app/actions/view-actions.c:458
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
 msgstr "Obraca o 15 stopni, zgodnie z ruchem wskazówek zegara"
 
-#: ../app/actions/view-actions.c:436
+#: ../app/actions/view-actions.c:463
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Obróć o 90° w _prawo"
 
-#: ../app/actions/view-actions.c:437
+#: ../app/actions/view-actions.c:464
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Obraca o 90 stopni, zgodnie z ruchem wskazówek zegara"
 
-#: ../app/actions/view-actions.c:442
+#: ../app/actions/view-actions.c:469
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Obróć o _180°"
 
-#: ../app/actions/view-actions.c:443
+#: ../app/actions/view-actions.c:470
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Odwraca do góry nogami"
 
-#: ../app/actions/view-actions.c:448
+#: ../app/actions/view-actions.c:475
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Obróć o 90° w _lewo"
 
-#: ../app/actions/view-actions.c:449
+#: ../app/actions/view-actions.c:476
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Obraca o 90 stopni, przeciwnie do ruchu wskazówek zegara"
 
-#: ../app/actions/view-actions.c:454
+#: ../app/actions/view-actions.c:481
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Obróć o 15° w _lewo"
 
-#: ../app/actions/view-actions.c:455
+#: ../app/actions/view-actions.c:482
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
 msgstr "Obraca o 15 stopni, przeciwnie do ruchu wskazówek zegara"
 
-#: ../app/actions/view-actions.c:463
+#: ../app/actions/view-actions.c:490
+msgctxt "view-action"
+msgid "_No Color Management"
+msgstr "_Bez zarządzania kolorami"
+
+#: ../app/actions/view-actions.c:491
+msgctxt "view-action"
+msgid "Don't color manage this view"
+msgstr "Wyłącza zarządzanie kolorami tego widoku"
+
+#: ../app/actions/view-actions.c:496
+msgctxt "view-action"
+msgid "_Color Managed Display"
+msgstr "Zarządzanie _kolorami ekranu"
+
+#: ../app/actions/view-actions.c:497
+msgctxt "view-action"
+msgid "Color manage this view"
+msgstr "Zarządza kolorami tego widoku"
+
+#: ../app/actions/view-actions.c:502
+msgctxt "view-action"
+msgid "_Print Simulation"
+msgstr "_Symulacja wydruku"
+
+#: ../app/actions/view-actions.c:503
+msgctxt "view-action"
+msgid "Use this view for softproofing"
+msgstr "Używa tego widoku do softproofingu"
+
+#: ../app/actions/view-actions.c:511
+msgctxt "view-action"
+msgid "_Perceptual"
+msgstr "_Percepcyjny"
+
+#: ../app/actions/view-actions.c:512
+msgctxt "view-action"
+msgid "Rendering intent is perceptual"
+msgstr "Percepcyjny sposób odwzorowania barw"
+
+#: ../app/actions/view-actions.c:517
+msgctxt "view-action"
+msgid "_Relative Colorimetric"
+msgstr "_Względny kolorymetryczny"
+
+#: ../app/actions/view-actions.c:518
+msgctxt "view-action"
+msgid "Rendering intent is relative colorimetric"
+msgstr "Względny kolorymetryczny sposób odwzorowania barw"
+
+#: ../app/actions/view-actions.c:523
+msgctxt "view-action"
+msgid "_Saturation"
+msgstr "_Nasycenie"
+
+#: ../app/actions/view-actions.c:524
+msgctxt "view-action"
+msgid "Rendering intent is saturation"
+msgstr "Sposób odwzorowania barw oparty na nasyceniu"
+
+#: ../app/actions/view-actions.c:529
+msgctxt "view-action"
+msgid "_Absolute Colorimetric"
+msgstr "_Bezwzględny kolorymetryczny"
+
+#: ../app/actions/view-actions.c:530
+msgctxt "view-action"
+msgid "Rendering intent is absolute colorimetric"
+msgstr "Bezwzględny kolorymetryczny sposób odwzorowania barw"
+
+#: ../app/actions/view-actions.c:538
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Z _motywu"
 
-#: ../app/actions/view-actions.c:464
+#: ../app/actions/view-actions.c:539
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Używa koloru tła z bieżącego motywu"
 
-#: ../app/actions/view-actions.c:469
+#: ../app/actions/view-actions.c:544
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Kolor ja_snego pola"
 
-#: ../app/actions/view-actions.c:470
+#: ../app/actions/view-actions.c:545
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Używa koloru jasnego pola"
 
-#: ../app/actions/view-actions.c:475
+#: ../app/actions/view-actions.c:550
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Kolor _ciemnego pola"
 
-#: ../app/actions/view-actions.c:476
+#: ../app/actions/view-actions.c:551
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Używa koloru ciemnego pola"
 
-#: ../app/actions/view-actions.c:481
+#: ../app/actions/view-actions.c:556
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "_Dowolny kolor…"
 
-#: ../app/actions/view-actions.c:482
+#: ../app/actions/view-actions.c:557
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Używa dowolnego koloru"
 
-#: ../app/actions/view-actions.c:487
+#: ../app/actions/view-actions.c:562
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "_Zgodnie z preferencjami"
 
-#: ../app/actions/view-actions.c:489
+#: ../app/actions/view-actions.c:564
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr ""
 "Ustawia kolor wyściółki na taki, jaki był skonfigurowany w preferencjach"
 
-#: ../app/actions/view-actions.c:703
+#: ../app/actions/view-actions.c:854
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "_Ponów powiększenie (%d%%)"
 
-#: ../app/actions/view-actions.c:711
+#: ../app/actions/view-actions.c:862
 msgid "Re_vert Zoom"
 msgstr "Przyw_róć powiększenie"
 
-#: ../app/actions/view-actions.c:877
+#: ../app/actions/view-actions.c:1039
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "I_nne (%s)…"
 
-#: ../app/actions/view-actions.c:886
+#: ../app/actions/view-actions.c:1048
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Powiększenie (%s)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:907
+#: ../app/actions/view-actions.c:1069
 msgid "(H+V) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:912
+#: ../app/actions/view-actions.c:1074
 msgid "(H) "
 msgstr "(H) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:917
+#: ../app/actions/view-actions.c:1079
 msgid "(V) "
 msgstr "(V) "
 
-#: ../app/actions/view-actions.c:924
+#: ../app/actions/view-actions.c:1086
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Odbij %si obróć (%d°)"
 
-#: ../app/actions/view-commands.c:723
+#: ../app/actions/view-commands.c:894
 msgid "Set Canvas Padding Color"
 msgstr "Ustawienie koloru wyściółki płótna"
 
-#: ../app/actions/view-commands.c:725
+#: ../app/actions/view-commands.c:896
 msgid "Set Custom Canvas Padding Color"
 msgstr "Ustawienie dowolnego koloru wyściółki płótna"
 
@@ -8546,7 +8663,7 @@ msgstr "Dane pasożytnicze"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:1098 ../app/core/gimpcontext.c:711
-#: ../app/dialogs/preferences-dialog.c:2618
+#: ../app/dialogs/preferences-dialog.c:2655
 #: ../app/tools/gimppaintoptions-gui.c:214
 msgid "Dynamics"
 msgstr "Dynamika"
@@ -8557,7 +8674,7 @@ msgid "Fonts (this may take a while)"
 msgstr "Czcionki (może to zająć kilka minut)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:1143 ../app/dialogs/preferences-dialog.c:2654
+#: ../app/core/gimp.c:1143 ../app/dialogs/preferences-dialog.c:2691
 msgid "Modules"
 msgstr "Moduły"
 
@@ -9157,7 +9274,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1178
+#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1183
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Gradient"
@@ -9770,8 +9887,8 @@ msgstr "Skalowanie obrazu"
 msgid "Can't undo %s"
 msgstr "Nie można cofnąć działania %s"
 
-#: ../app/core/gimpimagefile.c:776 ../app/dialogs/preferences-dialog.c:1748
-#: ../app/dialogs/preferences-dialog.c:1853
+#: ../app/core/gimpimagefile.c:776 ../app/dialogs/preferences-dialog.c:1785
+#: ../app/dialogs/preferences-dialog.c:1890
 msgid "Folder"
 msgstr "Katalog"
 
@@ -10428,19 +10545,28 @@ msgstr "Dokładność"
 msgid "Color managed"
 msgstr "Zarządzanie kolorami"
 
-#: ../app/core/gimptemplate.c:200
+#: ../app/core/gimptemplate.c:194
+msgid ""
+"Whether the image is color managed. Disabling color management is equivalent "
+"to choosing a built-in sRGB profile. Better leave color management enabled."
+msgstr ""
+"Czy zarządzać kolorami obrazu. Wyłączenie zarządzania kolorami jest równe "
+"przydzieleniu wbudowanego profilu kolorów sRGB. Zalecane jest włączenie "
+"zarządzania kolorami."
+
+#: ../app/core/gimptemplate.c:203
 msgid "Color profile"
 msgstr "Profil kolorów"
 
-#: ../app/core/gimptemplate.c:207 ../app/tools/gimpbucketfilloptions.c:93
+#: ../app/core/gimptemplate.c:210 ../app/tools/gimpbucketfilloptions.c:93
 msgid "Fill type"
 msgstr "Typ wypełnienia"
 
-#: ../app/core/gimptemplate.c:214 ../app/dialogs/image-properties-dialog.c:94
+#: ../app/core/gimptemplate.c:217 ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
 msgstr "Komentarz"
 
-#: ../app/core/gimptemplate.c:221
+#: ../app/core/gimptemplate.c:224
 msgid "Filename"
 msgstr "Nazwa pliku"
 
@@ -11074,7 +11200,7 @@ msgid "Create a New Image"
 msgstr "Utworzenie nowego obrazu"
 
 #: ../app/dialogs/image-new-dialog.c:136
-#: ../app/dialogs/preferences-dialog.c:1573
+#: ../app/dialogs/preferences-dialog.c:1610
 msgid "_Template:"
 msgstr "Sza_blon:"
 
@@ -11351,7 +11477,7 @@ msgid "Select Source"
 msgstr "Wybór źródła"
 
 #: ../app/dialogs/palette-import-dialog.c:214
-#: ../app/dialogs/preferences-dialog.c:1537
+#: ../app/dialogs/preferences-dialog.c:1574
 msgid "_Gradient"
 msgstr "_Gradient"
 
@@ -11464,900 +11590,920 @@ msgstr ""
 "Ustawienia narzędzi zostaną ustawione na wartości domyślne przy następnym "
 "uruchomieniu programu GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:1033
+#: ../app/dialogs/preferences-dialog.c:1054
 msgid "Show _menubar"
 msgstr "Pasek _menu"
 
-#: ../app/dialogs/preferences-dialog.c:1037
+#: ../app/dialogs/preferences-dialog.c:1058
 msgid "Show _rulers"
 msgstr "_Linijki"
 
-#: ../app/dialogs/preferences-dialog.c:1040
+#: ../app/dialogs/preferences-dialog.c:1061
 msgid "Show scroll_bars"
 msgstr "Pas_ki przewijania"
 
-#: ../app/dialogs/preferences-dialog.c:1043
+#: ../app/dialogs/preferences-dialog.c:1064
 msgid "Show s_tatusbar"
 msgstr "Pasek _stanu"
 
-#: ../app/dialogs/preferences-dialog.c:1051
+#: ../app/dialogs/preferences-dialog.c:1072
 msgid "Show s_election"
 msgstr "_Zaznaczenie"
 
-#: ../app/dialogs/preferences-dialog.c:1054
+#: ../app/dialogs/preferences-dialog.c:1075
 msgid "Show _layer boundary"
 msgstr "G_ranice warstwy"
 
-#: ../app/dialogs/preferences-dialog.c:1057
+#: ../app/dialogs/preferences-dialog.c:1078
 msgid "Show _guides"
 msgstr "Pr_owadnice"
 
-#: ../app/dialogs/preferences-dialog.c:1060
+#: ../app/dialogs/preferences-dialog.c:1081
 msgid "Show gri_d"
 msgstr "Sia_tka"
 
-#: ../app/dialogs/preferences-dialog.c:1066
+#: ../app/dialogs/preferences-dialog.c:1087
 msgid "Canvas _padding mode:"
 msgstr "Wygląd wyściół_ki płótna:"
 
-#: ../app/dialogs/preferences-dialog.c:1071
+#: ../app/dialogs/preferences-dialog.c:1092
 msgid "Custom p_adding color:"
 msgstr "Wybrany k_olor wyściółki płótna:"
 
-#: ../app/dialogs/preferences-dialog.c:1072
+#: ../app/dialogs/preferences-dialog.c:1093
 msgid "Select Custom Canvas Padding Color"
 msgstr "Wybór koloru wyściółki płótna"
 
-#: ../app/dialogs/preferences-dialog.c:1103
+#: ../app/dialogs/preferences-dialog.c:1124
 msgid "Snap to Guides"
 msgstr "Przyciąganie do prowadnic"
 
-#: ../app/dialogs/preferences-dialog.c:1106
+#: ../app/dialogs/preferences-dialog.c:1127
 msgid "Snap to Grid"
 msgstr "Przyciąganie do siatki"
 
-#: ../app/dialogs/preferences-dialog.c:1114
+#: ../app/dialogs/preferences-dialog.c:1135
 msgid "Snap to Canvas Edges"
 msgstr "Przyciąganie do krawędzi płótna"
 
-#: ../app/dialogs/preferences-dialog.c:1117
+#: ../app/dialogs/preferences-dialog.c:1138
 msgid "Snap to Active Path"
 msgstr "Przyciąganie do aktywnej ścieżki"
 
-#: ../app/dialogs/preferences-dialog.c:1192
+#: ../app/dialogs/preferences-dialog.c:1213
 msgid "Preferences"
 msgstr "Preferencje"
 
-#: ../app/dialogs/preferences-dialog.c:1228
-#: ../app/dialogs/preferences-dialog.c:1229
+#: ../app/dialogs/preferences-dialog.c:1249
+#: ../app/dialogs/preferences-dialog.c:1250
 msgid "System Resources"
 msgstr "Zasoby systemowe"
 
-#: ../app/dialogs/preferences-dialog.c:1236
+#: ../app/dialogs/preferences-dialog.c:1257
 msgid "Resource Consumption"
 msgstr "Wykorzystywanie zasobów"
 
-#: ../app/dialogs/preferences-dialog.c:1246
+#: ../app/dialogs/preferences-dialog.c:1267
 msgid "Minimal number of _undo levels:"
 msgstr "Mi_nimalna liczba poziomów cofnięć:"
 
-#: ../app/dialogs/preferences-dialog.c:1249
+#: ../app/dialogs/preferences-dialog.c:1270
 msgid "Maximum undo _memory:"
 msgstr "_Maksymalna pamięć dla historii działań:"
 
-#: ../app/dialogs/preferences-dialog.c:1252
+#: ../app/dialogs/preferences-dialog.c:1273
 msgid "Tile cache _size:"
 msgstr "_Rozmiar pamięci podręcznej kafli:"
 
-#: ../app/dialogs/preferences-dialog.c:1255
+#: ../app/dialogs/preferences-dialog.c:1276
 msgid "Maximum _new image size:"
 msgstr "Maksymal_ny rozmiar nowego obrazu:"
 
-#: ../app/dialogs/preferences-dialog.c:1260
+#: ../app/dialogs/preferences-dialog.c:1281
 msgid "Number of _processors to use:"
 msgstr "_Liczba używanych procesorów:"
 
 #. Hardware Acceleration
-#: ../app/dialogs/preferences-dialog.c:1265
+#: ../app/dialogs/preferences-dialog.c:1286
 msgid "Hardware Acceleration"
 msgstr "Przyspieszenie sprzętowe"
 
-#: ../app/dialogs/preferences-dialog.c:1269
+#: ../app/dialogs/preferences-dialog.c:1290
 msgid "Use OpenCL"
 msgstr "Użycie OpenCL"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1273
+#: ../app/dialogs/preferences-dialog.c:1294
 msgid "Image Thumbnails"
 msgstr "Miniatury obrazów"
 
-#: ../app/dialogs/preferences-dialog.c:1278
+#: ../app/dialogs/preferences-dialog.c:1299
 msgid "Size of _thumbnails:"
 msgstr "Wymiary m_iniatur:"
 
-#: ../app/dialogs/preferences-dialog.c:1282
+#: ../app/dialogs/preferences-dialog.c:1303
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Ma_ksymalny rozmiar miniaturyzowanych plików:"
 
-#: ../app/dialogs/preferences-dialog.c:1292
+#: ../app/dialogs/preferences-dialog.c:1313
 msgid "Keep record of used files in the Recent Documents list"
 msgstr "Zachowywanie używanych plików na liście historii dokumentów"
 
-#: ../app/dialogs/preferences-dialog.c:1301
-#: ../app/dialogs/preferences-dialog.c:1302
+#: ../app/dialogs/preferences-dialog.c:1322
+#: ../app/dialogs/preferences-dialog.c:1323
 msgid "Color Management"
 msgstr "Zarządzanie kolorami"
 
-#: ../app/dialogs/preferences-dialog.c:1318
-msgid "Preferred _RGB profile:"
-msgstr "Preferowany profil _RGB:"
+#: ../app/dialogs/preferences-dialog.c:1349
+msgid "Image display _mode:"
+msgstr "_Tryb wyświetlania obrazu:"
 
-#: ../app/dialogs/preferences-dialog.c:1319
-msgid "Select RGB Color Profile"
-msgstr "Wybór profilu kolorów RGB"
+#. Color Managed Display
+#: ../app/dialogs/preferences-dialog.c:1353
+msgid "Color Managed Display"
+msgstr "Zarządzanie kolorami ekranu"
 
-#: ../app/dialogs/preferences-dialog.c:1320
-msgid "Preferred _grayscale profile:"
-msgstr "Preferowany profil _odcieni szarości:"
-
-#: ../app/dialogs/preferences-dialog.c:1321
-msgid "Select Grayscale Color Profile"
-msgstr "Wybór profilu kolorów odcieni szarości"
-
-#: ../app/dialogs/preferences-dialog.c:1322
-msgid "_CMYK profile:"
-msgstr "Profil _CMYK:"
-
-#: ../app/dialogs/preferences-dialog.c:1323
-msgid "Select CMYK Color Profile"
-msgstr "Wybór profilu koloru CMYK"
-
-#: ../app/dialogs/preferences-dialog.c:1324
-msgid "_Monitor profile:"
-msgstr "Profil _monitora:"
-
-#: ../app/dialogs/preferences-dialog.c:1325
+#: ../app/dialogs/preferences-dialog.c:1362
 msgid "Select Monitor Color Profile"
 msgstr "Wybór profilu kolorów monitora"
 
-#: ../app/dialogs/preferences-dialog.c:1326
-msgid "_Print simulation profile:"
-msgstr "_Profil symulacji wydruku:"
-
-#: ../app/dialogs/preferences-dialog.c:1327
-msgid "Select Printer Color Profile"
-msgstr "Wybór profilu kolorów drukarki"
-
-#: ../app/dialogs/preferences-dialog.c:1338
-msgid "_Mode of operation:"
-msgstr "_Tryb działania:"
+#: ../app/dialogs/preferences-dialog.c:1363
+msgid "_Monitor profile:"
+msgstr "Profil _monitora:"
 
 #: ../app/dialogs/preferences-dialog.c:1368
 msgid "_Try to use the system monitor profile"
 msgstr "_Używanie systemowego profilu monitora"
 
 #: ../app/dialogs/preferences-dialog.c:1378
-msgid "_Display rendering intent:"
-msgstr "Sposób _odwzorowania barw ekranu:"
+msgid "_Rendering intent:"
+msgstr "Sposób _odwzorowania barw:"
 
-#: ../app/dialogs/preferences-dialog.c:1384
-msgid "Use _black point compensation for the display"
-msgstr "Kompensacja _czarnego punktu dla ekranu"
+#: ../app/dialogs/preferences-dialog.c:1383
+msgid "Use _black point compensation"
+msgstr "Kompensacja _czarnego punktu"
 
-#: ../app/dialogs/preferences-dialog.c:1398
-msgid "_Softproof rendering intent:"
-msgstr "_Sposób odwzorowania barw wydruku:"
+#. Print Simulation (Softproofing)
+#: ../app/dialogs/preferences-dialog.c:1390
+msgid "Print Simulation (Softproofing)"
+msgstr "Symulacja wydruku (softproofing)"
 
-#: ../app/dialogs/preferences-dialog.c:1404
-msgid "Use black _point compensation for softproofing"
-msgstr "Kompensacja czarnego _punktu dla softproofingu"
+#: ../app/dialogs/preferences-dialog.c:1400
+msgid "Select Printer Color Profile"
+msgstr "Wybór profilu kolorów drukarki"
 
-#: ../app/dialogs/preferences-dialog.c:1422
+#: ../app/dialogs/preferences-dialog.c:1401
+msgid "_Print simulation profile:"
+msgstr "_Profil symulacji wydruku:"
+
+#: ../app/dialogs/preferences-dialog.c:1406
+msgid "Re_ndering intent:"
+msgstr "Sposób o_dwzorowania barw:"
+
+#: ../app/dialogs/preferences-dialog.c:1411
+msgid "Use black _point compensation"
+msgstr "Kompensacja c_zarnego punktu"
+
+#: ../app/dialogs/preferences-dialog.c:1424
 msgid "Mark out of gamut colors"
 msgstr "Wyróżnienie kolorów spoza skali"
 
-#: ../app/dialogs/preferences-dialog.c:1427
+#: ../app/dialogs/preferences-dialog.c:1429
 msgid "Select Warning Color"
 msgstr "Wybór koloru ostrzeżeń"
 
+#. Preferred profiles
 #: ../app/dialogs/preferences-dialog.c:1440
-msgid "File Open behaviour:"
-msgstr "Zachowanie okna otwierania pliku:"
+msgid "Preferred Profiles"
+msgstr "Preferowane profile"
 
-#: ../app/dialogs/preferences-dialog.c:1454
+#: ../app/dialogs/preferences-dialog.c:1449
+msgid "Select Preferred RGB Color Profile"
+msgstr "Wybór preferowanego profilu kolorów RGB"
+
+#: ../app/dialogs/preferences-dialog.c:1450
+msgid "_RGB profile:"
+msgstr "Profil _RGB:"
+
+#: ../app/dialogs/preferences-dialog.c:1456
+msgid "Select Preferred Grayscale Color Profile"
+msgstr "Wybór preferowanego profilu kolorów odcieni szarości"
+
+#: ../app/dialogs/preferences-dialog.c:1457
+msgid "_Grayscale profile:"
+msgstr "Profil _odcieni szarości:"
+
+#: ../app/dialogs/preferences-dialog.c:1463
+msgid "Select CMYK Color Profile"
+msgstr "Wybór profilu koloru CMYK"
+
+#: ../app/dialogs/preferences-dialog.c:1464
+msgid "_CMYK profile:"
+msgstr "Profil _CMYK:"
+
+#. Policies
+#: ../app/dialogs/preferences-dialog.c:1468
+msgid "Policies"
+msgstr "Zachowanie"
+
+#: ../app/dialogs/preferences-dialog.c:1475
+msgid "File Open behaviour:"
+msgstr "Zachowanie okna otwierania plików:"
+
+#: ../app/dialogs/preferences-dialog.c:1491
 msgid "Experimental Playground"
 msgstr "Eksperymentalny plac zabaw"
 
-#: ../app/dialogs/preferences-dialog.c:1455
+#: ../app/dialogs/preferences-dialog.c:1492
 msgid "Playground"
 msgstr "Plac zabaw"
 
-#: ../app/dialogs/preferences-dialog.c:1460
+#: ../app/dialogs/preferences-dialog.c:1497
 msgid "Insane Options"
 msgstr "Szalone opcje"
 
-#: ../app/dialogs/preferences-dialog.c:1464
+#: ../app/dialogs/preferences-dialog.c:1501
 msgid "_N-Point Deformation tool"
 msgstr "_Zniekształcanie za pomocą wielu punktów"
 
-#: ../app/dialogs/preferences-dialog.c:1467
+#: ../app/dialogs/preferences-dialog.c:1504
 msgid "_Handle Transform tool"
 msgstr "Przekształcanie za pomocą _uchwytów"
 
-#: ../app/dialogs/preferences-dialog.c:1470
+#: ../app/dialogs/preferences-dialog.c:1507
 msgid "_Seamless Clone tool"
 msgstr "_Bezszwowe klonowanie"
 
-#: ../app/dialogs/preferences-dialog.c:1480
-#: ../app/dialogs/preferences-dialog.c:1481
+#: ../app/dialogs/preferences-dialog.c:1517
+#: ../app/dialogs/preferences-dialog.c:1518
 msgctxt "preferences"
 msgid "Tool Options"
-msgstr "Opcje narzędzia"
+msgstr "Opcje narzędzi"
 
 #. General
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1489
-#: ../app/dialogs/preferences-dialog.c:1973
-#: ../app/dialogs/preferences-dialog.c:2251
-#: ../app/dialogs/preferences-dialog.c:2482
+#: ../app/dialogs/preferences-dialog.c:1526
+#: ../app/dialogs/preferences-dialog.c:2010
+#: ../app/dialogs/preferences-dialog.c:2288
+#: ../app/dialogs/preferences-dialog.c:2519
 #: ../app/widgets/gimpcontrollereditor.c:186
 msgid "General"
 msgstr "Ogólne"
 
-#: ../app/dialogs/preferences-dialog.c:1492
+#: ../app/dialogs/preferences-dialog.c:1529
 msgid "_Save tool options on exit"
 msgstr "_Zapisywanie ustawień narzędzi przy zakończeniu"
 
-#: ../app/dialogs/preferences-dialog.c:1496
+#: ../app/dialogs/preferences-dialog.c:1533
 msgid "Save Tool Options _Now"
 msgstr "Zapisz ustawienia _narzędzi"
 
-#: ../app/dialogs/preferences-dialog.c:1503
+#: ../app/dialogs/preferences-dialog.c:1540
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Ustaw zapisane opcje narzędzi na wartości domyślne"
 
-#: ../app/dialogs/preferences-dialog.c:1517
+#: ../app/dialogs/preferences-dialog.c:1554
 msgid "Default _interpolation:"
 msgstr "Domyślna _interpolacja:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1524
+#: ../app/dialogs/preferences-dialog.c:1561
 msgid "Paint Options Shared Between Tools"
 msgstr "Opcje rysowania współdzielone przez narzędzia"
 
-#: ../app/dialogs/preferences-dialog.c:1528
+#: ../app/dialogs/preferences-dialog.c:1565
 msgid "_Brush"
 msgstr "_Pędzel"
 
-#: ../app/dialogs/preferences-dialog.c:1531
+#: ../app/dialogs/preferences-dialog.c:1568
 msgid "_Dynamics"
 msgstr "_Dynamika"
 
-#: ../app/dialogs/preferences-dialog.c:1534
+#: ../app/dialogs/preferences-dialog.c:1571
 msgid "_Pattern"
 msgstr "_Deseń"
 
 #. Move Tool
-#: ../app/dialogs/preferences-dialog.c:1541
+#: ../app/dialogs/preferences-dialog.c:1578
 msgid "Move Tool"
 msgstr "Przesuwanie"
 
-#: ../app/dialogs/preferences-dialog.c:1545
+#: ../app/dialogs/preferences-dialog.c:1582
 msgid "Set layer or path as active"
 msgstr "Ustawianie warstwy lub ścieżki jako aktywną"
 
-#: ../app/dialogs/preferences-dialog.c:1558
+#: ../app/dialogs/preferences-dialog.c:1595
 msgid "Default New Image"
 msgstr "Domyślny nowy obraz"
 
-#: ../app/dialogs/preferences-dialog.c:1559
+#: ../app/dialogs/preferences-dialog.c:1596
 msgid "Default Image"
 msgstr "Domyślny obraz"
 
-#: ../app/dialogs/preferences-dialog.c:1592
+#: ../app/dialogs/preferences-dialog.c:1629
 msgid "Set the default Quick Mask color"
 msgstr "Ustawienie domyślnego koloru szybkiej maski"
 
-#: ../app/dialogs/preferences-dialog.c:1598
+#: ../app/dialogs/preferences-dialog.c:1635
 msgid "Quick Mask color:"
 msgstr "Kolor szybkiej maski:"
 
-#: ../app/dialogs/preferences-dialog.c:1608
+#: ../app/dialogs/preferences-dialog.c:1645
 msgid "Default Image Grid"
 msgstr "Domyślna siatka obrazu"
 
-#: ../app/dialogs/preferences-dialog.c:1609
+#: ../app/dialogs/preferences-dialog.c:1646
 msgid "Default Grid"
 msgstr "Domyślna siatka"
 
-#: ../app/dialogs/preferences-dialog.c:1628
+#: ../app/dialogs/preferences-dialog.c:1665
 msgid "User Interface"
 msgstr "Interfejs użytkownika"
 
-#: ../app/dialogs/preferences-dialog.c:1629
+#: ../app/dialogs/preferences-dialog.c:1666
 msgid "Interface"
 msgstr "Interfejs"
 
-#: ../app/dialogs/preferences-dialog.c:1638 ../app/tools/gimptextoptions.c:167
+#: ../app/dialogs/preferences-dialog.c:1675 ../app/tools/gimptextoptions.c:167
 msgid "Language"
 msgstr "Język"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1644
+#: ../app/dialogs/preferences-dialog.c:1681
 msgid "Previews"
 msgstr "Podglądy"
 
-#: ../app/dialogs/preferences-dialog.c:1647
+#: ../app/dialogs/preferences-dialog.c:1684
 msgid "_Enable layer & channel previews"
 msgstr "_Podglądy kanałów i warstw"
 
-#: ../app/dialogs/preferences-dialog.c:1653
+#: ../app/dialogs/preferences-dialog.c:1690
 msgid "_Default layer & channel preview size:"
 msgstr "_Domyślny rozmiar podglądu warstwy i kanału:"
 
-#: ../app/dialogs/preferences-dialog.c:1656
+#: ../app/dialogs/preferences-dialog.c:1693
 msgid "Na_vigation preview size:"
 msgstr "Rozmiar podglądu _nawigacyjnego:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1660
+#: ../app/dialogs/preferences-dialog.c:1697
 msgid "Keyboard Shortcuts"
 msgstr "Skróty klawiszowe"
 
-#: ../app/dialogs/preferences-dialog.c:1664
+#: ../app/dialogs/preferences-dialog.c:1701
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "Dynamiczne skróty k_lawiszowe"
 
-#: ../app/dialogs/preferences-dialog.c:1668
+#: ../app/dialogs/preferences-dialog.c:1705
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "_Konfiguruj skróty klawiszowe…"
 
-#: ../app/dialogs/preferences-dialog.c:1675
+#: ../app/dialogs/preferences-dialog.c:1712
 msgid "_Save keyboard shortcuts on exit"
 msgstr "Zap_isywanie skrótów klawiszowych przed zakończeniem"
 
-#: ../app/dialogs/preferences-dialog.c:1679
+#: ../app/dialogs/preferences-dialog.c:1716
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "_Zapisz skróty klawiszowe"
 
-#: ../app/dialogs/preferences-dialog.c:1686
+#: ../app/dialogs/preferences-dialog.c:1723
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Ustaw domyślne wartości skrótów klawiszowych"
 
-#: ../app/dialogs/preferences-dialog.c:1695
+#: ../app/dialogs/preferences-dialog.c:1732
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Usuń wszystkie skróty _klawiszowe"
 
-#: ../app/dialogs/preferences-dialog.c:1707
-#: ../app/dialogs/preferences-dialog.c:1708
-#: ../app/dialogs/preferences-dialog.c:1743
+#: ../app/dialogs/preferences-dialog.c:1744
+#: ../app/dialogs/preferences-dialog.c:1745
+#: ../app/dialogs/preferences-dialog.c:1780
 msgid "Theme"
 msgstr "Motyw"
 
-#: ../app/dialogs/preferences-dialog.c:1713
+#: ../app/dialogs/preferences-dialog.c:1750
 msgid "Select Theme"
 msgstr "Wybór motywu"
 
-#: ../app/dialogs/preferences-dialog.c:1795
+#: ../app/dialogs/preferences-dialog.c:1832
 msgid "Reload C_urrent Theme"
 msgstr "Odśwież _bieżący motyw"
 
-#: ../app/dialogs/preferences-dialog.c:1807
-#: ../app/dialogs/preferences-dialog.c:1808
-#: ../app/dialogs/preferences-dialog.c:1848
+#: ../app/dialogs/preferences-dialog.c:1844
+#: ../app/dialogs/preferences-dialog.c:1845
+#: ../app/dialogs/preferences-dialog.c:1885
 msgid "Icon Theme"
 msgstr "Motyw ikon"
 
-#: ../app/dialogs/preferences-dialog.c:1813
+#: ../app/dialogs/preferences-dialog.c:1850
 msgid "Select an Icon Theme"
 msgstr "Wybór motywu ikon"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1929
-#: ../app/dialogs/preferences-dialog.c:2322 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:1966
+#: ../app/dialogs/preferences-dialog.c:2359 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Wygląd"
 
-#: ../app/dialogs/preferences-dialog.c:1933
+#: ../app/dialogs/preferences-dialog.c:1970
 msgid "Show _foreground & background color"
 msgstr "Wyświetlanie _koloru pierwszoplanowego i tła"
 
-#: ../app/dialogs/preferences-dialog.c:1937
+#: ../app/dialogs/preferences-dialog.c:1974
 msgid "Show active _brush, pattern & gradient"
 msgstr "Wyświetlanie ak_tywnego pędzla, desenia i gradientu"
 
-#: ../app/dialogs/preferences-dialog.c:1941
+#: ../app/dialogs/preferences-dialog.c:1978
 msgid "Show active _image"
 msgstr "Wyświetlanie aktywnego o_brazu"
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:1949
+#: ../app/dialogs/preferences-dialog.c:1986
 msgid "Tools Configuration"
 msgstr "Konfiguracja narzędzi"
 
-#: ../app/dialogs/preferences-dialog.c:1964
-#: ../app/dialogs/preferences-dialog.c:1965
+#: ../app/dialogs/preferences-dialog.c:2001
+#: ../app/dialogs/preferences-dialog.c:2002
 msgid "Help System"
 msgstr "System pomocy"
 
-#: ../app/dialogs/preferences-dialog.c:1976
+#: ../app/dialogs/preferences-dialog.c:2013
 msgid "Show _tooltips"
 msgstr "Po_dpowiedzi"
 
-#: ../app/dialogs/preferences-dialog.c:1979
+#: ../app/dialogs/preferences-dialog.c:2016
 msgid "Show help _buttons"
 msgstr "Przyciski po_mocy"
 
-#: ../app/dialogs/preferences-dialog.c:1992
+#: ../app/dialogs/preferences-dialog.c:2029
 msgid "Use the online version"
 msgstr "Wersja sieciowa"
 
-#: ../app/dialogs/preferences-dialog.c:1993
+#: ../app/dialogs/preferences-dialog.c:2030
 msgid "Use a locally installed copy"
 msgstr "Kopia zainstalowana na komputerze"
 
-#: ../app/dialogs/preferences-dialog.c:1994
+#: ../app/dialogs/preferences-dialog.c:2031
 msgid "User manual:"
 msgstr "Podręcznik użytkownika:"
 
-#: ../app/dialogs/preferences-dialog.c:2001
+#: ../app/dialogs/preferences-dialog.c:2038
 msgid "There's a local installation of the user manual."
 msgstr "Podręcznik użytkownika jest zainstalowany na komputerze."
 
-#: ../app/dialogs/preferences-dialog.c:2006
+#: ../app/dialogs/preferences-dialog.c:2043
 msgid "The user manual is not installed locally."
 msgstr "Podręcznik użytkownika nie jest zainstalowany na komputerze."
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:2029
+#: ../app/dialogs/preferences-dialog.c:2066
 msgid "Help Browser"
 msgstr "Przeglądarka pomocy"
 
-#: ../app/dialogs/preferences-dialog.c:2033
+#: ../app/dialogs/preferences-dialog.c:2070
 msgid "H_elp browser to use:"
 msgstr "Prz_eglądarka pomocy:"
 
 #. Action Search
-#: ../app/dialogs/preferences-dialog.c:2037
+#: ../app/dialogs/preferences-dialog.c:2074
 msgid "Action Search"
 msgstr "Wyszukiwanie czynności"
 
-#: ../app/dialogs/preferences-dialog.c:2041
+#: ../app/dialogs/preferences-dialog.c:2078
 msgid "Show _unavailable actions"
 msgstr "Wyświetlanie _niedostępnych czynności"
 
-#: ../app/dialogs/preferences-dialog.c:2044
+#: ../app/dialogs/preferences-dialog.c:2081
 msgid "Maximum History Size:"
 msgstr "Maksymalny rozmiar historii:"
 
-#: ../app/dialogs/preferences-dialog.c:2048
+#: ../app/dialogs/preferences-dialog.c:2085
 msgid "Clear Action History"
 msgstr "Wyczyszczenie historii czynności"
 
-#: ../app/dialogs/preferences-dialog.c:2063
-#: ../app/dialogs/preferences-dialog.c:2064
+#: ../app/dialogs/preferences-dialog.c:2100
+#: ../app/dialogs/preferences-dialog.c:2101
 msgid "Display"
 msgstr "Wyświetlanie"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2072
+#: ../app/dialogs/preferences-dialog.c:2109
 msgid "Transparency"
 msgstr "Przezroczysta"
 
-#: ../app/dialogs/preferences-dialog.c:2076
+#: ../app/dialogs/preferences-dialog.c:2113
 msgid "_Check style:"
 msgstr "Wygląd pola sza_chownicy:"
 
-#: ../app/dialogs/preferences-dialog.c:2079
+#: ../app/dialogs/preferences-dialog.c:2116
 msgid "Check _size:"
 msgstr "_Rozmiar pola szachownicy:"
 
-#: ../app/dialogs/preferences-dialog.c:2082
+#: ../app/dialogs/preferences-dialog.c:2119
 msgid "Monitor Resolution"
 msgstr "Rozdzielczość monitora"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2086 ../app/display/gimpcursorview.c:207
+#: ../app/dialogs/preferences-dialog.c:2123 ../app/display/gimpcursorview.c:207
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Piksele"
 
-#: ../app/dialogs/preferences-dialog.c:2104
+#: ../app/dialogs/preferences-dialog.c:2141
 msgid "Horizontal"
 msgstr "Poziomo"
 
-#: ../app/dialogs/preferences-dialog.c:2106
+#: ../app/dialogs/preferences-dialog.c:2143
 msgid "Vertical"
 msgstr "Pionowo"
 
-#: ../app/dialogs/preferences-dialog.c:2108
+#: ../app/dialogs/preferences-dialog.c:2145
 #: ../app/widgets/gimpimagepropview.c:459
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2126
+#: ../app/dialogs/preferences-dialog.c:2163
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Wykrywanie automatycznie (obecnie %d×%d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2144
+#: ../app/dialogs/preferences-dialog.c:2181
 msgid "_Enter manually"
 msgstr "_Wprowadzenie ręczne"
 
-#: ../app/dialogs/preferences-dialog.c:2159
+#: ../app/dialogs/preferences-dialog.c:2196
 msgid "C_alibrate..."
 msgstr "S_kalibruj…"
 
-#: ../app/dialogs/preferences-dialog.c:2187
-#: ../app/dialogs/preferences-dialog.c:2188
+#: ../app/dialogs/preferences-dialog.c:2224
+#: ../app/dialogs/preferences-dialog.c:2225
 msgid "Window Management"
 msgstr "Zarządzanie oknami"
 
-#: ../app/dialogs/preferences-dialog.c:2193
+#: ../app/dialogs/preferences-dialog.c:2230
 msgid "Window Manager Hints"
 msgstr "Podpowiedzi menedżera okien"
 
-#: ../app/dialogs/preferences-dialog.c:2199
+#: ../app/dialogs/preferences-dialog.c:2236
 msgid "Hint for _docks and toolbox:"
 msgstr "Podpowiedź dla _doków i przybornika:"
 
-#: ../app/dialogs/preferences-dialog.c:2202
+#: ../app/dialogs/preferences-dialog.c:2239
 msgid "Focus"
 msgstr "Aktywowanie okien"
 
-#: ../app/dialogs/preferences-dialog.c:2206
+#: ../app/dialogs/preferences-dialog.c:2243
 msgid "Activate the _focused image"
 msgstr "A_ktywowanie obrazu z kursorem"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2210
+#: ../app/dialogs/preferences-dialog.c:2247
 msgid "Window Positions"
 msgstr "Położenia okien"
 
-#: ../app/dialogs/preferences-dialog.c:2213
+#: ../app/dialogs/preferences-dialog.c:2250
 msgid "_Save window positions on exit"
 msgstr "Zapisywanie położeń okien przed za_kończeniem"
 
-#: ../app/dialogs/preferences-dialog.c:2216
+#: ../app/dialogs/preferences-dialog.c:2253
 msgid "Open windows on the same _monitor they were open before"
 msgstr "Otwieranie okien na tym samym _monitorze, co poprzednio"
 
-#: ../app/dialogs/preferences-dialog.c:2220
+#: ../app/dialogs/preferences-dialog.c:2257
 msgid "Save Window Positions _Now"
 msgstr "_Zapisz położenia okien"
 
-#: ../app/dialogs/preferences-dialog.c:2227
+#: ../app/dialogs/preferences-dialog.c:2264
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Ustaw zapisane pozycje okien na wartości domyślne"
 
-#: ../app/dialogs/preferences-dialog.c:2242
-#: ../app/dialogs/preferences-dialog.c:2243
+#: ../app/dialogs/preferences-dialog.c:2279
+#: ../app/dialogs/preferences-dialog.c:2280
 msgid "Image Windows"
 msgstr "Okna z obrazami"
 
-#: ../app/dialogs/preferences-dialog.c:2254
+#: ../app/dialogs/preferences-dialog.c:2291
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Domyślne ustawienie „_Punkt do punktu”"
 
-#: ../app/dialogs/preferences-dialog.c:2260
+#: ../app/dialogs/preferences-dialog.c:2297
 msgid "Marching _ants speed:"
 msgstr "Prędkość a_nimacji obwódki:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2264
+#: ../app/dialogs/preferences-dialog.c:2301
 msgid "Zoom & Resize Behavior"
 msgstr "Zachowanie przy powiększaniu i zmianie wymiarów"
 
-#: ../app/dialogs/preferences-dialog.c:2268
+#: ../app/dialogs/preferences-dialog.c:2305
 msgid "Resize window on _zoom"
 msgstr "Zmienianie wymiarów okna przy po_większeniu"
 
-#: ../app/dialogs/preferences-dialog.c:2271
+#: ../app/dialogs/preferences-dialog.c:2308
 msgid "Resize window on image _size change"
 msgstr "Zmienianie wymiarów okna przy z_mianie wymiarów obrazu"
 
-#: ../app/dialogs/preferences-dialog.c:2277
+#: ../app/dialogs/preferences-dialog.c:2314
 msgid "Show entire image"
 msgstr "Wyświetlanie całego obrazu"
 
-#: ../app/dialogs/preferences-dialog.c:2279
+#: ../app/dialogs/preferences-dialog.c:2316
 msgid "Initial zoom _ratio:"
 msgstr "Począ_tkowy współczynnik powiększenia:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2283
+#: ../app/dialogs/preferences-dialog.c:2320
 msgid "Space Bar"
 msgstr "Spacja"
 
-#: ../app/dialogs/preferences-dialog.c:2289
+#: ../app/dialogs/preferences-dialog.c:2326
 msgid "_While space bar is pressed:"
 msgstr "_Po naciśnięciu klawisza spacji:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2293
+#: ../app/dialogs/preferences-dialog.c:2330
 msgid "Mouse Pointers"
 msgstr "Kursory myszy"
 
-#: ../app/dialogs/preferences-dialog.c:2297
+#: ../app/dialogs/preferences-dialog.c:2334
 msgid "Show _brush outline"
 msgstr "Wyświetlanie o_bwódki pędzla"
 
-#: ../app/dialogs/preferences-dialog.c:2300
+#: ../app/dialogs/preferences-dialog.c:2337
 msgid "Show pointer for paint _tools"
 msgstr "Wyświetlanie kursora dla narzędzi _rysowania"
 
-#: ../app/dialogs/preferences-dialog.c:2306
+#: ../app/dialogs/preferences-dialog.c:2343
 msgid "Pointer _mode:"
 msgstr "_Tryb rysowania:"
 
-#: ../app/dialogs/preferences-dialog.c:2309
+#: ../app/dialogs/preferences-dialog.c:2346
 msgid "Pointer _handedness:"
 msgstr "P_rawo lub leworęczność kursora:"
 
-#: ../app/dialogs/preferences-dialog.c:2321
+#: ../app/dialogs/preferences-dialog.c:2358
 msgid "Image Window Appearance"
 msgstr "Wygląd okna z obrazem"
 
-#: ../app/dialogs/preferences-dialog.c:2329
+#: ../app/dialogs/preferences-dialog.c:2366
 msgid "Default Appearance in Normal Mode"
 msgstr "Domyślny wygląd w trybie zwykłym"
 
-#: ../app/dialogs/preferences-dialog.c:2334
+#: ../app/dialogs/preferences-dialog.c:2371
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Domyślny wygląd w trybie pełnoekranowym"
 
-#: ../app/dialogs/preferences-dialog.c:2343
+#: ../app/dialogs/preferences-dialog.c:2380
 msgid "Image Title & Statusbar Format"
 msgstr "Format tytułu obrazu i opisu na pasku stanu"
 
-#: ../app/dialogs/preferences-dialog.c:2344
+#: ../app/dialogs/preferences-dialog.c:2381
 msgid "Title & Status"
 msgstr "Tytuł i stan"
 
-#: ../app/dialogs/preferences-dialog.c:2362
+#: ../app/dialogs/preferences-dialog.c:2399
 msgid "Current format"
 msgstr "Bieżący format"
 
-#: ../app/dialogs/preferences-dialog.c:2363
+#: ../app/dialogs/preferences-dialog.c:2400
 msgid "Default format"
 msgstr "Domyślny format"
 
-#: ../app/dialogs/preferences-dialog.c:2364
+#: ../app/dialogs/preferences-dialog.c:2401
 msgid "Show zoom percentage"
 msgstr "Procentowe powiększenie"
 
-#: ../app/dialogs/preferences-dialog.c:2365
+#: ../app/dialogs/preferences-dialog.c:2402
 msgid "Show zoom ratio"
 msgstr "Współczynnik powiększenia"
 
-#: ../app/dialogs/preferences-dialog.c:2366
+#: ../app/dialogs/preferences-dialog.c:2403
 msgid "Show image size"
 msgstr "Rozmiar obrazu"
 
-#: ../app/dialogs/preferences-dialog.c:2367
+#: ../app/dialogs/preferences-dialog.c:2404
 msgid "Show drawable size"
 msgstr "Rozmiar obszaru rysowania"
 
-#: ../app/dialogs/preferences-dialog.c:2380
+#: ../app/dialogs/preferences-dialog.c:2417
 msgid "Image Title Format"
 msgstr "Format tytułu obrazu"
 
-#: ../app/dialogs/preferences-dialog.c:2382
+#: ../app/dialogs/preferences-dialog.c:2419
 msgid "Image Statusbar Format"
 msgstr "Format opisu na pasku stanu obrazu"
 
-#: ../app/dialogs/preferences-dialog.c:2466
+#: ../app/dialogs/preferences-dialog.c:2503
 msgid "Image Window Snapping Behavior"
 msgstr "Zachowanie przyciągania okna z obrazem"
 
-#: ../app/dialogs/preferences-dialog.c:2467
+#: ../app/dialogs/preferences-dialog.c:2504
 msgid "Snapping"
 msgstr "Przyciąganie"
 
-#: ../app/dialogs/preferences-dialog.c:2474
+#: ../app/dialogs/preferences-dialog.c:2511
 msgid "Default Behavior in Normal Mode"
 msgstr "Domyślne zachowanie w trybie zwykłym"
 
-#: ../app/dialogs/preferences-dialog.c:2478
+#: ../app/dialogs/preferences-dialog.c:2515
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Domyślne zachowanie w trybie pełnoekranowym"
 
-#: ../app/dialogs/preferences-dialog.c:2487
+#: ../app/dialogs/preferences-dialog.c:2524
 msgid "_Snapping distance:"
 msgstr "_Zasięg przyciągania:"
 
-#: ../app/dialogs/preferences-dialog.c:2496
-#: ../app/dialogs/preferences-dialog.c:2497
+#: ../app/dialogs/preferences-dialog.c:2533
+#: ../app/dialogs/preferences-dialog.c:2534
 msgid "Input Devices"
 msgstr "Urządzenia wejściowe"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2503
+#: ../app/dialogs/preferences-dialog.c:2540
 msgid "Extended Input Devices"
 msgstr "Dodatkowe urządzenia wejściowe"
 
-#: ../app/dialogs/preferences-dialog.c:2507
+#: ../app/dialogs/preferences-dialog.c:2544
 msgid "Configure E_xtended Input Devices..."
 msgstr "S_konfiguruj dodatkowe urządzenia wejściowe…"
 
-#: ../app/dialogs/preferences-dialog.c:2514
+#: ../app/dialogs/preferences-dialog.c:2551
 msgid "_Save input device settings on exit"
 msgstr "Zap_isywanie ustawień urządzeń wejściowych przed zakończeniem"
 
-#: ../app/dialogs/preferences-dialog.c:2518
+#: ../app/dialogs/preferences-dialog.c:2555
 msgid "Save Input Device Settings _Now"
 msgstr "_Zapisz ustawienia urządzeń wejściowych"
 
-#: ../app/dialogs/preferences-dialog.c:2525
+#: ../app/dialogs/preferences-dialog.c:2562
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Ustaw zapisane ustawienia urządzeń wejściowych na wartości domyślne"
 
-#: ../app/dialogs/preferences-dialog.c:2540
+#: ../app/dialogs/preferences-dialog.c:2577
 msgid "Additional Input Controllers"
 msgstr "Dodatkowe urządzenia sterujące"
 
-#: ../app/dialogs/preferences-dialog.c:2541
+#: ../app/dialogs/preferences-dialog.c:2578
 msgid "Input Controllers"
 msgstr "Urządzenia sterujące"
 
-#: ../app/dialogs/preferences-dialog.c:2556
-#: ../app/dialogs/preferences-dialog.c:2557
+#: ../app/dialogs/preferences-dialog.c:2593
+#: ../app/dialogs/preferences-dialog.c:2594
 msgid "Folders"
 msgstr "Katalogi"
 
-#: ../app/dialogs/preferences-dialog.c:2573
+#: ../app/dialogs/preferences-dialog.c:2610
 msgid "Temporary folder:"
 msgstr "Katalog tymczasowy:"
 
-#: ../app/dialogs/preferences-dialog.c:2574
+#: ../app/dialogs/preferences-dialog.c:2611
 msgid "Select Folder for Temporary Files"
 msgstr "Wybór katalogu dla plików tymczasowych"
 
-#: ../app/dialogs/preferences-dialog.c:2578
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "Swap folder:"
 msgstr "Katalog wymiany:"
 
-#: ../app/dialogs/preferences-dialog.c:2579
+#: ../app/dialogs/preferences-dialog.c:2616
 msgid "Select Swap Folder"
 msgstr "Wybór katalogu wymiany"
 
-#: ../app/dialogs/preferences-dialog.c:2614
+#: ../app/dialogs/preferences-dialog.c:2651
 msgid "Brush Folders"
 msgstr "Katalogi z pędzlami"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2653
 msgid "Select Brush Folders"
 msgstr "Wybór katalogów z pędzlami"
 
-#: ../app/dialogs/preferences-dialog.c:2618
+#: ../app/dialogs/preferences-dialog.c:2655
 msgid "Dynamics Folders"
 msgstr "Katalogi z dynamiką"
 
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:2657
 msgid "Select Dynamics Folders"
 msgstr "Wybór katalogów z dynamiką"
 
-#: ../app/dialogs/preferences-dialog.c:2622
+#: ../app/dialogs/preferences-dialog.c:2659
 msgid "Pattern Folders"
 msgstr "Katalogi z deseniami"
 
-#: ../app/dialogs/preferences-dialog.c:2624
+#: ../app/dialogs/preferences-dialog.c:2661
 msgid "Select Pattern Folders"
 msgstr "Wybór katalogów z deseniami"
 
-#: ../app/dialogs/preferences-dialog.c:2626
+#: ../app/dialogs/preferences-dialog.c:2663
 msgid "Palette Folders"
 msgstr "Katalogi z paletami"
 
-#: ../app/dialogs/preferences-dialog.c:2628
+#: ../app/dialogs/preferences-dialog.c:2665
 msgid "Select Palette Folders"
 msgstr "Wybór katalogów z paletami"
 
-#: ../app/dialogs/preferences-dialog.c:2630
+#: ../app/dialogs/preferences-dialog.c:2667
 msgid "Gradient Folders"
 msgstr "Katalogi z gradientami"
 
-#: ../app/dialogs/preferences-dialog.c:2632
+#: ../app/dialogs/preferences-dialog.c:2669
 msgid "Select Gradient Folders"
 msgstr "Wybór katalogów z gradientami"
 
-#: ../app/dialogs/preferences-dialog.c:2634
+#: ../app/dialogs/preferences-dialog.c:2671
 msgid "Font Folders"
 msgstr "Katalogi z czcionkami"
 
-#: ../app/dialogs/preferences-dialog.c:2636
+#: ../app/dialogs/preferences-dialog.c:2673
 msgid "Select Font Folders"
 msgstr "Wybór katalogów z czcionkami"
 
-#: ../app/dialogs/preferences-dialog.c:2638
+#: ../app/dialogs/preferences-dialog.c:2675
 msgid "Tool Preset Folders"
 msgstr "Katalogi z ustawieniami narzędzi"
 
-#: ../app/dialogs/preferences-dialog.c:2640
+#: ../app/dialogs/preferences-dialog.c:2677
 msgid "Select Tool Preset Folders"
 msgstr "Wybór katalogów z ustawieniami narzędzi"
 
-#: ../app/dialogs/preferences-dialog.c:2642
+#: ../app/dialogs/preferences-dialog.c:2679
 msgid "MyPaint Brush Folders"
 msgstr "Katalogi z pędzlami programu MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:2644
+#: ../app/dialogs/preferences-dialog.c:2681
 msgid "Select MyPaint Brush Folders"
 msgstr "Wybór katalogów z pędzlami programu MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:2646
+#: ../app/dialogs/preferences-dialog.c:2683
 msgid "Plug-In Folders"
 msgstr "Katalogi z wtyczkami"
 
-#: ../app/dialogs/preferences-dialog.c:2648
+#: ../app/dialogs/preferences-dialog.c:2685
 msgid "Select Plug-In Folders"
 msgstr "Wybór katalogów z wtyczkami"
 
-#: ../app/dialogs/preferences-dialog.c:2650
+#: ../app/dialogs/preferences-dialog.c:2687
 msgid "Scripts"
 msgstr "Skrypty"
 
-#: ../app/dialogs/preferences-dialog.c:2650
+#: ../app/dialogs/preferences-dialog.c:2687
 msgid "Script-Fu Folders"
 msgstr "Katalogi ze Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2652
+#: ../app/dialogs/preferences-dialog.c:2689
 msgid "Select Script-Fu Folders"
 msgstr "Wybór katalogów ze Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2654
+#: ../app/dialogs/preferences-dialog.c:2691
 msgid "Module Folders"
 msgstr "Katalogi z modułami"
 
-#: ../app/dialogs/preferences-dialog.c:2656
+#: ../app/dialogs/preferences-dialog.c:2693
 msgid "Select Module Folders"
 msgstr "Wybór katalogów z modułami"
 
-#: ../app/dialogs/preferences-dialog.c:2658
+#: ../app/dialogs/preferences-dialog.c:2695
 msgid "Interpreters"
 msgstr "Interpretery"
 
-#: ../app/dialogs/preferences-dialog.c:2658
+#: ../app/dialogs/preferences-dialog.c:2695
 msgid "Interpreter Folders"
 msgstr "Katalogi interpretera"
 
-#: ../app/dialogs/preferences-dialog.c:2660
+#: ../app/dialogs/preferences-dialog.c:2697
 msgid "Select Interpreter Folders"
 msgstr "Wybór katalogów interpretera"
 
-#: ../app/dialogs/preferences-dialog.c:2662
+#: ../app/dialogs/preferences-dialog.c:2699
 msgid "Environment"
 msgstr "Środowisko"
 
-#: ../app/dialogs/preferences-dialog.c:2662
+#: ../app/dialogs/preferences-dialog.c:2699
 msgid "Environment Folders"
 msgstr "Katalogi ze zmiennymi środowiskowymi"
 
-#: ../app/dialogs/preferences-dialog.c:2664
+#: ../app/dialogs/preferences-dialog.c:2701
 msgid "Select Environment Folders"
 msgstr "Wybór katalogów ze zmiennymi środowiskowymi"
 
-#: ../app/dialogs/preferences-dialog.c:2666
+#: ../app/dialogs/preferences-dialog.c:2703
 msgid "Themes"
 msgstr "Motywy"
 
-#: ../app/dialogs/preferences-dialog.c:2666
+#: ../app/dialogs/preferences-dialog.c:2703
 msgid "Theme Folders"
 msgstr "Katalogi z motywami"
 
-#: ../app/dialogs/preferences-dialog.c:2668
+#: ../app/dialogs/preferences-dialog.c:2705
 msgid "Select Theme Folders"
 msgstr "Wybór katalogów z motywami"
 
-#: ../app/dialogs/preferences-dialog.c:2670
+#: ../app/dialogs/preferences-dialog.c:2707
 msgid "Icon Themes"
 msgstr "Motywy ikon"
 
-#: ../app/dialogs/preferences-dialog.c:2670
+#: ../app/dialogs/preferences-dialog.c:2707
 msgid "Icon Theme Folders"
 msgstr "Katalogi z motywami ikon"
 
-#: ../app/dialogs/preferences-dialog.c:2672
+#: ../app/dialogs/preferences-dialog.c:2709
 msgid "Select Icon Theme Folders"
 msgstr "Wybór katalogów z motywami ikon"
 
@@ -12712,7 +12858,7 @@ msgstr "Przełącz szybką maskę"
 msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
-#: ../app/display/gimpdisplayshell.c:778 ../app/display/gimpdisplayshell.c:1486
+#: ../app/display/gimpdisplayshell.c:778 ../app/display/gimpdisplayshell.c:1480
 #: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
@@ -12862,12 +13008,12 @@ msgstr "Filtry wyświetlania kolorów"
 msgid "Configure Color Display Filters"
 msgstr "Konfiguracja filtrów wyświetlania kolorów"
 
-#: ../app/display/gimpdisplayshell-handlers.c:842
+#: ../app/display/gimpdisplayshell-handlers.c:869
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Zapisano obraz do „%s”"
 
-#: ../app/display/gimpdisplayshell-handlers.c:854
+#: ../app/display/gimpdisplayshell-handlers.c:881
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "Wyeksportowano obraz do „%s”"
@@ -14931,17 +15077,17 @@ msgstr "Aktywna warstwa jest niewidoczna."
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:952 ../app/tools/gimppainttool.c:655
+#: ../app/tools/gimpblendtool.c:957 ../app/tools/gimppainttool.c:655
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
 
-#: ../app/tools/gimpblendtool.c:953
+#: ../app/tools/gimpblendtool.c:958
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s przesunie całą linię"
 
-#: ../app/tools/gimpblendtool.c:957
+#: ../app/tools/gimpblendtool.c:962
 msgid "Blend: "
 msgstr "Gradient: "
 
