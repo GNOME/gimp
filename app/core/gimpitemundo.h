@@ -30,6 +30,7 @@
 #define GIMP_ITEM_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_UNDO, GimpItemUndoClass))
 
 
+typedef struct _GimpItemUndo      GimpItemUndo;
 typedef struct _GimpItemUndoClass GimpItemUndoClass;
 
 struct _GimpItemUndo

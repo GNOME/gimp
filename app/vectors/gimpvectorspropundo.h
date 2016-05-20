@@ -30,6 +30,7 @@
 #define GIMP_VECTORS_PROP_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTORS_PROP_UNDO, GimpVectorsPropUndoClass))
 
 
+typedef struct _GimpVectorsPropUndo      GimpVectorsPropUndo;
 typedef struct _GimpVectorsPropUndoClass GimpVectorsPropUndoClass;
 
 struct _GimpVectorsPropUndo

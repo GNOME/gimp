@@ -60,12 +60,6 @@ typedef struct _GimpPerspectiveCloneOptions GimpPerspectiveCloneOptions;
 typedef struct _GimpSmudgeOptions           GimpSmudgeOptions;
 
 
-/*  paint undos  */
-
-typedef struct _GimpPaintCoreUndo GimpPaintCoreUndo;
-typedef struct _GimpInkUndo       GimpInkUndo;
-
-
 /*  functions  */
 
 typedef void (* GimpPaintRegisterCallback) (Gimp        *gimp,

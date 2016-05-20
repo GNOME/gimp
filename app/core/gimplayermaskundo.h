@@ -30,6 +30,7 @@
 #define GIMP_LAYER_MASK_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_MASK_UNDO, GimpLayerMaskUndoClass))
 
 
+typedef struct _GimpLayerMaskUndo      GimpLayerMaskUndo;
 typedef struct _GimpLayerMaskUndoClass GimpLayerMaskUndoClass;
 
 struct _GimpLayerMaskUndo

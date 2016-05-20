@@ -30,6 +30,7 @@
 #define GIMP_GROUP_LAYER_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GROUP_LAYER_UNDO, GimpGroupLayerUndoClass))
 
 
+typedef struct _GimpGroupLayerUndo      GimpGroupLayerUndo;
 typedef struct _GimpGroupLayerUndoClass GimpGroupLayerUndoClass;
 
 struct _GimpGroupLayerUndo

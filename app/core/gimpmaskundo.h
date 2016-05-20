@@ -30,6 +30,7 @@
 #define GIMP_MASK_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MASK_UNDO, GimpMaskUndoClass))
 
 
+typedef struct _GimpMaskUndo      GimpMaskUndo;
 typedef struct _GimpMaskUndoClass GimpMaskUndoClass;
 
 struct _GimpMaskUndo
