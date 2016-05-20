@@ -109,8 +109,5 @@ void              gimp_widget_set_fully_opaque     (GtkWidget            *widget
 
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
 
-void              gimp_session_write_position      (GimpConfigWriter     *writer,
-                                                    gint                  position);
-
 
 #endif /* __APP_GIMP_WIDGETS_UTILS_H__ */

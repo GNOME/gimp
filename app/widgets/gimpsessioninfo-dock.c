@@ -33,12 +33,12 @@
 #include "gimpdockbook.h"
 #include "gimpdockcontainer.h"
 #include "gimpdockwindow.h"
+#include "gimpsessioninfo.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dock.h"
 #include "gimpsessioninfo-private.h"
 #include "gimptoolbox.h"
-#include "gimpwidgets-utils.h"
 
 
 enum
@@ -126,7 +126,15 @@ gimp_session_info_dock_serialize (GimpConfigWriter    *writer,
     }
 
   if (dock_info->position != 0)
-    gimp_session_write_position (writer, dock_info->position);
+    {
+      gint position;
+
+      position = gimp_session_info_apply_position_accuracy (dock_info->position);
+
+      gimp_config_writer_open (writer, "position");
+      gimp_config_writer_printf (writer, "%d", position);
+      gimp_config_writer_close (writer);
+    }
 
   for (list = dock_info->books; list; list = g_list_next (list))
     gimp_session_info_book_serialize (writer, list->data);

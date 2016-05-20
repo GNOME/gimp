@@ -31,9 +31,9 @@
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
+#include "gimpsessioninfo.h"
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dockable.h"
-#include "gimpwidgets-utils.h"
 
 
 enum
@@ -79,7 +79,15 @@ gimp_session_info_book_serialize (GimpConfigWriter    *writer,
   gimp_config_writer_open (writer, "book");
 
   if (info->position != 0)
-    gimp_session_write_position (writer, info->position);
+    {
+      gint position;
+
+      position = gimp_session_info_apply_position_accuracy (info->position);
+
+      gimp_config_writer_open (writer, "position");
+      gimp_config_writer_printf (writer, "%d", position);
+      gimp_config_writer_close (writer);
+    }
 
   gimp_config_writer_open (writer, "current-page");
   gimp_config_writer_printf (writer, "%d", info->current_page);
