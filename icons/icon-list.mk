@@ -253,6 +253,13 @@ vector24_images = \
 	24/gimp-channel-red.svg				\
 	24/gimp-channels.svg				\
 	24/gimp-colormap.svg				\
+	24/gimp-device-status				\
+	24/gimp-display-filter				\
+	24/gimp-display-filter-colorblind		\
+	24/gimp-display-filter-contrast			\
+	24/gimp-display-filter-gamma			\
+	24/gimp-display-filter-lcms			\
+	24/gimp-display-filter-proof			\
 	24/gimp-error.svg				\
 	24/gimp-floating-selection.svg			\
 	24/gimp-gegl.svg				\
