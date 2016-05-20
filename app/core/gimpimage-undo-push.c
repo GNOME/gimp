@@ -29,7 +29,7 @@
 #include "gimpchannelundo.h"
 #include "gimpdrawablemodundo.h"
 #include "gimpdrawableundo.h"
-#include "gimpfloatingselundo.h"
+#include "gimpfloatingselectionundo.h"
 #include "gimpgrid.h"
 #include "gimpgrouplayer.h"
 #include "gimpgrouplayerundo.h"
@@ -922,7 +922,7 @@ gimp_image_undo_push_fs_to_layer (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (floating_layer), NULL);
 
-  undo = gimp_image_undo_push (image, GIMP_TYPE_FLOATING_SEL_UNDO,
+  undo = gimp_image_undo_push (image, GIMP_TYPE_FLOATING_SELECTION_UNDO,
                                GIMP_UNDO_FS_TO_LAYER, undo_desc,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
                                "item", floating_layer,

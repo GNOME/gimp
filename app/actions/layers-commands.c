@@ -41,7 +41,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitemundo.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"

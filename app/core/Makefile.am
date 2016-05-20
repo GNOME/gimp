@@ -192,8 +192,8 @@ libappcore_a_sources = \
 	gimpfilteredcontainer.h			\
 	gimpfilterstack.c			\
 	gimpfilterstack.h			\
-	gimpfloatingselundo.c			\
-	gimpfloatingselundo.h			\
+	gimpfloatingselectionundo.c		\
+	gimpfloatingselectionundo.h		\
 	gimpgradient.c				\
 	gimpgradient.h				\
 	gimpgradient-load.c			\
@@ -295,8 +295,8 @@ libappcore_a_sources = \
 	gimpitemundo.h				\
 	gimplayer.c				\
 	gimplayer.h				\
-	gimplayer-floating-sel.c		\
-	gimplayer-floating-sel.h		\
+	gimplayer-floating-selection.c		\
+	gimplayer-floating-selection.h		\
 	gimplayer-new.c				\
 	gimplayer-new.h				\
 	gimplayermask.c				\

@@ -32,7 +32,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimplayermask.h"
 
 #include "gimp-intl.h"

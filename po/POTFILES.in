@@ -160,7 +160,7 @@ app/core/gimpimagefile.c
 app/core/gimpitem.c
 app/core/gimpitem-exclusive.c
 app/core/gimpitem-linked.c
-app/core/gimplayer-floating-sel.c
+app/core/gimplayer-floating-selection.c
 app/core/gimplayer.c
 app/core/gimplayermask.c
 app/core/gimpmybrush-load.c

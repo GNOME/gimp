@@ -47,7 +47,7 @@
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemstack.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"

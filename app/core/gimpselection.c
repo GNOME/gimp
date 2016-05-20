@@ -39,7 +39,7 @@
 #include "gimplayer.h"
 #include "gimplayer-new.h"
 #include "gimplayermask.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimppickable.h"
 #include "gimpselection.h"
 

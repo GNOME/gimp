@@ -41,7 +41,7 @@
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimplayer-new.h"
 #include "gimplist.h"
 #include "gimppattern.h"

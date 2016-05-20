@@ -30,7 +30,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimplayer.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-floating-selection.h"
 
 #include "gimpcanvas-style.h"
 #include "gimpcanvaslayerboundary.h"

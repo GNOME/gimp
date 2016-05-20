@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_FLOATING_SEL_H__
-#define __GIMP_LAYER_FLOATING_SEL_H__
+#ifndef __GIMP_LAYER_FLOATING_SELECTION_H__
+#define __GIMP_LAYER_FLOATING_SELECTION_H__
 
 
 void                 floating_sel_attach            (GimpLayer     *layer,
@@ -30,4 +30,4 @@ const GimpBoundSeg * floating_sel_boundary          (GimpLayer     *layer,
 void                 floating_sel_invalidate        (GimpLayer     *layer);
 
 
-#endif /* __GIMP_LAYER_FLOATING_SEL_H__ */
+#endif /* __GIMP_LAYER_FLOATING_SELECTION_H__ */

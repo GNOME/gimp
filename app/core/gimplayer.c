@@ -46,7 +46,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"

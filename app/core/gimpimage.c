@@ -62,7 +62,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimpitemtree.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"

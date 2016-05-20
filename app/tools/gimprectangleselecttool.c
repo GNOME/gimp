@@ -25,13 +25,13 @@
 
 #include "tools-types.h"
 
-#include "core/gimpchannel.h"
+#include "core/gimp-utils.h"
 #include "core/gimpchannel-select.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimplayer-floating-selection.h"
 #include "core/gimppickable.h"
-#include "core/gimp-utils.h"
 #include "core/gimpundostack.h"
 
 #include "widgets/gimpdialogfactory.h"
