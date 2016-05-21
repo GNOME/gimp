@@ -41,6 +41,8 @@
 
 #include "widgets-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockcontainer.h"
@@ -1374,4 +1376,72 @@ gimp_print_event (const GdkEvent *event)
   g_idle_add (gimp_print_event_free, str);
 
   return str;
+}
+
+gboolean
+gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
+                                       GimpColorConfig        *config,
+                                       GimpImageBaseType       base_type,
+                                       GimpPrecision           precision,
+                                       GError                **error)
+{
+  GimpColorProfile *profile;
+  const Babl       *format;
+  gchar            *label;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store), FALSE);
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  format  = gimp_babl_format (base_type, precision, TRUE);
+  profile = gimp_babl_format_get_color_profile (format);
+
+  if (base_type == GIMP_GRAY)
+    {
+      label = g_strdup_printf (_("Built-in grayscale (%s)"),
+                               gimp_color_profile_get_label (profile));
+
+      profile = gimp_color_config_get_gray_color_profile (config, error);
+    }
+  else
+    {
+      label = g_strdup_printf (_("Built-in RGB (%s)"),
+                               gimp_color_profile_get_label (profile));
+
+      profile = gimp_color_config_get_rgb_color_profile (config, error);
+    }
+
+  gimp_color_profile_store_add_file (store, NULL, label);
+  g_free (label);
+
+  if (profile)
+    {
+      GFile *file;
+
+      if (base_type == GIMP_GRAY)
+        {
+          file = g_file_new_for_path (config->gray_profile);
+
+          label = g_strdup_printf (_("Preferred grayscale (%s)"),
+                                   gimp_color_profile_get_label (profile));
+        }
+      else
+        {
+          file = g_file_new_for_path (config->rgb_profile);
+
+          label = g_strdup_printf (_("Preferred RGB (%s)"),
+                                   gimp_color_profile_get_label (profile));
+        }
+
+      g_object_unref (profile);
+
+      gimp_color_profile_store_add_file (store, file, label);
+
+      g_object_unref (file);
+      g_free (label);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }

@@ -107,5 +107,12 @@ void              gimp_widget_set_fully_opaque     (GtkWidget            *widget
 
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
 
+gboolean          gimp_color_profile_store_add_defaults
+                                                   (GimpColorProfileStore *store,
+                                                    GimpColorConfig       *config,
+                                                    GimpImageBaseType      base_type,
+                                                    GimpPrecision          precision,
+                                                    GError               **error);
+
 
 #endif /* __APP_GIMP_WIDGETS_UTILS_H__ */
