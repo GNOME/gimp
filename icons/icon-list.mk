@@ -277,6 +277,7 @@ vector24_images = \
 	24/gimp-scale					\
 	24/gimp-selection.svg				\
 	24/gimp-symmetry.svg				\
+	24/gimp-template.svg				\
 	24/gimp-text-layer.svg				\
 	24/gimp-tool-airbrush.svg			\
 	24/gimp-tool-align.svg				\
@@ -318,6 +319,7 @@ vector24_images = \
 	24/gimp-tool-posterize.svg			\
 	24/gimp-tool-rect-select.svg			\
 	24/gimp-tool-rotate.svg				\
+	24/gimp-tools.svg				\
 	24/gimp-tool-scale.svg				\
 	24/gimp-tool-seamless-clone.svg			\
 	24/gimp-tool-shear.svg				\
@@ -328,6 +330,7 @@ vector24_images = \
 	24/gimp-tool-warp.svg				\
 	24/gimp-tool-zoom.svg				\
 	24/gimp-transparency.svg			\
+	24/gimp-undo-history.svg			\
 	24/gimp-warning.svg				\
 	24/gimp-web.svg
 
