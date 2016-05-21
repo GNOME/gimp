@@ -114,7 +114,6 @@ gimp_prop_expanding_frame_new (GObject      *config,
   GParamSpec *param_spec;
   GtkWidget  *frame;
   GtkWidget  *toggle;
-  gboolean    value;
 
   param_spec = check_param_spec_w (config, property_name,
                                    G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
@@ -132,16 +131,9 @@ gimp_prop_expanding_frame_new (GObject      *config,
 
   gtk_container_add (GTK_CONTAINER (frame), child);
 
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  if (value)
-    gtk_widget_show (child);
-
-  g_signal_connect_object (toggle, "toggled",
-                           G_CALLBACK (gimp_toggle_button_set_visible),
-                           child, 0);
+  g_object_bind_property (G_OBJECT (config), property_name,
+                          G_OBJECT (child),  "visible",
+                          G_BINDING_SYNC_CREATE);
 
   if (button)
     *button = toggle;
@@ -150,9 +142,9 @@ gimp_prop_expanding_frame_new (GObject      *config,
 }
 
 
-/****************/
-/*  paint menu  */
-/****************/
+/*********************/
+/*  paint mode menu  */
+/*********************/
 
 static void   gimp_prop_paint_menu_callback (GtkWidget   *widget,
                                              GObject     *config);

@@ -82,8 +82,6 @@ void              gimp_window_set_hint             (GtkWindow            *window
 guint32           gimp_window_get_native_id        (GtkWindow            *window);
 void              gimp_window_set_transient_for    (GtkWindow            *window,
                                                     guint32               parent_ID);
-void              gimp_toggle_button_set_visible   (GtkToggleButton      *toggle,
-                                                    GtkWidget            *widget);
 void              gimp_widget_set_accel_help       (GtkWidget            *widget,
                                                     GtkAction            *action);
 const gchar     * gimp_get_message_icon_name       (GimpMessageSeverity   severity);

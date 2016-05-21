@@ -995,17 +995,6 @@ gimp_window_set_transient_for (GtkWindow *window,
 #endif
 }
 
-void
-gimp_toggle_button_set_visible (GtkToggleButton *toggle,
-                                GtkWidget       *widget)
-{
-  g_return_if_fail (GTK_IS_TOGGLE_BUTTON (toggle));
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-
-  gtk_widget_set_visible (widget,
-                          gtk_toggle_button_get_active (toggle));
-}
-
 static gboolean
 gimp_widget_accel_find_func (GtkAccelKey *key,
                              GClosure    *closure,
