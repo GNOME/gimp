@@ -302,17 +302,25 @@
       <menuitem action="view-navigation-window" />
       <menuitem action="view-display-filters" />
       <menu action="view-color-management-menu" name="Color Management">
-        <menuitem action="view-color-management-mode-off" />
-        <menuitem action="view-color-management-mode-display" />
-        <menuitem action="view-color-management-mode-softproof" />
+        <menuitem action="view-color-management-enable" />
+        <menuitem action="view-color-management-softproof" />
         <separator />
-        <menuitem action="view-color-management-intent-perceptual" />
-        <menuitem action="view-color-management-intent-relative-colorimetric" />
-        <menuitem action="view-color-management-intent-saturation" />
-        <menuitem action="view-color-management-intent-absolute-colorimetric" />
+	<menu action="view-display-intent-menu" name="Display Rendering Intent">
+          <menuitem action="view-display-intent-perceptual" />
+          <menuitem action="view-display-intent-relative-colorimetric" />
+          <menuitem action="view-display-intent-saturation" />
+          <menuitem action="view-display-intent-absolute-colorimetric" />
+	</menu>
+        <menuitem action="view-display-black-point-compensation" />
         <separator />
-        <menuitem action="view-color-management-black-point-compensation" />
-        <menuitem action="view-color-management-gamut-check" />
+	<menu action="view-softproof-intent-menu" name="Softproof Rendering Intent">
+          <menuitem action="view-softproof-intent-perceptual" />
+          <menuitem action="view-softproof-intent-relative-colorimetric" />
+          <menuitem action="view-softproof-intent-saturation" />
+          <menuitem action="view-softproof-intent-absolute-colorimetric" />
+	</menu>
+        <menuitem action="view-softproof-black-point-compensation" />
+        <menuitem action="view-softproof-gamut-check" />
         <separator />
         <menuitem action="view-color-management-reset" />
       </menu>

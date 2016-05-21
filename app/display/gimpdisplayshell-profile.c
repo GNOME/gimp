@@ -257,10 +257,9 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
       ! strcmp (pspec->name, "simulation-use-black-point-compensation") ||
       ! strcmp (pspec->name, "simulation-gamut-check"))
     {
-      GimpColorRenderingIntent intent  = GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL;
-      gboolean                 managed = TRUE;
-      gboolean                 bpc     = TRUE;
-      const gchar             *action  = NULL;
+      gboolean     managed   = FALSE;
+      gboolean     softproof = FALSE;
+      const gchar *action    = NULL;
 
 #define SET_SENSITIVE(action, sensitive) \
       gimp_display_shell_set_action_sensitive (shell, action, sensitive);
@@ -271,61 +270,83 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
       switch (config->mode)
         {
         case GIMP_COLOR_MANAGEMENT_OFF:
-          action  = "view-color-management-mode-off";
-          managed = FALSE;
           break;
 
         case GIMP_COLOR_MANAGEMENT_DISPLAY:
-          action = "view-color-management-mode-display";
-          intent = config->display_intent;
-          bpc    = config->display_use_black_point_compensation;
+          managed = TRUE;
           break;
 
         case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-          action = "view-color-management-mode-softproof";
-          intent = config->simulation_intent;
-          bpc    = config->simulation_use_black_point_compensation;
+          managed   = TRUE;
+          softproof = TRUE;
           break;
         }
 
-      SET_ACTIVE (action, TRUE);
+      SET_ACTIVE ("view-color-management-enable",    managed);
+      SET_ACTIVE ("view-color-management-softproof", softproof);
 
-      switch (intent)
+      switch (config->display_intent)
         {
         case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
-          action = "view-color-management-intent-perceptual";
+          action = "view-display-intent-perceptual";
           break;
 
         case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
-          action = "view-color-management-intent-relative-colorimetric";
+          action = "view-display-intent-relative-colorimetric";
           break;
 
         case GIMP_COLOR_RENDERING_INTENT_SATURATION:
-          action = "view-color-management-intent-saturation";
+          action = "view-display-intent-saturation";
           break;
 
         case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
-          action = "view-color-management-intent-absolute-colorimetric";
+          action = "view-display-intent-absolute-colorimetric";
           break;
         }
 
-      SET_SENSITIVE ("view-color-management-intent-perceptual",
-                     managed);
-      SET_SENSITIVE ("view-color-management-intent-relative-colorimetric",
-                     managed);
-      SET_SENSITIVE ("view-color-management-intent-saturation",
-                     managed);
-      SET_SENSITIVE ("view-color-management-intent-absolute-colorimetric",
-                     managed);
+      SET_SENSITIVE ("view-display-intent-perceptual",            managed);
+      SET_SENSITIVE ("view-display-intent-relative-colorimetric", managed);
+      SET_SENSITIVE ("view-display-intent-saturation",            managed);
+      SET_SENSITIVE ("view-display-intent-absolute-colorimetric", managed);
 
       SET_ACTIVE (action, TRUE);
 
-      SET_SENSITIVE ("view-color-management-black-point-compensation", managed);
-      SET_ACTIVE    ("view-color-management-black-point-compensation", bpc);
+      SET_SENSITIVE ("view-display-black-point-compensation", managed);
+      SET_ACTIVE    ("view-display-black-point-compensation",
+                     config->display_use_black_point_compensation);
 
-      SET_SENSITIVE ("view-color-management-gamut-check",
-                     config->mode == GIMP_COLOR_MANAGEMENT_SOFTPROOF);
-      SET_ACTIVE    ("view-color-management-gamut-check",
+      switch (config->simulation_intent)
+        {
+        case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
+          action = "view-softproof-intent-perceptual";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+          action = "view-softproof-intent-relative-colorimetric";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_SATURATION:
+          action = "view-softproof-intent-saturation";
+          break;
+
+        case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+          action = "view-softproof-intent-absolute-colorimetric";
+          break;
+        }
+
+      SET_SENSITIVE ("view-softproof-intent-perceptual",            softproof);
+      SET_SENSITIVE ("view-softproof-intent-relative-colorimetric", softproof);
+      SET_SENSITIVE ("view-softproof-intent-saturation",            softproof);
+      SET_SENSITIVE ("view-softproof-intent-absolute-colorimetric", softproof);
+
+      SET_ACTIVE (action, TRUE);
+
+      SET_SENSITIVE ("view-softproof-black-point-compensation", softproof);
+      SET_ACTIVE    ("view-softproof-black-point-compensation",
+                     config->simulation_use_black_point_compensation);
+
+      SET_SENSITIVE ("view-softproof-gamut-check", softproof);
+      SET_ACTIVE    ("view-softproof-gamut-check",
                      config->simulation_gamut_check);
     }
 

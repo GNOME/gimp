@@ -71,16 +71,22 @@ void   view_display_filters_cmd_callback        (GtkAction *action,
 
 void   view_color_management_reset_cmd_callback (GtkAction *action,
                                                  gpointer   data);
-void   view_color_management_mode_cmd_callback  (GtkAction *action,
-                                                 GtkAction *current,
+void   view_color_management_enable_cmd_callback(GtkAction *action,
                                                  gpointer   data);
-void   view_color_management_intent_cmd_callback(GtkAction *action,
-                                                 GtkAction *current,
-                                                 gpointer   data);
-void   view_color_management_bpc_cmd_callback   (GtkAction *action,
-                                                 gpointer   data);
-void   view_color_management_gamut_check_cmd_callback
+void   view_color_management_softproof_cmd_callback
                                                 (GtkAction *action,
+                                                 gpointer   data);
+void   view_display_intent_cmd_callback         (GtkAction *action,
+                                                 GtkAction *current,
+                                                 gpointer   data);
+void   view_display_bpc_cmd_callback            (GtkAction *action,
+                                                 gpointer   data);
+void   view_softproof_intent_cmd_callback       (GtkAction *action,
+                                                 GtkAction *current,
+                                                 gpointer   data);
+void   view_softproof_bpc_cmd_callback          (GtkAction *action,
+                                                 gpointer   data);
+void   view_softproof_gamut_check_cmd_callback  (GtkAction *action,
                                                  gpointer   data);
 
 void   view_toggle_selection_cmd_callback       (GtkAction *action,

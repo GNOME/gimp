@@ -505,32 +505,79 @@ view_color_management_reset_cmd_callback (GtkAction *action,
 }
 
 void
-view_color_management_mode_cmd_callback (GtkAction *action,
-                                         GtkAction *current,
-                                         gpointer   data)
+view_color_management_enable_cmd_callback (GtkAction *action,
+                                           gpointer   data)
 {
   GimpDisplayShell        *shell;
   GimpColorConfig         *color_config;
-  GimpColorManagementMode  value;
+  GimpColorManagementMode  mode;
+  gboolean                 active;
   return_if_no_shell (shell, data);
 
   color_config = gimp_display_shell_get_color_config (shell);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (value != color_config->mode)
+  mode = color_config->mode;
+
+  if (active)
+    {
+      if (mode != GIMP_COLOR_MANAGEMENT_SOFTPROOF)
+        mode = GIMP_COLOR_MANAGEMENT_DISPLAY;
+    }
+  else
+    {
+      mode = GIMP_COLOR_MANAGEMENT_OFF;
+    }
+
+  if (mode != color_config->mode)
     {
       g_object_set (color_config,
-                    "mode", value,
+                    "mode", mode,
                     NULL);
       shell->color_config_set = TRUE;
     }
 }
 
 void
-view_color_management_intent_cmd_callback (GtkAction *action,
-                                           GtkAction *current,
-                                           gpointer   data)
+view_color_management_softproof_cmd_callback (GtkAction *action,
+                                              gpointer   data)
+{
+  GimpDisplayShell        *shell;
+  GimpColorConfig         *color_config;
+  GimpColorManagementMode  mode;
+  gboolean                 active;
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  mode = color_config->mode;
+
+  if (active)
+    {
+      mode = GIMP_COLOR_MANAGEMENT_SOFTPROOF;
+    }
+  else
+    {
+      if (mode != GIMP_COLOR_MANAGEMENT_OFF)
+        mode = GIMP_COLOR_MANAGEMENT_DISPLAY;
+    }
+
+  if (mode != color_config->mode)
+    {
+      g_object_set (color_config,
+                    "mode", mode,
+                    NULL);
+      shell->color_config_set = TRUE;
+    }
+}
+
+void
+view_display_intent_cmd_callback (GtkAction *action,
+                                  GtkAction *current,
+                                  gpointer   data)
 {
   GimpDisplayShell          *shell;
   GimpColorConfig           *color_config;
@@ -541,36 +588,41 @@ view_color_management_intent_cmd_callback (GtkAction *action,
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  switch (color_config->mode)
+  if (value != color_config->display_intent)
     {
-    case GIMP_COLOR_MANAGEMENT_DISPLAY:
-      if (value != color_config->display_intent)
-        {
-          g_object_set (color_config,
-                        "display-rendering-intent", value,
-                        NULL);
-          shell->color_config_set = TRUE;
-        }
-      break;
-
-    case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-      if (value != color_config->simulation_intent)
-        {
-          g_object_set (color_config,
-                        "simulation-rendering-intent", value,
-                        NULL);
-          shell->color_config_set = TRUE;
-        }
-      break;
-
-    default:
-      break;
+      g_object_set (color_config,
+                    "display-rendering-intent", value,
+                    NULL);
+      shell->color_config_set = TRUE;
     }
 }
 
 void
-view_color_management_bpc_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+view_softproof_intent_cmd_callback (GtkAction *action,
+                                    GtkAction *current,
+                                    gpointer   data)
+{
+  GimpDisplayShell          *shell;
+  GimpColorConfig           *color_config;
+  GimpColorRenderingIntent   value;
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+
+  if (value != color_config->simulation_intent)
+    {
+      g_object_set (color_config,
+                    "simulation-rendering-intent", value,
+                    NULL);
+      shell->color_config_set = TRUE;
+    }
+}
+
+void
+view_display_bpc_cmd_callback (GtkAction *action,
+                               gpointer   data)
 {
   GimpDisplayShell *shell;
   GimpColorConfig  *color_config;
@@ -581,36 +633,40 @@ view_color_management_bpc_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  switch (color_config->mode)
+  if (active != color_config->display_use_black_point_compensation)
     {
-    case GIMP_COLOR_MANAGEMENT_DISPLAY:
-      if (active != color_config->display_use_black_point_compensation)
-        {
-          g_object_set (color_config,
-                        "display-use-black-point-compensation", active,
+      g_object_set (color_config,
+                    "display-use-black-point-compensation", active,
                         NULL);
-          shell->color_config_set = TRUE;
-        }
-      break;
-
-    case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-      if (active != color_config->simulation_use_black_point_compensation)
-        {
-          g_object_set (color_config,
-                        "simulation-use-black-point-compensation", active,
-                        NULL);
-          shell->color_config_set = TRUE;
-        }
-      break;
-
-    default:
-      break;
+      shell->color_config_set = TRUE;
     }
 }
 
 void
-view_color_management_gamut_check_cmd_callback (GtkAction *action,
-                                                gpointer   data)
+view_softproof_bpc_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  GimpDisplayShell *shell;
+  GimpColorConfig  *color_config;
+  gboolean          active;
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (active != color_config->simulation_use_black_point_compensation)
+    {
+      g_object_set (color_config,
+                    "simulation-use-black-point-compensation", active,
+                    NULL);
+      shell->color_config_set = TRUE;
+    }
+}
+
+void
+view_softproof_gamut_check_cmd_callback (GtkAction *action,
+                                         gpointer   data)
 {
   GimpDisplayShell *shell;
   GimpColorConfig  *color_config;
