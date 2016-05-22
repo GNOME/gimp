@@ -48,6 +48,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-constructors.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "color-profile-dialog.h"
 
@@ -322,96 +323,59 @@ color_profile_dialog_new (ColorProfileDialogType  dialog_type,
 static GtkWidget *
 color_profile_combo_box_new (ProfileDialog *dialog)
 {
-  GtkWidget        *combo;
-  GtkWidget        *chooser;
-  gchar            *history;
-  GimpColorProfile *profile;
-  gboolean          to_gray;
-  gchar            *label;
-  GError           *error = NULL;
-
-  chooser =
-    gimp_color_profile_chooser_dialog_new (_("Select Destination Profile"),
-                                           NULL,
-                                           GTK_FILE_CHOOSER_ACTION_OPEN);
+  GtkListStore      *store;
+  GtkWidget         *combo;
+  GtkWidget         *chooser;
+  gchar             *history;
+  GimpImageBaseType  base_type;
+  GimpPrecision      precision;
+  GError            *error = NULL;
 
   history = gimp_personal_rc_file ("profilerc");
-  combo = gimp_color_profile_combo_box_new (chooser, history);
+  store = gimp_color_profile_store_new (history);
   g_free (history);
 
   switch (dialog->dialog_type)
     {
     case COLOR_PROFILE_DIALOG_ASSIGN_PROFILE:
     case COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE:
-      to_gray = (gimp_image_get_base_type (dialog->image) == GIMP_GRAY);
+      base_type = gimp_image_get_base_type (dialog->image);
       break;
 
     case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
-      to_gray = FALSE;
+      base_type = GIMP_RGB;
       break;
 
     case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
-      to_gray = TRUE;
+      base_type = GIMP_GRAY;
       break;
 
     default:
       g_return_val_if_reached (NULL);
     }
 
-  profile = dialog->builtin_profile;
+  precision = gimp_image_get_precision (dialog->image);
 
-  if (to_gray)
-    {
-      label = g_strdup_printf (_("Built-in grayscale (%s)"),
-                               gimp_color_profile_get_label (profile));
-
-      profile = gimp_color_config_get_gray_color_profile (dialog->config, &error);
-    }
-  else
-    {
-      label = g_strdup_printf (_("Built-in RGB (%s)"),
-                               gimp_color_profile_get_label (profile));
-
-      profile = gimp_color_config_get_rgb_color_profile (dialog->config, &error);
-    }
-
-  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                         NULL, label);
-  g_free (label);
-
-  if (profile)
-    {
-      GFile *file;
-
-      if (to_gray)
-        {
-          file = g_file_new_for_path (dialog->config->gray_profile);
-
-          label = g_strdup_printf (_("Preferred grayscale (%s)"),
-                                   gimp_color_profile_get_label (profile));
-        }
-      else
-        {
-          file = g_file_new_for_path (dialog->config->rgb_profile);
-
-          label = g_strdup_printf (_("Preferred RGB (%s)"),
-                                   gimp_color_profile_get_label (profile));
-        }
-
-      g_object_unref (profile);
-
-      gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                             file, label);
-      g_object_unref (file);
-      g_free (label);
-    }
-  else if (error)
+  if (! gimp_color_profile_store_add_defaults (GIMP_COLOR_PROFILE_STORE (store),
+                                               dialog->config,
+                                               base_type,
+                                               precision,
+                                               &error))
     {
       gimp_message (dialog->image->gimp, G_OBJECT (dialog->dialog),
                     GIMP_MESSAGE_ERROR,
                     "%s", error->message);
       g_clear_error (&error);
     }
+
+  chooser =
+    gimp_color_profile_chooser_dialog_new (_("Select Destination Profile"),
+                                           NULL,
+                                           GTK_FILE_CHOOSER_ACTION_OPEN);
+
+  combo = gimp_color_profile_combo_box_new_with_model (chooser,
+                                                       GTK_TREE_MODEL (store));
+  g_object_unref (store);
 
   gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                                 NULL, NULL);
