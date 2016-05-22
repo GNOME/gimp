@@ -139,7 +139,8 @@ gimp_color_profile_combo_box_init (GimpColorProfileComboBox *combo_box)
   GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
 
   g_object_set (cell,
-                "ellipsize", PANGO_ELLIPSIZE_END,
+                "width-chars", 42,
+                "ellipsize",   PANGO_ELLIPSIZE_END,
                 NULL);
 
 
