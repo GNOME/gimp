@@ -1235,7 +1235,8 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
         }
 
-      if (layer->mask)
+      if (gimp_layer_get_mask (layer) &&
+          gimp_layer_get_apply_mask (layer))
         {
           gdouble mask_value;
 
