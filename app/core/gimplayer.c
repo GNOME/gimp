@@ -196,6 +196,10 @@ static void    gimp_layer_pixel_to_srgb         (GimpPickable       *pickable,
                                                  const Babl         *format,
                                                  gpointer            pixel,
                                                  GimpRGB            *color);
+static void    gimp_layer_srgb_to_pixel         (GimpPickable       *pickable,
+                                                 const GimpRGB      *color,
+                                                 const Babl         *format,
+                                                 gpointer            pixel);
 
 static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                x,
@@ -413,6 +417,7 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->get_opacity_at = gimp_layer_get_opacity_at;
   iface->pixel_to_srgb  = gimp_layer_pixel_to_srgb;
+  iface->srgb_to_pixel  = gimp_layer_srgb_to_pixel;
 }
 
 static void
@@ -1264,6 +1269,17 @@ gimp_layer_pixel_to_srgb (GimpPickable *pickable,
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (pickable));
 
   gimp_pickable_pixel_to_srgb (GIMP_PICKABLE (image), format, pixel, color);
+}
+
+static void
+gimp_layer_srgb_to_pixel (GimpPickable  *pickable,
+                          const GimpRGB *color,
+                          const Babl    *format,
+                          gpointer       pixel)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (pickable));
+
+  gimp_pickable_srgb_to_pixel (GIMP_PICKABLE (image), color, format, pixel);
 }
 
 static void

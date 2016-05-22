@@ -245,6 +245,48 @@ gimp_pickable_pixel_to_srgb (GimpPickable *pickable,
     }
 }
 
+void
+gimp_pickable_srgb_to_pixel (GimpPickable  *pickable,
+                             const GimpRGB *color,
+                             const Babl    *format,
+                             gpointer       pixel)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+  g_return_if_fail (color != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  if (! format)
+    format = gimp_pickable_get_format (pickable);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->srgb_to_pixel)
+    {
+      pickable_iface->srgb_to_pixel (pickable, color, format, pixel);
+    }
+  else
+    {
+      gimp_rgba_get_pixel (color, format, pixel);
+    }
+}
+
+void
+gimp_pickable_srgb_to_image_color (GimpPickable  *pickable,
+                                   const GimpRGB *color,
+                                   GimpRGB       *image_color)
+{
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+  g_return_if_fail (color != NULL);
+  g_return_if_fail (image_color != NULL);
+
+  gimp_pickable_srgb_to_pixel (pickable,
+                               color,
+                               babl_format ("R'G'B'A double"),
+                               image_color);
+}
+
 gboolean
 gimp_pickable_pick_color (GimpPickable *pickable,
                           gint          x,
