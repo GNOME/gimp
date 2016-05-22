@@ -29,11 +29,14 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
 #include "gimppropwidgets.h"
 #include "gimptemplateeditor.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -45,6 +48,7 @@
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_TEMPLATE
 };
 
@@ -53,6 +57,8 @@ typedef struct _GimpTemplateEditorPrivate GimpTemplateEditorPrivate;
 
 struct _GimpTemplateEditorPrivate
 {
+  Gimp          *gimp;
+
   GimpTemplate  *template;
 
   GtkWidget     *aspect_button;
@@ -65,6 +71,7 @@ struct _GimpTemplateEditorPrivate
   GtkWidget     *more_label;
   GtkWidget     *resolution_se;
   GtkWidget     *chain_button;
+  GtkWidget     *profile_combo;
 };
 
 #define GET_PRIVATE(editor) \
@@ -105,6 +112,12 @@ gimp_template_editor_class_init (GimpTemplateEditorClass *klass)
   object_class->finalize     = gimp_template_editor_finalize;
   object_class->set_property = gimp_template_editor_set_property;
   object_class->get_property = gimp_template_editor_get_property;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp", NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_TEMPLATE,
                                    g_param_spec_object ("template", NULL, NULL,
@@ -151,6 +164,7 @@ gimp_template_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
+  g_assert (private->gimp != NULL);
   g_assert (private->template != NULL);
 
   template = private->template;
@@ -401,15 +415,14 @@ gimp_template_editor_constructed (GObject *object)
                              NULL, 0.0, 0.5,
                              toggle, 1, FALSE);
 
-  combo = gimp_prop_profile_combo_box_new (G_OBJECT (template),
-                                           "color-profile",
-                                           NULL,
-                                           _("Choose A Color Profile"));
-  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                         NULL, NULL);
+  private->profile_combo =
+    gimp_prop_profile_combo_box_new (G_OBJECT (template),
+                                     "color-profile",
+                                     NULL,
+                                     _("Choose A Color Profile"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
                              _("Color _profile:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+                             private->profile_combo, 1, FALSE);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
@@ -470,6 +483,10 @@ gimp_template_editor_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      private->gimp = g_value_get_object (value); /* don't ref */
+      break;
+
     case PROP_TEMPLATE:
       private->template = g_value_dup_object (value);
       break;
@@ -490,6 +507,10 @@ gimp_template_editor_get_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, private->gimp);
+      break;
+
     case PROP_TEMPLATE:
       g_value_set_object (value, private->template);
       break;
@@ -508,9 +529,11 @@ gimp_template_editor_new (GimpTemplate *template,
   GimpTemplateEditor        *editor;
   GimpTemplateEditorPrivate *private;
 
-  g_return_val_if_fail (!edit_template || GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   editor = g_object_new (GIMP_TYPE_TEMPLATE_EDITOR,
+                         "gimp",     gimp,
                          "template", template,
                          NULL);
 
@@ -724,4 +747,30 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
 
   gtk_label_set_text (GTK_LABEL (private->more_label), text);
   g_free (text);
+
+  if (! param_spec                              ||
+      ! strcmp (param_spec->name, "image-type") ||
+      ! strcmp (param_spec->name, "precision"))
+    {
+      GtkListStore *profile_store;
+      gchar        *filename;
+
+      filename = gimp_personal_rc_file ("profilerc");
+      profile_store = gimp_color_profile_store_new (filename);
+      g_free (filename);
+
+      gimp_color_profile_store_add_defaults (GIMP_COLOR_PROFILE_STORE (profile_store),
+                                             private->gimp->config->color_management,
+                                             gimp_template_get_base_type (template),
+                                             gimp_template_get_precision (template),
+                                             NULL);
+
+      gtk_combo_box_set_model (GTK_COMBO_BOX (private->profile_combo),
+                               GTK_TREE_MODEL (profile_store));
+      g_object_unref (profile_store);
+
+      /* FIXME use template's profile */
+      gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (private->profile_combo),
+                                                    NULL, NULL);
+    }
 }
