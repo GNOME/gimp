@@ -128,6 +128,10 @@ static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *picka
 static gdouble     gimp_projection_get_opacity_at        (GimpPickable    *pickable,
                                                           gint             x,
                                                           gint             y);
+static void        gimp_projection_pixel_to_srgb         (GimpPickable    *pickable,
+                                                          const Babl      *format,
+                                                          gpointer         pixel,
+                                                          GimpRGB         *color);
 
 static void        gimp_projection_free_buffer           (GimpProjection  *proj);
 static void        gimp_projection_add_update_area       (GimpProjection  *proj,
@@ -240,6 +244,7 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_buffer            = gimp_projection_get_buffer;
   iface->get_pixel_at          = gimp_projection_get_pixel_at;
   iface->get_opacity_at        = gimp_projection_get_opacity_at;
+  iface->pixel_to_srgb         = gimp_projection_pixel_to_srgb;
 }
 
 static void
@@ -442,6 +447,21 @@ gimp_projection_get_opacity_at (GimpPickable *pickable,
 {
   return GIMP_OPACITY_OPAQUE;
 }
+
+static void
+gimp_projection_pixel_to_srgb (GimpPickable *pickable,
+                               const Babl   *format,
+                               gpointer      pixel,
+                               GimpRGB      *color)
+{
+  GimpProjection *proj  = GIMP_PROJECTION (pickable);
+  GimpImage      *image = gimp_projectable_get_image (proj->priv->projectable);
+
+  gimp_pickable_pixel_to_srgb (GIMP_PICKABLE (image), format, pixel, color);
+}
+
+
+/*  public functions  */
 
 GimpProjection *
 gimp_projection_new (GimpProjectable *projectable)

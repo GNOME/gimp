@@ -204,6 +204,10 @@ static gboolean     gimp_image_get_pixel_at      (GimpPickable      *pickable,
 static gdouble      gimp_image_get_opacity_at    (GimpPickable      *pickable,
                                                   gint               x,
                                                   gint               y);
+static void         gimp_image_pixel_to_srgb     (GimpPickable      *pickable,
+                                                  const Babl        *format,
+                                                  gpointer           pixel,
+                                                  GimpRGB           *color);
 
 static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               x,
@@ -668,6 +672,7 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_buffer            = gimp_image_get_buffer;
   iface->get_pixel_at          = gimp_image_get_pixel_at;
   iface->get_opacity_at        = gimp_image_get_opacity_at;
+  iface->pixel_to_srgb         = gimp_image_pixel_to_srgb;
 }
 
 static void
@@ -1570,6 +1575,16 @@ gimp_image_get_opacity_at (GimpPickable *pickable,
 
   return gimp_pickable_get_opacity_at (GIMP_PICKABLE (private->projection),
                                        x, y);
+}
+
+static void
+gimp_image_pixel_to_srgb (GimpPickable *pickable,
+                          const Babl   *format,
+                          gpointer      pixel,
+                          GimpRGB      *color)
+{
+  gimp_image_color_profile_pixel_to_srgb (GIMP_IMAGE (pickable),
+                                          format, pixel, color);
 }
 
 static GeglNode *

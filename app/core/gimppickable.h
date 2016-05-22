@@ -48,6 +48,10 @@ struct _GimpPickableInterface
   gdouble         (* get_opacity_at)        (GimpPickable *pickable,
                                              gint          x,
                                              gint          y);
+  void            (* pixel_to_srgb)         (GimpPickable *pickable,
+                                             const Babl   *format,
+                                             gpointer      pixel,
+                                             GimpRGB      *color);
 };
 
 
@@ -70,6 +74,10 @@ gboolean        gimp_pickable_get_color_at          (GimpPickable *pickable,
 gdouble         gimp_pickable_get_opacity_at        (GimpPickable *pickable,
                                                      gint          x,
                                                      gint          y);
+void            gimp_pickable_pixel_to_srgb         (GimpPickable *pickable,
+                                                     const Babl   *format,
+                                                     gpointer      pixel,
+                                                     GimpRGB      *color);
 
 gboolean        gimp_pickable_pick_color            (GimpPickable *pickable,
                                                      gint          x,
