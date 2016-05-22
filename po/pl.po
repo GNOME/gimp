@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-19 16:00+0200\n"
-"PO-Revision-Date: 2016-05-19 16:01+0200\n"
+"POT-Creation-Date: 2016-05-22 12:58+0200\n"
+"PO-Revision-Date: 2016-05-22 12:59+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1085,7 +1085,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1967
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1968
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:89
@@ -4821,7 +4821,7 @@ msgstr "Atrybuty warstwy"
 msgid "Edit Layer Attributes"
 msgstr "Modyfikacja atrybutów warstwy"
 
-#: ../app/actions/layers-commands.c:259 ../app/core/gimplayer.c:316
+#: ../app/actions/layers-commands.c:259 ../app/core/gimplayer.c:317
 msgid "Layer"
 msgstr "Warstwa"
 
@@ -6244,157 +6244,192 @@ msgstr "Zarządzanie _kolorami"
 
 #: ../app/actions/view-actions.c:79
 msgctxt "view-action"
+msgid "Display _Rendering Intent"
+msgstr "_Odwzorowanie barw ekranu"
+
+#: ../app/actions/view-actions.c:82
+msgctxt "view-action"
+msgid "Simulation Re_ndering Intent"
+msgstr "O_dwzorowanie barw symulacji"
+
+#: ../app/actions/view-actions.c:85
+msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Przenieś na ekran"
 
-#: ../app/actions/view-actions.c:83
+#: ../app/actions/view-actions.c:89
 msgctxt "view-action"
 msgid "_New View"
 msgstr "_Nowy widok"
 
-#: ../app/actions/view-actions.c:84
+#: ../app/actions/view-actions.c:90
 msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "Tworzy nowy widok tego obrazu"
 
-#: ../app/actions/view-actions.c:89
+#: ../app/actions/view-actions.c:95
 msgctxt "view-action"
 msgid "_Close View"
 msgstr "Za_mknij widok"
 
-#: ../app/actions/view-actions.c:90
+#: ../app/actions/view-actions.c:96
 msgctxt "view-action"
 msgid "Close the active image view"
 msgstr "Zamyka aktywny widok obrazu"
 
-#: ../app/actions/view-actions.c:95
+#: ../app/actions/view-actions.c:101
 msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "_Cały obraz w oknie"
 
-#: ../app/actions/view-actions.c:96
+#: ../app/actions/view-actions.c:102
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Dopasowuje powiększenie tak, aby obraz był w pełni widoczny"
 
-#: ../app/actions/view-actions.c:101
+#: ../app/actions/view-actions.c:107
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "_Dopasuj okno"
 
-#: ../app/actions/view-actions.c:102
+#: ../app/actions/view-actions.c:108
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Dopasowuje powiększenie do okna"
 
-#: ../app/actions/view-actions.c:107
+#: ../app/actions/view-actions.c:113
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Powiększ do _zaznaczenia"
 
-#: ../app/actions/view-actions.c:108
+#: ../app/actions/view-actions.c:114
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr "Dopasowuje powiększenie do zaznaczenia"
 
-#: ../app/actions/view-actions.c:113
+#: ../app/actions/view-actions.c:119
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Przyw_róć powiększenie"
 
-#: ../app/actions/view-actions.c:114
+#: ../app/actions/view-actions.c:120
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Przywraca poprzednie powiększenie"
 
-#: ../app/actions/view-actions.c:119
+#: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Othe_r..."
 msgstr "_Inne…"
 
-#: ../app/actions/view-actions.c:120
+#: ../app/actions/view-actions.c:126
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Ustawia dowolny kąt obrotu"
 
-#: ../app/actions/view-actions.c:125
+#: ../app/actions/view-actions.c:131
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Okno n_awigacyjne"
 
-#: ../app/actions/view-actions.c:126
+#: ../app/actions/view-actions.c:132
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Wyświetla okno podglądu dla tego obrazu"
 
-#: ../app/actions/view-actions.c:131
+#: ../app/actions/view-actions.c:137
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "_Filtry wyświetlania…"
 
-#: ../app/actions/view-actions.c:132
+#: ../app/actions/view-actions.c:138
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Konfiguruje filtry stosowane w tym widoku"
 
-#: ../app/actions/view-actions.c:137
+#: ../app/actions/view-actions.c:143
 msgctxt "view-action"
 msgid "As in _Preferences"
 msgstr "_Zgodnie z preferencjami"
 
-#: ../app/actions/view-actions.c:139
+#: ../app/actions/view-actions.c:145
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
 msgstr ""
 "Ustawia zarządzanie kolorami na takie, jakie było skonfigurowane w "
 "preferencjach"
 
-#: ../app/actions/view-actions.c:144
+#: ../app/actions/view-actions.c:150
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "Dop_asuj okno"
 
-#: ../app/actions/view-actions.c:145
+#: ../app/actions/view-actions.c:151
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Zmniejsza okno obrazu do wymiarów wyświetlanego obrazu"
 
-#: ../app/actions/view-actions.c:150
+#: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "_Otwórz ekran…"
 
-#: ../app/actions/view-actions.c:151
+#: ../app/actions/view-actions.c:157
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Łączy z innym ekranem"
 
-#: ../app/actions/view-actions.c:159
+#: ../app/actions/view-actions.c:165
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_Punkt do punktu"
 
-#: ../app/actions/view-actions.c:160
+#: ../app/actions/view-actions.c:166
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Piksel na ekranie, reprezentuje piksel na obrazie"
 
-#: ../app/actions/view-actions.c:166
+#: ../app/actions/view-actions.c:172
+msgctxt "view-action"
+msgid "_Color Manage this View"
+msgstr "Zarządzanie _kolorami tego widoku"
+
+#: ../app/actions/view-actions.c:173
+msgctxt "view-action"
+msgid "Color manage this view"
+msgstr "Zarządza kolorami tego widoku"
+
+#: ../app/actions/view-actions.c:179
+msgctxt "view-action"
+msgid "_Print Simulation"
+msgstr "_Symulacja wydruku"
+
+#: ../app/actions/view-actions.c:180
+msgctxt "view-action"
+msgid "Use this view for softproofing"
+msgstr "Używa tego widoku do softproofingu"
+
+#: ../app/actions/view-actions.c:186 ../app/actions/view-actions.c:193
 msgctxt "view-action"
 msgid "_Black Point Compensation"
 msgstr "Kompensacja _czarnego punktu"
 
-#: ../app/actions/view-actions.c:167
+#: ../app/actions/view-actions.c:187
 msgctxt "view-action"
-msgid "Use black point compensation"
-msgstr "Używa kompensacji czarnego punktu"
+msgid "Use black point compensation for image display"
+msgstr "Używa kompensacji czarnego punktu do wyświetlania obrazu"
 
-#: ../app/actions/view-actions.c:173
+#: ../app/actions/view-actions.c:194
+msgctxt "view-action"
+msgid "Use black point compensation for softproofing"
+msgstr "Używa kompensacji czarnego punktu do softproofingu"
+
+#: ../app/actions/view-actions.c:200
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
 msgstr "_Wyróżnienie kolorów spoza skali"
 
-#: ../app/actions/view-actions.c:174
+#: ../app/actions/view-actions.c:201
 msgctxt "view-action"
 msgid ""
 "When softproofing, mark colors which cannot be represented in the target "
@@ -6403,511 +6438,501 @@ msgstr ""
 "Wyróżnianie kolorów podczas softproofingu, których nie można oddać w "
 "docelowej przestrzeni kolorów"
 
-#: ../app/actions/view-actions.c:181
+#: ../app/actions/view-actions.c:208
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Wyświetlanie _zaznaczenia"
 
-#: ../app/actions/view-actions.c:182
+#: ../app/actions/view-actions.c:209
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Wyświetla krawędź zaznaczenia"
 
-#: ../app/actions/view-actions.c:188
+#: ../app/actions/view-actions.c:215
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Wyświetlanie g_ranic warstwy"
 
-#: ../app/actions/view-actions.c:189
+#: ../app/actions/view-actions.c:216
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Wyświetla ramkę wokół aktywnej warstwy"
 
-#: ../app/actions/view-actions.c:195
+#: ../app/actions/view-actions.c:222
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "Wyświetlanie pr_owadnic"
 
-#: ../app/actions/view-actions.c:196
+#: ../app/actions/view-actions.c:223
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Wyświetla prowadnice obrazu"
 
-#: ../app/actions/view-actions.c:202
+#: ../app/actions/view-actions.c:229
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Wyświetlanie _siatki"
 
-#: ../app/actions/view-actions.c:203
+#: ../app/actions/view-actions.c:230
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Wyświetla siatkę obrazu"
 
-#: ../app/actions/view-actions.c:209
+#: ../app/actions/view-actions.c:236
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Wyświetlanie punktów wzorcowych"
 
-#: ../app/actions/view-actions.c:210
+#: ../app/actions/view-actions.c:237
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Wyświetla kolorowe punkty wzorcowe obrazu"
 
-#: ../app/actions/view-actions.c:216
+#: ../app/actions/view-actions.c:243
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "Przyciąganie do pro_wadnic"
 
-#: ../app/actions/view-actions.c:217
+#: ../app/actions/view-actions.c:244
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Przyciąga wybrane narzędzie do prowadnic"
 
-#: ../app/actions/view-actions.c:223
+#: ../app/actions/view-actions.c:250
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Przyciąganie do si_atki"
 
-#: ../app/actions/view-actions.c:224
+#: ../app/actions/view-actions.c:251
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Przyciąga wybrane narzędzie do siatki"
 
-#: ../app/actions/view-actions.c:230
+#: ../app/actions/view-actions.c:257
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Przy_ciąganie do krawędzi płótna"
 
-#: ../app/actions/view-actions.c:231
+#: ../app/actions/view-actions.c:258
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Przyciąga wybrane narzędzie do krawędzi płótna"
 
-#: ../app/actions/view-actions.c:237
+#: ../app/actions/view-actions.c:264
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Przyciąganie d_o aktywnej ścieżki"
 
-#: ../app/actions/view-actions.c:238
+#: ../app/actions/view-actions.c:265
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Przyciąga wybrane narzędzie do aktywnej ścieżki"
 
-#: ../app/actions/view-actions.c:244
+#: ../app/actions/view-actions.c:271
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Wyświetlanie paska _menu"
 
-#: ../app/actions/view-actions.c:245
+#: ../app/actions/view-actions.c:272
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Wyświetla pasek menu tego okna"
 
-#: ../app/actions/view-actions.c:251
+#: ../app/actions/view-actions.c:278
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Wyświetlanie _linijek"
 
-#: ../app/actions/view-actions.c:252
+#: ../app/actions/view-actions.c:279
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Wyświetla linijki tego okna"
 
-#: ../app/actions/view-actions.c:258
+#: ../app/actions/view-actions.c:285
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Wyświetlanie pas_ków przewijania"
 
-#: ../app/actions/view-actions.c:259
+#: ../app/actions/view-actions.c:286
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Wyświetla paski przewijania tego okna"
 
-#: ../app/actions/view-actions.c:265
+#: ../app/actions/view-actions.c:292
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Wyświetlanie paska _stanu"
 
-#: ../app/actions/view-actions.c:266
+#: ../app/actions/view-actions.c:293
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Wyświetla pasek stanu tego okna"
 
-#: ../app/actions/view-actions.c:272
+#: ../app/actions/view-actions.c:299
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "P_ełny ekran"
 
-#: ../app/actions/view-actions.c:273
+#: ../app/actions/view-actions.c:300
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Przełącza na pełny ekran"
 
-#: ../app/actions/view-actions.c:297
+#: ../app/actions/view-actions.c:324
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "_Dalej"
 
-#: ../app/actions/view-actions.c:298 ../app/actions/view-actions.c:310
+#: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:337
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Zmniejszenie"
 
-#: ../app/actions/view-actions.c:303
+#: ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Bliżej"
 
-#: ../app/actions/view-actions.c:304 ../app/actions/view-actions.c:316
+#: ../app/actions/view-actions.c:331 ../app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Powiększenie"
 
-#: ../app/actions/view-actions.c:309
+#: ../app/actions/view-actions.c:336
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Dalej"
 
-#: ../app/actions/view-actions.c:315
+#: ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Bliżej"
 
-#: ../app/actions/view-actions.c:334 ../app/actions/view-actions.c:340
+#: ../app/actions/view-actions.c:361 ../app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6∶1  (1600%)"
 
-#: ../app/actions/view-actions.c:335 ../app/actions/view-actions.c:341
+#: ../app/actions/view-actions.c:362 ../app/actions/view-actions.c:368
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Powiększenie 16∶1"
 
-#: ../app/actions/view-actions.c:346 ../app/actions/view-actions.c:352
+#: ../app/actions/view-actions.c:373 ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8∶1  (800%)"
 
-#: ../app/actions/view-actions.c:347 ../app/actions/view-actions.c:353
+#: ../app/actions/view-actions.c:374 ../app/actions/view-actions.c:380
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Powiększenie 8∶1"
 
-#: ../app/actions/view-actions.c:358 ../app/actions/view-actions.c:364
+#: ../app/actions/view-actions.c:385 ../app/actions/view-actions.c:391
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4∶1  (400%)"
 
-#: ../app/actions/view-actions.c:359 ../app/actions/view-actions.c:365
+#: ../app/actions/view-actions.c:386 ../app/actions/view-actions.c:392
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Powiększenie 4∶1"
 
-#: ../app/actions/view-actions.c:370 ../app/actions/view-actions.c:376
+#: ../app/actions/view-actions.c:397 ../app/actions/view-actions.c:403
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2∶1  (200%)"
 
-#: ../app/actions/view-actions.c:371 ../app/actions/view-actions.c:377
+#: ../app/actions/view-actions.c:398 ../app/actions/view-actions.c:404
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Powiększenie 2∶1"
 
-#: ../app/actions/view-actions.c:382 ../app/actions/view-actions.c:388
+#: ../app/actions/view-actions.c:409 ../app/actions/view-actions.c:415
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1∶1  (100%)"
 
-#: ../app/actions/view-actions.c:383 ../app/actions/view-actions.c:389
+#: ../app/actions/view-actions.c:410 ../app/actions/view-actions.c:416
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Powiększenie 1∶1"
 
-#: ../app/actions/view-actions.c:394
+#: ../app/actions/view-actions.c:421
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1∶_2  (50%)"
 
-#: ../app/actions/view-actions.c:395
+#: ../app/actions/view-actions.c:422
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Powiększenie 1∶2"
 
-#: ../app/actions/view-actions.c:400
+#: ../app/actions/view-actions.c:427
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1∶_4  (25%)"
 
-#: ../app/actions/view-actions.c:401
+#: ../app/actions/view-actions.c:428
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Powiększenie 1∶4"
 
-#: ../app/actions/view-actions.c:406
+#: ../app/actions/view-actions.c:433
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1∶_8  (12,5%)"
 
-#: ../app/actions/view-actions.c:407
+#: ../app/actions/view-actions.c:434
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Powiększenie 1∶8"
 
-#: ../app/actions/view-actions.c:412
+#: ../app/actions/view-actions.c:439
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1∶1_6  (6,25%)"
 
-#: ../app/actions/view-actions.c:413
+#: ../app/actions/view-actions.c:440
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Powiększenie 1∶16"
 
-#: ../app/actions/view-actions.c:418
+#: ../app/actions/view-actions.c:445
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "_Inne…"
 
-#: ../app/actions/view-actions.c:419
+#: ../app/actions/view-actions.c:446
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Ustawienie dowolnego powiększenia"
 
-#: ../app/actions/view-actions.c:427
+#: ../app/actions/view-actions.c:454
 msgctxt "view-action"
 msgid "Flip Horizontally"
 msgstr "Odbij poziomo"
 
-#: ../app/actions/view-actions.c:433
+#: ../app/actions/view-actions.c:460
 msgctxt "view-action"
 msgid "Flip Vertically"
 msgstr "Odbij pionowo"
 
-#: ../app/actions/view-actions.c:447
+#: ../app/actions/view-actions.c:474
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
 msgstr "_Przywróć odbicie i obracanie"
 
-#: ../app/actions/view-actions.c:449
+#: ../app/actions/view-actions.c:476
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "Przywraca odbicie i kąt obrotu do 0°"
 
-#: ../app/actions/view-actions.c:457
+#: ../app/actions/view-actions.c:484
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Obróć o 15° w _prawo"
 
-#: ../app/actions/view-actions.c:458
+#: ../app/actions/view-actions.c:485
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
 msgstr "Obraca o 15 stopni, zgodnie z ruchem wskazówek zegara"
 
-#: ../app/actions/view-actions.c:463
+#: ../app/actions/view-actions.c:490
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Obróć o 90° w _prawo"
 
-#: ../app/actions/view-actions.c:464
+#: ../app/actions/view-actions.c:491
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Obraca o 90 stopni, zgodnie z ruchem wskazówek zegara"
 
-#: ../app/actions/view-actions.c:469
+#: ../app/actions/view-actions.c:496
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Obróć o _180°"
 
-#: ../app/actions/view-actions.c:470
+#: ../app/actions/view-actions.c:497
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Odwraca do góry nogami"
 
-#: ../app/actions/view-actions.c:475
+#: ../app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Obróć o 90° w _lewo"
 
-#: ../app/actions/view-actions.c:476
+#: ../app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Obraca o 90 stopni, przeciwnie do ruchu wskazówek zegara"
 
-#: ../app/actions/view-actions.c:481
+#: ../app/actions/view-actions.c:508
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Obróć o 15° w _lewo"
 
-#: ../app/actions/view-actions.c:482
+#: ../app/actions/view-actions.c:509
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
 msgstr "Obraca o 15 stopni, przeciwnie do ruchu wskazówek zegara"
 
-#: ../app/actions/view-actions.c:490
-msgctxt "view-action"
-msgid "_No Color Management"
-msgstr "_Bez zarządzania kolorami"
-
-#: ../app/actions/view-actions.c:491
-msgctxt "view-action"
-msgid "Don't color manage this view"
-msgstr "Wyłącza zarządzanie kolorami tego widoku"
-
-#: ../app/actions/view-actions.c:496
-msgctxt "view-action"
-msgid "_Color Managed Display"
-msgstr "Zarządzanie _kolorami ekranu"
-
-#: ../app/actions/view-actions.c:497
-msgctxt "view-action"
-msgid "Color manage this view"
-msgstr "Zarządza kolorami tego widoku"
-
-#: ../app/actions/view-actions.c:502
-msgctxt "view-action"
-msgid "_Print Simulation"
-msgstr "_Symulacja wydruku"
-
-#: ../app/actions/view-actions.c:503
-msgctxt "view-action"
-msgid "Use this view for softproofing"
-msgstr "Używa tego widoku do softproofingu"
-
-#: ../app/actions/view-actions.c:511
+#: ../app/actions/view-actions.c:517 ../app/actions/view-actions.c:544
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "_Percepcyjny"
 
-#: ../app/actions/view-actions.c:512
+#: ../app/actions/view-actions.c:518
 msgctxt "view-action"
-msgid "Rendering intent is perceptual"
-msgstr "Percepcyjny sposób odwzorowania barw"
+msgid "Display rendering intent is perceptual"
+msgstr "Percepcyjny sposób odwzorowania barw ekranu"
 
-#: ../app/actions/view-actions.c:517
+#: ../app/actions/view-actions.c:523 ../app/actions/view-actions.c:550
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "_Względny kolorymetryczny"
 
-#: ../app/actions/view-actions.c:518
+#: ../app/actions/view-actions.c:524
 msgctxt "view-action"
-msgid "Rendering intent is relative colorimetric"
-msgstr "Względny kolorymetryczny sposób odwzorowania barw"
+msgid "Display rendering intent is relative colorimetric"
+msgstr "Względny kolorymetryczny sposób odwzorowania barw ekranu"
 
-#: ../app/actions/view-actions.c:523
+#: ../app/actions/view-actions.c:529 ../app/actions/view-actions.c:556
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Nasycenie"
 
-#: ../app/actions/view-actions.c:524
+#: ../app/actions/view-actions.c:530
 msgctxt "view-action"
-msgid "Rendering intent is saturation"
-msgstr "Sposób odwzorowania barw oparty na nasyceniu"
+msgid "Display rendering intent is saturation"
+msgstr "Sposób odwzorowania barw ekranu oparty na nasyceniu"
 
-#: ../app/actions/view-actions.c:529
+#: ../app/actions/view-actions.c:535 ../app/actions/view-actions.c:562
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "_Bezwzględny kolorymetryczny"
 
-#: ../app/actions/view-actions.c:530
+#: ../app/actions/view-actions.c:536
 msgctxt "view-action"
-msgid "Rendering intent is absolute colorimetric"
-msgstr "Bezwzględny kolorymetryczny sposób odwzorowania barw"
+msgid "Display rendering intent is absolute colorimetric"
+msgstr "Bezwzględny kolorymetryczny sposób odwzorowania barw ekranu"
 
-#: ../app/actions/view-actions.c:538
+#: ../app/actions/view-actions.c:545
+msgctxt "view-action"
+msgid "Softproof rendering intent is perceptual"
+msgstr "Percepcyjny sposób odwzorowania barw do softproofingu"
+
+#: ../app/actions/view-actions.c:551
+msgctxt "view-action"
+msgid "Softproof rendering intent is relative colorimetric"
+msgstr "Względny kolorymetryczny sposób odwzorowania barw do softproofingu"
+
+#: ../app/actions/view-actions.c:557
+msgctxt "view-action"
+msgid "Softproof rendering intent is saturation"
+msgstr "Sposób odwzorowania barw do softproofingu oparty na nasyceniu"
+
+#: ../app/actions/view-actions.c:563
+msgctxt "view-action"
+msgid "Softproof rendering intent is absolute colorimetric"
+msgstr "Bezwzględny kolorymetryczny sposób odwzorowania barw do softproofingu"
+
+#: ../app/actions/view-actions.c:571
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Z _motywu"
 
-#: ../app/actions/view-actions.c:539
+#: ../app/actions/view-actions.c:572
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Używa koloru tła z bieżącego motywu"
 
-#: ../app/actions/view-actions.c:544
+#: ../app/actions/view-actions.c:577
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Kolor ja_snego pola"
 
-#: ../app/actions/view-actions.c:545
+#: ../app/actions/view-actions.c:578
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Używa koloru jasnego pola"
 
-#: ../app/actions/view-actions.c:550
+#: ../app/actions/view-actions.c:583
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Kolor _ciemnego pola"
 
-#: ../app/actions/view-actions.c:551
+#: ../app/actions/view-actions.c:584
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Używa koloru ciemnego pola"
 
-#: ../app/actions/view-actions.c:556
+#: ../app/actions/view-actions.c:589
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "_Dowolny kolor…"
 
-#: ../app/actions/view-actions.c:557
+#: ../app/actions/view-actions.c:590
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Używa dowolnego koloru"
 
-#: ../app/actions/view-actions.c:562
+#: ../app/actions/view-actions.c:595
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "_Zgodnie z preferencjami"
 
-#: ../app/actions/view-actions.c:564
+#: ../app/actions/view-actions.c:597
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr ""
 "Ustawia kolor wyściółki na taki, jaki był skonfigurowany w preferencjach"
 
-#: ../app/actions/view-actions.c:854
+#: ../app/actions/view-actions.c:895
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "_Ponów powiększenie (%d%%)"
 
-#: ../app/actions/view-actions.c:862
+#: ../app/actions/view-actions.c:903
 msgid "Re_vert Zoom"
 msgstr "Przyw_róć powiększenie"
 
-#: ../app/actions/view-actions.c:1039
+#: ../app/actions/view-actions.c:1089
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "I_nne (%s)…"
 
-#: ../app/actions/view-actions.c:1048
+#: ../app/actions/view-actions.c:1098
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Powiększenie (%s)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1069
+#: ../app/actions/view-actions.c:1119
 msgid "(H+V) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1074
+#: ../app/actions/view-actions.c:1124
 msgid "(H) "
 msgstr "(H) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1079
+#: ../app/actions/view-actions.c:1129
 msgid "(V) "
 msgstr "(V) "
 
-#: ../app/actions/view-actions.c:1086
+#: ../app/actions/view-actions.c:1136
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Odbij %si obróć (%d°)"
 
-#: ../app/actions/view-commands.c:894
+#: ../app/actions/view-commands.c:950
 msgid "Set Canvas Padding Color"
 msgstr "Ustawienie koloru wyściółki płótna"
 
-#: ../app/actions/view-commands.c:896
+#: ../app/actions/view-commands.c:952
 msgid "Set Custom Canvas Padding Color"
 msgstr "Ustawienie dowolnego koloru wyściółki płótna"
 
@@ -8950,7 +8975,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Zmiękczone zaznaczenie prostokątne"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:324
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:325
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Zaznaczenie z kanału alfa"
@@ -9269,7 +9294,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:542
+#: ../app/core/gimpdrawable.c:522
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
@@ -9292,6 +9317,10 @@ msgstr "Wypełnienie kubełkiem"
 msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Zrównanie"
+
+#: ../app/core/gimpdrawable-floating-selection.c:171
+msgid "Floating Selection"
+msgstr "Oderwane zaznaczenie"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
@@ -9332,7 +9361,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:968 ../app/core/gimplayer.c:323
+#: ../app/core/gimpdrawable-transform.c:968 ../app/core/gimplayer.c:324
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
@@ -9523,73 +9552,73 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Przekształcenie grupy warstw"
 
-#: ../app/core/gimpimage.c:633 ../app/widgets/gimpsymmetryeditor.c:176
+#: ../app/core/gimpimage.c:634 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Symetria"
 
-#: ../app/core/gimpimage.c:2219
+#: ../app/core/gimpimage.c:2220
 msgid " (exported)"
 msgstr " (eksportowany)"
 
-#: ../app/core/gimpimage.c:2223
+#: ../app/core/gimpimage.c:2224
 msgid " (overwritten)"
 msgstr " (zastąpiony)"
 
-#: ../app/core/gimpimage.c:2232
+#: ../app/core/gimpimage.c:2233
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:2466
+#: ../app/core/gimpimage.c:2467
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2518
+#: ../app/core/gimpimage.c:2519
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3431
+#: ../app/core/gimpimage.c:3432
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3472
+#: ../app/core/gimpimage.c:3473
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4181
+#: ../app/core/gimpimage.c:4182
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4231 ../app/core/gimpimage.c:4251
+#: ../app/core/gimpimage.c:4232 ../app/core/gimpimage.c:4252
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4245
+#: ../app/core/gimpimage.c:4246
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4410
+#: ../app/core/gimpimage.c:4411
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4448 ../app/core/gimpimage.c:4461
+#: ../app/core/gimpimage.c:4449 ../app/core/gimpimage.c:4462
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4515
+#: ../app/core/gimpimage.c:4516
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:4546
+#: ../app/core/gimpimage.c:4547
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -9966,12 +9995,12 @@ msgstr "Ustawienie wyłącznej widoczności elementu"
 msgid "Set Item Exclusive Linked"
 msgstr "Ustawienie wyłącznego dowiązania elementu"
 
-#: ../app/core/gimplayer-floating-sel.c:117
+#: ../app/core/gimplayer-floating-selection.c:118
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:834
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:835
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -9979,81 +10008,81 @@ msgstr ""
 "Nie można utworzyć nowej warstwy z oderwanego zaznaczenia, ponieważ należy "
 "ono do maski warstwy lub kanału."
 
-#: ../app/core/gimplayer-floating-sel.c:181
+#: ../app/core/gimplayer-floating-selection.c:182
 msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Oderwane zaznaczenie na warstwę"
 
-#: ../app/core/gimplayer.c:317
+#: ../app/core/gimplayer.c:318
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Zmiana nazwy warstwy"
 
-#: ../app/core/gimplayer.c:318
+#: ../app/core/gimplayer.c:319
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Przesunięcie warstwy"
 
-#: ../app/core/gimplayer.c:319
+#: ../app/core/gimplayer.c:320
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Skalowanie warstwy"
 
-#: ../app/core/gimplayer.c:320
+#: ../app/core/gimplayer.c:321
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Zmiana wymiarów warstwy"
 
-#: ../app/core/gimplayer.c:321
+#: ../app/core/gimplayer.c:322
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Odbicie warstwy"
 
-#: ../app/core/gimplayer.c:322
+#: ../app/core/gimplayer.c:323
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Obrót warstwy"
 
-#: ../app/core/gimplayer.c:325
+#: ../app/core/gimplayer.c:326
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Zmiana pozycji warstwy"
 
-#: ../app/core/gimplayer.c:326
+#: ../app/core/gimplayer.c:327
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Podniesienie warstwy"
 
-#: ../app/core/gimplayer.c:327
+#: ../app/core/gimplayer.c:328
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Podniesienie warstwy na wierzch"
 
-#: ../app/core/gimplayer.c:328
+#: ../app/core/gimplayer.c:329
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Obniżenie warstwy"
 
-#: ../app/core/gimplayer.c:329
+#: ../app/core/gimplayer.c:330
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Obniżenie warstwy na dno"
 
-#: ../app/core/gimplayer.c:330
+#: ../app/core/gimplayer.c:331
 msgid "Layer cannot be raised higher."
 msgstr "Nie można bardziej podnieść warstwy."
 
-#: ../app/core/gimplayer.c:331
+#: ../app/core/gimplayer.c:332
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:557 ../app/core/gimplayer.c:1405
+#: ../app/core/gimplayer.c:558 ../app/core/gimplayer.c:1406
 #: ../app/core/gimplayermask.c:262
 #, c-format
 msgid "%s mask"
 msgstr "maska %s"
 
-#: ../app/core/gimplayer.c:596
+#: ../app/core/gimplayer.c:597
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -10062,60 +10091,60 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1308
+#: ../app/core/gimplayer.c:1309
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1319
+#: ../app/core/gimplayer.c:1320
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1325
+#: ../app/core/gimplayer.c:1326
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1456
+#: ../app/core/gimplayer.c:1457
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: ../app/core/gimplayer.c:1607
+#: ../app/core/gimplayer.c:1608
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1608
+#: ../app/core/gimplayer.c:1609
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/gimplayer.c:1713
+#: ../app/core/gimplayer.c:1714
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Włączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1714
+#: ../app/core/gimplayer.c:1715
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Wyłączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1793
+#: ../app/core/gimplayer.c:1794
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1869
+#: ../app/core/gimplayer.c:1870
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:1901
+#: ../app/core/gimplayer.c:1902
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:1921
+#: ../app/core/gimplayer.c:1922
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
@@ -10776,21 +10805,25 @@ msgid "Select Destination Profile"
 msgstr "Wybór profilu docelowego"
 
 #: ../app/dialogs/color-profile-dialog.c:365
+#: ../app/widgets/gimpwidgets-utils.c:1401
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Wbudowany profil odcieni szarości (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:372
+#: ../app/widgets/gimpwidgets-utils.c:1408
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Wbudowany profil RGB (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:390
+#: ../app/widgets/gimpwidgets-utils.c:1425
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Preferowany profil odcieni szarości (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:397
+#: ../app/widgets/gimpwidgets-utils.c:1432
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Preferowany profil RGB (%s)"
@@ -19595,22 +19628,22 @@ msgstr "Otwarcie okna wyboru palety"
 msgid "Open the font selection dialog"
 msgstr "Otwiera okno wyboru czcionki"
 
-#: ../app/widgets/gimpwidgets-utils.c:646
+#: ../app/widgets/gimpwidgets-utils.c:648
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (próba %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:646
+#: ../app/widgets/gimpwidgets-utils.c:648
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:650
+#: ../app/widgets/gimpwidgets-utils.c:652
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (próba %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:654
+#: ../app/widgets/gimpwidgets-utils.c:656
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (próba %s, %s, %s)"

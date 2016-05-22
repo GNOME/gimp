@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-08 14:20+0200\n"
-"PO-Revision-Date: 2016-05-08 14:21+0200\n"
+"POT-Creation-Date: 2016-05-22 12:58+0200\n"
+"PO-Revision-Date: 2016-05-22 12:59+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1418,13 +1418,13 @@ msgstr "Błąd podczas odczytywania „%s”: %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve-bend.c:1224 ../plug-ins/common/curve-bend.c:2964
+#: ../plug-ins/common/curve-bend.c:1223 ../plug-ins/common/curve-bend.c:2963
 msgid "Curve Bend"
 msgstr "Wygięcie"
 
 #. Preview area, top of column
 #. preview
-#: ../plug-ins/common/curve-bend.c:1261
+#: ../plug-ins/common/curve-bend.c:1260
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:175
@@ -1432,116 +1432,116 @@ msgid "Preview"
 msgstr "Podgląd"
 
 #. The preview button
-#: ../plug-ins/common/curve-bend.c:1290
+#: ../plug-ins/common/curve-bend.c:1289
 msgid "_Preview Once"
 msgstr "_Pojedynczy podgląd"
 
 #. The preview toggle
-#: ../plug-ins/common/curve-bend.c:1299
+#: ../plug-ins/common/curve-bend.c:1298
 msgid "Automatic pre_view"
 msgstr "A_utomatyczny podgląd"
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve-bend.c:1309 ../plug-ins/common/ripple.c:521
+#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/common/ripple.c:521
 #: ../plug-ins/gfig/gfig-dialog.c:1241
 msgid "Options"
 msgstr "Opcje"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve-bend.c:1323
+#: ../plug-ins/common/curve-bend.c:1322
 msgid "Rotat_e:"
 msgstr "_Obrót:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve-bend.c:1342
+#: ../plug-ins/common/curve-bend.c:1341
 msgid "Smoo_thing"
 msgstr "Wygła_dzanie"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1352 ../plug-ins/common/qbist.c:865
+#: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:865
 #: ../plug-ins/common/ripple.c:530
 msgid "_Antialiasing"
 msgstr "_Wygładzanie"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve-bend.c:1362
+#: ../plug-ins/common/curve-bend.c:1361
 msgid "Work on cop_y"
 msgstr "_Praca na kopii"
 
 #. The curves graph
-#: ../plug-ins/common/curve-bend.c:1372
+#: ../plug-ins/common/curve-bend.c:1371
 msgid "Modify Curves"
 msgstr "Modyfikacje krzywej"
 
-#: ../plug-ins/common/curve-bend.c:1400
+#: ../plug-ins/common/curve-bend.c:1399
 msgid "Curve for Border"
 msgstr "Krzywa do krawędzi"
 
-#: ../plug-ins/common/curve-bend.c:1404
+#: ../plug-ins/common/curve-bend.c:1403
 msgid "_Upper"
 msgstr "_Górnej"
 
-#: ../plug-ins/common/curve-bend.c:1405
+#: ../plug-ins/common/curve-bend.c:1404
 msgid "_Lower"
 msgstr "_Dolnej"
 
-#: ../plug-ins/common/curve-bend.c:1415
+#: ../plug-ins/common/curve-bend.c:1414
 msgid "Curve Type"
 msgstr "Typ krzywej"
 
-#: ../plug-ins/common/curve-bend.c:1419
+#: ../plug-ins/common/curve-bend.c:1418
 msgid "Smoot_h"
 msgstr "_Wygładzony"
 
-#: ../plug-ins/common/curve-bend.c:1420
+#: ../plug-ins/common/curve-bend.c:1419
 msgid "_Free"
 msgstr "_Swobodny"
 
 #. The Copy button
-#: ../plug-ins/common/curve-bend.c:1435
+#: ../plug-ins/common/curve-bend.c:1434
 msgid "_Copy"
 msgstr "S_kopiuj"
 
-#: ../plug-ins/common/curve-bend.c:1440
+#: ../plug-ins/common/curve-bend.c:1439
 msgid "Copy the active curve to the other border"
 msgstr "Kopiuje aktywną krzywą do drugiej krawędzi"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve-bend.c:1447
+#: ../plug-ins/common/curve-bend.c:1446
 msgid "_Mirror"
 msgstr "_Odbij"
 
-#: ../plug-ins/common/curve-bend.c:1452
+#: ../plug-ins/common/curve-bend.c:1451
 msgid "Mirror the active curve to the other border"
 msgstr "Tworzy odbicie lustrzane aktywnej krzywej"
 
 #. The Swap button
-#: ../plug-ins/common/curve-bend.c:1460
+#: ../plug-ins/common/curve-bend.c:1459
 msgid "S_wap"
 msgstr "_Zamień"
 
-#: ../plug-ins/common/curve-bend.c:1465
+#: ../plug-ins/common/curve-bend.c:1464
 msgid "Swap the two curves"
 msgstr "Zamienia krzywe"
 
-#: ../plug-ins/common/curve-bend.c:1477
+#: ../plug-ins/common/curve-bend.c:1476
 msgid "Reset the active curve"
 msgstr "Przywraca aktywną krzywą"
 
-#: ../plug-ins/common/curve-bend.c:1494
+#: ../plug-ins/common/curve-bend.c:1493
 msgid "Load the curves from a file"
 msgstr "Wczytuje krzywą z pliku"
 
-#: ../plug-ins/common/curve-bend.c:1506
+#: ../plug-ins/common/curve-bend.c:1505
 msgid "Save the curves to a file"
 msgstr "Zapisuje krzywą do pliku"
 
-#: ../plug-ins/common/curve-bend.c:2062
+#: ../plug-ins/common/curve-bend.c:2061
 msgid "Load Curve Points from File"
 msgstr "Wczytanie punktów krzywej z pliku"
 
-#: ../plug-ins/common/curve-bend.c:2097
+#: ../plug-ins/common/curve-bend.c:2096
 msgid "Save Curve Points to File"
 msgstr "Zapis punktów krzywej do pliku"
 
@@ -2567,7 +2567,7 @@ msgstr "Szerokość każdej komórki. Liczba lub procent."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3508
 #: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1475
-#: ../plug-ins/common/film.c:1002 ../plug-ins/common/smooth-palette.c:441
+#: ../plug-ins/common/film.c:1005 ../plug-ins/common/smooth-palette.c:441
 #: ../plug-ins/common/tile.c:468 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:284
@@ -4194,7 +4194,7 @@ msgid "Selection"
 msgstr "Zaznaczenie"
 
 #. Film height/color
-#: ../plug-ins/common/film.c:975 ../plug-ins/common/film.c:1251
+#: ../plug-ins/common/film.c:975 ../plug-ins/common/film.c:1257
 msgid "Filmstrip"
 msgstr "Odcinek filmu"
 
@@ -4204,78 +4204,78 @@ msgid "_Fit height to images"
 msgstr "_Dopasowanie wysokości do obrazów"
 
 #. Film color
-#: ../plug-ins/common/film.c:1023
+#: ../plug-ins/common/film.c:1026
 msgid "Select Film Color"
 msgstr "Wybór koloru filmu"
 
-#: ../plug-ins/common/film.c:1028 ../plug-ins/common/film.c:1078
+#: ../plug-ins/common/film.c:1031 ../plug-ins/common/film.c:1084
 msgid "Co_lor:"
 msgstr "Ko_lor:"
 
 #. Film numbering: Startindex/Font/color
-#: ../plug-ins/common/film.c:1037
+#: ../plug-ins/common/film.c:1040
 msgid "Numbering"
 msgstr "Numeracja"
 
-#: ../plug-ins/common/film.c:1055
+#: ../plug-ins/common/film.c:1061
 msgid "Start _index:"
 msgstr "_Zaczynając od:"
 
-#: ../plug-ins/common/film.c:1068
+#: ../plug-ins/common/film.c:1074
 msgid "_Font:"
 msgstr "_Czcionka:"
 
 #. Numbering color
-#: ../plug-ins/common/film.c:1073
+#: ../plug-ins/common/film.c:1079
 msgid "Select Number Color"
 msgstr "Wybór koloru cyfr"
 
-#: ../plug-ins/common/film.c:1088
+#: ../plug-ins/common/film.c:1094
 msgid "At _bottom"
 msgstr "Na _dole"
 
-#: ../plug-ins/common/film.c:1089
+#: ../plug-ins/common/film.c:1095
 msgid "At _top"
 msgstr "Na górz_e"
 
 #. ** The right frame keeps the image selection **
-#: ../plug-ins/common/film.c:1102
+#: ../plug-ins/common/film.c:1108
 msgid "Image Selection"
 msgstr "Wybór obrazu"
 
-#: ../plug-ins/common/film.c:1131
+#: ../plug-ins/common/film.c:1137
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Wszystkie wartości są częścią wysokości filmu"
 
-#: ../plug-ins/common/film.c:1134
+#: ../plug-ins/common/film.c:1140
 msgid "Ad_vanced"
 msgstr "Zaa_wansowane"
 
-#: ../plug-ins/common/film.c:1153
+#: ../plug-ins/common/film.c:1159
 msgid "Image _height:"
 msgstr "Wysokość _obrazu:"
 
-#: ../plug-ins/common/film.c:1164
+#: ../plug-ins/common/film.c:1170
 msgid "Image spac_ing:"
 msgstr "Odstęp m_iędzy obrazami:"
 
-#: ../plug-ins/common/film.c:1175
+#: ../plug-ins/common/film.c:1181
 msgid "_Hole offset:"
 msgstr "_Przesunięcie dziury:"
 
-#: ../plug-ins/common/film.c:1186
+#: ../plug-ins/common/film.c:1192
 msgid "Ho_le width:"
 msgstr "_Szerokość dziury:"
 
-#: ../plug-ins/common/film.c:1197
+#: ../plug-ins/common/film.c:1203
 msgid "Hol_e height:"
 msgstr "_Wysokość dziury:"
 
-#: ../plug-ins/common/film.c:1208
+#: ../plug-ins/common/film.c:1214
 msgid "Hole sp_acing:"
 msgstr "_Odstęp między dziurami:"
 
-#: ../plug-ins/common/film.c:1219
+#: ../plug-ins/common/film.c:1225
 msgid "_Number height:"
 msgstr "Wysokość _liczby:"
 
@@ -5312,7 +5312,7 @@ msgstr "Obliczanie wygładzonej palety"
 msgid "Smooth Palette"
 msgstr "Wygładzona paleta"
 
-#: ../plug-ins/common/smooth-palette.c:453
+#: ../plug-ins/common/smooth-palette.c:456
 msgid "_Search depth:"
 msgstr "_Głębokość przeszukiwań:"
 
@@ -6318,104 +6318,104 @@ msgstr "Obraz BMP systemu Windows"
 msgid "Opening thumbnail for '%s'"
 msgstr "Otwieranie miniatury dla „%s”"
 
-#: ../plug-ins/file-darktable/file-formats.h:43
-msgid "Canon raw"
+#: ../plug-ins/file-darktable/file-formats.h:46
+msgid "Raw Canon"
 msgstr "Obraz Raw firmy Canon"
 
-#: ../plug-ins/file-darktable/file-formats.h:58
-msgid "Nikon raw"
+#: ../plug-ins/file-darktable/file-formats.h:61
+msgid "Raw Nikon"
 msgstr "Obraz Raw firmy Nikon"
 
-#: ../plug-ins/file-darktable/file-formats.h:69
-msgid "Hasselblad raw"
+#: ../plug-ins/file-darktable/file-formats.h:72
+msgid "Raw Hasselblad"
 msgstr "Obraz Raw firmy Hasselblad"
 
-#: ../plug-ins/file-darktable/file-formats.h:80
-msgid "Sony raw"
+#: ../plug-ins/file-darktable/file-formats.h:83
+msgid "Raw Sony"
 msgstr "Obraz Raw firmy Sony"
 
-#: ../plug-ins/file-darktable/file-formats.h:91
-msgid "Casio BAY raw"
+#: ../plug-ins/file-darktable/file-formats.h:94
+msgid "Raw Casio BAY"
 msgstr "Obraz Raw BAY firmy Casio"
 
-#: ../plug-ins/file-darktable/file-formats.h:102
-msgid "Phantom Software CINE raw"
+#: ../plug-ins/file-darktable/file-formats.h:105
+msgid "Raw Phantom Software CINE"
 msgstr "Obraz Raw CINE firmy Phantom Software"
 
-#: ../plug-ins/file-darktable/file-formats.h:113
-msgid "Sinar raw"
+#: ../plug-ins/file-darktable/file-formats.h:116
+msgid "Raw Sinar"
 msgstr "Obraz Raw firmy Sinar"
 
-#: ../plug-ins/file-darktable/file-formats.h:124
-msgid "Kodak raw"
+#: ../plug-ins/file-darktable/file-formats.h:127
+msgid "Raw Kodak"
 msgstr "Obraz Raw firmy Kodak"
 
-#: ../plug-ins/file-darktable/file-formats.h:136
-msgid "Adobe DNG Digital Negative raw"
+#: ../plug-ins/file-darktable/file-formats.h:139
+msgid "Raw Adobe DNG Digital Negative"
 msgstr "Cyfrowy negatyw Raw DNG firmy Adobe"
 
-#: ../plug-ins/file-darktable/file-formats.h:147
-msgid "Epson ERF raw"
+#: ../plug-ins/file-darktable/file-formats.h:150
+msgid "Raw Epson ERF"
 msgstr "Obraz Raw ERF firmy Epson"
 
-#: ../plug-ins/file-darktable/file-formats.h:158
-msgid "Phase One raw"
+#: ../plug-ins/file-darktable/file-formats.h:161
+msgid "Raw Phase One"
 msgstr "Obraz Raw firmy Phase One"
 
-#: ../plug-ins/file-darktable/file-formats.h:169
-msgid "Minolta raw"
+#: ../plug-ins/file-darktable/file-formats.h:172
+msgid "Raw Minolta"
 msgstr "Obraz Raw firmy Minolta"
 
-#: ../plug-ins/file-darktable/file-formats.h:180
-msgid "Mamiya MEF raw"
+#: ../plug-ins/file-darktable/file-formats.h:183
+msgid "Raw Mamiya MEF"
 msgstr "Obraz Raw MEF firmy Mamiya"
 
-#: ../plug-ins/file-darktable/file-formats.h:190
-msgid "Leaf MOS raw"
+#: ../plug-ins/file-darktable/file-formats.h:193
+msgid "Raw Leaf MOS"
 msgstr "Obraz Raw MOS firmy Leaf"
 
-#: ../plug-ins/file-darktable/file-formats.h:201
-msgid "Olympus ORF raw"
+#: ../plug-ins/file-darktable/file-formats.h:204
+msgid "Raw Olympus ORF"
 msgstr "Obraz Raw ORF firmy Olympus"
 
-#: ../plug-ins/file-darktable/file-formats.h:212
-msgid "Pentax PEF raw"
+#: ../plug-ins/file-darktable/file-formats.h:215
+msgid "Raw Pentax PEF"
 msgstr "Obraz Raw PEF firmy Pentax"
 
-#: ../plug-ins/file-darktable/file-formats.h:223
-msgid "Logitech PXN raw"
+#: ../plug-ins/file-darktable/file-formats.h:226
+msgid "Raw Logitech PXN"
 msgstr "Obraz Raw PXN firmy Logitech"
 
-#: ../plug-ins/file-darktable/file-formats.h:234
-msgid "Apple QuickTake QTK raw"
+#: ../plug-ins/file-darktable/file-formats.h:237
+msgid "Raw Apple QuickTake QTK"
 msgstr "Obraz Raw QTK QuickTake firmy Apple"
 
-#: ../plug-ins/file-darktable/file-formats.h:245
-msgid "Fujifilm RAF raw"
+#: ../plug-ins/file-darktable/file-formats.h:248
+msgid "Raw Fujifilm RAF"
 msgstr "Obraz Raw RAF firmy Fujifilm"
 
-#: ../plug-ins/file-darktable/file-formats.h:256
-msgid "Panasonic raw"
+#: ../plug-ins/file-darktable/file-formats.h:259
+msgid "Raw Panasonic"
 msgstr "Obraz Raw firmy Panasonic"
 
-#: ../plug-ins/file-darktable/file-formats.h:267
-msgid "Digital Foto Maker RDC raw"
+#: ../plug-ins/file-darktable/file-formats.h:270
+msgid "Raw Digital Foto Maker RDC"
 msgstr "Obraz Raw RDC firmy Digital Foto Maker"
 
-#: ../plug-ins/file-darktable/file-formats.h:278
-msgid "Leica RWL raw"
+#: ../plug-ins/file-darktable/file-formats.h:281
+msgid "Raw Leica RWL"
 msgstr "Obraz Raw RWL firmy Leica"
 
-#: ../plug-ins/file-darktable/file-formats.h:289
-msgid "Samsung SRW raw"
+#: ../plug-ins/file-darktable/file-formats.h:292
+msgid "Raw Samsung SRW"
 msgstr "Obraz Raw SRW firmy Samsung"
 
-#: ../plug-ins/file-darktable/file-formats.h:300
-msgid "Sigma X3F raw"
+#: ../plug-ins/file-darktable/file-formats.h:303
+msgid "Raw Sigma X3F"
 msgstr "Obraz Raw X3F firmy Sigma"
 
-#: ../plug-ins/file-darktable/file-formats.h:311
-msgid "Arriflex ARI raw"
+#: ../plug-ins/file-darktable/file-formats.h:314
+msgid "Raw Arriflex ARI"
 msgstr "Obraz Raw ARI firmy Arriflex"
 
 #: ../plug-ins/file-exr/file-exr.c:193
