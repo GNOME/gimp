@@ -451,9 +451,9 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 #ifdef HAVE_LCMS1
           cmsSetAlarmCodes (r, g, b);
 #else
-          alarmCodes[0] = (cmsUInt16Number) r;
-          alarmCodes[1] = (cmsUInt16Number) g;
-          alarmCodes[2] = (cmsUInt16Number) b;
+          alarmCodes[0] = (cmsUInt16Number) r * 256;
+          alarmCodes[1] = (cmsUInt16Number) g * 256;
+          alarmCodes[2] = (cmsUInt16Number) b * 256;
 
           cmsSetAlarmCodes (alarmCodes);
 #endif
