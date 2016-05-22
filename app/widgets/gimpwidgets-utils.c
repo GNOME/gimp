@@ -1388,6 +1388,7 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
   GimpColorProfile *profile;
   const Babl       *format;
   gchar            *label;
+  GError           *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store), FALSE);
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
@@ -1401,14 +1402,14 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
       label = g_strdup_printf (_("Built-in grayscale (%s)"),
                                gimp_color_profile_get_label (profile));
 
-      profile = gimp_color_config_get_gray_color_profile (config, error);
+      profile = gimp_color_config_get_gray_color_profile (config, &my_error);
     }
   else
     {
       label = g_strdup_printf (_("Built-in RGB (%s)"),
                                gimp_color_profile_get_label (profile));
 
-      profile = gimp_color_config_get_rgb_color_profile (config, error);
+      profile = gimp_color_config_get_rgb_color_profile (config, &my_error);
     }
 
   gimp_color_profile_store_add_file (store, NULL, label);
@@ -1442,6 +1443,12 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 
       return TRUE;
     }
+  else if (my_error)
+    {
+      g_propagate_error (error, my_error);
 
-  return FALSE;
+      return FALSE;
+    }
+
+  return TRUE;
 }
