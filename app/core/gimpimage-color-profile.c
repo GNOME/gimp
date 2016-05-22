@@ -647,6 +647,52 @@ gimp_image_color_profile_pixel_to_srgb (GimpImage  *image,
     }
 }
 
+void
+gimp_image_color_profile_srgb_to_pixel (GimpImage     *image,
+                                        const GimpRGB *color,
+                                        const Babl    *pixel_format,
+                                        gpointer       pixel)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->is_color_managed &&
+      private->transform_from_srgb_double)
+    {
+      guchar srgb_pixel[32];
+
+      gimp_rgb_get_pixel (color, private->transform_srgb_double_format,
+                          srgb_pixel);
+
+      if (pixel_format == private->transform_layer_format)
+        {
+          /* for the alpha channel */
+          gimp_rgba_get_pixel (color, pixel_format, pixel);
+
+          cmsDoTransform (private->transform_from_srgb_double,
+                          srgb_pixel, pixel, 1);
+        }
+      else
+        {
+          guchar dest_pixel[32];
+
+          /* for the alpha channel */
+          gimp_rgba_get_pixel (color, private->transform_layer_format,
+                               dest_pixel);
+
+          cmsDoTransform (private->transform_from_srgb_double,
+                          srgb_pixel, dest_pixel, 1);
+
+          babl_process (babl_fish (private->transform_layer_format,
+                                   pixel_format),
+                        dest_pixel, pixel, 1);
+        }
+    }
+  else
+    {
+      gimp_rgba_get_pixel (color, pixel_format, pixel);
+    }
+}
+
 
 /*  internal API  */
 
