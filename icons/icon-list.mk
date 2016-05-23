@@ -272,6 +272,7 @@ vector24_images = \
 	24/gimp-grid.svg				\
 	24/gimp-image.svg				\
 	24/gimp-images.svg				\
+	24/gimp-info.svg				\
 	24/gimp-layer.svg				\
 	24/gimp-layer-mask.svg				\
 	24/gimp-layers.svg				\
@@ -338,6 +339,8 @@ vector24_images = \
 	24/gimp-tool-zoom.svg				\
 	24/gimp-transparency.svg			\
 	24/gimp-undo-history.svg			\
+	24/gimp-user-manual.svg				\
+	24/gimp-video.svg				\
 	24/gimp-warning.svg				\
 	24/gimp-web.svg
 
