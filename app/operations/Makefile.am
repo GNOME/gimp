@@ -10,6 +10,7 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GDK_PIXBUF_CFLAGS)			\
+	$(LCMS_CFLAGS)				\
 	-I$(includedir)
 
 noinst_LIBRARIES = \
@@ -58,6 +59,8 @@ libappoperations_generic_a_sources = \
 	gimpoperationhistogramsink.h		\
 	gimpoperationmaskcomponents.c		\
 	gimpoperationmaskcomponents.h		\
+	gimpoperationprofiletransform.c		\
+	gimpoperationprofiletransform.h		\
 	gimpoperationscalarmultiply.c		\
 	gimpoperationscalarmultiply.h		\
 	gimpoperationsemiflatten.c		\
