@@ -585,7 +585,7 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
 
                       new_val = bottom[b] + mask_val * (top[b] - bottom[b]);
 
-                      dest[b] = affect[b] ? MIN (new_val, 1.0) : bottom[b];
+                      dest[b] = affect[b] ? new_val : bottom[b];
                     }
                 }
 
@@ -612,7 +612,7 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
                 {
                   gfloat new_val = a_recip * (bottom[b] * s1_a + mask_val *
                                               (top[b] * s2_a - bottom[b] * s1_a));
-                  dest[b] = affect[b] ? MIN (new_val, 1.0) : bottom[b];
+                  dest[b] = affect[b] ? new_val : bottom[b];
                 }
             }
 
