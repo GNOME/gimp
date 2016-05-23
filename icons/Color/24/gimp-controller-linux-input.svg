@@ -9,10 +9,10 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="16"
-   height="16"
+   width="24"
+   height="24"
    id="svg2"
-   viewBox="0 0 16 16"
+   viewBox="0 0 24 24"
    inkscape:version="0.91 r13725"
    sodipodi:docname="gimp-controller-linux-input.svg">
   <sodipodi:namedview
@@ -30,7 +30,7 @@
      showgrid="true"
      inkscape:zoom="14.824176"
      inkscape:cx="-4.6630843"
-     inkscape:cy="1.7935367"
+     inkscape:cy="15.285012"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
@@ -93,7 +93,7 @@
   </defs>
   <g
      style="display:inline"
-     transform="matrix(1,0,0,1.0050286,-158.38504,3.7239731)"
+     transform="matrix(1.5,0,0,1.5075429,-237.57756,5.5858656)"
      id="stock">
     <g
        id="gimp-controller-linux-input"

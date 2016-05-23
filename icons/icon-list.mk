@@ -253,6 +253,12 @@ vector24_images = \
 	24/gimp-channel-red.svg				\
 	24/gimp-channels.svg				\
 	24/gimp-colormap.svg				\
+	24/gimp-controller.svg				\
+	24/gimp-controller-keyboard.svg			\
+	24/gimp-controller-linux-input.svg		\
+	24/gimp-controller-midi.svg			\
+	24/gimp-controller-wheel.svg			\
+	24/gimp-cursor.svg				\
 	24/gimp-device-status				\
 	24/gimp-display-filter				\
 	24/gimp-display-filter-colorblind		\
@@ -274,6 +280,7 @@ vector24_images = \
 	24/gimp-print-resolution.svg			\
 	24/gimp-question.svg				\
 	24/gimp-resize.svg				\
+	24/gimp-sample-point.svg			\
 	24/gimp-scale					\
 	24/gimp-selection.svg				\
 	24/gimp-symmetry.svg				\

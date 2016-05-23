@@ -10,10 +10,10 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="15.999999"
-   height="16"
+   width="24"
+   height="24"
    id="svg2"
-   viewBox="0 0 15.999999 16"
+   viewBox="0 0 24 24"
    inkscape:version="0.91 r13725"
    sodipodi:docname="gimp-controller-wheel.svg">
   <sodipodi:namedview
@@ -28,14 +28,18 @@
      inkscape:window-width="1920"
      inkscape:window-height="1016"
      id="namedview1697"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="14.75"
      inkscape:cx="-4.8474595"
      inkscape:cy="3.0445135"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4163" />
+  </sodipodi:namedview>
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -43,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
@@ -102,7 +106,7 @@
        x2="23.991123"
        y2="15.069027"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(560.00744,146.5101)" />
+       gradientTransform="matrix(1.5511087,0,0,1.4994026,868.21842,220.12011)" />
     <linearGradient
        osb:paint="solid"
        id="linearGradient5487">
@@ -113,36 +117,30 @@
     </linearGradient>
   </defs>
   <g
-     style="display:inline"
-     transform="translate(-198.97084,4.2792012)"
-     id="stock">
-    <g
-       transform="translate(198.97084,-4.2792011)"
-       id="gimp-controller-wheel">
-      <path
-         id="path5634-1"
-         d="m 0.39504783,4.8454206 c -0.566838,1.459106 -0.357118,3.1860669 -0.357118,4.9542394 0,6.20034 0,6.20034 0,6.20034 L 15.955854,16 c 0,0 0,0 0,-6.20034 0,-1.6800602 0.218345,-3.5155986 -0.316154,-4.9867796 -2.264555,-6.233074 -12.6642062,-6.609821 -15.24465217,0.03254 z"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#c1c1c1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26077044;marker:none;enable-background:accumulate"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path5634-0"
-         d="m 0.72337794,5.0973259 c -0.53716321,1.3668054 -0.33842253,2.9845215 -0.3384224,4.6408423 3.7e-7,5.8081168 3.7e-7,5.8081168 3.7e-7,5.8081168 l 15.08459309,0 c 0,0 0,0 0,-5.8081168 0,-1.5737823 0.206914,-3.2932075 -0.299603,-4.671324 C 13.023945,-0.77193529 3.1687329,-1.12485 0.72337794,5.0973259 Z"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#555753;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24569248;marker:none;enable-background:accumulate"
-         inkscape:connector-curvature="0" />
-      <ellipse
-         id="path11617"
-         style="color:#000000;font-family:'Bitstream Vera Sans';display:inline;overflow:visible;visibility:visible;opacity:1;fill:#eeeeec;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.67654324;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
-         cx="8.0272694"
-         cy="8.3804789"
-         rx="4.3056359"
-         ry="6.7313461" />
-      <ellipse
-         style="color:#000000;font-family:'Bitstream Vera Sans';display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient11627);fill-opacity:1;fill-rule:evenodd;stroke:#595959;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
-         id="path11619"
-         cx="8.0032711"
-         cy="6.0407581"
-         rx="2.171828"
-         ry="4.7477169" />
-    </g>
+     id="g4165">
+    <path
+       inkscape:connector-curvature="0"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#c1c1c1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26077044;marker:none;enable-background:accumulate"
+       d="m 0.59257178,7.2681314 c -0.85025705,2.1886591 -0.53567703,4.7791006 -0.53567703,7.4313596 0,9.300511 0,9.300511 0,9.300511 l 23.87688825,0 c 0,0 0,0 0,-9.300511 0,-2.52009 0.327517,-5.2733983 -0.474231,-7.4801699 -3.396833,-9.3496116 -18.996311,-9.9147322 -22.86698022,0.04881 z"
+       id="path5634-1" />
+    <path
+       inkscape:connector-curvature="0"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#555753;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24569248;marker:none;enable-background:accumulate"
+       d="M 1.5431911,7.662453 C 0.76378854,9.6687237 1.0521534,12.043295 1.0521536,14.474532 1.0521541,23 1.0521541,23 1.0521541,23 l 21.8871469,0 c 0,0 0,0 0,-8.525468 0,-2.310083 0.300224,-4.8339481 -0.434712,-6.8568217 C 19.390826,-0.95276596 5.0913042,-1.4707932 1.5431911,7.662453 Z"
+       id="path5634-0" />
+    <ellipse
+       ry="10.09702"
+       rx="6.4584541"
+       cy="12.570719"
+       cx="12.040905"
+       style="color:#000000;font-family:'Bitstream Vera Sans';display:inline;overflow:visible;visibility:visible;opacity:1;fill:#eeeeec;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.67654324;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+       id="path11617" />
+    <ellipse
+       ry="7.1187391"
+       rx="3.3687408"
+       cy="9.5000019"
+       cx="12.000002"
+       id="path11619"
+       style="color:#000000;font-family:'Bitstream Vera Sans';display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient11627);fill-opacity:1;fill-rule:evenodd;stroke:#595959;stroke-width:0.76252198;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none" />
   </g>
 </svg>
