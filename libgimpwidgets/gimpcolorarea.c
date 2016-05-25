@@ -21,16 +21,20 @@
 
 #include "config.h"
 
+#include <lcms2.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gimpwidgetstypes.h"
 
 #include "gimpcairo-utils.h"
 #include "gimpcolorarea.h"
+#include "gimpwidgetsutils.h"
 
 
 /**
@@ -63,6 +67,22 @@ enum
 };
 
 
+typedef struct _GimpColorAreaPrivate GimpColorAreaPrivate;
+
+struct _GimpColorAreaPrivate
+{
+  GimpColorConfig    *config;
+  GimpColorTransform  transform;
+};
+
+#define GET_PRIVATE(obj) \
+        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
+                                     GIMP_TYPE_COLOR_AREA, \
+                                     GimpColorAreaPrivate)
+
+
+static void      gimp_color_area_dispose       (GObject            *object);
+static void      gimp_color_area_finalize      (GObject            *object);
 static void      gimp_color_area_get_property  (GObject            *object,
                                                 guint               property_id,
                                                 GValue             *value,
@@ -71,7 +91,6 @@ static void      gimp_color_area_set_property  (GObject            *object,
                                                 guint               property_id,
                                                 const GValue       *value,
                                                 GParamSpec         *pspec);
-static void      gimp_color_area_finalize      (GObject            *object);
 
 static void      gimp_color_area_size_allocate (GtkWidget          *widget,
                                                 GtkAllocation      *allocation);
@@ -106,6 +125,12 @@ static void  gimp_color_area_drag_data_get      (GtkWidget        *widget,
                                                  guint             info,
                                                  guint             time);
 
+static void  gimp_color_area_config_notify      (GimpColorConfig  *config,
+                                                 const GParamSpec *pspec,
+                                                 GimpColorArea    *area);
+
+static void  gimp_color_area_create_transform   (GimpColorArea    *area);
+
 
 G_DEFINE_TYPE (GimpColorArea, gimp_color_area, GTK_TYPE_DRAWING_AREA)
 
@@ -132,9 +157,10 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->dispose            = gimp_color_area_dispose;
+  object_class->finalize           = gimp_color_area_finalize;
   object_class->get_property       = gimp_color_area_get_property;
   object_class->set_property       = gimp_color_area_set_property;
-  object_class->finalize           = gimp_color_area_finalize;
 
   widget_class->size_allocate      = gimp_color_area_size_allocate;
   widget_class->state_changed      = gimp_color_area_state_changed;
@@ -199,6 +225,8 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (object_class, sizeof (GimpColorAreaPrivate));
 }
 
 static void
@@ -216,6 +244,16 @@ gimp_color_area_init (GimpColorArea *area)
                      GTK_DEST_DEFAULT_DROP,
                      &target, 1,
                      GDK_ACTION_COPY);
+}
+
+static void
+gimp_color_area_dispose (GObject *object)
+{
+  GimpColorArea *area = GIMP_COLOR_AREA (object);
+
+  gimp_color_area_set_color_config (area, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -342,10 +380,11 @@ static gboolean
 gimp_color_area_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
 {
-  GimpColorArea   *area  = GIMP_COLOR_AREA (widget);
-  GtkStyle        *style = gtk_widget_get_style (widget);
-  cairo_t         *cr;
-  cairo_surface_t *buffer;
+  GimpColorArea        *area  = GIMP_COLOR_AREA (widget);
+  GimpColorAreaPrivate *priv  = GET_PRIVATE (widget);
+  GtkStyle             *style = gtk_widget_get_style (widget);
+  cairo_t              *cr;
+  cairo_surface_t      *buffer;
 
   if (! area->buf || ! gtk_widget_is_drawable (widget))
     return FALSE;
@@ -358,11 +397,41 @@ gimp_color_area_expose (GtkWidget      *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-  buffer = cairo_image_surface_create_for_data (area->buf,
-                                                CAIRO_FORMAT_RGB24,
-                                                area->width,
-                                                area->height,
-                                                area->rowstride);
+  if (! priv->transform)
+    gimp_color_area_create_transform (area);
+
+  if (priv->transform)
+    {
+      guchar *buf  = g_new (guchar, area->rowstride * area->height);
+      guchar *src  = area->buf;
+      guchar *dest = buf;
+      gint    i;
+
+      for (i = 0; i < area->height; i++)
+        {
+          cmsDoTransform (priv->transform, src, dest, area->width);
+
+          src  += area->rowstride;
+          dest += area->rowstride;
+        }
+
+      buffer = cairo_image_surface_create_for_data (buf,
+                                                    CAIRO_FORMAT_RGB24,
+                                                    area->width,
+                                                    area->height,
+                                                    area->rowstride);
+      cairo_surface_set_user_data (buffer, NULL,
+                                   buf, (cairo_destroy_func_t) g_free);
+    }
+  else
+    {
+      buffer = cairo_image_surface_create_for_data (area->buf,
+                                                    CAIRO_FORMAT_RGB24,
+                                                    area->width,
+                                                    area->height,
+                                                    area->rowstride);
+    }
+
   cairo_set_source_surface (cr, buffer, 0.0, 0.0);
   cairo_surface_destroy (buffer);
 
@@ -522,6 +591,55 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
       g_object_notify (G_OBJECT (area), "draw-border");
     }
 }
+
+/**
+ * gimp_color_area_set_color_config:
+ * @area:   a #GimpColorArea widget.
+ * @config: a #GimpColorConfig object.
+ *
+ * Sets the color management configuration to use with this color area.
+ *
+ * Since: 2.10
+ */
+void
+gimp_color_area_set_color_config (GimpColorArea   *area,
+                                  GimpColorConfig *config)
+{
+  GimpColorAreaPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_COLOR_AREA (area));
+  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+
+  priv = GET_PRIVATE (area);
+
+  if (priv->config)
+    {
+      g_signal_handlers_disconnect_by_func (priv->config,
+                                            gimp_color_area_config_notify,
+                                            area);
+      g_object_unref (priv->config);
+
+      if (priv->transform)
+        {
+          cmsDeleteTransform (priv->transform);
+          priv->transform = NULL;
+        }
+    }
+
+  priv->config = config;
+
+  if (priv->config)
+    {
+      g_object_ref (priv->config);
+
+      g_signal_connect (priv->config, "notify",
+                        G_CALLBACK (gimp_color_area_config_notify),
+                        area);
+    }
+}
+
+
+/*  private functions  */
 
 static void
 gimp_color_area_render_buf (GtkWidget         *widget,
@@ -790,4 +908,42 @@ gimp_color_area_drag_data_get (GtkWidget        *widget,
   gtk_selection_data_set (selection_data,
                           gdk_atom_intern ("application/x-color", FALSE),
                           16, (guchar *) vals, 8);
+}
+
+static void
+gimp_color_area_config_notify (GimpColorConfig  *config,
+                               const GParamSpec *pspec,
+                               GimpColorArea    *area)
+{
+  GimpColorAreaPrivate *priv = GET_PRIVATE (area);
+
+  if (priv->transform)
+    {
+      cmsDeleteTransform (priv->transform);
+      priv->transform = NULL;
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (area));
+}
+
+static void
+gimp_color_area_create_transform (GimpColorArea *area)
+{
+  GimpColorAreaPrivate *priv = GET_PRIVATE (area);
+
+  if (priv->config)
+    {
+      static GimpColorProfile *profile = NULL;
+
+      const Babl *format = babl_format ("cairo-RGB24");
+
+      if (G_UNLIKELY (! profile))
+        profile = gimp_color_profile_new_rgb_srgb ();
+
+      priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (area),
+                                                         priv->config,
+                                                         profile,
+                                                         &format,
+                                                         &format);
+    }
 }
