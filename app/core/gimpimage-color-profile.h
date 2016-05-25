@@ -80,23 +80,15 @@ void                 gimp_image_import_color_profile   (GimpImage           *ima
                                                         GimpProgress        *progress,
                                                         gboolean             interactive);
 
-GimpColorTransform   gimp_image_get_color_transform_to_srgb_u8
-                                                       (GimpImage           *image,
-                                                        const Babl         **pixel_format,
-                                                        const Babl         **srgb_u8_format);
-GimpColorTransform   gimp_image_get_color_transform_from_srgb_u8
-                                                       (GimpImage           *image,
-                                                        const Babl         **pixel_format,
-                                                        const Babl         **srgb_u8_format);
+GimpColorTransform * gimp_image_get_color_transform_to_srgb_u8
+                                                       (GimpImage           *image);
+GimpColorTransform * gimp_image_get_color_transform_from_srgb_u8
+                                                       (GimpImage           *image);
 
-GimpColorTransform   gimp_image_get_color_transform_to_srgb_double
-                                                       (GimpImage           *image,
-                                                        const Babl         **pixel_format,
-                                                        const Babl         **srgb_double_format);
-GimpColorTransform   gimp_image_get_color_transform_from_srgb_double
-                                                       (GimpImage           *image,
-                                                        const Babl         **pixel_format,
-                                                        const Babl         **srgb_double_format);
+GimpColorTransform * gimp_image_get_color_transform_to_srgb_double
+                                                       (GimpImage           *image);
+GimpColorTransform * gimp_image_get_color_transform_from_srgb_double
+                                                       (GimpImage           *image);
 
 void                 gimp_image_color_profile_pixel_to_srgb
                                                        (GimpImage           *image,

@@ -153,7 +153,7 @@ gimp_operation_profile_transform_finalize (GObject *object)
 
   if (self->transform)
     {
-      cmsDeleteTransform (self->transform);
+      g_object_unref (self->transform);
       self->transform = NULL;
     }
 
@@ -241,7 +241,7 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
 
   if (self->transform)
     {
-      cmsDeleteTransform (self->transform);
+      g_object_unref (self->transform);
       self->transform = NULL;
     }
 
@@ -250,28 +250,14 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
 
   if (self->src_profile && self->dest_profile)
     {
-      cmsHPROFILE     src_lcms;
-      cmsHPROFILE     dest_lcms;
-      cmsUInt32Number lcms_src_format;
-      cmsUInt32Number lcms_dest_format;
-      cmsUInt32Number flags;
-
-      src_lcms  = gimp_color_profile_get_lcms_profile (self->src_profile);
-      dest_lcms = gimp_color_profile_get_lcms_profile (self->dest_profile);
-
-      self->src_format  = gimp_color_profile_get_format (format,
-                                                         &lcms_src_format);
-      self->dest_format = gimp_color_profile_get_format (format,
-                                                         &lcms_dest_format);
-
-      flags = cmsFLAGS_NOOPTIMIZE;
+      cmsUInt32Number flags = cmsFLAGS_NOOPTIMIZE;
 
       if (self->bpc)
         flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
 
-      self->transform = cmsCreateTransform (src_lcms,  lcms_src_format,
-                                            dest_lcms, lcms_dest_format,
-                                            self->intent, flags);
+      self->transform = gimp_color_transform_new (self->src_profile,  format,
+                                                  self->dest_profile, format,
+                                                  self->intent, flags);
     }
 
   gegl_operation_set_format (operation, "input",  self->src_format);
@@ -298,7 +284,12 @@ gimp_operation_profile_transform_process (GeglOperation       *operation,
                                  self->dest_format),
                       src, dest, samples);
 
-      cmsDoTransform (self->transform, src, dest, samples);
+      gimp_color_transform_process_pixels (self->transform,
+                                           self->src_format,
+                                           src,
+                                           self->dest_format,
+                                           dest,
+                                           samples);
     }
   else
     {

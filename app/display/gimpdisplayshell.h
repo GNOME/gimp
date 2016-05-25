@@ -153,13 +153,10 @@ struct _GimpDisplayShell
   GimpColorConfig   *color_config;     /*  color management settings          */
   gboolean           color_config_set; /*  settings changed from defaults     */
 
-  GimpColorTransform profile_transform;
-  const Babl        *profile_src_format;
-  const Babl        *profile_dest_format;
-
-  GeglBuffer        *profile_buffer;   /*  buffer for profile transform       */
-  guchar            *profile_data;     /*  profile_buffer's pixels            */
-  gint               profile_stride;   /*  profile_buffer's stride            */
+  GimpColorTransform *profile_transform;
+  GeglBuffer         *profile_buffer;  /*  buffer for profile transform       */
+  guchar             *profile_data;    /*  profile_buffer's pixels            */
+  gint                profile_stride;  /*  profile_buffer's stride            */
 
   GimpColorDisplayStack *filter_stack;   /* color display conversion stuff    */
   guint                  filter_idle_id;

@@ -67,7 +67,7 @@ typedef struct _GimpPreviewAreaPrivate GimpPreviewAreaPrivate;
 struct _GimpPreviewAreaPrivate
 {
   GimpColorConfig    *config;
-  GimpColorTransform  transform;
+  GimpColorTransform *transform;
 };
 
 #define GET_PRIVATE(obj) \
@@ -291,15 +291,19 @@ gimp_preview_area_expose (GtkWidget      *widget,
 
   if (priv->transform)
     {
-      gint    rowstride = ((area->width * 3) + 3) & ~3;
-      guchar *buf       = g_new (guchar, rowstride * area->height);
-      guchar *src       = area->buf;
-      guchar *dest      = buf;
-      gint    i;
+      const Babl *format    = babl_format ("R'G'B' u8");
+      gint        rowstride = ((area->width * 3) + 3) & ~3;
+      guchar     *buf       = g_new (guchar, rowstride * area->height);
+      guchar     *src       = area->buf;
+      guchar     *dest      = buf;
+      gint        i;
 
       for (i = 0; i < area->height; i++)
         {
-          cmsDoTransform (priv->transform, src, dest, area->width);
+          gimp_color_transform_process_pixels (priv->transform,
+                                               format, src,
+                                               format, dest,
+                                               area->width);
 
           src  += area->rowstride;
           dest += rowstride;
@@ -392,7 +396,7 @@ gimp_preview_area_config_notify (GimpColorConfig  *config,
 
   if (priv->transform)
     {
-      cmsDeleteTransform (priv->transform);
+      g_object_unref (priv->transform);
       priv->transform = NULL;
     }
 
@@ -416,8 +420,8 @@ gimp_preview_area_create_transform (GimpPreviewArea *area)
       priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (area),
                                                          priv->config,
                                                          profile,
-                                                         &format,
-                                                         &format);
+                                                         format,
+                                                         format);
     }
 }
 
@@ -1805,7 +1809,7 @@ gimp_preview_area_set_color_config (GimpPreviewArea *area,
 
       if (priv->transform)
         {
-          cmsDeleteTransform (priv->transform);
+          g_object_unref (priv->transform);
           priv->transform = NULL;
         }
     }

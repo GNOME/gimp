@@ -72,7 +72,7 @@ typedef struct _GimpColorAreaPrivate GimpColorAreaPrivate;
 struct _GimpColorAreaPrivate
 {
   GimpColorConfig    *config;
-  GimpColorTransform  transform;
+  GimpColorTransform *transform;
 };
 
 #define GET_PRIVATE(obj) \
@@ -402,14 +402,18 @@ gimp_color_area_expose (GtkWidget      *widget,
 
   if (priv->transform)
     {
-      guchar *buf  = g_new (guchar, area->rowstride * area->height);
-      guchar *src  = area->buf;
-      guchar *dest = buf;
-      gint    i;
+      const Babl *format = babl_format ("cairo-RGB24");
+      guchar     *buf    = g_new (guchar, area->rowstride * area->height);
+      guchar     *src    = area->buf;
+      guchar     *dest   = buf;
+      gint        i;
 
       for (i = 0; i < area->height; i++)
         {
-          cmsDoTransform (priv->transform, src, dest, area->width);
+          gimp_color_transform_process_pixels (priv->transform,
+                                               format, src,
+                                               format, dest,
+                                               area->width);
 
           src  += area->rowstride;
           dest += area->rowstride;
@@ -621,7 +625,7 @@ gimp_color_area_set_color_config (GimpColorArea   *area,
 
       if (priv->transform)
         {
-          cmsDeleteTransform (priv->transform);
+          g_object_unref (priv->transform);
           priv->transform = NULL;
         }
     }
@@ -919,7 +923,7 @@ gimp_color_area_config_notify (GimpColorConfig  *config,
 
   if (priv->transform)
     {
-      cmsDeleteTransform (priv->transform);
+      g_object_unref (priv->transform);
       priv->transform = NULL;
     }
 
@@ -943,7 +947,7 @@ gimp_color_area_create_transform (GimpColorArea *area)
       priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (area),
                                                          priv->config,
                                                          profile,
-                                                         &format,
-                                                         &format);
+                                                         format,
+                                                         format);
     }
 }

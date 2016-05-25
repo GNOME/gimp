@@ -710,14 +710,10 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                  gboolean                  bpc,
                                  GimpProgress             *progress)
 {
-  const Babl       *src_format;
-  const Babl       *dest_format;
-  cmsHPROFILE       src_lcms;
-  cmsHPROFILE       dest_lcms;
-  cmsUInt32Number   lcms_src_format;
-  cmsUInt32Number   lcms_dest_format;
-  cmsUInt32Number   flags;
-  cmsHTRANSFORM     transform;
+  GimpColorTransform *transform;
+  const Babl         *src_format;
+  const Babl         *dest_format;
+  cmsUInt32Number     flags;
 
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
@@ -729,28 +725,27 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
       return;
     }
 
-  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
-  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
-
-  src_format  = gimp_color_profile_get_format (src_format,  &lcms_src_format);
-  dest_format = gimp_color_profile_get_format (dest_format, &lcms_dest_format);
-
   flags = cmsFLAGS_NOOPTIMIZE;
 
   if (bpc)
     flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
 
-  transform = cmsCreateTransform (src_lcms,  lcms_src_format,
-                                  dest_lcms, lcms_dest_format,
-                                  intent, flags);
+  transform = gimp_color_transform_new (src_profile,  src_format,
+                                        dest_profile, dest_format,
+                                        intent, flags);
 
   if (transform)
     {
-      gimp_gegl_convert_color_transform (src_buffer,  src_rect,  src_format,
-                                         dest_buffer, dest_rect, dest_format,
-                                         transform, progress);
+      if (progress)
+        g_signal_connect_swapped (transform, "progress",
+                                  G_CALLBACK (gimp_progress_set_value),
+                                  progress);
 
-      cmsDeleteTransform (transform);
+      gimp_color_transform_process_buffer (transform,
+                                           src_buffer,  src_rect,
+                                           dest_buffer, dest_rect);
+
+      g_object_unref (transform);
     }
   else
     {
@@ -761,68 +756,4 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
       if (progress)
         gimp_progress_set_value (progress, 1.0);
     }
-}
-
-void
-gimp_gegl_convert_color_transform (GeglBuffer          *src_buffer,
-                                   const GeglRectangle *src_rect,
-                                   const Babl          *src_format,
-                                   GeglBuffer          *dest_buffer,
-                                   const GeglRectangle *dest_rect,
-                                   const Babl          *dest_format,
-                                   GimpColorTransform   transform,
-                                   GimpProgress        *progress)
-{
-  GeglBufferIterator *iter;
-  gboolean            has_alpha;
-  gint                total_pixels;
-  gint                done_pixels = 0;
-
-  if (src_rect)
-    {
-      total_pixels = src_rect->width * src_rect->height;
-    }
-  else
-    {
-      total_pixels = (gegl_buffer_get_width  (src_buffer) *
-                      gegl_buffer_get_height (src_buffer));
-    }
-
-  has_alpha = babl_format_has_alpha (dest_format);
-
-  /* make sure the alpha channel is copied too, lcms doesn't copy it */
-  if (has_alpha)
-    gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
-                      dest_buffer, dest_rect);
-
-  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
-                                   src_format,
-                                   GEGL_ACCESS_READ,
-                                   GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            dest_format,
-                            /* use READWRITE for alpha surfaces
-                             * because we must use the alpha channel
-                             * that is already copied, see above
-                             */
-                            has_alpha ?
-                            GEGL_ACCESS_READWRITE: GEGL_ACCESS_WRITE,
-                            GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
-    {
-      cmsDoTransform (transform,
-                      iter->data[0], iter->data[1], iter->length);
-
-      done_pixels += iter->roi[0].width * iter->roi[0].height;
-
-      if (progress)
-        gimp_progress_set_value (progress,
-                                 (gdouble) done_pixels /
-                                 (gdouble) total_pixels);
-    }
-
-  if (progress)
-    gimp_progress_set_value (progress, 1.0);
 }

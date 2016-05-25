@@ -145,9 +145,7 @@ gimp_image_get_new_pixbuf (GimpViewable *viewable,
   GdkPixbuf          *pixbuf;
   gdouble             scale_x;
   gdouble             scale_y;
-  GimpColorTransform  transform;
-  const Babl         *src_format;
-  const Babl         *dest_format;
+  GimpColorTransform *transform;
 
   scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
@@ -155,9 +153,7 @@ gimp_image_get_new_pixbuf (GimpViewable *viewable,
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
                            width, height);
 
-  transform = gimp_image_get_color_transform_to_srgb_u8 (image,
-                                                         &src_format,
-                                                         &dest_format);
+  transform = gimp_image_get_color_transform_to_srgb_u8 (image);
 
   if (transform)
     {
@@ -165,7 +161,8 @@ gimp_image_get_new_pixbuf (GimpViewable *viewable,
       GeglBuffer  *src_buf;
       GeglBuffer  *dest_buf;
 
-      temp_buf = gimp_temp_buf_new (width, height, src_format);
+      temp_buf = gimp_temp_buf_new (width, height,
+                                    gimp_pickable_get_format (GIMP_PICKABLE (image)));
 
       gegl_buffer_get (gimp_pickable_get_buffer (GIMP_PICKABLE (image)),
                        GEGL_RECTANGLE (0, 0, width, height),
@@ -179,15 +176,12 @@ gimp_image_get_new_pixbuf (GimpViewable *viewable,
 
       gimp_temp_buf_unref (temp_buf);
 
-      gimp_gegl_convert_color_transform (src_buf,
-                                         GEGL_RECTANGLE (0, 0,
-                                                         width, height),
-                                         src_format,
-                                         dest_buf,
-                                         GEGL_RECTANGLE (0, 0, 0, 0),
-                                         dest_format,
-                                         transform,
-                                         NULL);
+      gimp_color_transform_process_buffer (transform,
+                                           src_buf,
+                                           GEGL_RECTANGLE (0, 0,
+                                                           width, height),
+                                           dest_buf,
+                                           GEGL_RECTANGLE (0, 0, 0, 0));
 
       g_object_unref (src_buf);
       g_object_unref (dest_buf);

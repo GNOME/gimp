@@ -69,9 +69,7 @@ struct _GimpViewRendererPrivate
   gchar              *bg_icon_name;
 
   GimpColorConfig    *color_config;
-  GimpColorTransform  profile_transform;
-  const Babl         *profile_src_format;
-  const Babl         *profile_dest_format;
+  GimpColorTransform *profile_transform;
 
   gboolean            needs_render;
   guint               idle_id;
@@ -1119,16 +1117,13 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
       if (renderer->priv->profile_transform)
         {
-          gimp_gegl_convert_color_transform (src_buffer,
-                                             GEGL_RECTANGLE (x - temp_buf_x,
-                                                             y - temp_buf_y,
-                                                             width, height),
-                                             renderer->priv->profile_src_format,
-                                             dest_buffer,
-                                             GEGL_RECTANGLE (0, 0, 0, 0),
-                                             renderer->priv->profile_dest_format,
-                                             renderer->priv->profile_transform,
-                                             NULL);
+          gimp_color_transform_process_buffer (renderer->priv->profile_transform,
+                                               src_buffer,
+                                               GEGL_RECTANGLE (x - temp_buf_x,
+                                                               y - temp_buf_y,
+                                                               width, height),
+                                               dest_buffer,
+                                               GEGL_RECTANGLE (0, 0, 0, 0));
         }
       else
         {
@@ -1169,16 +1164,13 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
       if (renderer->priv->profile_transform)
         {
-          gimp_gegl_convert_color_transform (src_buffer,
-                                             GEGL_RECTANGLE (x - temp_buf_x,
-                                                             y - temp_buf_y,
-                                                             width, height),
-                                             renderer->priv->profile_src_format,
-                                             dest_buffer,
-                                             GEGL_RECTANGLE (x, y, 0, 0),
-                                             renderer->priv->profile_dest_format,
-                                             renderer->priv->profile_transform,
-                                             NULL);
+          gimp_color_transform_process_buffer (renderer->priv->profile_transform,
+                                               src_buffer,
+                                               GEGL_RECTANGLE (x - temp_buf_x,
+                                                               y - temp_buf_y,
+                                                               width, height),
+                                               dest_buffer,
+                                               GEGL_RECTANGLE (x, y, 0, 0));
         }
       else
         {
@@ -1313,15 +1305,11 @@ gimp_view_renderer_transform_create (GimpViewRenderer *renderer,
           if (! config)
             config = renderer->context->gimp->config->color_management;
 
-          renderer->priv->profile_src_format  = gegl_buffer_get_format (src_buffer);
-
-          renderer->priv->profile_dest_format = gegl_buffer_get_format (dest_buffer);
-
           renderer->priv->profile_transform =
             gimp_widget_get_color_transform (widget, config,
                                              profile,
-                                             &renderer->priv->profile_src_format,
-                                             &renderer->priv->profile_dest_format);
+                                             gegl_buffer_get_format (src_buffer),
+                                             gegl_buffer_get_format (dest_buffer));
         }
     }
 }
@@ -1331,9 +1319,7 @@ gimp_view_renderer_transform_free (GimpViewRenderer *renderer)
 {
   if (renderer->priv->profile_transform)
     {
-      cmsDeleteTransform (renderer->priv->profile_transform);
-      renderer->priv->profile_transform   = NULL;
-      renderer->priv->profile_src_format  = NULL;
-      renderer->priv->profile_dest_format = NULL;
+      g_object_unref (renderer->priv->profile_transform);
+      renderer->priv->profile_transform = NULL;
     }
 }

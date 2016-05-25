@@ -129,16 +129,13 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
     gimp_widget_get_color_transform (gtk_widget_get_toplevel (GTK_WIDGET (shell)),
                                      gimp_display_shell_get_color_config (shell),
                                      src_profile,
-                                     &src_format,
-                                     &dest_format);
+                                     src_format,
+                                     dest_format);
 
   if (shell->profile_transform)
     {
       gint w = GIMP_DISPLAY_RENDER_BUF_WIDTH  * GIMP_DISPLAY_RENDER_MAX_SCALE;
       gint h = GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE;
-
-      shell->profile_src_format  = src_format;
-      shell->profile_dest_format = dest_format;
 
       shell->profile_data =
         gegl_malloc (w * h * babl_format_get_bytes_per_pixel (src_format));
@@ -192,34 +189,10 @@ gimp_display_shell_profile_convert_buffer (GimpDisplayShell *shell,
                                            GeglBuffer       *dest_buffer,
                                            GeglRectangle    *dest_area)
 {
-  GeglBufferIterator *iter;
-  const Babl         *fish;
-
-  if (! shell->profile_transform)
-    return;
-
-  iter = gegl_buffer_iterator_new (src_buffer, src_area, 0,
-                                   shell->profile_src_format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
-                            shell->profile_dest_format,
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-  fish = babl_fish (shell->profile_src_format,
-                    shell->profile_dest_format);
-
-  while (gegl_buffer_iterator_next (iter))
-    {
-      gpointer src_data  = iter->data[0];
-      gpointer dest_data = iter->data[1];
-
-      babl_process (fish, src_data, dest_data, iter->length);
-
-      cmsDoTransform (shell->profile_transform,
-                      src_data, dest_data,
-                      iter->length);
-    }
+  if (shell->profile_transform)
+    gimp_color_transform_process_buffer (shell->profile_transform,
+                                         src_buffer,  src_area,
+                                         dest_buffer, dest_area);
 }
 
 
@@ -230,10 +203,8 @@ gimp_display_shell_profile_free (GimpDisplayShell *shell)
 {
   if (shell->profile_transform)
     {
-      cmsDeleteTransform (shell->profile_transform);
-      shell->profile_transform   = NULL;
-      shell->profile_src_format  = NULL;
-      shell->profile_dest_format = NULL;
+      g_object_unref (shell->profile_transform);
+      shell->profile_transform = NULL;
     }
 
   if (shell->profile_buffer)

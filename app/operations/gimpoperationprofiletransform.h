@@ -50,7 +50,7 @@ struct _GimpOperationProfileTransform
   GimpColorRenderingIntent  intent;
   gboolean                  bpc;
 
-  GimpColorTransform        transform;
+  GimpColorTransform       *transform;
 };
 
 struct _GimpOperationProfileTransformClass

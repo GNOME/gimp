@@ -48,11 +48,11 @@ gint                 gimp_get_monitor_at_pointer     (GdkScreen        **screen)
 
 GimpColorProfile   * gimp_widget_get_color_profile   (GtkWidget         *widget);
 
-GimpColorTransform   gimp_widget_get_color_transform (GtkWidget         *widget,
+GimpColorTransform * gimp_widget_get_color_transform (GtkWidget         *widget,
                                                       GimpColorConfig   *config,
                                                       GimpColorProfile  *src_profile,
-                                                      const Babl       **src_format,
-                                                      const Babl       **dest_format);
+                                                      const Babl        *src_format,
+                                                      const Babl        *dest_format);
 
 
 G_END_DECLS
