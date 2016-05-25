@@ -1480,9 +1480,13 @@ gimp_color_profile_get_format (const Babl *format,
 
   if (format == babl_format ("cairo-RGB24"))
     {
-      *lcms_format = TYPE_RGB_8;
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+      *lcms_format = TYPE_BGRA_8;
+#else
+      *lcms_format = TYPE_ARGB_8;
+#endif
 
-      return babl_format ("R'G'B' u8");
+      return format;
     }
   else if (format == babl_format ("cairo-ARGB32"))
     {
