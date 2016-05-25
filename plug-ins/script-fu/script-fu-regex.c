@@ -79,6 +79,7 @@ foreign_re_match (scheme  *sc,
 {
   pointer   retval = sc->F;
   gboolean  success;
+  gboolean  is_valid_utf8;
   GRegex   *regex;
   pointer   first_arg, second_arg;
   pointer   third_arg = sc->NIL;
@@ -97,6 +98,8 @@ foreign_re_match (scheme  *sc,
 
   pattern = sc->vptr->string_value (first_arg);
   string  = sc->vptr->string_value (second_arg);
+
+  is_valid_utf8 = g_utf8_validate (string, -1, NULL);
 
   args = sc->vptr->pair_cdr (args);
 
@@ -133,6 +136,12 @@ foreign_re_match (scheme  *sc,
           gint start, end;
 
           g_match_info_fetch_pos (match_info, i, &start, &end);
+
+          if (is_valid_utf8)
+            {
+              start = g_utf8_pointer_to_offset (string, string + start);
+              end   = g_utf8_pointer_to_offset (string, string + end);
+            }
 
 #undef cons
           set_vector_elem (third_arg, i,
