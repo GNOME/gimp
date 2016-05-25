@@ -14,7 +14,7 @@
    viewBox="0 0 16 16"
    id="svg30571"
    version="1.1"
-   inkscape:version="0.91+devel r"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="gimp-histogram.svg">
   <defs
      id="defs30573" />
@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="18.955946"
-     inkscape:cx="0.242538"
+     inkscape:cx="-14.8187"
      inkscape:cy="7.0026602"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -78,24 +78,22 @@
     <g
        transform="matrix(0.97080594,0,0,1.3585977,-1.8838482,-374.95352)"
        id="gimp-histogram"
-       inkscape:export-xdpi="123.74989"
-       inkscape:export-ydpi="123.74989"
-       style="fill:#729fcf;stroke:#d3d7cf;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+       style="fill:#729fcf;stroke:#555753;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
       <g
          inkscape:label="gimp-histogram"
          id="gimp-histogram-4"
          transform="translate(-161.0002,437.3622)"
-         style="fill:#729fcf;stroke:#d3d7cf;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+         style="fill:#729fcf;stroke:#555753;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
         <g
            transform="translate(0,5)"
            id="g3970"
-           style="fill:#729fcf;stroke:#d3d7cf;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+           style="fill:#729fcf;stroke:#555753;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
           <path
              sodipodi:nodetypes="ccccccccccccccccccccccc"
              inkscape:connector-curvature="0"
              id="path5449-8-6"
-             d="m 163.21122,608.00656 0.52371,-2.07609 0.6136,-0.63454 1.2977,-0.48358 0.64151,-2.11015 0.87002,-6.0507 h 1.35115 l 1.24424,3.3111 h 1.35115 l 1.35115,2.66667 0.92349,1.78743 1.28301,-0.17585 0.49581,-1.61158 v -2.66667 0 l 0.52542,-0.45583 0.54376,-0.37948 0.28197,3.50194 1.35116,2.66666 v 0 l 1.35115,1.08334 v 1.58337 z"
-             style="fill:#729fcf;stroke:#d3d7cf;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+             d="m 163.21122,608.00656 0.52371,-2.07609 0.6136,-0.63454 1.2977,-0.48358 0.64151,-2.11015 0.87002,-6.0507 1.35115,0 1.24424,3.3111 1.35115,0 1.35115,2.66667 0.92349,1.78743 1.28301,-0.17585 0.49581,-1.61158 0,-2.66667 0,0 0.52542,-0.45583 0.54376,-0.37948 0.28197,3.50194 1.35116,2.66666 0,0 1.35115,1.08334 0,1.58337 z"
+             style="fill:#729fcf;stroke:#555753;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         </g>
       </g>
     </g>

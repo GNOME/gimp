@@ -12,11 +12,8 @@
    viewBox="0 0 16 16"
    id="svg30571"
    version="1.1"
-   inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-path1.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/gimp-icons/Nostrification/Symbolic/toolstatus/gimp-save-tool-status.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-path.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -27,7 +24,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="16"
-     inkscape:cx="22.0625"
+     inkscape:cx="5.125"
      inkscape:cy="2.9781777"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -73,7 +70,7 @@
             <dc:title>Klaus Staedtler       </dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
