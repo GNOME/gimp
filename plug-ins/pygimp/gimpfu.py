@@ -734,6 +734,8 @@ def _interact(proc_name, start_params):
             else:
                 try:
                     dialog.res = run_script(params)
+                except CancelError:
+                    pass
                 except Exception:
                     dlg.set_response_sensitive(gtk.RESPONSE_CANCEL, True)
                     error_dialog(dialog, proc_name)
