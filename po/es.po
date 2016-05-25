@@ -11,23 +11,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-05-17 18:23+0000\n"
-"PO-Revision-Date: 2016-05-17 23:07-0500\n"
-"Last-Translator: Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 19:46+0000\n"
+"PO-Revision-Date: 2016-05-25 08:34+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 2.91.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -1092,7 +1092,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114
 #: ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1967
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1998
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:89
@@ -2823,8 +2823,6 @@ msgid "_Pattern"
 msgstr "_Patrón"
 
 #: ../app/actions/filters-actions.c:93
-#| msgctxt "plug-in-action"
-#| msgid "_Web"
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Web"
@@ -2840,7 +2838,6 @@ msgid "_Alien Map..."
 msgstr "Mapa _alienígena…"
 
 #: ../app/actions/filters-actions.c:106
-#| msgid "_Antialiasing"
 msgctxt "filters-action"
 msgid "_Antialias..."
 msgstr "_Antialias…"
@@ -3002,7 +2999,6 @@ msgstr "Desenfoque _gaussiano selectivo…"
 
 # Location lo traducimos por lugar (Serrador)
 #: ../app/actions/filters-actions.c:266
-#| msgid "_GEGL Operation..."
 msgctxt "filters-action"
 msgid "_GEGL graph..."
 msgstr "Gráfico _GEGL…"
@@ -3044,8 +3040,6 @@ msgid "_Maze..."
 msgstr "_Laberinto…"
 
 #: ../app/actions/filters-actions.c:306
-#| msgctxt "channels-action"
-#| msgid "_New Channel..."
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "Mezclador _mono…"
@@ -3079,8 +3073,6 @@ msgid "_Cell Noise..."
 msgstr "Ruido _RGB…"
 
 #: ../app/actions/filters-actions.c:336
-#| msgctxt "filters-action"
-#| msgid "HSV Noise..."
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Ruido CIE lch…"
@@ -3116,8 +3108,6 @@ msgid "Noise R_eduction..."
 msgstr "_Reducción de ruido…"
 
 #: ../app/actions/filters-actions.c:371
-#| msgctxt "filters-action"
-#| msgid "HSV Noise..."
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "Ruido _simplex…"
@@ -3934,8 +3924,6 @@ msgid "_Save Color Profile to File..."
 msgstr "_Guardar el perfil de color en un archivo…"
 
 #: ../app/actions/image-actions.c:105
-#| msgctxt "image-action"
-#| msgid "Remove the image's color profile"
 msgctxt "image-action"
 msgid "Save the image's color profile to an ICC file"
 msgstr "Guardar el perfil de color de la imagen a un archivo ICC"
@@ -4239,7 +4227,6 @@ msgstr "Escala de gr_ises…"
 
 #: ../app/actions/image-commands.c:487
 #, c-format
-#| msgid "Writing curves file failed: "
 msgid "Saving color profile failed: %s"
 msgstr "Falló al guardar el perfil de color: %s"
 
@@ -4870,7 +4857,7 @@ msgstr "Atributos de la capa"
 msgid "Edit Layer Attributes"
 msgstr "Editar atributos de capa"
 
-#: ../app/actions/layers-commands.c:259 ../app/core/gimplayer.c:316
+#: ../app/actions/layers-commands.c:259 ../app/core/gimplayer.c:325
 msgid "Layer"
 msgstr "Capa"
 
@@ -6293,465 +6280,491 @@ msgid "_Padding Color"
 msgstr "Color de _relleno"
 
 #: ../app/actions/view-actions.c:76
-#| msgid "Color Management"
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "_Gestión del color"
 
 #: ../app/actions/view-actions.c:79
 msgctxt "view-action"
+msgid "Display _Rendering Intent"
+msgstr "Prueba de _renderizado en pantalla"
+
+#: ../app/actions/view-actions.c:82
+msgctxt "view-action"
+msgid "Simulation Re_ndering Intent"
+msgstr "Simulación de prueba de _renderizado"
+
+#: ../app/actions/view-actions.c:85
+msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Mover a la pantalla"
 
-#: ../app/actions/view-actions.c:83
+#: ../app/actions/view-actions.c:89
 msgctxt "view-action"
 msgid "_New View"
 msgstr "Vista _nueva"
 
-#: ../app/actions/view-actions.c:84
+#: ../app/actions/view-actions.c:90
 msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "Crea otra vista en esta imagen"
 
-#: ../app/actions/view-actions.c:89
+#: ../app/actions/view-actions.c:95
 msgctxt "view-action"
 msgid "_Close View"
 msgstr "_Cerrar vista"
 
-#: ../app/actions/view-actions.c:90
+#: ../app/actions/view-actions.c:96
 msgctxt "view-action"
 msgid "Close the active image view"
 msgstr "Cerrar la vista de la imagen activa"
 
-#: ../app/actions/view-actions.c:95
+#: ../app/actions/view-actions.c:101
 msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "_Ajustar imagen a la ventana"
 
-#: ../app/actions/view-actions.c:96
+#: ../app/actions/view-actions.c:102
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Ajusta la ampliación para que la imagen se vea completamente"
 
 # fuzzy
-#: ../app/actions/view-actions.c:101
+#: ../app/actions/view-actions.c:107
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "Ocupar toda _la ventana"
 
-#: ../app/actions/view-actions.c:102
+#: ../app/actions/view-actions.c:108
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Ajusta la ampliación para que la ventana se use por completo"
 
-#: ../app/actions/view-actions.c:107
+#: ../app/actions/view-actions.c:113
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Ampliar a la _selección"
 
-#: ../app/actions/view-actions.c:108
+#: ../app/actions/view-actions.c:114
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr ""
 "Ajustar la relación de ampliación para que la selección rellene la ventana"
 
-#: ../app/actions/view-actions.c:113
+#: ../app/actions/view-actions.c:119
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Re_vertir la ampliación"
 
-#: ../app/actions/view-actions.c:114
+#: ../app/actions/view-actions.c:120
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Recuperar el nivel de ampliación previo"
 
-#: ../app/actions/view-actions.c:119
+#: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Othe_r..."
 msgstr "Ot_ro…"
 
-#: ../app/actions/view-actions.c:120
+#: ../app/actions/view-actions.c:126
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Establece un ángulo de rotación personalizado"
 
-#: ../app/actions/view-actions.c:125
+#: ../app/actions/view-actions.c:131
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Ventana de na_vegación"
 
-#: ../app/actions/view-actions.c:126
+#: ../app/actions/view-actions.c:132
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Muestra una venta de vista general para esta imagen"
 
-#: ../app/actions/view-actions.c:131
+#: ../app/actions/view-actions.c:137
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "Mostrar _filtros…"
 
-#: ../app/actions/view-actions.c:132
+#: ../app/actions/view-actions.c:138
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Configurar filtros aplicados a esta vista"
 
-#: ../app/actions/view-actions.c:137
-#| msgctxt "view-padding-color"
-#| msgid "As in _Preferences"
+#: ../app/actions/view-actions.c:143
 msgctxt "view-action"
 msgid "As in _Preferences"
 msgstr "Como en las _preferencias"
 
-#: ../app/actions/view-actions.c:139
-#| msgctxt "view-padding-color"
-#| msgid "Reset padding color to what's configured in preferences"
+#: ../app/actions/view-actions.c:145
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
 msgstr "Reiniciar gestión del color a lo establecido en las preferencias"
 
 # //R Creo que hace esto
-#: ../app/actions/view-actions.c:144
+#: ../app/actions/view-actions.c:150
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "_Ajustar encogiendo"
 
-#: ../app/actions/view-actions.c:145
+#: ../app/actions/view-actions.c:151
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Ajustar la ventana al tamaño con que se muestra la imagen"
 
-#: ../app/actions/view-actions.c:150
+#: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "_Abrir pantalla…"
 
-#: ../app/actions/view-actions.c:151
+#: ../app/actions/view-actions.c:157
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Conectar a otra pantalla"
 
-#: ../app/actions/view-actions.c:159
+#: ../app/actions/view-actions.c:165
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "P_unto por punto"
 
-#: ../app/actions/view-actions.c:160
+#: ../app/actions/view-actions.c:166
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Un píxel en la pantalla representa un píxel de la imagen"
 
-#: ../app/actions/view-actions.c:166
-#| msgid "_Black Point Compensation"
+#: ../app/actions/view-actions.c:172
+msgctxt "view-action"
+msgid "_Color Manage this View"
+msgstr "_Gestionar el color de esta vista"
+
+#: ../app/actions/view-actions.c:173
+msgctxt "view-action"
+msgid "Color manage this view"
+msgstr "Gestionar el color de esta vista"
+
+#: ../app/actions/view-actions.c:179
+msgctxt "view-action"
+msgid "_Print Simulation"
+msgstr "_Imprimir simulación"
+
+#: ../app/actions/view-actions.c:180
+msgctxt "view-action"
+msgid "Use this view for softproofing"
+msgstr "Utilizar esta vista para la pseudoprueba"
+
+#: ../app/actions/view-actions.c:186 ../app/actions/view-actions.c:193
 msgctxt "view-action"
 msgid "_Black Point Compensation"
 msgstr "_Compensación de punto negro"
 
-#: ../app/actions/view-actions.c:167
-#| msgid "_Black Point Compensation"
+#: ../app/actions/view-actions.c:187
 msgctxt "view-action"
-msgid "Use black point compentation"
-msgstr "Usar compensación de punto negro"
+msgid "Use black point compensation for image display"
+msgstr "Utilizar la compensación de punto negro para visualizar la imagen"
 
-#: ../app/actions/view-actions.c:173
-#, fuzzy
-#| msgid "Mark out of gamut colors"
+#: ../app/actions/view-actions.c:194
+msgctxt "view-action"
+msgid "Use black point compensation for softproofing"
+msgstr "Utilizar la compensación de punto negro para la pseudoprueba"
+
+#: ../app/actions/view-actions.c:200
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
-msgstr "Marcar a partir de los colores del gamut"
+msgstr "_Marcar a partir de los colores del gamut"
 
-#: ../app/actions/view-actions.c:174
+#: ../app/actions/view-actions.c:201
 msgctxt "view-action"
 msgid ""
 "When softproofing, mark colors which cannot be represented in the target "
 "color space"
 msgstr ""
 
-#: ../app/actions/view-actions.c:181
+#: ../app/actions/view-actions.c:208
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Mostrar la s_elección"
 
-#: ../app/actions/view-actions.c:182
+#: ../app/actions/view-actions.c:209
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Muestra el contorno de la selección"
 
-#: ../app/actions/view-actions.c:188
+#: ../app/actions/view-actions.c:215
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Mostrar el _límite de la capa"
 
-#: ../app/actions/view-actions.c:189
+#: ../app/actions/view-actions.c:216
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Dibuja un borde alrededor de la capa activa"
 
-#: ../app/actions/view-actions.c:195
+#: ../app/actions/view-actions.c:222
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "Mostrar g_uías"
 
-#: ../app/actions/view-actions.c:196
+#: ../app/actions/view-actions.c:223
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Muestra las líneas guía de la imagen"
 
-#: ../app/actions/view-actions.c:202
+#: ../app/actions/view-actions.c:229
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Mostrar _rejilla"
 
-#: ../app/actions/view-actions.c:203
+#: ../app/actions/view-actions.c:230
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Muestra la rejilla de la imagen"
 
-#: ../app/actions/view-actions.c:209
+#: ../app/actions/view-actions.c:236
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Mostrar puntos de muestra"
 
-#: ../app/actions/view-actions.c:210
+#: ../app/actions/view-actions.c:237
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Muestra los puntos de muestreo de color de la imagen"
 
-#: ../app/actions/view-actions.c:216
+#: ../app/actions/view-actions.c:243
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "Ajust_ar a las guías"
 
-#: ../app/actions/view-actions.c:217
+#: ../app/actions/view-actions.c:244
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Las operaciones de las herramientas se ajustan a las líneas guía"
 
-#: ../app/actions/view-actions.c:223
+#: ../app/actions/view-actions.c:250
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Ajustar a la rej_illa"
 
-#: ../app/actions/view-actions.c:224
+#: ../app/actions/view-actions.c:251
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Las operaciones de las herramientas se ajustan a la rejilla"
 
-#: ../app/actions/view-actions.c:230
+#: ../app/actions/view-actions.c:257
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Ajustar a los bordes del _lienzo"
 
-#: ../app/actions/view-actions.c:231
+#: ../app/actions/view-actions.c:258
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Las operaciones de las herramientas se ajustan a los bordes del lienzo"
 
-#: ../app/actions/view-actions.c:237
+#: ../app/actions/view-actions.c:264
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Ajustar a la _ruta activa"
 
-#: ../app/actions/view-actions.c:238
+#: ../app/actions/view-actions.c:265
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Las operaciones de las herramientas se ajustan a la ruta activa"
 
-#: ../app/actions/view-actions.c:244
+#: ../app/actions/view-actions.c:271
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "_Mostrar la barra de menú"
 
-#: ../app/actions/view-actions.c:245
+#: ../app/actions/view-actions.c:272
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Muestra la barra de menús de esta ventana"
 
-#: ../app/actions/view-actions.c:251
+#: ../app/actions/view-actions.c:278
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Mostrar las _reglas"
 
-#: ../app/actions/view-actions.c:252
+#: ../app/actions/view-actions.c:279
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Muestra las reglas de medición de esta ventana"
 
-#: ../app/actions/view-actions.c:258
+#: ../app/actions/view-actions.c:285
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Mostrar las _barras de desplazamiento"
 
-#: ../app/actions/view-actions.c:259
+#: ../app/actions/view-actions.c:286
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Muestra las barras de desplazamiento de esta ventana"
 
-#: ../app/actions/view-actions.c:265
+#: ../app/actions/view-actions.c:292
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Mostrar la barra de es_tado"
 
-#: ../app/actions/view-actions.c:266
+#: ../app/actions/view-actions.c:293
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Muestra la barra de estado de esta ventana"
 
-#: ../app/actions/view-actions.c:272
+#: ../app/actions/view-actions.c:299
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "Pantalla compl_eta"
 
-#: ../app/actions/view-actions.c:273
+#: ../app/actions/view-actions.c:300
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Activa o desactiva la vista de pantalla completa"
 
-#: ../app/actions/view-actions.c:297
+#: ../app/actions/view-actions.c:324
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "Re_ducir"
 
-#: ../app/actions/view-actions.c:298 ../app/actions/view-actions.c:310
+#: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:337
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Reducir"
 
-#: ../app/actions/view-actions.c:303
+#: ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Ampliar"
 
-#: ../app/actions/view-actions.c:304 ../app/actions/view-actions.c:316
+#: ../app/actions/view-actions.c:331 ../app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Ampliar"
 
-#: ../app/actions/view-actions.c:309
+#: ../app/actions/view-actions.c:336
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Reducir"
 
-#: ../app/actions/view-actions.c:315
+#: ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Ampliar"
 
-#: ../app/actions/view-actions.c:334 ../app/actions/view-actions.c:340
+#: ../app/actions/view-actions.c:361 ../app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:335 ../app/actions/view-actions.c:341
+#: ../app/actions/view-actions.c:362 ../app/actions/view-actions.c:368
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Ampliación 16:1"
 
-#: ../app/actions/view-actions.c:346 ../app/actions/view-actions.c:352
+#: ../app/actions/view-actions.c:373 ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:347 ../app/actions/view-actions.c:353
+#: ../app/actions/view-actions.c:374 ../app/actions/view-actions.c:380
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Ampliación 8:1"
 
-#: ../app/actions/view-actions.c:358 ../app/actions/view-actions.c:364
+#: ../app/actions/view-actions.c:385 ../app/actions/view-actions.c:391
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1 (400%)"
 
-#: ../app/actions/view-actions.c:359 ../app/actions/view-actions.c:365
+#: ../app/actions/view-actions.c:386 ../app/actions/view-actions.c:392
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Ampliación 4:1"
 
-#: ../app/actions/view-actions.c:370 ../app/actions/view-actions.c:376
+#: ../app/actions/view-actions.c:397 ../app/actions/view-actions.c:403
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1 (200%)"
 
-#: ../app/actions/view-actions.c:371 ../app/actions/view-actions.c:377
+#: ../app/actions/view-actions.c:398 ../app/actions/view-actions.c:404
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Ampliación 2:1"
 
-#: ../app/actions/view-actions.c:382 ../app/actions/view-actions.c:388
+#: ../app/actions/view-actions.c:409 ../app/actions/view-actions.c:415
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1 (100%)"
 
-#: ../app/actions/view-actions.c:383 ../app/actions/view-actions.c:389
+#: ../app/actions/view-actions.c:410 ../app/actions/view-actions.c:416
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Ampliación 1:1"
 
-#: ../app/actions/view-actions.c:394
+#: ../app/actions/view-actions.c:421
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2 (50%)"
 
-#: ../app/actions/view-actions.c:395
+#: ../app/actions/view-actions.c:422
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Ampliación 1:2"
 
-#: ../app/actions/view-actions.c:400
+#: ../app/actions/view-actions.c:427
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4 (25%)"
 
-#: ../app/actions/view-actions.c:401
+#: ../app/actions/view-actions.c:428
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Ampliación 1:4"
 
-#: ../app/actions/view-actions.c:406
+#: ../app/actions/view-actions.c:433
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:407
+#: ../app/actions/view-actions.c:434
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Ampliación 1:8"
 
-#: ../app/actions/view-actions.c:412
+#: ../app/actions/view-actions.c:439
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:413
+#: ../app/actions/view-actions.c:440
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Ampliación 1:16"
 
-#: ../app/actions/view-actions.c:418
+#: ../app/actions/view-actions.c:445
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "Ot_ros…"
 
-#: ../app/actions/view-actions.c:419
+#: ../app/actions/view-actions.c:446
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Establece un factor de ampliación personalizado"
 
-#: ../app/actions/view-actions.c:427
+#: ../app/actions/view-actions.c:454
 msgctxt "view-action"
 msgid "Flip Horizontally"
 msgstr "Voltear horizontalmente"
 
-#: ../app/actions/view-actions.c:433
+#: ../app/actions/view-actions.c:460
 msgctxt "view-action"
 msgid "Flip Vertically"
 msgstr "Voltear verticalmente"
 
-#: ../app/actions/view-actions.c:447
+#: ../app/actions/view-actions.c:474
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
 msgstr "_Restablecer voltear y rotar"
 
-#: ../app/actions/view-actions.c:449
+#: ../app/actions/view-actions.c:476
 #, fuzzy
 #| msgctxt "view-action"
 #| msgid "Reset the angle of rotation to 0°"
@@ -6759,241 +6772,211 @@ msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "Restablecer el ángulo a 0°"
 
-#: ../app/actions/view-actions.c:457
+#: ../app/actions/view-actions.c:484
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Rotar 15° en sentido _horario"
 
-#: ../app/actions/view-actions.c:458
+#: ../app/actions/view-actions.c:485
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
 msgstr "Rotar 15 grados a la derecha"
 
-#: ../app/actions/view-actions.c:463
+#: ../app/actions/view-actions.c:490
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Rotar 90° en sentido _horario"
 
-#: ../app/actions/view-actions.c:464
+#: ../app/actions/view-actions.c:491
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Rotar 90 grados a la derecha"
 
-#: ../app/actions/view-actions.c:469
+#: ../app/actions/view-actions.c:496
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Rotar _180°"
 
 # Poner cabeza abajo
-#: ../app/actions/view-actions.c:470
+#: ../app/actions/view-actions.c:497
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Voltear"
 
-#: ../app/actions/view-actions.c:475
+#: ../app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Rotar 90° en sentido _antihorario"
 
-#: ../app/actions/view-actions.c:476
+#: ../app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Rotar 90 grados a la izquierda"
 
-#: ../app/actions/view-actions.c:481
+#: ../app/actions/view-actions.c:508
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Rotar 15° en sentido _antihorario"
 
-#: ../app/actions/view-actions.c:482
+#: ../app/actions/view-actions.c:509
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
 msgstr "Rotar 15 grados a la izquierda"
 
-#: ../app/actions/view-actions.c:490
-#, fuzzy
-#| msgid "Color Management"
-msgctxt "view-action"
-msgid "_No Color Management"
-msgstr "Gestión del color"
-
-#: ../app/actions/view-actions.c:491
-#, fuzzy
-#| msgid "Color manage this image"
-msgctxt "view-action"
-msgid "Don't color manage this view"
-msgstr "Gestionar el color de esta imagen"
-
-#: ../app/actions/view-actions.c:496
-#, fuzzy
-#| msgid "Color Management"
-msgctxt "view-action"
-msgid "_Color Managed Display"
-msgstr "Gestión del color"
-
-#: ../app/actions/view-actions.c:497
-#, fuzzy
-#| msgid "Color manage this image"
-msgctxt "view-action"
-msgid "Color manage this view"
-msgstr "Gestionar el color de esta imagen"
-
-#: ../app/actions/view-actions.c:502
-#| msgid "_Print simulation profile:"
-msgctxt "view-action"
-msgid "_Print Simulation"
-msgstr "_Imprimir simulación"
-
-#: ../app/actions/view-actions.c:503
-#, fuzzy
-#| msgid "Use black _point compensation for softproofing"
-msgctxt "view-action"
-msgid "Use this view for softproofing"
-msgstr "Usar compensación de _punto negro para la pseudoprueba"
-
-#: ../app/actions/view-actions.c:511
-#, fuzzy
-#| msgid "Percentile:"
+#: ../app/actions/view-actions.c:517 ../app/actions/view-actions.c:544
 msgctxt "view-action"
 msgid "_Perceptual"
-msgstr "Percentil:"
+msgstr "_Perceptual"
 
-#: ../app/actions/view-actions.c:512
-#, fuzzy
-#| msgid "_Rendering Intent:"
+#: ../app/actions/view-actions.c:518
 msgctxt "view-action"
-msgid "Rendering intent is percptual"
-msgstr "Prueba de _renderizado:"
+msgid "Display rendering intent is perceptual"
+msgstr "Prueba de renderizado en pantalla es perceptual"
 
-#: ../app/actions/view-actions.c:517
-#| msgctxt "palette-editor-action"
-#| msgid "_Delete Color"
+#: ../app/actions/view-actions.c:523 ../app/actions/view-actions.c:550
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "Colorimétrico _relativo"
 
-#: ../app/actions/view-actions.c:518
+#: ../app/actions/view-actions.c:524
 msgctxt "view-action"
-msgid "Rendering intent is relative colorimetic"
-msgstr "La prueba de renderizado es colorimétrico relativo"
+msgid "Display rendering intent is relative colorimetric"
+msgstr "Prueba de renderizado en pantalla es colorimétrico relativo"
 
-#: ../app/actions/view-actions.c:523
-#| msgid "_Saturation"
+#: ../app/actions/view-actions.c:529 ../app/actions/view-actions.c:556
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Saturación"
 
-#: ../app/actions/view-actions.c:524
-#, fuzzy
-#| msgid "_Rendering Intent:"
+#: ../app/actions/view-actions.c:530
 msgctxt "view-action"
-msgid "Rendering intent is saturation"
-msgstr "Prueba de _renderizado:"
+msgid "Display rendering intent is saturation"
+msgstr "Prueba de renderizado en pantalla es la saturación"
 
-#: ../app/actions/view-actions.c:529
+#: ../app/actions/view-actions.c:535 ../app/actions/view-actions.c:562
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "Colorimétrico _absoluto"
 
-#: ../app/actions/view-actions.c:530
+#: ../app/actions/view-actions.c:536
 msgctxt "view-action"
-msgid "Rendering intent is absolute colorimetic"
-msgstr "La prueba de renderizado es colorimétrico absoluto"
+msgid "Display rendering intent is absolute colorimetric"
+msgstr "Prueba de renderizado en pantalla es colorimétrico absoluto"
 
-#: ../app/actions/view-actions.c:538
+#: ../app/actions/view-actions.c:545
+msgctxt "view-action"
+msgid "Softproof rendering intent is perceptual"
+msgstr "Prueba de renderizado de pseudoprueba es perceptual"
+
+#: ../app/actions/view-actions.c:551
+msgctxt "view-action"
+msgid "Softproof rendering intent is relative colorimetric"
+msgstr "Prueba de renderizado de pseudoprueba es colorimétrico relativo"
+
+#: ../app/actions/view-actions.c:557
+msgctxt "view-action"
+msgid "Softproof rendering intent is saturation"
+msgstr "Prueba de renderizado de pseudoprueba es la saturación"
+
+#: ../app/actions/view-actions.c:563
+msgctxt "view-action"
+msgid "Softproof rendering intent is absolute colorimetric"
+msgstr "Prueba de renderizado de pseudoprueba es colorimétrico absoluto"
+
+#: ../app/actions/view-actions.c:571
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Del _tema"
 
-#: ../app/actions/view-actions.c:539
+#: ../app/actions/view-actions.c:572
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Usar el color de fondo del tema actual"
 
-#: ../app/actions/view-actions.c:544
+#: ../app/actions/view-actions.c:577
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Color de los cuadros c_laros"
 
-#: ../app/actions/view-actions.c:545
+#: ../app/actions/view-actions.c:578
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Usar el color de los cuadrados claros"
 
-#: ../app/actions/view-actions.c:550
+#: ../app/actions/view-actions.c:583
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Color de los cuadros o_scuros"
 
-#: ../app/actions/view-actions.c:551
+#: ../app/actions/view-actions.c:584
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Usar el color de los cuadrados oscuros"
 
-#: ../app/actions/view-actions.c:556
+#: ../app/actions/view-actions.c:589
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "Color p_ersonalizado…"
 
-#: ../app/actions/view-actions.c:557
+#: ../app/actions/view-actions.c:590
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Usar un color arbitrario"
 
-#: ../app/actions/view-actions.c:562
+#: ../app/actions/view-actions.c:595
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Como en las _preferencias"
 
-#: ../app/actions/view-actions.c:564
+#: ../app/actions/view-actions.c:597
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Reiniciar el color de relleno a lo establecido en las preferencias"
 
-#: ../app/actions/view-actions.c:854
+#: ../app/actions/view-actions.c:895
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Re_vertir la ampliación (%d%%)"
 
-#: ../app/actions/view-actions.c:862
+#: ../app/actions/view-actions.c:903
 msgid "Re_vert Zoom"
 msgstr "Re_vertir la ampliación"
 
-#: ../app/actions/view-actions.c:1039
+#: ../app/actions/view-actions.c:1089
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Ot_ro (%s)…"
 
-#: ../app/actions/view-actions.c:1048
+#: ../app/actions/view-actions.c:1098
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "A_mpliación (%s)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1069
+#: ../app/actions/view-actions.c:1119
 msgid "(H+V) "
 msgstr "(H+V)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1074
+#: ../app/actions/view-actions.c:1124
 msgid "(H) "
 msgstr "(H) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1079
+#: ../app/actions/view-actions.c:1129
 msgid "(V) "
 msgstr "(V) "
 
-#: ../app/actions/view-actions.c:1086
+#: ../app/actions/view-actions.c:1136
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Voltear %s y rotar (%d°)"
 
-#: ../app/actions/view-commands.c:894
+#: ../app/actions/view-commands.c:950
 msgid "Set Canvas Padding Color"
 msgstr "Establecer el color de relleno del lienzo"
 
-#: ../app/actions/view-commands.c:896
+#: ../app/actions/view-commands.c:952
 msgid "Set Custom Canvas Padding Color"
 msgstr "Establecer el color personalizado de relleno del lienzo"
 
@@ -8507,11 +8490,9 @@ msgid "Change indexed palette"
 msgstr "Cambiar la paleta indexada"
 
 #: ../app/core/core-enums.c:919
-#, fuzzy
-#| msgid "Change color of selected text"
 msgctxt "undo-type"
 msgid "Change color managed state"
-msgstr "Cambiar el color del texto seleccionado"
+msgstr "Cambiar el estado del color gestionado"
 
 #: ../app/core/core-enums.c:925
 msgctxt "undo-type"
@@ -8729,28 +8710,21 @@ msgid "Jitter"
 msgstr "Vibración"
 
 #: ../app/core/core-enums.c:1181
-#| msgctxt "image-map-region"
-#| msgid "Use the selection as input"
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Usar la selección como entrada"
 
 #: ../app/core/core-enums.c:1182
-#| msgctxt "image-map-region"
-#| msgid "Use the entire layer as input"
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Usar toda la capa como entrada"
 
 #: ../app/core/core-enums.c:1211
-#| msgid "Hardness"
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Duro"
 
 #: ../app/core/core-enums.c:1212
-#| msgctxt "curve-type"
-#| msgid "Smooth"
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Suave"
@@ -9067,7 +9041,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Selección rectangular redondeada"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:324
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:333
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa a selección"
@@ -9386,12 +9360,12 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:542
+#: ../app/core/gimpdrawable.c:522
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Redimensionar"
 
-#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1178
+#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1183
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Mezclar"
@@ -9409,6 +9383,10 @@ msgstr "Relleno de cubeta"
 msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Ecualizar"
+
+#: ../app/core/gimpdrawable-floating-selection.c:171
+msgid "Floating Selection"
+msgstr "Selección flotante"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
@@ -9449,7 +9427,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Rotar"
 
-#: ../app/core/gimpdrawable-transform.c:968 ../app/core/gimplayer.c:323
+#: ../app/core/gimpdrawable-transform.c:968 ../app/core/gimplayer.c:332
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transformar la capa"
@@ -9644,73 +9622,73 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformar el grupo de capas"
 
-#: ../app/core/gimpimage.c:633 ../app/widgets/gimpsymmetryeditor.c:176
+#: ../app/core/gimpimage.c:642 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Simetría"
 
-#: ../app/core/gimpimage.c:2219
+#: ../app/core/gimpimage.c:2250
 msgid " (exported)"
 msgstr " (exportada)"
 
-#: ../app/core/gimpimage.c:2223
+#: ../app/core/gimpimage.c:2254
 msgid " (overwritten)"
 msgstr " (sobreescrita)"
 
-#: ../app/core/gimpimage.c:2232
+#: ../app/core/gimpimage.c:2263
 msgid " (imported)"
 msgstr " (importada)"
 
-#: ../app/core/gimpimage.c:2466
+#: ../app/core/gimpimage.c:2497
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambiar la resolución de la imagen"
 
-#: ../app/core/gimpimage.c:2518
+#: ../app/core/gimpimage.c:2549
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambiar la unidad de medida"
 
-#: ../app/core/gimpimage.c:3431
+#: ../app/core/gimpimage.c:3462
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjuntar parásito a la imagen"
 
-#: ../app/core/gimpimage.c:3472
+#: ../app/core/gimpimage.c:3503
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Eliminar el parásito de la imagen"
 
-#: ../app/core/gimpimage.c:4181
+#: ../app/core/gimpimage.c:4212
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Añadir una capa"
 
-#: ../app/core/gimpimage.c:4231 ../app/core/gimpimage.c:4251
+#: ../app/core/gimpimage.c:4262 ../app/core/gimpimage.c:4282
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Eliminar una capa"
 
-#: ../app/core/gimpimage.c:4245
+#: ../app/core/gimpimage.c:4276
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Eliminar la selección flotante"
 
-#: ../app/core/gimpimage.c:4410
+#: ../app/core/gimpimage.c:4441
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: ../app/core/gimpimage.c:4448 ../app/core/gimpimage.c:4461
+#: ../app/core/gimpimage.c:4479 ../app/core/gimpimage.c:4492
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Eliminar un canal"
 
-#: ../app/core/gimpimage.c:4515
+#: ../app/core/gimpimage.c:4546
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: ../app/core/gimpimage.c:4546
+#: ../app/core/gimpimage.c:4577
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Eliminar una ruta"
@@ -9739,14 +9717,11 @@ msgid "ICC profile validation failed: "
 msgstr "La validación de perfiles ICC falló:"
 
 #: ../app/core/gimpimage-color-profile.c:331
-#, fuzzy
-#| msgid ""
-#| "ICC profile validation failed: Color profile is not for RGB color space"
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "La validación de perfiles ICC falló: el perfil de color no es para el "
-"espacio de color RGB"
+"espacio de color de escala de grises"
 
 #: ../app/core/gimpimage-color-profile.c:341
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
@@ -10042,7 +10017,7 @@ msgstr "(La vista previa podría estar desactualizada)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:853 ../app/widgets/gimpimagepropview.c:430
-#: ../app/widgets/gimpsizebox.c:432 ../app/widgets/gimptemplateeditor.c:603
+#: ../app/widgets/gimpsizebox.c:432 ../app/widgets/gimptemplateeditor.c:626
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -10084,12 +10059,12 @@ msgstr "Define al elemento como exclusivo visible"
 msgid "Set Item Exclusive Linked"
 msgstr "Definir al elemento como exclusivo enlazado"
 
-#: ../app/core/gimplayer-floating-sel.c:117
+#: ../app/core/gimplayer-floating-selection.c:118
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Anclar una selección flotante"
 
-#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:834
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:845
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -10097,81 +10072,81 @@ msgstr ""
 "No se puede crear una capa nueva a partir de la selección flotante porque "
 "ésta pertenece a una máscara de capa o canal."
 
-#: ../app/core/gimplayer-floating-sel.c:181
+#: ../app/core/gimplayer-floating-selection.c:182
 msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Selección flotante a capa"
 
-#: ../app/core/gimplayer.c:317
+#: ../app/core/gimplayer.c:326
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Renombrar una capa"
 
-#: ../app/core/gimplayer.c:318
+#: ../app/core/gimplayer.c:327
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Mover una capa"
 
-#: ../app/core/gimplayer.c:319
+#: ../app/core/gimplayer.c:328
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Escalar una capa"
 
-#: ../app/core/gimplayer.c:320
+#: ../app/core/gimplayer.c:329
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Redimensionar una capa"
 
-#: ../app/core/gimplayer.c:321
+#: ../app/core/gimplayer.c:330
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Voltear una capa"
 
-#: ../app/core/gimplayer.c:322
+#: ../app/core/gimplayer.c:331
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Rotar una capa"
 
-#: ../app/core/gimplayer.c:325
+#: ../app/core/gimplayer.c:334
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Reordenar una capa"
 
-#: ../app/core/gimplayer.c:326
+#: ../app/core/gimplayer.c:335
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Elevar una capa"
 
-#: ../app/core/gimplayer.c:327
+#: ../app/core/gimplayer.c:336
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Elevar una capa hasta lo más alto"
 
-#: ../app/core/gimplayer.c:328
+#: ../app/core/gimplayer.c:337
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Bajar una capa"
 
-#: ../app/core/gimplayer.c:329
+#: ../app/core/gimplayer.c:338
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Bajar una capa hasta la parte más baja"
 
-#: ../app/core/gimplayer.c:330
+#: ../app/core/gimplayer.c:339
 msgid "Layer cannot be raised higher."
 msgstr "La capa no puede ser elevada más alto."
 
-#: ../app/core/gimplayer.c:331
+#: ../app/core/gimplayer.c:340
 msgid "Layer cannot be lowered more."
 msgstr "La capa no puede bajarse más."
 
-#: ../app/core/gimplayer.c:557 ../app/core/gimplayer.c:1405
+#: ../app/core/gimplayer.c:568 ../app/core/gimplayer.c:1439
 #: ../app/core/gimplayermask.c:262
 #, c-format
 msgid "%s mask"
 msgstr "máscara %s"
 
-#: ../app/core/gimplayer.c:596
+#: ../app/core/gimplayer.c:607
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -10180,62 +10155,62 @@ msgstr ""
 "Selección flotante\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1308
+#: ../app/core/gimplayer.c:1342
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No se puede añadir una máscara de capa dado que la capa ya posee una."
 
-#: ../app/core/gimplayer.c:1319
+#: ../app/core/gimplayer.c:1353
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No se puede añadir una máscara de capa de dimensiones distintas a la capa "
 "especificada."
 
-#: ../app/core/gimplayer.c:1325
+#: ../app/core/gimplayer.c:1359
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
 
-#: ../app/core/gimplayer.c:1456
+#: ../app/core/gimplayer.c:1490
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Transferir alfa a la máscara"
 
-#: ../app/core/gimplayer.c:1607
+#: ../app/core/gimplayer.c:1641
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Aplicar máscara de capa"
 
-#: ../app/core/gimplayer.c:1608
+#: ../app/core/gimplayer.c:1642
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Eliminar máscara de capa"
 
-#: ../app/core/gimplayer.c:1713
+#: ../app/core/gimplayer.c:1747
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Activar máscara de capa"
 
-#: ../app/core/gimplayer.c:1714
+#: ../app/core/gimplayer.c:1748
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Desactivar máscara de capa"
 
-#: ../app/core/gimplayer.c:1793
+#: ../app/core/gimplayer.c:1827
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Mostrar la máscara de la capa"
 
-#: ../app/core/gimplayer.c:1869
+#: ../app/core/gimplayer.c:1903
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Añadir un canal alfa"
 
-#: ../app/core/gimplayer.c:1901
+#: ../app/core/gimplayer.c:1935
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Eliminar el canal alfa"
 
-#: ../app/core/gimplayer.c:1921
+#: ../app/core/gimplayer.c:1955
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Capa a tamaño de imagen"
@@ -10670,10 +10645,8 @@ msgid "Precision"
 msgstr "Precisión"
 
 #: ../app/core/gimptemplate.c:193
-#, fuzzy
-#| msgid "Color Management"
 msgid "Color managed"
-msgstr "Gestión del color"
+msgstr "Color gestionado"
 
 #: ../app/core/gimptemplate.c:194
 msgid ""
@@ -10837,107 +10810,85 @@ msgstr "_Nombre del canal:"
 msgid "Initialize from _selection"
 msgstr "Iniciar a partir de la _selección"
 
-#: ../app/dialogs/color-profile-dialog.c:136
+#: ../app/dialogs/color-profile-dialog.c:137
 msgid "Assign ICC Color Profile"
 msgstr "Asignar perfil de color ICC"
 
-#: ../app/dialogs/color-profile-dialog.c:139
+#: ../app/dialogs/color-profile-dialog.c:140
 msgid "Assign a color profile to the image"
 msgstr "Asignar un perfil de color a la imagen"
 
-#: ../app/dialogs/color-profile-dialog.c:145
+#: ../app/dialogs/color-profile-dialog.c:146
 msgid "_Assign"
 msgstr "_Asignar"
 
-#: ../app/dialogs/color-profile-dialog.c:156
+#: ../app/dialogs/color-profile-dialog.c:157
 msgid "Convert to ICC Color Profile"
 msgstr "Convertir a perfil de color ICC"
 
-#: ../app/dialogs/color-profile-dialog.c:159
+#: ../app/dialogs/color-profile-dialog.c:160
 msgid "Convert the image to a color profile"
 msgstr "Convertir la imagen a un perfil de color"
 
-#: ../app/dialogs/color-profile-dialog.c:176
+#: ../app/dialogs/color-profile-dialog.c:177
 msgid "RGB Conversion"
 msgstr "Conversión RGB"
 
-#: ../app/dialogs/color-profile-dialog.c:179
+#: ../app/dialogs/color-profile-dialog.c:180
 msgid "Convert Image to RGB"
 msgstr "Convertir la imagen a RGB"
 
-#: ../app/dialogs/color-profile-dialog.c:198
+#: ../app/dialogs/color-profile-dialog.c:199
 msgid "Grayscale Conversion"
 msgstr "Conversión escala de grises"
 
-#: ../app/dialogs/color-profile-dialog.c:201
+#: ../app/dialogs/color-profile-dialog.c:202
 msgid "Convert Image to Grayscale"
 msgstr "Convertir la imagen a escala de grises"
 
-#: ../app/dialogs/color-profile-dialog.c:238
+#: ../app/dialogs/color-profile-dialog.c:239
 msgid "Current Color Profile"
 msgstr "Perfil de color actual"
 
-#: ../app/dialogs/color-profile-dialog.c:249
+#: ../app/dialogs/color-profile-dialog.c:250
 msgid "Assign"
 msgstr "Asignar"
 
-#: ../app/dialogs/color-profile-dialog.c:249
+#: ../app/dialogs/color-profile-dialog.c:250
 msgid "Convert to"
 msgstr "Convertir a"
 
-#: ../app/dialogs/color-profile-dialog.c:261
+#: ../app/dialogs/color-profile-dialog.c:262
 msgid "Profile _details"
 msgstr "_Detalles del perfil"
 
-#: ../app/dialogs/color-profile-dialog.c:290
+#: ../app/dialogs/color-profile-dialog.c:291
 msgid "_Rendering Intent:"
 msgstr "Prueba de _renderizado:"
 
-#: ../app/dialogs/color-profile-dialog.c:306
+#: ../app/dialogs/color-profile-dialog.c:307
 msgid "_Black Point Compensation"
 msgstr "_Compensación de punto negro"
 
-#: ../app/dialogs/color-profile-dialog.c:334
+#: ../app/dialogs/color-profile-dialog.c:372
 msgid "Select Destination Profile"
 msgstr "Seleccionar perfil destino"
 
-#: ../app/dialogs/color-profile-dialog.c:365
-#, fuzzy, c-format
-#| msgid "Direction  (%s)"
-msgid "Built-in grayscale (%s)"
-msgstr "Dirección (%s)"
-
-#: ../app/dialogs/color-profile-dialog.c:372
-#, fuzzy, c-format
-#| msgid "Direction  (%s)"
-msgid "Built-in RGB (%s)"
-msgstr "Dirección (%s)"
-
-#: ../app/dialogs/color-profile-dialog.c:390
-#, c-format
-msgid "Preferred grayscale (%s)"
-msgstr "Escala de grises preferida (%s)"
-
-#: ../app/dialogs/color-profile-dialog.c:397
-#, c-format
-msgid "Preferred RGB (%s)"
-msgstr "RGB preferido (%s)"
-
-#: ../app/dialogs/color-profile-dialog.c:459
+#: ../app/dialogs/color-profile-dialog.c:423
 msgid "Assign color profile"
 msgstr "Asignar perfil de color"
 
-#: ../app/dialogs/color-profile-dialog.c:489
+#: ../app/dialogs/color-profile-dialog.c:453
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Convertir a «%s»"
 
-#: ../app/dialogs/color-profile-dialog.c:517
+#: ../app/dialogs/color-profile-dialog.c:481
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Convertir a RGB (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:539
+#: ../app/dialogs/color-profile-dialog.c:503
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Convertir a escala de grises (%s)"
@@ -11213,11 +11164,8 @@ msgstr ""
 "su lugar."
 
 #: ../app/dialogs/file-save-dialog.c:616
-#, fuzzy
-#| msgctxt "dialogs-action"
-#| msgid "Open the layers dialog"
 msgid "Take me to the Save dialog"
-msgstr "Abre el diálogo de capas"
+msgstr "Ir al diálogo Guardar"
 
 #: ../app/dialogs/file-save-dialog.c:620
 msgid "The given filename cannot be used for saving"
@@ -11232,11 +11180,8 @@ msgstr ""
 "Archivo→Exportar para exportar a otros formatos de archivo."
 
 #: ../app/dialogs/file-save-dialog.c:623
-#, fuzzy
-#| msgctxt "dialogs-action"
-#| msgid "Open the paths dialog"
 msgid "Take me to the Export dialog"
-msgstr "Abre el diálogo de rutas"
+msgstr "Ir al diálogo Exportar"
 
 #: ../app/dialogs/file-save-dialog.c:626 ../app/dialogs/file-save-dialog.c:703
 msgid "Extension Mismatch"
@@ -11865,10 +11810,8 @@ msgstr "Modo de _visualización de la imagen:"
 
 #. Color Managed Display
 #: ../app/dialogs/preferences-dialog.c:1353
-#, fuzzy
-#| msgid "Color Management"
 msgid "Color Managed Display"
-msgstr "Gestión del color"
+msgstr "Pantalla de color gestionado"
 
 #: ../app/dialogs/preferences-dialog.c:1362
 msgid "Select Monitor Color Profile"
@@ -11883,23 +11826,17 @@ msgid "_Try to use the system monitor profile"
 msgstr "In_tentar utilizar el perfil de monitor del sistema"
 
 #: ../app/dialogs/preferences-dialog.c:1378
-#, fuzzy
-#| msgid "_Rendering Intent:"
 msgid "_Rendering intent:"
 msgstr "Prueba de _renderizado:"
 
 #: ../app/dialogs/preferences-dialog.c:1383
-#, fuzzy
-#| msgid "_Black Point Compensation"
 msgid "Use _black point compensation"
-msgstr "_Compensación de punto negro"
+msgstr "Usar _compensación de punto negro"
 
 #. Print Simulation (Softproofing)
 #: ../app/dialogs/preferences-dialog.c:1390
-#, fuzzy
-#| msgid "_Print simulation profile:"
 msgid "Print Simulation (Softproofing)"
-msgstr "Perfil de simulación de _impresión:"
+msgstr "Imprimir simulación (pseudoprueba)"
 
 #: ../app/dialogs/preferences-dialog.c:1400
 msgid "Select Printer Color Profile"
@@ -11910,16 +11847,12 @@ msgid "_Print simulation profile:"
 msgstr "Perfil de simulación de _impresión:"
 
 #: ../app/dialogs/preferences-dialog.c:1406
-#, fuzzy
-#| msgid "_Rendering Intent:"
 msgid "Re_ndering intent:"
 msgstr "Prueba de _renderizado:"
 
 #: ../app/dialogs/preferences-dialog.c:1411
-#, fuzzy
-#| msgid "_Black Point Compensation"
 msgid "Use black _point compensation"
-msgstr "_Compensación de punto negro"
+msgstr "Usar _compensación de punto negro"
 
 #: ../app/dialogs/preferences-dialog.c:1424
 msgid "Mark out of gamut colors"
@@ -11931,10 +11864,8 @@ msgstr "Seleccionar el color de las advertencias"
 
 #. Preferred profiles
 #: ../app/dialogs/preferences-dialog.c:1440
-#, fuzzy
-#| msgid "Preferred _RGB profile:"
 msgid "Preferred Profiles"
-msgstr "Perfil _RGB preferido:"
+msgstr "Perfiles preferidos"
 
 #: ../app/dialogs/preferences-dialog.c:1449
 #, fuzzy
@@ -11943,10 +11874,8 @@ msgid "Select Preferred RGB Color Profile"
 msgstr "Seleccionar el perfil de color RGB"
 
 #: ../app/dialogs/preferences-dialog.c:1450
-#, fuzzy
-#| msgid "_CMYK profile:"
 msgid "_RGB profile:"
-msgstr "Perfil _CMYK:"
+msgstr "Perfil _RGB:"
 
 #: ../app/dialogs/preferences-dialog.c:1456
 #, fuzzy
@@ -11955,10 +11884,8 @@ msgid "Select Preferred Grayscale Color Profile"
 msgstr "Seleccionar el perfil de color de escala de grises"
 
 #: ../app/dialogs/preferences-dialog.c:1457
-#, fuzzy
-#| msgid "Preferred _grayscale profile:"
 msgid "_Grayscale profile:"
-msgstr "Perfil _escala de grises preferido:"
+msgstr "Perfil _escala de grises:"
 
 #: ../app/dialogs/preferences-dialog.c:1463
 msgid "Select CMYK Color Profile"
@@ -11971,7 +11898,7 @@ msgstr "Perfil _CMYK:"
 #. Policies
 #: ../app/dialogs/preferences-dialog.c:1468
 msgid "Policies"
-msgstr ""
+msgstr "Políticas"
 
 #: ../app/dialogs/preferences-dialog.c:1475
 msgid "File Open behaviour:"
@@ -12696,23 +12623,23 @@ msgstr "Tamaño de la impresión"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:169 ../app/widgets/gimpsizebox.c:193
-#: ../app/widgets/gimptemplateeditor.c:181
+#: ../app/widgets/gimptemplateeditor.c:195
 msgid "_Width:"
 msgstr "Anc_hura:"
 
 #: ../app/dialogs/print-size-dialog.c:176 ../app/widgets/gimpsizebox.c:197
-#: ../app/widgets/gimptemplateeditor.c:188
+#: ../app/widgets/gimptemplateeditor.c:202
 msgid "H_eight:"
 msgstr "A_ltura:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:230 ../app/widgets/gimpsizebox.c:260
-#: ../app/widgets/gimptemplateeditor.c:310
+#: ../app/widgets/gimptemplateeditor.c:324
 msgid "_X resolution:"
 msgstr "Resolución _X:"
 
 #: ../app/dialogs/print-size-dialog.c:237 ../app/widgets/gimpsizebox.c:263
-#: ../app/widgets/gimptemplateeditor.c:317
+#: ../app/widgets/gimptemplateeditor.c:331
 msgid "_Y resolution:"
 msgstr "Resolución _Y:"
 
@@ -12807,7 +12734,7 @@ msgid "_Vertical:"
 msgstr "_Vertical:"
 
 #. Image size frame
-#: ../app/dialogs/scale-dialog.c:98 ../app/widgets/gimptemplateeditor.c:159
+#: ../app/dialogs/scale-dialog.c:98 ../app/widgets/gimptemplateeditor.c:173
 msgid "Image Size"
 msgstr "Tamaño de la imagen"
 
@@ -15264,17 +15191,17 @@ msgstr "La capa activa no está visible."
 msgid "No gradient available for use with this tool."
 msgstr "No hay degradados disponibles para usar con esta herramienta."
 
-#: ../app/tools/gimpblendtool.c:952 ../app/tools/gimppainttool.c:655
+#: ../app/tools/gimpblendtool.c:957 ../app/tools/gimppainttool.c:655
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s para ángulos restringidos"
 
-#: ../app/tools/gimpblendtool.c:953
+#: ../app/tools/gimpblendtool.c:958
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s para mover toda la línea"
 
-#: ../app/tools/gimpblendtool.c:957
+#: ../app/tools/gimpblendtool.c:962
 msgid "Blend: "
 msgstr "Mezcla: "
 
@@ -15958,12 +15885,12 @@ msgstr "Pulse para mover la guía de división"
 #: ../app/tools/gimpfiltertool.c:643
 #, c-format
 msgid "%s: switch original and filtered"
-msgstr ""
+msgstr "%s: cambiar original y filtrado"
 
 #: ../app/tools/gimpfiltertool.c:644
 #, c-format
 msgid "%s: switch horizontal and vertical"
-msgstr ""
+msgstr "%s: cambiar horizontal y vertical"
 
 #: ../app/tools/gimpfiltertool-settings.c:81
 msgid "Pre_sets:"
@@ -19232,7 +19159,7 @@ msgid "Number of paths:"
 msgstr "Número de rutas:"
 
 #: ../app/widgets/gimpimagepropview.c:454
-#: ../app/widgets/gimptemplateeditor.c:332
+#: ../app/widgets/gimptemplateeditor.c:346
 #, c-format
 msgid "pixels/%s"
 msgstr "píxeles/%s"
@@ -19575,57 +19502,57 @@ msgstr "introducir etiquetas"
 msgid ","
 msgstr ","
 
-#: ../app/widgets/gimptemplateeditor.c:202
+#: ../app/widgets/gimptemplateeditor.c:216
 #, c-format
 msgid "%p"
 msgstr "%p"
 
-#: ../app/widgets/gimptemplateeditor.c:277
+#: ../app/widgets/gimptemplateeditor.c:291
 msgid "_Advanced Options"
 msgstr "_Opciones avanzadas"
 
-#: ../app/widgets/gimptemplateeditor.c:388
+#: ../app/widgets/gimptemplateeditor.c:402
 msgid "Color _space:"
 msgstr "E_spacio de color:"
 
-#: ../app/widgets/gimptemplateeditor.c:394
+#: ../app/widgets/gimptemplateeditor.c:408
 msgid "_Precision:"
 msgstr "_Precisión:"
 
-#: ../app/widgets/gimptemplateeditor.c:399
+#: ../app/widgets/gimptemplateeditor.c:413
 msgid "Color manage this image"
 msgstr "Gestionar el color de esta imagen"
 
-#: ../app/widgets/gimptemplateeditor.c:407
+#: ../app/widgets/gimptemplateeditor.c:422
 msgid "Choose A Color Profile"
 msgstr "Elegir un perfil de color"
 
-#: ../app/widgets/gimptemplateeditor.c:411
+#: ../app/widgets/gimptemplateeditor.c:424
 msgid "Color _profile:"
 msgstr "_Perfil de color:"
 
-#: ../app/widgets/gimptemplateeditor.c:418
+#: ../app/widgets/gimptemplateeditor.c:431
 msgid "_Fill with:"
 msgstr "R_ellenar con:"
 
-#: ../app/widgets/gimptemplateeditor.c:428
+#: ../app/widgets/gimptemplateeditor.c:441
 msgid "Comme_nt:"
 msgstr "Come_ntario:"
 
-#: ../app/widgets/gimptemplateeditor.c:535
+#: ../app/widgets/gimptemplateeditor.c:558
 msgid "_Name:"
 msgstr "_Nombre:"
 
-#: ../app/widgets/gimptemplateeditor.c:541
+#: ../app/widgets/gimptemplateeditor.c:564
 msgid "_Icon:"
 msgstr "_Icono:"
 
-#: ../app/widgets/gimptemplateeditor.c:721
+#: ../app/widgets/gimptemplateeditor.c:744
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d x %d ppp, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:723
+#: ../app/widgets/gimptemplateeditor.c:746
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d ppp, %s"
@@ -19885,25 +19812,47 @@ msgstr "Abrir el diálogo de selección de paleta"
 msgid "Open the font selection dialog"
 msgstr "Abrir el diálogo de selección de tipografía"
 
-#: ../app/widgets/gimpwidgets-utils.c:646
+#: ../app/widgets/gimpwidgets-utils.c:648
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (intente %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:646
+#: ../app/widgets/gimpwidgets-utils.c:648
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:650
+#: ../app/widgets/gimpwidgets-utils.c:652
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (intente %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:654
+#: ../app/widgets/gimpwidgets-utils.c:656
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (intente %s, %s, %s)"
+
+#: ../app/widgets/gimpwidgets-utils.c:1402
+#, fuzzy, c-format
+#| msgid "Direction  (%s)"
+msgid "Built-in grayscale (%s)"
+msgstr "Dirección (%s)"
+
+#: ../app/widgets/gimpwidgets-utils.c:1409
+#, fuzzy, c-format
+#| msgid "Direction  (%s)"
+msgid "Built-in RGB (%s)"
+msgstr "Dirección (%s)"
+
+#: ../app/widgets/gimpwidgets-utils.c:1426
+#, c-format
+msgid "Preferred grayscale (%s)"
+msgstr "Escala de grises preferida (%s)"
+
+#: ../app/widgets/gimpwidgets-utils.c:1433
+#, c-format
+msgid "Preferred RGB (%s)"
+msgstr "RGB preferido (%s)"
 
 #: ../app/widgets/widgets-enums.c:23
 msgctxt "active-color"
@@ -20133,6 +20082,29 @@ msgstr "redondo"
 msgid "fuzzy"
 msgstr "borroso"
 
+#~| msgid "_Black Point Compensation"
+#~ msgctxt "view-action"
+#~ msgid "Use black point compentation"
+#~ msgstr "Usar compensación de punto negro"
+
+#, fuzzy
+#~| msgid "Color Management"
+#~ msgctxt "view-action"
+#~ msgid "_No Color Management"
+#~ msgstr "Gestión del color"
+
+#, fuzzy
+#~| msgid "Color manage this image"
+#~ msgctxt "view-action"
+#~ msgid "Don't color manage this view"
+#~ msgstr "Gestionar el color de esta imagen"
+
+#, fuzzy
+#~| msgid "Color Management"
+#~ msgctxt "view-action"
+#~ msgid "_Color Managed Display"
+#~ msgstr "Gestión del color"
+
 #, fuzzy
 #~| msgctxt "image-action"
 #~| msgid "Remove the image's color profile"
@@ -20142,12 +20114,6 @@ msgstr "borroso"
 
 #~ msgid "_Mode of operation:"
 #~ msgstr "_Modo de operación:"
-
-#~ msgid "_Display rendering intent:"
-#~ msgstr "Prueba de renderizado en _pantalla:"
-
-#~ msgid "Use _black point compensation for the display"
-#~ msgstr "Utilizar la _compensación de punto negro para la pantalla"
 
 #~ msgid "_Softproof rendering intent:"
 #~ msgstr "_Pseudoprueba de renderizado:"
