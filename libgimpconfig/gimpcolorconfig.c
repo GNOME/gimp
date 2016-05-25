@@ -30,8 +30,6 @@
 
 #include "gimpconfigtypes.h"
 
-#include "gimpcolorconfig-enums.h"
-
 #include "gimpcolorconfig.h"
 #include "gimpconfig-error.h"
 #include "gimpconfig-iface.h"
