@@ -1,21 +1,21 @@
-# translation of gimp20.po to Occitan (lengadocian)	
+# translation of gimp20.po to Occitan (lengadocian)
 # Occitan (post 1500) translation for gimp
 # Copyright (C) 1998-2014 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gedit package.
 # Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 # Cédric Valmary (Tot en Òc) <cvalmary@yahoo.fr>, 2015.
 # Cédric Valmary (Tot en òc) <cvalmary@yahoo.fr>, 2015.
-# Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2015.
+# Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2015, 2016.
 # Cédric VALMARY <cvalmary@yahoo.fr>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gedit HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
 "ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-21 19:15+0000\n"
-"PO-Revision-Date: 2016-04-15 14:31+0200\n"
-"Last-Translator: Cédric VALMARY <cvalmary@yahoo.fr>\n"
-"Language-Team: Tot en òc (totenoc.eu)\n"
+"POT-Creation-Date: 2016-05-25 18:25+0000\n"
+"PO-Revision-Date: 2016-05-26 22:43+0200\n"
+"Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
+"Language-Team: Tot En Òc\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +88,7 @@ msgstr "Gris"
 #. Gray: Circle: Spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:466
 msgid "Hue:"
-msgstr "Tencha :"
+msgstr "Tinta :"
 
 #. Gray: Circle: Spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:493
@@ -181,7 +181,7 @@ msgstr "_Modificar lo canal roge"
 
 #: ../plug-ins/common/alien-map.c:140
 msgid "_Modify hue channel"
-msgstr "_Modificar lo canal tencha"
+msgstr "_Modificar lo canal tinta"
 
 #: ../plug-ins/common/alien-map.c:141
 msgid "Mo_dify green channel"
@@ -205,7 +205,7 @@ msgstr "_Frequéncia roge :"
 
 #: ../plug-ins/common/alien-map.c:147
 msgid "Hue _frequency:"
-msgstr "_Frequéncia tencha :"
+msgstr "_Frequéncia tinta :"
 
 #: ../plug-ins/common/alien-map.c:148
 msgid "Green fr_equency:"
@@ -229,7 +229,7 @@ msgstr "Des_fasatge roge :"
 
 #: ../plug-ins/common/alien-map.c:151
 msgid "Hue _phaseshift:"
-msgstr "Des_fasatge tencha :"
+msgstr "Des_fasatge tinta :"
 
 #: ../plug-ins/common/alien-map.c:152
 msgid "Green ph_aseshift:"
@@ -275,7 +275,7 @@ msgstr "Angle de fasa, entre 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/alien-map.c:516 ../plug-ins/common/hot.c:613
-#: ../plug-ins/common/value-propagate.c:1121 ../plug-ins/common/waves.c:279
+#: ../plug-ins/common/value-propagate.c:1125 ../plug-ins/common/waves.c:279
 msgid "Mode"
 msgstr "Mòde"
 
@@ -314,11 +314,11 @@ msgstr "Collectar"
 
 #: ../plug-ins/common/align-layers.c:653
 msgid "Fill (left to right)"
-msgstr "Emplenar (d'esquèrra a drecha)"
+msgstr "Emplenar (d'esquèrra a dreita)"
 
 #: ../plug-ins/common/align-layers.c:654
 msgid "Fill (right to left)"
-msgstr "Emplenar (de drecha a esquèrra)"
+msgstr "Emplenar (de dreita a esquèrra)"
 
 #: ../plug-ins/common/align-layers.c:655 ../plug-ins/common/align-layers.c:686
 msgid "Snap to grid"
@@ -339,7 +339,7 @@ msgstr "Centrar"
 
 #: ../plug-ins/common/align-layers.c:670
 msgid "Right edge"
-msgstr "Bòrd drech"
+msgstr "Bòrd dreit"
 
 #: ../plug-ins/common/align-layers.c:679
 msgid "Ho_rizontal base:"
@@ -392,8 +392,7 @@ msgstr "Optimizar (per _GIF)"
 
 #: ../plug-ins/common/animation-optimize.c:152
 msgid "Reduce file size where combining layers is possible"
-msgstr ""
-"Redutz la talha del fichièr quand es possible de combinar los calques"
+msgstr "Redutz la talha del fichièr quand es possible de combinar los calques"
 
 #: ../plug-ins/common/animation-optimize.c:162
 msgid "_Optimize (Difference)"
@@ -537,15 +536,15 @@ msgstr "Apond una textura en canavàs a l'imatge"
 
 #: ../plug-ins/common/apply-canvas.c:1145
 msgid "_Apply Canvas..."
-msgstr "Efièch de _canavàs..."
+msgstr "Efièit de _canavàs..."
 
 #: ../plug-ins/common/apply-canvas.c:1226
 msgid "Applying canvas"
-msgstr "Efièch de canavàs en cors"
+msgstr "Efièit de canavàs en cors"
 
 #: ../plug-ins/common/apply-canvas.c:1263
 msgid "Apply Canvas"
-msgstr "Efièch de canavàs"
+msgstr "Efièit de canavàs"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
@@ -557,7 +556,7 @@ msgstr "Direccion"
 
 #: ../plug-ins/common/apply-canvas.c:1297
 msgid "_Top-right"
-msgstr "A_mont a drecha"
+msgstr "A_mont a dreita"
 
 #: ../plug-ins/common/apply-canvas.c:1298
 msgid "Top-_left"
@@ -608,9 +607,9 @@ msgstr "_Orizontal"
 msgid "_Vertical"
 msgstr "_Vertical"
 
-#. 
+#.
 #. * Create the "background" layer to hold the image...
-#. 
+#.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
 #: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:442
 #: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:612
@@ -618,7 +617,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
 #: ../plug-ins/common/file-png.c:898 ../plug-ins/common/file-pnm.c:585
-#: ../plug-ins/common/file-raw.c:766 ../plug-ins/common/file-sunras.c:979
+#: ../plug-ins/common/file-raw.c:780 ../plug-ins/common/file-sunras.c:979
 #: ../plug-ins/common/file-tga.c:1095 ../plug-ins/common/file-tiff-load.c:1011
 #: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
@@ -712,7 +711,7 @@ msgstr "_Vertical :"
 
 #: ../plug-ins/common/blur-gauss.c:550
 msgid "Blur Method"
-msgstr "Metòde de flou"
+msgstr "Metòde de fosc"
 
 #: ../plug-ins/common/blur-gauss.c:554
 msgid "_IIR"
@@ -845,7 +844,7 @@ msgstr "Talha dels pò_ts de pintrura :"
 
 #: ../plug-ins/common/bump-map.c:257
 msgid "Create an embossing effect using a bump map"
-msgstr "Crèa un efièch de repossatge en utilizant una mapa d'enfonsament"
+msgstr "Crèa un efièit de repossatge en utilizant una mapa d'enfonsament"
 
 #: ../plug-ins/common/bump-map.c:267
 msgid "_Bump Map..."
@@ -1036,7 +1035,7 @@ msgstr "Cargatz los paramètres del mixador de canals"
 #: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
 #: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
 #: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
-#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:714
+#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:728
 #: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
 #: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
@@ -1074,7 +1073,7 @@ msgstr "Enregistratz los paramètres del mixador de canals"
 #: ../plug-ins/common/file-pcx.c:713 ../plug-ins/common/file-pdf-save.c:438
 #: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1370
 #: ../plug-ins/common/file-pnm.c:1012 ../plug-ins/common/file-ps.c:1195
-#: ../plug-ins/common/file-raw.c:609 ../plug-ins/common/file-raw.c:637
+#: ../plug-ins/common/file-raw.c:623 ../plug-ins/common/file-raw.c:651
 #: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1202
 #: ../plug-ins/common/file-tiff-save.c:842 ../plug-ins/common/file-xbm.c:1037
 #: ../plug-ins/common/file-xmc.c:1449 ../plug-ins/common/file-xwd.c:637
@@ -1321,7 +1320,7 @@ msgstr "Aleatòris dempuèi un gèrme (partejat)"
 #: ../plug-ins/gimpressionist/orientation.c:179
 #: ../plug-ins/gimpressionist/size.c:182
 msgid "Hue"
-msgstr "Tencha"
+msgstr "Tinta"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:189
@@ -1341,7 +1340,7 @@ msgstr "(Pas cap)"
 
 #: ../plug-ins/common/cml-explorer.c:460
 msgid "Create abstract Coupled-Map Lattice patterns"
-msgstr "Crèa de motius abstraches de Coupled-Map Lattice"
+msgstr "Crèa de motius abstraits de Coupled-Map Lattice"
 
 #: ../plug-ins/common/cml-explorer.c:471
 msgid "CML _Explorer..."
@@ -1370,7 +1369,7 @@ msgstr "Gèrme aleatòri"
 #: ../plug-ins/common/cml-explorer.c:1293 ../plug-ins/common/filter-pack.c:702
 #: ../plug-ins/common/van-gogh-lic.c:675
 msgid "_Hue"
-msgstr "_Tencha"
+msgstr "_Tinta"
 
 #: ../plug-ins/common/cml-explorer.c:1297
 msgid "Sat_uration"
@@ -1548,8 +1547,7 @@ msgstr "Atencion : « %s » es un vièlh format de fichièr."
 
 #: ../plug-ins/common/cml-explorer.c:2241
 #, c-format
-msgid ""
-"Warning: '%s' is a parameter file for a newer version of CML Explorer."
+msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 "Atencion : « %s » es un fichièr de paramètres per una version de "
 "CML_Explorer mai recenta."
@@ -1735,7 +1733,7 @@ msgstr "Reorganizacion de la paleta de las colors"
 
 #: ../plug-ins/common/colormap-remap.c:481
 msgid "Sort on Hue"
-msgstr "Triar segon la tencha"
+msgstr "Triar segon la tinta"
 
 #: ../plug-ins/common/colormap-remap.c:485
 msgid "Sort on Saturation"
@@ -1763,11 +1761,11 @@ msgid ""
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
 "Lisatz-depausatz de colors per reorganizar la paleta. Los nombres indicats "
-"son los indicis originals. Efectuatz un clic-drech per afichar un menú "
+"son los indicis originals. Efectuatz un clic-dreit per afichar un menú "
 "d'opcions de triada."
 
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw.c:1103
+#: ../plug-ins/common/file-raw.c:1117
 msgid "RGB"
 msgstr "RVB"
 
@@ -1786,7 +1784,7 @@ msgstr "TSV"
 
 #: ../plug-ins/common/compose.c:212 ../plug-ins/common/compose.c:220
 msgid "_Hue:"
-msgstr "_Tencha :"
+msgstr "_Tinta :"
 
 #: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:221
 #: ../plug-ins/common/noise-hsv.c:425
@@ -1904,7 +1902,7 @@ msgid ""
 "'Decompose'."
 msgstr ""
 "Podètz utilizar « Recompausar » que se l'imatge activa es estat "
-"originalament produch per « Descompausar »"
+"originalament produit per « Descompausar »"
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -2130,7 +2128,7 @@ msgid "D_ivisor:"
 msgstr "Deve_sidor :"
 
 #: ../plug-ins/common/convolution-matrix.c:1001
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1124
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1138
 msgid "O_ffset:"
 msgstr "_Decalatge :"
 
@@ -2391,7 +2389,7 @@ msgstr "alfa"
 
 #: ../plug-ins/common/decompose.c:184 ../plug-ins/common/decompose.c:188
 msgid "hue"
-msgstr "tencha"
+msgstr "tinta"
 
 #: ../plug-ins/common/decompose.c:185 ../plug-ins/common/decompose.c:189
 msgid "saturation"
@@ -2403,7 +2401,7 @@ msgstr "valor"
 
 #: ../plug-ins/common/decompose.c:193 ../plug-ins/common/decompose.c:197
 msgid "hue_l"
-msgstr "tencha_l"
+msgstr "tinta_l"
 
 #: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:198
 msgid "saturation_l"
@@ -2415,7 +2413,7 @@ msgstr "lum"
 
 #: ../plug-ins/common/decompose.c:197
 msgid "Hue (HSL)"
-msgstr "Tencha (TSL)"
+msgstr "Tinta (TSL)"
 
 #: ../plug-ins/common/decompose.c:198
 msgid "Saturation (HSL)"
@@ -2628,7 +2626,7 @@ msgstr "Escala _2 :"
 
 #: ../plug-ins/common/despeckle.c:160
 msgid "Remove speckle noise from the image"
-msgstr "Suprimís los bruches parasits d'un imatge"
+msgstr "Suprimís los bruits parasits d'un imatge"
 
 #: ../plug-ins/common/despeckle.c:166
 msgid "Des_peckle..."
@@ -2684,7 +2682,7 @@ msgstr "Anti-estralhs"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
 #: ../plug-ins/common/file-ps.c:3039 ../plug-ins/common/file-ps.c:3237
-#: ../plug-ins/common/file-raw.c:1137 ../plug-ins/common/smooth-palette.c:437
+#: ../plug-ins/common/file-raw.c:1151 ../plug-ins/common/smooth-palette.c:437
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
@@ -2998,7 +2996,7 @@ msgstr "Gravadura"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
 #: ../plug-ins/common/file-ps.c:3049 ../plug-ins/common/file-ps.c:3246
-#: ../plug-ins/common/file-raw.c:1150 ../plug-ins/common/film.c:1002
+#: ../plug-ins/common/file-raw.c:1164 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
@@ -3048,7 +3046,7 @@ msgstr ""
 #: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:350
 #: ../plug-ins/common/file-png.c:770 ../plug-ins/common/file-pnm.c:501
-#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:719
+#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:733
 #: ../plug-ins/common/file-sunras.c:489 ../plug-ins/common/file-tga.c:448
 #: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:743 ../plug-ins/common/file-xmc.c:669
@@ -3148,7 +3146,7 @@ msgstr "Enregistrament de « %s »"
 
 #: ../plug-ins/common/file-csource.c:113
 msgid "C source code"
-msgstr "còde font C"
+msgstr "còdi font C"
 
 #: ../plug-ins/common/file-csource.c:701
 msgid "C-Source"
@@ -3163,13 +3161,13 @@ msgid "Co_mment:"
 msgstr "Co_mentari :"
 
 #. Use Comment
-#. 
+#.
 #: ../plug-ins/common/file-csource.c:735
 msgid "_Save comment to file"
 msgstr "Enregi_strar lo comentari dins lo fichièr"
 
 #. GLib types
-#. 
+#.
 #: ../plug-ins/common/file-csource.c:747
 msgid "_Use GLib types (guint8*)"
 msgstr "_Utilizar los tipes GLib (guint8*)"
@@ -3187,7 +3185,7 @@ msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Sal_var lo canal alfa (RVBA/RVB)"
 
 #. RGB-565
-#. 
+#.
 #: ../plug-ins/common/file-csource.c:798
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Enregistrar coma _RVB565 (16-bit)"
@@ -3226,7 +3224,6 @@ msgstr "Impossible d'enregistrar d'imatges amb un canal alfa."
 #: ../plug-ins/common/file-dicom.c:1354 ../plug-ins/common/file-ps.c:1185
 #: ../plug-ins/common/file-ps.c:1217 ../plug-ins/common/file-xwd.c:627
 #: ../plug-ins/file-fits/fits.c:468 ../plug-ins/file-xjt/xjt.c:1695
-#, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Impossible d'operar sus de tipes d'imatges desconeguts."
 
@@ -3319,7 +3316,7 @@ msgid ""
 "play or re-save perfectly."
 msgstr ""
 "GIF : lo tipe GIF composit %d es pas documentat e es pas pres en carga. "
-"L'animacion se poiria pas jogar ni èsser re-enregistrada perfièchament."
+"L'animacion se poiria pas jogar ni èsser re-enregistrada perfièitament."
 
 #: ../plug-ins/common/file-gif-save.c:476
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -3481,7 +3478,7 @@ msgstr "Rengs :"
 
 #: ../plug-ins/common/file-header.c:77
 msgid "C source code header"
-msgstr "entèsta de còde font C"
+msgstr "entèsta de còdi font C"
 
 #: ../plug-ins/common/file-html-table.c:156
 #: ../plug-ins/common/file-html-table.c:411
@@ -3621,8 +3618,7 @@ msgstr "Impossible de desencodar « %s »."
 
 #: ../plug-ins/common/file-jp2-load.c:237
 #, c-format
-msgid ""
-"The image '%s' is in grayscale but does not contain any gray component."
+msgid "The image '%s' is in grayscale but does not contain any gray component."
 msgstr ""
 "L'imatge « %s » es en nivèls de gris mas conten pas cap de componenta de "
 "gris."
@@ -3638,7 +3634,7 @@ msgid ""
 "The image '%s' is in the CIEXYZ color space, but there is no code in place "
 "to convert it to RGB."
 msgstr ""
-"L'imatge « %s » es dins l'espaci colorimetric CIEXYZ mas cap de còde es pas "
+"L'imatge « %s » es dins l'espaci colorimetric CIEXYZ mas cap de còdi es pas "
 "present per lo convertir en RVB."
 
 #: ../plug-ins/common/file-jp2-load.c:296
@@ -3647,7 +3643,7 @@ msgid ""
 "The image '%s' is in the CIELAB color space, but there is no code in place "
 "to convert it to RGB."
 msgstr ""
-"L'imatge « %s » es dins l'espaci colorimetric CIELAB mas cap de còde es pas "
+"L'imatge « %s » es dins l'espaci colorimetric CIELAB mas cap de còdi es pas "
 "present per lo convertir en RVB."
 
 #: ../plug-ins/common/file-jp2-load.c:303
@@ -3656,7 +3652,7 @@ msgid ""
 "The image '%s' is in the YCbCr color space, but there is no code in place to "
 "convert it to RGB."
 msgstr ""
-"L'imatge « %s » es dins l'espaci colorimetric YCbCr mas cap de còde es pas "
+"L'imatge « %s » es dins l'espaci colorimetric YCbCr mas cap de còdi es pas "
 "present per lo convertir en RVB."
 
 #: ../plug-ins/common/file-jp2-load.c:311
@@ -3675,8 +3671,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-jp2-load.c:336
 #, c-format
-msgid ""
-"Image component %d of image '%s' does not have both a hstep and vstep."
+msgid "Image component %d of image '%s' does not have both a hstep and vstep."
 msgstr ""
 "Lo component %d de l'imatge « %s » a pas a l'encòp un « hstep » e un « vstep "
 "»."
@@ -3876,13 +3871,12 @@ msgstr "Decalatge Y invalid : %d"
 #: ../plug-ins/common/file-pcx.c:698
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
-msgstr "La bordadura drecha es fòra limits (deu èsser inferiora a %d) : %d"
+msgstr "La bordadura dreita es fòra limits (deu èsser inferiora a %d) : %d"
 
 #: ../plug-ins/common/file-pcx.c:705
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
-msgstr ""
-"La bordadura inferiora es fòra limits (deu èsser inferiora a %d) : %d"
+msgstr "La bordadura inferiora es fòra limits (deu èsser inferiora a %d) : %d"
 
 #: ../plug-ins/common/file-pcx.c:770
 #, c-format
@@ -4208,7 +4202,7 @@ msgstr "Pagina %d"
 #: ../plug-ins/common/file-sunras.c:1506 ../plug-ins/common/file-sunras.c:1612
 #: ../plug-ins/file-fits/fits.c:852 ../plug-ins/file-fits/fits.c:975
 msgid "Write error occurred"
-msgstr "Una error d'escritura s'es producha"
+msgstr "Una error d'escritura s'es produita"
 
 #: ../plug-ins/common/file-ps.c:2962
 msgid "Import from PostScript"
@@ -4308,7 +4302,7 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Se aquesta opcion es activée, l'imatge résultante serà étirée per remplir la "
+"Se aquesta opcion es activada, l'imatge résultante serà étirée per remplir la "
 "talha donada sens changer les proportions."
 
 #. Unit
@@ -4380,83 +4374,83 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Donadas d'imatge Raw"
 
-#: ../plug-ins/common/file-raw.c:1059
+#: ../plug-ins/common/file-raw.c:1073
 msgid "Load Image from Raw Data"
 msgstr "Cargar un imatge dempuèi las donadas Raw"
 
-#: ../plug-ins/common/file-raw.c:1093
+#: ../plug-ins/common/file-raw.c:1107
 msgid "Image"
 msgstr "Imatge"
 
-#: ../plug-ins/common/file-raw.c:1104
+#: ../plug-ins/common/file-raw.c:1118
 msgid "RGB Alpha"
 msgstr "Alfa RVB"
 
-#: ../plug-ins/common/file-raw.c:1105
+#: ../plug-ins/common/file-raw.c:1119
 msgid "RGB565"
 msgstr "RVB565"
 
-#: ../plug-ins/common/file-raw.c:1106
+#: ../plug-ins/common/file-raw.c:1120
 msgid "Planar RGB"
 msgstr "RVB plat"
 
-#: ../plug-ins/common/file-raw.c:1107
+#: ../plug-ins/common/file-raw.c:1121
 msgid "Indexed"
-msgstr "Indexat"
+msgstr "Indèxat"
 
-#: ../plug-ins/common/file-raw.c:1108
+#: ../plug-ins/common/file-raw.c:1122
 msgid "Indexed Alpha"
 msgstr "Alfa indexat"
 
-#: ../plug-ins/common/file-raw.c:1113
+#: ../plug-ins/common/file-raw.c:1127
 msgid "Image _Type:"
 msgstr "_Tipe d'imatge :"
 
-#: ../plug-ins/common/file-raw.c:1163
+#: ../plug-ins/common/file-raw.c:1177
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/common/file-raw.c:1173 ../plug-ins/common/file-raw.c:1258
+#: ../plug-ins/common/file-raw.c:1187 ../plug-ins/common/file-raw.c:1272
 msgid "R, G, B (normal)"
 msgstr "R, V, B (normal)"
 
-#: ../plug-ins/common/file-raw.c:1174 ../plug-ins/common/file-raw.c:1260
+#: ../plug-ins/common/file-raw.c:1188 ../plug-ins/common/file-raw.c:1274
 msgid "B, G, R, X (BMP style)"
 msgstr "B, V, R, X (estil BMP)"
 
-#: ../plug-ins/common/file-raw.c:1179
+#: ../plug-ins/common/file-raw.c:1193
 msgid "_Palette Type:"
 msgstr "Tipe de _paletas :"
 
-#: ../plug-ins/common/file-raw.c:1190
+#: ../plug-ins/common/file-raw.c:1204
 msgid "Off_set:"
 msgstr "_Decalatge :"
 
-#: ../plug-ins/common/file-raw.c:1202
+#: ../plug-ins/common/file-raw.c:1216
 msgid "Select Palette File"
 msgstr "Seleccionar lo fichièr de paleta"
 
-#: ../plug-ins/common/file-raw.c:1208
+#: ../plug-ins/common/file-raw.c:1222
 msgid "Pal_ette File:"
 msgstr "Fichièr de _paletas :"
 
-#: ../plug-ins/common/file-raw.c:1236
+#: ../plug-ins/common/file-raw.c:1250
 msgid "Raw Image"
 msgstr "Imatge Raw"
 
-#: ../plug-ins/common/file-raw.c:1244
+#: ../plug-ins/common/file-raw.c:1258
 msgid "RGB Save Type"
 msgstr "Tipe d'enregistrament RVB"
 
-#: ../plug-ins/common/file-raw.c:1248
+#: ../plug-ins/common/file-raw.c:1262
 msgid "Standard (R,G,B)"
 msgstr "Estandard (R,V,B)"
 
-#: ../plug-ins/common/file-raw.c:1249
+#: ../plug-ins/common/file-raw.c:1263
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Plat (RRR,VVV,BBB)"
 
-#: ../plug-ins/common/file-raw.c:1254
+#: ../plug-ins/common/file-raw.c:1268
 msgid "Indexed Palette Type"
 msgstr "Tipe de paleta indexada"
 
@@ -4572,7 +4566,7 @@ msgstr "Rendut SVG en cors"
 
 #: ../plug-ins/common/file-svg.c:353
 msgid "Rendered SVG"
-msgstr "SVG rendut"
+msgstr "SVG rendutt"
 
 #: ../plug-ins/common/file-svg.c:549 ../plug-ins/common/file-wmf.c:358
 #, c-format
@@ -4704,7 +4698,7 @@ msgid ""
 msgstr ""
 "Attention :\n"
 "l'image que vous chargez possède 16 bits par canal. GIMP ne peut manipuler "
-"que 8 bits, donc elle sera convertie pour vous. Des informations seront "
+"que 8 bits, donc elle serà convertie pour vous. Des informations seront "
 "perdues à cause de cette conversion."
 
 #: ../plug-ins/common/file-tiff-save.c:816
@@ -4928,25 +4922,23 @@ msgstr "'%s' es tròp grand per un cursor X."
 #: ../plug-ins/common/file-xmc.c:1009
 #, c-format
 msgid "A read error occurred."
-msgstr "Una error de lectura s'es produsida."
+msgstr "Una error de lectura s'es produita."
 
-#. 
+#.
 #. * parameter settings
-#. 
+#.
 #: ../plug-ins/common/file-xmc.c:1051
 msgid "XMC Options"
 msgstr "Opcions XMC"
 
 #: ../plug-ins/common/file-xmc.c:1079
-msgid ""
-"Enter the X coordinate of the hot spot. The origin is top left corner."
+msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Picatz la coordenada X del punt actiu. L'origina es lo caire en naut a "
 "esquèrra."
 
 #: ../plug-ins/common/file-xmc.c:1097
-msgid ""
-"Enter the Y coordinate of the hot spot. The origin is top left corner."
+msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Picatz la coordenada Y del punt actiu. L'origina es lo caire en naut a "
 "esquèrra."
@@ -5040,9 +5032,9 @@ msgstr "Picatz las informacions de licéncia."
 msgid "_License:"
 msgstr "_Licéncia :"
 
-#. 
+#.
 #. *  Other
-#. 
+#.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
 #: ../plug-ins/common/file-xmc.c:1281
@@ -5381,7 +5373,7 @@ msgstr "Original :"
 
 #: ../plug-ins/common/filter-pack.c:576
 msgid "Hue Variations"
-msgstr "Variacions de tencha"
+msgstr "Variacions de tinta"
 
 #: ../plug-ins/common/filter-pack.c:631
 msgid "Roughness"
@@ -5429,7 +5421,7 @@ msgstr "Seleccion dels pixèls per"
 
 #: ../plug-ins/common/filter-pack.c:837
 msgid "H_ue"
-msgstr "T_encha"
+msgstr "T_inta"
 
 #: ../plug-ins/common/filter-pack.c:838
 msgid "Satu_ration"
@@ -5482,7 +5474,7 @@ msgstr "Talha de l'apercebut"
 
 #: ../plug-ins/common/fractal-trace.c:116
 msgid "Transform image with the Mandelbrot Fractal"
-msgstr "Transforme l'imatge amb una fractala de Mandelbrot"
+msgstr "Transfòrma l'imatge amb una fractala de Mandelbrot"
 
 #: ../plug-ins/common/fractal-trace.c:121
 msgid "_Fractal Trace..."
@@ -5849,7 +5841,7 @@ msgstr "Co_rbat"
 
 #: ../plug-ins/common/jigsaw.c:2526
 msgid "Each piece has straight sides"
-msgstr "Cada pèça a de costats dreches"
+msgstr "Cada pèça a de costats dreits"
 
 #: ../plug-ins/common/jigsaw.c:2527
 msgid "Each piece has curved sides"
@@ -6012,7 +6004,7 @@ msgstr "Simulacion de lentilha"
 
 #: ../plug-ins/common/lens-apply.c:395
 msgid "Lens Effect"
-msgstr "Efièch de lentilha optica"
+msgstr "Efièit de lentilha optica"
 
 #: ../plug-ins/common/lens-apply.c:430
 msgid "_Keep original surroundings"
@@ -6076,23 +6068,23 @@ msgstr "Decalatge _Y :"
 
 #: ../plug-ins/common/lens-flare.c:183
 msgid "Add a lens flare effect"
-msgstr "Apondre un efièch d'esbleugiment de lentilha"
+msgstr "Apondre un efièit d'esbleugiment de lentilha"
 
 #: ../plug-ins/common/lens-flare.c:190
 msgid "Lens _Flare..."
-msgstr "Efièch d'e_sbleugiment..."
+msgstr "Efièit d'e_sbleugiment..."
 
 #: ../plug-ins/common/lens-flare.c:265
 msgid "Render lens flare"
-msgstr "Rendut de l'efièch d'esbleugiment"
+msgstr "Rendut de l'efièit d'esbleugiment"
 
 #: ../plug-ins/common/lens-flare.c:301
 msgid "Lens Flare"
-msgstr "Efièch d'esbleugiment"
+msgstr "Efièit d'esbleugiment"
 
 #: ../plug-ins/common/lens-flare.c:745
 msgid "Center of Flare Effect"
-msgstr "Centre de l'efièch"
+msgstr "Centre de l'efièit"
 
 #: ../plug-ins/common/lens-flare.c:785 ../plug-ins/common/nova.c:475
 msgid "Show _position"
@@ -6298,8 +6290,7 @@ msgstr "Luminància"
 
 #: ../plug-ins/common/newsprint.c:508
 msgid "Halftone the image to give newspaper-like effect"
-msgstr ""
-"Aplica un tramatge a l'imatge per li donar un efièch de papièr jornal"
+msgstr "Aplica un tramatge a l'imatge per li donar un efièit de papièr jornal"
 
 #: ../plug-ins/common/newsprint.c:517
 msgid "Newsprin_t..."
@@ -6391,7 +6382,7 @@ msgstr "Filtre"
 
 #: ../plug-ins/common/nl-filter.c:1050
 msgid "_Alpha trimmed mean"
-msgstr "Mediana reducha per al_fa"
+msgstr "Mediana reduita per al_fa"
 
 #: ../plug-ins/common/nl-filter.c:1052
 msgid "Op_timal estimation"
@@ -6407,7 +6398,7 @@ msgstr "A_lfa :"
 
 #: ../plug-ins/common/noise-hsv.c:103
 msgid "Randomize hue/saturation/value independently"
-msgstr "Modifica aleatòriament e indepentament tencha/saturacion/valor"
+msgstr "Modifica aleatòriament e indepentament tinta/saturacion/valor"
 
 #: ../plug-ins/common/noise-hsv.c:108
 msgid "HSV Noise..."
@@ -6423,7 +6414,7 @@ msgstr "_Contraròtle :"
 
 #: ../plug-ins/common/noise-hsv.c:413
 msgid "H_ue:"
-msgstr "_Tencha :"
+msgstr "_Tinta :"
 
 #: ../plug-ins/common/noise-randomize.c:102
 msgid "Random Hurl"
@@ -6492,7 +6483,7 @@ msgstr "_Borrolatge RVB"
 
 #: ../plug-ins/common/noise-rgb.c:283
 msgid "Adding noise"
-msgstr "Apondon de bruch"
+msgstr "Apondon de bruit"
 
 #: ../plug-ins/common/noise-rgb.c:450
 msgid "RGB Noise"
@@ -6500,7 +6491,7 @@ msgstr "Borrolatge RVB"
 
 #: ../plug-ins/common/noise-rgb.c:484
 msgid "Co_rrelated noise"
-msgstr "Bruch associat"
+msgstr "Bruit associat"
 
 #: ../plug-ins/common/noise-rgb.c:499
 msgid "_Independent RGB"
@@ -6596,7 +6587,7 @@ msgstr "Ra_ionament :"
 
 #: ../plug-ins/common/nova.c:389
 msgid "R_andom hue:"
-msgstr "Tencha _aleatòria :"
+msgstr "Tinta _aleatòria :"
 
 #: ../plug-ins/common/nova.c:437
 msgid "Center of Nova"
@@ -6622,9 +6613,9 @@ msgstr "Pintura d'òli"
 msgid "_Mask size:"
 msgstr "_Talha de la masqueta :"
 
-#. 
+#.
 #. * Mask-size map check button
-#. 
+#.
 #: ../plug-ins/common/oilify.c:832
 msgid "Use m_ask-size map:"
 msgstr "Utilizar la mapa de talha de masqueta :"
@@ -6633,23 +6624,23 @@ msgstr "Utilizar la mapa de talha de masqueta :"
 msgid "_Exponent:"
 msgstr "_Exponent :"
 
-#. 
+#.
 #. * Exponent map check button
-#. 
+#.
 #: ../plug-ins/common/oilify.c:885
 msgid "Use e_xponent map:"
 msgstr "Utilizar la mapa d'_exponent :"
 
-#. 
+#.
 #. * Intensity algorithm check button
-#. 
+#.
 #: ../plug-ins/common/oilify.c:922
 msgid "_Use intensity algorithm"
 msgstr "_Utilizar l'algoritme d'intensitat"
 
 #: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
-msgstr "Simule la distorsion de color producha per una fotocopiadoira"
+msgstr "Simule la distorsion de color produita per una fotocopiadoira"
 
 #: ../plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
@@ -6674,7 +6665,7 @@ msgstr "Percentatge de _blanc :"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
-msgstr "Simplifica l'imatge en un tablèu fach de carrats de colors plenas"
+msgstr "Simplifica l'imatge en un tablèu fait de carrats de colors plenas"
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
@@ -6814,7 +6805,7 @@ msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
-"Se marcat, lo mappatge començarà del costat drech e non pas del costat "
+"Se marcat, lo mappatge començarà del costat dreit e non pas del costat "
 "esquèrra."
 
 #: ../plug-ins/common/polar-coords.c:676
@@ -6855,7 +6846,7 @@ msgstr "Navigador de proceduras"
 
 #: ../plug-ins/common/qbist.c:408
 msgid "Generate a huge variety of abstract patterns"
-msgstr "Generacion d'una granda varietat de motius abstraches"
+msgstr "Generacion d'una granda varietat de motius abstraits"
 
 #: ../plug-ins/common/qbist.c:416
 msgid "_Qbist..."
@@ -6879,8 +6870,7 @@ msgstr "G-Qbist"
 
 #: ../plug-ins/common/red-eye-removal.c:105
 msgid "Remove the red eye effect caused by camera flashes"
-msgstr ""
-"Suprimís l'efièch uèlhs roges causat pels flash dels aparelhs de fòto"
+msgstr "Suprimís l'efièit uèlhs roges causat pels flash dels aparelhs de fòto"
 
 #: ../plug-ins/common/red-eye-removal.c:116
 msgid "_Red Eye Removal..."
@@ -7099,7 +7089,7 @@ msgstr "_Capturar"
 
 #: ../plug-ins/common/screenshot.c:1243
 msgid "After the delay, the screenshot is taken."
-msgstr "Aprèp lo relambi, la captura es facha."
+msgstr "Aprèp lo relambi, la captura es faita."
 
 #: ../plug-ins/common/screenshot.c:1245
 msgid ""
@@ -7168,9 +7158,9 @@ msgstr ""
 msgid "_Sharpen..."
 msgstr "Aumentar los _contrastes..."
 
-#. 
+#.
 #. * Let the user know what we're doing...
-#. 
+#.
 #: ../plug-ins/common/sharpen.c:303
 msgid "Sharpening"
 msgstr "Aumentacion dels contrastes"
@@ -7217,7 +7207,7 @@ msgstr "_Sinus..."
 
 #: ../plug-ins/common/sinus.c:284
 msgid "Sinus: rendering"
-msgstr "Sinus : rendut en cors"
+msgstr "Sinus : rendutt en cors"
 
 #. Create Main window with a vbox
 #. ==============================
@@ -7370,7 +7360,7 @@ msgstr "Rai del _fosc :"
 
 #: ../plug-ins/common/sparkle.c:178
 msgid "Turn bright spots into starry sparkles"
-msgstr "Transfòrma los prètzfaches luminosas en puntas esteladas"
+msgstr "Transfòrma los prètzfaits luminosas en puntas esteladas"
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
@@ -7447,11 +7437,11 @@ msgstr "Ajusta l'opacitat de las puntas"
 
 #: ../plug-ins/common/sparkle.c:466
 msgid "_Random hue:"
-msgstr "Tencha al_eatòria :"
+msgstr "Tinta al_eatòria :"
 
 #: ../plug-ins/common/sparkle.c:469
 msgid "Adjust how much the hue should be changed randomly"
-msgstr "Ajusta l'influéncia de l'azard sus la tencha"
+msgstr "Ajusta l'influéncia de l'azard sus la tinta"
 
 #: ../plug-ins/common/sparkle.c:479
 msgid "Rando_m saturation:"
@@ -7475,7 +7465,7 @@ msgstr "In_versar"
 
 #: ../plug-ins/common/sparkle.c:521
 msgid "Should the effect be inversed?"
-msgstr "L'efièch deu èsser inversat ?"
+msgstr "L'efièit deu èsser inversat ?"
 
 #: ../plug-ins/common/sparkle.c:530
 msgid "A_dd border"
@@ -7533,7 +7523,7 @@ msgstr "Ombratge de Phong"
 
 #: ../plug-ins/common/sphere-designer.c:298 ../plug-ins/flame/flame.c:773
 msgid "Noise"
-msgstr "Bruch"
+msgstr "Bruit"
 
 #: ../plug-ins/common/sphere-designer.c:299
 msgid "Wood"
@@ -8122,49 +8112,49 @@ msgstr "Espandís las regions claras de l'imatge"
 msgid "_Dilate"
 msgstr "_Dilatar"
 
-#: ../plug-ins/common/value-propagate.c:476
-#: ../plug-ins/common/value-propagate.c:1086
+#: ../plug-ins/common/value-propagate.c:480
+#: ../plug-ins/common/value-propagate.c:1090
 msgid "Value Propagate"
 msgstr "Propagacion de valor"
 
 #. Parameter settings
-#: ../plug-ins/common/value-propagate.c:1153
+#: ../plug-ins/common/value-propagate.c:1157
 msgid "Propagate"
 msgstr "Propagacion"
 
-#: ../plug-ins/common/value-propagate.c:1166
+#: ../plug-ins/common/value-propagate.c:1170
 msgid "Lower t_hreshold:"
 msgstr "_Sulhet bas"
 
-#: ../plug-ins/common/value-propagate.c:1178
+#: ../plug-ins/common/value-propagate.c:1182
 msgid "_Upper threshold:"
 msgstr "S_ulhet naut"
 
-#: ../plug-ins/common/value-propagate.c:1190
+#: ../plug-ins/common/value-propagate.c:1194
 msgid "_Propagating rate:"
 msgstr "_Taus de propagacion :"
 
-#: ../plug-ins/common/value-propagate.c:1201
+#: ../plug-ins/common/value-propagate.c:1205
 msgid "To l_eft"
 msgstr "A es_quèrra"
 
-#: ../plug-ins/common/value-propagate.c:1204
+#: ../plug-ins/common/value-propagate.c:1208
 msgid "To _right"
-msgstr "A _drecha"
+msgstr "A _dreita"
 
-#: ../plug-ins/common/value-propagate.c:1207
+#: ../plug-ins/common/value-propagate.c:1211
 msgid "To _top"
 msgstr "A_mont"
 
-#: ../plug-ins/common/value-propagate.c:1210
+#: ../plug-ins/common/value-propagate.c:1214
 msgid "To _bottom"
 msgstr "A_val"
 
-#: ../plug-ins/common/value-propagate.c:1219
+#: ../plug-ins/common/value-propagate.c:1223
 msgid "Propagating _alpha channel"
 msgstr "Propagacion del canal a_lfa"
 
-#: ../plug-ins/common/value-propagate.c:1230
+#: ../plug-ins/common/value-propagate.c:1234
 msgid "Propagating value channel"
 msgstr "Propagacion del canal valor"
 
@@ -8174,7 +8164,7 @@ msgstr "Van Gogh (LIC)"
 
 #: ../plug-ins/common/van-gogh-lic.c:670
 msgid "Effect Channel"
-msgstr "Canal d'efièch"
+msgstr "Canal d'efièit"
 
 #: ../plug-ins/common/van-gogh-lic.c:677
 msgid "_Brightness"
@@ -8182,7 +8172,7 @@ msgstr "_Luminositat"
 
 #: ../plug-ins/common/van-gogh-lic.c:683
 msgid "Effect Operator"
-msgstr "Operador d'efièch"
+msgstr "Operador d'efièit"
 
 #: ../plug-ins/common/van-gogh-lic.c:688
 msgid "_Derivative"
@@ -8206,7 +8196,7 @@ msgstr "Amb l'imat_ge font"
 
 #: ../plug-ins/common/van-gogh-lic.c:720
 msgid "_Effect image:"
-msgstr "_Imatge d'efièch :"
+msgstr "_Imatge d'efièit :"
 
 #: ../plug-ins/common/van-gogh-lic.c:731
 msgid "_Filter length:"
@@ -8214,7 +8204,7 @@ msgstr "_Longor del filtre :"
 
 #: ../plug-ins/common/van-gogh-lic.c:740
 msgid "_Noise magnitude:"
-msgstr "I_mportància del bruch :"
+msgstr "I_mportància del bruit :"
 
 #: ../plug-ins/common/van-gogh-lic.c:749
 msgid "In_tegration steps:"
@@ -8230,7 +8220,7 @@ msgstr "Valor ma_ximum :"
 
 #: ../plug-ins/common/van-gogh-lic.c:813
 msgid "Special effects that nobody understands"
-msgstr "Efièches especials que degun compren pas"
+msgstr "Efièits especials que degun compren pas"
 
 #: ../plug-ins/common/van-gogh-lic.c:818
 msgid "_Van Gogh (LIC)..."
@@ -8275,7 +8265,7 @@ msgstr "_Punts"
 #: ../plug-ins/common/video.c:1807
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
 msgstr ""
-"Simula la distorsion producha per un monitor fosc o de febla resolucion"
+"Simula la distorsion produita per un monitor fosc o de febla resolucion"
 
 #: ../plug-ins/common/video.c:1814
 msgid "Vi_deo..."
@@ -8501,8 +8491,7 @@ msgid "The specified DLL was not found."
 msgstr "La DLL indicada es pas estada trobada."
 
 #: ../plug-ins/common/web-browser.c:165
-msgid ""
-"There is no application associated with the given file name extension."
+msgid "There is no application associated with the given file name extension."
 msgstr ""
 "Cap d'aplicacion es pas associada a l'extension de nom de fichièr provesida."
 
@@ -8512,7 +8501,7 @@ msgstr "Memòria insufisenta per acabar l'operacion."
 
 #: ../plug-ins/common/web-browser.c:171
 msgid "A sharing violation occurred."
-msgstr "Una violacion de partiment s'es producha."
+msgstr "Una violacion de partiment s'es produita."
 
 #: ../plug-ins/common/web-browser.c:174
 msgid "Unknown Microsoft Windows error."
@@ -8618,7 +8607,7 @@ msgstr "Fòrça d'_aspiracion :"
 
 #: ../plug-ins/common/wind.c:175
 msgid "Smear image to give windblown effect"
-msgstr "Modifica l'imatge per rendre un efièch de buf de vent"
+msgstr "Modifica l'imatge per rendre un efièit de buf de vent"
 
 #: ../plug-ins/common/wind.c:180
 msgid "Wi_nd..."
@@ -8681,7 +8670,7 @@ msgstr "Los D_os"
 #: ../plug-ins/common/wind.c:1010
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
-"De grandas valors restrenhon l'efièch a de zònas mai pichonas de l'imatge."
+"De grandas valors restrenhon l'efièit a de zònas mai pichonas de l'imatge."
 
 #: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:693
 msgid "_Strength:"
@@ -8689,7 +8678,7 @@ msgstr "_Fòrça :"
 
 #: ../plug-ins/common/wind.c:1029
 msgid "Higher values increase the magnitude of the effect"
-msgstr "De grandas valor aumentan l'amplor de l'efièch"
+msgstr "De grandas valor aumentan l'amplor de l'efièit"
 
 #: ../plug-ins/file-bmp/bmp-read.c:138
 msgid "Bad colormap"
@@ -8761,7 +8750,7 @@ msgid ""
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
 "Certanas aplicacions pòdon pas legir los imatges BMP qu'incluisson una "
-"informacion d'espaci color. Pasmens, GIMP inscrich per defaut aquesta "
+"informacion d'espaci color. Pasmens, GIMP inscrit per defaut aquesta "
 "informacion. En activant aquesta opcion, GIMP l'inscriurà pas dins lo "
 "fichièr."
 
@@ -9251,17 +9240,17 @@ msgid "Could not open '%s' for reading."
 msgstr "Impossible de dobrir « %s » en lectura."
 
 #: ../plug-ins/file-sgi/sgi.c:345
-#, c-format, c-format
+#, c-format
 msgid "Invalid width: %hu"
 msgstr "Largor non valide : %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:352
-#, c-format, c-format
+#, c-format
 msgid "Invalid height: %hu"
 msgstr "Nautor non valide : %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:359
-#, c-format, c-format
+#, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Nombre de canals non valide : %hu"
 
@@ -9336,7 +9325,7 @@ msgstr "Telecargament de %s de donadas d'imatge"
 #, c-format
 msgid "Opening '%s' for reading resulted in %s response code: %ld"
 msgstr ""
-"La dobertura de « %s » en lectura a produch lo còde de responsa %s : %ld"
+"La dobertura de « %s » en lectura a produit lo còdi de responsa %s : %ld"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:162
 #: ../plug-ins/file-uri/uri-backend-wget.c:182
@@ -9368,7 +9357,7 @@ msgstr "Dobertura de l'URI"
 #: ../plug-ins/file-uri/uri-backend-wget.c:309
 #, c-format
 msgid "A network error occurred: %s"
-msgstr "Una error de ret s'es producha : %s"
+msgstr "Una error de ret s'es produita : %s"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:366
 msgid "Downloading unknown amount of image data"
@@ -9656,7 +9645,7 @@ msgstr "C_amèra"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
 #: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/gimpressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
-#, c-format, c-format
+#, c-format
 msgid ""
 "No %s in gimprc:\n"
 "You need to add an entry like\n"
@@ -9666,7 +9655,7 @@ msgstr ""
 "Pas de %s dins gimprc :\n"
 "Vos cal apondre una entrada telle que\n"
 "(%s « %s »)\n"
-"à votre fichièr %s."
+"à vòstre fichièr %s."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 msgid "Fractal Explorer"
@@ -9807,8 +9796,7 @@ msgstr "Utilizar lo lissatge loglog"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:939
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
-"Utiliza un lissatge en log log per evitar las bendas dins lo resultat."
+msgstr "Utiliza un lissatge en log log per evitar las bendas dins lo resultat."
 
 #. Color Density frame
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:943
@@ -9894,8 +9882,8 @@ msgstr "Coma indicat çaisús"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1137
 msgid ""
-"Create a color-map with the options you specified above (color "
-"density/function). The result is visible in the preview image"
+"Create a color-map with the options you specified above (color density/"
+"function). The result is visible in the preview image"
 msgstr ""
 "Crèa una paleta de colors amb las opcions indicadas çaisús (densitat de "
 "color, foncion). Lo resultat es visible dins l'apercebut."
@@ -10314,8 +10302,7 @@ msgstr "Error al moment de la lectura del fichièr"
 
 #: ../plug-ins/gfig/gfig-dobject.c:1011
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
-"Modificacion d'un objècte en lectura sola : poiretz pas l'enregistrar"
+msgstr "Modificacion d'un objècte en lectura sola : poiretz pas l'enregistrar"
 
 #: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
@@ -10463,8 +10450,7 @@ msgid "Solid colored background"
 msgstr "Rèireplan de color unifòrma"
 
 #: ../plug-ins/gimpressionist/general.c:185
-msgid ""
-"Use a transparent background; Only the strokes painted will be visible"
+msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
 "Utiliza un rèireplan transparent ; sols los traçats pintrats seràn visibles"
 
@@ -10474,8 +10460,7 @@ msgstr "Pintrar los bòrds"
 
 #: ../plug-ins/gimpressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr ""
-"De seleccionar se volètz traçar tot a l'entorn dels bòrds de l'imatge"
+msgstr "De seleccionar se volètz traçar tot a l'entorn dels bòrds de l'imatge"
 
 #. Tileable checkbox
 #: ../plug-ins/gimpressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
@@ -10494,7 +10479,7 @@ msgstr "Ombra portada"
 
 #: ../plug-ins/gimpressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
-msgstr "Apond un efièch d'ombra portada a cada trach de bròssa"
+msgstr "Apond un efièit d'ombra portada a cada trait de bròssa"
 
 #: ../plug-ins/gimpressionist/general.c:239
 msgid "Edge darken:"
@@ -10503,7 +10488,7 @@ msgstr "Escurezir los bòrds :"
 #: ../plug-ins/gimpressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr ""
-"A quin punt cal estompar los bòrds de cada trach de bròssa en los "
+"A quin punt cal estompar los bòrds de cada trait de bròssa en los "
 "escurezissent"
 
 #: ../plug-ins/gimpressionist/general.c:248
@@ -10617,8 +10602,7 @@ msgid "Radial"
 msgstr "Radial"
 
 #: ../plug-ins/gimpressionist/orientation.c:168
-msgid ""
-"Let the direction from the center determine the direction of the stroke"
+msgid "Let the direction from the center determine the direction of the stroke"
 msgstr ""
 "La direccion del traçat es determinada per la direccion dempuèi lo centre"
 
@@ -10635,7 +10619,7 @@ msgstr "Los traçats fòrman un motiu qu'evòca lo flòt d'una ribièra"
 
 #: ../plug-ins/gimpressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
-msgstr "La tencha de la region determina la direccion del traçat"
+msgstr "La tinta de la region determina la direccion del traçat"
 
 #: ../plug-ins/gimpressionist/orientation.c:183
 #: ../plug-ins/gimpressionist/size.c:186
@@ -10674,8 +10658,8 @@ msgid ""
 msgstr ""
 "Lo camp de vectors :\r\n"
 "* <boton esquèrra> per bolegar lo vector seleccionat\r\n"
-"* <boton droit> pel dirigir cap a la mirga\r\n"
-"* <boton del milieu> per apondre un vector novèl"
+"* <boton dreit> pel dirigir cap a la mirga\r\n"
+"* <boton del mitan> per apondre un vector novèl"
 
 #: ../plug-ins/gimpressionist/orientmap.c:588
 #: ../plug-ins/gimpressionist/sizemap.c:457
@@ -10830,7 +10814,7 @@ msgstr "_Densitat dels traçats de la bròssa :"
 msgid "The relative density of the brush strokes"
 msgstr "La densitat relativa dels traçats de la bròssa"
 
-#. 
+#.
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
@@ -10940,11 +10924,10 @@ msgstr "La direccion del centre de l'imatge determina la talha del traçat"
 
 #: ../plug-ins/gimpressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
-msgstr "La tencha de la region determina la talha del traçat"
+msgstr "La tinta de la region determina la talha del traçat"
 
 #: ../plug-ins/gimpressionist/size.c:187
-msgid ""
-"The brush-size that matches the original image the closest is selected"
+msgid "The brush-size that matches the original image the closest is selected"
 msgstr "La talha de la bròssa la mai adaptada a l'imatge original es causida"
 
 #: ../plug-ins/gimpressionist/size.c:196
@@ -10970,7 +10953,7 @@ msgid ""
 msgstr ""
 "Lo camp de vectors que parametra los traçats de bròssa\r\n"
 "* <Boton esquèrra> per bolegar lo vector seleccionat\r\n"
-"* <boton drech> per lo puntar cap a la mirga\r\n"
+"* <boton dreit> per lo puntar cap a la mirga\r\n"
 "* <boton del mitan> per apondre un vector novèl"
 
 #: ../plug-ins/gimpressionist/sizemap.c:480
@@ -11099,15 +11082,15 @@ msgstr "Superposicion"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:807
 msgid "Produce a lense flare effect using gradients"
-msgstr "Produit un efièch d'esbleugiment en utilizant de degradats"
+msgstr "Produit un efièit d'esbleugiment en utilizant de degradats"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:812
 msgid "_Gradient Flare..."
 msgstr "Esbleugiment _gradual..."
 
-#. 
+#.
 #. *    Dialog Shell
-#. 
+#.
 #: ../plug-ins/gradient-flare/gradient-flare.c:951
 #: ../plug-ins/gradient-flare/gradient-flare.c:2356
 msgid "Gradient Flare"
@@ -11158,12 +11141,12 @@ msgstr "« Defaut » es creat."
 msgid "Default"
 msgstr "Per defaut"
 
-#. 
+#.
 #. *  Scales
-#. 
-#. 
+#.
+#.
 #. *    Scales
-#. 
+#.
 #: ../plug-ins/gradient-flare/gradient-flare.c:2744
 #: ../plug-ins/gradient-flare/gradient-flare.c:3583
 #: ../plug-ins/gradient-flare/gradient-flare.c:3688
@@ -11177,7 +11160,7 @@ msgstr "Ro_tacion :"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2782
 msgid "_Hue rotation:"
-msgstr "R_otacion de la tencha :"
+msgstr "R_otacion de la tinta :"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2794
 msgid "Vector _angle:"
@@ -11277,9 +11260,9 @@ msgstr "Opcions de dessenh dels rais"
 msgid "Second Flares Paint Options"
 msgstr "Opcions de dessenh dels reflèctes segondaris"
 
-#. 
+#.
 #. *  Gradient Menus
-#. 
+#.
 #: ../plug-ins/gradient-flare/gradient-flare.c:3556
 #: ../plug-ins/gradient-flare/gradient-flare.c:3659
 #: ../plug-ins/gradient-flare/gradient-flare.c:3798
@@ -11318,7 +11301,7 @@ msgstr "Rotacion :"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3725
 #: ../plug-ins/gradient-flare/gradient-flare.c:3862
 msgid "Hue rotation:"
-msgstr "Rotacion de la tencha :"
+msgstr "Rotacion de la tinta :"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3633
 msgid "G_low"
@@ -11344,9 +11327,9 @@ msgstr "Degradat de factor de talha :"
 msgid "Probability gradient:"
 msgstr "Degradat de probabilitat :"
 
-#. 
+#.
 #. *    Shape Radio Button Frame
-#. 
+#.
 #: ../plug-ins/gradient-flare/gradient-flare.c:3879
 msgid "Shape of Second Flares"
 msgstr "Ombra dels reflèctes segondaris"
@@ -11452,17 +11435,25 @@ msgstr "Las paginas d'ajuda per « %s » son pas disponiblas."
 msgid "The GIMP user manual is not available."
 msgstr "Lo manual d'utilizacion de GIMP es pas disponible."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#. TRANSLATORS: do not end the URL with a dot,
+#. * it would be in the link. Because of
+#. * technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
-"Please make sure gimp-help-en is installed, or the appropriate gimp-help "
-"package for your language."
+"Please install the additional help package or use the online user manual at: "
+"http://docs.gimp.org/"
 msgstr ""
+"Installatz lo paquet d'ajuda o utilizatz lo manual en linha a l'adreça "
+"http://docs.gimp.org/fr."
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Vos manca benlèu de motors GIO e caldriá alara installar GVFS."
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "ID d'ajuda « %s » desconegut"
@@ -11531,7 +11522,7 @@ msgstr "Fractalas : cibla"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Scale hue by:"
-msgstr "Escala de la tencha :"
+msgstr "Escala de la tinta :"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:670
 msgid "Scale value by:"
@@ -11589,7 +11580,7 @@ msgstr "Recalcular lo centre"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1064
 msgid "Render Options"
-msgstr "Opcions de rendut"
+msgstr "Opcions de rendutt"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1070
 #: ../plug-ins/imagemap/imap_cmd_move.c:85
@@ -11611,7 +11602,7 @@ msgstr "Estirar"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1174
 msgid "IFS Fractal Render Options"
-msgstr "Opcions de rendut de Fractalas"
+msgstr "Opcions de rendutt de Fractalas"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1196
 msgid "Max. memory:"
@@ -12408,15 +12399,15 @@ msgstr "Veire la font"
 #: ../plug-ins/lighting/lighting-apply.c:105
 #: ../plug-ins/lighting/lighting-ui.c:1023
 msgid "Lighting Effects"
-msgstr "Efièches d'esclairatge"
+msgstr "Efièits d'esclairatge"
 
 #: ../plug-ins/lighting/lighting-main.c:191
 msgid "Apply various lighting effects to an image"
-msgstr "Aplica diferents efièches de lum a l'imatge"
+msgstr "Aplica diferents efièits de lum a l'imatge"
 
 #: ../plug-ins/lighting/lighting-main.c:196
 msgid "_Lighting Effects..."
-msgstr "_Efièches d'esclairatge..."
+msgstr "_Efièits d'esclairatge..."
 
 #. General options
 #: ../plug-ins/lighting/lighting-ui.c:297
@@ -12807,8 +12798,8 @@ msgstr "Activar l'_anticrenelatge"
 #: ../plug-ins/map-object/map-object-ui.c:513
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr ""
-"(Des)activa l'eliminacion del desplasent « efièch de crenèls » "
-"(anticrenelatge, antialiasing)"
+"(Des)activa l'eliminacion del desplasent « efièit de crenèls "
+"» (anticrenelatge, antialiasing)"
 
 #: ../plug-ins/map-object/map-object-ui.c:530
 msgid "Antialiasing quality. Higher is better, but slower"
@@ -13018,7 +13009,7 @@ msgid ""
 msgstr ""
 "La talha de seleccion es impara.\n"
 "Lo laberint racordable \n"
-"foncionarà pas perfièchament."
+"foncionarà pas perfièitament."
 
 #: ../plug-ins/maze/maze.c:122
 msgid "Draw a labyrinth"
@@ -13037,7 +13028,6 @@ msgid "Property"
 msgstr "Proprietat"
 
 #: ../plug-ins/metadata/interface.c:204 ../plug-ins/metadata/interface.c:206
-#| msgid "Description:"
 msgid "Description"
 msgstr "Descripcion"
 
@@ -13064,7 +13054,6 @@ msgid "Empty"
 msgstr "Void"
 
 #: ../plug-ins/metadata/interface.c:286
-#| msgid "_Copyright:"
 msgid "Copyright"
 msgstr "Copyright"
 
@@ -13085,7 +13074,6 @@ msgid "Thumbnail"
 msgstr "Miniatura"
 
 #: ../plug-ins/metadata/interface.c:356
-#| msgid "_Advanced"
 msgid "Advanced"
 msgstr "Avançat"
 
@@ -13167,8 +13155,7 @@ msgstr "Atribut RDF requesit : a prepaus del mancant dins « %s »"
 #: ../plug-ins/metadata/xmp-parse.c:902
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
-msgstr ""
-"D'elements imbricats (« %s ») son pas autorizats dins aqueste contèxte"
+msgstr "D'elements imbricats (« %s ») son pas autorizats dins aqueste contèxte"
 
 #: ../plug-ins/metadata/xmp-parse.c:1031
 #, c-format
@@ -13190,8 +13177,7 @@ msgstr "Los paquets XMP se devon acabar per <?xpacket end=...?>"
 
 #: ../plug-ins/metadata/xmp-parse.c:1191
 msgid "XMP cannot contain XML comments or processing instructions"
-msgstr ""
-"XMP pòt pas conténer cap de comentaris XML o d'instruccion de comandas"
+msgstr "XMP pòt pas conténer cap de comentaris XML o d'instruccion de comandas"
 
 #: ../plug-ins/pagecurl/pagecurl.c:216
 msgid "Curl up one of the image corners"
@@ -13203,7 +13189,7 @@ msgstr "Caire de p_agina..."
 
 #: ../plug-ins/pagecurl/pagecurl.c:442
 msgid "Pagecurl Effect"
-msgstr "Efièch de caire de pagina"
+msgstr "Efièit de caire de pagina"
 
 #: ../plug-ins/pagecurl/pagecurl.c:464
 msgid "Curl Location"
@@ -13211,7 +13197,7 @@ msgstr "Emplaçament del caire"
 
 #: ../plug-ins/pagecurl/pagecurl.c:483
 msgid "Lower right"
-msgstr "Aval a drecha"
+msgstr "Aval a dreita"
 
 #: ../plug-ins/pagecurl/pagecurl.c:484
 msgid "Lower left"
@@ -13223,7 +13209,7 @@ msgstr "Amont a esquèrra"
 
 #: ../plug-ins/pagecurl/pagecurl.c:486
 msgid "Upper right"
-msgstr "Amont a drecha"
+msgstr "Amont a dreita"
 
 #: ../plug-ins/pagecurl/pagecurl.c:526
 msgid "Curl Orientation"
@@ -13327,7 +13313,7 @@ msgstr "Paramètres de l'imatge"
 
 #: ../plug-ins/print/print.c:372
 msgid "An error occurred while trying to print:"
-msgstr "Una error s'es producha en ensajant d'imprimir :"
+msgstr "Una error s'es produita en ensajant d'imprimir :"
 
 #: ../plug-ins/print/print.c:399
 msgid "Printing"
@@ -13395,7 +13381,6 @@ msgstr "_Captura d'ecran..."
 msgid "No data captured"
 msgstr "Cap de donada pas capturada"
 
-#, c-format
 #~ msgid "%.1f %%"
 #~ msgstr "%.1f %%"
 
@@ -13441,7 +13426,6 @@ msgstr "Cap de donada pas capturada"
 #~ msgid "H"
 #~ msgstr "H"
 
-#, c-format
 #~ msgid "Exporting '%s'"
 #~ msgstr "Exportacion de « %s »"
 
@@ -13457,37 +13441,34 @@ msgstr "Cap de donada pas capturada"
 #~ msgid "WebP image"
 #~ msgstr "Imatge WebP"
 
-#, c-format
 #~ msgid "Could not open '%s'"
 #~ msgstr "Impossible de dobrir « %s »"
 
-#, c-format
 #~ msgid ""
-#~ "Unable to export '%s'.  The GIF file format does not support images that are "
-#~ "more than %d pixels wide or tall."
+#~ "Unable to export '%s'.  The GIF file format does not support images that "
+#~ "are more than %d pixels wide or tall."
 #~ msgstr ""
-#~ "Impossible d'enregistrar « %s ». Lo format GIF pren pas en carga los imatges "
-#~ "de mai de %d pixèls de naut o de larg."
+#~ "Impossible d'enregistrar « %s ». Lo format GIF pren pas en carga los "
+#~ "imatges de mai de %d pixèls de naut o de larg."
 
 #~ msgid "Cannot export images with alpha channel."
 #~ msgstr "Impossible d'exportar d'imatges amb un canal alfa."
 
-#, c-format
 #~ msgid ""
 #~ "An error occurred while creating the PDF file:\n"
 #~ "%s\n"
-#~ "Make sure you entered a valid filename and that the selected location isn't "
-#~ "read only!"
+#~ "Make sure you entered a valid filename and that the selected location "
+#~ "isn't read only!"
 #~ msgstr ""
-#~ "Una error s'es producha al moment de la creacion del fichièr PDF :\n"
+#~ "Una error s'es produita al moment de la creacion del fichièr PDF :\n"
 #~ "%s\n"
-#~ "Vérifiez que lo nom de fichièr saisi es valide e que l'emplaçament choisi es "
-#~ "pas en lectura sola."
+#~ "Vérifiez que lo nom de fichièr sasit es valide e que l'emplaçament choisi "
+#~ "es pas en lectura sola."
 
 #~ msgid "PFM image"
 #~ msgstr "Imatge PFM"
 
-#, fuzzy, c-format
+#, fuzzy
 #~| msgid "Could not interpret Postscript file '%s'"
 #~ msgid "Could not interpret PostScript file '%s'"
 #~ msgstr "Impossible d'interpretar lo fichièr Postscript « %s »"
@@ -13498,11 +13479,9 @@ msgstr "Cap de donada pas capturada"
 #~ msgid "Planar (RRR... GGG... BBB...)"
 #~ msgstr "Plat (RRR... GGG... BBB...)"
 
-#, c-format
 #~ msgid "Could not open '%s' for writing: "
 #~ msgstr "Impossible de dobrir « %s » en escritura"
 
-#, c-format
 #~ msgid "Error exporting '%s': "
 #~ msgstr "Error al moment de l'exportacion « %s » :"
 
@@ -13587,40 +13566,33 @@ msgstr "Cap de donada pas capturada"
 #~ msgstr "« Defaut » es creat."
 
 #~ msgid ""
-#~ "Please install the additional help package or use the online user manual at: "
-#~ "http://docs.gimp.org/"
-#~ msgstr ""
-#~ "Installatz lo paquet d'ajuda o utilizatz lo manual en linha a l'adreça "
-#~ "http://docs.gimp.org/fr."
-
-#~ msgid ""
 #~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
 #~ "if necessary - use the environment variable GS_PROG to tell GIMP about "
 #~ "its location.\n"
 #~ "(%s)"
 #~ msgstr ""
 #~ "Erreur de démarrage de Ghostscript. Assurez-vous que Ghostscript soit "
-#~ "bien installé et si nécessaire utilisez la variable d'environnement "
+#~ "bien installé et si necessari utilisez la variable d'environnement "
 #~ "GS_PROG pour indiquer à GIMP son emplacement.\n"
 #~ "(%s)"
 
 #~ msgid "The width of frame %d of '%s' is too big for X cursor."
-#~ msgstr "Le cadre %d de « %s » est trop large pour le curseur X."
+#~ msgstr "Le cadre %d de « %s » es trop large pour le curseur X."
 
 #~ msgid "The height of frame %d of '%s' is too big for X cursor."
-#~ msgstr "Le cadre %d de « %s » est trop haut pour le curseur X."
+#~ msgstr "Le cadre %d de « %s » es trop naut pour le curseur X."
 
 #~ msgid "The height of '%s' is too big for X cursor."
-#~ msgstr "« %s » est trop haute pour le curseur X."
+#~ msgstr "« %s » es trop nauta pour le curseur X."
 
 #~ msgid ""
 #~ "This plug-in can only handle RGBA image format with 8bit color depth."
 #~ msgstr ""
-#~ "Ce greffon ne peut gérer que le format d'image RVBA avec une profondeur "
+#~ "Ce empeuton ne peut gérer que le format d'image RVBA avec une profondeur "
 #~ "de couleurs de 8 bits."
 
 #~ msgid "Width of '%s' is too large. Please reduce more than %dpx."
-#~ msgstr "« %s » est trop large. Réduisez au-delà de %dpx."
+#~ msgstr "« %s » es trop large. Réduisez au-delà de %dpx."
 
 #~ msgid "The size of '%s' is zero!"
-#~ msgstr "La taille de « %s » est zéro !"
+#~ msgstr "La taille de « %s » es zéro !"
