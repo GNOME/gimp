@@ -661,42 +661,6 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
     }
 }
 
-static gboolean
-gimp_color_profile_can_gegl_copy (GimpColorProfile *src_profile,
-                                  GimpColorProfile *dest_profile)
-{
-  static GimpColorProfile *srgb_profile        = NULL;
-  static GimpColorProfile *srgb_linear_profile = NULL;
-  static GimpColorProfile *gray_profile        = NULL;
-  static GimpColorProfile *gray_linear_profile = NULL;
-
-  if (gimp_color_profile_is_equal (src_profile, dest_profile))
-    return TRUE;
-
-  if (! srgb_profile)
-    {
-      srgb_profile        = gimp_color_profile_new_rgb_srgb ();
-      srgb_linear_profile = gimp_color_profile_new_rgb_srgb_linear ();
-      gray_profile        = gimp_color_profile_new_d65_gray_srgb_trc ();
-      gray_linear_profile = gimp_color_profile_new_d65_gray_linear ();
-    }
-
-  if ((gimp_color_profile_is_equal (src_profile, srgb_profile)        ||
-       gimp_color_profile_is_equal (src_profile, srgb_linear_profile) ||
-       gimp_color_profile_is_equal (src_profile, gray_profile)        ||
-       gimp_color_profile_is_equal (src_profile, gray_linear_profile))
-      &&
-      (gimp_color_profile_is_equal (dest_profile, srgb_profile)        ||
-       gimp_color_profile_is_equal (dest_profile, srgb_linear_profile) ||
-       gimp_color_profile_is_equal (dest_profile, gray_profile)        ||
-       gimp_color_profile_is_equal (dest_profile, gray_linear_profile)))
-    {
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
 void
 gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                  const GeglRectangle      *src_rect,
@@ -715,13 +679,6 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
 
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
-
-  if (gimp_color_profile_can_gegl_copy (src_profile, dest_profile))
-    {
-      gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
-                        dest_buffer, dest_rect);
-      return;
-    }
 
   if (bpc)
     flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
@@ -745,7 +702,6 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
     }
   else
     {
-      /* FIXME: no idea if this ever happens */
       gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
                         dest_buffer, dest_rect);
 

@@ -155,7 +155,8 @@ gimp_color_transform_finalize (GObject *object)
  *
  * This function creates an color transform.
  *
- * Return value: the #GimpColorTransform, or %NULL.
+ * Return value: the #GimpColorTransform, or %NULL if no transform is needed
+ *               to convert between pixels of @src_profile and @dest_profile.
  *
  * Since: 2.10
  **/
@@ -178,6 +179,9 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   g_return_val_if_fail (src_format != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile), NULL);
   g_return_val_if_fail (dest_format != NULL, NULL);
+
+  if (gimp_color_transform_can_gegl_copy (src_profile, dest_profile))
+    return NULL;
 
   transform = g_object_new (GIMP_TYPE_COLOR_TRANSFORM, NULL);
 
@@ -414,4 +418,56 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
   g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
                  1.0);
+}
+
+/**
+ * gimp_color_transform_can_gegl_copy:
+ * @src_format:  src profile
+ * @dest_format: dest profile
+ *
+ * This function checks if a GimpColorTransform is needed at all.
+ *
+ * Return value: %TRUE if pixels can be correctly converted between
+ *               @src_profile and @dest_profile by simply using
+ *               gegl_buffer_copy(), babl_process() or similar.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_transform_can_gegl_copy (GimpColorProfile *src_profile,
+                                    GimpColorProfile *dest_profile)
+{
+  static GimpColorProfile *srgb_profile        = NULL;
+  static GimpColorProfile *srgb_linear_profile = NULL;
+  static GimpColorProfile *gray_profile        = NULL;
+  static GimpColorProfile *gray_linear_profile = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), FALSE);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile), FALSE);
+
+  if (gimp_color_profile_is_equal (src_profile, dest_profile))
+    return TRUE;
+
+  if (! srgb_profile)
+    {
+      srgb_profile        = gimp_color_profile_new_rgb_srgb ();
+      srgb_linear_profile = gimp_color_profile_new_rgb_srgb_linear ();
+      gray_profile        = gimp_color_profile_new_d65_gray_srgb_trc ();
+      gray_linear_profile = gimp_color_profile_new_d65_gray_linear ();
+    }
+
+  if ((gimp_color_profile_is_equal (src_profile, srgb_profile)        ||
+       gimp_color_profile_is_equal (src_profile, srgb_linear_profile) ||
+       gimp_color_profile_is_equal (src_profile, gray_profile)        ||
+       gimp_color_profile_is_equal (src_profile, gray_linear_profile))
+      &&
+      (gimp_color_profile_is_equal (dest_profile, srgb_profile)        ||
+       gimp_color_profile_is_equal (dest_profile, srgb_linear_profile) ||
+       gimp_color_profile_is_equal (dest_profile, gray_profile)        ||
+       gimp_color_profile_is_equal (dest_profile, gray_linear_profile)))
+    {
+      return TRUE;
+    }
+
+  return FALSE;
 }

@@ -106,6 +106,9 @@ void    gimp_color_transform_process_buffer   (GimpColorTransform       *transfo
                                                GeglBuffer               *dest_buffer,
                                                const GeglRectangle      *dest_rect);
 
+gboolean gimp_color_transform_can_gegl_copy   (GimpColorProfile         *src_profile,
+                                               GimpColorProfile         *dest_profile);
+
 
 G_END_DECLS
 
