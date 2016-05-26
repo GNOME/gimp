@@ -34,17 +34,20 @@ typedef struct _GimpFgBgEditorClass GimpFgBgEditorClass;
 
 struct _GimpFgBgEditor
 {
-  GtkDrawingArea   parent_instance;
+  GtkDrawingArea      parent_instance;
 
-  GimpContext     *context;
-  GimpActiveColor  active_color;
+  GimpContext        *context;
+  GimpColorConfig    *color_config;
+  GimpColorTransform *transform;
 
-  GdkPixbuf       *default_icon;
-  GdkPixbuf       *swap_icon;
+  GimpActiveColor     active_color;
 
-  gint             rect_width;
-  gint             rect_height;
-  gint             click_target;
+  GdkPixbuf          *default_icon;
+  GdkPixbuf          *swap_icon;
+
+  gint                rect_width;
+  gint                rect_height;
+  gint                click_target;
 };
 
 struct _GimpFgBgEditorClass
