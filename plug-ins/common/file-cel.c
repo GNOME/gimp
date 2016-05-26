@@ -256,7 +256,10 @@ run (const gchar      *name,
       if (save_image (g_file_new_for_uri (param[3].data.d_string),
                       image_ID, drawable_ID, &error))
         {
-          gimp_set_data (SAVE_PROC, palette_file, data_length);
+	  if (data_length)
+	    {
+	      gimp_set_data (SAVE_PROC, palette_file, data_length);
+	    }
         }
       else
         {
