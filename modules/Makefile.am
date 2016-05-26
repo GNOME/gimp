@@ -53,8 +53,7 @@ controller_libadd = $(modules_libadd)
 
 libcolor_selector_cmyk_la_SOURCES = color-selector-cmyk.c
 libcolor_selector_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcolor_selector_cmyk_la_CFLAGS = $(LCMS_CFLAGS)
-libcolor_selector_cmyk_la_LIBADD = $(libgimpconfig) $(color_selector_libadd) $(LCMS_LIBS)
+libcolor_selector_cmyk_la_LIBADD = $(libgimpconfig) $(color_selector_libadd)
 
 libcolor_selector_water_la_SOURCES = color-selector-water.c
 libcolor_selector_water_la_LDFLAGS = -avoid-version -module $(no_undefined)
@@ -77,18 +76,12 @@ libdisplay_filter_high_contrast_la_LDFLAGS = -avoid-version -module $(no_undefin
 libdisplay_filter_high_contrast_la_LIBADD = $(display_filter_libadd)
 
 libdisplay_filter_lcms_la_SOURCES = display-filter-lcms.c
-libdisplay_filter_lcms_la_CFLAGS = $(LCMS_CFLAGS)
 libdisplay_filter_lcms_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libdisplay_filter_lcms_la_LIBADD = $(display_filter_libadd) $(LCMS_LIBS)
-
-if PLATFORM_WIN32
-libdisplay_filter_lcms_la_LIBADD += -lgdi32
-endif
+libdisplay_filter_lcms_la_LIBADD = $(display_filter_libadd)
 
 libdisplay_filter_proof_la_SOURCES = display-filter-proof.c
-libdisplay_filter_proof_la_CFLAGS = $(LCMS_CFLAGS)
 libdisplay_filter_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libdisplay_filter_proof_la_LIBADD = $(display_filter_libadd) $(LCMS_LIBS)
+libdisplay_filter_proof_la_LIBADD = $(display_filter_libadd)
 
 libcontroller_linux_input_la_SOURCES = \
 	gimpinputdevicestore-gudev.c	\

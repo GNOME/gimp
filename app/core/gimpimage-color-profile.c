@@ -21,7 +21,6 @@
 #include "config.h"
 
 #include <string.h>
-#include <lcms2.h>
 
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -664,13 +663,12 @@ _gimp_image_update_color_profile (GimpImage          *image,
 
       if (private->color_profile)
         {
-          GimpColorProfile *srgb_profile;
-          cmsUInt32Number   flags;
+          GimpColorProfile        *srgb_profile;
+          GimpColorTransformFlags  flags = 0;
 
           srgb_profile = gimp_color_profile_new_rgb_srgb ();
 
-          flags = cmsFLAGS_NOOPTIMIZE;
-          flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+          flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
           private->transform_to_srgb_u8 =
             gimp_color_transform_new (private->color_profile,
@@ -785,20 +783,22 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
                                      gboolean                  bpc,
                                      GimpProgress             *progress)
 {
-  GimpColorTransform *transform;
-  guchar             *cmap;
-  gint                n_colors;
+  GimpColorTransform      *transform;
+  GimpColorTransformFlags  flags = 0;
+  guchar                  *cmap;
+  gint                     n_colors;
 
   n_colors = gimp_image_get_colormap_size (image);
   cmap     = g_memdup (gimp_image_get_colormap (image), n_colors * 3);
+
+  if (bpc)
+    flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
   transform = gimp_color_transform_new (src_profile,
                                         babl_format ("R'G'B' u8"),
                                         dest_profile,
                                         babl_format ("R'G'B' u8"),
-                                        intent,
-                                        cmsFLAGS_NOOPTIMIZE |
-                                        (bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0));
+                                        intent, flags);
 
   if (transform)
     {

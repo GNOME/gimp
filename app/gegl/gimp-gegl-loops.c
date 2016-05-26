@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <lcms2.h>
-
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
@@ -710,10 +708,10 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                  gboolean                  bpc,
                                  GimpProgress             *progress)
 {
-  GimpColorTransform *transform;
-  const Babl         *src_format;
-  const Babl         *dest_format;
-  cmsUInt32Number     flags;
+  GimpColorTransform      *transform;
+  GimpColorTransformFlags  flags = 0;
+  const Babl              *src_format;
+  const Babl              *dest_format;
 
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
@@ -725,10 +723,8 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
       return;
     }
 
-  flags = cmsFLAGS_NOOPTIMIZE;
-
   if (bpc)
-    flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+    flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
   transform = gimp_color_transform_new (src_profile,  src_format,
                                         dest_profile, dest_format,

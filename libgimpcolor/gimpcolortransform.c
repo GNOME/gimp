@@ -165,7 +165,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
                           GimpColorProfile         *dest_profile,
                           const Babl               *dest_format,
                           GimpColorRenderingIntent  rendering_intent,
-                          guint32                   flags)
+                          GimpColorTransformFlags   flags)
 {
   GimpColorTransform        *transform;
   GimpColorTransformPrivate *priv;
@@ -194,7 +194,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   priv->transform = cmsCreateTransform (src_lcms,  lcms_src_format,
                                         dest_lcms, lcms_dest_format,
                                         rendering_intent,
-                                        flags);
+                                        flags | cmsFLAGS_NOOPTIMIZE);
 
   return transform;
 }
@@ -224,7 +224,7 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
                                    GimpColorProfile         *proof_profile,
                                    GimpColorRenderingIntent  proof_intent,
                                    GimpColorRenderingIntent  display_intent,
-                                   guint32                   flags)
+                                   GimpColorTransformFlags   flags)
 {
   GimpColorTransform        *transform;
   GimpColorTransformPrivate *priv;

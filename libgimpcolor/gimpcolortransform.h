@@ -32,6 +32,13 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+typedef enum
+{
+  GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK              = 0x1000,
+  GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION = 0x2000,
+} GimpColorTransformFlags;
+
+
 #define GIMP_TYPE_COLOR_TRANSFORM            (gimp_color_transform_get_type ())
 #define GIMP_COLOR_TRANSFORM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_TRANSFORM, GimpColorTransform))
 #define GIMP_COLOR_TRANSFORM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_TRANSFORM, GimpColorTransformClass))
@@ -74,7 +81,7 @@ GimpColorTransform *
                                                GimpColorProfile         *dest_profile,
                                                const Babl               *dest_format,
                                                GimpColorRenderingIntent  rendering_intent,
-                                               guint32                   flags);
+                                               GimpColorTransformFlags   flags);
 
 GimpColorTransform *
         gimp_color_transform_new_proofing     (GimpColorProfile         *src_profile,
@@ -84,7 +91,7 @@ GimpColorTransform *
                                                GimpColorProfile         *proof_profile,
                                                GimpColorRenderingIntent  proof_intent,
                                                GimpColorRenderingIntent  display_intent,
-                                               guint32                   flags);
+                                               GimpColorTransformFlags   flags);
 
 void    gimp_color_transform_process_pixels   (GimpColorTransform       *transform,
                                                const Babl               *src_format,

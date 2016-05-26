@@ -513,18 +513,18 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
 
   if (proof_profile)
     {
-      cmsUInt32Number softproof_flags = cmsFLAGS_SOFTPROOFING;
+      GimpColorTransformFlags flags = 0;
 
       if (config->simulation_use_black_point_compensation)
         {
-          softproof_flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+          flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
         }
 
       if (config->simulation_gamut_check)
         {
           guchar r, g, b;
 
-          softproof_flags |= cmsFLAGS_GAMUTCHECK;
+          flags |= GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK;
 
           gimp_rgb_get_uchar (&config->out_of_gamut_color, &r, &g, &b);
 
@@ -540,23 +540,23 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
                                                      proof_profile,
                                                      config->simulation_intent,
                                                      config->display_intent,
-                                                     softproof_flags);
+                                                     flags);
 
       g_object_unref (proof_profile);
     }
   else if (! gimp_color_profile_is_equal (src_profile, dest_profile))
     {
-      guint32 display_flags = 0;
+      GimpColorTransformFlags flags = 0;
 
       if (config->display_use_black_point_compensation)
         {
-          display_flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+          flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
         }
 
       transform = gimp_color_transform_new (src_profile,  src_format,
                                             dest_profile, dest_format,
                                             config->display_intent,
-                                            display_flags);
+                                            flags);
     }
 
   g_object_unref (dest_profile);

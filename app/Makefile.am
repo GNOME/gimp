@@ -164,7 +164,6 @@ gimpconsoleldadd = \
 	$(GEGL_LIBS)			\
 	$(GLIB_LIBS)			\
 	$(GEXIV2_LIBS)			\
-	$(LCMS_LIBS)			\
 	$(Z_LIBS)			\
 	$(JSON_C_LIBS)			\
 	$(LIBMYPAINT_LIBS)		\

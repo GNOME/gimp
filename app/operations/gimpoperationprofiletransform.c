@@ -16,18 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Ported from the threshold-alpha plug-in
- * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
  */
 
 #include "config.h"
 
 #include <cairo.h>
-#include <gio/gio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
-#include <lcms2.h>
 
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -250,10 +245,10 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
 
   if (self->src_profile && self->dest_profile)
     {
-      cmsUInt32Number flags = cmsFLAGS_NOOPTIMIZE;
+      GimpColorTransformFlags flags = 0;
 
       if (self->bpc)
-        flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
       self->transform = gimp_color_transform_new (self->src_profile,  format,
                                                   self->dest_profile, format,

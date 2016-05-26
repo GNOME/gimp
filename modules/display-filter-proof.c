@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <lcms2.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -43,13 +41,13 @@ typedef struct _CdisplayProofClass CdisplayProofClass;
 
 struct _CdisplayProof
 {
-  GimpColorDisplay  parent_instance;
+  GimpColorDisplay    parent_instance;
 
-  gint              intent;
-  gboolean          bpc;
-  gchar            *profile;
+  gint                intent;
+  gboolean            bpc;
+  gchar              *profile;
 
-  cmsHTRANSFORM     transform;
+  GimpColorTransform *transform;
 };
 
 struct _CdisplayProofClass
@@ -182,7 +180,7 @@ cdisplay_proof_finalize (GObject *object)
 
   if (proof->transform)
     {
-      cmsDeleteTransform (proof->transform);
+      g_object_unref (proof->transform);
       proof->transform = NULL;
     }
 
@@ -247,22 +245,12 @@ cdisplay_proof_convert_buffer (GimpColorDisplay *display,
                                GeglBuffer       *buffer,
                                GeglRectangle    *area)
 {
-  CdisplayProof      *proof = CDISPLAY_PROOF (display);
-  GeglBufferIterator *iter;
+  CdisplayProof *proof = CDISPLAY_PROOF (display);
 
-  if (! proof->transform)
-    return;
-
-  iter = gegl_buffer_iterator_new (buffer, area, 0,
-                                   babl_format ("R'G'B'A float"),
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
-    {
-      gfloat *data = iter->data[0];
-
-      cmsDoTransform (proof->transform, data, data, iter->length);
-    }
+  if (proof->transform)
+    gimp_color_transform_process_buffer (proof->transform,
+                                         buffer, area,
+                                         buffer, area);
 }
 
 static void
@@ -351,7 +339,7 @@ cdisplay_proof_changed (GimpColorDisplay *display)
 
   if (proof->transform)
     {
-      cmsDeleteTransform (proof->transform);
+      g_object_unref (proof->transform);
       proof->transform = NULL;
     }
 
@@ -366,22 +354,20 @@ cdisplay_proof_changed (GimpColorDisplay *display)
 
   if (proof_profile)
     {
-      cmsHPROFILE     rgb_lcms;
-      cmsHPROFILE     proof_lcms;
-      cmsUInt32Number flags = cmsFLAGS_SOFTPROOFING;
-
-      rgb_lcms   = gimp_color_profile_get_lcms_profile (rgb_profile);
-      proof_lcms = gimp_color_profile_get_lcms_profile (proof_profile);
+      GimpColorTransformFlags flags = 0;
 
       if (proof->bpc)
-        flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-      proof->transform = cmsCreateProofingTransform (rgb_lcms, TYPE_RGBA_FLT,
-                                                     rgb_lcms, TYPE_RGBA_FLT,
-                                                     proof_lcms,
-                                                     proof->intent,
-                                                     proof->intent,
-                                                     flags);
+      proof->transform =
+        gimp_color_transform_new_proofing (rgb_profile,
+                                           babl_format ("R'G'B'A float"),
+                                           rgb_profile,
+                                           babl_format ("R'G'B'A float"),
+                                           proof_profile,
+                                           proof->intent,
+                                           proof->intent,
+                                           flags);
 
       g_object_unref (proof_profile);
     }

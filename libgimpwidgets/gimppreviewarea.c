@@ -19,7 +19,6 @@
 #include "config.h"
 
 #include <string.h>
-#include <lcms2.h>
 
 #include <gegl.h>
 #include <gtk/gtk.h>

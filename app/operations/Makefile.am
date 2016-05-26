@@ -10,7 +10,6 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GDK_PIXBUF_CFLAGS)			\
-	$(LCMS_CFLAGS)				\
 	-I$(includedir)
 
 noinst_LIBRARIES = \

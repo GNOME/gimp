@@ -21,14 +21,6 @@
 
 #include <string.h>
 
-#ifdef G_OS_WIN32
-#define STRICT
-#include <windows.h>
-#define LCMS_WIN_TYPES_ALREADY_DEFINED
-#endif
-
-#include <lcms2.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
