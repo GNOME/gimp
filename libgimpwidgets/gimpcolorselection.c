@@ -537,6 +537,10 @@ gimp_color_selection_set_config (GimpColorSelection *selection,
                                   config);
   gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (selection->scales),
                                   config);
+  gimp_color_area_set_color_config (GIMP_COLOR_AREA (selection->old_color),
+                                    config);
+  gimp_color_area_set_color_config (GIMP_COLOR_AREA (selection->new_color),
+                                    config);
 }
 
 /*  private functions  */
