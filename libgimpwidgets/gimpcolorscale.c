@@ -27,13 +27,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimpwidgetstypes.h"
 
 #include "gimpcairo-utils.h"
 #include "gimpcolorscale.h"
+#include "gimpwidgetsutils.h"
 
 
 /**
@@ -52,30 +54,50 @@ enum
 };
 
 
-static void     gimp_color_scale_finalize       (GObject         *object);
-static void     gimp_color_scale_get_property   (GObject         *object,
-                                                 guint            property_id,
-                                                 GValue          *value,
-                                                 GParamSpec      *pspec);
-static void     gimp_color_scale_set_property   (GObject         *object,
-                                                 guint            property_id,
-                                                 const GValue    *value,
-                                                 GParamSpec      *pspec);
+typedef struct _GimpColorScalePrivate GimpColorScalePrivate;
 
-static void     gimp_color_scale_size_allocate  (GtkWidget       *widget,
-                                                 GtkAllocation   *allocation);
-static void     gimp_color_scale_state_changed  (GtkWidget       *widget,
-                                                 GtkStateType     previous_state);
-static gboolean gimp_color_scale_button_press   (GtkWidget       *widget,
-                                                 GdkEventButton  *event);
-static gboolean gimp_color_scale_button_release (GtkWidget       *widget,
-                                                 GdkEventButton  *event);
-static gboolean gimp_color_scale_expose         (GtkWidget       *widget,
-                                                 GdkEventExpose  *event);
+struct _GimpColorScalePrivate
+{
+  GimpColorConfig    *config;
+  GimpColorTransform *transform;
+};
 
-static void     gimp_color_scale_render         (GimpColorScale  *scale);
-static void     gimp_color_scale_render_alpha   (GimpColorScale  *scale);
-static void     gimp_color_scale_render_stipple (GimpColorScale  *scale);
+#define GET_PRIVATE(obj) \
+        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
+                                     GIMP_TYPE_COLOR_SCALE, \
+                                     GimpColorScalePrivate)
+
+
+static void     gimp_color_scale_dispose          (GObject          *object);
+static void     gimp_color_scale_finalize         (GObject          *object);
+static void     gimp_color_scale_get_property     (GObject          *object,
+                                                   guint             property_id,
+                                                   GValue           *value,
+                                                   GParamSpec       *pspec);
+static void     gimp_color_scale_set_property     (GObject          *object,
+                                                   guint             property_id,
+                                                   const GValue     *value,
+                                                   GParamSpec       *pspec);
+
+static void     gimp_color_scale_size_allocate    (GtkWidget        *widget,
+                                                   GtkAllocation    *allocation);
+static void     gimp_color_scale_state_changed    (GtkWidget        *widget,
+                                                   GtkStateType      previous_state);
+static gboolean gimp_color_scale_button_press     (GtkWidget        *widget,
+                                                   GdkEventButton   *event);
+static gboolean gimp_color_scale_button_release   (GtkWidget        *widget,
+                                                   GdkEventButton   *event);
+static gboolean gimp_color_scale_expose           (GtkWidget        *widget,
+                                                   GdkEventExpose   *event);
+
+static void     gimp_color_scale_render           (GimpColorScale   *scale);
+static void     gimp_color_scale_render_alpha     (GimpColorScale   *scale);
+static void     gimp_color_scale_render_stipple   (GimpColorScale   *scale);
+
+static void     gimp_color_scale_config_notify    (GimpColorConfig  *config,
+                                                   const GParamSpec *pspec,
+                                                   GimpColorScale   *scale);
+static void     gimp_color_scale_create_transform (GimpColorScale   *scale);
 
 
 G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
@@ -89,6 +111,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose              = gimp_color_scale_dispose;
   object_class->finalize             = gimp_color_scale_finalize;
   object_class->get_property         = gimp_color_scale_get_property;
   object_class->set_property         = gimp_color_scale_set_property;
@@ -112,6 +135,18 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
                                                       GIMP_COLOR_SELECTOR_VALUE,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
+
+  g_type_class_add_private (object_class, sizeof (GimpColorScalePrivate));
+}
+
+static void
+gimp_color_scale_dispose (GObject *object)
+{
+  GimpColorScale *scale = GIMP_COLOR_SCALE (object);
+
+  gimp_color_scale_set_color_config (scale, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -321,22 +356,23 @@ static gboolean
 gimp_color_scale_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
-  GimpColorScale  *scale     = GIMP_COLOR_SCALE (widget);
-  GtkRange        *range     = GTK_RANGE (widget);
-  GtkStyle        *style     = gtk_widget_get_style (widget);
-  GdkWindow       *window    = gtk_widget_get_window (widget);
-  gboolean         sensitive = gtk_widget_is_sensitive (widget);
-  GtkAllocation    allocation;
-  GdkRectangle     range_rect;
-  GdkRectangle     area      = { 0, };
-  cairo_surface_t *buffer;
-  gint             focus = 0;
-  gint             trough_border;
-  gint             slider_start;
-  gint             slider_size;
-  gint             x, y;
-  gint             w, h;
-  cairo_t         *cr;
+  GimpColorScale        *scale     = GIMP_COLOR_SCALE (widget);
+  GimpColorScalePrivate *priv      = GET_PRIVATE (widget);
+  GtkRange              *range     = GTK_RANGE (widget);
+  GtkStyle              *style     = gtk_widget_get_style (widget);
+  GdkWindow             *window    = gtk_widget_get_window (widget);
+  gboolean               sensitive = gtk_widget_is_sensitive (widget);
+  GtkAllocation          allocation;
+  GdkRectangle           range_rect;
+  GdkRectangle           area      = { 0, };
+  cairo_surface_t       *buffer;
+  gint                   focus = 0;
+  gint                   trough_border;
+  gint                   slider_start;
+  gint                   slider_size;
+  gint                   x, y;
+  gint                   w, h;
+  cairo_t               *cr;
 
   if (! scale->buf || ! gtk_widget_is_drawable (widget))
     return FALSE;
@@ -391,11 +427,44 @@ gimp_color_scale_expose (GtkWidget      *widget,
                  y + allocation.y,
                  w, h);
 
-  buffer = cairo_image_surface_create_for_data (scale->buf,
-                                                CAIRO_FORMAT_RGB24,
-                                                scale->width,
-                                                scale->height,
-                                                scale->rowstride);
+  if (! priv->transform)
+    gimp_color_scale_create_transform (scale);
+
+  if (priv->transform)
+    {
+      const Babl *format = babl_format ("cairo-RGB24");
+      guchar     *buf    = g_new (guchar, scale->rowstride * scale->height);
+      guchar     *src    = scale->buf;
+      guchar     *dest   = buf;
+      gint        i;
+
+      for (i = 0; i < scale->height; i++)
+        {
+          gimp_color_transform_process_pixels (priv->transform,
+                                               format, src,
+                                               format, dest,
+                                               scale->width);
+
+          src  += scale->rowstride;
+          dest += scale->rowstride;
+        }
+
+      buffer = cairo_image_surface_create_for_data (buf,
+                                                    CAIRO_FORMAT_RGB24,
+                                                    scale->width,
+                                                    scale->height,
+                                                    scale->rowstride);
+      cairo_surface_set_user_data (buffer, NULL,
+                                   buf, (cairo_destroy_func_t) g_free);
+    }
+  else
+    {
+      buffer = cairo_image_surface_create_for_data (scale->buf,
+                                                    CAIRO_FORMAT_RGB24,
+                                                    scale->width,
+                                                    scale->height,
+                                                    scale->rowstride);
+    }
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
@@ -570,6 +639,53 @@ gimp_color_scale_set_color (GimpColorScale *scale,
   scale->needs_render = TRUE;
   gtk_widget_queue_draw (GTK_WIDGET (scale));
 }
+
+/**
+ * gimp_color_scale_set_color_config:
+ * @scale:  a #GimpColorScale widget.
+ * @config: a #GimpColorConfig object.
+ *
+ * Sets the color management configuration to use with this color scale.
+ *
+ * Since: 2.10
+ */
+void
+gimp_color_scale_set_color_config (GimpColorScale  *scale,
+                                   GimpColorConfig *config)
+{
+  GimpColorScalePrivate *priv;
+
+  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
+  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+
+  priv = GET_PRIVATE (scale);
+
+  if (priv->config)
+    {
+      g_signal_handlers_disconnect_by_func (priv->config,
+                                            gimp_color_scale_config_notify,
+                                            scale);
+      g_object_unref (priv->config);
+
+      if (priv->transform)
+        {
+          g_object_unref (priv->transform);
+          priv->transform = NULL;
+        }
+    }
+
+  priv->config = config;
+
+  if (priv->config)
+    {
+      g_object_ref (priv->config);
+
+      g_signal_connect (priv->config, "notify",
+                        G_CALLBACK (gimp_color_scale_config_notify),
+                        scale);
+    }
+}
+
 
 /* as in gtkrange.c */
 static gboolean
@@ -859,5 +975,43 @@ gimp_color_scale_render_stipple (GimpColorScale *scale)
           d[2] = insensitive[2];
           d[3] = insensitive[3];
         }
+    }
+}
+
+static void
+gimp_color_scale_config_notify (GimpColorConfig  *config,
+                                const GParamSpec *pspec,
+                                GimpColorScale   *scale)
+{
+  GimpColorScalePrivate *priv = GET_PRIVATE (scale);
+
+  if (priv->transform)
+    {
+      g_object_unref (priv->transform);
+      priv->transform = NULL;
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (scale));
+}
+
+static void
+gimp_color_scale_create_transform (GimpColorScale *scale)
+{
+  GimpColorScalePrivate *priv = GET_PRIVATE (scale);
+
+  if (priv->config)
+    {
+      static GimpColorProfile *profile = NULL;
+
+      const Babl *format = babl_format ("cairo-RGB24");
+
+      if (G_UNLIKELY (! profile))
+        profile = gimp_color_profile_new_rgb_srgb ();
+
+      priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (scale),
+                                                         priv->config,
+                                                         profile,
+                                                         format,
+                                                         format);
     }
 }

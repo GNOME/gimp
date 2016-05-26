@@ -87,6 +87,8 @@ static void   gimp_color_scales_set_color      (GimpColorSelector *selector,
                                                 const GimpHSV     *hsv);
 static void   gimp_color_scales_set_channel    (GimpColorSelector *selector,
                                                 GimpColorSelectorChannel  channel);
+static void   gimp_color_scales_set_config     (GimpColorSelector *selector,
+                                                GimpColorConfig   *config);
 
 static void   gimp_color_scales_update_scales  (GimpColorScales   *scales,
                                                 gint               skip);
@@ -114,6 +116,7 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
   selector_class->set_show_alpha        = gimp_color_scales_set_show_alpha;
   selector_class->set_color             = gimp_color_scales_set_color;
   selector_class->set_channel           = gimp_color_scales_set_channel;
+  selector_class->set_config            = gimp_color_scales_set_config;
 }
 
 static void
@@ -189,6 +192,8 @@ gimp_color_scales_init (GimpColorScales *scales)
                                     NULL);
 
       scales->sliders[i] = GIMP_SCALE_ENTRY_SCALE (scales->slider_data[i]);
+      g_object_add_weak_pointer (G_OBJECT (scales->sliders[i]),
+                                 (gpointer) &scales->sliders[i]);
 
       gimp_color_scale_set_channel (GIMP_COLOR_SCALE (scales->sliders[i]), i);
 
@@ -276,6 +281,21 @@ gimp_color_scales_set_channel (GimpColorSelector        *selector,
       g_signal_handlers_unblock_by_func (scales->toggles[channel],
                                          gimp_color_scales_toggle_update,
                                          scales);
+    }
+}
+
+static void
+gimp_color_scales_set_config (GimpColorSelector *selector,
+                              GimpColorConfig   *config)
+{
+  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
+  gint             i;
+
+  for (i = 0; i < 7; i++)
+    {
+      if (scales->sliders[i])
+        gimp_color_scale_set_color_config (GIMP_COLOR_SCALE (scales->sliders[i]),
+                                           config);
     }
 }
 
