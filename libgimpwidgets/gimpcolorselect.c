@@ -154,6 +154,8 @@ static void   gimp_color_select_set_color       (GimpColorSelector  *selector,
                                                  const GimpHSV      *hsv);
 static void   gimp_color_select_set_channel     (GimpColorSelector  *selector,
                                                  GimpColorSelectorChannel  channel);
+static void   gimp_color_select_set_config      (GimpColorSelector  *selector,
+                                                 GimpColorConfig    *config);
 
 static void   gimp_color_select_channel_toggled (GtkWidget          *widget,
                                                  GimpColorSelect    *select);
@@ -243,6 +245,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
   selector_class->set_toggles_sensitive = gimp_color_select_togg_sensitive;
   selector_class->set_color             = gimp_color_select_set_color;
   selector_class->set_channel           = gimp_color_select_set_channel;
+  selector_class->set_config            = gimp_color_select_set_config;
 }
 
 static void
@@ -266,6 +269,8 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_widget_show (frame);
 
   select->xy_color = gimp_preview_area_new ();
+  g_object_add_weak_pointer (G_OBJECT (select->xy_color),
+                             (gpointer) &select->xy_color);
   gtk_widget_set_size_request (select->xy_color,
                                GIMP_COLOR_SELECTOR_SIZE,
                                GIMP_COLOR_SELECTOR_SIZE);
@@ -295,6 +300,8 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_widget_show (frame);
 
   select->z_color = gimp_preview_area_new ();
+  g_object_add_weak_pointer (G_OBJECT (select->z_color),
+                             (gpointer) &select->z_color);
   gtk_widget_set_size_request (select->z_color,
                                GIMP_COLOR_SELECTOR_BAR_SIZE, -1);
   gtk_widget_set_events (select->z_color, COLOR_AREA_EVENT_MASK);
@@ -430,6 +437,21 @@ gimp_color_select_set_channel (GimpColorSelector        *selector,
 
   gimp_color_select_update (select,
                             UPDATE_POS | UPDATE_Z_COLOR | UPDATE_XY_COLOR);
+}
+
+static void
+gimp_color_select_set_config (GimpColorSelector *selector,
+                              GimpColorConfig   *config)
+{
+  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
+
+  if (select->xy_color)
+    gimp_preview_area_set_color_config (GIMP_PREVIEW_AREA (select->xy_color),
+                                        config);
+
+  if (select->z_color)
+    gimp_preview_area_set_color_config (GIMP_PREVIEW_AREA (select->z_color),
+                                        config);
 }
 
 static void
