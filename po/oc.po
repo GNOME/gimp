@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
 "ywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-05-21 19:40+0000\n"
-"PO-Revision-Date: 2016-05-25 22:01+0200\n"
+"PO-Revision-Date: 2016-05-26 22:35+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot En Òc\n"
 "Language: oc\n"
@@ -2677,8 +2677,8 @@ msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
-"En restablissent a l'estat enregistrat sul disque, perdretz totas vòstras "
-"modificacions ainsi que las informacions d'anullacion."
+"En restablissent a l'estat enregistrat sul disc, perdretz totas vòstras "
+"modificacions atal que las informacions d'anullacion."
 
 #: ../app/actions/file-commands.c:823
 msgid "(Unnamed Template)"
@@ -3527,7 +3527,7 @@ msgstr "Re_centrer lo punt median del segment"
 
 #: ../app/actions/gradient-editor-actions.c:794
 msgid "Re-distribute _Handles in Segment"
-msgstr "Redistribuer las _punhadas dins lo segment"
+msgstr "Redistribuir las _punhadas dins lo segment"
 
 #: ../app/actions/gradient-editor-actions.c:799
 msgid "_Blending Function for Selection"
@@ -4522,7 +4522,7 @@ msgstr "_Abandonar l'informacion de tèxte"
 #: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
-msgstr "Transforme aqueste calc de tèxte en calc normal"
+msgstr "Transfòrma aqueste calc de tèxte en calc normal"
 
 #: ../app/actions/layers-actions.c:180
 msgctxt "layers-action"
@@ -6294,7 +6294,7 @@ msgstr "Mò_de de rendut de l'afichatge :"
 #| msgid "_Rendering Intent:"
 msgctxt "view-action"
 msgid "Simulation Re_ndering Intent"
-msgstr "Mo_de de rendut de l'afichatge :"
+msgstr "Mò_de de rendut de l'afichatge :"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -6792,7 +6792,7 @@ msgstr "Rotacion 90° sens _horaire"
 #: ../app/actions/view-actions.c:485
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
-msgstr "Rotacion de 90 grases cap a la droite"
+msgstr "Rotacion de 90 grases cap a dreita"
 
 #: ../app/actions/view-actions.c:490
 msgctxt "view-action"
@@ -6802,7 +6802,7 @@ msgstr "Rotacion 90° sens _horaire"
 #: ../app/actions/view-actions.c:491
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
-msgstr "Rotacion de 90 grases cap a la droite"
+msgstr "Rotacion de 90 grases cap a dreita"
 
 #: ../app/actions/view-actions.c:496
 msgctxt "view-action"
@@ -6812,27 +6812,27 @@ msgstr "Rotacion _180°"
 #: ../app/actions/view-actions.c:497
 msgctxt "view-action"
 msgid "Turn upside-down"
-msgstr "Retourne"
+msgstr "Revira"
 
 #: ../app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Rotacion 90° sens _anti-horaire"
+msgstr "Rotacion 90° sens _anti-orari"
 
 #: ../app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
-msgstr "Rotacion de 90 grases cap a la gauche"
+msgstr "Rotacion de 90 grases cap a esquèrra"
 
 #: ../app/actions/view-actions.c:508
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
-msgstr "Rotacion 90° sens _anti-horaire"
+msgstr "Rotacion 90° sens _anti-orari"
 
 #: ../app/actions/view-actions.c:509
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
-msgstr "Rotacion de 90 grases cap a la gauche"
+msgstr "Rotacion de 90 grases cap a esquèrra"
 
 #: ../app/actions/view-actions.c:517 ../app/actions/view-actions.c:544
 #, fuzzy
@@ -7222,7 +7222,7 @@ msgstr "Gardar en dessús"
 #: ../app/config/config-enums.c:207
 msgctxt "cursor-format"
 msgid "Black & white"
-msgstr "Negre & blanc"
+msgstr "Blanc & negre"
 
 #: ../app/config/config-enums.c:208
 msgctxt "cursor-format"
@@ -7232,12 +7232,12 @@ msgstr "Fantaisie"
 #: ../app/config/config-enums.c:236
 msgctxt "handedness"
 msgid "Left-handed"
-msgstr "Esquèrrar"
+msgstr "Esquerrièr"
 
 #: ../app/config/config-enums.c:237
 msgctxt "handedness"
 msgid "Right-handed"
-msgstr "Drechièr"
+msgstr "Dreitièr"
 
 #: ../app/config/config-enums.c:267
 msgctxt "position"
@@ -7304,7 +7304,7 @@ msgid ""
 "\"."
 msgstr ""
 "Se aquesta opcion es activada, un imatge deviendra l'imatge actiu quand sa "
-"fenèstra recevra lo focus. Es practic pels gestionaris de fenèstra utilisant "
+"fenèstra recevra lo focus. Es practic pels gestionaris de fenèstra qu'utilizan "
 "una « seleccion per clic »."
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
@@ -7489,7 +7489,7 @@ msgid ""
 "used to be the default behaviour in older versions."
 msgstr ""
 "Se activat, l'aisina desplaçar càmbia lo calc actiu o lo camin quand un calc "
-"o un camin es cliqué. Aquò était lo comportement per defaut de las ancianas "
+"o un camin es clicat. Aquò èra lo compòrtament per defaut de las ancianas "
 "versions."
 
 #: ../app/config/gimprc-blurbs.h:235
@@ -7503,7 +7503,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:239
 msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr ""
-"Definís combien de processors GIMP deu ensajar d'utilizar simultanément."
+"Definís combien de processors GIMP deu ensajar d'utilizar simultanèament."
 
 #: ../app/config/gimprc-blurbs.h:261
 msgid ""
@@ -7604,7 +7604,7 @@ msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
 msgstr ""
-"Se aquesta opcion es activada, lo puntador sera afichat per dessus l'imatge "
+"Se aquesta opcion es activada, lo puntador serà afichat per dessús l'imatge "
 "quand vous utilizatz un aisina de pintrura."
 
 #: ../app/config/gimprc-blurbs.h:321
@@ -7622,7 +7622,7 @@ msgid ""
 "with the \"View->Show Rulers\" command."
 msgstr ""
 "Se aquesta opcion es activada, per defaut, las règlas seràn visibles. "
-"L'afichatge d'aquest as darrièras pòt tanben èsser contrôlé via lo menú « "
+"L'afichatge d'aquest as darrièras pòt tanben èsser contrarotlat via lo menú « "
 "Afichatge -> Afichar las règlas »."
 
 #: ../app/config/gimprc-blurbs.h:329
@@ -7685,7 +7685,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Se aquesta opcion es activada, per defaut, los punts d'escandalhatge seront "
-"visibles. L'afichatge d'aquest as darrièrs pòt tanben èsser contrôlé via lo "
+"visibles. L'afichatge d'aquest as darrièrs pòt tanben èsser contrarotlat via lo "
 "menú « Afichatge -> Afichar los punts d'escandalhatge »."
 
 #: ../app/config/gimprc-blurbs.h:357
@@ -7699,7 +7699,7 @@ msgstr "Utilizar GIMP en mòde fenèstra unica."
 #: ../app/config/gimprc-blurbs.h:363
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
-"Masque las fenèstras, groupées o isolées. Solas persistent las fenèstras "
+"Masque las fenèstras, gropadas o isoladas. Solas persistent las fenèstras "
 "d'imatges."
 
 #: ../app/config/gimprc-blurbs.h:366
@@ -7739,11 +7739,11 @@ msgid ""
 msgstr ""
 "Definís l'emplaçament del fichièr d'escambi. GIMP utiliza un metòde "
 "d'allocation memòria per blòt. Lo fichièr d'escambi es utilizat per "
-"escambiar rapidament aquestes blocs entre lo disc e la memòria. Vos cal "
+"escambiar rapidament aquestes blòts entre lo disc e la memòria. Vos cal "
 "èsser conscient qu'aqueste fichièr pòt devenir très gros se vous travaillez "
-"sus d'imatges de granda talha. De plus, GIMP pòt devenir terriblement lent "
-"se lo fichièr d'escambi es créé dins un repertòri situé sul ret (NFS, Samba, "
-"etc.). Per aquestas raisons es de còps conselhat de metre lo fichièr "
+"sus d'imatges de granda talha. De plus, GIMP pòt devenir terriblament lent "
+"se lo fichièr d'escambi es créé dins un repertòri situé sus la ret (NFS, Samba, "
+"etc.). Per aquestas rasons es de còps conselhat de metre lo fichièr "
 "d'escambi dins « /tmp »."
 
 #: ../app/config/gimprc-blurbs.h:393
@@ -7803,7 +7803,7 @@ msgid ""
 "you may want to set this to a higher value."
 msgstr ""
 "Quand la quantitat de pixèls a tractar depassa aqueste limit, GIMP va "
-"començar de swappar sul disque. Es un pauc mai lent mas es atal possible de "
+"començar de swappar sul disc. Es un pauc mai lent mas es atal possible de "
 "trabalhar sus d'imatges mai grands que la memòria. Se avètz fòrça RAM, "
 "convendriá de definir aquesta valor mai naut."
 
@@ -7854,7 +7854,7 @@ msgid ""
 "as configured can be undone."
 msgstr ""
 "Definís un limit superiora a la memòria utilizada per l'imatge per conservar "
-"las operacions de la pila d'anullacions. lu minimum, autant de nivèls "
+"las operacions de la pila d'anullacions. legit minimum, autant de nivèls "
 "d'anullacions que configurats per aqueste paramètre poiràn èsser anullats."
 
 #: ../app/config/gimprc-blurbs.h:468
@@ -8778,11 +8778,10 @@ msgid "Smooth"
 msgstr "Lissada"
 
 #: ../app/core/core-enums.c:1213
-#, fuzzy
 #| msgid "Feather"
 msgctxt "channel-border-style"
 msgid "Feathered"
-msgstr "Ado_ucir..."
+msgstr "Adocit"
 
 #: ../app/core/gimp.c:708
 msgid "Initialization"
@@ -9538,7 +9537,7 @@ msgstr "Emplenar amb una color unida"
 #: ../app/core/gimpgradient-load.c:72
 #, c-format
 msgid "Not a GIMP gradient file."
-msgstr "aquò es pas un fichièr de corbas GIMP"
+msgstr "Aquò es pas un fichièr de corbas GIMP"
 
 #: ../app/core/gimpgradient-load.c:95
 #, fuzzy, c-format
@@ -10521,7 +10520,7 @@ msgid "Miter limit"
 msgstr "_Limit de punta :"
 
 # Aquesta explication es confuse. J'en prepause una autre.
-# Cette explication est confuse. J'en propose une autre.
+# Cette explication es confuse. J'en propose une autre.
 #: ../app/core/gimpstrokeoptions.c:193
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
@@ -10533,11 +10532,11 @@ msgstr ""
 
 #: ../app/core/gimpstrokeoptions.c:202
 msgid "Dash offset"
-msgstr "Tiret, point"
+msgstr "Jonhent, point"
 
 #: ../app/core/gimpstrokeoptions.c:224
 msgid "Emulate brush dynamics"
-msgstr "É_muler una bròssa dinamica"
+msgstr "E_mular una bròssa dinamica"
 
 #. no undo (or redo) steps available
 #: ../app/core/gimpsymmetry.c:132 ../app/widgets/gimpimagepropview.c:399
@@ -10595,11 +10594,11 @@ msgstr ""
 
 #: ../app/core/gimpsymmetry-mirror.c:153
 msgid "Horizontal axis position"
-msgstr "Decalatge orizontal per la distribution"
+msgstr "Decalatge orizontal per la distribucion"
 
 #: ../app/core/gimpsymmetry-mirror.c:161
 msgid "Vertical axis position"
-msgstr "Decalatge vertical per la distribution"
+msgstr "Decalatge vertical per la distribucion"
 
 #: ../app/core/gimpsymmetry-tiling.c:100
 msgid "Tiling"
@@ -10735,7 +10734,7 @@ msgstr "Aplicar la dinamica enregistrada"
 
 #: ../app/core/gimptoolpreset.c:168
 msgid "Apply stored MyPaint brush"
-msgstr "Aplicar la bròssa enregistrée"
+msgstr "Aplicar la bròssa enregistrada"
 
 #: ../app/core/gimptoolpreset.c:175
 msgid "Apply stored pattern"
@@ -11039,7 +11038,7 @@ msgstr "Tramatge"
 
 #: ../app/dialogs/convert-indexed-dialog.c:251
 msgid "Color _dithering:"
-msgstr "_Tramage de las colors"
+msgstr "_Tramatge de las colors"
 
 #: ../app/dialogs/convert-indexed-dialog.c:266
 msgid "Enable dithering of _transparency"
@@ -11047,7 +11046,7 @@ msgstr "Activa lo tramatge de la _transparéncia"
 
 #: ../app/dialogs/convert-indexed-dialog.c:278
 msgid "Enable dithering of text layers"
-msgstr "Activa lo tramage de la _transparence"
+msgstr "Activa lo tramatge de la _transparence"
 
 #: ../app/dialogs/convert-indexed-dialog.c:289
 #: ../app/dialogs/convert-precision-dialog.c:243
@@ -11615,7 +11614,7 @@ msgstr ""
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:243
 msgid "Edge Behavior"
-msgstr "Comportement suls bòrds"
+msgstr "Compòrtament suls bòrds"
 
 #: ../app/dialogs/offset-dialog.c:247
 msgid "W_rap around"
@@ -11996,7 +11995,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1475
 msgid "File Open behaviour:"
-msgstr "Comportement a la dobertura d'un fichièr :"
+msgstr "Compòrtament a la dobertura d'un fichièr :"
 
 #: ../app/dialogs/preferences-dialog.c:1491
 msgid "Experimental Playground"
@@ -12380,7 +12379,7 @@ msgstr "_Velocitat de desfilament dels puntilhats :"
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2301
 msgid "Zoom & Resize Behavior"
-msgstr "Comportement del zoom e del redimensionament"
+msgstr "Compòrtament del zoom e del redimensionament"
 
 #: ../app/dialogs/preferences-dialog.c:2305
 msgid "Resize window on _zoom"
@@ -12401,7 +12400,7 @@ msgstr "_Factor de zoom initial :"
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2320
 msgid "Space Bar"
-msgstr "Barre espaci"
+msgstr "Barra espaci"
 
 #: ../app/dialogs/preferences-dialog.c:2326
 msgid "_While space bar is pressed:"
@@ -12418,11 +12417,11 @@ msgstr "Afi_char lo contorn de la bròssa"
 
 #: ../app/dialogs/preferences-dialog.c:2337
 msgid "Show pointer for paint _tools"
-msgstr "Affic_her lo puntador per las aisinas de pintrura"
+msgstr "Afic_har lo puntador per las aisinas de pintrura"
 
 #: ../app/dialogs/preferences-dialog.c:2343
 msgid "Pointer _mode:"
-msgstr "Mod_e de puntage :"
+msgstr "Mòd_e de puntage :"
 
 #: ../app/dialogs/preferences-dialog.c:2346
 msgid "Pointer _handedness:"
@@ -12541,11 +12540,11 @@ msgstr "Dorsièrs"
 
 #: ../app/dialogs/preferences-dialog.c:2610
 msgid "Temporary folder:"
-msgstr "Dorsièr temporaire :"
+msgstr "Dorsièr temporari :"
 
 #: ../app/dialogs/preferences-dialog.c:2611
 msgid "Select Folder for Temporary Files"
-msgstr "Seleccionar un dorsièr pels fichièrs temporaires"
+msgstr "Seleccionar un dorsièr pels fichièrs temporaris"
 
 #: ../app/dialogs/preferences-dialog.c:2615
 msgid "Swap folder:"
@@ -12629,7 +12628,7 @@ msgstr "Seleccionar los dorsièrs dels empeutons"
 
 #: ../app/dialogs/preferences-dialog.c:2687
 msgid "Scripts"
-msgstr "Scripts"
+msgstr "Escripts"
 
 #: ../app/dialogs/preferences-dialog.c:2687
 msgid "Script-Fu Folders"
@@ -12861,7 +12860,7 @@ msgstr ""
 
 #: ../app/dialogs/tips-dialog.c:111
 msgid "The GIMP tips file could not be parsed!"
-msgstr "Lo fichièr de las astúcias GIMP pòt pas èsser lu corrèctament !"
+msgstr "Lo fichièr de las astúcias GIMP pòt pas èsser legit corrèctament !"
 
 #: ../app/dialogs/tips-dialog.c:139
 msgid "GIMP Tip of the Day"
@@ -12900,7 +12899,7 @@ msgstr "Fracàs de l'installacion utilizaire !"
 #: ../app/dialogs/user-install-dialog.c:96
 msgid "The GIMP user installation failed; see the log for details."
 msgstr ""
-"L'installacion utilizaire de GIMP a fracassat, voyez lo jornal per mai de "
+"L'installacion utilizaire de GIMP a fracassat, vejatz lo jornal per mai de "
 "détails."
 
 #: ../app/dialogs/user-install-dialog.c:99
@@ -13558,7 +13557,7 @@ msgstr "Emplenar la posicion iniciala de la gàbia amb una color unida"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
-msgstr "Aisina de désaturacion : transforme las colors en nivèls de gris"
+msgstr "Aisina de desaturacion : transfòrma las colors en nivèls de gris"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/tools/gimppaintoptions-gui.c:113 ../app/widgets/gimpdeviceinfo.c:132
@@ -13568,7 +13567,7 @@ msgstr "Mòde :"
 
 #: ../app/operations/gimpoperationdesaturate.c:91
 msgid "Choose shade of gray based on"
-msgstr "Causir la nuance de gris basée sus :"
+msgstr "Causir la nuança de gris basée sus :"
 
 #: ../app/operations/gimpoperationposterize.c:82
 msgid "Reduce to a limited set of colors"
@@ -13668,7 +13667,7 @@ msgstr "Taus"
 
 #: ../app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
-msgstr "Éclaircir/Escurezir"
+msgstr "Esclarzir/Escurezir"
 
 #: ../app/paint/gimpdodgeburnoptions.c:70
 msgid "Type"
@@ -13849,7 +13848,7 @@ msgstr "Incrémentiel"
 
 #: ../app/paint/gimppaintoptions.c:275
 msgid "Every stamp has its own opacity"
-msgstr "Chaque coup de tampon a sa propre opacitat"
+msgstr "Cada còp de tampon a sa propre opacitat"
 
 #: ../app/paint/gimppaintoptions.c:282
 msgid "Hard edge"
@@ -13865,7 +13864,7 @@ msgstr "Aplicar fluctuation"
 
 #: ../app/paint/gimppaintoptions.c:290
 msgid "Scatter brush as you paint"
-msgstr "Disperse los coups de bròssa pendent que pintratz"
+msgstr "Disperse los còps de bròssa pendent que pintratz"
 
 #: ../app/paint/gimppaintoptions.c:295
 msgid "Amount"
@@ -13885,7 +13884,7 @@ msgstr "Longor d'estompament"
 
 #: ../app/paint/gimppaintoptions.c:310
 msgid "Distance over which strokes fade out"
-msgstr "Distància d'estompament dels coups de bròssas"
+msgstr "Distància d'estompament dels còps de bròssas"
 
 #: ../app/paint/gimppaintoptions.c:320 ../app/widgets/gimpviewablebox.c:373
 msgid "Reverse"
@@ -13910,7 +13909,7 @@ msgstr "Lisser lo traçat"
 
 #: ../app/paint/gimppaintoptions.c:397
 msgid "Paint smoother strokes"
-msgstr "Donne de coups de bròssa mai lisses"
+msgstr "Dona de còps de bròssa mai lisses"
 
 #: ../app/paint/gimppaintoptions.c:403
 msgid "Depth of smoothing"
@@ -13944,7 +13943,7 @@ msgstr "Taux"
 
 #: ../app/paint/gimpsourcecore.c:238
 msgid "Set a source image first."
-msgstr "Définissez d'en primièr un imatge font"
+msgstr "Dzfinissètz d'en primièr un imatge font"
 
 #: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpcloneoptions-gui.c:102
 #: ../app/tools/gimphealtool.c:105
@@ -13985,7 +13984,7 @@ msgstr "Enregistrat"
 #: ../app/paint/paint-enums.c:86
 msgctxt "source-align-mode"
 msgid "Fixed"
-msgstr "Fixé"
+msgstr "Fixat"
 
 #: ../app/pdb/channel-cmds.c:198
 msgid "Combine Masks"
@@ -14128,7 +14127,7 @@ msgstr "Impossible de trobar la bròssa « %s »"
 #: ../app/pdb/gimppdb-utils.c:90
 #, fuzzy, c-format
 msgid "Brush '%s' is not editable"
-msgstr "La bròssa « %s » es pas modificable"
+msgstr "La bròssa « %s » es pas modificabla"
 
 #: ../app/pdb/gimppdb-utils.c:116
 #, fuzzy, c-format
@@ -14147,7 +14146,7 @@ msgstr "Impossible de trobar la dinamica de bròssa « %s »"
 #: ../app/pdb/gimppdb-utils.c:151
 #, fuzzy, c-format
 msgid "Paint dynamics '%s' is not editable"
-msgstr "La dinamic de bròssa « %s » es pas modificable"
+msgstr "La dinamica de bròssa « %s » es pas modificabla"
 
 #: ../app/pdb/gimppdb-utils.c:172
 msgid "Invalid empty MyPaint brush name"
@@ -14161,7 +14160,7 @@ msgstr "Impossible de trobar la bròssa « %s »"
 #: ../app/pdb/gimppdb-utils.c:186
 #, c-format
 msgid "MyPaint brush '%s' is not editable"
-msgstr "La bròssa « %s » n'est pas modifiable"
+msgstr "La bròssa « %s » es pas modifiabla"
 
 #: ../app/pdb/gimppdb-utils.c:206
 msgid "Invalid empty pattern name"
@@ -14247,7 +14246,7 @@ msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr ""
-"L'element « %s » (%d) pòt pas èsser utilizat, perque es pas un fils direct "
+"L'element « %s » (%d) pòt pas èsser utilizat, perque es pas un filh dirècte "
 "d'un arbre d'elements"
 
 #: ../app/pdb/gimppdb-utils.c:455
@@ -14256,8 +14255,8 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"Los elements « %s » (%d) e « %s » (%d) pòdon pas èsser utilizats, perque ils "
-"ne font pas partida del même arbre d'elements"
+"Los elements « %s » (%d) e « %s » (%d) pòdon pas èsser utilizats, perque "
+"fan pas partida del meteis arbre d'elements"
 
 #: ../app/pdb/gimppdb-utils.c:480
 #, fuzzy, c-format
@@ -15088,7 +15087,7 @@ msgstr ""
 
 #: ../app/tools/gimpairbrushtool.c:56
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
-msgstr "Aisina aerograf : peint a pression variabla en utilizant una bròssa"
+msgstr "Aisina aerograf : pintra a pression variabla en utilizant una bròssa"
 
 #: ../app/tools/gimpairbrushtool.c:57
 msgid "_Airbrush"
@@ -15441,7 +15440,7 @@ msgstr "C_lonatge"
 
 #: ../app/tools/gimpclonetool.c:81 ../app/tools/gimpclonetool.c:84
 msgid "Click to clone"
-msgstr "Clicatz per cloner"
+msgstr "Clicatz per clonar"
 
 #: ../app/tools/gimpclonetool.c:82 ../app/tools/gimpclonetool.c:87
 #, c-format
@@ -15822,7 +15821,7 @@ msgstr "Utilizar lo format de fichièr amb _ancianas corbas"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn"
-msgstr "Éclaircir / Escurezir"
+msgstr "Esclarzir / Escurezir"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
@@ -15937,7 +15936,7 @@ msgstr "Clicatz per seleccionar aqueste guida coma primièr element"
 #, fuzzy
 #| msgid "Click to place vertical and horizontal guides"
 msgid "Click to switch between vertical and horizontal"
-msgstr "Clicatz per placer de guidas orizontals e verticals"
+msgstr "Clicatz per plaçar de guidas orizontals e verticals"
 
 #: ../app/tools/gimpfiltertool.c:641
 #, fuzzy
@@ -16013,7 +16012,7 @@ msgstr "Revirament vertical"
 #: ../app/tools/gimpfliptool.c:197
 msgctxt "undo-desc"
 msgid "Flip"
-msgstr "Retourne"
+msgstr "Revira"
 
 #: ../app/tools/gimpforegroundselectoptions.c:84
 msgid "Draw Mode"
@@ -16555,7 +16554,7 @@ msgstr "Dobrís una fenèstra temporària per visualizar lo detalh de las mesura
 
 #: ../app/tools/gimpmeasuretool.c:127
 msgid "Measure"
-msgstr "Mesure"
+msgstr "Mesura"
 
 #: ../app/tools/gimpmeasuretool.c:128
 msgid "Measure Tool: Measure distances and angles"
@@ -16563,7 +16562,7 @@ msgstr "Aisina de mesura : mesura las distàncias e los angles"
 
 #: ../app/tools/gimpmeasuretool.c:129
 msgid "_Measure"
-msgstr "_Mesure"
+msgstr "_Mesura"
 
 #: ../app/tools/gimpmeasuretool.c:251
 msgid "Add Guides"
@@ -16575,15 +16574,15 @@ msgstr "Faites lisar per crear una linha"
 
 #: ../app/tools/gimpmeasuretool.c:563
 msgid "Click to place vertical and horizontal guides"
-msgstr "Clicatz per placer de guidas orizontals e verticals"
+msgstr "Clicatz per plaçar de guidas orizontals e verticals"
 
 #: ../app/tools/gimpmeasuretool.c:571
 msgid "Click to place a horizontal guide"
-msgstr "Clicatz per placer un guida orizontal"
+msgstr "Clicatz per plaçar un guida orizontal"
 
 #: ../app/tools/gimpmeasuretool.c:585
 msgid "Click to place a vertical guide"
-msgstr "Clicatz per placer un guida vertical"
+msgstr "Clicatz per plaçar un guida vertical"
 
 #: ../app/tools/gimpmeasuretool.c:598
 msgid "Click-Drag to add a new point"
@@ -16767,7 +16766,7 @@ msgstr ""
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
-msgstr "Aisina pincèl : peint de traits adoucis en utilizant una bròssa"
+msgstr "Aisina pincèl : pintra de traits adoucis en utilizant una bròssa"
 
 #: ../app/tools/gimppaintbrushtool.c:53
 msgid "_Paintbrush"
@@ -16837,7 +16836,7 @@ msgstr "%s per una linha dreita"
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
-msgstr "Aisina gredon : peint durement en utilizant una bròssa"
+msgstr "Aisina gredon : pintra durament en utilizant una bròssa"
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
@@ -16974,7 +16973,7 @@ msgstr "Reduccion automatica"
 
 #: ../app/tools/gimprectangleselectoptions.c:85
 msgid "Rounded corners"
-msgstr "Coins arredondits"
+msgstr "Caires arredondits"
 
 #: ../app/tools/gimprectangleselectoptions.c:86
 msgid "Round corners of selection"
@@ -17641,7 +17640,7 @@ msgstr "Seleccion dempuèi lo camin"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
-msgstr "Aisina camins : crée e modifica de camins"
+msgstr "Aisina camins : crèa e modifica de camins"
 
 #: ../app/tools/gimpvectortool.c:162
 msgid "Pat_hs"
@@ -17782,7 +17781,7 @@ msgstr "I a pas de calc o de canal actiu sus lequel tracer"
 
 #: ../app/tools/gimpwarpoptions.c:76 ../app/tools/gimpwarpoptions.c:77
 msgid "Behavior"
-msgstr "Comportement suls bòrds"
+msgstr "Compòrtament suls bòrds"
 
 #: ../app/tools/gimpwarpoptions.c:84
 msgid "Strength"
@@ -17977,7 +17976,7 @@ msgstr "TSV (teintes sens _horaire)"
 #: ../app/tools/tools-enums.c:378
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
-msgstr "TSV (teintes sens _anti-horaire)"
+msgstr "TSV (teintes sens _anti-orari)"
 
 #: ../app/tools/tools-enums.c:379
 msgctxt "warp-behavior"
@@ -18409,7 +18408,7 @@ msgstr "Cursor esquèrra"
 #: ../app/widgets/gimpcontrollerkeyboard.c:163
 #: ../app/widgets/gimpcontrollerkeyboard.c:166
 msgid "Cursor Right"
-msgstr "Cursor droit"
+msgstr "Cursor dreit"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:178
 msgid "Keyboard"
@@ -18627,7 +18626,7 @@ msgstr "Desfilament esquèrra"
 #: ../app/widgets/gimpcontrollerwheel.c:162
 #: ../app/widgets/gimpcontrollerwheel.c:165
 msgid "Scroll Right"
-msgstr "Desfilament droit"
+msgstr "Desfilament dreit"
 
 #: ../app/widgets/gimpcontrollerwheel.c:177
 msgid "Mouse Wheel"
@@ -20227,7 +20226,7 @@ msgstr "fosc"
 #~ msgstr "Desaturar (supression de las colors)"
 
 #~ msgid "Desaturate only operates on RGB layers."
-#~ msgstr "La désaturacion opèra pas que sus de calques RVB."
+#~ msgstr "La desaturacion opèra pas que sus de calques RVB."
 
 #~ msgid "Renge"
 #~ msgstr "Interval"
@@ -20400,7 +20399,7 @@ msgstr "fosc"
 
 #~ msgctxt "select-criterion"
 #~ msgid "Saturation"
-#~ msgstr "Saturation"
+#~ msgstr "Saturacion"
 
 #~ msgctxt "select-criterion"
 #~ msgid "Value"
@@ -20545,7 +20544,7 @@ msgstr "fosc"
 
 #~ msgid "Add more strokes or press Enter to accept the selection"
 #~ msgstr ""
-#~ "Ajoutez mai de tracés o appuyez sus Entrada per valider la seleccion"
+#~ "Apondètz mai de tracés o appuyez sus Entrada per valider la seleccion"
 
 #~ msgid "Mark foreground by painting on the object to extract"
 #~ msgstr "Marquer lo primièr plan en dessinant sus l'objècte a extraire"
@@ -20587,8 +20586,8 @@ msgstr "fosc"
 #~ "When enabled GIMP is in a single-window mode. Far from completely "
 #~ "implemented!"
 #~ msgstr ""
-#~ "Quand aquesta option es activée, GIMP es en mode fenèstra unica. Loin "
-#~ "d'èsser al point !"
+#~ "Quand aquesta option es activada, GIMP es en mode fenèstra unica. Loin "
+#~ "d'èsser al punt !"
 
 #~ msgctxt "undo-type"
 #~ msgid "Brightness_Contrast"
