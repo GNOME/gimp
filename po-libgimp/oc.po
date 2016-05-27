@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp20\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
-"ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-21 19:15+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-04-01 10:04+0000\n"
 "PO-Revision-Date: 2016-04-01 11:50+0200\n"
 "Last-Translator: Cédric VALMARY <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot en òc (totenoc.eu)\n"
@@ -26,22 +26,22 @@ msgstr ""
 "Langívol: \n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1136
+#: ../libgimp/gimp.c:1141
 msgid "success"
 msgstr "succès"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1140
+#: ../libgimp/gimp.c:1145
 msgid "execution error"
 msgstr "error d'execucion"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1144
+#: ../libgimp/gimp.c:1149
 msgid "calling error"
 msgstr "error d'appel"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1148
+#: ../libgimp/gimp.c:1153
 msgid "cancelled"
 msgstr "anullat"
 
@@ -137,8 +137,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"L'empeuton %s pòt pas gerir que los imatges indexats bitmap (2 colors)"
+msgstr "L'empeuton %s pòt pas gerir que los imatges indexats bitmap (2 colors)"
 
 #: ../libgimp/gimpexport.c:335
 msgid ""
@@ -244,7 +243,7 @@ msgstr "Selector de degradat"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
-#. 
+#.
 #: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:259
 msgid "(Empty)"
 msgstr "(Vide)"
@@ -267,7 +266,7 @@ msgstr "per descripcion"
 
 #: ../libgimp/gimpprocbrowserdialog.c:151
 msgid "by help"
-msgstr "per aide"
+msgstr "per ajuda"
 
 #: ../libgimp/gimpprocbrowserdialog.c:152
 msgid "by author"
@@ -321,7 +320,7 @@ msgstr "Recèrca per copyright"
 
 #: ../libgimp/gimpprocbrowserdialog.c:466
 msgid "Searching by date"
-msgstr "Recèrca per date"
+msgstr "Recèrca per data"
 
 #: ../libgimp/gimpprocbrowserdialog.c:473
 msgid "Searching by type"
@@ -461,7 +460,7 @@ msgstr "Remplaça la seleccion actuala"
 #: ../libgimpbase/gimpbaseenums.c:134
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr "Intersection amb la seleccion actuala"
+msgstr "Interseccion amb la seleccion actuala"
 
 #: ../libgimpbase/gimpbaseenums.c:167
 msgctxt "channel-type"
@@ -566,7 +565,7 @@ msgstr "Mejana"
 #: ../libgimpbase/gimpbaseenums.c:333
 msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr "Esclairir"
+msgstr "Esclarzir"
 
 #: ../libgimpbase/gimpbaseenums.c:334
 msgctxt "dodge-burn-type"
@@ -631,12 +630,12 @@ msgstr "Espirala (sens anti-orari)"
 #: ../libgimpbase/gimpbaseenums.c:442
 msgctxt "grid-style"
 msgid "Intersections (dots)"
-msgstr "Intersections (points)"
+msgstr "Interseccions (punts)"
 
 #: ../libgimpbase/gimpbaseenums.c:443
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
-msgstr "Intersections (croix)"
+msgstr "Interseccions (crotz)"
 
 #: ../libgimpbase/gimpbaseenums.c:444
 msgctxt "grid-style"
@@ -791,7 +790,7 @@ msgstr "Tons escurs"
 #: ../libgimpbase/gimpbaseenums.c:737
 msgctxt "transfer-mode"
 msgid "Midtones"
-msgstr "Semitenchas"
+msgstr "Semitintas"
 
 #: ../libgimpbase/gimpbaseenums.c:738
 msgctxt "transfer-mode"
@@ -851,12 +850,12 @@ msgstr "Procedura temporària"
 #: ../libgimpbase/gimpbaseenums.c:1105
 msgctxt "text-direction"
 msgid "From left to right"
-msgstr "D'esquèrra a drecha"
+msgstr "D'esquèrra a dreita"
 
 #: ../libgimpbase/gimpbaseenums.c:1106
 msgctxt "text-direction"
 msgid "From right to left"
-msgstr "De drecha a esquèrra"
+msgstr "De dreita a esquèrra"
 
 #: ../libgimpbase/gimpbaseenums.c:1137
 msgctxt "text-hint-style"
@@ -886,7 +885,7 @@ msgstr "Alinhat a esquèrra"
 #: ../libgimpbase/gimpbaseenums.c:1172
 msgctxt "text-justification"
 msgid "Right justified"
-msgstr "Alinhat a drecha"
+msgstr "Alinhat a dreita"
 
 #: ../libgimpbase/gimpbaseenums.c:1173
 msgctxt "text-justification"
@@ -1006,8 +1005,7 @@ msgstr "Colorimetria absoluda"
 #: ../libgimpconfig/gimpconfig-deserialize.c:109
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr ""
-"La valor de l'expression %s es pas una cadena de caractèr UTF-8 valida"
+msgstr "La valor de l'expression %s es pas una cadena de caractèr UTF-8 valida"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpconfig-deserialize.c:451
@@ -1066,7 +1064,7 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"Una error s'es producha pendent l'escritura del fichièr temporari per "
+"Una error s'es produita pendent l'escritura del fichièr temporari per "
 "« %s » : %s\n"
 "Lo fichièr original es pas estat modificat."
 
@@ -1182,15 +1180,15 @@ msgstr "Pas cap"
 msgid "Scales"
 msgstr "Escalas"
 
-#: ../libgimpwidgets/gimpcolorselection.c:220
+#: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
 msgstr "Actuala :"
 
-#: ../libgimpwidgets/gimpcolorselection.c:229
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr "Precedenta :"
 
-#: ../libgimpwidgets/gimpcolorselection.c:314
+#: ../libgimpwidgets/gimpcolorselection.c:318
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1198,7 +1196,7 @@ msgstr ""
 "Notacion exadecimala de la color tala coma utilizada en HTML e CSS. Aquesta "
 "entrada accèpta tanben de noms CSS de colors."
 
-#: ../libgimpwidgets/gimpcolorselection.c:320
+#: ../libgimpwidgets/gimpcolorselection.c:324
 msgid "HTML _notation:"
 msgstr "_Notacion HTML :"
 
@@ -1437,7 +1435,7 @@ msgstr "Carrat"
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Portrait"
-msgstr "Retrach"
+msgstr "Retrait"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
@@ -1451,7 +1449,7 @@ msgstr "_T"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Hue"
-msgstr "Tencha"
+msgstr "Tinta"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgctxt "color-selector-channel"
@@ -1660,7 +1658,7 @@ msgstr "X cap a esquèrra"
 
 #: ../modules/controller-dx-dinput.c:444 ../modules/controller-linux-input.c:90
 msgid "X Move Right"
-msgstr "X cap a drecha"
+msgstr "X cap a dreita"
 
 #: ../modules/controller-dx-dinput.c:450
 msgid "Y Move Away"
@@ -1688,7 +1686,7 @@ msgstr "L'axe Y se rapròcha"
 
 #: ../modules/controller-dx-dinput.c:477 ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
-msgstr "L'axe Y clina cap a drecha"
+msgstr "L'axe Y clina cap a dreita"
 
 #: ../modules/controller-dx-dinput.c:480 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
@@ -1702,7 +1700,7 @@ msgstr "L'axe Z vira cap a esquèrra"
 #: ../modules/controller-dx-dinput.c:489
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Right"
-msgstr "L'axe Z vira cap a drecha"
+msgstr "L'axe Z vira cap a dreita"
 
 #: ../modules/controller-dx-dinput.c:500
 #, c-format
@@ -1793,7 +1791,7 @@ msgstr "Boton d'esquèrra"
 
 #: ../modules/controller-linux-input.c:69
 msgid "Button Right"
-msgstr "Boton de drecha"
+msgstr "Boton de dreita"
 
 #: ../modules/controller-linux-input.c:70
 msgid "Button Middle"
@@ -1817,7 +1815,7 @@ msgstr "Boton precedent"
 
 #: ../modules/controller-linux-input.c:75
 msgid "Button Task"
-msgstr "Boton de prètzfach"
+msgstr "Boton de prètzfait"
 
 #: ../modules/controller-linux-input.c:77
 msgid "Button Wheel"
@@ -1861,7 +1859,7 @@ msgstr "Quadran vira a esquèrra"
 
 #: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Right"
-msgstr "Quadran vira a drecha"
+msgstr "Quadran vira a dreita"
 
 #: ../modules/controller-linux-input.c:107
 msgid "Wheel Turn Left"
@@ -1869,7 +1867,7 @@ msgstr "Rodeta vira cap a esquèrra"
 
 #: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Right"
-msgstr "Rodeta vira cap a drecha"
+msgstr "Rodeta vira cap a dreita"
 
 #: ../modules/controller-linux-input.c:177
 msgid "Linux input event controller"
@@ -1877,8 +1875,7 @@ msgstr "Entrada del contrarotlador d'eveniment Linux"
 
 #: ../modules/controller-linux-input.c:218
 msgid "The name of the device to read Linux Input events from."
-msgstr ""
-"Lo nom del periferic ont òm pòt legir las entradas d'eveniments Linux."
+msgstr "Lo nom del periferic ont òm pòt legir las entradas d'eveniments Linux."
 
 #: ../modules/controller-linux-input.c:229
 msgid "Linux Input"
@@ -1936,12 +1933,12 @@ msgstr "MIDI"
 #: ../modules/controller-midi.c:354
 #, c-format
 msgid "Note %02x on"
-msgstr "Note %02x activée"
+msgstr "Note %02x activada"
 
 #: ../modules/controller-midi.c:357
 #, c-format
 msgid "Note %02x off"
-msgstr "Note %02x désactivée"
+msgstr "Note %02x désactivada"
 
 #: ../modules/controller-midi.c:360
 #, c-format
