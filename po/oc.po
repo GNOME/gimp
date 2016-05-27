@@ -560,7 +560,7 @@ msgstr "Copiar l'emplaçament del fichièr de bròssa dins lo quichapapièrs"
 #: ../app/actions/brushes-actions.c:71
 msgctxt "brushes-action"
 msgid "Show in _File Manager"
-msgstr "Gestionarie moduls"
+msgstr "Afichar dins lo gestionari de _fichièrs"
 
 #: ../app/actions/brushes-actions.c:72
 msgctxt "brushes-action"
@@ -895,7 +895,7 @@ msgstr "_Interseccion amb la seleccion"
 #: ../app/actions/colormap-actions.c:92
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
-msgstr "Interseccion d'aquest e canal amb la seleccion actuala"
+msgstr "Interseccion d'aqueste canal amb la seleccion actuala"
 
 #: ../app/actions/colormap-commands.c:74
 #, c-format
@@ -1418,7 +1418,7 @@ msgstr "Acorchis de cla_vièr"
 #: ../app/actions/dialogs-actions.c:257
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "Dobrís l'editor de acorchis de clavièr"
+msgstr "Dobrís l'editor d'acorchis de clavièr"
 
 #: ../app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
@@ -2304,7 +2304,7 @@ msgstr "Voidar l'istoric d'anullacion"
 
 #: ../app/actions/edit-commands.c:178
 msgid "Really clear image's undo history?"
-msgstr "Vraiment escafar los imatges de l'istoric d'anullacion ?"
+msgstr "Vertadièrament escafar los imatges de l'istoric d'anullacion ?"
 
 #: ../app/actions/edit-commands.c:191
 #, c-format
@@ -2490,7 +2490,7 @@ msgstr "Recarga lo fichièr imatge dempuèi lo disc"
 #: ../app/actions/file-actions.c:106
 msgctxt "file-action"
 msgid "Close all"
-msgstr "Tampar tout"
+msgstr "Tampar tot"
 
 #: ../app/actions/file-actions.c:107
 msgctxt "file-action"
@@ -2602,7 +2602,7 @@ msgstr "Exportar..."
 #: ../app/actions/file-actions.c:172
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
-msgstr "Expòrta l'imatge cap a divers formats de fichièr tels que PNG o JPEG"
+msgstr "Expòrta l'imatge cap a divèrses formats de fichièr tals coma PNG o JPEG"
 
 #: ../app/actions/file-actions.c:320
 #| msgctxt "file-action"
@@ -2738,7 +2738,7 @@ msgstr "_Génériques"
 #: ../app/actions/filters-actions.c:71
 msgctxt "filters-action"
 msgid "_Light and Shadow"
-msgstr "_Ombras e lumières"
+msgstr "_Ombras e lums"
 
 #: ../app/actions/filters-actions.c:73
 msgctxt "filters-action"
@@ -2748,27 +2748,27 @@ msgstr "_Distorsions"
 #: ../app/actions/filters-actions.c:75
 msgctxt "filters-action"
 msgid "_Artistic"
-msgstr "_Artistiques"
+msgstr "_Artisticas"
 
 #: ../app/actions/filters-actions.c:77
 msgctxt "filters-action"
 msgid "_Decor"
-msgstr "_Décor"
+msgstr "_Decòr"
 
 #: ../app/actions/filters-actions.c:79
 msgctxt "filters-action"
 msgid "_Map"
-msgstr "Cart_e"
+msgstr "_Mapa"
 
 #: ../app/actions/filters-actions.c:81
 msgctxt "filters-action"
 msgid "_Render"
-msgstr "_Rendu"
+msgstr "_Rendut"
 
 #: ../app/actions/filters-actions.c:83
 msgctxt "filters-action"
 msgid "_Clouds"
-msgstr "N_uages"
+msgstr "_Nívols"
 
 #: ../app/actions/filters-actions.c:85
 msgctxt "filters-action"
@@ -2778,7 +2778,7 @@ msgstr "_Fractalas"
 #: ../app/actions/filters-actions.c:87
 msgctxt "filters-action"
 msgid "_Nature"
-msgstr "_Nature"
+msgstr "_Natura"
 
 #: ../app/actions/filters-actions.c:89
 msgctxt "filters-action"
@@ -2808,7 +2808,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:106
 msgctxt "filters-action"
 msgid "_Antialias..."
-msgstr "_Anti-crénelage"
+msgstr "_Anti-crenelatge"
 
 #: ../app/actions/filters-actions.c:111
 msgctxt "filters-action"
@@ -3312,7 +3312,7 @@ msgstr "Cargar la color _esquèrra dempuèi"
 #: ../app/actions/gradient-editor-actions.c:54
 msgctxt "gradient-editor-action"
 msgid "_Save Left Color To"
-msgstr "Enregi_strer la color esquèrra vers"
+msgstr "Enregi_strer la color esquèrra cap a"
 
 #: ../app/actions/gradient-editor-actions.c:57
 msgctxt "gradient-editor-action"
@@ -3327,7 +3327,7 @@ msgstr "Cargar la color _dreita dempuèi"
 #: ../app/actions/gradient-editor-actions.c:61
 msgctxt "gradient-editor-action"
 msgid "Sa_ve Right Color To"
-msgstr "Enre_gistrar la color dreita vers"
+msgstr "Enre_gistrar la color dreita cap a"
 
 #: ../app/actions/gradient-editor-actions.c:67
 msgctxt "gradient-editor-action"
@@ -3856,7 +3856,7 @@ msgstr "Perfil de color"
 #: ../app/actions/image-actions.c:87
 msgctxt "image-action"
 msgid "Set a color profile on the image"
-msgstr "Crèa una novèla vista d'aquest a imatge"
+msgstr "Crèa una novèla vista d'aquesta imatge"
 
 #: ../app/actions/image-actions.c:92
 msgctxt "image-action"
@@ -3978,7 +3978,7 @@ msgstr "Fusiona totes los calques visibles en un sol"
 #: ../app/actions/image-actions.c:158
 msgctxt "image-action"
 msgid "_Flatten Image"
-msgstr "Aplatir l'imat_gee"
+msgstr "Aplatir l'imat_ge"
 
 #: ../app/actions/image-actions.c:159
 msgctxt "image-action"
@@ -4282,7 +4282,7 @@ msgstr "Met las fenèstras d'aqueste imatge al primièr plan"
 #: ../app/actions/images-actions.c:53
 msgctxt "images-action"
 msgid "_New View"
-msgstr "_Novèla vistata"
+msgstr "_Novèla vista"
 
 #: ../app/actions/images-actions.c:54
 msgctxt "images-action"
@@ -4477,7 +4477,7 @@ msgstr "Ancòra lo calc flotant"
 #: ../app/actions/layers-actions.c:150
 msgctxt "layers-action"
 msgid "Merge Do_wn"
-msgstr "_Fusionar cap a lo bas"
+msgstr "_Fusionar cap aval"
 
 #: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
@@ -4605,8 +4605,8 @@ msgstr "Apondre una masqueta de cal_que..."
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
-"Apond una masquetaque permet la modification non destructiva de la "
-"transparence"
+"Apond una masquetaque permet la modificacion non destructiva de la "
+"transparéncia"
 
 #: ../app/actions/layers-actions.c:229
 msgctxt "layers-action"
@@ -4636,7 +4636,7 @@ msgstr "_Verrolhar lo canal alfa"
 #: ../app/actions/layers-actions.c:246
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
-msgstr "Empêche de modificar l'informacion de transparéncia d'aqueste calc"
+msgstr "Empacha de modificar l'informacion de transparéncia d'aqueste calc"
 
 #: ../app/actions/layers-actions.c:252
 msgctxt "layers-action"
@@ -4676,7 +4676,7 @@ msgstr "Applique l'efièit de la masqueta de calc e suprimís la masqueta"
 #: ../app/actions/layers-actions.c:281
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
-msgstr "Suprimir la masqueta de ca_lque"
+msgstr "Suprimir la masqueta de ca_lc"
 
 #: ../app/actions/layers-actions.c:282
 msgctxt "layers-action"
@@ -5306,7 +5306,7 @@ msgstr "_Tot"
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
 msgid "Select everything"
-msgstr "Selecciona tout"
+msgstr "Selecciona tot"
 
 #: ../app/actions/select-actions.c:56
 msgctxt "select-action"
@@ -5534,7 +5534,7 @@ msgstr "Seleccion flotanta"
 #: ../app/actions/vectors-commands.c:467 ../app/actions/vectors-commands.c:501
 #: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
-msgstr "I a pas de calc o de canal actiu sus lequel tracer."
+msgstr "I a pas de calc o de canal actiu sul qual tracer."
 
 #: ../app/actions/select-commands.c:443
 msgid "Stroke Selection"
@@ -5692,7 +5692,7 @@ msgstr "_Talhar"
 #: ../app/actions/text-tool-actions.c:63
 msgctxt "text-tool-action"
 msgid "_Copy"
-msgstr "_Copier"
+msgstr "_Copiar"
 
 #: ../app/actions/text-tool-actions.c:68
 msgctxt "text-tool-action"
@@ -5717,7 +5717,7 @@ msgstr "_Escafar"
 #: ../app/actions/text-tool-actions.c:84
 msgctxt "text-tool-action"
 msgid "Clear all text"
-msgstr "Efface tot lo tèxte"
+msgstr "Escafa tot lo tèxte"
 
 #: ../app/actions/text-tool-actions.c:89
 msgctxt "text-tool-action"
@@ -5869,7 +5869,7 @@ msgstr ""
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
-msgstr "_Restaurer lo prereglatge d'aisinas"
+msgstr "_Restablir lo prereglatge d'aisinas"
 
 #: ../app/actions/tool-presets-actions.c:75
 msgctxt "tool-presets-action"
@@ -5944,7 +5944,7 @@ msgstr "Selecciona de regions de colors similaras"
 #: ../app/actions/tools-actions.c:62
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
-msgstr "Rotacion ar_bitraire..."
+msgstr "Rotacion ar_bitrària..."
 
 #: ../app/actions/tools-actions.c:63
 msgctxt "tools-action"
@@ -6115,7 +6115,7 @@ msgstr "_Copiar lo camin"
 #: ../app/actions/vectors-actions.c:141
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
-msgstr "C_oller lo camin"
+msgstr "_Pegar lo camin"
 
 #: ../app/actions/vectors-actions.c:146
 msgctxt "vectors-action"
@@ -6435,7 +6435,7 @@ msgstr "_Punt per punt"
 #: ../app/actions/view-actions.c:166
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
-msgstr "Un pixèl de l'ecran représente un pixèl de l'imatge"
+msgstr "Un pixèl de l'ecran representa un pixèl de l'imatge"
 
 #: ../app/actions/view-actions.c:172
 #, fuzzy
@@ -6485,7 +6485,7 @@ msgstr ""
 #| msgid "Mark out of gamut colors"
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
-msgstr "Indicar las colors hors gamme"
+msgstr "Indicar las colors fòra gamme"
 
 #: ../app/actions/view-actions.c:201
 msgctxt "view-action"
@@ -6787,7 +6787,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:484
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
-msgstr "Rotacion 90° sens _horaire"
+msgstr "Rotacion 90° sens _orari"
 
 #: ../app/actions/view-actions.c:485
 msgctxt "view-action"
@@ -6797,7 +6797,7 @@ msgstr "Rotacion de 90 grases cap a dreita"
 #: ../app/actions/view-actions.c:490
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Rotacion 90° sens _horaire"
+msgstr "Rotacion 90° sens _orari"
 
 #: ../app/actions/view-actions.c:491
 msgctxt "view-action"
@@ -7340,8 +7340,8 @@ msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
 msgstr ""
-"Los puntadors dont l'aparéncia es dépendante del contexte son utiles e "
-"activats per defaut. Pasmens, demandan de ressorsas supplémentaires que "
+"Los puntadors dont l'aparéncia es dependenta del contexte son utiles e "
+"activats per defaut. Pasmens, demandan de ressorsas suplementàrias que "
 "voldriatz benlèu estalviar."
 
 #: ../app/config/gimprc-blurbs.h:68
@@ -7370,7 +7370,7 @@ msgstr ""
 "recèrca dit « a germe ». Lo emplenatge se fait a partir del pixèl initial e "
 "progresse dins totas las directions fins al moment que la diferéncia de "
 "color amb lo pixèl initial depasse un sulhet determinat.  Aquesta opcion "
-"représente la valor per defaut d'aquest e sulhet."
+"representa la valor per defaut d'aqueste sulhet."
 
 #: ../app/config/gimprc-blurbs.h:122
 msgid ""
@@ -7413,13 +7413,13 @@ msgstr "Definís lo navigador utilizat pel sistèma d'ajuda."
 #: ../app/config/gimprc-blurbs.h:179
 msgid "Sets the text to appear in image window status bars."
 msgstr ""
-"Definís lo tèxte apparaissant dins la barra d'estat de las fenèstras "
+"Definís lo tèxte qu'apareis dins la barra d'estat de las fenèstras "
 "d'imatge."
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid "Sets the text to appear in image window titles."
 msgstr ""
-"Definís lo tèxte apparaissant dins la barra de títol de las fenèstras "
+"Definís lo tèxte qu'apareis dins la barra de títol de las fenèstras "
 "d'imatge."
 
 #: ../app/config/gimprc-blurbs.h:185
@@ -7428,7 +7428,7 @@ msgid ""
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
 "Se aquesta opcion es activada, los imatges seràn integralament visibles a "
-"lor dobertura, siquenon seràn afichadas a l'escala 1:1."
+"lor dobertura, siquenon seràn afichats a l'escala 1:1."
 
 #: ../app/config/gimprc-blurbs.h:189
 msgid ""
@@ -7560,7 +7560,7 @@ msgstr ""
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
-"Se souvenir d'una session a l'autre de l'aisina, de la color, de la bròssa e "
+"Se remembrar d'una session a l'autre de l'aisina, de la color, de la bròssa e "
 "del motiu actuals."
 
 #: ../app/config/gimprc-blurbs.h:295
@@ -7597,7 +7597,7 @@ msgid ""
 msgstr ""
 "Se aquesta opcion es activada, las bóstias de dialòg aficharàn un boton "
 "d'ajuda que vous permettra d'accedir a la pagina d'ajuda idoine. Sens "
-"aqueste boton, la page d'ajuda pòt totjorn èsser accédée per la tòca F1."
+"aqueste boton, la page d'ajuda pòt totjorn èsser accedida per la tòca F1."
 
 #: ../app/config/gimprc-blurbs.h:317
 msgid ""
@@ -7622,7 +7622,7 @@ msgid ""
 "with the \"View->Show Rulers\" command."
 msgstr ""
 "Se aquesta opcion es activada, per defaut, las règlas seràn visibles. "
-"L'afichatge d'aquest as darrièras pòt tanben èsser contrarotlat via lo menú « "
+"L'afichatge d'aquestas darrièras pòt tanben èsser contrarotlat via lo menú « "
 "Afichatge -> Afichar las règlas »."
 
 #: ../app/config/gimprc-blurbs.h:329
@@ -7685,7 +7685,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Se aquesta opcion es activada, per defaut, los punts d'escandalhatge seront "
-"visibles. L'afichatge d'aquest as darrièrs pòt tanben èsser contrarotlat via lo "
+"visibles. L'afichatge d'aquestas darrièrs pòt tanben èsser contrarotlat via lo "
 "menú « Afichatge -> Afichar los punts d'escandalhatge »."
 
 #: ../app/config/gimprc-blurbs.h:357
@@ -7699,7 +7699,7 @@ msgstr "Utilizar GIMP en mòde fenèstra unica."
 #: ../app/config/gimprc-blurbs.h:363
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
-"Masque las fenèstras, gropadas o isoladas. Solas persistent las fenèstras "
+"Masque las fenèstras, gropadas o isoladas. Solas persistisson las fenèstras "
 "d'imatges."
 
 #: ../app/config/gimprc-blurbs.h:366
@@ -7740,15 +7740,15 @@ msgstr ""
 "Definís l'emplaçament del fichièr d'escambi. GIMP utiliza un metòde "
 "d'allocation memòria per blòt. Lo fichièr d'escambi es utilizat per "
 "escambiar rapidament aquestes blòts entre lo disc e la memòria. Vos cal "
-"èsser conscient qu'aqueste fichièr pòt devenir très gros se vous travaillez "
-"sus d'imatges de granda talha. De plus, GIMP pòt devenir terriblament lent "
-"se lo fichièr d'escambi es créé dins un repertòri situé sus la ret (NFS, Samba, "
+"èsser conscient qu'aqueste fichièr pòt venir fòrça gròs se trabalhatz "
+"sus d'imatges de granda talha. De plus, GIMP pòt venir terriblament lent "
+"se lo fichièr d'escambi es creat dins un repertòri situat sus la ret (NFS, Samba, "
 "etc.). Per aquestas rasons es de còps conselhat de metre lo fichièr "
 "d'escambi dins « /tmp »."
 
 #: ../app/config/gimprc-blurbs.h:393
 msgid "When enabled, menus can be torn off."
-msgstr "Se aquesta opcion es activada, los menús pòdon èsser détachés."
+msgstr "Se aquesta opcion es activada, los menús pòdon èsser destacats."
 
 #: ../app/config/gimprc-blurbs.h:396
 msgid ""
@@ -7835,7 +7835,7 @@ msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
-"Se aquesta opcion es activada, GIMP n'enregistrara l'imatge que se es estada "
+"Se aquesta opcion es activada, GIMP enregistrarà pas l'imatge que se es estada "
 "modificada dempuèi son dobertura."
 
 #: ../app/config/gimprc-blurbs.h:459
@@ -7869,7 +7869,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:474
 msgid "When enabled, uses OpenCL for some operations."
-msgstr "Se aquesta opcion es activada, los menús peuvent èsser détachés."
+msgstr "Se aquesta opcion es activada, los menús pòdon èsser destacats."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:135
 #: ../app/core/gimp-units.c:168 ../app/gui/session.c:292
@@ -8000,7 +8000,7 @@ msgstr "Escurezir solament"
 #: ../app/core/core-enums.c:338
 msgctxt "layer-mode-effects"
 msgid "Lighten only"
-msgstr "Esclairir solament"
+msgstr "Esclarzir solament"
 
 #: ../app/core/core-enums.c:339
 msgctxt "layer-mode-effects"
@@ -8030,7 +8030,7 @@ msgstr "Devesir"
 #: ../app/core/core-enums.c:344
 msgctxt "layer-mode-effects"
 msgid "Dodge"
-msgstr "Esclairir"
+msgstr "Esclarzir"
 
 #: ../app/core/core-enums.c:345
 msgctxt "layer-mode-effects"
@@ -9006,7 +9006,7 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:785
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
-"Error fatala a l'analisi del fichièr de bròssa : lo fichièr semble tronqué."
+"Error fatala a l'analisi del fichièr de bròssa : lo fichièr semble troncat."
 
 #: ../app/core/gimpbrush-load.c:931
 #, c-format
@@ -9447,7 +9447,7 @@ msgstr ""
 
 #: ../app/core/gimpdrawable-fill.c:154 ../app/vectors/gimpvectors.c:644
 msgid "Not enough points to fill"
-msgstr "I a pas pro de punts a remplir"
+msgstr "I a pas pro de punts a emplenar"
 
 #: ../app/core/gimpdrawable-fill.c:250
 msgctxt "undo-type"
@@ -9976,7 +9976,7 @@ msgstr "I a pas de calc visible a fusionar."
 #: ../app/core/gimpimage-merge.c:290
 msgctxt "undo-type"
 msgid "Merge Down"
-msgstr "Fusionar cap a lo bas"
+msgstr "Fusionar cap aval"
 
 #: ../app/core/gimpimage-merge.c:318
 msgctxt "undo-type"
@@ -10366,7 +10366,7 @@ msgstr "Istoric"
 
 #: ../app/core/gimppattern-load.c:60
 msgid "File appears truncated: "
-msgstr "Lo fichièr es tronqué a la linha %d"
+msgstr "Lo fichièr es troncat a la linha %d"
 
 #: ../app/core/gimppattern-load.c:77
 #, c-format
@@ -10382,7 +10382,7 @@ msgstr ""
 
 #: ../app/core/gimppattern-load.c:103 ../app/core/gimppattern-load.c:141
 msgid "File appears truncated."
-msgstr "Lo fichièr es tronqué a la linha %d"
+msgstr "Lo fichièr es troncat a la linha %d"
 
 #: ../app/core/gimppattern-load.c:109
 #, fuzzy, c-format
@@ -10397,8 +10397,8 @@ msgstr "Error fatala a l'analisi del fichièr de paleta « %s »"
 #, fuzzy, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Impossible d'executar la foncion de rapèl %s. L'empeuton correspondant a "
-"benlèu échoué."
+"Impossible d'executar la foncion de rapèl %s. L'empeuton correspondent a "
+"benlèu fracassat."
 
 #: ../app/core/gimpselection.c:170
 msgctxt "undo-type"
@@ -10496,7 +10496,7 @@ msgstr "Calc flotant"
 
 #: ../app/core/gimpstrokeoptions.c:156
 msgid "Method"
-msgstr ""
+msgstr "Metòde"
 
 #: ../app/core/gimpstrokeoptions.c:164
 msgid "Line width"
@@ -10520,7 +10520,7 @@ msgid "Miter limit"
 msgstr "_Limit de punta :"
 
 # Aquesta explication es confuse. J'en prepause una autre.
-# Cette explication es confuse. J'en propose une autre.
+# Cette explication es confuse. J'en propose una autre.
 #: ../app/core/gimpstrokeoptions.c:193
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
@@ -10532,7 +10532,7 @@ msgstr ""
 
 #: ../app/core/gimpstrokeoptions.c:202
 msgid "Dash offset"
-msgstr "Jonhent, point"
+msgstr "Jonhent, punt"
 
 #: ../app/core/gimpstrokeoptions.c:224
 msgid "Emulate brush dynamics"
@@ -11046,7 +11046,7 @@ msgstr "Activa lo tramatge de la _transparéncia"
 
 #: ../app/dialogs/convert-indexed-dialog.c:278
 msgid "Enable dithering of text layers"
-msgstr "Activa lo tramatge de la _transparence"
+msgstr "Activa lo tramatge de la _transparéncia"
 
 #: ../app/dialogs/convert-indexed-dialog.c:289
 #: ../app/dialogs/convert-precision-dialog.c:243
@@ -11784,7 +11784,7 @@ msgstr "Afichar los _bòrds del calc"
 
 #: ../app/dialogs/preferences-dialog.c:1078
 msgid "Show _guides"
-msgstr "Afichar los g_uides"
+msgstr "Afichar los g_uidas"
 
 #: ../app/dialogs/preferences-dialog.c:1081
 msgid "Show gri_d"
@@ -11816,7 +11816,7 @@ msgstr "Alinhar suls bòrds del _canavàs"
 
 #: ../app/dialogs/preferences-dialog.c:1138
 msgid "Snap to Active Path"
-msgstr "Alinhar sus lo c_amin actiu"
+msgstr "Alinhar sul c_amin actiu"
 
 #: ../app/dialogs/preferences-dialog.c:1213
 msgid "Preferences"
@@ -11942,11 +11942,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1424
 msgid "Mark out of gamut colors"
-msgstr "Indicar las colors hors gamme"
+msgstr "Indicar las colors fòra gamme"
 
 #: ../app/dialogs/preferences-dialog.c:1429
 msgid "Select Warning Color"
-msgstr "Seleccionatz una color d'alerte"
+msgstr "Seleccionatz una color d'alèrta"
 
 #. Preferred profiles
 #: ../app/dialogs/preferences-dialog.c:1440
@@ -12507,15 +12507,15 @@ msgstr "Periferics d'entrada"
 #. Extended Input Devices
 #: ../app/dialogs/preferences-dialog.c:2540
 msgid "Extended Input Devices"
-msgstr "Periferics d'entrada étendus"
+msgstr "Periferics d'entrada espandits"
 
 #: ../app/dialogs/preferences-dialog.c:2544
 msgid "Configure E_xtended Input Devices..."
-msgstr "_Configurar los periferics d'entrada étendus"
+msgstr "_Configurar los periferics d'entrada espandits"
 
 #: ../app/dialogs/preferences-dialog.c:2551
 msgid "_Save input device settings on exit"
-msgstr "_Enregistrar l'estat dels periferics en quittant"
+msgstr "_Enregistrar l'estat dels periferics en quitant"
 
 #: ../app/dialogs/preferences-dialog.c:2555
 msgid "Save Input Device Settings _Now"
@@ -13939,11 +13939,11 @@ msgstr "Pintorlatge"
 #: ../app/paint/gimpsmudgeoptions.c:66
 msgctxt "smudge-tool"
 msgid "Rate"
-msgstr "Taux"
+msgstr "Taus"
 
 #: ../app/paint/gimpsourcecore.c:238
 msgid "Set a source image first."
-msgstr "Dzfinissètz d'en primièr un imatge font"
+msgstr "Definissètz d'en primièr un imatge font"
 
 #: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpcloneoptions-gui.c:102
 #: ../app/tools/gimphealtool.c:105
@@ -13964,7 +13964,7 @@ msgstr "Modifica lo plan de perspectiva"
 #: ../app/paint/paint-enums.c:53
 msgctxt "perspective-clone-mode"
 msgid "Perspective Clone"
-msgstr "Clonatge en perspective"
+msgstr "Clonatge en perspectiva"
 
 #: ../app/paint/paint-enums.c:83
 msgctxt "source-align-mode"
@@ -14365,7 +14365,7 @@ msgstr "Lissar los contorns"
 
 #: ../app/pdb/gimppdbcontext.c:106
 msgid "Feather"
-msgstr "Ado_ucir..."
+msgstr "Adocir..."
 
 #: ../app/pdb/gimppdbcontext.c:113
 msgid "Feather radius X"
@@ -15532,7 +15532,7 @@ msgstr "Coloriatge"
 
 #: ../app/tools/gimpcolorizetool.c:83
 msgid "Colorize Tool: Colorize the image"
-msgstr "Aisina de coloriatge : colorie l'imatge"
+msgstr "Aisina de coloriatge : coloria l'imatge"
 
 #: ../app/tools/gimpcolorizetool.c:84
 msgid "Colori_ze..."
@@ -15783,7 +15783,7 @@ msgstr "Clicatz per apondre de punts de contraròtle a totes los canals."
 
 #: ../app/tools/gimpcurvestool.c:355
 msgid "Click to locate on curve"
-msgstr "Clicatz per tampar la courbe"
+msgstr "Clicatz per tampar la corba"
 
 #: ../app/tools/gimpcurvestool.c:357
 #, c-format
@@ -16032,7 +16032,7 @@ msgstr "Traçar lo camin"
 
 #: ../app/tools/gimpforegroundselectoptions.c:94
 msgid "Size of the brush used for refinements"
-msgstr "Talha de la bròssa utilizada per l'affinage"
+msgstr "Talha de la bròssa utilizada per l'afinatge"
 
 #: ../app/tools/gimpforegroundselectoptions.c:100
 #: ../app/tools/gimpforegroundselectoptions.c:305
@@ -16104,7 +16104,7 @@ msgstr "Seleccionar la color de primièr plan"
 
 #: ../app/tools/gimpforegroundselecttool.c:598
 msgid "Roughly outline the object to extract"
-msgstr "Traçar un contorn grorsièr a l'entorn de l'objècte a extraire"
+msgstr "Traçar un contorn grorsièr a l'entorn de l'objècte d'extraire"
 
 #: ../app/tools/gimpforegroundselecttool.c:619
 msgid "Selecting foreground,"
@@ -16273,7 +16273,7 @@ msgstr "C_orrector"
 
 #: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:80
 msgid "Click to heal"
-msgstr "Clicatz per corriger"
+msgstr "Clicatz per corregir"
 
 #: ../app/tools/gimphealtool.c:78 ../app/tools/gimphealtool.c:83
 #, c-format
@@ -16317,7 +16317,7 @@ msgstr "Ajustar la tinta / luminositat / saturacion"
 
 #: ../app/tools/gimphuesaturationtool.c:205
 msgid "M_aster"
-msgstr "_Maître"
+msgstr "_Mèstre"
 
 #: ../app/tools/gimphuesaturationtool.c:205
 msgid "Adjust all colors"
@@ -16893,7 +16893,7 @@ msgstr "Utilizar totes los calques visibles per reduire la seleccion"
 #: ../app/tools/gimprectangleoptions.c:123
 #: ../app/tools/gimptransformoptions.c:155
 msgid "Composition guides such as rule of thirds"
-msgstr "Guides de composicion tels que la règla dels tèrces"
+msgstr "Guides de composicion tals coma la règla dels tèrces"
 
 #: ../app/tools/gimprectangleoptions.c:132
 msgid "X coordinate of top left corner"
@@ -17777,7 +17777,7 @@ msgstr "Suprimir las ancòras"
 
 #: ../app/tools/gimpvectortool.c:1971
 msgid "There is no active layer or channel to stroke to"
-msgstr "I a pas de calc o de canal actiu sus lequel tracer"
+msgstr "I a pas de calc o de canal actiu sul qual tracer"
 
 #: ../app/tools/gimpwarpoptions.c:76 ../app/tools/gimpwarpoptions.c:77
 msgid "Behavior"
@@ -17971,12 +17971,12 @@ msgstr "Aj_uster la fenèstra a l'imatge"
 #: ../app/tools/tools-enums.c:377
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
-msgstr "TSV (teintes sens _horaire)"
+msgstr "TSV (tintas sens _orari)"
 
 #: ../app/tools/tools-enums.c:378
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
-msgstr "TSV (teintes sens _anti-orari)"
+msgstr "TSV (tintas sens _anti-orari)"
 
 #: ../app/tools/tools-enums.c:379
 msgctxt "warp-behavior"
@@ -18141,7 +18141,7 @@ msgstr "Nom"
 
 #: ../app/widgets/gimpactionview.c:632 ../app/widgets/gimpactionview.c:861
 msgid "Changing shortcut failed."
-msgstr "Fracàs del cambiament de acorchi de clavièr."
+msgstr "Fracàs del cambiament d'acorchi de clavièr."
 
 #: ../app/widgets/gimpactionview.c:669
 msgid "Conflicting Shortcuts"
@@ -18201,11 +18201,11 @@ msgstr "Filtres disponibles"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:221
 msgid "Move the selected filter up"
-msgstr "Desplaçar cap a lo naut lo filtre seleccionat"
+msgstr "Desplaçar cap amont lo filtre seleccionat"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:230
 msgid "Move the selected filter down"
-msgstr "Desplaçar cap a lo bas lo filtre seleccionat"
+msgstr "Desplaçar cap aval lo filtre seleccionat"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:277
 msgid "Active Filters"
@@ -18337,7 +18337,7 @@ msgstr "_Capturar l'eveniment"
 
 #: ../app/widgets/gimpcontrollereditor.c:370
 msgid "Select the next event arriving from the controller"
-msgstr "Seleccionar lo prochain eveniment arrivant d'aquest e contrarotlador"
+msgstr "Seleccionar l'eveniment que ven arrivant d'aqueste contrarotlador"
 
 #: ../app/widgets/gimpcontrollereditor.c:526
 #, c-format
@@ -18356,7 +18356,7 @@ msgstr "Seleccionatz una accion per l'eveniment « %s »"
 
 #: ../app/widgets/gimpcontrollereditor.c:657
 msgid "Select Controller Event Action"
-msgstr "Seleccionar una accion associée a l'eveniment del contrarotlador"
+msgstr "Seleccionar una accion associada a l'eveniment del contrarotlador"
 
 #: ../app/widgets/gimpcontrollerinfo.c:112
 msgid "Enabled"
@@ -18422,7 +18422,7 @@ msgstr "Eveniments del clavièr"
 #: ../app/widgets/gimpcontrollermouse.c:245
 #: ../app/widgets/gimpcontrollerwheel.c:230
 msgid "Ready"
-msgstr "Prêt"
+msgstr "Prèst"
 
 #: ../app/widgets/gimpcontrollerlist.c:183
 msgid "Available Controllers"
@@ -18438,11 +18438,11 @@ msgstr "Configurar lo contrarotlador seleccionat"
 
 #: ../app/widgets/gimpcontrollerlist.c:304
 msgid "Move the selected controller up"
-msgstr "Desplaçar cap a lo naut lo contrarotlador seleccionat"
+msgstr "Desplaçar cap amont lo contrarotlador seleccionat"
 
 #: ../app/widgets/gimpcontrollerlist.c:312
 msgid "Move the selected controller down"
-msgstr "Desplaçar cap a lo bas lo contrarotlador seleccionat"
+msgstr "Desplaçar cap aval lo contrarotlador seleccionat"
 
 #: ../app/widgets/gimpcontrollerlist.c:429
 #, c-format
@@ -18471,9 +18471,9 @@ msgid ""
 "\n"
 "You already have a wheel controller in your list of active controllers."
 msgstr ""
-"I pòt pas aver qu'un contrarotlador de roulette actiu.\n"
+"I pòt pas aver qu'un contrarotlador de rodeta actiu.\n"
 "\n"
-"Avètz ja un contrarotlador de roulette dins la lista de contrarotladors "
+"Avètz ja un contrarotlador de rodeta dins la lista de contrarotladors "
 "actius."
 
 #: ../app/widgets/gimpcontrollerlist.c:536
@@ -18515,7 +18515,7 @@ msgstr ""
 "definitivament suprimir totes los eveniments qu'avètz configurat.\n"
 "\n"
 "La seleccion de « Desactivar lo contrarotlador » va desactivar lo "
-"contrarotlador sans l'enlever."
+"contrarotlador sans l'levar."
 
 #: ../app/widgets/gimpcontrollerlist.c:637
 msgid "Configure Input Controller"
@@ -18762,7 +18762,7 @@ msgstr "Un fichièr apelat « %s » existís ja."
 
 #: ../app/widgets/gimpdnd-xds.c:242
 msgid "Do you want to replace it with the image you are saving?"
-msgstr "Lo volètz remplaçar amb l'imatge que vous enregistraz ?"
+msgstr "Lo volètz remplaçar amb l'imatge qu'enregistratz ?"
 
 #. String used to separate dockables, e.g. "Tool Options, Layers"
 #: ../app/widgets/gimpdock.h:34
@@ -18800,7 +18800,7 @@ msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
 "Se aquesta opcion es activada, la bóstia de dialòg suit automaticament "
-"l'imatge sus la quala vous travaillez."
+"l'imatge sus la quala trabalhatz."
 
 #: ../app/widgets/gimpdrawabletreeview.c:121
 msgid "Lock pixels"
@@ -18889,7 +18889,7 @@ msgstr "Color d'emplenatge"
 
 #: ../app/widgets/gimpfilleditor.c:143
 msgid "_Antialiasing"
-msgstr "_Anti-crénelage"
+msgstr "_Anti-crenelatge"
 
 #: ../app/widgets/gimpgradienteditor.c:754
 #, c-format
@@ -19476,7 +19476,7 @@ msgstr "_Limit de punta :"
 
 #: ../app/widgets/gimpstrokeeditor.c:178
 msgid "Dash pattern:"
-msgstr "Motiu del tiret :"
+msgstr "Motiu del jonhent :"
 
 #: ../app/widgets/gimpstrokeeditor.c:241
 msgid "Dash _preset:"
@@ -19629,7 +19629,7 @@ msgstr "Italica"
 
 #: ../app/widgets/gimptextstyleeditor.c:335
 msgid "Underline"
-msgstr "Solinhat"
+msgstr "Soslinhat"
 
 #: ../app/widgets/gimptextstyleeditor.c:338
 msgid "Strikethrough"
@@ -19903,7 +19903,7 @@ msgstr "Apondre a la paleta"
 #: ../app/widgets/widgets-enums.c:209
 msgctxt "histogram-scale"
 msgid "Linear histogram"
-msgstr "Istograma linéaire"
+msgstr "Istograma linear"
 
 #: ../app/widgets/widgets-enums.c:210
 msgctxt "histogram-scale"
@@ -20156,7 +20156,7 @@ msgstr "fosc"
 
 #~ msgctxt "join-style"
 #~ msgid "Miter"
-#~ msgstr "Ponchut"
+#~ msgstr "Pontut"
 
 #~ msgctxt "join-style"
 #~ msgid "Round"
@@ -20172,11 +20172,11 @@ msgstr "fosc"
 
 #~ msgctxt "cap-style"
 #~ msgid "Round"
-#~ msgstr "Arrondi"
+#~ msgstr "Arredondit"
 
 #~ msgctxt "cap-style"
 #~ msgid "Square"
-#~ msgstr "Carré"
+#~ msgstr "Carrat"
 
 #~ msgid "Langívol"
 #~ msgstr "Lenga"
@@ -20193,7 +20193,7 @@ msgstr "fosc"
 #~ "Color management has been disabled. It can be enabled again in the "
 #~ "Preferences dialog."
 #~ msgstr ""
-#~ "La gestion de las colors a été désactivada. Elle pòt èsser activada a "
+#~ "La gestion de las colors a été désactivada. Pòt èsser activada a "
 #~ "novèl dins la bóstia de dialòg Preferéncias."
 
 #~| msgid "Desaturate"
@@ -20202,7 +20202,7 @@ msgstr "fosc"
 
 #~ msgctxt "perspective-clone-mode"
 #~ msgid "Perspectiva Clone"
-#~ msgstr "Clonatge en perspective"
+#~ msgstr "Clonatge en perspectiva"
 
 #~ msgid "Posterize"
 #~ msgstr "Posterizar"
@@ -20241,7 +20241,7 @@ msgstr "fosc"
 #~ msgstr "Puntaz lo punt gris"
 
 #~ msgid "Posterize (Reduce Number of Colors)"
-#~ msgstr "Posterizar (Redusir lo nombre de colors)"
+#~ msgstr "Posterizar (Reduire lo nombre de colors)"
 
 #~ msgid "Langívol:"
 #~ msgstr "Lenga :"
@@ -20252,14 +20252,14 @@ msgstr "fosc"
 #~ "To avoid data loss, please check the location and permissions of the swap "
 #~ "directory defined in your Preferences (currently \"%s\")."
 #~ msgstr ""
-#~ "Impossible de dobrir un fichièr d'échange de test.\n"
+#~ "Impossible de dobrir un fichièr d'escambi de test.\n"
 #~ "\n"
 #~ "Per evitar de perdre des donadas, verificatz l'emplaçament e les "
-#~ "permissions del repertòri d'échange défini dins vos preferéncias "
+#~ "permissions del repertòri d'escambi definit dins vòstras preferéncias "
 #~ "(actualament « %s »)."
 
 #~ msgid "Configuration"
-#~ msgstr "Configuration"
+#~ msgstr "Configuracion"
 
 #~ msgctxt "config-action"
 #~ msgid "Use _GEGL"
@@ -20271,10 +20271,10 @@ msgstr "fosc"
 
 #~ msgctxt "file-action"
 #~ msgid "Export to"
-#~ msgstr "Exporter vers"
+#~ msgstr "Exporter cap a"
 
 #~ msgid "Export to"
-#~ msgstr "Exporter vers"
+#~ msgstr "Exporter cap a"
 
 #, fuzzy
 #~ msgctxt "filters-action"
@@ -20306,7 +20306,7 @@ msgstr "fosc"
 
 #~ msgctxt "view-action"
 #~ msgid "Use GEGL to create this window's projection"
-#~ msgstr "Utilizar GEGL per crear la projection de aquesta fenèstra"
+#~ msgstr "Utilizar GEGL per crear la projeccion d'aquesta fenèstra"
 
 #~ msgid ""
 #~ "Unable to open swap file. GIMP has run out of memory and cannot use the "
@@ -20314,16 +20314,16 @@ msgstr "fosc"
 #~ "work using different filenames, restart GIMP and check the location of "
 #~ "the swap directory in your Preferences."
 #~ msgstr ""
-#~ "Impossible de dobrir lo fichièr d'échange. GIMP n'a mai de mémoire "
-#~ "disponible e ne pòt utilizar lo fichièr d'échange. Certanas partidas de "
-#~ "l'imatge pòdon èsser corrompues. Essayez d'enregistrar votre trabalh en "
-#~ "utilisant plusieurs noms de fichièrs différents, redémarrez GIMP e "
-#~ "verificatz l'emplaçament del repertòri de swap dins les Preferéncias."
+#~ "Impossible de dobrir lo fichièr d'escambi. GIMP n'a mai de mémoire "
+#~ "disponible e ne pòt utilizar lo fichièr d'escambi. Certanas partidas de "
+#~ "l'imatge pòdon èsser corrompudas. Ensajatz d'enregistrar vòstre trabalh en "
+#~ "utilizant plusieurs noms de fichièrs diferents, reaviatz GIMP e "
+#~ "verificatz l'emplaçament del repertòri de swap dins las Preferéncias."
 
 #~ msgid "Ask for confirmation before closing an image without saving."
 #~ msgstr ""
 #~ "Demander confirmation avant de tampar un imatge non sauvegardée dempuèi "
-#~ "sa darrièra modification."
+#~ "sa darrièra modificacion."
 
 #~ msgctxt "convert-palette-type"
 #~ msgid "Generate optimum palette"
@@ -20331,7 +20331,7 @@ msgstr "fosc"
 
 #~ msgctxt "convert-palette-type"
 #~ msgid "Use web-optimized palette"
-#~ msgstr "Utilizar una paleta optimisée pel Web"
+#~ msgstr "Utilizar una paleta optimizada pel Web"
 
 #~ msgctxt "convert-palette-type"
 #~ msgid "Use black and white (1-bit) palette"
@@ -20363,11 +20363,11 @@ msgstr "fosc"
 
 #~ msgctxt "brush-generated-shape"
 #~ msgid "Square"
-#~ msgstr "Carré"
+#~ msgstr "Carrat"
 
 #~ msgctxt "brush-generated-shape"
 #~ msgid "Diamond"
-#~ msgstr "Losange"
+#~ msgstr "Lausange"
 
 #~ msgctxt "orientation-type"
 #~ msgid "Horizontal"
@@ -20420,14 +20420,14 @@ msgstr "fosc"
 #~ msgid ""
 #~ "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 #~ msgstr ""
-#~ "Error fatale a l'analyse del fichièr de bròssa « %s » : forme de bròssa "
+#~ "Error fatale a l'analyse del fichièr de bròssa « %s » : forma de bròssa "
 #~ "desconeguda de GIMP a la linha %d."
 
 #~ msgid "Line %d: %s"
 #~ msgstr "Linha %d : %s"
 
 #~ msgid "Error while reading brush file '%s': %s"
-#~ msgstr "Error durant la lectura del fichièr de bròssa « %s » : %s"
+#~ msgstr "Error pendent la lectura del fichièr de bròssa « %s » : %s"
 
 #~ msgid "Could not read %d byte from '%s': %s"
 #~ msgid_plural "Could not read %d bytes from '%s': %s"
@@ -20466,12 +20466,12 @@ msgstr "fosc"
 
 #~ msgid "Fatal parse error in palette file '%s': Read error in line %d."
 #~ msgstr ""
-#~ "Error fatale a l'analyse del fichièr de palette « %s » : error de lectura "
+#~ "Error fatale a l'analyse del fichièr de paleta « %s » : error de lectura "
 #~ "a la linha %d."
 
 #~ msgid "Fatal parse error in palette file '%s': Missing magic header."
 #~ msgstr ""
-#~ "Error fatale a l'analyse del fichièr de palette « %s » : entèsta magique "
+#~ "Error fatale a l'analyse del fichièr de paleta « %s » : entèsta magic "
 #~ "absent."
 
 #~ msgid "Please wait"
@@ -20497,7 +20497,7 @@ msgstr "fosc"
 
 #~ msgctxt "convolve-type"
 #~ msgid "Blur"
-#~ msgstr "Flou"
+#~ msgstr "Fosc"
 
 #, fuzzy
 #~ msgctxt "ink-blob-type"
@@ -20507,71 +20507,71 @@ msgstr "fosc"
 #, fuzzy
 #~ msgctxt "ink-blob-type"
 #~ msgid "Square"
-#~ msgstr "Carré"
+#~ msgstr "Carrat"
 
 #, fuzzy
 #~ msgctxt "ink-blob-type"
 #~ msgid "Diamond"
-#~ msgstr "Losange"
+#~ msgstr "Lausange"
 
 #~ msgid ""
 #~ "Smaller values give a more accurate selection border but may introduce "
 #~ "holes in the selection"
 #~ msgstr ""
-#~ "De petites valors donnent una bordadura de seleccion mai précise mas "
+#~ "De pichonas valors donnent una bordadura de seleccion mai précise mas "
 #~ "pòdon aussi introduire des cassures dins la seleccion"
 
 #~ msgid "Sensitivity for brightness component"
-#~ msgstr "Sensibilitat per la componenta lumineuse"
+#~ msgstr "Sensibilitat per la componenta luminosa"
 
 #~ msgid "Sensitivity for red/green component"
-#~ msgstr "Sensibilitat per la componenta rouge/vert"
+#~ msgstr "Sensibilitat per la componenta roge/verd"
 
 #~ msgid "Sensitivity for yellow/blue component"
-#~ msgstr "Sensibilitat per la componenta bleu/jaune"
+#~ msgstr "Sensibilitat per la componenta blau/jaune"
 
 #~ msgid "Interactiva refinement  (%s)"
-#~ msgstr "Affinage interactiu (%s)"
+#~ msgstr "Afinatge interactiu (%s)"
 
 #~ msgid "Small brush"
-#~ msgstr "Petite bròssa"
+#~ msgstr "Pichona bròssa"
 
 #~ msgid "Large brush"
-#~ msgstr "Grande bròssa"
+#~ msgstr "Granda bròssa"
 
 #~ msgid "Color Sensitivity"
 #~ msgstr "Sensibilitat a la color"
 
 #~ msgid "Add more strokes or press Enter to accept the selection"
 #~ msgstr ""
-#~ "Apondètz mai de tracés o appuyez sus Entrada per valider la seleccion"
+#~ "Apondètz mai de traçats o quichatz sus Entrada per valider la seleccion"
 
 #~ msgid "Mark foreground by painting on the object to extract"
-#~ msgstr "Marquer lo primièr plan en dessinant sus l'objècte a extraire"
+#~ msgstr "Marcar lo primièr plan en dessenhant sus l'objècte d'extraire"
 
 #~ msgid "Fixed:"
 #~ msgstr "Fixé :"
 
 #~ msgid "Error while writing '%s': %s"
-#~ msgstr "Error durant l'escritura de « %s » : %s"
+#~ msgstr "Error pendent l'escritura de « %s » : %s"
 
 #~ msgid "Querying..."
-#~ msgstr "Interrogation..."
+#~ msgstr "Interrogacion..."
 
 #~ msgid "ICC color profile (*.icc, *.icm)"
 #~ msgstr "Perfil de color ICC (*.icc, *.icm)"
 
 #~ msgid "English"
-#~ msgstr "Anglais"
+#~ msgstr "Anglés"
 
 #~ msgid "Error saving XCF file: %s"
 #~ msgstr "Error d'enregistrament del fichièr XCF : %s"
 
 #~ msgid "Equalize does not operate on indexed layers."
-#~ msgstr "L'egalisation ne fonctionne pas sus de calques en colors indexadas."
+#~ msgstr "L'egalizacion fonciona pas sus de calques en colors indexadas."
 
 #~ msgid "Invert does not operate on indexed layers."
-#~ msgstr "L'inversion ne fonctionne pas sus de calques en colors indexadas."
+#~ msgstr "L'inversion fonciona pas sus de calques en colors indexadas."
 
 #~ msgctxt "view-action"
 #~ msgid "Zoom out"
@@ -20586,7 +20586,7 @@ msgstr "fosc"
 #~ "When enabled GIMP is in a single-window mode. Far from completely "
 #~ "implemented!"
 #~ msgstr ""
-#~ "Quand aquesta option es activada, GIMP es en mode fenèstra unica. Loin "
+#~ "Quand aquesta opcion es activada, GIMP es en mode fenèstra unica. Luènh "
 #~ "d'èsser al punt !"
 
 #~ msgctxt "undo-type"
@@ -20598,35 +20598,35 @@ msgstr "fosc"
 
 #~ msgid "Perspectiva Clone does not operate on indexed layers."
 #~ msgstr ""
-#~ "Lo clonage en perspectiva ne fonctionne pas sus los calques en colors "
+#~ "Lo clonatge en perspectiva fonciona pas suls calques en colors "
 #~ "indexadas."
 
 #~ msgid "Blend does not operate on indexed layers."
-#~ msgstr "Lo degradat ne fonctionne pas sus de calques en colors indexadas."
+#~ msgstr "Lo degradat fonciona pas sus de calques en colors indexadas."
 
 #~ msgid "Brightness-Contrast does not operate on indexed layers."
 #~ msgstr ""
-#~ "Luminositat-Contraste ne fonctionne pas sus de calques en colors "
+#~ "Luminositat-Contraste fonciona pas sus de calques en colors "
 #~ "indexadas."
 
 #~ msgid "Colorize operates only on RGB color layers."
-#~ msgstr "Colorier ne fonctionne que sus de calques RVB."
+#~ msgstr "Coloriar fonciona pas que sus de calques RVB."
 
 #~ msgid "Curves does not operate on indexed layers."
-#~ msgstr "Courbes ne fonctionne pas sus de calques en colors indexadas."
+#~ msgstr "Corbas fonciona pas sus de calques en colors indexadas."
 
 #~ msgid "GEGL operations do not operate on indexed layers."
 #~ msgstr ""
-#~ "Les actions GEGL ne fonctionnent pas sus de calques en colors indexadas."
+#~ "Las accions GEGL foncionan pas sus de calques en colors indexadas."
 
 #~ msgid "_Operation:"
-#~ msgstr "_Action :"
+#~ msgstr "_Accion :"
 
 #~ msgid "Operation Settings"
-#~ msgstr "Paramètres de l'action"
+#~ msgstr "Paramètres de l'accion"
 
 #~ msgid "Levels does not operate on indexed layers."
-#~ msgstr "Nivèls ne fonctionne pas sus de calques en colors indexadas."
+#~ msgstr "Nivèls fonciona pas sus de calques en colors indexadas."
 
 #~ msgctxt "tool"
 #~ msgid "_Zoom"
@@ -20634,18 +20634,18 @@ msgstr "fosc"
 
 #~ msgid "Threshold does not operate on indexed layers."
 #~ msgstr ""
-#~ "Les sulhets ne fonctionnent pas sus los calques en colors indexadas."
+#~ "Los sulhets foncionan pas suls calques en colors indexadas."
 
 #~ msgid "Opacity:"
 #~ msgstr "Opacitat :"
 
 #~ msgid "Perspective Clone does not operate on indexed layers."
 #~ msgstr ""
-#~ "Le clonage en perspective ne fonctionne pas sur les calques en couleurs "
-#~ "indexées."
+#~ "Lo clonatge en perspectiva fonciona pas suls calques en colors "
+#~ "indexadas."
 
 #~ msgid "Interactive refinement  (%s)"
-#~ msgstr "Affinage interactif (%s)"
+#~ msgstr "Afinatge interactiu (%s)"
 
 #~ msgid "Pick white point"
-#~ msgstr "Pointez le point blanc"
+#~ msgstr "Puntatz lo punt blanc"
