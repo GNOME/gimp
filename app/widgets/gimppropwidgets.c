@@ -68,11 +68,11 @@ static GParamSpec * find_param_spec    (GObject     *object,
                                         const gchar *strloc);
 static GParamSpec * check_param_spec   (GObject     *object,
                                         const gchar *property_name,
-                                        GType         type,
+                                        GType        type,
                                         const gchar *strloc);
 static GParamSpec * check_param_spec_w (GObject     *object,
                                         const gchar *property_name,
-                                        GType         type,
+                                        GType        type,
                                         const gchar *strloc);
 
 static void         connect_notify     (GObject     *config,
@@ -114,7 +114,6 @@ gimp_prop_expanding_frame_new (GObject      *config,
   GParamSpec *param_spec;
   GtkWidget  *frame;
   GtkWidget  *toggle;
-  gboolean    value;
 
   param_spec = check_param_spec_w (config, property_name,
                                    G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
@@ -132,16 +131,9 @@ gimp_prop_expanding_frame_new (GObject      *config,
 
   gtk_container_add (GTK_CONTAINER (frame), child);
 
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  if (value)
-    gtk_widget_show (child);
-
-  g_signal_connect_object (toggle, "toggled",
-                           G_CALLBACK (gimp_toggle_button_set_visible),
-                           child, 0);
+  g_object_bind_property (G_OBJECT (config), property_name,
+                          G_OBJECT (child),  "visible",
+                          G_BINDING_SYNC_CREATE);
 
   if (button)
     *button = toggle;
@@ -150,9 +142,9 @@ gimp_prop_expanding_frame_new (GObject      *config,
 }
 
 
-/****************/
-/*  paint menu  */
-/****************/
+/*********************/
+/*  paint mode menu  */
+/*********************/
 
 static void   gimp_prop_paint_menu_callback (GtkWidget   *widget,
                                              GObject     *config);
@@ -916,10 +908,10 @@ gimp_prop_angle_dial_new (GObject     *config,
 }
 
 GtkWidget *
-gimp_prop_angle_range_dial_new  (GObject     *config,
-                                 const gchar *alpha_property_name,
-                                 const gchar *beta_property_name,
-                                 const gchar *clockwise_property_name)
+gimp_prop_angle_range_dial_new (GObject     *config,
+                                const gchar *alpha_property_name,
+                                const gchar *beta_property_name,
+                                const gchar *clockwise_property_name)
 {
   GParamSpec *alpha_param_spec;
   GParamSpec *beta_param_spec;
@@ -971,9 +963,9 @@ gimp_prop_angle_range_dial_new  (GObject     *config,
 }
 
 GtkWidget *
-gimp_prop_polar_new  (GObject     *config,
-                      const gchar *angle_property_name,
-                      const gchar *radius_property_name)
+gimp_prop_polar_new (GObject     *config,
+                     const gchar *angle_property_name,
+                     const gchar *radius_property_name)
 {
   GParamSpec *angle_param_spec;
   GParamSpec *radius_param_spec;
@@ -1586,6 +1578,198 @@ gimp_prop_language_entry_notify (GObject    *config,
 }
 
 
+/***********************/
+/*  profile combo box  */
+/***********************/
+
+static void   gimp_prop_profile_combo_callback (GimpColorProfileComboBox *combo,
+                                                GObject                  *config);
+static void   gimp_prop_profile_combo_notify   (GObject                  *config,
+                                                const GParamSpec         *param_spec,
+                                                GimpColorProfileComboBox *combo);
+
+GtkWidget *
+gimp_prop_profile_combo_box_new (GObject      *config,
+                                 const gchar  *property_name,
+                                 GtkListStore *profile_store,
+                                 const gchar  *dialog_title)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *dialog;
+  GtkWidget  *combo;
+  GFile      *file = NULL;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                             property_name);
+
+  if (param_spec && G_IS_PARAM_SPEC_STRING (param_spec))
+    {
+      param_spec = check_param_spec_w (config, property_name,
+                                       G_TYPE_PARAM_STRING, G_STRFUNC);
+    }
+  else
+    {
+      param_spec = check_param_spec_w (config, property_name,
+                                       G_TYPE_PARAM_OBJECT, G_STRFUNC);
+    }
+
+  if (! param_spec)
+    return NULL;
+
+  dialog = gimp_color_profile_chooser_dialog_new (dialog_title, NULL,
+                                                  GTK_FILE_CHOOSER_ACTION_OPEN);
+
+  if (G_IS_PARAM_SPEC_STRING (param_spec))
+    {
+      gchar *value;
+      gchar *path;
+
+      g_object_get (config,
+                    property_name, &value,
+                    NULL);
+
+      path = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+      g_free (value);
+
+      if (path)
+        {
+          file = g_file_new_for_path (path);
+          g_free (path);
+        }
+    }
+  else
+    {
+      g_object_get (config, property_name, &file, NULL);
+    }
+
+  if (profile_store)
+    {
+      combo = gimp_color_profile_combo_box_new_with_model (dialog,
+                                                           GTK_TREE_MODEL (profile_store));
+    }
+  else
+    {
+      gchar *filename;
+
+      filename = gimp_personal_rc_file ("profilerc");
+      combo = gimp_color_profile_combo_box_new (dialog, filename);
+      g_free (filename);
+    }
+
+  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                                file, NULL);
+
+  if (file)
+    g_object_unref (file);
+
+  set_param_spec (G_OBJECT (combo), combo, param_spec);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_prop_profile_combo_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_profile_combo_notify),
+                  combo);
+
+  return combo;
+}
+
+static void
+gimp_prop_profile_combo_callback (GimpColorProfileComboBox *combo,
+                                  GObject                  *config)
+{
+  GParamSpec *param_spec;
+  GFile      *file;
+
+  param_spec = get_param_spec (G_OBJECT (combo));
+  if (! param_spec)
+    return;
+
+  file = gimp_color_profile_combo_box_get_active_file (combo);
+
+  if (! file)
+    g_signal_handlers_block_by_func (config,
+                                     gimp_prop_profile_combo_notify,
+                                     combo);
+
+  if (G_IS_PARAM_SPEC_STRING (param_spec))
+    {
+      gchar *path = NULL;
+
+      if (file)
+        path = g_file_get_path (file);
+
+      g_object_set (config,
+                    param_spec->name, path,
+                    NULL);
+
+      g_free (path);
+    }
+  else
+    {
+      g_object_set (config,
+                    param_spec->name, file,
+                    NULL);
+    }
+
+  if (! file)
+    g_signal_handlers_unblock_by_func (config,
+                                       gimp_prop_profile_combo_notify,
+                                       combo);
+
+  if (file)
+    g_object_unref (file);
+}
+
+static void
+gimp_prop_profile_combo_notify (GObject                  *config,
+                                const GParamSpec         *param_spec,
+                                GimpColorProfileComboBox *combo)
+{
+  GFile *file = NULL;
+
+  if (G_IS_PARAM_SPEC_STRING (param_spec))
+    {
+      gchar *value;
+      gchar *path;
+
+      g_object_get (config,
+                    param_spec->name, &value,
+                    NULL);
+
+      path = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+      g_free (value);
+
+      if (path)
+        {
+          file = g_file_new_for_path (path);
+          g_free (path);
+        }
+    }
+  else
+    {
+      g_object_get (config,
+                    param_spec->name, &file,
+                    NULL);
+
+    }
+
+  g_signal_handlers_block_by_func (combo,
+                                   gimp_prop_profile_combo_callback,
+                                   config);
+
+  gimp_color_profile_combo_box_set_active_file (combo, file, NULL);
+
+  g_signal_handlers_unblock_by_func (combo,
+                                     gimp_prop_profile_combo_callback,
+                                     config);
+
+  if (file)
+    g_object_unref (file);
+}
+
+
 /*****************/
 /*  icon picker  */
 /*****************/
@@ -1870,7 +2054,7 @@ check_param_spec_w (GObject     *object,
   if (param_spec &&
       (param_spec->flags & G_PARAM_WRITABLE) == 0)
     {
-      g_warning ("%s: property '%s' of %s is writable",
+      g_warning ("%s: property '%s' of %s is not writable",
                  strloc,
                  param_spec->name,
                  g_type_name (param_spec->owner_type));

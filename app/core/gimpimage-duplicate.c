@@ -40,7 +40,7 @@
 #include "gimpitemstack.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimpparasitelist.h"
 #include "gimpsamplepoint.h"
 

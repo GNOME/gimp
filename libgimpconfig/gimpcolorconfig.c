@@ -30,8 +30,6 @@
 
 #include "gimpconfigtypes.h"
 
-#include "gimpcolorconfig-enums.h"
-
 #include "gimpcolorconfig.h"
 #include "gimpconfig-error.h"
 #include "gimpconfig-iface.h"
@@ -51,7 +49,7 @@
 
 
 #define COLOR_MANAGEMENT_MODE_BLURB \
-  _("Mode of operation for color management.")
+  _("How images are displayed on screen.")
 
 #define DISPLAY_PROFILE_BLURB \
   _("The color profile of your (primary) monitor.")
@@ -261,7 +259,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
 
   GIMP_CONFIG_PROP_RGB (object_class, PROP_OUT_OF_GAMUT_COLOR,
                         "out-of-gamut-color",
-                        _("Out of gammut warning color"),
+                        _("Out of gamut warning color"),
                         OUT_OF_GAMUT_COLOR_BLURB,
                         FALSE, &color,
                         GIMP_PARAM_STATIC_STRINGS);

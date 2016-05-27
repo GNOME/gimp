@@ -22,34 +22,34 @@
 #define GIMP_IMAGE_COLORMAP_SIZE 768
 
 
-void           gimp_image_colormap_init            (GimpImage       *image);
-void           gimp_image_colormap_dispose         (GimpImage       *image);
-void           gimp_image_colormap_free            (GimpImage       *image);
+void           gimp_image_colormap_init            (GimpImage     *image);
+void           gimp_image_colormap_dispose         (GimpImage     *image);
+void           gimp_image_colormap_free            (GimpImage     *image);
 
-const Babl   * gimp_image_colormap_get_rgb_format  (const GimpImage *image);
-const Babl   * gimp_image_colormap_get_rgba_format (const GimpImage *image);
+const Babl   * gimp_image_colormap_get_rgb_format  (GimpImage     *image);
+const Babl   * gimp_image_colormap_get_rgba_format (GimpImage     *image);
 
-GimpPalette  * gimp_image_get_colormap_palette     (GimpImage       *image);
+GimpPalette  * gimp_image_get_colormap_palette     (GimpImage     *image);
 
-const guchar * gimp_image_get_colormap             (const GimpImage *image);
-gint           gimp_image_get_colormap_size        (const GimpImage *image);
-void           gimp_image_set_colormap             (GimpImage       *image,
-                                                    const guchar    *colormap,
-                                                    gint             n_colors,
-                                                    gboolean         push_undo);
-void           gimp_image_unset_colormap           (GimpImage       *image,
-                                                    gboolean         push_undo);
+const guchar * gimp_image_get_colormap             (GimpImage     *image);
+gint           gimp_image_get_colormap_size        (GimpImage     *image);
+void           gimp_image_set_colormap             (GimpImage     *image,
+                                                    const guchar  *colormap,
+                                                    gint           n_colors,
+                                                    gboolean       push_undo);
+void           gimp_image_unset_colormap           (GimpImage     *image,
+                                                    gboolean       push_undo);
 
-void           gimp_image_get_colormap_entry       (GimpImage       *image,
-                                                    gint             color_index,
-                                                    GimpRGB         *color);
-void           gimp_image_set_colormap_entry       (GimpImage       *image,
-                                                    gint             color_index,
-                                                    const GimpRGB   *color,
-                                                    gboolean         push_undo);
+void           gimp_image_get_colormap_entry       (GimpImage     *image,
+                                                    gint           color_index,
+                                                    GimpRGB       *color);
+void           gimp_image_set_colormap_entry       (GimpImage     *image,
+                                                    gint           color_index,
+                                                    const GimpRGB *color,
+                                                    gboolean       push_undo);
 
-void           gimp_image_add_colormap_entry       (GimpImage       *image,
-                                                    const GimpRGB   *color);
+void           gimp_image_add_colormap_entry       (GimpImage     *image,
+                                                    const GimpRGB *color);
 
 
 #endif /* __GIMP_IMAGE_COLORMAP_H__ */

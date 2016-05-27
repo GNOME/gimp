@@ -29,7 +29,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
 

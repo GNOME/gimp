@@ -61,6 +61,8 @@ static GType  colorsel_wheel_get_type      (void);
 static void   colorsel_wheel_set_color     (GimpColorSelector *selector,
                                             const GimpRGB     *rgb,
                                             const GimpHSV     *hsv);
+static void   colorsel_wheel_set_config    (GimpColorSelector *selector,
+                                            GimpColorConfig   *config);
 static void   colorsel_wheel_changed       (GimpColorWheel    *hsv,
                                             GimpColorSelector *selector);
 
@@ -99,10 +101,11 @@ colorsel_wheel_class_init (ColorselWheelClass *klass)
 {
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  selector_class->name      = _("Wheel");
-  selector_class->help_id   = "gimp-colorselector-triangle";
-  selector_class->icon_name = GIMP_STOCK_COLOR_TRIANGLE;
-  selector_class->set_color = colorsel_wheel_set_color;
+  selector_class->name       = _("Wheel");
+  selector_class->help_id    = "gimp-colorselector-triangle";
+  selector_class->icon_name  = GIMP_STOCK_COLOR_TRIANGLE;
+  selector_class->set_color  = colorsel_wheel_set_color;
+  selector_class->set_config = colorsel_wheel_set_config;
 }
 
 static void
@@ -121,6 +124,8 @@ colorsel_wheel_init (ColorselWheel *wheel)
   gtk_widget_show (frame);
 
   wheel->hsv = gimp_color_wheel_new ();
+  g_object_add_weak_pointer (G_OBJECT (wheel->hsv),
+                             (gpointer) &wheel->hsv);
   gtk_container_add (GTK_CONTAINER (frame), wheel->hsv);
   gtk_widget_show (wheel->hsv);
 
@@ -138,6 +143,16 @@ colorsel_wheel_set_color (GimpColorSelector *selector,
 
   gimp_color_wheel_set_color (GIMP_COLOR_WHEEL (wheel->hsv),
                               hsv->h, hsv->s, hsv->v);
+}
+
+static void
+colorsel_wheel_set_config (GimpColorSelector *selector,
+                           GimpColorConfig   *config)
+{
+  ColorselWheel *wheel = COLORSEL_WHEEL (selector);
+
+  if (wheel->hsv)
+    gimp_color_wheel_set_color_config (GIMP_COLOR_WHEEL (wheel->hsv), config);
 }
 
 static void

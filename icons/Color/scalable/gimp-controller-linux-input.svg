@@ -10,9 +10,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    width="16"
-   height="15.919941"
+   height="16"
    id="svg2"
-   viewBox="0 0 16 15.919941"
+   viewBox="0 0 16 16"
    inkscape:version="0.91 r13725"
    sodipodi:docname="gimp-controller-linux-input.svg">
   <sodipodi:namedview
@@ -24,17 +24,21 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="640"
-     inkscape:window-height="480"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
      id="namedview1702"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="14.824176"
-     inkscape:cx="-527.40949"
-     inkscape:cy="-282.50552"
+     inkscape:cx="-4.6630843"
+     inkscape:cy="1.7935367"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg2" />
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4150" />
+  </sodipodi:namedview>
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -89,7 +93,7 @@
   </defs>
   <g
      style="display:inline"
-     transform="translate(-158.38504,3.7051493)"
+     transform="matrix(1,0,0,1.0050286,-158.38504,3.7239731)"
      id="stock">
     <g
        id="gimp-controller-linux-input"

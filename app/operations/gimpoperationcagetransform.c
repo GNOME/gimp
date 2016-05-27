@@ -28,7 +28,6 @@
 
 #include "operations-types.h"
 
-#include "core/gimpmarshal.h"
 #include "gimpoperationcagetransform.h"
 #include "gimpcageconfig.h"
 
@@ -39,12 +38,6 @@ enum
   PROP_0,
   PROP_CONFIG,
   PROP_FILL,
-};
-
-enum
-{
-  PROGRESS,
-  LAST_SIGNAL
 };
 
 
@@ -94,8 +87,6 @@ G_DEFINE_TYPE (GimpOperationCageTransform, gimp_operation_cage_transform,
 
 #define parent_class gimp_operation_cage_transform_parent_class
 
-static guint cage_transform_signals[LAST_SIGNAL] = { 0 };
-
 
 static void
 gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass)
@@ -103,16 +94,6 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
   GObjectClass               *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass         *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationComposerClass *filter_class    = GEGL_OPERATION_COMPOSER_CLASS (klass);
-
-  cage_transform_signals[PROGRESS] =
-    g_signal_new ("progress",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_LAST,
-                  0,
-                  NULL, NULL,
-                  gimp_marshal_VOID__DOUBLE,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_DOUBLE);
 
   object_class->get_property               = gimp_operation_cage_transform_get_property;
   object_class->set_property               = gimp_operation_cage_transform_set_property;
@@ -230,13 +211,6 @@ gimp_operation_cage_transform_prepare (GeglOperation *operation)
                              babl_format_n (babl_type ("float"), 2));
 }
 
-static void
-gimp_operation_cage_transform_notify_progress (gpointer instance,
-                                               gdouble  progress)
-{
-  g_signal_emit (instance, cage_transform_signals[PROGRESS], 0, progress);
-}
-
 static gboolean
 gimp_operation_cage_transform_process (GeglOperation       *operation,
                                        GeglBuffer          *in_buf,
@@ -314,7 +288,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
         }
     }
 
-  gimp_operation_cage_transform_notify_progress (oct, 0.0);
+  gegl_operation_progress (operation, 0.0, "");
 
   /* pre-allocate memory outside of the loop */
   coords      = g_slice_alloc (2 * sizeof (gfloat));
@@ -379,7 +353,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
           /*  0.0 and 1.0 indicate progress start/end, so avoid them  */
           if (fraction > 0.0 && fraction < 1.0)
             {
-              gimp_operation_cage_transform_notify_progress (oct, fraction);
+              gegl_operation_progress (operation, fraction, "");
             }
         }
     }
@@ -387,7 +361,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   g_free (coef);
   g_slice_free1 (2 * sizeof (gfloat), coords);
 
-  gimp_operation_cage_transform_notify_progress (oct, 1.0);
+  gegl_operation_progress (operation, 1.0, "");
 
   return TRUE;
 }

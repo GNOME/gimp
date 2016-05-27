@@ -33,9 +33,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
-#ifdef USE_NODE_BLIT
 #include "core/gimpprojectable.h"
-#endif
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -204,7 +202,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GEGL_RECTANGLE (scaled_x, scaled_y,
                                            scaled_width, scaled_height),
                            buffer_scale,
-                           shell->profile_src_format,
+                           gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
                            shell->profile_data, shell->profile_stride,
                            GEGL_ABYSS_CLAMP);
 #else
@@ -212,7 +210,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                           buffer_scale,
                           GEGL_RECTANGLE (scaled_x, scaled_y,
                                           scaled_width, scaled_height),
-                          shell->profile_src_format,
+                          gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
                           shell->profile_data, shell->profile_stride,
                           GEGL_BLIT_CACHE);
 #endif

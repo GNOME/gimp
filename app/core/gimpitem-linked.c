@@ -37,7 +37,7 @@
 /*  public functions  */
 
 gboolean
-gimp_item_linked_is_locked (const GimpItem *item)
+gimp_item_linked_is_locked (GimpItem *item)
 {
   GList    *list;
   GList    *l;

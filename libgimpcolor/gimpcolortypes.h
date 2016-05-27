@@ -21,6 +21,7 @@
 
 
 #include <libgimpbase/gimpbasetypes.h>
+#include <libgimpconfig/gimpconfigtypes.h>
 
 
 G_BEGIN_DECLS
@@ -28,10 +29,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-typedef struct _GimpColorManaged GimpColorManaged;  /* dummy typedef */
-typedef struct _GimpColorProfile GimpColorProfile;
-
-typedef gpointer GimpColorTransform;
+typedef struct _GimpColorManaged   GimpColorManaged;  /* dummy typedef */
+typedef struct _GimpColorProfile   GimpColorProfile;
+typedef struct _GimpColorTransform GimpColorTransform;
 
 
 /*  usually we don't keep the structure definitions in the types file

@@ -30,6 +30,7 @@
 #define GIMP_SAMPLE_POINT_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAMPLE_POINT_UNDO, GimpSamplePointUndoClass))
 
 
+typedef struct _GimpSamplePointUndo      GimpSamplePointUndo;
 typedef struct _GimpSamplePointUndoClass GimpSamplePointUndoClass;
 
 struct _GimpSamplePointUndo

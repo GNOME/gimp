@@ -200,7 +200,7 @@ CODE
 
 
 @headers = qw("core/gimpimage.h"
-              "core/gimplayer-floating-sel.h"
+              "core/gimplayer-floating-selection.h"
               "gimppdberror.h"
               "gimppdb-utils.h"
               "gimp-intl.h");

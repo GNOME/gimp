@@ -25,6 +25,9 @@
 #include <pygobject.h>
 #include <pygtk/pygtk.h>
 
+#include <pycairo.h>
+Pycairo_CAPI_t *Pycairo_CAPI;
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -43,6 +46,16 @@ static char gimpui_doc[] =
 ;
 
 void init_gimpui(void);
+
+static gboolean
+init_pycairo(void)
+{
+  Pycairo_IMPORT;
+  if (Pycairo_CAPI == NULL)
+    return FALSE;
+
+  return TRUE;
+}
 
 PyMODINIT_FUNC
 init_gimpui(void)
@@ -66,6 +79,8 @@ init_gimpui(void)
     pygimp_init_pygobject();
 
     init_pygtk();
+    if (!init_pycairo())
+      return;
     init_pygimpcolor();
     init_pygimp();
 

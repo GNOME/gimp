@@ -154,25 +154,9 @@ typedef struct _GimpGroupLayer      GimpGroupLayer;
 
 /*  undo objects  */
 
-typedef struct _GimpUndo              GimpUndo;
-typedef struct _GimpImageUndo         GimpImageUndo;
-typedef struct _GimpItemUndo          GimpItemUndo;
-typedef struct _GimpItemPropUndo      GimpItemPropUndo;
-typedef struct _GimpChannelUndo       GimpChannelUndo;
-typedef struct _GimpChannelPropUndo   GimpChannelPropUndo;
-typedef struct _GimpDrawableUndo      GimpDrawableUndo;
-typedef struct _GimpDrawableModUndo   GimpDrawableModUndo;
-typedef struct _GimpLayerMaskUndo     GimpLayerMaskUndo;
-typedef struct _GimpLayerMaskPropUndo GimpLayerMaskPropUndo;
-typedef struct _GimpLayerUndo         GimpLayerUndo;
-typedef struct _GimpLayerPropUndo     GimpLayerPropUndo;
-typedef struct _GimpGroupLayerUndo    GimpGroupLayerUndo;
-typedef struct _GimpMaskUndo          GimpMaskUndo;
-typedef struct _GimpGuideUndo         GimpGuideUndo;
-typedef struct _GimpSamplePointUndo   GimpSamplePointUndo;
-typedef struct _GimpFloatingSelUndo   GimpFloatingSelUndo;
-typedef struct _GimpUndoStack         GimpUndoStack;
-typedef struct _GimpUndoAccumulator   GimpUndoAccumulator;
+typedef struct _GimpUndo            GimpUndo;
+typedef struct _GimpUndoStack       GimpUndoStack;
+typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 typedef struct _GimpViewableUndo      GimpViewableUndo;
 
 
@@ -187,11 +171,11 @@ typedef struct _GimpMandala         GimpMandala;
 /*  misc objects  */
 
 typedef struct _GimpBuffer          GimpBuffer;
+typedef struct _GimpDrawableFilter  GimpDrawableFilter;
 typedef struct _GimpEnvironTable    GimpEnvironTable;
 typedef struct _GimpGuide           GimpGuide;
 typedef struct _GimpHistogram       GimpHistogram;
 typedef struct _GimpIdTable         GimpIdTable;
-typedef struct _GimpImageMap        GimpImageMap;
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpInterpreterDB   GimpInterpreterDB;
 typedef struct _GimpParasiteList    GimpParasiteList;
@@ -242,15 +226,15 @@ typedef void * GimpBezierDesc;
 
 /*  functions  */
 
-typedef void     (* GimpInitStatusFunc)    (const gchar      *text1,
-                                            const gchar      *text2,
-                                            gdouble           percentage);
+typedef void     (* GimpInitStatusFunc)    (const gchar *text1,
+                                            const gchar *text2,
+                                            gdouble      percentage);
 
-typedef gboolean (* GimpObjectFilterFunc)  (const GimpObject *object,
-                                            gpointer          user_data);
+typedef gboolean (* GimpObjectFilterFunc)  (GimpObject  *object,
+                                            gpointer     user_data);
 
-typedef gint64   (* GimpMemsizeFunc)       (gpointer          instance,
-                                            gint64           *gui_size);
+typedef gint64   (* GimpMemsizeFunc)       (gpointer     instance,
+                                            gint64      *gui_size);
 
 
 /*  structs  */

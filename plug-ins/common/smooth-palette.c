@@ -398,14 +398,14 @@ smooth_palette (GimpDrawable *drawable,
 static gboolean
 dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *sizeentry;
-  guint32    image_id;
-  GimpUnit   unit;
-  gdouble    xres, yres;
-  gboolean   run;
+  GtkWidget     *dlg;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  GtkWidget     *sizeentry;
+  guint32        image_id;
+  GimpUnit       unit;
+  gdouble        xres, yres;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -447,8 +447,11 @@ dialog (GimpDrawable *drawable)
                       sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
 
-  spinbutton = gimp_spin_button_new (&adj, config.ntries,
-                                     1, 1024, 1, 10, 0, 1, 0);
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (config.ntries,
+                                            1, 1024, 1, 10, 0));
+  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+
   gimp_table_attach_aligned (GTK_TABLE (sizeentry), 0, 2,
                              _("_Search depth:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);

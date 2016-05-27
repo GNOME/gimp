@@ -31,25 +31,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "file-formats.h"
 
-typedef struct _FileFormat FileFormat;
-
-struct _FileFormat
-{
-  const gchar *file_type;
-  const gchar *mime_type;
-  const gchar *extensions;
-  const gchar *magic;
-
-  const gchar *load_proc;
-  const gchar *load_blurb;
-  const gchar *load_help;
-
-  const gchar *load_thumb_proc;
-  const gchar *load_thumb_blurb;
-  const gchar *load_thumb_help;
-};
-
+#define LOAD_THUMB_PROC "file-raw-load-thumb"
 
 static void     query                (void);
 static void     run                  (const gchar      *name,
@@ -66,40 +50,6 @@ static gint32   load_thumbnail_image (const gchar      *filename,
                                       gint             *width,
                                       gint             *height,
                                       GError          **error);
-
-static const FileFormat file_formats[] =
-{
-  {
-    N_("Canon CR2 raw"),
-    "image/x-canon-cr2",
-    "cr2",
-    "0,string,II*\\0\\020\\0\\0\\0CR",
-
-    "file-cr2-load",
-    "Load files in the CR2 raw format via darktable",
-    "This plug-in loads files in Canon's raw CR2 format by calling darktable.",
-
-    "file-cr2-load-thumb",
-    "Load thumbnail from a CR2 raw image via darktable",
-    "This plug-in loads a thumbnail from Canon's raw CR2 images by calling darktable-cli."
-  },
-
-  {
-    N_("Nikon NEF raw"),
-    " image/x-nikon-nef ",
-    "nef",
-    NULL,
-
-    "file-nef-load",
-    "Load files in the NEF raw format via darktable",
-    "This plug-in loads files in Nikon's raw NEF format by calling darktable.",
-
-    "file-nef-load-thumb",
-    "Load thumbnail from a NEF raw image via darktable",
-    "This plug-in loads a thumbnail from Nikon's raw NEF images by calling darktable-cli."
-  }
-};
-
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -182,6 +132,19 @@ query (void)
   if (! have_darktable)
     return;
 
+  gimp_install_procedure (LOAD_THUMB_PROC,
+                          "Load thumbnail from a raw image via darktable",
+                          "This plug-in loads a thumbnail from a raw image by calling darktable-cli.",
+                          "Tobias Ellinghaus",
+                          "Tobias Ellinghaus",
+                          "2016",
+                          NULL,
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (thumb_args),
+                          G_N_ELEMENTS (thumb_return_vals),
+                          thumb_args, thumb_return_vals);
+
   for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
     {
       const FileFormat *format = &file_formats[i];
@@ -206,20 +169,7 @@ query (void)
                                         "",
                                         format->magic);
 
-      gimp_install_procedure (format->load_thumb_proc,
-                              format->load_thumb_blurb,
-                              format->load_thumb_help,
-                              "Tobias Ellinghaus",
-                              "Tobias Ellinghaus",
-                              "2016",
-                              NULL,
-                              NULL,
-                              GIMP_PLUGIN,
-                              G_N_ELEMENTS (thumb_args),
-                              G_N_ELEMENTS (thumb_return_vals),
-                              thumb_args, thumb_return_vals);
-
-      gimp_register_thumbnail_loader (format->load_proc, format->load_thumb_proc);
+      gimp_register_thumbnail_loader (format->load_proc, LOAD_THUMB_PROC);
     }
 }
 
@@ -269,8 +219,7 @@ run (const gchar      *name,
 
           break;
         }
-      else if (format->load_thumb_proc
-               && ! strcmp (name, format->load_thumb_proc))
+      else if (! strcmp (name, LOAD_THUMB_PROC))
         {
           gint width  = 0;
           gint height = 0;
@@ -332,6 +281,8 @@ load_image (const gchar  *filename,
   gchar  *filename_out    = gimp_temp_name ("exr");
   gchar  *export_filename = g_strdup_printf ("lua/export_on_exit/export_filename=%s", filename_out);
 
+  gchar *darktable_stdout = NULL;
+
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gchar *argv[] =
     {
@@ -354,12 +305,12 @@ load_image (const gchar  *filename,
   if (g_spawn_sync (NULL,
                     argv,
                     NULL,
-                    G_SPAWN_STDOUT_TO_DEV_NULL |
+//                     G_SPAWN_STDOUT_TO_DEV_NULL |
                     G_SPAWN_STDERR_TO_DEV_NULL |
                     G_SPAWN_SEARCH_PATH,
                     NULL,
                     NULL,
-                    NULL,
+                    &darktable_stdout,
                     NULL,
                     NULL,
                     error))
@@ -368,6 +319,9 @@ load_image (const gchar  *filename,
       if (image_ID != -1)
         gimp_image_set_filename (image_ID, filename);
     }
+
+// if (darktable_stdout) printf ("%s\n", darktable_stdout);
+  g_free(darktable_stdout);
 
   g_unlink (filename_out);
   g_free (lua_cmd);

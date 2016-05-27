@@ -78,8 +78,8 @@ GType           gimp_layer_get_type            (void) G_GNUC_CONST;
 
 GimpLayer     * gimp_layer_get_parent          (GimpLayer            *layer);
 
-GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
-GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
+GimpLayerMask * gimp_layer_get_mask            (GimpLayer            *layer);
+GimpLayerMask * gimp_layer_create_mask         (GimpLayer            *layer,
                                                 GimpAddMaskType       mask_type,
                                                 GimpChannel          *channel);
 GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
@@ -93,16 +93,16 @@ void            gimp_layer_apply_mask          (GimpLayer            *layer,
 void            gimp_layer_set_apply_mask      (GimpLayer           *layer,
                                                 gboolean             apply,
                                                 gboolean             push_undo);
-gboolean        gimp_layer_get_apply_mask      (const GimpLayer     *layer);
+gboolean        gimp_layer_get_apply_mask      (GimpLayer           *layer);
 
 void            gimp_layer_set_edit_mask       (GimpLayer           *layer,
                                                 gboolean             edit);
-gboolean        gimp_layer_get_edit_mask       (const GimpLayer     *layer);
+gboolean        gimp_layer_get_edit_mask       (GimpLayer           *layer);
 
 void            gimp_layer_set_show_mask       (GimpLayer           *layer,
                                                 gboolean             show,
                                                 gboolean             push_undo);
-gboolean        gimp_layer_get_show_mask       (const GimpLayer     *layer);
+gboolean        gimp_layer_get_show_mask       (GimpLayer           *layer);
 
 void            gimp_layer_add_alpha           (GimpLayer            *layer);
 void            gimp_layer_flatten             (GimpLayer            *layer,
@@ -111,26 +111,26 @@ void            gimp_layer_flatten             (GimpLayer            *layer,
 void            gimp_layer_resize_to_image     (GimpLayer            *layer,
                                                 GimpContext          *context);
 
-GimpDrawable * gimp_layer_get_floating_sel_drawable (const GimpLayer *layer);
+GimpDrawable * gimp_layer_get_floating_sel_drawable (GimpLayer       *layer);
 void           gimp_layer_set_floating_sel_drawable (GimpLayer       *layer,
                                                      GimpDrawable    *drawable);
-gboolean        gimp_layer_is_floating_sel     (const GimpLayer      *layer);
+gboolean        gimp_layer_is_floating_sel     (GimpLayer            *layer);
 
 void            gimp_layer_set_opacity         (GimpLayer            *layer,
                                                 gdouble               opacity,
                                                 gboolean              push_undo);
-gdouble         gimp_layer_get_opacity         (const GimpLayer      *layer);
+gdouble         gimp_layer_get_opacity         (GimpLayer            *layer);
 
 void            gimp_layer_set_mode            (GimpLayer            *layer,
                                                 GimpLayerModeEffects  mode,
                                                 gboolean              push_undo);
-GimpLayerModeEffects gimp_layer_get_mode       (const GimpLayer      *layer);
+GimpLayerModeEffects gimp_layer_get_mode       (GimpLayer            *layer);
 
 void            gimp_layer_set_lock_alpha      (GimpLayer            *layer,
                                                 gboolean              lock_alpha,
                                                 gboolean              push_undo);
-gboolean        gimp_layer_get_lock_alpha      (const GimpLayer      *layer);
-gboolean        gimp_layer_can_lock_alpha      (const GimpLayer      *layer);
+gboolean        gimp_layer_get_lock_alpha      (GimpLayer            *layer);
+gboolean        gimp_layer_can_lock_alpha      (GimpLayer            *layer);
 
 
 #endif /* __GIMP_LAYER_H__ */

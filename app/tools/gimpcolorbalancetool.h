@@ -19,7 +19,7 @@
 #define __GIMP_COLOR_BALANCE_TOOL_H__
 
 
-#include "gimpimagemaptool.h"
+#include "gimpfiltertool.h"
 
 
 #define GIMP_TYPE_COLOR_BALANCE_TOOL            (gimp_color_balance_tool_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpColorBalanceToolClass GimpColorBalanceToolClass;
 
 struct _GimpColorBalanceTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpFilterTool  parent_instance;
 };
 
 struct _GimpColorBalanceToolClass
 {
-  GimpImageMapToolClass  parent_class;
+  GimpFilterToolClass  parent_class;
 };
 
 

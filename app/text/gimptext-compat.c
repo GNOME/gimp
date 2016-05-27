@@ -35,7 +35,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-floating-selection.h"
 
 #include "gimptext.h"
 #include "gimptext-compat.h"

@@ -41,7 +41,7 @@
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimplayer-new.h"
 #include "gimplist.h"
 #include "gimppattern.h"
@@ -63,7 +63,7 @@ static GimpBuffer * gimp_edit_extract (GimpImage     *image,
 
 /*  public functions  */
 
-const GimpBuffer *
+GimpBuffer *
 gimp_edit_cut (GimpImage     *image,
                GimpDrawable  *drawable,
                GimpContext   *context,
@@ -91,7 +91,7 @@ gimp_edit_cut (GimpImage     *image,
   return NULL;
 }
 
-const GimpBuffer *
+GimpBuffer *
 gimp_edit_copy (GimpImage     *image,
                 GimpDrawable  *drawable,
                 GimpContext   *context,
@@ -119,7 +119,7 @@ gimp_edit_copy (GimpImage     *image,
   return NULL;
 }
 
-const GimpBuffer *
+GimpBuffer *
 gimp_edit_copy_visible (GimpImage    *image,
                         GimpContext  *context,
                         GError      **error)

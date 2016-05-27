@@ -30,6 +30,7 @@
 #define GIMP_LAYER_PROP_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_PROP_UNDO, GimpLayerPropUndoClass))
 
 
+typedef struct _GimpLayerPropUndo      GimpLayerPropUndo;
 typedef struct _GimpLayerPropUndoClass GimpLayerPropUndoClass;
 
 struct _GimpLayerPropUndo

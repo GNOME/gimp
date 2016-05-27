@@ -25,20 +25,20 @@
 #include "gimpcontainertreeview.h"
 
 
-typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage *image);
-typedef GimpItem      * (* GimpGetItemFunc)      (const GimpImage *image);
-typedef void            (* GimpSetItemFunc)      (GimpImage       *image,
-                                                  GimpItem        *item);
-typedef void            (* GimpAddItemFunc)      (GimpImage       *image,
-                                                  GimpItem        *item,
-                                                  GimpItem        *parent,
-                                                  gint             index,
-                                                  gboolean         push_undo);
-typedef void            (* GimpRemoveItemFunc)   (GimpImage       *image,
-                                                  GimpItem        *item,
-                                                  gboolean         push_undo,
-                                                  GimpItem        *new_active);
-typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage       *image);
+typedef GimpContainer * (* GimpGetContainerFunc) (GimpImage *image);
+typedef GimpItem      * (* GimpGetItemFunc)      (GimpImage *image);
+typedef void            (* GimpSetItemFunc)      (GimpImage *image,
+                                                  GimpItem  *item);
+typedef void            (* GimpAddItemFunc)      (GimpImage *image,
+                                                  GimpItem  *item,
+                                                  GimpItem  *parent,
+                                                  gint       index,
+                                                  gboolean   push_undo);
+typedef void            (* GimpRemoveItemFunc)   (GimpImage *image,
+                                                  GimpItem  *item,
+                                                  gboolean   push_undo,
+                                                  GimpItem  *new_active);
+typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage *image);
 
 
 #define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())

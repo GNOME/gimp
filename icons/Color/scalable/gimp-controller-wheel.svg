@@ -25,16 +25,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="501"
-     inkscape:window-height="405"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
      id="namedview1697"
      showgrid="false"
      inkscape:zoom="14.75"
-     inkscape:cx="-567.99529"
-     inkscape:cy="-282.95945"
+     inkscape:cx="-4.8474595"
+     inkscape:cy="3.0445135"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <metadata
      id="metadata90">
@@ -95,26 +95,6 @@
          id="stop11625" />
     </linearGradient>
     <linearGradient
-       id="linearGradient11950">
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1.0000000;"
-         offset="0.0000000"
-         id="stop11952" />
-      <stop
-         style="stop-color:#a9a9a9;stop-opacity:1.0000000;"
-         offset="1.0000000"
-         id="stop11954" />
-    </linearGradient>
-    <linearGradient
-       xlink:href="#linearGradient11950"
-       id="linearGradient11958"
-       x1="23.991123"
-       y1="12.830256"
-       x2="23.991123"
-       y2="7.1877394"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.982494,0,0,1.417807,536.4603,144.11546)" />
-    <linearGradient
        xlink:href="#linearGradient11621"
        id="linearGradient11627"
        x1="23.991123"
@@ -151,7 +131,7 @@
          inkscape:connector-curvature="0" />
       <ellipse
          id="path11617"
-         style="color:#000000;font-family:'Bitstream Vera Sans';display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient11958);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.67654324;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         style="color:#000000;font-family:'Bitstream Vera Sans';display:inline;overflow:visible;visibility:visible;opacity:1;fill:#eeeeec;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.67654324;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
          cx="8.0272694"
          cy="8.3804789"
          rx="4.3056359"

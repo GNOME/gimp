@@ -118,8 +118,8 @@ static void       gimp_item_get_property            (GObject        *object,
 static gint64     gimp_item_get_memsize             (GimpObject     *object,
                                                      gint64         *gui_size);
 
-static gboolean   gimp_item_real_is_content_locked  (const GimpItem *item);
-static gboolean   gimp_item_real_is_position_locked (const GimpItem *item);
+static gboolean   gimp_item_real_is_content_locked  (GimpItem       *item);
+static gboolean   gimp_item_real_is_position_locked (GimpItem       *item);
 static gboolean   gimp_item_real_bounds             (GimpItem       *item,
                                                      gdouble        *x,
                                                      gdouble        *y,
@@ -438,7 +438,7 @@ gimp_item_get_memsize (GimpObject *object,
 }
 
 static gboolean
-gimp_item_real_is_content_locked (const GimpItem *item)
+gimp_item_real_is_content_locked (GimpItem *item)
 {
   GimpItem *parent = gimp_item_get_parent (item);
 
@@ -449,7 +449,7 @@ gimp_item_real_is_content_locked (const GimpItem *item)
 }
 
 static gboolean
-gimp_item_real_is_position_locked (const GimpItem *item)
+gimp_item_real_is_position_locked (GimpItem *item)
 {
   if (gimp_item_get_linked (item))
     if (gimp_item_linked_is_locked (item))
@@ -709,7 +709,7 @@ gimp_item_removed (GimpItem *item)
  * Returns: %TRUE if the 'removed' flag is set for @item, %FALSE otherwise.
  */
 gboolean
-gimp_item_is_removed (const GimpItem *item)
+gimp_item_is_removed (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -751,7 +751,7 @@ gimp_item_unset_removed (GimpItem *item)
  * Returns: %TRUE if the item is attached to an image, %FALSE otherwise.
  */
 gboolean
-gimp_item_is_attached (const GimpItem *item)
+gimp_item_is_attached (GimpItem *item)
 {
   GimpItem *parent;
 
@@ -766,7 +766,7 @@ gimp_item_is_attached (const GimpItem *item)
 }
 
 GimpItem *
-gimp_item_get_parent (const GimpItem *item)
+gimp_item_get_parent (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
@@ -1008,7 +1008,7 @@ gimp_item_rename (GimpItem     *item,
  * Returns: The width of the item.
  */
 gint
-gimp_item_get_width (const GimpItem *item)
+gimp_item_get_width (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
@@ -1022,7 +1022,7 @@ gimp_item_get_width (const GimpItem *item)
  * Returns: The height of the item.
  */
 gint
-gimp_item_get_height (const GimpItem *item)
+gimp_item_get_height (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
@@ -1072,9 +1072,9 @@ gimp_item_set_size (GimpItem *item,
  * Reveals the X and Y offsets of the item.
  */
 void
-gimp_item_get_offset (const GimpItem *item,
-                      gint           *offset_x,
-                      gint           *offset_y)
+gimp_item_get_offset (GimpItem *item,
+                      gint     *offset_x,
+                      gint     *offset_y)
 {
   GimpItemPrivate *private;
 
@@ -1190,9 +1190,9 @@ gimp_item_translate (GimpItem *item,
  *          of this; otherwise, returns #TRUE.
  **/
 gboolean
-gimp_item_check_scaling (const GimpItem *item,
-                         gint            new_width,
-                         gint            new_height)
+gimp_item_check_scaling (GimpItem *item,
+                         gint      new_width,
+                         gint      new_height)
 {
   GimpImage *image;
   gdouble    img_scale_w;
@@ -1687,7 +1687,7 @@ gimp_item_get_by_ID (Gimp *gimp,
 }
 
 GimpTattoo
-gimp_item_get_tattoo (const GimpItem *item)
+gimp_item_get_tattoo (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), 0);
 
@@ -1704,7 +1704,7 @@ gimp_item_set_tattoo (GimpItem   *item,
 }
 
 GimpImage *
-gimp_item_get_image (const GimpItem *item)
+gimp_item_get_image (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
@@ -1858,7 +1858,7 @@ gimp_item_set_parasites (GimpItem         *item,
  * Return value: The @item's #GimpParasiteList.
  **/
 GimpParasiteList *
-gimp_item_get_parasites (const GimpItem *item)
+gimp_item_get_parasites (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
@@ -1984,8 +1984,8 @@ gimp_item_parasite_detach (GimpItem    *item,
 }
 
 const GimpParasite *
-gimp_item_parasite_find (const GimpItem *item,
-                         const gchar    *name)
+gimp_item_parasite_find (GimpItem    *item,
+                         const gchar *name)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
@@ -2001,8 +2001,8 @@ gimp_item_parasite_list_foreach_func (gchar          *name,
 }
 
 gchar **
-gimp_item_parasite_list (const GimpItem *item,
-                         gint           *count)
+gimp_item_parasite_list (GimpItem *item,
+                         gint     *count)
 {
   GimpItemPrivate  *private;
   gchar           **list;
@@ -2048,7 +2048,7 @@ gimp_item_set_visible (GimpItem *item,
 }
 
 gboolean
-gimp_item_get_visible (const GimpItem *item)
+gimp_item_get_visible (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -2056,7 +2056,7 @@ gimp_item_get_visible (const GimpItem *item)
 }
 
 gboolean
-gimp_item_is_visible (const GimpItem *item)
+gimp_item_is_visible (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -2091,7 +2091,7 @@ gimp_item_set_linked (GimpItem *item,
 }
 
 gboolean
-gimp_item_get_linked (const GimpItem *item)
+gimp_item_get_linked (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -2129,7 +2129,7 @@ gimp_item_set_lock_content (GimpItem *item,
 }
 
 gboolean
-gimp_item_get_lock_content (const GimpItem *item)
+gimp_item_get_lock_content (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -2137,7 +2137,7 @@ gimp_item_get_lock_content (const GimpItem *item)
 }
 
 gboolean
-gimp_item_can_lock_content (const GimpItem *item)
+gimp_item_can_lock_content (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -2145,7 +2145,7 @@ gimp_item_can_lock_content (const GimpItem *item)
 }
 
 gboolean
-gimp_item_is_content_locked (const GimpItem *item)
+gimp_item_is_content_locked (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -2180,7 +2180,7 @@ gimp_item_set_lock_position (GimpItem *item,
 }
 
 gboolean
-gimp_item_get_lock_position (const GimpItem *item)
+gimp_item_get_lock_position (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -2188,7 +2188,7 @@ gimp_item_get_lock_position (const GimpItem *item)
 }
 
 gboolean
-gimp_item_can_lock_position (const GimpItem *item)
+gimp_item_can_lock_position (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
@@ -2199,7 +2199,7 @@ gimp_item_can_lock_position (const GimpItem *item)
 }
 
 gboolean
-gimp_item_is_position_locked (const GimpItem *item)
+gimp_item_is_position_locked (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 

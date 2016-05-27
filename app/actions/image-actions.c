@@ -76,6 +76,12 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_new_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
+  { "image-duplicate", GIMP_STOCK_DUPLICATE,
+    NC_("image-action", "_Duplicate"), "<primary>D",
+    NC_("image-action", "Create a duplicate of this image"),
+    G_CALLBACK (image_duplicate_cmd_callback),
+    GIMP_HELP_IMAGE_DUPLICATE },
+
   { "image-color-profile-assign", NULL,
     NC_("image-action", "_Assign Color Profile..."), NULL,
     NC_("image-action", "Set a color profile on the image"),
@@ -93,6 +99,12 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "Remove the image's color profile"),
     G_CALLBACK (image_color_profile_discard_cmd_callback),
     GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD },
+
+  { "image-color-profile-save", NULL,
+    NC_("image-action", "_Save Color Profile to File..."), NULL,
+    NC_("image-action", "Save the image's color profile to an ICC file"),
+    G_CALLBACK (image_color_profile_save_cmd_callback),
+    GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE },
 
   { "image-resize", GIMP_STOCK_RESIZE,
     NC_("image-action", "Can_vas Size..."), NULL,
@@ -136,12 +148,6 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_crop_to_content_cmd_callback),
     GIMP_HELP_IMAGE_CROP },
 
-  { "image-duplicate", GIMP_STOCK_DUPLICATE,
-    NC_("image-action", "_Duplicate"), "<primary>D",
-    NC_("image-action", "Create a duplicate of this image"),
-    G_CALLBACK (image_duplicate_cmd_callback),
-    GIMP_HELP_IMAGE_DUPLICATE },
-
   { "image-merge-layers", NULL,
     NC_("image-action", "Merge Visible _Layers..."), "<primary>M",
     NC_("image-action", "Merge all visible layers into one layer"),
@@ -165,6 +171,18 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "Display information about this image"),
     G_CALLBACK (image_properties_cmd_callback),
     GIMP_HELP_IMAGE_PROPERTIES }
+};
+
+static const GimpToggleActionEntry image_toggle_actions[] =
+{
+  { "image-color-management-enabled", NULL,
+    NC_("image-action", "_Enable Color Management"), NULL,
+    NC_("image-action", "Whether the image is color managed. Disabling "
+        "color management is equivalent to assigning a built-in sRGB "
+        "color profile. Better leave color management enabled."),
+    G_CALLBACK (image_color_management_enabled_cmd_callback),
+    TRUE,
+    GIMP_HELP_IMAGE_COLOR_MANAGEMENT_ENABLED }
 };
 
 static const GimpRadioActionEntry image_convert_base_type_actions[] =
@@ -283,6 +301,10 @@ image_actions_setup (GimpActionGroup *group)
                                  image_actions,
                                  G_N_ELEMENTS (image_actions));
 
+  gimp_action_group_add_toggle_actions (group, "image-action",
+                                        image_toggle_actions,
+                                        G_N_ELEMENTS (image_toggle_actions));
+
   gimp_action_group_add_radio_actions (group, "image-convert-action",
                                        image_convert_base_type_actions,
                                        G_N_ELEMENTS (image_convert_base_type_actions),
@@ -325,14 +347,15 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image       = action_data_get_image (data);
-  gboolean   is_indexed  = FALSE;
-  gboolean   is_u8_gamma = FALSE;
-  gboolean   aux         = FALSE;
-  gboolean   lp          = FALSE;
-  gboolean   sel         = FALSE;
-  gboolean   groups      = FALSE;
-  gboolean   profile     = FALSE;
+  GimpImage *image         = action_data_get_image (data);
+  gboolean   is_indexed    = FALSE;
+  gboolean   is_u8_gamma   = FALSE;
+  gboolean   aux           = FALSE;
+  gboolean   lp            = FALSE;
+  gboolean   sel           = FALSE;
+  gboolean   groups        = FALSE;
+  gboolean   color_managed = FALSE;
+  gboolean   profile       = FALSE;
 
   if (image)
     {
@@ -387,13 +410,18 @@ image_actions_update (GimpActionGroup *group,
 
       groups = ! gimp_item_stack_is_flat (GIMP_ITEM_STACK (layers));
 
-      profile = (gimp_image_get_color_profile (image) != NULL);
+      color_managed = gimp_image_get_is_color_managed (image);
+      profile       = (gimp_image_get_color_profile (image) != NULL);
     }
 
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
+
+  SET_SENSITIVE ("image-duplicate", image);
 
   if (profile)
     {
@@ -424,9 +452,13 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-gamma",  image);
   SET_SENSITIVE ("image-convert-linear", image && !is_indexed);
 
+  SET_SENSITIVE ("image-color-management-enabled", image);
+  SET_ACTIVE    ("image-color-management-enabled", image && color_managed);
+
   SET_SENSITIVE ("image-color-profile-assign",  image);
   SET_SENSITIVE ("image-color-profile-convert", image);
   SET_SENSITIVE ("image-color-profile-discard", image && profile);
+  SET_SENSITIVE ("image-color-profile-save",    image);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);
@@ -441,7 +473,6 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-scale",               image);
   SET_SENSITIVE ("image-crop-to-selection",   image && sel);
   SET_SENSITIVE ("image-crop-to-content",     image);
-  SET_SENSITIVE ("image-duplicate",           image);
   SET_SENSITIVE ("image-merge-layers",        image && !aux && lp);
   SET_SENSITIVE ("image-flatten",             image && !aux && lp);
   SET_SENSITIVE ("image-configure-grid",      image);
@@ -449,4 +480,5 @@ image_actions_update (GimpActionGroup *group,
 
 #undef SET_LABEL
 #undef SET_SENSITIVE
+#undef SET_ACTIVE
 }

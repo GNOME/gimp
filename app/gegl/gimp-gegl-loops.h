@@ -98,15 +98,5 @@ void   gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                         gboolean                  bpc,
                                         GimpProgress             *progress);
 
-void   gimp_gegl_convert_color_transform
-                                       (GeglBuffer               *src_buffer,
-                                        const GeglRectangle      *src_rect,
-                                        const Babl               *src_format,
-                                        GeglBuffer               *dest_buffer,
-                                        const GeglRectangle      *dest_rect,
-                                        const Babl               *dest_format,
-                                        GimpColorTransform        transform,
-                                        GimpProgress             *progress);
-
 
 #endif /* __GIMP_GEGL_LOOPS_H__ */

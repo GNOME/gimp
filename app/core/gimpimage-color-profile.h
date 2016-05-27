@@ -25,6 +25,11 @@
 #define GIMP_ICC_PROFILE_PARASITE_NAME "icc-profile"
 
 
+gboolean             gimp_image_get_is_color_managed   (GimpImage           *image);
+void                 gimp_image_set_is_color_managed   (GimpImage           *image,
+                                                        gboolean             is_color_managed,
+                                                        gboolean             push_undo);
+
 gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,
                                                         const GimpParasite  *icc_parasite,
                                                         gboolean            *is_builtin,
@@ -75,29 +80,26 @@ void                 gimp_image_import_color_profile   (GimpImage           *ima
                                                         GimpProgress        *progress,
                                                         gboolean             interactive);
 
-GimpColorTransform   gimp_image_get_color_transform_to_srgb_u8
-                                                       (GimpImage           *image,
-                                                        const Babl         **pixel_format,
-                                                        const Babl         **srgb_u8_format);
-GimpColorTransform   gimp_image_get_color_transform_from_srgb_u8
-                                                       (GimpImage           *image,
-                                                        const Babl         **pixel_format,
-                                                        const Babl         **srgb_u8_format);
+GimpColorTransform * gimp_image_get_color_transform_to_srgb_u8
+                                                       (GimpImage           *image);
+GimpColorTransform * gimp_image_get_color_transform_from_srgb_u8
+                                                       (GimpImage           *image);
 
-GimpColorTransform   gimp_image_get_color_transform_to_srgb_double
-                                                       (GimpImage           *image,
-                                                        const Babl         **pixel_format,
-                                                        const Babl         **srgb_double_format);
-GimpColorTransform   gimp_image_get_color_transform_from_srgb_double
-                                                       (GimpImage           *image,
-                                                        const Babl         **pixel_format,
-                                                        const Babl         **srgb_double_format);
+GimpColorTransform * gimp_image_get_color_transform_to_srgb_double
+                                                       (GimpImage           *image);
+GimpColorTransform * gimp_image_get_color_transform_from_srgb_double
+                                                       (GimpImage           *image);
 
 void                 gimp_image_color_profile_pixel_to_srgb
                                                        (GimpImage           *image,
                                                         const Babl          *pixel_format,
                                                         gpointer             pixel,
                                                         GimpRGB             *color);
+void                 gimp_image_color_profile_srgb_to_pixel
+                                                       (GimpImage           *image,
+                                                        const GimpRGB       *color,
+                                                        const Babl          *pixel_format,
+                                                        gpointer             pixel);
 
 
 /*  internal API, to be called only from gimpimage.c  */

@@ -292,7 +292,7 @@ gimp_parasite_list_new (void)
 }
 
 GimpParasiteList *
-gimp_parasite_list_copy (const GimpParasiteList *list)
+gimp_parasite_list_copy (GimpParasiteList *list)
 {
   GimpParasiteList *newlist;
 

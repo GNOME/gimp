@@ -55,6 +55,22 @@
 #define TYPE_GRAYA_DBL      (FLOAT_SH(1)|COLORSPACE_SH(PT_GRAY)|EXTRA_SH(1)|CHANNELS_SH(1)|BYTES_SH(0))
 #endif
 
+#ifndef TYPE_CMYKA_DBL
+#define TYPE_CMYKA_DBL      (FLOAT_SH(1)|COLORSPACE_SH(PT_CMYK)|EXTRA_SH(1)|CHANNELS_SH(4)|BYTES_SH(0))
+#endif
+
+#ifndef TYPE_CMYKA_HALF_FLT
+#define TYPE_CMYKA_HALF_FLT (FLOAT_SH(1)|COLORSPACE_SH(PT_CMYK)|EXTRA_SH(1)|CHANNELS_SH(4)|BYTES_SH(2))
+#endif
+
+#ifndef TYPE_CMYKA_FLT
+#define TYPE_CMYKA_FLT      (FLOAT_SH(1)|COLORSPACE_SH(PT_CMYK)|EXTRA_SH(1)|CHANNELS_SH(4)|BYTES_SH(4))
+#endif
+
+#ifndef TYPE_CMYKA_16
+#define TYPE_CMYKA_16       (COLORSPACE_SH(PT_CMYK)|EXTRA_SH(1)|CHANNELS_SH(4)|BYTES_SH(2))
+#endif
+
 
 /**
  * SECTION: gimpcolorprofile
@@ -184,9 +200,10 @@ gimp_color_profile_new_from_file (GFile   *file,
 
   if (path)
     {
-      GMappedFile  *mapped;
+      GMappedFile *mapped;
 
       mapped = g_mapped_file_new (path, FALSE, error);
+      g_free (path);
 
       if (! mapped)
         return NULL;
@@ -358,6 +375,37 @@ gimp_color_profile_new_from_lcms_profile (gpointer   lcms_profile,
 }
 
 /**
+ * gimp_color_profile_save_to_file:
+ * profile: a #GimpColorProfile
+ * @file:   a #GFile
+ * @error:  return location for #GError
+ *
+ * This function saves @profile to @file as ICC profile.
+ *
+ * Return value: %TRUE on success, %FALSE if an error occured.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_profile_save_to_file (GimpColorProfile  *profile,
+                                 GFile             *file,
+                                 GError           **error)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  return g_file_replace_contents (file,
+                                  (const gchar *) profile->priv->data,
+                                  profile->priv->length,
+                                  NULL, FALSE,
+                                  G_FILE_CREATE_NONE,
+                                  NULL,
+                                  NULL,
+                                  error);
+}
+
+/**
  * gimp_color_profile_get_icc_profile:
  * @profile: a #GimpColorProfile
  * @length:  return location for the number of bytes
@@ -521,7 +569,7 @@ gimp_color_profile_get_copyright (GimpColorProfile *profile)
  * string that can be used to label the profile in a user interface.
  *
  * Unlike gimp_color_profile_get_description(), this function always
- * returns a string (as a fallback, it returns "(unnamed profile)".
+ * returns a string (as a fallback, it returns "(unnamed profile)").
  *
  * Return value: the @profile's label. The returned value belongs to
  *               @profile and must not be modified or freed.
@@ -1436,8 +1484,10 @@ gimp_color_profile_get_format (const Babl *format,
   const Babl *type;
   const Babl *model;
   gboolean    has_alpha;
-  gboolean    gray;
-  gboolean    linear;
+  gboolean    rgb    = FALSE;
+  gboolean    gray   = FALSE;
+  gboolean    cmyk   = FALSE;
+  gboolean    linear = FALSE;
 
   g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (lcms_format != NULL, NULL);
@@ -1448,9 +1498,13 @@ gimp_color_profile_get_format (const Babl *format,
 
   if (format == babl_format ("cairo-RGB24"))
     {
-      *lcms_format = TYPE_RGB_8;
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+      *lcms_format = TYPE_BGRA_8;
+#else
+      *lcms_format = TYPE_ARGB_8;
+#endif
 
-      return babl_format ("R'G'B' u8");
+      return format;
     }
   else if (format == babl_format ("cairo-ARGB32"))
     {
@@ -1461,14 +1515,13 @@ gimp_color_profile_get_format (const Babl *format,
   else if (model == babl_model ("RGB") ||
            model == babl_model ("RGBA"))
     {
-      gray   = FALSE;
+      rgb    = TRUE;
       linear = TRUE;
     }
   else if (model == babl_model ("R'G'B'") ||
            model == babl_model ("R'G'B'A"))
     {
-      gray   = FALSE;
-      linear = FALSE;
+      rgb = TRUE;
     }
   else if (model == babl_model ("Y") ||
            model == babl_model ("YA"))
@@ -1479,8 +1532,12 @@ gimp_color_profile_get_format (const Babl *format,
   else if (model == babl_model ("Y'") ||
            model == babl_model ("Y'A"))
     {
-      gray   = TRUE;
-      linear = FALSE;
+      gray = TRUE;
+    }
+  else if (model == babl_model ("CMYK") ||
+           model == babl_model ("CMYKA"))
+    {
+      cmyk = TRUE;
     }
   else if (babl_format_is_palette (format))
     {
@@ -1516,17 +1573,21 @@ gimp_color_profile_get_format (const Babl *format,
     {
       if (has_alpha)
         {
-          if (gray)
-            *lcms_format = TYPE_GRAYA_8;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGBA_8;
+          else if (gray)
+            *lcms_format = TYPE_GRAYA_8;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYKA_8;
         }
       else
         {
-          if (gray)
-            *lcms_format = TYPE_GRAY_8;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGB_8;
+          else if (gray)
+            *lcms_format = TYPE_GRAY_8;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYK_8;
         }
 
       output_format = format;
@@ -1535,17 +1596,21 @@ gimp_color_profile_get_format (const Babl *format,
     {
       if (has_alpha)
         {
-          if (gray)
-            *lcms_format = TYPE_GRAYA_16;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGBA_16;
+          else if (gray)
+            *lcms_format = TYPE_GRAYA_16;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYKA_16;
         }
       else
         {
-          if (gray)
-            *lcms_format = TYPE_GRAY_16;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGB_16;
+          else if (gray)
+            *lcms_format = TYPE_GRAY_16;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYK_16;
         }
 
       output_format = format;
@@ -1554,17 +1619,21 @@ gimp_color_profile_get_format (const Babl *format,
     {
       if (has_alpha)
         {
-          if (gray)
-            *lcms_format = TYPE_GRAYA_HALF_FLT;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGBA_HALF_FLT;
+          else if (gray)
+            *lcms_format = TYPE_GRAYA_HALF_FLT;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYKA_HALF_FLT;
         }
       else
         {
-          if (gray)
-            *lcms_format = TYPE_GRAY_HALF_FLT;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGB_HALF_FLT;
+          else if (gray)
+            *lcms_format = TYPE_GRAY_HALF_FLT;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYK_HALF_FLT;
         }
 
       output_format = format;
@@ -1573,17 +1642,21 @@ gimp_color_profile_get_format (const Babl *format,
     {
       if (has_alpha)
         {
-          if (gray)
-            *lcms_format = TYPE_GRAYA_FLT;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGBA_FLT;
+          else if (gray)
+            *lcms_format = TYPE_GRAYA_FLT;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYKA_FLT;
         }
       else
         {
-          if (gray)
-            *lcms_format = TYPE_GRAY_FLT;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGB_FLT;
+          else if (gray)
+            *lcms_format = TYPE_GRAY_FLT;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYK_FLT;
         }
 
       output_format = format;
@@ -1592,17 +1665,21 @@ gimp_color_profile_get_format (const Babl *format,
     {
       if (has_alpha)
         {
-          if (gray)
-            *lcms_format = TYPE_GRAYA_DBL;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGBA_DBL;
+          else if (gray)
+            *lcms_format = TYPE_GRAYA_DBL;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYKA_DBL;
         }
       else
         {
-          if (gray)
-            *lcms_format = TYPE_GRAY_DBL;
-          else
+          if (rgb)
             *lcms_format = TYPE_RGB_DBL;
+          else if (gray)
+            *lcms_format = TYPE_GRAY_DBL;
+          else if (cmyk)
+            *lcms_format = TYPE_CMYK_DBL;
         }
 
       output_format = format;

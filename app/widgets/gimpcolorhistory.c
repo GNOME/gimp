@@ -27,6 +27,9 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimp-palettes.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
@@ -183,6 +186,8 @@ gimp_color_history_set_property (GObject      *object,
               history->color_areas[i] = gimp_color_area_new (&black,
                                                              GIMP_COLOR_AREA_SMALL_CHECKS,
                                                              GDK_BUTTON2_MASK);
+              gimp_color_area_set_color_config (GIMP_COLOR_AREA (history->color_areas[i]),
+                                                history->context->gimp->config->color_management);
               gtk_container_add (GTK_CONTAINER (button), history->color_areas[i]);
               gtk_widget_show (history->color_areas[i]);
 

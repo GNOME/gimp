@@ -30,6 +30,7 @@
 #define GIMP_IMAGE_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_UNDO, GimpImageUndoClass))
 
 
+typedef struct _GimpImageUndo      GimpImageUndo;
 typedef struct _GimpImageUndoClass GimpImageUndoClass;
 
 struct _GimpImageUndo
@@ -50,6 +51,8 @@ struct _GimpImageUndo
   GimpGrid          *grid;
   gint               num_colors;
   guchar            *colormap;
+  gboolean           is_color_managed;
+  GimpMetadata      *metadata;
   GimpAttributes    *attributes;
   gchar             *parasite_name;
   GimpParasite      *parasite;

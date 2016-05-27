@@ -63,6 +63,7 @@ static GeglBuffer * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                   GeglBuffer        *orig_buffer,
                                                   gint               orig_offset_x,
                                                   gint               orig_offset_y,
+                                                  GimpColorProfile **buffer_profile,
                                                   gint              *new_offset_x,
                                                   gint              *new_offset_y);
 
@@ -203,6 +204,7 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           GeglBuffer        *orig_buffer,
                           gint               orig_offset_x,
                           gint               orig_offset_y,
+                          GimpColorProfile **buffer_profile,
                           gint              *new_offset_x,
                           gint              *new_offset_y)
 {
@@ -240,6 +242,7 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                                                  orig_offset_y,
                                                  options->flip_type, axis,
                                                  FALSE,
+                                                 buffer_profile,
                                                  new_offset_x,
                                                  new_offset_y);
     }

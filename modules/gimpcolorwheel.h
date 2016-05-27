@@ -70,25 +70,28 @@ struct _GimpColorWheelClass
 };
 
 
-void        color_wheel_register_type          (GTypeModule *module);
+void        color_wheel_register_type          (GTypeModule     *module);
 
 GType       gimp_color_wheel_get_type          (void) G_GNUC_CONST;
 GtkWidget * gimp_color_wheel_new               (void);
 
-void        gimp_color_wheel_set_color         (GimpColorWheel *wheel,
-                                                double          h,
-                                                double          s,
-                                                double          v);
-void        gimp_color_wheel_get_color         (GimpColorWheel *wheel,
-                                                gdouble        *h,
-                                                gdouble        *s,
-                                                gdouble        *v);
+void        gimp_color_wheel_set_color         (GimpColorWheel  *wheel,
+                                                double           h,
+                                                double           s,
+                                                double           v);
+void        gimp_color_wheel_get_color         (GimpColorWheel  *wheel,
+                                                gdouble         *h,
+                                                gdouble         *s,
+                                                gdouble         *v);
 
-void        gimp_color_wheel_set_ring_fraction (GimpColorWheel *wheel,
-                                                gdouble         fraction);
-gdouble     gimp_color_wheel_get_ring_fraction (GimpColorWheel *wheel);
+void        gimp_color_wheel_set_ring_fraction (GimpColorWheel  *wheel,
+                                                gdouble          fraction);
+gdouble     gimp_color_wheel_get_ring_fraction (GimpColorWheel  *wheel);
 
-gboolean    gimp_color_wheel_is_adjusting      (GimpColorWheel *wheel);
+void        gimp_color_wheel_set_color_config  (GimpColorWheel  *wheel,
+                                                GimpColorConfig *config);
+
+gboolean    gimp_color_wheel_is_adjusting      (GimpColorWheel  *wheel);
 
 G_END_DECLS
 

@@ -46,6 +46,8 @@ libappoperations_generic_a_sources = \
 	gimpoperationcagecoefcalc.h		\
 	gimpoperationcagetransform.c		\
 	gimpoperationcagetransform.h		\
+	gimpoperationcomposecrop.c		\
+	gimpoperationcomposecrop.h		\
 	gimpoperationequalize.c			\
 	gimpoperationequalize.h			\
 	gimpoperationflood.c			\
@@ -56,6 +58,8 @@ libappoperations_generic_a_sources = \
 	gimpoperationhistogramsink.h		\
 	gimpoperationmaskcomponents.c		\
 	gimpoperationmaskcomponents.h		\
+	gimpoperationprofiletransform.c		\
+	gimpoperationprofiletransform.h		\
 	gimpoperationscalarmultiply.c		\
 	gimpoperationscalarmultiply.h		\
 	gimpoperationsemiflatten.c		\

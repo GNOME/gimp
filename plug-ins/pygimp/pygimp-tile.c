@@ -20,6 +20,8 @@
 #  include <config.h>
 #endif
 
+#define GIMP_DISABLE_DEPRECATION_WARNINGS
+
 #include "pygimp.h"
 
 #define NO_IMPORT_PYGIMPCOLOR

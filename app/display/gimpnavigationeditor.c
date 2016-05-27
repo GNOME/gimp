@@ -365,6 +365,8 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
                                    view->renderer->border_width);
       gimp_view_renderer_set_context (view->renderer,
                                       gimp_get_user_context (gimp));
+      gimp_view_renderer_set_color_config (view->renderer,
+                                           gimp_display_shell_get_color_config (shell));
 
       gimp_navigation_editor_set_shell (editor, shell);
 

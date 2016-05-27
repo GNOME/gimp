@@ -31,7 +31,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-floating-selection.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"

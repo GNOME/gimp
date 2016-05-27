@@ -50,7 +50,7 @@ static GimpDirtyMask gimp_image_undo_dirty_from_type (GimpUndoType   undo_type);
 /*  public functions  */
 
 gboolean
-gimp_image_undo_is_enabled (const GimpImage *image)
+gimp_image_undo_is_enabled (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
@@ -217,7 +217,7 @@ gimp_image_strong_redo (GimpImage *image)
 }
 
 GimpUndoStack *
-gimp_image_get_undo_stack (const GimpImage *image)
+gimp_image_get_undo_stack (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -225,7 +225,7 @@ gimp_image_get_undo_stack (const GimpImage *image)
 }
 
 GimpUndoStack *
-gimp_image_get_redo_stack (const GimpImage *image)
+gimp_image_get_redo_stack (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -264,7 +264,7 @@ gimp_image_undo_free (GimpImage *image)
 }
 
 gint
-gimp_image_get_undo_group_count (const GimpImage *image)
+gimp_image_get_undo_group_count (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 

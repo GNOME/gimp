@@ -90,11 +90,12 @@ gimp_image_new_from_template (Gimp         *gimp,
                               GimpTemplate *template,
                               GimpContext  *context)
 {
-  GimpImage   *image;
-  GimpLayer   *layer;
-  gint         width, height;
-  gboolean     has_alpha;
-  const gchar *comment;
+  GimpImage         *image;
+  GimpLayer         *layer;
+  GimpColorProfile  *profile;
+  gint               width, height;
+  gboolean           has_alpha;
+  const gchar       *comment;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
@@ -127,6 +128,14 @@ gimp_image_new_from_template (Gimp         *gimp,
                              gimp_template_get_resolution_x (template),
                              gimp_template_get_resolution_y (template));
   gimp_image_set_unit (image, gimp_template_get_resolution_unit (template));
+
+  gimp_image_set_is_color_managed (image,
+                                   gimp_template_get_color_managed (template),
+                                   FALSE);
+  profile = gimp_template_get_color_profile (template);
+  gimp_image_set_color_profile (image, profile, NULL);
+  if (profile)
+    g_object_unref (profile);
 
   width  = gimp_image_get_width (image);
   height = gimp_image_get_height (image);
@@ -165,6 +174,7 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   GimpImageBaseType  type;
   gdouble            xres;
   gdouble            yres;
+  GimpColorProfile  *profile;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -192,17 +202,16 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   gimp_image_set_resolution (new_image, xres, yres);
   gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
-  if (GIMP_IS_LAYER (drawable))
-    {
-      GimpColorProfile *profile = gimp_image_get_color_profile (image);
-      gimp_image_set_color_profile (new_image, profile, NULL);
+  gimp_image_set_is_color_managed (new_image,
+                                   gimp_image_get_is_color_managed (image),
+                                   FALSE);
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+  gimp_image_set_color_profile (new_image, profile, NULL);
 
-      new_type = G_TYPE_FROM_INSTANCE (drawable);
-    }
+  if (GIMP_IS_LAYER (drawable))
+    new_type = G_TYPE_FROM_INSTANCE (drawable);
   else
-    {
-      new_type = GIMP_TYPE_LAYER;
-    }
+    new_type = GIMP_TYPE_LAYER;
 
   new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (drawable),
                                              new_image, new_type));
@@ -289,7 +298,6 @@ gimp_image_new_from_buffer (Gimp       *gimp,
   format    = gimp_buffer_get_format (paste);
   has_alpha = babl_format_has_alpha (format);
 
-  /*  create a new image  (always of type GIMP_RGB)  */
   image = gimp_create_image (gimp,
                              gimp_buffer_get_width  (paste),
                              gimp_buffer_get_height (paste),
@@ -309,8 +317,7 @@ gimp_image_new_from_buffer (Gimp       *gimp,
     }
 
   profile = gimp_buffer_get_color_profile (paste);
-  if (profile)
-    gimp_image_set_color_profile (image, profile, NULL);
+  gimp_image_set_color_profile (image, profile, NULL);
 
   layer = gimp_layer_new_from_buffer (paste, image,
                                       gimp_image_get_layer_format (image,

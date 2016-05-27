@@ -154,6 +154,7 @@ struct _GimpTransformToolClass
                                      GeglBuffer        *orig_buffer,
                                      gint               orig_offset_x,
                                      gint               orig_offset_y,
+                                     GimpColorProfile **buffer_profile,
                                      gint              *new_offset_x,
                                      gint              *new_offset_y);
 };

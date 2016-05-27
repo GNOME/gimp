@@ -944,20 +944,20 @@ static void
 create_selection_tab (GtkWidget *notebook,
                       gint32     image_ID)
 {
-  GtkSizeGroup *group;
-  GtkWidget    *vbox;
-  GtkWidget    *vbox2;
-  GtkWidget    *hbox;
-  GtkWidget    *table;
-  GtkWidget    *label;
-  GtkWidget    *frame;
-  GtkWidget    *toggle;
-  GtkWidget    *spinbutton;
-  GtkObject    *adj;
-  GtkWidget    *button;
-  GtkWidget    *font_button;
-  gint32       *image_id_list;
-  gint          nimages, j;
+  GtkSizeGroup  *group;
+  GtkWidget     *vbox;
+  GtkWidget     *vbox2;
+  GtkWidget     *hbox;
+  GtkWidget     *table;
+  GtkWidget     *label;
+  GtkWidget     *frame;
+  GtkWidget     *toggle;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  GtkWidget     *button;
+  GtkWidget     *font_button;
+  gint32        *image_id_list;
+  gint           nimages, j;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -996,8 +996,11 @@ create_selection_tab (GtkWidget *notebook,
   gtk_widget_show (table);
 
   /* Film height */
-  spinbutton = gimp_spin_button_new (&adj, filmvals.film_height, 10,
-                                     GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (filmvals.film_height, 10,
+                                            GIMP_MAX_IMAGE_SIZE, 1, 10, 0));
+  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                      _("_Height:"), 0.0, 0.5,
                                      spinbutton, 1, TRUE);
@@ -1049,8 +1052,11 @@ create_selection_tab (GtkWidget *notebook,
   gtk_widget_show (table);
 
   /* Startindex */
-  spinbutton = gimp_spin_button_new (&adj, filmvals.number_start, 0,
-                                     GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (filmvals.number_start, 0,
+                                            GIMP_MAX_IMAGE_SIZE, 1, 10, 0));
+  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                      _("Start _index:"), 0.0, 0.5,
                                      spinbutton, 1, TRUE);

@@ -14,7 +14,7 @@
    viewBox="0 0 16 16"
    id="svg30571"
    version="1.1"
-   inkscape:version="0.91+devel r"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="gimp-cursor.svg">
   <defs
      id="defs30573" />
@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="13.403878"
-     inkscape:cx="7.2636935"
+     inkscape:cx="-12.954336"
      inkscape:cy="7.5489056"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -65,7 +65,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -80,7 +80,7 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <g
-       id="g4241">
+       id="g4139">
       <rect
          y="1036.3622"
          x="0"
@@ -92,8 +92,8 @@
          sodipodi:nodetypes="ccccccccccc"
          inkscape:connector-curvature="0"
          id="path8245"
-         d="m 3.7578515,1039.2013 v 8.9609 h 0.8505642 l 1.7011685,-2.8633 3.1638281,5.3054 h 2.5517327 l -4.0144124,-6.1765 H 11.8 v -0.871 l -8.0421485,-5.2262 z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.51570296;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         d="m 3.2819958,1038.81 0,9.6423 0.9454183,0 1.8908807,-3.0809 3.5166543,5.7087 2.8362999,0 -4.4620955,-6.6461 4.2118425,0 0,-0.9373 -8.9390002,-5.6236 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.56399179;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
   </g>
 </svg>

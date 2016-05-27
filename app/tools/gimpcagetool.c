@@ -39,8 +39,8 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-shadow.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 #include "core/gimplayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
@@ -133,11 +133,11 @@ static gint       gimp_cage_tool_is_on_edge         (GimpCageTool          *ct,
 static gboolean   gimp_cage_tool_is_complete        (GimpCageTool          *ct);
 static void       gimp_cage_tool_remove_last_handle (GimpCageTool          *ct);
 static void       gimp_cage_tool_compute_coef       (GimpCageTool          *ct);
-static void       gimp_cage_tool_create_image_map   (GimpCageTool          *ct,
+static void       gimp_cage_tool_create_filter      (GimpCageTool          *ct,
                                                      GimpDrawable          *drawable);
-static void       gimp_cage_tool_image_map_flush    (GimpImageMap          *image_map,
+static void       gimp_cage_tool_filter_flush       (GimpDrawableFilter    *filter,
                                                      GimpTool              *tool);
-static void       gimp_cage_tool_image_map_update   (GimpCageTool          *ct);
+static void       gimp_cage_tool_filter_update      (GimpCageTool          *ct);
 
 static void       gimp_cage_tool_create_render_node (GimpCageTool          *ct);
 static void       gimp_cage_tool_render_node_update (GimpCageTool          *ct);
@@ -254,11 +254,11 @@ gimp_cage_tool_start (GimpCageTool *ct,
       ct->coef = NULL;
     }
 
-  if (ct->image_map)
+  if (ct->filter)
     {
-      gimp_image_map_abort (ct->image_map);
-      g_object_unref (ct->image_map);
-      ct->image_map = NULL;
+      gimp_drawable_filter_abort (ct->filter);
+      g_object_unref (ct->filter);
+      ct->filter = NULL;
     }
 
   if (ct->render_node)
@@ -328,15 +328,15 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
                   gimp_cage_tool_render_node_update (ct);
                 }
 
-              if (! ct->image_map)
+              if (! ct->filter)
                 {
                   GimpImage    *image    = gimp_display_get_image (tool->display);
                   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-                  gimp_cage_tool_create_image_map (ct, drawable);
+                  gimp_cage_tool_create_filter (ct, drawable);
                 }
 
-              gimp_cage_tool_image_map_update (ct);
+              gimp_cage_tool_filter_update (ct);
             }
           else
             {
@@ -348,9 +348,9 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
       else
         {
           /* switch to edit mode */
-          if (ct->image_map)
+          if (ct->filter)
             {
-              gimp_image_map_abort (ct->image_map);
+              gimp_drawable_filter_abort (ct->filter);
 
               gimp_tool_pop_status (tool, tool->display);
               ct->tool_state = CAGE_STATE_WAIT;
@@ -362,7 +362,7 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
       if (ct->tool_state == DEFORM_STATE_WAIT)
         {
           gimp_cage_tool_render_node_update (ct);
-          gimp_cage_tool_image_map_update (ct);
+          gimp_cage_tool_filter_update (ct);
         }
     }
 
@@ -668,7 +668,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
           break;
 
         case DEFORM_STATE_MOVE_HANDLE:
-          gimp_cage_tool_image_map_update (ct);
+          gimp_cage_tool_filter_update (ct);
           ct->tool_state = DEFORM_STATE_WAIT;
           break;
 
@@ -727,7 +727,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
           ct->tool_state = DEFORM_STATE_WAIT;
           gimp_cage_config_commit_displacement (ct->config);
           gegl_node_set (ct->cage_node, "config", ct->config, NULL);
-          gimp_cage_tool_image_map_update (ct);
+          gimp_cage_tool_filter_update (ct);
           break;
 
         case DEFORM_STATE_SELECTING:
@@ -930,13 +930,13 @@ gimp_cage_tool_halt (GimpCageTool *ct)
       ct->cage_node   = NULL;
     }
 
-  if (ct->image_map)
+  if (ct->filter)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_abort (ct->image_map);
-      g_object_unref (ct->image_map);
-      ct->image_map = NULL;
+      gimp_drawable_filter_abort (ct->filter);
+      g_object_unref (ct->filter);
+      ct->filter = NULL;
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -954,15 +954,15 @@ gimp_cage_tool_halt (GimpCageTool *ct)
 static void
 gimp_cage_tool_commit (GimpCageTool *ct)
 {
-  if (ct->image_map)
+  if (ct->filter)
     {
       GimpTool *tool = GIMP_TOOL (ct);
 
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (ct->image_map, GIMP_PROGRESS (tool), FALSE);
-      g_object_unref (ct->image_map);
-      ct->image_map = NULL;
+      gimp_drawable_filter_commit (ct->filter, GIMP_PROGRESS (tool), FALSE);
+      g_object_unref (ct->filter);
+      ct->filter = NULL;
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -1239,25 +1239,25 @@ gimp_cage_tool_render_node_update (GimpCageTool *ct)
 }
 
 static void
-gimp_cage_tool_create_image_map (GimpCageTool *ct,
-                                 GimpDrawable *drawable)
+gimp_cage_tool_create_filter (GimpCageTool *ct,
+                              GimpDrawable *drawable)
 {
-  if (!ct->render_node)
+  if (! ct->render_node)
     gimp_cage_tool_create_render_node (ct);
 
-  ct->image_map = gimp_image_map_new (drawable,
-                                      _("Cage transform"),
-                                      ct->render_node,
-                                      GIMP_STOCK_TOOL_CAGE);
+  ct->filter = gimp_drawable_filter_new (drawable,
+                                         _("Cage transform"),
+                                         ct->render_node,
+                                         GIMP_STOCK_TOOL_CAGE);
 
-  g_signal_connect (ct->image_map, "flush",
-                    G_CALLBACK (gimp_cage_tool_image_map_flush),
+  g_signal_connect (ct->filter, "flush",
+                    G_CALLBACK (gimp_cage_tool_filter_flush),
                     ct);
 }
 
 static void
-gimp_cage_tool_image_map_flush (GimpImageMap *image_map,
-                                GimpTool     *tool)
+gimp_cage_tool_filter_flush (GimpDrawableFilter *filter,
+                             GimpTool           *tool)
 {
   GimpImage *image = gimp_display_get_image (tool->display);
 
@@ -1265,7 +1265,7 @@ gimp_cage_tool_image_map_flush (GimpImageMap *image_map,
 }
 
 static void
-gimp_cage_tool_image_map_update (GimpCageTool *ct)
+gimp_cage_tool_filter_update (GimpCageTool *ct)
 {
-  gimp_image_map_apply (ct->image_map, NULL);
+  gimp_drawable_filter_apply (ct->filter, NULL);
 }

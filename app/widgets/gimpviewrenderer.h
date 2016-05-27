@@ -33,7 +33,8 @@
 #define GIMP_VIEW_RENDERER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER, GimpViewRendererClass))
 
 
-typedef struct _GimpViewRendererClass  GimpViewRendererClass;
+typedef struct _GimpViewRendererPrivate GimpViewRendererPrivate;
+typedef struct _GimpViewRendererClass   GimpViewRendererClass;
 
 struct _GimpViewRenderer
 {
@@ -56,18 +57,10 @@ struct _GimpViewRenderer
   /*< protected >*/
   cairo_surface_t    *surface;
 
-  /*< private >*/
-  cairo_pattern_t    *pattern;
-  GdkPixbuf          *pixbuf;
-  gchar              *bg_icon_name;
-
-  GimpColorTransform  profile_transform;
-  const Babl         *profile_src_format;
-  const Babl         *profile_dest_format;
-
   gint                size;
-  gboolean            needs_render;
-  guint               idle_id;
+
+  /*< private >*/
+  GimpViewRendererPrivate *priv;
 };
 
 struct _GimpViewRendererClass
@@ -130,6 +123,8 @@ void   gimp_view_renderer_set_border_color (GimpViewRenderer   *renderer,
                                             const GimpRGB      *border_color);
 void   gimp_view_renderer_set_background   (GimpViewRenderer   *renderer,
                                             const gchar        *icon_name);
+void   gimp_view_renderer_set_color_config (GimpViewRenderer   *renderer,
+                                            GimpColorConfig    *color_config);
 
 void   gimp_view_renderer_invalidate       (GimpViewRenderer   *renderer);
 void   gimp_view_renderer_update           (GimpViewRenderer   *renderer);

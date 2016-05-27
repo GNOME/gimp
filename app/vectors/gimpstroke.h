@@ -51,33 +51,33 @@ struct _GimpStrokeClass
   void          (* changed)              (GimpStroke            *stroke);
   void          (* removed)              (GimpStroke            *stroke);
 
-  GimpAnchor  * (* anchor_get)           (const GimpStroke      *stroke,
+  GimpAnchor  * (* anchor_get)           (GimpStroke            *stroke,
                                           const GimpCoords      *coord);
-  gdouble       (* nearest_point_get)    (const GimpStroke      *stroke,
+  gdouble       (* nearest_point_get)    (GimpStroke            *stroke,
                                           const GimpCoords      *coord,
-                                          const gdouble          precision,
+                                          gdouble                precision,
                                           GimpCoords            *ret_point,
                                           GimpAnchor           **ret_segment_start,
                                           GimpAnchor           **ret_segment_end,
                                           gdouble               *ret_pos);
-  gdouble       (* nearest_tangent_get)  (const GimpStroke      *stroke,
+  gdouble       (* nearest_tangent_get)  (GimpStroke            *stroke,
                                           const GimpCoords      *coord1,
                                           const GimpCoords      *coord2,
-                                          const gdouble          precision,
+                                          gdouble                precision,
                                           GimpCoords            *nearest,
                                           GimpAnchor           **ret_segment_start,
                                           GimpAnchor           **ret_segment_end,
                                           gdouble               *ret_pos);
   gdouble       (* nearest_intersection_get)
-                                         (const GimpStroke      *stroke,
+                                         (GimpStroke            *stroke,
                                           const GimpCoords      *coord1,
                                           const GimpCoords      *direction,
-                                          const gdouble          precision,
+                                          gdouble                precision,
                                           GimpCoords            *nearest,
                                           GimpAnchor           **ret_segment_start,
                                           GimpAnchor           **ret_segment_end,
                                           gdouble               *ret_pos);
-  GimpAnchor  * (* anchor_get_next)      (const GimpStroke      *stroke,
+  GimpAnchor  * (* anchor_get_next)      (GimpStroke            *stroke,
                                           const GimpAnchor      *prev);
   void          (* anchor_select)        (GimpStroke            *stroke,
                                           GimpAnchor            *anchor,
@@ -131,24 +131,24 @@ struct _GimpStrokeClass
                                           GimpStroke            *extension,
                                           GimpAnchor            *neighbor);
 
-  gboolean      (* is_empty)             (const GimpStroke      *stroke);
-  gdouble       (* get_length)           (const GimpStroke      *stroke,
-                                          const gdouble          precision);
-  gdouble       (* get_distance)         (const GimpStroke      *stroke,
+  gboolean      (* is_empty)             (GimpStroke            *stroke);
+  gdouble       (* get_length)           (GimpStroke            *stroke,
+                                          gdouble                precision);
+  gdouble       (* get_distance)         (GimpStroke            *stroke,
                                           const GimpCoords      *coord);
-  gboolean      (* get_point_at_dist)    (const GimpStroke      *stroke,
-                                          const gdouble          dist,
-                                          const gdouble          precision,
+  gboolean      (* get_point_at_dist)    (GimpStroke            *stroke,
+                                          gdouble                dist,
+                                          gdouble                precision,
                                           GimpCoords            *position,
                                           gdouble               *slope);
 
-  GArray      * (* interpolate)          (const GimpStroke      *stroke,
-                                          const gdouble          precision,
+  GArray      * (* interpolate)          (GimpStroke            *stroke,
+                                          gdouble                precision,
                                           gboolean              *ret_closed);
 
-  GimpStroke  * (* duplicate)            (const GimpStroke      *stroke);
+  GimpStroke  * (* duplicate)            (GimpStroke            *stroke);
 
-  GimpBezierDesc * (* make_bezier)       (const GimpStroke      *stroke);
+  GimpBezierDesc * (* make_bezier)       (GimpStroke            *stroke);
 
   void          (* translate)            (GimpStroke            *stroke,
                                           gdouble                offset_x,
@@ -171,10 +171,10 @@ struct _GimpStrokeClass
   void          (* transform)            (GimpStroke            *stroke,
                                           const GimpMatrix3     *matrix);
 
-  GList       * (* get_draw_anchors)     (const GimpStroke      *stroke);
-  GList       * (* get_draw_controls)    (const GimpStroke      *stroke);
-  GArray      * (* get_draw_lines)       (const GimpStroke      *stroke);
-  GArray      * (* control_points_get)   (const GimpStroke      *stroke,
+  GList       * (* get_draw_anchors)     (GimpStroke            *stroke);
+  GList       * (* get_draw_controls)    (GimpStroke            *stroke);
+  GArray      * (* get_draw_lines)       (GimpStroke            *stroke);
+  GArray      * (* control_points_get)   (GimpStroke            *stroke,
                                           gboolean              *ret_closed);
 };
 
@@ -183,25 +183,25 @@ GType        gimp_stroke_get_type             (void) G_GNUC_CONST;
 
 void         gimp_stroke_set_ID               (GimpStroke            *stroke,
                                                gint                   id);
-gint         gimp_stroke_get_ID               (const GimpStroke      *stroke);
+gint         gimp_stroke_get_ID               (GimpStroke            *stroke);
 
 
 /* accessing / modifying the anchors */
 
-GArray     * gimp_stroke_control_points_get   (const GimpStroke      *stroke,
+GArray     * gimp_stroke_control_points_get   (GimpStroke            *stroke,
                                                gboolean              *closed);
 
-GimpAnchor * gimp_stroke_anchor_get           (const GimpStroke      *stroke,
+GimpAnchor * gimp_stroke_anchor_get           (GimpStroke            *stroke,
                                                const GimpCoords      *coord);
 
-gdouble      gimp_stroke_nearest_point_get    (const GimpStroke      *stroke,
+gdouble      gimp_stroke_nearest_point_get    (GimpStroke            *stroke,
                                                const GimpCoords      *coord,
-                                               const gdouble          precision,
+                                               gdouble                precision,
                                                GimpCoords            *ret_point,
                                                GimpAnchor           **ret_segment_start,
                                                GimpAnchor           **ret_segment_end,
                                                gdouble               *ret_pos);
-gdouble     gimp_stroke_nearest_tangent_get   (const GimpStroke      *stroke,
+gdouble     gimp_stroke_nearest_tangent_get   (GimpStroke            *stroke,
                                                const GimpCoords      *coords1,
                                                const GimpCoords      *coords2,
                                                gdouble                precision,
@@ -209,7 +209,7 @@ gdouble     gimp_stroke_nearest_tangent_get   (const GimpStroke      *stroke,
                                                GimpAnchor           **ret_segment_start,
                                                GimpAnchor           **ret_segment_end,
                                                gdouble               *ret_pos);
-gdouble  gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
+gdouble  gimp_stroke_nearest_intersection_get (GimpStroke            *stroke,
                                                const GimpCoords      *coords1,
                                                const GimpCoords      *direction,
                                                gdouble                precision,
@@ -220,7 +220,7 @@ gdouble  gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
 
 
 /* prev == NULL: "first" anchor */
-GimpAnchor * gimp_stroke_anchor_get_next      (const GimpStroke      *stroke,
+GimpAnchor * gimp_stroke_anchor_get_next      (GimpStroke            *stroke,
                                                const GimpAnchor      *prev);
 
 void         gimp_stroke_anchor_select        (GimpStroke            *stroke,
@@ -286,30 +286,30 @@ gboolean     gimp_stroke_connect_stroke       (GimpStroke            *stroke,
                                                GimpStroke            *extension,
                                                GimpAnchor            *neighbor);
 
-gboolean     gimp_stroke_is_empty             (const GimpStroke      *stroke);
+gboolean     gimp_stroke_is_empty             (GimpStroke            *stroke);
 
 /* accessing the shape of the curve */
 
-gdouble      gimp_stroke_get_length           (const GimpStroke      *stroke,
-                                               const gdouble          precision);
-gdouble      gimp_stroke_get_distance         (const GimpStroke      *stroke,
+gdouble      gimp_stroke_get_length           (GimpStroke            *stroke,
+                                               gdouble                precision);
+gdouble      gimp_stroke_get_distance         (GimpStroke            *stroke,
                                                const GimpCoords      *coord);
 
-gboolean     gimp_stroke_get_point_at_dist    (const GimpStroke      *stroke,
-                                               const gdouble          dist,
-                                               const gdouble          precision,
+gboolean     gimp_stroke_get_point_at_dist    (GimpStroke            *stroke,
+                                               gdouble                dist,
+                                               gdouble                precision,
                                                GimpCoords            *position,
                                                gdouble               *slope);
 
 /* returns an array of valid coordinates */
-GArray     * gimp_stroke_interpolate          (const GimpStroke      *stroke,
+GArray     * gimp_stroke_interpolate          (GimpStroke            *stroke,
                                                const gdouble          precision,
                                                gboolean              *closed);
 
-GimpStroke * gimp_stroke_duplicate            (const GimpStroke      *stroke);
+GimpStroke * gimp_stroke_duplicate            (GimpStroke            *stroke);
 
 /* creates a bezier approximation. */
-GimpBezierDesc * gimp_stroke_make_bezier      (const GimpStroke      *stroke);
+GimpBezierDesc * gimp_stroke_make_bezier      (GimpStroke            *stroke);
 
 void         gimp_stroke_translate            (GimpStroke            *stroke,
                                                gdouble                offset_x,
@@ -333,9 +333,9 @@ void         gimp_stroke_transform            (GimpStroke            *stroke,
                                                const GimpMatrix3     *matrix);
 
 
-GList      * gimp_stroke_get_draw_anchors     (const GimpStroke      *stroke);
-GList      * gimp_stroke_get_draw_controls    (const GimpStroke      *stroke);
-GArray     * gimp_stroke_get_draw_lines       (const GimpStroke      *stroke);
+GList      * gimp_stroke_get_draw_anchors     (GimpStroke            *stroke);
+GList      * gimp_stroke_get_draw_controls    (GimpStroke            *stroke);
+GArray     * gimp_stroke_get_draw_lines       (GimpStroke            *stroke);
 
 #endif /* __GIMP_STROKE_H__ */
 

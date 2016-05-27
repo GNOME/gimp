@@ -78,7 +78,7 @@ struct _GimpBlendTool
 #endif
   GeglNode           *dist_node;
   GeglBuffer         *dist_buffer;
-  GimpImageMap       *image_map;
+  GimpDrawableFilter *filter;
 };
 
 struct _GimpBlendToolClass

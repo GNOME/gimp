@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 23.999999 24"
+   id="svg7384"
+   height="24"
+   width="24"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-template-24.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview1511"
+     showgrid="true"
+     inkscape:zoom="29.5"
+     inkscape:cx="13.576271"
+     inkscape:cy="12.515268"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="stock"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4146" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-93.351872,122.03851)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(1.5,0,0,1,1395.2846,-225.99014)"
+       gradientUnits="userSpaceOnUse"
+       y2="434.5"
+       x2="-168"
+       y1="434.5"
+       x1="-176"
+       id="linearGradient7033"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="matrix(1.5,0,0,1,1395.2846,-225.99014)"
+       gradientUnits="userSpaceOnUse"
+       y2="432.5"
+       x2="-168"
+       y1="432.5"
+       x1="-176"
+       id="linearGradient7035"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="matrix(1.5,0,0,1.5,1395.2846,-351.72987)"
+       gradientUnits="userSpaceOnUse"
+       y2="428"
+       x2="-172"
+       y1="428"
+       x1="-176"
+       id="linearGradient7037"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(-182.52055,633.23831)"
+       gradientUnits="userSpaceOnUse"
+       y2="308"
+       x2="617.00018"
+       y1="308"
+       x1="602.00018"
+       id="linearGradient7039"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <g
+     transform="translate(-175.42716,-7.48931)"
+     style="display:inline"
+     id="stock">
+    <rect
+       style="fill:none;stroke:none"
+       id="rect22281-6"
+       width="24"
+       height="24"
+       x="175.42715"
+       y="7.4893098" />
+    <g
+       transform="matrix(0,-1.6,1.6666639,0,-325.90531,994.68965)"
+       style="display:inline"
+       id="g1829">
+      <path
+         inkscape:connector-curvature="0"
+         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7039);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:new"
+         d="m 602.0002,301.99998 0,12 10.62501,2e-5 4.37499,-3.6 0,0 0,-8.40001 z m 1,0.6 13.37501,10e-6 0,7.80001 -3.75,0 0,3 -9.62501,0 z"
+         id="path22285-9"
+         sodipodi:nodetypes="cccccccccccccc" />
+    </g>
+    <rect
+       y="13.48931"
+       x="181.42715"
+       height="6"
+       width="6"
+       id="rect7033"
+       style="opacity:0.3;fill:url(#linearGradient7037);fill-opacity:1;stroke:none" />
+    <rect
+       y="23.489309"
+       x="181.42715"
+       height="1"
+       width="12"
+       id="rect7035"
+       style="opacity:0.3;fill:url(#linearGradient7035);fill-opacity:1;stroke:none" />
+    <rect
+       y="25.489309"
+       x="181.42715"
+       height="1"
+       width="12"
+       id="rect7037"
+       style="opacity:0.3;fill:url(#linearGradient7033);fill-opacity:1;stroke:none" />
+  </g>
+</svg>

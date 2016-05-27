@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   id="svg11300"
+   sodipodi:version="0.32"
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="gimp-error-24.svg"
+   version="1.0"
+   viewBox="0 0 24 24">
+  <sodipodi:namedview
+     inkscape:cy="11.425657"
+     inkscape:cx="6.0982944"
+     inkscape:zoom="28.65233"
+     inkscape:window-height="1016"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="0.17254902"
+     bordercolor="#666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:showpageshadow="false"
+     showborder="true"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:current-layer="layer1"
+     width="16px"
+     height="16px"
+     showgrid="true"
+     inkscape:window-maximized="1"
+     inkscape:document-units="px">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4307" />
+  </sodipodi:namedview>
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     stroke="#ef2929"
+     fill="#eeeeec"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="0.25490196"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="-14.198652"
+     inkscape:cy="-5.1663457"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="872"
+     inkscape:window-height="659"
+     inkscape:window-x="403"
+     inkscape:window-y="296"
+     width="32px"
+     height="32px"
+     id="namedview73" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jakub Steiner</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:source>http://jimmac.musichall.cz</dc:source>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/" />
+        <dc:title></dc:title>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Attribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,8)">
+    <g
+       transform="matrix(1.2000022,0,0,1.1996862,-364.80066,-221.54378)"
+       style="display:inline;enable-background:new"
+       id="g4050">
+      <ellipse
+         cy="188.00232"
+         cx="313.99997"
+         id="path10616"
+         style="display:inline;overflow:visible;visibility:visible;fill:#cc0000;fill-opacity:1;fill-rule:nonzero;stroke:#cc0000;stroke-width:0.83374298;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:new"
+         rx="9.5831099"
+         ry="9.5857439" />
+      <rect
+         ry="0.15628983"
+         rx="0.1671004"
+         y="186.75206"
+         x="308.16666"
+         height="2.5006375"
+         width="11.666645"
+         id="rect10618"
+         style="display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.80043352;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:new" />
+      <ellipse
+         cy="188.0023"
+         cx="313.99997"
+         id="path10620"
+         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:0.88009208;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:new"
+         rx="8.7266035"
+         ry="8.7290182" />
+    </g>
+  </g>
+</svg>

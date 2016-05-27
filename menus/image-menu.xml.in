@@ -301,6 +301,29 @@
       <separator />
       <menuitem action="view-navigation-window" />
       <menuitem action="view-display-filters" />
+      <menu action="view-color-management-menu" name="Color Management">
+        <menuitem action="view-color-management-enable" />
+        <menuitem action="view-color-management-softproof" />
+        <separator />
+	<menu action="view-display-intent-menu" name="Display Rendering Intent">
+          <menuitem action="view-display-intent-perceptual" />
+          <menuitem action="view-display-intent-relative-colorimetric" />
+          <menuitem action="view-display-intent-saturation" />
+          <menuitem action="view-display-intent-absolute-colorimetric" />
+	</menu>
+        <menuitem action="view-display-black-point-compensation" />
+        <separator />
+	<menu action="view-softproof-intent-menu" name="Softproof Rendering Intent">
+          <menuitem action="view-softproof-intent-perceptual" />
+          <menuitem action="view-softproof-intent-relative-colorimetric" />
+          <menuitem action="view-softproof-intent-saturation" />
+          <menuitem action="view-softproof-intent-absolute-colorimetric" />
+	</menu>
+        <menuitem action="view-softproof-black-point-compensation" />
+        <menuitem action="view-softproof-gamut-check" />
+        <separator />
+        <menuitem action="view-color-management-reset" />
+      </menu>
       <separator />
       <menuitem action="view-show-selection" />
       <menuitem action="view-show-layer-boundary" />
@@ -352,9 +375,13 @@
         <separator />
       </menu>
       <menu action="image-color-management-menu" name="Color Management">
+        <menuitem action="image-color-management-enabled" />
+        <separator />
         <menuitem action="image-color-profile-assign" />
         <menuitem action="image-color-profile-convert" />
         <menuitem action="image-color-profile-discard" />
+        <separator />
+        <menuitem action="image-color-profile-save" />
      </menu>
       <separator />
       <menu action="image-transform-menu" name="Transform">

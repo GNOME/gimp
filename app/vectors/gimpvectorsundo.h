@@ -30,6 +30,7 @@
 #define GIMP_VECTORS_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTORS_UNDO, GimpVectorsUndoClass))
 
 
+typedef struct _GimpVectorsUndo      GimpVectorsUndo;
 typedef struct _GimpVectorsUndoClass GimpVectorsUndoClass;
 
 struct _GimpVectorsUndo

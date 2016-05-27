@@ -80,6 +80,9 @@ GimpUnit            gimp_template_get_resolution_unit (GimpTemplate *template);
 GimpImageBaseType   gimp_template_get_base_type       (GimpTemplate *template);
 GimpPrecision       gimp_template_get_precision       (GimpTemplate *template);
 
+gboolean            gimp_template_get_color_managed   (GimpTemplate *template);
+GimpColorProfile  * gimp_template_get_color_profile   (GimpTemplate *template);
+
 GimpFillType        gimp_template_get_fill_type       (GimpTemplate *template);
 
 const gchar       * gimp_template_get_comment         (GimpTemplate *template);

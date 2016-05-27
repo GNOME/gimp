@@ -167,14 +167,15 @@ load_image (const gchar  *filename,
   GimpImageType     layer_type;
   gint32            layer;
   const Babl       *format;
-  GeglBuffer       *buffer = NULL;
+  GeglBuffer       *buffer        = NULL;
   gint              bpp;
   gint              tile_height;
-  gchar            *pixels = NULL;
+  gchar            *pixels        = NULL;
   gint              begin;
-  gint32            success = FALSE;
+  gint32            success       = FALSE;
   gchar            *comment;
-  GimpMetadata     *metadata;
+  GimpMetadata     *metadata      = NULL;
+  GimpAttributes   *attributes    = NULL;
   gboolean          have_metadata = FALSE;
   guchar           *exif_data;
   guint             exif_size;
@@ -329,7 +330,11 @@ load_image (const gchar  *filename,
       g_free (comment);
     }
 
-  metadata = gimp_image_get_metadata (image);
+  attributes = gimp_image_get_attributes (image);
+  if (!attributes)
+    attributes = gimp_attributes_new ();
+
+  gimp_attributes_to_metadata (attributes, metadata, "image/x-exr");
 
   if (metadata)
     g_object_ref (metadata);
@@ -367,7 +372,11 @@ load_image (const gchar  *filename,
     }
 
   if (have_metadata)
-    gimp_image_set_metadata (image, metadata);
+    {
+      gimp_attributes_from_metadata (attributes, metadata);
+      gimp_image_set_attributes (image, attributes);
+      g_object_unref (attributes);
+    }
 
   g_object_unref (metadata);
 

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   id="svg7854"
+   sodipodi:version="0.32"
+   inkscape:version="0.91+devel r"
+   version="1.0"
+   sodipodi:docname="gimp-display-filter-lcms.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   viewBox="0 0 24 24">
+  <defs
+     id="defs7856">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5253">
+      <stop
+         style="stop-color:#729fcf;stop-opacity:1"
+         offset="0"
+         id="stop5255" />
+      <stop
+         id="stop5261"
+         offset="0.20362347"
+         style="stop-color:#73d216;stop-opacity:1" />
+      <stop
+         style="stop-color:#c17d11;stop-opacity:1"
+         offset="0.5222187"
+         id="stop5263" />
+      <stop
+         id="stop5265"
+         offset="0.88899916"
+         style="stop-color:#75507b;stop-opacity:1" />
+      <stop
+         style="stop-color:#a40000;stop-opacity:1"
+         offset="1"
+         id="stop5257" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5140">
+      <stop
+         style="stop-color:#eeeeec;stop-opacity:1;"
+         offset="0"
+         id="stop5142" />
+      <stop
+         style="stop-color:#d4d4cf;stop-opacity:1;"
+         offset="1"
+         id="stop5144" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5140"
+       id="linearGradient5146"
+       x1="12"
+       y1="1.2683793"
+       x2="12"
+       y2="21.251747"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0003114,0,0,0.9852831,-0.00373716,0.9889921)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5253"
+       id="linearGradient5259"
+       x1="6.0288601"
+       y1="8.3465099"
+       x2="18.913376"
+       y2="8.3465099"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.158587,0,0,1.1453712,-2.3464693,2.4401479)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#e0e0e0"
+     borderopacity="1"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="16"
+     inkscape:cx="9.9707317"
+     inkscape:cy="6.2355347"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     width="24px"
+     height="24px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     showgrid="true"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7859">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jakub Steiner</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:source>http://jimmac.musichall.cz</dc:source>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/GPL/2.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/GPL/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/SourceCode" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g4250">
+      <rect
+         ry="1.5408345"
+         rx="1.4055704"
+         y="0.49189186"
+         x="0.49189186"
+         height="23.016216"
+         width="23.016216"
+         id="rect4559"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient5146);fill-opacity:1;fill-rule:evenodd;stroke:#888a85;stroke-width:0.98378372;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
+      <rect
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.90239233;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+         id="rect5148"
+         width="21.126432"
+         height="21.097607"
+         x="1.4367839"
+         y="1.4511962"
+         rx="0.64012909"
+         ry="0.62965173" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5245"
+         d="M 12,6 C 7.0278866,6 2.9999985,10.004754 3,14.920152 3,16.004307 3.1950358,17.039377 3.5538461,18 H 8.6538463 C 7.8932397,17.193097 7.430769,16.109174 7.430769,14.920152 c 8e-7,-2.493317 2.0471442,-4.51711 4.569231,-4.51711 2.522089,0 4.569231,2.023793 4.569231,4.51711 -10e-7,1.192575 -0.481508,2.272186 -1.246154,3.079848 h 5.1 C 20.781887,17.039377 21,16.004307 21,14.920152 20.999998,10.004754 16.972113,6 12,6 Z"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient5259);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.15196013;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
+    </g>
+  </g>
+</svg>

@@ -260,11 +260,11 @@ gimp_image_scale (GimpImage             *image,
  *               exceed the maximum specified in the preferences.
  **/
 GimpImageScaleCheckType
-gimp_image_scale_check (const GimpImage *image,
-                        gint             new_width,
-                        gint             new_height,
-                        gint64           max_memsize,
-                        gint64          *new_memsize)
+gimp_image_scale_check (GimpImage *image,
+                        gint       new_width,
+                        gint       new_height,
+                        gint64     max_memsize,
+                        gint64    *new_memsize)
 {
   GList  *all_layers;
   GList  *list;

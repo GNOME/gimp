@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: libgimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-28 14:44+0000\n"
-"PO-Revision-Date: 2016-03-28 18:46+0200\n"
+"POT-Creation-Date: 2016-05-12 18:33+0000\n"
+"PO-Revision-Date: 2016-05-12 21:35+0200\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -1225,12 +1225,12 @@ msgstr "Metadaten können nur aus lokalen Dateien geladen werden"
 msgid "Can save metadata only to local files"
 msgstr "Metadaten können nur in lokalen Dateien gespeichert werden"
 
-#: ../libgimpbase/gimpmetadata.c:656
+#: ../libgimpbase/gimpmetadata.c:658
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Auswerten der Exif-Daten ist fehlgeschlagen."
 
-#: ../libgimpbase/gimpmetadata.c:710
+#: ../libgimpbase/gimpmetadata.c:709
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Auswerten der XMP-Daten ist fehlgeschlagen."
@@ -1264,34 +1264,34 @@ msgstr "Verbindung zu org.freedesktop.FileManager1 ist fehlgeschlagen: "
 msgid "Calling ShowItems failed: "
 msgstr "Aufruf von ShowItems ist fehlgeschlagen: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:252
+#: ../libgimpcolor/gimpcolorprofile.c:253
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "»%s« scheint kein ICC-Farbprofil zu sein"
 
-#: ../libgimpcolor/gimpcolorprofile.c:298
+#: ../libgimpcolor/gimpcolorprofile.c:299
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Daten scheinen kein ICC-Farbprofil zu sein"
 
-#: ../libgimpcolor/gimpcolorprofile.c:355
+#: ../libgimpcolor/gimpcolorprofile.c:356
 msgid "Could not save color profile to memory"
 msgstr "Farbprofil konnte nicht im Speicher abgelegt werden"
 
-#: ../libgimpcolor/gimpcolorprofile.c:542
+#: ../libgimpcolor/gimpcolorprofile.c:574
 msgid "(unnamed profile)"
 msgstr "(unbenanntes Profil)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:584
+#: ../libgimpcolor/gimpcolorprofile.c:616
 #, c-format
 msgid "Model: %s"
 msgstr "Modell: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:593
+#: ../libgimpcolor/gimpcolorprofile.c:625
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Hersteller: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:602
+#: ../libgimpcolor/gimpcolorprofile.c:634
 #, c-format
 msgid "Copyright: %s"
 msgstr "Copyright: %s"
@@ -1403,20 +1403,72 @@ msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 "Die Farbe, mit der Farben markiert werden, die außerhalb des Gamut liegen."
 
-#: ../libgimpconfig/gimpcolorconfig.c:431
-#: ../libgimpconfig/gimpcolorconfig.c:565
+#: ../libgimpconfig/gimpcolorconfig.c:177
+msgid "Mode of operation"
+msgstr "Arbeitsmodus"
+
+#: ../libgimpconfig/gimpcolorconfig.c:185
+msgid "Preferred RGB profile"
+msgstr "Bevorzugtes RGB-Profil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:192
+msgid "Preferred grayscale profile"
+msgstr "Bevorzugtes Graustufen-Profil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:199
+msgid "CMYK profile"
+msgstr "CMYK-Profil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:206
+msgid "Monitor profile"
+msgstr "Monitor-Profil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:213
+msgid "Use the system monitor profile"
+msgstr "Monitor-Profil des Systems verwenden"
+
+#: ../libgimpconfig/gimpcolorconfig.c:220
+msgid "Print simulation profile"
+msgstr "Drucksimulationsprofil"
+
+#: ../libgimpconfig/gimpcolorconfig.c:227
+msgid "Display rendering intent"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:235
+msgid "Use black point compensation for the display"
+msgstr "Schwarzpunkt-Abgleich für die Anzeige verwenden"
+
+#: ../libgimpconfig/gimpcolorconfig.c:242
+msgid "Softproof rendering intent"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:250
+msgid "Use black point compensation for softproofing"
+msgstr "_Schwarzpunkt-Abgleich für das Softproofing verwenden"
+
+#: ../libgimpconfig/gimpcolorconfig.c:257
+msgid "Mark out of gamut colors"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:264
+msgid "Out of gamut warning color"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:464
+#: ../libgimpconfig/gimpcolorconfig.c:598
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Das Farbprofil »%s« ist nicht für den RGB-Farbraum geeignet."
 
-#: ../libgimpconfig/gimpcolorconfig.c:462
-#: ../libgimpconfig/gimpcolorconfig.c:606
+#: ../libgimpconfig/gimpcolorconfig.c:495
+#: ../libgimpconfig/gimpcolorconfig.c:639
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Das Farbprofil »%s« ist nicht für den Graustufen-Farbraum geeignet."
 
-#: ../libgimpconfig/gimpcolorconfig.c:493
-#: ../libgimpconfig/gimpcolorconfig.c:647
+#: ../libgimpconfig/gimpcolorconfig.c:526
+#: ../libgimpconfig/gimpcolorconfig.c:680
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Das Farbprofil »%s« ist nicht für den CMYK-Farbraum geeignet."
@@ -1456,29 +1508,29 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Kolorimetrisch (absolut)"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:110
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "Symbolwert für %s ist keine gültige UTF-8-Zeichenkette"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:452
+#: ../libgimpconfig/gimpconfig-deserialize.c:464
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "»yes« oder »no« wurde für boolesches Symbol %s erwartet, aber »%s« erhalten"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:526
+#: ../libgimpconfig/gimpconfig-deserialize.c:538
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ungültiger Wert »%s« für Symbol %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:541
+#: ../libgimpconfig/gimpconfig-deserialize.c:553
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ungültiger Wert »%ld« für Symbol %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:610
+#: ../libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "beim Verarbeiten von %s: %s"
@@ -1595,20 +1647,20 @@ msgstr "_Schwarz"
 msgid "_White"
 msgstr "_Weiß"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
 msgid "All files (*.*)"
 msgstr "Alle Dateien (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:109
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-Farbprofil (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:216
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:312
 #: ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "Ordner"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:221
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:317
 msgid "Not a regular file."
 msgstr "Keine reguläre Datei."
 
@@ -2416,11 +2468,15 @@ msgstr "Tritanopia (Blauschwäche)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Simulation von Farbenblindheit (Algorithmus von Brettel-Vienot-Mollon)"
 
-#: ../modules/display-filter-color-blind.c:256
+#: ../modules/display-filter-color-blind.c:252
+msgid "Deficiency"
+msgstr "Schwäche"
+
+#: ../modules/display-filter-color-blind.c:258
 msgid "Color Deficient Vision"
 msgstr "Farbenblindheit"
 
-#: ../modules/display-filter-color-blind.c:417
+#: ../modules/display-filter-color-blind.c:419
 msgid "Color _deficiency type:"
 msgstr "Art der _Sehschwäche:"
 
@@ -2428,11 +2484,11 @@ msgstr "Art der _Sehschwäche:"
 msgid "Gamma color display filter"
 msgstr "Farbfilter für Gamma-Anzeigen"
 
-#: ../modules/display-filter-gamma.c:127
+#: ../modules/display-filter-gamma.c:124 ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-gamma.c:224
+#: ../modules/display-filter-gamma.c:226
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -2440,11 +2496,12 @@ msgstr "_Gamma:"
 msgid "High Contrast color display filter"
 msgstr "Farbfilter für Hochkontrastanzeigen"
 
-#: ../modules/display-filter-high-contrast.c:127
+#: ../modules/display-filter-high-contrast.c:124
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../modules/display-filter-high-contrast.c:224
+#: ../modules/display-filter-high-contrast.c:226
 msgid "Contrast c_ycles:"
 msgstr "Kontrast_verstärkung:"
 
@@ -2488,23 +2545,35 @@ msgstr "Keine"
 msgid "Color proof filter using ICC color profile"
 msgstr "Farbandruck-Filter mittels ICC-Farbprofilen"
 
-#: ../modules/display-filter-proof.c:143
+#: ../modules/display-filter-proof.c:131
+msgid "Intent"
+msgstr "Vorsatz"
+
+#: ../modules/display-filter-proof.c:139
+msgid "Black point compensation"
+msgstr "Schwarzpunkt-Abgleich"
+
+#: ../modules/display-filter-proof.c:146
+msgid "Profile"
+msgstr "Profil"
+
+#: ../modules/display-filter-proof.c:151
 msgid "Color Proof"
 msgstr "Farbandruck"
 
-#: ../modules/display-filter-proof.c:296
+#: ../modules/display-filter-proof.c:304
 msgid "Choose an ICC Color Profile"
 msgstr "ICC-Farbprofil auswählen"
 
-#: ../modules/display-filter-proof.c:316
+#: ../modules/display-filter-proof.c:326
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:322
+#: ../modules/display-filter-proof.c:332
 msgid "_Intent:"
 msgstr "_Vorsatz:"
 
-#: ../modules/display-filter-proof.c:327
+#: ../modules/display-filter-proof.c:337
 msgid "_Black Point Compensation"
 msgstr "_Schwarzpunkt-Abgleich"
 

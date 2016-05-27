@@ -180,9 +180,8 @@ GeglNode *
 gimp_filter_stack_get_graph (GimpFilterStack *stack)
 {
   GList    *list;
-  GList    *reverse_list = NULL;
-  GeglNode *first        = NULL;
-  GeglNode *previous     = NULL;
+  GeglNode *first    = NULL;
+  GeglNode *previous = NULL;
   GeglNode *input;
   GeglNode *output;
 
@@ -191,18 +190,11 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
   if (stack->graph)
     return stack->graph;
 
-  for (list = GIMP_LIST (stack)->queue->head;
-       list;
-       list = g_list_next (list))
-    {
-      GimpFilter *filter = list->data;
-
-      reverse_list = g_list_prepend (reverse_list, filter);
-    }
-
   stack->graph = gegl_node_new ();
 
-  for (list = reverse_list; list; list = g_list_next (list))
+  for (list = GIMP_LIST (stack)->queue->tail;
+       list;
+       list = g_list_previous (list))
     {
       GimpFilter *filter = list->data;
       GeglNode   *node   = gimp_filter_get_node (filter);
@@ -218,8 +210,6 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
 
       previous = node;
     }
-
-  g_list_free (reverse_list);
 
   input  = gegl_node_get_input_proxy  (stack->graph, "input");
   output = gegl_node_get_output_proxy (stack->graph, "output");

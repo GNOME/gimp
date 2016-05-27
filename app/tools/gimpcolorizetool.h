@@ -19,7 +19,7 @@
 #define __GIMP_COLORIZE_TOOL_H__
 
 
-#include "gimpimagemaptool.h"
+#include "gimpfiltertool.h"
 
 
 #define GIMP_TYPE_COLORIZE_TOOL            (gimp_colorize_tool_get_type ())
@@ -35,12 +35,12 @@ typedef struct _GimpColorizeToolClass GimpColorizeToolClass;
 
 struct _GimpColorizeTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpFilterTool  parent_instance;
 };
 
 struct _GimpColorizeToolClass
 {
-  GimpImageMapToolClass  parent_class;
+  GimpFilterToolClass  parent_class;
 };
 
 

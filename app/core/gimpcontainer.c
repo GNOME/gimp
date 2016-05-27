@@ -523,7 +523,7 @@ gimp_container_disconnect_callback (GimpObject *object,
 }
 
 GType
-gimp_container_get_children_type (const GimpContainer *container)
+gimp_container_get_children_type (GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), G_TYPE_NONE);
 
@@ -531,7 +531,7 @@ gimp_container_get_children_type (const GimpContainer *container)
 }
 
 GimpContainerPolicy
-gimp_container_get_policy (const GimpContainer *container)
+gimp_container_get_policy (GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
 
@@ -539,7 +539,7 @@ gimp_container_get_policy (const GimpContainer *container)
 }
 
 gint
-gimp_container_get_n_children (const GimpContainer *container)
+gimp_container_get_n_children (GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
 
@@ -783,7 +783,7 @@ gimp_container_clear (GimpContainer *container)
 }
 
 gboolean
-gimp_container_is_empty (const GimpContainer *container)
+gimp_container_is_empty (GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
 
@@ -791,8 +791,8 @@ gimp_container_is_empty (const GimpContainer *container)
 }
 
 gboolean
-gimp_container_have (const GimpContainer *container,
-                     GimpObject          *object)
+gimp_container_have (GimpContainer *container,
+                     GimpObject    *object)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
 
@@ -803,9 +803,9 @@ gimp_container_have (const GimpContainer *container,
 }
 
 void
-gimp_container_foreach (const GimpContainer *container,
-                        GFunc                func,
-                        gpointer             user_data)
+gimp_container_foreach (GimpContainer *container,
+                        GFunc          func,
+                        gpointer       user_data)
 {
   g_return_if_fail (GIMP_IS_CONTAINER (container));
   g_return_if_fail (func != NULL);
@@ -815,8 +815,8 @@ gimp_container_foreach (const GimpContainer *container,
 }
 
 GimpObject *
-gimp_container_get_child_by_name (const GimpContainer *container,
-                                  const gchar         *name)
+gimp_container_get_child_by_name (GimpContainer *container,
+                                  const gchar   *name)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
 
@@ -828,8 +828,8 @@ gimp_container_get_child_by_name (const GimpContainer *container,
 }
 
 GimpObject *
-gimp_container_get_child_by_index (const GimpContainer *container,
-                                   gint                 index)
+gimp_container_get_child_by_index (GimpContainer *container,
+                                   gint           index)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
 
@@ -848,7 +848,7 @@ gimp_container_get_child_by_index (const GimpContainer *container,
  *               container is empty
  */
 GimpObject *
-gimp_container_get_first_child (const GimpContainer *container)
+gimp_container_get_first_child (GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
 
@@ -867,7 +867,7 @@ gimp_container_get_first_child (const GimpContainer *container)
  *               container is empty
  */
 GimpObject *
-gimp_container_get_last_child (const GimpContainer *container)
+gimp_container_get_last_child (GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
 
@@ -879,8 +879,8 @@ gimp_container_get_last_child (const GimpContainer *container)
 }
 
 gint
-gimp_container_get_child_index (const GimpContainer *container,
-                                const GimpObject    *object)
+gimp_container_get_child_index (GimpContainer *container,
+                                GimpObject    *object)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), -1);
   g_return_val_if_fail (object != NULL, -1);
@@ -893,8 +893,8 @@ gimp_container_get_child_index (const GimpContainer *container,
 }
 
 GimpObject *
-gimp_container_get_neighbor_of (const GimpContainer *container,
-                                const GimpObject    *object)
+gimp_container_get_neighbor_of (GimpContainer *container,
+                                GimpObject    *object)
 {
   gint index;
 
@@ -929,8 +929,8 @@ gimp_container_get_name_array_foreach_func (GimpObject   *object,
 }
 
 gchar **
-gimp_container_get_name_array (const GimpContainer *container,
-                               gint                *length)
+gimp_container_get_name_array (GimpContainer *container,
+                               gint          *length)
 {
   gchar **names;
   gchar **iter;

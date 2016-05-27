@@ -823,6 +823,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_IMAGE_RESOLUTION, "GIMP_UNDO_IMAGE_RESOLUTION", "image-resolution" },
     { GIMP_UNDO_IMAGE_GRID, "GIMP_UNDO_IMAGE_GRID", "image-grid" },
     { GIMP_UNDO_IMAGE_COLORMAP, "GIMP_UNDO_IMAGE_COLORMAP", "image-colormap" },
+    { GIMP_UNDO_IMAGE_COLOR_MANAGED, "GIMP_UNDO_IMAGE_COLOR_MANAGED", "image-color-managed" },
     { GIMP_UNDO_IMAGE_ATTRIBUTES, "GIMP_UNDO_IMAGE_ATTRIBUTES", "image-attributes" },
     { GIMP_UNDO_GUIDE, "GIMP_UNDO_GUIDE", "guide" },
     { GIMP_UNDO_SAMPLE_POINT, "GIMP_UNDO_SAMPLE_POINT", "sample-point" },
@@ -916,6 +917,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_IMAGE_RESOLUTION, NC_("undo-type", "Image resolution change"), NULL },
     { GIMP_UNDO_IMAGE_GRID, NC_("undo-type", "Grid"), NULL },
     { GIMP_UNDO_IMAGE_COLORMAP, NC_("undo-type", "Change indexed palette"), NULL },
+    { GIMP_UNDO_IMAGE_COLOR_MANAGED, NC_("undo-type", "Change color managed state"), NULL },
     { GIMP_UNDO_IMAGE_ATTRIBUTES, "GIMP_UNDO_IMAGE_ATTRIBUTES", NULL },
     { GIMP_UNDO_GUIDE, NC_("undo-type", "Guide"), NULL },
     { GIMP_UNDO_SAMPLE_POINT, NC_("undo-type", "Sample Point"), NULL },
@@ -1169,19 +1171,19 @@ gimp_dynamics_output_type_get_type (void)
 }
 
 GType
-gimp_image_map_region_get_type (void)
+gimp_filter_region_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_IMAGE_MAP_REGION_SELECTION, "GIMP_IMAGE_MAP_REGION_SELECTION", "selection" },
-    { GIMP_IMAGE_MAP_REGION_DRAWABLE, "GIMP_IMAGE_MAP_REGION_DRAWABLE", "drawable" },
+    { GIMP_FILTER_REGION_SELECTION, "GIMP_FILTER_REGION_SELECTION", "selection" },
+    { GIMP_FILTER_REGION_DRAWABLE, "GIMP_FILTER_REGION_DRAWABLE", "drawable" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_IMAGE_MAP_REGION_SELECTION, NC_("image-map-region", "Use the selection as input"), NULL },
-    { GIMP_IMAGE_MAP_REGION_DRAWABLE, NC_("image-map-region", "Use the entire layer as input"), NULL },
+    { GIMP_FILTER_REGION_SELECTION, NC_("filter-region", "Use the selection as input"), NULL },
+    { GIMP_FILTER_REGION_DRAWABLE, NC_("filter-region", "Use the entire layer as input"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -1189,8 +1191,39 @@ gimp_image_map_region_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpImageMapRegion", values);
-      gimp_type_set_translation_context (type, "image-map-region");
+      type = g_enum_register_static ("GimpFilterRegion", values);
+      gimp_type_set_translation_context (type, "filter-region");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_channel_border_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_CHANNEL_BORDER_STYLE_HARD, "GIMP_CHANNEL_BORDER_STYLE_HARD", "hard" },
+    { GIMP_CHANNEL_BORDER_STYLE_SMOOTH, "GIMP_CHANNEL_BORDER_STYLE_SMOOTH", "smooth" },
+    { GIMP_CHANNEL_BORDER_STYLE_FEATHERED, "GIMP_CHANNEL_BORDER_STYLE_FEATHERED", "feathered" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_CHANNEL_BORDER_STYLE_HARD, NC_("channel-border-style", "Hard"), NULL },
+    { GIMP_CHANNEL_BORDER_STYLE_SMOOTH, NC_("channel-border-style", "Smooth"), NULL },
+    { GIMP_CHANNEL_BORDER_STYLE_FEATHERED, NC_("channel-border-style", "Feathered"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpChannelBorderStyle", values);
+      gimp_type_set_translation_context (type, "channel-border-style");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

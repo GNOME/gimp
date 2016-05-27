@@ -196,7 +196,7 @@ gimp_pickable_get_color_at (GimpPickable *pickable,
   if (! gimp_pickable_get_pixel_at (pickable, x, y, NULL, pixel))
     return FALSE;
 
-  gimp_rgba_set_pixel (color, gimp_pickable_get_format (pickable), pixel);
+  gimp_pickable_pixel_to_srgb (pickable, NULL, pixel, color);
 
   return TRUE;
 }
@@ -218,6 +218,75 @@ gimp_pickable_get_opacity_at (GimpPickable *pickable,
   return GIMP_OPACITY_TRANSPARENT;
 }
 
+void
+gimp_pickable_pixel_to_srgb (GimpPickable *pickable,
+                             const Babl   *format,
+                             gpointer      pixel,
+                             GimpRGB      *color)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+  g_return_if_fail (pixel != NULL);
+  g_return_if_fail (color != NULL);
+
+  if (! format)
+    format = gimp_pickable_get_format (pickable);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->pixel_to_srgb)
+    {
+      pickable_iface->pixel_to_srgb (pickable, format, pixel, color);
+    }
+  else
+    {
+      gimp_rgba_set_pixel (color, format, pixel);
+    }
+}
+
+void
+gimp_pickable_srgb_to_pixel (GimpPickable  *pickable,
+                             const GimpRGB *color,
+                             const Babl    *format,
+                             gpointer       pixel)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+  g_return_if_fail (color != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  if (! format)
+    format = gimp_pickable_get_format (pickable);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->srgb_to_pixel)
+    {
+      pickable_iface->srgb_to_pixel (pickable, color, format, pixel);
+    }
+  else
+    {
+      gimp_rgba_get_pixel (color, format, pixel);
+    }
+}
+
+void
+gimp_pickable_srgb_to_image_color (GimpPickable  *pickable,
+                                   const GimpRGB *color,
+                                   GimpRGB       *image_color)
+{
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+  g_return_if_fail (color != NULL);
+  g_return_if_fail (image_color != NULL);
+
+  gimp_pickable_srgb_to_pixel (pickable,
+                               color,
+                               babl_format ("R'G'B'A double"),
+                               image_color);
+}
+
 gboolean
 gimp_pickable_pick_color (GimpPickable *pickable,
                           gint          x,
@@ -237,7 +306,7 @@ gimp_pickable_pick_color (GimpPickable *pickable,
   if (! gimp_pickable_get_pixel_at (pickable, x, y, format, sample))
     return FALSE;
 
-  gimp_rgba_set_pixel (color, format, sample);
+  gimp_pickable_pixel_to_srgb (pickable, format, sample, color);
 
   if (pixel)
     memcpy (pixel, sample, babl_format_get_bytes_per_pixel (format));
@@ -249,7 +318,7 @@ gimp_pickable_pick_color (GimpPickable *pickable,
       gint    radius       = (gint) average_radius;
       gint    i, j;
 
-      format = babl_format ("RGBA double");
+      format = babl_format ("RaGaBaA double");
 
       for (i = x - radius; i <= x + radius; i++)
         for (j = y - radius; j <= y + radius; j++)
@@ -268,7 +337,7 @@ gimp_pickable_pick_color (GimpPickable *pickable,
       sample[BLUE]  = color_avg[BLUE]  / count;
       sample[ALPHA] = color_avg[ALPHA] / count;
 
-      gimp_rgba_set_pixel (color, format, sample);
+      gimp_pickable_pixel_to_srgb (pickable, format, sample, color);
     }
 
   return TRUE;

@@ -218,8 +218,8 @@ gimp_tool_info_get_description (GimpViewable  *viewable,
 }
 
 static gboolean
-gimp_tool_info_filter_preset (const GimpObject *object,
-                              gpointer          user_data)
+gimp_tool_info_filter_preset (GimpObject *object,
+                              gpointer    user_data)
 {
   GimpToolPreset *preset    = GIMP_TOOL_PRESET (object);
   GimpToolInfo   *tool_info = user_data;

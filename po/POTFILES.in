@@ -125,6 +125,7 @@ app/core/gimpdrawable.c
 app/core/gimpdrawable-blend.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-equalize.c
+app/core/gimpdrawable-floating-selection.c
 app/core/gimpdrawable-foreground-extract.c
 app/core/gimpdrawable-fill.c
 app/core/gimpdrawable-levels.c
@@ -159,7 +160,7 @@ app/core/gimpimagefile.c
 app/core/gimpitem.c
 app/core/gimpitem-exclusive.c
 app/core/gimpitem-linked.c
-app/core/gimplayer-floating-sel.c
+app/core/gimplayer-floating-selection.c
 app/core/gimplayer.c
 app/core/gimplayermask.c
 app/core/gimpmybrush-load.c
@@ -386,6 +387,9 @@ app/tools/gimpdodgeburntool.c
 app/tools/gimpeditselectiontool.c
 app/tools/gimpellipseselecttool.c
 app/tools/gimperasertool.c
+app/tools/gimpfilteroptions.c
+app/tools/gimpfiltertool.c
+app/tools/gimpfiltertool-settings.c
 app/tools/gimpflipoptions.c
 app/tools/gimpfliptool.c
 app/tools/gimpforegroundselectoptions.c
@@ -399,9 +403,6 @@ app/tools/gimphandletransformtool.c
 app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
-app/tools/gimpimagemapoptions.c
-app/tools/gimpimagemaptool.c
-app/tools/gimpimagemaptool-settings.c
 app/tools/gimpinkoptions-gui.c
 app/tools/gimpinktool.c
 app/tools/gimpiscissorsoptions.c

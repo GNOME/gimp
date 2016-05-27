@@ -67,7 +67,7 @@ struct _GimpCageTool
 
   gint            tool_state; /* Current state in statemachine */
 
-  GimpImageMap   *image_map; /* For preview */
+  GimpDrawableFilter *filter; /* For preview */
 };
 
 struct _GimpCageToolClass

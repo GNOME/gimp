@@ -16,9 +16,8 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)					\
 	$(GEGL_CFLAGS)					\
 	$(GDK_PIXBUF_CFLAGS)				\
-	$(LIBMYPAINT_CFLAGS)			\
+	$(LIBMYPAINT_CFLAGS)				\
 	$(GEXIV2_CFLAGS)				\
-	$(LCMS_CFLAGS)					\
 	-I$(includedir)					\
 	$(xobjective_c)
 
@@ -143,8 +142,10 @@ libappcore_a_sources = \
 	gimpdrawable-equalize.h			\
 	gimpdrawable-fill.c			\
 	gimpdrawable-fill.h			\
-	gimpdrawable-filter.c			\
-	gimpdrawable-filter.h			\
+	gimpdrawable-filters.c			\
+	gimpdrawable-filters.h			\
+	gimpdrawable-floating-selection.c	\
+	gimpdrawable-floating-selection.h	\
 	gimpdrawable-foreground-extract.c	\
 	gimpdrawable-foreground-extract.h	\
 	gimpdrawable-histogram.c		\
@@ -164,6 +165,8 @@ libappcore_a_sources = \
 	gimpdrawable-stroke.h			\
 	gimpdrawable-transform.c		\
 	gimpdrawable-transform.h		\
+	gimpdrawablefilter.c			\
+	gimpdrawablefilter.h			\
 	gimpdrawablemodundo.c			\
 	gimpdrawablemodundo.h			\
 	gimpdrawablestack.c			\
@@ -188,8 +191,8 @@ libappcore_a_sources = \
 	gimpfilteredcontainer.h			\
 	gimpfilterstack.c			\
 	gimpfilterstack.h			\
-	gimpfloatingselundo.c			\
-	gimpfloatingselundo.h			\
+	gimpfloatingselectionundo.c		\
+	gimpfloatingselectionundo.h		\
 	gimpgradient.c				\
 	gimpgradient.h				\
 	gimpgradient-load.c			\
@@ -273,8 +276,6 @@ libappcore_a_sources = \
 	gimpimageundo.h				\
 	gimpimagefile.c				\
 	gimpimagefile.h				\
-	gimpimagemap.c				\
-	gimpimagemap.h				\
 	gimpitem.c				\
 	gimpitem.h				\
 	gimpitem-exclusive.c			\
@@ -295,8 +296,8 @@ libappcore_a_sources = \
 	gimpitemundo.h				\
 	gimplayer.c				\
 	gimplayer.h				\
-	gimplayer-floating-sel.c		\
-	gimplayer-floating-sel.h		\
+	gimplayer-floating-selection.c		\
+	gimplayer-floating-selection.h		\
 	gimplayer-new.c				\
 	gimplayer-new.h				\
 	gimplayermask.c				\

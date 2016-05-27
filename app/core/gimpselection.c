@@ -17,10 +17,11 @@
 
 #include "config.h"
 
-#include <string.h>
-
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -38,14 +39,14 @@
 #include "gimplayer.h"
 #include "gimplayer-new.h"
 #include "gimplayermask.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimppickable.h"
 #include "gimpselection.h"
 
 #include "gimp-intl.h"
 
 
-static gboolean   gimp_selection_is_attached   (const GimpItem      *item);
+static gboolean   gimp_selection_is_attached   (GimpItem            *item);
 static GimpItemTree * gimp_selection_get_tree  (GimpItem            *item);
 static void       gimp_selection_translate     (GimpItem            *item,
                                                 gint                 offset_x,
@@ -125,7 +126,7 @@ static void       gimp_selection_invert        (GimpChannel         *channel,
 static void       gimp_selection_border        (GimpChannel         *channel,
                                                 gint                 radius_x,
                                                 gint                 radius_y,
-                                                gboolean             feather,
+                                                GimpChannelBorderStyle style,
                                                 gboolean             edge_lock,
                                                 gboolean             push_undo);
 static void       gimp_selection_grow          (GimpChannel         *channel,
@@ -202,7 +203,7 @@ gimp_selection_init (GimpSelection *selection)
 }
 
 static gboolean
-gimp_selection_is_attached (const GimpItem *item)
+gimp_selection_is_attached (GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
           gimp_image_get_mask (gimp_item_get_image (item)) ==
@@ -544,16 +545,16 @@ gimp_selection_invert (GimpChannel *channel,
 }
 
 static void
-gimp_selection_border (GimpChannel *channel,
-                       gint         radius_x,
-                       gint         radius_y,
-                       gboolean     feather,
-                       gboolean     edge_lock,
-                       gboolean     push_undo)
+gimp_selection_border (GimpChannel            *channel,
+                       gint                    radius_x,
+                       gint                    radius_y,
+                       GimpChannelBorderStyle  style,
+                       gboolean                edge_lock,
+                       gboolean                push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->border (channel,
                                              radius_x, radius_y,
-                                             feather, edge_lock,
+                                             style, edge_lock,
                                              push_undo);
 }
 
@@ -851,11 +852,12 @@ gimp_selection_float (GimpSelection *selection,
                       gint           off_y,
                       GError       **error)
 {
-  GimpImage  *image;
-  GimpLayer  *layer;
-  GeglBuffer *buffer;
-  gint        x1, y1;
-  gint        x2, y2;
+  GimpImage        *image;
+  GimpLayer        *layer;
+  GeglBuffer       *buffer;
+  GimpColorProfile *profile;
+  gint              x1, y1;
+  gint              x2, y2;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -884,6 +886,8 @@ gimp_selection_float (GimpSelection *selection,
                                    cut_image, FALSE, TRUE,
                                    &x1, &y1, NULL);
 
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+
   /*  Clear the selection  */
   gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);
 
@@ -896,7 +900,7 @@ gimp_selection_float (GimpSelection *selection,
                                            _("Floated Layer"),
                                            GIMP_OPACITY_OPAQUE,
                                            GIMP_NORMAL_MODE,
-                                           NULL /* same image */);
+                                           profile);
 
   /*  Set the offsets  */
   gimp_item_set_offset (GIMP_ITEM (layer), x1 + off_x, y1 + off_y);

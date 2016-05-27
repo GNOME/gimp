@@ -37,6 +37,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpitem.h"
 
 #include "gimpdisplay.h"
@@ -456,16 +457,21 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'o': /* image's color profile name */
-              {
-                GimpColorManaged *managed = GIMP_COLOR_MANAGED (image);
-                GimpColorProfile *profile;
+              if (gimp_image_get_is_color_managed (image))
+                {
+                  GimpColorManaged *managed = GIMP_COLOR_MANAGED (image);
+                  GimpColorProfile *profile;
 
-                profile = gimp_color_managed_get_color_profile (managed);
+                  profile = gimp_color_managed_get_color_profile (managed);
 
-                if (profile)
                   i += print (title, title_len, i, "%s",
                               gimp_color_profile_get_label (profile));
-              }
+                }
+              else
+                {
+                  i += print (title, title_len, i, "%s",
+                              _("not color managed"));
+                }
               break;
 
             case 'e': /* display's offsets in pixels */

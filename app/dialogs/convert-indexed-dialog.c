@@ -63,16 +63,16 @@ typedef struct
 } IndexedDialog;
 
 
-static void        convert_dialog_response        (GtkWidget        *widget,
-                                                   gint              response_id,
-                                                   IndexedDialog    *dialog);
-static GtkWidget * convert_dialog_palette_box     (IndexedDialog    *dialog);
-static gboolean    convert_dialog_palette_filter  (const GimpObject *object,
-                                                   gpointer          user_data);
-static void        convert_dialog_palette_changed (GimpContext      *context,
-                                                   GimpPalette      *palette,
-                                                   IndexedDialog    *dialog);
-static void        convert_dialog_free            (IndexedDialog    *dialog);
+static void        convert_dialog_response        (GtkWidget     *widget,
+                                                   gint           response_id,
+                                                   IndexedDialog *dialog);
+static GtkWidget * convert_dialog_palette_box     (IndexedDialog *dialog);
+static gboolean    convert_dialog_palette_filter  (GimpObject    *object,
+                                                   gpointer       user_data);
+static void        convert_dialog_palette_changed (GimpContext   *context,
+                                                   GimpPalette   *palette,
+                                                   IndexedDialog *dialog);
+static void        convert_dialog_free            (IndexedDialog *dialog);
 
 
 /*  defaults  */
@@ -413,8 +413,8 @@ convert_dialog_palette_box (IndexedDialog *dialog)
 }
 
 static gboolean
-convert_dialog_palette_filter (const GimpObject *object,
-                               gpointer          user_data)
+convert_dialog_palette_filter (GimpObject *object,
+                               gpointer    user_data)
 {
   GimpPalette *palette = GIMP_PALETTE (object);
 

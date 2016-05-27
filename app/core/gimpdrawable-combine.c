@@ -141,7 +141,8 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                     base_x - buffer_region->x,
                                     base_y - buffer_region->y);
 
-  gimp_applicator_set_mode (applicator, opacity, mode);
+  gimp_applicator_set_opacity (applicator, opacity);
+  gimp_applicator_set_mode (applicator, mode);
   gimp_applicator_set_affect (applicator,
                               gimp_drawable_get_active_mask (drawable));
 

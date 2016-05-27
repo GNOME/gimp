@@ -38,9 +38,9 @@
 /*  local prototypes  */
 
 static gdouble
-    gimp_bezier_stroke_nearest_point_get   (const GimpStroke      *stroke,
+    gimp_bezier_stroke_nearest_point_get   (GimpStroke            *stroke,
                                             const GimpCoords      *coord,
-                                            const gdouble          precision,
+                                            gdouble                precision,
                                             GimpCoords            *ret_point,
                                             GimpAnchor           **ret_segment_start,
                                             GimpAnchor           **ret_segment_end,
@@ -49,15 +49,15 @@ static gdouble
     gimp_bezier_stroke_segment_nearest_point_get
                                            (const GimpCoords      *beziercoords,
                                             const GimpCoords      *coord,
-                                            const gdouble          precision,
+                                            gdouble                precision,
                                             GimpCoords            *ret_point,
                                             gdouble               *ret_pos,
                                             gint                   depth);
 static gdouble
-    gimp_bezier_stroke_nearest_tangent_get (const GimpStroke      *stroke,
+    gimp_bezier_stroke_nearest_tangent_get (GimpStroke            *stroke,
                                             const GimpCoords      *coord1,
                                             const GimpCoords      *coord2,
-                                            const gdouble          precision,
+                                            gdouble                precision,
                                             GimpCoords            *nearest,
                                             GimpAnchor           **ret_segment_start,
                                             GimpAnchor           **ret_segment_end,
@@ -67,7 +67,7 @@ static gdouble
                                            (const GimpCoords      *beziercoords,
                                             const GimpCoords      *coord1,
                                             const GimpCoords      *coord2,
-                                            const gdouble          precision,
+                                            gdouble                precision,
                                             GimpCoords            *ret_point,
                                             gdouble               *ret_pos);
 static void
@@ -129,11 +129,11 @@ static gboolean
                                             GimpStroke            *extension,
                                             GimpAnchor            *neighbor);
 static GArray *
-    gimp_bezier_stroke_interpolate         (const GimpStroke      *stroke,
-                                            const gdouble          precision,
+    gimp_bezier_stroke_interpolate         (GimpStroke            *stroke,
+                                            gdouble                precision,
                                             gboolean              *closed);
 static GimpBezierDesc *
-    gimp_bezier_stroke_make_bezier         (const GimpStroke      *stroke);
+    gimp_bezier_stroke_make_bezier         (GimpStroke            *stroke);
 
 static void gimp_bezier_stroke_finalize    (GObject               *object);
 
@@ -555,13 +555,13 @@ gimp_bezier_stroke_close (GimpStroke *stroke)
 }
 
 static gdouble
-gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
-                                      const GimpCoords     *coord,
-                                      const gdouble         precision,
-                                      GimpCoords           *ret_point,
-                                      GimpAnchor          **ret_segment_start,
-                                      GimpAnchor          **ret_segment_end,
-                                      gdouble              *ret_pos)
+gimp_bezier_stroke_nearest_point_get (GimpStroke        *stroke,
+                                      const GimpCoords  *coord,
+                                      gdouble            precision,
+                                      GimpCoords        *ret_point,
+                                      GimpAnchor       **ret_segment_start,
+                                      GimpAnchor       **ret_segment_end,
+                                      gdouble           *ret_pos)
 {
   gdouble     min_dist, dist, pos;
   GimpCoords  point = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -663,12 +663,12 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
 
 
 static gdouble
-gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
-                                              const GimpCoords  *coord,
-                                              const gdouble      precision,
-                                              GimpCoords        *ret_point,
-                                              gdouble           *ret_pos,
-                                              gint               depth)
+gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords *beziercoords,
+                                              const GimpCoords *coord,
+                                              gdouble           precision,
+                                              GimpCoords       *ret_point,
+                                              gdouble          *ret_pos,
+                                              gint              depth)
 {
   /*
    * beziercoords has to contain four GimpCoords with the four control points
@@ -791,10 +791,10 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
 
 
 static gdouble
-gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
+gimp_bezier_stroke_nearest_tangent_get (GimpStroke        *stroke,
                                         const GimpCoords  *coord1,
                                         const GimpCoords  *coord2,
-                                        const gdouble      precision,
+                                        gdouble            precision,
                                         GimpCoords        *nearest,
                                         GimpAnchor       **ret_segment_start,
                                         GimpAnchor       **ret_segment_end,
@@ -901,7 +901,7 @@ static gdouble
 gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
                                                 const GimpCoords *coord1,
                                                 const GimpCoords *coord2,
-                                                const gdouble     precision,
+                                                gdouble           precision,
                                                 GimpCoords       *ret_point,
                                                 gdouble          *ret_pos)
 {
@@ -1457,7 +1457,7 @@ gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
 
 
 static GimpBezierDesc *
-gimp_bezier_stroke_make_bezier (const GimpStroke *stroke)
+gimp_bezier_stroke_make_bezier (GimpStroke *stroke)
 {
   GArray            *points;
   GArray            *cmd_array;
@@ -1543,9 +1543,9 @@ gimp_bezier_stroke_make_bezier (const GimpStroke *stroke)
 
 
 static GArray *
-gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
-                                gdouble            precision,
-                                gboolean          *ret_closed)
+gimp_bezier_stroke_interpolate (GimpStroke *stroke,
+                                gdouble     precision,
+                                gboolean   *ret_closed)
 {
   GArray     *ret_coords;
   GimpAnchor *anchor;

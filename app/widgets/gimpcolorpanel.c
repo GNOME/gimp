@@ -178,6 +178,11 @@ gimp_color_panel_clicked (GtkButton *button)
                         G_CALLBACK (gimp_color_panel_dialog_update),
                         panel);
     }
+  else
+    {
+      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
+                                   &color);
+    }
 
   gtk_window_present (GTK_WINDOW (panel->color_dialog));
 }

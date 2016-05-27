@@ -243,55 +243,106 @@ scalable_images = \
 	scalable/gimp-zoom-follow-window.svg
 
 vector24_images = \
-	24/gimp-gegl.svg					\
-	24/gimp-tool-airbrush.svg				\
-	24/gimp-tool-align.svg					\
-	24/gimp-tool-blend.svg					\
-	24/gimp-tool-blur.svg					\
-	24/gimp-tool-brightness-contrast.svg	\
+	24/gimp-center.svg				\
+	24/gimp-channel.svg				\
+	24/gimp-channel-alpha.svg			\
+	24/gimp-channel-blue.svg			\
+	24/gimp-channel-gray.svg			\
+	24/gimp-channel-green.svg			\
+	24/gimp-channel-indexed.svg			\
+	24/gimp-channel-red.svg				\
+	24/gimp-channels.svg				\
+	24/gimp-colormap.svg				\
+	24/gimp-controller.svg				\
+	24/gimp-controller-keyboard.svg			\
+	24/gimp-controller-linux-input.svg		\
+	24/gimp-controller-midi.svg			\
+	24/gimp-controller-wheel.svg			\
+	24/gimp-cursor.svg				\
+	24/gimp-device-status				\
+	24/gimp-display-filter				\
+	24/gimp-display-filter-colorblind		\
+	24/gimp-display-filter-contrast			\
+	24/gimp-display-filter-gamma			\
+	24/gimp-display-filter-lcms			\
+	24/gimp-display-filter-proof			\
+	24/gimp-error.svg				\
+	24/gimp-floating-selection.svg			\
+	24/gimp-gegl.svg				\
+	24/gimp-grid.svg				\
+	24/gimp-image.svg				\
+	24/gimp-images.svg				\
+	24/gimp-info.svg				\
+	24/gimp-layer.svg				\
+	24/gimp-layer-mask.svg				\
+	24/gimp-layers.svg				\
+	24/gimp-move-to-screen.svg			\
+	24/gimp-navigation.svg				\
+	24/gimp-print-resolution.svg			\
+	24/gimp-question.svg				\
+	24/gimp-resize.svg				\
+	24/gimp-sample-point.svg			\
+	24/gimp-scale					\
+	24/gimp-selection.svg				\
+	24/gimp-symmetry.svg				\
+	24/gimp-template.svg				\
+	24/gimp-text-layer.svg				\
+	24/gimp-tool-airbrush.svg			\
+	24/gimp-tool-align.svg				\
+	24/gimp-tool-blend.svg				\
+	24/gimp-tool-blur.svg				\
+	24/gimp-tool-brightness-contrast.svg		\
 	24/gimp-tool-bucket-fill.svg			\
 	24/gimp-tool-by-color-select.svg		\
-	24/gimp-tool-cage.svg					\
-	24/gimp-tool-clone.svg					\
+	24/gimp-tool-cage.svg				\
+	24/gimp-tool-clone.svg				\
 	24/gimp-tool-color-balance.svg			\
 	24/gimp-tool-color-picker.svg			\
-	24/gimp-tool-colorize.svg				\
-	24/gimp-tool-crop.svg					\
-	24/gimp-tool-curves.svg					\
-	24/gimp-tool-desaturate.svg				\
-	24/gimp-tool-dodge.svg					\
-	24/gimp-tool-eraser.svg					\
+	24/gimp-tool-colorize.svg			\
+	24/gimp-tool-crop.svg				\
+	24/gimp-tool-curves.svg				\
+	24/gimp-tool-desaturate.svg			\
+	24/gimp-tool-dodge.svg				\
+	24/gimp-tool-eraser.svg				\
 	24/gimp-tool-ellipse-select.svg			\
-	24/gimp-tool-flip.svg					\
+	24/gimp-tool-flip.svg				\
 	24/gimp-tool-foreground-select.svg		\
 	24/gimp-tool-free-select.svg			\
 	24/gimp-tool-fuzzy-select.svg			\
 	24/gimp-tool-handle-transform.svg		\
-	24/gimp-tool-heal.svg					\
+	24/gimp-tool-heal.svg				\
 	24/gimp-tool-hue-saturation.svg			\
-	24/gimp-tool-ink.svg					\
-	24/gimp-tool-iscissors.svg				\
-	24/gimp-tool-levels.svg					\
+	24/gimp-tool-ink.svg				\
+	24/gimp-tool-iscissors.svg			\
+	24/gimp-tool-levels.svg				\
 	24/gimp-tool-mypaint-brush.svg			\
-	24/gimp-tool-measure.svg				\
-	24/gimp-tool-n-point-deformation.svg	\
-	24/gimp-tool-paintbrush.svg				\
-	24/gimp-tool-path.svg					\
-	24/gimp-tool-pencil.svg					\
+	24/gimp-tool-measure.svg			\
+	24/gimp-tool-n-point-deformation.svg		\
+	24/gimp-tool-options.svg			\
+	24/gimp-tool-paintbrush.svg			\
+	24/gimp-tool-path.svg				\
+	24/gimp-tool-pencil.svg				\
 	24/gimp-tool-perspective.svg			\
 	24/gimp-tool-perspective-clone.svg		\
-	24/gimp-tool-posterize.svg				\
+	24/gimp-tool-posterize.svg			\
 	24/gimp-tool-rect-select.svg			\
-	24/gimp-tool-rotate.svg					\
-	24/gimp-tool-scale.svg					\
+	24/gimp-tool-rotate.svg				\
+	24/gimp-tools.svg				\
+	24/gimp-tool-scale.svg				\
 	24/gimp-tool-seamless-clone.svg			\
-	24/gimp-tool-shear.svg					\
-	24/gimp-tool-smudge.svg					\
-	24/gimp-tool-threshold.svg				\
+	24/gimp-tool-shear.svg				\
+	24/gimp-tool-smudge.svg				\
+	24/gimp-tool-threshold.svg			\
 	24/gimp-tool-unified-transform.svg		\
-	24/gimp-tool-text.svg					\
-	24/gimp-tool-warp.svg					\
-	24/gimp-tool-zoom.svg
+	24/gimp-tool-text.svg				\
+	24/gimp-tool-warp.svg				\
+	24/gimp-tool-zoom.svg				\
+	24/gimp-transparency.svg			\
+	24/gimp-undo-history.svg			\
+	24/gimp-user-manual.svg				\
+	24/gimp-video.svg				\
+	24/gimp-warning.svg				\
+	24/gimp-web.svg
 
 icons12_images = \
 	12/gimp-close.png			\
@@ -343,6 +394,7 @@ icons16_images = \
 	16/gimp-duplicate.png				\
 	16/gimp-dynamics.png				\
 	16/gimp-edit.png				\
+	16/gimp-error.png				\
 	16/gimp-flip-horizontal.png			\
 	16/gimp-flip-vertical.png			\
 	16/gimp-floating-selection.png			\
@@ -402,13 +454,14 @@ icons16_images = \
 	16/gimp-prefs-folders-tool-plug-ins.png		\
 	16/gimp-prefs-folders-tool-presets.png		\
 	16/gimp-prefs-folders-tools.png			\
-	16/gimp-prefs-icon-theme.png		\
+	16/gimp-prefs-icon-theme.png			\
 	16/gimp-prefs-image-windows.png			\
 	16/gimp-prefs-interface.png			\
 	16/gimp-prefs-theme.png				\
 	16/gimp-prefs-toolbox.png			\
 	16/gimp-prefs-window-management.png		\
 	16/gimp-print-resolution.png			\
+	16/gimp-question.png				\
 	16/gimp-reset.png				\
 	16/gimp-reshow-filter.png			\
 	16/gimp-resize.png				\
@@ -579,8 +632,10 @@ icons24_images = \
 	24/gimp-display-filter-lcms.png		\
 	24/gimp-display-filter-proof.png	\
 	24/gimp-display-filter.png		\
+	24/gimp-error.png			\
 	24/gimp-floating-selection.png		\
 	24/gimp-gegl.png			\
+	24/gimp-grid.png			\
 	24/gimp-gravity-east.png		\
 	24/gimp-gravity-north-east.png		\
 	24/gimp-gravity-north-west.png		\
@@ -600,8 +655,13 @@ icons24_images = \
 	24/gimp-layer.png			\
 	24/gimp-layers.png			\
 	24/gimp-move-to-screen.png		\
+	24/gimp-navigation.png			\
 	24/gimp-print-resolution.png		\
+	24/gimp-question.png			\
+	24/gimp-resize.png			\
 	24/gimp-sample-point.png		\
+	24/gimp-scale.png			\
+	24/gimp-selection.png			\
 	24/gimp-symmetry.png			\
 	24/gimp-template.png			\
 	24/gimp-text-dir-ltr.png		\

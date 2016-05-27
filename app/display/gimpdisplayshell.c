@@ -405,6 +405,8 @@ gimp_display_shell_constructed (GObject *object)
   config = shell->display->config;
   image  = gimp_display_get_image (shell->display);
 
+  gimp_display_shell_profile_init (shell);
+
   if (image)
     {
       image_width  = gimp_image_get_width  (image);
@@ -745,10 +747,9 @@ gimp_display_shell_constructed (GObject *object)
 
   gtk_widget_show (GTK_WIDGET (shell->canvas));
 
-  /*  add display filter for color management  */
+  /*  add display filters  */
 
-  filter = gimp_display_shell_filter_new (shell,
-                                          GIMP_CORE_CONFIG (config)->color_management);
+  filter = gimp_display_shell_filter_new (shell);
 
   if (filter)
     {
@@ -816,7 +817,7 @@ gimp_display_shell_dispose (GObject *object)
       shell->checkerboard = NULL;
     }
 
-  gimp_display_shell_profile_dispose (shell);
+  gimp_display_shell_profile_finalize (shell);
 
   if (shell->filter_buffer)
     {
@@ -1375,6 +1376,14 @@ gimp_display_shell_get_statusbar (GimpDisplayShell *shell)
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   return GIMP_STATUSBAR (shell->statusbar);
+}
+
+GimpColorConfig *
+gimp_display_shell_get_color_config (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  return shell->color_config;
 }
 
 void

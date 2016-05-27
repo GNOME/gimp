@@ -37,7 +37,7 @@
 #include "core/gimpimage-pick-layer.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-floating-selection.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"

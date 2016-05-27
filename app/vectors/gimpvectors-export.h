@@ -19,12 +19,12 @@
 #define __GIMP_VECTORS_EXPORT_H__
 
 
-gboolean   gimp_vectors_export_file   (const GimpImage    *image,
-                                       const GimpVectors  *vectors,
-                                       GFile              *file,
-                                       GError            **error);
-gchar    * gimp_vectors_export_string (const GimpImage    *image,
-                                       const GimpVectors  *vectors);
+gboolean   gimp_vectors_export_file   (GimpImage    *image,
+                                       GimpVectors  *vectors,
+                                       GFile        *file,
+                                       GError      **error);
+gchar    * gimp_vectors_export_string (GimpImage    *image,
+                                       GimpVectors  *vectors);
 
 
 #endif /* __GIMP_VECTORS_IMPORT_H__ */

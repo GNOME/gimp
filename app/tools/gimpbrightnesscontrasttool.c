@@ -41,7 +41,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpbrightnesscontrasttool.h"
-#include "gimpimagemapoptions.h"
+#include "gimpfilteroptions.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -72,20 +72,20 @@ static void   gimp_brightness_contrast_tool_motion         (GimpTool            
                                                             GimpDisplay           *display);
 
 static gchar *
-              gimp_brightness_contrast_tool_get_operation  (GimpImageMapTool      *image_map_tool,
+              gimp_brightness_contrast_tool_get_operation  (GimpFilterTool        *filter_tool,
                                                             gchar                **title,
                                                             gchar                **description,
                                                             gchar                **undo_desc,
                                                             gchar                **icon_name,
                                                             gchar                **help_id);
-static void   gimp_brightness_contrast_tool_dialog         (GimpImageMapTool      *image_map_tool);
+static void   gimp_brightness_contrast_tool_dialog         (GimpFilterTool        *filter_tool);
 
-static void   brightness_contrast_to_levels_callback       (GtkWidget                  *widget,
-                                                            GimpImageMapTool           *image_map_tool);
+static void   brightness_contrast_to_levels_callback       (GtkWidget             *widget,
+                                                            GimpFilterTool        *filter_tool);
 
 
 G_DEFINE_TYPE (GimpBrightnessContrastTool, gimp_brightness_contrast_tool,
-               GIMP_TYPE_IMAGE_MAP_TOOL)
+               GIMP_TYPE_FILTER_TOOL)
 
 #define parent_class gimp_brightness_contrast_tool_parent_class
 
@@ -95,7 +95,7 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
                                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
-                GIMP_TYPE_IMAGE_MAP_OPTIONS, NULL,
+                GIMP_TYPE_FILTER_OPTIONS, NULL,
                 0,
                 "gimp-brightness-contrast-tool",
                 _("Brightness-Contrast"),
@@ -109,20 +109,20 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass)
 {
-  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
-  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
+  GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  tool_class->initialize             = gimp_brightness_contrast_tool_initialize;
-  tool_class->button_press           = gimp_brightness_contrast_tool_button_press;
-  tool_class->button_release         = gimp_brightness_contrast_tool_button_release;
-  tool_class->motion                 = gimp_brightness_contrast_tool_motion;
+  tool_class->initialize                 = gimp_brightness_contrast_tool_initialize;
+  tool_class->button_press               = gimp_brightness_contrast_tool_button_press;
+  tool_class->button_release             = gimp_brightness_contrast_tool_button_release;
+  tool_class->motion                     = gimp_brightness_contrast_tool_motion;
 
-  im_tool_class->settings_name       = "brightness-contrast";
-  im_tool_class->import_dialog_title = _("Import Brightness-Contrast settings");
-  im_tool_class->export_dialog_title = _("Export Brightness-Contrast settings");
+  filter_tool_class->settings_name       = "brightness-contrast";
+  filter_tool_class->import_dialog_title = _("Import Brightness-Contrast settings");
+  filter_tool_class->export_dialog_title = _("Export Brightness-Contrast settings");
 
-  im_tool_class->get_operation       = gimp_brightness_contrast_tool_get_operation;
-  im_tool_class->dialog              = gimp_brightness_contrast_tool_dialog;
+  filter_tool_class->get_operation       = gimp_brightness_contrast_tool_get_operation;
+  filter_tool_class->dialog              = gimp_brightness_contrast_tool_dialog;
 }
 
 static void
@@ -163,12 +163,12 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 }
 
 static gchar *
-gimp_brightness_contrast_tool_get_operation (GimpImageMapTool  *im_tool,
-                                             gchar            **title,
-                                             gchar            **description,
-                                             gchar            **undo_desc,
-                                             gchar            **icon_name,
-                                             gchar            **help_id)
+gimp_brightness_contrast_tool_get_operation (GimpFilterTool  *filter_tool,
+                                             gchar          **title,
+                                             gchar          **description,
+                                             gchar          **undo_desc,
+                                             gchar          **icon_name,
+                                             gchar          **help_id)
 {
   *description = g_strdup (_("Adjust Brightness and Contrast"));
 
@@ -187,7 +187,7 @@ gimp_brightness_contrast_tool_button_press (GimpTool            *tool,
   gdouble                     brightness;
   gdouble                     contrast;
 
-  g_object_get (GIMP_IMAGE_MAP_TOOL (tool)->config,
+  g_object_get (GIMP_FILTER_TOOL (tool)->config,
                 "brightness", &brightness,
                 "contrast",   &contrast,
                 NULL);
@@ -217,7 +217,7 @@ gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
     return;
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
-    gimp_config_reset (GIMP_CONFIG (GIMP_IMAGE_MAP_TOOL (tool)->config));
+    gimp_config_reset (GIMP_CONFIG (GIMP_FILTER_TOOL (tool)->config));
 }
 
 static void
@@ -232,7 +232,7 @@ gimp_brightness_contrast_tool_motion (GimpTool         *tool,
   bc_tool->dx =   (coords->x - bc_tool->x);
   bc_tool->dy = - (coords->y - bc_tool->y);
 
-  g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->config,
+  g_object_set (GIMP_FILTER_TOOL (tool)->config,
                 "brightness", CLAMP (bc_tool->dy, -127.0, 127.0) / 127.0,
                 "contrast",   CLAMP (bc_tool->dx, -127.0, 127.0) / 127.0,
                 NULL);
@@ -244,17 +244,17 @@ gimp_brightness_contrast_tool_motion (GimpTool         *tool,
 /********************************/
 
 static void
-gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
+gimp_brightness_contrast_tool_dialog (GimpFilterTool *filter_tool)
 {
-  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (image_map_tool);
+  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (filter_tool);
   GtkWidget                  *main_vbox;
   GtkWidget                  *scale;
   GtkWidget                  *button;
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+  main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
   /*  Create the brightness scale widget  */
-  scale = gimp_prop_spin_scale_new (image_map_tool->config, "brightness",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "brightness",
                                     _("_Brightness"), 0.01, 0.1, 3);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -262,7 +262,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
   bc_tool->brightness_scale = scale;
 
   /*  Create the contrast scale widget  */
-  scale = gimp_prop_spin_scale_new (image_map_tool->config, "contrast",
+  scale = gimp_prop_spin_scale_new (filter_tool->config, "contrast",
                                     _("_Contrast"), 0.01, 0.1, 3);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -276,20 +276,20 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (brightness_contrast_to_levels_callback),
-                    image_map_tool);
+                    filter_tool);
 }
 
 static void
-brightness_contrast_to_levels_callback (GtkWidget        *widget,
-                                        GimpImageMapTool *image_map_tool)
+brightness_contrast_to_levels_callback (GtkWidget      *widget,
+                                        GimpFilterTool *filter_tool)
 {
   GimpLevelsConfig *levels;
 
-  levels = gimp_brightness_contrast_config_to_levels_config (GIMP_BRIGHTNESS_CONTRAST_CONFIG (image_map_tool->config));
+  levels = gimp_brightness_contrast_config_to_levels_config (GIMP_BRIGHTNESS_CONTRAST_CONFIG (filter_tool->config));
 
-  gimp_image_map_tool_edit_as (image_map_tool,
-                               "gimp-levels-tool",
-                               GIMP_CONFIG (levels));
+  gimp_filter_tool_edit_as (filter_tool,
+                            "gimp-levels-tool",
+                            GIMP_CONFIG (levels));
 
   g_object_unref (levels);
 }

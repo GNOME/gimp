@@ -52,29 +52,29 @@ struct _GimpTagClass
 
 GType         gimp_tag_get_type            (void) G_GNUC_CONST;
 
-GimpTag     * gimp_tag_new                 (const gchar    *tag_string);
-GimpTag     * gimp_tag_try_new             (const gchar    *tag_string);
+GimpTag     * gimp_tag_new                 (const gchar *tag_string);
+GimpTag     * gimp_tag_try_new             (const gchar *tag_string);
 
-const gchar * gimp_tag_get_name            (GimpTag        *tag);
-guint         gimp_tag_get_hash            (GimpTag        *tag);
+const gchar * gimp_tag_get_name            (GimpTag     *tag);
+guint         gimp_tag_get_hash            (GimpTag     *tag);
 
-gboolean      gimp_tag_get_internal        (GimpTag        *tag);
-void          gimp_tag_set_internal        (GimpTag        *tag,
-                                            gboolean        internal);
+gboolean      gimp_tag_get_internal        (GimpTag     *tag);
+void          gimp_tag_set_internal        (GimpTag     *tag,
+                                            gboolean     internal);
 
-gboolean      gimp_tag_equals              (const GimpTag  *tag,
-                                            const GimpTag  *other);
-gint          gimp_tag_compare_func        (const void     *p1,
-                                            const void     *p2);
-gint          gimp_tag_compare_with_string (GimpTag        *tag,
-                                            const gchar    *tag_string);
-gboolean      gimp_tag_has_prefix          (GimpTag        *tag,
-                                            const gchar    *prefix_string);
-gchar       * gimp_tag_string_make_valid   (const gchar    *tag_string);
-gboolean      gimp_tag_is_tag_separator    (gunichar        c);
+gboolean      gimp_tag_equals              (GimpTag     *tag,
+                                            GimpTag     *other);
+gint          gimp_tag_compare_func        (const void  *p1,
+                                            const void  *p2);
+gint          gimp_tag_compare_with_string (GimpTag     *tag,
+                                            const gchar *tag_string);
+gboolean      gimp_tag_has_prefix          (GimpTag     *tag,
+                                            const gchar *prefix_string);
+gchar       * gimp_tag_string_make_valid   (const gchar *tag_string);
+gboolean      gimp_tag_is_tag_separator    (gunichar     c);
 
-void          gimp_tag_or_null_ref         (GimpTag        *tag_or_null);
-void          gimp_tag_or_null_unref       (GimpTag        *tag_or_null);
+void          gimp_tag_or_null_ref         (GimpTag     *tag_or_null);
+void          gimp_tag_or_null_unref       (GimpTag     *tag_or_null);
 
 
 #endif /* __GIMP_TAG_H__ */

@@ -1556,7 +1556,7 @@ gimp_context_new (Gimp        *gimp,
 }
 
 GimpContext *
-gimp_context_get_parent (const GimpContext *context)
+gimp_context_get_parent (GimpContext *context)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 

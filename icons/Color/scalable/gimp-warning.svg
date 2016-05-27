@@ -5,7 +5,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
@@ -29,7 +28,7 @@
      id="namedview1700"
      showgrid="true"
      inkscape:zoom="41.719235"
-     inkscape:cx="8.000223"
+     inkscape:cx="5.580806"
      inkscape:cy="9.783131"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -58,53 +57,7 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs7386">
-    <linearGradient
-       gradientTransform="translate(601.21892,446.11061)"
-       gradientUnits="userSpaceOnUse"
-       y2="181.60797"
-       x2="324.875"
-       y1="197.10638"
-       x1="324.875"
-       id="linearGradient8773"
-       xlink:href="#linearGradient8751" />
-    <linearGradient
-       id="linearGradient8751">
-      <stop
-         id="stop8753"
-         offset="0"
-         style="stop-color:#b45000;stop-opacity:1;" />
-      <stop
-         id="stop8755"
-         offset="1"
-         style="stop-color:#f57900;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient
-       y2="45.930267"
-       x2="30.840555"
-       y1="23.197418"
-       x1="30.7416"
-       gradientTransform="matrix(0.6879344,0,-0.00299456,0.7160842,879.57984,596.96769)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient10153"
-       xlink:href="#linearGradient11223" />
-    <linearGradient
-       id="linearGradient11223"
-       gradientUnits="userSpaceOnUse"
-       x1="4.1914001"
-       y1="11.1133"
-       x2="47.319698"
-       y2="56.052299">
-      <stop
-         offset="0"
-         style="stop-color:#ffffff;stop-opacity:1;"
-         id="stop11225" />
-      <stop
-         offset="1"
-         style="stop-color:#ffffff;stop-opacity:0"
-         id="stop11227" />
-    </linearGradient>
-  </defs>
+     id="defs7386" />
   <g
      style="display:inline"
      transform="translate(-66.497722,-189.99994)"
@@ -124,7 +77,7 @@
          style="display:inline;enable-background:new"
          id="gimp-warning-2">
         <path
-           style="fill:#f57900;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient8773);stroke-width:1.00000024;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:#f57900;fill-opacity:1;fill-rule:nonzero;stroke:#f57900;stroke-width:1.00000024;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m 324.33756,194.52932 -8.97696,-16.82114 c -0.25803,-0.46725 -0.72492,-0.72684 -1.24489,-0.72684 -0.51997,0 -0.98926,0.31151 -1.2512,0.77876 l -8.91011,16.82114 c -0.20974,0.41533 -0.21213,0.98642 0.0461,1.40176 0.25825,0.41534 0.67335,0.623 1.19333,0.623 h 17.88707 c 0.51997,0 0.98904,-0.25958 1.19877,-0.67492 0.26173,-0.41534 0.26391,-0.93451 0.0579,-1.40176 z"
            id="path10109"
            inkscape:connector-curvature="0" />
@@ -134,7 +87,7 @@
            style="fill:#fcaf3e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.97919464;stroke-miterlimit:4"
            inkscape:connector-curvature="0" />
         <path
-           style="opacity:0.7;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient10153);stroke-width:0.96627188;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           style="opacity:0.99999999;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:0.96627188;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m 322.61753,193.53672 -7.72376,-14.45791 c -0.32893,-0.62467 -0.27639,-0.82509 -0.7763,-0.82509 -0.42997,0 -0.4844,0.29189 -0.79511,0.88153 l -7.63803,14.44622 c -0.44352,0.81347 -0.70421,1.11107 -0.49072,1.46911 0.21347,0.35804 0.53021,0.253 1.54298,0.27635 h 15.01208 c 0.94288,0.0117 1.15527,0.0252 1.32875,-0.33278 0.21648,-0.35805 -0.0461,-0.72765 -0.45989,-1.45743 z"
            id="path1325"
            inkscape:connector-curvature="0" />

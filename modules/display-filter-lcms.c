@@ -21,14 +21,6 @@
 
 #include <string.h>
 
-#ifdef G_OS_WIN32
-#define STRICT
-#include <windows.h>
-#define LCMS_WIN_TYPES_ALREADY_DEFINED
-#endif
-
-#include <lcms2.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -62,9 +54,7 @@ struct _CdisplayLcms
 {
   GimpColorDisplay    parent_instance;
 
-  GimpColorTransform  transform;
-  const Babl         *src_format;
-  const Babl         *dest_format;
+  GimpColorTransform *transform;
 };
 
 struct _CdisplayLcmsClass
@@ -148,7 +138,6 @@ cdisplay_lcms_class_finalize (CdisplayLcmsClass *klass)
 static void
 cdisplay_lcms_init (CdisplayLcms *lcms)
 {
-  lcms->transform = NULL;
 }
 
 static void
@@ -158,7 +147,7 @@ cdisplay_lcms_finalize (GObject *object)
 
   if (lcms->transform)
     {
-      cmsDeleteTransform (lcms->transform);
+      g_object_unref (lcms->transform);
       lcms->transform = NULL;
     }
 
@@ -234,22 +223,12 @@ cdisplay_lcms_convert_buffer (GimpColorDisplay *display,
                               GeglBuffer       *buffer,
                               GeglRectangle    *area)
 {
-  CdisplayLcms       *lcms = CDISPLAY_LCMS (display);
-  GeglBufferIterator *iter;
+  CdisplayLcms *lcms = CDISPLAY_LCMS (display);
 
-  if (! lcms->transform)
-    return;
-
-  iter = gegl_buffer_iterator_new (buffer, area, 0,
-                                   lcms->src_format,
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
-    {
-      gfloat *data = iter->data[0];
-
-      cmsDoTransform (lcms->transform, data, data, iter->length);
-    }
+  if (lcms->transform)
+    gimp_color_transform_process_buffer (lcms->transform,
+                                         buffer, area,
+                                         buffer, area);
 }
 
 static void
@@ -263,7 +242,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 
   if (lcms->transform)
     {
-      cmsDeleteTransform (lcms->transform);
+      g_object_unref (lcms->transform);
       lcms->transform = NULL;
     }
 
@@ -278,16 +257,11 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 
   src_profile = gimp_color_managed_get_color_profile (managed);
 
-  if (src_profile)
-    {
-      lcms->src_format  = babl_format ("R'G'B'A float");
-      lcms->dest_format = babl_format ("R'G'B'A float");
-
-      lcms->transform = gimp_widget_get_color_transform (widget,
-                                                         config, src_profile,
-                                                         &lcms->src_format,
-                                                         &lcms->dest_format);
-    }
+  lcms->transform =
+    gimp_widget_get_color_transform (widget,
+                                     config, src_profile,
+                                     babl_format ("R'G'B'A float"),
+                                     babl_format ("R'G'B'A float"));
 }
 
 static GimpColorProfile *

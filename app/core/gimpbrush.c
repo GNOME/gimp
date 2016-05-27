@@ -818,7 +818,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
 }
 
 GimpTempBuf *
-gimp_brush_get_mask (const GimpBrush *brush)
+gimp_brush_get_mask (GimpBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
@@ -827,7 +827,7 @@ gimp_brush_get_mask (const GimpBrush *brush)
 }
 
 GimpTempBuf *
-gimp_brush_get_pixmap (const GimpBrush *brush)
+gimp_brush_get_pixmap (GimpBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
@@ -836,7 +836,7 @@ gimp_brush_get_pixmap (const GimpBrush *brush)
 }
 
 gint
-gimp_brush_get_width (const GimpBrush *brush)
+gimp_brush_get_width (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
 
@@ -844,7 +844,7 @@ gimp_brush_get_width (const GimpBrush *brush)
 }
 
 gint
-gimp_brush_get_height (const GimpBrush *brush)
+gimp_brush_get_height (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
 
@@ -852,7 +852,7 @@ gimp_brush_get_height (const GimpBrush *brush)
 }
 
 gint
-gimp_brush_get_spacing (const GimpBrush *brush)
+gimp_brush_get_spacing (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
 
@@ -877,7 +877,7 @@ gimp_brush_set_spacing (GimpBrush *brush,
 static const GimpVector2 fail = { 0.0, 0.0 };
 
 GimpVector2
-gimp_brush_get_x_axis (const GimpBrush *brush)
+gimp_brush_get_x_axis (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), fail);
 
@@ -885,7 +885,7 @@ gimp_brush_get_x_axis (const GimpBrush *brush)
 }
 
 GimpVector2
-gimp_brush_get_y_axis (const GimpBrush *brush)
+gimp_brush_get_y_axis (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), fail);
 

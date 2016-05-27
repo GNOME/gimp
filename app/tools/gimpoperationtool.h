@@ -19,7 +19,7 @@
 #define __GIMP_OPERATION_TOOL_H__
 
 
-#include "gimpimagemaptool.h"
+#include "gimpfiltertool.h"
 
 
 #define GIMP_TYPE_OPERATION_TOOL            (gimp_operation_tool_get_type ())
@@ -35,25 +35,25 @@ typedef struct _GimpOperationToolClass GimpOperationToolClass;
 
 struct _GimpOperationTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpFilterTool  parent_instance;
 
-  gchar            *operation;
-  gchar            *title;
-  gchar            *description;
-  gchar            *undo_desc;
-  gchar            *icon_name;
-  gchar            *help_id;
+  gchar          *operation;
+  gchar          *title;
+  gchar          *description;
+  gchar          *undo_desc;
+  gchar          *icon_name;
+  gchar          *help_id;
 
-  GList            *aux_inputs;
+  GList          *aux_inputs;
 
   /* dialog */
-  GtkWidget        *options_box;
-  GtkWidget        *options_gui;
+  GtkWidget      *options_box;
+  GtkWidget      *options_gui;
 };
 
 struct _GimpOperationToolClass
 {
-  GimpImageMapToolClass  parent_class;
+  GimpFilterToolClass  parent_class;
 };
 
 

@@ -83,7 +83,7 @@ static void     gimp_plug_in_procedure_execute_async   (GimpProcedure  *procedur
                                                         GimpValueArray *args,
                                                         GimpObject     *display);
 
-static GFile  * gimp_plug_in_procedure_real_get_file   (const GimpPlugInProcedure *procedure);
+static GFile  * gimp_plug_in_procedure_real_get_file   (GimpPlugInProcedure *procedure);
 
 static gboolean gimp_plug_in_procedure_validate_args   (GimpPlugInProcedure *proc,
                                                         Gimp                *gimp,
@@ -452,7 +452,7 @@ gimp_plug_in_procedure_execute_async (GimpProcedure  *procedure,
 }
 
 static GFile *
-gimp_plug_in_procedure_real_get_file (const GimpPlugInProcedure *procedure)
+gimp_plug_in_procedure_real_get_file (GimpPlugInProcedure *procedure)
 {
   return procedure->file;
 }
@@ -550,7 +550,7 @@ gimp_plug_in_procedure_find (GSList      *list,
 }
 
 GFile *
-gimp_plug_in_procedure_get_file (const GimpPlugInProcedure *proc)
+gimp_plug_in_procedure_get_file (GimpPlugInProcedure *proc)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
@@ -567,7 +567,7 @@ gimp_plug_in_procedure_set_locale_domain (GimpPlugInProcedure *proc,
 }
 
 const gchar *
-gimp_plug_in_procedure_get_locale_domain (const GimpPlugInProcedure *proc)
+gimp_plug_in_procedure_get_locale_domain (GimpPlugInProcedure *proc)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
@@ -584,7 +584,7 @@ gimp_plug_in_procedure_set_help_domain (GimpPlugInProcedure *proc,
 }
 
 const gchar *
-gimp_plug_in_procedure_get_help_domain (const GimpPlugInProcedure *proc)
+gimp_plug_in_procedure_get_help_domain (GimpPlugInProcedure *proc)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 

@@ -33,8 +33,8 @@
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 #include "core/gimpitem.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
@@ -161,11 +161,11 @@ static void       gimp_seamless_clone_tool_commit             (GimpSeamlessClone
 
 static void       gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc);
 static gboolean   gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc);
-static void       gimp_seamless_clone_tool_create_image_map   (GimpSeamlessCloneTool *sc,
+static void       gimp_seamless_clone_tool_create_filter      (GimpSeamlessCloneTool *sc,
                                                                GimpDrawable          *drawable);
-static void       gimp_seamless_clone_tool_image_map_flush    (GimpImageMap          *image_map,
+static void       gimp_seamless_clone_tool_filter_flush       (GimpDrawableFilter     *filter,
                                                                GimpTool              *tool);
-static void       gimp_seamless_clone_tool_image_map_update   (GimpSeamlessCloneTool *sc);
+static void       gimp_seamless_clone_tool_filter_update      (GimpSeamlessCloneTool *sc);
 
 
 G_DEFINE_TYPE (GimpSeamlessCloneTool, gimp_seamless_clone_tool,
@@ -308,7 +308,7 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
 
   tool->display = display;
 
-  gimp_seamless_clone_tool_create_image_map (sc, drawable);
+  gimp_seamless_clone_tool_create_filter (sc, drawable);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (sc), display);
 
@@ -359,11 +359,11 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
     }
 
   /* This should always happen, even when we just switch a display */
-  if (sc->image_map)
+  if (sc->filter)
     {
-      gimp_image_map_abort (sc->image_map);
-      g_object_unref (sc->image_map);
-      sc->image_map = NULL;
+      gimp_drawable_filter_abort (sc->filter);
+      g_object_unref (sc->filter);
+      sc->filter = NULL;
 
       if (GIMP_TOOL (sc)->display)
         gimp_image_flush (gimp_display_get_image (GIMP_TOOL (sc)->display));
@@ -377,13 +377,13 @@ gimp_seamless_clone_tool_commit (GimpSeamlessCloneTool *sc)
 {
   GimpTool *tool = GIMP_TOOL (sc);
 
-  if (sc->image_map)
+  if (sc->filter)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (sc->image_map, GIMP_PROGRESS (tool), FALSE);
-      g_object_unref (sc->image_map);
-      sc->image_map = NULL;
+      gimp_drawable_filter_commit (sc->filter, GIMP_PROGRESS (tool), FALSE);
+      g_object_unref (sc->filter);
+      sc->filter = NULL;
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -431,7 +431,7 @@ gimp_seamless_clone_tool_button_press (GimpTool            *tool,
 
       if (gimp_seamless_clone_tool_render_node_update (sc))
         {
-          gimp_seamless_clone_tool_image_map_update (sc);
+          gimp_seamless_clone_tool_filter_update (sc);
         }
 
       sc->tool_state = SC_STATE_RENDER_MOTION;
@@ -475,7 +475,7 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
 
       if (gimp_seamless_clone_tool_render_node_update (sc))
         {
-          gimp_seamless_clone_tool_image_map_update (sc);
+          gimp_seamless_clone_tool_filter_update (sc);
         }
 
       sc->tool_state = SC_STATE_RENDER_WAIT;
@@ -502,7 +502,7 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
 
       if (gimp_seamless_clone_tool_render_node_update (sc))
         {
-          gimp_seamless_clone_tool_image_map_update (sc);
+          gimp_seamless_clone_tool_filter_update (sc);
         }
     }
 }
@@ -531,9 +531,9 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
            *       rectangle each time (in the update function) or by
            *       invalidating and re-rendering all now (expensive and
            *       perhaps useless */
-          gimp_image_map_commit (sct->image_map, GIMP_PROGRESS (tool), FALSE);
-          g_object_unref (sct->image_map);
-          sct->image_map = NULL;
+          gimp_drawable_filter_commit (sct->filter, GIMP_PROGRESS (tool), FALSE);
+          g_object_unref (sct->filter);
+          sct->filter = NULL;
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
@@ -622,7 +622,7 @@ gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
     {
       if (gimp_seamless_clone_tool_render_node_update (sc))
         {
-          gimp_seamless_clone_tool_image_map_update (sc);
+          gimp_seamless_clone_tool_filter_update (sc);
         }
     }
 
@@ -753,27 +753,27 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 }
 
 static void
-gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
-                                           GimpDrawable          *drawable)
+gimp_seamless_clone_tool_create_filter (GimpSeamlessCloneTool *sc,
+                                        GimpDrawable          *drawable)
 {
   if (! sc->render_node)
     gimp_seamless_clone_tool_create_render_node (sc);
 
-  sc->image_map = gimp_image_map_new (drawable,
-                                      _("Seamless Clone"),
-                                      sc->render_node,
-                                      GIMP_STOCK_TOOL_SEAMLESS_CLONE);
+  sc->filter = gimp_drawable_filter_new (drawable,
+                                         _("Seamless Clone"),
+                                         sc->render_node,
+                                         GIMP_STOCK_TOOL_SEAMLESS_CLONE);
 
-  gimp_image_map_set_region (sc->image_map, GIMP_IMAGE_MAP_REGION_DRAWABLE);
+  gimp_drawable_filter_set_region (sc->filter, GIMP_FILTER_REGION_DRAWABLE);
 
-  g_signal_connect (sc->image_map, "flush",
-                    G_CALLBACK (gimp_seamless_clone_tool_image_map_flush),
+  g_signal_connect (sc->filter, "flush",
+                    G_CALLBACK (gimp_seamless_clone_tool_filter_flush),
                     sc);
 }
 
 static void
-gimp_seamless_clone_tool_image_map_flush (GimpImageMap *image_map,
-                                          GimpTool     *tool)
+gimp_seamless_clone_tool_filter_flush (GimpDrawableFilter *filter,
+                                       GimpTool           *tool)
 {
   GimpImage *image = gimp_display_get_image (tool->display);
 
@@ -781,7 +781,7 @@ gimp_seamless_clone_tool_image_map_flush (GimpImageMap *image_map,
 }
 
 static void
-gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
+gimp_seamless_clone_tool_filter_update (GimpSeamlessCloneTool *sc)
 {
   GimpTool         *tool  = GIMP_TOOL (sc);
   GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
@@ -819,7 +819,7 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
                             &visible.width,
                             &visible.height);
 
-  /* Since the image_map_apply function receives a rectangle describing
+  /* Since the filter_apply function receives a rectangle describing
    * where it should update the preview, and since that rectangle should
    * be relative to the drawable's location, we now offset back by the
    * drawable's offsetts. */
@@ -835,7 +835,7 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   g_object_unref (op);
 
   /* Now update the image map and show this area */
-  gimp_image_map_apply (sc->image_map, NULL);
+  gimp_drawable_filter_apply (sc->filter, NULL);
 
   /* Show update progress. */
   output = gegl_node_get_output_proxy (sc->render_node, "output");

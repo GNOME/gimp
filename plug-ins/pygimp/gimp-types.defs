@@ -1,0 +1,9 @@
+;; -*- scheme -*-
+
+;; from libgimpbase, implemented manually in pygimp-parasite.c
+
+(define-boxed GimpParasite
+  (in-module "Gimp")
+  (c-name "GimpParasite")
+  (gtype-id "GIMP_TYPE_PARASITE")
+)

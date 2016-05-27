@@ -524,14 +524,12 @@ static void
 gimp_color_button_clicked (GtkButton *button)
 {
   GimpColorButton *color_button = GIMP_COLOR_BUTTON (button);
+  GtkWidget       *selection;
+  GimpRGB          color;
 
   if (! color_button->dialog)
     {
       GtkWidget *dialog;
-      GtkWidget *selection;
-      GimpRGB    color;
-
-      gimp_color_button_get_color (color_button, &color);
 
       dialog = color_button->dialog =
         gimp_dialog_new (color_button->title, COLOR_SELECTION_KEY,
@@ -561,9 +559,6 @@ gimp_color_button_clicked (GtkButton *button)
       gtk_container_set_border_width (GTK_CONTAINER (selection), 6);
       gimp_color_selection_set_show_alpha (GIMP_COLOR_SELECTION (selection),
                                            gimp_color_button_has_alpha (color_button));
-      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (selection), &color);
-      gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (selection),
-                                          &color);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           selection, TRUE, TRUE, 0);
       gtk_widget_show (selection);
@@ -575,6 +570,25 @@ gimp_color_button_clicked (GtkButton *button)
       g_object_set_data (G_OBJECT (color_button->dialog), COLOR_SELECTION_KEY,
                          selection);
     }
+  else
+    {
+      selection = g_object_get_data (G_OBJECT (color_button->dialog),
+                                     COLOR_SELECTION_KEY);
+    }
+
+  gimp_color_button_get_color (color_button, &color);
+
+  g_signal_handlers_block_by_func (selection,
+                                   gimp_color_button_selection_changed,
+                                   button);
+
+  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (selection), &color);
+  gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (selection),
+                                      &color);
+
+  g_signal_handlers_unblock_by_func (selection,
+                                     gimp_color_button_selection_changed,
+                                     button);
 
   gtk_window_present (GTK_WINDOW (color_button->dialog));
 }

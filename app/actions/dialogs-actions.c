@@ -97,7 +97,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-histogram-editor",
     GIMP_HELP_HISTOGRAM_DIALOG },
 
-  { "dialogs-selection-editor", GIMP_STOCK_TOOL_RECT_SELECT,
+  { "dialogs-selection-editor", GIMP_STOCK_SELECTION,
     NC_("dialogs-action", "_Selection Editor"), NULL,
     NC_("dialogs-action", "Open the selection editor"),
     "gimp-selection-editor",

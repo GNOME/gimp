@@ -139,7 +139,7 @@ gimp_image_colormap_free (GimpImage *image)
 }
 
 const Babl *
-gimp_image_colormap_get_rgb_format (const GimpImage *image)
+gimp_image_colormap_get_rgb_format (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -147,7 +147,7 @@ gimp_image_colormap_get_rgb_format (const GimpImage *image)
 }
 
 const Babl *
-gimp_image_colormap_get_rgba_format (const GimpImage *image)
+gimp_image_colormap_get_rgba_format (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -163,7 +163,7 @@ gimp_image_get_colormap_palette (GimpImage *image)
 }
 
 const guchar *
-gimp_image_get_colormap (const GimpImage *image)
+gimp_image_get_colormap (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -171,7 +171,7 @@ gimp_image_get_colormap (const GimpImage *image)
 }
 
 gint
-gimp_image_get_colormap_size (const GimpImage *image)
+gimp_image_get_colormap_size (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 

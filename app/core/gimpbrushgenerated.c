@@ -803,7 +803,7 @@ gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
 }
 
 GimpBrushGeneratedShape
-gimp_brush_generated_get_shape (const GimpBrushGenerated *brush)
+gimp_brush_generated_get_shape (GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush),
                         GIMP_BRUSH_GENERATED_CIRCLE);
@@ -812,7 +812,7 @@ gimp_brush_generated_get_shape (const GimpBrushGenerated *brush)
 }
 
 gfloat
-gimp_brush_generated_get_radius (const GimpBrushGenerated *brush)
+gimp_brush_generated_get_radius (GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -820,7 +820,7 @@ gimp_brush_generated_get_radius (const GimpBrushGenerated *brush)
 }
 
 gint
-gimp_brush_generated_get_spikes (const GimpBrushGenerated *brush)
+gimp_brush_generated_get_spikes (GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1);
 
@@ -828,7 +828,7 @@ gimp_brush_generated_get_spikes (const GimpBrushGenerated *brush)
 }
 
 gfloat
-gimp_brush_generated_get_hardness (const GimpBrushGenerated *brush)
+gimp_brush_generated_get_hardness (GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -836,7 +836,7 @@ gimp_brush_generated_get_hardness (const GimpBrushGenerated *brush)
 }
 
 gfloat
-gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated *brush)
+gimp_brush_generated_get_aspect_ratio (GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -844,7 +844,7 @@ gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated *brush)
 }
 
 gfloat
-gimp_brush_generated_get_angle (const GimpBrushGenerated *brush)
+gimp_brush_generated_get_angle (GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 

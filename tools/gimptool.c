@@ -479,7 +479,7 @@ do_build_2 (const gchar *cflags,
   else
     q++;
 
-  dest_exe = g_strconcat (q, EXEEXT, NULL);
+  dest_exe = g_strconcat (dest_dir, q, EXEEXT, NULL);
 
   if (msvc_syntax)
     {
@@ -495,19 +495,19 @@ do_build_2 (const gchar *cflags,
 #endif
     }
 
-  cmd = g_strdup_printf ("%s %s %s %s%s%s %s%s %s%s %s %s",
+  cmd = g_strdup_printf ("%s %s %s %s%s %s%s %s%s %s %s",
 			 env_cc,
 			 env_cflags,
 			 cflags,
 			 output_flag,
-			 dest_dir,
-			 dest_exe,
+			 g_shell_quote (dest_exe),
 			 what,
 			 here_comes_linker_flags,
 			 env_ldflags,
 			 windows_subsystem_flag,
 			 libs,
 			 env_libs);
+
   maybe_run (cmd);
 }
 
@@ -606,7 +606,10 @@ do_install_bin_2 (const gchar *dir,
                         S_IRGRP | S_IXGRP |
                         S_IROTH | S_IXOTH);
 
-  maybe_run (g_strconcat (COPY, " ", what, " ", dir, NULL));
+  maybe_run (g_strconcat (COPY, " ",
+                          g_shell_quote (what), " ",
+                          g_shell_quote (dir),
+                          NULL));
 }
 
 static void
@@ -625,7 +628,10 @@ static void
 do_uninstall (const gchar *dir,
 	      const gchar *what)
 {
-  maybe_run (g_strconcat (REMOVE, " ", dir, G_DIR_SEPARATOR_S, what, NULL));
+  maybe_run (g_strconcat (REMOVE, " ",
+                          g_shell_quote (g_strconcat (dir, G_DIR_SEPARATOR_S,
+                                                      what, NULL)),
+                          NULL));
 }
 
 static const gchar *

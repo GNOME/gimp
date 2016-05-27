@@ -99,8 +99,7 @@ static Gimp *
 gimp_init_for_gui_testing_internal (gboolean  show_gui,
                                     GFile    *gimprc)
 {
-  GimpSessionInfoClass *klass;
-  Gimp                 *gimp;
+  Gimp *gimp;
 
 #if defined (G_OS_WIN32)
   /* g_test_init() sets warnings always fatal, which is a usually a good
@@ -119,8 +118,7 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
   gegl_init (NULL, NULL);
 
   /* Introduce an error margin for positions written to sessionrc */
-  klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
-  gimp_session_info_class_set_position_accuracy (klass, 5);
+  gimp_session_info_set_position_accuracy (5);
 
   /* from app_run() */
   gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, !show_gui,
@@ -134,8 +132,6 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
   gimp_init_icon_theme_for_testing ();
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);
-
-  g_type_class_unref (klass);
 
   return gimp;
 }

@@ -19,7 +19,7 @@
 #define __GIMP_ITEM_LINKED_H__
 
 
-gboolean gimp_item_linked_is_locked (const GimpItem         *item);
+gboolean gimp_item_linked_is_locked (GimpItem               *item);
 
 void     gimp_item_linked_translate (GimpItem               *item,
                                      gint                    offset_x,

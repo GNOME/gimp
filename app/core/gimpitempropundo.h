@@ -30,6 +30,7 @@
 #define GIMP_ITEM_PROP_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_PROP_UNDO, GimpItemPropUndoClass))
 
 
+typedef struct _GimpItemPropUndo      GimpItemPropUndo;
 typedef struct _GimpItemPropUndoClass GimpItemPropUndoClass;
 
 struct _GimpItemPropUndo

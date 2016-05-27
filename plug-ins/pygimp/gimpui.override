@@ -4,6 +4,10 @@ headers
 #define NO_IMPORT_PYGOBJECT
 #include <pygobject.h>
 
+#include <pycairo.h>
+extern Pycairo_CAPI_t *Pycairo_CAPI;
+
+#define GIMP_DISABLE_DEPRECATION_WARNINGS
 #include <libgimp/gimp.h>
 #undef GIMP_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
@@ -1986,4 +1990,74 @@ _wrap_gimp_ruler_get_range(PyGObject *self)
     gimp_ruler_get_range(GIMP_RULER(self->obj), &lower, &upper, &max_size);
 
     return Py_BuildValue("(ddd)", lower, upper, max_size);
+}
+%%
+override gimp_color_display_convert_surface kwargs
+static PyObject *
+_wrap_gimp_color_display_convert_surface(PyGObject *self, PyObject *args,
+                                         PyObject *kwargs)
+{
+  PycairoSurface *pysurface;
+
+  static char *kwlist[] = { "surface", NULL };
+
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                   "O!:GimpColorDisplay.convert_surface",
+                                   kwlist,
+                                   &PycairoSurface_Type, &pysurface))
+    return NULL;
+
+  gimp_color_display_convert_surface(GIMP_COLOR_DISPLAY(self->obj),
+                                     pysurface->surface);
+
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+%%
+override gimp_color_display_stack_convert_surface kwargs
+static PyObject *
+_wrap_gimp_color_display_stack_convert_surface(PyGObject *self, PyObject *args,
+                                               PyObject *kwargs)
+{
+  PycairoSurface *pysurface;
+
+  static char *kwlist[] = { "surface", NULL };
+
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                   "O!:GimpColorDisplayStack.convert_surface",
+                                   kwlist,
+                                   &PycairoSurface_Type, &pysurface))
+    return NULL;
+
+  gimp_color_display_stack_convert_surface(GIMP_COLOR_DISPLAY_STACK(self->obj),
+                                           pysurface->surface);
+
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+%%
+override gimp_zoom_preview_get_source noargs
+static PyObject *
+_wrap_gimp_zoom_preview_get_source(PyGObject *self)
+{
+  gint width, height, bpp;
+  guchar *image;
+  PyObject *pyimage;
+
+  image = gimp_zoom_preview_get_source(GIMP_ZOOM_PREVIEW(self->obj),
+                                       &width, &height, &bpp);
+
+  if (image)
+    {
+      pyimage = PyByteArray_FromStringAndSize((const char *)image,
+                                              width * height * bpp);
+      g_free (image);
+    }
+  else
+    {
+      Py_INCREF(Py_None);
+      pyimage = Py_None;
+    }
+
+  return Py_BuildValue("(Niii)", pyimage, width, height, bpp);
 }

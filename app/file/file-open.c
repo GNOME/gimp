@@ -61,7 +61,7 @@ static void     file_open_sanitize_image       (GimpImage           *image,
 static void     file_open_convert_items        (GimpImage           *dest_image,
                                                 const gchar         *basename,
                                                 GList               *items);
-static GList *  file_open_get_layers           (const GimpImage     *image,
+static GList *  file_open_get_layers           (GimpImage           *image,
                                                 gboolean             merge_visible,
                                                 gint                *n_visible);
 static gboolean file_open_file_proc_is_import  (GimpPlugInProcedure *file_proc);
@@ -761,9 +761,9 @@ file_open_convert_items (GimpImage   *dest_image,
 }
 
 static GList *
-file_open_get_layers (const GimpImage *image,
-                      gboolean         merge_visible,
-                      gint            *n_visible)
+file_open_get_layers (GimpImage *image,
+                      gboolean   merge_visible,
+                      gint      *n_visible)
 {
   GList *iter   = NULL;
   GList *layers = NULL;

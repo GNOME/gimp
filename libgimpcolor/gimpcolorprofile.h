@@ -86,6 +86,10 @@ GimpColorProfile * gimp_color_profile_new_from_icc_profile  (const guint8      *
 GimpColorProfile * gimp_color_profile_new_from_lcms_profile (gpointer           lcms_profile,
                                                              GError           **error);
 
+gboolean           gimp_color_profile_save_to_file          (GimpColorProfile  *profile,
+                                                             GFile             *file,
+                                                             GError           **error);
+
 const guint8     * gimp_color_profile_get_icc_profile       (GimpColorProfile  *profile,
                                                              gsize             *length);
 gpointer           gimp_color_profile_get_lcms_profile      (GimpColorProfile  *profile);

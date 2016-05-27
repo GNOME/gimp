@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -77,6 +78,7 @@
 #define IMAGE_CONVERT_TYPE_DIALOG_KEY      "image-convert-type-dialog"
 #define IMAGE_PROFILE_CONVERT_DIALOG_KEY   "image-profile-convert-dialog"
 #define IMAGE_PROFILE_ASSIGN_DIALOG_KEY    "image-profile-assign-dialog"
+#define IMAGE_PROFILE_SAVE_DIALOG_KEY      "image-profile-save-dialog"
 
 
 typedef struct
@@ -157,6 +159,29 @@ image_new_cmd_callback (GtkAction *action,
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
+}
+
+void
+image_duplicate_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpDisplay      *display;
+  GimpImage        *image;
+  GimpDisplayShell *shell;
+  GimpImage        *new_image;
+  return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
+  shell = gimp_display_get_shell (display);
+
+  new_image = gimp_image_duplicate (image);
+
+  gimp_create_display (new_image->gimp, new_image, shell->unit,
+                       gimp_zoom_model_get_factor (shell->zoom),
+                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
+                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
+
+  g_object_unref (new_image);
 }
 
 static void
@@ -324,6 +349,23 @@ image_convert_gamma_cmd_callback (GtkAction *action,
   gimp_image_flush (image);
 }
 
+void
+image_color_management_enabled_cmd_callback (GtkAction *action,
+                                             gpointer   data)
+{
+  GimpImage *image;
+  gboolean   enabled;
+  return_if_no_image (image, data);
+
+  enabled = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (enabled != gimp_image_get_is_color_managed (image))
+    {
+      gimp_image_set_is_color_managed (image, enabled, TRUE);
+      gimp_image_flush (image);
+    }
+}
+
 static void
 image_profile_assign_dialog_unset (GimpImage *image)
 {
@@ -413,6 +455,95 @@ image_color_profile_discard_cmd_callback (GtkAction *action,
 
   gimp_image_set_color_profile (image, NULL, NULL);
   gimp_image_flush (image);
+}
+
+static void
+image_profile_save_dialog_unset (GimpImage *image)
+{
+  g_object_set_data (G_OBJECT (image), IMAGE_PROFILE_SAVE_DIALOG_KEY, NULL);
+}
+
+static void
+image_profile_save_dialog_response (GtkWidget *dialog,
+                                    gint       response_id,
+                                    GimpImage *image)
+{
+  if (response_id == GTK_RESPONSE_ACCEPT)
+    {
+      GimpColorProfile *profile;
+      GFile            *file;
+      GError           *error = NULL;
+
+      profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+      file    = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
+
+      if (! file)
+        return;
+
+      if (! gimp_color_profile_save_to_file (profile, file, &error))
+        {
+          gimp_message (image->gimp, NULL,
+                        GIMP_MESSAGE_WARNING,
+                        _("Saving color profile failed: %s"),
+                        error->message);
+          g_clear_error (&error);
+          g_object_unref (file);
+          return;
+        }
+
+      g_object_unref (file);
+    }
+
+  gtk_widget_destroy (dialog);
+}
+
+void
+image_color_profile_save_cmd_callback (GtkAction *action,
+                                       gpointer   data)
+{
+  GimpImage   *image;
+  GimpDisplay *display;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
+  return_if_no_image (image, data);
+  return_if_no_display (display, data);
+  return_if_no_widget (widget, data);
+
+  dialog = g_object_get_data (G_OBJECT (image),
+                              IMAGE_PROFILE_SAVE_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GtkWindow        *toplevel;
+      GimpColorProfile *profile;
+      gchar            *basename;
+
+      toplevel = GTK_WINDOW (gtk_widget_get_toplevel (widget));
+      profile  = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+      dialog =
+        gimp_color_profile_chooser_dialog_new (_("Save Color Profile"),
+                                               toplevel,
+                                               GTK_FILE_CHOOSER_ACTION_SAVE);
+
+      basename = g_strconcat (gimp_color_profile_get_label (profile),
+                              ".icc", NULL);
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
+      g_free (basename);
+
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (image_profile_save_dialog_response),
+                        image);
+
+      g_object_set_data (G_OBJECT (image),
+                         IMAGE_PROFILE_SAVE_DIALOG_KEY, dialog);
+
+      g_signal_connect_object (dialog, "destroy",
+                               G_CALLBACK (image_profile_save_dialog_unset),
+                               image, G_CONNECT_SWAPPED);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -673,29 +804,6 @@ image_crop_to_content_cmd_callback (GtkAction *action,
                             _("Cannot crop because the image is already cropped to its content."));
       break;
     }
-}
-
-void
-image_duplicate_cmd_callback (GtkAction *action,
-                              gpointer   data)
-{
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDisplayShell *shell;
-  GimpImage        *new_image;
-  return_if_no_display (display, data);
-
-  image = gimp_display_get_image (display);
-  shell = gimp_display_get_shell (display);
-
-  new_image = gimp_image_duplicate (image);
-
-  gimp_create_display (new_image->gimp, new_image, shell->unit,
-                       gimp_zoom_model_get_factor (shell->zoom),
-                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
-                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
-
-  g_object_unref (new_image);
 }
 
 void

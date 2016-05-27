@@ -78,7 +78,7 @@ static gchar  * gimp_channel_get_description (GimpViewable      *viewable,
 
 static GeglNode * gimp_channel_get_node      (GimpFilter        *filter);
 
-static gboolean   gimp_channel_is_attached   (const GimpItem    *item);
+static gboolean   gimp_channel_is_attached   (GimpItem          *item);
 static GimpItemTree * gimp_channel_get_tree  (GimpItem          *item);
 static gboolean   gimp_channel_bounds        (GimpItem          *item,
                                               gdouble           *x,
@@ -155,10 +155,10 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               gboolean           push_undo,
                                               GimpProgress      *progress);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
-static void gimp_channel_get_active_components (const GimpDrawable *drawable,
+static void gimp_channel_get_active_components (GimpDrawable       *drawable,
                                                 gboolean           *active);
 static GimpComponentMask
-                  gimp_channel_get_active_mask (const GimpDrawable *drawable);
+                  gimp_channel_get_active_mask (GimpDrawable      *drawable);
 
 static void      gimp_channel_apply_buffer   (GimpDrawable        *drawable,
                                               GeglBuffer          *buffer,
@@ -221,7 +221,7 @@ static void       gimp_channel_real_invert   (GimpChannel         *channel,
 static void       gimp_channel_real_border   (GimpChannel         *channel,
                                               gint                 radius_x,
                                               gint                 radius_y,
-                                              gboolean             feather,
+                                              GimpChannelBorderStyle style,
                                               gboolean             edge_lock,
                                               gboolean             push_undo);
 static void       gimp_channel_real_grow     (GimpChannel         *channel,
@@ -477,7 +477,7 @@ gimp_channel_get_node (GimpFilter *filter)
 }
 
 static gboolean
-gimp_channel_is_attached (const GimpItem *item)
+gimp_channel_is_attached (GimpItem *item)
 {
   GimpImage *image = gimp_item_get_image (item);
 
@@ -1002,8 +1002,8 @@ gimp_channel_invalidate_boundary (GimpDrawable *drawable)
 }
 
 static void
-gimp_channel_get_active_components (const GimpDrawable *drawable,
-                                    gboolean           *active)
+gimp_channel_get_active_components (GimpDrawable *drawable,
+                                    gboolean     *active)
 {
   /*  Make sure that the alpha channel is not valid.  */
   active[GRAY]    = TRUE;
@@ -1011,7 +1011,7 @@ gimp_channel_get_active_components (const GimpDrawable *drawable,
 }
 
 static GimpComponentMask
-gimp_channel_get_active_mask (const GimpDrawable *drawable)
+gimp_channel_get_active_mask (GimpDrawable *drawable)
 {
   /*  Return all, because that skips the component mask op when painting  */
   return GIMP_COMPONENT_MASK_ALL;
@@ -1420,17 +1420,33 @@ gimp_channel_real_invert (GimpChannel *channel,
 }
 
 static void
-gimp_channel_real_border (GimpChannel *channel,
-                          gint         radius_x,
-                          gint         radius_y,
-                          gboolean     feather,
-                          gboolean     edge_lock,
-                          gboolean     push_undo)
+gimp_channel_real_border (GimpChannel            *channel,
+                          gint                    radius_x,
+                          gint                    radius_y,
+                          GimpChannelBorderStyle  style,
+                          gboolean                edge_lock,
+                          gboolean                push_undo)
 {
   gint x1, y1, x2, y2;
 
-  if (radius_x < 0 || radius_y < 0)
-    return;
+  if (radius_x == 0 && radius_y == 0)
+    {
+      /* The relevant GEGL operations require radius_x and radius_y to be > 0.
+       * When both are 0 (currently can only be achieved by the user through
+       * PDB), the effect should be to clear the channel.
+       */
+      gimp_channel_clear (channel,
+                          GIMP_CHANNEL_GET_CLASS (channel)->border_desc,
+                          push_undo);
+      return;
+    }
+  else if (radius_x <= 0 || radius_y <= 0)
+    {
+      /* FIXME: Implement the case where only one of radius_x and radius_y is 0.
+       * Currently, should never happen.
+       */
+      g_return_if_reached();
+    }
 
   if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
@@ -1471,7 +1487,7 @@ gimp_channel_real_border (GimpChannel *channel,
                           NULL, NULL,
                           gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                           GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
-                          radius_x, radius_y, feather, edge_lock);
+                          radius_x, radius_y, style, edge_lock);
 
   channel->bounds_known = FALSE;
 
@@ -1802,8 +1818,8 @@ gimp_channel_set_color (GimpChannel   *channel,
 }
 
 void
-gimp_channel_get_color (const GimpChannel *channel,
-                        GimpRGB           *color)
+gimp_channel_get_color (GimpChannel *channel,
+                        GimpRGB     *color)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
@@ -1812,7 +1828,7 @@ gimp_channel_get_color (const GimpChannel *channel,
 }
 
 gdouble
-gimp_channel_get_opacity (const GimpChannel *channel)
+gimp_channel_get_opacity (GimpChannel *channel)
 {
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), GIMP_OPACITY_TRANSPARENT);
 
@@ -2042,12 +2058,12 @@ gimp_channel_invert (GimpChannel *channel,
 }
 
 void
-gimp_channel_border (GimpChannel *channel,
-                     gint         radius_x,
-                     gint         radius_y,
-                     gboolean     feather,
-                     gboolean     edge_lock,
-                     gboolean     push_undo)
+gimp_channel_border (GimpChannel            *channel,
+                     gint                    radius_x,
+                     gint                    radius_y,
+                     GimpChannelBorderStyle  style,
+                     gboolean                edge_lock,
+                     gboolean                push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
@@ -2055,7 +2071,7 @@ gimp_channel_border (GimpChannel *channel,
     push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->border (channel,
-                                            radius_x, radius_y, feather, edge_lock,
+                                            radius_x, radius_y, style, edge_lock,
                                             push_undo);
 }
 

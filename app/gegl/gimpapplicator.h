@@ -89,7 +89,7 @@ GType        gimp_applicator_get_type         (void) G_GNUC_CONST;
 
 GimpApplicator * gimp_applicator_new          (GeglNode             *parent,
                                                gboolean              linear,
-                                               gboolean              use_preview_cache,
+                                               gboolean              use_split_preview,
                                                gboolean              use_result_cache);
 
 void         gimp_applicator_set_src_buffer   (GimpApplicator       *applicator,
@@ -109,8 +109,9 @@ void         gimp_applicator_set_apply_offset (GimpApplicator       *applicator,
                                                gint                  apply_offset_x,
                                                gint                  apply_offset_y);
 
+void         gimp_applicator_set_opacity      (GimpApplicator       *applicator,
+                                               gdouble               opacity);
 void         gimp_applicator_set_mode         (GimpApplicator       *applicator,
-                                               gdouble               opacity,
                                                GimpLayerModeEffects  paint_mode);
 void         gimp_applicator_set_affect       (GimpApplicator       *applicator,
                                                GimpComponentMask     affect);

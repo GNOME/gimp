@@ -19,7 +19,7 @@
 #define __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__
 
 
-#include "gimpimagemaptool.h"
+#include "gimpfiltertool.h"
 
 
 #define GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL            (gimp_brightness_contrast_tool_get_type ())
@@ -35,19 +35,19 @@ typedef struct _GimpBrightnessContrastToolClass GimpBrightnessContrastToolClass;
 
 struct _GimpBrightnessContrastTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpFilterTool  parent_instance;
 
-  gdouble           x, y;
-  gdouble           dx, dy;
+  gdouble         x, y;
+  gdouble         dx, dy;
 
   /* dialog */
-  GtkWidget        *brightness_scale;
-  GtkWidget        *contrast_scale;
+  GtkWidget      *brightness_scale;
+  GtkWidget      *contrast_scale;
 };
 
 struct _GimpBrightnessContrastToolClass
 {
-  GimpImageMapToolClass  parent_class;
+  GimpFilterToolClass  parent_class;
 };
 
 

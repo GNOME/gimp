@@ -40,7 +40,7 @@
 
 static const GimpActionEntry select_actions[] =
 {
-  { "selection-popup", GIMP_STOCK_TOOL_RECT_SELECT,
+  { "selection-popup", GIMP_STOCK_SELECTION,
     NC_("select-action", "Selection Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_SELECTION_DIALOG },
 

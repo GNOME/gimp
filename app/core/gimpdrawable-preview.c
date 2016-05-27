@@ -192,9 +192,7 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
   gdouble             scale;
   gint                scaled_x;
   gint                scaled_y;
-  GimpColorTransform  transform;
-  const Babl         *src_format;
-  const Babl         *dest_format;
+  GimpColorTransform *transform;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -225,9 +223,7 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
   scaled_x = RINT ((gdouble) src_x * scale);
   scaled_y = RINT ((gdouble) src_y * scale);
 
-  transform = gimp_image_get_color_transform_to_srgb_u8 (image,
-                                                         &src_format,
-                                                         &dest_format);
+  transform = gimp_image_get_color_transform_to_srgb_u8 (image);
 
   if (transform)
     {
@@ -235,7 +231,8 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
       GeglBuffer  *src_buf;
       GeglBuffer  *dest_buf;
 
-      temp_buf = gimp_temp_buf_new (dest_width, dest_height, src_format);
+      temp_buf = gimp_temp_buf_new (dest_width, dest_height,
+                                    gimp_drawable_get_format (drawable));
 
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (scaled_x, scaled_y,
@@ -250,15 +247,12 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
 
       gimp_temp_buf_unref (temp_buf);
 
-      gimp_gegl_convert_color_transform (src_buf,
-                                         GEGL_RECTANGLE (0, 0,
-                                                         dest_width, dest_height),
-                                         src_format,
-                                         dest_buf,
-                                         GEGL_RECTANGLE (0, 0, 0, 0),
-                                         dest_format,
-                                         transform,
-                                         NULL);
+      gimp_color_transform_process_buffer (transform,
+                                           src_buf,
+                                           GEGL_RECTANGLE (0, 0,
+                                                           dest_width, dest_height),
+                                           dest_buf,
+                                           GEGL_RECTANGLE (0, 0, 0, 0));
 
       g_object_unref (src_buf);
       g_object_unref (dest_buf);

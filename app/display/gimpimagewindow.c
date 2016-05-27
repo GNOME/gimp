@@ -54,6 +54,7 @@
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpview.h"
+#include "widgets/gimpviewrenderer.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
@@ -2297,6 +2298,8 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
                                  GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
                                  GIMP_VIEW_SIZE_LARGE, 0, FALSE);
   gtk_widget_set_size_request (view, GIMP_VIEW_SIZE_LARGE, -1);
+  gimp_view_renderer_set_color_config (GIMP_VIEW (view)->renderer,
+                                       gimp_display_shell_get_color_config (shell));
   gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
   gtk_widget_show (view);
 

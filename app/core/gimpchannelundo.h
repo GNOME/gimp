@@ -30,6 +30,7 @@
 #define GIMP_CHANNEL_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHANNEL_UNDO, GimpChannelUndoClass))
 
 
+typedef struct _GimpChannelUndo      GimpChannelUndo;
 typedef struct _GimpChannelUndoClass GimpChannelUndoClass;
 
 struct _GimpChannelUndo

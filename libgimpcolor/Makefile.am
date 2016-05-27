@@ -78,6 +78,8 @@ libgimpcolor_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpcolorprofile.h		\
 	gimpcolorspace.c		\
 	gimpcolorspace.h		\
+	gimpcolortransform.c		\
+	gimpcolortransform.h		\
 	gimphsl.c			\
 	gimphsl.h			\
 	gimphsv.c			\
@@ -98,6 +100,7 @@ libgimpcolorinclude_HEADERS = \
 	gimpcolormanaged.h		\
 	gimpcolorprofile.h		\
 	gimpcolorspace.h		\
+	gimpcolortransform.h		\
 	gimphsl.h			\
 	gimphsv.h			\
 	gimppixbuf.h			\

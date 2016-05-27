@@ -41,6 +41,8 @@
 
 #include "widgets-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockcontainer.h"
@@ -995,17 +997,6 @@ gimp_window_set_transient_for (GtkWindow *window,
 #endif
 }
 
-void
-gimp_toggle_button_set_visible (GtkToggleButton *toggle,
-                                GtkWidget       *widget)
-{
-  g_return_if_fail (GTK_IS_TOGGLE_BUTTON (toggle));
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-
-  gtk_widget_set_visible (widget,
-                          gtk_toggle_button_get_active (toggle));
-}
-
 static gboolean
 gimp_widget_accel_find_func (GtkAccelKey *key,
                              GClosure    *closure,
@@ -1387,22 +1378,77 @@ gimp_print_event (const GdkEvent *event)
   return str;
 }
 
-void
-gimp_session_write_position (GimpConfigWriter *writer,
-                             gint              position)
+gboolean
+gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
+                                       GimpColorConfig        *config,
+                                       GimpImageBaseType       base_type,
+                                       GimpPrecision           precision,
+                                       GError                **error)
 {
-  GimpSessionInfoClass *klass;
-  gint                  pos_to_write;
+  GimpColorProfile *profile;
+  const Babl       *format;
+  gchar            *label;
+  GError           *my_error = NULL;
 
-  klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store), FALSE);
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  pos_to_write =
-    gimp_session_info_class_apply_position_accuracy (klass,
-                                                     position);
+  format  = gimp_babl_format (base_type, precision, TRUE);
+  profile = gimp_babl_format_get_color_profile (format);
 
-  gimp_config_writer_open (writer, "position");
-  gimp_config_writer_printf (writer, "%d", pos_to_write);
-  gimp_config_writer_close (writer);
+  if (base_type == GIMP_GRAY)
+    {
+      label = g_strdup_printf (_("Built-in grayscale (%s)"),
+                               gimp_color_profile_get_label (profile));
 
-  g_type_class_unref (klass);
+      profile = gimp_color_config_get_gray_color_profile (config, &my_error);
+    }
+  else
+    {
+      label = g_strdup_printf (_("Built-in RGB (%s)"),
+                               gimp_color_profile_get_label (profile));
+
+      profile = gimp_color_config_get_rgb_color_profile (config, &my_error);
+    }
+
+  gimp_color_profile_store_add_file (store, NULL, label);
+  g_free (label);
+
+  if (profile)
+    {
+      GFile *file;
+
+      if (base_type == GIMP_GRAY)
+        {
+          file = g_file_new_for_path (config->gray_profile);
+
+          label = g_strdup_printf (_("Preferred grayscale (%s)"),
+                                   gimp_color_profile_get_label (profile));
+        }
+      else
+        {
+          file = g_file_new_for_path (config->rgb_profile);
+
+          label = g_strdup_printf (_("Preferred RGB (%s)"),
+                                   gimp_color_profile_get_label (profile));
+        }
+
+      g_object_unref (profile);
+
+      gimp_color_profile_store_add_file (store, file, label);
+
+      g_object_unref (file);
+      g_free (label);
+
+      return TRUE;
+    }
+  else if (my_error)
+    {
+      g_propagate_error (error, my_error);
+
+      return FALSE;
+    }
+
+  return TRUE;
 }

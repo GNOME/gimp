@@ -176,9 +176,6 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  if (progress)
-    gimp_progress_set_text_literal (progress, _("Calculating distance map"));
-
   /*  allocate the distance map  */
   dist_buffer = gegl_buffer_new (region, babl_format ("Y float"));
 
@@ -235,11 +232,12 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
   else
     shapeburst = gegl_node_new_child (NULL,
                                       "operation", "gegl:distance-transform",
-                                      "normalize", FALSE,
+                                      "normalize", TRUE,
                                       NULL);
 
   if (progress)
-    gimp_gegl_progress_connect (shapeburst, progress, NULL);
+    gimp_gegl_progress_connect (shapeburst, progress,
+                                _("Calculating distance map"));
 
   gimp_gegl_apply_operation (temp_buffer, NULL, NULL,
                              shapeburst,

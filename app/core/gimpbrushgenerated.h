@@ -77,12 +77,12 @@ gfloat  gimp_brush_generated_set_angle        (GimpBrushGenerated      *brush,
                                                gfloat                   angle);
 
 GimpBrushGeneratedShape
-        gimp_brush_generated_get_shape        (const GimpBrushGenerated *brush);
-gfloat  gimp_brush_generated_get_radius       (const GimpBrushGenerated *brush);
-gint    gimp_brush_generated_get_spikes       (const GimpBrushGenerated *brush);
-gfloat  gimp_brush_generated_get_hardness     (const GimpBrushGenerated *brush);
-gfloat  gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated *brush);
-gfloat  gimp_brush_generated_get_angle        (const GimpBrushGenerated *brush);
+        gimp_brush_generated_get_shape        (GimpBrushGenerated      *brush);
+gfloat  gimp_brush_generated_get_radius       (GimpBrushGenerated      *brush);
+gint    gimp_brush_generated_get_spikes       (GimpBrushGenerated      *brush);
+gfloat  gimp_brush_generated_get_hardness     (GimpBrushGenerated      *brush);
+gfloat  gimp_brush_generated_get_aspect_ratio (GimpBrushGenerated      *brush);
+gfloat  gimp_brush_generated_get_angle        (GimpBrushGenerated      *brush);
 
 
 #endif  /*  __GIMP_BRUSH_GENERATED_H__  */

@@ -31,24 +31,22 @@
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h" /* FIXME profile convert config */
-
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 
-#include "gimp.h" /* FIXME profile convert config */
 #include "gimpboundary.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
+#include "gimpdrawable-floating-selection.h"
 #include "gimperror.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimage-undo.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
-#include "gimplayer-floating-sel.h"
+#include "gimplayer-floating-selection.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
@@ -108,7 +106,7 @@ static GeglNode * gimp_layer_get_node           (GimpFilter         *filter);
 
 static void       gimp_layer_removed            (GimpItem           *item);
 static void       gimp_layer_unset_removed      (GimpItem           *item);
-static gboolean   gimp_layer_is_attached        (const GimpItem     *item);
+static gboolean   gimp_layer_is_attached        (GimpItem           *item);
 static GimpItemTree * gimp_layer_get_tree       (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type);
@@ -162,7 +160,7 @@ static void       gimp_layer_to_selection       (GimpItem           *item,
                                                  gdouble             feather_radius_y);
 
 static void       gimp_layer_alpha_changed      (GimpDrawable       *drawable);
-static gint64     gimp_layer_estimate_memsize   (const GimpDrawable *drawable,
+static gint64     gimp_layer_estimate_memsize   (GimpDrawable       *drawable,
                                                  GimpComponentType   component_type,
                                                  gint                width,
                                                  gint                height);
@@ -177,10 +175,10 @@ static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  gboolean            push_undo,
                                                  GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
-static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
+static void    gimp_layer_get_active_components (GimpDrawable       *drawable,
                                                  gboolean           *active);
 static GimpComponentMask
-               gimp_layer_get_active_mask       (const GimpDrawable *drawable);
+               gimp_layer_get_active_mask       (GimpDrawable       *drawable);
 static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
                                                  gboolean            push_undo,
                                                  const gchar        *undo_desc,
@@ -194,6 +192,14 @@ static GimpColorProfile *
 static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
                                                  gint                y);
+static void    gimp_layer_pixel_to_srgb         (GimpPickable       *pickable,
+                                                 const Babl         *format,
+                                                 gpointer            pixel,
+                                                 GimpRGB            *color);
+static void    gimp_layer_srgb_to_pixel         (GimpPickable       *pickable,
+                                                 const GimpRGB      *color,
+                                                 const Babl         *format,
+                                                 gpointer            pixel);
 
 static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                x,
@@ -410,6 +416,8 @@ static void
 gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->get_opacity_at = gimp_layer_get_opacity_at;
+  iface->pixel_to_srgb  = gimp_layer_pixel_to_srgb;
+  iface->srgb_to_pixel  = gimp_layer_srgb_to_pixel;
 }
 
 static void
@@ -710,7 +718,7 @@ gimp_layer_unset_removed (GimpItem *item)
 }
 
 static gboolean
-gimp_layer_is_attached (const GimpItem *item)
+gimp_layer_is_attached (GimpItem *item)
 {
   GimpImage *image = gimp_item_get_image (item);
 
@@ -789,8 +797,6 @@ gimp_layer_convert (GimpItem  *item,
 {
   GimpLayer         *layer    = GIMP_LAYER (item);
   GimpDrawable      *drawable = GIMP_DRAWABLE (item);
-  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (layer));
-  GimpColorConfig   *config   = image->gimp->config->color_management;
   GimpImageBaseType  old_base_type;
   GimpImageBaseType  new_base_type;
   GimpPrecision      old_precision;
@@ -804,10 +810,7 @@ gimp_layer_convert (GimpItem  *item,
   new_precision = gimp_image_get_precision (dest_image);
 
   if (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
-      /*  FIXME: this is the wrong check, need
-       *  something like file import conversion config
-       */
-      (config->mode != GIMP_COLOR_MANAGEMENT_OFF))
+      gimp_image_get_is_color_managed (dest_image))
     {
       dest_profile =
         gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
@@ -1048,10 +1051,10 @@ gimp_layer_alpha_changed (GimpDrawable *drawable)
 }
 
 static gint64
-gimp_layer_estimate_memsize (const GimpDrawable *drawable,
-                             GimpComponentType   component_type,
-                             gint                width,
-                             gint                height)
+gimp_layer_estimate_memsize (GimpDrawable      *drawable,
+                             GimpComponentType  component_type,
+                             gint               width,
+                             gint               height)
 {
   GimpLayer *layer   = GIMP_LAYER (drawable);
   gint64     memsize = 0;
@@ -1079,9 +1082,9 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          gboolean           push_undo,
                          GimpProgress      *progress)
 {
-  GimpLayer        *layer = GIMP_LAYER (drawable);
-  GeglBuffer       *src_buffer;
-  GeglBuffer       *dest_buffer;
+  GimpLayer  *layer = GIMP_LAYER (drawable);
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
 
   if (layer_dither_type == 0)
     {
@@ -1170,8 +1173,8 @@ gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 }
 
 static void
-gimp_layer_get_active_components (const GimpDrawable *drawable,
-                                  gboolean           *active)
+gimp_layer_get_active_components (GimpDrawable *drawable,
+                                  gboolean     *active)
 {
   GimpLayer  *layer  = GIMP_LAYER (drawable);
   GimpImage  *image  = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -1185,7 +1188,7 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 }
 
 static GimpComponentMask
-gimp_layer_get_active_mask (const GimpDrawable *drawable)
+gimp_layer_get_active_mask (GimpDrawable *drawable)
 {
   GimpLayer         *layer = GIMP_LAYER (drawable);
   GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -1252,7 +1255,8 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
         }
 
-      if (layer->mask)
+      if (gimp_layer_get_mask (layer) &&
+          gimp_layer_get_apply_mask (layer))
         {
           gdouble mask_value;
 
@@ -1264,6 +1268,28 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
     }
 
   return value;
+}
+
+static void
+gimp_layer_pixel_to_srgb (GimpPickable *pickable,
+                          const Babl   *format,
+                          gpointer      pixel,
+                          GimpRGB      *color)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (pickable));
+
+  gimp_pickable_pixel_to_srgb (GIMP_PICKABLE (image), format, pixel, color);
+}
+
+static void
+gimp_layer_srgb_to_pixel (GimpPickable  *pickable,
+                          const GimpRGB *color,
+                          const Babl    *format,
+                          gpointer       pixel)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (pickable));
+
+  gimp_pickable_srgb_to_pixel (GIMP_PICKABLE (image), color, format, pixel);
 }
 
 static void
@@ -1294,7 +1320,7 @@ gimp_layer_get_parent (GimpLayer *layer)
 }
 
 GimpLayerMask *
-gimp_layer_get_mask (const GimpLayer *layer)
+gimp_layer_get_mask (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
@@ -1401,7 +1427,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
 }
 
 GimpLayerMask *
-gimp_layer_create_mask (const GimpLayer *layer,
+gimp_layer_create_mask (GimpLayer       *layer,
                         GimpAddMaskType  add_mask_type,
                         GimpChannel     *channel)
 {
@@ -1762,7 +1788,7 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
 }
 
 gboolean
-gimp_layer_get_apply_mask (const GimpLayer *layer)
+gimp_layer_get_apply_mask (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (layer->mask, FALSE);
@@ -1786,7 +1812,7 @@ gimp_layer_set_edit_mask (GimpLayer *layer,
 }
 
 gboolean
-gimp_layer_get_edit_mask (const GimpLayer *layer)
+gimp_layer_get_edit_mask (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (layer->mask, FALSE);
@@ -1851,7 +1877,7 @@ gimp_layer_set_show_mask (GimpLayer *layer,
 }
 
 gboolean
-gimp_layer_get_show_mask (const GimpLayer *layer)
+gimp_layer_get_show_mask (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (layer->mask, FALSE);
@@ -1952,7 +1978,7 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
 /**********************/
 
 GimpDrawable *
-gimp_layer_get_floating_sel_drawable (const GimpLayer *layer)
+gimp_layer_get_floating_sel_drawable (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
@@ -1988,7 +2014,7 @@ gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
 }
 
 gboolean
-gimp_layer_is_floating_sel (const GimpLayer *layer)
+gimp_layer_is_floating_sel (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
@@ -2029,7 +2055,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
 }
 
 gdouble
-gimp_layer_get_opacity (const GimpLayer *layer)
+gimp_layer_get_opacity (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_OPACITY_OPAQUE);
 
@@ -2068,7 +2094,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
 }
 
 GimpLayerModeEffects
-gimp_layer_get_mode (const GimpLayer *layer)
+gimp_layer_get_mode (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_NORMAL_MODE);
 
@@ -2102,7 +2128,7 @@ gimp_layer_set_lock_alpha (GimpLayer *layer,
 }
 
 gboolean
-gimp_layer_get_lock_alpha (const GimpLayer *layer)
+gimp_layer_get_lock_alpha (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
@@ -2110,7 +2136,7 @@ gimp_layer_get_lock_alpha (const GimpLayer *layer)
 }
 
 gboolean
-gimp_layer_can_lock_alpha (const GimpLayer *layer)
+gimp_layer_can_lock_alpha (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 

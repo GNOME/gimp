@@ -200,8 +200,6 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
     }
 
   cairo_surface_mark_dirty (renderer->surface);
-
-  renderer->needs_render = FALSE;
 }
 
 void

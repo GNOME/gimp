@@ -39,7 +39,7 @@
 #include "core/gimplayer.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayermask.h"
-#include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-floating-selection.h"
 #include "core/gimpundostack.h"
 
 #include "widgets/gimphelp-ids.h"

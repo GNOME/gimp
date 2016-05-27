@@ -69,15 +69,18 @@ struct _GimpColorScaleClass
 };
 
 
-GType       gimp_color_scale_get_type    (void) G_GNUC_CONST;
-GtkWidget * gimp_color_scale_new         (GtkOrientation            orientation,
-                                          GimpColorSelectorChannel  channel);
+GType       gimp_color_scale_get_type         (void) G_GNUC_CONST;
+GtkWidget * gimp_color_scale_new              (GtkOrientation            orientation,
+                                               GimpColorSelectorChannel  channel);
 
-void        gimp_color_scale_set_channel (GimpColorScale           *scale,
-                                          GimpColorSelectorChannel  channel);
-void        gimp_color_scale_set_color   (GimpColorScale           *scale,
-                                          const GimpRGB            *rgb,
-                                          const GimpHSV            *hsv);
+void        gimp_color_scale_set_channel      (GimpColorScale           *scale,
+                                               GimpColorSelectorChannel  channel);
+void        gimp_color_scale_set_color        (GimpColorScale           *scale,
+                                               const GimpRGB            *rgb,
+                                               const GimpHSV            *hsv);
+
+void        gimp_color_scale_set_color_config (GimpColorScale           *scale,
+                                               GimpColorConfig          *config);
 
 
 G_END_DECLS
