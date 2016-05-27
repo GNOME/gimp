@@ -135,6 +135,7 @@ query (void)
                     argv,
                     NULL,
                     G_SPAWN_STDERR_TO_DEV_NULL |
+                    G_SPAWN_STDOUT_TO_DEV_NULL |
                     G_SPAWN_SEARCH_PATH,
                     NULL,
                     NULL,
