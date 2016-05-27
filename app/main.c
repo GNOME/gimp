@@ -735,6 +735,7 @@ gimp_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
   GList *deprecated_procs;
   GList *iter;
 
+  babl_init ();
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
   /* Make sure to turn on compatibility mode so deprecated procedures
