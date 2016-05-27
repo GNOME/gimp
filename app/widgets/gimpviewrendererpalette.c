@@ -82,6 +82,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 {
   GimpViewRendererPalette *renderpal = GIMP_VIEW_RENDERER_PALETTE (renderer);
   GimpPalette             *palette;
+  GimpColorTransform      *transform;
   guchar                  *row;
   guchar                  *dest;
   GList                   *list;
@@ -150,6 +151,10 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
   dest        = cairo_image_surface_get_data (renderer->surface);
   dest_stride = cairo_image_surface_get_stride (renderer->surface);
 
+  transform = gimp_view_renderer_get_color_transform (renderer, widget,
+                                                      babl_format ("cairo-RGB24"),
+                                                      babl_format ("cairo-RGB24"));
+
   for (y = 0; y < renderer->height; y++)
     {
       if ((y % renderpal->cell_height) == 0)
@@ -200,7 +205,19 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
         }
       else
         {
-          memcpy (dest, row, renderer->width * 4);
+          if (transform)
+            {
+              gimp_color_transform_process_pixels (transform,
+                                                   babl_format ("cairo-RGB24"),
+                                                   row,
+                                                   babl_format ("cairo-RGB24"),
+                                                   dest,
+                                                   renderer->width);
+            }
+          else
+            {
+              memcpy (dest, row, renderer->width * 4);
+            }
         }
 
       dest += dest_stride;

@@ -159,6 +159,7 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
   GimpViewRendererGradient *rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
   GimpGradient             *gradient   = GIMP_GRADIENT (renderer->viewable);
   GimpGradientSegment      *seg        = NULL;
+  GimpColorTransform       *transform;
   guchar                   *buf;
   guchar                   *dest;
   gint                      dest_stride;
@@ -193,6 +194,16 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
 
   dest        = cairo_image_surface_get_data (renderer->surface);
   dest_stride = cairo_image_surface_get_stride (renderer->surface);
+
+  transform = gimp_view_renderer_get_color_transform (renderer, widget,
+                                                      babl_format ("cairo-ARGB32"),
+                                                      babl_format ("cairo-ARGB32"));
+
+  if (transform)
+    gimp_color_transform_process_pixels (transform,
+                                         babl_format ("cairo-ARGB32"), buf,
+                                         babl_format ("cairo-ARGB32"), buf,
+                                         renderer->width);
 
   for (y = 0; y < renderer->height; y++, dest += dest_stride)
     {
