@@ -58,32 +58,36 @@ typedef struct
 } m_info;
 
 
-static void               query                (void);
-static void               run                  (const gchar      *name,
-                                                gint              nparams,
-                                                const GimpParam  *param,
-                                                gint             *nreturn_vals,
-                                                GimpParam       **return_vals);
+static void               query                   (void);
+static void               run                     (const gchar      *name,
+                                                   gint              nparams,
+                                                   const GimpParam  *param,
+                                                   gint             *nreturn_vals,
+                                                   GimpParam       **return_vals);
 
-static GimpPDBStatusType  send_image           (const gchar      *filename,
-                                                gint32            image_ID,
-                                                gint32            drawable_ID,
-                                                gint32            run_mode);
+static GimpPDBStatusType  send_image              (const gchar      *filename,
+                                                   gint32            image_ID,
+                                                   gint32            drawable_ID,
+                                                   gint32            run_mode);
 
-static gboolean           send_dialog          (void);
-static void               mail_entry_callback  (GtkWidget        *widget,
-                                                gchar            *data);
-static void               mesg_body_callback   (GtkTextBuffer    *buffer,
-                                                gpointer          data);
+static gboolean           send_dialog             (void);
+static void               mail_entry_callback     (GtkWidget        *widget,
+                                                   gchar            *data);
+static void               mesg_body_callback      (GtkTextBuffer    *buffer,
+                                                   gpointer          data);
 
-static gboolean           valid_file           (const gchar      *filename);
-static void               create_headers       (FILE             *mailpipe);
-static gchar            * find_extension       (const gchar      *filename);
-static gboolean           to64                 (const gchar      *filename,
-                                                FILE             *outfile,
-                                                GError          **error);
-static FILE             * sendmail_pipe        (gchar           **cmd,
-                                                GPid             *pid);
+static gboolean           valid_file              (const gchar      *filename);
+static gchar            * find_extension          (const gchar      *filename);
+
+#ifdef SENDMAIL
+static gchar            * sendmail_content_type   (const gchar *filename)
+static void               sendmail_create_headers (FILE             *mailpipe);
+static gboolean           sendmail_to64           (const gchar      *filename,
+                                                   FILE             *outfile,
+                                                   GError          **error);
+static FILE             * sendmail_pipe           (gchar           **cmd,
+                                                   GPid             *pid);
+#endif
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -120,13 +124,38 @@ query (void)
     { GIMP_PDB_INT32,    "encapsulation", "ignored" }
   };
 
-#if defined XDG_EMAIL || defined SENDMAIL
+#ifndef SENDMAIL /* xdg-email */
+  /* check if xdg-email is installed
+   * TODO: allow setting the location of the executable in preferences
+   */
+  gchar    *argv[]         = { "xdg-email", "--version", NULL };
+  gboolean  have_xdg_email = FALSE;
+
+  if (g_spawn_sync (NULL,
+                    argv,
+                    NULL,
+                    G_SPAWN_STDERR_TO_DEV_NULL |
+                    G_SPAWN_SEARCH_PATH,
+                    NULL,
+                    NULL,
+                    NULL,
+                    NULL,
+                    NULL,
+                    NULL))
+    {
+      have_xdg_email = TRUE;
+    }
+
+  if (! have_xdg_email)
+    return;
+#endif
+
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Send the image by email"),
-#ifdef XDG_EMAIL
-                          "The preferred email composer is used to send emails and must be properly configured.",
-#else /* sendmail */
+#ifdef SENDMAIL
                           "Sendmail is used to send emails and must be properly configured.",
+#else /* xdg-email */
+                          "The preferred email composer is used to send emails and must be properly configured.",
 #endif
                           "Adrian Likins, Reagan Blundell",
                           "Adrian Likins, Reagan Blundell, Daniel Risacher, "
@@ -141,7 +170,6 @@ query (void)
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Send");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
                              (const guint8 *) GTK_STOCK_EDIT);
-#endif
 }
 
 static void
@@ -254,7 +282,7 @@ send_image (const gchar *filename,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gchar             *ext;
   gchar             *tmpname;
-#ifdef XDG_EMAIL
+#ifndef SENDMAIL /* xdg-email */
   gchar             *mailcmd[9];
   gchar             *filepath = NULL;
   GFile             *tmp_dir  = NULL;
@@ -283,7 +311,7 @@ send_image (const gchar *filename,
       goto error;
     }
 
-#ifdef XDG_EMAIL
+#ifndef SENDMAIL /* xdg-email */
   /* From xdg-email doc:
    * "Some e-mail applications require the file to remain present
    * after xdg-email returns."
@@ -336,7 +364,7 @@ send_image (const gchar *filename,
                                mail_info.filename, NULL);
   g_rename (tmpname, filepath);
 
-  mailcmd[0] = XDG_EMAIL;
+  mailcmd[0] = "xdg-email";
   mailcmd[1] = "--attach";
   mailcmd[2] = filepath;
   mailcmd[3] = "--subject";
@@ -347,7 +375,7 @@ send_image (const gchar *filename,
   mailcmd[8] = NULL;
 
   if (! g_spawn_async (NULL, mailcmd, NULL,
-                       G_SPAWN_DEFAULT,
+                       G_SPAWN_SEARCH_PATH,
                        NULL, NULL, NULL, &error))
     {
       g_message ("%s", error->message);
@@ -561,51 +589,6 @@ valid_file (const gchar *filename)
 }
 
 static gchar *
-find_content_type (const gchar *filename)
-{
-  /* This function returns a MIME Content-type: value based on the
-     filename it is given.  */
-  const gchar *type_mappings[20] =
-  {
-    "gif" , "image/gif",
-    "jpg" , "image/jpeg",
-    "jpeg", "image/jpeg",
-    "tif" , "image/tiff",
-    "tiff", "image/tiff",
-    "png" , "image/png",
-    "g3"  , "image/g3fax",
-    "ps"  , "application/postscript",
-    "eps" , "application/postscript",
-    NULL, NULL
-  };
-
-  gchar *ext;
-  gint   i;
-
-  ext = find_extension (filename);
-
-  if (!ext)
-    {
-      return g_strdup ("application/octet-stream");
-    }
-
-  i = 0;
-  ext += 1;
-
-  while (type_mappings[i])
-    {
-      if (g_ascii_strcasecmp (ext, type_mappings[i]) == 0)
-        {
-          return g_strdup (type_mappings[i + 1]);
-        }
-
-      i += 2;
-    }
-
-  return g_strdup_printf ("image/x-%s", ext);
-}
-
-static gchar *
 find_extension (const gchar *filename)
 {
   gchar *filename_copy;
@@ -665,8 +648,54 @@ mesg_body_callback (GtkTextBuffer *buffer,
   mesg_body = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 }
 
+#ifdef SENDMAIL
+static gchar *
+sendmail_content_type (const gchar *filename)
+{
+  /* This function returns a MIME Content-type: value based on the
+     filename it is given.  */
+  const gchar *type_mappings[20] =
+  {
+    "gif" , "image/gif",
+    "jpg" , "image/jpeg",
+    "jpeg", "image/jpeg",
+    "tif" , "image/tiff",
+    "tiff", "image/tiff",
+    "png" , "image/png",
+    "g3"  , "image/g3fax",
+    "ps"  , "application/postscript",
+    "eps" , "application/postscript",
+    NULL, NULL
+  };
+
+  gchar *ext;
+  gint   i;
+
+  ext = find_extension (filename);
+
+  if (!ext)
+    {
+      return g_strdup ("application/octet-stream");
+    }
+
+  i = 0;
+  ext += 1;
+
+  while (type_mappings[i])
+    {
+      if (g_ascii_strcasecmp (ext, type_mappings[i]) == 0)
+        {
+          return g_strdup (type_mappings[i + 1]);
+        }
+
+      i += 2;
+    }
+
+  return g_strdup_printf ("image/x-%s", ext);
+}
+
 static void
-create_headers (FILE *mailpipe)
+sendmail_create_headers (FILE *mailpipe)
 {
   /* create all the mail header stuff. Feel free to add your own */
   /* It is advisable to leave the X-Mailer header though, as     */
@@ -695,7 +724,7 @@ create_headers (FILE *mailpipe)
   fprintf (mailpipe, "\n\n");
 
   {
-    gchar *content = find_content_type (mail_info.filename);
+    gchar *content = sendmail_content_type (mail_info.filename);
 
     fprintf (mailpipe, "--GUMP-MIME-boundary\n");
     fprintf (mailpipe, "Content-type: %s\n", content);
@@ -709,9 +738,9 @@ create_headers (FILE *mailpipe)
 }
 
 static gboolean
-to64 (const gchar  *filename,
-      FILE         *outfile,
-      GError      **error)
+sendmail_to64 (const gchar  *filename,
+               FILE         *outfile,
+               GError      **error)
 {
   GMappedFile  *infile;
   const guchar *in;
@@ -766,3 +795,4 @@ sendmail_pipe (gchar **cmd,
 
   return fdopen (fd, "wb");
 }
+#endif

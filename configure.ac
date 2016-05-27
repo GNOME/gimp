@@ -1855,26 +1855,15 @@ if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
   fi
 fi
 
-AC_ARG_WITH(xdg_email,[  --with-xdg-email[=DIR]   set xdg-email command location])
-
-have_xdg_email=no
-if test "x$have_sendmail" = xno && test "x$with_xdg_email" != "xno"; then
-  if test "x$with_xdg_email" != "xyes" && test "x$with_sendmail" != "x"; then
-    xdg_email_path=$with_xdg_email
-  else
-    xdg_email_path=$PATH
-  fi
-
-  AC_PATH_PROG(XDG_EMAIL, xdg-email, , $xdg_email_path)
+if test "x$have_sendmail" = xno; then
+  AC_PATH_PROG(XDG_EMAIL, xdg-email)
   if test "x$XDG_EMAIL" != "x"; then
     have_email="yes (xdg-email)"
-    have_xdg_email=yes
-    AC_DEFINE_UNQUOTED(XDG_EMAIL, "$XDG_EMAIL",
-                       [The email composer search tool used by the mail plug-in.])
-  elif test "x$with_xdg_email" != "x"; then
-    AC_MSG_ERROR([
-*** Check for xdg-email failed, though it was explicitly enabled with --with-xdg-email.
-*** If you know where it is installed, you may configure --with-xdg-email=/path/to/bin/.])
+  else
+    # Not having xdg-email at runtime is not a blocker.
+    # But let's inform the builder that for the feature to be available,
+    # xdg-email is a runtime dependency.
+    have_email="needs runtime dependency: xdg-email"
   fi
 fi
 
