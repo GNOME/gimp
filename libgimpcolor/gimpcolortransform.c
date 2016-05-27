@@ -323,7 +323,7 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
     }
 
   /* copy the alpha channel */
-  if (babl_format_has_alpha (dest_format))
+  if (src != dest && babl_format_has_alpha (dest_format))
     babl_process (babl_fish (src_format,
                              priv->dest_format),
                   src, dest, length);
