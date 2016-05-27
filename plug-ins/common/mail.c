@@ -73,13 +73,13 @@ static GimpPDBStatusType  send_image              (const gchar      *filename,
 static gboolean           send_dialog             (void);
 static void               mail_entry_callback     (GtkWidget        *widget,
                                                    gchar            *data);
-static void               mesg_body_callback      (GtkTextBuffer    *buffer,
-                                                   gpointer          data);
-
 static gboolean           valid_file              (const gchar      *filename);
 static gchar            * find_extension          (const gchar      *filename);
 
 #ifdef SENDMAIL
+static void               mesg_body_callback      (GtkTextBuffer    *buffer,
+                                                   gpointer          data);
+
 static gchar            * sendmail_content_type   (const gchar *filename)
 static void               sendmail_create_headers (FILE             *mailpipe);
 static gboolean           sendmail_to64           (const gchar      *filename,
@@ -287,6 +287,7 @@ send_image (const gchar *filename,
   gchar             *filepath = NULL;
   GFile             *tmp_dir  = NULL;
   GFileEnumerator   *enumerator;
+  gint               i;
 #else /* SENDMAIL */
   gchar             *mailcmd[3];
   GPid               mailpid;
@@ -367,12 +368,25 @@ send_image (const gchar *filename,
   mailcmd[0] = "xdg-email";
   mailcmd[1] = "--attach";
   mailcmd[2] = filepath;
-  mailcmd[3] = "--subject";
-  mailcmd[4] = mail_info.subject;
-  mailcmd[5] = "--body";
-  mailcmd[6] = mail_info.comment;
-  mailcmd[7] = mail_info.receipt;
-  mailcmd[8] = NULL;
+  i = 3;
+  if (mail_info.subject &&
+      strlen (mail_info.subject) > 0)
+    {
+      mailcmd[i++] = "--subject";
+      mailcmd[i++] = mail_info.subject;
+    }
+  if (mail_info.comment &&
+      strlen (mail_info.comment) > 0)
+    {
+      mailcmd[i++] = "--body";
+      mailcmd[i++] = mail_info.comment;
+    }
+  if (mail_info.receipt &&
+      strlen (mail_info.receipt) > 0)
+    {
+      mailcmd[i++] = mail_info.receipt;
+    }
+  mailcmd[i] = NULL;
 
   if (! g_spawn_async (NULL, mailcmd, NULL,
                        G_SPAWN_SEARCH_PATH,
@@ -447,9 +461,11 @@ send_dialog (void)
   GtkWidget     *main_vbox;
   GtkWidget     *entry;
   GtkWidget     *table;
+#ifdef SENDMAIL
   GtkWidget     *scrolled_window;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
+#endif
   gchar         *gump_from;
   gint           row = 0;
   gboolean       run;
@@ -508,6 +524,7 @@ send_dialog (void)
                     G_CALLBACK (mail_entry_callback),
                     mail_info.filename);
 
+#ifdef SENDMAIL
   /* To entry */
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
@@ -570,6 +587,7 @@ send_dialog (void)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
+#endif
 
   gtk_widget_show (dlg);
 
@@ -635,6 +653,7 @@ mail_entry_callback (GtkWidget *widget,
   g_strlcpy (data, gtk_entry_get_text (GTK_ENTRY (widget)), BUFFER_SIZE);
 }
 
+#ifdef SENDMAIL
 static void
 mesg_body_callback (GtkTextBuffer *buffer,
                     gpointer       data)
@@ -648,7 +667,6 @@ mesg_body_callback (GtkTextBuffer *buffer,
   mesg_body = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 }
 
-#ifdef SENDMAIL
 static gchar *
 sendmail_content_type (const gchar *filename)
 {
