@@ -3355,7 +3355,7 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Se aquesta opcion es activada, l'imatge résultante serà étirée per remplir la "
+"Se aquesta opcion es activada, l'imatge résultante serà étirée per emplenar la "
 "talha donada sens changer les proportions."
 
 #. Unit
@@ -5239,10 +5239,10 @@ msgstr "Colòria l'imatge en utilizant un escapolon d'imatge coma guida"
 msgid "_Sample Colorize..."
 msgstr "Color_iar a partir d'un escapolon..."
 
-# TODO étrange, je dirai Colorier l'échantillon, mas es pas del tout
-# ce que fait aquesta fonction, elle colorie a partir d'un échantillon
-# TODO étrange, je dirai Colorier l'échantillon, mais ce n'est pas du tout
-# ce que fait cette fonction, elle colorie à partir d'un échantillon
+# TODO étrange, je dirai Coloriar l'échantillon, mas es pas del tout
+# ce que fait aquesta fonction, elle coloria a partir d'un échantillon
+# TODO étrange, je dirai Coloriar l'échantillon, mais ce n'est pas du tout
+# ce que fait cette fonction, elle coloria à partir d'un échantillon
 #: ../plug-ins/common/sample-colorize.c:1325
 msgid "Sample Colorize"
 msgstr "Coloriar a partir d'un escapolon"
@@ -12476,7 +12476,7 @@ msgstr "_Captura d'ecran..."
 #~ msgstr "Mescla aleatòria"
 
 #~ msgid "Completely randomize a fraction of pixels"
-#~ msgstr "Modificar totalament aleatòriament una fraccion de pixels"
+#~ msgstr "Modificar totalament aleatòriament una fraccion de pixèls"
 
 #~ msgid "Randomly interchange some pixels with neighbors"
 #~ msgstr "Escambiar aleatòriament qualques pixèls amb lors vesins"
@@ -12718,7 +12718,7 @@ msgstr "_Captura d'ecran..."
 #~ msgstr "Aplatir a meitat"
 
 #~ msgid "Shift each row of pixels by a random amount"
-#~ msgstr "Decala cada rengada de pixels d'una quantitat aleatòri"
+#~ msgstr "Decala cada rengada de pixèls d'una quantitat aleatòri"
 
 #~ msgid "_Shift..."
 #~ msgstr "Desp_laçar..."
@@ -13374,24 +13374,24 @@ msgstr "_Captura d'ecran..."
 #~ "(%s)"
 #~ msgstr ""
 #~ "Erreur de démarrage de Ghostscript. Assurez-vous que Ghostscript soit "
-#~ "bien installé et si necessari utilisez la variable d'environnement "
+#~ "bien installé et se necessari utilisez la variable d'environnement "
 #~ "GS_PROG pour indiquer à GIMP son emplacement.\n"
 #~ "(%s)"
 
 #~ msgid "The width of frame %d of '%s' is too big for X cursor."
-#~ msgstr "Le cadre %d de « %s » es trop large pour le curseur X."
+#~ msgstr "Lo cadre %d de « %s » es trop large pour lo curseur X."
 
 #~ msgid "The height of frame %d of '%s' is too big for X cursor."
-#~ msgstr "Le cadre %d de « %s » es trop naut pour le curseur X."
+#~ msgstr "Lo cadre %d de « %s » es trop naut pour lo curseur X."
 
 #~ msgid "The height of '%s' is too big for X cursor."
-#~ msgstr "« %s » es trop nauta pour le curseur X."
+#~ msgstr "« %s » es trop nauta pour lo curseur X."
 
 #~ msgid ""
 #~ "This plug-in can only handle RGBA image format with 8bit color depth."
 #~ msgstr ""
-#~ "Ce empeuton ne peut gérer que le format d'image RVBA avec une profondeur "
-#~ "de couleurs de 8 bits."
+#~ "Ce empeuton ne peut gérer que lo format d'image RVBA avec una profondeur "
+#~ "de colors de 8 bits."
 
 #~ msgid "Width of '%s' is too large. Please reduce more than %dpx."
 #~ msgstr "« %s » es trop large. Réduisez au-delà de %dpx."
