@@ -474,7 +474,7 @@ run (const gchar      *name,
                    */
                   gimp_attributes_remove_attribute (attributes, "Exif.Image.0x0118");
                   gimp_attributes_remove_attribute (attributes, "Exif.Image.0x0119");
-                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.PageNumber");
+                  gimp_attributes_remove_attribute (attributes, "Exif.Image.PageNumber");
 
                   gimp_attributes_set_bits_per_sample (attributes, saved_bpp);
 
