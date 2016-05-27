@@ -80,7 +80,7 @@ static gchar            * find_extension          (const gchar      *filename);
 static void               mesg_body_callback      (GtkTextBuffer    *buffer,
                                                    gpointer          data);
 
-static gchar            * sendmail_content_type   (const gchar *filename)
+static gchar            * sendmail_content_type   (const gchar      *filename);
 static void               sendmail_create_headers (FILE             *mailpipe);
 static gboolean           sendmail_to64           (const gchar      *filename,
                                                    FILE             *outfile,
@@ -292,7 +292,7 @@ send_image (const gchar *filename,
 #else /* SENDMAIL */
   gchar             *mailcmd[3];
   GPid               mailpid;
-  FILE              *mailpipe;
+  FILE              *mailpipe = NULL;
 #endif
   GError            *error = NULL;
 
@@ -410,11 +410,11 @@ send_image (const gchar *filename,
   if (mailpipe == NULL)
     return GIMP_PDB_EXECUTION_ERROR;
 
-  create_headers (mailpipe);
+  sendmail_create_headers (mailpipe);
 
   fflush (mailpipe);
 
-  if (! to64 (tmpname, mailpipe, &error))
+  if (! sendmail_to64 (tmpname, mailpipe, &error))
     {
       g_message ("%s", error->message);
       g_error_free (error);
@@ -436,9 +436,12 @@ error:
 cleanup:
   /* close out the sendmail process */
 #ifdef SENDMAIL
-  fclose (mailpipe);
-  waitpid (mailpid, NULL, 0);
-  g_spawn_close_pid (mailpid);
+  if (mailpipe)
+    {
+      fclose (mailpipe);
+      waitpid (mailpid, NULL, 0);
+      g_spawn_close_pid (mailpid);
+    }
 
   /* delete the tmpfile that was generated */
   g_unlink (tmpname);
