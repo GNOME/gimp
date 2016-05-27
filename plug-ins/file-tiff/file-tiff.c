@@ -271,7 +271,7 @@ run (const gchar      *name,
                   gimp_set_data (LOAD_PROC,
                                  &pages.target, sizeof (pages.target));
 
-                  image = load_image (param[1].data.d_string, &layer_ID, tif, &pages,
+                  image = load_image (file, &layer_ID, tif, &pages,
                                       &resolution_loaded,
                                       &error);
 
@@ -474,7 +474,7 @@ run (const gchar      *name,
                    */
                   gimp_attributes_remove_attribute (attributes, "Exif.Image.0x0118");
                   gimp_attributes_remove_attribute (attributes, "Exif.Image.0x0119");
-                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.PageNumber");
+                  gimp_attributes_remove_attribute (attributes, "Exif.Image.PageNumber");
 
                   gimp_attributes_set_bits_per_sample (attributes, saved_bpp);
 

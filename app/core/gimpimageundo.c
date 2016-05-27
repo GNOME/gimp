@@ -483,7 +483,6 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_IMAGE_METADATA:
     case GIMP_UNDO_IMAGE_ATTRIBUTES:
       {
         GimpAttributes *attributes;
