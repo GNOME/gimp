@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
-"ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-06-07 05:36+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-09-19 15:30+0000\n"
 "PO-Revision-Date: 2015-06-25 21:55+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot En Òc\n"
@@ -25,7 +25,9 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
-msgid "Interactiva console for Script-Fu development"
+#, fuzzy
+#| msgid "Interactiva console for Script-Fu development"
+msgid "Interactive console for Script-Fu development"
 msgstr "Consòla interactiva pel desvolopament de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:117
@@ -102,7 +104,7 @@ msgid ""
 "Please close all Script-Fu windows and try again."
 msgstr ""
 "Podètz pas utilizar « Actualizar los escripts » tant que la bóstia de dialòg "
-"d'un Script-Fu es dobèrta. Tampatz totas las fenèstras de script-fu e "
+"d'un Script-Fu es dobèrta. Tampatz totas las fenèstras d'escript-fu e "
 "ensajatz tornamai."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
@@ -115,7 +117,9 @@ msgid "Welcome to TinyScheme"
 msgstr "Benvenguda sus TinyScheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:196
-msgid "Interactiva Scheme Development"
+#, fuzzy
+#| msgid "Interactiva Scheme Development"
+msgid "Interactive Scheme Development"
 msgstr "Desvolopament Scheme interactiu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:232
@@ -136,13 +140,15 @@ msgid "Script-Fu Procedure Browser"
 msgstr "Navigador de proceduras Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
-msgid "Script-Fu evaluation mode only allows non-interactiva invocation"
+#, fuzzy
+#| msgid "Script-Fu evaluation mode only allows non-interactiva invocation"
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Lo mòde d'avaloracion de Script-Fu autoriza unicament un apèl non-interactiu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:198
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Script-Fu pòt pas executar dos escripts a l'encòp."
+msgstr "Escript-Fu pòt pas executar dos escripts a l'encòp."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:200
 #, c-format
@@ -152,10 +158,10 @@ msgstr "Utilizatz ja l'escript « %s »"
 #: ../plug-ins/script-fu/script-fu-interface.c:226
 #, c-format
 msgid "Script-Fu: %s"
-msgstr "Script-Fu : %s"
+msgstr "Escript-Fu : %s"
 
 #. we add a colon after the label;
-#. *  some langívols want an extra space here
+#. *  some languages want an extra space here
 #.
 #: ../plug-ins/script-fu/script-fu-interface.c:289
 #, c-format
@@ -203,7 +209,7 @@ msgstr "Error al moment de l'execucion de %s :"
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Tròp pauc de paramètres per l'apèl a « script-fu-register »"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Error al moment del cargament de %s :"
@@ -234,1079 +240,1461 @@ msgid ""
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
 
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr "Bosselage"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+msgid "Add B_evel..."
+msgstr "Apondre un bis_eau..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+msgid "Add a beveled border to an image"
+msgstr "Apond una bordadura biseutada a un imatge"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+msgid "Thickness"
+msgstr "Épaisseur"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Work on copy"
+msgstr "Trabalhar sus una copie"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "Keep bump layer"
+msgstr "Conservar lo calc de relèu"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
+msgid "Border Layer"
+msgstr "Calc de bordadura"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:160
+msgid "Add _Border..."
+msgstr "Apondre una _bordadura..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:161
+msgid "Add a border around an image"
+msgstr "Apond una bordadura a l'entorn de l'imatge"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:168
+msgid "Border X size"
+msgstr "Talha de la bordadura en X"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:169
+msgid "Border Y size"
+msgstr "Talha de la bordadura en Y"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border color"
+msgstr "Color de la bordadura"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Delta value on color"
+msgstr "Valor de diferéncia de color"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+msgid "Frame"
+msgstr "Cadre"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr "L'animation mélanger a besoin d'au mens trois calques sources"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "_Mélanger..."
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"Crèa des calques intermediaris per mélanger deux o plusieurs calques par-"
+"dessus un fons coma animation"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr "Sequéncias intermédaires"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr "Rai max. del flou"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr "en Boucle"
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"L'efièit « en flammes » necessita deux calques al total. Un calc de primièr "
+"plan amb transparéncia e un calc de fons."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+msgid "B_urn-In..."
+msgstr "En _flammes..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"Crèa des calques intermediaris per produire una animacion de transition « en "
+"flammes » entre deux calques"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+msgid "Glow color"
+msgstr "Color de la lusor"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+msgid "Fadeout"
+msgstr "Fondut"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+msgid "Fadeout width"
+msgstr "Largor de l'estompement"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+msgid "Corona width"
+msgstr "Largor de la couronne"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+msgid "After glow"
+msgstr "Rogeoiement"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Add glowing"
+msgstr "Apondre lusor"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Prepare for GIF"
+msgstr "Préparer per GIF"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Speed (pixels/frame)"
+msgstr "Velocitat (pixels/image)"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+msgid "Carved Surface"
+msgstr "Surface gravée"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+msgid "Bevel Shadow"
+msgstr "Ombra del bisèu"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+msgid "Bevel Highlight"
+msgstr "Esclairatge del bisèu"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+msgid "Cast Shadow"
+msgstr "Ombra projècteée"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+msgid "Inset"
+msgstr "Insertion"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+msgid "Stencil C_arve..."
+msgstr "Patron de gr_avure..."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+msgid "Image to carve"
+msgstr "Image a graver"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+msgid "Carve white areas"
+msgstr "Graver les zones blanches"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+msgid "Background"
+msgstr "Rèireplan"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+msgid "Layer 1"
+msgstr "Calc 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+msgid "Layer 2"
+msgstr "Calc 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+msgid "Layer 3"
+msgstr "Calc 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+msgid "Drop Shadow"
+msgstr "Ombra portada"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+msgid "Chrome"
+msgstr "Chrome"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+msgid "Highlight"
+msgstr "Esclairatge"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+msgid "Stencil C_hrome..."
+msgstr "Patron de c_hromage..."
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"Apond un efièit chrome a la région seleccionada (o alpha) en utilizant un "
+"patron (tons de gris) especificat"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+msgid "Chrome saturation"
+msgstr "Saturacion del chrome"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+msgid "Chrome lightness"
+msgstr "Luminositat del chrome"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+msgid "Chrome factor"
+msgstr "Factor de chrome"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+msgid "Environment map"
+msgstr "Carte d'environament"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+msgid "Highlight balance"
+msgstr "Balance d'esclairatge"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+msgid "Chrome balance"
+msgstr "Balance del chrome"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+msgid "Chrome white areas"
+msgstr "Zones blanches del chrome"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:74
+msgid "Effect layer"
+msgstr "Calc d'efièit"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:127
+msgid "_Circuit..."
+msgstr "_Circuit..."
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:128
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+"Remplit la région seleccionada (o alpha) amb des traces talas coma sus un "
+"circuit imprimé"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid "Oilify mask size"
+msgstr "Talha de masque "
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:136
+msgid "Circuit seed"
+msgstr "Gèrme del circuit"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:137
+msgid "No background (only for separate layer)"
+msgstr "Aucun arrière-plan (solament pel novèl calque)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:138
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Keep selection"
+msgstr "Conservar la seleccion"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:139
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+msgid "Separate layer"
+msgstr "Novèl calc"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:51
+msgid "_Clothify..."
+msgstr "_Tisser..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "Apond una texture de style tissu sus la région seleccionada (o alpha)"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:59
+msgid "Blur X"
+msgstr "Fosc X"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur Y"
+msgstr "Fosc Y"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Elevation"
+msgstr "Élévation"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Depth"
+msgstr "Prigondor"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr "Taches"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:81
+msgid "_Coffee Stain..."
+msgstr "_Tache de café..."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "Add realistic looking coffee stains to the image"
+msgstr "Apond una tache de café réaliste a l'imatge"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:89
+msgid "Stains"
+msgstr "Taches"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+msgid "Darken only"
+msgstr "Escurezir solament"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+msgid "Difference Clouds..."
+msgstr "Nívols per diferéncia..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Bruit plein appliqué amb lo mòde de calc diferéncia"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+msgid "_Distort..."
+msgstr "_Déformation..."
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+msgid "Distress the selection"
+msgstr "Déforme la seleccion"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Sulhet (plus grand 1<-->254 mai petit)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "Spread"
+msgstr "Dispersion"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "Granularity (1 is low)"
+msgstr "Granularité (1 es faible)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+msgid "Smooth"
+msgstr "Adocir"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+#, fuzzy
+#| msgid "Smooth orizontally"
+msgid "Smooth horizontally"
+msgstr "Adocir orizontalament"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+msgid "Smooth vertically"
+msgstr "Adocir verticalament"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow..."
+msgstr "Ombra _portée..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Apond una ombra portada a la région seleccionada (o alpha)"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "Decalatge X"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "Decalatge Y"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Blur radius"
+msgstr "Rai del flou"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+msgid "Color"
+msgstr "Color"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Opacity"
+msgstr "Opacitat"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+msgid "Allow resizing"
+msgstr "Permettre lo redimensionnement"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
+msgid "_Erase Every Other Row..."
+msgstr "Change una colomna o rengada _sur deux..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
+msgid "Erase every other row or column"
+msgstr "Escafa una colomna o rengada sus deux"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Rows/cols"
+msgstr "Rengadas/colomnas"
+
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
 msgstr "Rengadas"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Columns"
+msgstr "Colomnas"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even/odd"
+msgstr "Pair/impair"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Even"
 msgstr "Par"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Odd"
+msgstr "Impair"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Erase/fill"
+msgstr "Escafar/emplenar"
+
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
 msgid "Erase"
 msgstr "Escafar"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Fill with BG"
+msgstr "Emplenar amb l'AP"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr "Rendre un apercebut de _poliças..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+"Crèa un imatge remplie amb des apercebuts des poliças correspondant a un "
+"filtre de nom de poliça"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+msgid "_Text"
+msgstr "Te_xte"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr "Utilizar lo n_om de la poliça coma tèxte"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr "É_tiquettes"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr "_Filtre (regexp)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Font _size (pixels)"
+msgstr "_Talha de la poliça (pixels)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+msgid "_Border (pixels)"
+msgstr "_Bordadura (pixels)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "_Color scheme"
+msgstr "_Schéma de color"
+
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
 msgstr "Negre e blanc"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#, fuzzy
+#| msgid "Activa colors"
+msgid "Active colors"
+msgstr "Activar las colors"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+msgid "_Fuzzy Border..."
+msgstr "Bordadura _inegala..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "Apond una bordadura diffuse e inegala a l'imatge"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr "Talha de bordadura"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+msgid "Blur border"
+msgstr "Bordadura floue"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+msgid "Granularity (1 is Low)"
+msgstr "Granularité (1 es faible)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+msgid "Add shadow"
+msgstr "Apondre una ombre"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Shadow weight (%)"
+msgstr "Épaisseur de l'ombra (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Flatten image"
+msgstr "Aplatir l'imatge"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr "Utilizar les _camins"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "Signet cap a lo manuel utilizaire"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr "_Préparer vos images pel Web"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "_Trabalhar sus les photos numériques"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr "Crear, ouvrir e enregistrar des _fichièrs"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr "Concepts de _base"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr "Comment utilizar les bóstias de _dialòg"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr "Dessenhar des _objèctes simples"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr "Crear e utilizar les _seleccions"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+msgid "_Main Web Site"
+msgstr "Site Web _officiel"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the GIMP web site"
+msgstr "Signet cap a lo site Web de GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+msgid "_Developer Web Site"
+msgstr "Site Web des _développeurs"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+msgid "_User Manual Web Site"
+msgstr "Site Web del _manuel utilizaire"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Plug-in _Registry"
+msgstr "_Registre des empeutons"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+msgid "Custom _Gradient..."
+msgstr "Degradat _personalizat..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Crèa un imatge remplie amb un exemplaire del degradat courant"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+msgid "Width"
+msgstr "Largor"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Height"
+msgstr "Nautor"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+msgid "Gradient reverse"
+msgstr "Degradat inverse"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "_Grille..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+"Trace una grasilha suivant les indications des listas de coordenadas X e Y "
+"en utilizant la bròssa courante"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr "Divisions en X"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr "Divisions en Y"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "Novèls guides dempuèi la _seleccion"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#, fuzzy
+msgid "Create four guides around the bounding box of the current selection"
+msgstr "Arredonditt les coins de la seleccion courante"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr "Novèl guide (en _percentatge)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr ""
+"Apond un guide a la posicion indicada en percentatge de la talha de l'imatge"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Direction"
+msgstr "Direction"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "Orizontal"
 
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "Vertical"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "Position (in %)"
+msgstr "Position (en %)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr "Novèl _guide..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr ""
+"Apond un guide dins l'orientation e a la posicion indicadas (en pixels)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "Position"
+msgstr "Position"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "_Enlever totes les guides"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+#, fuzzy
+#| msgid "Remove all orizontal and vertical guides"
+msgid "Remove all horizontal and vertical guides"
+msgstr "Suprimís totes les guides orizontals e verticals"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr "_Lave..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr "Remplit la seleccion courante amb de la lave"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
+msgid "Seed"
+msgstr "Graine"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "Talha"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
+msgstr "Rugosité"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+msgid "Gradient"
+msgstr "Degradat"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+msgid "Use current gradient"
+msgstr "Utiliza lo degradat courant"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+msgid "Line _Nova..."
+msgstr "Linha No_va..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+"Remplit un calc amb des rayons émanant de son centre en utilizant la color "
+"de primièr plan"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Number of lines"
+msgstr "Nombres de lignes"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Sharpness (degrees)"
+msgstr "Étroelocitat (grases)"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:118
+msgid "Offset radius"
+msgstr "Rai del decalatge"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:119
+msgid "Randomness"
+msgstr "Aléa"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr "_Rectangulaire..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr "Crèa una bròssa rectangulaire"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+msgid "Name"
+msgstr "Nom"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "Spacing"
+msgstr "Espaçament"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+msgid "Re_ctangular, Feathered..."
+msgstr "Re_ctangulaire, adoucie..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+msgid "Create a rectangular brush with feathered edges"
+msgstr "Crèa una bròssa rectangulaire amb dels bòrds adoucis"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Feathering"
+msgstr "Adociment"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+msgid "_Elliptical..."
+msgstr "_Elliptique..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+msgid "Create an elliptical brush"
+msgstr "Crèa una bròssa elliptique"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+msgid "Elli_ptical, Feathered..."
+msgstr "_Elliptique, adoucie..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+msgid "Create an elliptical brush with feathered edges"
+msgstr "Crèa una bròssa elliptique amb dels bòrds adoucis"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr "_Vieille photo..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr "Far qu'una image ressemble a una vieille photo"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr "Enlever lo focus"
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "Sépia"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr "Marbrer"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
+msgid "Folder for the output file"
+msgstr "Dorsièr pel fichièr de sortida"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Lo nom del fichièr a crear (se un fichièr de ce nom existís ja, il serà "
+"remplacé)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "The filename you entered is not a suitable name for a file."
+msgstr ""
+"Lo nom de fichièr que vous avez sasit es pas un nom qui convient a un "
+"fichièr."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Totes los caractèrs del nom son soit des espaces blancs, soit des caractèrs "
+"interdits dins los noms de fichièrs."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Exporte la paleta activa en tant que feuille de style CSS amb per nom de "
+"classe lo nom d'entrada de color, et, per attribut de color, la color elle-"
+"même"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Exporte la paleta activa en tant que dictionnaire PHP (nom => color)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Exporte la paleta activa en tant que dictionnaire Python (nom : color)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"Inscrit totas las colors d'una palette dins un fichièr tèxte, una valor "
+"hexadécimale per linha (sans nom)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr ""
+"Exporte la paleta activa en tant que java.util.Hashtable <cadena, color>"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr "Aucune image n'est présente dins lo presse-papier per collage."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+msgid "New _Brush..."
+msgstr "Novèla _bròssa..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr "Còpia lo contengut del quichapapièrs cap a una novèla bròssa"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "Brush name"
+msgstr "Nom de la bròssa"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+msgid "File name"
+msgstr "Nom de fichièr"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+msgid "New _Pattern..."
+msgstr "Novèl _motiu..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "Còpia lo contengut del quichapapièrs cap a un novèl motiu"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+msgid "Pattern name"
+msgstr "Nom del motiu"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr "Ombra en _perspective..."
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+#, fuzzy
+#| msgid "Add a perspectiva shadow to the selected region (or alpha)"
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "Apond una ombre en perspectiva a la région seleccionada (o alpha)"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "Angle"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative distance of horizon"
+msgstr "Distance relative de l'horizon"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Relative length of shadow"
+msgstr "Longor relative de l'ombra"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr "Interpolation"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr "_Prédateur..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "Apond un efièit « prédateur » a la région seleccionada (o alpha)"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+msgid "Edge amount"
+msgstr "Nombre d'arêtes"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr "Pixéliser"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+msgid "Pixel amount"
+msgstr "Nombre de pixèls"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer Order"
+msgstr "Inversar l'òrdre des calques"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr "Inverse l'òrdre des calques dins l'imatge"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:67
+msgid "_Rippling..."
+msgstr "_Ondulation..."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
+#, fuzzy
+#| msgid ""
+#| "Create a multi-layer image by adding a ripple effect to the current image"
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr ""
+"Crèa un imatge multicalques en ajoutant un efièit d'ondulation a l'imatge "
+"courante"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
+msgid "Rippling strength"
+msgstr "Vigueur de l'ondulation"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:76
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Nombre d'imatges"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Edge behavior"
+msgstr "Compòrtament del bord"
+
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Wrap"
 msgstr "Enrotlar"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Smear"
+msgstr "Étaler"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Black"
+msgstr "Negre"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr "Caires a_rredondits..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+"Arredonditt les coins d'un imatge e optionnellement apondre una ombre portée e "
+"un fond"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+msgid "Edge radius"
+msgstr "Rai dels bòrds"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+msgid "Add drop-shadow"
+msgstr "Apondre una ombra portada"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Shadow X offset"
+msgstr "Decalatge de l'ombra en X"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Shadow Y offset"
+msgstr "Decalatge de l'ombra en Y"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add background"
+msgstr "Apondre un arrière-plan"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr "Definir la pale_tte..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+"Attribue a la paleta de colors d'un imatge las colors de la paleta indicada."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr "Palette"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr "Rectangle arr_ondi..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr "Arredonditt les coins de la seleccion courante"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "Radius (%)"
+msgstr "Rai (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Concave"
+msgstr "Concave"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+msgid "To _Brush..."
+msgstr "Vers una _bròssa..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr "Convertit una seleccion en bròssa"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+msgid "To _Image"
+msgstr "Vers una _image"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr "Convertit una seleccion en image"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+msgid "To _Pattern..."
+msgstr "Vers un _motiu..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr "Convertit una seleccion en motiu"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:236
+msgid "_Slide..."
+msgstr "_Pellicule photo..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm:237
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+"Apond un cadre de pellicule photo, des trous d'entraînement e un étiquetage "
+"a un imatge"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:244
+msgid "Text"
+msgstr "Tèxte"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "Number"
+msgstr "Nombre"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Font"
+msgstr "Poliça"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:247
+msgid "Font color"
+msgstr "Color de la poliça"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr "Globe _tournant..."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr ""
+"Crèa una animacion en plaquant l'imatge courante sus una esfèra tournante"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "Images"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Turn from left to right"
+msgstr "Tourne de esquèrra a dreita"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Transparent background"
+msgstr "Rèireplan transparent"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "Indèx a n colors (0 = reste en RVB)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+msgid "Rendering Spyro"
+msgstr "Rendut spirographe en cors"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+msgid "_Spyrogimp..."
+msgstr "_Spirographe..."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr ""
+"Apond des corbas spirographes, épitrochoïdes e lissajous al calc actual"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Type"
+msgstr "Type"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
 msgstr "Espirograf"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+msgid "Epitrochoid"
+msgstr "Épitrochoïde"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Shape"
+msgstr "Forma"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
 msgid "Circle"
 msgstr "Cercle"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+msgid "Triangle"
+msgstr "Triangle"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+msgid "Square"
+msgstr "Carrat"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+msgid "Pentagon"
+msgstr "Pentagone"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+msgid "Hexagon"
+msgstr "Hexagone"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+msgid "Polygon: 7 sides"
+msgstr "Poligòn : 7 costats"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+msgid "Polygon: 8 sides"
+msgstr "Poligòn : 8 costats"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+msgid "Polygon: 9 sides"
+msgstr "Poligòn : 9 costats"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+msgid "Polygon: 10 sides"
+msgstr "Poligòn : 10 costats"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+msgid "Outer teeth"
+msgstr "Denture exteriora"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+msgid "Inner teeth"
+msgstr "Denture interiora"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+msgid "Margin (pixels)"
+msgstr "Marge (pixels)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+msgid "Hole ratio"
+msgstr "Talha del trou central"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+msgid "Start angle"
+msgstr "Angle de despart"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Tool"
+msgstr "Aisina"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
 msgid "Pencil"
 msgstr "Gredon"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+msgid "Brush"
+msgstr "Bròssa"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+msgid "Airbrush"
+msgstr "Aérographe"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Color method"
+msgstr "Metòde de coloration"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Solid Color"
 msgstr "Color unida"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+msgid "Gradient: Loop Sawtooth"
+msgstr "Degradat : rebouclage en dents de scie"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+msgid "Gradient: Loop Triangle"
+msgstr "Degradat : rebouclage en triangle"
+
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+#, fuzzy
+msgid "_Sphere..."
+msgstr "C_hrome..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr "Fosc _mosaïque..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "Brouille los bòrds d'un imatge per obténer un carrèu raccordable"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "Rayon"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+msgid "Blur vertically"
+msgstr "Rendre flou verticalament"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+#, fuzzy
+#| msgid "Blur orizontally"
+msgid "Blur horizontally"
+msgstr "Rendre flou orizontalament"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Blur type"
+msgstr "Tipe de flou"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
 msgstr "IIR"
 
-#~ msgid "Bumpmap"
-#~ msgstr "Bosselage"
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr "Talha de la masqueta"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+msgid "Mask opacity"
+msgstr "Opacitat de la masqueta"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr "_Vagues..."
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"Crèa un imatge multi-calque amb un efièit de pierre jetée al travers de "
+"l'imatge courante"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr "Amplitude"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr "Longor d'onde"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+msgid "Invert direction"
+msgstr "Inverse la direction"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:389
+msgid "_Weave..."
+msgstr "T_resser..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm:390
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"Crèa un novèl calc rempli amb un efièit de tresse a utilizar coma surcouche "
+"o relèu"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "Ribbon width"
+msgstr "Largor des bandes"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid "Ribbon spacing"
+msgstr "Espaçament bandes"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:399
+msgid "Shadow darkness"
+msgstr "Obscurité de l'ombra"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:400
+msgid "Shadow depth"
+msgstr "Prigondor de l'ombra"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:401
+msgid "Thread length"
+msgstr "Longor fial"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:402
+msgid "Thread density"
+msgstr "Densitat fial"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:403
+msgid "Thread intensity"
+msgstr "Intensitat fial"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "Ombra"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr "Efièit _Xach..."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+"Apond un subtile efièit 3D translucide a la région seleccionada (o alpha)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+msgid "Highlight X offset"
+msgstr "Decalatge X esclairatge"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight Y offset"
+msgstr "Decalatge Y esclairatge"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "Color d'esclairatge"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight opacity"
+msgstr "Opacitat d'esclairatge"
 
-#~ msgid "Add B_evel..."
-#~ msgstr "Apondre un bis_eau..."
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Drop shadow color"
+msgstr "Color de l'ombra portada"
 
-#~ msgid "Add a beveled border to an image"
-#~ msgstr "Apond una bordadura biseutada a un imatge"
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr "Opacitat de l'ombra portada"
 
-#~ msgid "Thickness"
-#~ msgstr "Épaisseur"
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow blur radius"
+msgstr "Rai de flou per l'ombra portada"
 
-#~ msgid "Work on copy"
-#~ msgstr "Travailler sus una copie"
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow X offset"
+msgstr "Decalatge X d'ombra portada"
 
-#~ msgid "Keep bump layer"
-#~ msgstr "Conservar lo calc de relèu"
-
-#~ msgid "Border Layer"
-#~ msgstr "Calc de bordadura"
-
-#~ msgid "Add _Border..."
-#~ msgstr "Apondre una _bordadura..."
-
-#~ msgid "Add a border around an image"
-#~ msgstr "Apond una bordadura a l'entorn de l'imatge"
-
-#~ msgid "Border X size"
-#~ msgstr "Talha de la bordadura en X"
-
-#~ msgid "Border Y size"
-#~ msgstr "Talha de la bordadura en Y"
-
-#~ msgid "Border color"
-#~ msgstr "Color de la bordadura"
-
-#~ msgid "Delta value on color"
-#~ msgstr "Valor de diferéncia de color"
-
-#~ msgid "Frame"
-#~ msgstr "Cadre"
-
-#~ msgid "Blend Animation needs at least three source layers"
-#~ msgstr "L'animation mélanger a besoin d'au moins trois calques sources"
-
-#~ msgid "_Blend..."
-#~ msgstr "_Mélanger..."
-
-#~ msgid ""
-#~ "Create intermediate layers to blend two or more layers over a background "
-#~ "as an animation"
-#~ msgstr ""
-#~ "Crèa des calques intermediaris per mélanger deux o plusieurs calques "
-#~ "par-dessus un fons coma animation"
-
-#~ msgid "Intermediate frames"
-#~ msgstr "Sequéncias intermédaires"
-
-#~ msgid "Max. blur radius"
-#~ msgstr "Rai max. del flou"
-
-#~ msgid "Looped"
-#~ msgstr "en Boucle"
-
-#~ msgid ""
-#~ "The Burn-In script needs two layers in total. A foreground layer with "
-#~ "transparency and a background layer."
-#~ msgstr ""
-#~ "L'efièch « en flammes » necessita deux calques al total. Un calc de "
-#~ "primièr plan amb transparéncia e un calc de fond."
-
-#~ msgid "B_urn-In..."
-#~ msgstr "En _flammes..."
-
-#~ msgid ""
-#~ "Create intermediate layers to produce an animated 'burn-in' transition "
-#~ "between two layers"
-#~ msgstr ""
-#~ "Crèa des calques intermediaris per produire una animacion de transition "
-#~ "« en flammes » entre deux calques"
-
-#~ msgid "Glow color"
-#~ msgstr "Color de la lusor"
-
-#~ msgid "Fadeout"
-#~ msgstr "Fondut"
-
-#~ msgid "Fadeout width"
-#~ msgstr "Largor de l'estompement"
-
-#~ msgid "Corona width"
-#~ msgstr "Largor de la couronne"
-
-#~ msgid "After glow"
-#~ msgstr "Rogeoiement"
-
-#~ msgid "Add glowing"
-#~ msgstr "Apondre lusor"
-
-#~ msgid "Prepare for GIF"
-#~ msgstr "Préparer per GIF"
-
-#~ msgid "Speed (pixels/frame)"
-#~ msgstr "Velocitat (pixels/image)"
-
-#~ msgid "Carved Surface"
-#~ msgstr "Surface gravée"
-
-#~ msgid "Bevel Shadow"
-#~ msgstr "Ombra del bisèu"
-
-#~ msgid "Bevel Highlight"
-#~ msgstr "Esclairatge del bisèu"
-
-#~ msgid "Cast Shadow"
-#~ msgstr "Ombra projetée"
-
-#~ msgid "Inset"
-#~ msgstr "Insertion"
-
-#~ msgid "Stencil C_arve..."
-#~ msgstr "Patron de gr_avure..."
-
-#~ msgid "Image to carve"
-#~ msgstr "Image a graver"
-
-#~ msgid "Carve white areas"
-#~ msgstr "Graver les zones blanches"
-
-#~ msgid "Background"
-#~ msgstr "Rèire plan"
-
-#~ msgid "Layer 1"
-#~ msgstr "Calc 1"
-
-#~ msgid "Layer 2"
-#~ msgstr "Calc 2"
-
-#~ msgid "Layer 3"
-#~ msgstr "Calc 3"
-
-#~ msgid "Drop Shadow"
-#~ msgstr "Ombra portada"
-
-#~ msgid "Chrome"
-#~ msgstr "Chrome"
-
-#~ msgid "Highlight"
-#~ msgstr "Esclairatge"
-
-#~ msgid "Stencil C_hrome..."
-#~ msgstr "Patron de c_hromage..."
-
-#~ msgid ""
-#~ "Add a chrome effect to the selected region (or alpha) using a specified "
-#~ "(grayscale) stencil"
-#~ msgstr ""
-#~ "Apond un efièch chrome a la région seleccionada (o alpha) en utilizant "
-#~ "un patron (tons de gris) especificat"
-
-#~ msgid "Chrome saturation"
-#~ msgstr "Saturation del chrome"
-
-#~ msgid "Chrome lightness"
-#~ msgstr "Luminositat del chrome"
-
-#~ msgid "Chrome factor"
-#~ msgstr "Factor de chrome"
-
-#~ msgid "Environment map"
-#~ msgstr "Carte d'environament"
-
-#~ msgid "Highlight balance"
-#~ msgstr "Balance d'esclairatge"
-
-#~ msgid "Chrome balance"
-#~ msgstr "Balance del chrome"
-
-#~ msgid "Chrome white areas"
-#~ msgstr "Zones blanches del chrome"
-
-#~ msgid "Effect layer"
-#~ msgstr "Calc d'efièch"
-
-#~ msgid "_Circuit..."
-#~ msgstr "_Circuit..."
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with traces like those on a circuit "
-#~ "board"
-#~ msgstr ""
-#~ "Remplit la région seleccionada (o alpha) amb des traces telles que sus "
-#~ "un circuit imprimé"
-
-#~ msgid "Oilify mask size"
-#~ msgstr "Talha de masque "
-
-#~ msgid "Circuit seed"
-#~ msgstr "Gèrme del circuit"
-
-#~ msgid "No background (only for separate layer)"
-#~ msgstr "Aucun arrière-plan (solament pel novèl calque)"
-
-#~ msgid "Keep selection"
-#~ msgstr "Conservar la seleccion"
-
-#~ msgid "Separate layer"
-#~ msgstr "Novèl calque"
-
-#~ msgid "_Clothify..."
-#~ msgstr "_Tisser..."
-
-#~ msgid "Add a cloth-like texture to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Apond una texture de style tissu sus la région seleccionada (o alpha)"
-
-#~ msgid "Blur X"
-#~ msgstr "Fosc X"
-
-#~ msgid "Blur Y"
-#~ msgstr "Fosc Y"
-
-#~ msgid "Azimuth"
-#~ msgstr "Azimut"
-
-#~ msgid "Elevation"
-#~ msgstr "Élévation"
-
-#~ msgid "Depth"
-#~ msgstr "Prigondor"
-
-#~ msgid "Stain"
-#~ msgstr "Taches"
-
-#~ msgid "_Coffee Stain..."
-#~ msgstr "_Tache de café..."
-
-#~ msgid "Add realistic looking coffee stains to the image"
-#~ msgstr "Apond una tache de café réaliste a l'imatge"
-
-#~ msgid "Stains"
-#~ msgstr "Taches"
-
-#~ msgid "Darken only"
-#~ msgstr "Escurezir solament"
-
-#~ msgid "Difference Clouds..."
-#~ msgstr "Nívols per diferéncia..."
-
-#~ msgid "Solid noise applied with Difference layer mode"
-#~ msgstr "Bruit plein appliqué amb lo mode de calc diferéncia"
-
-#~ msgid "_Distort..."
-#~ msgstr "_Déformation..."
-
-#~ msgid "Distress the selection"
-#~ msgstr "Déforme la seleccion"
-
-#~ msgid "Threshold (bigger 1<-->254 smaller)"
-#~ msgstr "Sulhet (plus grand 1<-->254 mai petit)"
-
-#~ msgid "Spread"
-#~ msgstr "Dispersion"
-
-#~ msgid "Granularity (1 is low)"
-#~ msgstr "Granularité (1 es faible)"
-
-#~ msgid "Smooth"
-#~ msgstr "Adocir"
-
-#~ msgid "Smooth orizontally"
-#~ msgstr "Adocir orizontalament"
-
-#~ msgid "Smooth vertically"
-#~ msgstr "Adocir verticalament"
-
-#~ msgid "_Drop Shadow..."
-#~ msgstr "Ombra _portée..."
-
-#~ msgid "Add a drop shadow to the selected region (or alpha)"
-#~ msgstr "Apond una ombra portada a la région seleccionada (o alpha)"
-
-#~ msgid "Offset X"
-#~ msgstr "Decalatge X"
-
-#~ msgid "Offset Y"
-#~ msgstr "Decalatge Y"
-
-#~ msgid "Blur radius"
-#~ msgstr "Rai del flou"
-
-#~ msgid "Color"
-#~ msgstr "Color"
-
-#~ msgid "Opacity"
-#~ msgstr "Opacitat"
-
-#~ msgid "Allow resizing"
-#~ msgstr "Permettre lo redimensionnement"
-
-#~ msgid "_Erase Every Other Row..."
-#~ msgstr "Change una colomna o rengada _sur deux..."
-
-#~ msgid "Erase every other row or column"
-#~ msgstr "Efface una colomna o rengada sus deux"
-
-#~ msgid "Rows/cols"
-#~ msgstr "Rengadas/colomnas"
-
-#~ msgid "Columns"
-#~ msgstr "Colomnas"
-
-#~ msgid "Even/odd"
-#~ msgstr "Pair/impair"
-
-#~ msgid "Odd"
-#~ msgstr "Impair"
-
-#~ msgid "Erase/fill"
-#~ msgstr "Escafar/remplir"
-
-#~ msgid "Fill with BG"
-#~ msgstr "Emplenar amb l'AP"
-
-#~ msgid "Render _Font Map..."
-#~ msgstr "Rendre un apercebut de _poliças..."
-
-#~ msgid ""
-#~ "Create an image filled with previews of fonts matching a fontname filter"
-#~ msgstr ""
-#~ "Crèa un imatge remplie amb des apercebuts des poliças correspondant a un "
-#~ "filtre de nom de poliça"
-
-#~ msgid "_Text"
-#~ msgstr "Te_xte"
-
-#~ msgid "Use font _name as text"
-#~ msgstr "Utilizar lo n_om de la poliça coma tèxte"
-
-#~ msgid "_Labels"
-#~ msgstr "É_tiquettes"
-
-#~ msgid "_Filter (regexp)"
-#~ msgstr "_Filtre (regexp)"
-
-#~ msgid "Font _size (pixels)"
-#~ msgstr "_Talha de la poliça (pixels)"
-
-#~ msgid "_Border (pixels)"
-#~ msgstr "_Bordadura (pixels)"
-
-#~ msgid "_Color scheme"
-#~ msgstr "_Schéma de color"
-
-#~ msgid "Activa colors"
-#~ msgstr "Activar las colors"
-
-#~ msgid "_Fuzzy Border..."
-#~ msgstr "Bordadura _inegala..."
-
-#~ msgid "Add a jagged, fuzzy border to an image"
-#~ msgstr "Apond una bordadura diffuse e inegala a l'imatge"
-
-#~ msgid "Border size"
-#~ msgstr "Talha de bordadura"
-
-#~ msgid "Blur border"
-#~ msgstr "Bordadura floue"
-
-#~ msgid "Granularity (1 is Low)"
-#~ msgstr "Granularité (1 es faible)"
-
-#~ msgid "Add shadow"
-#~ msgstr "Apondre una ombre"
-
-#~ msgid "Shadow weight (%)"
-#~ msgstr "Épaisseur de l'ombra (%)"
-
-#~ msgid "Flatten image"
-#~ msgstr "Aplatir l'imatge"
-
-#~ msgid "Using _Paths"
-#~ msgstr "Utilizar les _camins"
-
-#~ msgid "Bookmark to the user manual"
-#~ msgstr "Signet cap a lo manuel utilizaire"
-
-#~ msgid "_Preparing your Images for the Web"
-#~ msgstr "_Préparer vos images pel Web"
-
-#~ msgid "_Working with Digital Camera Photos"
-#~ msgstr "_Travailler sus les photos numériques"
-
-#~ msgid "Create, Open and Save _Files"
-#~ msgstr "Crear, ouvrir e enregistrar des _fichièrs"
-
-#~ msgid "_Basic Concepts"
-#~ msgstr "Concepts de _base"
-
-#~ msgid "How to Use _Dialogs"
-#~ msgstr "Comment utilizar les bóstias de _dialòg"
-
-#~ msgid "Drawing _Simple Objects"
-#~ msgstr "Dessenhar des _objèctes simples"
-
-#~ msgid "Create and Use _Selections"
-#~ msgstr "Crear e utilizar les _seleccions"
-
-#~ msgid "_Main Web Site"
-#~ msgstr "Site Web _officiel"
-
-#~ msgid "Bookmark to the GIMP web site"
-#~ msgstr "Signet cap a lo site Web de GIMP"
-
-#~ msgid "_Developer Web Site"
-#~ msgstr "Site Web des _développeurs"
-
-#~ msgid "_User Manual Web Site"
-#~ msgstr "Site Web del _manuel utilizaire"
-
-#~ msgid "Plug-in _Registry"
-#~ msgstr "_Registre des empeutons"
-
-#~ msgid "Custom _Gradient..."
-#~ msgstr "Degradat _personalizat..."
-
-#~ msgid "Create an image filled with an example of the current gradient"
-#~ msgstr "Crèa un imatge remplie amb un exemplaire del degradat courant"
-
-#~ msgid "Width"
-#~ msgstr "Largor"
-
-#~ msgid "Height"
-#~ msgstr "Nautor"
-
-#~ msgid "Gradient reverse"
-#~ msgstr "Degradat inverse"
-
-#~ msgid "_Grid..."
-#~ msgstr "_Grille..."
-
-#~ msgid ""
-#~ "Draw a grid as specified by the lists of X and Y locations using the "
-#~ "current brush"
-#~ msgstr ""
-#~ "Trace una grasilha suivant les indications des listas de coordenadas X e Y "
-#~ "en utilisant la bròssa courante"
-
-#~ msgid "X divisions"
-#~ msgstr "Divisions en X"
-
-#~ msgid "Y divisions"
-#~ msgstr "Divisions en Y"
-
-#~ msgid "New Guides from _Selection"
-#~ msgstr "Novèls guides dempuèi la _seleccion"
-
-#, fuzzy
-#~ msgid "Create four guides around the bounding box of the current selection"
-#~ msgstr "Arrondit les coins de la seleccion courante"
-
-#~ msgid "New Guide (by _Percent)..."
-#~ msgstr "Novèl guide (en _percentatge)..."
-
-#~ msgid ""
-#~ "Add a guide at the position specified as a percentage of the image size"
-#~ msgstr ""
-#~ "Apond un guide a la posicion indicada en percentatge de la talha de "
-#~ "l'imatge"
-
-#~ msgid "Direction"
-#~ msgstr "Direction"
-
-#~ msgid "Vertical"
-#~ msgstr "Vertical"
-
-#~ msgid "Position (in %)"
-#~ msgstr "Position (en %)"
-
-#~ msgid "New _Guide..."
-#~ msgstr "Novèl _guide..."
-
-#~ msgid "Add a guide at the orientation and position specified (in pixels)"
-#~ msgstr ""
-#~ "Apond un guide dins l'orientation e a la posicion indicadas (en pixels)"
-
-#~ msgid "Position"
-#~ msgstr "Position"
-
-#~ msgid "_Remove all Guides"
-#~ msgstr "_Enlever totes les guides"
-
-#~ msgid "Remove all orizontal and vertical guides"
-#~ msgstr "Suprimís totes les guides orizontals e verticals"
-
-#~ msgid "_Lava..."
-#~ msgstr "_Lave..."
-
-#~ msgid "Fill the current selection with lava"
-#~ msgstr "Remplit la seleccion courante amb de la lave"
-
-#~ msgid "Seed"
-#~ msgstr "Graine"
-
-#~ msgid "Size"
-#~ msgstr "Talha"
-
-#~ msgid "Roughness"
-#~ msgstr "Rugosité"
-
-#~ msgid "Gradient"
-#~ msgstr "Degradat"
-
-#~ msgid "Use current gradient"
-#~ msgstr "Utiliza lo degradat courant"
-
-#~ msgid "Line _Nova..."
-#~ msgstr "Linha No_va..."
-
-#~ msgid ""
-#~ "Fill a layer with rays emanating outward from its center using the "
-#~ "foreground color"
-#~ msgstr ""
-#~ "Remplit un calc amb des rayons émanant de son centre en utilizant la "
-#~ "color de primièr plan"
-
-#~ msgid "Number of lines"
-#~ msgstr "Nombres de lignes"
-
-#~ msgid "Sharpness (degrees)"
-#~ msgstr "Étroelocitat (grases)"
-
-#~ msgid "Offset radius"
-#~ msgstr "Rai del decalatge"
-
-#~ msgid "Randomness"
-#~ msgstr "Aléa"
-
-#~ msgid "_Rectangular..."
-#~ msgstr "_Rectangulaire..."
-
-#~ msgid "Create a rectangular brush"
-#~ msgstr "Crèa una bròssa rectangulaire"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "Spacing"
-#~ msgstr "Espaçament"
-
-#~ msgid "Re_ctangular, Feathered..."
-#~ msgstr "Re_ctangulaire, adoucie..."
-
-#~ msgid "Create a rectangular brush with feathered edges"
-#~ msgstr "Crèa una bròssa rectangulaire amb dels bòrds adoucis"
-
-#~ msgid "Feathering"
-#~ msgstr "Adociment"
-
-#~ msgid "_Elliptical..."
-#~ msgstr "_Elliptique..."
-
-#~ msgid "Create an elliptical brush"
-#~ msgstr "Crèa una bròssa elliptique"
-
-#~ msgid "Elli_ptical, Feathered..."
-#~ msgstr "_Elliptique, adoucie..."
-
-#~ msgid "Create an elliptical brush with feathered edges"
-#~ msgstr "Crèa una bròssa elliptique amb dels bòrds adoucis"
-
-#~ msgid "_Old Photo..."
-#~ msgstr "_Vieille photo..."
-
-#~ msgid "Make an image look like an old photo"
-#~ msgstr "Faire qu'una image ressemble a una vieille photo"
-
-#~ msgid "Defocus"
-#~ msgstr "Enlever lo focus"
-
-#~ msgid "Sepia"
-#~ msgstr "Sépia"
-
-#~ msgid "Mottle"
-#~ msgstr "Marbrer"
-
-#~ msgid "Folder for the output file"
-#~ msgstr "Dorsièr pel fichièr de sortida"
-
-#~ msgid ""
-#~ "The name of the file to create (if a file with this name already exist, "
-#~ "it will be replaced)"
-#~ msgstr ""
-#~ "Lo nom del fichièr a crear (si un fichièr de ce nom existís ja, il serà "
-#~ "remplacé)"
-
-#~ msgid "The filename you entered is not a suitable name for a file."
-#~ msgstr ""
-#~ "Lo nom de fichièr que vous avez saisi es pas un nom qui convient a un "
-#~ "fichièr."
-
-#~ msgid ""
-#~ "All characters in the name are either white-spaces or characters which "
-#~ "can not appear in filenames."
-#~ msgstr ""
-#~ "Totes les caractèrs del nom son soit des espaces blancs, soit des "
-#~ "caractèrs interdits dins les noms de fichièrs."
-
-#~ msgid ""
-#~ "Export the active palette as a CSS stylesheet with the color entry name "
-#~ "as their class name, and the color itself as the color attribute"
-#~ msgstr ""
-#~ "Exporte la paleta activa en tant que feuille de style CSS amb per nom "
-#~ "de classe lo nom d'entrada de color, et, per attribut de color, la "
-#~ "color elle-même"
-
-#~ msgid "Export the active palette as a PHP dictionary (name => color)"
-#~ msgstr ""
-#~ "Exporte la paleta activa en tant que dictionnaire PHP (nom => color)"
-
-#~ msgid "Export the active palette as a Python dictionary (name: color)"
-#~ msgstr ""
-#~ "Exporte la paleta activa en tant que dictionnaire Python (nom : color)"
-
-#~ msgid ""
-#~ "Write all the colors in a palette to a text file, one hexadecimal value "
-#~ "per line (no names)"
-#~ msgstr ""
-#~ "Inscrit totas las colors d'una palette dins un fichièr tèxte, una "
-#~ "valor hexadécimale per linha (sans nom)"
-
-#~ msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-#~ msgstr ""
-#~ "Exporte la paleta activa en tant que java.util.Hashtable <cadena, "
-#~ "color>"
-
-#~ msgid "There is no image data in the clipboard to paste."
-#~ msgstr "Aucune image n'est présente dins lo presse-papier per collage."
-
-#~ msgid "New _Brush..."
-#~ msgstr "Novèla _bròssa..."
-
-#~ msgid "Paste the clipboard contents into a new brush"
-#~ msgstr "Còpia lo contengut del quichapapièrs cap a una novèla bròssa"
-
-#~ msgid "Brush name"
-#~ msgstr "Nom de la bròssa"
-
-#~ msgid "File name"
-#~ msgstr "Nom de fichièr"
-
-#~ msgid "New _Pattern..."
-#~ msgstr "Novèl _motiu..."
-
-#~ msgid "Paste the clipboard contents into a new pattern"
-#~ msgstr "Còpia lo contengut del quichapapièrs cap a un novèl motiu"
-
-#~ msgid "Pattern name"
-#~ msgstr "Nom del motiu"
-
-#~ msgid "_Perspective..."
-#~ msgstr "Ombra en _perspective..."
-
-#~ msgid "Add a perspectiva shadow to the selected region (or alpha)"
-#~ msgstr "Apond una ombre en perspectiva a la région seleccionada (o alpha)"
-
-#~ msgid "Angle"
-#~ msgstr "Angle"
-
-#~ msgid "Relative distance of horizon"
-#~ msgstr "Distance relative de l'horizon"
-
-#~ msgid "Relative length of shadow"
-#~ msgstr "Longor relative de l'ombra"
-
-#~ msgid "Interpolation"
-#~ msgstr "Interpolation"
-
-#~ msgid "_Predator..."
-#~ msgstr "_Prédateur..."
-
-#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
-#~ msgstr "Apond un efièch « prédateur » a la région seleccionada (o alpha)"
-
-#~ msgid "Edge amount"
-#~ msgstr "Nombre d'arêtes"
-
-#~ msgid "Pixelize"
-#~ msgstr "Pixéliser"
-
-#~ msgid "Pixel amount"
-#~ msgstr "Nombre de pixels"
-
-#~ msgid "Reverse Layer Order"
-#~ msgstr "Inversar l'òrdre des calques"
-
-#~ msgid "Reverse the order of layers in the image"
-#~ msgstr "Inverse l'òrdre des calques dins l'imatge"
-
-#~ msgid "_Rippling..."
-#~ msgstr "_Ondulation..."
-
-#~ msgid ""
-#~ "Create a multi-layer image by adding a ripple effect to the current image"
-#~ msgstr ""
-#~ "Crèa un imatge multicalque en ajoutant un efièch d'ondulation a l'imatge "
-#~ "courante"
-
-#~ msgid "Rippling strength"
-#~ msgstr "Vigueur de l'ondulation"
-
-#~ msgid "Number of frames"
-#~ msgstr "Nombre d'imatges"
-
-#~ msgid "Edge behavior"
-#~ msgstr "Comportement del bord"
-
-#~ msgid "Smear"
-#~ msgstr "Étaler"
-
-#~ msgid "Black"
-#~ msgstr "Negre"
-
-#~ msgid "_Round Corners..."
-#~ msgstr "Coins a_rrondis..."
-
-#~ msgid ""
-#~ "Round the corners of an image and optionally add a drop-shadow and "
-#~ "background"
-#~ msgstr ""
-#~ "Arrondit les coins d'un imatge e optionnellement apondre una ombre "
-#~ "portée e un fond"
-
-#~ msgid "Edge radius"
-#~ msgstr "Rai dels bòrds"
-
-#~ msgid "Add drop-shadow"
-#~ msgstr "Apondre una ombra portada"
-
-#~ msgid "Shadow X offset"
-#~ msgstr "Decalatge de l'ombra en X"
-
-#~ msgid "Shadow Y offset"
-#~ msgstr "Decalatge de l'ombra en Y"
-
-#~ msgid "Add background"
-#~ msgstr "Apondre un arrière-plan"
-
-#~ msgid "Se_t Colormap..."
-#~ msgstr "Definir la pale_tte..."
-
-#~ msgid ""
-#~ "Change the colormap of an image to the colors in a specified palette."
-#~ msgstr ""
-#~ "Attribue a la paleta de colors d'un imatge las colors de la paleta "
-#~ "indicada."
-
-#~ msgid "Palette"
-#~ msgstr "Palette"
-
-#~ msgid "Rounded R_ectangle..."
-#~ msgstr "Rectangle arr_ondi..."
-
-#~ msgid "Round the corners of the current selection"
-#~ msgstr "Arrondit les coins de la seleccion courante"
-
-#~ msgid "Radius (%)"
-#~ msgstr "Rai (%)"
-
-#~ msgid "Concave"
-#~ msgstr "Concave"
-
-#~ msgid "To _Brush..."
-#~ msgstr "Vers una _bròssa..."
-
-#~ msgid "Convert a selection to a brush"
-#~ msgstr "Convertit una seleccion en bròssa"
-
-#~ msgid "To _Image"
-#~ msgstr "Vers una _image"
-
-#~ msgid "Convert a selection to an image"
-#~ msgstr "Convertit una seleccion en image"
-
-#~ msgid "To _Pattern..."
-#~ msgstr "Vers un _motiu..."
-
-#~ msgid "Convert a selection to a pattern"
-#~ msgstr "Convertit una seleccion en motiu"
-
-#~ msgid "_Slide..."
-#~ msgstr "_Pellicule photo..."
-
-#~ msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-#~ msgstr ""
-#~ "Apond un cadre de pellicule photo, des trous d'entraînement e un "
-#~ "étiquetage a un imatge"
-
-#~ msgid "Text"
-#~ msgstr "Tèxte"
-
-#~ msgid "Number"
-#~ msgstr "Nombre"
-
-#~ msgid "Font"
-#~ msgstr "Poliça"
-
-#~ msgid "Font color"
-#~ msgstr "Color de la poliça"
-
-#~ msgid "_Spinning Globe..."
-#~ msgstr "Globe _tournant..."
-
-#~ msgid ""
-#~ "Create an animation by mapping the current image onto a spinning sphere"
-#~ msgstr ""
-#~ "Crèa una animacion en plaquant l'imatge courante sus una esfèra tournante"
-
-#~ msgid "Frames"
-#~ msgstr "Images"
-
-#~ msgid "Turn from left to right"
-#~ msgstr "Tourne de esquèrra a drecha"
-
-#~ msgid "Transparent background"
-#~ msgstr "Rèire plan transparent"
-
-#~ msgid "Index to n colors (0 = remain RGB)"
-#~ msgstr "Index a n colors (0 = reste en RVB)"
-
-#~ msgid "Rendering Spyro"
-#~ msgstr "Rendut spirographe en cors"
-
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Spirographe..."
-
-#~ msgid ""
-#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-#~ msgstr ""
-#~ "Apond des courbes spirographes, épitrochoïdes e lissajous al calc "
-#~ "actual"
-
-#~ msgid "Type"
-#~ msgstr "Type"
-
-#~ msgid "Epitrochoid"
-#~ msgstr "Épitrochoïde"
-
-#~ msgid "Lissajous"
-#~ msgstr "Lissajous"
-
-#~ msgid "Shape"
-#~ msgstr "Forme"
-
-#~ msgid "Triangle"
-#~ msgstr "Triangle"
-
-#~ msgid "Square"
-#~ msgstr "Carré"
-
-#~ msgid "Pentagon"
-#~ msgstr "Pentagone"
-
-#~ msgid "Hexagon"
-#~ msgstr "Hexagone"
-
-#~ msgid "Polygon: 7 sides"
-#~ msgstr "Poligòn : 7 costats"
-
-#~ msgid "Polygon: 8 sides"
-#~ msgstr "Poligòn : 8 costats"
-
-#~ msgid "Polygon: 9 sides"
-#~ msgstr "Poligòn : 9 costats"
-
-#~ msgid "Polygon: 10 sides"
-#~ msgstr "Poligòn : 10 costats"
-
-#~ msgid "Outer teeth"
-#~ msgstr "Denture exteriora"
-
-#~ msgid "Inner teeth"
-#~ msgstr "Denture interiora"
-
-#~ msgid "Margin (pixels)"
-#~ msgstr "Marge (pixels)"
-
-#~ msgid "Hole ratio"
-#~ msgstr "Talha del trou central"
-
-#~ msgid "Start angle"
-#~ msgstr "Angle de despart"
-
-#~ msgid "Tool"
-#~ msgstr "Aisina"
-
-#~ msgid "Brush"
-#~ msgstr "Bròssa"
-
-#~ msgid "Airbrush"
-#~ msgstr "Aérographe"
-
-#~ msgid "Color method"
-#~ msgstr "Metòde de coloration"
-
-#~ msgid "Gradient: Loop Sawtooth"
-#~ msgstr "Degradat : rebouclage en dents de scie"
-
-#~ msgid "Gradient: Loop Triangle"
-#~ msgstr "Degradat : rebouclage en triangle"
-
-#, fuzzy
-#~ msgid "_Sphere..."
-#~ msgstr "C_hrome..."
-
-#~ msgid "_Tileable Blur..."
-#~ msgstr "Fosc _mosaïque..."
-
-#~ msgid "Blur the edges of an image so the result tiles seamlessly"
-#~ msgstr "Brouille los bòrds d'un imatge per obténer un carrèu raccordable"
-
-#~ msgid "Radius"
-#~ msgstr "Rayon"
-
-#~ msgid "Blur vertically"
-#~ msgstr "Rendre flou verticalament"
-
-#~ msgid "Blur orizontally"
-#~ msgstr "Rendre flou orizontalament"
-
-#~ msgid "Blur type"
-#~ msgstr "Tipe de flou"
-
-#~ msgid "RLE"
-#~ msgstr "RLE"
-
-#~ msgid "Mask size"
-#~ msgstr "Talha de la masqueta"
-
-#~ msgid "Mask opacity"
-#~ msgstr "Opacitat de la masqueta"
-
-#~ msgid "_Waves..."
-#~ msgstr "_Vagues..."
-
-#~ msgid ""
-#~ "Create a multi-layer image with an effect like a stone was thrown into "
-#~ "the current image"
-#~ msgstr ""
-#~ "Crèa un imatge multi-calque amb un efièch de pierre jetée al travers de "
-#~ "l'imatge courante"
-
-#~ msgid "Amplitude"
-#~ msgstr "Amplitude"
-
-#~ msgid "Wavelength"
-#~ msgstr "Longor d'onde"
-
-#~ msgid "Invert direction"
-#~ msgstr "Inverse la direction"
-
-#~ msgid "_Weave..."
-#~ msgstr "T_resser..."
-
-#~ msgid ""
-#~ "Create a new layer filled with a weave effect to be used as an overlay or "
-#~ "bump map"
-#~ msgstr ""
-#~ "Crèa un novèl calc rempli amb un efièch de tresse a utilizar coma "
-#~ "surcouche o relèu"
-
-#~ msgid "Ribbon width"
-#~ msgstr "Largor des bandes"
-
-#~ msgid "Ribbon spacing"
-#~ msgstr "Espaçament bandes"
-
-#~ msgid "Shadow darkness"
-#~ msgstr "Obscurité de l'ombra"
-
-#~ msgid "Shadow depth"
-#~ msgstr "Prigondor de l'ombra"
-
-#~ msgid "Thread length"
-#~ msgstr "Longor fial"
-
-#~ msgid "Thread density"
-#~ msgstr "Densitat fial"
-
-#~ msgid "Thread intensity"
-#~ msgstr "Intensitat fial"
-
-#~ msgid "Shadow"
-#~ msgstr "Ombra"
-
-#~ msgid "_Xach-Effect..."
-#~ msgstr "Efièch _Xach..."
-
-#~ msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Apond un subtile efièch 3D translucide a la région seleccionada (o alpha)"
-
-#~ msgid "Highlight X offset"
-#~ msgstr "Decalatge X esclairatge"
-
-#~ msgid "Highlight Y offset"
-#~ msgstr "Decalatge Y esclairatge"
-
-#~ msgid "Highlight color"
-#~ msgstr "Color d'esclairatge"
-
-#~ msgid "Highlight opacity"
-#~ msgstr "Opacitat d'esclairatge"
-
-#~ msgid "Drop shadow color"
-#~ msgstr "Color de l'ombra portada"
-
-#~ msgid "Drop shadow opacity"
-#~ msgstr "Opacitat de l'ombra portada"
-
-#~ msgid "Drop shadow blur radius"
-#~ msgstr "Rai de flou per l'ombra portada"
-
-#~ msgid "Drop shadow X offset"
-#~ msgstr "Decalatge X d'ombra portada"
-
-#~ msgid "Drop shadow Y offset"
-#~ msgstr "Decalatge Y d'ombra portada"
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow Y offset"
+msgstr "Decalatge Y d'ombra portada"
 
 #~ msgid "3D _Outline..."
 #~ msgstr "_Contorn 3D..."
@@ -1343,7 +1731,7 @@ msgstr "IIR"
 #~ msgstr "3_D Truchet..."
 
 #~ msgid "Background color"
-#~ msgstr "Color de rèire plan"
+#~ msgstr "Color de rèireplan"
 
 #~ msgid "Block size"
 #~ msgstr "Talha de bloc"
@@ -1380,13 +1768,13 @@ msgstr "IIR"
 #~ msgstr "Bas"
 
 #~ msgid "Left"
-#~ msgstr "Gauche"
+#~ msgstr "Esquèrra"
 
 #~ msgid "Orientation"
 #~ msgstr "Orientation"
 
 #~ msgid "Right"
-#~ msgstr "Droite"
+#~ msgstr "Dreita"
 
 #~ msgid "Up"
 #~ msgstr "Haut"
@@ -1395,7 +1783,7 @@ msgstr "IIR"
 #~ msgstr "_Flècha..."
 
 #~ msgid "Bar"
-#~ msgstr "Barre"
+#~ msgstr "Barra"
 
 #~ msgid "Bar height"
 #~ msgstr "Nautor de la barre"
@@ -1405,8 +1793,8 @@ msgstr "IIR"
 
 #~ msgid "Create an Hrule graphic with an eerie glow for web pages"
 #~ msgstr ""
-#~ "Crèa una linha orizontala (hrule) graphique amb una lusor espectrala "
-#~ "pour las paginas Web"
+#~ "Crèa una linha orizontala (hrule) graphique amb una lusor espectrala pour "
+#~ "las paginas Web"
 
 #~ msgid "_Hrule..."
 #~ msgstr "_Règle orizontala..."
@@ -1415,7 +1803,8 @@ msgstr "IIR"
 #~ msgstr "Puce"
 
 #~ msgid "Create a bullet graphic with an eerie glow for web pages"
-#~ msgstr "Crèa una puce graphique amb una lusor espectrala per las paginas Web"
+#~ msgstr ""
+#~ "Crèa una puce graphique amb una lusor espectrala per las paginas Web"
 
 #~ msgid "_Bullet..."
 #~ msgstr "_Puce..."
@@ -1427,8 +1816,7 @@ msgstr "IIR"
 #~ msgstr "Boton"
 
 #~ msgid "Create a button graphic with an eerie glow for web pages"
-#~ msgstr ""
-#~ "Crèa un boton grafic amb una lusor espectrala per las paginas Web"
+#~ msgstr "Crèa un boton grafic amb una lusor espectrala per las paginas Web"
 
 #~ msgid "Glow"
 #~ msgstr "Lusor"
@@ -1482,21 +1870,20 @@ msgstr "IIR"
 #~ "Add a gradient effect, a drop shadow, and a background to the selected "
 #~ "region (or alpha)"
 #~ msgstr ""
-#~ "Apond un efièch graduel, una ombra portada e un fons a la région "
+#~ "Apond un efièit graduel, una ombra portada e un fons a la région "
 #~ "seleccionada (o alpha)"
 
 #~ msgid ""
 #~ "Create a plain text logo with a gradient effect, a drop shadow, and a "
 #~ "background"
 #~ msgstr ""
-#~ "Crèa un logo textuel amb un efièch graduel, una ombra portada e un fond"
+#~ "Crèa un logo textuel amb un efièit graduel, una ombra portada e un fond"
 
 #~ msgid "_Basic I..."
 #~ msgstr "_Basique I..."
 
 #~ msgid "Add a shadow and a highlight to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Apond un esclairatge e una ombre a la région seleccionada (o alpha)"
+#~ msgstr "Apond un esclairatge e una ombre a la région seleccionada (o alpha)"
 
 #~ msgid "B_asic II..."
 #~ msgstr "B_asique II..."
@@ -1511,10 +1898,10 @@ msgstr "IIR"
 #~ msgstr "Crèa un simple boton grafic biseutat per las paginas Web"
 
 #~ msgid "Lower-right color"
-#~ msgstr "Color bas-drecha"
+#~ msgstr "Color bas-dreita"
 
 #~ msgid "Pressed"
-#~ msgstr "Activé"
+#~ msgstr "Activat"
 
 #~ msgid "Simple _Beveled Button..."
 #~ msgstr "Simple boton _biseutat..."
@@ -1535,7 +1922,7 @@ msgstr "IIR"
 #~ msgstr "Crèa un boton biseutat per las paginas Web"
 
 #~ msgid "Create a beveled pattern heading for webpages"
-#~ msgstr "Crèa un titre biseutat per las paginas Web"
+#~ msgstr "Crèa un títol biseutat per las paginas Web"
 
 #~ msgid "H_eading..."
 #~ msgstr "_Titre..."
@@ -1581,7 +1968,7 @@ msgstr "IIR"
 #~ msgstr "Apond des « taches bovines » a la région seleccionada (o alpha)"
 
 #~ msgid "Background Color"
-#~ msgstr "Color de rèire plan"
+#~ msgstr "Color de rèireplan"
 
 #~ msgid "Bo_vination..."
 #~ msgstr "Bo_vination..."
@@ -1617,7 +2004,7 @@ msgstr "IIR"
 #~ msgstr "_Camouflage..."
 
 #~ msgid "Background Image"
-#~ msgstr "Image de rèire plan"
+#~ msgstr "Image de rèireplan"
 
 #~ msgid "Carve raised text"
 #~ msgstr "Grave lo tèxte agrandi"
@@ -1640,7 +2027,7 @@ msgstr "IIR"
 
 #~ msgid "Create a chalk drawing effect for the selected region (or alpha)"
 #~ msgstr ""
-#~ "Crèa un efièch de dessenh a la craie sus la région seleccionada (o alpha)"
+#~ "Crèa un efièit de dessenh a la craie sus la région seleccionada (o alpha)"
 
 #~ msgid "Create a logo resembling chalk scribbled on a blackboard"
 #~ msgstr ""
@@ -1651,7 +2038,7 @@ msgstr "IIR"
 
 #~ msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "Apond un efièch de gravure sus bois a la région seleccionada (o alpha)"
+#~ "Apond un efièit de gravure sus bois a la région seleccionada (o alpha)"
 
 #~ msgid "Blur amount"
 #~ msgstr "Importance del flou"
@@ -1675,11 +2062,10 @@ msgstr "IIR"
 #~ msgstr "Inversar"
 
 #~ msgid "Keep background"
-#~ msgstr "Garder lo rèire plan"
+#~ msgstr "Garder lo rèireplan"
 
 #~ msgid "Add a simple chrome effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Apond un simple efièch de chrome a la région seleccionada (o alpha)"
+#~ msgstr "Apond un simple efièit de chrome a la région seleccionada (o alpha)"
 
 #~ msgid "Create a simplistic, but cool, chromed logo"
 #~ msgstr "Crèa un logo chromé, simpliste mas sympathique"
@@ -1691,8 +2077,8 @@ msgstr "IIR"
 #~ "Add a comic-book effect to the selected region (or alpha) by outlining "
 #~ "and filling with a gradient"
 #~ msgstr ""
-#~ "Apond un efièch BD a la région seleccionada (o alpha) en l'entourant e "
-#~ "la remplissant amb un degradat"
+#~ "Apond un efièit BD a la région seleccionada (o alpha) en l'entourant e la "
+#~ "remplissant amb un degradat"
 
 #~ msgid "Comic Boo_k..."
 #~ msgstr "B_D..."
@@ -1712,7 +2098,7 @@ msgstr "IIR"
 #~ "Add a metallic effect to the selected region (or alpha) with reflections "
 #~ "and perspectiva shadows"
 #~ msgstr ""
-#~ "Apond un efièch métallique a la région seleccionada (o alpha) amb des "
+#~ "Apond un efièit métallique a la région seleccionada (o alpha) amb des "
 #~ "réflexions e des ombres de perspective"
 
 #~ msgid "Cool _Metal..."
@@ -1723,15 +2109,15 @@ msgstr "IIR"
 #~ "Crèa un logo métallique amb des réflexions e des ombres de perspective"
 
 #~ msgid "Effect size (pixels)"
-#~ msgstr "Talha de l'efièch (pixels)"
+#~ msgstr "Talha de l'efièit (pixels)"
 
 #~ msgid "Background image"
-#~ msgstr "Image de rèire plan"
+#~ msgstr "Image de rèireplan"
 
 #~ msgid ""
 #~ "Create a logo with a crystal/gel effect displacing the image underneath"
 #~ msgstr ""
-#~ "Crèa un logo amb un efièch cristal/gel e desplaça l'imatge en dessous"
+#~ "Crèa un logo amb un efièit cristal/gel e desplaça l'imatge en dessous"
 
 #~ msgid "Crystal..."
 #~ msgstr "Cristal..."
@@ -1764,7 +2150,7 @@ msgstr "IIR"
 #~ "Add a frost effect to the selected region (or alpha) with an added drop "
 #~ "shadow"
 #~ msgstr ""
-#~ "Apond un efièch givré a la région seleccionada (o alpha) amb una ombre "
+#~ "Apond un efièit givré a la région seleccionada (o alpha) amb una ombre "
 #~ "portée"
 
 #~ msgid "Create frozen logo with an added drop shadow"
@@ -1777,8 +2163,8 @@ msgstr "IIR"
 #~ "Add gradients, patterns, shadows, and bump maps to the selected region "
 #~ "(or alpha)"
 #~ msgstr ""
-#~ "Apond des degradats, motius, ombres e relèus a la région seleccionada "
-#~ "(o alpha)"
+#~ "Apond des degradats, motius, ombres e relèus a la région seleccionada (o "
+#~ "alpha)"
 
 #~ msgid "Blend gradient (outline)"
 #~ msgstr "Degradat (contorns)"
@@ -1793,7 +2179,7 @@ msgstr "IIR"
 #~ msgstr "G_lacé..."
 
 #~ msgid "Outline gradient reverse"
-#~ msgstr "Degradat del contorn inversé"
+#~ msgstr "Degradat del contorn inversat"
 
 #~ msgid "Pattern (outline)"
 #~ msgstr "Motiu (contour)"
@@ -1805,20 +2191,20 @@ msgstr "IIR"
 #~ msgstr "Motiu (tèxte)"
 
 #~ msgid "Text gradient reverse"
-#~ msgstr "Degradat de tèxte inversé"
+#~ msgstr "Degradat de tèxte inversat"
 
 #~ msgid "Use pattern for outline instead of gradient"
-#~ msgstr "Utilizar un motiu pel contorn al lieu del degradat"
+#~ msgstr "Utilizar un motiu pel contorn al luòc del degradat"
 
 #~ msgid "Use pattern for text instead of gradient"
-#~ msgstr "Utilizar un motiu pel tèxte al lieu del degradat"
+#~ msgstr "Utilizar un motiu pel tèxte al luòc del degradat"
 
 #~ msgid "Use pattern overlay"
 #~ msgstr "Utilizar un motiu de recouvrement"
 
 #~ msgid "Add a glowing hot metal effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "Apond un efièch de métal chaud rougeoyant a la région seleccionada (o "
+#~ "Apond un efièit de métal chaud rougeoyant a la région seleccionada (o "
 #~ "alpha) "
 
 #~ msgid "Create a logo that looks like glowing hot metal"
@@ -1829,8 +2215,7 @@ msgstr "IIR"
 
 #~ msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "Apond un aspect brillant e un bisèu a la région seleccionada (o "
-#~ "alpha) "
+#~ "Apond un aspect brillant e un bisèu a la région seleccionada (o alpha) "
 
 #~ msgid "Bevel height (sharpness)"
 #~ msgstr "Nautor del bisèu (finesse)"
@@ -1916,7 +2301,7 @@ msgstr "IIR"
 #~ msgstr "Marge Y"
 
 #~ msgid "Round ratio"
-#~ msgstr "Proportions de l'arrondi"
+#~ msgstr "Proportions de l'arredondit"
 
 #~ msgid "Text color (active)"
 #~ msgstr "Color del tèxte (actiu)"
@@ -1925,19 +2310,19 @@ msgstr "IIR"
 #~ msgstr "Color del haut"
 
 #~ msgid "Upper color (active)"
-#~ msgstr "Color del haut (actiu)"
+#~ msgstr "Color del naut (actiu)"
 
 #~ msgid "_Round Button..."
-#~ msgstr "Boton a_rrondi..."
+#~ msgstr "Boton a_rredondit..."
 
 #~ msgid "Behavior"
-#~ msgstr "Comportement"
+#~ msgstr "Compòrtament"
 
 #~ msgid "Create an image filled with an Earth-like map pattern"
 #~ msgstr "Crèa un imatge remplie amb un motiu de style terrain"
 
 #~ msgid "Detail in Middle"
-#~ msgstr "Détail al milieu"
+#~ msgstr "Détail al mitan"
 
 #~ msgid "Render _Map..."
 #~ msgstr "Rendre un _terrain..."
@@ -1952,21 +2337,20 @@ msgstr "IIR"
 #~ msgstr "SOTA chrome..."
 
 #~ msgid "Create a logo with a speedy text effect"
-#~ msgstr "Crèa un logo amb un efièch de tèxte accéléré"
+#~ msgstr "Crèa un logo amb un efièit de tèxte accéléré"
 
 #~ msgid "Speed Text..."
 #~ msgstr "Tèxte accéléré..."
 
 #~ msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 #~ msgstr ""
-#~ "Crèa un logo en utilizant una texture de roche, una lusor nova e una "
-#~ "ombre"
+#~ "Crèa un logo en utilizant una texture de roche, una lusor nova e una ombre"
 
 #~ msgid "Sta_rscape..."
 #~ msgstr "Paysage étoilé..."
 
 #~ msgid "Create an image filled with a swirled tile effect"
-#~ msgstr "Crèa un imatge remplie amb un efièch tourbillonnant "
+#~ msgstr "Crèa un imatge remplie amb un efièit tourbillonnant "
 
 #~ msgid "Swirl-_Tile..."
 #~ msgstr "Carrèu tourbillonnant..."
@@ -1991,13 +2375,13 @@ msgstr "IIR"
 
 #~ msgid "Add a Trace of Particles effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "Apond un efièch de trace de particules a la région seleccionada (o alpha)"
+#~ "Apond un efièit de trace de particules a la région seleccionada (o alpha)"
 
 #~ msgid "Base color"
-#~ msgstr "Color de base"
+#~ msgstr "Color de basa"
 
 #~ msgid "Create a logo using a Trace Of Particles effect"
-#~ msgstr "Crèa un logo en utilizant l'efièch de trace de particules"
+#~ msgstr "Crèa un logo en utilizant l'efièit de trace de particules"
 
 #~ msgid "Edge only"
 #~ msgstr "Bords solament"
@@ -2006,22 +2390,23 @@ msgstr "IIR"
 #~ msgstr "Largor dels bòrds"
 
 #~ msgid "Hit rate"
-#~ msgstr "Taux de traces"
+#~ msgstr "Taus de traces"
 
 #~ msgid "_Particle Trace..."
 #~ msgstr "Traces de _particules..."
 
 #~ msgid "Antialias"
-#~ msgstr "Anti-crénelage"
+#~ msgstr "Anti-crenelatge"
 
 #~ msgid ""
 #~ "Create a logo by rendering the specified text along the perimeter of a "
 #~ "circle"
 #~ msgstr ""
-#~ "Crèa un logo en rendant lo tèxte especificat lo long del périmètre d'un cercle"
+#~ "Crèa un logo en rendant lo tèxte especificat lo long del périmètre d'un "
+#~ "cercle"
 
 #~ msgid "Fill angle"
-#~ msgstr "Angle de remplissage"
+#~ msgstr "Angle d'emplenatge"
 
 #~ msgid "Text C_ircle..."
 #~ msgstr "Tèxte circ_ulaire..."
@@ -2050,7 +2435,7 @@ msgstr "IIR"
 #~ msgstr "Octogones"
 
 #~ msgid "Squares"
-#~ msgstr "Carrés"
+#~ msgstr "Carrats"
 
 #~ msgid "Starting blend"
 #~ msgstr "Début mélange"
@@ -2062,7 +2447,7 @@ msgstr "IIR"
 #~ msgstr "_Texturé..."
 
 #~ msgid "Create a decorative web title header"
-#~ msgstr "Crèa un entèsta de titre Web décoratif"
+#~ msgstr "Crèa un entèsta de títol Web décoratif"
 
 #~ msgid "Web Title Header..."
 #~ msgstr "Titre Web..."
