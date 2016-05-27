@@ -34,9 +34,11 @@ typedef struct _GimpFgBgViewClass GimpFgBgViewClass;
 
 struct _GimpFgBgView
 {
-  GtkWidget    parent_instance;
+  GtkWidget           parent_instance;
 
-  GimpContext *context;
+  GimpContext        *context;
+  GimpColorConfig    *color_config;
+  GimpColorTransform *transform;
 };
 
 struct _GimpFgBgViewClass
@@ -48,6 +50,7 @@ struct _GimpFgBgViewClass
 GType       gimp_fg_bg_view_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * gimp_fg_bg_view_new         (GimpContext  *context);
+
 void        gimp_fg_bg_view_set_context (GimpFgBgView *view,
                                          GimpContext  *context);
 
