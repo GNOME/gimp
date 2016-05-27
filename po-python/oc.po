@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp20\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
-"eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-05-22 21:33+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-09-19 15:41+0000\n"
 "PO-Revision-Date: 2015-06-07 21:51+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot En Òc\n"
@@ -31,30 +31,30 @@ msgstr "Informacions mancantas sus l'excepcion"
 #: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
 msgid "An error occurred running %s"
-msgstr "Una error s'es produsida pendent l'execucion de %s"
+msgstr "Una error s'es produita pendent l'execucion de %s"
 
 #: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
 msgstr "_Mai d'informacions"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
+#: ../plug-ins/pygimp/gimpfu.py:545
 msgid "No"
 msgstr "Non"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
 msgid "Yes"
 msgstr "Òc"
 
-#: ../plug-ins/pygimp/gimpfu.py:597 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Seleccion del fichièr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:643
+#: ../plug-ins/pygimp/gimpfu.py:644
 msgid "Python-Fu Folder Selection"
 msgstr "Seleccion del dorsièr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:732
+#: ../plug-ins/pygimp/gimpfu.py:733
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Entrada invalida per « %s »"
@@ -81,7 +81,7 @@ msgstr "_Font caractèr"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
-msgstr "Còde font"
+msgstr "Còdi font"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
@@ -110,50 +110,6 @@ msgstr "Degradat d'utilizar"
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
 msgstr "Nom de fichièr"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
-msgid "Exports the image histogram to a text file (CSV)"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
-msgid "_Export histogram..."
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
-msgid "_Image"
-msgstr "_Imatge"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
-msgid "_Drawable"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
-msgid "Histogram _File"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
-msgid "_Bucket Size"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
-msgid "Sample _Average"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
-msgid "Output format"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
-msgid "Pixel count"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
-msgid "Normalized"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
-msgid "Percent"
-msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -192,7 +148,7 @@ msgid "_Offset Palette..."
 msgstr "_Decalatge de paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -202,128 +158,47 @@ msgstr "Paleta"
 msgid "Off_set"
 msgstr "Decalat_ge"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Red"
-msgstr "Roge"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Green"
-msgstr "Verd"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Blue"
-msgstr "Blau"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
-msgid "Luma (Y)"
-msgstr "Luma (Y)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-msgid "Hue"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-#| msgid "Green or Saturation"
-msgid "Saturation"
-msgstr "Saturacion"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-msgid "Value"
-msgstr "Valor"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
-msgid "Saturation (HSL)"
-msgstr "Saturacion (HSL)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
-msgid "Lightness (HSL)"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
-msgid "Index"
-msgstr "Indèx"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
-msgid "Random"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
-msgid "Lightness (LAB)"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
-msgid "A-color"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
-msgid "B-color"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
-msgid "Chroma (LCHab)"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
-msgid "Hue (LCHab)"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
 msgstr "Triar las colors dins una paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
 msgstr "_Triar la paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
-msgid "Se_lections"
-msgstr ""
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+msgid "Color _model"
+msgstr "_Modèl de color"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "All"
-msgstr ""
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "RGB"
+msgstr "RVB"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "Slice / Array"
-msgstr ""
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "HSV"
+msgstr "TSV"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "Autoslice (fg->bg)"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
-msgid "Partitioned"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
-msgid "Slice _expression"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
 msgstr "Canal de _triar"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Red or Hue"
+msgstr "Rouge o tinta"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+#, fuzzy
+#| msgid "Saturation"
+msgid "Green or Saturation"
+msgstr "Saturacion"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Blue or Value"
+msgstr "Bleu o valor"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "_Ascending"
 msgstr "_Ascendent"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-#| msgid "Channel to _sort"
-msgid "Secondary Channel to s_ort"
-msgstr "Canal segondari de _triar"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
-msgid "_Quantization"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
-msgid "_Partitioning channel"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
-msgid "Partition q_uantization"
-msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -420,7 +295,9 @@ msgid "Save Python-Fu Console Output"
 msgstr "Enregistrar las sortidas de la consòla python-fu"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
-msgid "Interactiva GIMP Python interpreter"
+#, fuzzy
+#| msgid "Interactiva GIMP Python interpreter"
+msgid "Interactive GIMP Python interpreter"
 msgstr "Interpretador interactiu GIMP Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:221
@@ -455,33 +332,51 @@ msgstr "Desplaçament _X de l'ombra portada"
 msgid "Drop shadow _Y displacement"
 msgstr "Desplaçament _Y de l'ombra portada"
 
-#~ msgid "Color _model"
-#~ msgstr "_Modèl de color"
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:76
+msgid "Create a new brush with characters from a text sequence"
+msgstr ""
+"Creacion d'una novèla bròssa amb los caractèrs d'una sequéncia de tèxte"
 
-#~ msgid "RGB"
-#~ msgstr "RVB"
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:82
+msgid "New Brush from _Text..."
+msgstr "Novèla bròssa dempuèi un _tèxte..."
 
-#~ msgid "HSV"
-#~ msgstr "TSV"
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+msgid "Font"
+msgstr "Poliça"
 
-#~ msgid "Red or Hue"
-#~ msgstr "Rouge o tencha"
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+msgid "Pixel Size"
+msgstr "Talha de pixèl"
 
-#~ msgid "Blue or Value"
-#~ msgstr "Bleu o valor"
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:87
+msgid "Text"
+msgstr "Tèxte"
 
-#~ msgid "Create a new brush with characters from a text sequence"
-#~ msgstr ""
-#~ "Creacion d'una novèla bròssa amb les caractèrs d'una sequéncia de tèxte"
+#~ msgid "_Image"
+#~ msgstr "_Imatge"
 
-#~ msgid "New Brush from _Text..."
-#~ msgstr "Novèla bròssa dempuèi un _tèxte..."
+#~ msgid "Red"
+#~ msgstr "Roge"
 
-#~ msgid "Font"
-#~ msgstr "Poliça"
+#~ msgid "Green"
+#~ msgstr "Verd"
 
-#~ msgid "Pixel Size"
-#~ msgstr "Talha de pixel"
+#~ msgid "Blue"
+#~ msgstr "Blau"
 
-#~ msgid "Text"
-#~ msgstr "Tèxte"
+#~ msgid "Luma (Y)"
+#~ msgstr "Luma (Y)"
+
+#~ msgid "Value"
+#~ msgstr "Valor"
+
+#~ msgid "Saturation (HSL)"
+#~ msgstr "Saturacion (HSL)"
+
+#~ msgid "Index"
+#~ msgstr "Indèx"
+
+#~| msgid "Channel to _sort"
+#~ msgid "Secondary Channel to s_ort"
+#~ msgstr "Canal segondari de _triar"
