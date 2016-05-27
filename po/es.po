@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-05-24 19:46+0000\n"
-"PO-Revision-Date: 2016-05-25 08:34+0200\n"
+"POT-Creation-Date: 2016-05-26 23:13+0000\n"
+"PO-Revision-Date: 2016-05-27 08:16+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -3065,12 +3065,9 @@ msgid "_Zoom Motion Blur..."
 msgstr "_Ampliar desenfoque de movimiento…"
 
 #: ../app/actions/filters-actions.c:331
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_RGB Noise..."
 msgctxt "filters-action"
 msgid "_Cell Noise..."
-msgstr "Ruido _RGB…"
+msgstr "Ruido _celular…"
 
 #: ../app/actions/filters-actions.c:336
 msgctxt "filters-action"
@@ -4054,6 +4051,9 @@ msgid ""
 "to assigning a built-in sRGB color profile. Better leave color management "
 "enabled."
 msgstr ""
+"Indica si la imagen es de color gestionado. Desactivar la gestión del color "
+"es equivalente a asignar un perfil de color sRGB incorporado. Mejor deje "
+"activada la gestión de color."
 
 #: ../app/actions/image-actions.c:191 ../app/actions/image-actions.c:436
 msgctxt "image-convert-action"
@@ -6478,6 +6478,8 @@ msgid ""
 "When softproofing, mark colors which cannot be represented in the target "
 "color space"
 msgstr ""
+"Cuando realiza una pseudoprueba, marque los colores que no se pueden "
+"representar en el espacio de color destino"
 
 #: ../app/actions/view-actions.c:208
 msgctxt "view-action"
@@ -6765,12 +6767,9 @@ msgid "_Reset Flip & Rotate"
 msgstr "_Restablecer voltear y rotar"
 
 #: ../app/actions/view-actions.c:476
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Reset the angle of rotation to 0°"
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
-msgstr "Restablecer el ángulo a 0°"
+msgstr "Restablecer voltear a no voltear y el ángulo de rotación a 0°"
 
 #: ../app/actions/view-actions.c:484
 msgctxt "view-action"
@@ -9698,13 +9697,13 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Disponer objetos"
 
-#: ../app/core/gimpimage-color-profile.c:121
+#: ../app/core/gimpimage-color-profile.c:120
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 "La validación de perfiles ICC falló: el nombre del parásito no es «icc-"
 "profile»"
 
-#: ../app/core/gimpimage-color-profile.c:130
+#: ../app/core/gimpimage-color-profile.c:129
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -9712,29 +9711,29 @@ msgstr ""
 "La validación de perfiles ICC falló: las opciones del parásito no son "
 "(PERSISTENT | UNDOABLE)"
 
-#: ../app/core/gimpimage-color-profile.c:187
+#: ../app/core/gimpimage-color-profile.c:186
 msgid "ICC profile validation failed: "
 msgstr "La validación de perfiles ICC falló:"
 
-#: ../app/core/gimpimage-color-profile.c:331
+#: ../app/core/gimpimage-color-profile.c:330
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "La validación de perfiles ICC falló: el perfil de color no es para el "
 "espacio de color de escala de grises"
 
-#: ../app/core/gimpimage-color-profile.c:341
+#: ../app/core/gimpimage-color-profile.c:340
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "La validación de perfiles ICC falló: el perfil de color no es para el "
 "espacio de color RGB"
 
-#: ../app/core/gimpimage-color-profile.c:396
+#: ../app/core/gimpimage-color-profile.c:395
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Convirtiendo de «%s» a «%s»"
 
-#: ../app/core/gimpimage-color-profile.c:401
+#: ../app/core/gimpimage-color-profile.c:400
 msgid "Color profile conversion"
 msgstr "Conversión del perfil de color"
 
@@ -10653,6 +10652,9 @@ msgid ""
 "Whether the image is color managed. Disabling color management is equivalent "
 "to choosing a built-in sRGB profile. Better leave color management enabled."
 msgstr ""
+"Indica si la imagen es de color gestionado. Desactivar la gestión del color "
+"es equivalente a elegir un perfil sRGB incorporado. Mejor deje activada la "
+"gestión de color."
 
 #: ../app/core/gimptemplate.c:203
 msgid "Color profile"
@@ -11868,20 +11870,16 @@ msgid "Preferred Profiles"
 msgstr "Perfiles preferidos"
 
 #: ../app/dialogs/preferences-dialog.c:1449
-#, fuzzy
-#| msgid "Select RGB Color Profile"
 msgid "Select Preferred RGB Color Profile"
-msgstr "Seleccionar el perfil de color RGB"
+msgstr "Seleccionar perfil de color RGB preferido"
 
 #: ../app/dialogs/preferences-dialog.c:1450
 msgid "_RGB profile:"
 msgstr "Perfil _RGB:"
 
 #: ../app/dialogs/preferences-dialog.c:1456
-#, fuzzy
-#| msgid "Select Grayscale Color Profile"
 msgid "Select Preferred Grayscale Color Profile"
-msgstr "Seleccionar el perfil de color de escala de grises"
+msgstr "Seleccionar perfil de color escala de grises preferido"
 
 #: ../app/dialogs/preferences-dialog.c:1457
 msgid "_Grayscale profile:"
@@ -11913,10 +11911,8 @@ msgid "Playground"
 msgstr "Entorno"
 
 #: ../app/dialogs/preferences-dialog.c:1497
-#, fuzzy
-#| msgid "Fade Options"
 msgid "Insane Options"
-msgstr "Opciones de desvanecimiento"
+msgstr "Opciones dementes"
 
 #: ../app/dialogs/preferences-dialog.c:1501
 msgid "_N-Point Deformation tool"
@@ -12395,16 +12391,12 @@ msgid "Image Statusbar Format"
 msgstr "Formato de la barra de estado de la imagen"
 
 #: ../app/dialogs/preferences-dialog.c:2503
-#, fuzzy
-#| msgid "Image Window Appearance"
 msgid "Image Window Snapping Behavior"
-msgstr "Apariencia de la ventana de la imagen"
+msgstr "Comportamiento de la ventana de imagen de rotura"
 
 #: ../app/dialogs/preferences-dialog.c:2504
-#, fuzzy
-#| msgid "Flipping"
 msgid "Snapping"
-msgstr "Volteando"
+msgstr "Ajuste"
 
 #: ../app/dialogs/preferences-dialog.c:2511
 msgid "Default Behavior in Normal Mode"
@@ -12415,10 +12407,8 @@ msgid "Default Behavior in Fullscreen Mode"
 msgstr "Comportamiento predeterminado en el modo de pantalla completa"
 
 #: ../app/dialogs/preferences-dialog.c:2524
-#, fuzzy
-#| msgid "_Snap distance:"
 msgid "_Snapping distance:"
-msgstr "Distancia del ajus_te:"
+msgstr "Distancia de _ajuste:"
 
 #: ../app/dialogs/preferences-dialog.c:2533
 #: ../app/dialogs/preferences-dialog.c:2534
@@ -12982,6 +12972,12 @@ msgid ""
 "<small>Please test bugs against latest git master branch\n"
 "before reporting them.</small>"
 msgstr ""
+"<big>Versión de desarrollo inestable</big>\n"
+"\n"
+"<small>commit <tt>%s</tt></small>\n"
+"\n"
+"<small>Revise los errores de la última rama principal de git\n"
+"antes de infomrar sobre ellos.</small>"
 
 #: ../app/display/gimpdisplayshell-close.c:168
 #: ../app/display/gimpdisplayshell-close.c:268
@@ -13162,10 +13158,8 @@ msgid "(none)"
 msgstr "(ninguna)"
 
 #: ../app/display/gimpdisplayshell-title.c:473
-#, fuzzy
-#| msgid "Color Management"
 msgid "not color managed"
-msgstr "Gestión del color"
+msgstr "color no gestionado"
 
 #: ../app/display/gimpstatusbar.c:431
 #, c-format
@@ -13662,10 +13656,8 @@ msgid "Ink Blob Angle"
 msgstr "Ángulo de la gota de tinta"
 
 #: ../app/paint/gimpmybrushcore.c:98
-#, fuzzy
-#| msgid "Airbrush"
 msgid "Mybrush"
-msgstr "Aerógrafo"
+msgstr "Mybrush"
 
 #: ../app/paint/gimpmybrushcore.c:155
 msgid "No MyPaint brushes available for use with this tool."
@@ -14255,16 +14247,14 @@ msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "La imagen «%s» (%d) no debe tener la precisión «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:734 ../app/pdb/image-guides-cmds.c:179
-#, fuzzy, c-format
-#| msgid "Vectors object %d does not contain stroke with ID %d"
+#, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
-msgstr "El objeto de vectores %d no contiene un trazo con el ID %d"
+msgstr "La imagen «%s» (%d) no contiene una guía con el ID %d"
 
 #: ../app/pdb/gimppdb-utils.c:757 ../app/pdb/image-sample-points-cmds.c:144
-#, fuzzy, c-format
-#| msgid "Vectors object %d does not contain stroke with ID %d"
+#, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
-msgstr "El objeto de vectores %d no contiene un trazo con el ID %d"
+msgstr "La imagen «%s» (%d) no contiene un punto de muestra con el ID %d"
 
 #: ../app/pdb/gimppdb-utils.c:785
 #, c-format
@@ -15689,7 +15679,7 @@ msgstr "_Recortar"
 
 #: ../app/tools/gimpcroptool.c:252
 msgid "Click or press Enter to crop"
-msgstr "Pulse o presione «Retorno» para recortar"
+msgstr "Pulse con el ratón o presione Intro para recortar"
 
 #: ../app/tools/gimpcroptool.c:318
 msgid "There is no active layer to crop."
@@ -15865,10 +15855,8 @@ msgid "_Preview"
 msgstr "Vista _previa"
 
 #: ../app/tools/gimpfilteroptions.c:80
-#, fuzzy
-#| msgid "Split"
 msgid "_Split view"
-msgstr "Partir"
+msgstr "_Dividir vista"
 
 #: ../app/tools/gimpfiltertool.c:633
 msgid "Click to switch the original and filtered sides"
@@ -16057,10 +16045,8 @@ msgid "Selecting unknown,"
 msgstr "Seleccionando desconocido,"
 
 #: ../app/tools/gimpforegroundselecttool.c:626
-#, fuzzy
-#| msgid "Click or press Enter to crop"
 msgid "press Enter to preview."
-msgstr "Pulse o presione «Retorno» para recortar"
+msgstr "Presione «Retorno» para vista previa."
 
 #: ../app/tools/gimpforegroundselecttool.c:628
 msgid "press Escape to exit preview or Enter to apply."
@@ -16642,11 +16628,11 @@ msgstr "Usar pesos"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:105
 msgid "Control points influence"
-msgstr ""
+msgstr "Influencia de los puntos de control"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:106
 msgid "Amount of control points' influence"
-msgstr ""
+msgstr "Cantidad de influencia de los puntos de control"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:112
 #: ../app/tools/gimpnpointdeformationoptions.c:113
@@ -17132,16 +17118,12 @@ msgid "S_hear"
 msgstr "_Inclinar [Shear]"
 
 #: ../app/tools/gimpsheartool.c:135
-#, fuzzy
-#| msgid "Shear magnitude _X:"
 msgid "Shear magnitude _X"
-msgstr "Magnitud _X de la inclinación:"
+msgstr "Cortar magnitud _X"
 
 #: ../app/tools/gimpsheartool.c:146
-#, fuzzy
-#| msgid "Shear magnitude _Y:"
 msgid "Shear magnitude _Y"
-msgstr "Magnitud _Y de la inclinación:"
+msgstr "Cortar magnitud _Y"
 
 #: ../app/tools/gimpsheartool.c:258
 #, c-format
@@ -17489,11 +17471,8 @@ msgid "Lock"
 msgstr "Bloquear"
 
 #: ../app/tools/gimptransformoptions.c:541
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "L_ock position of channel"
 msgid "Lock pivot position to canvas"
-msgstr "Bl_oquear la posición del canal"
+msgstr "Bloquear la posición del pivote al lienzo"
 
 #: ../app/tools/gimptransformtool.c:241
 msgid "Transforming"
@@ -17505,11 +17484,8 @@ msgid "The selection does not intersect with the layer."
 msgstr "La extensión no se intersecta con la capa."
 
 #: ../app/tools/gimptransformtool.c:796 ../app/tools/gimptransformtool.c:809
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Transform Items"
 msgid "Transform Step"
-msgstr "Transformar elementos"
+msgstr "Transformar paso"
 
 #: ../app/tools/gimptransformtool.c:1839
 msgid "There is no layer to transform."
