@@ -1834,7 +1834,7 @@ have_email="no (xdg-email not found)"
 AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]   use sendmail instead of xdg-email])
 
 have_sendmail=no
-# Sendmail must be explicitely enabled.
+# Sendmail must be explicitely enabled to replace xdg-email implementation.
 if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
   if test "x$with_sendmail" = "xyes"; then
       sendmail_path=$PATH:/usr/sbin:/usr/lib
@@ -1845,14 +1845,13 @@ if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
   AC_PATH_PROG(SENDMAIL, sendmail, , $sendmail_path)
   if test "x$SENDMAIL" != "x"; then
     have_email="yes (sendmail)"
-    have_sendmail=yes
     AC_DEFINE_UNQUOTED(SENDMAIL, "$SENDMAIL",
                        [The MTA used by the mail plug-in.])
   else
-    AC_MSG_ERROR([
-*** Check for sendmail failed, though it was explicitly enabled with --with-sendmail.
-*** If you know where it is installed, you may configure --with-sendmail=/path/to/bin/.])
+    # Not having sendmail at runtime is not a blocker.
+    have_email="needs runtime dependency: sendmail"
   fi
+  have_sendmail=yes
 fi
 
 if test "x$have_sendmail" = xno; then

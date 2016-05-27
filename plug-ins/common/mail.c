@@ -111,6 +111,8 @@ MAIN ()
 static void
 query (void)
 {
+  gchar *email_bin;
+
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",      "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
@@ -124,32 +126,17 @@ query (void)
     { GIMP_PDB_INT32,    "encapsulation", "ignored" }
   };
 
-#ifndef SENDMAIL /* xdg-email */
-  /* check if xdg-email is installed
+  /* check if xdg-email or sendmail is installed
    * TODO: allow setting the location of the executable in preferences
    */
-  gchar    *argv[]         = { "xdg-email", "--version", NULL };
-  gboolean  have_xdg_email = FALSE;
-
-  if (g_spawn_sync (NULL,
-                    argv,
-                    NULL,
-                    G_SPAWN_STDERR_TO_DEV_NULL |
-                    G_SPAWN_STDOUT_TO_DEV_NULL |
-                    G_SPAWN_SEARCH_PATH,
-                    NULL,
-                    NULL,
-                    NULL,
-                    NULL,
-                    NULL,
-                    NULL))
-    {
-      have_xdg_email = TRUE;
-    }
-
-  if (! have_xdg_email)
-    return;
+#ifdef SENDMAIL
+  email_bin = g_find_program_in_path ("sendmail");
+#else
+  email_bin = g_find_program_in_path ("xdg-email");
 #endif
+
+  if (email_bin == NULL)
+    return;
 
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Send the image by email"),
@@ -171,6 +158,8 @@ query (void)
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Send");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
                              (const guint8 *) GTK_STOCK_EDIT);
+
+  g_free (email_bin);
 }
 
 static void
@@ -400,7 +389,7 @@ send_image (const gchar *filename,
 
 #else /* SENDMAIL */
   /* construct the "sendmail user@location" line */
-  mailcmd[0] = SENDMAIL;
+  mailcmd[0] = "sendmail";
   mailcmd[1] = mail_info.receipt;
   mailcmd[2] = NULL;
 
@@ -806,7 +795,9 @@ sendmail_pipe (gchar **cmd,
   gint    fd;
   GError *err = NULL;
 
-  if (! g_spawn_async_with_pipes (NULL, cmd, NULL, G_SPAWN_DO_NOT_REAP_CHILD,
+  if (! g_spawn_async_with_pipes (NULL, cmd, NULL,
+                                  G_SPAWN_DO_NOT_REAP_CHILD |
+                                  G_SPAWN_SEARCH_PATH,
                                   NULL, NULL, pid, &fd, NULL, NULL, &err))
     {
       g_message (_("Could not start sendmail (%s)"), err->message);
