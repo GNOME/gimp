@@ -527,6 +527,7 @@ send_dialog (void)
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     mail_info.filename);
+  gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
 
 #ifdef SENDMAIL
   /* To entry */
