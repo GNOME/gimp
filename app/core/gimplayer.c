@@ -984,39 +984,42 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
                            gint          y)
 {
   GimpLayer *layer = GIMP_LAYER (pickable);
-  Tile      *tile;
   gint       val   = 0;
 
   if (x >= 0 && x < gimp_item_get_width  (GIMP_ITEM (layer)) &&
       y >= 0 && y < gimp_item_get_height (GIMP_ITEM (layer)) &&
       gimp_item_is_visible (GIMP_ITEM (layer)))
     {
-      /*  If the point is inside, and the layer has no
-       *  alpha channel, success!
-       */
+      GimpLayerMask *mask;
+
       if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-        return OPAQUE_OPACITY;
+        {
+          val = OPAQUE_OPACITY;
+        }
+      else
+        {
+          Tile *tile;
 
-      /*  Otherwise, determine if the alpha value at
-       *  the given point is non-zero
-       */
-      tile = tile_manager_get_tile (gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                                    x, y, TRUE, FALSE);
+          tile = tile_manager_get_tile (gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+                                        x, y, TRUE, FALSE);
 
-      val = * ((const guchar *) tile_data_pointer (tile, x, y) +
-               tile_bpp (tile) - 1);
+          val = * ((const guchar *) tile_data_pointer (tile, x, y) +
+                   tile_bpp (tile) - 1);
 
-      if (layer->mask)
+          tile_release (tile, FALSE);
+        }
+
+      if ((mask = gimp_layer_get_mask (layer)) &&
+          gimp_layer_mask_get_apply (mask))
         {
           gint mask_val;
 
-          mask_val = gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer->mask),
+          mask_val = gimp_pickable_get_opacity_at (GIMP_PICKABLE (mask),
                                                    x, y);
 
           val = val * mask_val / 255;
         }
 
-      tile_release (tile, FALSE);
     }
 
   return val;
