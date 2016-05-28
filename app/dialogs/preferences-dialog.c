@@ -1689,9 +1689,12 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_enum_combo_box_add (object, "layer-preview-size", 0, 0,
                             _("_Default layer & channel preview size:"),
                             GTK_TABLE (table), 0, size_group);
+  prefs_enum_combo_box_add (object, "undo-preview-size", 0, 0,
+                            _("_Undo preview size:"),
+                            GTK_TABLE (table), 1, size_group);
   prefs_enum_combo_box_add (object, "navigation-preview-size", 0, 0,
                             _("Na_vigation preview size:"),
-                            GTK_TABLE (table), 1, size_group);
+                            GTK_TABLE (table), 2, size_group);
 
   /* Keyboard Shortcuts */
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
