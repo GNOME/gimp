@@ -10,23 +10,20 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:export-ydpi="90.000000"
-   inkscape:export-xdpi="90.000000"
-   inkscape:export-filename="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/stock-layers-16.png"
    width="16"
    height="16"
    id="svg11300"
    sodipodi:version="0.32"
-   inkscape:version="0.91+devel r"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="gimp-prefs-help-system.svg"
    version="1.0"
    viewBox="0 0 16 16">
   <sodipodi:namedview
-     inkscape:cy="7.1741021"
-     inkscape:cx="-1.73689"
+     inkscape:cy="11.487418"
+     inkscape:cx="0.55691543"
      inkscape:zoom="27.820822"
-     inkscape:window-height="907"
-     inkscape:window-width="1478"
+     inkscape:window-height="1016"
+     inkscape:window-width="1920"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="0.17254902"
@@ -41,7 +38,7 @@
      width="16px"
      height="16px"
      showgrid="false"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:document-units="px" />
   <defs
      id="defs3">
@@ -139,21 +136,21 @@
     </radialGradient>
     <linearGradient
        id="b"
-       x1="27.427"
+       x1="43.087959"
        xlink:href="#linearGradient4176"
        gradientUnits="userSpaceOnUse"
-       x2="15.76"
-       y1="30.841999"
-       y2="13.171"
+       x2="4.9110665"
+       y1="43.108994"
+       y2="4.9345889"
        gradientTransform="matrix(0.41083239,0,0,0.41022291,-1.8464808,-1.8202333)" />
     <linearGradient
        id="h"
-       x1="15.929"
+       x1="-7.9561524"
        xlink:href="#linearGradient4176"
        gradientUnits="userSpaceOnUse"
-       x2="51.529999"
-       y1="9.0699997"
-       y2="64.25"
+       x2="56.167042"
+       y1="-11.170541"
+       y2="57.152668"
        gradientTransform="matrix(0.41083239,0,0,0.41022291,-1.8464808,-1.8202333)" />
     <linearGradient
        inkscape:collect="always"

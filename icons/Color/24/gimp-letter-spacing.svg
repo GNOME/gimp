@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-letter-spacing-24.svg">
+  <defs
+     id="defs30573" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="27.303964"
+     inkscape:cx="8.0663513"
+     inkscape:cy="11.899306"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid22" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1028.3622)">
+    <g
+       id="g4147">
+      <rect
+         y="1028.3622"
+         x="0"
+         height="24"
+         width="24"
+         id="rect858"
+         style="opacity:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.00953174;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="89"
+         inkscape:export-xdpi="89"
+         inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#000000;stroke-width:2.21182895;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+         d="m 3.2047838,1031.4682 4.4601947,-10e-5 c 1.1749449,0 2.2291066,1.0875 2.2291066,2.1973 l 0,6.5907 -5.5747369,2e-4 c -2.9115619,0 -2.9906563,-4.3941 0,-4.3941 l 5.5747369,0"
+         id="path18616-0-4-7"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccssc" />
+      <path
+         inkscape:export-ydpi="89"
+         inkscape:export-xdpi="89"
+         inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+         sodipodi:nodetypes="ccssc"
+         inkscape:connector-curvature="0"
+         id="path18618-3-4-3"
+         d="m 14.101887,1029.3621 0,10.8982 5.857473,0 c 2.550239,0 2.619504,-5.4489 0,-5.4489 l -5.857473,0"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#000000;stroke-width:2.20377541;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path18497-9-8"
+         d="m 22.034857,1047.3622 0,2 -19.5616642,0 0,-2 z"
+         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.62987268;marker:none;enable-background:accumulate" />
+      <path
+         inkscape:export-ydpi="89"
+         inkscape:export-xdpi="89"
+         inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+         inkscape:connector-curvature="0"
+         style="color:#555753;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#ff9753;fill-opacity:1;stroke:#ff5000;stroke-width:0.52343333;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+         d="m 17.761717,1044.624 0,0.9345 c 0,0.24 0.125828,0.4939 0.302863,0.6717 l 2.604624,2.132 -2.604624,2.1322 c -0.177035,0.1779 -0.302863,0.4317 -0.302863,0.6717 l 0,0.9344 c 0.323055,0 0.646109,-2e-4 0.969163,-2e-4 0.299908,0 0.535288,-0.084 0.726872,-0.2625 1.372983,-1.0028 2.745957,-2.4728 4.11894,-3.4756 l -4.11894,-3.4755 c -0.191584,-0.1784 -0.426964,-0.2627 -0.726872,-0.2627 -0.323054,0 -0.646108,0 -0.969163,0 z"
+         id="path17259-0-7-2-6"
+         sodipodi:nodetypes="ccccccccccccc" />
+      <path
+         inkscape:export-ydpi="89"
+         inkscape:export-xdpi="89"
+         inkscape:export-filename="/home/matthias/GIT/icons/exported-sifr/cmd/lc_spacing.png"
+         inkscape:connector-curvature="0"
+         style="color:#555753;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#ff9753;fill-opacity:1;stroke:#ff5000;stroke-width:0.52331352;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+         d="m 6.2354701,1044.624 0,0.9346 c 0,0.2401 -0.1257672,0.4938 -0.3027226,0.6714 l -2.6034156,2.132 2.6034156,2.1322 c 0.1769547,0.1779 0.3027226,0.4317 0.3027226,0.6716 l 0,0.9346 c -0.3229043,0 -0.6458087,-10e-5 -0.9687128,-10e-5 -0.2997679,0 -0.5350393,-0.084 -0.7265344,-0.2627 -1.3723462,-1.0027 -2.7446832,-2.4727 -4.11702928,-3.4756 l 4.11702928,-3.4753 c 0.1914951,-0.1783 0.4267665,-0.2629 0.7265344,-0.2629 0.3229041,2e-4 0.6458085,2e-4 0.9687128,2e-4 z"
+         id="path17259-0-7-2-6-9"
+         sodipodi:nodetypes="ccccccccccccc" />
+    </g>
+  </g>
+</svg>
