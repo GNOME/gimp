@@ -10921,6 +10921,10 @@ msgstr ""
 "aus."
 
 #: ../plug-ins/screenshot/screenshot.c:434
+msgid "Click in a window to snap it after delay."
+msgstr "Klicken Sie in das am Ende der Verzögerung zu fotografierende Fenster."
+
+#: ../plug-ins/screenshot/screenshot.c:437
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Klicken Sie am Ende der Verzögerung in das zu fotografierende Fenster."
 

@@ -32,7 +32,8 @@ typedef enum
 {
   SCREENSHOT_CAN_SHOOT_DECORATIONS     = 0x1 << 0,
   SCREENSHOT_CAN_SHOOT_POINTER         = 0x1 << 1,
-  SCREENSHOT_CAN_PICK_NONINTERACTIVELY = 0x1 << 2
+  SCREENSHOT_CAN_PICK_NONINTERACTIVELY = 0x1 << 2,
+  SCREENSHOT_CAN_SHOOT_REGION          = 0x1 << 3
 } ScreenshotCapabilities;
 
 typedef enum
