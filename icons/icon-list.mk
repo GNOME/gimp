@@ -252,6 +252,7 @@ vector24_images = \
 	24/gimp-channel-indexed.svg			\
 	24/gimp-channel-red.svg				\
 	24/gimp-channels.svg				\
+	24/gimp-char-picker.svg				\
 	24/gimp-colormap.svg				\
 	24/gimp-controller.svg				\
 	24/gimp-controller-keyboard.svg			\
@@ -266,18 +267,27 @@ vector24_images = \
 	24/gimp-display-filter-gamma			\
 	24/gimp-display-filter-lcms			\
 	24/gimp-display-filter-proof			\
+	24/gimp-dynamics.svg				\
 	24/gimp-error.svg				\
 	24/gimp-floating-selection.svg			\
 	24/gimp-gegl.svg				\
 	24/gimp-grid.svg				\
+	24/gimp-histogram.svg				\
 	24/gimp-image.svg				\
 	24/gimp-images.svg				\
 	24/gimp-info.svg				\
+	24/gimp-landscape.svg				\
 	24/gimp-layer.svg				\
 	24/gimp-layer-mask.svg				\
 	24/gimp-layers.svg				\
+	24/gimp-letter-spacing.svg			\
+	24/gimp-line-spacing.svg			\
 	24/gimp-move-to-screen.svg			\
 	24/gimp-navigation.svg				\
+	24/gimp-path.svg				\
+	24/gimp-paths.svg				\
+	24/gimp-portrait.svg				\
+	24/gimp-prefs-folders.svg			\
 	24/gimp-print-resolution.svg			\
 	24/gimp-question.svg				\
 	24/gimp-resize.svg				\
@@ -325,6 +335,7 @@ vector24_images = \
 	24/gimp-tool-perspective.svg			\
 	24/gimp-tool-perspective-clone.svg		\
 	24/gimp-tool-posterize.svg			\
+	24/gimp-tool-preset.svg				\
 	24/gimp-tool-rect-select.svg			\
 	24/gimp-tool-rotate.svg				\
 	24/gimp-tools.svg				\
@@ -342,7 +353,8 @@ vector24_images = \
 	24/gimp-user-manual.svg				\
 	24/gimp-video.svg				\
 	24/gimp-warning.svg				\
-	24/gimp-web.svg
+	24/gimp-web.svg					\
+	24/gimp-wilber.svg
 
 icons12_images = \
 	12/gimp-close.png			\
