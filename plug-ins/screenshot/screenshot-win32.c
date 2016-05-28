@@ -100,17 +100,6 @@ typedef struct {
   GtkWidget *delay_spinner;
 } WinSnapInterface;
 
-/* The dialog data */
-static WinSnapInterface winsnapintf =
-{
-#ifdef CAN_SET_DECOR
-  NULL,
-#endif
-  NULL,
-  NULL,
-  NULL
-};
-
 /* We create a DIB section to hold the grabbed area. The scanlines in
  * DIB sections are aligned ona LONG (four byte) boundary. Its pixel
  * data is in RGB (BGR actually) format, three bytes per pixel.
@@ -135,8 +124,7 @@ screenshot_win32_available (void)
 ScreenshotCapabilities
 screenshot_win32_get_capabilities (void)
 {
-  return (SCREENSHOT_CAN_SHOOT_DECORATIONS |
-          SCREENSHOT_CAN_SHOOT_POINTER);
+  return (SCREENSHOT_CAN_SHOOT_DECORATIONS);
 }
 
 GimpPDBStatusType
@@ -212,12 +200,12 @@ flipRedAndBlueBytes(int width, int height)
 static void
 sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
 {
-  int           width, height;
-  int           imageType, layerType;
-  gint32        new_image_id;
-  gint32        layer_id;
-  GimpPixelRgn  pixel_rgn;
-  GimpDrawable *drawable;
+  int            width, height;
+  int            imageType, layerType;
+  gint32         new_image_id;
+  gint32         layer_id;
+  GeglBuffer    *buffer;
+  GeglRectangle *rectangle;
 
   /* Our width and height */
   width = (rect.right - rect.left);
@@ -244,20 +232,22 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
                             layerType, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer(new_image_id, layer_id, -1, 0);
 
-  /* Get our drawable */
-  drawable = gimp_drawable_get(layer_id);
+  /* make rectangle */
+  rectangle = g_new (GeglRectangle, 1);
+  rectangle->x = 0;
+  rectangle->y = 0;
+  rectangle->width = ROUND4(width);
+  rectangle->height = height;
 
-  gimp_tile_cache_size(ROUND4(width) * gimp_tile_height() * 3);
+  /* get the buffer */
+  buffer = gimp_drawable_get_buffer (layer_id);
 
-  /* Initialize a pixel region for writing to the image */
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0,
-          ROUND4(width), height, TRUE, FALSE);
+  /* fill the buffer */
+  gegl_buffer_set (buffer, rectangle, 0, NULL, (guchar *) capBytes, GEGL_AUTO_ROWSTRIDE);
 
-  gimp_pixel_rgn_set_rect(&pixel_rgn, (guchar *) capBytes,
-        0, 0, ROUND4(width), height);
+  /* flushing data */
+  gegl_buffer_flush (buffer);
 
-  /* HB: update data BEFORE size change */
-  gimp_drawable_flush(drawable);
   /* Now resize the layer down to the correct size if necessary. */
   if (width != ROUND4(width)) {
     gimp_layer_resize (layer_id, width, height, 0, 0);
@@ -286,19 +276,6 @@ doWindowCapture(void)
    * to be captured
    */
   winsnapWinMain();
-}
-
-/*
- * doRootWindowCapture
- *
- * Capture the root window
- * ENTRY POINT FOR WINSNAP ROOT
- */
-static void
-doRootWindowCapture(void)
-{
-  /* Do the window capture */
-  doCapture(0);
 }
 
 /******************************************************************

@@ -430,10 +430,14 @@ shoot_dialog (GdkScreen **screen)
   shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_REGION,
                          _("After the delay, drag your mouse to select "
                            "the region for the screenshot."));
+#ifdef G_OS_WIN32
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
+                         _("Click in a window to snap it after delay."));
+#else
   shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
                          _("At the end of the delay, click in a window "
                            "to snap it."));
-
+#endif
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
 
   /*  Area  */
@@ -527,20 +531,23 @@ shoot_dialog (GdkScreen **screen)
                                 shootvals.shoot_type == SHOOT_ROOT);
 
   /*  dragged region  */
-  button = gtk_radio_button_new_with_mnemonic (radio_group,
-                                               _("Select a _region to grab"));
-  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                shootvals.shoot_type == SHOOT_REGION);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  if (capabilities & SCREENSHOT_CAN_SHOOT_REGION)
+    {
+      button = gtk_radio_button_new_with_mnemonic (radio_group,
+                                                   _("Select a _region to grab"));
+      radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                    shootvals.shoot_type == SHOOT_REGION);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (button), "gimp-item-data",
-                     GINT_TO_POINTER (SHOOT_REGION));
+      g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                         GINT_TO_POINTER (SHOOT_REGION));
 
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (shoot_radio_button_toggled),
-                    notebook);
+      g_signal_connect (button, "toggled",
+                        G_CALLBACK (shoot_radio_button_toggled),
+                        notebook);
+    }
 
   /*  Delay  */
   frame = gimp_frame_new (_("Delay"));
