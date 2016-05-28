@@ -377,11 +377,24 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Offset:"));
+  label = gtk_label_new (_("Offset X:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   spinbutton = gimp_prop_spin_button_new (config, "offset-x",
+                                          1, 20, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Offset Y:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_prop_spin_button_new (config, "offset-y",
                                           1, 20, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
