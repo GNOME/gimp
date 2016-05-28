@@ -223,4 +223,3 @@ plug-ins/selection-to-path/pxl-outline.c
 plug-ins/selection-to-path/selection-to-path.c
 plug-ins/selection-to-path/selection-to-path-dialog.c
 plug-ins/twain/twain.c
-plug-ins/win-snap/winsnap.c

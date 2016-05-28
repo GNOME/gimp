@@ -2400,7 +2400,6 @@ plug-ins/script-fu/scripts/images/Makefile
 plug-ins/script-fu/tinyscheme/Makefile
 plug-ins/selection-to-path/Makefile
 plug-ins/twain/Makefile
-plug-ins/win-snap/Makefile
 plug-ins/common/Makefile
 modules/Makefile
 devel-docs/Makefile
