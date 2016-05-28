@@ -165,6 +165,11 @@ header files installed.
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
 
+ 18. Summary of optional runtime dependencies:
+
+     darktable >= 1.7, with lua support enabled for raw loading
+     xdg-email for sending emails
+     sendmail for sending emails if --with-sendmail enabled
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
 lying around on your system, otherwise configure may fail to find the

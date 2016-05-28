@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp20\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
-"eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-05-22 21:33+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-09-19 15:30+0000\n"
 "PO-Revision-Date: 2015-06-07 21:51+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot En Òc\n"
@@ -31,30 +31,30 @@ msgstr "Informacions mancantas sus l'excepcion"
 #: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
 msgid "An error occurred running %s"
-msgstr "Una error s'es produsida pendent l'execucion de %s"
+msgstr "Una error s'es produita pendent l'execucion de %s"
 
 #: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
 msgstr "_Mai d'informacions"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
+#: ../plug-ins/pygimp/gimpfu.py:545
 msgid "No"
 msgstr "Non"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
 msgid "Yes"
 msgstr "Òc"
 
-#: ../plug-ins/pygimp/gimpfu.py:597 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Seleccion del fichièr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:643
+#: ../plug-ins/pygimp/gimpfu.py:644
 msgid "Python-Fu Folder Selection"
 msgstr "Seleccion del dorsièr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:732
+#: ../plug-ins/pygimp/gimpfu.py:733
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Entrada invalida per « %s »"
@@ -81,7 +81,7 @@ msgstr "_Font caractèr"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
-msgstr "Còde font"
+msgstr "Còdi font"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
@@ -223,7 +223,6 @@ msgid "Hue"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-#| msgid "Green or Saturation"
 msgid "Saturation"
 msgstr "Saturacion"
 
@@ -309,7 +308,6 @@ msgid "_Ascending"
 msgstr "_Ascendent"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-#| msgid "Channel to _sort"
 msgid "Secondary Channel to s_ort"
 msgstr "Canal segondari de _triar"
 
@@ -420,7 +418,9 @@ msgid "Save Python-Fu Console Output"
 msgstr "Enregistrar las sortidas de la consòla python-fu"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
-msgid "Interactiva GIMP Python interpreter"
+#, fuzzy
+#| msgid "Interactiva GIMP Python interpreter"
+msgid "Interactive GIMP Python interpreter"
 msgstr "Interpretador interactiu GIMP Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:221
@@ -465,14 +465,14 @@ msgstr "Desplaçament _Y de l'ombra portada"
 #~ msgstr "TSV"
 
 #~ msgid "Red or Hue"
-#~ msgstr "Rouge o tencha"
+#~ msgstr "Roge o tinta"
 
 #~ msgid "Blue or Value"
-#~ msgstr "Bleu o valor"
+#~ msgstr "Blau o valor"
 
 #~ msgid "Create a new brush with characters from a text sequence"
 #~ msgstr ""
-#~ "Creacion d'una novèla bròssa amb les caractèrs d'una sequéncia de tèxte"
+#~ "Creacion d'una novèla bròssa amb los caractèrs d'una sequéncia de tèxte"
 
 #~ msgid "New Brush from _Text..."
 #~ msgstr "Novèla bròssa dempuèi un _tèxte..."
@@ -481,7 +481,7 @@ msgstr "Desplaçament _Y de l'ombra portada"
 #~ msgstr "Poliça"
 
 #~ msgid "Pixel Size"
-#~ msgstr "Talha de pixel"
+#~ msgstr "Talha de pixèl"
 
 #~ msgid "Text"
 #~ msgstr "Tèxte"

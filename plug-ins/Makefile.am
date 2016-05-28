@@ -23,7 +23,6 @@ endif
 
 if OS_WIN32
 twain = twain
-win_snap = win-snap
 endif
 
 SUBDIRS = \
@@ -58,5 +57,4 @@ SUBDIRS = \
 	selection-to-path	\
 	$(twain)		\
 	ui			\
-	$(win_snap)		\
 	common

@@ -31,6 +31,9 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpimagefile.h"  /* eek */
@@ -388,6 +391,10 @@ gimp_action_set_proxy (GimpAction *action,
           area = gimp_color_area_new (action->color,
                                       GIMP_COLOR_AREA_SMALL_CHECKS, 0);
           gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
+
+          if (action->context)
+            gimp_color_area_set_color_config (GIMP_COLOR_AREA (area),
+                                              action->context->gimp->config->color_management);
 
           gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (proxy),
                                              GTK_ICON_SIZE_MENU,

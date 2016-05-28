@@ -233,6 +233,14 @@ edit_actions_setup (GimpActionGroup *group)
   gtk_action_set_accel_path (action, "<Actions>/edit/edit-paste-as-new");
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "edit-fill-fg");
+  g_object_set (action, "context", context, NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "edit-fill-bg");
+  g_object_set (action, "context", context, NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         "edit-fill-pattern");
   g_object_set (action, "context", context, NULL);
 

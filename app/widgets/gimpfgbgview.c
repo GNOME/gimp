@@ -30,6 +30,9 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
@@ -44,19 +47,22 @@ enum
 };
 
 
-static void     gimp_fg_bg_view_dispose      (GObject        *object);
-static void     gimp_fg_bg_view_set_property (GObject        *object,
-                                              guint           property_id,
-                                              const GValue   *value,
-                                              GParamSpec     *pspec);
-static void     gimp_fg_bg_view_get_property (GObject        *object,
-                                              guint           property_id,
-                                              GValue         *value,
-                                              GParamSpec     *pspec);
+static void     gimp_fg_bg_view_dispose       (GObject          *object);
+static void     gimp_fg_bg_view_set_property  (GObject          *object,
+                                               guint             property_id,
+                                               const GValue     *value,
+                                               GParamSpec       *pspec);
+static void     gimp_fg_bg_view_get_property  (GObject          *object,
+                                               guint             property_id,
+                                               GValue           *value,
+                                               GParamSpec       *pspec);
 
-static gboolean gimp_fg_bg_view_expose       (GtkWidget      *widget,
-                                              GdkEventExpose *eevent);
+static gboolean gimp_fg_bg_view_expose        (GtkWidget        *widget,
+                                               GdkEventExpose   *eevent);
 
+static void     gimp_fg_bg_view_config_notify (GimpColorConfig  *config,
+                                               const GParamSpec *pspec,
+                                               GimpFgBgView     *view);
 
 G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_WIDGET)
 
@@ -168,11 +174,35 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   rect_w = allocation.width  * 3 / 4;
   rect_h = allocation.height * 3 / 4;
 
+  if (! view->transform)
+    {
+      static GimpColorProfile *profile = NULL;
+
+      if (G_UNLIKELY (! profile))
+        profile = gimp_color_profile_new_rgb_srgb ();
+
+      view->transform =
+        gimp_widget_get_color_transform (widget,
+                                         view->color_config,
+                                         profile,
+                                         babl_format ("R'G'B'A double"),
+                                         babl_format ("R'G'B'A double"));
+    }
+
   /*  draw the background area  */
 
   if (view->context)
     {
       gimp_context_get_background (view->context, &color);
+
+      if (view->transform)
+        gimp_color_transform_process_pixels (view->transform,
+                                             babl_format ("R'G'B'A double"),
+                                             &color,
+                                             babl_format ("R'G'B'A double"),
+                                             &color,
+                                             1);
+
       gimp_cairo_set_source_rgb (cr, &color);
 
       cairo_rectangle (cr,
@@ -195,6 +225,15 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   if (view->context)
     {
       gimp_context_get_foreground (view->context, &color);
+
+      if (view->transform)
+        gimp_color_transform_process_pixels (view->transform,
+                                             babl_format ("R'G'B'A double"),
+                                             &color,
+                                             babl_format ("R'G'B'A double"),
+                                             &color,
+                                             1);
+
       gimp_cairo_set_source_rgb (cr, &color);
 
       cairo_rectangle (cr, 1, 1, rect_w - 2, rect_h - 2);
@@ -210,6 +249,21 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
 
   return TRUE;
 }
+
+static void
+gimp_fg_bg_view_config_notify (GimpColorConfig  *config,
+                               const GParamSpec *pspec,
+                               GimpFgBgView     *view)
+{
+  if (view->transform)
+    {
+      g_object_unref (view->transform);
+      view->transform = NULL;
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+
 
 /*  public functions  */
 
@@ -240,6 +294,12 @@ gimp_fg_bg_view_set_context (GimpFgBgView *view,
                                             view);
       g_object_unref (view->context);
       view->context = NULL;
+
+      g_signal_handlers_disconnect_by_func (view->color_config,
+                                            gimp_fg_bg_view_config_notify,
+                                            view);
+      g_object_unref (view->color_config);
+      view->color_config = NULL;
     }
 
   view->context = context;
@@ -254,7 +314,15 @@ gimp_fg_bg_view_set_context (GimpFgBgView *view,
       g_signal_connect_swapped (context, "background-changed",
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 view);
+
+      view->color_config = g_object_ref (context->gimp->config->color_management);
+
+      g_signal_connect (view->color_config, "notify",
+                        G_CALLBACK (gimp_fg_bg_view_config_notify),
+                        view);
     }
+
+  gimp_fg_bg_view_config_notify (NULL, NULL, view);
 
   g_object_notify (G_OBJECT (view), "context");
 }

@@ -479,6 +479,87 @@ get_display_profile (GtkWidget       *widget,
   return profile;
 }
 
+typedef struct _TransformCache TransformCache;
+
+struct _TransformCache
+{
+  GimpColorTransform *transform;
+
+  GimpColorConfig    *config;
+  GimpColorProfile   *src_profile;
+  const Babl         *src_format;
+  GimpColorProfile   *dest_profile;
+  const Babl         *dest_format;
+  GimpColorProfile   *proof_profile;
+
+  gulong              notify_id;
+};
+
+static GList    *transform_caches = NULL;
+static gboolean  debug_cache      = FALSE;
+
+static gboolean
+profiles_equal (GimpColorProfile *profile1,
+                GimpColorProfile *profile2)
+{
+  return ((profile1 == NULL && profile2 == NULL) ||
+          (profile1 != NULL && profile2 != NULL &&
+           gimp_color_profile_is_equal (profile1, profile2)));
+}
+
+static TransformCache *
+transform_cache_get (GimpColorConfig  *config,
+                     GimpColorProfile *src_profile,
+                     const Babl       *src_format,
+                     GimpColorProfile *dest_profile,
+                     const Babl       *dest_format,
+                     GimpColorProfile *proof_profile)
+{
+  GList *list;
+
+  for (list = transform_caches; list; list = g_list_next (list))
+    {
+      TransformCache *cache = list->data;
+
+      if (config      == cache->config                        &&
+          src_format  == cache->src_format                    &&
+          dest_format == cache->dest_format                   &&
+          profiles_equal (src_profile,   cache->src_profile)  &&
+          profiles_equal (dest_profile,  cache->dest_profile) &&
+          profiles_equal (proof_profile, cache->proof_profile))
+        {
+          if (debug_cache)
+            g_printerr ("found cache %p\n", cache);
+
+          return cache;
+        }
+    }
+
+  return NULL;
+}
+
+static void
+transform_cache_config_notify (GObject          *config,
+                               const GParamSpec *pspec,
+                               TransformCache   *cache)
+{
+  transform_caches = g_list_remove (transform_caches, cache);
+
+  g_signal_handler_disconnect (config, cache->notify_id);
+
+  g_object_unref (cache->transform);
+  g_object_unref (cache->src_profile);
+  g_object_unref (cache->dest_profile);
+
+  if (cache->proof_profile)
+    g_object_unref (cache->proof_profile);
+
+  g_free (cache);
+
+  if (debug_cache)
+    g_printerr ("deleted cache %p\n", cache);
+}
+
 GimpColorTransform *
 gimp_widget_get_color_transform (GtkWidget        *widget,
                                  GimpColorConfig  *config,
@@ -486,16 +567,23 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
                                  const Babl       *src_format,
                                  const Babl       *dest_format)
 {
-  GimpColorTransform *transform     = NULL;
+  static gboolean     initialized   = FALSE;
   GimpColorProfile   *dest_profile  = NULL;
   GimpColorProfile   *proof_profile = NULL;
-  cmsUInt16Number     alarmCodes[cmsMAXCHANNELS] = { 0, };
+  TransformCache     *cache;
 
   g_return_val_if_fail (widget == NULL || GTK_IS_WIDGET (widget), NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), NULL);
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), NULL);
   g_return_val_if_fail (src_format != NULL, NULL);
   g_return_val_if_fail (dest_format != NULL, NULL);
+
+  if (G_UNLIKELY (! initialized))
+    {
+      initialized = TRUE;
+
+      debug_cache = g_getenv ("GIMP_DEBUG_TRANSFORM_CACHE") != NULL;
+    }
 
   switch (config->mode)
     {
@@ -511,7 +599,54 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       break;
     }
 
-  if (proof_profile)
+  cache = transform_cache_get (config,
+                               src_profile,
+                               src_format,
+                               dest_profile,
+                               dest_format,
+                               proof_profile);
+
+  if (cache)
+    {
+      g_object_unref (dest_profile);
+
+      if (proof_profile)
+        g_object_unref (proof_profile);
+
+      if (cache->transform)
+        return g_object_ref (cache->transform);
+
+      return NULL;
+    }
+
+  if (! proof_profile &&
+      gimp_color_profile_is_equal (src_profile, dest_profile))
+    {
+      g_object_unref (dest_profile);
+
+      return NULL;
+    }
+
+  cache = g_new0 (TransformCache, 1);
+
+  if (debug_cache)
+    g_printerr ("creating cache %p\n", cache);
+
+  cache->config        = g_object_ref (config);
+  cache->src_profile   = g_object_ref (src_profile);
+  cache->src_format    = src_format;
+  cache->dest_profile  = dest_profile;
+  cache->dest_format   = dest_format;
+  cache->proof_profile = proof_profile;
+
+  cache->notify_id =
+    g_signal_connect (cache->config, "notify",
+                      G_CALLBACK (transform_cache_config_notify),
+                      cache);
+
+  transform_caches = g_list_prepend (transform_caches, cache);
+
+  if (cache->proof_profile)
     {
       GimpColorTransformFlags flags = 0;
 
@@ -522,7 +657,8 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
 
       if (config->simulation_gamut_check)
         {
-          guchar r, g, b;
+          cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0, };
+          guchar          r, g, b;
 
           flags |= GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK;
 
@@ -535,16 +671,17 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
           cmsSetAlarmCodes (alarmCodes);
         }
 
-      transform = gimp_color_transform_new_proofing (src_profile,  src_format,
-                                                     dest_profile, dest_format,
-                                                     proof_profile,
-                                                     config->simulation_intent,
-                                                     config->display_intent,
-                                                     flags);
-
-      g_object_unref (proof_profile);
+      cache->transform =
+        gimp_color_transform_new_proofing (cache->src_profile,
+                                           cache->src_format,
+                                           cache->dest_profile,
+                                           cache->dest_format,
+                                           cache->proof_profile,
+                                           config->simulation_intent,
+                                           config->display_intent,
+                                           flags);
     }
-  else if (! gimp_color_profile_is_equal (src_profile, dest_profile))
+  else
     {
       GimpColorTransformFlags flags = 0;
 
@@ -553,13 +690,17 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
           flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
         }
 
-      transform = gimp_color_transform_new (src_profile,  src_format,
-                                            dest_profile, dest_format,
-                                            config->display_intent,
-                                            flags);
+      cache->transform =
+        gimp_color_transform_new (cache->src_profile,
+                                  cache->src_format,
+                                  cache->dest_profile,
+                                  cache->dest_format,
+                                  config->display_intent,
+                                  flags);
     }
 
-  g_object_unref (dest_profile);
+  if (cache->transform)
+    return g_object_ref (cache->transform);
 
-  return transform;
+  return NULL;
 }

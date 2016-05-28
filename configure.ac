@@ -1820,24 +1820,51 @@ if test "x$have_libgudev" = xyes; then
 fi
 
 
-####################
-# Check for sendmail
-####################
+##########################
+# Check for Email Settings
+##########################
 
-AC_ARG_WITH(sendmail,[  --with-sendmail=DIR     set sendmail command location])
+# The default behavior is that xdg-email is searched in the user PATH,
+# and email plugin is enabled if found.
+# Sendmail can be used instead of xdg-email, but must be explicitly
+# enabled with --with-sendmail.
 
-if test "x$with_sendmail" != "x"; then
-  sendmail_path=$with_sendmail
-else
-  sendmail_path=$PATH:/usr/sbin:/usr/lib
+have_email="no (xdg-email not found)"
+
+AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]   use sendmail instead of xdg-email])
+
+have_sendmail=no
+# Sendmail must be explicitely enabled to replace xdg-email implementation.
+if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
+  if test "x$with_sendmail" = "xyes"; then
+      sendmail_path=$PATH:/usr/sbin:/usr/lib
+  else
+      sendmail_path=$with_sendmail
+  fi
+
+  AC_PATH_PROG(SENDMAIL, sendmail, , $sendmail_path)
+  if test "x$SENDMAIL" != "x"; then
+    have_email="yes (sendmail)"
+    AC_DEFINE_UNQUOTED(SENDMAIL, "$SENDMAIL",
+                       [The MTA used by the mail plug-in.])
+  else
+    # Not having sendmail at runtime is not a blocker.
+    have_email="needs runtime dependency: sendmail"
+  fi
+  have_sendmail=yes
 fi
 
-AC_PATH_PROG(SENDMAIL, sendmail, , $sendmail_path)
-if test "x$SENDMAIL" != "x"; then
-  AC_DEFINE_UNQUOTED(SENDMAIL, "$SENDMAIL",
-	             [The MTA used by the mail plug-in.])
+if test "x$have_sendmail" = xno; then
+  AC_PATH_PROG(XDG_EMAIL, xdg-email)
+  if test "x$XDG_EMAIL" != "x"; then
+    have_email="yes (xdg-email)"
+  else
+    # Not having xdg-email at runtime is not a blocker.
+    # But let's inform the builder that for the feature to be available,
+    # xdg-email is a runtime dependency.
+    have_email="needs runtime dependency: xdg-email"
+  fi
 fi
-
 
 ################
 # Check for perl
@@ -2374,7 +2401,6 @@ plug-ins/script-fu/scripts/images/Makefile
 plug-ins/script-fu/tinyscheme/Makefile
 plug-ins/selection-to-path/Makefile
 plug-ins/twain/Makefile
-plug-ins/win-snap/Makefile
 plug-ins/common/Makefile
 modules/Makefile
 devel-docs/Makefile
@@ -2506,6 +2532,7 @@ Optional Plug-Ins:
   WMF:                 $have_libwmf
   X11 Mouse Cursor:    $have_xmc
   XPM:                 $have_libxpm
+  Email:               $have_email
 
 Optional Modules:
   ALSA (MIDI Input):   $have_alsa

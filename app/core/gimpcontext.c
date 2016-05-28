@@ -2386,18 +2386,6 @@ gimp_context_get_foreground (GimpContext *context,
 }
 
 void
-gimp_context_get_foreground_pixel (GimpContext *context,
-                                   const Babl  *pixel_format,
-                                   gpointer     pixel)
-{
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (pixel_format != NULL);
-  g_return_if_fail (pixel != NULL);
-
-  gimp_rgba_get_pixel (&context->foreground, pixel_format, pixel);
-}
-
-void
 gimp_context_set_foreground (GimpContext   *context,
                              const GimpRGB *color)
 {
@@ -2406,22 +2394,6 @@ gimp_context_set_foreground (GimpContext   *context,
   context_find_defined (context, GIMP_CONTEXT_PROP_FOREGROUND);
 
   gimp_context_real_set_foreground (context, color);
-}
-
-void
-gimp_context_set_foreground_pixel (GimpContext   *context,
-                                   const Babl    *pixel_format,
-                                   gconstpointer  pixel)
-{
-  GimpRGB color;
-
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (pixel_format != NULL);
-  g_return_if_fail (pixel != NULL);
-
-  gimp_rgba_set_pixel (&color, pixel_format, pixel);
-
-  gimp_context_set_foreground (context, &color);
 }
 
 void
@@ -2464,18 +2436,6 @@ gimp_context_get_background (GimpContext *context,
 }
 
 void
-gimp_context_get_background_pixel (GimpContext *context,
-                                   const Babl  *pixel_format,
-                                   gpointer     pixel)
-{
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (pixel_format != NULL);
-  g_return_if_fail (pixel != NULL);
-
-  gimp_rgba_get_pixel (&context->background, pixel_format, pixel);
-}
-
-void
 gimp_context_set_background (GimpContext   *context,
                              const GimpRGB *color)
 {
@@ -2484,22 +2444,6 @@ gimp_context_set_background (GimpContext   *context,
   context_find_defined (context, GIMP_CONTEXT_PROP_BACKGROUND);
 
   gimp_context_real_set_background (context, color);
-}
-
-void
-gimp_context_set_background_pixel (GimpContext   *context,
-                                   const Babl    *pixel_format,
-                                   gconstpointer  pixel)
-{
-  GimpRGB color;
-
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (pixel_format != NULL);
-  g_return_if_fail (pixel != NULL);
-
-  gimp_rgba_set_pixel (&color, pixel_format, pixel);
-
-  gimp_context_set_background (context, &color);
 }
 
 void

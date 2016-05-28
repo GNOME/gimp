@@ -245,28 +245,16 @@ void             gimp_context_paint_info_changed  (GimpContext     *context);
 /*  foreground color  */
 void             gimp_context_get_foreground       (GimpContext     *context,
                                                     GimpRGB         *color);
-void             gimp_context_get_foreground_pixel (GimpContext     *context,
-                                                    const Babl      *pixel_format,
-                                                    gpointer         pixel);
 void             gimp_context_set_foreground       (GimpContext     *context,
                                                     const GimpRGB   *color);
-void             gimp_context_set_foreground_pixel (GimpContext     *context,
-                                                    const Babl      *pixel_format,
-                                                    gconstpointer    pixel);
 void             gimp_context_foreground_changed   (GimpContext     *context);
 
 
 /*  background color  */
 void             gimp_context_get_background       (GimpContext     *context,
                                                     GimpRGB         *color);
-void             gimp_context_get_background_pixel (GimpContext     *context,
-                                                    const Babl      *pixel_format,
-                                                    gpointer         pixel);
 void             gimp_context_set_background       (GimpContext     *context,
                                                     const GimpRGB   *color);
-void             gimp_context_set_background_pixel (GimpContext     *context,
-                                                    const Babl      *pixel_format,
-                                                    gconstpointer    pixel);
 void             gimp_context_background_changed   (GimpContext     *context);
 
 
