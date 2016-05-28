@@ -25,17 +25,21 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="501"
-     inkscape:window-height="405"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
      id="namedview1696"
-     showgrid="false"
-     inkscape:zoom="0.21411147"
-     inkscape:cx="-191.8625"
-     inkscape:cy="183.34613"
+     showgrid="true"
+     inkscape:zoom="38.758316"
+     inkscape:cx="5.4820257"
+     inkscape:cy="12.632015"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg2" />
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4144" />
+  </sodipodi:namedview>
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -98,8 +102,9 @@
       <path
          style="fill:none;stroke:#b2b2b2;stroke-width:9.77835178;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
          id="path10-3"
-         d="m -0.35714,42.614183 982.1429,0 m -982.1429,123.491147 982.1429,0 m -982.1429,123.23861 982.1429,0 m -982.1429,121.47084 982.1429,0 M -0.35714,534.811 l 982.1429,0 m -982.1429,122.481 982.1429,0 m -982.1429,122.73354 982.1429,0 m -982.1429,184.10031 982.1429,0 m -122.61832,-979.985307 0,1102.229557 M 736.68645,-15.859457 l 0,1102.229557 M 613.95292,-15.859457 l 0,1102.229557 M 490.96685,-15.859457 l 0,1102.229557 M 367.72823,-15.859457 l 0,1102.229557 M 244.99469,-15.859457 l 0,1102.229557 m -122.481,-1102.229557 0,1102.229557"
-         inkscape:connector-curvature="0" />
+         d="m -0.35714,121.91909 982.1429,0 m -982.1429,137.77872 982.1429,0 m -982.1429,137.77871 982.1429,0 M -0.35714,534.811 l 982.1429,0 m -982.1429,138.22296 982.1429,0 m -982.1429,137.77872 982.1429,0 m -982.1429,137.77871 982.1429,0 m -122.61832,-964.450847 0,1102.229557 M 736.68645,-15.859457 l 0,1102.229557 M 613.95292,-15.859457 l 0,1102.229557 M 490.96685,-15.859457 l 0,1102.229557 M 367.72823,-15.859457 l 0,1102.229557 M 244.99469,-15.859457 l 0,1102.229557 m -122.481,-1102.229557 0,1102.229557"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccccccccccccccccccccc" />
       <image
          id="image12"
          height="1026"

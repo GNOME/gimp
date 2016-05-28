@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   id="svg11300"
+   sodipodi:version="0.32"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-prefs-interface-24.svg"
+   version="1.0"
+   viewBox="0 0 24 24">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     stroke="#204a87"
+     fill="#204a87"
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666"
+     borderopacity="0.17254902"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.627417"
+     inkscape:cx="-7.7392094"
+     inkscape:cy="10.706021"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     width="22px"
+     height="22px"
+     showborder="true"
+     showguides="false"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4161" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jakub Steiner</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:source>http://jimmac.musichall.cz</dc:source>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/" />
+        <dc:title />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>session</rdf:li>
+            <rdf:li>restart</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Attribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,2)">
+    <g
+       id="g4173">
+      <rect
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#eeeeec;fill-opacity:1;fill-rule:evenodd;stroke:#3465a4;stroke-width:1.09983087;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         id="rect3862"
+         width="20.900156"
+         height="20.900185"
+         x="2.5499229"
+         y="0.54990125"
+         rx="0.85683507"
+         ry="0.88872826" />
+      <rect
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         id="rect3864"
+         width="16"
+         height="1"
+         x="6"
+         y="2"
+         rx="0.14818065"
+         ry="0.11113545" />
+      <rect
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#eeeeec;fill-opacity:1;fill-rule:evenodd;stroke:#888a85;stroke-width:1.08715343;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         id="rect2787"
+         width="8.9128313"
+         height="15.912847"
+         x="0.54357684"
+         y="-1.4564233"
+         rx="1.2543448"
+         ry="1.1833733" />
+      <rect
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#555753;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         id="rect2789"
+         width="6"
+         height="1"
+         x="2"
+         y="1"
+         rx="0.26672477"
+         ry="0.11113545" />
+      <circle
+         r="1"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#ef2929;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         id="path6940"
+         cx="7"
+         cy="4" />
+      <circle
+         r="1"
+         id="path6942"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#4e9a06;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         cx="3"
+         cy="4" />
+      <circle
+         r="1"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         id="path6944"
+         cx="3"
+         cy="7" />
+      <circle
+         r="1"
+         id="path6946"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#888a85;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         cx="7"
+         cy="7" />
+      <circle
+         r="1"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#c4a000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         id="path6948"
+         cx="7"
+         cy="10" />
+      <circle
+         r="1"
+         id="path6950"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#f57900;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+         cx="3"
+         cy="10" />
+    </g>
+  </g>
+</svg>
