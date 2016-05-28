@@ -293,7 +293,7 @@ gimp_operation_shrink_process (GeglOperation       *operation,
           if (self->edge_lock)
             max[i] = buffer;
           else
-            max[i] = &buffer[(self->radius_x + 1) * (roi->width + self->radius_x)];
+            max[i] = &buffer[(self->radius_y + 1) * (roi->width + self->radius_x)];
         }
       else if (i < roi->width + self->radius_x)
         {
@@ -302,9 +302,9 @@ gimp_operation_shrink_process (GeglOperation       *operation,
       else
         {
           if (self->edge_lock)
-            max[i] = &buffer[(self->radius_x + 1) * (roi->width + self->radius_x - 1)];
+            max[i] = &buffer[(self->radius_y + 1) * (roi->width + self->radius_x - 1)];
           else
-            max[i] = &buffer[(self->radius_x + 1) * (roi->width + self->radius_x)];
+            max[i] = &buffer[(self->radius_y + 1) * (roi->width + self->radius_x)];
         }
     }
 
@@ -402,7 +402,7 @@ gimp_operation_shrink_process (GeglOperation       *operation,
           else
             {
               last_index = self->radius_x;
-              last_max = max[x + self->radius_y][circ[self->radius_x]];
+              last_max = max[x + self->radius_x][circ[self->radius_x]];
 
               for (i = self->radius_x - 1; i >= -self->radius_x; i--)
                 if (last_max > max[x + i][circ[i]])
@@ -431,7 +431,7 @@ gimp_operation_shrink_process (GeglOperation       *operation,
   g_free (buffer);
   g_free (max);
 
-  for (i = 0; i < self->radius_x + 1; i++)
+  for (i = 0; i < self->radius_y + 1; i++)
     g_free (buf[i]);
 
   g_free (buf);
