@@ -25,6 +25,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpbuffer.h"
@@ -1336,6 +1338,8 @@ gimp_dnd_get_color_icon (GtkWidget      *widget,
                           (GDestroyNotify) g_free);
 
   color_area = gimp_color_area_new (&color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+  gimp_color_area_set_color_config (GIMP_COLOR_AREA (color_area),
+                                    the_dnd_gimp->config->color_management);
   gtk_widget_set_size_request (color_area,
                                DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
 
