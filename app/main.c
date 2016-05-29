@@ -325,7 +325,7 @@ main (int    argc,
     t_SetDllDirectoryA p_SetDllDirectoryA;
 
     p_SetDllDirectoryA = GetProcAddress (GetModuleHandle ("kernel32.dll"),
-					 "SetDllDirectoryA");
+                                         "SetDllDirectoryA");
     if (p_SetDllDirectoryA)
       (*p_SetDllDirectoryA) ("");
   }
@@ -400,7 +400,7 @@ main (int    argc,
     t_SetProcessDEPPolicy p_SetProcessDEPPolicy;
 
     p_SetProcessDEPPolicy = GetProcAddress (GetModuleHandle ("kernel32.dll"),
-					    "SetProcessDEPPolicy");
+                                            "SetProcessDEPPolicy");
     if (p_SetProcessDEPPolicy)
       (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
   }
@@ -522,8 +522,8 @@ main (int    argc,
   if (! new_instance && gimp_unique_open (filenames, as_new))
     {
       if (be_verbose)
-	g_print ("%s\n",
-		 _("Another GIMP instance is already running."));
+        g_print ("%s\n",
+                 _("Another GIMP instance is already running."));
 
       if (batch_commands)
         gimp_unique_batch_run (batch_interpreter, batch_commands);
