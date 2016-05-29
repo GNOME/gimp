@@ -445,6 +445,8 @@ gimp_edit_fill (GimpImage       *image,
     {
     case GIMP_FILL_STYLE_SOLID:
       gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                         &color, &color);
       break;
 
     case GIMP_FILL_STYLE_PATTERN:

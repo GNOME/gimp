@@ -37,6 +37,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpmybrush.h"
+#include "core/gimppickable.h"
 #include "core/gimpsymmetry.h"
 
 #include "gimpmybrushcore.h"
@@ -315,6 +316,8 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
       GimpHSV             hsv;
 
       gimp_context_get_foreground (context, &fg);
+      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                         &fg, &fg);
       gimp_rgb_to_hsv (&fg, &hsv);
 
       g_list_free_full (mybrush->private->brushes,

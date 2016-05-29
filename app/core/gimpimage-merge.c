@@ -47,6 +47,7 @@
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
+#include "gimppickable.h"
 #include "gimpundostack.h"
 
 #include "gimp-intl.h"
@@ -538,6 +539,8 @@ gimp_image_merge_layers (GimpImage     *image,
 
       /*  get the background for compositing  */
       gimp_context_get_background (context, &bg);
+      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
+                                         &bg, &bg);
 
       color = gimp_gegl_color_new (&bg);
       gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),

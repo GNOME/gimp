@@ -36,6 +36,7 @@
 #include "gimpfilloptions.h"
 #include "gimpimage.h"
 #include "gimppattern.h"
+#include "gimppickable.h"
 #include "gimpscanconvert.h"
 
 #include "vectors/gimpvectors.h"
@@ -70,6 +71,9 @@ gimp_drawable_fill (GimpDrawable *drawable,
   else
     {
       GeglColor *gegl_color;
+
+      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                         &color, &color);
 
       if (! gimp_drawable_has_alpha (drawable))
         gimp_rgb_set_alpha (&color, 1.0);
@@ -221,6 +225,8 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
         GeglColor *color;
 
         gimp_context_get_foreground (context, &fg);
+        gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                           &fg, &fg);
 
         color = gimp_gegl_color_new (&fg);
         gegl_buffer_set_color (base_buffer, NULL, color);
