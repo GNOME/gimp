@@ -65,9 +65,12 @@ gimp_display_shell_profile_init (GimpDisplayShell *shell)
 
   shell->color_config = gimp_config_duplicate (GIMP_CONFIG (color_config));
 
-  g_signal_connect (shell->color_config, "notify",
-                    G_CALLBACK (gimp_display_shell_color_config_notify),
-                    shell);
+  /* use after so we are called after the profile cache is invalidated
+   * in gimp_widget_get_color_transform()
+   */
+  g_signal_connect_after (shell->color_config, "notify",
+                          G_CALLBACK (gimp_display_shell_color_config_notify),
+                          shell);
 }
 
 void
