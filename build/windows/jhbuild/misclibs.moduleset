@@ -140,9 +140,10 @@
 </autotools>
 
 <cmake id="exiv2">
-	<branch version="0.24" repo="exiv2"
-			module="exiv2-0.24.tar.gz"
-			hash="md5:b8a23dc56a98ede85c00718a97a8d6fc">
+	<branch version="0.25" repo="exiv2"
+			module="exiv2-0.25.tar.gz"
+			hash="md5:258d4831b30f75a01e0234065c6c2806">
+		<patch file="exiv2-add-wsock32.patch" strip="1"/>
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>

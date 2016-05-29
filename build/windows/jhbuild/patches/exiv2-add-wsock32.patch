@@ -1,0 +1,11 @@
+--- a/src/CMakeLists.txt	2016-05-29 00:04:56.925764000 -0400
++++ b/src/CMakeLists.txt	2016-05-29 00:05:16.485877571 -0400
+@@ -288,7 +288,7 @@
+ ENDIF( ICONV_FOUND )
+ 
+ IF (CYGWIN OR MINGW)
+-    TARGET_LINK_LIBRARIES( exiv2lib psapi )
++    TARGET_LINK_LIBRARIES( exiv2lib psapi wsock32 )
+ ENDIF(CYGWIN OR MINGW)
+ 
+ 
