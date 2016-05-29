@@ -9,10 +9,10 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 15.999999 16"
+   viewBox="0 0 24 24"
    id="svg7384"
-   height="16"
-   width="15.999999"
+   height="24"
+   width="24"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
    sodipodi:docname="gimp-prefs-session.svg">
@@ -28,14 +28,18 @@
      inkscape:window-width="501"
      inkscape:window-height="405"
      id="namedview1510"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="14.749668"
      inkscape:cx="-1.944781"
-     inkscape:cy="6.7798143"
+     inkscape:cy="6.3391264"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg7384" />
+     inkscape:current-layer="svg7384">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4248" />
+  </sodipodi:namedview>
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -56,47 +60,6 @@
   </metadata>
   <defs
      id="defs7386">
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient8074">
-      <stop
-         id="stop8072"
-         offset="0"
-         style="stop-color:#be00be;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient7561">
-      <stop
-         id="stop7558"
-         offset="0"
-         style="stop-color:#a5a5a5;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient7548">
-      <stop
-         id="stop7546"
-         offset="0"
-         style="stop-color:#ebebeb;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       osb:paint="solid"
-       id="linearGradient7542">
-      <stop
-         id="stop7538"
-         offset="0"
-         style="stop-color:#c9c9c9;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
-       osb:paint="solid"
-       id="linearGradient19282">
-      <stop
-         id="stop19284"
-         offset="0"
-         style="stop-color:#b4b4b4;stop-opacity:1;" />
-    </linearGradient>
     <linearGradient
        gradientTransform="matrix(0.34682586,0,0,0.30620888,-59.303024,760.97603)"
        osb:paint="solid"
@@ -126,7 +89,7 @@
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     transform="translate(-240.82633,-197.96911)"
+     transform="matrix(1.5000001,0,0,1.5000001,-361.23951,-296.95368)"
      style="display:inline"
      id="preferences">
     <g
