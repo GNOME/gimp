@@ -6,6 +6,8 @@
 		href="http://ftp.gnome.org/pub/gnome/sources/" />
 	<repository type="tarball" name="sourceware.org"
 		href="ftp://sourceware.org/pub/" />
+	<repository type="tarball" name="ftp.csx.cam.ac.uk"
+		href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/" />
 
 <autotools id="iconv" autogen-sh="configure">
 	<branch version="1.14" repo="gnu.org"
@@ -33,14 +35,22 @@
 	</branch>
 </autotools>
 
+<autotools id="pcre" autogen-sh="configure">
+	<branch version="8.38" repo="ftp.csx.cam.ac.uk"
+			module="pcre/pcre-8.38.tar.bz2"
+			hash="sha256:b9e02d36e23024d6c02a2e5b25204b3a4fa6ade43e0a5f869f254f49535079df">
+	</branch>
+</autotools>
+
 <autotools id="glib2">
-	<branch version="2.44.1" repo="gnome.org"
-			module="glib/2.44/glib-2.44.1.tar.xz"
-			hash="sha256:8811deacaf8a503d0a9b701777ea079ca6a4277be10e3d730d2112735d5eca07">
+	<branch version="2.48.1" repo="gnome.org"
+			module="glib/2.48/glib-2.48.1.tar.xz"
+			hash="sha256:74411bff489cb2a3527bac743a51018841a56a4d896cc1e0d0d54f8166a14612">
 	</branch>
 	<dependencies>
 		<dep package="gettext"/>
 		<dep package="iconv"/>
+		<dep package="pcre"/>
 		<dep package="zlib"/>
 		<dep package="libffi"/>
 	</dependencies>
