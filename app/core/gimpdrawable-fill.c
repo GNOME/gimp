@@ -168,7 +168,7 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
 {
   GimpContext *context;
   GimpImage   *image;
-  GeglBuffer  *base_buffer;
+  GeglBuffer  *buffer;
   GeglBuffer  *mask_buffer;
   gint         x, y, w, h;
   gint         off_x;
@@ -214,51 +214,22 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                             x + off_x, y + off_y,
                             gimp_fill_options_get_antialias (options));
 
-  base_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
-                                 gimp_drawable_get_format_with_alpha (drawable));
+  buffer = gimp_fill_options_create_buffer (options, drawable,
+                                            GEGL_RECTANGLE (0, 0, w, h));
 
-  switch (gimp_fill_options_get_style (options))
-    {
-    case GIMP_FILL_STYLE_SOLID:
-      {
-        GimpRGB    fg;
-        GeglColor *color;
-
-        gimp_context_get_foreground (context, &fg);
-        gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                           &fg, &fg);
-
-        color = gimp_gegl_color_new (&fg);
-        gegl_buffer_set_color (base_buffer, NULL, color);
-        g_object_unref (color);
-      }
-      break;
-
-    case GIMP_FILL_STYLE_PATTERN:
-      {
-        GimpPattern *pattern = gimp_context_get_pattern (context);
-        GeglBuffer  *pattern_buffer;
-
-        pattern_buffer = gimp_pattern_create_buffer (pattern);
-        gegl_buffer_set_pattern (base_buffer, NULL, pattern_buffer, 0, 0);
-        g_object_unref (pattern_buffer);
-      }
-      break;
-    }
-
-  gimp_gegl_apply_opacity (base_buffer, NULL, NULL, base_buffer,
+  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
                            mask_buffer, 0, 0, 1.0);
   g_object_unref (mask_buffer);
 
   /* Apply to drawable */
-  gimp_drawable_apply_buffer (drawable, base_buffer,
+  gimp_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (0, 0, w, h),
                               push_undo, C_("undo-type", "Render Stroke"),
                               gimp_context_get_opacity (context),
                               gimp_context_get_paint_mode (context),
                               NULL, x, y);
 
-  g_object_unref (base_buffer);
+  g_object_unref (buffer);
 
   gimp_drawable_update (drawable, x, y, w, h);
 }

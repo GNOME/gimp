@@ -44,7 +44,6 @@
 #include "gimplayer-floating-selection.h"
 #include "gimplayer-new.h"
 #include "gimplist.h"
-#include "gimppattern.h"
 #include "gimppickable.h"
 #include "gimpselection.h"
 #include "gimptempbuf.h"
@@ -427,10 +426,7 @@ gimp_edit_fill (GimpImage       *image,
                 GimpFillOptions *options,
                 const gchar     *undo_desc)
 {
-  GeglBuffer  *dest_buffer;
-  GimpPattern *pattern = NULL;
-  GimpRGB      color;
-  const Babl  *format;
+  GeglBuffer  *buffer;
   gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -441,59 +437,21 @@ gimp_edit_fill (GimpImage       *image,
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return;  /*  nothing to do, but the fill succeeded  */
 
-  switch (gimp_fill_options_get_style (options))
-    {
-    case GIMP_FILL_STYLE_SOLID:
-      gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                         &color, &color);
-      break;
-
-    case GIMP_FILL_STYLE_PATTERN:
-      pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
-      break;
-    }
-
-  if (pattern &&
-      babl_format_has_alpha (gimp_temp_buf_get_format (pattern->mask)) &&
-      ! gimp_drawable_has_alpha (drawable))
-    {
-      format = gimp_drawable_get_format_with_alpha (drawable);
-    }
-  else
-    {
-      format = gimp_drawable_get_format (drawable);
-    }
-
-  dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                 format);
-
-  if (pattern)
-    {
-      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
-
-      gegl_buffer_set_pattern (dest_buffer, NULL, src_buffer, 0, 0);
-      g_object_unref (src_buffer);
-    }
-  else
-    {
-      GeglColor *gegl_color = gimp_gegl_color_new (&color);
-
-      gegl_buffer_set_color (dest_buffer, NULL, gegl_color);
-      g_object_unref (gegl_color);
-    }
+  buffer = gimp_fill_options_create_buffer (options, drawable,
+                                            GEGL_RECTANGLE (0, 0,
+                                                            width, height));
 
   if (! undo_desc)
     undo_desc = gimp_fill_options_get_undo_desc (options);
 
-  gimp_drawable_apply_buffer (drawable, dest_buffer,
+  gimp_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (0, 0, width, height),
                               TRUE, undo_desc,
                               gimp_context_get_opacity (GIMP_CONTEXT (options)),
                               gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
                               NULL, x, y);
 
-  g_object_unref (dest_buffer);
+  g_object_unref (buffer);
 
   gimp_drawable_update (drawable, x, y, width, height);
 }

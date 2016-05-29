@@ -31,12 +31,10 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
-#include "gimp-palettes.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"
 #include "gimpfilloptions.h"
 #include "gimpimage.h"
-#include "gimppattern.h"
 #include "gimppickable.h"
 #include "gimppickable-contiguous-region.h"
 
@@ -60,8 +58,6 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   GimpPickable *pickable;
   GeglBuffer   *buffer;
   GeglBuffer   *mask_buffer;
-  GimpPattern  *pattern = NULL;
-  GimpRGB       color;
   gint          x1, y1, x2, y2;
   gint          mask_offset_x = 0;
   gint          mask_offset_y = 0;
@@ -146,38 +142,9 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
       mask_offset_y = y1;
     }
 
-  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
-                            gimp_drawable_get_format_with_alpha (drawable));
-
-  switch (gimp_fill_options_get_style (options))
-    {
-    case GIMP_FILL_STYLE_SOLID:
-      gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                         &color, &color);
-      break;
-
-    case GIMP_FILL_STYLE_PATTERN:
-      pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
-      break;
-    }
-
-  if (pattern)
-    {
-      GeglBuffer *pattern_buffer = gimp_pattern_create_buffer (pattern);
-
-      gegl_buffer_set_pattern (buffer, NULL, pattern_buffer, -x1, -y1);
-      g_object_unref (pattern_buffer);
-    }
-  else
-    {
-      GeglColor *gegl_color = gimp_gegl_color_new (&color);
-
-      gegl_buffer_set_color (buffer, NULL, gegl_color);
-      g_object_unref (gegl_color);
-
-      gimp_palettes_add_color_history (image->gimp, &color);
-    }
+  buffer = gimp_fill_options_create_buffer (options, drawable,
+                                            GEGL_RECTANGLE (0, 0,
+                                                            x2 - x1, y2 - y1));
 
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
                            mask_buffer,
