@@ -157,9 +157,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 gboolean
 gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
 {
-  GimpImage *image;
-
-  image = gimp_display_get_image (shell->display);
+  GimpImage *image = gimp_display_get_image (shell->display);
 
   if (image)
     {
@@ -181,19 +179,6 @@ gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
     }
 
   return FALSE;
-}
-
-void
-gimp_display_shell_profile_convert_buffer (GimpDisplayShell *shell,
-                                           GeglBuffer       *src_buffer,
-                                           GeglRectangle    *src_area,
-                                           GeglBuffer       *dest_buffer,
-                                           GeglRectangle    *dest_area)
-{
-  if (shell->profile_transform)
-    gimp_color_transform_process_buffer (shell->profile_transform,
-                                         src_buffer,  src_area,
-                                         dest_buffer, dest_area);
 }
 
 

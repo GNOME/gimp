@@ -26,11 +26,5 @@ void     gimp_display_shell_profile_update            (GimpDisplayShell *shell);
 
 gboolean gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell);
 
-void     gimp_display_shell_profile_convert_buffer    (GimpDisplayShell *shell,
-                                                       GeglBuffer       *src_buffer,
-                                                       GeglRectangle    *src_area,
-                                                       GeglBuffer       *dest_buffer,
-                                                       GeglRectangle    *dest_area);
-
 
 #endif /*  __GIMP_DISPLAY_SHELL_PROFILE_H__  */

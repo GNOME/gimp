@@ -220,30 +220,30 @@ gimp_display_shell_render (GimpDisplayShell *shell,
               /*  if there are filters, convert the pixels from the
                *  profile_buffer to the filter_buffer
                */
-              gimp_display_shell_profile_convert_buffer (shell,
-                                                         shell->profile_buffer,
-                                                         GEGL_RECTANGLE (0, 0,
-                                                                         scaled_width,
-                                                                         scaled_height),
-                                                         shell->filter_buffer,
-                                                         GEGL_RECTANGLE (0, 0,
-                                                                         scaled_width,
-                                                                         scaled_height));
+              gimp_color_transform_process_buffer (shell->profile_transform,
+                                                   shell->profile_buffer,
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   scaled_width,
+                                                                   scaled_height),
+                                                   shell->filter_buffer,
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   scaled_width,
+                                                                   scaled_height));
             }
           else
             {
               /*  otherwise, convert the profile_buffer directly into
                *  the cairo_buffer
                */
-              gimp_display_shell_profile_convert_buffer (shell,
-                                                         shell->profile_buffer,
-                                                         GEGL_RECTANGLE (0, 0,
-                                                                         scaled_width,
-                                                                         scaled_height),
-                                                         cairo_buffer,
-                                                         GEGL_RECTANGLE (0, 0,
-                                                                         scaled_width,
-                                                                         scaled_height));
+              gimp_color_transform_process_buffer (shell->profile_transform,
+                                                   shell->profile_buffer,
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   scaled_width,
+                                                                   scaled_height),
+                                                   cairo_buffer,
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   scaled_width,
+                                                                   scaled_height));
             }
         }
       else
