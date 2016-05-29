@@ -30,6 +30,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -393,8 +395,6 @@ gimp_fill_options_create_buffer (GimpFillOptions     *options,
                                  const GeglRectangle *rect)
 {
   GeglBuffer  *buffer;
-  GimpPattern *pattern = NULL;
-  GimpRGB      color;
 
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
   g_return_val_if_fail (gimp_fill_options_get_style (options) !=
@@ -404,36 +404,60 @@ gimp_fill_options_create_buffer (GimpFillOptions     *options,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (rect != NULL, NULL);
 
-  switch (gimp_fill_options_get_style (options))
-    {
-    case GIMP_FILL_STYLE_SOLID:
-      gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-      gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &color);
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                         &color, &color);
-      break;
-
-    case GIMP_FILL_STYLE_PATTERN:
-      pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
-      break;
-    }
-
   buffer = gegl_buffer_new (rect,
                             gimp_drawable_get_format_with_alpha (drawable));
 
-  if (pattern)
+  switch (gimp_fill_options_get_style (options))
     {
-      GeglBuffer *pattern_buffer = gimp_pattern_create_buffer (pattern);
+    case GIMP_FILL_STYLE_SOLID:
+      {
+        GimpRGB    color;
+        GeglColor *gegl_color;
 
-      gegl_buffer_set_pattern (buffer, NULL, pattern_buffer, 0, 0);
-      g_object_unref (pattern_buffer);
-    }
-  else
-    {
-      GeglColor *gegl_color = gimp_gegl_color_new (&color);
+        gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &color);
 
-      gegl_buffer_set_color (buffer, NULL, gegl_color);
-      g_object_unref (gegl_color);
+        gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                           &color, &color);
+
+        gegl_color = gimp_gegl_color_new (&color);
+        gegl_buffer_set_color (buffer, NULL, gegl_color);
+        g_object_unref (gegl_color);
+      }
+      break;
+
+    case GIMP_FILL_STYLE_PATTERN:
+      {
+        GimpPattern      *pattern;
+        const Babl       *format;
+        GeglBuffer       *src_buffer;
+        GeglBuffer       *dest_buffer;
+        GimpColorProfile *src_profile;
+        GimpColorProfile *dest_profile;
+
+        pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
+
+        src_buffer = gimp_pattern_create_buffer (pattern);
+        format = gegl_buffer_get_format (src_buffer);
+
+        dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                       gegl_buffer_get_format (src_buffer));
+
+        src_profile  = gimp_babl_format_get_color_profile (format);
+        dest_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+
+        gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+                                         dest_buffer, NULL, dest_profile,
+                                         GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                         TRUE,
+                                         NULL);
+
+        gegl_buffer_set_pattern (buffer, NULL, dest_buffer, 0, 0);
+
+        g_object_unref (src_buffer);
+        g_object_unref (dest_buffer);
+      }
+      break;
     }
 
   return buffer;
