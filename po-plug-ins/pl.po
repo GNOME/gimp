@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-22 12:58+0200\n"
-"PO-Revision-Date: 2016-05-22 12:59+0200\n"
+"POT-Creation-Date: 2016-05-29 14:38+0200\n"
+"PO-Revision-Date: 2016-05-29 14:39+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -335,8 +335,8 @@ msgstr "P_ionowe"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
-#: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:438
-#: ../plug-ins/common/file-cel.c:441 ../plug-ins/common/file-dicom.c:611
+#: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
+#: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:429 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
@@ -352,8 +352,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
 #: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
-#: ../plug-ins/screenshot/screenshot-win32.c:242 ../plug-ins/twain/twain.c:567
-#: ../plug-ins/win-snap/winsnap.c:1162
+#: ../plug-ins/screenshot/screenshot-win32.c:230 ../plug-ins/twain/twain.c:567
 msgid "Background"
 msgstr "Tło"
 
@@ -905,8 +904,8 @@ msgid "Load CML Explorer Parameters"
 msgstr "Wczytanie parametrów przeglądarki CML"
 
 #: ../plug-ins/common/cml-explorer.c:2211 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:348
-#: ../plug-ins/common/file-cel.c:575 ../plug-ins/common/file-dicom.c:342
+#: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
+#: ../plug-ins/common/file-cel.c:578 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361
 #: ../plug-ins/common/file-jp2-load.c:234
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
@@ -1967,8 +1966,8 @@ msgstr "KISS CEL"
 msgid "Load KISS Palette"
 msgstr "Wczytaj paletę KISS"
 
-#: ../plug-ins/common/file-cel.c:309 ../plug-ins/common/file-cel.c:360
-#: ../plug-ins/common/file-cel.c:380
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-cel.c:363
+#: ../plug-ins/common/file-cel.c:383
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
@@ -2010,7 +2009,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:339 ../plug-ins/common/file-dicom.c:334
+#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:313
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:668
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
@@ -2031,17 +2030,17 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 msgid "Opening '%s'"
 msgstr "Otwieranie „%s”"
 
-#: ../plug-ins/common/file-cel.c:388
+#: ../plug-ins/common/file-cel.c:391
 #, c-format
 msgid "is not a CEL image file"
 msgstr "nie jest plikiem obrazu CEL"
 
-#: ../plug-ins/common/file-cel.c:402
+#: ../plug-ins/common/file-cel.c:405
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "niedozwolona wartość BPP w obrazie: %hhu"
 
-#: ../plug-ins/common/file-cel.c:416
+#: ../plug-ins/common/file-cel.c:419
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
@@ -2050,44 +2049,44 @@ msgstr ""
 "niedozwolone wymiary obrazu: szerokość: %d, przesunięcie poziome: %d, "
 "wysokość: %d, przesunięcie pionowe: %d"
 
-#: ../plug-ins/common/file-cel.c:429
+#: ../plug-ins/common/file-cel.c:432
 #, c-format
 msgid "Can't create a new image"
 msgstr "Nie można utworzyć nowego obrazu"
 
-#: ../plug-ins/common/file-cel.c:464 ../plug-ins/common/file-cel.c:500
-#: ../plug-ins/common/file-cel.c:525
+#: ../plug-ins/common/file-cel.c:467 ../plug-ins/common/file-cel.c:503
+#: ../plug-ins/common/file-cel.c:528
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "Koniec pliku lub błąd podczas odczytywania danych obrazu"
 
-#: ../plug-ins/common/file-cel.c:542
+#: ../plug-ins/common/file-cel.c:545
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Nieobsługiwana głębia kolorów (%d)."
 
-#: ../plug-ins/common/file-cel.c:626 ../plug-ins/common/file-cel.c:638
+#: ../plug-ins/common/file-cel.c:629 ../plug-ins/common/file-cel.c:641
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr "„%s”: koniec pliku lub błąd podczas odczytywania nagłówka desenia"
 
-#: ../plug-ins/common/file-cel.c:647
+#: ../plug-ins/common/file-cel.c:650
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "„%s”: nie jest plikiem desenia KCF"
 
-#: ../plug-ins/common/file-cel.c:656
+#: ../plug-ins/common/file-cel.c:659
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "„%s”: niedozwolona wartość BPP w deseniu: %hhu"
 
-#: ../plug-ins/common/file-cel.c:665
+#: ../plug-ins/common/file-cel.c:668
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "„%s”: niedozwolona liczba kolorów: %u"
 
-#: ../plug-ins/common/file-cel.c:680 ../plug-ins/common/file-cel.c:697
-#: ../plug-ins/common/file-cel.c:717
+#: ../plug-ins/common/file-cel.c:683 ../plug-ins/common/file-cel.c:700
+#: ../plug-ins/common/file-cel.c:720
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
@@ -2100,7 +2099,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-gbr.c:689
+#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-gbr.c:689
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1294
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:533
 #: ../plug-ins/common/file-pcx.c:660 ../plug-ins/common/file-pix.c:536
@@ -4717,45 +4716,45 @@ msgstr "Każdy kawałek ma proste krawędzie"
 msgid "Each piece has curved sides"
 msgstr "Każdy kawałek ma zaokrąglone krawędzie"
 
-#: ../plug-ins/common/mail.c:188
+#: ../plug-ins/common/mail.c:142
 msgid "Send the image by email"
 msgstr "Wysyła obraz przez e-mail"
 
-#: ../plug-ins/common/mail.c:194
+#: ../plug-ins/common/mail.c:152
 msgid "Send by E_mail..."
 msgstr "Wyślij przez e-_mail…"
 
-#: ../plug-ins/common/mail.c:403
+#: ../plug-ins/common/mail.c:477
 msgid "Send by Email"
 msgstr "Wysłanie przez e-mail"
 
-#: ../plug-ins/common/mail.c:408
+#: ../plug-ins/common/mail.c:482
 msgid "_Send"
 msgstr "_Nadawca"
 
-#: ../plug-ins/common/mail.c:440
+#: ../plug-ins/common/mail.c:514
 msgid "_Filename:"
 msgstr "_Nazwa pliku:"
 
-#: ../plug-ins/common/mail.c:452
+#: ../plug-ins/common/mail.c:528
 msgctxt "email-address"
 msgid "_To:"
 msgstr "_Do:"
 
-#: ../plug-ins/common/mail.c:466
+#: ../plug-ins/common/mail.c:542
 msgctxt "email-address"
 msgid "_From:"
 msgstr "O_d:"
 
-#: ../plug-ins/common/mail.c:478
+#: ../plug-ins/common/mail.c:554
 msgid "S_ubject:"
 msgstr "_Temat:"
 
-#: ../plug-ins/common/mail.c:587
+#: ../plug-ins/common/mail.c:619
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "błędne rozszerzenie pliku lub jego brak"
 
-#: ../plug-ins/common/mail.c:723
+#: ../plug-ins/common/mail.c:803
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Nie można uruchomić programu sendmail (%s)"
@@ -10901,47 +10900,50 @@ msgid ""
 msgstr ""
 "Po podanym czasie należy przesunąć mysz, aby wybrać obszar dla zrzutu ekranu."
 
-#: ../plug-ins/screenshot/screenshot.c:434
+#: ../plug-ins/screenshot/screenshot.c:435
+msgid "Click in a window to snap it after delay."
+msgstr "Należy kliknąć okno do przechwycenia po podanym czasie."
+
+#: ../plug-ins/screenshot/screenshot.c:438
 msgid "At the end of the delay, click in a window to snap it."
-msgstr "Po podanym czasie należy kliknąć okno, aby je przechwycić."
+msgstr "Po podanym czasie należy kliknąć okno do przechwycenia."
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:440
+#: ../plug-ins/screenshot/screenshot.c:444
 msgid "Area"
 msgstr "Obszar"
 
-#: ../plug-ins/screenshot/screenshot.c:451
+#: ../plug-ins/screenshot/screenshot.c:455
 msgid "Take a screenshot of a single _window"
 msgstr "Wykonanie zrzutu ekranu pojedynczego _okna"
 
-#: ../plug-ins/screenshot/screenshot.c:471
+#: ../plug-ins/screenshot/screenshot.c:475
 msgid "Include window _decoration"
 msgstr "Wraz z _dekoracją okna"
 
-#: ../plug-ins/screenshot/screenshot.c:491
+#: ../plug-ins/screenshot/screenshot.c:495
 msgid "Take a screenshot of the entire _screen"
 msgstr "Wykonanie zrzutu całego _ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:511
+#: ../plug-ins/screenshot/screenshot.c:515
 msgid "Include _mouse pointer"
 msgstr "Wraz z kursorem _myszy"
 
-#: ../plug-ins/screenshot/screenshot.c:531
+#: ../plug-ins/screenshot/screenshot.c:537
 msgid "Select a _region to grab"
 msgstr "Wybór _obszaru do przechwycenia"
 
 #. Delay
-#: ../plug-ins/screenshot/screenshot.c:546
+#: ../plug-ins/screenshot/screenshot.c:553
 msgid "Delay"
 msgstr "Opóźnienie"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:571
+#: ../plug-ins/screenshot/screenshot.c:578
 msgid "seconds"
 msgstr "sekund"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:229
-#: ../plug-ins/win-snap/winsnap.c:1149
+#: ../plug-ins/screenshot/screenshot-win32.c:217
 msgid "No data captured"
 msgstr "Nie pobrano danych"
 
@@ -11226,36 +11228,4 @@ msgstr "_Skaner/aparat…"
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
-msgstr "Transferowanie danych ze skanera/aparatu"
-
-#: ../plug-ins/win-snap/winsnap.c:871
-msgid "Grab"
-msgstr "Zrzuć"
-
-#: ../plug-ins/win-snap/winsnap.c:888
-msgid "Grab a single window"
-msgstr "Pobranie jednego okna"
-
-#: ../plug-ins/win-snap/winsnap.c:902
-msgid "Grab the whole screen"
-msgstr "Pobranie całego ekranu"
-
-#: ../plug-ins/win-snap/winsnap.c:918
-msgid "after"
-msgstr "po"
-
-#: ../plug-ins/win-snap/winsnap.c:930
-msgid "Seconds delay"
-msgstr "Opóźnienie w sekundach"
-
-#: ../plug-ins/win-snap/winsnap.c:937
-msgid "Include decorations"
-msgstr "Wraz z dekoracją"
-
-#: ../plug-ins/win-snap/winsnap.c:996
-msgid "Capture a window or desktop image"
-msgstr "Przechwytuje obraz okna lub pulpitu"
-
-#: ../plug-ins/win-snap/winsnap.c:1001
-msgid "_Screen Shot..."
-msgstr "_Zrzut ekranu…"
+msgstr "Przesyłanie danych ze skanera/aparatu"
