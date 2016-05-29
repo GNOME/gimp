@@ -41,6 +41,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitemtree.h"
@@ -722,14 +723,16 @@ static void
 gimp_text_layer_render_layout (GimpTextLayer  *layer,
                                GimpTextLayout *layout)
 {
-  GimpDrawable    *drawable = GIMP_DRAWABLE (layer);
-  GimpItem        *item     = GIMP_ITEM (layer);
-  GeglBuffer      *buffer;
-  cairo_t         *cr;
-  cairo_surface_t *surface;
-  gint             width;
-  gint             height;
-  cairo_status_t   status;
+  GimpDrawable       *drawable = GIMP_DRAWABLE (layer);
+  GimpItem           *item     = GIMP_ITEM (layer);
+  GimpImage          *image    = gimp_item_get_image (item);
+  GeglBuffer         *buffer;
+  GimpColorTransform *transform;
+  cairo_t            *cr;
+  cairo_surface_t    *surface;
+  gint                width;
+  gint                height;
+  cairo_status_t      status;
 
   g_return_if_fail (gimp_drawable_has_alpha (drawable));
 
@@ -758,8 +761,21 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   buffer = gimp_cairo_surface_create_buffer (surface);
 
-  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
-                    gimp_drawable_get_buffer (drawable), NULL);
+  transform = gimp_image_get_color_transform_from_srgb_u8 (image);
+
+  if (transform)
+    {
+      gimp_color_transform_process_buffer (transform,
+                                           buffer,
+                                           NULL,
+                                           gimp_drawable_get_buffer (drawable),
+                                           NULL);
+    }
+  else
+    {
+      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                        gimp_drawable_get_buffer (drawable), NULL);
+    }
 
   g_object_unref (buffer);
   cairo_surface_destroy (surface);
