@@ -14,6 +14,10 @@
 		href="http://poppler.freedesktop.org/" />
 	<repository type="tarball" name="exiv2"
 		href="http://www.exiv2.org/" />
+	<repository type="tarball" name="json-c"
+		href="https://s3.amazonaws.com/json-c_releases/releases/" />
+	<repository type="git" name="github"
+		href="https://github.com/"/>
 
 	<include href="gtk+.moduleset"/>
 
@@ -191,6 +195,24 @@
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="json-c" autogen-sh="configure">
+	<branch version="0.12" repo="json-c"
+			module="json-c-0.12-nodoc.tar.gz"
+			checkoutdir="json-c-0.12-nodoc"
+			hash="sha256:6fd6d2311d610b279e1bcdd5c6d4f699700159d3e0786de8306af7b4bc94fb35">
+		<!-- Local patch: -->
+		<patch file="json-c-disable-werror.patch" strip="1"/>
+	</branch>
+</autotools>
+
+<autotools id="libmypaint" autogen-sh="autogen.sh &amp;&amp; ./configure">
+	<branch repo="github" module="mypaint/libmypaint.git"/>
+	<dependencies>
+		<dep package="json-c"/>
+		<dep package="gettext"/>
 	</dependencies>
 </autotools>
 

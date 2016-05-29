@@ -67,6 +67,7 @@
 		<dep package="gimp-common"/>
 		<dep package="lcms2"/>
 		<dep package="libgexiv2"/>
+		<dep package="libmypaint"/>
 		<dep package="gegl"/>
 		<dep package="gnome-icon-theme"/>
 	</dependencies>
