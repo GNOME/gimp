@@ -309,7 +309,7 @@ gimp_operation_shrink_process (GeglOperation       *operation,
     }
 
   if (! self->edge_lock)
-    for (j = 0 ; j < self->radius_x + 1; j++)
+    for (j = 0 ; j < self->radius_y + 1; j++)
       max[0][j] = 0.0;
 
   /* offset the max pointer by self->radius_x so the range of the
