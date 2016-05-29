@@ -9,12 +9,12 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 16.000058 16.000568"
+   viewBox="0 0 15.999999 16"
    id="svg7384"
-   height="16.000568"
-   width="16.000059"
+   height="16"
+   width="16"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92pre1 unknown"
    sodipodi:docname="gimp-prefs-default-grid.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -30,8 +30,8 @@
      id="namedview1510"
      showgrid="false"
      inkscape:zoom="14.749476"
-     inkscape:cx="-543.5015"
-     inkscape:cy="-148.08658"
+     inkscape:cx="-12.004313"
+     inkscape:cy="6.3392082"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -126,7 +126,7 @@
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     transform="translate(-197.21847,-175.59289)"
+     transform="matrix(1,0,0,0.99996444,-197.21847,-175.58665)"
      style="display:inline"
      id="preferences">
     <g
@@ -150,7 +150,7 @@
           <path
              id="rect6300-3"
              transform="translate(-686.25767,45.537679)"
-             d="m 807.25781,333.46289 0,1 0,4 0,1 0,4 0,1 0,4 0,1 1,0 15,0 0,-1 0,-15 -15,0 z m 1,1 4,0 0,4 -4,0 z m 5,0 4,0 0,4 -4,0 z m 5,0 4,0 0,4 -4,0 z m -10,5 4,0 0,4 -4,0 z m 5,0 4,0 0,4 -4,0 z m 5,0 4,0 0,4 -4,0 z m -10,5 4,0 0,4 -4,0 z m 5,0 4,0 0,4 -4,0 z m 5,0 4,0 0,4 -4,0 z"
+             d="m 807.25781,333.46289 v 1 4 1 4 1 4 1 h 1 15 v -1 -15 h -15 z m 1,1 h 4 v 4 h -4 z m 5,0 h 4 v 4 h -4 z m 5,0 h 4 v 4 h -4 z m -10,5 h 4 v 4 h -4 z m 5,0 h 4 v 4 h -4 z m 5,0 h 4 v 4 h -4 z m -10,5 h 4 v 4 h -4 z m 5,0 h 4 v 4 h -4 z m 5,0 h 4 v 4 h -4 z"
              style="fill:url(#linearGradient7484);fill-opacity:1;stroke:none"
              inkscape:connector-curvature="0" />
         </g>
