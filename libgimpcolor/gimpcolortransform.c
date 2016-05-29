@@ -353,7 +353,7 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
  * @dest_format:
  * @dest_rect:
  *
- * This function transforms a contiguous line of pixels.
+ * This function transforms buffer into another buffer.
  *
  * Since: 2.10
  **/
@@ -366,7 +366,6 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 {
   GimpColorTransformPrivate *priv;
   GeglBufferIterator        *iter;
-  const Babl                *fish = NULL;
   gint                       total_pixels;
   gint                       done_pixels = 0;
 
@@ -386,34 +385,58 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
                       gegl_buffer_get_height (src_buffer));
     }
 
-  if (babl_format_has_alpha (priv->dest_format))
-    fish = babl_fish (priv->src_format,
-                      priv->dest_format);
-
-  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
-                                   priv->src_format,
-                                   GEGL_ACCESS_READ,
-                                   GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            priv->dest_format,
-                            GEGL_ACCESS_WRITE,
-                            GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
+  if (src_buffer != dest_buffer)
     {
-      /* make sure the alpha channel is copied too, lcms doesn't copy it */
-      if (fish)
-        babl_process (fish, iter->data[0], iter->data[1], iter->length);
+      const Babl *fish = NULL;
 
-      cmsDoTransform (priv->transform,
-                      iter->data[0], iter->data[1], iter->length);
+      if (babl_format_has_alpha (priv->dest_format))
+        fish = babl_fish (priv->src_format,
+                          priv->dest_format);
 
-      done_pixels += iter->roi[0].width * iter->roi[0].height;
+      iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
+                                       priv->src_format,
+                                       GEGL_ACCESS_READ,
+                                       GEGL_ABYSS_NONE);
 
-      g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
-                     (gdouble) done_pixels /
-                     (gdouble) total_pixels);
+      gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
+                                priv->dest_format,
+                                GEGL_ACCESS_WRITE,
+                                GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          /* make sure the alpha channel is copied too, lcms doesn't copy it */
+          if (fish)
+            babl_process (fish, iter->data[0], iter->data[1], iter->length);
+
+          cmsDoTransform (priv->transform,
+                          iter->data[0], iter->data[1], iter->length);
+
+          done_pixels += iter->roi[0].width * iter->roi[0].height;
+
+          g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
+                         (gdouble) done_pixels /
+                         (gdouble) total_pixels);
+        }
+    }
+  else
+    {
+      iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
+                                       priv->src_format,
+                                       GEGL_ACCESS_READWRITE,
+                                       GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          cmsDoTransform (priv->transform,
+                          iter->data[0], iter->data[0], iter->length);
+
+          done_pixels += iter->roi[0].width * iter->roi[0].height;
+
+          g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
+                         (gdouble) done_pixels /
+                         (gdouble) total_pixels);
+        }
     }
 
   g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
