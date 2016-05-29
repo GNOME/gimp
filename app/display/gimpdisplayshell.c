@@ -781,6 +781,9 @@ gimp_display_shell_constructed (GObject *object)
 
       gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
     }
+
+  /* make sure the information is up-to-date */
+  gimp_display_shell_scale_update (shell);
 }
 
 static void
@@ -1521,23 +1524,28 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
                          GimpUnit          unit,
                          gdouble           scale)
 {
-  GimpImageWindow *window;
+  GimpDisplayConfig *config;
+  GimpImageWindow   *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
+  config = shell->display->config;
   window = gimp_display_shell_get_window (shell);
+
+  shell->dot_for_dot = config->default_dot_for_dot;
 
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
+  gimp_display_shell_scale_update (shell);
 
   /* center the image so subsequent stuff only moves it a little in
    * the center
    */
   gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 
-  gimp_display_shell_sync_config (shell, shell->display->config);
+  gimp_display_shell_sync_config (shell, config);
 
   gimp_image_window_suspend_keep_pos (window);
   gimp_display_shell_appearance_update (shell);
