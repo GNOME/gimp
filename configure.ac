@@ -2551,11 +2551,13 @@ $optional_deps]);
 else
   AC_MSG_ERROR([
 
+== Summary of optional features ==
+$optional_deps
+
+== Missing mandatory dependencies ==
+
 GIMP configuration failed.
 The following mandatory dependencies are missing:$required_deps
 
-See the file 'INSTALL' for more help
-
-== Additional information (options) ==
-$optional_deps]);
+See the file 'INSTALL' for more help.]);
 fi
