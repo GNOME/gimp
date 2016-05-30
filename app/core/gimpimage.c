@@ -3408,6 +3408,18 @@ gimp_image_parasite_validate (GimpImage           *image,
     {
       return gimp_image_validate_icc_parasite (image, parasite, NULL, error);
     }
+  else if (strcmp (name, "gimp-comment") == 0)
+    {
+      if (! g_utf8_validate (gimp_parasite_data (parasite),
+                             gimp_parasite_data_size (parasite),
+                             NULL))
+        {
+          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                       _("'gimp-comment' parasite validation failed: "
+                         "comment contains invalid UTF-8"));
+          return FALSE;
+        }
+    }
 
   return TRUE;
 }
