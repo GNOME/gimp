@@ -87,6 +87,28 @@ G_DEFINE_TYPE (GimpColorTransform, gimp_color_transform,
 
 static guint gimp_color_transform_signals[LAST_SIGNAL] = { 0 };
 
+static gchar *lcms_last_error = NULL;
+
+
+static void
+lcms_error_clear (void)
+{
+  if (lcms_last_error)
+    {
+      g_free (lcms_last_error);
+      lcms_last_error = NULL;
+    }
+}
+
+static void
+lcms_error_handler (cmsContext       ContextID,
+                    cmsUInt32Number  ErrorCode,
+                    const gchar     *text)
+{
+  lcms_error_clear ();
+
+  lcms_last_error = g_strdup_printf ("lcms2 error %d: %s", ErrorCode, text);
+}
 
 static void
 gimp_color_transform_class_init (GimpColorTransformClass *klass)
@@ -107,6 +129,8 @@ gimp_color_transform_class_init (GimpColorTransformClass *klass)
                   G_TYPE_DOUBLE);
 
   g_type_class_add_private (klass, sizeof (GimpColorTransformPrivate));
+
+  cmsSetLogErrorHandler (lcms_error_handler);
 }
 
 static void
@@ -195,10 +219,23 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   priv->dest_format = gimp_color_profile_get_format (dest_format,
                                                      &lcms_dest_format);
 
+  lcms_error_clear ();
+
   priv->transform = cmsCreateTransform (src_lcms,  lcms_src_format,
                                         dest_lcms, lcms_dest_format,
                                         rendering_intent,
                                         flags | cmsFLAGS_NOOPTIMIZE);
+
+  if (lcms_last_error)
+    {
+      if (priv->transform)
+        {
+          cmsDeleteTransform (priv->transform);
+          priv->transform = NULL;
+        }
+
+      g_printerr ("%s\n", lcms_last_error);
+    }
 
   if (! priv->transform)
     {
@@ -263,12 +300,25 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
   priv->dest_format = gimp_color_profile_get_format (dest_format,
                                                      &lcms_dest_format);
 
+  lcms_error_clear ();
+
   priv->transform = cmsCreateProofingTransform (src_lcms,  lcms_src_format,
                                                 dest_lcms, lcms_dest_format,
                                                 proof_lcms,
                                                 proof_intent,
                                                 display_intent,
                                                 flags | cmsFLAGS_SOFTPROOFING);
+
+  if (lcms_last_error)
+    {
+      if (priv->transform)
+        {
+          cmsDeleteTransform (priv->transform);
+          priv->transform = NULL;
+        }
+
+      g_printerr ("%s\n", lcms_last_error);
+    }
 
   if (! priv->transform)
     {
