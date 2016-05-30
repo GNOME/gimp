@@ -200,6 +200,12 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
                                         rendering_intent,
                                         flags | cmsFLAGS_NOOPTIMIZE);
 
+  if (! priv->transform)
+    {
+      g_object_unref (transform);
+      transform = NULL;
+    }
+
   return transform;
 }
 
@@ -263,6 +269,12 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
                                                 proof_intent,
                                                 display_intent,
                                                 flags | cmsFLAGS_SOFTPROOFING);
+
+  if (! priv->transform)
+    {
+      g_object_unref (transform);
+      transform = NULL;
+    }
 
   return transform;
 }
