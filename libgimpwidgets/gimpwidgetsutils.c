@@ -547,7 +547,9 @@ transform_cache_config_notify (GObject          *config,
 
   g_signal_handler_disconnect (config, cache->notify_id);
 
-  g_object_unref (cache->transform);
+  if (cache->transform)
+    g_object_unref (cache->transform);
+
   g_object_unref (cache->src_profile);
   g_object_unref (cache->dest_profile);
 
