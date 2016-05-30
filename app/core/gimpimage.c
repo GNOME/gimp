@@ -848,10 +848,6 @@ gimp_image_constructed (GObject *object)
                            G_CALLBACK (gimp_viewable_size_changed),
                            image, G_CONNECT_SWAPPED);
 
-  g_signal_connect_object (config->color_management, "notify",
-                           G_CALLBACK (gimp_color_managed_profile_changed),
-                           image, G_CONNECT_SWAPPED);
-
   gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
 }
 
