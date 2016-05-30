@@ -556,6 +556,8 @@ screenshot_x11_get_capabilities (void)
   capabilities |= SCREENSHOT_CAN_SHOOT_POINTER;
 #endif
 
+  capabilities |= SCREENSHOT_CAN_SHOOT_REGION;
+
   return capabilities;
 }
 

@@ -70,7 +70,8 @@ ScreenshotCapabilities
 screenshot_gnome_shell_get_capabilities (void)
 {
   return (SCREENSHOT_CAN_SHOOT_DECORATIONS |
-          SCREENSHOT_CAN_SHOOT_POINTER);
+          SCREENSHOT_CAN_SHOOT_POINTER     |
+          SCREENSHOT_CAN_SHOOT_REGION);
 }
 
 GimpPDBStatusType
