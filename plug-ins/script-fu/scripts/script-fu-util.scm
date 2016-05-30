@@ -80,5 +80,9 @@
              (when image
                ,@body
                (gimp-image-delete image)))
-           (,loop (cdr ,filenames))))
-       (gimp-quit 0))))
+           (,loop (cdr ,filenames))
+         )
+       )
+     )
+  )
+)
