@@ -49,20 +49,26 @@
 ;     gimp -i -b '(with-files "*.png" <body>)'
 ;
 ; where <body> is the code that handles whatever processing you want to
-; perform on the files. There are three variables that are available within
-; the <body>: 'basename', 'image', and 'layer'. The 'basename' is the
-; name of the file with its extension removed, while the other two
-; variables are self-explanatory. You basically write your code as though
-; it were processing a single 'image' and the 'with-files' macro applies
-; it to all of the files matching the pattern.
+; perform on the files. There are four variables that are available
+; within the <body>: 'basename', 'image', 'filename' and 'layer'.
+; The 'basename' is the name of the file with its extension removed,
+; while the other three variables are self-explanatory.
+; You basically write your code as though it were processing a single
+; 'image' and the 'with-files' macro applies it to all of the files
+; matching the pattern.
 ;
 ; For example, to invert the colors of all of the PNG files in the
 ; start directory:
 ;
 ;    gimp -i -b '(with-files "*.png" (gimp-invert layer) \
-;                  (gimp-file-save 1 image layer \
-;                                  (string-append basename ".png") \
-;                                  (string-append basename ".png") ))'
+;                 (gimp-file-save 1 image layer filename filename ))'
+;
+; To do the same thing, but saving them as jpeg instead:
+;
+;    gimp -i -b '(with-files "*.png" (gimp-invert layer) \
+;                 (gimp-file-save 1 image layer \
+;                  (string-append basename ".jpg") \
+;                  (string-append basename ".jpg") ))'
 
 (define-macro (with-files pattern . body)
   (let ((loop (gensym))
@@ -71,12 +77,12 @@
     `(begin
        (let ,loop ((,filenames (cadr (file-glob ,pattern 1))))
          (unless (null? ,filenames)
-           (let* ((,filename (car ,filenames))
+           (let* ((filename (car ,filenames))
                   (image (catch #f (car (gimp-file-load RUN-NONINTERACTIVE
-                                                        ,filename
-                                                        ,filename ))))
+                                                        filename
+                                                        filename ))))
                   (layer (if image (car (gimp-image-get-active-layer image)) #f))
-                  (basename (unbreakupstr (butlast (strbreakup ,filename ".")) ".")))
+                  (basename (unbreakupstr (butlast (strbreakup filename ".")) ".")))
              (when image
                ,@body
                (gimp-image-delete image)))
