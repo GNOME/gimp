@@ -230,29 +230,32 @@ colorsel_water_set_config (GimpColorSelector *selector,
 {
   ColorselWater *water = COLORSEL_WATER (selector);
 
-  if (water->config)
+  if (config != water->config)
     {
-      g_signal_handlers_disconnect_by_func (water->config,
-                                            colorsel_water_config_notify,
-                                            water);
-      g_object_unref (water->config);
-
-      if (water->transform)
+      if (water->config)
         {
-          g_object_unref (water->transform);
-          water->transform = NULL;
+          g_signal_handlers_disconnect_by_func (water->config,
+                                                colorsel_water_config_notify,
+                                                water);
+          g_object_unref (water->config);
+
+          if (water->transform)
+            {
+              g_object_unref (water->transform);
+              water->transform = NULL;
+            }
         }
-    }
 
-  water->config = config;
+      water->config = config;
 
-  if (water->config)
-    {
-      g_object_ref (water->config);
+      if (water->config)
+        {
+          g_object_ref (water->config);
 
-      g_signal_connect (water->config, "notify",
-                        G_CALLBACK (colorsel_water_config_notify),
-                        water);
+          g_signal_connect (water->config, "notify",
+                            G_CALLBACK (colorsel_water_config_notify),
+                            water);
+        }
     }
 }
 

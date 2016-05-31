@@ -1462,29 +1462,32 @@ gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
 
   priv = wheel->priv;
 
-  if (priv->config)
+  if (config != priv->config)
     {
-      g_signal_handlers_disconnect_by_func (priv->config,
-                                            gimp_color_wheel_config_notify,
-                                            wheel);
-      g_object_unref (priv->config);
-
-      if (priv->transform)
+      if (priv->config)
         {
-          g_object_unref (priv->transform);
-          priv->transform = NULL;
+          g_signal_handlers_disconnect_by_func (priv->config,
+                                                gimp_color_wheel_config_notify,
+                                                wheel);
+          g_object_unref (priv->config);
+
+          if (priv->transform)
+            {
+              g_object_unref (priv->transform);
+              priv->transform = NULL;
+            }
         }
-    }
 
-  priv->config = config;
+      priv->config = config;
 
-  if (priv->config)
-    {
-      g_object_ref (priv->config);
+      if (priv->config)
+        {
+          g_object_ref (priv->config);
 
-      g_signal_connect (priv->config, "notify",
-                        G_CALLBACK (gimp_color_wheel_config_notify),
-                        wheel);
+          g_signal_connect (priv->config, "notify",
+                            G_CALLBACK (gimp_color_wheel_config_notify),
+                            wheel);
+        }
     }
 }
 

@@ -268,28 +268,28 @@ colorsel_cmyk_set_config (GimpColorSelector *selector,
 {
   ColorselCmyk *module = COLORSEL_CMYK (selector);
 
-  if (config == module->config)
-    return;
-
-  if (module->config)
+  if (config != module->config)
     {
-      g_signal_handlers_disconnect_by_func (module->config,
-                                            G_CALLBACK (colorsel_cmyk_config_changed),
-                                            module);
-      g_object_unref (module->config);
+      if (module->config)
+        {
+          g_signal_handlers_disconnect_by_func (module->config,
+                                                colorsel_cmyk_config_changed,
+                                                module);
+          g_object_unref (module->config);
+        }
+
+      module->config = config;
+
+      if (module->config)
+        {
+          g_object_ref (module->config);
+          g_signal_connect_swapped (module->config, "notify",
+                                    G_CALLBACK (colorsel_cmyk_config_changed),
+                                    module);
+        }
+
+      colorsel_cmyk_config_changed (module);
     }
-
-  module->config = config;
-
-  if (module->config)
-    {
-      g_object_ref (module->config);
-      g_signal_connect_swapped (module->config, "notify",
-                                G_CALLBACK (colorsel_cmyk_config_changed),
-                                module);
-    }
-
-  colorsel_cmyk_config_changed (module);
 }
 
 static void

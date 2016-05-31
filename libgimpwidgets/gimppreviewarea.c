@@ -1799,29 +1799,32 @@ gimp_preview_area_set_color_config (GimpPreviewArea *area,
 
   priv = GET_PRIVATE (area);
 
-  if (priv->config)
+  if (config != priv->config)
     {
-      g_signal_handlers_disconnect_by_func (priv->config,
-                                            gimp_preview_area_config_notify,
-                                            area);
-      g_object_unref (priv->config);
-
-      if (priv->transform)
+      if (priv->config)
         {
-          g_object_unref (priv->transform);
-          priv->transform = NULL;
+          g_signal_handlers_disconnect_by_func (priv->config,
+                                                gimp_preview_area_config_notify,
+                                                area);
+          g_object_unref (priv->config);
+
+          if (priv->transform)
+            {
+              g_object_unref (priv->transform);
+              priv->transform = NULL;
+            }
         }
-    }
 
-  priv->config = config;
+      priv->config = config;
 
-  if (priv->config)
-    {
-      g_object_ref (priv->config);
+      if (priv->config)
+        {
+          g_object_ref (priv->config);
 
-      g_signal_connect (priv->config, "notify",
-                        G_CALLBACK (gimp_preview_area_config_notify),
-                        area);
+          g_signal_connect (priv->config, "notify",
+                            G_CALLBACK (gimp_preview_area_config_notify),
+                            area);
+        }
     }
 }
 
