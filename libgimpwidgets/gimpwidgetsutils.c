@@ -468,7 +468,8 @@ get_display_profile (GtkWidget       *widget,
   GimpColorProfile *profile = NULL;
 
   if (config->display_profile_from_gdk)
-    profile = gimp_widget_get_color_profile (widget);
+    /* get the toplevel's profile so all a window's colors look the same */
+    profile = gimp_widget_get_color_profile (gtk_widget_get_toplevel (widget));
 
   if (! profile)
     profile = gimp_color_config_get_display_color_profile (config, NULL);
