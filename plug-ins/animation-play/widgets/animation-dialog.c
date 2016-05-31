@@ -20,10 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <errno.h>
-
-#include <glib/gstdio.h>
 #undef GDK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
@@ -48,7 +44,7 @@
  * These will be used only for image without stored animation. */
 typedef struct
 {
-  gdouble     framerate;
+  gdouble framerate;
 }
 CachedSettings;
 
@@ -316,7 +312,7 @@ animation_dialog_class_init (AnimationDialogClass *klass)
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_int ("image", NULL,
-                                                     "GIMP imag id",
+                                                     "GIMP image id",
                                                      G_MININT, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
@@ -327,12 +323,6 @@ animation_dialog_class_init (AnimationDialogClass *klass)
 static void
 animation_dialog_init (AnimationDialog *dialog)
 {
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-
-  priv->drawing_area_width        = -1;
-  priv->drawing_area_height       = -1;
-  priv->shape_drawing_area_width  = -1;
-  priv->shape_drawing_area_height = -1;
 }
 
 /**** Public Functions ****/
@@ -1295,7 +1285,7 @@ animation_dialog_save_settings (AnimationDialog *dialog)
           gimp_image_undo_group_start (priv->image_id);
           undo_step_started = TRUE;
         }
-      parasite = gimp_parasite_new (PLUG_IN_PROC "/frame-rate",
+      parasite = gimp_parasite_new (PLUG_IN_PROC "/framerate",
                                     GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
                                     sizeof (cached_settings.framerate),
                                     &cached_settings.framerate);
@@ -1881,7 +1871,9 @@ popup_menu (GtkWidget       *widget,
             AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GtkWidget *menu = gtk_ui_manager_get_widget (priv->ui_manager, "/anim-play-popup");
+  GtkWidget              *menu;
+
+  menu = gtk_ui_manager_get_widget (priv->ui_manager, "/anim-play-popup");
 
   gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
   gtk_menu_popup (GTK_MENU (menu),
@@ -2652,7 +2644,7 @@ show_goto_progress (AnimationDialog *dialog,
                             animation_get_length (priv->animation));
   else
     text = g_strdup_printf (_("Go to frame %d [%d-%d]"),
-                            goto_frame, 
+                            goto_frame,
                             animation_get_start_position (priv->animation),
                             animation_get_start_position (priv->animation) + animation_get_length (priv->animation) - 1);
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), text);
@@ -2666,7 +2658,6 @@ show_playing_progress (AnimationDialog *dialog)
   gchar *text;
 
   /* update the dialog's progress bar */
-
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress),
                                  ((gfloat) (animation_get_position (priv->animation) - animation_get_start_position (priv->animation)) /
                                   (gfloat) (animation_get_length (priv->animation) - 0.999)));

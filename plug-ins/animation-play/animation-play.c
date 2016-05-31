@@ -33,12 +33,12 @@
 
 #include "animation-utils.h"
 
-static void        query                     (void);
-static void        run                       (const gchar      *name,
-                                              gint              nparams,
-                                              const GimpParam  *param,
-                                              gint             *nreturn_vals,
-                                              GimpParam       **return_vals);
+static void query (void);
+static void run   (const gchar      *name,
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -96,13 +96,10 @@ run (const gchar      *name,
   /* For preview, we want fast (0.0) over high quality (1.0). */
   g_object_set (config, "quality", 0.0, NULL);
 
-  status        = GIMP_PDB_SUCCESS;
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3)
+  if (run_mode == GIMP_RUN_NONINTERACTIVE ||
+      n_params != 3)
     {
       /* This plugin is meaningless right now other than interactive. */
       status = GIMP_PDB_CALLING_ERROR;
@@ -117,17 +114,22 @@ run (const gchar      *name,
       image_id = param[1].data.d_image;
       dialog   = animation_dialog_new (image_id);
 
-      gimp_help_connect (GTK_WIDGET (dialog), gimp_standard_help_func, PLUG_IN_PROC, NULL);
+      gimp_help_connect (GTK_WIDGET (dialog),
+                         gimp_standard_help_func,
+                         PLUG_IN_PROC, NULL);
       gtk_widget_show_now (GTK_WIDGET (dialog));
 
       gtk_main ();
+      gimp_displays_flush ();
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      status = GIMP_PDB_SUCCESS;
     }
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
+
+  *nreturn_vals = 1;
+  *return_vals  = values;
 
   gegl_exit ();
   gimp_quit ();

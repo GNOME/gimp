@@ -715,7 +715,7 @@ animation_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_IMAGE:
-      priv->image_id       = g_value_get_int (value);
+      priv->image_id = g_value_get_int (value);
       break;
 
     default:
