@@ -3410,9 +3410,16 @@ gimp_image_parasite_validate (GimpImage           *image,
     }
   else if (strcmp (name, "gimp-comment") == 0)
     {
-      if (! g_utf8_validate (gimp_parasite_data (parasite),
-                             gimp_parasite_data_size (parasite),
-                             NULL))
+      const gchar *data   = gimp_parasite_data (parasite);
+      gssize       length = gimp_parasite_data_size (parasite);
+      gboolean     valid;
+
+      if (data[length - 1] == '\0')
+        valid = g_utf8_validate (data, -1, NULL);
+      else
+        valid = g_utf8_validate (data, length, NULL);
+
+      if (! valid)
         {
           g_set_error (error, GIMP_ERROR, GIMP_FAILED,
                        _("'gimp-comment' parasite validation failed: "
