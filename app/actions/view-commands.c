@@ -637,7 +637,7 @@ view_display_bpc_cmd_callback (GtkAction *action,
     {
       g_object_set (color_config,
                     "display-use-black-point-compensation", active,
-                        NULL);
+                    NULL);
       shell->color_config_set = TRUE;
     }
 }
