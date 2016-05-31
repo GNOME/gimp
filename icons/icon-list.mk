@@ -293,7 +293,14 @@ vector24_images = \
 	24/gimp-prefs-default-grid.svg			\
 	24/gimp-prefs-display.svg			\
 	24/gimp-prefs-folders.svg			\
-	24/gimp-prefs-folders-brushes.svg			\
+	24/gimp-prefs-folders-brushes.svg		\
+	24/gimp-prefs-folders-dynamics.svg		\
+	24/gimp-prefs-folders-environ.svg		\
+	24/gimp-prefs-folders-fonts.svg			\
+	24/gimp-prefs-folders-gradients.svg		\
+	24/gimp-prefs-folders-icon-themes.svg		\
+	24/gimp-prefs-folders-interp.svg		\
+	24\gimp-prefs-folders-modules.svg		\
 	24/gimp-prefs-help-system.svg			\
 	24/gimp-prefs-icon-theme.svg			\
 	24/gimp-prefs-image-title.svg			\
