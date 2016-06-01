@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-29 14:38+0200\n"
-"PO-Revision-Date: 2016-05-29 14:39+0200\n"
+"POT-Creation-Date: 2016-06-01 15:32+0200\n"
+"PO-Revision-Date: 2016-06-01 15:33+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -238,11 +238,11 @@ msgstr "Wypisuje uporządkowaną listę przestarzałych procedur w PDB"
 msgid "Show a preferences page with experimental features"
 msgstr "Wyświetla stronę preferencji z eksperymentalnymi funkcjami"
 
-#: ../app/main.c:489
+#: ../app/main.c:492
 msgid "[FILE|URI...]"
 msgstr "[PLIK|URI…]"
 
-#: ../app/main.c:507
+#: ../app/main.c:510
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -250,20 +250,20 @@ msgstr ""
 "Program GIMP nie może zainicjować interfejsu graficznego.\n"
 "Proszę się upewnić, że ustawienia środowiska wyświetlania są poprawne."
 
-#: ../app/main.c:526
+#: ../app/main.c:529
 msgid "Another GIMP instance is already running."
 msgstr "Inna kopia programu GIMP jest już uruchomiona."
 
-#: ../app/main.c:614
+#: ../app/main.c:617
 msgid "GIMP output. Type any character to close this window."
 msgstr "Wyjście programu GIMP. Wpisanie dowolnego znaku zamknie to okno."
 
-#: ../app/main.c:615
+#: ../app/main.c:618
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Wpisanie dowolnego znaku zamknie to okno)\n"
 
-#: ../app/main.c:632
+#: ../app/main.c:635
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Wyjście programu GIMP. Można zminimalizować to okno, ale nie należy go "
@@ -1085,7 +1085,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1998
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1994
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:89
@@ -8347,12 +8347,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/core-enums.c:903 ../app/core/gimp-edit.c:287
+#: ../app/core/core-enums.c:903 ../app/core/gimp-edit.c:286
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Wklejenie"
 
-#: ../app/core/core-enums.c:904 ../app/core/gimp-edit.c:557
+#: ../app/core/core-enums.c:904 ../app/core/gimp-edit.c:517
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Wycięcie"
@@ -8363,7 +8363,7 @@ msgid "Text"
 msgstr "Tekst"
 
 #: ../app/core/core-enums.c:906 ../app/core/core-enums.c:954
-#: ../app/core/gimpdrawable-transform.c:649
+#: ../app/core/gimpdrawable-transform.c:661
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -8727,16 +8727,16 @@ msgstr ""
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Usunięcie „%s” się nie powiodło: %s"
 
-#: ../app/core/gimp-edit.c:184 ../app/core/gimpimage-new.c:325
+#: ../app/core/gimp-edit.c:183 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
 msgstr "Wklejona warstwa"
 
-#: ../app/core/gimp-edit.c:419
+#: ../app/core/gimp-edit.c:418
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Wyczyść"
 
-#: ../app/core/gimp-edit.c:570
+#: ../app/core/gimp-edit.c:530
 msgid "Global Buffer"
 msgstr "Bufor globalny"
 
@@ -8807,7 +8807,7 @@ msgstr "Tworzenie katalogu „%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Nie można utworzyć katalogu „%s”: %s"
 
-#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:305
+#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:312
 msgid "No patterns available for this operation."
 msgstr "Brak deseni dostępnych dla tego działania."
 
@@ -9031,7 +9031,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Obrót kanału"
 
-#: ../app/core/gimpchannel.c:296 ../app/core/gimpdrawable-transform.c:970
+#: ../app/core/gimpchannel.c:296 ../app/core/gimpdrawable-transform.c:982
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Przekształcenie kanału"
@@ -9308,7 +9308,7 @@ msgstr "Gradient"
 msgid "Calculating distance map"
 msgstr "Obliczanie mapy odległości"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:190
+#: ../app/core/gimpdrawable-bucket-fill.c:159
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Wypełnienie kubełkiem"
@@ -9326,11 +9326,11 @@ msgstr "Oderwane zaznaczenie"
 msgid "Computing alpha of unknown pixels"
 msgstr "Obliczanie alfy nieznanych pikseli"
 
-#: ../app/core/gimpdrawable-fill.c:154 ../app/vectors/gimpvectors.c:644
+#: ../app/core/gimpdrawable-fill.c:158 ../app/vectors/gimpvectors.c:644
 msgid "Not enough points to fill"
 msgstr "Niewystarczająca liczba punktów do wypełnienia"
 
-#: ../app/core/gimpdrawable-fill.c:250
+#: ../app/core/gimpdrawable-fill.c:227
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Rysowanie pociągnięcia"
@@ -9341,7 +9341,7 @@ msgstr "Rysowanie pociągnięcia"
 msgid "Levels"
 msgstr "Poziomy"
 
-#: ../app/core/gimpdrawable-offset.c:246
+#: ../app/core/gimpdrawable-offset.c:249
 msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Przesunięcie obszaru rysowania"
@@ -9351,22 +9351,22 @@ msgstr "Przesunięcie obszaru rysowania"
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
 
-#: ../app/core/gimpdrawable-transform.c:738
+#: ../app/core/gimpdrawable-transform.c:750
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/core/gimpdrawable-transform.c:823
+#: ../app/core/gimpdrawable-transform.c:835
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:968 ../app/core/gimplayer.c:332
+#: ../app/core/gimpdrawable-transform.c:980 ../app/core/gimplayer.c:332
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
 
-#: ../app/core/gimpdrawable-transform.c:981
+#: ../app/core/gimpdrawable-transform.c:993
 msgid "Transformation"
 msgstr "Przekształcenie"
 
@@ -9374,41 +9374,41 @@ msgstr "Przekształcenie"
 msgid "Output type"
 msgstr "Typ wyjścia"
 
-#: ../app/core/gimpfilloptions.c:93
+#: ../app/core/gimpfilloptions.c:100
 msgid "Style"
 msgstr "Styl"
 
-#: ../app/core/gimpfilloptions.c:101 ../app/pdb/gimppdbcontext.c:99
+#: ../app/core/gimpfilloptions.c:108 ../app/pdb/gimppdbcontext.c:99
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:150
 msgid "Antialiasing"
 msgstr "Wygładzanie"
 
-#: ../app/core/gimpfilloptions.c:279
+#: ../app/core/gimpfilloptions.c:286
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Wypełnienie kolorem pierwszoplanowym"
 
-#: ../app/core/gimpfilloptions.c:284
+#: ../app/core/gimpfilloptions.c:291
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Wypełnienie kolorem tła"
 
-#: ../app/core/gimpfilloptions.c:289
+#: ../app/core/gimpfilloptions.c:296
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Wypełnienie białym kolorem"
 
-#: ../app/core/gimpfilloptions.c:295
+#: ../app/core/gimpfilloptions.c:302
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Wypełnienie przezroczystością"
 
-#: ../app/core/gimpfilloptions.c:311 ../app/core/gimpfilloptions.c:379
+#: ../app/core/gimpfilloptions.c:318 ../app/core/gimpfilloptions.c:386
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Wypełnienie deseniem"
 
-#: ../app/core/gimpfilloptions.c:376
+#: ../app/core/gimpfilloptions.c:383
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
 msgstr "Wypełnienie pełnym kolorem"
@@ -9556,69 +9556,77 @@ msgstr "Przekształcenie grupy warstw"
 msgid "Symmetry"
 msgstr "Symetria"
 
-#: ../app/core/gimpimage.c:2250
+#: ../app/core/gimpimage.c:2246
 msgid " (exported)"
 msgstr " (eksportowany)"
 
-#: ../app/core/gimpimage.c:2254
+#: ../app/core/gimpimage.c:2250
 msgid " (overwritten)"
 msgstr " (zastąpiony)"
 
-#: ../app/core/gimpimage.c:2263
+#: ../app/core/gimpimage.c:2259
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:2497
+#: ../app/core/gimpimage.c:2493
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2549
+#: ../app/core/gimpimage.c:2545
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3462
+#: ../app/core/gimpimage.c:3425
+#, c-format
+msgid ""
+"'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
+msgstr ""
+"Sprawdzenie poprawności danych pasożytniczych „gimp-comment” się nie "
+"powiodło: komentarz zawiera nieprawidłowe UTF-8"
+
+#: ../app/core/gimpimage.c:3477
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3503
+#: ../app/core/gimpimage.c:3518
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4212
+#: ../app/core/gimpimage.c:4227
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4262 ../app/core/gimpimage.c:4282
+#: ../app/core/gimpimage.c:4277 ../app/core/gimpimage.c:4297
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4276
+#: ../app/core/gimpimage.c:4291
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4441
+#: ../app/core/gimpimage.c:4456
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4479 ../app/core/gimpimage.c:4492
+#: ../app/core/gimpimage.c:4494 ../app/core/gimpimage.c:4507
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4546
+#: ../app/core/gimpimage.c:4561
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:4577
+#: ../app/core/gimpimage.c:4592
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -9834,48 +9842,48 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Przekształcanie obiektów"
 
-#: ../app/core/gimpimage-merge.c:133
+#: ../app/core/gimpimage-merge.c:134
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Połączenie widocznych warstw"
 
-#: ../app/core/gimpimage-merge.c:196
+#: ../app/core/gimpimage-merge.c:197
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Spłaszczenie obrazu"
 
-#: ../app/core/gimpimage-merge.c:218
+#: ../app/core/gimpimage-merge.c:219
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Nie można spłaszczyć obrazu bez żadnej widocznej warstwy."
 
-#: ../app/core/gimpimage-merge.c:261
+#: ../app/core/gimpimage-merge.c:262
 msgid "Cannot merge down to a layer group."
 msgstr "Nie można połączyć w dół do grupy warstw."
 
-#: ../app/core/gimpimage-merge.c:268
+#: ../app/core/gimpimage-merge.c:269
 msgid "The layer to merge down to is locked."
 msgstr "Warstwa do połączenia w dół jest zablokowana."
 
-#: ../app/core/gimpimage-merge.c:280
+#: ../app/core/gimpimage-merge.c:281
 msgid "There is no visible layer to merge down to."
 msgstr "Nie ma widocznych warstw do połączenia w dół."
 
-#: ../app/core/gimpimage-merge.c:290
+#: ../app/core/gimpimage-merge.c:291
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Połączenie w dół"
 
-#: ../app/core/gimpimage-merge.c:318
+#: ../app/core/gimpimage-merge.c:319
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Połączenie grupy warstw"
 
-#: ../app/core/gimpimage-merge.c:371
+#: ../app/core/gimpimage-merge.c:372
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Połączenie widocznych ścieżek"
 
-#: ../app/core/gimpimage-merge.c:407
+#: ../app/core/gimpimage-merge.c:408
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są co "
@@ -12871,7 +12879,7 @@ msgstr "Przełącz szybką maskę"
 msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
-#: ../app/display/gimpdisplayshell.c:778 ../app/display/gimpdisplayshell.c:1480
+#: ../app/display/gimpdisplayshell.c:778 ../app/display/gimpdisplayshell.c:1483
 #: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
@@ -13518,7 +13526,7 @@ msgstr "Typ"
 msgid "Exposure"
 msgstr "Ekspozycja"
 
-#: ../app/paint/gimperaser.c:63 ../app/tools/gimperasertool.c:66
+#: ../app/paint/gimperaser.c:64 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
 msgstr "Gumka"
 
@@ -13534,7 +13542,7 @@ msgstr "Łatka"
 msgid "Healing does not operate on indexed layers."
 msgstr "Łatanie nie jest możliwe na warstwach indeksowanych."
 
-#: ../app/paint/gimpink.c:103 ../app/tools/gimpinktool.c:61
+#: ../app/paint/gimpink.c:104 ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Stalówka"
 
@@ -13579,11 +13587,11 @@ msgstr "Proporcje kropli tuszu"
 msgid "Ink Blob Angle"
 msgstr "Nachylenie kropli tuszu"
 
-#: ../app/paint/gimpmybrushcore.c:98
+#: ../app/paint/gimpmybrushcore.c:99
 msgid "Mybrush"
 msgstr "MyBrush"
 
-#: ../app/paint/gimpmybrushcore.c:155
+#: ../app/paint/gimpmybrushcore.c:156
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli programu MyPaint dla tego narzędzia."
 
@@ -13606,7 +13614,7 @@ msgstr "Twardość"
 msgid "Erase with this brush"
 msgstr "Wycieranie za pomocą tego pędzla"
 
-#: ../app/paint/gimppaintbrush.c:67 ../app/tools/gimppaintbrushtool.c:51
+#: ../app/paint/gimppaintbrush.c:68 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Pędzel"
 
@@ -14829,51 +14837,51 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:149
+#: ../app/text/gimptextlayer.c:150
 msgid "Text Layer"
 msgstr "Warstwa tekstowa"
 
-#: ../app/text/gimptextlayer.c:150
+#: ../app/text/gimptextlayer.c:151
 msgid "Rename Text Layer"
 msgstr "Zmiana nazwy warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:151
+#: ../app/text/gimptextlayer.c:152
 msgid "Move Text Layer"
 msgstr "Przesunięcie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:152
+#: ../app/text/gimptextlayer.c:153
 msgid "Scale Text Layer"
 msgstr "Skalowanie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:153
+#: ../app/text/gimptextlayer.c:154
 msgid "Resize Text Layer"
 msgstr "Zmiana wymiarów warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:154
+#: ../app/text/gimptextlayer.c:155
 msgid "Flip Text Layer"
 msgstr "Odbicie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:155
+#: ../app/text/gimptextlayer.c:156
 msgid "Rotate Text Layer"
 msgstr "Obrót warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:156
+#: ../app/text/gimptextlayer.c:157
 msgid "Transform Text Layer"
 msgstr "Przekształcenie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:570
+#: ../app/text/gimptextlayer.c:571
 msgid "Discard Text Information"
 msgstr "Porzucenie informacji o tekście"
 
-#: ../app/text/gimptextlayer.c:638
+#: ../app/text/gimptextlayer.c:639
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkcje tekstowe nie są dostępne z powodu braku czcionek."
 
-#: ../app/text/gimptextlayer.c:697
+#: ../app/text/gimptextlayer.c:698
 msgid "Empty Text Layer"
 msgstr "Pusta warstwa tekstowa"
 
-#: ../app/text/gimptextlayer.c:747
+#: ../app/text/gimptextlayer.c:750
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -15012,8 +15020,12 @@ msgid "Distribute targets evenly in the vertical"
 msgstr "Rozmieszczenie równo w pionie"
 
 #: ../app/tools/gimpalignoptions.c:380
-msgid "Offset:"
-msgstr "Przesunięcie:"
+msgid "Offset X:"
+msgstr "Przesunięcie na osi X:"
+
+#: ../app/tools/gimpalignoptions.c:393
+msgid "Offset Y:"
+msgstr "Przesunięcie na osi Y:"
 
 #: ../app/tools/gimpaligntool.c:125
 msgid "Alignment Tool: Align or arrange layers and other objects"
@@ -15460,35 +15472,35 @@ msgstr "Tryb wybierania  (%s)"
 msgid "Use info window  (%s)"
 msgstr "Okno informacyjne  (%s)"
 
-#: ../app/tools/gimpcolorpickertool.c:98
+#: ../app/tools/gimpcolorpickertool.c:102
 msgid "Color Picker"
 msgstr "Pobranie koloru"
 
-#: ../app/tools/gimpcolorpickertool.c:99
+#: ../app/tools/gimpcolorpickertool.c:103
 msgid "Color Picker Tool: Set colors from image pixels"
 msgstr "Pobranie koloru: ustawia kolor z punktów obrazu"
 
-#: ../app/tools/gimpcolorpickertool.c:100
+#: ../app/tools/gimpcolorpickertool.c:104
 msgid "C_olor Picker"
 msgstr "Po_branie koloru"
 
-#: ../app/tools/gimpcolorpickertool.c:248
+#: ../app/tools/gimpcolorpickertool.c:252
 msgid "Click in any image to view its color"
 msgstr "Kliknięcie na obraz wyświetli jego kolor"
 
-#: ../app/tools/gimpcolorpickertool.c:255 ../app/tools/gimppainttool.c:497
+#: ../app/tools/gimpcolorpickertool.c:259 ../app/tools/gimppainttool.c:497
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknięcie na dowolny obraz pobierze jego kolor pierwszoplanowy"
 
-#: ../app/tools/gimpcolorpickertool.c:263 ../app/tools/gimppainttool.c:503
+#: ../app/tools/gimpcolorpickertool.c:267 ../app/tools/gimppainttool.c:503
 msgid "Click in any image to pick the background color"
 msgstr "Kliknięcie na dowolny obraz pobierze jego kolor tła"
 
-#: ../app/tools/gimpcolorpickertool.c:271
+#: ../app/tools/gimpcolorpickertool.c:275
 msgid "Click in any image to add the color to the palette"
 msgstr "Kliknięcie na dowolny obraz doda kolor do palety"
 
-#: ../app/tools/gimpcolorpickertool.c:337
+#: ../app/tools/gimpcolorpickertool.c:342
 msgid "Color Picker Information"
 msgstr "Informacje o zakraplaczu"
 
