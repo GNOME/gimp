@@ -80,12 +80,6 @@ header files installed.
      not be disabled.
 
  10. For MyPaint brushes, brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@ is used.
-
-     To build and install libmypaint:
-
-       `scons prefix=<your prefix>`
-       `scons prefix=<your prefix> install`
-
      The libmypaint repository is hosted at:
 
         https://github.com/mypaint/libmypaint
@@ -298,9 +292,10 @@ These are:
   --disable-mp. This option allows you to disable support for multiple
      processors. It is enabled by default.
 
-  --with-sendmail=[PATH]. This option is used to tell GIMP where to find
-     the sendmail command. Normally this options don't have to be used
-     because configure tries to find it in the usual places.
+  --with-sendmail[=PATH]. This option is used to tell GIMP to send email
+     through sendmail instead of xdg-email. You can optionally indicate
+     where to find the sendmail command. Otherwise sendmail will simply
+     be search in your $PATH at runtime.
 
   --with-desktop-dir=[PATH]. This option specifies where to install
      desktop files. These files are used by desktop environments that
