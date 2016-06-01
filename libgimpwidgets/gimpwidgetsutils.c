@@ -352,6 +352,123 @@ gimp_get_monitor_at_pointer (GdkScreen **screen)
   return gdk_screen_get_monitor_at_point (*screen, x, y);
 }
 
+typedef void (* MonitorChangedCallback) (GtkWidget *, gpointer);
+
+typedef struct
+{
+  GtkWidget *widget;
+  gint       monitor;
+
+  MonitorChangedCallback callback;
+  gpointer               user_data;
+} TrackMonitorData;
+
+static gboolean
+track_monitor_configure_event (GtkWidget        *toplevel,
+                               GdkEvent         *event,
+                               TrackMonitorData *track_data)
+{
+  gint monitor = gimp_widget_get_monitor (toplevel);
+
+  if (monitor != track_data->monitor)
+    {
+      track_data->monitor = monitor;
+
+      track_data->callback (track_data->widget, track_data->user_data);
+    }
+
+  return FALSE;
+}
+
+static void
+track_monitor_hierarchy_changed (GtkWidget        *widget,
+                                 GtkWidget        *previous_toplevel,
+                                 TrackMonitorData *track_data)
+{
+  GtkWidget *toplevel;
+
+  if (previous_toplevel)
+    {
+      g_signal_handlers_disconnect_by_func (previous_toplevel,
+                                            track_monitor_configure_event,
+                                            track_data);
+    }
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  if (GTK_IS_WINDOW (toplevel))
+    {
+      GClosure *closure;
+      gint      monitor;
+
+      closure = g_cclosure_new (G_CALLBACK (track_monitor_configure_event),
+                                track_data, NULL);
+      g_object_watch_closure (G_OBJECT (widget), closure);
+      g_signal_connect_closure (toplevel, "configure-event", closure, FALSE);
+
+      monitor = gimp_widget_get_monitor (toplevel);
+
+      if (monitor != track_data->monitor)
+        {
+          track_data->monitor = monitor;
+
+          track_data->callback (track_data->widget, track_data->user_data);
+        }
+    }
+}
+
+/**
+ * gimp_widget_track_monitor:
+ * @widget:                   a #GtkWidget
+ * @monitor_changed_callback: the callback when @widget's monitor changes
+ * @user_data:                data passed to @monitor_changed_callback
+ *
+ * This function behaves as if #GtkWidget had a signal
+ *
+ * GtkWidget::monitor_changed(GtkWidget *widget, gpointer user_data)
+ *
+ * That is emitted whenever @widget's toplevel window is moved from
+ * one monitor to another. This function automatically connects to
+ * the right toplevel #GtkWindow, even across moving @widget between
+ * toplevel windows.
+ *
+ * Note that this function tracks the toplevel, not @widget itself, so
+ * all a window's widgets are always considered to be on the same
+ * monitor. This is because this function is mainly used for fetching
+ * the new monitor's color profile, and it makes little sense to use
+ * different profiles for the widgets of one window.
+ *
+ * Since: 2.10
+ **/
+void
+gimp_widget_track_monitor (GtkWidget *widget,
+                           GCallback  monitor_changed_callback,
+                           gpointer   user_data)
+{
+  TrackMonitorData *track_data;
+  GtkWidget        *toplevel;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (monitor_changed_callback != NULL);
+
+  track_data = g_new0 (TrackMonitorData, 1);
+
+  track_data->widget    = widget;
+  track_data->callback  = (MonitorChangedCallback) monitor_changed_callback;
+  track_data->user_data = user_data;
+
+  g_object_weak_ref (G_OBJECT (widget), (GWeakNotify) g_free, track_data);
+
+  g_signal_connect (widget, "hierarchy-changed",
+                    G_CALLBACK (track_monitor_hierarchy_changed),
+                    track_data);
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  if (GTK_IS_WINDOW (toplevel))
+    track_monitor_hierarchy_changed (widget, NULL, track_data);
+}
+
 GimpColorProfile *
 gimp_widget_get_color_profile (GtkWidget *widget)
 {
