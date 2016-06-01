@@ -30,8 +30,8 @@
      id="namedview1511"
      showgrid="true"
      inkscape:zoom="14.749984"
-     inkscape:cx="-15.76276"
-     inkscape:cy="10.101706"
+     inkscape:cx="13.540961"
+     inkscape:cy="10.542384"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
@@ -71,16 +71,7 @@
          style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
-       gradientTransform="translate(541.61297,283.03649)"
-       gradientUnits="userSpaceOnUse"
-       y2="602"
-       x2="176.0002"
-       y1="602"
-       x1="162.0002"
-       id="linearGradient7532"
-       xlink:href="#linearGradient19282-4" />
-    <linearGradient
-       gradientTransform="translate(541.61297,283.03649)"
+       gradientTransform="matrix(1.1666666,0,0,1.3391314,603.71507,173.83113)"
        gradientUnits="userSpaceOnUse"
        y2="603"
        x2="175.0002"
@@ -102,15 +93,9 @@
        id="g3970-0"
        transform="matrix(1.5714286,0,0,1.5714286,-253.57175,-934.00002)">
       <path
-         sodipodi:nodetypes="cccccccccc"
-         style="fill:url(#linearGradient7532);fill-opacity:1;stroke:none"
-         d="m 162.0002,595 v 14 h 14 v -14 z m 0.63637,0.63637 h 12.72727 v 11.45454 h -12.72727 z"
-         id="rect5444-3-2"
-         inkscape:connector-curvature="0" />
-      <path
-         sodipodi:nodetypes="ccccccccccccccccccccccc"
-         style="fill:url(#linearGradient7536);fill-opacity:1;stroke:none"
-         d="m 163.0002,608 0.625,-1.0625 0.375,-0.9375 h 1 v 0 l 1,-8.45454 h 1 l 1,4.45454 h 1 l 1,2 1,2 v 0 l 1,-2 v -2 0 0 0 l 1,2 1,2 v 0 l 1,1 v 1 z"
+         sodipodi:nodetypes="ccccccccccccccccccccc"
+         style="fill:url(#linearGradient7536);fill-opacity:1;stroke:none;stroke-width:1.249928"
+         d="m 162.0002,609 0.72917,-1.42282 0.4375,-1.25544 h 1.16666 v 0 L 165.5002,595 h 1.16667 l 1.16666,5.96521 h 1.16667 l 1.16667,2.67826 1.16666,2.67827 v 0 l 1.16667,-2.67827 v -2.9162 c 0.33092,-0.25957 0.65075,0.0168 0.95455,0 l 0.21212,2.9162 1.16666,2.67827 v 0 l 1.16667,1.33912 V 609 Z"
          id="path5449-8-0"
          inkscape:connector-curvature="0" />
     </g>

@@ -93,6 +93,8 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_COLOR_PICKER_GRAY        "gimp-color-picker-gray"
 #define GIMP_STOCK_COLOR_PICKER_WHITE       "gimp-color-picker-white"
 #define GIMP_STOCK_COLOR_TRIANGLE           "gimp-color-triangle"
+#define GIMP_STOCK_COLOR_CMYK               "gimp-color-cmyk"
+#define GIMP_STOCK_COLOR_WATER              "gimp-color-water"
 #define GIMP_STOCK_COLOR_PICK_FROM_SCREEN   "gimp-color-pick-from-screen"
 
 #define GIMP_STOCK_CHAR_PICKER              "gimp-char-picker"
