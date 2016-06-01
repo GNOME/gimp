@@ -126,10 +126,19 @@ query (void)
     { GIMP_PDB_INT32,    "encapsulation", "ignored" }
   };
 
-  /* check if xdg-email or sendmail is installed
-   * TODO: allow setting the location of the executable in preferences
+  /* Check if xdg-email or sendmail is installed.
+   * TODO: allow setting the location of the executable in preferences.
    */
-#ifdef SENDMAIL
+#ifdef SENDMAIL && SENDMAIL
+  /* If a directory has been set at build time, we assume that sendmail
+   * can only be in this directory. */
+  email_bin = g_build_path (SENDMAIL, "sendmail", NULL);
+  if (! g_file_test (email_bin, G_FILE_TEST_IS_EXECUTABLE))
+    {
+      g_free (email_bin);
+      email_bin = NULL;
+    }
+#elif defined SENDMAIL
   email_bin = g_find_program_in_path ("sendmail");
 #else
   email_bin = g_find_program_in_path ("xdg-email");
