@@ -262,13 +262,13 @@ vector24_images = \
 	24/gimp-controller-midi.svg			\
 	24/gimp-controller-wheel.svg			\
 	24/gimp-cursor.svg				\
-	24/gimp-device-status				\
-	24/gimp-display-filter				\
-	24/gimp-display-filter-colorblind		\
-	24/gimp-display-filter-contrast			\
-	24/gimp-display-filter-gamma			\
-	24/gimp-display-filter-lcms			\
-	24/gimp-display-filter-proof			\
+	24/gimp-device-status.svg				\
+	24/gimp-display-filter.svg				\
+	24/gimp-display-filter-colorblind.svg		\
+	24/gimp-display-filter-contrast.svg			\
+	24/gimp-display-filter-gamma.svg			\
+	24/gimp-display-filter-lcms.svg			\
+	24/gimp-display-filter-proof.svg			\
 	24/gimp-dynamics.svg				\
 	24/gimp-error.svg				\
 	24/gimp-floating-selection.svg			\
@@ -329,7 +329,7 @@ vector24_images = \
 	24/gimp-question.svg				\
 	24/gimp-resize.svg				\
 	24/gimp-sample-point.svg			\
-	24/gimp-scale					\
+	24/gimp-scale.svg					\
 	24/gimp-selection.svg				\
 	24/gimp-symmetry.svg				\
 	24/gimp-template.svg				\
