@@ -1465,15 +1465,15 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
 
                               if (attr->klass->type == PANGO_ATTR_BACKGROUND)
                                 {
-                                  gimp_text_buffer_set_bg_color (text_tool->buffer,
-                                                                 &start, &end,
-                                                                 &color);
+                                  gimp_text_buffer_set_preedit_bg_color (text_tool->buffer,
+                                                                         &start, &end,
+                                                                         &color);
                                 }
                               else
                                 {
-                                  gimp_text_buffer_set_color (text_tool->buffer,
-                                                              &start, &end,
-                                                              &color);
+                                  gimp_text_buffer_set_preedit_color (text_tool->buffer,
+                                                                      &start, &end,
+                                                                      &color);
                                 }
                             }
                           break;
