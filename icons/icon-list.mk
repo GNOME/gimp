@@ -21,7 +21,7 @@ scalable_images = \
 	scalable/gimp-color-pick-from-screen.svg	\
 	scalable/gimp-color-cmyk.svg			\
 	scalable/gimp-color-triangle.svg		\
-	scalable/gimp-color-palette.svg			\
+	scalable/gimp-color-water.svg			\
 	scalable/gimp-controller-keyboard.svg		\
 	scalable/gimp-controller-linux-input.svg	\
 	scalable/gimp-controller-midi.svg		\
