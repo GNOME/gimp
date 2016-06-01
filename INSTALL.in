@@ -189,6 +189,9 @@ options can be listed using the command `./configure --help'. There
 are several special options the GIMP `configure' script recognizes.
 These are:
 
+  --enable-vector-icons.  This option installs vectorial icons instead
+    of raster icons.
+
   --enable-shared and --disable-shared.  This option affects whether
      shared libraries will be built or not. Shared libraries provide
      for much smaller executables. The default is to enable shared
