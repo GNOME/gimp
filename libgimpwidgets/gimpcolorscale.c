@@ -68,36 +68,34 @@ struct _GimpColorScalePrivate
                                      GimpColorScalePrivate)
 
 
-static void     gimp_color_scale_dispose          (GObject          *object);
-static void     gimp_color_scale_finalize         (GObject          *object);
-static void     gimp_color_scale_get_property     (GObject          *object,
-                                                   guint             property_id,
-                                                   GValue           *value,
-                                                   GParamSpec       *pspec);
-static void     gimp_color_scale_set_property     (GObject          *object,
-                                                   guint             property_id,
-                                                   const GValue     *value,
-                                                   GParamSpec       *pspec);
+static void     gimp_color_scale_dispose           (GObject          *object);
+static void     gimp_color_scale_finalize          (GObject          *object);
+static void     gimp_color_scale_get_property      (GObject          *object,
+                                                    guint             property_id,
+                                                    GValue           *value,
+                                                    GParamSpec       *pspec);
+static void     gimp_color_scale_set_property      (GObject          *object,
+                                                    guint             property_id,
+                                                    const GValue     *value,
+                                                    GParamSpec       *pspec);
 
-static void     gimp_color_scale_size_allocate    (GtkWidget        *widget,
-                                                   GtkAllocation    *allocation);
-static void     gimp_color_scale_state_changed    (GtkWidget        *widget,
-                                                   GtkStateType      previous_state);
-static gboolean gimp_color_scale_button_press     (GtkWidget        *widget,
-                                                   GdkEventButton   *event);
-static gboolean gimp_color_scale_button_release   (GtkWidget        *widget,
-                                                   GdkEventButton   *event);
-static gboolean gimp_color_scale_expose           (GtkWidget        *widget,
-                                                   GdkEventExpose   *event);
+static void     gimp_color_scale_size_allocate     (GtkWidget        *widget,
+                                                    GtkAllocation    *allocation);
+static void     gimp_color_scale_state_changed     (GtkWidget        *widget,
+                                                    GtkStateType      previous_state);
+static gboolean gimp_color_scale_button_press      (GtkWidget        *widget,
+                                                    GdkEventButton   *event);
+static gboolean gimp_color_scale_button_release    (GtkWidget        *widget,
+                                                    GdkEventButton   *event);
+static gboolean gimp_color_scale_expose            (GtkWidget        *widget,
+                                                    GdkEventExpose   *event);
 
-static void     gimp_color_scale_render           (GimpColorScale   *scale);
-static void     gimp_color_scale_render_alpha     (GimpColorScale   *scale);
-static void     gimp_color_scale_render_stipple   (GimpColorScale   *scale);
+static void     gimp_color_scale_render            (GimpColorScale   *scale);
+static void     gimp_color_scale_render_alpha      (GimpColorScale   *scale);
+static void     gimp_color_scale_render_stipple    (GimpColorScale   *scale);
 
-static void     gimp_color_scale_config_notify    (GimpColorConfig  *config,
-                                                   const GParamSpec *pspec,
-                                                   GimpColorScale   *scale);
-static void     gimp_color_scale_create_transform (GimpColorScale   *scale);
+static void     gimp_color_scale_create_transform  (GimpColorScale   *scale);
+static void     gimp_color_scale_destroy_transform (GimpColorScale   *scale);
 
 
 G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
@@ -167,6 +165,10 @@ gimp_color_scale_init (GimpColorScale *scale)
 
   gimp_rgba_set (&scale->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&scale->rgb, &scale->hsv);
+
+  gimp_widget_track_monitor (GTK_WIDGET (scale),
+                             G_CALLBACK (gimp_color_scale_destroy_transform),
+                             NULL);
 }
 
 static void
@@ -665,15 +667,11 @@ gimp_color_scale_set_color_config (GimpColorScale  *scale,
       if (priv->config)
         {
           g_signal_handlers_disconnect_by_func (priv->config,
-                                                gimp_color_scale_config_notify,
+                                                gimp_color_scale_destroy_transform,
                                                 scale);
           g_object_unref (priv->config);
 
-          if (priv->transform)
-            {
-              g_object_unref (priv->transform);
-              priv->transform = NULL;
-            }
+          gimp_color_scale_destroy_transform (scale);
         }
 
       priv->config = config;
@@ -682,9 +680,9 @@ gimp_color_scale_set_color_config (GimpColorScale  *scale,
         {
           g_object_ref (priv->config);
 
-          g_signal_connect (priv->config, "notify",
-                            G_CALLBACK (gimp_color_scale_config_notify),
-                            scale);
+          g_signal_connect_swapped (priv->config, "notify",
+                                    G_CALLBACK (gimp_color_scale_destroy_transform),
+                                    scale);
         }
     }
 }
@@ -982,22 +980,6 @@ gimp_color_scale_render_stipple (GimpColorScale *scale)
 }
 
 static void
-gimp_color_scale_config_notify (GimpColorConfig  *config,
-                                const GParamSpec *pspec,
-                                GimpColorScale   *scale)
-{
-  GimpColorScalePrivate *priv = GET_PRIVATE (scale);
-
-  if (priv->transform)
-    {
-      g_object_unref (priv->transform);
-      priv->transform = NULL;
-    }
-
-  gtk_widget_queue_draw (GTK_WIDGET (scale));
-}
-
-static void
 gimp_color_scale_create_transform (GimpColorScale *scale)
 {
   GimpColorScalePrivate *priv = GET_PRIVATE (scale);
@@ -1017,4 +999,18 @@ gimp_color_scale_create_transform (GimpColorScale *scale)
                                                          format,
                                                          format);
     }
+}
+
+static void
+gimp_color_scale_destroy_transform (GimpColorScale *scale)
+{
+  GimpColorScalePrivate *priv = GET_PRIVATE (scale);
+
+  if (priv->transform)
+    {
+      g_object_unref (priv->transform);
+      priv->transform = NULL;
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (scale));
 }

@@ -132,6 +132,8 @@ static void          gimp_container_tree_view_expand_rows         (GtkTreeModel 
                                                                    GtkTreeView              *view,
                                                                    GtkTreeIter              *parent);
 
+static void          gimp_container_tree_view_monitor_changed     (GimpContainerTreeView    *view);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
                          GIMP_TYPE_CONTAINER_BOX,
@@ -224,6 +226,10 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+
+  gimp_widget_track_monitor (GTK_WIDGET (tree_view),
+                             G_CALLBACK (gimp_container_tree_view_monitor_changed),
+                             NULL);
 }
 
 static void
@@ -1475,4 +1481,33 @@ gimp_container_tree_view_expand_rows (GtkTreeModel *model,
           gimp_container_tree_view_expand_rows (model, view, &iter);
         }
     while (gtk_tree_model_iter_next (model, &iter));
+}
+
+static gboolean
+gimp_container_tree_view_monitor_changed_foreach (GtkTreeModel *model,
+                                                  GtkTreePath  *path,
+                                                  GtkTreeIter  *iter,
+                                                  gpointer      data)
+{
+  GimpViewRenderer *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      -1);
+
+  if (renderer)
+    {
+      gimp_view_renderer_free_color_transform (renderer);
+      g_object_unref (renderer);
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_container_tree_view_monitor_changed (GimpContainerTreeView *view)
+{
+  gtk_tree_model_foreach (view->model,
+                          gimp_container_tree_view_monitor_changed_foreach,
+                          NULL);
 }

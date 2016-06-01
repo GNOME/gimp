@@ -64,42 +64,41 @@ typedef enum
 } FgBgTarget;
 
 
-static void     gimp_fg_bg_editor_dispose         (GObject          *object);
-static void     gimp_fg_bg_editor_set_property    (GObject          *object,
-                                                   guint             property_id,
-                                                   const GValue     *value,
-                                                   GParamSpec       *pspec);
-static void     gimp_fg_bg_editor_get_property    (GObject          *object,
-                                                   guint             property_id,
-                                                   GValue           *value,
-                                                   GParamSpec       *pspec);
+static void     gimp_fg_bg_editor_dispose           (GObject          *object);
+static void     gimp_fg_bg_editor_set_property      (GObject          *object,
+                                                     guint             property_id,
+                                                     const GValue     *value,
+                                                     GParamSpec       *pspec);
+static void     gimp_fg_bg_editor_get_property      (GObject          *object,
+                                                     guint             property_id,
+                                                     GValue           *value,
+                                                     GParamSpec       *pspec);
 
-static void     gimp_fg_bg_editor_style_set       (GtkWidget        *widget,
-                                                   GtkStyle         *prev_style);
-static gboolean gimp_fg_bg_editor_expose          (GtkWidget        *widget,
-                                                   GdkEventExpose   *eevent);
-static gboolean gimp_fg_bg_editor_button_press    (GtkWidget        *widget,
-                                                   GdkEventButton   *bevent);
-static gboolean gimp_fg_bg_editor_button_release  (GtkWidget        *widget,
-                                                   GdkEventButton   *bevent);
-static gboolean gimp_fg_bg_editor_drag_motion     (GtkWidget        *widget,
-                                                   GdkDragContext   *context,
-                                                   gint              x,
-                                                   gint              y,
-                                                   guint             time);
+static void     gimp_fg_bg_editor_style_set         (GtkWidget        *widget,
+                                                     GtkStyle         *prev_style);
+static gboolean gimp_fg_bg_editor_expose            (GtkWidget        *widget,
+                                                     GdkEventExpose   *eevent);
+static gboolean gimp_fg_bg_editor_button_press      (GtkWidget        *widget,
+                                                     GdkEventButton   *bevent);
+static gboolean gimp_fg_bg_editor_button_release    (GtkWidget        *widget,
+                                                     GdkEventButton   *bevent);
+static gboolean gimp_fg_bg_editor_drag_motion       (GtkWidget        *widget,
+                                                     GdkDragContext   *context,
+                                                     gint              x,
+                                                     gint              y,
+                                                     guint             time);
 
-static void     gimp_fg_bg_editor_drag_color      (GtkWidget        *widget,
-                                                   GimpRGB          *color,
-                                                   gpointer          data);
-static void     gimp_fg_bg_editor_drop_color      (GtkWidget        *widget,
-                                                   gint              x,
-                                                   gint              y,
-                                                   const GimpRGB    *color,
-                                                   gpointer          data);
+static void     gimp_fg_bg_editor_drag_color        (GtkWidget        *widget,
+                                                     GimpRGB          *color,
+                                                     gpointer          data);
+static void     gimp_fg_bg_editor_drop_color        (GtkWidget        *widget,
+                                                     gint              x,
+                                                     gint              y,
+                                                     const GimpRGB    *color,
+                                                     gpointer          data);
 
-static void     gimp_fg_bg_editor_config_notify   (GimpColorConfig  *config,
-                                                   const GParamSpec *pspec,
-                                                   GimpFgBgEditor   *editor);
+static void     gimp_fg_bg_editor_create_transform  (GimpFgBgEditor   *editor);
+static void     gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor   *editor);
 
 
 G_DEFINE_TYPE (GimpFgBgEditor, gimp_fg_bg_editor, GTK_TYPE_DRAWING_AREA)
@@ -152,7 +151,6 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
 static void
 gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
 {
-  editor->context      = NULL;
   editor->active_color = GIMP_ACTIVE_COLOR_FOREGROUND;
 
   gtk_widget_add_events (GTK_WIDGET (editor),
@@ -163,6 +161,10 @@ gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
                              gimp_fg_bg_editor_drag_color, NULL);
   gimp_dnd_color_dest_add (GTK_WIDGET (editor),
                            gimp_fg_bg_editor_drop_color, NULL);
+
+  gimp_widget_track_monitor (GTK_WIDGET (editor),
+                             G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
+                             NULL);
 }
 
 static void
@@ -331,20 +333,7 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
 
 
   if (! editor->transform)
-    {
-      static GimpColorProfile *profile = NULL;
-
-      if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
-
-      editor->transform =
-        gimp_widget_get_color_transform (widget,
-                                         editor->color_config,
-                                         profile,
-                                         babl_format ("R'G'B'A double"),
-                                         babl_format ("R'G'B'A double"));
-    }
-
+    gimp_fg_bg_editor_create_transform (editor);
 
   /*  draw the background area  */
 
@@ -569,46 +558,46 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
   g_return_if_fail (GIMP_IS_FG_BG_EDITOR (editor));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
-  if (context == editor->context)
-    return;
-
-  if (editor->context)
+  if (context != editor->context)
     {
-      g_signal_handlers_disconnect_by_func (editor->context,
-                                            gtk_widget_queue_draw,
-                                            editor);
-      g_object_unref (editor->context);
+      if (editor->context)
+        {
+          g_signal_handlers_disconnect_by_func (editor->context,
+                                                gtk_widget_queue_draw,
+                                                editor);
+          g_object_unref (editor->context);
 
-      g_signal_handlers_disconnect_by_func (editor->color_config,
-                                            gimp_fg_bg_editor_config_notify,
-                                            editor);
-      g_object_unref (editor->color_config);
-      editor->color_config = NULL;
+          g_signal_handlers_disconnect_by_func (editor->color_config,
+                                                gimp_fg_bg_editor_destroy_transform,
+                                                editor);
+          g_object_unref (editor->color_config);
+          editor->color_config = NULL;
+        }
+
+      editor->context = context;
+
+      if (context)
+        {
+          g_object_ref (context);
+
+          g_signal_connect_swapped (context, "foreground-changed",
+                                    G_CALLBACK (gtk_widget_queue_draw),
+                                    editor);
+          g_signal_connect_swapped (context, "background-changed",
+                                    G_CALLBACK (gtk_widget_queue_draw),
+                                    editor);
+
+          editor->color_config = g_object_ref (context->gimp->config->color_management);
+
+          g_signal_connect_swapped (editor->color_config, "notify",
+                                    G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
+                                    editor);
+        }
+
+      gimp_fg_bg_editor_destroy_transform (editor);
+
+      g_object_notify (G_OBJECT (editor), "context");
     }
-
-  editor->context = context;
-
-  if (context)
-    {
-      g_object_ref (context);
-
-      g_signal_connect_swapped (context, "foreground-changed",
-                                G_CALLBACK (gtk_widget_queue_draw),
-                                editor);
-      g_signal_connect_swapped (context, "background-changed",
-                                G_CALLBACK (gtk_widget_queue_draw),
-                                editor);
-
-      editor->color_config = g_object_ref (context->gimp->config->color_management);
-
-      g_signal_connect (editor->color_config, "notify",
-                        G_CALLBACK (gimp_fg_bg_editor_config_notify),
-                        editor);
-    }
-
-  gimp_fg_bg_editor_config_notify (NULL, NULL, editor);
-
-  g_object_notify (G_OBJECT (editor), "context");
 }
 
 void
@@ -675,9 +664,26 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
 }
 
 static void
-gimp_fg_bg_editor_config_notify (GimpColorConfig  *config,
-                                 const GParamSpec *pspec,
-                                 GimpFgBgEditor   *editor)
+gimp_fg_bg_editor_create_transform (GimpFgBgEditor *editor)
+{
+  if (editor->color_config)
+    {
+      static GimpColorProfile *profile = NULL;
+
+      if (G_UNLIKELY (! profile))
+        profile = gimp_color_profile_new_rgb_srgb ();
+
+      editor->transform =
+        gimp_widget_get_color_transform (GTK_WIDGET (editor),
+                                         editor->color_config,
+                                         profile,
+                                         babl_format ("R'G'B'A double"),
+                                         babl_format ("R'G'B'A double"));
+    }
+}
+
+static void
+gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor *editor)
 {
   if (editor->transform)
     {

@@ -95,35 +95,33 @@ enum
   LAST_SIGNAL
 };
 
-static void     gimp_color_wheel_dispose          (GObject            *object);
+static void     gimp_color_wheel_dispose           (GObject            *object);
 
-static void     gimp_color_wheel_map              (GtkWidget          *widget);
-static void     gimp_color_wheel_unmap            (GtkWidget          *widget);
-static void     gimp_color_wheel_realize          (GtkWidget          *widget);
-static void     gimp_color_wheel_unrealize        (GtkWidget          *widget);
-static void     gimp_color_wheel_size_request     (GtkWidget          *widget,
-                                                   GtkRequisition     *requisition);
-static void     gimp_color_wheel_size_allocate    (GtkWidget          *widget,
-                                                   GtkAllocation      *allocation);
-static gboolean gimp_color_wheel_button_press     (GtkWidget          *widget,
-                                                   GdkEventButton     *event);
-static gboolean gimp_color_wheel_button_release   (GtkWidget          *widget,
-                                                   GdkEventButton     *event);
-static gboolean gimp_color_wheel_motion           (GtkWidget          *widget,
-                                                   GdkEventMotion     *event);
-static gboolean gimp_color_wheel_expose           (GtkWidget          *widget,
-                                                   GdkEventExpose     *event);
-static gboolean gimp_color_wheel_grab_broken      (GtkWidget          *widget,
-                                                   GdkEventGrabBroken *event);
-static gboolean gimp_color_wheel_focus            (GtkWidget          *widget,
-                                                   GtkDirectionType    direction);
-static void     gimp_color_wheel_move             (GimpColorWheel     *wheel,
-                                                   GtkDirectionType    dir);
+static void     gimp_color_wheel_map               (GtkWidget          *widget);
+static void     gimp_color_wheel_unmap             (GtkWidget          *widget);
+static void     gimp_color_wheel_realize           (GtkWidget          *widget);
+static void     gimp_color_wheel_unrealize         (GtkWidget          *widget);
+static void     gimp_color_wheel_size_request      (GtkWidget          *widget,
+                                                    GtkRequisition     *requisition);
+static void     gimp_color_wheel_size_allocate     (GtkWidget          *widget,
+                                                    GtkAllocation      *allocation);
+static gboolean gimp_color_wheel_button_press      (GtkWidget          *widget,
+                                                    GdkEventButton     *event);
+static gboolean gimp_color_wheel_button_release    (GtkWidget          *widget,
+                                                    GdkEventButton     *event);
+static gboolean gimp_color_wheel_motion            (GtkWidget          *widget,
+                                                    GdkEventMotion     *event);
+static gboolean gimp_color_wheel_expose            (GtkWidget          *widget,
+                                                    GdkEventExpose     *event);
+static gboolean gimp_color_wheel_grab_broken       (GtkWidget          *widget,
+                                                    GdkEventGrabBroken *event);
+static gboolean gimp_color_wheel_focus             (GtkWidget          *widget,
+                                                    GtkDirectionType    direction);
+static void     gimp_color_wheel_move              (GimpColorWheel     *wheel,
+                                                    GtkDirectionType    dir);
 
-static void     gimp_color_wheel_config_notify    (GimpColorConfig    *config,
-                                                   const GParamSpec   *pspec,
-                                                   GimpColorWheel     *wheel);
-static void     gimp_color_wheel_create_transform (GimpColorWheel     *wheel);
+static void     gimp_color_wheel_create_transform  (GimpColorWheel     *wheel);
+static void     gimp_color_wheel_destroy_transform (GimpColorWheel     *wheel);
 
 
 static guint wheel_signals[LAST_SIGNAL];
@@ -238,6 +236,10 @@ gimp_color_wheel_init (GimpColorWheel *wheel)
   priv->ring_fraction = DEFAULT_FRACTION;
   priv->size          = DEFAULT_SIZE;
   priv->ring_width    = DEFAULT_RING_WIDTH;
+
+  gimp_widget_track_monitor (GTK_WIDGET (wheel),
+                             G_CALLBACK (gimp_color_wheel_destroy_transform),
+                             NULL);
 }
 
 static void
@@ -1467,15 +1469,11 @@ gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
       if (priv->config)
         {
           g_signal_handlers_disconnect_by_func (priv->config,
-                                                gimp_color_wheel_config_notify,
+                                                gimp_color_wheel_destroy_transform,
                                                 wheel);
           g_object_unref (priv->config);
 
-          if (priv->transform)
-            {
-              g_object_unref (priv->transform);
-              priv->transform = NULL;
-            }
+          gimp_color_wheel_destroy_transform (wheel);
         }
 
       priv->config = config;
@@ -1484,9 +1482,9 @@ gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
         {
           g_object_ref (priv->config);
 
-          g_signal_connect (priv->config, "notify",
-                            G_CALLBACK (gimp_color_wheel_config_notify),
-                            wheel);
+          g_signal_connect_swapped (priv->config, "notify",
+                                    G_CALLBACK (gimp_color_wheel_destroy_transform),
+                                    wheel);
         }
     }
 }
@@ -1595,22 +1593,6 @@ gimp_color_wheel_move (GimpColorWheel   *wheel,
 }
 
 static void
-gimp_color_wheel_config_notify (GimpColorConfig  *config,
-                                const GParamSpec *pspec,
-                                GimpColorWheel   *wheel)
-{
-  GimpColorWheelPrivate *priv = wheel->priv;
-
-  if (priv->transform)
-    {
-      g_object_unref (priv->transform);
-      priv->transform = NULL;
-    }
-
-  gtk_widget_queue_draw (GTK_WIDGET (wheel));
-}
-
-static void
 gimp_color_wheel_create_transform (GimpColorWheel *wheel)
 {
   GimpColorWheelPrivate *priv = wheel->priv;
@@ -1630,4 +1612,18 @@ gimp_color_wheel_create_transform (GimpColorWheel *wheel)
                                                          format,
                                                          format);
     }
+}
+
+static void
+gimp_color_wheel_destroy_transform (GimpColorWheel *wheel)
+{
+  GimpColorWheelPrivate *priv = wheel->priv;
+
+  if (priv->transform)
+    {
+      g_object_unref (priv->transform);
+      priv->transform = NULL;
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (wheel));
 }

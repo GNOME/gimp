@@ -75,34 +75,31 @@ struct _GimpPreviewAreaPrivate
                                      GimpPreviewAreaPrivate)
 
 
-static void      gimp_preview_area_dispose          (GObject          *object);
-static void      gimp_preview_area_finalize         (GObject          *object);
-static void      gimp_preview_area_set_property     (GObject          *object,
-                                                     guint             property_id,
-                                                     const GValue     *value,
-                                                     GParamSpec       *pspec);
-static void      gimp_preview_area_get_property     (GObject          *object,
-                                                     guint             property_id,
-                                                     GValue           *value,
-                                                     GParamSpec       *pspec);
+static void      gimp_preview_area_dispose           (GObject          *object);
+static void      gimp_preview_area_finalize          (GObject          *object);
+static void      gimp_preview_area_set_property      (GObject          *object,
+                                                      guint             property_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void      gimp_preview_area_get_property      (GObject          *object,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
 
-static void      gimp_preview_area_size_allocate    (GtkWidget        *widget,
-                                                     GtkAllocation    *allocation);
-static gboolean  gimp_preview_area_expose           (GtkWidget        *widget,
-                                                     GdkEventExpose   *event);
+static void      gimp_preview_area_size_allocate     (GtkWidget        *widget,
+                                                      GtkAllocation    *allocation);
+static gboolean  gimp_preview_area_expose            (GtkWidget        *widget,
+                                                      GdkEventExpose   *event);
 
-static void      gimp_preview_area_queue_draw       (GimpPreviewArea  *area,
-                                                     gint              x,
-                                                     gint              y,
-                                                     gint              width,
-                                                     gint              height);
-static gint      gimp_preview_area_image_type_bytes (GimpImageType     type);
+static void      gimp_preview_area_queue_draw        (GimpPreviewArea  *area,
+                                                      gint              x,
+                                                      gint              y,
+                                                      gint              width,
+                                                      gint              height);
+static gint      gimp_preview_area_image_type_bytes  (GimpImageType     type);
 
-static void      gimp_preview_area_config_notify    (GimpColorConfig  *config,
-                                                     const GParamSpec *pspec,
-                                                     GimpPreviewArea  *area);
-
-static void      gimp_preview_area_create_transform (GimpPreviewArea  *area);
+static void      gimp_preview_area_create_transform  (GimpPreviewArea  *area);
+static void      gimp_preview_area_destroy_transform (GimpPreviewArea  *area);
 
 
 G_DEFINE_TYPE (GimpPreviewArea, gimp_preview_area, GTK_TYPE_DRAWING_AREA)
@@ -155,6 +152,10 @@ gimp_preview_area_init (GimpPreviewArea *area)
   area->rowstride  = 0;
   area->max_width  = -1;
   area->max_height = -1;
+
+  gimp_widget_track_monitor (GTK_WIDGET (area),
+                             G_CALLBACK (gimp_preview_area_destroy_transform),
+                             NULL);
 }
 
 static void
@@ -387,22 +388,6 @@ gimp_preview_area_image_type_bytes (GimpImageType type)
 }
 
 static void
-gimp_preview_area_config_notify (GimpColorConfig  *config,
-                                 const GParamSpec *pspec,
-                                 GimpPreviewArea  *area)
-{
-  GimpPreviewAreaPrivate *priv = GET_PRIVATE (area);
-
-  if (priv->transform)
-    {
-      g_object_unref (priv->transform);
-      priv->transform = NULL;
-    }
-
-  gtk_widget_queue_draw (GTK_WIDGET (area));
-}
-
-static void
 gimp_preview_area_create_transform (GimpPreviewArea *area)
 {
   GimpPreviewAreaPrivate *priv = GET_PRIVATE (area);
@@ -422,6 +407,20 @@ gimp_preview_area_create_transform (GimpPreviewArea *area)
                                                          format,
                                                          format);
     }
+}
+
+static void
+gimp_preview_area_destroy_transform (GimpPreviewArea *area)
+{
+  GimpPreviewAreaPrivate *priv = GET_PRIVATE (area);
+
+  if (priv->transform)
+    {
+      g_object_unref (priv->transform);
+      priv->transform = NULL;
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (area));
 }
 
 
@@ -1804,15 +1803,11 @@ gimp_preview_area_set_color_config (GimpPreviewArea *area,
       if (priv->config)
         {
           g_signal_handlers_disconnect_by_func (priv->config,
-                                                gimp_preview_area_config_notify,
+                                                gimp_preview_area_destroy_transform,
                                                 area);
           g_object_unref (priv->config);
 
-          if (priv->transform)
-            {
-              g_object_unref (priv->transform);
-              priv->transform = NULL;
-            }
+          gimp_preview_area_destroy_transform (area);
         }
 
       priv->config = config;
@@ -1821,9 +1816,9 @@ gimp_preview_area_set_color_config (GimpPreviewArea *area,
         {
           g_object_ref (priv->config);
 
-          g_signal_connect (priv->config, "notify",
-                            G_CALLBACK (gimp_preview_area_config_notify),
-                            area);
+          g_signal_connect_swapped (priv->config, "notify",
+                                    G_CALLBACK (gimp_preview_area_destroy_transform),
+                                    area);
         }
     }
 }

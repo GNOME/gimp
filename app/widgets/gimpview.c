@@ -83,6 +83,8 @@ static void        gimp_view_real_set_viewable    (GimpView         *view,
 static void        gimp_view_update_callback      (GimpViewRenderer *renderer,
                                                    GimpView         *view);
 
+static void        gimp_view_monitor_changed      (GimpView         *view);
+
 static GimpViewable * gimp_view_drag_viewable     (GtkWidget        *widget,
                                                    GimpContext     **context,
                                                    gpointer          data);
@@ -173,10 +175,6 @@ gimp_view_init (GimpView *view)
                          GDK_ENTER_NOTIFY_MASK   |
                          GDK_LEAVE_NOTIFY_MASK);
 
-  view->event_window      = NULL;
-  view->viewable          = NULL;
-  view->renderer          = NULL;
-
   view->clickable         = FALSE;
   view->eat_button_events = TRUE;
   view->show_popup        = FALSE;
@@ -185,6 +183,10 @@ gimp_view_init (GimpView *view)
   view->in_button         = FALSE;
   view->has_grab          = FALSE;
   view->press_state       = 0;
+
+  gimp_widget_track_monitor (GTK_WIDGET (view),
+                             G_CALLBACK (gimp_view_monitor_changed),
+                             NULL);
 }
 
 static void
@@ -821,6 +823,13 @@ gimp_view_update_callback (GimpViewRenderer *renderer,
     {
       gtk_widget_queue_draw (widget);
     }
+}
+
+static void
+gimp_view_monitor_changed (GimpView *view)
+{
+  if (view->renderer)
+    gimp_view_renderer_free_color_transform (view->renderer);
 }
 
 static GimpViewable *

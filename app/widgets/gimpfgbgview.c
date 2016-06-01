@@ -47,22 +47,22 @@ enum
 };
 
 
-static void     gimp_fg_bg_view_dispose       (GObject          *object);
-static void     gimp_fg_bg_view_set_property  (GObject          *object,
-                                               guint             property_id,
-                                               const GValue     *value,
-                                               GParamSpec       *pspec);
-static void     gimp_fg_bg_view_get_property  (GObject          *object,
-                                               guint             property_id,
-                                               GValue           *value,
-                                               GParamSpec       *pspec);
+static void     gimp_fg_bg_view_dispose           (GObject        *object);
+static void     gimp_fg_bg_view_set_property      (GObject        *object,
+                                                   guint           property_id,
+                                                   const GValue   *value,
+                                                   GParamSpec     *pspec);
+static void     gimp_fg_bg_view_get_property      (GObject        *object,
+                                                   guint           property_id,
+                                                   GValue         *value,
+                                                   GParamSpec     *pspec);
 
-static gboolean gimp_fg_bg_view_expose        (GtkWidget        *widget,
-                                               GdkEventExpose   *eevent);
+static gboolean gimp_fg_bg_view_expose            (GtkWidget      *widget,
+                                                   GdkEventExpose *eevent);
 
-static void     gimp_fg_bg_view_config_notify (GimpColorConfig  *config,
-                                               const GParamSpec *pspec,
-                                               GimpFgBgView     *view);
+static void     gimp_fg_bg_view_create_transform  (GimpFgBgView   *view);
+static void     gimp_fg_bg_view_destroy_transform (GimpFgBgView   *view);
+
 
 G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_WIDGET)
 
@@ -93,7 +93,9 @@ gimp_fg_bg_view_init (GimpFgBgView *view)
 {
   gtk_widget_set_has_window (GTK_WIDGET (view), FALSE);
 
-  view->context = NULL;
+  gimp_widget_track_monitor (GTK_WIDGET (view),
+                             G_CALLBACK (gimp_fg_bg_view_destroy_transform),
+                             NULL);
 }
 
 static void
@@ -175,19 +177,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   rect_h = allocation.height * 3 / 4;
 
   if (! view->transform)
-    {
-      static GimpColorProfile *profile = NULL;
-
-      if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
-
-      view->transform =
-        gimp_widget_get_color_transform (widget,
-                                         view->color_config,
-                                         profile,
-                                         babl_format ("R'G'B'A double"),
-                                         babl_format ("R'G'B'A double"));
-    }
+    gimp_fg_bg_view_create_transform (view);
 
   /*  draw the background area  */
 
@@ -251,9 +241,26 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
 }
 
 static void
-gimp_fg_bg_view_config_notify (GimpColorConfig  *config,
-                               const GParamSpec *pspec,
-                               GimpFgBgView     *view)
+gimp_fg_bg_view_create_transform (GimpFgBgView *view)
+{
+  if (view->color_config)
+    {
+      static GimpColorProfile *profile = NULL;
+
+      if (G_UNLIKELY (! profile))
+        profile = gimp_color_profile_new_rgb_srgb ();
+
+      view->transform =
+        gimp_widget_get_color_transform (GTK_WIDGET (view),
+                                         view->color_config,
+                                         profile,
+                                         babl_format ("R'G'B'A double"),
+                                         babl_format ("R'G'B'A double"));
+    }
+}
+
+static void
+gimp_fg_bg_view_destroy_transform (GimpFgBgView *view)
 {
   if (view->transform)
     {
@@ -284,45 +291,45 @@ gimp_fg_bg_view_set_context (GimpFgBgView *view,
   g_return_if_fail (GIMP_IS_FG_BG_VIEW (view));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
-  if (context == view->context)
-    return;
-
-  if (view->context)
+  if (context != view->context)
     {
-      g_signal_handlers_disconnect_by_func (view->context,
-                                            gtk_widget_queue_draw,
-                                            view);
-      g_object_unref (view->context);
-      view->context = NULL;
+      if (view->context)
+        {
+          g_signal_handlers_disconnect_by_func (view->context,
+                                                gtk_widget_queue_draw,
+                                                view);
+          g_object_unref (view->context);
+          view->context = NULL;
 
-      g_signal_handlers_disconnect_by_func (view->color_config,
-                                            gimp_fg_bg_view_config_notify,
-                                            view);
-      g_object_unref (view->color_config);
-      view->color_config = NULL;
+          g_signal_handlers_disconnect_by_func (view->color_config,
+                                                gimp_fg_bg_view_destroy_transform,
+                                                view);
+          g_object_unref (view->color_config);
+          view->color_config = NULL;
+        }
+
+      view->context = context;
+
+      if (context)
+        {
+          g_object_ref (context);
+
+          g_signal_connect_swapped (context, "foreground-changed",
+                                    G_CALLBACK (gtk_widget_queue_draw),
+                                    view);
+          g_signal_connect_swapped (context, "background-changed",
+                                    G_CALLBACK (gtk_widget_queue_draw),
+                                    view);
+
+          view->color_config = g_object_ref (context->gimp->config->color_management);
+
+          g_signal_connect_swapped (view->color_config, "notify",
+                                    G_CALLBACK (gimp_fg_bg_view_destroy_transform),
+                                    view);
+        }
+
+      gimp_fg_bg_view_destroy_transform (view);
+
+      g_object_notify (G_OBJECT (view), "context");
     }
-
-  view->context = context;
-
-  if (context)
-    {
-      g_object_ref (context);
-
-      g_signal_connect_swapped (context, "foreground-changed",
-                                G_CALLBACK (gtk_widget_queue_draw),
-                                view);
-      g_signal_connect_swapped (context, "background-changed",
-                                G_CALLBACK (gtk_widget_queue_draw),
-                                view);
-
-      view->color_config = g_object_ref (context->gimp->config->color_management);
-
-      g_signal_connect (view->color_config, "notify",
-                        G_CALLBACK (gimp_fg_bg_view_config_notify),
-                        view);
-    }
-
-  gimp_fg_bg_view_config_notify (NULL, NULL, view);
-
-  g_object_notify (G_OBJECT (view), "context");
 }
