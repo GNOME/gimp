@@ -1450,7 +1450,7 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                         {
                         case PANGO_ATTR_UNDERLINE:
                           gtk_text_buffer_apply_tag (buffer,
-                                                     text_tool->buffer->underline_tag,
+                                                     text_tool->buffer->preedit_underline_tag,
                                                      &start, &end);
                           break;
                         case PANGO_ATTR_BACKGROUND:

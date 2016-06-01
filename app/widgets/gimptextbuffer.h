@@ -47,6 +47,8 @@ struct _GimpTextBuffer
   GList         *color_tags;
   GList         *bg_color_tags;
 
+  GtkTextTag    *preedit_underline_tag;
+
   gboolean       insert_tags_set;
   GList         *insert_tags;
   GList         *remove_tags;

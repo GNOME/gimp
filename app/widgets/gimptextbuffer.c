@@ -106,6 +106,11 @@ gimp_text_buffer_constructed (GObject *object)
                                                       "underline", PANGO_UNDERLINE_SINGLE,
                                                       NULL);
 
+  buffer->preedit_underline_tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                                              "preedit-underline",
+                                                              "underline", PANGO_UNDERLINE_SINGLE,
+                                                              NULL);
+
   buffer->strikethrough_tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                                           "strikethrough",
                                                           "strikethrough", TRUE,
@@ -1091,12 +1096,14 @@ gimp_text_buffer_set_bg_color (GimpTextBuffer    *buffer,
 
 /*  Pango markup attribute names  */
 
-#define GIMP_TEXT_ATTR_NAME_SIZE     "size"
-#define GIMP_TEXT_ATTR_NAME_BASELINE "rise"
-#define GIMP_TEXT_ATTR_NAME_KERNING  "letter_spacing"
-#define GIMP_TEXT_ATTR_NAME_FONT     "font"
-#define GIMP_TEXT_ATTR_NAME_COLOR    "foreground"
-#define GIMP_TEXT_ATTR_NAME_BG_COLOR "background"
+#define GIMP_TEXT_ATTR_NAME_SIZE      "size"
+#define GIMP_TEXT_ATTR_NAME_BASELINE  "rise"
+#define GIMP_TEXT_ATTR_NAME_KERNING   "letter_spacing"
+#define GIMP_TEXT_ATTR_NAME_FONT      "font"
+#define GIMP_TEXT_ATTR_NAME_STYLE     "style"
+#define GIMP_TEXT_ATTR_NAME_COLOR     "foreground"
+#define GIMP_TEXT_ATTR_NAME_BG_COLOR  "background"
+#define GIMP_TEXT_ATTR_NAME_UNDERLINE "underline"
 
 const gchar *
 gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
@@ -1202,6 +1209,16 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
 
           *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
         }
+
+      return "span";
+    }
+  else if (tag == buffer->preedit_underline_tag)
+    {
+      if (attribute)
+        *attribute = GIMP_TEXT_ATTR_NAME_UNDERLINE;
+
+      if (value)
+        *value = g_strdup ("single");
 
       return "span";
     }
