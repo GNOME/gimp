@@ -1831,7 +1831,7 @@ fi
 
 have_email="no (xdg-email not found)"
 
-AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]   use sendmail instead of xdg-email])
+AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]     use sendmail instead of xdg-email])
 
 have_sendmail=no
 # Sendmail must be explicitely enabled to replace xdg-email implementation.
