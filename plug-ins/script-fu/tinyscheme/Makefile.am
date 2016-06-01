@@ -7,7 +7,7 @@ AM_CFLAGS = \
 	-DUSE_ASCII_NAMES=0	\
 	-DUSE_STRLWR=0		\
 	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)        
+	$(GLIB_CFLAGS)
 
 noinst_LIBRARIES = libtinyscheme.a
 

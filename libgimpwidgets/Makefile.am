@@ -342,7 +342,7 @@ EXTRA_PROGRAMS = \
 	test-eevl
 
 
-test_preview_area_SOURCES = test-preview-area.c 
+test_preview_area_SOURCES = test-preview-area.c
 
 test_preview_area_LDADD = \
 	$(GTK_LIBS)	\

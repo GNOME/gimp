@@ -394,7 +394,7 @@ run (const gchar      *name,
                   main_colorize (MC_DST_REMAP);
                   status = GIMP_PDB_SUCCESS;
                 }
-              else 
+              else
                 {
                   status = GIMP_PDB_EXECUTION_ERROR;
                 }

@@ -303,7 +303,7 @@ preview_expose(GtkWidget *widget, GdkEventExpose *event)
    cairo_clip (cr);
    cairo_set_line_width (cr, 1.);
    draw_grid (cr, width, height);
-   
+
    draw_shapes (cr);
 
    if (_tmp_obj)

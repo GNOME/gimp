@@ -1007,7 +1007,7 @@ drw_get_data(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     } else if (g_str_has_suffix (format, "u8")) {
         array_data_type = 'B';
     } else {
-        PyErr_Warn (PyExc_Warning, 
+        PyErr_Warn (PyExc_Warning,
             "Could not find apropriate data format - returning raw bytes");
         array_data_type = 'B';
     }

@@ -34,8 +34,8 @@ static PyObject *
 item_from_id(PyObject *not_used, PyObject *args)
 {
     gint32 ID;
- 
-    if (!PyArg_ParseTuple(args, "i", &ID)) 
+
+    if (!PyArg_ParseTuple(args, "i", &ID))
         return NULL;
     return pygimp_item_new(ID);
 }

@@ -1367,7 +1367,7 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
   GimpSizeEntryField *gsef                 = (GimpSizeEntryField *) data;
   gboolean            resolve_default_unit = (identifier == NULL);
   GimpUnit            unit;
-  
+
   g_return_val_if_fail (gsef, FALSE);
   g_return_val_if_fail (result != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gsef->gse), FALSE);

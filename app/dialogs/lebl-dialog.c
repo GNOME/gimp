@@ -120,8 +120,8 @@ inv_show_status (void)
 
 	if (inv_game_over) {
 		t = g_strdup_printf (_("<b>GAME OVER</b> at level %d!"),
-				     inv_level+1); 	
-		u = g_strdup_printf ("<big>%s</big>", t); 
+				     inv_level+1);
+		u = g_strdup_printf ("<big>%s</big>", t);
 		/* Translators: the first and third strings are similar to a
 		 * title, and the second string is a small information text.
 		 * The spaces are there only to separate all the strings, so
@@ -149,7 +149,7 @@ inv_show_status (void)
 		s = g_strdup_printf (_("%1$s\t%2$s"), w,
 				     _("Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"));
 		g_free (t);
-		g_free (u);		
+		g_free (u);
 		g_free (v);
 		g_free (w);
 
@@ -215,7 +215,7 @@ inv_do_game_over (void)
 	GSList *li;
 
 	inv_game_over = TRUE;
-	
+
 	for (li = inv_shots; li != NULL; li = li->next) {
 		InvShot *shot = li->data;
 		shot->good = FALSE;
@@ -231,7 +231,7 @@ static GdkPixbuf *
 pb_scale (GdkPixbuf *pb, double scale)
 {
 	int w, h;
-	
+
 	if (scale == 1.0)
 		return (GdkPixbuf *)g_object_ref ((GObject *)pb);
 

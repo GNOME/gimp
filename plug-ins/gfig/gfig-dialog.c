@@ -1209,7 +1209,7 @@ gfig_paint_timeout (gpointer data)
   gfig_paint_callback ();
 
   paint_timeout = 0;
-  
+
   return FALSE;
 }
 

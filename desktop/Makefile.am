@@ -48,7 +48,7 @@ EXTRA_DIST = \
 	32x32/gimp.png		\
 	48x48/gimp.png		\
 	64x64/gimp.png		\
-	256x256/gimp.png	
+	256x256/gimp.png
 
 
 DISTCLEANFILES = $(desktop_files) $(appdata_files)

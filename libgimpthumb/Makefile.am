@@ -86,7 +86,7 @@ libgimpthumb_@GIMP_API_VERSION@_la_LDFLAGS = \
 
 libgimpthumb_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GDK_PIXBUF_LIBS)	\
-	$(GIO_LIBS) 
+	$(GIO_LIBS)
 
 
 noinst_PROGRAMS = gimp-thumbnail-list

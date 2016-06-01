@@ -111,7 +111,7 @@ typedef struct
 
   GimpEevlToken            current_token;
   const gchar             *start_of_current_token;
-  
+
 
   jmp_buf                  catcher;
   const gchar             *error_message;
@@ -453,7 +453,6 @@ gimp_eevl_lex (GimpEevl *eva)
       gimp_eevl_lex_accept_count (eva, 1, s[0]);
     }
   else
-    
     {
       /* Attempt to parse a numeric value */
       gchar  *endptr = NULL;
@@ -557,7 +556,7 @@ gimp_eevl_unit_identifier_size (const gchar *string,
           length++;
         }
     }
-  
+
   return g_utf8_offset_to_pointer (start, length) - start;
 }
 
