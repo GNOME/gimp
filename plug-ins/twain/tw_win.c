@@ -96,12 +96,16 @@ twainIsAvailable (void)
   /* Attempt to load the library */
   hDLL = LoadLibrary (TWAIN_DLL_NAME);
   if (hDLL == NULL)
+  {
     return FALSE;
+  }
 
   /* Look up the entry point for use */
   dsmEntryPoint = (DSMENTRYPROC) GetProcAddress (hDLL, "DSM_Entry");
   if (dsmEntryPoint == NULL)
+  {
     return FALSE;
+  }
 
   return TRUE;
 }
@@ -155,7 +159,7 @@ unloadTwainLibrary (pTW_SESSION twSession)
   /* the data source id will no longer be valid after
    * twain is killed.  If the id is left around the
    * data source can not be found or opened
-	 */
+   */
   DS_IDENTITY(twSession)->Id = 0;
 
 	/* We are now back at state 1 */
@@ -188,7 +192,7 @@ TwainProcessMessage (LPMSG lpMsg, pTW_SESSION twSession)
      * messages sent from the Source to our Application.
      */
     twEvent.pEvent = (TW_MEMREF) lpMsg;
-		twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
+    twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
 			DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT,
 			(TW_MEMREF) &twEvent);
 
@@ -365,7 +369,9 @@ InitApplication (HINSTANCE hInstance)
 
   /* Log error */
   if (!retValue)
+  {
     LogLastWinError ();
+  }
 
   return retValue;
 }
@@ -421,11 +427,15 @@ twainMain ()
 
   /* Perform instance initialization */
   if (!InitApplication (hInst))
+  {
     return (FALSE);
+  }
 
   /* Perform application initialization */
   if (!InitInstance (hInst, SHOW_WINDOW, twSession))
+  {
     return (FALSE);
+  }
 
   /*
    * Call the main message processing loop...
