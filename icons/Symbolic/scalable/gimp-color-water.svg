@@ -19,7 +19,7 @@
    viewBox="0 0 16 16">
   <sodipodi:namedview
      inkscape:cy="9.0182525"
-     inkscape:cx="18.004561"
+     inkscape:cx="10.550768"
      inkscape:zoom="38.973448"
      inkscape:window-height="1016"
      inkscape:window-width="1920"
@@ -82,7 +82,7 @@
             <dc:title />
           </cc:Agent>
         </dc:creator>
-        <dc:source>http://jimmac.musichall.cz</dc:source>
+        <dc:source />
         <cc:license
            rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/" />
         <dc:title />

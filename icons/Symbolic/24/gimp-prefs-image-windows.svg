@@ -30,8 +30,8 @@
      id="namedview1509"
      showgrid="true"
      inkscape:zoom="14.75"
-     inkscape:cx="14.396167"
-     inkscape:cy="-0.065881596"
+     inkscape:cx="-5.2987483"
+     inkscape:cy="-0.50655956"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -108,40 +108,43 @@
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     transform="matrix(1.5,0,0,1.5,-426.23351,-263.19348)"
-     style="display:inline"
-     id="preferences">
+     id="g43">
     <g
-       transform="translate(289.15566,155.46232)"
-       id="gimp-prefs-image-title">
+       id="preferences"
+       style="display:inline"
+       transform="matrix(1.5,0,0,1.5,-426.23351,-263.19348)">
       <g
-         id="g724"
-         transform="translate(-20,20)">
-        <rect
-           style="fill:none;stroke:none"
-           id="rect15294"
-           width="16"
-           height="16"
-           x="15.000013"
-           y="0" />
-        <path
-           style="fill:url(#linearGradient8141);fill-opacity:1;stroke:none;stroke-width:1.0476191"
-           d="M 15.66668,0.66666666 V 15.333333 H 30.333347 V 0.66666666 Z M 17.000013,2 h 12 v 2 h -12 z m 0,2.6666667 h 12 V 14 h -12 z"
-           id="path15296"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="ccccccccccccccc" />
+         id="gimp-prefs-image-title"
+         transform="translate(289.15566,155.46232)">
+        <g
+           transform="translate(-20,20)"
+           id="g724">
+          <rect
+             y="0"
+             x="15.000013"
+             height="16"
+             width="16"
+             id="rect15294"
+             style="fill:none;stroke:none" />
+          <path
+             sodipodi:nodetypes="ccccccccccccccc"
+             inkscape:connector-curvature="0"
+             id="path15296"
+             d="M 15.66668,0.66666666 V 15.333333 H 30.333347 V 0.66666666 Z M 17.000013,2 h 12 v 2 h -12 z m 0,2.6666667 h 12 V 14 h -12 z"
+             style="fill:url(#linearGradient8141);fill-opacity:1;stroke:none;stroke-width:1.0476191" />
+        </g>
       </g>
     </g>
+    <path
+       inkscape:connector-curvature="0"
+       id="path9161"
+       d="m 4,12.447081 c 9.6,8.191149 11.271408,-2.7188559 16,0 V 19 H 4 Z"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.3;fill:url(#linearGradient7488);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.23800421;marker:none;enable-background:new" />
+    <circle
+       id="path27159"
+       style="display:inline;opacity:0.3;fill:url(#linearGradient7486);fill-opacity:1;stroke:none;stroke-width:1.66666663"
+       cx="10.5"
+       cy="10.5"
+       r="2.5" />
   </g>
-  <path
-     style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.3;fill:url(#linearGradient7488);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.23800421;marker:none;enable-background:new"
-     d="m 4,12.447081 c 9.6,8.191149 11.271408,-2.7188559 16,0 V 19 H 4 Z"
-     id="path9161"
-     inkscape:connector-curvature="0" />
-  <circle
-     r="2.5"
-     cy="10.5"
-     cx="10.5"
-     style="display:inline;opacity:0.3;fill:url(#linearGradient7486);fill-opacity:1;stroke:none;stroke-width:1.66666663"
-     id="path27159" />
 </svg>
