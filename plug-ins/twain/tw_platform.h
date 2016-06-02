@@ -29,9 +29,6 @@
 
 /* The DLL to be loaded for TWAIN support */
 #define TWAIN_DLL_NAME "TWAIN_32.DLL"
-#define DUMP_FILE "C:\\TWAINCAP.BIN"
-#define DUMP_NAME "DTWAIN.EXE"
-#define READDUMP_NAME "RTWAIN.EXE"
 
 /* Windows uses separate entry point */
 #define TWAIN_ALTERNATE_MAIN
@@ -50,9 +47,4 @@
   #define PLUG_IN_MINOR       6
   #define PLUG_IN_VERSION     "v0.6 (07/22/2004)"
   #define MID_SELECT          "twain-acquire"
-
-  #ifdef _DEBUG
-  #define PLUG_IN_D_NAME      "twain-acquire-dump"
-  #define PLUG_IN_R_NAME      "twain-acquire-read"
-  #endif /* _DEBUG */
 #endif

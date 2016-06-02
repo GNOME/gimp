@@ -217,7 +217,6 @@ void            disableDS (pTW_SESSION twSession);
 void            closeDS (pTW_SESSION twSession);
 void            closeDSM (pTW_SESSION twSession);
 void            cancelPendingTransfers (pTW_SESSION twSession);
-int scanImage (void);
 
 TW_FIX32 FloatToFIX32(float);
 float           FIX32ToFloat(TW_FIX32);
@@ -228,7 +227,6 @@ pTW_SESSION     newSession (pTW_IDENTITY twSession);
 void            registerWindowHandle(pTW_SESSION, TW_HANDLE);
 void            registerTransferCallbacks(pTW_SESSION, pTXFR_CB_FUNCS, void *);
 void            setClientData(pTW_SESSION session, void *clientData);
-pTW_SESSION     initializeTwain (void);
 
 #ifdef G_OS_WIN32
 void LogLastWinError(void);
