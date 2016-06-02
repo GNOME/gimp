@@ -558,10 +558,10 @@ gimp_widget_get_color_profile (GtkWidget *widget)
         gchar  *path;
         gint32  len = 0;
 
-        GetICMProfile (hdc, &len, NULL);
+        GetICMProfile (hdc, (LPDWORD) &len, NULL);
         path = g_new (gchar, len);
 
-        if (GetICMProfile (hdc, &len, path))
+        if (GetICMProfile (hdc, (LPDWORD) &len, path))
           {
             GFile *file = g_file_new_for_path (path);
 
