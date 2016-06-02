@@ -35,10 +35,10 @@
 #include "tw_util.h"
 #include "tw_local.h"
 
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);
 
-int twainMessageLoop(pTW_SESSION);
-int TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession);
+int twainMessageLoop (pTW_SESSION);
+int TwainProcessMessage (LPMSG lpMsg, pTW_SESSION twSession);
 
 extern GimpPlugInInfo PLUG_IN_INFO;
 extern pTW_SESSION initializeTwain ();
@@ -52,15 +52,14 @@ extern void setRunMode(char *argv[]);
 #define WM_TRANSFER_IMAGE (WM_USER + 100)
 
 /* main bits */
-static HWND        hwnd = NULL;
-static HINSTANCE   hInst = NULL;
+static HWND         hwnd  = NULL;
+static HINSTANCE    hInst = NULL;
 
 /* Storage for the DLL handle */
-static HINSTANCE hDLL = NULL;
+static HINSTANCE    hDLL  = NULL;
 
 /* Storage for the entry point into the DSM */
 static DSMENTRYPROC dsmEntryPoint = NULL;
-
 
 /*
  * callDSM
@@ -68,12 +67,13 @@ static DSMENTRYPROC dsmEntryPoint = NULL;
  * Call the specified function on the data source manager.
  */
 TW_UINT16
-callDSM(pTW_IDENTITY pOrigin,
-	pTW_IDENTITY pDest,
-	TW_UINT32    DG,
-	TW_UINT16    DAT,
-	TW_UINT16    MSG,
-	TW_MEMREF    pData)
+callDSM (
+    pTW_IDENTITY pOrigin,
+    pTW_IDENTITY pDest,
+    TW_UINT32    DG,
+    TW_UINT16    DAT,
+    TW_UINT16    MSG,
+    TW_MEMREF    pData)
 {
   /* Call the function */
   return (*dsmEntryPoint) (pOrigin, pDest, DG, DAT, MSG, pData);
@@ -85,20 +85,21 @@ callDSM(pTW_IDENTITY pOrigin,
  * Return boolean indicating whether TWAIN is available
  */
 int
-twainIsAvailable(void)
+twainIsAvailable (void)
 {
   /* Already loaded? */
-  if (dsmEntryPoint) {
+  if (dsmEntryPoint)
+  {
     return TRUE;
   }
 
   /* Attempt to load the library */
-  hDLL = LoadLibrary(TWAIN_DLL_NAME);
+  hDLL = LoadLibrary (TWAIN_DLL_NAME);
   if (hDLL == NULL)
     return FALSE;
 
   /* Look up the entry point for use */
-  dsmEntryPoint = (DSMENTRYPROC) GetProcAddress(hDLL, "DSM_Entry");
+  dsmEntryPoint = (DSMENTRYPROC) GetProcAddress (hDLL, "DSM_Entry");
   if (dsmEntryPoint == NULL)
     return FALSE;
 
@@ -108,7 +109,7 @@ twainIsAvailable(void)
 TW_HANDLE
 twainAllocHandle (size_t size)
 {
-  return GlobalAlloc(GHND, size);
+  return GlobalAlloc (GHND, size);
 }
 
 TW_MEMREF
@@ -142,11 +143,12 @@ twainSetupCallback (pTW_SESSION twSession)
  * Unload the TWAIN dynamic link library
  */
 int
-unloadTwainLibrary(pTW_SESSION twSession)
+unloadTwainLibrary (pTW_SESSION twSession)
 {
   /* Explicitly free the SM library */
-  if (hDLL) {
-    FreeLibrary(hDLL);
+  if (hDLL)
+  {
+    FreeLibrary (hDLL);
     hDLL=NULL;
   }
 
@@ -170,32 +172,34 @@ unloadTwainLibrary(pTW_SESSION twSession)
  * Returns FALSE if the application should skip processing of this message
  */
 int
-TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
+TwainProcessMessage (LPMSG lpMsg, pTW_SESSION twSession)
 {
-  TW_EVENT   twEvent;
+  TW_EVENT twEvent;
 
   twSession->twRC = TWRC_NOTDSEVENT;
 
   /* Only ask Source Manager to process event if there is a Source connected. */
-  if (DSM_IS_OPEN(twSession) && DS_IS_OPEN(twSession)) {
-		/*
-		 * A Source provides a modeless dialog box as its user interface.
-		 * The following call relays Windows messages down to the Source's
-		 * UI that were intended for its dialog box.  It also retrieves TWAIN
-		 * messages sent from the Source to our Application.
-		 */
-		twEvent.pEvent = (TW_MEMREF) lpMsg;
+  if (DSM_IS_OPEN(twSession) && DS_IS_OPEN(twSession))
+  {
+    /*
+     * A Source provides a modeless dialog box as its user interface.
+     * The following call relays Windows messages down to the Source's
+     * UI that were intended for its dialog box. It also retrieves TWAIN
+     * messages sent from the Source to our Application.
+     */
+    twEvent.pEvent = (TW_MEMREF) lpMsg;
 		twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
 			DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT,
 			(TW_MEMREF) &twEvent);
 
-		/* Check the return code */
-		if (twSession->twRC == TWRC_NOTDSEVENT) {
-			return FALSE;
-		}
+    /* Check the return code */
+    if (twSession->twRC == TWRC_NOTDSEVENT)
+    {
+      return FALSE;
+    }
 
-		/* Process the message as necessary */
-		processTwainMessage(twEvent.TWMessage, twSession);
+    /* Process the message as necessary */
+    processTwainMessage (twEvent.TWMessage, twSession);
   }
 
   /* tell the caller what happened */
@@ -210,14 +214,16 @@ TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
  * the application exits.
  */
 int
-twainMessageLoop(pTW_SESSION twSession)
+twainMessageLoop (pTW_SESSION twSession)
 {
   MSG msg;
 
-  while (GetMessage(&msg, NULL, 0, 0)) {
-    if (DS_IS_CLOSED(twSession) || !TwainProcessMessage(&msg, twSession)) {
-      TranslateMessage((LPMSG)&msg);
-      DispatchMessage(&msg);
+  while (GetMessage(&msg, NULL, 0, 0))
+  {
+    if (DS_IS_CLOSED(twSession) || !TwainProcessMessage (&msg, twSession))
+    {
+      TranslateMessage ((LPMSG) &msg);
+      DispatchMessage (&msg);
     }
   }
 
@@ -231,29 +237,30 @@ twainMessageLoop(pTW_SESSION twSession)
  * GetLastError.
  */
 void
-LogLastWinError(void)
+LogLastWinError (void)
 {
-	LPVOID lpMsgBuf;
+  LPVOID lpMsgBuf;
 
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM |
-		FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL,
-		GetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
-		(LPTSTR) &lpMsgBuf,
-		0,
-		NULL
-		);
+  FormatMessage (
+      FORMAT_MESSAGE_ALLOCATE_BUFFER |
+      FORMAT_MESSAGE_FROM_SYSTEM |
+      FORMAT_MESSAGE_IGNORE_INSERTS,
+      NULL,
+      GetLastError (),
+      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
+      (LPTSTR) &lpMsgBuf,
+      0,
+      NULL
+  );
 
 	LogMessage("%s\n", lpMsgBuf);
 
-	/* Free the buffer. */
-	LocalFree( lpMsgBuf );
+  /* Free the buffer. */
+  LocalFree ( lpMsgBuf );
 }
 
-void twainQuitApplication ()
+void
+twainQuitApplication ()
 {
   PostQuitMessage (0);
 }
@@ -273,10 +280,11 @@ void twainQuitApplication ()
  * datasource.
  */
 int APIENTRY
-WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR     lpCmdLine,
-	int       nCmdShow)
+WinMain (
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPSTR     lpCmdLine,
+    int       nCmdShow)
 {
 
   /*
@@ -301,7 +309,7 @@ WinMain(HINSTANCE hInstance,
    * Now, call gimp_main... This is what the MAIN() macro
    * would usually do.
    */
-  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
+  return gimp_main (&PLUG_IN_INFO, __argc, __argv);
 }
 
 /*
@@ -309,7 +317,8 @@ WinMain(HINSTANCE hInstance,
  *
  * allow to build as console app as well
  */
-int main (int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
 #ifdef _DEBUG
   /* When in debug version, we allow different run modes...
@@ -322,7 +331,7 @@ int main (int argc, char *argv[])
    * Now, call gimp_main... This is what the MAIN() macro
    * would usually do.
    */
-  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
+  return gimp_main (&PLUG_IN_INFO, __argc, __argv);
 }
 
 /*
@@ -331,7 +340,7 @@ int main (int argc, char *argv[])
  * Initialize window data and register the window class
  */
 BOOL
-InitApplication(HINSTANCE hInstance)
+InitApplication (HINSTANCE hInstance)
 {
   WNDCLASS wc;
   BOOL retValue;
@@ -345,18 +354,18 @@ InitApplication(HINSTANCE hInstance)
   wc.cbClsExtra = 0;
   wc.cbWndExtra = 0;
   wc.hInstance = hInstance;
-  wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-  wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+  wc.hIcon = LoadIcon (NULL, IDI_APPLICATION);
+  wc.hCursor = LoadCursor (NULL, IDC_ARROW);
   wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
   wc.lpszClassName = APP_NAME;
   wc.lpszMenuName = NULL;
 
   /* Register the window class and stash success/failure code. */
-  retValue = RegisterClass(&wc);
+  retValue = RegisterClass (&wc);
 
   /* Log error */
   if (!retValue)
-    LogLastWinError();
+    LogLastWinError ();
 
   return retValue;
 }
@@ -368,27 +377,29 @@ InitApplication(HINSTANCE hInstance)
  * interface with the TWAIN datasource.
  */
 BOOL
-InitInstance(HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession)
+InitInstance (HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession)
 {
   /* Create our window */
-  hwnd = CreateWindow(APP_NAME, APP_NAME, WS_OVERLAPPEDWINDOW,
-		      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
-		      NULL, NULL, hInstance, NULL);
+  hwnd = CreateWindow (APP_NAME, APP_NAME, WS_OVERLAPPEDWINDOW,
+      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
+      NULL, NULL, hInstance, NULL);
 
-  if (!hwnd) {
+  if (!hwnd)
+  {
     return (FALSE);
   }
 
   /* Register our window handle with the TWAIN
    * support.
    */
-  registerWindowHandle(twSession, hwnd);
+  registerWindowHandle (twSession, hwnd);
 
   /* Schedule the image transfer by posting a message */
-  PostMessage(hwnd, WM_TRANSFER_IMAGE, 0, 0);
+  PostMessage (hwnd, WM_TRANSFER_IMAGE, 0, 0);
 
-  ShowWindow(hwnd, nCmdShow);
-  UpdateWindow(hwnd);
+  ShowWindow (hwnd, nCmdShow);
+
+  UpdateWindow (hwnd);
 
   return TRUE;
 }
@@ -403,17 +414,17 @@ InitInstance(HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession)
  * operate.
  */
 int
-twainMain()
+twainMain ()
 {
   /* Initialize the twain information */
   pTW_SESSION twSession = initializeTwain();
 
   /* Perform instance initialization */
-  if (!InitApplication(hInst))
+  if (!InitApplication (hInst))
     return (FALSE);
 
   /* Perform application initialization */
-  if (!InitInstance(hInst, SHOW_WINDOW, twSession))
+  if (!InitInstance (hInst, SHOW_WINDOW, twSession))
     return (FALSE);
 
   /*
@@ -421,7 +432,7 @@ twainMain()
    * This call will not return until the application
    * exits.
    */
-  return twainMessageLoop(twSession);
+  return twainMessageLoop (twSession);
 }
 
 /*
@@ -430,23 +441,24 @@ twainMain()
  * Process window message for the main window.
  */
 LRESULT CALLBACK
-WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  switch (message) {
+  switch (message)
+  {
+    case WM_TRANSFER_IMAGE:
+      /* Get an image */
+      scanImage ();
+      break;
 
-  case WM_TRANSFER_IMAGE:
-    /* Get an image */
-    scanImage ();
-    break;
+    case WM_DESTROY:
+      LogMessage("Exiting application\n");
+      PostQuitMessage (0);
+      break;
 
-  case WM_DESTROY:
-    LogMessage("Exiting application\n");
-    PostQuitMessage(0);
-    break;
-
-  default:
-    return (DefWindowProc(hWnd, message, wParam, lParam));
+    default:
+      return (DefWindowProc (hWnd, message, wParam, lParam));
   }
+
   return 0;
 }
 

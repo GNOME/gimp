@@ -82,7 +82,7 @@ FILE *logFile = NULL;
  * LogMessage
  */
 void
-LogMessage(char *format, ...)
+LogMessage (char *format, ...)
 {
   va_list args;
   time_t time_of_day;
@@ -92,15 +92,16 @@ LogMessage(char *format, ...)
   if (!logFile)
     logFile = g_fopen(DEBUG_LOGFILE, "w");
 
-  time_of_day = time(NULL);
-  ctime_string = ctime(&time_of_day);
+  time_of_day = time (NULL);
+  ctime_string = ctime (&time_of_day);
   ctime_string[19] = '\0';
 
-  fprintf(logFile, "[%s] ", (ctime_string + 11));
-  va_start(args, format);
-  vfprintf(logFile, format, args);
-  fflush(logFile);
-  va_end(args);
+  fprintf (logFile, "[%s] ", (ctime_string + 11));
+
+  va_start (args, format);
+  vfprintf (logFile, format, args);
+  fflush (logFile);
+  va_end (args);
 }
 
 void

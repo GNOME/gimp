@@ -207,31 +207,31 @@ typedef struct _TWAIN_SESSION {
 #define DS_IS_DISABLED(tw_session) (tw_session->twainState < 5)
 
 /* Function declarations */
-char *twainError(int);
-char *currentTwainError(pTW_SESSION);
-int getImage(pTW_SESSION);
-int loadTwainLibrary(pTW_SESSION);
+char *          twainError (int);
+char *          currentTwainError (pTW_SESSION);
+int             getImage (pTW_SESSION);
+int             loadTwainLibrary (pTW_SESSION);
 int unloadTwainLibrary(pTW_SESSION twSession);
-int openDSM(pTW_SESSION);
-int selectDS(pTW_SESSION);
-int selectDefaultDS(pTW_SESSION);
-int openDS(pTW_SESSION);
-int requestImageAcquire(pTW_SESSION, gboolean);
-int disableDS(pTW_SESSION);
-int closeDS(pTW_SESSION);
-int closeDSM(pTW_SESSION);
-void cancelPendingTransfers(pTW_SESSION);
+int             openDSM (pTW_SESSION);
+int             selectDS (pTW_SESSION);
+int             selectDefaultDS (pTW_SESSION);
+int             openDS (pTW_SESSION);
+int             requestImageAcquire (pTW_SESSION, gboolean);
+int             disableDS (pTW_SESSION);
+int             closeDS (pTW_SESSION);
+int             closeDSM (pTW_SESSION);
+void            cancelPendingTransfers (pTW_SESSION);
 int scanImage (void);
 
 TW_FIX32 FloatToFIX32(float);
-float FIX32ToFloat(TW_FIX32);
+float           FIX32ToFloat(TW_FIX32);
 
-void processTwainMessage(TW_UINT16 message, pTW_SESSION twSession);
+void            processTwainMessage (TW_UINT16 message, pTW_SESSION twSession);
 
-pTW_SESSION newSession(pTW_IDENTITY);
-void registerWindowHandle(pTW_SESSION, TW_HANDLE);
-void registerTransferCallbacks(pTW_SESSION, pTXFR_CB_FUNCS, void *);
-void setClientData(pTW_SESSION session, void *clientData);
+pTW_SESSION     newSession (pTW_IDENTITY);
+void            registerWindowHandle(pTW_SESSION, TW_HANDLE);
+void            registerTransferCallbacks(pTW_SESSION, pTXFR_CB_FUNCS, void *);
+void            setClientData(pTW_SESSION session, void *clientData);
 pTW_SESSION initializeTwain(void);
 
 #ifdef G_OS_WIN32
