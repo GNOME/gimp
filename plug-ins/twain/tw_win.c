@@ -284,13 +284,6 @@ WinMain (
    */
   hInst = hInstance;
 
-#ifdef _DEBUG
-  /* When in debug version, we allow different run modes...
-   * make sure that it is correctly set.
-   */
-  setRunMode(__argv);
-#endif /* _DEBUG */
-
   /*
    * Now, call gimp_main... This is what the MAIN() macro
    * would usually do.
@@ -306,13 +299,6 @@ WinMain (
 int
 main (int argc, char *argv[])
 {
-#ifdef _DEBUG
-  /* When in debug version, we allow different run modes...
-   * make sure that it is correctly set.
-   */
-  setRunMode(__argv);
-#endif /* _DEBUG */
-
   /*
    * Now, call gimp_main... This is what the MAIN() macro
    * would usually do.

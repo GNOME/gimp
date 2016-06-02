@@ -41,13 +41,6 @@
  */
 #define MAX_IMAGES 1
 
-/*
- * Definition of the run states
- */
-#define RUN_STANDARD 0
-#define RUN_DUMP 1
-#define RUN_READDUMP 2
-
 /* Functions which the platform-independent code will call */
 TW_UINT16 callDSM (
     pTW_IDENTITY,
@@ -68,6 +61,7 @@ void      twainFreeHandle (TW_HANDLE handle);
 
 int       twainMain (void);
 int       scanImage (void);
+pTW_SESSION initializeTwain (void);
 
 void      preTransferCallback (void *);
 int       beginTransferCallback (pTW_IMAGEINFO, void *);

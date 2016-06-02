@@ -74,10 +74,6 @@
 #include "tw_local.h"
 #include "tw_util.h"
 
-#ifdef _DEBUG
-#include "tw_dump.h"
-#endif /* _DEBUG */
-
 static void query (void);
 static void run (
     const gchar      *name,
@@ -93,9 +89,6 @@ static const GimpParamDef args[] = { IN_ARGS };
 static const GimpParamDef return_vals[] = { OUT_ARGS };
 
 static char  *destBuf = NULL;
-#ifdef _DEBUG
-static int         twain_run_mode = RUN_STANDARD;
-#endif
 static char bitMasks[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
 
 /* Return values storage */
@@ -130,34 +123,6 @@ TXFR_CB_FUNCS standardCbFuncs =
   postTransferCallback
 };
 
-/******************************************************************
- * Dump handling
- ******************************************************************/
-
-#ifdef _DEBUG
-/* The dumper callback functions */
-TXFR_CB_FUNCS dumperCbFuncs = {
-  dumpPreTransferCallback,
-  dumpBeginTransferCallback,
-  dumpDataTransferCallback,
-  dumpEndTransferCallback,
-  dumpPostTransferCallback };
-
-void
-setRunMode(char *argv[])
-{
-  char *exeName = strrchr(argv[0], '\\') + 1;
-
-  log_message ("Executable name: %s\n", exeName);
-
-  if (!_stricmp(exeName, DUMP_NAME))
-    twain_run_mode = RUN_DUMP;
-
-  if (!_stricmp(exeName, RUNDUMP_NAME))
-    twain_run_mode = RUN_READDUMP;
-}
-#endif /* _DEBUG */
-
 #ifndef TWAIN_ALTERNATE_MAIN
 MAIN()
 #endif
@@ -165,12 +130,7 @@ MAIN()
 int
 scanImage (void)
 {
-#ifdef _DEBUG
-  if (twain_run_mode == RUN_READDUMP)
-    return readDumpedImage (twSession);
-  else
-#endif /* _DEBUG */
-    return getImage (twSession);
+  return getImage (twSession);
 }
 
 /*
@@ -221,12 +181,7 @@ initializeTwain (void)
   twSession = newSession (appIdentity);
 
   /* Register our image transfer callback functions */
-#ifdef _DEBUG
-  if (twain_run_mode == RUN_DUMP)
-    registerTransferCallbacks(twSession, &dumperCbFuncs, NULL);
-  else
-#endif /* _DEBUG */
-    registerTransferCallbacks(twSession, &standardCbFuncs, NULL);
+  registerTransferCallbacks(twSession, &standardCbFuncs, NULL);
   return twSession;
 }
 
@@ -243,66 +198,22 @@ initializeTwain (void)
 static void
 query (void)
 {
+  /* the installation of the plugin */
+  gimp_install_procedure(MID_SELECT,
+                         PLUG_IN_DESCRIPTION,
+                         PLUG_IN_HELP,
+                         PLUG_IN_AUTHOR,
+                         PLUG_IN_COPYRIGHT,
+                         PLUG_IN_VERSION,
+                         N_("_Scanner/Camera..."),
+                         NULL,
+                         GIMP_PLUGIN,
+                         NUMBER_IN_ARGS,
+                         NUMBER_OUT_ARGS,
+                         args,
+                         return_vals);
 
-#ifdef _DEBUG
-  if (twain_run_mode == RUN_DUMP)
-    {
-      /* the installation of the plugin */
-      gimp_install_procedure(PLUG_IN_D_NAME,
-                             PLUG_IN_DESCRIPTION,
-                             PLUG_IN_HELP,
-                             PLUG_IN_AUTHOR,
-                             PLUG_IN_COPYRIGHT,
-                             PLUG_IN_VERSION,
-                             "TWAIN (Dump)...",
-                             NULL,
-                             GIMP_PLUGIN,
-                             NUMBER_IN_ARGS,
-                             NUMBER_OUT_ARGS,
-                             args,
-                             return_vals);
-
-      gimp_plugin_menu_register (PLUG_IN_D_NAME, "<Image>/File/Create/Acquire");
-    }
-  else if (twain_run_mode == RUN_READDUMP)
-    {
-      /* the installation of the plugin */
-      gimp_install_procedure(PLUG_IN_R_NAME,
-                             PLUG_IN_DESCRIPTION,
-                             PLUG_IN_HELP,
-                             PLUG_IN_AUTHOR,
-                             PLUG_IN_COPYRIGHT,
-                             PLUG_IN_VERSION,
-                             "TWAIN (Read)...",
-                             NULL,
-                             GIMP_PLUGIN,
-                             NUMBER_IN_ARGS,
-                             NUMBER_OUT_ARGS,
-                             args,
-                             return_vals);
-
-      gimp_plugin_menu_register (PLUG_IN_R_NAME, "<Image>/File/Create/Acquire");
-    }
-  else
-#endif /* _DEBUG */
-    {
-      /* the installation of the plugin */
-      gimp_install_procedure(MID_SELECT,
-                             PLUG_IN_DESCRIPTION,
-                             PLUG_IN_HELP,
-                             PLUG_IN_AUTHOR,
-                             PLUG_IN_COPYRIGHT,
-                             PLUG_IN_VERSION,
-                             N_("_Scanner/Camera..."),
-                             NULL,
-                             GIMP_PLUGIN,
-                             NUMBER_IN_ARGS,
-                             NUMBER_OUT_ARGS,
-                             args,
-                             return_vals);
-
-      gimp_plugin_menu_register (MID_SELECT, "<Image>/File/Create/Acquire");
-    }
+  gimp_plugin_menu_register (MID_SELECT, "<Image>/File/Create/Acquire");
 }
 
 /*
@@ -429,10 +340,6 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
   int imageType, layerType;
 
   pClientDataStruct theClientData = g_new (ClientDataStruct, 1);
-
-#ifdef _DEBUG
-  logBegin(imageInfo, clientData);
-#endif
 
   /* Decide on the image type */
   switch (imageInfo->PixelType)
@@ -826,10 +733,6 @@ dataTransferCallback (
     pTW_IMAGEMEMXFER imageMemXfer,
     void *clientData)
 {
-#ifdef _DEBUG
-  logData(imageInfo, imageMemXfer, clientData);
-#endif
-
   /* Choose the appropriate transfer handler */
   switch (imageInfo->PixelType)
   {

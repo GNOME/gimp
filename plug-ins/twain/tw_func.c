@@ -453,7 +453,7 @@ disableDS(pTW_SESSION twSession)
 		break;
 
       case TWRC_FAILURE:
-        log_message  ("Can't disable data source: %s\n, currentTwainError(twSession));
+        log_message  ("Can't disable data source: %s\n", currentTwainError(twSession));
 		break;
     }
 }
