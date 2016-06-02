@@ -61,7 +61,7 @@
 #ifndef __TW_UTIL_H
 #define __TW_UTIL_H
 
-void LogMessage(char *, ...);
+void log_message (char *format, ...);
 
 #ifdef _DEBUG
 void logBegin(pTW_IMAGEINFO, void *);

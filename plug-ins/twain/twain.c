@@ -148,7 +148,7 @@ setRunMode(char *argv[])
 {
   char *exeName = strrchr(argv[0], '\\') + 1;
 
-  LogMessage("Executable name: %s\n", exeName);
+  log_message ("Executable name: %s\n", exeName);
 
   if (!_stricmp(exeName, DUMP_NAME))
     twain_run_mode = RUN_DUMP;
@@ -174,7 +174,7 @@ scanImage (void)
 }
 
 /*
- * initTwainAppIdentity
+ * getAppIdentity
  *
  * Initialize and return our application's identity for
  * the TWAIN runtime.
@@ -879,9 +879,6 @@ endTransferCallback (int completionState, int pendingCount, void *clientData)
 {
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
 
-  LogMessage("endTransferCallback: CompState = %d, pending = %d\n",
-	     completionState, pendingCount);
-
   /* Clean up and detach from the drawable */
   if (destBuf)
   {
@@ -900,13 +897,11 @@ endTransferCallback (int completionState, int pendingCount, void *clientData)
       theClientData->image_id;
 
     /* Display the image */
-    LogMessage("Displaying image %d\n", theClientData->image_id);
     gimp_display_new (theClientData->image_id);
   }
   else
   {
     /* The transfer did not complete successfully */
-    LogMessage("Deleting image\n");
     gimp_image_delete (theClientData->image_id);
   }
 

@@ -73,10 +73,6 @@
  ****************************************************************************/
 
 /* Define one of the following, depending on the platform */
-/* #define _MAC_   */
-/* #define _UNIX_  */
-#define _MSWIN_
-
 #ifdef  _MSWIN_
     typedef HANDLE         TW_HANDLE;
     typedef LPVOID         TW_MEMREF;

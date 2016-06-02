@@ -149,7 +149,6 @@ unloadTwainLibrary (pTW_SESSION twSession)
 
 	/* We are now back at state 0 */
   twSession->twainState = 0;
-  LogMessage("Source Manager successfully closed\n");
 }
 
 /*
@@ -166,7 +165,7 @@ TwainProcessMessage (LPMSG lpMsg, pTW_SESSION twSession)
   twSession->twRC = TWRC_NOTDSEVENT;
 
   /* Only ask Source Manager to process event if there is a Source connected. */
-  if (DSM_IS_OPEN(twSession) && DS_IS_OPEN(twSession))
+  if (DS_IS_OPEN(twSession))
   {
     /*
      * A Source provides a modeless dialog box as its user interface.
@@ -240,7 +239,7 @@ LogLastWinError (void)
       NULL
   );
 
-	LogMessage("%s\n", lpMsgBuf);
+  log_message ("%s\n", lpMsgBuf);
 
   /* Free the buffer. */
   LocalFree ( lpMsgBuf );
@@ -444,7 +443,6 @@ WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       break;
 
     case WM_DESTROY:
-      LogMessage("Exiting application\n");
       PostQuitMessage (0);
       break;
 
