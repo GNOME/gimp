@@ -135,13 +135,19 @@ twainError (int errorCode)
 {
   /* Check whether we've counted */
   if (twainErrorCount == 0)
+  {
     while (twainErrors[twainErrorCount++]) {}
+  }
 
   /* Check out of bounds */
   if (errorCode >= twainErrorCount)
+  {
     return "Unknown TWAIN Error Code";
+  }
   else
+  {
     return twainErrors[errorCode];
+  }
 }
 
 /*
@@ -218,7 +224,9 @@ openDSM (pTW_SESSION twSession)
 {
   /* Make sure that we aren't already open */
   if (DSM_IS_OPEN(twSession))
+  {
     return TRUE;
+  }
 
   /* Open the data source manager */
   twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
@@ -297,7 +305,8 @@ int
 selectDefaultDS(pTW_SESSION twSession)
 {
   /* The datasource manager must be open */
-  if (DSM_IS_CLOSED(twSession)) {
+  if (DSM_IS_CLOSED(twSession))
+  {
     LogMessage("Can't select data source with closed source manager\n");
     return FALSE;
   }
@@ -379,7 +388,9 @@ setBufferedXfer (pTW_SESSION twSession)
 
   /* Make sure the data source is open first */
   if (DS_IS_CLOSED(twSession))
+  {
     return FALSE;
+  }
 
   /* Create the capability information */
   bufXfer.Cap = ICAP_XFERMECH;
@@ -605,9 +616,12 @@ beginImageTransfer (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
 
   /* Call the begin transfer callback if registered */
   if (twSession->transferFunctions->txfrBeginCb)
+  {
     if (!(*twSession->transferFunctions->txfrBeginCb) (imageInfo, twSession->clientData))
+    {
       return FALSE;
-
+    }
+  }
   /* We should continue */
   return TRUE;
 }
@@ -695,7 +709,9 @@ endPendingTransfer (pTW_SESSION twSession)
 			    (TW_MEMREF) &pendingXfers);
 
   if (!pendingXfers.Count)
+  {
     twSession->twainState = 5;
+  }
 
   return pendingXfers.Count;
 }
@@ -780,7 +796,9 @@ transferImages (pTW_SESSION twSession)
    * to transfer images.
    */
   if (twSession->transferFunctions->preTxfrCb)
+  {
     (*twSession->transferFunctions->preTxfrCb)(twSession->clientData);
+  }
 
   /* Loop through the available images */
   do
@@ -790,7 +808,9 @@ transferImages (pTW_SESSION twSession)
 
     /* Begin the image transfer */
     if (!beginImageTransfer (twSession, &imageInfo))
+    {
       continue;
+    }
 
     /* Call the image transfer function */
     transferImage(twSession, &imageInfo);
@@ -802,8 +822,10 @@ transferImages (pTW_SESSION twSession)
    * transferring images.
    */
   if (twSession->transferFunctions->postTxfrCb)
+  {
     (*twSession->transferFunctions->postTxfrCb)(pendingCount,
 						twSession->clientData);
+  }
 }
 
 void
@@ -860,9 +882,13 @@ newSession (pTW_IDENTITY appIdentity)
   session->transferFunctions = NULL;
 
   if (twainIsAvailable ())
+  {
     session->twainState = 2;
+  }
   else
+  {
     session->twainState = 0;
+  }
 
   return session;
 }
