@@ -20,6 +20,7 @@ scalable_images = \
 	scalable/gimp-color-picker-white.svg		\
 	scalable/gimp-color-pick-from-screen.svg	\
 	scalable/gimp-color-cmyk.svg			\
+	scalable/gimp-color-palette.svg			\
 	scalable/gimp-color-triangle.svg		\
 	scalable/gimp-color-water.svg			\
 	scalable/gimp-controller-keyboard.svg		\
@@ -256,19 +257,20 @@ vector24_images = \
 	24/gimp-channels.svg				\
 	24/gimp-char-picker.svg				\
 	24/gimp-colormap.svg				\
+	24/gimp-color-palette.svg			\
 	24/gimp-controller.svg				\
 	24/gimp-controller-keyboard.svg			\
 	24/gimp-controller-linux-input.svg		\
 	24/gimp-controller-midi.svg			\
 	24/gimp-controller-wheel.svg			\
 	24/gimp-cursor.svg				\
-	24/gimp-device-status.svg				\
-	24/gimp-display-filter.svg				\
+	24/gimp-device-status.svg			\
+	24/gimp-display-filter.svg			\
 	24/gimp-display-filter-colorblind.svg		\
-	24/gimp-display-filter-contrast.svg			\
-	24/gimp-display-filter-gamma.svg			\
+	24/gimp-display-filter-contrast.svg		\
+	24/gimp-display-filter-gamma.svg		\
 	24/gimp-display-filter-lcms.svg			\
-	24/gimp-display-filter-proof.svg			\
+	24/gimp-display-filter-proof.svg		\
 	24/gimp-dynamics.svg				\
 	24/gimp-error.svg				\
 	24/gimp-floating-selection.svg			\
@@ -329,7 +331,7 @@ vector24_images = \
 	24/gimp-question.svg				\
 	24/gimp-resize.svg				\
 	24/gimp-sample-point.svg			\
-	24/gimp-scale.svg					\
+	24/gimp-scale.svg				\
 	24/gimp-selection.svg				\
 	24/gimp-symmetry.svg				\
 	24/gimp-template.svg				\
@@ -421,6 +423,7 @@ icons16_images = \
 	16/gimp-channels.png				\
 	16/gimp-color-pick-from-screen.png		\
 	16/gimp-color-cmyk.png				\
+	16/gimp-color-palette.png			\
 	16/gimp-color-triangle.png			\
 	16/gimp-color-water.png				\
 	16/gimp-colormap.png				\
@@ -670,6 +673,7 @@ icons24_images = \
 	24/gimp-channel.png			\
 	24/gimp-channels.png			\
 	24/gimp-colormap.png			\
+	24/gimp-color-palette.png		\
 	24/gimp-controller-keyboard.png		\
 	24/gimp-controller-linux-input.png	\
 	24/gimp-controller-midi.png		\
