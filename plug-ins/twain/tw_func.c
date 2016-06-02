@@ -63,9 +63,14 @@
 
 #include <glib.h>   /* Needed when compiling with gcc */
 
+#include "libgimp/gimp.h"
+
+#include "tw_platform.h"
 #include "tw_func.h"
 #include "tw_util.h"
 #include "tw_local.h"
+
+TW_USERINTERFACE ui;
 
 /*
  * Twain error code to string mappings
@@ -240,10 +245,8 @@ openDSM (pTW_SESSION twSession)
       /* We are now at state 3 */
       twSession->twainState = 3;
       return TRUE;
-      break;
 
     case TWRC_FAILURE:
-    default:
       LogMessage("OpenDSM failure\n");
       break;
   }
@@ -358,18 +361,11 @@ openDS (pTW_SESSION twSession)
     case TWRC_SUCCESS:
       /* We are now in TWAIN state 4 */
       twSession->twainState = 4;
-      LogMessage("Data source %s opened\n", DS_IDENTITY(twSession)->ProductName);
-      LogMessage("\tVersion.MajorNum = %d\n", dsIdentity->Version.MajorNum);
-      LogMessage("\tVersion.MinorNum = %d\n", dsIdentity->Version.MinorNum);
-      LogMessage("\tVersion.Info = %s\n", dsIdentity->Version.Info);
-      LogMessage("\tProtocolMajor = %d\n", dsIdentity->ProtocolMajor);
-      LogMessage("\tProtocolMinor = %d\n", dsIdentity->ProtocolMinor);
-      LogMessage("\tManufacturer = %s\n", dsIdentity->Manufacturer);
-      LogMessage("\tProductFamily = %s\n", dsIdentity->ProductFamily);
+      twainSetupCallback (twSession);
       return TRUE;
       break;
 
-    default:
+    case TWRC_FAILURE:
       LogMessage("Error \"%s\" opening data source\n", currentTwainError(twSession));
       break;
   }
@@ -431,13 +427,9 @@ requestImageAcquire (pTW_SESSION twSession, gboolean showUI)
     return FALSE;
   }
 
-  twainSetupCallback(twSession);
-
   /* Set the transfer mode */
   if (setBufferedXfer (twSession))
   {
-    TW_USERINTERFACE ui;
-
     /* Set the UI information */
     ui.ShowUI = TRUE;
     ui.ModalUI = TRUE;
@@ -475,21 +467,15 @@ requestImageAcquire (pTW_SESSION twSession, gboolean showUI)
  *
  * Disable the datasource associated with twSession.
  */
-int
+void
 disableDS(pTW_SESSION twSession)
 {
-    TW_USERINTERFACE ui;
   /* Verify the datasource is enabled */
   if (DS_IS_DISABLED(twSession))
   {
     LogMessage("disableDS: Data source not enabled\n");
-    return TRUE;
+    return;
   }
-
-    /* Set the UI information */
-    ui.ShowUI = TRUE;
-    ui.ModalUI = TRUE;
-    ui.hParent = twSession->hwnd;
 
     /* Make the call to the source manager */
     twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
@@ -500,13 +486,10 @@ disableDS(pTW_SESSION twSession)
     {
       /* We are now at a new twain state */
       twSession->twainState = 4;
-
-      return TRUE;
     }
     else
     {
       LogMessage("Error during data source disable\n");
-      return FALSE;
     }
 }
 
@@ -516,14 +499,14 @@ disableDS(pTW_SESSION twSession)
  * Close the datasource associated with the
  * specified session.
  */
-int
+void
 closeDS (pTW_SESSION twSession)
 {
   /* Can't close a closed data source */
   if (DS_IS_CLOSED(twSession))
   {
     LogMessage("closeDS: Data source already closed\n");
-    return TRUE;
+    return;
   }
 
   /* Open the TWAIN datasource */
@@ -540,15 +523,12 @@ closeDS (pTW_SESSION twSession)
       /* We are now in TWAIN state 3 */
       twSession->twainState = 3;
       LogMessage("Data source %s closed\n", DS_IDENTITY(twSession)->ProductName);
-      return TRUE;
       break;
 
     default:
       LogMessage("Error \"%s\" closing data source\n", currentTwainError(twSession));
       break;
   }
-
-  return FALSE;
 }
 
 /*
@@ -556,38 +536,39 @@ closeDS (pTW_SESSION twSession)
  *
  * Close the data source manager
  */
-int
+void
 closeDSM (pTW_SESSION twSession)
 {
   if (DSM_IS_CLOSED(twSession))
   {
     LogMessage("closeDSM: Source Manager not open\n");
-    return FALSE;
   }
   else
   {
-    if (DS_IS_OPEN(twSession)) {
+    if (DS_IS_OPEN(twSession))
+    {
       LogMessage("closeDSM: Can't close source manager with open source\n");
-      return FALSE;
-    } else {
+    }
+    else
+    {
       twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
 				DG_CONTROL, DAT_PARENT, MSG_CLOSEDSM,
 				(TW_MEMREF)&(twSession->hwnd));
 
-      if (twSession->twRC != TWRC_SUCCESS) {
-				LogMessage("CloseDSM failure -- %s\n", currentTwainError(twSession));
-      }
-      else {
-        /* We are now in state 2 */
-        twSession->twainState = 2;
+      switch (twSession->twRC)
+	  {
+        case TWRC_SUCCESS:
+          /* We are now in state 2 */
+          twSession->twainState = 2;
+          break;
+
+        case TWRC_FAILURE:
+          LogMessage("CloseDSM failure -- %s\n", currentTwainError(twSession));
+          break;
       }
     }
   }
-
-  /* Let the caller know what happened */
-  return (twSession->twRC==TWRC_SUCCESS);
 }
-
 
 /*
  * beginImageTransfer
@@ -607,23 +588,24 @@ beginImageTransfer (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
 			    (TW_MEMREF) imageInfo);
 
   /* Check the return code */
-  if (twSession->twRC != TWRC_SUCCESS)
+  switch (twSession->twRC)
   {
-    LogMessage("Get Image Info failure - %s\n", currentTwainError(twSession));
-
-    return FALSE;
+    case TWRC_SUCCESS:
+      /* Call the begin transfer callback if registered */
+      if (twSession->transferFunctions->txfrBeginCb)
+      {
+        if (!(*twSession->transferFunctions->txfrBeginCb) (imageInfo, twSession->clientData))
+        {
+          return FALSE;
+        }
+      }
+      /* We should continue */
+      return TRUE;
+	case TWRC_FAILURE:
+      LogMessage("Get Image Info failure - %s\n", currentTwainError(twSession));
+      break;
   }
-
-  /* Call the begin transfer callback if registered */
-  if (twSession->transferFunctions->txfrBeginCb)
-  {
-    if (!(*twSession->transferFunctions->txfrBeginCb) (imageInfo, twSession->clientData))
-    {
-      return FALSE;
-    }
-  }
-  /* We should continue */
-  return TRUE;
+  return FALSE;
 }
 
 /*
@@ -751,22 +733,23 @@ endImageTransfer (pTW_SESSION twSession, int *pendingCount)
     case TWRC_XFERDONE:
     case TWRC_CANCEL:
     LogMessage("Xfer done received\n");
-      *pendingCount = endPendingTransfer(twSession);
+      *pendingCount = endPendingTransfer (twSession);
       break;
 
     case TWRC_FAILURE:
       LogMessage("Failure received\n");
-      *pendingCount = endPendingTransfer(twSession);
+      *pendingCount = endPendingTransfer (twSession);
       break;
   }
 
   /* Call the end transfer callback */
   if (twSession->transferFunctions->txfrEndCb)
+  {
     continueTransfers =
-      (*twSession->transferFunctions->txfrEndCb)(exitCode,
+      (*twSession->transferFunctions->txfrEndCb) (exitCode,
 						 *pendingCount,
 						 twSession->clientData);
-
+  }
   return (*pendingCount && continueTransfers);
 }
 
@@ -813,7 +796,7 @@ transferImages (pTW_SESSION twSession)
     }
 
     /* Call the image transfer function */
-    transferImage(twSession, &imageInfo);
+    transferImage (twSession, &imageInfo);
 
   } while (endImageTransfer (twSession, &pendingCount));
 
@@ -823,7 +806,7 @@ transferImages (pTW_SESSION twSession)
    */
   if (twSession->transferFunctions->postTxfrCb)
   {
-    (*twSession->transferFunctions->postTxfrCb)(pendingCount,
+    (*twSession->transferFunctions->postTxfrCb) (pendingCount,
 						twSession->clientData);
   }
 }

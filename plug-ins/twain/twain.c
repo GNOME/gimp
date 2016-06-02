@@ -66,60 +66,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "tw_platform.h"
-#include "tw_local.h"
-
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
 
+#include "tw_platform.h"
 #include "tw_func.h"
+#include "tw_local.h"
 #include "tw_util.h"
 
 #ifdef _DEBUG
 #include "tw_dump.h"
 #endif /* _DEBUG */
-
-/*
- * Plug-in Definitions
- */
-#define PLUG_IN_NAME        "twain-acquire"
-#define PLUG_IN_DESCRIPTION N_("Capture an image from a TWAIN datasource")
-#define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource"
-#define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
-#define PLUG_IN_COPYRIGHT   "Craig Setera"
-#define PLUG_IN_VERSION     "v0.6 (07/22/2004)"
-
-#ifdef _DEBUG
-#define PLUG_IN_D_NAME      "twain-acquire-dump"
-#define PLUG_IN_R_NAME      "twain-acquire-read"
-#endif /* _DEBUG */
-
-/*
- * Application definitions
- */
-#define MAX_IMAGES 1
-
-/*
- * Definition of the run states
- */
-#define RUN_STANDARD 0
-#define RUN_DUMP 1
-#define RUN_READDUMP 2
-
-/* Global variables */
-pTW_SESSION twSession = NULL;
-
-static char        *destBuf = NULL;
-#ifdef _DEBUG
-static int         twain_run_mode = RUN_STANDARD;
-#endif
-
-/* Forward declarations */
-void preTransferCallback (void *);
-int  beginTransferCallback (pTW_IMAGEINFO, void *);
-int  dataTransferCallback (pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
-int  endTransferCallback (int, int, void *);
-void postTransferCallback (int, void *);
 
 static void query (void);
 static void run (
@@ -129,6 +86,21 @@ static void run (
     gint             *nreturn_vals,
     GimpParam       **return_vals);
 
+
+/* Global variables */
+pTW_SESSION  twSession = NULL;
+static const GimpParamDef args[] = { IN_ARGS };
+static const GimpParamDef return_vals[] = { OUT_ARGS };
+
+static char  *destBuf = NULL;
+#ifdef _DEBUG
+static int         twain_run_mode = RUN_STANDARD;
+#endif
+static char bitMasks[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
+
+/* Return values storage */
+static GimpParam values[3];
+
 /* This plug-in's functions */
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -137,23 +109,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
   query,   /* query_proc */
   run,     /* run_proc */
 };
-
-extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
-
-/* Data structure holding data between runs */
-/* Currently unused... Eventually may be used
- * to track dialog data.
- */
-typedef struct {
-  gchar  sourceName[34];
-  gfloat xResolution;
-  gfloat yResolution;
-  gint   xOffset;
-  gint   yOffset;
-  gint   width;
-  gint   height;
-  gint   imageType;
-} TwainValues;
 
 /* Default Twain values */
 static TwainValues twainvals =
@@ -231,17 +186,17 @@ getAppIdentity(void)
 
   /* Set up the application identity */
   appIdentity->Id = 0;
-  appIdentity->Version.MajorNum = 0;
-  appIdentity->Version.MinorNum = 1;
+  appIdentity->Version.MajorNum = PLUG_IN_MAJOR;
+  appIdentity->Version.MinorNum = PLUG_IN_MINOR;
   appIdentity->Version.Language = TWLG_USA;
   appIdentity->Version.Country = TWCY_USA;
-  strcpy(appIdentity->Version.Info, "GIMP TWAIN 0.6");
+  strcpy(appIdentity->Version.Info, PLUG_IN_VERSION);
   appIdentity->ProtocolMajor = TWON_PROTOCOLMAJOR;
   appIdentity->ProtocolMinor = TWON_PROTOCOLMINOR;
   appIdentity->SupportedGroups = DG_IMAGE;
-  strcpy(appIdentity->Manufacturer, "Craig Setera");
-  strcpy(appIdentity->ProductFamily, "GIMP");
-  strcpy(appIdentity->ProductName, "GIMP");
+  strcpy (appIdentity->Manufacturer, PLUG_IN_COPYRIGHT);
+  strcpy (appIdentity->ProductFamily, PRODUCT_FAMILY);
+  strcpy (appIdentity->ProductName, PRODUCT_NAME);
 
   return appIdentity;
 }
@@ -280,17 +235,6 @@ initializeTwain (void)
  ******************************************************************/
 
 /*
- * Plug-in Parameter definitions
- */
-#define NUMBER_IN_ARGS 1
-#define IN_ARGS { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" }
-#define NUMBER_OUT_ARGS 2
-#define OUT_ARGS \
-	{ GIMP_PDB_INT32, "image-count", "Number of acquired images" }, \
-	{ GIMP_PDB_INT32ARRAY, "image-ids", "Array of acquired image identifiers" }
-
-
-/*
  * query
  *
  * The plug-in is being queried.  Install our procedure for
@@ -299,8 +243,6 @@ initializeTwain (void)
 static void
 query (void)
 {
-  static const GimpParamDef args[] = { IN_ARGS };
-  static const GimpParamDef return_vals[] = { OUT_ARGS };
 
 #ifdef _DEBUG
   if (twain_run_mode == RUN_DUMP)
@@ -345,7 +287,7 @@ query (void)
 #endif /* _DEBUG */
     {
       /* the installation of the plugin */
-      gimp_install_procedure(PLUG_IN_NAME,
+      gimp_install_procedure(MID_SELECT,
                              PLUG_IN_DESCRIPTION,
                              PLUG_IN_HELP,
                              PLUG_IN_AUTHOR,
@@ -359,13 +301,9 @@ query (void)
                              args,
                              return_vals);
 
-      gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/File/Create/Acquire");
+      gimp_plugin_menu_register (MID_SELECT, "<Image>/File/Create/Acquire");
     }
 }
-
-
-/* Return values storage */
-static GimpParam values[3];
 
 /*
  * run
@@ -465,19 +403,6 @@ run (const gchar      *name,
 /***********************************************************************
  * Image transfer callback functions
  ***********************************************************************/
-
-/* Data used to carry data between each of
- * the callback function calls.
- */
-typedef struct {
-  gint32 image_id;
-  gint32 layer_id;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  pTW_PALETTE8 paletteData;
-  int totalPixels;
-  int completedPixels;
-} ClientDataStruct, *pClientDataStruct;
 
 /*
  * preTransferCallback
@@ -622,7 +547,6 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
  * into byte data and written into a gray scale GIMP
  * image.
  */
-static char bitMasks[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
 static int
 bitTransferCallback(pTW_IMAGEINFO imageInfo,
         pTW_IMAGEMEMXFER imageMemXfer,
@@ -951,7 +875,7 @@ dataTransferCallback (
  *  The transfer failed.
  */
 int
-endTransferCallback(int completionState, int pendingCount, void *clientData)
+endTransferCallback (int completionState, int pendingCount, void *clientData)
 {
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
 
