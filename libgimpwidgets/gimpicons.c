@@ -120,7 +120,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_COLOR_TRIANGLE,           NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_CMYK,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_WATER,              NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_COLOR_PALETTE             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_COLOR_PALETTE,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_PICK_FROM_SCREEN,   NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CHAR_PICKER,              NULL,        0, 0, LIBGIMP_DOMAIN },
