@@ -68,105 +68,21 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #include "tw_platform.h"
-#ifdef _DEBUG
-#include "tw_func.h"
-FILE *logFile = NULL;
-#endif
 #include "tw_util.h"
 
-#ifdef _DEBUG
-
 /*
- * LogMessage
+ * log_message
  */
 void
-LogMessage (char *format, ...)
+log_message (char *format, ...)
 {
   va_list args;
-  time_t time_of_day;
-  char *ctime_string;
-
-  /* Open the log file as necessary */
-  if (!logFile)
-    logFile = g_fopen(DEBUG_LOGFILE, "w");
-
-  time_of_day = time (NULL);
-  ctime_string = ctime (&time_of_day);
-  ctime_string[19] = '\0';
-
-  fprintf (logFile, "[%s] ", (ctime_string + 11));
 
   va_start (args, format);
-  vfprintf (logFile, format, args);
-  fflush (logFile);
+  g_message (format, args);
   va_end (args);
+  return;
 }
 
-void
-logBegin(pTW_IMAGEINFO imageInfo, void *clientData)
-{
-  int i;
-  char buffer[256];
-
-  LogMessage("\n");
-  LogMessage("*************************************\n");
-  LogMessage("\n");
-  LogMessage("Image transfer begin:\n");
-  /*	LogMessage("\tClient data: %s\n", (char *) clientData); */
-
-  /* Log the image information */
-  LogMessage("Image information:\n");
-  LogMessage("\tXResolution: %f\n", FIX32ToFloat(imageInfo->XResolution));
-  LogMessage("\tYResolution: %f\n", FIX32ToFloat(imageInfo->YResolution));
-  LogMessage("\tImageWidth: %d\n", imageInfo->ImageWidth);
-  LogMessage("\tImageLength: %d\n", imageInfo->ImageLength);
-  LogMessage("\tSamplesPerPixel: %d\n", imageInfo->SamplesPerPixel);
-  sprintf(buffer, "\tBitsPerSample: {");
-  for (i = 0; i < 8; i++) {
-    if (imageInfo->BitsPerSample[i])
-      strcat(buffer, "1");
-    else
-      strcat(buffer, "0");
-
-    if (i != 7)
-      strcat(buffer, ",");
-  }
-  LogMessage("%s}\n", buffer);
-
-  LogMessage("\tBitsPerPixel: %d\n", imageInfo->BitsPerPixel);
-  LogMessage("\tPlanar: %s\n", (imageInfo->Planar ? "TRUE" : "FALSE"));
-  LogMessage("\tPixelType: %d\n", imageInfo->PixelType);
-  /* Compression */
-
-}
-
-void
-logData(pTW_IMAGEINFO imageInfo,
-	pTW_IMAGEMEMXFER imageMemXfer,
-	void *clientData)
-{
-  LogMessage("Image transfer callback called:\n");
-  LogMessage("\tClient data: %s\n", (char *) clientData);
-  LogMessage("Memory block transferred:\n");
-  LogMessage("\tBytesPerRow = %d\n", imageMemXfer->BytesPerRow);
-  LogMessage("\tColumns = %d\n", imageMemXfer->Columns);
-  LogMessage("\tRows = %d\n", imageMemXfer->Rows);
-  LogMessage("\tXOffset = %d\n", imageMemXfer->XOffset);
-  LogMessage("\tYOffset = %d\n", imageMemXfer->YOffset);
-  LogMessage("\tBytesWritten = %d\n", imageMemXfer->BytesWritten);
-}
-
-#else
-
-/*
- * LogMessage
- */
-void
-LogMessage(char *format, ...)
-{
-}
-
-#endif /* DEBUG */

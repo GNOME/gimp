@@ -24,11 +24,11 @@
     /* Coding style violation: Don't include headers in headers */
     #include <windows.h>
     /* Coding style violation: Don't include headers in headers */
+    #define _MSWIN_ /* Definition for TWAIN.H */  
     #include "twain.h"
 
 /* The DLL to be loaded for TWAIN support */
 #define TWAIN_DLL_NAME "TWAIN_32.DLL"
-#define DEBUG_LOGFILE "c:\\twain.log"
 #define DUMP_FILE "C:\\TWAINCAP.BIN"
 #define DUMP_NAME "DTWAIN.EXE"
 #define READDUMP_NAME "RTWAIN.EXE"
@@ -36,9 +36,9 @@
 /* Windows uses separate entry point */
 #define TWAIN_ALTERNATE_MAIN
 
-/*
- * Plug-in Definitions
- */
+  /*
+   * Plug-in Definitions
+   */
   #define PRODUCT_FAMILY      "GNU"
   #define PRODUCT_NAME        "GIMP"
   #define PLUG_IN_NAME        "TWAIN"

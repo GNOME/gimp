@@ -211,7 +211,6 @@ int             loadTwainLibrary (pTW_SESSION twSession);
 void            unloadTwainLibrary (pTW_SESSION twSession);
 int             openDSM (pTW_SESSION twSession);
 int             selectDS (pTW_SESSION twSession);
-int             selectDefaultDS (pTW_SESSION twSession);
 int             openDS (pTW_SESSION twSession);
 int             requestImageAcquire (pTW_SESSION twSession, gboolean showUI);
 void            disableDS (pTW_SESSION twSession);
