@@ -21,8 +21,10 @@
 #ifndef _TW_PLATFORM_H
 #define _TW_PLATFORM_H
 
-#include <windows.h>
-#include "twain.h"
+    /* Coding style violation: Don't include headers in headers */
+    #include <windows.h>
+    /* Coding style violation: Don't include headers in headers */
+    #include "twain.h"
 
 /* The DLL to be loaded for TWAIN support */
 #define TWAIN_DLL_NAME "TWAIN_32.DLL"
@@ -34,4 +36,23 @@
 /* Windows uses separate entry point */
 #define TWAIN_ALTERNATE_MAIN
 
+/*
+ * Plug-in Definitions
+ */
+  #define PRODUCT_FAMILY      "GNU"
+  #define PRODUCT_NAME        "GIMP"
+  #define PLUG_IN_NAME        "TWAIN"
+  #define PLUG_IN_DESCRIPTION N_("Capture an image from a TWAIN datasource")
+  #define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource"
+  #define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
+  #define PLUG_IN_COPYRIGHT   "Craig Setera"
+  #define PLUG_IN_MAJOR       0
+  #define PLUG_IN_MINOR       6
+  #define PLUG_IN_VERSION     "v0.6 (07/22/2004)"
+  #define MID_SELECT          "twain-acquire"
+
+  #ifdef _DEBUG
+  #define PLUG_IN_D_NAME      "twain-acquire-dump"
+  #define PLUG_IN_R_NAME      "twain-acquire-read"
+  #endif /* _DEBUG */
 #endif

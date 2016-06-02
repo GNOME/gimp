@@ -34,22 +34,7 @@
 #include "tw_func.h"
 #include "tw_util.h"
 #include "tw_local.h"
-
-LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);
-
-int twainMessageLoop (pTW_SESSION);
-int TwainProcessMessage (LPMSG lpMsg, pTW_SESSION twSession);
-
-extern GimpPlugInInfo PLUG_IN_INFO;
-extern pTW_SESSION initializeTwain ();
-#ifdef _DEBUG
-extern void setRunMode(char *argv[]);
-#endif
-
-
-#define APP_NAME "TWAIN"
-#define SHOW_WINDOW 0
-#define WM_TRANSFER_IMAGE (WM_USER + 100)
+#include "tw_win.h"
 
 /* main bits */
 static HWND         hwnd  = NULL;
@@ -146,7 +131,7 @@ twainSetupCallback (pTW_SESSION twSession)
  *
  * Unload the TWAIN dynamic link library
  */
-int
+void
 unloadTwainLibrary (pTW_SESSION twSession)
 {
   /* Explicitly free the SM library */
@@ -162,11 +147,9 @@ unloadTwainLibrary (pTW_SESSION twSession)
    */
   DS_IDENTITY(twSession)->Id = 0;
 
-	/* We are now back at state 1 */
-  twSession->twainState = 1;
+	/* We are now back at state 0 */
+  twSession->twainState = 0;
   LogMessage("Source Manager successfully closed\n");
-
-  return TRUE;
 }
 
 /*
@@ -264,7 +247,7 @@ LogLastWinError (void)
 }
 
 void
-twainQuitApplication ()
+twainQuitApplication (void)
 {
   PostQuitMessage (0);
 }
@@ -361,7 +344,7 @@ InitApplication (HINSTANCE hInstance)
   wc.hIcon = LoadIcon (NULL, IDI_APPLICATION);
   wc.hCursor = LoadCursor (NULL, IDC_ARROW);
   wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-  wc.lpszClassName = APP_NAME;
+  wc.lpszClassName = PLUG_IN_NAME;
   wc.lpszMenuName = NULL;
 
   /* Register the window class and stash success/failure code. */
@@ -386,7 +369,7 @@ BOOL
 InitInstance (HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession)
 {
   /* Create our window */
-  hwnd = CreateWindow (APP_NAME, APP_NAME, WS_OVERLAPPEDWINDOW,
+  hwnd = CreateWindow (PLUG_IN_NAME, PLUG_IN_NAME, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
       NULL, NULL, hInstance, NULL);
 
@@ -420,7 +403,7 @@ InitInstance (HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession)
  * operate.
  */
 int
-twainMain ()
+twainMain (void)
 {
   /* Initialize the twain information */
   pTW_SESSION twSession = initializeTwain();

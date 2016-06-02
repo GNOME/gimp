@@ -70,11 +70,12 @@
 #include <string.h>
 #include <time.h>
 
-#include "tw_util.h"
+#include "tw_platform.h"
 #ifdef _DEBUG
 #include "tw_func.h"
 FILE *logFile = NULL;
 #endif
+#include "tw_util.h"
 
 #ifdef _DEBUG
 

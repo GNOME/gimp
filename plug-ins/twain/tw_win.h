@@ -8,6 +8,10 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
+ * Added for Win x64 support, changed data source selection.
+ * Jens M. Plonka <jens.plonka@gmx.de>
+ * 11/25/2011
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -20,33 +24,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- *
- * Based on (at least) the following plug-ins:
- * Screenshot
- * GIF
- * Randomize
- *
- * Any suggestions, bug-reports or patches are welcome.
- *
- * This plug-in interfaces to the TWAIN support library in order
- * to capture images from TWAIN devices directly into GIMP images.
- * The plug-in is capable of acquiring the following type of
- * images:
- * - B/W (1 bit images translated to grayscale B/W)
- * - Grayscale up to 16 bits per pixel
- * - RGB up to 16 bits per sample (24, 30, 36, etc.)
- * - Paletted images (both Gray and RGB)
- *
- * Prerequisites:
- * Should compile and run on both Win32 and Mac OS X 10.3 (possibly
- * also on 10.2).
- *
- * Known problems:
- * - Multiple image transfers will hang the plug-in.  The current
- *   configuration compiles with a maximum of single image transfers.
- * - On Mac OS X, canceling doesn't always close things out fully.
- * - Epson TWAIN driver on Mac OS X crashes the plugin when scanning.
  */
 
 /*
@@ -57,15 +34,36 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
+ *  (11/25/11)  v0.7   Added Win x64 support, changed data source selection.
  */
-#ifndef __TW_UTIL_H
-#define __TW_UTIL_H
 
-void LogMessage(char *, ...);
+/*
+ * Windows platform-specific code
+ */
+#ifndef _TW_WIN_H
+#define _TW_WIN_H
 
-#ifdef _DEBUG
-void logBegin(pTW_IMAGEINFO, void *);
-void logData(pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
-#endif
+#define SHOW_WINDOW 0
+#define WM_TRANSFER_IMAGE (WM_USER + 100)
 
-#endif /* __TW_UTIL_H */
+TW_UINT16 callDSM (
+  pTW_IDENTITY pOrigin,
+  pTW_IDENTITY pDest,
+  TW_UINT32    DG,
+  TW_UINT16    DAT,
+  TW_UINT16    MSG,
+  TW_MEMREF    pData);
+
+extern GimpPlugInInfo PLUG_IN_INFO;
+
+LRESULT CALLBACK WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+int     twainMessageLoop (pTW_SESSION);
+int     TwainProcessMessage (LPMSG lpMsg, pTW_SESSION twSession);
+void    LogLastWinError (void);
+void    twainQuitApplication (void);
+BOOL    InitApplication (HINSTANCE hInstance);
+BOOL    InitInstance (HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession);
+int     twainMain (void);
+extern  pTW_SESSION initializeTwain (void);
+
+#endif /* _TW_WIN_H */

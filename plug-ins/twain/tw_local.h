@@ -1,4 +1,4 @@
-/*
+.re/*
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
  * Craig Setera <setera@home.com>
@@ -25,10 +25,30 @@
 #ifndef _TW_LOCAL_H
 #define _TW_LOCAL_H
 
-#include "tw_func.h"
+/*
+ * Plug-in Parameter definitions
+ */
+#define NUMBER_IN_ARGS 1
+#define IN_ARGS \
+    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" }
+#define NUMBER_OUT_ARGS 2
+#define OUT_ARGS \
+    { GIMP_PDB_INT32, "image-count", "Number of acquired images" }, \
+    { GIMP_PDB_INT32ARRAY, "image-ids", "Array of acquired image identifiers" }
+
+/*
+ * Application definitions
+ */
+#define MAX_IMAGES 1
+
+/*
+ * Definition of the run states
+ */
+#define RUN_STANDARD 0
+#define RUN_DUMP 1
+#define RUN_READDUMP 2
 
 /* Functions which the platform-independent code will call */
-
 TW_UINT16 callDSM (
     pTW_IDENTITY,
     pTW_IDENTITY,
@@ -46,7 +66,44 @@ TW_MEMREF twainLockHandle (TW_HANDLE handle);
 void      twainUnlockHandle (TW_HANDLE handle);
 void      twainFreeHandle (TW_HANDLE handle);
 
-int twainMain (void);
-int scanImage (void);
+int       twainMain (void);
+int       scanImage (void);
+
+void      preTransferCallback (void *);
+int       beginTransferCallback (pTW_IMAGEINFO, void *);
+int       dataTransferCallback (pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
+int       endTransferCallback (int, int, void *);
+void      postTransferCallback (int, void *);
+
+extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
+
+/* Data structure holding data between runs */
+/* Currently unused... Eventually may be used
+ * to track dialog data.
+ */
+typedef struct {
+  gchar  sourceName[34];
+  gfloat xResolution;
+  gfloat yResolution;
+  gint   xOffset;
+  gint   yOffset;
+  gint   width;
+  gint   height;
+  gint   imageType;
+} TwainValues;
+
+/* Data used to carry data between each
+ * of the callback function calls.
+ */
+typedef struct
+{
+  gint32 image_id;
+  gint32 layer_id;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  pTW_PALETTE8 paletteData;
+  int totalPixels;
+  int completedPixels;
+} ClientDataStruct, *pClientDataStruct;
 
 #endif
