@@ -129,17 +129,22 @@ query (void)
   /* Check if xdg-email or sendmail is installed.
    * TODO: allow setting the location of the executable in preferences.
    */
-#ifdef SENDMAIL && SENDMAIL
-  /* If a directory has been set at build time, we assume that sendmail
-   * can only be in this directory. */
-  email_bin = g_build_path (SENDMAIL, "sendmail", NULL);
-  if (! g_file_test (email_bin, G_FILE_TEST_IS_EXECUTABLE))
+#ifdef SENDMAIL
+  if (strlen (SENDMAIL) == 0)
     {
-      g_free (email_bin);
-      email_bin = NULL;
+      email_bin = g_find_program_in_path ("sendmail");
     }
-#elif defined SENDMAIL
-  email_bin = g_find_program_in_path ("sendmail");
+  else
+    {
+      /* If a directory has been set at build time, we assume that sendmail
+       * can only be in this directory. */
+      email_bin = g_build_filename (SENDMAIL, "sendmail", NULL);
+      if (! g_file_test (email_bin, G_FILE_TEST_IS_EXECUTABLE))
+        {
+          g_free (email_bin);
+          email_bin = NULL;
+        }
+    }
 #else
   email_bin = g_find_program_in_path ("xdg-email");
 #endif
@@ -364,7 +369,7 @@ send_image (const gchar *filename,
                                mail_info.filename, NULL);
   g_rename (tmpname, filepath);
 
-  mailcmd[0] = "xdg-email";
+  mailcmd[0] = g_strdup ("xdg-email");
   mailcmd[1] = "--attach";
   mailcmd[2] = filepath;
   i = 3;
@@ -398,7 +403,11 @@ send_image (const gchar *filename,
 
 #else /* SENDMAIL */
   /* construct the "sendmail user@location" line */
-  mailcmd[0] = "sendmail";
+  if (strlen (SENDMAIL) == 0)
+    mailcmd[0] = g_strdup ("sendmail");
+  else
+    mailcmd[0] = g_build_filename (SENDMAIL, "sendmail", NULL);
+
   mailcmd[1] = mail_info.receipt;
   mailcmd[2] = NULL;
 
@@ -450,6 +459,7 @@ cleanup:
     g_free (filepath);
 #endif
 
+  g_free (mailcmd[0]);
   g_free (tmpname);
 
   return status;
