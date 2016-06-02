@@ -1838,15 +1838,17 @@ have_sendmail=no
 if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
   if test "x$with_sendmail" = "xyes"; then
       sendmail_path=$PATH:/usr/sbin:/usr/lib
+      AC_DEFINE_UNQUOTED(SENDMAIL, "",
+                         [The MTA used by the mail plug-in.])
   else
       sendmail_path=$with_sendmail
+      AC_DEFINE_UNQUOTED(SENDMAIL, "$with_sendmail",
+                         [The MTA used by the mail plug-in.])
   fi
 
   AC_PATH_PROG(SENDMAIL, sendmail, , $sendmail_path)
   if test "x$SENDMAIL" != "x"; then
     have_email="yes (sendmail)"
-    AC_DEFINE_UNQUOTED(SENDMAIL, "$SENDMAIL",
-                       [The MTA used by the mail plug-in.])
   else
     # Not having sendmail at runtime is not a blocker.
     have_email="needs runtime dependency: sendmail"
