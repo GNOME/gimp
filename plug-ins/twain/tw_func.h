@@ -8,7 +8,7 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
- * Added for Win x64 support
+ * Added for Win x64 support, changed data source selection.
  * Jens M. Plonka <jens.plonka@gmx.de>
  * 11/25/2011
  *
@@ -61,7 +61,7 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
- *  (11/25/11)  v0.7   Added Win x64 support.
+ *  (11/25/11)  v0.7   Added Win x64 support, changed data source selection.
  */
 
 #ifndef _TW_FUNC_H
@@ -146,6 +146,11 @@ typedef struct _TXFR_CB_FUNCS {
   TW_POST_TXFR_CB postTxfrCb;
 } TXFR_CB_FUNCS, *pTXFR_CB_FUNCS;
 
+typedef struct _TW_DATA_SOURCE {
+  pTW_IDENTITY dsIdentity;
+  struct _TW_DATA_SOURCE *dsNext;
+} TW_DATA_SOURCE, *pTW_DATA_SOURCE;
+
 /*
  * Data representing a TWAIN
  * application to data source
@@ -185,6 +190,13 @@ typedef struct _TWAIN_SESSION {
    * 7) Transferring
    */
   int twainState;
+
+  const gchar *name;
+  /*
+   * The available data sources for this session.
+   * The list will be updated each time the plugin is invoked on query.
+   */
+  struct _TW_DATA_SOURCE *dataSources;
 
 } TW_SESSION, *pTW_SESSION;
 
@@ -299,5 +311,7 @@ void            closeDSM (pTW_SESSION twSession);
 void            cancelPendingTransfers (pTW_SESSION twSession);
 void            processTwainMessage (TW_UINT16 message, pTW_SESSION twSession);
 pTW_SESSION     newSession (pTW_IDENTITY twSession);
+pTW_DATA_SOURCE get_available_ds (pTW_SESSION twSession);
+int             adjust_selected_data_source (pTW_SESSION twSession);
 
 #endif /* _TW_FUNC_H */

@@ -8,7 +8,7 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
- * Added for Win x64 support
+ * Added for Win x64 support, changed data source selection.
  * Jens M. Plonka <jens.plonka@gmx.de>
  * 11/25/2011
  *
@@ -34,7 +34,7 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
- *  (11/25/11)  v0.7   Added Win x64 support.
+ *  (11/25/11)  v0.7   Added Win x64 support, changed data source selection.
  */
 
 #ifndef _TW_LOCAL_H
@@ -74,7 +74,7 @@ TW_MEMREF twainLockHandle (TW_HANDLE handle);
 void      twainUnlockHandle (TW_HANDLE handle);
 void      twainFreeHandle (TW_HANDLE handle);
 
-int       twainMain (void);
+int       twainMain (const gchar *name);
 int       scanImage (void);
 pTW_SESSION initializeTwain (void);
 
@@ -83,8 +83,8 @@ int       beginTransferCallback (pTW_IMAGEINFO, void *);
 int       dataTransferCallback (pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
 int       endTransferCallback (int, int, void *);
 void      postTransferCallback (int, void *);
-
-extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
+void      register_menu (pTW_IDENTITY dsIdentity);
+void      register_scanner_menus (void);
 
 /* Data used to carry data between each
  * of the callback function calls.
@@ -99,5 +99,4 @@ typedef struct
   int totalPixels;
   int completedPixels;
 } ClientDataStruct, *pClientDataStruct;
-
-#endif
+#endif /* _TW_LOCAL_H */

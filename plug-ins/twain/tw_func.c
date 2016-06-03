@@ -8,7 +8,7 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
- * Added for Win x64 support
+ * Added for Win x64 support, changed data source selection
  * Jens M. Plonka <jens.plonka@gmx.de>
  * 11/25/2011
  *
@@ -61,7 +61,7 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
- *  (11/25/11)  v0.7   Added Win x64 support.
+ *  (11/25/11)  v0.7   Added Win x64 support, changed data source selection.
  */
 
 #include "config.h"
@@ -226,6 +226,39 @@ openDSM (pTW_SESSION twSession)
 }
 
 /*
+ * adjust_selected_data_source
+ *
+ * Selects the
+ */
+int
+adjust_selected_data_source (pTW_SESSION twSession)
+{
+  pTW_DATA_SOURCE dataSource;
+  pTW_IDENTITY dsIdentity;
+  gchar *dsName;
+
+  twSession->dsIdentity = NULL;
+  /* get all available data source as a linked list into twSession */
+  dataSource = get_available_ds (twSession);
+
+  while (dataSource != NULL)
+  {
+    dataSource = twSession->dataSources;
+    /* for each data source create an own menu item */
+    dsIdentity = dataSource->dsIdentity;
+    dsName = dsIdentity->ProductName;
+    if (strcmp (dsName, twSession->name) == 0)
+    {
+      twSession->dsIdentity = dataSource->dsIdentity;
+      twSession->twRC = TWRC_SUCCESS;
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+/*
  * selectDS
  *
  * Select a datasource using the TWAIN user
@@ -241,8 +274,12 @@ selectDS (pTW_SESSION twSession)
     return FALSE;
   }
 
-  /* Ask TWAIN to present the source select dialog */
-  twSession->twRC = DSM_SELECT_USER(twSession);
+  if ((strcmp (MID_SELECT, twSession->name) == 0)
+      || (adjust_selected_data_source (twSession) == FALSE))
+  {
+    /* Ask TWAIN to present the source select dialog */
+    twSession->twRC = DSM_SELECT_USER(twSession);
+  }
 
   /* Check the return to determine what the user decided
    * to do.
@@ -766,4 +803,72 @@ newSession (pTW_IDENTITY appIdentity)
   }
 
   return session;
+}
+
+/*
+ * get_available_ds
+ *
+ * Get the list of available data sources.
+ */
+pTW_DATA_SOURCE
+get_available_ds (pTW_SESSION twSession)
+{
+  pTW_DATA_SOURCE data_source = NULL;
+  pTW_IDENTITY dsIdentity;
+
+  if(DSM_IS_CLOSED(twSession))
+  {
+    log_message ("You need to open the DSM first.\n");
+    return NULL;
+  }
+
+  if (twSession != NULL)
+  {
+    dsIdentity = g_new (TW_IDENTITY, 1);
+    twSession->twRC = DSM_GET_FIRST_DS(twSession, dsIdentity);
+
+    switch (twSession->twRC)
+    {
+      case TWRC_SUCCESS:
+        data_source = g_new (TW_DATA_SOURCE, 1);
+        data_source->dsIdentity = dsIdentity;
+        data_source->dsNext = NULL;
+        twSession->dataSources = data_source;
+        break;
+
+    case TWRC_ENDOFLIST:
+        twSession->dataSources = NULL;
+        break;
+
+      case TWRC_FAILURE:
+        log_message ("Error getting first data source: %s\n", currentTwainError(twSession));
+        break;
+    }
+
+    /* get the rest of the data sources */
+    while (TWRC_SUCCESS == twSession->twRC)
+    {
+      dsIdentity = g_new (TW_IDENTITY, 1);
+      twSession->twRC = DSM_GET_NEXT_DS(twSession, dsIdentity);
+
+      switch (twSession->twRC)
+      {
+        case TWRC_SUCCESS:
+          data_source->dsNext = g_new (TW_DATA_SOURCE, 1);
+          data_source = data_source->dsNext;
+          data_source->dsIdentity = dsIdentity;
+          data_source->dsNext = NULL;
+          break;
+
+        case TWRC_ENDOFLIST:
+          break;
+
+        case TWRC_FAILURE:
+          log_message ("Error getting next data source: %s\n", currentTwainError(twSession));
+          break;
+      }
+    }
+  }
+
+  return twSession->dataSources;
 }

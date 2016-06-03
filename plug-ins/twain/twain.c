@@ -8,7 +8,7 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
- * Added for Win x64 support
+ * Added for Win x64 support, changed data source selection.
  * Jens M. Plonka <jens.plonka@gmx.de>
  * 11/25/2011
  *
@@ -61,7 +61,7 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
- *  (11/25/11)  v0.7   Added Win x64 support.
+ *  (11/25/11)  v0.7   Added Win x64 support, changed data source selection.
  */
 #include "config.h"
 
@@ -189,6 +189,79 @@ initializeTwain (void)
   return twSession;
 }
 
+/*
+ * register_menu
+ *
+ * Registers a menu item for the given scanner.
+ */
+void
+register_menu (const pTW_IDENTITY dsIdentity)
+{
+  guint8 *iconfile;
+  gchar  *name;
+
+  name = dsIdentity->ProductName;
+
+  gimp_install_procedure (
+      name,
+      PLUG_IN_DESCRIPTION,
+      PLUG_IN_HELP,
+      dsIdentity->Manufacturer,
+      PLUG_IN_COPYRIGHT,
+      PLUG_IN_VERSION,
+      name,
+      NULL,
+      GIMP_PLUGIN,
+      NUMBER_IN_ARGS,
+      NUMBER_OUT_ARGS,
+      args, return_vals);
+
+  gimp_plugin_menu_register (name, MP_SELECT);
+  iconfile = (guint8 *) g_build_filename (gimp_data_directory (),
+                                      "twain",
+                                      "twain-menu.png",
+                                      NULL);
+  gimp_plugin_icon_register (name, GIMP_ICON_TYPE_IMAGE_FILE, iconfile);
+  g_free (iconfile);
+}
+
+/*
+ * register_scanner_menus
+ *
+ * Initilizes communication with the Data Source Manager.
+ * Communication will be kept open till shutdown of GIMP
+ * because the id might change due to new installed data
+ * sources wile GIMP is open!
+ * The name of each scanner is the identifyer of the menu.
+ */
+void
+register_scanner_menus (void)
+{
+  pTW_DATA_SOURCE dataSource;
+  pTW_IDENTITY dsIdentity;
+
+  // Get the list of available TWAIN data sources
+  initializeTwain ();
+
+  if (openDSM (twSession))
+  {
+    /* get all available data source as a linked list into twSession */
+    dataSource = get_available_ds (twSession);
+
+    /* for each found data source create an own menu item */
+    while (dataSource != NULL)
+    {
+      dsIdentity = dataSource->dsIdentity;
+      register_menu (dsIdentity);
+
+      /* handle the next data source */
+      dataSource = dataSource->dsNext;
+    }
+
+    closeDSM (twSession);
+  }
+}
+
 /******************************************************************
  * GIMP Plug-in entry points
  ******************************************************************/
@@ -202,7 +275,7 @@ initializeTwain (void)
 static void
 query (void)
 {
-  /* the installation of the plugin */
+  /* Select scanner by dialog */
   gimp_install_procedure(MID_SELECT,
                          PLUG_IN_DESCRIPTION,
                          PLUG_IN_HELP,
@@ -217,7 +290,10 @@ query (void)
                          args,
                          return_vals);
 
-  gimp_plugin_menu_register (MID_SELECT, "<Image>/File/Create/Acquire");
+  gimp_plugin_menu_register (MID_SELECT, MP_SELECT);
+
+  /* Direct scanner selection by menu items */
+  register_scanner_menus ();
 }
 
 /*
@@ -277,7 +353,7 @@ run (const gchar      *name,
   /* Have we succeeded so far? */
   if (values[0].data.d_status == GIMP_PDB_SUCCESS)
   {
-    twainMain ();
+    twainMain (name);
   }
 
   /* Check to make sure we got at least one valid
@@ -316,6 +392,8 @@ int
 beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
 {
   int imageType, layerType;
+  TW_INT32 width = imageInfo->ImageWidth;
+  TW_INT32 length = imageInfo->ImageLength;
 
   pClientDataStruct theClientData = g_new (ClientDataStruct, 1);
 
@@ -372,8 +450,7 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
   }
 
   /* Create the GIMP image */
-  theClientData->image_id = gimp_image_new(imageInfo->ImageWidth,
-					   imageInfo->ImageLength, imageType);
+  theClientData->image_id = gimp_image_new (width, length, imageType);
 
   /* Set the actual resolution */
   gimp_image_set_resolution (theClientData->image_id,
@@ -383,17 +460,14 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
 
   /* Create a layer */
   theClientData->layer_id = gimp_layer_new(theClientData->image_id,
-					   _("Background"),
-					   imageInfo->ImageWidth,
-					   imageInfo->ImageLength,
-					   layerType, 100, GIMP_NORMAL_MODE);
+      _("Background"), width, length, layerType, 100, GIMP_NORMAL_MODE);
 
   /* Add the layer to the image */
-  gimp_image_insert_layer(theClientData->image_id,
-                          theClientData->layer_id, -1, 0);
+  gimp_image_insert_layer (theClientData->image_id,
+      theClientData->layer_id, -1, 0);
 
   /* Update the progress dialog */
-  theClientData->totalPixels = imageInfo->ImageWidth * imageInfo->ImageLength;
+  theClientData->totalPixels = width * length;
   theClientData->completedPixels = 0;
   gimp_progress_update ((double) 0);
 
@@ -402,8 +476,7 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
 
   /* Initialize a pixel region for writing to the image */
   gimp_pixel_rgn_init (&(theClientData->pixel_rgn), theClientData->drawable,
-		      0, 0, imageInfo->ImageWidth, imageInfo->ImageLength,
-		      TRUE, FALSE);
+      0, 0, width, length, TRUE, FALSE);
 
   /* Store our client data for the data transfer callbacks */
   if (clientData)
