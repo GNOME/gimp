@@ -8,6 +8,10 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
+ * Added for Win x64 support
+ * Jens M. Plonka <jens.plonka@gmx.de>
+ * 11/25/2011
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -57,6 +61,7 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
+ *  (11/25/11)  v0.7   Added Win x64 support.
  */
 
 #include "config.h"
@@ -104,32 +109,6 @@ static char *twainErrors[] =
 };
 
 /*
- * FloatToFix32
- *
- * Convert a floating point value into a FIX32.
- */
-TW_FIX32 FloatToFIX32(float floater)
-{
-  TW_FIX32 Fix32_value;
-  TW_INT32 value = (TW_INT32) (floater * 65536.0 + 0.5);
-  Fix32_value.Whole = value >> 16;
-  Fix32_value.Frac = value & 0x0000ffffL;
-  return (Fix32_value);
-}
-
-/*
- * Fix32ToFloat
- *
- * Convert a FIX32 value into a floating point value.
- */
-float FIX32ToFloat(TW_FIX32 fix32)
-{
-  float floater;
-  floater = (float) fix32.Whole + (float) fix32.Frac / 65536.0;
-  return floater;
-}
-
-/*
  * twainError
  *
  * Return the TWAIN error message associated
@@ -166,9 +145,7 @@ currentTwainError (pTW_SESSION twSession)
   TW_STATUS twStatus;
 
   /* Get the current status code from the DSM */
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			    DG_CONTROL, DAT_STATUS, MSG_GET,
-			    (TW_MEMREF) &twStatus);
+  twSession->twRC = DSM_GET_STATUS(twSession, twStatus);
 
   /* Return the mapped error code */
   return twainError (twStatus.ConditionCode);
@@ -230,9 +207,7 @@ openDSM (pTW_SESSION twSession)
   }
 
   /* Open the data source manager */
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
-      DG_CONTROL, DAT_PARENT, MSG_OPENDSM,
-      (TW_MEMREF) &(twSession->hwnd));
+  twSession->twRC = DSM_OPEN(twSession);
 
   /* Check the return code */
   switch (twSession->twRC)
@@ -267,9 +242,7 @@ selectDS (pTW_SESSION twSession)
   }
 
   /* Ask TWAIN to present the source select dialog */
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
-      DG_CONTROL, DAT_IDENTITY, MSG_USERSELECT,
-      (TW_MEMREF) DS_IDENTITY(twSession));
+  twSession->twRC = DSM_SELECT_USER(twSession);
 
   /* Check the return to determine what the user decided
    * to do.
@@ -295,8 +268,6 @@ selectDS (pTW_SESSION twSession)
 int
 openDS (pTW_SESSION twSession)
 {
-  TW_IDENTITY *dsIdentity;
-
   /* The datasource manager must be open */
   if (DSM_IS_CLOSED(twSession))
   {
@@ -312,14 +283,11 @@ openDS (pTW_SESSION twSession)
   }
 
   /* Open the TWAIN datasource */
-  dsIdentity = DS_IDENTITY(twSession);
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
-			    DG_CONTROL, DAT_IDENTITY, MSG_OPENDS,
-			    (TW_MEMREF) dsIdentity);
+  twSession->twRC = DSM_OPEN_DS(twSession);
 
   /* Check the return to determine what the user decided
    * to do.
-	 */
+   */
   switch (twSession->twRC)
   {
     case TWRC_SUCCESS:
@@ -366,9 +334,7 @@ setBufferedXfer (pTW_SESSION twSession)
   twainUnlockHandle (bufXfer.hContainer);
 
   /* Make the call to the source manager */
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			    DG_CONTROL, DAT_CAPABILITY, MSG_SET,
-			    (TW_MEMREF) &bufXfer);
+  twSession->twRC = DSM_XFER_SET(twSession, bufXfer);
   if (twSession->twRC == TWRC_FAILURE)
   {
     log_message ("Could not set capability: %s\n", currentTwainError(twSession));
@@ -409,18 +375,19 @@ requestImageAcquire (pTW_SESSION twSession, gboolean showUI)
     ui.hParent = twSession->hwnd;
 
     /* Make the call to the source manager */
-    twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			      DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS,
-			      (TW_MEMREF) &ui);
+    twSession->twRC = DSM_ENABLE_DS(twSession, ui);
 
-    if (twSession->twRC == TWRC_SUCCESS)
+    switch (twSession->twRC)
     {
-      /* We are now at a new twain state */
-      twSession->twainState = 5;
+      case TWRC_SUCCESS:
+        /* We are now at a new twain state */
+        twSession->twainState = 5;
+        return TRUE;
 
-      return TRUE;
+	  case TWRC_FAILURE:
+       log_message ("Error enabeling data source: %s\n", currentTwainError(twSession));
+	   break;
     }
-    log_message ("Error enabeling data source: %s\n", currentTwainError(twSession));
   }
   return FALSE;
 }
@@ -440,22 +407,20 @@ disableDS(pTW_SESSION twSession)
     return;
   }
 
-    /* Make the call to the source manager */
-    twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			      DG_CONTROL, DAT_USERINTERFACE, MSG_DISABLEDS,
-			      (TW_MEMREF) &ui);
+  /* Make the call to the source manager */
+  twSession->twRC = DSM_DISABLE_DS(twSession, ui);
 
-    switch (twSession->twRC)
-    {
-      case TWRC_SUCCESS:
-        /* We are now at a new twain state */
-        twSession->twainState = 4;
-		break;
+  switch (twSession->twRC)
+  {
+    case TWRC_SUCCESS:
+      /* We are now at a new twain state */
+      twSession->twainState = 4;
+    break;
 
-      case TWRC_FAILURE:
-        log_message  ("Can't disable data source: %s\n", currentTwainError(twSession));
-		break;
-    }
+    case TWRC_FAILURE:
+      log_message  ("Can't disable data source: %s\n", currentTwainError(twSession));
+      break;
+  }
 }
 
 /*
@@ -475,9 +440,7 @@ closeDS (pTW_SESSION twSession)
   }
 
   /* Open the TWAIN datasource */
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
-			    DG_CONTROL, DAT_IDENTITY, MSG_CLOSEDS,
-			    (TW_MEMREF) DS_IDENTITY(twSession));
+  twSession->twRC = DSM_CLOSE_DS(twSession);
 
   /* Check the return to determine what the user decided
    * to do.
@@ -509,9 +472,7 @@ closeDSM (pTW_SESSION twSession)
   }
   else
   {
-    twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
-				DG_CONTROL, DAT_PARENT, MSG_CLOSEDSM,
-				(TW_MEMREF)&(twSession->hwnd));
+    twSession->twRC = DSM_CLOSE(twSession);
 
     switch (twSession->twRC)
     {
@@ -539,10 +500,7 @@ beginImageTransfer (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
   memset (imageInfo, 0, sizeof (TW_IMAGEINFO));
 
   /* Query the image information */
-  twSession->twRC = callDSM(
-			    APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			    DG_IMAGE, DAT_IMAGEINFO, MSG_GET,
-			    (TW_MEMREF) imageInfo);
+  twSession->twRC = DSM_GET_IMAGE(twSession, imageInfo);
 
   /* Check the return code */
   switch (twSession->twRC)
@@ -585,9 +543,7 @@ transferImage (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
   memset (&imageMemXfer, 0, sizeof (TW_IMAGEMEMXFER));
 
   /* Find out how the source would like to transfer... */
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			    DG_CONTROL, DAT_SETUPMEMXFER, MSG_GET,
-			    (TW_MEMREF) &setupMemXfer);
+  twSession->twRC = DSM_XFER_START(twSession, setupMemXfer);
 
   /* Allocate the buffer for the transfer */
   buffer = g_new (char, setupMemXfer.Preferred);
@@ -608,18 +564,13 @@ transferImage (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
     imageMemXfer.BytesWritten = TWON_DONTCARE32;
 
     /* Get the next block of memory */
-    twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			      DG_IMAGE, DAT_IMAGEMEMXFER, MSG_GET,
-			      (TW_MEMREF) &imageMemXfer);
+    twSession->twRC = DSM_XFER_GET(twSession, imageMemXfer);
 
     if ((twSession->twRC == TWRC_SUCCESS) ||
         (twSession->twRC == TWRC_XFERDONE))
     {
-      /* Call the callback function */
-      if (!(*twSession->transferFunctions->txfrDataCb) (
-							imageInfo,
-							&imageMemXfer,
-							twSession->clientData))
+      /* Call dataTransferCallback */
+      if (!CB_XFER_DATA(twSession, imageInfo, imageMemXfer))
       {
         /* Callback function requested to cancel */
         twSession->twRC = TWRC_CANCEL;
@@ -643,9 +594,7 @@ endPendingTransfer (pTW_SESSION twSession)
 {
   TW_PENDINGXFERS pendingXfers;
 
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			    DG_CONTROL, DAT_PENDINGXFERS, MSG_ENDXFER,
-			    (TW_MEMREF) &pendingXfers);
+  twSession->twRC = DSM_XFER_STOP(twSession, pendingXfers);
 
   if (!pendingXfers.Count)
   {
@@ -665,9 +614,7 @@ cancelPendingTransfers (pTW_SESSION twSession)
 {
   TW_PENDINGXFERS pendingXfers;
 
-  twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			      DG_CONTROL, DAT_PENDINGXFERS, MSG_RESET,
-			      (TW_MEMREF) &pendingXfers);
+  twSession->twRC = DSM_XFER_RESET(twSession, pendingXfers);
 }
 
 /*
@@ -699,13 +646,8 @@ endImageTransfer (pTW_SESSION twSession, int *pendingCount)
   }
 
   /* Call the end transfer callback */
-  if (twSession->transferFunctions->txfrEndCb)
-  {
-    continueTransfers =
-      (*twSession->transferFunctions->txfrEndCb) (exitCode,
-						 *pendingCount,
-						 twSession->clientData);
-  }
+  CB_XFER_END(twSession, continueTransfers, exitCode, pendingCount);
+
   return (*pendingCount && continueTransfers);
 }
 
@@ -724,7 +666,7 @@ transferImages (pTW_SESSION twSession)
   /* Check the image transfer callback function
    * before even attempting to do the transfer
    */
-  if (!twSession->transferFunctions || !twSession->transferFunctions->txfrDataCb)
+  if (!twSession || !twSession->transferFunctions || !twSession->transferFunctions->txfrDataCb)
   {
     log_message ("Attempting image transfer without callback function.\n");
     return;
@@ -736,7 +678,7 @@ transferImages (pTW_SESSION twSession)
    */
   if (twSession->transferFunctions->preTxfrCb)
   {
-    (*twSession->transferFunctions->preTxfrCb)(twSession->clientData);
+    CB_XFER_PRE(twSession);
   }
 
   /* Loop through the available images */
@@ -760,11 +702,7 @@ transferImages (pTW_SESSION twSession)
    * Inform our application that we are done
    * transferring images.
    */
-  if (twSession->transferFunctions->postTxfrCb)
-  {
-    (*twSession->transferFunctions->postTxfrCb) (pendingCount,
-						twSession->clientData);
-  }
+  CB_XFER_POST(twSession, pendingCount);
 }
 
 void
@@ -828,43 +766,4 @@ newSession (pTW_IDENTITY appIdentity)
   }
 
   return session;
-}
-
-/*
- * registerWindowHandle
- *
- * Register the window handle to be used for this
- * session.
- */
-void
-registerWindowHandle(pTW_SESSION session, TW_HANDLE hwnd)
-{
-  session->hwnd = hwnd;
-}
-
-/*
- * registerTransferCallback
- *
- * Register the callback to use when transferring
- * image data.
- */
-void
-registerTransferCallbacks(pTW_SESSION session,
-			  pTXFR_CB_FUNCS txfrFuncs,
-			  void *clientData)
-{
-  session->transferFunctions = txfrFuncs;
-  session->clientData = clientData;
-}
-
-/*
- * setClientData
- *
- * Set the client data associated with the specified
- * TWAIN session.
- */
-void
-setClientData(pTW_SESSION session, void *clientData)
-{
-  session->clientData = clientData;
 }

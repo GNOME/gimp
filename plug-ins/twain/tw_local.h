@@ -8,6 +8,10 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
+ * Added for Win x64 support
+ * Jens M. Plonka <jens.plonka@gmx.de>
+ * 11/25/2011
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -20,6 +24,17 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * Revision history
+ *  (02/07/99)  v0.1   First working version (internal)
+ *  (02/09/99)  v0.2   First release to anyone other than myself
+ *  (02/15/99)  v0.3   Added image dump and read support for debugging
+ *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
+ *                     images.
+ *  (07/23/04)  v0.6   Added Mac OS X support.
+ *  (11/25/11)  v0.7   Added Win x64 support.
  */
 
 #ifndef _TW_LOCAL_H
@@ -43,12 +58,12 @@
 
 /* Functions which the platform-independent code will call */
 TW_UINT16 callDSM (
-    pTW_IDENTITY,
-    pTW_IDENTITY,
-    TW_UINT32,
-    TW_UINT16,
-    TW_UINT16,
-    TW_MEMREF);
+  pTW_IDENTITY pOrigin,
+  pTW_IDENTITY pDest,
+  TW_UINT32    DG,
+  TW_UINT16    DAT,
+  TW_UINT16    MSG,
+  TW_MEMREF    pData);
 
 int       twainIsAvailable(void);
 void      twainQuitApplication (void);
@@ -70,21 +85,6 @@ int       endTransferCallback (int, int, void *);
 void      postTransferCallback (int, void *);
 
 extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
-
-/* Data structure holding data between runs */
-/* Currently unused... Eventually may be used
- * to track dialog data.
- */
-typedef struct {
-  gchar  sourceName[34];
-  gfloat xResolution;
-  gfloat yResolution;
-  gint   xOffset;
-  gint   yOffset;
-  gint   width;
-  gint   height;
-  gint   imageType;
-} TwainValues;
 
 /* Data used to carry data between each
  * of the callback function calls.

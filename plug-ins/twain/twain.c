@@ -8,6 +8,10 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
+ * Added for Win x64 support
+ * Jens M. Plonka <jens.plonka@gmx.de>
+ * 11/25/2011
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -57,6 +61,7 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
+ *  (11/25/11)  v0.7   Added Win x64 support.
  */
 #include "config.h"
 
@@ -103,16 +108,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-/* Default Twain values */
-static TwainValues twainvals =
-{
-  "",
-  100.0, 100.0,
-  0, 0,
-  0, 0,
-  TWPT_RGB
-};
-
 /* The standard callback functions */
 TXFR_CB_FUNCS standardCbFuncs =
 {
@@ -124,9 +119,15 @@ TXFR_CB_FUNCS standardCbFuncs =
 };
 
 #ifndef TWAIN_ALTERNATE_MAIN
-MAIN()
-#endif
+MAIN ()
+#endif /* TWAIN_ALTERNATE_MAIN */
 
+/*
+ * scan_image
+ *
+ * Callback function for OS dependant implementation inside the
+ * event loop.
+ */
 int
 scanImage (void)
 {
@@ -140,7 +141,7 @@ scanImage (void)
  * the TWAIN runtime.
  */
 static pTW_IDENTITY
-getAppIdentity(void)
+getAppIdentity (void)
 {
   pTW_IDENTITY appIdentity = g_new (TW_IDENTITY, 1);
 
@@ -153,7 +154,8 @@ getAppIdentity(void)
   strcpy(appIdentity->Version.Info, PLUG_IN_VERSION);
   appIdentity->ProtocolMajor = TWON_PROTOCOLMAJOR;
   appIdentity->ProtocolMinor = TWON_PROTOCOLMINOR;
-  appIdentity->SupportedGroups = DG_IMAGE;
+  /* Tell the data source manger that we only accept image data sources */
+  appIdentity->SupportedGroups = DF_APP2 | DG_CONTROL | DG_IMAGE;
   strcpy (appIdentity->Manufacturer, PLUG_IN_COPYRIGHT);
   strcpy (appIdentity->ProductFamily, PRODUCT_FAMILY);
   strcpy (appIdentity->ProductName, PRODUCT_NAME);
@@ -181,7 +183,9 @@ initializeTwain (void)
   twSession = newSession (appIdentity);
 
   /* Register our image transfer callback functions */
-  registerTransferCallbacks(twSession, &standardCbFuncs, NULL);
+  twSession->transferFunctions = &standardCbFuncs;
+  twSession->clientData = NULL;
+
   return twSession;
 }
 
@@ -260,29 +264,14 @@ run (const gchar      *name,
   /* How are we running today? */
   switch (run_mode)
   {
-  case GIMP_RUN_INTERACTIVE:
-    /* Retrieve values from the last run...
-     * Currently ignored
-     */
-    gimp_get_data(PLUG_IN_NAME, &twainvals);
-    break;
-
-  case GIMP_RUN_NONINTERACTIVE:
-    /* Currently, we don't do non-interactive calls.
-     * Bail if someone tries to call us non-interactively
-     */
-    values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-    return;
-
-  case GIMP_RUN_WITH_LAST_VALS:
-    /* Retrieve values from the last run...
-     * Currently ignored
-     */
-    gimp_get_data(PLUG_IN_NAME, &twainvals);
-    break;
-
-  default:
-    break;
+    case GIMP_RUN_NONINTERACTIVE:
+      /* Non-interactive calls are not supported!
+       * Bail if someone tries to call this way.
+       */
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+      return;
+	default:
+	  break; 
   } /* switch */
 
   /* Have we succeeded so far? */
@@ -295,19 +284,8 @@ run (const gchar      *name,
    * image.
    */
   if (values[1].data.d_int32 > 0) {
-    /* An image was captured from the TWAIN
-     * datasource.  Do final Interactive
-     * steps.
-     */
-    if (run_mode == GIMP_RUN_INTERACTIVE) {
-      /* Store variable states for next run */
-      gimp_set_data(PLUG_IN_NAME, &twainvals, sizeof (TwainValues));
-    }
-
     /* Set return values */
     *nreturn_vals = 3;
-  } else {
-    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
   }
 }
 
@@ -360,9 +338,7 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
     case TWPT_PALETTE:
       /* Get the palette data */
       theClientData->paletteData = g_new (TW_PALETTE8, 1);
-      twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			      DG_IMAGE, DAT_PALETTE8, MSG_GET,
-			      (TW_MEMREF) theClientData->paletteData);
+      twSession->twRC = DSM_GET_PALETTE(twSession, theClientData);
       if (twSession->twRC != TWRC_SUCCESS)
       {
         return FALSE;
@@ -401,8 +377,8 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
 
   /* Set the actual resolution */
   gimp_image_set_resolution (theClientData->image_id,
-                             FIX32ToFloat(imageInfo->XResolution),
-                             FIX32ToFloat(imageInfo->YResolution));
+      FIX32_TO_FLOAT(imageInfo->XResolution),
+      FIX32_TO_FLOAT(imageInfo->YResolution));
   gimp_image_set_unit (theClientData->image_id, GIMP_UNIT_INCH);
 
   /* Create a layer */
@@ -435,7 +411,7 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
     g_free (clientData);
   }
 
-  setClientData(twSession, (void *) theClientData);
+  twSession->clientData = (void *) theClientData;
 
   /* Make sure to return TRUE to continue the image
    * transfer

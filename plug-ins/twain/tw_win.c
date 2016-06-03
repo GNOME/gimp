@@ -8,6 +8,10 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
+ * Added for Win x64 support
+ * Jens M. Plonka <jens.plonka@gmx.de>
+ * 11/25/2011
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -20,6 +24,17 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * Revision history
+ *  (02/07/99)  v0.1   First working version (internal)
+ *  (02/09/99)  v0.2   First release to anyone other than myself
+ *  (02/15/99)  v0.3   Added image dump and read support for debugging
+ *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
+ *                     images.
+ *  (07/23/04)  v0.6   Added Mac OS X support.
+ *  (11/25/11)  v0.7   Added Win x64 support.
  */
 
 /*
@@ -73,23 +88,23 @@ int
 twainIsAvailable (void)
 {
   /* Already loaded? */
-  if (dsmEntryPoint)
-  {
-    return TRUE;
-  }
-
-  /* Attempt to load the library */
-  hDLL = LoadLibrary (TWAIN_DLL_NAME);
-  if (hDLL == NULL)
-  {
-    return FALSE;
-  }
-
-  /* Look up the entry point for use */
-  dsmEntryPoint = (DSMENTRYPROC) GetProcAddress (hDLL, "DSM_Entry");
   if (dsmEntryPoint == NULL)
   {
-    return FALSE;
+    /* Attempt to load the library */
+    hDLL = LoadLibrary (TWAIN_DLL_NAME);
+    if (hDLL == NULL)
+    {
+      log_message ("Can't load library \"%s\"!\n", TWAIN_DLL_NAME);
+      return FALSE;
+    }
+
+    /* Look up the entry point for use */
+    dsmEntryPoint = (DSMENTRYPROC) GetProcAddress (hDLL, "DSM_Entry");
+    if (dsmEntryPoint == NULL)
+    {
+      log_message ("Lirary has no DSM Entry point.\n");
+      return FALSE;
+    }
   }
 
   return TRUE;
@@ -141,14 +156,17 @@ unloadTwainLibrary (pTW_SESSION twSession)
     hDLL=NULL;
   }
 
-  /* the data source id will no longer be valid after
-   * twain is killed.  If the id is left around the
-   * data source can not be found or opened
-   */
-  DS_IDENTITY(twSession)->Id = 0;
+  if (twSession != NULL)
+  {
+    /* the data source id will no longer be valid after
+     * twain is killed.  If the id is left around the
+     * data source can not be found or opened
+     */
+    twSession->dsIdentity->Id = 0;
 
 	/* We are now back at state 0 */
-  twSession->twainState = 0;
+    twSession->twainState = 0;
+  }
 }
 
 /*
@@ -174,9 +192,7 @@ TwainProcessMessage (LPMSG lpMsg, pTW_SESSION twSession)
      * messages sent from the Source to our Application.
      */
     twEvent.pEvent = (TW_MEMREF) lpMsg;
-    twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT,
-			(TW_MEMREF) &twEvent);
+    twSession->twRC = DSM_PROCESS_EVENT(twSession, twEvent);
 
     /* Check the return code */
     if (twSession->twRC == TWRC_NOTDSEVENT)
@@ -366,7 +382,7 @@ InitInstance (HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession)
   /* Register our window handle with the TWAIN
    * support.
    */
-  registerWindowHandle (twSession, hwnd);
+  twSession->hwnd = hwnd;
 
   /* Schedule the image transfer by posting a message */
   PostMessage (hwnd, WM_TRANSFER_IMAGE, 0, 0);
