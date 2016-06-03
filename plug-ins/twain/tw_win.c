@@ -8,7 +8,7 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
- * Added for Win x64 support
+ * Added for Win x64 support, changed data source selection.
  * Jens M. Plonka <jens.plonka@gmx.de>
  * 11/25/2011
  *
@@ -34,7 +34,7 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
- *  (11/25/11)  v0.7   Added Win x64 support.
+ *  (11/25/11)  v0.7   Added Win x64 support, changed data source selection.
  */
 
 /*
@@ -404,10 +404,12 @@ InitInstance (HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession)
  * operate.
  */
 int
-twainMain (void)
+twainMain (const gchar *name)
 {
   /* Initialize the twain information */
   pTW_SESSION twSession = initializeTwain();
+
+  twSession->name = name;
 
   /* Perform instance initialization */
   if (!InitApplication (hInst))

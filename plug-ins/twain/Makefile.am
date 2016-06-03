@@ -22,8 +22,9 @@ endif
 if HAVE_WINDRES
 include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
 twain_RC = twain.rc.o
+twaindata_DATA = twain-menu.png
 endif
-
+twaindatadir = $(gimpdatadir)/twain
 
 twain_SOURCES = \
 	tw_func.c	\
