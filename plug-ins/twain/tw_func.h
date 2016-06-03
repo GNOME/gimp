@@ -8,6 +8,10 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
+ * Added for Win x64 support
+ * Jens M. Plonka <jens.plonka@gmx.de>
+ * 11/25/2011
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -57,6 +61,7 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
+ *  (11/25/11)  v0.7   Added Win x64 support.
  */
 
 #ifndef _TW_FUNC_H
@@ -183,25 +188,100 @@ typedef struct _TWAIN_SESSION {
 
 } TW_SESSION, *pTW_SESSION;
 
+#define CB_XFER_PRE(s) if (s->transferFunctions->preTxfrCb) \
+    (*s->transferFunctions->preTxfrCb) (s->clientData);
+
+#define CB_XFER_BEGIN(s, i)   if (s->transferFunctions->txfrBeginCb) \
+    if (!(*s->transferFunctions->txfrBeginCb) (imageInfo, s->clientData)) \
+      return FALSE; \
+  return TRUE;
+
+#define CB_XFER_DATA(s, i, m) (*s->transferFunctions->txfrDataCb) \
+    (i, &m, s->clientData)
+
+#define CB_XFER_END(s, c, e, p)   if (s->transferFunctions->txfrEndCb) \
+    c = (*s->transferFunctions->txfrEndCb) (e, *p, s->clientData)
+
+#define CB_XFER_POST(s, p) if (s->transferFunctions->postTxfrCb) \
+    (*s->transferFunctions->postTxfrCb) (p, s->clientData)
+
 /* Session structure access
  * macros
  */
-/* #define pAPP_IDENTITY(tw_session) (&(tw_session->appIdentity)) */
-#define APP_IDENTITY(tw_session) (tw_session->appIdentity)
-/* #define pDS_IDENTITY(tw_session) (&(tw_session->dsIdentity)) */
-#define DS_IDENTITY(tw_session) (tw_session->dsIdentity)
+#define APP_IDENTITY(s)   ((s == NULL) ? NULL : s->appIdentity)
+#define DS_IDENTITY(s)    ((s == NULL) ? NULL : s->dsIdentity)
 
 /* State macros... Each expects
  * a Twain Session pointer
  */
-#define TWAIN_LOADED(tw_session) (tw_session->twainState >= 2)
-#define TWAIN_UNLOADED(tw_session) (tw_session->twainState < 2)
-#define DSM_IS_OPEN(tw_session) (tw_session->twainState >= 3)
-#define DSM_IS_CLOSED(tw_session) (tw_session->twainState < 3)
-#define DS_IS_OPEN(tw_session) (tw_session->twainState >= 4)
-#define DS_IS_CLOSED(tw_session) (tw_session->twainState < 4)
-#define DS_IS_ENABLED(tw_session) (tw_session->twainState >= 5)
-#define DS_IS_DISABLED(tw_session) (tw_session->twainState < 5)
+#define TWAIN_LOADED(s)   ((s == NULL) ? FALSE : s->twainState >= 2)
+#define TWAIN_UNLOADED(s) ((s == NULL) ? TRUE  : s->twainState <  2)
+#define DSM_IS_OPEN(s)    ((s == NULL) ? FALSE : s->twainState >= 3)
+#define DSM_IS_CLOSED(s)  ((s == NULL) ? TRUE  : s->twainState <  3)
+#define DS_IS_OPEN(s)     ((s == NULL) ? FALSE : s->twainState >= 4)
+#define DS_IS_CLOSED(s)   ((s == NULL) ? TRUE  : s->twainState <  4)
+#define DS_IS_ENABLED(s)  ((s == NULL) ? FALSE : s->twainState >= 5)
+#define DS_IS_DISABLED(s) ((s == NULL) ? TRUE  : s->twainState <  5)
+
+#define DSM_GET_STATUS(ses, sta)  callDSM(ses->appIdentity, ses->dsIdentity, \
+          DG_CONTROL, DAT_STATUS, MSG_GET, (TW_MEMREF) &sta)
+
+#define DSM_OPEN(ses) callDSM(ses->appIdentity, NULL,\
+          DG_CONTROL, DAT_PARENT, MSG_OPENDSM, (TW_MEMREF) &(ses->hwnd))
+
+#define DSM_CLOSE(ses) callDSM(ses->appIdentity, NULL,\
+          DG_CONTROL, DAT_PARENT, MSG_CLOSEDSM, (TW_MEMREF)&(ses->hwnd))
+
+#define DSM_SET_CALLBACK(ses, cb) callDSM(ses->appIdentity, NULL,\
+          DG_CONTROL, DAT_CALLBACK, MSG_REGISTER_CALLBACK, (TW_MEMREF) &cb)
+
+#define DSM_PROCESS_EVENT(ses, ev) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT, (TW_MEMREF) &ev)
+
+#define DSM_GET_PALETTE(ses, d) callDSM(ses->appIdentity, ses->dsIdentity,\
+            DG_IMAGE, DAT_PALETTE8, MSG_GET, (TW_MEMREF) d->paletteData)
+
+#define DSM_SELECT_USER(ses) callDSM(ses->appIdentity, NULL,\
+          DG_CONTROL, DAT_IDENTITY, MSG_USERSELECT, (TW_MEMREF) ses->dsIdentity)
+
+#define DSM_SELECT_DEFAULT(ses) callDSM(ses->appIdentity, NULL,\
+          DG_CONTROL, DAT_IDENTITY, MSG_GETDEFAULT, (TW_MEMREF) ses->dsIdentity)
+
+#define DSM_OPEN_DS(ses) callDSM(ses->appIdentity, NULL,\
+          DG_CONTROL, DAT_IDENTITY, MSG_OPENDS, (TW_MEMREF) ses->dsIdentity)
+
+#define DSM_CLOSE_DS(ses) callDSM(ses->appIdentity, NULL,\
+          DG_CONTROL, DAT_IDENTITY, MSG_CLOSEDS, (TW_MEMREF) ses->dsIdentity)
+
+#define DSM_ENABLE_DS(ses, ui) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS, (TW_MEMREF) &ui)
+
+#define DSM_DISABLE_DS(ses, ui) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_CONTROL, DAT_USERINTERFACE, MSG_DISABLEDS, (TW_MEMREF) &ui)
+
+#define DSM_GET_IMAGE(ses, i) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_IMAGE, DAT_IMAGEINFO, MSG_GET, (TW_MEMREF) i)
+
+#define DSM_XFER_SET(ses, x) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_CONTROL, DAT_CAPABILITY, MSG_SET, (TW_MEMREF) &x)
+
+#define DSM_XFER_START(ses, x) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_CONTROL, DAT_SETUPMEMXFER, MSG_GET, (TW_MEMREF) &x)
+
+#define DSM_XFER_GET(ses, x) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_IMAGE, DAT_IMAGEMEMXFER, MSG_GET, (TW_MEMREF) &x)
+
+#define DSM_XFER_STOP(ses, x) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_CONTROL, DAT_PENDINGXFERS, MSG_ENDXFER, (TW_MEMREF) &x)
+
+#define DSM_XFER_RESET(ses, x) callDSM(ses->appIdentity, ses->dsIdentity,\
+          DG_CONTROL, DAT_PENDINGXFERS, MSG_RESET, (TW_MEMREF) &x)
+
+#define DSM_GET_FIRST_DS(ses, ds) callDSM (ses->appIdentity, NULL, \
+          DG_CONTROL, DAT_IDENTITY, MSG_GETFIRST, (TW_MEMREF) ds);
+
+#define DSM_GET_NEXT_DS(ses, ds) callDSM (ses->appIdentity, NULL, \
+          DG_CONTROL, DAT_IDENTITY, MSG_GETNEXT, (TW_MEMREF) ds);
 
 /* Function declarations */
 char *          twainError (int errorCode);
@@ -217,21 +297,7 @@ void            disableDS (pTW_SESSION twSession);
 void            closeDS (pTW_SESSION twSession);
 void            closeDSM (pTW_SESSION twSession);
 void            cancelPendingTransfers (pTW_SESSION twSession);
-
-TW_FIX32 FloatToFIX32(float);
-float           FIX32ToFloat(TW_FIX32);
-
 void            processTwainMessage (TW_UINT16 message, pTW_SESSION twSession);
-
 pTW_SESSION     newSession (pTW_IDENTITY twSession);
-void            registerWindowHandle(pTW_SESSION, TW_HANDLE);
-void            registerTransferCallbacks(pTW_SESSION, pTXFR_CB_FUNCS, void *);
-void            setClientData(pTW_SESSION session, void *clientData);
-
-#ifdef G_OS_WIN32
-void LogLastWinError(void);
-BOOL InitApplication(HINSTANCE hInstance);
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession);
-#endif
 
 #endif /* _TW_FUNC_H */
