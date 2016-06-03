@@ -61,7 +61,11 @@
   #define PRODUCT_NAME        "GIMP"
   #define PLUG_IN_NAME        "TWAIN"
   #define PLUG_IN_DESCRIPTION N_("Capture an image from a TWAIN datasource")
-  #define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource"
+  #define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource.\n" \
+                              "Recent changes:\n" \
+                              "  - Support of Win 64 Bit (requires twaindsm.dll from twain.org)\n" \
+                              "  - Fixed bug while scanning multiple images\n" \
+                              "  - Added easy Scanner access"
   #define PLUG_IN_AUTHOR      "Jens Plonka (jens.plonka@gmx.de)"
   #define PLUG_IN_COPYRIGHT   "Craig Setera"
   #define PLUG_IN_MAJOR       0

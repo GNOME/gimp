@@ -51,6 +51,8 @@
 #include "tw_local.h"
 #include "tw_win.h"
 
+#define DLL_NOT_FOUND "Can't load library \"" TWAIN_DLL_NAME "\"!\nPlease install 'TWAIN Data Source Manager' from www.twain.org.\n" 
+
 /* main bits */
 static HWND         hwnd  = NULL;
 static HINSTANCE    hInst = NULL;
@@ -94,7 +96,7 @@ twainIsAvailable (void)
     hDLL = LoadLibrary (TWAIN_DLL_NAME);
     if (hDLL == NULL)
     {
-      log_message ("Can't load library \"%s\"!\n", TWAIN_DLL_NAME);
+      g_message (DLL_NOT_FOUND);
       return FALSE;
     }
 
@@ -102,7 +104,7 @@ twainIsAvailable (void)
     dsmEntryPoint = (DSMENTRYPROC) GetProcAddress (hDLL, "DSM_Entry");
     if (dsmEntryPoint == NULL)
     {
-      log_message ("Lirary has no DSM Entry point.\n");
+      g_message ("Lirary has no DSM Entry point.\n");
       return FALSE;
     }
   }
@@ -255,7 +257,7 @@ LogLastWinError (void)
       NULL
   );
 
-  log_message ("%s\n", lpMsgBuf);
+  g_message ("%s\n", (LPTSTR) lpMsgBuf);
 
   /* Free the buffer. */
   LocalFree ( lpMsgBuf );
