@@ -2369,7 +2369,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Image Windows / Appearance  */
   /********************************/
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-image-windows-appearence",
+                                  "gimp-prefs-image-windows-appearance",
                                   _("Image Window Appearance"),
                                   _("Appearance"),
                                   GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
