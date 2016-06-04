@@ -110,6 +110,10 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SELECTION_TO_PATH,        NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_PATH_STROKE,            N_("_Stroke"), 0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PATH_NEW,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PATH_UP,                  NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PATH_DOWN,                NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PATH_DELETE,              NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CURVE_FREE,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CURVE_SMOOTH,             NULL,        0, 0, LIBGIMP_DOMAIN },
