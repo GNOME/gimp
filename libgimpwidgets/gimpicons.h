@@ -85,6 +85,10 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SELECTION_TO_PATH        "gimp-selection-to-path"
 
 #define GIMP_STOCK_PATH_STROKE              "gimp-path-stroke"
+#define GIMP_STOCK_PATH_NEW                 "gimp-path-new"
+#define GIMP_STOCK_PATH_UP                  "gimp-path-up"
+#define GIMP_STOCK_PATH_DOWN                "gimp-path-down"
+#define GIMP_STOCK_PATH_DELETE              "gimp-path-delete"
 
 #define GIMP_STOCK_CURVE_FREE               "gimp-curve-free"
 #define GIMP_STOCK_CURVE_SMOOTH             "gimp-curve-smooth"
