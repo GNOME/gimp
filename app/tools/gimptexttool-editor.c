@@ -111,6 +111,8 @@ static gboolean gimp_text_tool_im_delete_surrounding
                                                    gint             n_chars,
                                                    GimpTextTool    *text_tool);
 
+static void     gimp_text_tool_im_delete_preedit  (GimpTextTool    *text_tool);
+
 
 /*  public functions  */
 
@@ -534,25 +536,7 @@ void
 gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
 {
   /* Cancel any ungoing preedit on reset. */
-  if (text_tool->preedit_string && *text_tool->preedit_string)
-    {
-      GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
-      GtkTextIter    start;
-      GtkTextIter    end;
-
-      gtk_text_buffer_get_iter_at_mark (buffer, &start,
-                                        text_tool->preedit_start);
-      gtk_text_buffer_get_iter_at_mark (buffer, &end,
-                                        text_tool->preedit_end);
-      gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
-
-      g_free (text_tool->preedit_string);
-      text_tool->preedit_string = NULL;
-      gtk_text_buffer_delete_mark (buffer, text_tool->preedit_start);
-      gtk_text_buffer_delete_mark (buffer, text_tool->preedit_end);
-      text_tool->preedit_start = NULL;
-      text_tool->preedit_end = NULL;
-    }
+  gimp_text_tool_im_delete_preedit (text_tool);
 
   if (text_tool->needs_im_reset)
     {
@@ -1365,33 +1349,14 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   PangoAttrList *attrs;
 
-  if (text_tool->preedit_string)
-    {
-      if (*text_tool->preedit_string)
-        {
-          GtkTextIter start;
-          GtkTextIter end;
-
-          gtk_text_buffer_get_iter_at_mark (buffer, &start,
-                                            text_tool->preedit_start);
-          gtk_text_buffer_get_iter_at_mark (buffer, &end,
-                                            text_tool->preedit_end);
-          gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
-
-          gtk_text_buffer_delete_mark (buffer, text_tool->preedit_start);
-          gtk_text_buffer_delete_mark (buffer, text_tool->preedit_end);
-          text_tool->preedit_start = NULL;
-          text_tool->preedit_end = NULL;
-        }
-      g_free (text_tool->preedit_string);
-      text_tool->preedit_string = NULL;
-    }
+  gimp_text_tool_im_delete_preedit (text_tool);
 
   gimp_text_tool_delete_selection (text_tool);
 
   gtk_im_context_get_preedit_string (context,
                                      &text_tool->preedit_string, &attrs,
                                      &text_tool->preedit_cursor);
+
   if (text_tool->preedit_string && *text_tool->preedit_string)
     {
       PangoAttrIterator *attr_iter;
@@ -1482,8 +1447,10 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                           break;
                         }
                     }
+
                   attrs_pos = attrs_pos->next;
                 }
+
               gtk_text_buffer_end_user_action (buffer);
             }
         }
@@ -1504,6 +1471,7 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
 
       pango_attr_iterator_destroy (attr_iter);
     }
+
   pango_attr_list_unref (attrs);
 }
 
@@ -1512,27 +1480,9 @@ gimp_text_tool_im_commit (GtkIMContext *context,
                           const gchar  *str,
                           GimpTextTool *text_tool)
 {
-  if (text_tool->preedit_string && *text_tool->preedit_string)
-    {
-      GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
-      GtkTextIter    start;
-      GtkTextIter    end;
+  gimp_text_tool_im_delete_preedit (text_tool);
 
-      gtk_text_buffer_get_iter_at_mark (buffer, &start,
-                                        text_tool->preedit_start);
-      gtk_text_buffer_get_iter_at_mark (buffer, &end,
-                                        text_tool->preedit_end);
-      gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
-
-      gtk_text_buffer_delete_mark (buffer, text_tool->preedit_start);
-      gtk_text_buffer_delete_mark (buffer, text_tool->preedit_end);
-      text_tool->preedit_start = NULL;
-      text_tool->preedit_end = NULL;
-    }
   gimp_text_tool_enter_text (text_tool, str);
-
-  g_free (text_tool->preedit_string);
-  text_tool->preedit_string = NULL;
 }
 
 static gboolean
@@ -1580,4 +1530,33 @@ gimp_text_tool_im_delete_surrounding (GtkIMContext *context,
   gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
 
   return TRUE;
+}
+
+static void
+gimp_text_tool_im_delete_preedit (GimpTextTool *text_tool)
+{
+  if (text_tool->preedit_string)
+    {
+      if (*text_tool->preedit_string)
+        {
+          GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+          GtkTextIter    start;
+          GtkTextIter    end;
+
+          gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                            text_tool->preedit_start);
+          gtk_text_buffer_get_iter_at_mark (buffer, &end,
+                                            text_tool->preedit_end);
+
+          gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
+
+          gtk_text_buffer_delete_mark (buffer, text_tool->preedit_start);
+          gtk_text_buffer_delete_mark (buffer, text_tool->preedit_end);
+          text_tool->preedit_start = NULL;
+          text_tool->preedit_end = NULL;
+        }
+
+      g_free (text_tool->preedit_string);
+      text_tool->preedit_string = NULL;
+    }
 }
