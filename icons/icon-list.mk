@@ -124,6 +124,7 @@ scalable_images = \
 	scalable/gimp-prefs-folders-icon-themes.svg	\
 	scalable/gimp-prefs-folders-interp.svg		\
 	scalable/gimp-prefs-folders-modules.svg		\
+	scalable/gimp-prefs-folders-mypaint-brushes.svg	\
 	scalable/gimp-prefs-folders-palettes.svg	\
 	scalable/gimp-prefs-folders-patterns.svg	\
 	scalable/gimp-prefs-folders-plug-ins.svg	\
@@ -137,6 +138,8 @@ scalable_images = \
 	scalable/gimp-prefs-icon-theme.svg		\
 	scalable/gimp-prefs-image-title.svg		\
 	scalable/gimp-prefs-image-windows.svg		\
+	scalable/gimp-prefs-image-windows-appearance.svg	\
+	scalable/gimp-prefs-image-windows-snapping.svg		\
 	scalable/gimp-prefs-input-devices.svg		\
 	scalable/gimp-prefs-interface.svg		\
 	scalable/gimp-prefs-new-image.svg		\
@@ -310,6 +313,7 @@ vector24_images = \
 	24/gimp-prefs-folders-icon-themes.svg		\
 	24/gimp-prefs-folders-interp.svg		\
 	24/gimp-prefs-folders-modules.svg		\
+	24/gimp-prefs-folders-mypaint-brushes.svg	\
 	24/gimp-prefs-folders-palettes.svg		\
 	24/gimp-prefs-folders-patterns.svg		\
 	24/gimp-prefs-folders-plug-ins.svg		\
@@ -322,6 +326,8 @@ vector24_images = \
 	24/gimp-prefs-icon-theme.svg			\
 	24/gimp-prefs-image-title.svg			\
 	24/gimp-prefs-image-windows.svg			\
+	24/gimp-prefs-image-windows-appearance.svg	\
+	24/gimp-prefs-image-windows-snapping.svg	\
 	24/gimp-prefs-input-devices.svg			\
 	24/gimp-prefs-interface.svg			\
 	24/gimp-prefs-new-image.svg			\
@@ -646,6 +652,7 @@ icons22_images = \
 	22/gimp-prefs-folders-icon-themes.png	\
 	22/gimp-prefs-folders-interp.png	\
 	22/gimp-prefs-folders-modules.png	\
+	22/gimp-prefs-folders-mypaint-brushes.png	\
 	22/gimp-prefs-folders-palettes.png	\
 	22/gimp-prefs-folders-patterns.png	\
 	22/gimp-prefs-folders-plug-ins.png	\
@@ -659,6 +666,8 @@ icons22_images = \
 	22/gimp-prefs-icon-theme.png		\
 	22/gimp-prefs-image-title.png		\
 	22/gimp-prefs-image-windows.png		\
+	22/gimp-prefs-image-windows-appearance.png	\
+	22/gimp-prefs-image-windows-snapping.png	\
 	22/gimp-prefs-input-devices.png		\
 	22/gimp-prefs-interface.png		\
 	22/gimp-prefs-new-image.png		\
@@ -836,6 +845,7 @@ icons48_images = \
 	48/gimp-prefs-folders-icon-themes.png	\
 	48/gimp-prefs-folders-interp.png	\
 	48/gimp-prefs-folders-modules.png	\
+	48/gimp-prefs-folders-mypaint-brushes.png	\
 	48/gimp-prefs-folders-palettes.png	\
 	48/gimp-prefs-folders-patterns.png	\
 	48/gimp-prefs-folders-plug-ins.png	\
@@ -849,6 +859,8 @@ icons48_images = \
 	48/gimp-prefs-icon-theme.png		\
 	48/gimp-prefs-image-title.png		\
 	48/gimp-prefs-image-windows.png		\
+	48/gimp-prefs-image-windows-appearance.png	\
+	48/gimp-prefs-image-windows-snapping.png	\
 	48/gimp-prefs-input-devices.png		\
 	48/gimp-prefs-interface.png		\
 	48/gimp-prefs-new-image.png		\

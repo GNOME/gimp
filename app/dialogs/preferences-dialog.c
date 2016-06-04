@@ -2369,7 +2369,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Image Windows / Appearance  */
   /********************************/
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-image-windows",
+                                  "gimp-prefs-image-windows-appearence",
                                   _("Image Window Appearance"),
                                   _("Appearance"),
                                   GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
@@ -2514,7 +2514,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Image Windows / Snapping  */
   /******************************/
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-tool-options",
+                                  "gimp-prefs-image-windows-snapping",
                                   _("Image Window Snapping Behavior"),
                                   _("Snapping"),
                                   GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
