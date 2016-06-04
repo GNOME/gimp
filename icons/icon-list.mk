@@ -49,6 +49,7 @@ scalable_images = \
 	scalable/gimp-flip-horizontal.svg		\
 	scalable/gimp-flip-vertical.svg			\
 	scalable/gimp-floating-selection.svg		\
+	scalable/gimp-font.svg				\
 	scalable/gimp-gegl.svg				\
 	scalable/gimp-gradient-bilinear.svg		\
 	scalable/gimp-gradient-conical-asymmetric.svg	\
@@ -456,6 +457,7 @@ icons16_images = \
 	16/gimp-flip-horizontal.png			\
 	16/gimp-flip-vertical.png			\
 	16/gimp-floating-selection.png			\
+	16/gimp-font.png				\
 	16/gimp-gegl.png				\
 	16/gimp-gradient-bilinear.png			\
 	16/gimp-gradient-conical-asymmetric.png		\
