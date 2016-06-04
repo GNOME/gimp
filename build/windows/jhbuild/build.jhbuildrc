@@ -77,6 +77,9 @@ if os.environ.get('MINGW_USE_CCACHE', '') == 'yes':
     os.environ['CPP'] = 'ccache ' + os.environ['CPP']
     os.environ['CXX'] = 'ccache ' + os.environ['CXX']
 
+# Clear DISPLAY (prevents wine from popping up dialogs on some machines)
+os.environ['DISPLAY'] = ''
+
 #Added another common env var name for windres
 os.environ['RC'] = os.environ['WINDRES']
 
