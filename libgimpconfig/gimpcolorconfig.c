@@ -439,6 +439,117 @@ gimp_color_config_get_property (GObject    *object,
     }
 }
 
+
+/*  public functions  */
+
+/**
+ * gimp_color_config_get_mode:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+GimpColorManagementMode
+gimp_color_config_get_mode (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config),
+                        GIMP_COLOR_MANAGEMENT_OFF);
+
+  return config->mode;
+}
+
+/**
+ * gimp_color_config_get_display_intent:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+GimpColorRenderingIntent
+gimp_color_config_get_display_intent (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config),
+                        GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL);
+
+  return config->display_intent;
+}
+
+/**
+ * gimp_color_config_get_display_bpc:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_config_get_display_bpc (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+
+  return config->display_use_black_point_compensation;
+}
+
+/**
+ * gimp_color_config_get_display_profile_from_gdk:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_config_get_display_profile_from_gdk (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+
+  return config->display_profile_from_gdk;
+}
+
+/**
+ * gimp_color_config_get_simulation_intent:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+GimpColorRenderingIntent
+gimp_color_config_get_simulation_intent (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config),
+                        GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL);
+
+  return config->simulation_intent;
+}
+
+/**
+ * gimp_color_config_get_simulation_bpc:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_config_get_simulation_bpc (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+
+  return config->simulation_use_black_point_compensation;
+}
+
+/**
+ * gimp_color_config_get_simulation_gamut_check:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_config_get_simulation_gamut_check (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+
+  return config->simulation_gamut_check;
+}
+
+/**
+ * gimp_color_config_get_rgb_color_profile:
+ * @config: a #GimpColorConfig
+ * @error:  return location for a #GError
+ *
+ * Since: 2.10
+ **/
 GimpColorProfile *
 gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
                                          GError          **error)
@@ -470,6 +581,13 @@ gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
   return profile;
 }
 
+/**
+ * gimp_color_config_get_gray_color_profile:
+ * @config: a #GimpColorConfig
+ * @error:  return location for a #GError
+ *
+ * Since: 2.10
+ **/
 GimpColorProfile *
 gimp_color_config_get_gray_color_profile (GimpColorConfig  *config,
                                           GError          **error)
@@ -501,6 +619,13 @@ gimp_color_config_get_gray_color_profile (GimpColorConfig  *config,
   return profile;
 }
 
+/**
+ * gimp_color_config_get_cmyk_color_profile:
+ * @config: a #GimpColorConfig
+ * @error:  return location for a #GError
+ *
+ * Since: 2.10
+ **/
 GimpColorProfile *
 gimp_color_config_get_cmyk_color_profile (GimpColorConfig  *config,
                                           GError          **error)
@@ -532,6 +657,13 @@ gimp_color_config_get_cmyk_color_profile (GimpColorConfig  *config,
   return profile;
 }
 
+/**
+ * gimp_color_config_get_display_color_profile:
+ * @config: a #GimpColorConfig
+ * @error:  return location for a #GError
+ *
+ * Since: 2.10
+ **/
 GimpColorProfile *
 gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
                                              GError          **error)
@@ -552,6 +684,13 @@ gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
   return profile;
 }
 
+/**
+ * gimp_color_config_get_simulation_color_profile:
+ * @config: a #GimpColorConfig
+ * @error:  return location for a #GError
+ *
+ * Since: 2.10
+ **/
 GimpColorProfile *
 gimp_color_config_get_simulation_color_profile (GimpColorConfig  *config,
                                                 GError          **error)

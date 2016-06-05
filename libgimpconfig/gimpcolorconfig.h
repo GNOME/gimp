@@ -80,6 +80,19 @@ struct _GimpColorConfigClass
 
 GType              gimp_color_config_get_type                     (void) G_GNUC_CONST;
 
+GimpColorManagementMode
+                   gimp_color_config_get_mode                     (GimpColorConfig  *config);
+
+GimpColorRenderingIntent
+                   gimp_color_config_get_display_intent           (GimpColorConfig  *config);
+gboolean           gimp_color_config_get_display_bpc              (GimpColorConfig  *config);
+gboolean           gimp_color_config_get_display_profile_from_gdk (GimpColorConfig  *config);
+
+GimpColorRenderingIntent
+                   gimp_color_config_get_simulation_intent        (GimpColorConfig  *config);
+gboolean           gimp_color_config_get_simulation_bpc           (GimpColorConfig  *config);
+gboolean           gimp_color_config_get_simulation_gamut_check   (GimpColorConfig  *config);
+
 GimpColorProfile * gimp_color_config_get_rgb_color_profile        (GimpColorConfig  *config,
                                                                    GError          **error);
 GimpColorProfile * gimp_color_config_get_gray_color_profile       (GimpColorConfig  *config,

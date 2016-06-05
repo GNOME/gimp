@@ -584,7 +584,7 @@ get_display_profile (GtkWidget       *widget,
 {
   GimpColorProfile *profile = NULL;
 
-  if (config->display_profile_from_gdk)
+  if (gimp_color_config_get_display_profile_from_gdk (config))
     /* get the toplevel's profile so all a window's colors look the same */
     profile = gimp_widget_get_color_profile (gtk_widget_get_toplevel (widget));
 
@@ -705,7 +705,7 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       debug_cache = g_getenv ("GIMP_DEBUG_TRANSFORM_CACHE") != NULL;
     }
 
-  switch (config->mode)
+  switch (gimp_color_config_get_mode (config))
     {
     case GIMP_COLOR_MANAGEMENT_OFF:
       return NULL;
@@ -771,16 +771,16 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
     {
       GimpColorTransformFlags flags = 0;
 
-      if (config->simulation_use_black_point_compensation)
+      if (gimp_color_config_get_simulation_bpc (config))
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
 #if 0
       /* FIXME add this to GimpColorConfig */
-      if (config->simulation_nooptimize)
+      if (gimp_color_config_get_simulation_nooptimize (config))
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
 #endif
 
-      if (config->simulation_gamut_check)
+      if (gimp_color_config_get_simulation_gamut_check (config))
         {
           cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0, };
           guchar          r, g, b;
@@ -802,20 +802,20 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
                                            cache->dest_profile,
                                            cache->dest_format,
                                            cache->proof_profile,
-                                           config->simulation_intent,
-                                           config->display_intent,
+                                           gimp_color_config_get_simulation_intent (config),
+                                           gimp_color_config_get_display_intent (config),
                                            flags);
     }
   else
     {
       GimpColorTransformFlags flags = 0;
 
-      if (config->display_use_black_point_compensation)
+      if (gimp_color_config_get_display_bpc (config))
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
 #if 0
       /* FIXME add this to GimpColorConfig */
-      if (config->display_nooptimize)
+      if (gimp_color_config_get_display_nooptimize (config))
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
 #endif
 
@@ -824,7 +824,7 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
                                   cache->src_format,
                                   cache->dest_profile,
                                   cache->dest_format,
-                                  config->display_intent,
+                                  gimp_color_config_get_display_intent (config),
                                   flags);
     }
 

@@ -814,7 +814,7 @@ view_actions_update (GimpActionGroup *group,
 
       color_config = gimp_display_shell_get_color_config (shell);
 
-      switch (color_config->mode)
+      switch (gimp_color_config_get_mode (color_config))
         {
         case GIMP_COLOR_MANAGEMENT_OFF:
           break;
@@ -829,7 +829,7 @@ view_actions_update (GimpActionGroup *group,
           break;
         }
 
-      switch (color_config->display_intent)
+      switch (gimp_color_config_get_display_intent (color_config))
         {
         case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
           action = "view-display-intent-perceptual";
@@ -850,7 +850,7 @@ view_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      switch (color_config->simulation_intent)
+      switch (gimp_color_config_get_simulation_intent (color_config))
         {
         case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
           action = "view-softproof-intent-perceptual";
@@ -871,9 +871,9 @@ view_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      d_bpc  = color_config->display_use_black_point_compensation;
-      s_bpc  = color_config->simulation_use_black_point_compensation;
-      gammut = color_config->simulation_gamut_check;
+      d_bpc  = gimp_color_config_get_display_bpc (color_config);
+      s_bpc  = gimp_color_config_get_simulation_bpc (color_config);
+      gammut = gimp_color_config_get_simulation_gamut_check (color_config);
     }
 
 #define SET_ACTIVE(action,condition) \

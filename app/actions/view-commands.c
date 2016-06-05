@@ -518,7 +518,7 @@ view_color_management_enable_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  mode = color_config->mode;
+  mode = gimp_color_config_get_mode (color_config);
 
   if (active)
     {
@@ -530,7 +530,7 @@ view_color_management_enable_cmd_callback (GtkAction *action,
       mode = GIMP_COLOR_MANAGEMENT_OFF;
     }
 
-  if (mode != color_config->mode)
+  if (mode != gimp_color_config_get_mode (color_config))
     {
       g_object_set (color_config,
                     "mode", mode,
@@ -553,7 +553,7 @@ view_color_management_softproof_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  mode = color_config->mode;
+  mode = gimp_color_config_get_mode (color_config);
 
   if (active)
     {
@@ -565,7 +565,7 @@ view_color_management_softproof_cmd_callback (GtkAction *action,
         mode = GIMP_COLOR_MANAGEMENT_DISPLAY;
     }
 
-  if (mode != color_config->mode)
+  if (mode != gimp_color_config_get_mode (color_config))
     {
       g_object_set (color_config,
                     "mode", mode,
@@ -588,7 +588,7 @@ view_display_intent_cmd_callback (GtkAction *action,
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value != color_config->display_intent)
+  if (value != gimp_color_config_get_display_intent (color_config))
     {
       g_object_set (color_config,
                     "display-rendering-intent", value,
@@ -611,7 +611,7 @@ view_softproof_intent_cmd_callback (GtkAction *action,
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value != color_config->simulation_intent)
+  if (value != gimp_color_config_get_simulation_intent (color_config))
     {
       g_object_set (color_config,
                     "simulation-rendering-intent", value,
@@ -633,7 +633,7 @@ view_display_bpc_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (active != color_config->display_use_black_point_compensation)
+  if (active != gimp_color_config_get_display_bpc (color_config))
     {
       g_object_set (color_config,
                     "display-use-black-point-compensation", active,
@@ -655,7 +655,7 @@ view_softproof_bpc_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (active != color_config->simulation_use_black_point_compensation)
+  if (active != gimp_color_config_get_simulation_bpc (color_config))
     {
       g_object_set (color_config,
                     "simulation-use-black-point-compensation", active,
@@ -677,7 +677,7 @@ view_softproof_gamut_check_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (active != color_config->simulation_gamut_check)
+  if (active != gimp_color_config_get_simulation_gamut_check (color_config))
     {
       g_object_set (color_config,
                     "simulation-gamut-check", active,
