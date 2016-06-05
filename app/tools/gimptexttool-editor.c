@@ -1511,7 +1511,7 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                                         gtk_text_buffer_get_insert (buffer));
       text_tool->preedit_end = gtk_text_buffer_create_mark (buffer,
                                                             "preedit-end",
-                                                            &iter, TRUE);
+                                                            &iter, FALSE);
 
       /* Move the cursor to the expected location. */
       gtk_text_buffer_get_iter_at_mark (buffer, &iter, text_tool->preedit_start);
