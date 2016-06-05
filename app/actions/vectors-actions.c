@@ -142,7 +142,7 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_paste_cmd_callback),
     GIMP_HELP_PATH_PASTE },
 
-  { "vectors-export", "document-save",
+  { "vectors-export", GIMP_STOCK_SAVE,
     NC_("vectors-action", "E_xport Path..."), "", NULL,
     G_CALLBACK (vectors_export_cmd_callback),
     GIMP_HELP_PATH_EXPORT },

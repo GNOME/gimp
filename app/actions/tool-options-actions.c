@@ -57,7 +57,7 @@ static const GimpActionEntry tool_options_actions[] =
     NC_("tool-options-action", "Tool Options Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DIALOG },
 
-  { "tool-options-save-preset-menu", "document-save",
+  { "tool-options-save-preset-menu", GIMP_STOCK_SAVE,
     NC_("tool-options-action", "_Save Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_SAVE },
 
