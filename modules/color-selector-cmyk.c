@@ -398,25 +398,20 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
                            gimp_color_profile_get_summary (cmyk_profile),
                            NULL);
 
-  if (config->display_intent ==
-      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
-    {
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
-    }
-
   flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+  flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
   module->rgb2cmyk = gimp_color_transform_new (rgb_profile,
                                                babl_format ("R'G'B' double"),
                                                cmyk_profile,
                                                babl_format ("CMYK double"),
-                                               config->display_intent,
+                                               GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                                flags);
   module->cmyk2rgb = gimp_color_transform_new (cmyk_profile,
                                                babl_format ("CMYK double"),
                                                rgb_profile,
                                                babl_format ("R'G'B' double"),
-                                               config->display_intent,
+                                               GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                                flags);
 
  out:
