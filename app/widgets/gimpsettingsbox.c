@@ -321,7 +321,7 @@ gimp_settings_box_constructed (GObject *object)
 
   private->export_item =
     gimp_settings_box_menu_item_add (box,
-                                     "document-save",
+                                     GIMP_STOCK_SAVE,
                                      _("_Export Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 

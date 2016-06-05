@@ -50,14 +50,14 @@ static const GimpActionEntry gradient_editor_actions[] =
     NC_("gradient-editor-action", "Left Color Type") },
   { "gradient-editor-load-left-color", "document-revert",
     NC_("gradient-editor-action", "_Load Left Color From") },
-  { "gradient-editor-save-left-color", "document-save",
+  { "gradient-editor-save-left-color", GIMP_STOCK_SAVE,
     NC_("gradient-editor-action", "_Save Left Color To") },
 
   { "gradient-editor-right-color-type", NULL,
     NC_("gradient-editor-action", "Right Color Type") },
   { "gradient-editor-load-right-color", "document-revert",
     NC_("gradient-editor-action", "Load Right Color Fr_om") },
-  { "gradient-editor-save-right-color", "document-save",
+  { "gradient-editor-save-right-color", GIMP_STOCK_SAVE,
     NC_("gradient-editor-action", "Sa_ve Right Color To") },
 
   { "gradient-editor-blending-func", NULL, "blending-function" },

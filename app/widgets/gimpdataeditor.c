@@ -211,7 +211,7 @@ gimp_data_editor_constructed (GObject *object)
 
   editor->save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            "document-save",
+                            GIMP_STOCK_SAVE,
                             _("Save"), NULL,
                             G_CALLBACK (gimp_data_editor_save_clicked),
                             NULL,

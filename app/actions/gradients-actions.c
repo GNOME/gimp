@@ -68,7 +68,7 @@ static const GimpActionEntry gradients_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_GRADIENT_SHOW_IN_FILE_MANAGER },
 
-  { "gradients-save-as-pov", "document-save-as",
+  { "gradients-save-as-pov", GIMP_STOCK_SAVE_AS,
     NC_("gradients-action", "Save as _POV-Ray..."), NULL,
     NC_("gradients-action", "Save gradient as POV-Ray"),
     G_CALLBACK (gradients_save_as_pov_ray_cmd_callback),

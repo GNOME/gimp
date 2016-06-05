@@ -1029,7 +1029,7 @@ create_presetpage (GtkNotebook *notebook)
 
   presetsavebutton = tmpw = gtk_button_new_with_label ( _("Save Current..."));
   gtk_button_set_image (GTK_BUTTON (presetsavebutton),
-                        gtk_image_new_from_icon_name ("document-save",
+                        gtk_image_new_from_icon_name ("gimp-save",
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);

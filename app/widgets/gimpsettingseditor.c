@@ -199,7 +199,7 @@ gimp_settings_editor_constructed (GObject *object)
 
   private->export_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            "document-save",
+                            GIMP_STOCK_SAVE,
                             _("Export the selected settings to a file"),
                             NULL,
                             G_CALLBACK (gimp_settings_editor_export_clicked),
