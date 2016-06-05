@@ -84,7 +84,11 @@
 
 #define DISPLAY_USE_BPC_BLURB \
   _("Do use black point compensation (unless you know you have a reason " \
-    "not to). ")
+    "not to).")
+
+#define DISPLAY_OPTIMIZE_BLURB \
+  _("When disabled, image display might be of better quality " \
+    "at the cost of speed.")
 
 #define SIMULATION_RENDERING_INTENT_BLURB \
   _("How colors are converted from your image's color space to the "  \
@@ -94,6 +98,10 @@
 #define SIMULATION_USE_BPC_BLURB \
   _("Try with and without black point compensation "\
     "and choose what looks best. ")
+
+#define SIMULATION_OPTIMIZE_BLURB \
+  _("When disabled, simulation might be of better quality " \
+    "at the cost of speed.")
 
 #define SIMULATION_GAMUT_CHECK_BLURB \
   _("When enabled, the print simulation will mark colors " \
@@ -115,12 +123,28 @@ enum
   PROP_SIMULATION_PROFILE,
   PROP_DISPLAY_RENDERING_INTENT,
   PROP_DISPLAY_USE_BPC,
+  PROP_DISPLAY_OPTIMIZE,
   PROP_SIMULATION_RENDERING_INTENT,
   PROP_SIMULATION_USE_BPC,
+  PROP_SIMULATION_OPTIMIZE,
   PROP_SIMULATION_GAMUT_CHECK,
   PROP_OUT_OF_GAMUT_COLOR,
   PROP_DISPLAY_MODULE
 };
+
+
+typedef struct _GimpColorConfigPrivate GimpColorConfigPrivate;
+
+struct _GimpColorConfigPrivate
+{
+  gboolean display_optimize;
+  gboolean simulation_optimize;
+};
+
+#define GET_PRIVATE(obj) \
+        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
+                                     GIMP_TYPE_COLOR_CONFIG, \
+                                     GimpColorConfigPrivate)
 
 
 static void  gimp_color_config_finalize               (GObject          *object);
@@ -236,6 +260,13 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DISPLAY_OPTIMIZE,
+                            "display-optimize",
+                            _("Optimize display color transformations"),
+                            DISPLAY_OPTIMIZE_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_SIMULATION_RENDERING_INTENT,
                          "simulation-rendering-intent",
                          _("Softproof rendering intent"),
@@ -249,6 +280,13 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                             _("Use black point compensation for softproofing"),
                             SIMULATION_USE_BPC_BLURB,
                             FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_OPTIMIZE,
+                            "simulation-optimize",
+                            _("Optimize simulation color transformations"),
+                            SIMULATION_OPTIMIZE_BLURB,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_GAMUT_CHECK,
@@ -270,6 +308,8 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                            NULL, NULL,
                            "CdisplayLcms",
                            GIMP_PARAM_STATIC_STRINGS);
+
+  g_type_class_add_private (object_class, sizeof (GimpColorConfigPrivate));
 }
 
 static void
@@ -309,8 +349,9 @@ gimp_color_config_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpColorConfig *color_config = GIMP_COLOR_CONFIG (object);
-  GError          *error        = NULL;
+  GimpColorConfig        *color_config = GIMP_COLOR_CONFIG (object);
+  GimpColorConfigPrivate *priv         = GET_PRIVATE (object);
+  GError                 *error        = NULL;
 
   switch (property_id)
     {
@@ -351,11 +392,17 @@ gimp_color_config_set_property (GObject      *object,
     case PROP_DISPLAY_USE_BPC:
       color_config->display_use_black_point_compensation = g_value_get_boolean (value);
       break;
+    case PROP_DISPLAY_OPTIMIZE:
+      priv->display_optimize = g_value_get_boolean (value);
+      break;
     case PROP_SIMULATION_RENDERING_INTENT:
       color_config->simulation_intent = g_value_get_enum (value);
       break;
     case PROP_SIMULATION_USE_BPC:
       color_config->simulation_use_black_point_compensation = g_value_get_boolean (value);
+      break;
+    case PROP_SIMULATION_OPTIMIZE:
+      priv->simulation_optimize = g_value_get_boolean (value);
       break;
     case PROP_SIMULATION_GAMUT_CHECK:
       color_config->simulation_gamut_check = g_value_get_boolean (value);
@@ -386,7 +433,8 @@ gimp_color_config_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpColorConfig *color_config = GIMP_COLOR_CONFIG (object);
+  GimpColorConfig        *color_config = GIMP_COLOR_CONFIG (object);
+  GimpColorConfigPrivate *priv         = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -417,11 +465,17 @@ gimp_color_config_get_property (GObject    *object,
     case PROP_DISPLAY_USE_BPC:
       g_value_set_boolean (value, color_config->display_use_black_point_compensation);
       break;
+    case PROP_DISPLAY_OPTIMIZE:
+      g_value_set_boolean (value, priv->display_optimize);
+      break;
     case PROP_SIMULATION_RENDERING_INTENT:
       g_value_set_enum (value, color_config->simulation_intent);
       break;
     case PROP_SIMULATION_USE_BPC:
       g_value_set_boolean (value, color_config->simulation_use_black_point_compensation);
+      break;
+    case PROP_SIMULATION_OPTIMIZE:
+      g_value_set_boolean (value, priv->simulation_optimize);
       break;
     case PROP_SIMULATION_GAMUT_CHECK:
       g_value_set_boolean (value, color_config->simulation_gamut_check);
@@ -487,6 +541,20 @@ gimp_color_config_get_display_bpc (GimpColorConfig *config)
 }
 
 /**
+ * gimp_color_config_get_display_optimize:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_config_get_display_optimize (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+
+  return GET_PRIVATE (config)->display_optimize;
+}
+
+/**
  * gimp_color_config_get_display_profile_from_gdk:
  * @config: a #GimpColorConfig
  *
@@ -527,6 +595,20 @@ gimp_color_config_get_simulation_bpc (GimpColorConfig *config)
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
 
   return config->simulation_use_black_point_compensation;
+}
+
+/**
+ * gimp_color_config_get_simulation_optimize:
+ * @config: a #GimpColorConfig
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_config_get_simulation_optimize (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+
+  return GET_PRIVATE (config)->simulation_optimize;
 }
 
 /**

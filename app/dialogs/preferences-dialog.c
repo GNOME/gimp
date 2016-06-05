@@ -1367,7 +1367,6 @@ prefs_dialog_new (Gimp       *gimp,
                                          "display-profile-from-gdk",
                                          _("_Try to use the system monitor "
                                            "profile"));
-
     gtk_table_attach_defaults (GTK_TABLE (table),
                                button, 1, 2, row, row + 1);
     gtk_widget_show (button);
@@ -1381,10 +1380,18 @@ prefs_dialog_new (Gimp       *gimp,
     button = gimp_prop_check_button_new (color_config,
                                          "display-use-black-point-compensation",
                                          _("Use _black point compensation"));
-
     gtk_table_attach_defaults (GTK_TABLE (table),
                                button, 1, 2, row, row + 1);
     gtk_widget_show (button);
+    row++;
+
+    button = gimp_prop_check_button_new (color_config,
+                                         "display-optimize",
+                                         _("_Optimize display color transforms"));
+    gtk_table_attach_defaults (GTK_TABLE (table),
+                               button, 1, 2, row, row + 1);
+    gtk_widget_show (button);
+    row++;
 
     /*  Print Simulation (Softproofing)  */
     vbox2 = prefs_frame_new (_("Print Simulation (Softproofing)"),
@@ -1409,7 +1416,14 @@ prefs_dialog_new (Gimp       *gimp,
     button = gimp_prop_check_button_new (color_config,
                                          "simulation-use-black-point-compensation",
                                          _("Use black _point compensation"));
+    gtk_table_attach_defaults (GTK_TABLE (table),
+                               button, 1, 2, row, row + 1);
+    gtk_widget_show (button);
+    row++;
 
+    button = gimp_prop_check_button_new (color_config,
+                                         "simulation-optimize",
+                                         _("O_ptimize simulation color transforms"));
     gtk_table_attach_defaults (GTK_TABLE (table),
                                button, 1, 2, row, row + 1);
     gtk_widget_show (button);

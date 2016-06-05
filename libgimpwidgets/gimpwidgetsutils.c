@@ -774,11 +774,8 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       if (gimp_color_config_get_simulation_bpc (config))
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-#if 0
-      /* FIXME add this to GimpColorConfig */
-      if (gimp_color_config_get_simulation_nooptimize (config))
+      if (! gimp_color_config_get_simulation_optimize (config))
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
-#endif
 
       if (gimp_color_config_get_simulation_gamut_check (config))
         {
@@ -813,11 +810,8 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       if (gimp_color_config_get_display_bpc (config))
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-#if 0
-      /* FIXME add this to GimpColorConfig */
-      if (gimp_color_config_get_display_nooptimize (config))
+      if (! gimp_color_config_get_display_optimize (config))
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
-#endif
 
       cache->transform =
         gimp_color_transform_new (cache->src_profile,
