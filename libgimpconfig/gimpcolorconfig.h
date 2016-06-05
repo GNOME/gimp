@@ -78,18 +78,18 @@ struct _GimpColorConfigClass
 };
 
 
-GType              gimp_color_config_get_type                  (void) G_GNUC_CONST;
+GType              gimp_color_config_get_type                     (void) G_GNUC_CONST;
 
-GimpColorProfile * gimp_color_config_get_rgb_color_profile     (GimpColorConfig  *config,
-                                                                GError          **error);
-GimpColorProfile * gimp_color_config_get_gray_color_profile    (GimpColorConfig  *config,
-                                                                GError          **error);
-GimpColorProfile * gimp_color_config_get_cmyk_color_profile    (GimpColorConfig  *config,
-                                                                GError          **error);
-GimpColorProfile * gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
-                                                                GError          **error);
-GimpColorProfile * gimp_color_config_get_printer_color_profile (GimpColorConfig  *config,
-                                                                GError          **error);
+GimpColorProfile * gimp_color_config_get_rgb_color_profile        (GimpColorConfig  *config,
+                                                                   GError          **error);
+GimpColorProfile * gimp_color_config_get_gray_color_profile       (GimpColorConfig  *config,
+                                                                   GError          **error);
+GimpColorProfile * gimp_color_config_get_cmyk_color_profile       (GimpColorConfig  *config,
+                                                                   GError          **error);
+GimpColorProfile * gimp_color_config_get_display_color_profile    (GimpColorConfig  *config,
+                                                                   GError          **error);
+GimpColorProfile * gimp_color_config_get_simulation_color_profile (GimpColorConfig  *config,
+                                                                   GError          **error);
 
 
 #endif /* GIMP_COLOR_CONFIG_H__ */

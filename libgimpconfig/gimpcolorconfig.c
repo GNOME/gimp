@@ -70,7 +70,7 @@
 #define CMYK_PROFILE_BLURB \
   _("The CMYK color profile used to convert between RGB and CMYK.")
 
-#define PRINTER_PROFILE_BLURB \
+#define SIMULATION_PROFILE_BLURB \
   _("The color profile to use for soft proofing from your image's " \
     "color space to some other color space, including " \
     "soft proofing to a printer or other output device profile. ")
@@ -112,7 +112,7 @@ enum
   PROP_CMYK_PROFILE,
   PROP_DISPLAY_PROFILE,
   PROP_DISPLAY_PROFILE_FROM_GDK,
-  PROP_PRINTER_PROFILE,
+  PROP_SIMULATION_PROFILE,
   PROP_DISPLAY_RENDERING_INTENT,
   PROP_DISPLAY_USE_BPC,
   PROP_SIMULATION_RENDERING_INTENT,
@@ -123,31 +123,31 @@ enum
 };
 
 
-static void  gimp_color_config_finalize            (GObject          *object);
-static void  gimp_color_config_set_property        (GObject          *object,
-                                                    guint             property_id,
-                                                    const GValue     *value,
-                                                    GParamSpec       *pspec);
-static void  gimp_color_config_get_property        (GObject          *object,
-                                                    guint             property_id,
-                                                    GValue           *value,
-                                                    GParamSpec       *pspec);
+static void  gimp_color_config_finalize               (GObject          *object);
+static void  gimp_color_config_set_property           (GObject          *object,
+                                                       guint             property_id,
+                                                       const GValue     *value,
+                                                       GParamSpec       *pspec);
+static void  gimp_color_config_get_property           (GObject          *object,
+                                                       guint             property_id,
+                                                       GValue           *value,
+                                                       GParamSpec       *pspec);
 
-static void  gimp_color_config_set_rgb_profile     (GimpColorConfig  *config,
-                                                    const gchar      *filename,
-                                                    GError          **error);
-static void  gimp_color_config_set_gray_profile    (GimpColorConfig  *config,
-                                                    const gchar      *filename,
-                                                    GError          **error);
-static void  gimp_color_config_set_cmyk_profile    (GimpColorConfig  *config,
-                                                    const gchar      *filename,
-                                                    GError          **error);
-static void  gimp_color_config_set_display_profile (GimpColorConfig  *config,
-                                                    const gchar      *filename,
-                                                    GError          **error);
-static void  gimp_color_config_set_printer_profile (GimpColorConfig  *config,
-                                                    const gchar      *filename,
-                                                    GError          **error);
+static void  gimp_color_config_set_rgb_profile        (GimpColorConfig  *config,
+                                                       const gchar      *filename,
+                                                       GError          **error);
+static void  gimp_color_config_set_gray_profile       (GimpColorConfig  *config,
+                                                       const gchar      *filename,
+                                                       GError          **error);
+static void  gimp_color_config_set_cmyk_profile       (GimpColorConfig  *config,
+                                                       const gchar      *filename,
+                                                       GError          **error);
+static void  gimp_color_config_set_display_profile    (GimpColorConfig  *config,
+                                                       const gchar      *filename,
+                                                       GError          **error);
+static void  gimp_color_config_set_simulation_profile (GimpColorConfig  *config,
+                                                       const gchar      *filename,
+                                                       GError          **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorConfig, gimp_color_config, G_TYPE_OBJECT,
@@ -213,10 +213,11 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_PRINTER_PROFILE,
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_SIMULATION_PROFILE,
+                         /* FIXME: 3.0: change to simulation-profile */
                          "printer-profile",
-                         _("Print simulation profile"),
-                         PRINTER_PROFILE_BLURB,
+                         _("Simulation profile for softproofing"),
+                         SIMULATION_PROFILE_BLURB,
                          GIMP_CONFIG_PATH_FILE, NULL,
                          GIMP_PARAM_STATIC_STRINGS);
 
@@ -339,10 +340,10 @@ gimp_color_config_set_property (GObject      *object,
     case PROP_DISPLAY_PROFILE_FROM_GDK:
       color_config->display_profile_from_gdk = g_value_get_boolean (value);
       break;
-    case PROP_PRINTER_PROFILE:
-      gimp_color_config_set_printer_profile (color_config,
-                                             g_value_get_string (value),
-                                             &error);
+    case PROP_SIMULATION_PROFILE:
+      gimp_color_config_set_simulation_profile (color_config,
+                                                g_value_get_string (value),
+                                                &error);
       break;
     case PROP_DISPLAY_RENDERING_INTENT:
       color_config->display_intent = g_value_get_enum (value);
@@ -407,7 +408,7 @@ gimp_color_config_get_property (GObject    *object,
     case PROP_DISPLAY_PROFILE_FROM_GDK:
       g_value_set_boolean (value, color_config->display_profile_from_gdk);
       break;
-    case PROP_PRINTER_PROFILE:
+    case PROP_SIMULATION_PROFILE:
       g_value_set_string (value, color_config->printer_profile);
       break;
     case PROP_DISPLAY_RENDERING_INTENT:
@@ -552,8 +553,8 @@ gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
 }
 
 GimpColorProfile *
-gimp_color_config_get_printer_color_profile (GimpColorConfig  *config,
-                                             GError          **error)
+gimp_color_config_get_simulation_color_profile (GimpColorConfig  *config,
+                                                GError          **error)
 {
   GimpColorProfile *profile = NULL;
 
@@ -731,9 +732,9 @@ gimp_color_config_set_display_profile (GimpColorConfig  *config,
 }
 
 static void
-gimp_color_config_set_printer_profile (GimpColorConfig  *config,
-                                       const gchar      *filename,
-                                       GError          **error)
+gimp_color_config_set_simulation_profile (GimpColorConfig  *config,
+                                          const gchar      *filename,
+                                          GError          **error)
 {
   gboolean success = TRUE;
 

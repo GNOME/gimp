@@ -1397,8 +1397,8 @@ prefs_dialog_new (Gimp       *gimp,
     prefs_profile_combo_box_add (color_config,
                                  "printer-profile",
                                  store,
-                                 _("Select Printer Color Profile"),
-                                 _("_Print simulation profile:"),
+                                 _("Select Simulation (Softproofing) Color Profile"),
+                                 _("_Simulation profile:"),
                                  GTK_TABLE (table), row++, size_group);
 
     prefs_enum_combo_box_add (color_config,

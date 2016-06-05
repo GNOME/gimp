@@ -347,7 +347,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
     }
   else if (strcmp (name, "printer-profile") == 0)
     {
-      profile = gimp_color_config_get_printer_color_profile (config, NULL);
+      profile = gimp_color_config_get_simulation_color_profile (config, NULL);
     }
   else
     {

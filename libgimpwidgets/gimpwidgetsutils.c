@@ -711,7 +711,8 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       return NULL;
 
     case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-      proof_profile = gimp_color_config_get_printer_color_profile (config, NULL);
+      proof_profile = gimp_color_config_get_simulation_color_profile (config,
+                                                                      NULL);
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
