@@ -1165,7 +1165,7 @@ build_searchbar (void)
   button = gtk_button_new_with_mnemonic (C_("search", "_Previous"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name ("go-previous",
+                        gtk_image_new_from_icon_name ("gimp-previous",
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1177,7 +1177,7 @@ build_searchbar (void)
   button = gtk_button_new_with_mnemonic (C_("search", "_Next"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name ("go-next",
+                        gtk_image_new_from_icon_name ("gimp-next",
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);

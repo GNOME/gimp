@@ -100,6 +100,7 @@ scalable_images = \
 	scalable/gimp-merge-down.svg			\
 	scalable/gimp-move-to-screen.svg		\
 	scalable/gimp-navigation.svg			\
+	scalable/gimp-next.svg				\
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
 	scalable/gimp-path.svg				\
@@ -150,6 +151,7 @@ scalable_images = \
 	scalable/gimp-prefs-toolbox.svg			\
 	scalable/gimp-prefs-tool-options.svg		\
 	scalable/gimp-prefs-window-management.svg	\
+	scalable/gimp-previous.svg			\
 	scalable/gimp-print-resolution.svg		\
 	scalable/gimp-question.svg			\
 	scalable/gimp-quick-mask-off.svg		\
@@ -497,6 +499,7 @@ icons16_images = \
 	16/gimp-merge-down.png				\
 	16/gimp-move-to-screen.png			\
 	16/gimp-navigation.png				\
+	16/gimp-next.png				\
 	16/gimp-paste-as-new.png			\
 	16/gimp-paste-into.png				\
 	16/gimp-path-delete.png				\
@@ -530,6 +533,7 @@ icons16_images = \
 	16/gimp-prefs-theme.png				\
 	16/gimp-prefs-toolbox.png			\
 	16/gimp-prefs-window-management.png		\
+	16/gimp-previous.png				\
 	16/gimp-print-resolution.png			\
 	16/gimp-question.png				\
 	16/gimp-reset.png				\

@@ -188,7 +188,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_sensitive (editor->add_button, FALSE);
   gtk_widget_show (editor->add_button);
 
-  image = gtk_image_new_from_icon_name ("go-next",
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_NEXT,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->add_button), image);
   gtk_widget_show (image);
@@ -202,7 +202,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_sensitive (editor->remove_button, FALSE);
   gtk_widget_show (editor->remove_button);
 
-  image = gtk_image_new_from_icon_name ("go-previous",
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_PREVIOUS,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->remove_button), image);
   gtk_widget_show (image);
