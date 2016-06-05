@@ -45,7 +45,16 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_NEXT                     "gimp-next"
 #define GIMP_STOCK_PREVIOUS                 "gimp-previous"
 #define GIMP_STOCK_SAVE                     "gimp-save"
+#define GIMP_STOCK_SAVE_AS                  "gimp-save-as"
 #define GIMP_STOCK_CANCEL                   "gimp-cancel"
+#define GIMP_STOCK_QUIT                     "gimp-quit"
+
+#define GIMP_STOCK_IMAGE_OPEN               "gimp-image-open"
+#define GIMP_STOCK_IMAGE_RELOAD             "gimp-image-reload"
+#define GIMP_STOCK_CLOSE_ALL                "gimp-close-all"
+#define GIMP_STOCK_CLIPBOARD                "gimp-clipboard"
+#define GIMP_STOCK_FILE_MANAGER             "gimp-file-manager"
+
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
 #define GIMP_STOCK_GRADIENT_BILINEAR             "gimp-gradient-bilinear"
