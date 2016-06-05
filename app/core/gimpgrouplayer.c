@@ -209,7 +209,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
 
   gimp_object_class->get_memsize    = gimp_group_layer_get_memsize;
 
-  viewable_class->default_icon_name = "gtk-directory";
+  viewable_class->default_icon_name = "gimp-group-layer";
   viewable_class->get_size          = gimp_group_layer_get_size;
   viewable_class->get_children      = gimp_group_layer_get_children;
   viewable_class->set_expanded      = gimp_group_layer_set_expanded;
