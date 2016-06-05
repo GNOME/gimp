@@ -925,8 +925,8 @@ gui_multi (void)
   file_browse = gtk_button_new_with_label (_("Browse..."));
   file_choose = gtk_file_chooser_dialog_new (_("Multipage PDF export"),
                                              GTK_WINDOW (window), GTK_FILE_CHOOSER_ACTION_SAVE,
-                                             "gtk-save", GTK_RESPONSE_OK,
-                                             "gtk-cancel", GTK_RESPONSE_CANCEL,
+                                             "gimp-save", GTK_RESPONSE_OK,
+                                             "gimp-cancel", GTK_RESPONSE_CANCEL,
                                              NULL);
 
   gtk_box_pack_start (GTK_BOX (file_hbox), file_label, FALSE, FALSE, 0);

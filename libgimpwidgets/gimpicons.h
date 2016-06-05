@@ -44,6 +44,8 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_VISIBLE                  "gimp-visible"
 #define GIMP_STOCK_NEXT                     "gimp-next"
 #define GIMP_STOCK_PREVIOUS                 "gimp-previous"
+#define GIMP_STOCK_SAVE                     "gimp-save"
+#define GIMP_STOCK_CANCEL                   "gimp-cancel"
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
 #define GIMP_STOCK_GRADIENT_BILINEAR             "gimp-gradient-bilinear"

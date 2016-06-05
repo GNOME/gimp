@@ -1,5 +1,6 @@
 scalable_images = \
 	scalable/gimp-anchor.svg			\
+	scalable/gimp-cancel.svg			\
 	scalable/gimp-cap-butt.svg			\
 	scalable/gimp-cap-round.svg			\
 	scalable/gimp-cap-square.svg			\
@@ -163,6 +164,7 @@ scalable_images = \
 	scalable/gimp-rotate-270.svg			\
 	scalable/gimp-rotate-90.svg			\
 	scalable/gimp-sample-point.svg			\
+	scalable/gimp-save.svg				\
 	scalable/gimp-scale.svg				\
 	scalable/gimp-selection.svg			\
 	scalable/gimp-selection-add.svg			\
@@ -422,6 +424,7 @@ icons12_images = \
 
 icons16_images = \
 	16/gimp-anchor.png				\
+	16/gimp-cancel.png				\
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\
 	16/gimp-cap-square.png				\
@@ -543,6 +546,7 @@ icons16_images = \
 	16/gimp-rotate-270.png				\
 	16/gimp-rotate-90.png				\
 	16/gimp-sample-point.png			\
+	16/gimp-save.png				\
 	16/gimp-scale.png				\
 	16/gimp-selection-add.png			\
 	16/gimp-selection-all.png			\
