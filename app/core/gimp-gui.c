@@ -521,11 +521,13 @@ gimp_get_mount_operation (Gimp         *gimp,
 }
 
 GimpColorProfilePolicy
-gimp_query_profile_policy (Gimp              *gimp,
-                           GimpImage         *image,
-                           GimpContext       *context,
-                           GimpColorProfile **dest_profile,
-                           gboolean          *dont_ask)
+gimp_query_profile_policy (Gimp                      *gimp,
+                           GimpImage                 *image,
+                           GimpContext               *context,
+                           GimpColorProfile         **dest_profile,
+                           GimpColorRenderingIntent  *intent,
+                           gboolean                  *bpc,
+                           gboolean                  *dont_ask)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_COLOR_PROFILE_POLICY_KEEP);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_COLOR_PROFILE_POLICY_KEEP);
@@ -534,7 +536,9 @@ gimp_query_profile_policy (Gimp              *gimp,
 
   if (gimp->gui.query_profile_policy)
     return gimp->gui.query_profile_policy (gimp, image, context,
-                                           dest_profile, dont_ask);
+                                           dest_profile,
+                                           intent, bpc,
+                                           dont_ask);
 
   return GIMP_COLOR_PROFILE_POLICY_KEEP;
 }

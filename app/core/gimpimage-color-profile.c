@@ -443,10 +443,14 @@ gimp_image_import_color_profile (GimpImage    *image,
   if (gimp_image_get_is_color_managed (image) &&
       gimp_image_get_color_profile (image))
     {
-      GimpColorProfilePolicy  policy;
-      GimpColorProfile       *dest_profile = NULL;
+      GimpColorProfilePolicy     policy;
+      GimpColorProfile          *dest_profile = NULL;
+      GimpColorRenderingIntent   intent;
+      gboolean                   bpc;
 
       policy = image->gimp->config->color_profile_policy;
+      intent = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+      bpc    = TRUE;
 
       if (policy == GIMP_COLOR_PROFILE_POLICY_ASK)
         {
@@ -455,7 +459,9 @@ gimp_image_import_color_profile (GimpImage    *image,
               gboolean dont_ask = FALSE;
 
               policy = gimp_query_profile_policy (image->gimp, image, context,
-                                                  &dest_profile, &dont_ask);
+                                                  &dest_profile,
+                                                  &intent, &bpc,
+                                                  &dont_ask);
 
               if (dont_ask)
                 {
@@ -472,21 +478,6 @@ gimp_image_import_color_profile (GimpImage    *image,
 
       if (policy == GIMP_COLOR_PROFILE_POLICY_CONVERT)
         {
-          GimpColorConfig           *config;
-          GimpColorRenderingIntent   intent;
-          gboolean                   bpc;
-
-          config = image->gimp->config->color_management;
-
-          if (! dest_profile)
-            {
-              dest_profile = gimp_image_get_builtin_color_profile (image);
-              g_object_ref (dest_profile);
-            }
-
-          intent = config->display_intent;
-          bpc    = (intent == GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
-
           gimp_image_convert_color_profile (image, dest_profile,
                                             intent, bpc,
                                             progress, NULL);
