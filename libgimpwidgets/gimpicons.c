@@ -68,7 +68,9 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_RESET,          N_("_Reset"),          0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VISIBLE,        N_("Visible"),         0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_NEXT,           N_("Ne_xt"),           0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_Previous,       N_("Pre_vious"),       0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PREVIOUS,       N_("Pre_vious"),       0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SAVE,           N_("_Save"),           0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CANCEL,         N_("_Cancel"),         0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },

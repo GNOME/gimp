@@ -278,7 +278,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_container_add (GTK_CONTAINER (statusbar->cancel_button), hbox2);
   gtk_widget_show (hbox2);
 
-  image = gtk_image_new_from_icon_name ("gtk-cancel", GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox2), image, FALSE, FALSE, 2);
   gtk_widget_show (image);
 
