@@ -77,6 +77,7 @@ struct _GimpTextTool
   GtkIMContext   *im_context;
   gboolean        needs_im_reset;
 
+  gboolean        preedit_active;
   gchar          *preedit_string;
   gint            preedit_cursor;
   GtkTextMark    *preedit_start;

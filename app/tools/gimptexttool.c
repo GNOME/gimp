@@ -148,6 +148,8 @@ static void      gimp_text_tool_text_changed    (GimpText          *text,
 
 static gboolean  gimp_text_tool_apply           (GimpTextTool      *text_tool,
                                                  gboolean           push_undo);
+static void      gimp_text_tool_apply_list      (GimpTextTool      *text_tool,
+                                                 GList             *pspecs);
 
 static void      gimp_text_tool_create_layer    (GimpTextTool      *text_tool,
                                                  GimpText          *text);
@@ -366,7 +368,14 @@ gimp_text_tool_button_press (GimpTool            *tool,
     {
       gimp_tool_control_activate (tool->control);
 
-      gimp_text_tool_reset_im_context (text_tool);
+      /* clicking anywhere while a preedit is going on aborts the
+       * preedit, this is ugly but at least leaves everything in
+       * a consistent state
+       */
+      if (text_tool->preedit_active)
+        gimp_text_tool_abort_im_context (text_tool);
+      else
+        gimp_text_tool_reset_im_context (text_tool);
 
       text_tool->selecting = FALSE;
 
@@ -1130,17 +1139,59 @@ gimp_text_tool_proxy_notify (GimpText         *text,
   if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE &&
       pspec->owner_type == GIMP_TYPE_TEXT)
     {
-      gimp_text_tool_block_drawing (text_tool);
+      if (text_tool->preedit_active)
+        {
+          /* if there is a preedit going on, don't queue pending
+           * changes to be idle-applied with undo; instead, flush the
+           * pending queue (happens only when preedit starts), and
+           * apply the changes to text_tool->text directly. Preedit
+           * will *always* end by removing the preedit string, and if
+           * the preedit was committed, it will insert the resulting
+           * text, which will not trigger this if() any more.
+           */
 
-      text_tool->pending = g_list_append (text_tool->pending, (gpointer) pspec);
+          GList *list = NULL;
 
-      if (text_tool->idle_id)
-        g_source_remove (text_tool->idle_id);
+         /* if there are pending changes, apply them before applying
+           * preedit stuff directly (bypassing undo)
+           */
+          if (text_tool->pending)
+            {
+              gimp_text_tool_block_drawing (text_tool);
+              gimp_text_tool_apply (text_tool, TRUE);
+            }
 
-      text_tool->idle_id =
-        g_idle_add_full (G_PRIORITY_LOW,
-                         gimp_text_tool_apply_idle, text_tool,
-                         NULL);
+          gimp_text_tool_block_drawing (text_tool);
+
+          list = g_list_append (list, (gpointer) pspec);
+          gimp_text_tool_apply_list (text_tool, list);
+          g_list_free (list);
+
+          gimp_text_tool_frame_item (text_tool);
+
+          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (text_tool->layer)));
+
+          gimp_text_tool_unblock_drawing (text_tool);
+        }
+      else
+        {
+          /* else queue the property change for normal processing,
+           * including undo
+           */
+
+          gimp_text_tool_block_drawing (text_tool);
+
+          text_tool->pending = g_list_append (text_tool->pending,
+                                              (gpointer) pspec);
+
+          if (text_tool->idle_id)
+            g_source_remove (text_tool->idle_id);
+
+          text_tool->idle_id =
+            g_idle_add_full (G_PRIORITY_LOW,
+                             gimp_text_tool_apply_idle, text_tool,
+                             NULL);
+        }
     }
 }
 
@@ -1150,6 +1201,10 @@ gimp_text_tool_text_notify (GimpText         *text,
                             GimpTextTool     *text_tool)
 {
   g_return_if_fail (text == text_tool->text);
+
+  /* an undo cancels all preedit operations */
+  if (text_tool->preedit_active)
+    gimp_text_tool_abort_im_context (text_tool);
 
   gimp_text_tool_block_drawing (text_tool);
 
@@ -1219,8 +1274,6 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
   const GParamSpec *pspec = NULL;
   GimpImage        *image;
   GimpTextLayer    *layer;
-  GObject          *src;
-  GObject          *dest;
   GList            *list;
   gboolean          undo_group = FALSE;
 
@@ -1299,47 +1352,10 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
       gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
     }
 
-  src  = G_OBJECT (text_tool->proxy);
-  dest = G_OBJECT (text_tool->text);
-
-  g_signal_handlers_block_by_func (dest,
-                                   gimp_text_tool_text_notify,
-                                   text_tool);
-  g_signal_handlers_block_by_func (dest,
-                                   gimp_text_tool_text_changed,
-                                   text_tool);
-
-  g_object_freeze_notify (dest);
-
-  for (; list; list = g_list_next (list))
-    {
-      GValue value = G_VALUE_INIT;
-
-      /*  look ahead and compress changes  */
-      if (list->next && list->next->data == list->data)
-        continue;
-
-      pspec = list->data;
-
-      g_value_init (&value, pspec->value_type);
-
-      g_object_get_property (src,  pspec->name, &value);
-      g_object_set_property (dest, pspec->name, &value);
-
-      g_value_unset (&value);
-    }
+  gimp_text_tool_apply_list (text_tool, list);
 
   g_list_free (text_tool->pending);
   text_tool->pending = NULL;
-
-  g_object_thaw_notify (dest);
-
-  g_signal_handlers_unblock_by_func (dest,
-                                     gimp_text_tool_text_notify,
-                                     text_tool);
-  g_signal_handlers_unblock_by_func (dest,
-                                     gimp_text_tool_text_changed,
-                                     text_tool);
 
   if (push_undo)
     {
@@ -1356,6 +1372,52 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
   gimp_text_tool_unblock_drawing (text_tool);
 
   return FALSE;
+}
+
+static void
+gimp_text_tool_apply_list (GimpTextTool *text_tool,
+                           GList        *pspecs)
+{
+  GObject *src  = G_OBJECT (text_tool->proxy);
+  GObject *dest = G_OBJECT (text_tool->text);
+  GList   *list;
+
+  g_signal_handlers_block_by_func (dest,
+                                   gimp_text_tool_text_notify,
+                                   text_tool);
+  g_signal_handlers_block_by_func (dest,
+                                   gimp_text_tool_text_changed,
+                                   text_tool);
+
+  g_object_freeze_notify (dest);
+
+  for (list = pspecs; list; list = g_list_next (list))
+    {
+      const GParamSpec *pspec;
+      GValue            value = G_VALUE_INIT;
+
+      /*  look ahead and compress changes  */
+      if (list->next && list->next->data == list->data)
+        continue;
+
+      pspec = list->data;
+
+      g_value_init (&value, pspec->value_type);
+
+      g_object_get_property (src,  pspec->name, &value);
+      g_object_set_property (dest, pspec->name, &value);
+
+      g_value_unset (&value);
+    }
+
+  g_object_thaw_notify (dest);
+
+  g_signal_handlers_unblock_by_func (dest,
+                                     gimp_text_tool_text_notify,
+                                     text_tool);
+  g_signal_handlers_unblock_by_func (dest,
+                                     gimp_text_tool_text_changed,
+                                     text_tool);
 }
 
 static void

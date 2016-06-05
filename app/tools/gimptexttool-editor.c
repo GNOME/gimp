@@ -95,6 +95,8 @@ static void     gimp_text_tool_xy_to_iter         (GimpTextTool    *text_tool,
                                                    gdouble          y,
                                                    GtkTextIter     *iter);
 
+static void     gimp_text_tool_im_preedit_start   (GtkIMContext    *context,
+                                                   GimpTextTool    *text_tool);
 static void     gimp_text_tool_im_preedit_end     (GtkIMContext    *context,
                                                    GimpTextTool    *text_tool);
 static void     gimp_text_tool_im_preedit_changed (GtkIMContext    *context,
@@ -127,6 +129,9 @@ gimp_text_tool_editor_init (GimpTextTool *text_tool)
   text_tool->overwrite_mode = FALSE;
   text_tool->x_pos          = -1;
 
+  g_signal_connect (text_tool->im_context, "preedit-start",
+                    G_CALLBACK (gimp_text_tool_im_preedit_start),
+                    text_tool);
   g_signal_connect (text_tool->im_context, "preedit-end",
                     G_CALLBACK (gimp_text_tool_im_preedit_end),
                     text_tool);
@@ -535,14 +540,33 @@ gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
 void
 gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
 {
-  /* Cancel any ungoing preedit on reset. */
-  gimp_text_tool_im_delete_preedit (text_tool);
-
   if (text_tool->needs_im_reset)
     {
       text_tool->needs_im_reset = FALSE;
       gtk_im_context_reset (text_tool->im_context);
     }
+}
+
+void
+gimp_text_tool_abort_im_context (GimpTextTool *text_tool)
+{
+  GimpTool         *tool  = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+
+  text_tool->needs_im_reset = TRUE;
+  gimp_text_tool_reset_im_context (text_tool);
+
+  /* the following lines seem to be the only way of really getting
+   * rid of any ongoing preedit state, please somebody tell me
+   * a clean way... mitch
+   */
+
+  gtk_im_context_focus_out (text_tool->im_context);
+  gtk_im_context_set_client_window (text_tool->im_context, NULL);
+
+  gtk_im_context_set_client_window (text_tool->im_context,
+                                    gtk_widget_get_window (shell->canvas));
+  gtk_im_context_focus_in (text_tool->im_context);
 }
 
 void
@@ -1336,10 +1360,23 @@ gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
 }
 
 static void
+gimp_text_tool_im_preedit_start (GtkIMContext *context,
+                                 GimpTextTool *text_tool)
+{
+  GIMP_LOG (TEXT_EDITING, "preedit start");
+
+  text_tool->preedit_active = TRUE;
+}
+
+static void
 gimp_text_tool_im_preedit_end (GtkIMContext *context,
                                GimpTextTool *text_tool)
 {
   gimp_text_tool_delete_selection (text_tool);
+
+  text_tool->preedit_active = FALSE;
+
+  GIMP_LOG (TEXT_EDITING, "preedit end");
 }
 
 static void
@@ -1348,6 +1385,10 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   PangoAttrList *attrs;
+
+  GIMP_LOG (TEXT_EDITING, "preedit changed");
+
+  gtk_text_buffer_begin_user_action (buffer);
 
   gimp_text_tool_im_delete_preedit (text_tool);
 
@@ -1473,6 +1514,8 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
     }
 
   pango_attr_list_unref (attrs);
+
+  gtk_text_buffer_end_user_action (buffer);
 }
 
 static void

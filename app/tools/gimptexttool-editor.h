@@ -45,6 +45,7 @@ gboolean   gimp_text_tool_editor_key_release      (GimpTextTool        *text_too
                                                    GdkEventKey         *kevent);
 
 void       gimp_text_tool_reset_im_context        (GimpTextTool        *text_tool);
+void       gimp_text_tool_abort_im_context        (GimpTextTool        *text_tool);
 
 void       gimp_text_tool_editor_get_cursor_rect  (GimpTextTool        *text_tool,
                                                    gboolean             overwrite,
