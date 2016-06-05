@@ -637,6 +637,7 @@ file_compressor_LDADD = \
 	$(libgimpbase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(GIO_LIBS)		\
 	$(LZMA_LIBS)		\
 	$(BZIP2_LIBS)		\
 	$(Z_LIBS)		\
