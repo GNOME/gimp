@@ -1532,9 +1532,21 @@ gimp_text_tool_im_commit (GtkIMContext *context,
                           const gchar  *str,
                           GimpTextTool *text_tool)
 {
+  gboolean preedit_active = text_tool->preedit_active;
+
   gimp_text_tool_im_delete_preedit (text_tool);
 
+  /* Some IMEs would emit a preedit-commit before preedit-end.
+   * To keep undo consistency, we fake and end then immediate restart of
+   * preediting.
+   */
+  if (preedit_active)
+    gimp_text_tool_im_preedit_end (context, text_tool);
+
   gimp_text_tool_enter_text (text_tool, str);
+
+  if (preedit_active)
+    gimp_text_tool_im_preedit_start (context, text_tool);
 }
 
 static gboolean
