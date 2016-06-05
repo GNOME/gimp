@@ -72,7 +72,7 @@ static const GimpActionEntry file_actions[] =
   { "file-create-menu",      NULL, NC_("file-action", "Crea_te")      },
   { "file-open-recent-menu", NULL, NC_("file-action", "Open _Recent") },
 
-  { "file-open", "document-open",
+  { "file-open", GIMP_STOCK_IMAGE_OPEN,
     NC_("file-action", "_Open..."), "<primary>O",
     NC_("file-action", "Open an image file"),
     G_CALLBACK (file_open_cmd_callback),
@@ -96,31 +96,31 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_create_template_cmd_callback),
     GIMP_HELP_FILE_CREATE_TEMPLATE },
 
-  { "file-revert", "document-revert",
+  { "file-revert", GIMP_STOCK_IMAGE_RELOAD,
     NC_("file-action", "Re_vert"), NULL,
     NC_("file-action", "Reload the image file from disk"),
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
-  { "file-close-all", "window-close",
+  { "file-close-all", GIMP_STOCK_CLOSE_ALL,
     NC_("file-action", "Close all"), "<primary><shift>W",
     NC_("file-action", "Close all opened images"),
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
-  { "file-copy-location", "edit-copy",
+  { "file-copy-location", GIMP_STOCK_CLIPBOARD
     NC_("file-action", "Copy _Image Location"), NULL,
     NC_("file-action", "Copy image file location to clipboard"),
     G_CALLBACK (file_copy_location_cmd_callback),
     GIMP_HELP_FILE_COPY_LOCATION },
 
-  { "file-show-in-file-manager", "gtk-directory",
+  { "file-show-in-file-manager", GIMP_STOCK_FILE_MANAGER
     NC_("file-action", "Show in _File Manager"), "<primary><alt>F",
     NC_("file-action", "Show image file location in the file manager"),
     G_CALLBACK (file_show_in_file_manager_cmd_callback),
     GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER },
 
-  { "file-quit", "application-exit",
+  { "file-quit", GIMP_STOCK_QUIT,
     NC_("file-action", "_Quit"), "<primary>Q",
     NC_("file-action", "Quit the GNU Image Manipulation Program"),
     G_CALLBACK (file_quit_cmd_callback),
@@ -129,13 +129,13 @@ static const GimpActionEntry file_actions[] =
 
 static const GimpEnumActionEntry file_save_actions[] =
 {
-  { "file-save", "document-save",
+  { "file-save", GIMP_STOCK_SAVE,
     NC_("file-action", "_Save"), "<primary>S",
     NC_("file-action", "Save this image"),
     GIMP_SAVE_MODE_SAVE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
-  { "file-save-as", "document-save-as",
+  { "file-save-as", GIMP_STOCK_SAVE_AS,
     NC_("file-action", "Save _As..."), "<primary><shift>S",
     NC_("file-action", "Save this image with a different name"),
     GIMP_SAVE_MODE_SAVE_AS, FALSE,

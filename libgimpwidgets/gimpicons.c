@@ -70,7 +70,15 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_NEXT,           N_("Ne_xt"),           0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PREVIOUS,       N_("Pre_vious"),       0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SAVE,           N_("_Save"),           0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SAVE_AS,        N_("Save as"),         0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CANCEL,         N_("_Cancel"),         0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_QUIT,           N_("_Quit"),           0, 0, LIBGIMP_DOMAIN },
+
+  { GIMP_STOCK_IMAGE_OPEN,                    NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_IMAGE_RELOAD,                  NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CLOSE_ALL,                     NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CLIPBOARD,                     NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_FILE_MANAGER,                  NULL,   0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },

@@ -14,7 +14,9 @@ scalable_images = \
 	scalable/gimp-channels.svg			\
 	scalable/gimp-channel.svg			\
 	scalable/gimp-char-picker.svg			\
+	scalable/gimp-clipboard.svg			\
 	scalable/gimp-close.svg				\
+	scalable/gimp-close-all.svg			\
 	scalable/gimp-colormap.svg			\
 	scalable/gimp-color-picker-black.svg		\
 	scalable/gimp-color-picker-gray.svg		\
@@ -47,6 +49,7 @@ scalable_images = \
 	scalable/gimp-dynamics.svg			\
 	scalable/gimp-edit.svg				\
 	scalable/gimp-error.svg				\
+	scalable/gimp-file-manager.svg			\
 	scalable/gimp-flip-horizontal.svg		\
 	scalable/gimp-flip-vertical.svg			\
 	scalable/gimp-floating-selection.svg		\
@@ -81,6 +84,8 @@ scalable_images = \
 	scalable/gimp-histogram.svg			\
 	scalable/gimp-images.svg			\
 	scalable/gimp-image.svg				\
+	scalable/gimp-image-open.svg			\
+	scalable/gimp-image-reload.svg			\
 	scalable/gimp-info.svg				\
 	scalable/gimp-input-device.svg			\
 	scalable/gimp-invert.svg			\
@@ -157,6 +162,7 @@ scalable_images = \
 	scalable/gimp-question.svg			\
 	scalable/gimp-quick-mask-off.svg		\
 	scalable/gimp-quick-mask-on.svg			\
+	scalable/gimp-quit.svg				\
 	scalable/gimp-reset.svg				\
 	scalable/gimp-reshow-filter.svg			\
 	scalable/gimp-resize.svg			\
@@ -165,6 +171,7 @@ scalable_images = \
 	scalable/gimp-rotate-90.svg			\
 	scalable/gimp-sample-point.svg			\
 	scalable/gimp-save.svg				\
+	scalabe/gimp-save-as.svg			\
 	scalable/gimp-scale.svg				\
 	scalable/gimp-selection.svg			\
 	scalable/gimp-selection-add.svg			\
@@ -437,6 +444,8 @@ icons16_images = \
 	16/gimp-channel-red.png				\
 	16/gimp-channel.png				\
 	16/gimp-channels.png				\
+	16/gimp-clipboard.png				\
+	16/gimp-close-all.png				\
 	16/gimp-color-pick-from-screen.png		\
 	16/gimp-color-cmyk.png				\
 	16/gimp-color-palette.png			\
@@ -465,6 +474,7 @@ icons16_images = \
 	16/gimp-dynamics.png				\
 	16/gimp-edit.png				\
 	16/gimp-error.png				\
+	16/gimp-file-manager.png			\
 	16/gimp-flip-horizontal.png			\
 	16/gimp-flip-vertical.png			\
 	16/gimp-floating-selection.png			\
@@ -487,6 +497,8 @@ icons16_images = \
 	16/gimp-histogram.png				\
 	16/gimp-image.png				\
 	16/gimp-images.png				\
+	16/gimp-image-open.png				\
+	16/gimp-image-reload.png			\
 	16/gimp-info.png				\
 	16/gimp-input-device.png			\
 	16/gimp-invert.png				\
@@ -539,6 +551,7 @@ icons16_images = \
 	16/gimp-previous.png				\
 	16/gimp-print-resolution.png			\
 	16/gimp-question.png				\
+	16/gimp-quit.png				\
 	16/gimp-reset.png				\
 	16/gimp-reshow-filter.png			\
 	16/gimp-resize.png				\
@@ -547,6 +560,7 @@ icons16_images = \
 	16/gimp-rotate-90.png				\
 	16/gimp-sample-point.png			\
 	16/gimp-save.png				\
+	16/gimp-save-as.png				\
 	16/gimp-scale.png				\
 	16/gimp-selection-add.png			\
 	16/gimp-selection-all.png			\
