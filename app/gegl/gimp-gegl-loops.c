@@ -683,6 +683,8 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
   if (bpc)
     flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
+  flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+
   transform = gimp_color_transform_new (src_profile,  src_format,
                                         dest_profile, dest_format,
                                         intent, flags);

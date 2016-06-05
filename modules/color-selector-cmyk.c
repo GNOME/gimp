@@ -404,6 +404,8 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
       flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
     }
 
+  flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+
   module->rgb2cmyk = gimp_color_transform_new (rgb_profile,
                                                babl_format ("R'G'B' double"),
                                                cmyk_profile,

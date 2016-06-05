@@ -224,7 +224,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   priv->transform = cmsCreateTransform (src_lcms,  lcms_src_format,
                                         dest_lcms, lcms_dest_format,
                                         rendering_intent,
-                                        flags | cmsFLAGS_NOOPTIMIZE);
+                                        flags);
 
   if (lcms_last_error)
     {

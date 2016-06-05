@@ -668,6 +668,7 @@ _gimp_image_update_color_profile (GimpImage          *image,
 
           srgb_profile = gimp_color_profile_new_rgb_srgb ();
 
+          flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
           flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
           private->transform_to_srgb_u8 =

@@ -771,9 +771,13 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       GimpColorTransformFlags flags = 0;
 
       if (config->simulation_use_black_point_compensation)
-        {
-          flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
-        }
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+
+#if 0
+      /* FIXME add this to GimpColorConfig */
+      if (config->simulation_nooptimize)
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+#endif
 
       if (config->simulation_gamut_check)
         {
@@ -806,9 +810,13 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       GimpColorTransformFlags flags = 0;
 
       if (config->display_use_black_point_compensation)
-        {
-          flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
-        }
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+
+#if 0
+      /* FIXME add this to GimpColorConfig */
+      if (config->display_nooptimize)
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+#endif
 
       cache->transform =
         gimp_color_transform_new (cache->src_profile,
