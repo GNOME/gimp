@@ -716,6 +716,15 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
   gboolean       cancel_selection = FALSE;
   gint           x_pos  = -1;
 
+  if (text_tool->pending)
+    {
+      /* If there are any pending text commits, there would be
+       * inconsistencies between the text_tool->buffer and layout.
+       * This could result in crashes. See bug 751333.
+       * Therefore we apply them first.
+       */
+      gimp_text_tool_apply (text_tool, TRUE);
+    }
   GIMP_LOG (TEXT_EDITING, "%s count = %d, select = %s",
             g_enum_get_value (g_type_class_ref (GTK_TYPE_MOVEMENT_STEP),
                               step)->value_name,

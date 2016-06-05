@@ -146,8 +146,6 @@ static void      gimp_text_tool_text_notify     (GimpText          *text,
 static void      gimp_text_tool_text_changed    (GimpText          *text,
                                                  GimpTextTool      *text_tool);
 
-static gboolean  gimp_text_tool_apply           (GimpTextTool      *text_tool,
-                                                 gboolean           push_undo);
 static void      gimp_text_tool_apply_list      (GimpTextTool      *text_tool,
                                                  GList             *pspecs);
 
@@ -1267,7 +1265,7 @@ gimp_text_tool_text_changed (GimpText     *text,
   gimp_text_tool_unblock_drawing (text_tool);
 }
 
-static gboolean
+gboolean
 gimp_text_tool_apply (GimpTextTool *text_tool,
                       gboolean      push_undo)
 {
