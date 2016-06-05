@@ -45,7 +45,7 @@
 		<dep package="ghostscript"/>
 	</dependencies>
 	<suggests>
-		<dep package="webkitgtk"/>
+		<!--<dep package="webkitgtk"/>-->
 		<dep package="libmng"/>
 		<dep package="gdb"/>
 		<dep package="poppler"/>
