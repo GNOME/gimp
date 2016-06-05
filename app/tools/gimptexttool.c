@@ -1265,113 +1265,6 @@ gimp_text_tool_text_changed (GimpText     *text,
   gimp_text_tool_unblock_drawing (text_tool);
 }
 
-gboolean
-gimp_text_tool_apply (GimpTextTool *text_tool,
-                      gboolean      push_undo)
-{
-  const GParamSpec *pspec = NULL;
-  GimpImage        *image;
-  GimpTextLayer    *layer;
-  GList            *list;
-  gboolean          undo_group = FALSE;
-
-  if (text_tool->idle_id)
-    {
-      g_source_remove (text_tool->idle_id);
-      text_tool->idle_id = 0;
-    }
-
-  g_return_val_if_fail (text_tool->text != NULL, FALSE);
-  g_return_val_if_fail (text_tool->layer != NULL, FALSE);
-
-  layer = text_tool->layer;
-  image = gimp_item_get_image (GIMP_ITEM (layer));
-
-  g_return_val_if_fail (layer->text == text_tool->text, FALSE);
-
-  /*  Walk over the list of changes and figure out if we are changing
-   *  a single property or need to push a full text undo.
-   */
-  for (list = text_tool->pending;
-       list && list->next && list->next->data == list->data;
-       list = list->next)
-    /* do nothing */;
-
-  if (g_list_length (list) == 1)
-    pspec = list->data;
-
-  /*  If we are changing a single property, we don't need to push
-   *  an undo if all of the following is true:
-   *   - the redo stack is empty
-   *   - the last item on the undo stack is a text undo
-   *   - the last undo changed the same text property on the same layer
-   *   - the last undo happened less than TEXT_UNDO_TIMEOUT seconds ago
-   */
-  if (pspec)
-    {
-      GimpUndo *undo = gimp_image_undo_can_compress (image, GIMP_TYPE_TEXT_UNDO,
-                                                     GIMP_UNDO_TEXT_LAYER);
-
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
-        {
-          GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
-
-          if (text_undo->pspec == pspec)
-            {
-              if (gimp_undo_get_age (undo) < TEXT_UNDO_TIMEOUT)
-                {
-                  GimpTool    *tool = GIMP_TOOL (text_tool);
-                  GimpContext *context;
-
-                  context = GIMP_CONTEXT (gimp_tool_get_options (tool));
-
-                  push_undo = FALSE;
-                  gimp_undo_reset_age (undo);
-                  gimp_undo_refresh_preview (undo, context);
-                }
-            }
-        }
-    }
-
-  if (push_undo)
-    {
-      if (layer->modified)
-        {
-          undo_group = TRUE;
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
-
-          gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-
-          /*  see comment in gimp_text_layer_set()  */
-          gimp_image_undo_push_drawable_mod (image, NULL,
-                                             GIMP_DRAWABLE (layer), TRUE);
-        }
-
-      gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
-    }
-
-  gimp_text_tool_apply_list (text_tool, list);
-
-  g_list_free (text_tool->pending);
-  text_tool->pending = NULL;
-
-  if (push_undo)
-    {
-      g_object_set (layer, "modified", FALSE, NULL);
-
-      if (undo_group)
-        gimp_image_undo_group_end (image);
-    }
-
-  gimp_text_tool_frame_item (text_tool);
-
-  gimp_image_flush (image);
-
-  gimp_text_tool_unblock_drawing (text_tool);
-
-  return FALSE;
-}
-
 static void
 gimp_text_tool_apply_list (GimpTextTool *text_tool,
                            GList        *pspecs)
@@ -1856,6 +1749,113 @@ gimp_text_tool_ensure_layout (GimpTextTool *text_tool)
     }
 
   return text_tool->layout != NULL;
+}
+
+gboolean
+gimp_text_tool_apply (GimpTextTool *text_tool,
+                      gboolean      push_undo)
+{
+  const GParamSpec *pspec = NULL;
+  GimpImage        *image;
+  GimpTextLayer    *layer;
+  GList            *list;
+  gboolean          undo_group = FALSE;
+
+  if (text_tool->idle_id)
+    {
+      g_source_remove (text_tool->idle_id);
+      text_tool->idle_id = 0;
+    }
+
+  g_return_val_if_fail (text_tool->text != NULL, FALSE);
+  g_return_val_if_fail (text_tool->layer != NULL, FALSE);
+
+  layer = text_tool->layer;
+  image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  g_return_val_if_fail (layer->text == text_tool->text, FALSE);
+
+  /*  Walk over the list of changes and figure out if we are changing
+   *  a single property or need to push a full text undo.
+   */
+  for (list = text_tool->pending;
+       list && list->next && list->next->data == list->data;
+       list = list->next)
+    /* do nothing */;
+
+  if (g_list_length (list) == 1)
+    pspec = list->data;
+
+  /*  If we are changing a single property, we don't need to push
+   *  an undo if all of the following is true:
+   *   - the redo stack is empty
+   *   - the last item on the undo stack is a text undo
+   *   - the last undo changed the same text property on the same layer
+   *   - the last undo happened less than TEXT_UNDO_TIMEOUT seconds ago
+   */
+  if (pspec)
+    {
+      GimpUndo *undo = gimp_image_undo_can_compress (image, GIMP_TYPE_TEXT_UNDO,
+                                                     GIMP_UNDO_TEXT_LAYER);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+        {
+          GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
+
+          if (text_undo->pspec == pspec)
+            {
+              if (gimp_undo_get_age (undo) < TEXT_UNDO_TIMEOUT)
+                {
+                  GimpTool    *tool = GIMP_TOOL (text_tool);
+                  GimpContext *context;
+
+                  context = GIMP_CONTEXT (gimp_tool_get_options (tool));
+
+                  push_undo = FALSE;
+                  gimp_undo_reset_age (undo);
+                  gimp_undo_refresh_preview (undo, context);
+                }
+            }
+        }
+    }
+
+  if (push_undo)
+    {
+      if (layer->modified)
+        {
+          undo_group = TRUE;
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+
+          gimp_image_undo_push_text_layer_modified (image, NULL, layer);
+
+          /*  see comment in gimp_text_layer_set()  */
+          gimp_image_undo_push_drawable_mod (image, NULL,
+                                             GIMP_DRAWABLE (layer), TRUE);
+        }
+
+      gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
+    }
+
+  gimp_text_tool_apply_list (text_tool, list);
+
+  g_list_free (text_tool->pending);
+  text_tool->pending = NULL;
+
+  if (push_undo)
+    {
+      g_object_set (layer, "modified", FALSE, NULL);
+
+      if (undo_group)
+        gimp_image_undo_group_end (image);
+    }
+
+  gimp_text_tool_frame_item (text_tool);
+
+  gimp_image_flush (image);
+
+  gimp_text_tool_unblock_drawing (text_tool);
+
+  return FALSE;
 }
 
 void
