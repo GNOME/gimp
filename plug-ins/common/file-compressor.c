@@ -167,6 +167,7 @@ static gboolean            xz_load        (const char         *infile,
                                            const char         *outfile);
 static gboolean            xz_save        (const char         *infile,
                                            const char         *outfile);
+static goffset             get_file_info  (const gchar        *filename);
 
 
 static const Compressor compressors[] =
@@ -440,6 +441,9 @@ save_image (const Compressor  *compressor,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
+  gimp_progress_init_printf (_("Compressing '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   if (!compressor->save_fn (tmpname, filename))
     {
       g_unlink (tmpname);
@@ -449,6 +453,7 @@ save_image (const Compressor  *compressor,
     }
 
   g_unlink (tmpname);
+  gimp_progress_update (1.0);
   g_free (tmpname);
 
   /* ask the core to save a thumbnail for compressed XCF files */
@@ -625,6 +630,7 @@ gzip_save (const char *infile,
   gzFile    out;
   char      buf[16384];
   int       len;
+  goffset   tot = 0, file_size;
 
   ret = FALSE;
   in = NULL;
@@ -645,6 +651,7 @@ gzip_save (const char *infile,
       goto out;
     }
 
+  file_size = get_file_info (infile);
   while (TRUE)
     {
       len = fread (buf, 1, sizeof buf, in);
@@ -661,6 +668,8 @@ gzip_save (const char *infile,
 
       if (gzwrite (out, buf, len) != len)
         break;
+
+      gimp_progress_update ((tot += len) * 1.0 / file_size);
     }
 
  out:
@@ -743,6 +752,7 @@ bzip2_save (const char *infile,
   BZFILE   *out;
   char      buf[16384];
   int       len;
+  goffset   tot = 0, file_size;
 
   ret = FALSE;
   in = NULL;
@@ -763,6 +773,7 @@ bzip2_save (const char *infile,
       goto out;
     }
 
+  file_size = get_file_info (infile);
   while (TRUE)
     {
       len = fread (buf, 1, sizeof buf, in);
@@ -779,6 +790,8 @@ bzip2_save (const char *infile,
 
       if (BZ2_bzwrite (out, buf, len) != len)
         break;
+
+      gimp_progress_update ((tot += len) * 1.0 / file_size);
     }
 
  out:
@@ -893,6 +906,7 @@ xz_save (const char *infile,
   guint8       inbuf[BUFSIZ];
   guint8       outbuf[BUFSIZ];
   lzma_ret     status;
+  goffset      tot = 0, file_size;
 
   ret = FALSE;
   in = NULL;
@@ -902,6 +916,7 @@ xz_save (const char *infile,
   if (!in)
     goto out;
 
+  file_size = get_file_info (infile);
   out = g_fopen (outfile, "wb");
   if (!out)
     goto out;
@@ -935,6 +950,8 @@ xz_save (const char *infile,
              it should finish the encoding. */
           if (feof (in))
             action = LZMA_FINISH;
+
+          gimp_progress_update ((tot += strm.avail_in) * 1.0 / file_size);
         }
 
       status = lzma_code (&strm, action);
@@ -969,4 +986,29 @@ xz_save (const char *infile,
     fclose (out);
 
   return ret;
+}
+
+/* get file size from a filename */
+static goffset
+get_file_info (const gchar *filename)
+{
+  GFile     *file = g_file_new_for_path (filename);
+  GFileInfo *info;
+  goffset    size = 1;
+
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                            G_FILE_QUERY_INFO_NONE,
+                            NULL, NULL);
+
+  if (info)
+    {
+      size = g_file_info_get_size (info);
+
+      g_object_unref (info);
+    }
+
+  g_object_unref (file);
+
+  return size;
 }
