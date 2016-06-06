@@ -556,6 +556,9 @@ gimp_text_tool_abort_im_context (GimpTextTool *text_tool)
   text_tool->needs_im_reset = TRUE;
   gimp_text_tool_reset_im_context (text_tool);
 
+  /* Making sure preedit text is removed. */
+  gimp_text_tool_im_delete_preedit (text_tool);
+
   /* the following lines seem to be the only way of really getting
    * rid of any ongoing preedit state, please somebody tell me
    * a clean way... mitch
