@@ -76,6 +76,7 @@ static const GtkStockItem gimp_stock_items[] =
 
   { GIMP_STOCK_IMAGE_OPEN,                    NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_IMAGE_RELOAD,                  NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_REVERT,                        NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CLOSE_ALL,                     NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CLIPBOARD,                     NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FILE_MANAGER,                  NULL,   0, 0, LIBGIMP_DOMAIN },

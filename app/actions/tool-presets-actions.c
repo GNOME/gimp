@@ -64,13 +64,13 @@ static const GimpActionEntry tool_presets_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_TOOL_PRESET_COPY_LOCATION },
 
-  { "tool-presets-show-in-file-manager", "gtk-directory",
+  { "tool-presets-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
     NC_("tool-presets-action", "Show in _File Manager"), NULL,
     NC_("tool-presets-action", "Show tool preset file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER },
 
-  { "tool-presets-restore", "document-revert",
+  { "tool-presets-restore", GIMP_STOCK_REVERT,
     NC_("tool-presets-action", "_Restore Tool Preset"), NULL,
     NC_("tool-presets-action", "Restore this tool preset"),
     G_CALLBACK (tool_presets_restore_cmd_callback),

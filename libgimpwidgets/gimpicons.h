@@ -52,6 +52,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_IMAGE_OPEN               "gimp-image-open"
 #define GIMP_STOCK_IMAGE_RELOAD             "gimp-image-reload"
 #define GIMP_STOCK_CLOSE_ALL                "gimp-close-all"
+#define GIMP_STOCK_REVERT                   "gimp-revert"
 #define GIMP_STOCK_CLIPBOARD                "gimp-clipboard"
 #define GIMP_STOCK_FILE_MANAGER             "gimp-file-manager"
 

@@ -206,7 +206,7 @@ gimp_tool_options_editor_constructed (GObject *object)
                             editor);
 
   editor->p->restore_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor), "document-revert",
+    gimp_editor_add_button (GIMP_EDITOR (editor), GIMP_STOCK_REVERT,
                             _("Restore Tool Preset..."),
                             GIMP_HELP_TOOL_OPTIONS_RESTORE,
                             G_CALLBACK (gimp_tool_options_editor_restore_clicked),
