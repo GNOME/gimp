@@ -118,6 +118,7 @@ scalable_images = \
 	scalable/gimp-paths.svg				\
 	scalable/gimp-path-stroke.svg			\
 	scalable/gimp-path-up.svg			\
+	scalable/gimp-pattern.svg			\
 	scalable/gimp-plugin.svg			\
 	scalable/gimp-portrait.svg			\
 	scalable/gimp-prefs-color-management.svg	\
@@ -530,6 +531,7 @@ icons16_images = \
 	16/gimp-path-up.png				\
 	16/gimp-path.png				\
 	16/gimp-paths.png				\
+	16/gimp-pattern.png				\
 	16/gimp-plugin.png				\
 	16/gimp-portrait.png				\
 	16/gimp-prefs-folders-brushes.png		\
