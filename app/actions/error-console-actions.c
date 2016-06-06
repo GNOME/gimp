@@ -40,7 +40,7 @@ static const GimpActionEntry error_console_actions[] =
     NC_("error-console-action", "Error Console Menu"), NULL, NULL, NULL,
     GIMP_HELP_ERRORS_DIALOG },
 
-  { "error-console-clear", "edit-clear",
+  { "error-console-clear", GIMP_STOCK_EDIT_CLEAR,
     NC_("error-console-action", "_Clear"), NULL,
     NC_("error-console-action", "Clear error console"),
     G_CALLBACK (error_console_clear_cmd_callback),

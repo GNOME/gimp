@@ -1743,7 +1743,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
-  button = prefs_button_add ("edit-clear",
+  button = prefs_button_add (GIMP_STOCK_EDIT_CLEAR,
                              _("Remove _All Keyboard Shortcuts"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -2096,7 +2096,7 @@ prefs_dialog_new (Gimp       *gimp,
                          _("Maximum History Size:"),
                          GTK_TABLE (table), 0, size_group);
 
-  button = prefs_button_add ("edit-clear",
+  button = prefs_button_add (GIMP_STOCK_SHRED,
                              _("Clear Action History"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",

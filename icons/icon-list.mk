@@ -48,6 +48,7 @@ scalable_images = \
 	scalable/gimp-duplicate.svg			\
 	scalable/gimp-dynamics.svg			\
 	scalable/gimp-edit.svg				\
+	scalable/gimp-edit-clear.svg			\
 	scalable/gimp-error.svg				\
 	scalable/gimp-file-manager.svg			\
 	scalable/gimp-flip-horizontal.svg		\
@@ -75,6 +76,7 @@ scalable_images = \
 	scalable/gimp-gravity-south-west.svg		\
 	scalable/gimp-gravity-west.svg			\
 	scalable/gimp-grid.svg				\
+	scalable/gimp-group-layer.svg			\
 	scalable/gimp-hcenter.svg			\
 	scalable/gimp-hchain-broken.svg			\
 	scalable/gimp-hchain.svg			\
@@ -166,12 +168,13 @@ scalable_images = \
 	scalable/gimp-reset.svg				\
 	scalable/gimp-reshow-filter.svg			\
 	scalable/gimp-resize.svg			\
+	scalable/gimp-revert.svg			\
 	scalable/gimp-rotate-180.svg			\
 	scalable/gimp-rotate-270.svg			\
 	scalable/gimp-rotate-90.svg			\
 	scalable/gimp-sample-point.svg			\
 	scalable/gimp-save.svg				\
-	scalabe/gimp-save-as.svg			\
+	scalable/gimp-save-as.svg			\
 	scalable/gimp-scale.svg				\
 	scalable/gimp-selection.svg			\
 	scalable/gimp-selection-add.svg			\
@@ -189,6 +192,7 @@ scalable_images = \
 	scalable/gimp-shape-circle.svg			\
 	scalable/gimp-shape-diamond.svg			\
 	scalable/gimp-shape-square.svg			\
+	scalable/gimp-shred.svg				\
 	scalable/gimp-swap-colors.svg			\
 	scalable/gimp-symmetry.svg			\
 	scalable/gimp-template.svg			\
@@ -473,6 +477,7 @@ icons16_images = \
 	16/gimp-duplicate.png				\
 	16/gimp-dynamics.png				\
 	16/gimp-edit.png				\
+	16/gimp-edit-clear.png				\
 	16/gimp-error.png				\
 	16/gimp-file-manager.png			\
 	16/gimp-flip-horizontal.png			\
@@ -492,6 +497,7 @@ icons16_images = \
 	16/gimp-gradient-spiral-clockwise.png		\
 	16/gimp-gradient-square.png			\
 	16/gimp-grid.png				\
+	16/gimp-group-layer.png				\
 	16/gimp-histogram-linear.png			\
 	16/gimp-histogram-logarithmic.png		\
 	16/gimp-histogram.png				\
@@ -555,6 +561,7 @@ icons16_images = \
 	16/gimp-reset.png				\
 	16/gimp-reshow-filter.png			\
 	16/gimp-resize.png				\
+	16/gimp-revert.png				\
 	16/gimp-rotate-180.png				\
 	16/gimp-rotate-270.png				\
 	16/gimp-rotate-90.png				\
@@ -578,6 +585,7 @@ icons16_images = \
 	16/gimp-shape-circle.png			\
 	16/gimp-shape-diamond.png			\
 	16/gimp-shape-square.png			\
+	16/gimp-shred.png				\
 	16/gimp-symmetry.png				\
 	16/gimp-template.png				\
 	16/gimp-text-layer.png				\
