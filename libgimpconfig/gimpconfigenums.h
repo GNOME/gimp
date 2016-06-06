@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpColorConfig enums
+ * gimpconfigenums.h
  * Copyright (C) 2004  Stefan Döhla <stefan@doehla.de>
  *
  * This library is free software: you can redistribute it and/or
@@ -19,8 +19,8 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_CONFIG_ENUMS_H__
-#define __GIMP_COLOR_CONFIG_ENUMS_H__
+#ifndef __GIMP_CONFIG_ENUMS_H__
+#define __GIMP_CONFIG_ENUMS_H__
 
 
 #define GIMP_TYPE_COLOR_MANAGEMENT_MODE (gimp_color_management_mode_get_type ())
@@ -35,8 +35,7 @@ typedef enum
 } GimpColorManagementMode;
 
 
-#define GIMP_TYPE_COLOR_RENDERING_INTENT \
-  (gimp_color_rendering_intent_get_type ())
+#define GIMP_TYPE_COLOR_RENDERING_INTENT (gimp_color_rendering_intent_get_type ())
 
 GType gimp_color_rendering_intent_get_type (void) G_GNUC_CONST;
 
@@ -49,5 +48,4 @@ typedef enum
 } GimpColorRenderingIntent;
 
 
-
-#endif /* GIMP_COLOR_CONFIG_ENUMS_H__ */
+#endif /* __GIMP_CONFIG_ENUMS_H__ */

@@ -4,10 +4,10 @@
 #include "config.h"
 #include <gio/gio.h>
 #include "libgimpbase/gimpbase.h"
-#include "gimpcolorconfig-enums.h"
+#include "gimpconfigenums.h"
 #include "libgimp/libgimp-intl.h"
 
-/* enumerations from "./gimpcolorconfig-enums.h" */
+/* enumerations from "./gimpconfigenums.h" */
 GType
 gimp_color_management_mode_get_type (void)
 {

@@ -30,10 +30,9 @@ typedef struct _GimpConfig        GimpConfig; /* dummy typedef */
 typedef struct _GimpConfigWriter  GimpConfigWriter;
 typedef gchar *                   GimpConfigPath; /* to satisfy docs */
 
-
-#include <libgimpconfig/gimpcolorconfig-enums.h>
-
 typedef struct _GimpColorConfig   GimpColorConfig;
+
+#include <libgimpconfig/gimpconfigenums.h>
 
 
 #endif  /* __GIMP_CONFIG_TYPES_H__ */
