@@ -219,7 +219,7 @@ gimp_data_editor_constructed (GObject *object)
 
   editor->revert_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            "document-revert",
+                            GIMP_STOCK_REVERT,
                             _("Revert"), NULL,
                             G_CALLBACK (gimp_data_editor_revert_clicked),
                             NULL,

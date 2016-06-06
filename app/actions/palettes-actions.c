@@ -74,7 +74,7 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_PALETTE_COPY_LOCATION },
 
-  { "palettes-show-in-file-manager", "gtk-directory",
+  { "palettes-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
     NC_("palettes-action", "Show in _File Manager"), NULL,
     NC_("palettes-action", "Show palette file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
