@@ -567,9 +567,29 @@ gimp_text_tool_abort_im_context (GimpTextTool *text_tool)
   gtk_im_context_focus_out (text_tool->im_context);
   gtk_im_context_set_client_window (text_tool->im_context, NULL);
 
+  g_object_unref (text_tool->im_context);
+  text_tool->im_context = gtk_im_multicontext_new ();
   gtk_im_context_set_client_window (text_tool->im_context,
                                     gtk_widget_get_window (shell->canvas));
   gtk_im_context_focus_in (text_tool->im_context);
+  g_signal_connect (text_tool->im_context, "preedit-start",
+                    G_CALLBACK (gimp_text_tool_im_preedit_start),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "preedit-end",
+                    G_CALLBACK (gimp_text_tool_im_preedit_end),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "preedit-changed",
+                    G_CALLBACK (gimp_text_tool_im_preedit_changed),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "commit",
+                    G_CALLBACK (gimp_text_tool_im_commit),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "retrieve-surrounding",
+                    G_CALLBACK (gimp_text_tool_im_retrieve_surrounding),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "delete-surrounding",
+                    G_CALLBACK (gimp_text_tool_im_delete_surrounding),
+                    text_tool);
 }
 
 void
