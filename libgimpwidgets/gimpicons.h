@@ -55,6 +55,8 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_REVERT                   "gimp-revert"
 #define GIMP_STOCK_CLIPBOARD                "gimp-clipboard"
 #define GIMP_STOCK_FILE_MANAGER             "gimp-file-manager"
+#define GIMP_STOCK_EDIT_CLEAR               "gimp-edit-clear"
+#define GIMP_STOCK_SHRED                    "gimp-shred"
 
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"

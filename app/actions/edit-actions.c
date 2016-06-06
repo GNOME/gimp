@@ -95,7 +95,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_strong_redo_cmd_callback),
     GIMP_HELP_EDIT_STRONG_REDO },
 
-  { "edit-undo-clear", "edit-clear",
+  { "edit-undo-clear", GIMP_STOCK_SHRED,
     NC_("edit-action", "_Clear Undo History"), NULL,
     NC_("edit-action", "Remove all operations from the undo history"),
     G_CALLBACK (edit_undo_clear_cmd_callback),
@@ -182,7 +182,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_named_paste_cmd_callback),
     GIMP_HELP_BUFFER_PASTE },
 
-  { "edit-clear", "edit-clear",
+  { "edit-clear", GIMP_STOCK_EDIT_CLEAR,
     NC_("edit-action", "Cl_ear"), "Delete",
     NC_("edit-action", "Clear the selected pixels"),
     G_CALLBACK (edit_clear_cmd_callback),
@@ -203,7 +203,7 @@ static const GimpEnumActionEntry edit_fill_actions[] =
     GIMP_FILL_BACKGROUND, FALSE,
     GIMP_HELP_EDIT_FILL_BG },
 
-  { "edit-fill-pattern", GIMP_STOCK_TOOL_BUCKET_FILL,
+  { "edit-fill-pattern", GIMP_STOCK_PATTERN,
     NC_("edit-action", "Fill _with Pattern"), "<primary>semicolon",
     NC_("edit-action", "Fill the selection using the active pattern"),
     GIMP_FILL_PATTERN, FALSE,

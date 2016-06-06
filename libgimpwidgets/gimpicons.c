@@ -80,6 +80,8 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_CLOSE_ALL,                     NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CLIPBOARD,                     NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FILE_MANAGER,                  NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_EDIT_CLEAR,                    NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SHRED,                         NULL,   0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },
