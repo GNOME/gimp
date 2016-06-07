@@ -1385,13 +1385,12 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_widget_show (button);
     row++;
 
-    button = gimp_prop_check_button_new (color_config,
-                                         "display-optimize",
-                                         _("_Optimize display color transforms"));
-    gtk_table_attach_defaults (GTK_TABLE (table),
-                               button, 1, 2, row, row + 1);
-    gtk_widget_show (button);
-    row++;
+    prefs_boolean_combo_box_add (color_config,
+                                 "display-optimize",
+                                 _("Speed"),
+                                 _("Precision / Color Fidelity"),
+                                 _("_Optimize image display for:"),
+                                 GTK_TABLE (table), row++, size_group);
 
     /*  Print Simulation (Softproofing)  */
     vbox2 = prefs_frame_new (_("Print Simulation (Softproofing)"),
@@ -1421,13 +1420,12 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_widget_show (button);
     row++;
 
-    button = gimp_prop_check_button_new (color_config,
-                                         "simulation-optimize",
-                                         _("O_ptimize simulation color transforms"));
-    gtk_table_attach_defaults (GTK_TABLE (table),
-                               button, 1, 2, row, row + 1);
-    gtk_widget_show (button);
-    row++;
+    prefs_boolean_combo_box_add (color_config,
+                                 "simulation-optimize",
+                                 _("Speed"),
+                                 _("Precision / Color Fidelity"),
+                                 _("O_ptimize simulation for:"),
+                                 GTK_TABLE (table), row++, size_group);
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, row, row + 1);
