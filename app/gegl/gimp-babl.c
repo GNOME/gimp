@@ -477,10 +477,12 @@ gimp_babl_format_get_base_type (const Babl *format)
     {
       return GIMP_GRAY;
     }
-  else if (model == babl_model ("RGB")    ||
-           model == babl_model ("R'G'B'") ||
-           model == babl_model ("RGBA")   ||
-           model == babl_model ("R'G'B'A"))
+  else if (model == babl_model ("RGB")     ||
+           model == babl_model ("R'G'B'")  ||
+           model == babl_model ("RGBA")    ||
+           model == babl_model ("R'G'B'A") ||
+           model == babl_model ("RaGaBaA") ||
+           model == babl_model ("R'aG'aB'aA"))
     {
       return GIMP_RGB;
     }
@@ -569,17 +571,19 @@ gimp_babl_format_get_linear (const Babl *format)
 
   model = babl_format_get_model (format);
 
-  if (model == babl_model ("Y")   ||
-      model == babl_model ("YA")  ||
-      model == babl_model ("RGB") ||
-      model == babl_model ("RGBA"))
+  if (model == babl_model ("Y")    ||
+      model == babl_model ("YA")   ||
+      model == babl_model ("RGB")  ||
+      model == babl_model ("RGBA") ||
+      model == babl_model ("RaGaBaA"))
     {
       return TRUE;
     }
-  else if (model == babl_model ("Y'")     ||
-           model == babl_model ("Y'A")    ||
-           model == babl_model ("R'G'B'") ||
-           model == babl_model ("R'G'B'A"))
+  else if (model == babl_model ("Y'")      ||
+           model == babl_model ("Y'A")     ||
+           model == babl_model ("R'G'B'")  ||
+           model == babl_model ("R'G'B'A") ||
+           model == babl_model ("R'aG'aB'aA"))
     {
       return FALSE;
     }
