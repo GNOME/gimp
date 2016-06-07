@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 
 #include "gimp-gegl-types.h"
 
@@ -111,6 +112,31 @@ gimp_gegl_progress_connect (GeglNode     *node,
   g_object_set_data_full (G_OBJECT (node),
                           "gimp-progress-text", g_strdup (text),
                           (GDestroyNotify) g_free);
+}
+
+const Babl *
+gimp_gegl_node_get_format (GeglNode    *node,
+                           const gchar *pad_name)
+{
+  GeglOperation *op;
+  const Babl    *format = NULL;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), NULL);
+  g_return_val_if_fail (pad_name != NULL, NULL);
+
+  g_object_get (node, "gegl-operation", &op, NULL);
+
+  if (op)
+    {
+      format = gegl_operation_get_format (op, pad_name);
+
+      g_object_unref (op);
+    }
+
+  if (! format)
+    format = babl_format ("RGBA float");
+
+  return format;
 }
 
 gboolean
