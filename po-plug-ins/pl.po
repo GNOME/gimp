@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-29 14:38+0200\n"
-"PO-Revision-Date: 2016-05-29 14:39+0200\n"
+"POT-Creation-Date: 2016-06-07 11:38+0200\n"
+"PO-Revision-Date: 2016-06-07 11:39+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -2165,23 +2165,28 @@ msgstr "Zapisanie jako _RGB565 (16-bitowy)"
 msgid "Op_acity:"
 msgstr "_Krycie:"
 
-#: ../plug-ins/common/file-compressor.c:175
+#: ../plug-ins/common/file-compressor.c:176
 msgid "gzip archive"
 msgstr "Archiwum gzip"
 
-#: ../plug-ins/common/file-compressor.c:194
+#: ../plug-ins/common/file-compressor.c:195
 msgid "bzip archive"
 msgstr "Archiwum bzip"
 
-#: ../plug-ins/common/file-compressor.c:213
+#: ../plug-ins/common/file-compressor.c:214
 msgid "xz archive"
 msgstr "Archiwum xz"
 
-#: ../plug-ins/common/file-compressor.c:420
+#: ../plug-ins/common/file-compressor.c:421
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Brak sensownego rozszerzenia pliku, zapis jako skompresowany plik XCF."
 
-#: ../plug-ins/common/file-compressor.c:476
+#: ../plug-ins/common/file-compressor.c:444
+#, c-format
+msgid "Compressing '%s'"
+msgstr "Kompresowanie „%s”"
+
+#: ../plug-ins/common/file-compressor.c:481
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Brak sensownego rozszerzenia, próba odgadnięcia formatu pliku."
 
@@ -4716,45 +4721,45 @@ msgstr "Każdy kawałek ma proste krawędzie"
 msgid "Each piece has curved sides"
 msgstr "Każdy kawałek ma zaokrąglone krawędzie"
 
-#: ../plug-ins/common/mail.c:142
+#: ../plug-ins/common/mail.c:156
 msgid "Send the image by email"
 msgstr "Wysyła obraz przez e-mail"
 
-#: ../plug-ins/common/mail.c:152
+#: ../plug-ins/common/mail.c:166
 msgid "Send by E_mail..."
 msgstr "Wyślij przez e-_mail…"
 
-#: ../plug-ins/common/mail.c:477
+#: ../plug-ins/common/mail.c:496
 msgid "Send by Email"
 msgstr "Wysłanie przez e-mail"
 
-#: ../plug-ins/common/mail.c:482
+#: ../plug-ins/common/mail.c:501
 msgid "_Send"
 msgstr "_Nadawca"
 
-#: ../plug-ins/common/mail.c:514
+#: ../plug-ins/common/mail.c:533
 msgid "_Filename:"
 msgstr "_Nazwa pliku:"
 
-#: ../plug-ins/common/mail.c:528
+#: ../plug-ins/common/mail.c:547
 msgctxt "email-address"
 msgid "_To:"
 msgstr "_Do:"
 
-#: ../plug-ins/common/mail.c:542
+#: ../plug-ins/common/mail.c:561
 msgctxt "email-address"
 msgid "_From:"
 msgstr "O_d:"
 
-#: ../plug-ins/common/mail.c:554
+#: ../plug-ins/common/mail.c:573
 msgid "S_ubject:"
 msgstr "_Temat:"
 
-#: ../plug-ins/common/mail.c:619
+#: ../plug-ins/common/mail.c:638
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "błędne rozszerzenie pliku lub jego brak"
 
-#: ../plug-ins/common/mail.c:803
+#: ../plug-ins/common/mail.c:822
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Nie można uruchomić programu sendmail (%s)"
@@ -10881,65 +10886,65 @@ msgstr "Tworzy obraz z obszaru ekranu"
 msgid "_Screenshot..."
 msgstr "_Zrzut ekranu…"
 
-#: ../plug-ins/screenshot/screenshot.c:390
-#: ../plug-ins/screenshot/screenshot-x11.c:439
+#: ../plug-ins/screenshot/screenshot.c:408
+#: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Zrzut ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:399
+#: ../plug-ins/screenshot/screenshot.c:417
 msgid "S_nap"
 msgstr "_Przechwyć"
 
-#: ../plug-ins/screenshot/screenshot.c:429
+#: ../plug-ins/screenshot/screenshot.c:447
 msgid "After the delay, the screenshot is taken."
 msgstr "Po podanym czasie zostanie wykonany zrzut ekranu."
 
-#: ../plug-ins/screenshot/screenshot.c:431
+#: ../plug-ins/screenshot/screenshot.c:449
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Po podanym czasie należy przesunąć mysz, aby wybrać obszar dla zrzutu ekranu."
 
-#: ../plug-ins/screenshot/screenshot.c:435
+#: ../plug-ins/screenshot/screenshot.c:453
 msgid "Click in a window to snap it after delay."
 msgstr "Należy kliknąć okno do przechwycenia po podanym czasie."
 
-#: ../plug-ins/screenshot/screenshot.c:438
+#: ../plug-ins/screenshot/screenshot.c:456
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Po podanym czasie należy kliknąć okno do przechwycenia."
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:444
+#: ../plug-ins/screenshot/screenshot.c:462
 msgid "Area"
 msgstr "Obszar"
 
-#: ../plug-ins/screenshot/screenshot.c:455
+#: ../plug-ins/screenshot/screenshot.c:473
 msgid "Take a screenshot of a single _window"
 msgstr "Wykonanie zrzutu ekranu pojedynczego _okna"
 
-#: ../plug-ins/screenshot/screenshot.c:475
+#: ../plug-ins/screenshot/screenshot.c:493
 msgid "Include window _decoration"
 msgstr "Wraz z _dekoracją okna"
 
-#: ../plug-ins/screenshot/screenshot.c:495
+#: ../plug-ins/screenshot/screenshot.c:513
 msgid "Take a screenshot of the entire _screen"
 msgstr "Wykonanie zrzutu całego _ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:515
+#: ../plug-ins/screenshot/screenshot.c:533
 msgid "Include _mouse pointer"
 msgstr "Wraz z kursorem _myszy"
 
-#: ../plug-ins/screenshot/screenshot.c:537
+#: ../plug-ins/screenshot/screenshot.c:555
 msgid "Select a _region to grab"
 msgstr "Wybór _obszaru do przechwycenia"
 
 #. Delay
-#: ../plug-ins/screenshot/screenshot.c:553
+#: ../plug-ins/screenshot/screenshot.c:571
 msgid "Delay"
 msgstr "Opóźnienie"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:578
+#: ../plug-ins/screenshot/screenshot.c:596
 msgid "seconds"
 msgstr "sekund"
 
@@ -10951,15 +10956,15 @@ msgstr "Nie pobrano danych"
 msgid "Error selecting the window"
 msgstr "Błąd podczas wybierania okna"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:413
+#: ../plug-ins/screenshot/screenshot-x11.c:412
 msgid "Importing screenshot"
 msgstr "Importowanie zrzutu ekranu"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:480
+#: ../plug-ins/screenshot/screenshot-x11.c:465
 msgid "Mouse Pointer"
 msgstr "Kursor myszy"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:623
+#: ../plug-ins/screenshot/screenshot-x11.c:610
 msgid "Specified window not found"
 msgstr "Nie odnaleziono podanego okna"
 
