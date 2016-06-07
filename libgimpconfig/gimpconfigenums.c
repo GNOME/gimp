@@ -22,8 +22,8 @@ gimp_color_management_mode_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_COLOR_MANAGEMENT_OFF, NC_("color-management-mode", "No color management"), NULL },
-    { GIMP_COLOR_MANAGEMENT_DISPLAY, NC_("color-management-mode", "Color managed display"), NULL },
-    { GIMP_COLOR_MANAGEMENT_SOFTPROOF, NC_("color-management-mode", "Print simulation"), NULL },
+    { GIMP_COLOR_MANAGEMENT_DISPLAY, NC_("color-management-mode", "Color-managed display"), NULL },
+    { GIMP_COLOR_MANAGEMENT_SOFTPROOF, NC_("color-management-mode", "Soft-proofing"), NULL },
     { 0, NULL, NULL }
   };
 
