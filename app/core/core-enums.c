@@ -1103,7 +1103,7 @@ gimp_color_profile_policy_get_type (void)
   {
     { GIMP_COLOR_PROFILE_POLICY_ASK, NC_("color-profile-policy", "Ask what to do"), NULL },
     { GIMP_COLOR_PROFILE_POLICY_KEEP, NC_("color-profile-policy", "Keep embedded profile"), NULL },
-    { GIMP_COLOR_PROFILE_POLICY_CONVERT, NC_("color-profile-policy", "Convert to RGB workspace"), NULL },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT, NC_("color-profile-policy", "Convert to preferred RGB color profile"), NULL },
     { 0, NULL, NULL }
   };
 

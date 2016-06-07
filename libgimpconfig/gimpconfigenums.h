@@ -30,8 +30,8 @@ GType gimp_color_management_mode_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_COLOR_MANAGEMENT_OFF,       /*< desc="No color management"   >*/
-  GIMP_COLOR_MANAGEMENT_DISPLAY,   /*< desc="Color managed display" >*/
-  GIMP_COLOR_MANAGEMENT_SOFTPROOF  /*< desc="Print simulation"      >*/
+  GIMP_COLOR_MANAGEMENT_DISPLAY,   /*< desc="Color-managed display" >*/
+  GIMP_COLOR_MANAGEMENT_SOFTPROOF  /*< desc="Soft-proofing"      >*/
 } GimpColorManagementMode;
 
 

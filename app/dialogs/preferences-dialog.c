@@ -1392,8 +1392,8 @@ prefs_dialog_new (Gimp       *gimp,
                                  _("_Optimize image display for:"),
                                  GTK_TABLE (table), row++, size_group);
 
-    /*  Print Simulation (Softproofing)  */
-    vbox2 = prefs_frame_new (_("Print Simulation (Softproofing)"),
+    /*  Print Simulation (Soft-proofing)  */
+    vbox2 = prefs_frame_new (_("Soft-Proofing"),
                              GTK_CONTAINER (vbox),
                              FALSE);
 
@@ -1403,8 +1403,8 @@ prefs_dialog_new (Gimp       *gimp,
     prefs_profile_combo_box_add (color_config,
                                  "printer-profile",
                                  store,
-                                 _("Select Simulation (Softproofing) Color Profile"),
-                                 _("_Simulation profile:"),
+                                 _("Select Soft-Proofing Color Profile"),
+                                 _("_Soft-proofing profile:"),
                                  GTK_TABLE (table), row++, size_group);
 
     prefs_enum_combo_box_add (color_config,
@@ -1424,7 +1424,7 @@ prefs_dialog_new (Gimp       *gimp,
                                  "simulation-optimize",
                                  _("Speed"),
                                  _("Precision / Color Fidelity"),
-                                 _("O_ptimize simulation for:"),
+                                 _("O_ptimize soft-proofing for:"),
                                  GTK_TABLE (table), row++, size_group);
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);

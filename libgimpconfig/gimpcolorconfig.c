@@ -100,11 +100,11 @@
     "and choose what looks best. ")
 
 #define SIMULATION_OPTIMIZE_BLURB \
-  _("When disabled, simulation might be of better quality " \
+  _("When disabled, soft-proofing might be of better quality " \
     "at the cost of speed.")
 
 #define SIMULATION_GAMUT_CHECK_BLURB \
-  _("When enabled, the print simulation will mark colors " \
+  _("When enabled, the soft-proofing will mark colors " \
     "which can not be represented in the target color space.")
 
 #define OUT_OF_GAMUT_COLOR_BLURB \
@@ -269,7 +269,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_SIMULATION_RENDERING_INTENT,
                          "simulation-rendering-intent",
-                         _("Softproof rendering intent"),
+                         _("Soft-proofing rendering intent"),
                          SIMULATION_RENDERING_INTENT_BLURB,
                          GIMP_TYPE_COLOR_RENDERING_INTENT,
                          GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
@@ -277,14 +277,14 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_USE_BPC,
                             "simulation-use-black-point-compensation",
-                            _("Use black point compensation for softproofing"),
+                            _("Use black point compensation for soft-proofing"),
                             SIMULATION_USE_BPC_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_OPTIMIZE,
                             "simulation-optimize",
-                            _("Optimize simulation color transformations"),
+                            _("Optimize soft-proofing color transformations"),
                             SIMULATION_OPTIMIZE_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);

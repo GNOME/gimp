@@ -79,7 +79,7 @@ static const GimpActionEntry view_actions[] =
     NC_("view-action", "Display _Rendering Intent") },
 
   { "view-softproof-intent-menu", NULL,
-    NC_("view-action", "Simulation Re_ndering Intent") },
+    NC_("view-action", "Soft-Proofing Re_ndering Intent") },
 
   { "view-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
     NC_("view-action", "Move to Screen"), NULL, NULL, NULL,
@@ -169,15 +169,15 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_DOT_FOR_DOT },
 
   { "view-color-management-enable", NULL,
-    NC_("view-action", "_Color Manage this View"), NULL,
-    NC_("view-action", "Color manage this view"),
+    NC_("view-action", "_Color-Manage this View"), NULL,
+    NC_("view-action", "Use color management for this view"),
     G_CALLBACK (view_color_management_enable_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-color-management-softproof", NULL,
-    NC_("view-action", "_Print Simulation"), NULL,
-    NC_("view-action", "Use this view for softproofing"),
+    NC_("view-action", "_Proof Colors"), NULL,
+    NC_("view-action", "Use this view for soft-proofing"),
     G_CALLBACK (view_color_management_softproof_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
