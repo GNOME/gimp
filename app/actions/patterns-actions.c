@@ -61,7 +61,7 @@ static const GimpActionEntry patterns_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_PATTERN_DUPLICATE },
 
-  { "patterns-copy-location", "edit-copy",
+  { "patterns-copy-location", GIMP_STOCK_CLIPBOARD,
     NC_("patterns-action", "Copy Pattern _Location"), NULL,
     NC_("patterns-action", "Copy pattern file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),

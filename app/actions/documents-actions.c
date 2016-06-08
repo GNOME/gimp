@@ -60,7 +60,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_file_open_dialog_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
-  { "documents-copy-location", "edit-copy",
+  { "documents-copy-location", GIMP_STOCK_CLIPBOARD,
     NC_("documents-action", "Copy Image _Location"), NULL,
     NC_("documents-action", "Copy image location to clipboard"),
     G_CALLBACK (documents_copy_location_cmd_callback),

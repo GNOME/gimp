@@ -56,7 +56,7 @@ static const GimpActionEntry gradients_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_GRADIENT_DUPLICATE },
 
-  { "gradients-copy-location", "edit-copy",
+  { "gradients-copy-location", GIMP_STOCK_CLIPBOARD,
     NC_("gradients-action", "Copy Gradient _Location"), NULL,
     NC_("gradients-action", "Copy gradient file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
