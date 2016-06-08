@@ -1,4 +1,4 @@
-.re/*
+/*
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
  * Craig Setera <setera@home.com>
