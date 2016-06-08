@@ -58,7 +58,7 @@ static const GimpActionEntry tool_presets_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_TOOL_PRESET_DUPLICATE },
 
-  { "tool-presets-copy-location", "edit-copy",
+  { "tool-presets-copy-location", GIMP_STOCK_CLIPBOARD,
     NC_("tool-presets-action", "Copy Tool Preset _Location"), NULL,
     NC_("tool-presets-action", "Copy tool preset file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),

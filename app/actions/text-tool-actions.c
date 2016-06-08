@@ -59,7 +59,7 @@ static const GimpActionEntry text_tool_actions[] =
     G_CALLBACK (text_tool_cut_cmd_callback),
     NULL },
 
-  { "text-tool-copy", "edit-copy",
+  { "text-tool-copy", GIMP_STOCK_DUPLICATE,
     NC_("text-tool-action", "_Copy"), NULL, "<primary>C",
     G_CALLBACK (text_tool_copy_cmd_callback),
     NULL },

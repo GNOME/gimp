@@ -132,7 +132,7 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_stroke_last_vals_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
-  { "vectors-copy", "edit-copy",
+  { "vectors-copy", GIMP_STOCK_CLIPBOARD,
     NC_("vectors-action", "Co_py Path"), "", NULL,
     G_CALLBACK (vectors_copy_cmd_callback),
     GIMP_HELP_PATH_COPY },
