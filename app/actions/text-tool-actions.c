@@ -74,7 +74,7 @@ static const GimpActionEntry text_tool_actions[] =
     G_CALLBACK (text_tool_delete_cmd_callback),
     NULL },
 
-  { "text-tool-load", "document-open",
+  { "text-tool-load", GIMP_STOCK_OPEN,
     NC_("text-tool-action", "_Open text file..."), NULL, NULL,
     G_CALLBACK (text_tool_load_cmd_callback),
     NULL },

@@ -109,6 +109,7 @@ scalable_images = \
 	scalable/gimp-move-to-screen.svg		\
 	scalable/gimp-navigation.svg			\
 	scalable/gimp-next.svg				\
+	scalable/gimp-open.svg				\
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
 	scalable/gimp-path.svg				\
@@ -522,6 +523,7 @@ icons16_images = \
 	16/gimp-move-to-screen.png			\
 	16/gimp-navigation.png				\
 	16/gimp-next.png				\
+	16/gimp-open.png				\
 	16/gimp-paste-as-new.png			\
 	16/gimp-paste-into.png				\
 	16/gimp-path-delete.png				\
