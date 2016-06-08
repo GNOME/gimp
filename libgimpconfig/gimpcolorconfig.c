@@ -71,9 +71,9 @@
   _("The CMYK color profile used to convert between RGB and CMYK.")
 
 #define SIMULATION_PROFILE_BLURB \
-  _("The color profile to use for soft proofing from your image's " \
+  _("The color profile to use for soft-proofing from your image's " \
     "color space to some other color space, including " \
-    "soft proofing to a printer or other output device profile. ")
+    "soft-proofing to a printer or other output device profile. ")
 
 #define DISPLAY_RENDERING_INTENT_BLURB \
   _("How colors are converted from your image's color space to your " \
@@ -240,7 +240,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
   GIMP_CONFIG_PROP_PATH (object_class, PROP_SIMULATION_PROFILE,
                          /* FIXME: 3.0: change to simulation-profile */
                          "printer-profile",
-                         _("Simulation profile for softproofing"),
+                         _("Simulation profile for soft-proofing"),
                          SIMULATION_PROFILE_BLURB,
                          GIMP_CONFIG_PATH_FILE, NULL,
                          GIMP_PARAM_STATIC_STRINGS);

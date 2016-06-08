@@ -191,14 +191,14 @@ static const GimpToggleActionEntry view_toggle_actions[] =
 
   { "view-softproof-black-point-compensation", NULL,
     NC_("view-action", "_Black Point Compensation"), NULL,
-    NC_("view-action", "Use black point compensation for softproofing"),
+    NC_("view-action", "Use black point compensation for soft-proofing"),
     G_CALLBACK (view_softproof_bpc_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-gamut-check", NULL,
     NC_("view-action", "_Mark Out Of Gamut Colors"), NULL,
-    NC_("view-action", "When softproofing, mark colors which cannot "
+    NC_("view-action", "When soft-proofing, mark colors which cannot "
         "be represented in the target color space"),
     G_CALLBACK (view_softproof_gamut_check_cmd_callback),
     FALSE,
@@ -542,25 +542,25 @@ static const GimpRadioActionEntry view_softproof_intent_actions[] =
 {
   { "view-softproof-intent-perceptual", NULL,
     NC_("view-action", "_Perceptual"), NULL,
-    NC_("view-action", "Softproof rendering intent is perceptual"),
+    NC_("view-action", "Soft-proofing rendering intent is perceptual"),
     GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-intent-relative-colorimetric", NULL,
     NC_("view-action", "_Relative Colorimetric"), NULL,
-    NC_("view-action", "Softproof rendering intent is relative colorimetric"),
+    NC_("view-action", "Soft-proofing rendering intent is relative colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-intent-saturation", NULL,
     NC_("view-action", "_Saturation"), NULL,
-    NC_("view-action", "Softproof rendering intent is saturation"),
+    NC_("view-action", "Soft-proofing rendering intent is saturation"),
     GIMP_COLOR_RENDERING_INTENT_SATURATION,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-intent-absolute-colorimetric", NULL,
     NC_("view-action", "_Absolute Colorimetric"), NULL,
-    NC_("view-action", "Softproof rendering intent is absolute colorimetric"),
+    NC_("view-action", "Soft-proofing rendering intent is absolute colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT }
 };
