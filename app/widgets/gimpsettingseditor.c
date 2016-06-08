@@ -190,7 +190,7 @@ gimp_settings_editor_constructed (GObject *object)
 
   private->import_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            "document-open",
+                            GIMP_STOCK_OPEN,
                             _("Import settings from a file"),
                             NULL,
                             G_CALLBACK (gimp_settings_editor_import_clicked),

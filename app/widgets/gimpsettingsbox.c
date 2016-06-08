@@ -315,7 +315,7 @@ gimp_settings_box_constructed (GObject *object)
 
   private->import_item =
     gimp_settings_box_menu_item_add (box,
-                                     "document-open",
+                                     GIMP_STOCK_OPEN,
                                      _("_Import Settings from File..."),
                                      G_CALLBACK (gimp_settings_box_import_activate));
 

@@ -44,6 +44,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_VISIBLE                  "gimp-visible"
 #define GIMP_STOCK_NEXT                     "gimp-next"
 #define GIMP_STOCK_PREVIOUS                 "gimp-previous"
+#define GIMP_STOCK_OPEN                     "gimp-open"
 #define GIMP_STOCK_SAVE                     "gimp-save"
 #define GIMP_STOCK_SAVE_AS                  "gimp-save-as"
 #define GIMP_STOCK_CANCEL                   "gimp-cancel"

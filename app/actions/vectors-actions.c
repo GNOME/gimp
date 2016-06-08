@@ -147,7 +147,7 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_export_cmd_callback),
     GIMP_HELP_PATH_EXPORT },
 
-  { "vectors-import", "document-open",
+  { "vectors-import", GIMP_STOCK_OPEN,
     NC_("vectors-action", "I_mport Path..."), "", NULL,
     G_CALLBACK (vectors_import_cmd_callback),
     GIMP_HELP_PATH_IMPORT }

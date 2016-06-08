@@ -198,7 +198,7 @@ file_actions_setup (GimpActionGroup *group)
     {
       entries[i].name           = g_strdup_printf ("file-open-recent-%02d",
                                                    i + 1);
-      entries[i].icon_name      = "document-open";
+      entries[i].icon_name      = "gimp-open";
       entries[i].label          = entries[i].name;
       entries[i].tooltip        = NULL;
       entries[i].value          = i;
