@@ -38,7 +38,7 @@
 
 static const GimpActionEntry documents_actions[] =
 {
-  { "documents-popup", "document-open-recent",
+  { "documents-popup", GIMP_STOCK_DOCUMENT_RECENT,
     NC_("documents-action", "Documents Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCUMENT_DIALOG },
 
