@@ -238,39 +238,41 @@ AM_MAINTAINER_MODE([enable])
 PKG_PROG_PKG_CONFIG(0.16)
 
 
-###########################
-# Check target architecture
-###########################
+#########################
+# Check host architecture
+#########################
 
-AC_MSG_CHECKING([for target architecture])
-case x"$target" in
-  xNONE | x)
-    target_or_host="$host" ;;
-  *)
-    target_or_host="$target" ;;
-esac
-AC_MSG_RESULT([$target_or_host])
+AC_CANONICAL_HOST
 
-case "$target_or_host" in
-  i*86-*-*)
+AC_MSG_CHECKING([for host type])
+AC_MSG_RESULT([$host])
+
+AC_MSG_CHECKING([for host processor])
+case "$host_cpu" in
+  i*86)
     have_x86=yes
     AC_DEFINE(ARCH_X86, 1, [Define to 1 if you are compiling for ix86.])
+    AC_MSG_RESULT([x86])
     ;;
-  x86_64-*-*)
+  x86_64)
     have_x86=yes
     AC_DEFINE(ARCH_X86, 1, [Define to 1 if you are compiling for ix86.])
     AC_DEFINE(ARCH_X86_64, 1, [Define to 1 if you are compiling for amd64.])
+    AC_MSG_RESULT([x86-64])
     ;;
-  ppc-*-* | powerpc-*)
+  ppc | powerpc)
     have_ppc=yes
     AC_DEFINE(ARCH_PPC, 1, [Define to 1 if you are compiling for PowerPC.])
+    AC_MSG_RESULT([PowerPC])
     ;;
-  ppc64-*-* | powerpc64-*)
+  ppc64 | powerpc64)
     have_ppc=yes
     AC_DEFINE(ARCH_PPC, 1, [Define to 1 if you are compiling for PowerPC.])
     AC_DEFINE(ARCH_PPC64, 1, [Define to 1 if you are compiling for PowerPC64.])
+    AC_MSG_RESULT([64-bit PowerPC])
     ;;
   *)
+    AC_MSG_RESULT([unknown])
     ;;
 esac
 
@@ -279,9 +281,9 @@ esac
 # Check for Win32
 #################
 
-AC_MSG_CHECKING([for some Win32 platform])
-case "$target_or_host" in
-  *-*-mingw* | *-*-cygwin*)
+AC_MSG_CHECKING([if compiling for Win32])
+case "$host_os" in
+  mingw* | cygwin*)
     platform_win32=yes
     ;;
   *)
@@ -291,25 +293,27 @@ esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
 
-AC_MSG_CHECKING([for native Win32])
-case "$target_or_host" in
-  *-*-mingw*)
-    os_win32=yes
-    case "$host" in
-      x86_64-*-*)
-	;;
-      *)
-	WIN32_LARGE_ADDRESS_AWARE='-Wl,--large-address-aware'
-	;;
-    esac
-    PATHSEP=';'
-    ;;
-  *)
-    os_win32=no
-    PATHSEP=':'
-    ;;
-esac
-AC_MSG_RESULT([$os_win32])
+PATHSEP=':'
+os_win32=no
+if test "x$platform_win32" != xno; then
+  AC_MSG_CHECKING([if this is native Win32])
+  case "$host_os" in
+    mingw*)
+      os_win32=yes
+      case "$host_cpu" in
+        x86_64)
+        ;;
+        *)
+        WIN32_LARGE_ADDRESS_AWARE='-Wl,--large-address-aware'
+        ;;
+      esac
+      PATHSEP=';'
+      ;;
+    *)
+      ;;
+  esac
+  AC_MSG_RESULT([$os_win32])
+fi
 AC_SUBST(WIN32_LARGE_ADDRESS_AWARE)
 AC_SUBST(PATHSEP)
 AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
@@ -326,6 +330,25 @@ AM_CONDITIONAL(MS_LIB_AVAILABLE, test "x$ms_librarian" = xyes)
 AM_CONDITIONAL(HAVE_WINDRES, test "x$WINDRES" != "x:")
 
 AC_SUBST(WINDRES)
+
+
+####################
+# Check for Mac OS X
+####################
+
+platform_osx=no
+AC_MSG_CHECKING([if compiling for Mac OS X])
+case "$host_os" in
+  darwin*)
+     AC_MSG_RESULT(yes)
+     AC_DEFINE(PLATFORM_OSX, 1, [define to 1 if compiling for Mac OS X])
+     platform_osx=yes
+     ;;
+  *)
+     ;;
+esac
+AC_MSG_RESULT($platform_osx)
+AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
 
 
 ###############
@@ -1000,8 +1023,8 @@ if test "x$enable_altivec" = xyes; then
     AC_MSG_RESULT(no)
     AC_MSG_WARN([The compiler does not support the AltiVec command set.])
   else
-    case "$target_or_host" in
-      *-*-darwin*)
+    case "$host_os" in
+      darwin*)
         can_use_altivec=yes
         AC_DEFINE(HAVE_ALTIVEC_SYSCTL, 1,
          [Define to 1 if the altivec runtime test should use a sysctl.])
@@ -1030,8 +1053,8 @@ fi
 ###################################
 
 # MacOS X has broken SysV shm
-case "$target_or_host" in
-  *-*-darwin* | *-*-rhapsody* | *-*-machten*)
+case "$host_os" in
+  darwin* | rhapsody* | machten*)
     shmdefault=posix
     ;;
   *)
@@ -1969,26 +1992,6 @@ if test "x$os_win32" = xno; then
 fi
 
 AC_SUBST(MAIL)
-
-
-####################
-# Check for Mac OS X
-####################
-
-platform_osx=no
-AC_MSG_CHECKING([if compiling for Mac OS X])
-case "$target_or_host" in
-  *-*-darwin*)
-     AC_MSG_RESULT(yes)
-     AC_DEFINE(PLATFORM_OSX, 1, [define to 1 if compiling for Mac OS X])
-     platform_osx=yes
-     ;;
-  *)
-     AC_MSG_RESULT(no)
-     ;;
-esac
-
-AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
 
 
 ###############################
