@@ -150,6 +150,10 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_LETTER_SPACING, N_("L_etter Spacing"), 0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INTEND,         N_("I_ntend"),         0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_JUSTIFY_CENTER,           NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_JUSTIFY_BLOCK,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_JUSTIFY_LEFT,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_JUSTIFY_RIGHT,            NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_TEXT_DIR_LTR,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEXT_DIR_RTL,             NULL,        0, 0, LIBGIMP_DOMAIN },
