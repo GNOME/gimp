@@ -160,7 +160,8 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_PRINT_RESOLUTION,         NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FONT,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATTERN,                  NULL,        0, 0, LIBGIMP_DOMAIN },
-
+  { GIMP_STOCK_BUFFER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+ 
   { GIMP_STOCK_CONVERT_RGB,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_GRAYSCALE,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_INDEXED,          NULL,        0, 0, LIBGIMP_DOMAIN },
