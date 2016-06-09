@@ -1,5 +1,6 @@
 scalable_images = \
 	scalable/gimp-anchor.svg			\
+	scalable/gimp-buffer.svg			\
 	scalable/gimp-cancel.svg			\
 	scalable/gimp-cap-butt.svg			\
 	scalable/gimp-cap-round.svg			\
@@ -442,6 +443,7 @@ icons12_images = \
 
 icons16_images = \
 	16/gimp-anchor.png				\
+	16/gimp-buffer.png				\
 	16/gimp-cancel.png				\
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\
