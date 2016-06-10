@@ -96,10 +96,10 @@ scalable_images = \
 	scalable/gimp-join-bevel.svg			\
 	scalable/gimp-join-miter.svg			\
 	scalable/gimp-join-round.svg			\
-	scalable/gimp-justify.block.svg			\
-	scalable/gimp-justify.center.svg		\
-	scalable/gimp-justify.left.svg			\
-	scalable/gimp-justify.right.svg			\
+	scalable/gimp-justify-block.svg			\
+	scalable/gimp-justify-center.svg		\
+	scalable/gimp-justify-left.svg			\
+	scalable/gimp-justify-right.svg			\
 	scalable/gimp-landscape.svg			\
 	scalable/gimp-layer-mask.svg			\
 	scalable/gimp-layers.svg			\
