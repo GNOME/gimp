@@ -123,7 +123,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CHAR_PICKER              "gimp-char-picker"
 #define GIMP_STOCK_LETTER_SPACING           "gimp-letter-spacing"
 #define GIMP_STOCK_LINE_SPACING             "gimp-line-spacing"
-#define GIMP_STOCK_INTEND                   "gimp-intend"
+#define GIMP_STOCK_INDENT                   "gimp-indent"
 #define GIMP_STOCK_JUSTIFY_CENTER           "gimp-justify-center"
 #define GIMP_STOCK_JUSTIFY_BLOCK            "gimp-justify-block"
 #define GIMP_STOCK_JUSTIFY_LEFT             "gimp-justify-left"
