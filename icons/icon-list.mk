@@ -90,6 +90,7 @@ scalable_images = \
 	scalable/gimp-image.svg				\
 	scalable/gimp-image-open.svg			\
 	scalable/gimp-image-reload.svg			\
+	scalable/gimp-indent.svg				\
 	scalable/gimp-info.svg				\
 	scalable/gimp-input-device.svg			\
 	scalable/gimp-invert.svg			\
@@ -675,6 +676,7 @@ icons22_images = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
 	22/gimp-histogram.png			\
+	22/gimp-indent.svg				\
 	22/gimp-input-device.png		\
 	22/gimp-justify-block.png		\
 	22/gimp-justify-center.png		\
