@@ -676,7 +676,7 @@ icons22_images = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
 	22/gimp-histogram.png			\
-	22/gimp-indent.svg				\
+	22/gimp-indent.png				\
 	22/gimp-input-device.png		\
 	22/gimp-justify-center.png		\
 	22/gimp-justify-fill.png		\
