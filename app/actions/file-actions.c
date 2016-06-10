@@ -108,13 +108,13 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
-  { "file-copy-location", GIMP_STOCK_CLIPBOARD
+  { "file-copy-location", GIMP_STOCK_CLIPBOARD,
     NC_("file-action", "Copy _Image Location"), NULL,
     NC_("file-action", "Copy image file location to clipboard"),
     G_CALLBACK (file_copy_location_cmd_callback),
     GIMP_HELP_FILE_COPY_LOCATION },
 
-  { "file-show-in-file-manager", GIMP_STOCK_FILE_MANAGER
+  { "file-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
     NC_("file-action", "Show in _File Manager"), "<primary><alt>F",
     NC_("file-action", "Show image file location in the file manager"),
     G_CALLBACK (file_show_in_file_manager_cmd_callback),
