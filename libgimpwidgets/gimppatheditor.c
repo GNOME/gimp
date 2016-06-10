@@ -32,6 +32,7 @@
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpfileentry.h"
 
+#include "gimpicons.h"
 #include "gimppatheditor.h"
 #include "gimp3migration.h"
 
