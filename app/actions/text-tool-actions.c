@@ -79,7 +79,7 @@ static const GimpActionEntry text_tool_actions[] =
     G_CALLBACK (text_tool_load_cmd_callback),
     NULL },
 
-  { "text-tool-clear", GGIMP_STOCK_EDIT_CLEAR,
+  { "text-tool-clear", GIMP_STOCK_EDIT_CLEAR,
     NC_("text-tool-action", "Cl_ear"), NULL,
     NC_("text-tool-action", "Clear all text"),
     G_CALLBACK (text_tool_clear_cmd_callback),

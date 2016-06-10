@@ -78,7 +78,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_remove_cmd_callback),
     GIMP_HELP_DOCUMENT_REMOVE },
 
-  { "documents-clear", GIMP_STOCK_SHRED
+  { "documents-clear", GIMP_STOCK_SHRED,
     NC_("documents-action", "_Clear History"), NULL,
     NC_("documents-action", "Clear the entire document history"),
     G_CALLBACK (documents_clear_cmd_callback),
