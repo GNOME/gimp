@@ -125,7 +125,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_LINE_SPACING             "gimp-line-spacing"
 #define GIMP_STOCK_INDENT                   "gimp-indent"
 #define GIMP_STOCK_JUSTIFY_CENTER           "gimp-justify-center"
-#define GIMP_STOCK_JUSTIFY_BLOCK            "gimp-justify-block"
+#define GIMP_STOCK_JUSTIFY_FILL             "gimp-justify-fill"
 #define GIMP_STOCK_JUSTIFY_LEFT             "gimp-justify-left"
 #define GIMP_STOCK_JUSTIFY_RIGHT            "gimp-justify-right"
 #define GIMP_STOCK_PRINT_RESOLUTION         "gimp-print-resolution"

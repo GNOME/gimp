@@ -96,7 +96,7 @@ scalable_images = \
 	scalable/gimp-join-bevel.svg			\
 	scalable/gimp-join-miter.svg			\
 	scalable/gimp-join-round.svg			\
-	scalable/gimp-justify-block.svg			\
+	scalable/gimp-justify-fill.svg			\
 	scalable/gimp-justify-center.svg		\
 	scalable/gimp-justify-left.svg			\
 	scalable/gimp-justify-right.svg			\
@@ -676,8 +676,8 @@ icons22_images = \
 	22/gimp-dynamics.png			\
 	22/gimp-histogram.png			\
 	22/gimp-input-device.png		\
-	22/gimp-justify-block.png		\
 	22/gimp-justify-center.png		\
+	22/gimp-justify-fill.png		\
 	22/gimp-justify-left.png		\
 	22/gimp-justify-right.png		\
 	22/gimp-landscape.png			\

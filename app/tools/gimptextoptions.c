@@ -602,7 +602,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                              button, 1, TRUE);
   gtk_size_group_add_widget (size_group, button);
 
-  box = gimp_prop_enum_icon_box_new (config, "justify", "gtk-justify", 0, 0);
+  box = gimp_prop_enum_icon_box_new (config, "justify", "gimp-justify", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Justify:"), 0.0, 0.5,
                              box, 2, TRUE);
