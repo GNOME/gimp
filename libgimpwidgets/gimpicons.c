@@ -151,7 +151,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INDENT,         N_("I_ndent"),         0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_JUSTIFY_CENTER,           NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_JUSTIFY_BLOCK,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_JUSTIFY_FILL,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_JUSTIFY_LEFT,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_JUSTIFY_RIGHT,            NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -161,7 +161,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_FONT,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATTERN,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_BUFFER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
- 
+
   { GIMP_STOCK_CONVERT_RGB,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_GRAYSCALE,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_INDEXED,          NULL,        0, 0, LIBGIMP_DOMAIN },
