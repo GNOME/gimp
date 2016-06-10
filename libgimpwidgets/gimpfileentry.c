@@ -33,6 +33,7 @@
 #include "gimpfileentry.h"
 
 #include "gimphelpui.h"
+#include "gimpicons.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -138,7 +139,8 @@ gimp_file_entry_init (GimpFileEntry *entry)
 
   gtk_widget_set_sensitive (button, FALSE);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_FILE_MANGER, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_FILE_MANAGER,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
