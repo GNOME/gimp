@@ -103,19 +103,25 @@ header files installed.
      or newer) to be present. You will also need PyGTK and the
      respective development headers.
 
- 13. Configure GIMP by running the `configure' script. You may want
+ 13. Windows builds can now generate backtrace logs upon a crash.
+     The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
+     The feature depends on Dr.MinGW's ExcHndl library:
+
+        https://github.com/jrfonseca/drmingw
+
+ 14. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 14. Build GIMP by running `make'. The use of GNU make is recommended.
+ 15. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 15. Install GIMP by running `make install'. In order to avoid clashes
+ 16. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-@GIMP_APP_VERSION@.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-@GIMP_APP_VERSION@.
 
- 16. Summary of required packages and what version you need:
+ 17. Summary of required packages and what version you need:
 
      Package Name	Version
 
@@ -140,7 +146,7 @@ header files installed.
      pangocairo 	@PANGOCAIRO_REQUIRED_VERSION@
      zlib
 
- 17. Summary of optional packages:
+ 18. Summary of optional packages:
 
      Package Name	Version		Feature
 
@@ -158,8 +164,9 @@ header files installed.
      libwmf		@WMF_REQUIRED_VERSION@		WMF
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
+     ExcHndl		-		Crash logs on Windows with Dr. MinGW
 
- 18. Summary of optional runtime dependencies:
+ 19. Summary of optional runtime dependencies:
 
      darktable >= 1.7, with lua support enabled for raw loading
      xdg-email for sending emails

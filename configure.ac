@@ -813,11 +813,16 @@ PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version,,
 # Check for Dr. Mingw
 #####################
 
+enable_drmingw="no"
 if test "x$platform_win32" = "xyes"; then
    # Check for Dr. Mingw
    AC_CHECK_LIB(exchndl, ExcHndlSetLogFileNameA,
-		[AC_DEFINE(HAVE_EXCHNDL, 1, [Define to 1 when Dr. MingW is available])]
-		)
+                [
+                 AC_DEFINE(HAVE_EXCHNDL, 1, [Define to 1 when Dr. MingW is available])
+                 enable_drmingw="yes"
+                ],
+                [enable_drmingw="no (ExcHndl library missing)"]
+               )
 fi
 AM_CONDITIONAL(HAVE_EXCHNDL, test "x$ac_cv_lib_exchndl_ExcHndlSetLogFileNameA" = "xyes")
 
@@ -2517,6 +2522,7 @@ Extra Binaries:
 Optional Features:
   Language selection:  $have_iso_codes
   Vectorial icons:     $enable_vector_icons
+  Dr. Mingw (Win32):   $enable_drmingw
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa
