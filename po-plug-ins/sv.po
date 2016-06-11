@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-20 06:21+0000\n"
-"PO-Revision-Date: 2016-04-20 12:20+0200\n"
+"POT-Creation-Date: 2016-06-08 09:01+0000\n"
+"PO-Revision-Date: 2016-06-11 10:49+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:120
 msgid "Original"
@@ -607,8 +607,8 @@ msgstr "_Vertikal"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:442
-#: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:445
+#: ../plug-ins/common/file-cel.c:448 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
@@ -1019,8 +1019,8 @@ msgstr "Läs in kanalblandarinställningar"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:349
-#: ../plug-ins/common/file-cel.c:580 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:352
+#: ../plug-ins/common/file-cel.c:583 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:357
 #: ../plug-ins/common/file-gih.c:642 ../plug-ins/common/file-jp2-load.c:196
 #: ../plug-ins/common/file-jp2-load.c:205 ../plug-ins/common/file-mng.c:1156
@@ -1058,7 +1058,7 @@ msgstr "Spara kanalblandarinställningar"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
 #: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -3016,8 +3016,8 @@ msgstr "KISS CEL"
 msgid "Load KISS Palette"
 msgstr "Läs in KISS-palett"
 
-#: ../plug-ins/common/file-cel.c:309 ../plug-ins/common/file-cel.c:364
-#: ../plug-ins/common/file-cel.c:384
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-cel.c:367
+#: ../plug-ins/common/file-cel.c:387
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "EOF eller fel vid läsning av bildhuvud"
@@ -3026,7 +3026,7 @@ msgstr "EOF eller fel vid läsning av bildhuvud"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:354 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:357 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:375 ../plug-ins/common/file-gif-load.c:362
 #: ../plug-ins/common/file-gih.c:647 ../plug-ins/common/file-jp2-load.c:189
 #: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
@@ -3045,17 +3045,17 @@ msgstr "EOF eller fel vid läsning av bildhuvud"
 msgid "Opening '%s'"
 msgstr "Öppnar \"%s\""
 
-#: ../plug-ins/common/file-cel.c:392
+#: ../plug-ins/common/file-cel.c:395
 #, c-format
 msgid "is not a CEL image file"
 msgstr "är inte en CEL-bildfil"
 
-#: ../plug-ins/common/file-cel.c:406
+#: ../plug-ins/common/file-cel.c:409
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "ogiltigt bpp-värde i bild: %hhu"
 
-#: ../plug-ins/common/file-cel.c:420
+#: ../plug-ins/common/file-cel.c:423
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
@@ -3064,51 +3064,51 @@ msgstr ""
 "ogiltiga bilddimensioner: bredd: %d, horisontell kompensation: %d, höjd: %d, "
 "vertikal kompensation: %d"
 
-#: ../plug-ins/common/file-cel.c:433
+#: ../plug-ins/common/file-cel.c:436
 #, c-format
 msgid "Can't create a new image"
 msgstr "Kan inte skapa en ny bild"
 
-#: ../plug-ins/common/file-cel.c:471 ../plug-ins/common/file-cel.c:506
-#: ../plug-ins/common/file-cel.c:531
+#: ../plug-ins/common/file-cel.c:474 ../plug-ins/common/file-cel.c:509
+#: ../plug-ins/common/file-cel.c:534
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "EOF eller fel under läsning av bilddata"
 
-#: ../plug-ins/common/file-cel.c:548
+#: ../plug-ins/common/file-cel.c:551
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Antalet färger stöds inte (%d)!"
 
-#: ../plug-ins/common/file-cel.c:630 ../plug-ins/common/file-cel.c:642
+#: ../plug-ins/common/file-cel.c:633 ../plug-ins/common/file-cel.c:645
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr "\"%s\": EOF eller fel vid läsning av palettrubrik"
 
-#: ../plug-ins/common/file-cel.c:651
+#: ../plug-ins/common/file-cel.c:654
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "\"%s\" är inte en KCF-palettfil"
 
-#: ../plug-ins/common/file-cel.c:660
+#: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "\"%s\": ogiltigt bpp-värde i palett: %hhu"
 
-#: ../plug-ins/common/file-cel.c:669
+#: ../plug-ins/common/file-cel.c:672
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "\"%s\": ogiltigt antal färger: %u"
 
-#: ../plug-ins/common/file-cel.c:684 ../plug-ins/common/file-cel.c:701
-#: ../plug-ins/common/file-cel.c:721
+#: ../plug-ins/common/file-cel.c:687 ../plug-ins/common/file-cel.c:704
+#: ../plug-ins/common/file-cel.c:724
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "\"%s\": EOF eller fel vid läsning av palettdata"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:670
+#: ../plug-ins/common/file-cel.c:781 ../plug-ins/common/file-gbr.c:670
 #: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
@@ -8742,19 +8742,24 @@ msgstr "32 bitar"
 msgid "Windows BMP image"
 msgstr "Windows BMP-bild"
 
-#: ../plug-ins/file-compressor/file-compressor.c:166
+#: ../plug-ins/file-compressor/file-compressor.c:167
 msgid "gzip archive"
 msgstr "gzip-arkiv"
 
-#: ../plug-ins/file-compressor/file-compressor.c:185
+#: ../plug-ins/file-compressor/file-compressor.c:186
 msgid "bzip archive"
 msgstr "bzip-arkiv"
 
-#: ../plug-ins/file-compressor/file-compressor.c:392
+#: ../plug-ins/file-compressor/file-compressor.c:393
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Ingen känslig filändelse, sparar som komprimerad XCF."
 
-#: ../plug-ins/file-compressor/file-compressor.c:448
+#: ../plug-ins/file-compressor/file-compressor.c:416
+#, c-format
+msgid "Compressing '%s'"
+msgstr "Komprimerar ”%s”"
+
+#: ../plug-ins/file-compressor/file-compressor.c:453
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Ingen känslig filändelse, försöker läs in med filmagi."
 
