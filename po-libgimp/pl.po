@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-10 11:53+0200\n"
-"PO-Revision-Date: 2016-06-10 11:54+0200\n"
+"POT-Creation-Date: 2016-06-11 17:42+0200\n"
+"PO-Revision-Date: 2016-06-11 17:43+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1667,7 +1667,7 @@ msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil kolorów ICC (*.icc, *.icm)"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:312
-#: ../libgimpwidgets/gimppatheditor.c:248
+#: ../libgimpwidgets/gimppatheditor.c:249
 msgid "Folder"
 msgstr "Katalog"
 
@@ -1716,28 +1716,28 @@ msgstr ""
 msgid "HTML _notation:"
 msgstr "_Zapis języka HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:150
+#: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
 msgstr "Wyświetla położenie pliku w menedżerze plików"
 
-#: ../libgimpwidgets/gimpfileentry.c:227
+#: ../libgimpwidgets/gimpfileentry.c:229
 msgid "Open a file selector to browse your folders"
 msgstr "Otwiera przeglądarkę plików, aby odnaleźć katalogi"
 
-#: ../libgimpwidgets/gimpfileentry.c:228
+#: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your files"
 msgstr "Otwiera przeglądarkę plików, aby odnaleźć pliki"
 
-#: ../libgimpwidgets/gimpfileentry.c:395
+#: ../libgimpwidgets/gimpfileentry.c:397
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Nie można wyświetlić pliku w menedżerze plików: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:422
+#: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select Folder"
 msgstr "Wybór katalogu"
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:426
 msgid "Select File"
 msgstr "Wybór pliku"
 
@@ -1781,44 +1781,76 @@ msgstr "_Przywróć"
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../libgimpwidgets/gimpicons.c:108 ../libgimpwidgets/gimpicons.c:112
+#: ../libgimpwidgets/gimpicons.c:70
+msgid "Ne_xt"
+msgstr "_Dalej"
+
+#: ../libgimpwidgets/gimpicons.c:71
+msgid "Pre_vious"
+msgstr "_Wstecz"
+
+#: ../libgimpwidgets/gimpicons.c:72
+msgid "_Open"
+msgstr "_Otwórz"
+
+#: ../libgimpwidgets/gimpicons.c:73
+msgid "_Save"
+msgstr "_Zapisz"
+
+#: ../libgimpwidgets/gimpicons.c:74
+msgid "Save as"
+msgstr "Zapisz jako"
+
+#: ../libgimpwidgets/gimpicons.c:75
+msgid "_Cancel"
+msgstr "_Anuluj"
+
+#: ../libgimpwidgets/gimpicons.c:76
+msgid "_Quit"
+msgstr "Za_kończ"
+
+#: ../libgimpwidgets/gimpicons.c:127 ../libgimpwidgets/gimpicons.c:131
 msgid "_Stroke"
 msgstr "Ry_suj"
 
-#: ../libgimpwidgets/gimpicons.c:127
+#: ../libgimpwidgets/gimpicons.c:150
 msgid "L_etter Spacing"
 msgstr "Odstępy międzyz_nakowe"
 
-#: ../libgimpwidgets/gimpicons.c:128
+#: ../libgimpwidgets/gimpicons.c:151
 msgid "L_ine Spacing"
 msgstr "Odstępy między_wierszowe"
 
-#: ../libgimpwidgets/gimpicons.c:144
+#: ../libgimpwidgets/gimpicons.c:152
+msgid "I_ndent"
+msgstr "W_cięcie"
+
+#: ../libgimpwidgets/gimpicons.c:176
 msgid "Re_size"
 msgstr "Zmień _rozmiar"
 
-#: ../libgimpwidgets/gimpicons.c:145 ../libgimpwidgets/gimpicons.c:280
+#: ../libgimpwidgets/gimpicons.c:177 ../libgimpwidgets/gimpicons.c:312
 msgid "_Scale"
 msgstr "Prze_skaluj"
 
-#: ../libgimpwidgets/gimpicons.c:252
+#: ../libgimpwidgets/gimpicons.c:284
 msgid "Cr_op"
 msgstr "K_adruj"
 
-#: ../libgimpwidgets/gimpicons.c:260
+#: ../libgimpwidgets/gimpicons.c:292
 msgid "_Select"
 msgstr "_Zaznacz"
 
-#: ../libgimpwidgets/gimpicons.c:263 ../libgimpwidgets/gimpicons.c:275
-#: ../libgimpwidgets/gimpicons.c:286
+#: ../libgimpwidgets/gimpicons.c:295 ../libgimpwidgets/gimpicons.c:307
+#: ../libgimpwidgets/gimpicons.c:318
 msgid "_Transform"
 msgstr "_Przekształć"
 
-#: ../libgimpwidgets/gimpicons.c:279
+#: ../libgimpwidgets/gimpicons.c:311
 msgid "_Rotate"
 msgstr "O_bróć"
 
-#: ../libgimpwidgets/gimpicons.c:282
+#: ../libgimpwidgets/gimpicons.c:314
 msgid "_Shear"
 msgstr "_Zetnij"
 
@@ -1871,7 +1903,7 @@ msgstr[0] "%d stronę zaznaczono"
 msgstr[1] "%d strony zaznaczono"
 msgstr[2] "%d stron zaznaczono"
 
-#: ../libgimpwidgets/gimppatheditor.c:239
+#: ../libgimpwidgets/gimppatheditor.c:240
 msgid "Writable"
 msgstr "Zapisywalny"
 
