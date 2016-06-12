@@ -819,6 +819,7 @@ if test "x$platform_win32" = "xyes"; then
    AC_CHECK_LIB(exchndl, ExcHndlSetLogFileNameA,
                 [
                  AC_DEFINE(HAVE_EXCHNDL, 1, [Define to 1 when Dr. MingW is available])
+                 LIBS="-lexchndl $LIBS"
                  enable_drmingw="yes"
                 ],
                 [enable_drmingw="no (ExcHndl library missing)"]
