@@ -220,6 +220,7 @@ AS_IF([test "x$0" != "x./configure"], [
 
 # Determine a C compiler to use
 AC_PROG_CC
+AX_PROG_CC_FOR_BUILD
 AM_PROG_CC_C_O
 
 # Determine a C++ compiler to use
@@ -2075,8 +2076,6 @@ if test "x$enable_vector_icons" = "xyes"; then
 fi
 
 if test "x$enable_vector_icons" = "xyes"; then
-  AX_PROG_CC_FOR_BUILD
-
   # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
   # to make sure we use the native pkg-config (in case we cross-compile).
   if pkg-config --atleast-version=glib_required_version glib-2.0 &&
