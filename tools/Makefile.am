@@ -2,12 +2,6 @@
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
-if ENABLE_VECTOR_ICONS
-svg_icon_tools = compute-svg-viewbox
-else
-svg_icon_tools =
-endif
-
 if WITH_PDBGEN
 D_pdbgen = pdbgen
 else
@@ -30,7 +24,7 @@ bin_PROGRAMS = gimptool-2.0
 
 endif
 
-noinst_PROGRAMS = test-clipboard $(svg_icon_tools)
+noinst_PROGRAMS = test-clipboard
 
 EXTRA_PROGRAMS = \
 	kernelgen
