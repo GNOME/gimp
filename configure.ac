@@ -2060,9 +2060,16 @@ if test "x$enable_vector_icons" = "xyes"; then
   else
     # Check if librsvg was built with --disable-pixbuf-loader.
     gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
-    AC_CHECK_FILE(["$gdk_pixbuf_moduledir/libpixbufloader-svg.*"],
-                  [enable_vector_icons="yes"],
-                  [enable_vector_icons="no (librsvg GdkPixbuf loader missing)"])
+    # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
+    # error: cannot check for file existence when cross compiling
+    # So let's test files the shell way.
+    if (test "x$platform_win32" = "xyes" &&
+        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
+       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
+      enable_vector_icons="yes"
+    else
+      enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
+    fi
   fi
 fi
 AM_CONDITIONAL(ENABLE_VECTOR_ICONS, test "x$enable_vector_icons" = "xyes")
