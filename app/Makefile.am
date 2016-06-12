@@ -112,6 +112,8 @@ GIMPCONSOLERC = gimp-console-$(GIMP_APP_VERSION).rc.o
 endif
 
 AM_CPPFLAGS = \
+	-DGIMPDIR=\""$(gimpdir)"\"				\
+	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"		\
 	-DG_LOG_DOMAIN=\"Gimp\"		\
 	-DGIMP_APP_GLUE_COMPILATION	\
 	-I$(top_srcdir)			\
