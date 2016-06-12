@@ -2073,6 +2073,22 @@ if test "x$enable_vector_icons" = "xyes"; then
     fi
   fi
 fi
+
+if test "x$enable_vector_icons" = "xyes"; then
+  AX_PROG_CC_FOR_BUILD
+
+  # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
+  # to make sure we use the native pkg-config (in case we cross-compile).
+  if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+     pkg-config gio-2.0; then
+    NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
+    NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+  else
+    enable_vector_icons="no (missing native glib > glib_required_version or gio)"
+  fi
+fi
+AC_SUBST(NATIVE_GLIB_LIBS)
+AC_SUBST(NATIVE_GLIB_CFLAGS)
 AM_CONDITIONAL(ENABLE_VECTOR_ICONS, test "x$enable_vector_icons" = "xyes")
 
 if test "x$enable_vector_icons" = "xyes"; then
