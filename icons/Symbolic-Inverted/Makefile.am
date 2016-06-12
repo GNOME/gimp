@@ -37,7 +37,7 @@ scalable/%.svg: ../Symbolic/scalable/%.svg $(top_builddir)/tools/invert-svg$(BUI
 	$(top_builddir)/tools/invert-svg$(BUILD_EXEEXT) $< $@
 
 24/%.svg: $(top_srcdir)/icons/Symbolic/24/%.svg $(top_builddir)/tools/invert-svg$(BUILD_EXEEXT)
-	mkdir -p scalable && \
+	mkdir -p 24 && \
 	$(top_builddir)/tools/invert-svg$(BUILD_EXEEXT) $< $@
 
 # We are basically repeating the same rule for every subdirectory, which
