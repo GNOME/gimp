@@ -184,9 +184,9 @@ compilation and installation output is not shown.
 
   % tar xvfz gimp-@GIMP_VERSION@.tar.gz   # unpack the sources
   % cd gimp-@GIMP_VERSION@                # change to the toplevel directory
-  % ./configure                  # run the `configure' script
-  % make                         # build GIMP
-  % make install                 # install GIMP
+  % ./configure                           # run the `configure' script
+  % make                                  # build GIMP
+  % make install                          # install GIMP
 
 
 The `configure' script examines your system, and adapts GIMP to run on
@@ -305,7 +305,7 @@ These are:
   --with-sendmail[=PATH]. This option is used to tell GIMP to send email
      through sendmail instead of xdg-email. You can optionally indicate
      where to find the sendmail command. Otherwise sendmail will simply
-     be search in your $PATH at runtime.
+     be searched in your $PATH at runtime.
 
   --with-desktop-dir=[PATH]. This option specifies where to install
      desktop files. These files are used by desktop environments that
