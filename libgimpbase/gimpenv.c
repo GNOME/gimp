@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <string.h>
 #include <sys/types.h>
 
@@ -98,7 +99,8 @@ const guint gimp_micro_version = GIMP_MICRO_VERSION;
 void
 gimp_env_init (gboolean plug_in)
 {
-  static gboolean gimp_env_initialized = FALSE;
+  static gboolean  gimp_env_initialized = FALSE;
+  const gchar     *data_home = g_get_user_data_dir ();
 
   if (gimp_env_initialized)
     g_error ("gimp_env_init() must only be called once!");
@@ -133,6 +135,20 @@ gimp_env_init (gboolean plug_in)
       g_free (libdir);
     }
 #endif
+
+  /* The user data directory (XDG_DATA_HOME on Unix) is used to store
+   * various data, like crash logs (win32) or recently used file history
+   * (by GTK+). Yet it may be absent, in particular on non-Linux
+   * platforms. Make sure it exists.
+   */
+  if (! g_file_test (data_home, G_FILE_TEST_IS_DIR))
+    {
+      if (g_mkdir_with_parents (data_home, S_IRUSR | S_IWUSR | S_IXUSR) != 0)
+        {
+          g_warning ("Failed to create the data directory '%s': %s",
+                     data_home, g_strerror (errno));
+        }
+    }
 }
 
 /**
