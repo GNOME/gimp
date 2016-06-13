@@ -46,12 +46,16 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC      "file-raw-load"
-#define SAVE_PROC      "file-raw-save"
-#define PLUG_IN_BINARY "file-raw-data"
-#define PLUG_IN_ROLE   "gimp-file-raw-data"
-#define PREVIEW_SIZE   350
+#define LOAD_PROC              "file-raw-load"
+#define SAVE_PROC              "file-raw-save"
+#define SAVE_DEFAULTS_PROC     "file-raw-save-defaults"
+#define GET_DEFAULTS_PROC      "file-raw-get-defaults"
+#define SET_DEFAULTS_PROC      "file-raw-set-defaults"
+#define PLUG_IN_BINARY         "file-raw-data"
+#define PLUG_IN_ROLE           "gimp-file-raw-data"
+#define PREVIEW_SIZE           350
 
+#define RAW_DEFAULTS_PARASITE  "raw-save-defaults"
 
 typedef enum
 {
@@ -76,6 +80,21 @@ typedef enum
   RAW_PALETTE_BGR   /* Windows BGRX */
 } RawPaletteType;
 
+typedef struct
+{
+  RawType        image_type;     /* type of image (RGB, PLANAR) */
+  RawPaletteType palette_type;   /* type of palette (RGB/BGR)   */
+} RawSaveVals;
+
+typedef struct
+{
+  gboolean   run;
+
+  GtkWidget *image_type_standard;
+  GtkWidget *image_type_planar;
+  GtkWidget *palette_type_normal;
+  GtkWidget *palette_type_bmp;
+} RawSaveGui;
 
 typedef struct
 {
@@ -133,7 +152,7 @@ static void              rgb_565_to_888            (guint16          *in,
 
 static gint32            load_image                (const gchar      *filename,
                                                     GError          **error);
-static GimpPDBStatusType save_image                (const gchar      *filename,
+static gboolean          save_image                (const gchar      *filename,
                                                     gint32            image_id,
                                                     gint32            drawable_id,
                                                     GError          **error);
@@ -150,13 +169,15 @@ static void              save_dialog_response      (GtkWidget        *widget,
 static void              palette_callback          (GtkFileChooser   *button,
                                                     GimpPreviewArea  *preview);
 
+static void      load_defaults                     (void);
+static void      save_defaults                     (void);
+static void      load_gui_defaults                 (RawSaveGui        *rg);
 
 static RawConfig *runtime             = NULL;
 static gchar     *palfile             = NULL;
 static gint       preview_fd          = -1;
 static guchar     preview_cmap[1024];
 static gboolean   preview_cmap_update = TRUE;
-
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -165,6 +186,14 @@ const GimpPlugInInfo PLUG_IN_INFO =
   query,  /* query_proc */
   run,    /* run_proc   */
 };
+
+static const RawSaveVals defaults =
+{
+  RAW_RGB,
+  RAW_PALETTE_RGB
+};
+
+static RawSaveVals rawvals;
 
 MAIN()
 
@@ -183,13 +212,36 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
+#define COMMON_SAVE_ARGS \
+    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" }, \
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  }, \
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             }, \
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" }, \
+    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             }
+
+#define CONFIG_ARGS \
+    { GIMP_PDB_INT32,    "image-type",   "The image type { RAW_RGB (0), RAW_PLANAR (3) }" }, \
+    { GIMP_PDB_INT32,    "palette-type", "The palette type { RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }" }
+
   static const GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             }
+    COMMON_SAVE_ARGS,
+    CONFIG_ARGS
+  };
+
+  static const GimpParamDef save_args_defaults[] =
+  {
+    COMMON_SAVE_ARGS
+  };
+
+  static const GimpParamDef save_get_defaults_return_vals[] =
+  {
+    CONFIG_ARGS
+  };
+
+  static const GimpParamDef save_args_set_defaults[] =
+  {
+    CONFIG_ARGS
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -220,6 +272,56 @@ query (void)
                           save_args, NULL);
 
   gimp_register_save_handler (SAVE_PROC, "data", "");
+
+  gimp_install_procedure (SAVE_DEFAULTS_PROC,
+                          "Dump images to disk in raw format",
+                          "This plug-in dumps images to disk in raw format, "
+                          "using the default settings stored as a parasite.",
+                          "Björn Kautler, Bjoern@Kautler.net",
+                          "Björn Kautler, Bjoern@Kautler.net",
+                          "April 2014",
+                          N_("Raw image data"),
+                          "INDEXED, GRAY, RGB, RGBA",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args_defaults), 0,
+                          save_args_defaults, NULL);
+
+  gimp_register_save_handler (SAVE_DEFAULTS_PROC, "data,raw", "");
+
+  gimp_install_procedure (GET_DEFAULTS_PROC,
+                          "Get the current set of defaults used by the "
+                          "raw image data dump plug-in",
+                          "This procedure returns the current set of "
+                          "defaults stored as a parasite for the raw "
+                          "image data dump plug-in. "
+                          "These defaults are used to seed the UI, by the "
+                          "file_raw_save_defaults procedure, and by "
+                          "gimp_file_save when it detects to use RAW.",
+                          "Björn Kautler, Bjoern@Kautler.net",
+                          "Björn Kautler, Bjoern@Kautler.net",
+                          "April 2014",
+                          NULL,
+                          NULL,
+                          GIMP_PLUGIN,
+                          0, G_N_ELEMENTS (save_get_defaults_return_vals),
+                          NULL, save_get_defaults_return_vals);
+
+  gimp_install_procedure (SET_DEFAULTS_PROC,
+                          "Set the current set of defaults used by the "
+                          "raw image dump plug-in",
+                          "This procedure sets the current set of defaults "
+                          "stored as a parasite for the raw image data dump plug-in. "
+                          "These defaults are used to seed the UI, by the "
+                          "file_raw_save_defaults procedure, and by "
+                          "gimp_file_save when it detects to use RAW.",
+                          "Björn Kautler, Bjoern@Kautler.net",
+                          "Björn Kautler, Bjoern@Kautler.net",
+                          "April 2014",
+                          NULL,
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args_set_defaults), 0,
+                          save_args_set_defaults, NULL);
 }
 
 static void
@@ -229,7 +331,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[2];
+  static GimpParam   values[3];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GError            *error  = NULL;
@@ -240,25 +342,25 @@ run (const gchar      *name,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
-
   *nreturn_vals = 1;
   *return_vals  = values;
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  /* allocate config structure and fill with defaults */
-  runtime = g_new0 (RawConfig, 1);
-
-  runtime->file_offset    = 0;
-  runtime->image_width    = PREVIEW_SIZE;
-  runtime->image_height   = PREVIEW_SIZE;
-  runtime->palette_offset = 0;
-  runtime->palette_type   = RAW_PALETTE_RGB;
-
   if (strcmp (name, LOAD_PROC) == 0)
     {
+      run_mode = param[0].data.d_int32;
+
+      /* allocate config structure and fill with defaults */
+      runtime = g_new0 (RawConfig, 1);
+
+      runtime->file_offset    = 0;
+      runtime->image_width    = PREVIEW_SIZE;
+      runtime->image_height   = PREVIEW_SIZE;
+      runtime->palette_offset = 0;
+      runtime->palette_type   = RAW_PALETTE_RGB;
+
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           gimp_get_data (LOAD_PROC, runtime);
@@ -310,11 +412,17 @@ run (const gchar      *name,
               status = GIMP_PDB_EXECUTION_ERROR;
             }
         }
+
+      g_free (runtime);
     }
-  else if (strcmp (name, SAVE_PROC) == 0)
+  else if (strcmp (name, SAVE_PROC) == 0 ||
+           strcmp (name, SAVE_DEFAULTS_PROC) == 0)
     {
+      run_mode    = param[0].data.d_int32;
       image_id    = param[1].data.d_int32;
       drawable_id = param[2].data.d_int32;
+
+      load_defaults ();
 
       /* export the image */
       export = gimp_export_image (&image_id, &drawable_id, "RAW",
@@ -330,38 +438,81 @@ run (const gchar      *name,
           return;
         }
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      switch (run_mode)
         {
-          gimp_get_data (SAVE_PROC, runtime);
+        case GIMP_RUN_INTERACTIVE:
+          /*
+           * Possibly retrieve data...
+           */
+          gimp_get_data (SAVE_PROC, &rawvals);
 
-          if (nparams != 5)
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          else if (! save_dialog (image_id))
-            {
-              status = GIMP_PDB_CANCEL;
-            }
-        }
-      else
-        {
+          /*
+           * Then acquire information with a dialog...
+           */
+          if (! save_dialog (image_id))
+            status = GIMP_PDB_CANCEL;
+          break;
+
+        default:
           /* we want to make sure we always do save-as for raw images
            * to avoid confusion and data loss
            */
           status = GIMP_PDB_CALLING_ERROR;
+          break;
         }
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          status = save_image (param[3].data.d_string, image_id, drawable_id,
-                               &error);
+          if (save_image (param[3].data.d_string,
+                          image_id, drawable_id, &error))
+            {
+              gimp_set_data (SAVE_PROC, &rawvals, sizeof (rawvals));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
         }
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_id);
     }
+  else if (strcmp (name, GET_DEFAULTS_PROC) == 0)
+    {
+      load_defaults ();
 
-  g_free (runtime);
+      *nreturn_vals = 3;
+
+#define SET_VALUE(index, field)        G_STMT_START { \
+ values[(index)].type = GIMP_PDB_INT32;        \
+ values[(index)].data.d_int32 = rawvals.field; \
+} G_STMT_END
+
+      SET_VALUE (1, image_type);
+      SET_VALUE (2, palette_type);
+
+#undef SET_VALUE
+    }
+  else if (strcmp (name, SET_DEFAULTS_PROC) == 0)
+    {
+      if (nparams == 2)
+        {
+          load_defaults ();
+
+          rawvals.image_type     = param[0].data.d_int32;
+          rawvals.palette_type   = param[1].data.d_int32;
+
+          save_defaults ();
+        }
+      else
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
+    }
+  else
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
 
   if (status != GIMP_PDB_SUCCESS && error)
     {
@@ -729,7 +880,7 @@ raw_load_palette (RawGimpData *data,
 
 /* end new image handle functions */
 
-static GimpPDBStatusType
+static gboolean
 save_image (const gchar  *filename,
             gint32        image_id,
             gint32        drawable_id,
@@ -745,7 +896,7 @@ save_image (const gchar  *filename,
   FILE             *fp;
   gint              i, j, c;
   gint              palsize = 0;
-  GimpPDBStatusType ret = GIMP_PDB_EXECUTION_ERROR;
+  gboolean          ret = FALSE;
 
   /* get info about the current image */
   buffer = gimp_drawable_get_buffer (drawable_id);
@@ -798,24 +949,24 @@ save_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return GIMP_PDB_EXECUTION_ERROR;
+      return FALSE;
     }
 
-  ret = GIMP_PDB_SUCCESS;
+  ret = TRUE;
 
-  switch (runtime->image_type)
+  switch (rawvals.image_type)
     {
     case RAW_RGB:
       if (! fwrite (buf, width * height * bpp, 1, fp))
         {
-          return GIMP_PDB_EXECUTION_ERROR;
+          return FALSE;
         }
 
       fclose (fp);
 
       if (cmap)
         {
-          /* we have a colormap, too.write it into filename+pal */
+          /* we have colormap, too.write it into filename+pal */
           gchar *newfile = g_strconcat (filename, ".pal", NULL);
           gchar *temp;
 
@@ -826,14 +977,14 @@ save_image (const gchar  *filename,
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Could not open '%s' for writing: %s"),
                            gimp_filename_to_utf8 (newfile), g_strerror (errno));
-              return GIMP_PDB_EXECUTION_ERROR;
+              return FALSE;
             }
 
-          switch (runtime->palette_type)
+          switch (rawvals.palette_type)
             {
             case RAW_PALETTE_RGB:
               if (!fwrite (cmap, palsize * 3, 1, fp))
-                ret = GIMP_PDB_EXECUTION_ERROR;
+                ret = FALSE;
               fclose (fp);
               break;
 
@@ -847,7 +998,7 @@ save_image (const gchar  *filename,
                   temp[j++] = 0;
                 }
               if (!fwrite (temp, palsize * 4, 1, fp))
-                ret = GIMP_PDB_EXECUTION_ERROR;
+                ret = FALSE;
               fclose (fp);
               g_free (temp);
               break;
@@ -865,11 +1016,11 @@ save_image (const gchar  *filename,
             components[c][j] = buf[i + c];
         }
 
-      ret = GIMP_PDB_SUCCESS;
+      ret = TRUE;
       for (c = 0; c < n_components; c++)
         {
           if (! fwrite (components[c], width * height, 1, fp))
-            ret = GIMP_PDB_EXECUTION_ERROR;
+            ret = FALSE;
 
           g_free (components[c]);
         }
@@ -1573,10 +1724,10 @@ radio_button_init (GtkBuilder  *builder,
 static gboolean
 save_dialog (gint32 image_id)
 {
+  RawSaveGui  rg;
   GtkWidget  *dialog;
   GtkBuilder *builder;
   gchar      *ui_file;
-  gboolean   run;
   GError     *error = NULL;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
@@ -1585,7 +1736,7 @@ save_dialog (gint32 image_id)
   dialog = gimp_export_dialog_new (_("Raw Image"), PLUG_IN_BINARY, SAVE_PROC);
   g_signal_connect (dialog, "response",
                     G_CALLBACK (save_dialog_response),
-                    &run);
+                    &rg);
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -1611,31 +1762,42 @@ save_dialog (gint32 image_id)
                       FALSE, FALSE, 0);
 
   /* Radios */
-  radio_button_init (builder, "image-type-standard",
-                     RAW_RGB,
-                     runtime->image_type,
-                     &runtime->image_type);
-  radio_button_init (builder, "image-type-planar",
-                     RAW_PLANAR,
-                     runtime->image_type,
-                     &runtime->image_type);
-  radio_button_init (builder, "palette-type-normal",
-                     RAW_PALETTE_RGB,
-                     runtime->palette_type,
-                     &runtime->palette_type);
-  radio_button_init (builder, "palette-type-bmp",
-                     RAW_PALETTE_BGR,
-                     runtime->palette_type,
-                     &runtime->palette_type);
+  rg.image_type_standard = radio_button_init (builder, "image-type-standard",
+                                              RAW_RGB,
+                                              rawvals.image_type,
+                                              &rawvals.image_type);
+  rg.image_type_planar = radio_button_init (builder, "image-type-planar",
+                                            RAW_PLANAR,
+                                            rawvals.image_type,
+                                            &rawvals.image_type);
+  rg.palette_type_normal = radio_button_init (builder, "palette-type-normal",
+                                              RAW_PALETTE_RGB,
+                                              rawvals.palette_type,
+                                              &rawvals.palette_type);
+  rg.palette_type_bmp = radio_button_init (builder, "palette-type-bmp",
+                                           RAW_PALETTE_BGR,
+                                           rawvals.palette_type,
+                                           &rawvals.palette_type);
+
+  /* Load/save defaults buttons */
+  g_signal_connect_swapped (gtk_builder_get_object (builder, "load-defaults"),
+                            "clicked",
+                            G_CALLBACK (load_gui_defaults),
+                            &rg);
+
+  g_signal_connect_swapped (gtk_builder_get_object (builder, "save-defaults"),
+                            "clicked",
+                            G_CALLBACK (save_defaults),
+                            &rg);
 
   /* Show dialog and run */
   gtk_widget_show (dialog);
 
-  run = FALSE;
+  rg.run = FALSE;
 
   gtk_main ();
 
-  return run;
+  return rg.run;
 }
 
 static void
@@ -1643,12 +1805,12 @@ save_dialog_response (GtkWidget *widget,
                       gint       response_id,
                       gpointer   data)
 {
-  gboolean *run = data;
+  RawSaveGui *rg = data;
 
   switch (response_id)
     {
     case GTK_RESPONSE_OK:
-      *run = TRUE;
+      rg->run = TRUE;
 
     default:
       gtk_widget_destroy (widget);
@@ -1667,4 +1829,73 @@ palette_callback (GtkFileChooser  *button,
   palfile = gtk_file_chooser_get_filename (button);
 
   palette_update (preview);
+}
+
+static void
+load_defaults (void)
+{
+  GimpParasite *parasite;
+
+  /* initialize with hardcoded defaults */
+  rawvals = defaults;
+
+  parasite = gimp_get_parasite (RAW_DEFAULTS_PARASITE);
+
+  if (parasite)
+    {
+      gchar        *def_str;
+      RawSaveVals   tmpvals = defaults;
+      gint          num_fields;
+
+      def_str = g_strndup (gimp_parasite_data (parasite),
+                           gimp_parasite_data_size (parasite));
+
+      gimp_parasite_free (parasite);
+
+      num_fields = sscanf (def_str, "%d %d",
+                           (int *) &tmpvals.image_type,
+                           (int *) &tmpvals.palette_type);
+
+      g_free (def_str);
+
+      if (num_fields == 2)
+        rawvals = tmpvals;
+    }
+}
+
+static void
+save_defaults (void)
+{
+  GimpParasite *parasite;
+  gchar        *def_str;
+
+  def_str = g_strdup_printf ("%d %d",
+                             rawvals.image_type,
+                             rawvals.palette_type);
+
+  parasite = gimp_parasite_new (RAW_DEFAULTS_PARASITE,
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (def_str), def_str);
+
+  gimp_attach_parasite (parasite);
+
+  gimp_parasite_free (parasite);
+  g_free (def_str);
+}
+
+static void
+load_gui_defaults (RawSaveGui *rg)
+{
+  load_defaults ();
+
+#define SET_ACTIVE(field, datafield) \
+  if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (rg->field), "gimp-item-data")) == rawvals.datafield) \
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (rg->field), TRUE)
+
+  SET_ACTIVE (image_type_standard, image_type);
+  SET_ACTIVE (image_type_planar, image_type);
+  SET_ACTIVE (palette_type_normal, palette_type);
+  SET_ACTIVE (palette_type_bmp, palette_type);
+
+#undef SET_ACTIVE
 }
