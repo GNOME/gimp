@@ -96,58 +96,59 @@ typedef struct
 } RawGimpData;
 
 
-static void              query               (void);
-static void              run                 (const gchar      *name,
-                                              gint              nparams,
-                                              const GimpParam  *param,
-                                              gint             *nreturn_vals,
-                                              GimpParam       **return_vals);
+static void              query                     (void);
+static void              run                       (const gchar      *name,
+                                                    gint              nparams,
+                                                    const GimpParam  *param,
+                                                    gint             *nreturn_vals,
+                                                    GimpParam       **return_vals);
 
 /* prototypes for the new load functions */
-static gboolean          raw_load_standard   (RawGimpData      *data,
-                                              gint              bpp);
-static gboolean          raw_load_gray       (RawGimpData      *data,
-                                              gint              bpp,
-                                              gint              bitspp);
-static gboolean          raw_load_rgb565     (RawGimpData      *data,
-                                              RawType           type);
-static gboolean          raw_load_planar     (RawGimpData      *data);
-static gboolean          raw_load_palette    (RawGimpData      *data,
-                                              const gchar      *palette_filename);
+static gboolean          raw_load_standard         (RawGimpData      *data,
+                                                    gint              bpp);
+static gboolean          raw_load_gray             (RawGimpData      *data,
+                                                    gint              bpp,
+                                                    gint              bitspp);
+static gboolean          raw_load_rgb565           (RawGimpData      *data,
+                                                    RawType           type);
+static gboolean          raw_load_planar           (RawGimpData      *data);
+static gboolean          raw_load_palette          (RawGimpData      *data,
+                                                    const gchar      *palette_filename);
 
 /* support functions */
-static goffset           get_file_info       (const gchar      *filename);
-static void              raw_read_row        (FILE             *fp,
-                                              guchar           *buf,
-                                              gint32            offset,
-                                              gint32            size);
-static int               mmap_read           (gint              fd,
-                                              gpointer          buf,
-                                              gint32            len,
-                                              gint32            pos,
-                                              gint              rowstride);
-static void              rgb_565_to_888      (guint16          *in,
-                                              guchar           *out,
-                                              gint32            num_pixels,
-                                              RawType           type);
+static goffset           get_file_info             (const gchar      *filename);
+static void              raw_read_row              (FILE             *fp,
+                                                    guchar           *buf,
+                                                    gint32            offset,
+                                                    gint32            size);
+static int               mmap_read                 (gint              fd,
+                                                    gpointer          buf,
+                                                    gint32            len,
+                                                    gint32            pos,
+                                                    gint              rowstride);
+static void              rgb_565_to_888            (guint16          *in,
+                                                    guchar           *out,
+                                                    gint32            num_pixels,
+                                                    RawType           type);
 
-static gint32            load_image          (const gchar      *filename,
-                                              GError          **error);
-static GimpPDBStatusType save_image          (const gchar      *filename,
-                                              gint32            image_id,
-                                              gint32            drawable_id,
-                                              GError          **error);
+static gint32            load_image                (const gchar      *filename,
+                                                    GError          **error);
+static GimpPDBStatusType save_image                (const gchar      *filename,
+                                                    gint32            image_id,
+                                                    gint32            drawable_id,
+                                                    GError          **error);
 
 /* gui functions */
-static void              preview_update_size (GimpPreviewArea  *preview);
-static void              preview_update      (GimpPreviewArea  *preview);
-static void              palette_update      (GimpPreviewArea  *preview);
-static gboolean          load_dialog         (const gchar      *filename);
-static gboolean          save_dialog         (const gchar      *filename,
-                                              gint32            image_id,
-                                              gint32            drawable_id);
-static void              palette_callback    (GtkFileChooser   *button,
-                                              GimpPreviewArea  *preview);
+static void              preview_update_size       (GimpPreviewArea  *preview);
+static void              preview_update            (GimpPreviewArea  *preview);
+static void              palette_update            (GimpPreviewArea  *preview);
+static gboolean          load_dialog               (const gchar      *filename);
+static gboolean          save_dialog               (gint32            image_id);
+static void              save_dialog_response      (GtkWidget        *widget,
+                                                    gint              response_id,
+                                                    gpointer          data);
+static void              palette_callback          (GtkFileChooser   *button,
+                                                    GimpPreviewArea  *preview);
 
 
 static RawConfig *runtime             = NULL;
@@ -337,8 +338,7 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
-          else if (! save_dialog (param[3].data.d_string,
-                                  image_id, drawable_id))
+          else if (! save_dialog (image_id))
             {
               status = GIMP_PDB_CANCEL;
             }
@@ -1549,56 +1549,113 @@ load_dialog (const gchar *filename)
   return run;
 }
 
-static gboolean
-save_dialog (const gchar *filename,
-             gint32       image_id,
-             gint32       drawable_id)
+static GtkWidget *
+radio_button_init (GtkBuilder  *builder,
+                   const gchar *name,
+                   gint         item_data,
+                   gint         initial_value,
+                   gpointer     value_pointer)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
+  GtkWidget *radio = NULL;
+
+  radio = GTK_WIDGET (gtk_builder_get_object (builder, name));
+  if (item_data)
+    g_object_set_data (G_OBJECT (radio), "gimp-item-data", GINT_TO_POINTER (item_data));
+  if (initial_value == item_data)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
+  g_signal_connect (radio, "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    value_pointer);
+
+  return radio;
+}
+
+static gboolean
+save_dialog (gint32 image_id)
+{
+  GtkWidget  *dialog;
+  GtkBuilder *builder;
+  gchar      *ui_file;
   gboolean   run;
+  GError     *error = NULL;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
+  /* Dialog init */
   dialog = gimp_export_dialog_new (_("Raw Image"), PLUG_IN_BINARY, SAVE_PROC);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (save_dialog_response),
+                    &run);
+  g_signal_connect (dialog, "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  /* GtkBuilder init */
+  builder = gtk_builder_new ();
+  ui_file = g_build_filename (gimp_data_directory (),
+                              "ui/plug-ins/plug-in-file-raw.ui",
+                              NULL);
+  if (! gtk_builder_add_from_file (builder, ui_file, &error))
+    {
+      gchar *display_name = g_filename_display_name (ui_file);
+      g_printerr (_("Error loading UI file '%s': %s"),
+                  display_name, error ? error->message : _("Unknown error"));
+      g_free (display_name);
+    }
+
+  g_free (ui_file);
+
+  /* VBox */
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      main_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (main_vbox);
+                      GTK_WIDGET (gtk_builder_get_object (builder, "vbox")),
+                      FALSE, FALSE, 0);
 
-  frame = gimp_int_radio_group_new (TRUE, _("RGB Save Type"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &runtime->image_type,
-                                    runtime->image_type,
-                                    _("Standard (RGB RGB RGB ...)"),    RAW_RGB,    NULL,
-                                    _("Planar (RRR... GGG... BBB...)"), RAW_PLANAR, NULL,
-                                    NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  /* Radios */
+  radio_button_init (builder, "image-type-standard",
+                     RAW_RGB,
+                     runtime->image_type,
+                     &runtime->image_type);
+  radio_button_init (builder, "image-type-planar",
+                     RAW_PLANAR,
+                     runtime->image_type,
+                     &runtime->image_type);
+  radio_button_init (builder, "palette-type-normal",
+                     RAW_PALETTE_RGB,
+                     runtime->palette_type,
+                     &runtime->palette_type);
+  radio_button_init (builder, "palette-type-bmp",
+                     RAW_PALETTE_BGR,
+                     runtime->palette_type,
+                     &runtime->palette_type);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Indexed Palette Type"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &runtime->palette_type,
-                                    runtime->palette_type,
-                                    _("R, G, B (normal)"),
-                                    RAW_PALETTE_RGB, NULL,
-                                    _("B, G, R, X (BMP style)"),
-                                    RAW_PALETTE_BGR, NULL,
-                                    NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
+  /* Show dialog and run */
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = FALSE;
 
-  gtk_widget_destroy (dialog);
+  gtk_main ();
 
   return run;
 }
+
+static void
+save_dialog_response (GtkWidget *widget,
+                      gint       response_id,
+                      gpointer   data)
+{
+  gboolean *run = data;
+
+  switch (response_id)
+    {
+    case GTK_RESPONSE_OK:
+      *run = TRUE;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
+    }
+}
+
 
 static void
 palette_callback (GtkFileChooser  *button,

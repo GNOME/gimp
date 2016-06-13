@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<interface>
+  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkVBox" id="vbox">
+    <property name="visible">True</property>
+    <property name="border_width">12</property>
+    <property name="spacing">12</property>
+    <child>
+      <object class="GimpFrame" id="image-type-frame">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">RGB Save Type</property>
+        <child>
+          <object class="GtkVBox" id="image-type-vbox">
+            <property name="visible">True</property>
+            <property name="spacing">2</property>
+            <child>
+              <object class="GtkRadioButton" id="image-type-standard">
+                <property name="label" translatable="yes">Standard (R,G,B)</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="use_underline">True</property>
+                <property name="draw_indicator">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="image-type-planar">
+                <property name="label" translatable="yes">Planar (RRR,GGG,BBB)</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="use_underline">True</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">image-type-standard</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GimpFrame" id="palette-type-frame">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">RGB Save Type</property>
+        <child>
+          <object class="GtkVBox" id="palette-type-vbox">
+            <property name="visible">True</property>
+            <property name="spacing">2</property>
+            <child>
+              <object class="GtkRadioButton" id="palette-type-normal">
+                <property name="label" translatable="yes">R, G, B (normal)</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="use_underline">True</property>
+                <property name="draw_indicator">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="palette-type-bmp">
+                <property name="label" translatable="yes">B, G, R, X (BMP style)</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="use_underline">True</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">palette-type-normal</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

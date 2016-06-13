@@ -153,6 +153,7 @@ plug-ins/gimpressionist/sizemap.c
 plug-ins/gimpressionist/utils.c
 [type: gettext/glade]plug-ins/ui/plug-in-file-gif.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-png.ui
+[type: gettext/glade]plug-ins/ui/plug-in-file-raw.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-tiff.ui
 [type: gettext/glade]plug-ins/ui/plug-in-metadata.ui
 plug-ins/gradient-flare/gradient-flare.c
