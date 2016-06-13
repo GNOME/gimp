@@ -258,6 +258,19 @@ gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *d
         if (! folder_set)
           {
             g_free (folder);
+
+            /* Some software, like GNOME color, will save profiles in
+             * $XDG_DATA_HOME/icc/
+             */
+            folder = g_build_filename (g_get_user_data_dir (),
+                                       "icc", NULL);
+
+            folder_set = add_shortcut (dialog, folder);
+          }
+
+        if (! folder_set)
+          {
+            g_free (folder);
             folder = g_build_filename (g_get_home_dir (),
                                        ".color", "icc", NULL);
 
