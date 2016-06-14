@@ -142,13 +142,20 @@ twainError (int errorCode)
 char *
 currentTwainError (pTW_SESSION twSession)
 {
-  TW_STATUS twStatus;
+  pTW_STATUS twStatus;
+  char *     error;
+
+  twStatus = g_new (TW_STATUS, 1);
 
   /* Get the current status code from the DSM */
   twSession->twRC = DSM_GET_STATUS(twSession, twStatus);
 
   /* Return the mapped error code */
-  return twainError (twStatus.ConditionCode);
+  error = twainError (twStatus->ConditionCode);
+
+  g_free (twStatus);
+
+  return error;
 }
 
 /*
@@ -186,6 +193,8 @@ getImage (pTW_SESSION twSession)
   {
     return FALSE;
   }
+
+  set_ds_capabilities (twSession);
 
   requestImageAcquire (twSession, TRUE);
 
@@ -342,10 +351,26 @@ openDS (pTW_SESSION twSession)
 }
 
 /*
- * setBufferedXfer
+ * set_ds_capabilities
+ *
+ * Sets the required capabilities of the data source.
  */
-static int
-setBufferedXfer (pTW_SESSION twSession)
+void
+set_ds_capabilities (pTW_SESSION twSession)
+{
+  if (!DS_IS_OPEN(twSession))
+  {
+    log_message ("Open data source before setting capabilities!\n", currentTwainError(twSession));
+  }
+  else
+  {
+    set_ds_capability (twSession, ICAP_XFERMECH, TWTY_UINT16, TWSX_MEMORY);
+    set_ds_capability (twSession, CAP_XFERCOUNT, TWTY_INT16, TWBP_AUTO);
+  }
+}
+
+void
+set_ds_capability (pTW_SESSION twSession, TW_UINT16 cap, TW_UINT16 type, TW_UINT32 value)
 {
   TW_CAPABILITY bufXfer;
   pTW_ONEVALUE pvalOneValue;
@@ -353,25 +378,25 @@ setBufferedXfer (pTW_SESSION twSession)
   /* Make sure the data source is open first */
   if (DS_IS_CLOSED(twSession))
   {
-    return FALSE;
+    return;
   }
 
   /* Create the capability information */
-  bufXfer.Cap = ICAP_XFERMECH;
+  bufXfer.Cap = cap;
   bufXfer.ConType = TWON_ONEVALUE;
   bufXfer.hContainer = twainAllocHandle (sizeof(TW_ONEVALUE));
   if (bufXfer.hContainer == NULL)
   {
     g_message ("Error allocating memory for XFer mechanism.\n");
-    return FALSE;
+    return;
   }
   pvalOneValue = (pTW_ONEVALUE) twainLockHandle (bufXfer.hContainer);
-  pvalOneValue->ItemType = TWTY_UINT16;
-  pvalOneValue->Item = TWSX_MEMORY;
+  pvalOneValue->ItemType = type;
+  pvalOneValue->Item = value;
   twainUnlockHandle (bufXfer.hContainer);
 
   /* Make the call to the source manager */
-  twSession->twRC = DSM_XFER_SET(twSession, bufXfer);
+  twSession->twRC = DSM_CAPABILITY_SET(twSession, bufXfer);
   if (twSession->twRC == TWRC_FAILURE)
   {
     g_message ("Could not set capability: %s\n", currentTwainError(twSession));
@@ -380,9 +405,6 @@ setBufferedXfer (pTW_SESSION twSession)
   /* Free the container */
   twainUnlockHandle (bufXfer.hContainer);
   twainFreeHandle (bufXfer.hContainer);
-
-  /* Let the caller know what happened */
-  return (twSession->twRC==TWRC_SUCCESS);
 }
 
 /*
@@ -402,29 +424,25 @@ requestImageAcquire (pTW_SESSION twSession, gboolean showUI)
     return FALSE;
   }
 
-  /* Set the transfer mode */
-  if (setBufferedXfer (twSession))
+  /* Set the UI information */
+  ui.ShowUI = TRUE;
+  ui.ModalUI = TRUE;
+  /* In Windows, the callbacks are sent to the window message handler */
+  ui.hParent = twSession->hwnd;
+
+  /* Make the call to the source manager */
+  twSession->twRC = DSM_ENABLE_DS(twSession, ui);
+
+  switch (twSession->twRC)
   {
-    /* Set the UI information */
-    ui.ShowUI = TRUE;
-    ui.ModalUI = TRUE;
-    /* In Windows, the callbacks are sent to the window message handler */
-    ui.hParent = twSession->hwnd;
+    case TWRC_SUCCESS:
+      /* We are now at a new twain state */
+      twSession->twainState = 5;
+      return TRUE;
 
-    /* Make the call to the source manager */
-    twSession->twRC = DSM_ENABLE_DS(twSession, ui);
-
-    switch (twSession->twRC)
-    {
-      case TWRC_SUCCESS:
-        /* We are now at a new twain state */
-        twSession->twainState = 5;
-        return TRUE;
-
-	  case TWRC_FAILURE:
-       g_message ("Error enabeling data source: %s\n", currentTwainError(twSession));
-	   break;
-    }
+    case TWRC_FAILURE:
+      g_message ("Error enabeling data source: %s\n", currentTwainError(twSession));
+      break;
   }
   return FALSE;
 }
@@ -531,7 +549,7 @@ closeDSM (pTW_SESSION twSession)
  * Begin an image transfer.
  */
 static int
-beginImageTransfer (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
+beginImageTransfer (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo, gboolean first)
 {
   /* Clear our structures */
   memset (imageInfo, 0, sizeof (TW_IMAGEINFO));
@@ -569,23 +587,16 @@ beginImageTransfer (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
  * from State 6 to 7.  Return the reason for exiting the transfer.
  */
 static void
-transferImage (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
+transferImage (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo, TW_UINT32 bufferSize)
 {
-  TW_SETUPMEMXFER setupMemXfer;
   TW_IMAGEMEMXFER imageMemXfer;
   char *buffer;
 
-  /* Clear our structures */
-  memset (&setupMemXfer, 0, sizeof (TW_SETUPMEMXFER));
-  memset (&imageMemXfer, 0, sizeof (TW_IMAGEMEMXFER));
-
-  /* Find out how the source would like to transfer... */
-  twSession->twRC = DSM_XFER_START(twSession, setupMemXfer);
-
   /* Allocate the buffer for the transfer */
-  buffer = g_new (char, setupMemXfer.Preferred);
+  memset (&imageMemXfer, 0, sizeof (TW_IMAGEMEMXFER));
+  buffer = g_new (char, bufferSize);
   imageMemXfer.Memory.Flags = TWMF_APPOWNS | TWMF_POINTER;
-  imageMemXfer.Memory.Length = setupMemXfer.Preferred;
+  imageMemXfer.Memory.Length = bufferSize;
   imageMemXfer.Memory.TheMem = (TW_MEMREF) buffer;
 
   /* Get the data */
@@ -621,13 +632,13 @@ transferImage (pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
 }
 
 /*
- * endPendingTransfer
+ * endImageTransfer
  *
- * Cancel the currently pending transfer.
- * Return the count of pending transfers.
+ * Finish transferring an image.  Return the count
+ * of pending images.
  */
-static int
-endPendingTransfer (pTW_SESSION twSession)
+static void
+endImageTransfer (pTW_SESSION twSession)
 {
   TW_PENDINGXFERS pendingXfers;
 
@@ -638,54 +649,8 @@ endPendingTransfer (pTW_SESSION twSession)
     twSession->twainState = 5;
   }
 
-  return pendingXfers.Count;
-}
-
-/*
- * cancelPendingTransfers
- *
- * Cancel all pending image transfers.
- */
-void
-cancelPendingTransfers (pTW_SESSION twSession)
-{
-  TW_PENDINGXFERS pendingXfers;
-
-  twSession->twRC = DSM_XFER_RESET(twSession, pendingXfers);
-}
-
-/*
- * endImageTransfer
- *
- * Finish transferring an image.  Return the count
- * of pending images.
- */
-static int
-endImageTransfer (pTW_SESSION twSession, int *pendingCount)
-{
-  gboolean continueTransfers;
-  int exitCode = twSession->twRC;
-
-  /* Have now exited the transfer for some reason... Figure out
-   * why and what to do about it
-   */
-  switch (twSession->twRC)
-  {
-    case TWRC_XFERDONE:
-    case TWRC_CANCEL:
-      *pendingCount = endPendingTransfer (twSession);
-      break;
-
-    case TWRC_FAILURE:
-      g_message ("Failure received: %s\n", currentTwainError(twSession));
-      *pendingCount = endPendingTransfer (twSession);
-      break;
-  }
-
   /* Call the end transfer callback */
-  CB_XFER_END(twSession, continueTransfers, exitCode, pendingCount);
-
-  return (*pendingCount && continueTransfers);
+  CB_XFER_END(twSession);
 }
 
 /*
@@ -697,8 +662,11 @@ endImageTransfer (pTW_SESSION twSession, int *pendingCount)
 static void
 transferImages (pTW_SESSION twSession)
 {
-  TW_IMAGEINFO imageInfo;
-  int pendingCount;
+  TW_IMAGEINFO    imageInfo;
+  TW_PENDINGXFERS pendingXfers;
+  gboolean        first;
+  TW_UINT32       bufferSize;
+  TW_SETUPMEMXFER setupMemXfer;
 
   /* Check the image transfer callback function
    * before even attempting to do the transfer
@@ -718,28 +686,57 @@ transferImages (pTW_SESSION twSession)
     CB_XFER_PRE(twSession);
   }
 
-  /* Loop through the available images */
-  do
+  first = TRUE;
+
+  /* Clear our structures */
+  memset (&setupMemXfer, 0, sizeof (TW_SETUPMEMXFER));
+
+  /* Find out how the source would like to transfer... */
+  twSession->twRC = DSM_XFER_START(twSession, setupMemXfer);
+  switch (twSession->twRC)
   {
+    case TWRC_SUCCESS:
+      bufferSize = setupMemXfer.Preferred;
+      break;
+
+    case TWRC_FAILURE:
+      log_message ("Failure setting transfer buffer: %s\n", currentTwainError(twSession));
+      break;
+
+    default:
+      break;
+  }
+
+  /* Loop through the available images */
+  while (beginImageTransfer (twSession, &imageInfo, first))
+  {
+    first = FALSE;
     /* Move to the new state */
     twSession->twainState = 6;
 
-    /* Begin the image transfer */
-    if (!beginImageTransfer (twSession, &imageInfo))
-    {
-      continue;
-    }
-
     /* Call the image transfer function */
-    transferImage (twSession, &imageInfo);
+    transferImage (twSession, &imageInfo, bufferSize);
 
-  } while (endImageTransfer (twSession, &pendingCount));
+    endImageTransfer (twSession);
+  }
+
+  /* Reset any open transfers */
+  DSM_XFER_RESET(twSession, pendingXfers);
+
+  /* This will close the datasource and datasource
+   * manager.  Then the message queue will be shut
+   * down and the run() procedure will finally be
+   * able to finish.
+   */
+  disableDS (twSession);
+  closeDS (twSession);
+  closeDSM (twSession);
 
   /*
    * Inform our application that we are done
    * transferring images.
    */
-  CB_XFER_POST(twSession, pendingCount);
+  CB_XFER_POST(twSession);
 }
 
 void

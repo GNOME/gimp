@@ -51,11 +51,6 @@
     { GIMP_PDB_INT32, "image-count", "Number of acquired images" }, \
     { GIMP_PDB_INT32ARRAY, "image-ids", "Array of acquired image identifiers" }
 
-/*
- * Application definitions
- */
-#define MAX_IMAGES 1
-
 /* Functions which the platform-independent code will call */
 TW_UINT16 callDSM (
   pTW_IDENTITY pOrigin,
@@ -81,8 +76,8 @@ pTW_SESSION initializeTwain (void);
 void      preTransferCallback (void *);
 int       beginTransferCallback (pTW_IMAGEINFO, void *);
 int       dataTransferCallback (pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
-int       endTransferCallback (int, int, void *);
-void      postTransferCallback (int, void *);
+void      endTransferCallback (int, void *);
+void      postTransferCallback (void *);
 void      register_menu (pTW_IDENTITY dsIdentity);
 void      register_scanner_menus (void);
 

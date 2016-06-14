@@ -8,7 +8,8 @@
  * Brion Vibber <brion@pobox.com>
  * 07/22/2004
  *
- * Added for Win x64 support, changed data source selection.
+ * Added for Win x64 support, changed data source selection, fixed
+ * scanning more than one image.
  * Jens M. Plonka <jens.plonka@gmx.de>
  * 11/25/2011
  *
@@ -61,7 +62,8 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
- *  (11/25/11)  v0.7   Added Win x64 support, changed data source selection.
+ *  (11/25/11)  v0.7   Added Win x64 support, changed data source selection,
+ *                     fixed scanning more than one image.
  */
 #include "config.h"
 
@@ -94,6 +96,10 @@ static const GimpParamDef args[] = { IN_ARGS };
 static const GimpParamDef return_vals[] = { OUT_ARGS };
 
 static char  *destBuf = NULL;
+
+/* The list of images to be transferred */
+GList        *images = NULL;
+
 static char bitMasks[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
 
 /* Return values storage */
@@ -309,14 +315,17 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpRunMode run_mode = param[0].data.d_int32;
+  GList       *list;
+  gint32       count = 0;
+  gint32       i;
+  GimpRunMode  run_mode = param[0].data.d_int32;
 
   /* Initialize the return values
    * Always return at least the status to the caller.
    */
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
-  *nreturn_vals = 1;
+  *nreturn_vals = 3;
   *return_vals = values;
 
   INIT_I18N ();
@@ -335,7 +344,7 @@ run (const gchar      *name,
   values[1].type = GIMP_PDB_INT32;
   values[1].data.d_int32 = 0;
   values[2].type = GIMP_PDB_INT32ARRAY;
-  values[2].data.d_int32array = g_new (gint32, MAX_IMAGES);
+  values[2].data.d_int32array = NULL; /* Will be assigned after acquiring images */
 
   /* How are we running today? */
   switch (run_mode)
@@ -353,15 +362,31 @@ run (const gchar      *name,
   /* Have we succeeded so far? */
   if (values[0].data.d_status == GIMP_PDB_SUCCESS)
   {
-    twainMain (name);
+    if (twainMain (name))
+    {
+      count = g_list_length (images);
+    }
   }
+
+  /* Retrun the number of images */
+  values[1].data.d_int32      = count;
 
   /* Check to make sure we got at least one valid
    * image.
    */
-  if (values[1].data.d_int32 > 0) {
-    /* Set return values */
-    *nreturn_vals = 3;
+  if (count == 0)
+  {
+    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  }
+  else
+  {
+    /* Return the list of image IDs */
+    values[2].data.d_int32array = g_new (gint32, count);
+    for (list = images, i = 0; list; list = g_list_next (list), i++)
+    {
+      values[2].data.d_int32array[i] = GPOINTER_TO_INT (list->data);
+    }
+    g_list_free (images);
   }
 }
 
@@ -477,12 +502,6 @@ beginTransferCallback (pTW_IMAGEINFO imageInfo, void *clientData)
   /* Initialize a pixel region for writing to the image */
   gimp_pixel_rgn_init (&(theClientData->pixel_rgn), theClientData->drawable,
       0, 0, width, length, TRUE, FALSE);
-
-  /* Store our client data for the data transfer callbacks */
-  if (clientData)
-  {
-    g_free (clientData);
-  }
 
   twSession->clientData = (void *) theClientData;
 
@@ -826,8 +845,8 @@ dataTransferCallback (
  * TWRC_FAILURE
  *  The transfer failed.
  */
-int
-endTransferCallback (int completionState, int pendingCount, void *clientData)
+void
+endTransferCallback (int twRC, void *clientData)
 {
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
 
@@ -841,13 +860,9 @@ endTransferCallback (int completionState, int pendingCount, void *clientData)
   gimp_drawable_detach (theClientData->drawable);
 
   /* Make sure to check our return code */
-  if (completionState == TWRC_XFERDONE)
+  if ((twRC == TWRC_XFERDONE) || (twRC == TWRC_SUCCESS))
   {
-    /* We have a completed image transfer */
-    values[2].type = GIMP_PDB_INT32ARRAY;
-    values[2].data.d_int32array[values[1].data.d_int32++] =
-      theClientData->image_id;
-
+    images = g_list_prepend (images, GINT_TO_POINTER (theClientData->image_id));
     /* Display the image */
     gimp_display_new (theClientData->image_id);
   }
@@ -856,9 +871,6 @@ endTransferCallback (int completionState, int pendingCount, void *clientData)
     /* The transfer did not complete successfully */
     gimp_image_delete (theClientData->image_id);
   }
-
-  /* Shut down if we have received all of the possible images */
-  return (values[1].data.d_int32 < MAX_IMAGES);
 }
 
 /*
@@ -869,23 +881,8 @@ endTransferCallback (int completionState, int pendingCount, void *clientData)
  * transferred.
  */
 void
-postTransferCallback (int pendingCount, void *clientData)
+postTransferCallback (void *clientData)
 {
-  /* Shut things down. */
-  if (pendingCount != 0)
-  {
-    cancelPendingTransfers(twSession);
-  }
-
-  /* This will close the datasource and datasource
-   * manager.  Then the message queue will be shut
-   * down and the run() procedure will finally be
-   * able to finish.
-   */
-  disableDS (twSession);
-  closeDS (twSession);
-  closeDSM (twSession);
-
   /* Post a message to close up the application */
   twainQuitApplication ();
 }

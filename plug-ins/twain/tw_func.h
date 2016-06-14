@@ -110,7 +110,7 @@ typedef int (* TW_TXFR_DATA_CB)(pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
  * TWRC_FAILURE
  *  The transfer failed.
  */
-typedef int (* TW_TXFR_END_CB)(int, int, void *);
+typedef void (* TW_TXFR_END_CB)(int, void *);
 
 /*
  * Post-image transfer callback
@@ -119,7 +119,7 @@ typedef int (* TW_TXFR_END_CB)(int, int, void *);
  * of the possible images have been transferred
  * from the datasource.
  */
-typedef void (* TW_POST_TXFR_CB)(int, void *);
+typedef void (* TW_POST_TXFR_CB)(void *);
 
 /*
  * The following structure defines the
@@ -211,11 +211,11 @@ typedef struct _TWAIN_SESSION {
 #define CB_XFER_DATA(s, i, m) (*s->transferFunctions->txfrDataCb) \
     (i, &m, s->clientData)
 
-#define CB_XFER_END(s, c, e, p)   if (s->transferFunctions->txfrEndCb) \
-    c = (*s->transferFunctions->txfrEndCb) (e, *p, s->clientData)
+#define CB_XFER_END(s)   if (s->transferFunctions->txfrEndCb) \
+    (*s->transferFunctions->txfrEndCb) (s->twRC, s->clientData)
 
-#define CB_XFER_POST(s, p) if (s->transferFunctions->postTxfrCb) \
-    (*s->transferFunctions->postTxfrCb) (p, s->clientData)
+#define CB_XFER_POST(s) if (s->transferFunctions->postTxfrCb) \
+    (*s->transferFunctions->postTxfrCb) (s->clientData)
 
 /* Session structure access
  * macros
@@ -236,7 +236,7 @@ typedef struct _TWAIN_SESSION {
 #define DS_IS_DISABLED(s) ((s == NULL) ? TRUE  : s->twainState <  5)
 
 #define DSM_GET_STATUS(ses, sta)  callDSM(ses->appIdentity, ses->dsIdentity, \
-          DG_CONTROL, DAT_STATUS, MSG_GET, (TW_MEMREF) &sta)
+          DG_CONTROL, DAT_STATUS, MSG_GET, (TW_MEMREF) sta)
 
 #define DSM_OPEN(ses) callDSM(ses->appIdentity, NULL,\
           DG_CONTROL, DAT_PARENT, MSG_OPENDSM, (TW_MEMREF) &(ses->hwnd))
@@ -274,7 +274,7 @@ typedef struct _TWAIN_SESSION {
 #define DSM_GET_IMAGE(ses, i) callDSM(ses->appIdentity, ses->dsIdentity,\
           DG_IMAGE, DAT_IMAGEINFO, MSG_GET, (TW_MEMREF) i)
 
-#define DSM_XFER_SET(ses, x) callDSM(ses->appIdentity, ses->dsIdentity,\
+#define DSM_CAPABILITY_SET(ses, x) callDSM(ses->appIdentity, ses->dsIdentity,\
           DG_CONTROL, DAT_CAPABILITY, MSG_SET, (TW_MEMREF) &x)
 
 #define DSM_XFER_START(ses, x) callDSM(ses->appIdentity, ses->dsIdentity,\
@@ -313,5 +313,6 @@ void            processTwainMessage (TW_UINT16 message, pTW_SESSION twSession);
 pTW_SESSION     newSession (pTW_IDENTITY twSession);
 pTW_DATA_SOURCE get_available_ds (pTW_SESSION twSession);
 int             adjust_selected_data_source (pTW_SESSION twSession);
-
+void            set_ds_capabilities (pTW_SESSION twSession);
+void            set_ds_capability (pTW_SESSION twSession, TW_UINT16 cap, TW_UINT16 type, TW_UINT32 value);
 #endif /* _TW_FUNC_H */
