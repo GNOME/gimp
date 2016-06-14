@@ -492,6 +492,10 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  * gdouble property in a very space-efficient way.
  * If @label is #NULL, the @property_name's nick will be used as label
  * of the returned widget.
+ * The property's lower and upper values will be used as min/max of the
+ * #GimpSpinScale, unless the object carries locale data superseding
+ * the property's setting, with the respective keys "@property_name:min"
+ * and "@property_name:max".
  *
  * Return value:  A new #GimpSpinScale widget.
  *
@@ -508,6 +512,8 @@ gimp_prop_spin_scale_new (GObject     *config,
   GParamSpec    *param_spec;
   GtkAdjustment *adjustment;
   GtkWidget     *scale;
+  gdouble       *config_value;
+  gchar         *config_key;
   gdouble        value;
   gdouble        lower;
   gdouble        upper;
@@ -516,14 +522,40 @@ gimp_prop_spin_scale_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
+  /* The generic min and max for the property. */
   if (! _gimp_prop_widgets_get_numeric_values (config, param_spec,
                                                &value, &lower, &upper,
                                                G_STRFUNC))
     return NULL;
 
+  /* Check if locale min/max for this specific config object exist. */
+  config_key = g_strconcat (param_spec->name, ":min", NULL);
+  config_value = g_object_get_data (G_OBJECT (config),
+                                    config_key);
+  if (config_value &&
+      *config_value > lower &&
+      *config_value < upper)
+    {
+      lower = *config_value;
+    }
+  g_free (config_key);
+
+  config_key = g_strconcat (param_spec->name, ":max", NULL);
+  config_value = g_object_get_data (G_OBJECT (config),
+                                    config_key);
+  if (config_value &&
+      *config_value > lower &&
+      *config_value < upper)
+    {
+      upper = *config_value;
+    }
+  g_free (config_key);
+
+  /* Get label. */
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
+  /* Also usable on int properties. */
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 

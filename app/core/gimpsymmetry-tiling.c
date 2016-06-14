@@ -105,7 +105,7 @@ gimp_tiling_class_init (GimpTilingClass *klass)
                            "x-interval",
                            _("Interval X"),
                            _("Interval on the X axis (pixels)"),
-                           0.0, 10000.0, 0.0,
+                           0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
@@ -113,7 +113,7 @@ gimp_tiling_class_init (GimpTilingClass *klass)
                            "y-interval",
                            _("Interval Y"),
                            _("Interval on the Y axis (pixels)"),
-                           0.0, 10000.0, 0.0,
+                           0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
@@ -121,7 +121,7 @@ gimp_tiling_class_init (GimpTilingClass *klass)
                            "shift",
                            _("Shift"),
                            _("X-shift between lines (pixels)"),
-                           0.0, 10000.0, 0.0,
+                           0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
@@ -150,22 +150,20 @@ gimp_tiling_init (GimpTiling *tiling)
 static void
 gimp_tiling_constructed (GObject *object)
 {
-  GimpSymmetry     *sym    = GIMP_SYMMETRY (object);
-  GimpTiling       *tiling = GIMP_TILING (object);
-  GParamSpecDouble *dspec;
+  GimpSymmetry *sym       = GIMP_SYMMETRY (object);
+  GimpTiling   *tiling    = GIMP_TILING (object);
+  gdouble      *x_max     = g_new (gdouble, 1);
+  gdouble      *y_max     = g_new (gdouble, 1);
+  gdouble      *shift_max = g_new (gdouble, 1);
 
-  /* Update property values to actual image size. */
-  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                                             "x-interval"));
-  dspec->maximum = gimp_image_get_width (sym->image);
+  /* Set property values to actual image size. */
+  *x_max     = gimp_image_get_width (sym->image);
+  *y_max     = gimp_image_get_height (sym->image);
+  *shift_max = *x_max;
 
-  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                                             "shift"));
-  dspec->maximum = gimp_image_get_width (sym->image);
-
-  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                                             "y-interval"));
-  dspec->maximum = gimp_image_get_height (sym->image);
+  g_object_set_data_full (object, "x-interval:max", x_max, g_free);
+  g_object_set_data_full (object, "y-interval:max", y_max, g_free);
+  g_object_set_data_full (object, "shift:max", shift_max, g_free);
 
   g_signal_connect (sym->image, "size-changed-detailed",
                     G_CALLBACK (gimp_tiling_image_size_changed_cb),
@@ -375,23 +373,27 @@ gimp_tiling_image_size_changed_cb (GimpImage    *image,
                                    gint          previous_height,
                                    GimpSymmetry *sym)
 {
-  GParamSpecDouble *dspec;
-
   if (previous_width != gimp_image_get_width (image))
     {
-      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                                                 "x-interval"));
-      dspec->maximum = gimp_image_get_width (sym->image);
+      gdouble *x_max     = g_new (gdouble, 1);
+      gdouble *shift_max = g_new (gdouble, 1);
 
-      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                                                 "shift"));
-      dspec->maximum = gimp_image_get_width (sym->image);
+      *x_max     = gimp_image_get_width (sym->image);
+      *shift_max = *x_max;
+
+      g_object_set_data_full (G_OBJECT (sym), "x-interval:max",
+                              x_max, g_free);
+      g_object_set_data_full (G_OBJECT (sym), "shift:max",
+                              shift_max, g_free);
     }
   if (previous_height != gimp_image_get_height (image))
     {
-      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                                                 "y-interval"));
-      dspec->maximum = gimp_image_get_height (sym->image);
+      gdouble *y_max     = g_new (gdouble, 1);
+
+      *y_max = gimp_image_get_height (sym->image);
+
+      g_object_set_data_full (G_OBJECT (sym), "y-interval:max",
+                              y_max, g_free);
     }
 
   if (previous_width != gimp_image_get_width (image) ||

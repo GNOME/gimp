@@ -57,6 +57,7 @@ enum
 
 /* Local function prototypes */
 
+static void       gimp_mirror_constructed             (GObject             *object);
 static void       gimp_mirror_finalize                (GObject             *object);
 static void       gimp_mirror_set_property            (GObject             *object,
                                                        guint                property_id,
@@ -95,6 +96,12 @@ static void       gimp_mirror_set_vertical_symmetry   (GimpMirror          *mirr
 static void       gimp_mirror_set_point_symmetry      (GimpMirror          *mirror,
                                                        gboolean             active);
 
+static void       gimp_mirror_image_size_changed_cb   (GimpImage           *image,
+                                                       gint                 previous_origin_x,
+                                                       gint                 previous_origin_y,
+                                                       gint                 previous_width,
+                                                       gint                 previous_height,
+                                                       GimpSymmetry        *sym);
 
 G_DEFINE_TYPE (GimpMirror, gimp_mirror, GIMP_TYPE_SYMMETRY)
 
@@ -107,6 +114,7 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpSymmetryClass *symmetry_class = GIMP_SYMMETRY_CLASS (klass);
 
+  object_class->constructed         = gimp_mirror_constructed;
   object_class->finalize            = gimp_mirror_finalize;
   object_class->set_property        = gimp_mirror_set_property;
   object_class->get_property        = gimp_mirror_get_property;
@@ -168,6 +176,26 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
 static void
 gimp_mirror_init (GimpMirror *mirror)
 {
+}
+
+static void
+gimp_mirror_constructed (GObject *object)
+{
+  GimpSymmetry *sym;
+  gdouble      *x_max = g_new (gdouble, 1);
+  gdouble      *y_max = g_new (gdouble, 1);
+
+  sym = GIMP_SYMMETRY (object);
+
+  *x_max = gimp_image_get_width (sym->image);
+  *y_max = gimp_image_get_height (sym->image);
+
+  g_object_set_data_full (object, "horizontal-position:max", y_max, g_free);
+  g_object_set_data_full (object, "vertical-position:max", x_max, g_free);
+
+  g_signal_connect (sym->image, "size-changed-detailed",
+                    G_CALLBACK (gimp_mirror_image_size_changed_cb),
+                    sym);
 }
 
 static void
@@ -706,4 +734,28 @@ gimp_mirror_set_point_symmetry (GimpMirror *mirror,
     }
 
   gimp_mirror_reset (mirror);
+}
+
+static void
+gimp_mirror_image_size_changed_cb (GimpImage    *image,
+                                   gint          previous_origin_x,
+                                   gint          previous_origin_y,
+                                   gint          previous_width,
+                                   gint          previous_height,
+                                   GimpSymmetry *sym)
+{
+  if (previous_width != gimp_image_get_width (image) ||
+      previous_height != gimp_image_get_height (image))
+    {
+      gdouble *x_max = g_new (gdouble, 1);
+      gdouble *y_max = g_new (gdouble, 1);
+
+      *x_max = gimp_image_get_width (image);
+      *y_max = gimp_image_get_height (image);
+
+      g_object_set_data_full (G_OBJECT (sym), "vertical-position:max", x_max, g_free);
+      g_object_set_data_full (G_OBJECT (sym), "horizontal-position:max", y_max, g_free);
+
+      g_signal_emit_by_name (sym, "update-ui", sym->image);
+    }
 }

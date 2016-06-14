@@ -85,7 +85,7 @@ static GeglNode * gimp_mandala_get_operation      (GimpSymmetry *mandala,
                                                    gint          stroke,
                                                    gint          paint_width,
                                                    gint          paint_height);
-static void    gimp_mandala_image_size_changed_cb (GimpImage    *image ,
+static void    gimp_mandala_image_size_changed_cb (GimpImage    *image,
                                                    gint          previous_origin_x,
                                                    gint          previous_origin_y,
                                                    gint          previous_width,
@@ -118,7 +118,7 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
                            "center-x",
                            _("Center abscisse"),
                            NULL,
-                           0.0, 10000.0, 0.0,
+                           0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
@@ -126,7 +126,7 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
                            "center-y",
                            _("Center ordinate"),
                            NULL,
-                           0.0, 10000.0, 0.0,
+                           0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
@@ -155,19 +155,17 @@ gimp_mandala_init (GimpMandala *mandala)
 static void
 gimp_mandala_constructed (GObject *object)
 {
-  GimpSymmetry     *sym;
-  GParamSpecDouble *dspec;
+  GimpSymmetry *sym;
+  gdouble      *x_max = g_new (gdouble, 1);
+  gdouble      *y_max = g_new (gdouble, 1);
 
   sym = GIMP_SYMMETRY (object);
 
-  /* Update property values to actual image size. */
-  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                                             "center-x"));
-  dspec->maximum = gimp_image_get_width (sym->image);
+  *x_max = gimp_image_get_width (sym->image);
+  *y_max = gimp_image_get_height (sym->image);
 
-  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                                             "center-y"));
-  dspec->maximum = gimp_image_get_height (sym->image);
+  g_object_set_data_full (object, "center-x:max", x_max, g_free);
+  g_object_set_data_full (object, "center-y:max", y_max, g_free);
 
   g_signal_connect (sym->image, "size-changed-detailed",
                     G_CALLBACK (gimp_mandala_image_size_changed_cb),
@@ -177,8 +175,12 @@ gimp_mandala_constructed (GObject *object)
 static void
 gimp_mandala_finalize (GObject *object)
 {
-  GimpMandala *mandala = GIMP_MANDALA (object);
+  GimpSymmetry *sym     = GIMP_SYMMETRY (object);
+  GimpMandala  *mandala = GIMP_MANDALA (object);
 
+  g_signal_handlers_disconnect_by_func (sym->image,
+                                        gimp_mandala_image_size_changed_cb,
+                                        object);
   if (mandala->horizontal_guide)
     g_object_unref (mandala->horizontal_guide);
   mandala->horizontal_guide = NULL;
@@ -547,22 +549,18 @@ gimp_mandala_image_size_changed_cb (GimpImage    *image,
                                     gint          previous_height,
                                     GimpSymmetry *sym)
 {
-  GParamSpecDouble *dspec;
-
-  if (previous_width != gimp_image_get_width (image))
-    {
-      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                                                 "center-x"));
-      dspec->maximum = gimp_image_get_width (sym->image);
-    }
-  if (previous_height != gimp_image_get_height (image))
-    {
-      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                                                 "center-y"));
-      dspec->maximum = gimp_image_get_height (sym->image);
-    }
-
   if (previous_width != gimp_image_get_width (image) ||
       previous_height != gimp_image_get_height (image))
-    g_signal_emit_by_name (sym, "update-ui", sym->image);
+    {
+      gdouble *x_max = g_new (gdouble, 1);
+      gdouble *y_max = g_new (gdouble, 1);
+
+      *x_max = gimp_image_get_width (image);
+      *y_max = gimp_image_get_height (image);
+
+      g_object_set_data_full (G_OBJECT (sym), "center-x:max", x_max, g_free);
+      g_object_set_data_full (G_OBJECT (sym), "center-y:max", y_max, g_free);
+
+      g_signal_emit_by_name (sym, "update-ui", sym->image);
+    }
 }
