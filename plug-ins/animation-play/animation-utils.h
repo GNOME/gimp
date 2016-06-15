@@ -21,9 +21,12 @@
 #ifndef __ANIMATION_UTILS_H__
 #define __ANIMATION_UTILS_H__
 
-#define PLUG_IN_PROC   "plug-in-animationplay"
-#define PLUG_IN_BINARY "animation-play"
-#define PLUG_IN_ROLE   "gimp-animation-playback"
+#define PLUG_IN_PROC       "plug-in-animationplay"
+#define PLUG_IN_BINARY     "animation-play"
+#define PLUG_IN_ROLE       "gimp-animation-playback"
+
+#define MAX_FRAMERATE      300.0
+#define DEFAULT_FRAMERATE  24.0
 
 void total_alpha_preview (guchar *drawing_data,
                           guint   drawing_width,

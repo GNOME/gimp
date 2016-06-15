@@ -66,6 +66,9 @@ static void animation_storyboard_load                  (Animation           *ani
 static void animation_storyboard_duration_spin_changed (GtkSpinButton       *spinbutton,
                                                         AnimationAnimatic   *animation);
 
+static void animation_storyboard_comment_changed       (GtkTextBuffer       *text_buffer,
+                                                        AnimationAnimatic   *animatic);
+
 G_DEFINE_TYPE (AnimationStoryboard, animation_storyboard, GTK_TYPE_TABLE)
 
 #define parent_class animation_storyboard_parent_class
@@ -275,6 +278,12 @@ animation_storyboard_load (Animation           *animation,
           if (comment_contents != NULL)
             gtk_text_buffer_insert_at_cursor (buffer, comment_contents, -1);
 
+          g_object_set_data (G_OBJECT (buffer), "panel-num",
+                             GINT_TO_POINTER (panel_num));
+          g_signal_connect (buffer, "changed",
+                            (GCallback) animation_storyboard_comment_changed,
+                            animation);
+
           g_free (image_name);
         }
 
@@ -296,7 +305,7 @@ animation_storyboard_load (Animation           *animation,
                         0, /* Do not expand nor fill, nor shrink. */
                         0, /* Do not expand nor fill, nor shrink. */
                         0, 1);
-      g_object_set_data (G_OBJECT (duration), "layer-position",
+      g_object_set_data (G_OBJECT (duration), "panel-num",
                          GINT_TO_POINTER (panel_num));
       g_signal_connect (duration, "value-changed",
                         (GCallback) animation_storyboard_duration_spin_changed,
@@ -322,13 +331,32 @@ static void
 animation_storyboard_duration_spin_changed (GtkSpinButton     *spinbutton,
                                             AnimationAnimatic *animation)
 {
-  gpointer layer_pos;
+  gpointer panel_num;
   gint     duration;
 
-  layer_pos = g_object_get_data (G_OBJECT (spinbutton), "layer-position");
+  panel_num = g_object_get_data (G_OBJECT (spinbutton), "panel-num");
   duration = gtk_spin_button_get_value_as_int (spinbutton);
 
   animation_animatic_set_duration (animation,
-                                   GPOINTER_TO_INT (layer_pos),
+                                   GPOINTER_TO_INT (panel_num),
                                    duration);
+}
+
+static void
+animation_storyboard_comment_changed (GtkTextBuffer     *text_buffer,
+                                      AnimationAnimatic *animatic)
+{
+  gchar       *text;
+  GtkTextIter  start;
+  GtkTextIter  end;
+  gpointer     panel_num;
+
+  panel_num = g_object_get_data (G_OBJECT (text_buffer), "panel-num");
+
+  gtk_text_buffer_get_bounds (text_buffer, &start, &end);
+  text = gtk_text_buffer_get_text (text_buffer, &start, &end, FALSE);
+  animation_animatic_set_comment (animatic,
+                                  GPOINTER_TO_INT (panel_num),
+                                  text);
+  g_free (text);
 }

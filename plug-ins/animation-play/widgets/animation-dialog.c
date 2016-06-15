@@ -36,7 +36,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define MAX_FRAMERATE  300.0
 #define DITHERTYPE     GDK_RGB_DITHER_NORMAL
 
 /* Settings we cache assuming they may be the user's
@@ -333,6 +332,7 @@ animation_dialog_new (gint32 image_id)
   GtkWidget      *dialog;
   Animation      *animation;
   GimpParasite   *parasite;
+  const gchar    *xml = NULL;
   CachedSettings  settings;
 
   /* Acceptable default settings. */
@@ -343,16 +343,15 @@ animation_dialog_new (gint32 image_id)
 
   /* If this animation has specific settings already, override the global ones. */
   parasite = gimp_image_get_parasite (image_id,
-                                      PLUG_IN_PROC "/framerate");
+                                      PLUG_IN_PROC "/animation-0");
   if (parasite)
     {
-      const gdouble *rate = gimp_parasite_data (parasite);
-
-      settings.framerate = *rate;
+      xml = g_strdup (gimp_parasite_data (parasite));
       gimp_parasite_free (parasite);
     }
 
-  animation = animation_new (image_id, FALSE);
+  animation = animation_new (image_id, xml);
+  g_free ((gchar *) xml);
 
   dialog = g_object_new (ANIMATION_TYPE_DIALOG,
                          "type",  GTK_WINDOW_TOPLEVEL,
@@ -361,7 +360,6 @@ animation_dialog_new (gint32 image_id)
   animation_dialog_set_animation (ANIMATION_DIALOG (dialog),
                                   animation);
 
-  animation_set_framerate (animation, settings.framerate);
   animation_load (animation, 1.0);
 
   return dialog;
@@ -1262,6 +1260,7 @@ animation_dialog_save_settings (AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   GimpParasite           *old_parasite;
+  gchar                  *xml;
   gboolean                undo_step_started = FALSE;
   CachedSettings          cached_settings;
 
@@ -1270,14 +1269,15 @@ animation_dialog_save_settings (AnimationDialog *dialog)
 
   gimp_set_data (PLUG_IN_PROC, &cached_settings, sizeof (&cached_settings));
 
+  xml = animation_serialize (priv->animation);
   /* Then as a parasite for the specific image.
    * If there was already parasites and they were all the same as the
    * current state, do not resave them.
    * This prevents setting the image in a dirty state while it stayed
    * the same. */
-  old_parasite = gimp_image_get_parasite (priv->image_id, PLUG_IN_PROC "/framerate");
+  old_parasite = gimp_image_get_parasite (priv->image_id, PLUG_IN_PROC "/animation-0");
   if (! old_parasite ||
-      *(gdouble *) gimp_parasite_data (old_parasite) != cached_settings.framerate)
+      (gchar *) gimp_parasite_data (old_parasite) != xml)
     {
       GimpParasite *parasite;
       if (! undo_step_started)
@@ -1285,10 +1285,9 @@ animation_dialog_save_settings (AnimationDialog *dialog)
           gimp_image_undo_group_start (priv->image_id);
           undo_step_started = TRUE;
         }
-      parasite = gimp_parasite_new (PLUG_IN_PROC "/framerate",
+      parasite = gimp_parasite_new (PLUG_IN_PROC "/animation-0",
                                     GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
-                                    sizeof (cached_settings.framerate),
-                                    &cached_settings.framerate);
+                                    strlen (xml) + 1, xml);
       gimp_image_attach_parasite (priv->image_id, parasite);
       gimp_parasite_free (parasite);
     }

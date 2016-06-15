@@ -49,8 +49,11 @@ struct _AnimationClass
                                       gint       next_pos);
 
   /* These virtual methods must be implemented by any subclass. */
-  void         (*load)          (Animation  *animation,
-                                 gdouble     proxy_ratio);
+  void         (*load)          (Animation   *animation,
+                                 gdouble      proxy_ratio);
+  void         (*load_xml)      (Animation   *animation,
+                                 const gchar *xml,
+                                 gdouble      proxy_ratio);
   gint         (*get_length)    (Animation   *animation);
 
 
@@ -67,7 +70,8 @@ struct _AnimationClass
 GType         animation_get_type (void);
 
 Animation   * animation_new                (gint32       image_id,
-                                            gboolean     xsheet);
+                                            const gchar *xml);
+
 gint32        animation_get_image_id       (Animation   *animation);
 
 void          animation_load               (Animation   *animation,

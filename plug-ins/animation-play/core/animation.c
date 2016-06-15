@@ -56,6 +56,7 @@ typedef struct _AnimationPrivate AnimationPrivate;
 struct _AnimationPrivate
 {
   gint32       image_id;
+  gchar       *xml;
 
   gdouble      framerate;
 
@@ -343,14 +344,18 @@ animation_init (Animation *animation)
 /************ Public Functions ****************/
 
 Animation *
-animation_new (gint32   image_id,
-               gboolean xsheet)
+animation_new (gint32       image_id,
+               const gchar *xml)
 {
-  Animation *animation;
+  Animation        *animation;
+  AnimationPrivate *priv;
 
   animation = g_object_new (ANIMATION_TYPE_ANIMATIC,
                             "image", image_id,
                             NULL);
+  priv = ANIMATION_GET_PRIVATE (animation);
+  priv->xml = g_strdup (xml);
+
   return animation;
 }
 
@@ -377,7 +382,16 @@ animation_load (Animation *animation,
   priv->proxy_ratio = proxy_ratio;
   g_signal_emit (animation, animation_signals[PROXY], 0, proxy_ratio);
 
-  ANIMATION_GET_CLASS (animation)->load (animation, proxy_ratio);
+  if (priv->xml)
+    ANIMATION_GET_CLASS (animation)->load_xml (animation,
+                                               priv->xml,
+                                               proxy_ratio);
+  else
+    ANIMATION_GET_CLASS (animation)->load (animation, proxy_ratio);
+  /* XML is only used for the first load.
+   * Any next loads will use internal data. */
+  g_free (priv->xml);
+  priv->xml = NULL;
 
   priv->start_pos = ANIMATION_GET_CLASS (animation)->get_start_position (animation);
   priv->position  = priv->start_pos;

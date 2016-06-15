@@ -23,7 +23,32 @@
 #include <libgimp/gimp.h>
 #include <libgimp/stdplugins-intl.h>
 
+#include "animation-utils.h"
 #include "animationanimatic.h"
+
+typedef enum
+{
+  START_STATE,
+  ANIMATION_STATE,
+  SEQUENCE_STATE,
+  PANEL_STATE,
+  LAYER_STATE,
+  END_SEQUENCE_STATE,
+  COMMENTS_STATE,
+  COMMENT_STATE,
+  END_STATE
+} AnimationParseState;
+
+typedef struct
+{
+  Animation           *animation;
+  AnimationParseState  state;
+
+  gint                 panel;
+  gint                 duration;
+
+  gint                 xml_level;
+} ParseStatus;
 
 enum
 {
@@ -62,19 +87,42 @@ static void         animation_animatic_finalize   (GObject           *object);
 
 /* Virtual methods */
 
-static gint         animation_animatic_get_length (Animation         *animation);
-static void         animation_animatic_get_size   (Animation         *animation,
-                                                   gint              *width,
-                                                   gint              *height);
+static gint         animation_animatic_get_length  (Animation         *animation);
+static void         animation_animatic_get_size    (Animation         *animation,
+                                                    gint              *width,
+                                                    gint              *height);
 
-static void         animation_animatic_load       (Animation         *animation,
-                                                   gdouble            proxy_ratio);
-static GeglBuffer * animation_animatic_get_frame  (Animation         *animation,
-                                                   gint               pos);
-static gchar      * animation_animatic_serialize  (Animation         *animation);
-static gboolean     animation_animatic_same       (Animation         *animation,
-                                                   gint               previous_pos,
-                                                   gint               next_pos);
+static void         animation_animatic_load        (Animation         *animation,
+                                                    gdouble            proxy_ratio);
+static void         animation_animatic_load_xml    (Animation         *animation,
+                                                    const gchar       *xml,
+                                                    gdouble            proxy_ratio);
+static GeglBuffer * animation_animatic_get_frame   (Animation         *animation,
+                                                    gint               pos);
+static gchar      * animation_animatic_serialize   (Animation         *animation);
+
+static gboolean     animation_animatic_same        (Animation         *animation,
+                                                    gint               previous_pos,
+                                                    gint               next_pos);
+
+/* XML parsing */
+
+static void      animation_animatic_start_element (GMarkupParseContext *context,
+                                                    const gchar         *element_name,
+                                                    const gchar        **attribute_names,
+                                                    const gchar        **attribute_values,
+                                                    gpointer             user_data,
+                                                    GError             **error);
+static void      animation_animatic_end_element   (GMarkupParseContext *context,
+                                                   const gchar         *element_name,
+                                                   gpointer             user_data,
+                                                   GError             **error);
+
+static void      animation_animatic_text          (GMarkupParseContext  *context,
+                                                   const gchar          *text,
+                                                   gsize                 text_len,
+                                                   gpointer              user_data,
+                                                   GError              **error);
 
 /* Utils */
 
@@ -127,12 +175,13 @@ animation_animatic_class_init (AnimationAnimaticClass *klass)
 
   object_class->finalize = animation_animatic_finalize;
 
-  anim_class->get_length = animation_animatic_get_length;
-  anim_class->get_size   = animation_animatic_get_size;
-  anim_class->load       = animation_animatic_load;
-  anim_class->get_frame  = animation_animatic_get_frame;
-  anim_class->serialize  = animation_animatic_serialize;
-  anim_class->same       = animation_animatic_same;
+  anim_class->get_length  = animation_animatic_get_length;
+  anim_class->get_size    = animation_animatic_get_size;
+  anim_class->load        = animation_animatic_load;
+  anim_class->load_xml    = animation_animatic_load_xml;
+  anim_class->get_frame   = animation_animatic_get_frame;
+  anim_class->serialize   = animation_animatic_serialize;
+  anim_class->same        = animation_animatic_same;
 
   g_type_class_add_private (klass, sizeof (AnimationAnimaticPrivate));
 }
@@ -432,6 +481,52 @@ animation_animatic_load (Animation *animation,
   g_free (layers);
 }
 
+static void
+animation_animatic_load_xml (Animation   *animation,
+                             const gchar *xml,
+                             gdouble      proxy_ratio)
+{
+  const GMarkupParser markup_parser =
+    {
+      animation_animatic_start_element,
+      animation_animatic_end_element,
+      animation_animatic_text,
+      NULL,  /*  passthrough  */
+      NULL   /*  error        */
+    };
+  GMarkupParseContext *context;
+  ParseStatus          status = { 0, };
+  GError              *error  = NULL;
+
+  g_return_if_fail (xml != NULL);
+
+  /* Init with a default load. */
+  animation_animatic_load (animation, proxy_ratio);
+
+  /* Parse XML to update. */
+  status.state = START_STATE;
+  status.animation = animation;
+  status.xml_level = 0;
+
+  context = g_markup_parse_context_new (&markup_parser,
+                                        0, &status, NULL);
+  g_markup_parse_context_parse (context, xml, strlen (xml), &error);
+  if (error)
+    {
+      g_warning ("Error parsing XML: %s", error->message);
+    }
+  else
+    {
+      g_markup_parse_context_end_parse (context, &error);
+      if (error)
+        g_warning ("Error parsing XML: %s", error->message);
+    }
+  g_markup_parse_context_free (context);
+  /* If XML parsing failed, just reset the animation. */
+  if (error)
+    animation_animatic_load (animation, proxy_ratio);
+}
+
 static GeglBuffer *
 animation_animatic_get_frame (Animation *animation,
                               gint       pos)
@@ -477,45 +572,48 @@ animation_animatic_serialize (Animation *animation)
   gchar                    *tmp;
   gint                      i;
 
-  text = g_strdup_printf ("<animation framerate=\"%f\" type=\"animatic\"><sequence>",
-                          animation_get_framerate (animation));
+  text = g_strdup_printf ("<animation type=\"animatic\" framerate=\"%f\" "
+                          " duration=\"%d\" width=\"\" height=\"\">"
+                          "<sequence>",
+                          animation_get_framerate (animation),
+                          priv->n_panels);
   for (i = 0; i < priv->n_panels; i++)
     {
       gchar  *panel;
-      gchar  *layer_name;
-      gint32 *panels;
-      gint    n_panels;
 
-      panels = gimp_image_get_layers (priv->panels, &n_panels);
-      layer_name = gimp_item_get_name (panels[n_panels - (i + 1)]);
-
-      panel = g_markup_printf_escaped ("<panel title=\"%s\" duration=\"%d\" layer=\"%d\">",
-                                       layer_name, priv->durations[i],
+      panel = g_markup_printf_escaped ("<panel duration=\"%d\">"
+                                       "<layer id=\"%d\"/></panel>",
+                                       priv->durations[i],
                                        priv->tattoos[i]);
-      g_free (layer_name);
 
       tmp = text;
       text = g_strconcat (text, panel, NULL);
       g_free (tmp);
       g_free (panel);
+    }
+  tmp = text;
+  text = g_strconcat (text, "</sequence><comments>", NULL);
+  g_free (tmp);
 
+  /* New loop for comments. */
+  for (i = 0; i < priv->n_panels; i++)
+    {
       if (priv->comments[i])
         {
           gchar *comment;
 
-          comment = g_markup_printf_escaped ("<notes title=\"Notes\">%s</notes>",
+          /* Comments are for a given panel, not for a frame position. */
+          comment = g_markup_printf_escaped ("<comment panel=\"%d\">%s</comment>",
+                                             i + 1,
                                              priv->comments[i]);
           tmp = text;
           text = g_strconcat (text, comment, NULL);
           g_free (tmp);
           g_free (comment);
         }
-      tmp = text;
-      text = g_strconcat (text, "</panel>", NULL);
-      g_free (tmp);
     }
   tmp = text;
-  text = g_strconcat (text, "</sequence></animation>", NULL);
+  text = g_strconcat (text, "</comments></animation>", NULL);
   g_free (tmp);
 
   return text;
@@ -547,6 +645,223 @@ animation_animatic_same (Animation *animation,
     }
 
   return identical;
+}
+
+static void
+animation_animatic_start_element (GMarkupParseContext *context,
+                                  const gchar         *element_name,
+                                  const gchar        **attribute_names,
+                                  const gchar        **attribute_values,
+                                  gpointer             user_data,
+                                  GError             **error)
+{
+  const gchar              **names  = attribute_names;
+  const gchar              **values = attribute_values;
+  ParseStatus               *status = (ParseStatus *) user_data;
+  AnimationAnimaticPrivate  *priv   = GET_PRIVATE (status->animation);
+
+  status->xml_level++;
+  switch (status->state)
+    {
+    case START_STATE:
+      if (g_strcmp0 (element_name, "animation") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Unknown animation tag: \"%s\"."),
+                       element_name);
+          return;
+        }
+      while (*names && *values)
+        {
+          if (strcmp (*names, "type") == 0)
+            {
+              if (! **values || strcmp (*values, "animatic") != 0)
+                {
+                  g_set_error (error, 0, 0,
+                               _("Unknown animation type: \"%s\"."),
+                               *values);
+                  return;
+                }
+            }
+          else if (strcmp (*names, "framerate") == 0 && **values)
+            {
+              gdouble fps = g_strtod (*values, NULL);
+              if (fps >= MAX_FRAMERATE)
+                {
+                  /* Let's avoid huge frame rates. */
+                  fps = MAX_FRAMERATE;
+                }
+              else if (fps <= 0)
+                {
+                  /* Null or negative framerates are impossible. */
+                  fps = DEFAULT_FRAMERATE;
+                }
+              animation_set_framerate (status->animation, fps);
+            }
+
+          names++;
+          values++;
+        }
+      status->state = ANIMATION_STATE;
+      break;
+    case ANIMATION_STATE:
+      if (g_strcmp0 (element_name, "sequence") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Unknown sequence tag: \"%s\"."),
+                       element_name);
+          return;
+        }
+      status->state = SEQUENCE_STATE;
+      break;
+    case SEQUENCE_STATE:
+      if (g_strcmp0 (element_name, "panel") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Unknown panel tag: \"%s\"."),
+                       element_name);
+          return;
+        }
+      status->panel++;
+      while (*names && *values)
+        {
+          if (strcmp (*names, "duration") == 0 && **values)
+            {
+              gint duration = g_ascii_strtoll (*values, NULL, 10);
+
+              if (duration > 0)
+                priv->durations[status->panel - 1] = duration;
+            }
+
+          names++;
+          values++;
+        }
+      status->state = PANEL_STATE;
+      break;
+    case PANEL_STATE:
+      if (g_strcmp0 (element_name, "layer") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Unknown layer tag: \"%s\"."),
+                       element_name);
+          return;
+        }
+      status->state = LAYER_STATE;
+      break;
+    case LAYER_STATE:
+      /* <layer> should have no child tag. */
+      g_set_error (error, 0, 0,
+                   _("Unknown layer tag: \"%s\"."),
+                   element_name);
+      return;
+    case END_SEQUENCE_STATE:
+      if (g_strcmp0 (element_name, "comments") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Unknown comments tag: \"%s\"."),
+                       element_name);
+          return;
+        }
+      status->state = COMMENTS_STATE;
+      break;
+    case COMMENTS_STATE:
+      if (g_strcmp0 (element_name, "comment") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Unknown comment tag: \"%s\"."),
+                       element_name);
+          return;
+        }
+      status->panel = -1;
+      while (*names && *values)
+        {
+          if (strcmp (*names, "panel") == 0 && **values)
+            {
+              gint panel = (gint) g_ascii_strtoll (*values, NULL, 10);
+
+              status->panel = panel;
+              break;
+            }
+
+          names++;
+          values++;
+        }
+      status->state = COMMENT_STATE;
+      break;
+    case COMMENT_STATE:
+      /* <comment> should have no child tag. */
+      g_set_error (error, 0, 0,
+                   _("Unknown layer tag: \"%s\"."),
+                   element_name);
+      return;
+    default:
+      g_set_error (error, 0, 0,
+                   _("Unknown state!"));
+      break;
+    }
+}
+
+static void
+animation_animatic_end_element (GMarkupParseContext *context,
+                                const gchar         *element_name,
+                                gpointer             user_data,
+                                GError             **error)
+{
+  ParseStatus *status = (ParseStatus *) user_data;
+
+  status->xml_level--;
+
+  switch (status->state)
+    {
+    case SEQUENCE_STATE:
+    case COMMENTS_STATE:
+      status->state = END_SEQUENCE_STATE;
+      break;
+    case PANEL_STATE:
+      status->state = SEQUENCE_STATE;
+      break;
+    case LAYER_STATE:
+      status->state = PANEL_STATE;
+      break;
+    case END_SEQUENCE_STATE:
+    case ANIMATION_STATE:
+      status->state = END_STATE;
+      break;
+    case COMMENT_STATE:
+      status->state = COMMENTS_STATE;
+      break;
+    default: /* START/END_STATE */
+      /* invalid XML. I expect the parser to raise an error anyway.*/
+      break;
+    }
+}
+
+static void
+animation_animatic_text (GMarkupParseContext  *context,
+                         const gchar          *text,
+                         gsize                 text_len,
+                         gpointer              user_data,
+                         GError              **error)
+{
+  ParseStatus *status = (ParseStatus *) user_data;
+  AnimationAnimatic *animatic = ANIMATION_ANIMATIC (status->animation);
+
+  switch (status->state)
+    {
+    case COMMENT_STATE:
+      if (status->panel == -1)
+        /* invalid comment tag. */
+        break;
+      /* Setting comment to a panel. */
+      animation_animatic_set_comment (animatic,
+                                      status->panel,
+                                      text);
+      status->panel = -1;
+      break;
+    default:
+      /* Ignoring text everywhere else. */
+      break;
+    }
 }
 
 /**** Utils ****/
