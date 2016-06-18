@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-05-29 12:48+0000\n"
-"PO-Revision-Date: 2016-05-31 04:28+0100\n"
+"PO-Revision-Date: 2016-06-04 13:08+0100\n"
 "Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Language-Team: Português\n"
 "Language: pt\n"
@@ -71,7 +71,7 @@ msgstr ""
 
 #: ../desktop/gimp.appdata.xml.in.h:6
 msgid "Screenshot showing channel mixing and layer editor"
-msgstr ""
+msgstr "Captura de ecrã que mostra a mistura de canais e o editor de camadas"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -1125,7 +1125,7 @@ msgstr "Abrir diálogo do estado do dispositivo"
 #: ../app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
-msgstr ""
+msgstr "Pintura _simétrica"
 
 #: ../app/actions/dialogs-actions.c:66
 #| msgctxt "dialogs-action"
@@ -3371,6 +3371,8 @@ msgstr "Volta a procurar e verificar os tipos de letra instalados"
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
+"Não existem definições anteriorres para '%s', em vez disso mostra-se o "
+"diálogo do filtro."
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgctxt "gradient-editor-action"
@@ -4096,6 +4098,9 @@ msgid ""
 "to assigning a built-in sRGB color profile. Better leave color management "
 "enabled."
 msgstr ""
+"Se a imagem tem a cor gerida. Desativar a gestão de cor é equivalente a "
+"atribuir um perfil de cor sRGB imbutido. É melhor deixar a gestão de cor "
+"ativa."
 
 #: ../app/actions/image-actions.c:191 ../app/actions/image-actions.c:436
 msgctxt "image-convert-action"
@@ -6586,6 +6591,8 @@ msgid ""
 "When softproofing, mark colors which cannot be represented in the target "
 "color space"
 msgstr ""
+"Quando fizer o softproofing, marcar cores que não podem ser representadas no "
+"espaço de cor alvo"
 
 #: ../app/actions/view-actions.c:208
 msgctxt "view-action"
@@ -6973,7 +6980,7 @@ msgstr "Intenção do renderizador do monitor é saturação"
 #: ../app/actions/view-actions.c:535 ../app/actions/view-actions.c:562
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
-msgstr ""
+msgstr "Colorimétrico _absoluto"
 
 #: ../app/actions/view-actions.c:536
 #| msgid "_Display rendering intent:"
@@ -7786,7 +7793,7 @@ msgstr "Ativar a ferramenta Transformação de pega."
 
 #: ../app/config/gimprc-blurbs.h:372
 msgid "Enable symmetry on painting."
-msgstr ""
+msgstr "Ativa simetria na pintura."
 
 #: ../app/config/gimprc-blurbs.h:375
 msgid "Enable the MyPaint Brush tool."
@@ -8005,7 +8012,7 @@ msgstr "Alfa"
 #: ../app/core/core-enums.c:270
 msgctxt "histogram-channel"
 msgid "Luminance"
-msgstr ""
+msgstr "Luminância"
 
 #: ../app/core/core-enums.c:271
 msgctxt "histogram-channel"
@@ -10360,7 +10367,7 @@ msgstr "Impossível renomear máscaras da camada."
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
 msgid "MyPaint brush file is unreasonably large, skipping."
-msgstr ""
+msgstr "Ficheiro de pincel do MyPaint é demasiado grande. A avançar."
 
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
@@ -10632,7 +10639,7 @@ msgstr "Ativo"
 
 #: ../app/core/gimpsymmetry.c:146
 msgid "Activate symmetry painting"
-msgstr ""
+msgstr "Ativar pintura simétrica "
 
 #: ../app/core/gimpsymmetry-mandala.c:112
 msgid "Mandala"
@@ -10687,7 +10694,7 @@ msgstr "Espelhar na vertical"
 
 #: ../app/core/gimpsymmetry-mirror.c:137
 msgid "Central Symmetry"
-msgstr ""
+msgstr "Simetria central"
 
 #: ../app/core/gimpsymmetry-mirror.c:153
 #| msgid "Horizontal offset for distribution"
@@ -10711,7 +10718,7 @@ msgstr "Intervalo X"
 
 #: ../app/core/gimpsymmetry-tiling.c:107
 msgid "Interval on the X axis (pixels)"
-msgstr ""
+msgstr "Intervalo no eixo dos X (pixeis)"
 
 #: ../app/core/gimpsymmetry-tiling.c:114
 #| msgid "I_nterval:"
@@ -10720,7 +10727,7 @@ msgstr "Intervalo Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:115
 msgid "Interval on the Y axis (pixels)"
-msgstr ""
+msgstr "Intervalo no eixo dos Y (pixeis)"
 
 #: ../app/core/gimpsymmetry-tiling.c:122
 #| msgctxt "undo-type"
@@ -10730,7 +10737,7 @@ msgstr "Shift"
 
 #: ../app/core/gimpsymmetry-tiling.c:123
 msgid "X-shift between lines (pixels)"
-msgstr ""
+msgstr "X-desvio entre linhas (pixeis)"
 
 #: ../app/core/gimpsymmetry-tiling.c:130
 #| msgctxt "vectors-action"
@@ -10814,6 +10821,9 @@ msgid ""
 "Whether the image is color managed. Disabling color management is equivalent "
 "to choosing a built-in sRGB profile. Better leave color management enabled."
 msgstr ""
+"Se a imagem tem a cor gerida. Desativar a gestão de cor é equivalente a "
+"atribuir um perfil de cor sRGB imbutido. É melhor deixar a gestão de cor "
+"ativa."
 
 #: ../app/core/gimptemplate.c:203
 #| msgid "Color Profile"
@@ -11279,7 +11289,7 @@ msgstr "Editor de seleção"
 
 #: ../app/dialogs/dialogs.c:389
 msgid "Symmetry Painting"
-msgstr ""
+msgstr "Pintura simétrica"
 
 #: ../app/dialogs/dialogs.c:393
 msgid "Undo"
@@ -11996,7 +12006,7 @@ msgstr "Gestão de cor"
 
 #: ../app/dialogs/preferences-dialog.c:1349
 msgid "Image display _mode:"
-msgstr ""
+msgstr "_Modo de apresentação da imagem:"
 
 #. Color Managed Display
 #: ../app/dialogs/preferences-dialog.c:1353
@@ -15476,7 +15486,7 @@ msgstr "Área base enchida em todas as camadas visíveis"
 #: ../app/tools/gimpbucketfilloptions.c:120
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
-msgstr ""
+msgstr "Tratar pixeis vizinhos diagonais como conetados"
 
 #: ../app/tools/gimpbucketfilloptions.c:127
 #: ../app/tools/gimpregionselectoptions.c:113
@@ -16093,12 +16103,12 @@ msgstr "Clique para mover a guia de divisão"
 #: ../app/tools/gimpfiltertool.c:643
 #, c-format
 msgid "%s: switch original and filtered"
-msgstr ""
+msgstr "%s: alternar entre original e filtrado"
 
 #: ../app/tools/gimpfiltertool.c:644
 #, c-format
 msgid "%s: switch horizontal and vertical"
-msgstr ""
+msgstr "%s: alternar entre horizontal e vertical"
 
 #: ../app/tools/gimpfiltertool-settings.c:81
 msgid "Pre_sets:"
@@ -19378,11 +19388,10 @@ msgid "Clockwise"
 msgstr "À direita"
 
 #: ../app/widgets/gimppropgui-constructors.c:330
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Invert Channel"
 msgid "Invert Range"
-msgstr "Inverter canal"
+msgstr "Inverter intervalo"
 
 #: ../app/widgets/gimppropgui-constructors.c:334
 #| msgctxt "undo-type"
