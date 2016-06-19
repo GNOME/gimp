@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include "gdk/gdkkeysyms.h"
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -43,6 +45,7 @@ struct _AnimationStoryboardPrivate
   gint                current_panel;
 
   GList              *panel_buttons;
+  GList              *comments;
 };
 
 /* GObject handlers */
@@ -75,6 +78,9 @@ static void animation_storyboard_rendered              (Animation           *ani
 static void animation_storyboard_duration_spin_changed (GtkSpinButton       *spinbutton,
                                                         AnimationAnimatic   *animation);
 
+static gboolean animation_storyboard_comment_keypress  (GtkWidget           *entry,
+                                                        GdkEventKey         *event,
+                                                        AnimationStoryboard *view);
 static void animation_storyboard_comment_changed       (GtkTextBuffer       *text_buffer,
                                                         AnimationAnimatic   *animatic);
 static void animation_storyboard_button_clicked        (GtkWidget           *widget,
@@ -200,6 +206,10 @@ animation_storyboard_finalize (GObject *object)
     {
       g_list_free (view->priv->panel_buttons);
     }
+  if (view->priv->comments)
+    {
+      g_list_free (view->priv->comments);
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -236,6 +246,12 @@ animation_storyboard_load (Animation           *animation,
       g_list_free_full (view->priv->panel_buttons,
                         (GDestroyNotify) gtk_widget_destroy);
       view->priv->panel_buttons = NULL;
+    }
+  if (view->priv->comments)
+    {
+      g_list_free_full (view->priv->comments,
+                        (GDestroyNotify) gtk_widget_destroy);
+      view->priv->comments = NULL;
     }
 
   /* Setting new values. */
@@ -301,6 +317,8 @@ animation_storyboard_load (Animation           *animation,
       gtk_widget_show (image);
 
       comment = gtk_text_view_new ();
+      g_object_set_data (G_OBJECT (comment), "panel-num",
+                         GINT_TO_POINTER (panel_num));
       gtk_table_attach (GTK_TABLE (view),
                         comment, 6, 11,
                         5 * panel_num - 5,
@@ -308,6 +326,8 @@ animation_storyboard_load (Animation           *animation,
                         GTK_EXPAND | GTK_FILL,
                         GTK_EXPAND | GTK_FILL,
                         0, 1);
+      view->priv->comments = g_list_prepend (view->priv->comments,
+                                             comment);
       gtk_widget_show (comment);
 
       image_name = gimp_item_get_name (layers[i]);
@@ -328,6 +348,9 @@ animation_storyboard_load (Animation           *animation,
 
           g_object_set_data (G_OBJECT (buffer), "panel-num",
                              GINT_TO_POINTER (panel_num));
+          g_signal_connect (comment, "key-press-event",
+                            G_CALLBACK (animation_storyboard_comment_keypress),
+                            view);
           g_signal_connect (buffer, "changed",
                             (GCallback) animation_storyboard_comment_changed,
                             animation);
@@ -421,6 +444,38 @@ animation_storyboard_duration_spin_changed (GtkSpinButton     *spinbutton,
   animation_animatic_set_duration (animation,
                                    GPOINTER_TO_INT (panel_num),
                                    duration);
+}
+
+static gboolean
+animation_storyboard_comment_keypress (GtkWidget           *entry,
+                                       GdkEventKey         *event,
+                                       AnimationStoryboard *view)
+{
+  gpointer panel_num;
+
+  panel_num = g_object_get_data (G_OBJECT (entry), "panel-num");
+
+  if (event->keyval == GDK_KEY_Tab    ||
+      event->keyval == GDK_KEY_KP_Tab ||
+      event->keyval == GDK_KEY_ISO_Left_Tab)
+    {
+      GtkWidget *comment;
+
+      comment = g_list_nth_data (view->priv->comments,
+                                 GPOINTER_TO_INT (panel_num));
+      if (comment)
+        {
+          /* Grab the next comment widget. */
+          gtk_widget_grab_focus (comment);
+        }
+      else
+        {
+          /* Loop to the first comment after the last. */
+          gtk_widget_grab_focus (view->priv->comments->data);
+        }
+      return TRUE;
+    }
+  return FALSE;
 }
 
 static void
