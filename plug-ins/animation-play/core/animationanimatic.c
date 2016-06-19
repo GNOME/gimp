@@ -339,6 +339,51 @@ animation_animatic_get_combine (AnimationAnimatic *animatic,
   return priv->combine[panel_num - 1];
 }
 
+gint
+animation_animatic_get_panel (AnimationAnimatic *animation,
+                              gint               pos)
+{
+  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
+  gint                      count = 0;
+  gint                      i     = -1;
+
+  g_return_val_if_fail (priv->panels, -1);
+
+  if (pos >= 1       &&
+      pos <= animation_animatic_get_length (ANIMATION (animation)))
+    {
+      for (i = 0; i < priv->n_panels; i++)
+        {
+          count += priv->durations[i];
+          if (count >= pos)
+            break;
+        }
+    }
+
+  if (i != -1 && i < priv->n_panels)
+    return i + 1;
+
+  return -1;
+}
+
+void animation_animatic_jump_panel (AnimationAnimatic *animation,
+                                    gint               panel)
+{
+  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
+  /* Get the first frame position for a given panel. */
+  gint                      pos = 1;
+  gint                      i;
+
+  g_return_if_fail (priv->panels && panel <= priv->n_panels);
+
+  for (i = 0; i < panel - 1; i++)
+    {
+      pos += priv->durations[i];
+    }
+
+  animation_jump (ANIMATION (animation), pos);
+}
+
 /**** Virtual methods ****/
 
 static gint
@@ -533,31 +578,17 @@ animation_animatic_get_frame (Animation *animation,
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   GeglBuffer               *buffer = NULL;
+  gint                      panel;
 
-  if (priv->panels)
+  panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
+                                        pos);
+  if (panel > 0)
     {
       gint32 *layers;
       gint32  num_layers;
-      gint    count = 0;
 
       layers = gimp_image_get_layers (priv->panels, &num_layers);
-
-      if (num_layers > 0 &&
-          pos >= 1       &&
-          pos <= animation_animatic_get_length (animation))
-        {
-          gint i ;
-
-          for (i = 0; i < num_layers; i++)
-            {
-              count += priv->durations[i];
-              if (count >= pos)
-                break;
-            }
-
-          buffer = gimp_drawable_get_buffer (layers[num_layers - i - 1]);
-        }
-
+      buffer = gimp_drawable_get_buffer(layers[num_layers - panel]);
       g_free (layers);
     }
 

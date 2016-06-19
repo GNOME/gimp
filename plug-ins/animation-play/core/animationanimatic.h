@@ -63,4 +63,8 @@ void             animation_animatic_set_combine  (AnimationAnimatic *animatic,
 const gboolean   animation_animatic_get_combine  (AnimationAnimatic *animatic,
                                                   gint               panel_num);
 
+gint             animation_animatic_get_panel    (AnimationAnimatic *animation,
+                                                  gint               pos);
+void             animation_animatic_jump_panel   (AnimationAnimatic *animation,
+                                                  gint               panel);
 #endif  /*  __ANIMATION_ANIMATIC_H__  */
