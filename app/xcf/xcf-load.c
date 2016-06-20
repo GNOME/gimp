@@ -1141,6 +1141,18 @@ xcf_load_layer_props (XcfInfo    *info,
         case PROP_GROUP_ITEM:
           {
             GimpLayer *group;
+            gboolean   is_active_layer;
+
+            /* We're going to delete *layer, Don't leave its pointers
+             * in @info.  After that, we'll restore them back with the
+             * new pointer. See bug #767873.
+             */
+            is_active_layer = (*layer == info->active_layer);
+            if (is_active_layer)
+              info->active_layer = NULL;
+
+            if (*layer == info->floating_sel)
+              info->floating_sel = NULL;
 
             group = gimp_group_layer_new (image);
 
@@ -1150,6 +1162,13 @@ xcf_load_layer_props (XcfInfo    *info,
             g_object_ref_sink (*layer);
             g_object_unref (*layer);
             *layer = group;
+
+            if (is_active_layer)
+              info->active_layer = *layer;
+
+            /* Don't restore info->floating_sel because group layers
+             * can't be floating selections
+             */
           }
           break;
 
@@ -1220,6 +1239,12 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             GimpChannel *mask;
 
+            /* We're going to delete *channel, Don't leave its pointer
+             * in @info. See bug #767873.
+             */
+            if (*channel == info->active_channel)
+              info->active_channel = NULL;
+
             mask =
               gimp_selection_new (image,
                                   gimp_item_get_width  (GIMP_ITEM (*channel)),
@@ -1234,6 +1259,10 @@ xcf_load_channel_props (XcfInfo      *info,
             *channel = mask;
             (*channel)->boundary_known = FALSE;
             (*channel)->bounds_known   = FALSE;
+
+            /* Don't restore info->active_channel because the
+             * selection can't be the active channel
+             */
           }
           break;
 
