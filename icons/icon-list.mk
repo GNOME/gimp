@@ -553,6 +553,7 @@ icons16_images = \
 	16/gimp-prefs-folders-icon-themes.png		\
 	16/gimp-prefs-folders-interp.png		\
 	16/gimp-prefs-folders-modules.png		\
+	16/gimp-prefs-folders-mypaint-brushes.png	\
 	16/gimp-prefs-folders-palettes.png		\
 	16/gimp-prefs-folders-patterns.png		\
 	16/gimp-prefs-folders-plug-ins.png		\
