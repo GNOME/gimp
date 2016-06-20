@@ -92,8 +92,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="21.73877"
-     inkscape:cx="9.7343465"
-     inkscape:cy="12.273932"
+     inkscape:cx="5.8691547"
+     inkscape:cy="12.572937"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -113,9 +113,9 @@
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
      showborder="false"
-     inkscape:window-width="1440"
-     inkscape:window-height="752"
-     inkscape:window-x="480"
+     inkscape:window-width="1346"
+     inkscape:window-height="1016"
+     inkscape:window-x="50"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:snap-global="false"
@@ -139,7 +139,7 @@
             <dc:title>Klaus Staedtler       </dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -149,14 +149,10 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <g
-       id="g4279">
+       id="g4265"
+       transform="matrix(0.99840495,0,0,0.99977163,0.02549157,0.24057387)">
       <g
          id="g4138" />
-      <path
-         id="path4874"
-         d="m 9.0125159,1036.5345 a 0.80323728,0.7804304 0 0 0 -0.7905492,0.792 v 0.6434 c -0.6700284,-0.5785 -1.4941016,-0.9726 -2.386662,-1.1171 -0.5326351,-0.086 -1.0873497,-0.086 -1.6439032,0.012 -2.2262103,0.3918 -3.89758745,2.2412 -4.01281707,4.4361 -0.1152312,2.1949 1.35490827,4.168 3.53084147,4.7319 2.1759346,0.5641 4.4894871,-0.4294 5.5502219,-2.3799 l -1.4117915,-0.7137 c -0.7140143,1.3131 -2.2484545,1.9708 -3.7097046,1.5919 -1.4612509,-0.3786 -2.4397051,-1.6894 -2.3620872,-3.1678 0.077617,-1.4785 1.1894665,-2.7072 2.6843142,-2.9703 1.1405136,-0.2008 2.2575699,0.2053 2.9792328,1.0135 H 6.0797047 a 0.80356616,0.78075 0 1 0 0,1.5615 h 3.7479371 v -3.6416 a 0.80323728,0.7804304 0 0 0 -0.8151259,-0.792 z"
-         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fcaf3e;fill-opacity:1;fill-rule:nonzero;stroke:#f57900;stroke-width:0.34453622;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-         inkscape:connector-curvature="0" />
       <g
          transform="matrix(1.0019647,0,0,1.0242673,2.0083331,-22.260655)"
          id="g3976-3">
@@ -220,6 +216,12 @@
           </g>
         </g>
       </g>
+      <path
+         sodipodi:nodetypes="ccccssccaacsscccc"
+         id="path4874"
+         d="m 9.0125159,1036.5345 c -0.44333,0.01 -0.7971768,0.3613 -0.7905492,0.792 v 0.6434 c -0.6700284,-0.5785 -1.4941016,-0.9726 -2.386662,-1.1171 -0.5326351,-0.086 -1.7191709,-0.1786 -2.2508401,-0.046 -1.2293966,0.3069 -1.9473256,0.8737 -2.66447655,1.8991 -0.90261356,1.2906 -0.76621958,1.4584 -0.76412806,4.504 H 1.9776629 c 0.078347,-1.875 -0.2356082,-2.3674 0.3308519,-3.3279 0.4426332,-0.7506 1.2883295,-1.3666 2.1518633,-1.4869 1.0389425,-0.1447 2.2575699,0.2053 2.9792328,1.0135 H 6.0797047 c -1.0714211,0 -1.0694066,1.8025 0.00201,1.8025 h 3.7479371 l -0.00201,-3.8826 c 0.00677,-0.4401 -0.3621681,-0.7986 -0.8151259,-0.792 z"
+         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fcaf3e;fill-opacity:1;fill-rule:nonzero;stroke:#f57900;stroke-width:0.34453622;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         inkscape:connector-curvature="0" />
     </g>
   </g>
 </svg>

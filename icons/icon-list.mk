@@ -458,6 +458,7 @@ icons16_images = \
 	16/gimp-channel-red.png				\
 	16/gimp-channel.png				\
 	16/gimp-channels.png				\
+	16/gimp-char-picker.png				\
 	16/gimp-clipboard.png				\
 	16/gimp-close-all.png				\
 	16/gimp-color-pick-from-screen.png		\
