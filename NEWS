@@ -10,6 +10,238 @@ Generally, all bug fixes that are applied on the stable GIMP 2.8
 branch are also applied here, but they are usually not mentioned
 in NEWS.
 
+Overview of Changes from GIMP 2.9.2 to GIMP 2.9.4
+=================================================
+
+Core:
+
+  color management:
+  - add new GimpColorTransform object to create abstraction from LittleCMS
+  - now color-managed:
+    - layer/image/color palette/gradient/pattern previews,
+    - Color Picker tool,
+    - color buttons of GimpColorHistory,
+    - GimpFgBgEditor, as used e.g. in the toolbox
+    - color selectors,
+    - DND widget,
+    - painting tools,
+    - copying layers/paste buffer between images
+    - Colors applied to images
+    - GimpColorPanel and its color dialog (color widgets in dialogs)
+    - color areas created from menu actions
+  - color management for greyscale images, including setting preferred 
+    ICC profile
+  - add fast switching between color managed display and soft-proofing
+  - add a per-image "is color managed" switch and show the image's 
+    "is color managed" state in the window title string
+  - add basic support for creating images with color profiles
+  - add "Optimize" options for display and soft-proofing to optionally 
+    speed-up rendering at the cost of color fidelity 
+  - add Image -> Color Management -> Save Color Profile to File...
+  - improve the naming of generated ICC profiles
+  - add a shortcut to the profile chooser dialog on OS X too
+  - don't let display color management settings affect file import
+  - enable color management when a profile is assigned to the image
+  - enable color management when the image is converted to a profile
+  - pass the right color profile around in gimp_selection_float()
+  - hardcode the CMYK selector's conversion parameters, as well as NTSC 
+    parameters in babl/GEGL/GIMP
+  - have all previews track the monitor they are on
+
+  core:
+  - add "Select -> Flood" select action
+  - add "Select -> Remove Holes" action
+  - add "Border style" combo to the "Select -> Border..." dialog
+  - do not request xcf compat mode when compat_toggle not sensitive.
+  - initialize fontconfig in the background to be able to show a pulsing 
+    progress bar when rebuilding the list of fonts (typically, the first 
+    time GIMP runs)
+  - fix the Behind blending mode
+  - make Burn mode output match Gimp 2.8 ( partial revert of bug 744265 )
+  - improve file magic matching
+  - add a custom guide concept
+  - improve updating the statusbar messages and icons
+
+GUI
+  
+  menu:
+  - move the image-duplicate action next to image-new
+  - add Image -> Color Management -> Color Management Enabled
+  - change "Select _Custom Color..." to "_Custom Color..."
+  - change "Export" to "Export..." in the FIle menu
+
+  dialogs:
+  - include recently used colors in the Dockable Colors Dialog
+  - add RGB-based Luminance channel to the Histogram dialog
+  - fix remembering the order of dockable dialogs.
+
+  preferences: 
+  - reorder the prefs categories tree and rename some pages
+  - move "Snap Distance" to the prefs dialog's "Snapping" page
+  - add configuration for undo preview size
+  - clean-up Preferences -> Color Management
+  - add "Shortcut [some modifier] + Mousewheel" for changing pen size
+
+  themes:
+  - rename theme "Default" into "System"
+  - add new GUI themes: Lighter, Light, Gray, Dark, Darker
+
+  icons:
+  - add icon theme selection and make the icon theme path configurable in prefs
+  - preserve 2.8 pixel-perfect icon theme under the name "Legacy"
+  - add new symbolic icon theme for GIMP
+  - add a scalable icon theme and a configure option --enable-vector-icons
+
+  widgets:
+  - add new GimpBufferSourceBox widget and use it in GimpOperationTool
+
+View/Display
+
+  - fix various bugs related to rotated convas
+  - make GIMP not ignore 'Maximized' windows hints on startup
+  - enable a pulsing progress bar in the splash
+  - make new images jump around much less
+  - fix image position when entering/leaving fullscreen mode
+  - make layer boundary re-drawn correctly on scrolling
+  - make images not appear completely black when images dockable is visible
+  - have all previews track the monitor they are on
+
+Tools
+  
+  Fuzzy Select:
+  - add "Diagonal neighbors" option
+
+  Foreground Select:
+  - fix ghost brush outline
+
+  Bucket Fill:
+  - add "Diagonal neighbors" option
+
+  Posterize:
+  - turn the posterize tool into an ordinary GEGL filter
+  - remove posterize from Tools -> Colors
+
+  Desaturate:
+  - turn the Desaturate tool into a normal GEGL filter
+  - move "Desaturate" to Colors -> Desaturate
+
+  Align:
+  - add vertical offset to distribution options
+
+  Paths:
+  - improve performance
+
+  Flip:
+  - rename options to "Transform" and "Direction"
+
+  Cage Transform:
+  - fix a few performance issue
+
+  Unified Transform:
+  - make the tool not fail when currently selected layer is hidden
+
+  Text:
+  - add advanced input methods support for CJK
+  - add background colors setting, only exposed for advanced input methods
+  
+  Blend:
+  - use gegl:distance-transform in the blend tool, it has a progress now
+  - add shapeburst handles to the blend tool
+
+  All Painting Tools:
+  - add mirror symetry
+  - remove artefacts from painting tools in Burn blending mode
+  - add shortcut actions for changing spacing, hardness, and force
+
+  MyPaint:
+  - dramatically improve performance of the tool and enable it by default
+  - add Colorize mode
+  - add a toggle to change between erase & paint mode
+  - add a brush selector to the MyPaint brush options
+  - add a dockable dialog to choose a brush, with tagging
+  - read tags from MyPaint brushes
+  - improve blend math
+  - allow plug-ins to register procedures in the <MyPaintBrushes> menu
+
+  Smudge:
+  - fix the clipping of out-of-gamut channel values
+  - fix the handling of layers with alpha channels
+
+  Ink:
+  - the range of angle is now [-PI..PI]
+
+
+Plug-ins
+
+  preview:
+  - add a "split preview" feature to GEGL ops
+  - allow to switch the split preview between horizontal and vertical
+  - allow to swap the before/after position
+
+  filters
+  - update the "Recently used" menu with gegl filters
+  - replace Selective Gaussian Blur with the GEGL version
+  - add gegl:saturation as Colors -> Saturation
+  - add gegl:high-pass as Filters > Enhance > High Pass
+  - add new gegl:gegl filter that executes a custom processing chain
+  - port Tile and Pagecurl plug-ins to gegl
+  - refactor the screenshot plug-in into backend and front-ends, one 
+    per X.org, Wayland, Windows, OS X
+  - add Monochrome option to the GEGL version of Channel Mixer
+  - bring dialog titles and help IDs to GEGL filter dialogs
+
+  file plug-ins:
+  - add darktable plug-in top pre-process varios raw images
+  - port file-gif-save and file-tiff to GIO
+  - TIFF support:
+    - make libtiff a hard dependency
+    - merge the file-tiff-load and file-tiff-save plug-ins
+    - fix various tiff exporting bugs
+  - EXR support:
+    - read comment, Exif, and XMP data from EXR files
+    - use GIMP's internal profile when loading EXR
+  - PSD support:
+    - fix the loading of files with adjustment or fill layers
+    - fix the reading of layer group structure
+  - fix the raw image loader
+  - fix the layer groups support in OpenRaster
+  - code cleanup in file-bmp
+  - fix the exporting of KISS - CELL (*.cel) images
+  - resurrect the email plugin
+  - use GIO to figure if a file is hidden
+
+  pygimp:
+  - update pyconsole code
+  - add binding for GimpImageType
+  - add GimpColorConfig object
+  - add type definition for GimpColorManaged
+  - make GimpParasite type known to the code generator
+  - require Pycairo in configure, link gimpui against pycairo
+  - fix the application of paintbrush size in Python scripts
+
+  script-fu:
+  - make regex matching return character indexes
+  - fix the hanging of Script-fu on machines with 64-bit longs
+  - update tinyscheme code from upstream
+
+PDB:
+  - Bug 759104 - Allow coordinates of sample points to be accessed from scripts
+
+
+Build:
+
+  build/win:
+  - Start building libmypaint.
+  - Add pcre and upgrade glib2 to 2.48.1
+  - Upgrade exiv2 to 0.25
+  - Clear DISPLAY before building.
+  - Disable webkitgtk.
+
+OS-specific changes:
+  
+  Windows:
+  - Add support for generating crash backtraces using Dr. MingW
+
 
 Overview of Changes from GIMP 2.8.0 to GIMP 2.9.2
 =================================================
