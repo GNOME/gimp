@@ -29,14 +29,14 @@ Core:
     - Colors applied to images
     - GimpColorPanel and its color dialog (color widgets in dialogs)
     - color areas created from menu actions
-  - color management for greyscale images, including setting preferred 
+  - color management for grayscale images, including setting preferred
     ICC profile
   - add fast switching between color managed display and soft-proofing
-  - add a per-image "is color managed" switch and show the image's 
+  - add a per-image "is color managed" switch and show the image's
     "is color managed" state in the window title string
   - add basic support for creating images with color profiles
-  - add "Optimize" options for display and soft-proofing to optionally 
-    speed-up rendering at the cost of color fidelity 
+  - add "Optimize" options for display and soft-proofing to optionally
+    speed-up rendering at the cost of color fidelity
   - add Image -> Color Management -> Save Color Profile to File...
   - improve the naming of generated ICC profiles
   - add a shortcut to the profile chooser dialog on OS X too
@@ -44,7 +44,7 @@ Core:
   - enable color management when a profile is assigned to the image
   - enable color management when the image is converted to a profile
   - pass the right color profile around in gimp_selection_float()
-  - hardcode the CMYK selector's conversion parameters, as well as NTSC 
+  - hardcode the CMYK selector's conversion parameters, as well as NTSC
     parameters in babl/GEGL/GIMP
   - have all previews track the monitor they are on
 
@@ -53,8 +53,8 @@ Core:
   - add "Select -> Remove Holes" action
   - add "Border style" combo to the "Select -> Border..." dialog
   - do not request xcf compat mode when compat_toggle not sensitive.
-  - initialize fontconfig in the background to be able to show a pulsing 
-    progress bar when rebuilding the list of fonts (typically, the first 
+  - initialize fontconfig in the background to be able to show a pulsing
+    progress bar when rebuilding the list of fonts (typically, the first
     time GIMP runs)
   - fix the Behind blending mode
   - make Burn mode output match Gimp 2.8 ( partial revert of bug 744265 )
@@ -63,7 +63,7 @@ Core:
   - improve updating the statusbar messages and icons
 
 GUI
-  
+
   menu:
   - move the image-duplicate action next to image-new
   - add Image -> Color Management -> Color Management Enabled
@@ -75,7 +75,7 @@ GUI
   - add RGB-based Luminance channel to the Histogram dialog
   - fix remembering the order of dockable dialogs.
 
-  preferences: 
+  preferences:
   - reorder the prefs categories tree and rename some pages
   - move "Snap Distance" to the prefs dialog's "Snapping" page
   - add configuration for undo preview size
@@ -98,7 +98,7 @@ GUI
 View/Display
 
   - fix various bugs related to rotated convas
-  - make GIMP not ignore 'Maximized' windows hints on startup
+  - make GIMP not ignore 'Maximized' hints on startup in Windows
   - enable a pulsing progress bar in the splash
   - make new images jump around much less
   - fix image position when entering/leaving fullscreen mode
@@ -107,7 +107,7 @@ View/Display
   - have all previews track the monitor they are on
 
 Tools
-  
+
   Fuzzy Select:
   - add "Diagonal neighbors" option
 
@@ -143,14 +143,14 @@ Tools
   Text:
   - add advanced input methods support for CJK
   - add background colors setting, only exposed for advanced input methods
-  
+
   Blend:
   - use gegl:distance-transform in the blend tool, it has a progress now
   - add shapeburst handles to the blend tool
 
   All Painting Tools:
-  - add mirror symetry
-  - remove artefacts from painting tools in Burn blending mode
+  - add mirror symmetry
+  - remove artifacts from painting tools in Burn blending mode
   - add shortcut actions for changing spacing, hardness, and force
 
   MyPaint:
@@ -185,7 +185,7 @@ Plug-ins
   - add gegl:high-pass as Filters > Enhance > High Pass
   - add new gegl:gegl filter that executes a custom processing chain
   - port Tile and Pagecurl plug-ins to gegl
-  - refactor the screenshot plug-in into backend and front-ends, one 
+  - refactor the screenshot plug-in into backend and front-ends, one
     per X.org, Wayland, Windows, OS X
   - add Monochrome option to the GEGL version of Channel Mixer
   - bring dialog titles and help IDs to GEGL filter dialogs
@@ -238,7 +238,7 @@ Build:
   - Disable webkitgtk.
 
 OS-specific changes:
-  
+
   Windows:
   - Add support for generating crash backtraces using Dr. MingW
 
