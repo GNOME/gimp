@@ -82,7 +82,7 @@ static const GimpActionEntry mypaint_brushes_actions[] =
 
 static const GimpStringActionEntry mypaint_brushes_edit_actions[] =
 {
-  { "mypaint-brushes-edit", "gtk-edit",
+  { "mypaint-brushes-edit", GIMP_STOCK_EDIT,
     NC_("mypaint-brushes-action", "_Edit MyPaint Brush..."), NULL,
     NC_("mypaint-brushes-action", "Edit MyPaint brush"),
     "gimp-mybrush-editor",

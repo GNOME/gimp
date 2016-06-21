@@ -89,7 +89,7 @@ static const GimpActionEntry gradients_actions[] =
 
 static const GimpStringActionEntry gradients_edit_actions[] =
 {
-  { "gradients-edit", "gtk-edit",
+  { "gradients-edit", GIMP_STOCK_EDIT,
     NC_("gradients-action", "_Edit Gradient..."), NULL,
     NC_("gradients-action", "Edit gradient"),
     "gimp-gradient-editor",

@@ -82,7 +82,7 @@ static const GimpActionEntry dynamics_actions[] =
 
 static const GimpStringActionEntry dynamics_edit_actions[] =
 {
-  { "dynamics-edit", "gtk-edit",
+  { "dynamics-edit", GIMP_STOCK_EDIT,
     NC_("dynamics-action", "_Edit Dynamics..."), NULL,
     NC_("dynamics-action", "Edit dynamics"),
     "gimp-dynamics-editor",

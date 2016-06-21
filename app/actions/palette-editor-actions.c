@@ -44,7 +44,7 @@ static const GimpActionEntry palette_editor_actions[] =
     NC_("palette-editor-action", "Palette Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_EDITOR_DIALOG },
 
-  { "palette-editor-edit-color", "gtk-edit",
+  { "palette-editor-edit-color", GIMP_STOCK_EDIT,
     NC_("palette-editor-action", "_Edit Color..."), NULL,
     NC_("palette-editor-action", "Edit this entry"),
     G_CALLBACK (palette_editor_edit_color_cmd_callback),

@@ -88,7 +88,7 @@ static const GimpActionEntry patterns_actions[] =
 
 static const GimpStringActionEntry patterns_edit_actions[] =
 {
-  { "patterns-edit", "gtk-edit",
+  { "patterns-edit", GIMP_STOCK_EDIT,
     NC_("patterns-action", "_Edit Pattern..."), NULL,
     NC_("patterns-action", "Edit pattern"),
     "gimp-pattern-editor",

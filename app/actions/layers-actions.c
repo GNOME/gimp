@@ -72,7 +72,7 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_text_tool_cmd_callback),
     GIMP_HELP_TOOL_TEXT },
 
-  { "layers-edit-attributes", "gtk-edit",
+  { "layers-edit-attributes", GIMP_STOCK_EDIT,
     NC_("layers-action", "_Edit Layer Attributes..."), NULL,
     NC_("layers-action", "Edit the layer's name"),
     G_CALLBACK (layers_edit_attributes_cmd_callback),
@@ -248,7 +248,7 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     FALSE,
     GIMP_HELP_LAYER_LOCK_ALPHA },
 
-  { "layers-mask-edit", "gtk-edit",
+  { "layers-mask-edit", GIMP_STOCK_EDIT,
     NC_("layers-action", "_Edit Layer Mask"), NULL,
     NC_("layers-action", "Work on the layer mask"),
     G_CALLBACK (layers_mask_edit_cmd_callback),

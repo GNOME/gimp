@@ -45,7 +45,7 @@ static const GimpActionEntry colormap_actions[] =
     NC_("colormap-action", "Colormap Menu"), NULL, NULL, NULL,
     GIMP_HELP_INDEXED_PALETTE_DIALOG },
 
-  { "colormap-edit-color", "gtk-edit",
+  { "colormap-edit-color", GIMP_STOCK_EDIT,
     NC_("colormap-action", "_Edit Color..."), NULL,
     NC_("colormap-action", "Edit this color"),
     G_CALLBACK (colormap_edit_color_cmd_callback),

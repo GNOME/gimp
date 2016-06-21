@@ -60,7 +60,7 @@ static const GimpActionEntry templates_actions[] =
     G_CALLBACK (templates_duplicate_cmd_callback),
     GIMP_HELP_TEMPLATE_DUPLICATE },
 
-  { "templates-edit", "gtk-edit",
+  { "templates-edit", GIMP_STOCK_EDIT,
     NC_("templates-action", "_Edit Template..."), NULL,
     NC_("templates-action", "Edit this template"),
     G_CALLBACK (templates_edit_cmd_callback),

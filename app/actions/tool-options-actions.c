@@ -65,7 +65,7 @@ static const GimpActionEntry tool_options_actions[] =
     NC_("tool-options-action", "_Restore Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_RESTORE },
 
-  { "tool-options-edit-preset-menu", "gtk-edit",
+  { "tool-options-edit-preset-menu", GIMP_STOCK_EDIT,
     NC_("tool-options-action", "E_dit Tool Preset"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_EDIT },
 

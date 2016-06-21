@@ -328,7 +328,7 @@ gimp_settings_box_constructed (GObject *object)
   gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
 
   gimp_settings_box_menu_item_add (box,
-                                   "gtk-edit",
+                                   GIMP_STOCK_EDIT,
                                    _("_Manage Settings..."),
                                    G_CALLBACK (gimp_settings_box_manage_activate));
 }

@@ -91,7 +91,7 @@ static const GimpActionEntry tool_presets_actions[] =
 
 static const GimpStringActionEntry tool_presets_edit_actions[] =
 {
-  { "tool-presets-edit", "gtk-edit",
+  { "tool-presets-edit", GIMP_STOCK_EDIT,
     NC_("tool-presets-action", "_Edit Tool Preset..."), NULL,
     NC_("tool-presets-action", "Edit this tool preset"),
     "gimp-tool-preset-editor",
