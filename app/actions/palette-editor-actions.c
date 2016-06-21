@@ -50,7 +50,7 @@ static const GimpActionEntry palette_editor_actions[] =
     G_CALLBACK (palette_editor_edit_color_cmd_callback),
     GIMP_HELP_PALETTE_EDITOR_EDIT },
 
-  { "palette-editor-delete-color", "edit-delete",
+  { "palette-editor-delete-color", GIMP_STOCK_DELETE,
     NC_("palette-editor-action", "_Delete Color"), NULL,
     NC_("palette-editor-action", "Delete this entry"),
     G_CALLBACK (palette_editor_delete_color_cmd_callback),

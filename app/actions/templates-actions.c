@@ -66,7 +66,7 @@ static const GimpActionEntry templates_actions[] =
     G_CALLBACK (templates_edit_cmd_callback),
     GIMP_HELP_TEMPLATE_EDIT },
 
-  { "templates-delete", "edit-delete",
+  { "templates-delete", GIMP_STOCK_DELETE,
     NC_("templates-action", "_Delete Template"), NULL,
     NC_("templates-action", "Delete this template"),
     G_CALLBACK (templates_delete_cmd_callback),

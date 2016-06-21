@@ -93,7 +93,7 @@ static const GimpActionEntry gradient_editor_actions[] =
     G_CALLBACK (gradient_editor_split_uniformly_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM },
 
-  { "gradient-editor-delete", "edit-delete",
+  { "gradient-editor-delete", GIMP_STOCK_DELETE,
     "delete", "", NULL,
     G_CALLBACK (gradient_editor_delete_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_DELETE },

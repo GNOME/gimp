@@ -73,7 +73,7 @@ static const GimpActionEntry patterns_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_PATTERN_SHOW_IN_FILE_MANAGER },
 
-  { "patterns-delete", "edit-delete",
+  { "patterns-delete", GIMP_STOCK_DELETE,
     NC_("patterns-action", "_Delete Pattern"), NULL,
     NC_("patterns-action", "Delete this pattern"),
     G_CALLBACK (data_delete_cmd_callback),

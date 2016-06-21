@@ -69,7 +69,7 @@ static const GimpActionEntry tool_options_actions[] =
     NC_("tool-options-action", "E_dit Tool Preset"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_EDIT },
 
-  { "tool-options-delete-preset-menu", "edit-delete",
+  { "tool-options-delete-preset-menu", GIMP_STOCK_DELETE,
     NC_("tool-options-action", "_Delete Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DELETE },
 

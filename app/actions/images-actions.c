@@ -55,7 +55,7 @@ static const GimpActionEntry images_actions[] =
     G_CALLBACK (images_new_view_cmd_callback),
     NULL },
 
-  { "images-delete", "edit-delete",
+  { "images-delete", GIMP_STOCK_DELETE,
     NC_("images-action", "_Delete Image"), NULL,
     NC_("images-action", "Delete this image"),
     G_CALLBACK (images_delete_image_cmd_callback),

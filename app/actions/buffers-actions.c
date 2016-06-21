@@ -60,7 +60,7 @@ static const GimpActionEntry buffers_actions[] =
     G_CALLBACK (buffers_paste_as_new_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_AS_NEW },
 
-  { "buffers-delete", "edit-delete",
+  { "buffers-delete", GIMP_STOCK_DELETE,
     NC_("buffers-action", "_Delete Buffer"), NULL,
     NC_("buffers-action", "Delete the selected buffer"),
     G_CALLBACK (buffers_delete_cmd_callback),

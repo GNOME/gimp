@@ -214,7 +214,7 @@ gimp_tool_options_editor_constructed (GObject *object)
                             editor);
 
   editor->p->delete_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor), "edit-delete",
+    gimp_editor_add_button (GIMP_EDITOR (editor), GIMP_STOCK_DELETE,
                             _("Delete Tool Preset..."),
                             GIMP_HELP_TOOL_OPTIONS_DELETE,
                             G_CALLBACK (gimp_tool_options_editor_delete_clicked),

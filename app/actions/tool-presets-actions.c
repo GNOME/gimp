@@ -76,7 +76,7 @@ static const GimpActionEntry tool_presets_actions[] =
     G_CALLBACK (tool_presets_restore_cmd_callback),
     GIMP_HELP_TOOL_PRESET_RESTORE },
 
-  { "tool-presets-delete", "edit-delete",
+  { "tool-presets-delete", GIMP_STOCK_DELETE,
     NC_("tool-presets-action", "_Delete Tool Preset"), NULL,
     NC_("tool-presets-action", "Delete this tool preset"),
     G_CALLBACK (data_delete_cmd_callback),

@@ -69,7 +69,7 @@ static const GimpActionEntry text_tool_actions[] =
     G_CALLBACK (text_tool_paste_cmd_callback),
     NULL },
 
-  { "text-tool-delete", "edit-delete",
+  { "text-tool-delete", GIMP_STOCK_DELETE,
     NC_("text-tool-action", "_Delete"), NULL, NULL,
     G_CALLBACK (text_tool_delete_cmd_callback),
     NULL },

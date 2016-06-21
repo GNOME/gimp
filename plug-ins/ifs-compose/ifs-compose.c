@@ -1027,7 +1027,7 @@ design_op_menu_create (GtkWidget *window)
       NULL, "<control>N", NULL,
       G_CALLBACK (ifs_compose_new_callback) },
 
-    { "delete", "edit-delete",
+    { "delete", GIMP_STOCK_DELETE,
       NULL, "<control>D", NULL,
       G_CALLBACK (ifs_compose_delete_callback) },
 

@@ -69,7 +69,7 @@ static const GimpActionEntry channels_actions[] =
     G_CALLBACK (channels_duplicate_cmd_callback),
     GIMP_HELP_CHANNEL_DUPLICATE },
 
-  { "channels-delete", "edit-delete",
+  { "channels-delete", GIMP_STOCK_DELETE,
     NC_("channels-action", "_Delete Channel"), NULL,
     NC_("channels-action", "Delete this channel"),
     G_CALLBACK (channels_delete_cmd_callback),

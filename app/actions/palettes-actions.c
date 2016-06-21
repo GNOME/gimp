@@ -80,7 +80,7 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_PALETTE_SHOW_IN_FILE_MANAGER },
 
-  { "palettes-delete", "edit-delete",
+  { "palettes-delete", GIMP_STOCK_DELETE,
     NC_("palettes-action", "_Delete Palette"), NULL,
     NC_("palettes-action", "Delete this palette"),
     G_CALLBACK (data_delete_cmd_callback),

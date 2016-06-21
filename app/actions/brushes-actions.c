@@ -73,7 +73,7 @@ static const GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_BRUSH_SHOW_IN_FILE_MANAGER },
 
-  { "brushes-delete", "edit-delete",
+  { "brushes-delete", GIMP_STOCK_DELETE,
     NC_("brushes-action", "_Delete Brush"), NULL,
     NC_("brushes-action", "Delete this brush"),
     G_CALLBACK (data_delete_cmd_callback),

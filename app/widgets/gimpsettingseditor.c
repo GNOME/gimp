@@ -208,7 +208,7 @@ gimp_settings_editor_constructed (GObject *object)
 
   private->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            "edit-delete",
+                            GIMP_STOCK_DELETE,
                             _("Delete the selected settings"),
                             NULL,
                             G_CALLBACK (gimp_settings_editor_delete_clicked),

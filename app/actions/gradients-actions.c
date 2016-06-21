@@ -74,7 +74,7 @@ static const GimpActionEntry gradients_actions[] =
     G_CALLBACK (gradients_save_as_pov_ray_cmd_callback),
     GIMP_HELP_GRADIENT_SAVE_AS_POV },
 
-  { "gradients-delete", "edit-delete",
+  { "gradients-delete", GIMP_STOCK_DELETE,
     NC_("gradients-action", "_Delete Gradient"), NULL,
     NC_("gradients-action", "Delete this gradient"),
     G_CALLBACK (data_delete_cmd_callback),

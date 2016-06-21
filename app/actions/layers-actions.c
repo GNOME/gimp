@@ -110,7 +110,7 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_duplicate_cmd_callback),
     GIMP_HELP_LAYER_DUPLICATE },
 
-  { "layers-delete", "edit-delete",
+  { "layers-delete", GIMP_STOCK_DELETE,
     NC_("layers-action", "_Delete Layer"), NULL,
     NC_("layers-action", "Delete this layer"),
     G_CALLBACK (layers_delete_cmd_callback),
@@ -277,7 +277,7 @@ static const GimpEnumActionEntry layers_mask_apply_actions[] =
     GIMP_MASK_APPLY, FALSE,
     GIMP_HELP_LAYER_MASK_APPLY },
 
-  { "layers-mask-delete", "edit-delete",
+  { "layers-mask-delete", GIMP_STOCK_DELETE,
     NC_("layers-action", "Delete Layer Mas_k"), NULL,
     NC_("layers-action", "Remove the layer mask and its effect"),
     GIMP_MASK_DISCARD, FALSE,

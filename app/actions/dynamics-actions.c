@@ -67,7 +67,7 @@ static const GimpActionEntry dynamics_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_DYNAMICS_SHOW_IN_FILE_MANAGER },
 
-  { "dynamics-delete", "edit-delete",
+  { "dynamics-delete", GIMP_STOCK_DELETE,
     NC_("dynamics-action", "_Delete Dynamics"), NULL,
     NC_("dynamics-action", "Delete this dynamics"),
     G_CALLBACK (data_delete_cmd_callback),

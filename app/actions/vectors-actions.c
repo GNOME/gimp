@@ -73,7 +73,7 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_duplicate_cmd_callback),
     GIMP_HELP_PATH_DUPLICATE },
 
-  { "vectors-delete", "edit-delete",
+  { "vectors-delete", GIMP_STOCK_DELETE,
     NC_("vectors-action", "_Delete Path"), NULL,
     NC_("vectors-action", "Delete this path"),
     G_CALLBACK (vectors_delete_cmd_callback),
