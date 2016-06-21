@@ -1,5 +1,6 @@
 scalable_images = \
 	scalable/gimp-anchor.svg			\
+	scalable/gimp-bottom-svg			\
 	scalable/gimp-buffer.svg			\
 	scalable/gimp-cancel.svg			\
 	scalable/gimp-cap-butt.svg			\
@@ -39,6 +40,8 @@ scalable_images = \
 	scalable/gimp-curve-free.svg			\
 	scalable/gimp-curve-smooth.svg			\
 	scalable/gimp-default-colors.svg		\
+	scalable/gimp-delete.svg			\
+	scalable/gimp-down.svg   			\
 	scalable/gimp-device-status.svg			\
 	scalable/gimp-display-filter-colorblind.svg	\
 	scalable/gimp-display-filter-contrast.svg	\
@@ -90,7 +93,7 @@ scalable_images = \
 	scalable/gimp-image.svg				\
 	scalable/gimp-image-open.svg			\
 	scalable/gimp-image-reload.svg			\
-	scalable/gimp-indent.svg				\
+	scalable/gimp-indent.svg			\
 	scalable/gimp-info.svg				\
 	scalable/gimp-input-device.svg			\
 	scalable/gimp-invert.svg			\
@@ -115,17 +118,14 @@ scalable_images = \
 	scalable/gimp-merge-down.svg			\
 	scalable/gimp-move-to-screen.svg		\
 	scalable/gimp-navigation.svg			\
+	scalable/gimp-new.svg				\
 	scalable/gimp-next.svg				\
 	scalable/gimp-open.svg				\
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
 	scalable/gimp-path.svg				\
-	scalable/gimp-delete.svg			\
-	scalable/gimp-down.svg   			\
-	scalable/gimp-new.svG				\
 	scalable/gimp-paths.svg				\
 	scalable/gimp-path-stroke.svg			\
-	scalable/gimp-up.svg				\
 	scalable/gimp-pattern.svg			\
 	scalable/gimp-plugin.svg			\
 	scalable/gimp-portrait.svg			\
@@ -261,8 +261,10 @@ scalable_images = \
 	scalable/gimp-tool-unified-transform.svg	\
 	scalable/gimp-tool-warp.svg			\
 	scalable/gimp-tool-zoom.svg			\
+	scalable/gimp-top.svg				\
 	scalable/gimp-transparency.svg			\
 	scalable/gimp-undo-history.svg			\
+	scalable/gimp-up.svg				\
 	scalable/gimp-user-manual.svg			\
 	scalable/gimp-vcenter.svg			\
 	scalable/gimp-vchain.svg			\
@@ -444,6 +446,7 @@ icons12_images = \
 
 icons16_images = \
 	16/gimp-anchor.png				\
+	16/gimp-bottom.png				\
 	16/gimp-buffer.png				\
 	16/gimp-cancel.png				\
 	16/gimp-cap-butt.png				\
@@ -478,6 +481,8 @@ icons16_images = \
 	16/gimp-cursor.png				\
 	16/gimp-curve-free.png				\
 	16/gimp-curve-smooth.png			\
+	16/gimp-delete.png				\
+	16/gimp-down.png				\
 	16/gimp-device-status.png			\
 	16/gimp-display-filter-colorblind.png		\
 	16/gimp-display-filter-contrast.png		\
@@ -532,15 +537,12 @@ icons16_images = \
 	16/gimp-merge-down.png				\
 	16/gimp-move-to-screen.png			\
 	16/gimp-navigation.png				\
+	16/gimp-new.png					\
 	16/gimp-next.png				\
 	16/gimp-open.png				\
 	16/gimp-paste-as-new.png			\
 	16/gimp-paste-into.png				\
-	16/gimp-delete.png				\
-	16/gimp-down.png				\
-	16/gimp-new.png				\
 	16/gimp-path-stroke.png				\
-	16/gimp-up.png				\
 	16/gimp-path.png				\
 	16/gimp-paths.png				\
 	16/gimp-pattern.png				\
@@ -657,8 +659,10 @@ icons16_images = \
 	16/gimp-tool-warp.png				\
 	16/gimp-tool-zoom.png				\
 	16/gimp-tools.png				\
+	16/gimp-top.png					\
 	16/gimp-transparency.png			\
 	16/gimp-undo-history.png			\
+	16/gimp-up.png					\
 	16/gimp-user-manual.png				\
 	16/gimp-video.png				\
 	16/gimp-warning.png				\

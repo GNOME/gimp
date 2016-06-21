@@ -133,6 +133,8 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_UP,                       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DOWN,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DELETE,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_BOTTOM,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TOP,                      NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CURVE_FREE,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CURVE_SMOOTH,             NULL,        0, 0, LIBGIMP_DOMAIN },

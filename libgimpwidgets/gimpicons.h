@@ -107,6 +107,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_UP                       "gimp-up"
 #define GIMP_STOCK_DOWN                     "gimp-down"
 #define GIMP_STOCK_DELETE                   "gimp-delete"
+#define GIMP_STOCK_BOTTOM                   "gimp-bottom"
+#define GIMP_STOCK_TOP                      "gimp-top"
+
 
 #define GIMP_STOCK_CURVE_FREE               "gimp-curve-free"
 #define GIMP_STOCK_CURVE_SMOOTH             "gimp-curve-smooth"
