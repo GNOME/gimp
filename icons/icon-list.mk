@@ -90,6 +90,7 @@ scalable_images = \
 	scalable/gimp-image.svg				\
 	scalable/gimp-image-open.svg			\
 	scalable/gimp-image-reload.svg			\
+	scalable/gimp-indent.svg				\
 	scalable/gimp-info.svg				\
 	scalable/gimp-input-device.svg			\
 	scalable/gimp-invert.svg			\
@@ -119,12 +120,12 @@ scalable_images = \
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
 	scalable/gimp-path.svg				\
-	scalable/gimp-path-delete.svg			\
-	scalable/gimp-path-down.svg			\
-	scalable/gimp-path-new.svg			\
+	scalable/gimp-delete.svg			\
+	scalable/gimp-down.svg   			\
+	scalable/gimp-new.svG				\
 	scalable/gimp-paths.svg				\
 	scalable/gimp-path-stroke.svg			\
-	scalable/gimp-path-up.svg			\
+	scalable/gimp-up.svg				\
 	scalable/gimp-pattern.svg			\
 	scalable/gimp-plugin.svg			\
 	scalable/gimp-portrait.svg			\
@@ -457,6 +458,7 @@ icons16_images = \
 	16/gimp-channel-red.png				\
 	16/gimp-channel.png				\
 	16/gimp-channels.png				\
+	16/gimp-char-picker.png				\
 	16/gimp-clipboard.png				\
 	16/gimp-close-all.png				\
 	16/gimp-color-pick-from-screen.png		\
@@ -534,11 +536,11 @@ icons16_images = \
 	16/gimp-open.png				\
 	16/gimp-paste-as-new.png			\
 	16/gimp-paste-into.png				\
-	16/gimp-path-delete.png				\
-	16/gimp-path-down.png				\
-	16/gimp-path-new.png				\
+	16/gimp-delete.png				\
+	16/gimp-down.png				\
+	16/gimp-new.png				\
 	16/gimp-path-stroke.png				\
-	16/gimp-path-up.png				\
+	16/gimp-up.png				\
 	16/gimp-path.png				\
 	16/gimp-paths.png				\
 	16/gimp-pattern.png				\
@@ -552,6 +554,7 @@ icons16_images = \
 	16/gimp-prefs-folders-icon-themes.png		\
 	16/gimp-prefs-folders-interp.png		\
 	16/gimp-prefs-folders-modules.png		\
+	16/gimp-prefs-folders-mypaint-brushes.png	\
 	16/gimp-prefs-folders-palettes.png		\
 	16/gimp-prefs-folders-patterns.png		\
 	16/gimp-prefs-folders-plug-ins.png		\
@@ -675,6 +678,7 @@ icons22_images = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
 	22/gimp-histogram.png			\
+	22/gimp-indent.png				\
 	22/gimp-input-device.png		\
 	22/gimp-justify-center.png		\
 	22/gimp-justify-fill.png		\

@@ -13,7 +13,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-cancel.svg">
+   sodipodi:docname="gimp-down.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -23,9 +23,9 @@
      borderopacity="1"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="21.166144"
-     inkscape:cx="19.531027"
-     inkscape:cy="12.125749"
+     inkscape:zoom="16"
+     inkscape:cx="-1.207795"
+     inkscape:cy="17.894336"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -49,11 +49,10 @@
      inkscape:window-height="1016"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="1"
-     inkscape:snap-global="false">
+     inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
-       id="grid4233" />
+       id="grid4234" />
   </sodipodi:namedview>
   <metadata
      id="metadata30576">
@@ -70,7 +69,7 @@
             <dc:title>Klaus Staedtler       </dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -79,10 +78,27 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1036.3622)">
-    <path
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#cc0000;fill-opacity:1;fill-rule:nonzero;stroke:#a40000;stroke-width:0.37105447;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       d="m 8.1181827,1036.5488 c -3.3280239,-0.056 -6.4420412,2.043 -7.53900353,5.372 -1.35011096,4.0977 0.88144193,8.5113 4.97676643,9.8621 4.0953243,1.3508 8.5069284,-0.8828 9.8570304,-4.9803 l 0.07287,-0.1949 c 1.213443,-4.053 -1.033475,-8.3421 -5.04964,-9.667 -0.7678713,-0.2532 -1.5500326,-0.3787 -2.3180263,-0.3919 z m -0.122105,2.3454 c 3.0184813,0 5.4651873,2.4483 5.4651873,5.4685 0,1.0114 -0.279766,1.9541 -0.758234,2.7667 l -7.4720424,-7.479 c 0.8117387,-0.4779 1.755138,-0.7562 2.7650891,-0.7562 z m -4.7030148,2.6939 7.4700731,7.483 c -0.8122568,0.4788 -1.7561467,0.7583 -2.7670583,0.7583 -3.0185016,0 -5.4651868,-2.4467 -5.4651868,-5.4667 0,-1.014 0.2814768,-1.9605 0.762172,-2.7746 z"
-       id="path6388-7-7-4-7"
-       inkscape:connector-curvature="0" />
+    <g
+       id="g4245"
+       transform="matrix(1,0,0,-1,0,2088.7244)">
+      <g
+         transform="matrix(0.98507463,0,0,-0.98507463,1.7683403e-7,1052.1234)"
+         id="go-down">
+        <title
+           id="title47619">go-down</title>
+        <rect
+           width="16.242424"
+           height="16.242424"
+           x="0"
+           y="-0.24241818"
+           style="fill:none;stroke-width:1.0151515"
+           id="gtk-go-down" />
+        <path
+           inkscape:connector-curvature="0"
+           style="fill:#f57900;fill-opacity:1;stroke:#ce5c00;stroke-width:0.56829733;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 8.121212,12.552843 1.6190795,6.0551741 C 1.3963782,5.8326253 1.2993,5.5289634 1.2993,5.2385269 V 4.1023227 h 1.1369854 c 0.2906362,0 0.5945069,0.097031 0.8172082,0.3195574 l 4.8677184,4.864375 4.867718,-4.864375 c 0.222701,-0.2225482 0.526572,-0.3195574 0.817208,-0.3195574 h 1.136986 v 1.1362042 c 0,0.2904365 -0.0971,0.5940984 -0.319778,0.8166472 z"
+           id="path47623" />
+      </g>
+    </g>
   </g>
 </svg>
