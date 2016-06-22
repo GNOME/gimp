@@ -9,11 +9,15 @@ scalable_images = \
 	scalable/gimp-center.svg			\
 	scalable/gimp-channel-alpha.svg			\
 	scalable/gimp-channel-blue.svg			\
+	scalable/gimp-channel-delete.svg		\
+	scalable/gimp-channel-down.svg			\
 	scalable/gimp-channel-gray.svg			\
 	scalable/gimp-channel-green.svg			\
 	scalable/gimp-channel-indexed.svg		\
+	scalable/gimp-channel-new.svg			\
 	scalable/gimp-channel-red.svg			\
 	scalable/gimp-channels.svg			\
+	scalable/gimp-channel-up.svg			\
 	scalable/gimp-channel.svg			\
 	scalable/gimp-char-picker.svg			\
 	scalable/gimp-clipboard.svg			\
@@ -462,12 +466,16 @@ icons16_images = \
 	16/gimp-center.png				\
 	16/gimp-channel-alpha.png			\
 	16/gimp-channel-blue.png			\
+	16/gimp-channel-delete.png			\
+	16/gimp-channel-down.png			\
 	16/gimp-channel-gray.png			\
 	16/gimp-channel-green.png			\
 	16/gimp-channel-indexed.png			\
+	16/gimp-channel-new.png				\
 	16/gimp-channel-red.png				\
 	16/gimp-channel.png				\
 	16/gimp-channels.png				\
+	16/gimp-channel-up.png				\
 	16/gimp-char-picker.png				\
 	16/gimp-clipboard.png				\
 	16/gimp-close-all.png				\
