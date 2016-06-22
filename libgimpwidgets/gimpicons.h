@@ -213,6 +213,11 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_IMAGE                    "gimp-image"
 #define GIMP_STOCK_LAYER                    "gimp-layer"
+#define GIMP_STOCK_LAYER_DELETE             "gimp-layer-delete"
+#define GIMP_STOCK_LAYER_DOWN               "gimp-layer-down"
+#define GIMP_STOCK_LAYER_GROUP_NEW          "gimp-layer-group-new"
+#define GIMP_STOCK_LAYER_NEW                "gimp-layer-new"
+#define GIMP_STOCK_LAYER_UP                 "gimp-layer-up"
 #define GIMP_STOCK_TEXT_LAYER               "gimp-text-layer"
 #define GIMP_STOCK_FLOATING_SELECTION       "gimp-floating-selection"
 #define GIMP_STOCK_CHANNEL                  "gimp-channel"

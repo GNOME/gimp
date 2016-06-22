@@ -109,7 +109,12 @@ scalable_images = \
 	scalable/gimp-layer-mask.svg			\
 	scalable/gimp-layers.svg			\
 	scalable/gimp-layer.svg				\
+	scalable/gimp-layer-delete.svg			\
+	scalable/gimp-layer-down.svg			\
+	scalable/gimp-layer-group-new.svg		\
+	scalable/gimp-layer-new.svg			\
 	scalable/gimp-layer-to-imagesize.svg		\
+	scalable/gimp-layer-up.svg			\
 	scalable/gimp-letter-spacing.svg		\
 	scalable/gimp-line-spacing.svg			\
 	scalable/gimp-linked.svg			\
@@ -532,10 +537,15 @@ icons16_images = \
 	16/gimp-join-miter.png				\
 	16/gimp-join-round.png				\
 	16/gimp-landscape.png				\
-	16/gimp-layer-mask.png				\
-	16/gimp-layer-to-imagesize.png			\
 	16/gimp-layer.png				\
+	16/gimp-layer-delete.png			\
+	16/gimp-layer-down.png				\
+	16/gimp-layer-group-new.png			\
+	16/gimp-layer-mask.png				\
+	16/gimp-layer-new.png				\
 	16/gimp-layers.png				\
+	16/gimp-layer-to-imagesize.png			\
+	16/gimp-layer-up.png				\
 	16/gimp-list.png				\
 	16/gimp-merge-down.png				\
 	16/gimp-move-to-screen.png			\

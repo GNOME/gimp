@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-layer-group-new.svg">
+  <defs
+     id="defs30573">
+    <linearGradient
+       id="linearGradient19282"
+       osb:paint="solid"
+       gradientTransform="matrix(1.2178615,0,0,1.043881,356.69172,1794.4958)">
+      <stop
+         offset="0"
+         id="stop19284"
+         style="stop-color:#006666;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.8856883"
+     inkscape:cx="-7.7067406"
+     inkscape:cy="6.6316579"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>
+          image/svg+xml
+        </dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler       </dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1036.3622)">
+    <g
+       id="g3938">
+      <g
+         inkscape:label="#new_layer"
+         id="layer-new"
+         transform="translate(-105,509.00002)">
+        <rect
+           style="fill:none;fill-opacity:1;stroke:none"
+           id="rect10817"
+           width="16"
+           height="16"
+           x="105"
+           y="15"
+           transform="translate(0,512.36218)"
+           rx="0"
+           ry="1" />
+        <path
+           sodipodi:nodetypes="ccccc"
+           inkscape:connector-curvature="0"
+           id="path11591"
+           d="m 106,542.36218 3,-3 h 11 l -3,3 z"
+           style="fill:#bebebe;fill-opacity:0.99607843;stroke:none" />
+        <g
+           transform="translate(0,0.99999977)"
+           id="g3862">
+          <rect
+             ry="0"
+             y="526.36218"
+             x="114"
+             height="7.9999976"
+             width="2"
+             id="rect11686"
+             style="fill:#bebebe;fill-opacity:0.99607843;stroke:none" />
+          <rect
+             y="529.36218"
+             x="111"
+             height="2"
+             width="8"
+             id="rect11688"
+             style="fill:#bebebe;fill-opacity:0.99607843;stroke:none" />
+        </g>
+      </g>
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="path11591-96"
+         d="m 1,1048.3622 3,-3 h 11 l -3,3 z"
+         style="fill:#bebebe;fill-opacity:0.99607843;stroke:none" />
+    </g>
+  </g>
+</svg>
