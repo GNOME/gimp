@@ -73,7 +73,7 @@ static const GimpActionEntry tool_options_actions[] =
     NC_("tool-options-action", "_Delete Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DELETE },
 
-  { "tool-options-save-new-preset", "document-new",
+  { "tool-options-save-new-preset", GIMP_STOCK_DOCUMENT_NEW,
     NC_("tool-options-action", "_New Tool Preset..."), "", NULL,
     G_CALLBACK (tool_options_save_new_preset_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_SAVE },

@@ -49,7 +49,7 @@ static const GimpActionEntry patterns_actions[] =
     G_CALLBACK (data_open_as_image_cmd_callback),
     GIMP_HELP_PATTERN_OPEN_AS_IMAGE },
 
-  { "patterns-new", "document-new",
+  { "patterns-new", GIMP_STOCK_DOCUMENT_NEW,
     NC_("patterns-action", "_New Pattern"), NULL,
     NC_("patterns-action", "Create a new pattern"),
     G_CALLBACK (data_new_cmd_callback),

@@ -116,7 +116,7 @@ static GtkActionEntry actions[] =
     "Unit Editor Toolbar", NULL, NULL, NULL
   },
 
-  { "unit-editor-new", "document-new",
+  { "unit-editor-new", GIMP_STOCK_UNIT_NEW,
     NULL, "<control>N",
     N_("Create a new unit from scratch"),
     G_CALLBACK (new_callback)

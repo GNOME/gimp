@@ -44,7 +44,7 @@ static const GimpActionEntry palettes_actions[] =
     NC_("palettes-action", "Palettes Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_DIALOG },
 
-  { "palettes-new", "document-new",
+  { "palettes-new", GIMP_STOCK_DOCUMENT_NEW,
     NC_("palettes-action", "_New Palette"), NULL,
     NC_("palettes-action", "Create a new palette"),
     G_CALLBACK (data_new_cmd_callback),
@@ -95,7 +95,7 @@ static const GimpActionEntry palettes_actions[] =
 
 static const GimpStringActionEntry palettes_edit_actions[] =
 {
-  { "palettes-edit", "gtk-edit",
+  { "palettes-edit", GIMP_STOCK_EDIT,
     NC_("palettes-action", "_Edit Palette..."), NULL,
     NC_("palettes-action", "Edit palette"),
     "gimp-palette-editor",

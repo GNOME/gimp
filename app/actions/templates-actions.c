@@ -48,7 +48,7 @@ static const GimpActionEntry templates_actions[] =
     G_CALLBACK (templates_create_image_cmd_callback),
     GIMP_HELP_TEMPLATE_IMAGE_NEW },
 
-  { "templates-new", "document-new",
+  { "templates-new", GIMP_STOCK_DOCUMENT_NEW,
     NC_("templates-action", "_New Template..."), NULL,
     NC_("templates-action", "Create a new template"),
     G_CALLBACK (templates_new_cmd_callback),

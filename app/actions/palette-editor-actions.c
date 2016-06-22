@@ -68,14 +68,14 @@ static const GimpToggleActionEntry palette_editor_toggle_actions[] =
 
 static const GimpEnumActionEntry palette_editor_new_actions[] =
 {
-  { "palette-editor-new-color-fg", "document-new",
+  { "palette-editor-new-color-fg", GIMP_STOCK_DOCUMENT_NEW,
     NC_("palette-editor-action", "New Color from _FG"), NULL,
     NC_("palette-editor-action",
         "Create a new entry from the foreground color"),
     FALSE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW },
 
-  { "palette-editor-new-color-bg", "document-new",
+  { "palette-editor-new-color-bg", GIMP_STOCK_DOCUMENT_NEW,
     NC_("palette-editor-action", "New Color from _BG"), NULL,
     NC_("palette-editor-action",
         "Create a new entry from the background color"),

@@ -85,8 +85,6 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SHRED,                         NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DOCUMENT_RECENT,               NULL,   0, 0, LIBGIMP_DOMAIN },
 
-
-
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_RADIAL,               NULL,   0, 0, LIBGIMP_DOMAIN },
@@ -130,6 +128,8 @@ static const GtkStockItem gimp_stock_items[] =
 
   { GIMP_STOCK_PATH_STROKE,            N_("_Stroke"), 0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_NEW,                      NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DOCUMENT_NEW,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_UNIT_NEW,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_UP,                       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DOWN,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DELETE,                   NULL,        0, 0, LIBGIMP_DOMAIN },

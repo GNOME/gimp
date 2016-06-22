@@ -43,7 +43,7 @@ static const GimpActionEntry mypaint_brushes_actions[] =
     NC_("mypaint-brushes-action", "MyPaint Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_MYPAINT_BRUSH_DIALOG },
 
-  { "mypaint-brushes-new", "document-new",
+  { "mypaint-brushes-new", GIMP_STOCK_DOCUMENT_NEW,
     NC_("mypaint-brushes-action", "_New MyPaint Brush"), NULL,
     NC_("mypaint-brushes-action", "Create a new MyPaint brush"),
     G_CALLBACK (data_new_cmd_callback),

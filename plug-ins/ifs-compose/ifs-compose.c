@@ -1023,7 +1023,7 @@ design_op_menu_create (GtkWidget *window)
   {
     { "ifs-compose-menu", NULL, "IFS Fractal Menu" },
 
-    { "new", "document-new",
+    { "new", GIMP_STOCK_DOCUMENT_NEW,
       NULL, "<control>N", NULL,
       G_CALLBACK (ifs_compose_new_callback) },
 

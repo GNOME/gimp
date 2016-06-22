@@ -49,7 +49,7 @@ static const GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_open_as_image_cmd_callback),
     GIMP_HELP_BRUSH_OPEN_AS_IMAGE },
 
-  { "brushes-new", "document-new",
+  { "brushes-new", GIMP_STOCK_DOCUMENT_NEW,
     NC_("brushes-action", "_New Brush"), NULL,
     NC_("brushes-action", "Create a new brush"),
     G_CALLBACK (data_new_cmd_callback),

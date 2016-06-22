@@ -49,7 +49,7 @@ static const GimpActionEntry images_actions[] =
     G_CALLBACK (images_raise_views_cmd_callback),
     NULL },
 
-  { "images-new-view", "document-new",
+  { "images-new-view", GIMP_STOCK_DOCUMENT_NEW,
     NC_("images-action", "_New View"), NULL,
     NC_("images-action", "Create a new display for this image"),
     G_CALLBACK (images_new_view_cmd_callback),

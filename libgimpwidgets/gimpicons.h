@@ -104,6 +104,8 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_PATH_STROKE              "gimp-path-stroke"
 #define GIMP_STOCK_NEW                      "gimp-new"
+#define GIMP_STOCK_DOCUMENT_NEW             "gimp-document-new"
+#define GIMP_STOCK_UNIT_NEW                 "gimp-unit-new"
 #define GIMP_STOCK_UP                       "gimp-up"
 #define GIMP_STOCK_DOWN                     "gimp-down"
 #define GIMP_STOCK_DELETE                   "gimp-delete"

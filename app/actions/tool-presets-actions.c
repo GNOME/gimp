@@ -46,7 +46,7 @@ static const GimpActionEntry tool_presets_actions[] =
     NC_("tool-presets-action", "Tool Presets Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_PRESET_DIALOG },
 
-  { "tool-presets-new", "document-new",
+  { "tool-presets-new", GIMP_STOCK_DOCUMENT_NEW,
     NC_("tool-presets-action", "_New Tool Preset"), NULL,
     NC_("tool-presets-action", "Create a new tool preset"),
     G_CALLBACK (data_new_cmd_callback),

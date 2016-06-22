@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-unit-new.svg">
+  <defs
+     id="defs30573" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.007858"
+     inkscape:cx="4.9220364"
+     inkscape:cy="11.123946"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="380"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid18" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>
+          image/svg+xml
+        </dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler       </dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1036.3622)">
+    <g
+       id="g840">
+      <rect
+         y="1036.5415"
+         x="0.17935765"
+         height="15.641285"
+         width="15.641285"
+         id="rect4137"
+         style="opacity:0;fill:none;fill-opacity:1;stroke:#555753;stroke-width:0.3587153;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         transform="matrix(0.95226426,0,0,0.85606276,2.1568278,150.31472)"
+         id="g4117">
+        <g
+           id="g3171"
+           transform="matrix(0.05810733,0,0,0.05810733,-0.03527236,1036.3426)"
+           style="fill:#d3d7cf;stroke:#000000;stroke-width:2.7191062;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+          <path
+             id="path3165"
+             style="fill:#d3d7cf;fill-opacity:1;fill-rule:evenodd;stroke:#555753;stroke-width:8.60476685;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 67.236,1.7446 10.625,10.625 v 67.312 c -7.086,10.63 -48.434,89.778 -70.875,134.66 -7.0863,14.17 -7.0671,31.89 3.563,46.06 7.086,10.63 19.461,14.19 31.875,14.19 h 127.57 c 12.41,0 24.78,-3.56 31.87,-14.19 10.63,-14.17 10.65,-31.89 3.56,-46.06 -20.07,-44.88 -41.93814,-83.61369 -62.01814,-128.493689 L 141.644,12.3716 l 10.28,-10.282 0.35,-0.3434 C 123.928,1.7458369 95.582,1.7475913 67.236,1.7446 Z"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cccccssccccccc" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="3.5152276"
+           y="1049.9399"
+           id="text3994"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3992"
+             x="3.5152276"
+             y="1049.9399"
+             style="font-size:5.33333349px">SI</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

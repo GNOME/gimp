@@ -41,6 +41,7 @@ scalable_images = \
 	scalable/gimp-curve-smooth.svg			\
 	scalable/gimp-default-colors.svg		\
 	scalable/gimp-delete.svg			\
+	scalable/gimp-document-new.svg			\
 	scalable/gimp-down.svg   			\
 	scalable/gimp-device-status.svg			\
 	scalable/gimp-display-filter-colorblind.svg	\
@@ -263,6 +264,7 @@ scalable_images = \
 	scalable/gimp-tool-zoom.svg			\
 	scalable/gimp-top.svg				\
 	scalable/gimp-transparency.svg			\
+	scalable/gimp-unit-new.svg			\
 	scalable/gimp-undo-history.svg			\
 	scalable/gimp-up.svg				\
 	scalable/gimp-user-manual.svg			\
@@ -482,6 +484,7 @@ icons16_images = \
 	16/gimp-curve-free.png				\
 	16/gimp-curve-smooth.png			\
 	16/gimp-delete.png				\
+	16/gimp-document-new.png			\
 	16/gimp-down.png				\
 	16/gimp-device-status.png			\
 	16/gimp-display-filter-colorblind.png		\
@@ -661,6 +664,7 @@ icons16_images = \
 	16/gimp-tools.png				\
 	16/gimp-top.png					\
 	16/gimp-transparency.png			\
+	16/gimp-unit-new.png				\
 	16/gimp-undo-history.png			\
 	16/gimp-up.png					\
 	16/gimp-user-manual.png				\
