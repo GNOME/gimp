@@ -143,11 +143,11 @@ gimp_undo_editor_constructed (GObject *object)
 
   undo_editor->undo_button =
     gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
-                                   "edit-undo", NULL);
+                                   GIMP_STOCK_UNDO, NULL);
 
   undo_editor->redo_button =
     gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
-                                   "edit-redo", NULL);
+                                   GIMP_STOCK_REDO, NULL);
 
   undo_editor->clear_button =
     gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",

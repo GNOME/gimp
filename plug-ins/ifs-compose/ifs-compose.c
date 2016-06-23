@@ -1031,11 +1031,11 @@ design_op_menu_create (GtkWidget *window)
       NULL, "<control>D", NULL,
       G_CALLBACK (ifs_compose_delete_callback) },
 
-    { "undo", "edit-undo",
+    { "undo", GIMP_STOCK_UNDO,
       NULL, "<control>Z", NULL,
       G_CALLBACK (undo) },
 
-    { "redo", "edit-redo",
+    { "redo", GIMP_STOCK_REDO,
       NULL, "<control>Y", NULL,
       G_CALLBACK (redo) },
 

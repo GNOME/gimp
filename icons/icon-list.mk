@@ -188,6 +188,7 @@ scalable_images = \
 	scalable/gimp-quick-mask-off.svg		\
 	scalable/gimp-quick-mask-on.svg			\
 	scalable/gimp-quit.svg				\
+	scalable/gimp-redo.svg				\
 	scalable/gimp-reset.svg				\
 	scalable/gimp-reshow-filter.svg			\
 	scalable/gimp-resize.svg			\
@@ -278,6 +279,7 @@ scalable_images = \
 	scalable/gimp-top.svg				\
 	scalable/gimp-transparency.svg			\
 	scalable/gimp-unit-new.svg			\
+	scalable/gimp-undo.svg				\
 	scalable/gimp-undo-history.svg			\
 	scalable/gimp-up.svg				\
 	scalable/gimp-user-manual.svg			\
@@ -604,6 +606,7 @@ icons16_images = \
 	16/gimp-print-resolution.png			\
 	16/gimp-question.png				\
 	16/gimp-quit.png				\
+	16/gimp-redo.png				\
 	16/gimp-reset.png				\
 	16/gimp-reshow-filter.png			\
 	16/gimp-resize.png				\
@@ -691,6 +694,7 @@ icons16_images = \
 	16/gimp-top.png					\
 	16/gimp-transparency.png			\
 	16/gimp-unit-new.png				\
+	16/gimp-undo.png				\
 	16/gimp-undo-history.png			\
 	16/gimp-up.png					\
 	16/gimp-user-manual.png				\

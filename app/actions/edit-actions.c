@@ -70,25 +70,25 @@ static const GimpActionEntry edit_actions[] =
     "edit-undo", NC_("edit-action", "Undo History Menu"), NULL, NULL, NULL,
     GIMP_HELP_UNDO_DIALOG },
 
-  { "edit-undo", "edit-undo",
+  { "edit-undo", GIMP_STOCK_UNDO,
     NC_("edit-action", "_Undo"), "<primary>Z",
     NC_("edit-action", "Undo the last operation"),
     G_CALLBACK (edit_undo_cmd_callback),
     GIMP_HELP_EDIT_UNDO },
 
-  { "edit-redo", "edit-redo",
+  { "edit-redo", GIMP_STOCK_REDO,
     NC_("edit-action", "_Redo"), "<primary>Y",
     NC_("edit-action", "Redo the last operation that was undone"),
     G_CALLBACK (edit_redo_cmd_callback),
     GIMP_HELP_EDIT_REDO },
 
-  { "edit-strong-undo", "edit-undo",
+  { "edit-strong-undo", GIMP_STOCK_UNDO,
     NC_("edit-action", "Strong Undo"), "<primary><shift>Z",
     NC_("edit-action", "Undo the last operation, skipping visibility changes"),
     G_CALLBACK (edit_strong_undo_cmd_callback),
     GIMP_HELP_EDIT_STRONG_UNDO },
 
-  { "edit-strong-redo", "edit-redo",
+  { "edit-strong-redo", GIMP_STOCK_REDO,
     NC_("edit-action", "Strong Redo"), "<primary><shift>Y",
     NC_("edit-action",
         "Redo the last operation that was undone, skipping visibility changes"),
@@ -101,7 +101,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_undo_clear_cmd_callback),
     GIMP_HELP_EDIT_UNDO_CLEAR },
 
-  { "edit-fade", "edit-undo",
+  { "edit-fade", GIMP_STOCK_UNDO,
     NC_("edit-action", "_Fade..."), NULL,
     NC_("edit-action",
         "Modify paint mode and opacity of the last pixel manipulation"),
