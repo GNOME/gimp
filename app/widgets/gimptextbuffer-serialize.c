@@ -38,36 +38,6 @@
 
 /*  serialize  */
 
-static void
-find_list_delta (GSList  *old_list,
-                 GSList  *new_list,
-		 GList  **added,
-                 GList  **removed)
-{
-  GSList *tmp;
-  GList  *tmp_added   = NULL;
-  GList  *tmp_removed = NULL;
-
-  /* Find added tags */
-  for (tmp = new_list; tmp; tmp = g_slist_next (tmp))
-    {
-      if (! g_slist_find (old_list, tmp->data))
-	tmp_added = g_list_prepend (tmp_added, tmp->data);
-    }
-
-  *added = tmp_added;
-
-  /* Find removed tags */
-  for (tmp = old_list; tmp; tmp = g_slist_next (tmp))
-    {
-      if (! g_slist_find (new_list, tmp->data))
-	tmp_removed = g_list_prepend (tmp_removed, tmp->data);
-    }
-
-  /* We reverse the list here to match the xml semantics */
-  *removed = g_list_reverse (tmp_removed);
-}
-
 static gboolean
 open_tag (GimpTextBuffer *buffer,
           GString        *string,
@@ -131,7 +101,7 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
 {
   GString     *string;
   GtkTextIter  iter, old_iter;
-  GSList      *tag_list, *new_tag_list;
+  GSList      *tag_list;
   GSList      *active_tags;
 
   string = g_string_new ("<markup>");
@@ -142,52 +112,14 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
 
   do
     {
-      GList *added, *removed;
-      GList *tmp;
+      GSList *tmp;
       gchar *tmp_text, *escaped_text;
 
-      new_tag_list = gtk_text_iter_get_tags (&iter);
-
-      find_list_delta (tag_list, new_tag_list, &added, &removed);
-
-      /* Handle removed tags */
-      for (tmp = removed; tmp; tmp = tmp->next)
-	{
-	  GtkTextTag *tag = tmp->data;
-
-          /* Only close the tag if we didn't close it before (by using
-           * the stack logic in the while() loop below)
-           */
-          if (g_slist_find (active_tags, tag))
-            {
-              /* Drop all tags that were opened after this one (which are
-               * above this on in the stack), but move them to the added
-               * list so they get re-opened again, *unless* they are also
-               * closed at this iter
-               */
-              while (active_tags->data != tag)
-                {
-                  close_tag (GIMP_TEXT_BUFFER (register_buffer),
-                             string, active_tags->data);
-
-                  /* if it also in the list of removed tags, *don't* add
-                   * it to the list of added tags again
-                   */
-                  if (! g_list_find (removed, active_tags->data))
-                    added = g_list_prepend (added, active_tags->data);
-
-                  active_tags = g_slist_remove (active_tags, active_tags->data);
-                }
-
-              /*  then, close the tag itself  */
-              close_tag (GIMP_TEXT_BUFFER (register_buffer), string, tag);
-
-              active_tags = g_slist_remove (active_tags, active_tags->data);
-            }
-	}
+      active_tags = NULL;
+      tag_list = gtk_text_iter_get_tags (&iter);
 
       /* Handle added tags */
-      for (tmp = added; tmp; tmp = tmp->next)
+      for (tmp = tag_list; tmp; tmp = tmp->next)
 	{
 	  GtkTextTag *tag = tmp->data;
 
@@ -197,11 +129,6 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
 	}
 
       g_slist_free (tag_list);
-      tag_list = new_tag_list;
-
-      g_list_free (added);
-      g_list_free (removed);
-
       old_iter = iter;
 
       /* Now try to go to either the next tag toggle, or if a pixbuf appears */
@@ -237,16 +164,14 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
 
       g_string_append (string, escaped_text);
       g_free (escaped_text);
+
+      /* Close any open tags */
+      for (tmp = active_tags; tmp; tmp = tmp->next)
+        close_tag (GIMP_TEXT_BUFFER (register_buffer), string, tmp->data);
+
+      g_slist_free (active_tags);
     }
   while (! gtk_text_iter_equal (&iter, end));
-
-  g_slist_free (tag_list);
-
-  /* Close any open tags */
-  for (tag_list = active_tags; tag_list; tag_list = tag_list->next)
-    close_tag (GIMP_TEXT_BUFFER (register_buffer), string, tag_list->data);
-
-  g_slist_free (active_tags);
 
   g_string_append (string, "</markup>");
 
