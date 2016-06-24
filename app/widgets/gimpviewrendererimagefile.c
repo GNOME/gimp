@@ -186,7 +186,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
 
   if (! pixbuf)
     {
-      const gchar *icon_name = "text-x-generic";
+      const gchar *icon_name = GIMP_STOCK_DOCUMENT;
 
       if (thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
         icon_name = "folder";

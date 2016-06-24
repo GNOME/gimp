@@ -228,6 +228,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_PATH_NEW,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATH_UP,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEMPLATE,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DOCUMENT,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLORMAP,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_HISTOGRAM,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_HISTOGRAM_LINEAR,         NULL,        0, 0, LIBGIMP_DOMAIN },

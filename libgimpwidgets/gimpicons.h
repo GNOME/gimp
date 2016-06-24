@@ -246,6 +246,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PATH_NEW                 "gimp-path-new"
 #define GIMP_STOCK_PATH_UP                  "gimp-path-up"
 #define GIMP_STOCK_TEMPLATE                 "gimp-template"
+#define GIMP_STOCK_DOCUMENT                 "gimp-document"
 #define GIMP_STOCK_TRANSPARENCY             "gimp-transparency"
 #define GIMP_STOCK_COLORMAP                 "gimp-colormap"
 

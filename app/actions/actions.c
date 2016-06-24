@@ -158,7 +158,7 @@ static const GimpActionFactoryEntry action_groups[] =
   { "error-console", N_("Error Console"), GIMP_STOCK_WARNING,
     error_console_actions_setup,
     error_console_actions_update },
-  { "file", N_("File"), "text-x-generic",
+  { "file", N_("File"), GIMP_STOCK_DOCUMENT,
     file_actions_setup,
     file_actions_update },
   { "filters", N_("Filters"), GIMP_STOCK_GEGL,

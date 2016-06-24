@@ -329,7 +329,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   priv->default_thumbnail =
     gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                              "text-x-generic", 32, 0, NULL);
+                              "gimp-document", 32, 0, NULL);
 }
 
 static void
