@@ -64,6 +64,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_UNDO                     "gimp-undo"
 #define GIMP_STOCK_REDO                     "gimp-redo"
 #define GIMP_STOCK_DOCUMENT_RECENT          "gimp-document-recent"
+#define GIMP_STOCK_NO                       "gimp-no"
+#define GIMP_STOCK_YES                      "gimp-yes"
+#define GIMP_STOCK_OKAY                     "gimp-okay"
 
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"

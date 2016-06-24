@@ -133,6 +133,8 @@ scalable_images = \
 	scalable/gimp-navigation.svg			\
 	scalable/gimp-new.svg				\
 	scalable/gimp-next.svg				\
+	scalable/gimp-no.svg				\
+	scalable/gimp-okay.svg				\
 	scalable/gimp-open.svg				\
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
@@ -297,6 +299,7 @@ scalable_images = \
 	scalable/gimp-wilber.svg			\
 	scalable/gimp-wilber-eek.svg			\
 	scalable/gimp-wilber-outline.svg		\
+	scalable/gimp-yes.svg				\
 	scalable/gimp-zoom-follow-window.svg
 
 vector24_images = \
@@ -572,6 +575,8 @@ icons16_images = \
 	16/gimp-navigation.png				\
 	16/gimp-new.png					\
 	16/gimp-next.png				\
+	16/gimp-no.png					\
+	16/gimp-okay.png				\
 	16/gimp-open.png				\
 	16/gimp-paste-as-new.png			\
 	16/gimp-paste-into.png				\
@@ -707,7 +712,8 @@ icons16_images = \
 	16/gimp-video.png				\
 	16/gimp-warning.png				\
 	16/gimp-web.png					\
-	16/gimp-wilber.png
+	16/gimp-wilber.png				\
+	16/gimp-yes.png
 
 icons18_images = \
 	18/gimp-color-picker-black.png		\

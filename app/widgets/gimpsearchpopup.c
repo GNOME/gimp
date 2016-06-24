@@ -263,9 +263,9 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   if (GTK_IS_TOGGLE_ACTION (action))
     {
       if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
-        icon_name = "gtk-ok";
+        icon_name = GIMP_STOCK_OK;
       else
-        icon_name = "gtk-no";
+        icon_name = GIMP_STOCK_NO;
     }
   else
     {
