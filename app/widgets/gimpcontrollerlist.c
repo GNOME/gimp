@@ -300,7 +300,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             list);
   list->up_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            "go-up",
+                            GIMP_STOCK_UP,
                             _("Move the selected controller up"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_up_clicked),
@@ -308,7 +308,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             list);
   list->down_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            "go-down",
+                            GIMP_STOCK_DOWN,
                             _("Move the selected controller down"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_down_clicked),

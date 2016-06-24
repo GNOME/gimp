@@ -217,7 +217,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   editor->up_button =
     gimp_editor_add_button (GIMP_EDITOR (ed),
-                            "go-up",
+                            GIMP_STOCK_UP,
                             _("Move the selected filter up"),
                             NULL,
                             G_CALLBACK (gimp_color_display_editor_up_clicked),
@@ -226,7 +226,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   editor->down_button =
     gimp_editor_add_button (GIMP_EDITOR (ed),
-                            "go-down",
+                            GIMP_STOCK_DOWN,
                             _("Move the selected filter down"),
                             NULL,
                             G_CALLBACK (gimp_color_display_editor_down_clicked),

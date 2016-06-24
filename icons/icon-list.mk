@@ -61,6 +61,7 @@ scalable_images = \
 	scalable/gimp-edit-clear.svg			\
 	scalable/gimp-error.svg				\
 	scalable/gimp-file-manager.svg			\
+	scalable/gimp-first.svg				\
 	scalable/gimp-flip-horizontal.svg		\
 	scalable/gimp-flip-vertical.svg			\
 	scalable/gimp-floating-selection.svg		\
@@ -94,6 +95,7 @@ scalable_images = \
 	scalable/gimp-histogram-linear.svg		\
 	scalable/gimp-histogram-logarithmic.svg		\
 	scalable/gimp-histogram.svg			\
+	scalable/gimp-home.svg				\
 	scalable/gimp-images.svg			\
 	scalable/gimp-image.svg				\
 	scalable/gimp-image-open.svg			\
@@ -110,6 +112,7 @@ scalable_images = \
 	scalable/gimp-justify-left.svg			\
 	scalable/gimp-justify-right.svg			\
 	scalable/gimp-landscape.svg			\
+	scalable/gimp-last.svg				\
 	scalable/gimp-layer-mask.svg			\
 	scalable/gimp-layers.svg			\
 	scalable/gimp-layer.svg				\
@@ -519,6 +522,7 @@ icons16_images = \
 	16/gimp-edit-clear.png				\
 	16/gimp-error.png				\
 	16/gimp-file-manager.png			\
+	16/gimp-first.png				\
 	16/gimp-flip-horizontal.png			\
 	16/gimp-flip-vertical.png			\
 	16/gimp-floating-selection.png			\
@@ -540,6 +544,7 @@ icons16_images = \
 	16/gimp-histogram-linear.png			\
 	16/gimp-histogram-logarithmic.png		\
 	16/gimp-histogram.png				\
+	16/gimp-home.png				\
 	16/gimp-image.png				\
 	16/gimp-images.png				\
 	16/gimp-image-open.png				\
@@ -551,6 +556,7 @@ icons16_images = \
 	16/gimp-join-miter.png				\
 	16/gimp-join-round.png				\
 	16/gimp-landscape.png				\
+	16/gimp-last.png				\
 	16/gimp-layer.png				\
 	16/gimp-layer-delete.png			\
 	16/gimp-layer-down.png				\

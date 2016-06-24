@@ -552,12 +552,12 @@ ui_manager_new (GtkWidget *window)
   static const GtkActionEntry actions[] =
   {
     {
-      "back", "go-previous",
+      "back", "gimp-previous",
       NULL, "<alt>Left", N_("Go back one page"),
       G_CALLBACK (back_callback)
     },
     {
-      "forward", "go-next",
+      "forward", "gimp-next",
       NULL, "<alt>Right", N_("Go forward one page"),
       G_CALLBACK (forward_callback)
     },
@@ -572,7 +572,7 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (stop_callback)
     },
     {
-      "home", "go-home",
+      "home", "gimp-home",
       NULL, "<alt>Home", N_("Go to the index page"),
       G_CALLBACK (home_callback)
     },

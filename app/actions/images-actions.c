@@ -43,7 +43,7 @@ static const GimpActionEntry images_actions[] =
     NC_("images-action", "Images Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_DIALOG },
 
-  { "images-raise-views", "go-top",
+  { "images-raise-views", GIMP_STOCK_TOP,
     NC_("images-action", "_Raise Views"), NULL,
     NC_("images-action", "Raise this image's displays"),
     G_CALLBACK (images_raise_views_cmd_callback),

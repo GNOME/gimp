@@ -291,7 +291,7 @@ gimp_tool_editor_new (GimpContainer *container,
 
   /* buttons */
   priv->raise_button =
-    gimp_editor_add_button (GIMP_EDITOR (tree_view), "go-up",
+    gimp_editor_add_button (GIMP_EDITOR (tree_view), GIMP_STOCK_UP,
                             _("Raise this tool"),
                             _("Raise this tool to the top"),
                             G_CALLBACK (gimp_tool_editor_raise_clicked),
@@ -299,7 +299,7 @@ gimp_tool_editor_new (GimpContainer *container,
                             tool_editor);
 
   priv->lower_button =
-    gimp_editor_add_button (GIMP_EDITOR (tree_view), "go-down",
+    gimp_editor_add_button (GIMP_EDITOR (tree_view), GIMP_STOCK_DOWN,
                             _("Lower this tool"),
                             _("Lower this tool to the bottom"),
                             G_CALLBACK (gimp_tool_editor_lower_clicked),

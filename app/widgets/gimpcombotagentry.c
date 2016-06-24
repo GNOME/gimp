@@ -92,7 +92,7 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
 
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (entry),
                                      GTK_ENTRY_ICON_SECONDARY,
-                                     "go-down");
+                                     "gimp-down");
 
   g_signal_connect (entry, "icon-press",
                     G_CALLBACK (gimp_combo_tag_entry_icon_press),
