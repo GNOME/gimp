@@ -54,6 +54,7 @@ scalable_images = \
 	scalable/gimp-display-filter-lcms.svg		\
 	scalable/gimp-display-filter-proof.svg		\
 	scalable/gimp-display-filter.svg		\
+	scalable/gimp-document.svg			\
 	scalable/gimp-document-recent.svg		\
 	scalable/gimp-duplicate.svg			\
 	scalable/gimp-dynamics.svg			\
@@ -518,6 +519,7 @@ icons16_images = \
 	16/gimp-display-filter-lcms.png			\
 	16/gimp-display-filter-proof.png		\
 	16/gimp-display-filter.png			\
+	16/gimp-document.png				\
 	16/gimp-document-recent.png			\
 	16/gimp-duplicate.png				\
 	16/gimp-dynamics.png				\
