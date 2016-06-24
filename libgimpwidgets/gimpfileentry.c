@@ -139,7 +139,7 @@ gimp_file_entry_init (GimpFileEntry *entry)
 
   gtk_widget_set_sensitive (button, FALSE);
 
-  image = gtk_image_new_from_icon_name ("gimp-file-manager",
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_FILE_MANAGER,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
@@ -155,7 +155,7 @@ gimp_file_entry_init (GimpFileEntry *entry)
   gtk_box_pack_end (GTK_BOX (entry), entry->browse_button, FALSE, FALSE, 0);
   gtk_widget_show (entry->browse_button);
 
-  image = gtk_image_new_from_icon_name ("gimp-open", GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (entry->browse_button), image);
   gtk_widget_show (image);
 
@@ -232,7 +232,7 @@ gimp_file_entry_new (const gchar *title,
 
   if (check_valid)
     {
-      entry->file_exists = gtk_image_new_from_icon_name ("gimp-no",
+      entry->file_exists = gtk_image_new_from_icon_name (GIMP_STOCK_NO,
                                                          GTK_ICON_SIZE_BUTTON);
       gtk_box_pack_start (GTK_BOX (entry), entry->file_exists, FALSE, FALSE, 0);
       gtk_widget_show (entry->file_exists);
@@ -494,6 +494,6 @@ gimp_file_entry_check_filename (GimpFileEntry *entry)
   g_free (filename);
 
   gtk_image_set_from_icon_name (GTK_IMAGE (entry->file_exists),
-                                exists ? "gimp-yes" : "gimp-no",
+                                exists ? GIMP_STOCK_YES : GIMP_STOCK_NO,
                                 GTK_ICON_SIZE_BUTTON);
 }
