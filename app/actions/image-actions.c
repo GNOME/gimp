@@ -70,7 +70,7 @@ static const GimpActionEntry image_actions[] =
   { "colors-components-menu", NULL, NC_("image-action", "C_omponents") },
   { "colors-desaturate-menu", NULL, NC_("image-action", "D_esaturate") },
 
-  { "image-new", "document-new",
+  { "image-new", GIMP_STOCK_IMAGE,
     NC_("image-action", "_New..."), "<primary>N",
     NC_("image-action", "Create a new image"),
     G_CALLBACK (image_new_cmd_callback),
