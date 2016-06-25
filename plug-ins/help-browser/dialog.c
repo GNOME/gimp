@@ -608,7 +608,7 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (find_again_callback)
     },
     {
-      "close", "window-close",
+      "close", "gimp-quit",
       NULL, "<control>W", NULL,
       G_CALLBACK (close_callback)
     },
