@@ -1115,6 +1115,12 @@ gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool *fg_select)
   undo = gimp_foreground_select_undo_new (fg_select->trimap,
                                           fg_select->stroke,
                                           options->draw_mode, width);
+  if (! undo)
+    {
+      g_array_free (fg_select->stroke, TRUE);
+      fg_select->stroke = NULL;
+      return;
+    }
 
   fg_select->undo_stack = g_list_prepend (fg_select->undo_stack, undo);
 
@@ -1235,7 +1241,7 @@ gimp_foreground_select_undo_new (GeglBuffer          *trimap,
                                  gint                stroke_width)
 
 {
-  StrokeUndo *undo = g_slice_new0 (StrokeUndo);
+  StrokeUndo *undo;
   gint        x1, y1, x2, y2;
   gint        width, height;
   gint        i;
@@ -1255,10 +1261,10 @@ gimp_foreground_select_undo_new (GeglBuffer          *trimap,
       y2 = MAX (y2, ceil (point->y));
     }
 
-  x1 -= stroke_width;
-  y1 -= stroke_width;
-  x2 += stroke_width;
-  y2 += stroke_width;
+  x1 -= (stroke_width + 1) / 2;
+  y1 -= (stroke_width + 1) / 2;
+  x2 += (stroke_width + 1) / 2;
+  y2 += (stroke_width + 1) / 2;
 
   x1 = MAX (x1, 0);
   y1 = MAX (y1, 0);
@@ -1268,6 +1274,10 @@ gimp_foreground_select_undo_new (GeglBuffer          *trimap,
   width  = x2 - x1;
   height = y2 - y1;
 
+  if (width <= 0 || height <= 0)
+    return NULL;
+
+  undo = g_slice_new0 (StrokeUndo);
   undo->saved_trimap = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                         gegl_buffer_get_format (trimap));
 
