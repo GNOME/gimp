@@ -547,15 +547,16 @@ server_start (const gchar *listen_ip,
 static gboolean
 execute_command (SFCommand *cmd)
 {
-  guchar    buffer[RESPONSE_HEADER];
-  GString  *response;
-  time_t    clock1;
-  time_t    clock2;
-  gboolean  error;
-  gint      i;
+  guchar      buffer[RESPONSE_HEADER];
+  GString    *response;
+  time_t      clocknow;
+  gboolean    error;
+  gint        i;
+  gdouble     total_time;
+  GTimer      *timer;
 
   server_log ("Processing request #%d\n", cmd->request_no);
-  time (&clock1);
+  timer = g_timer_new ();
 
   response = g_string_new (NULL);
   ts_register_output_func (ts_gstring_output_func, response);
@@ -574,10 +575,12 @@ execute_command (SFCommand *cmd)
       if (response->len == 0)
         g_string_assign (response, ts_get_success_msg ());
 
-      time (&clock2);
-      server_log ("Request #%d processed in %f seconds, finishing on %s",
-                  cmd->request_no, difftime (clock2, clock1), ctime (&clock2));
+      total_time = g_timer_elapsed (timer, NULL);
+      time (&clocknow);
+      server_log ("Request #%d processed in %.3f seconds, finishing on %s",
+                  cmd->request_no, total_time, ctime (&clocknow));
     }
+  g_timer_destroy (timer);
 
   buffer[MAGIC_BYTE]     = MAGIC;
   buffer[ERROR_BYTE]     = error ? TRUE : FALSE;
