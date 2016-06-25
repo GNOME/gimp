@@ -166,7 +166,7 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_configure_grid_cmd_callback),
     GIMP_HELP_IMAGE_GRID },
 
-  { "image-properties", "dialog-information",
+  { "image-properties", GIMP_STOCK_INFORMATION,
     NC_("image-action", "Image Pr_operties"), "<alt>Return",
     NC_("image-action", "Display information about this image"),
     G_CALLBACK (image_properties_cmd_callback),

@@ -534,7 +534,7 @@ export_dialog (GSList      *actions,
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_icon_name ("dialog-information",
+  image = gtk_image_new_from_icon_name ("gimp-information",
                                         GTK_ICON_SIZE_DIALOG);
   gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);

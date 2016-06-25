@@ -336,6 +336,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_ERROR                    "gimp-error"
 #define GIMP_STOCK_INFO                     "gimp-info"
 #define GIMP_STOCK_QUESTION                 "gimp-question"
+#define GIMP_STOCK_INFORMATION              "gimp-information"
 #define GIMP_STOCK_WARNING                  "gimp-warning"
 #define GIMP_STOCK_WILBER                   "gimp-wilber"
 #define GIMP_STOCK_WILBER_EEK               "gimp-wilber-eek"

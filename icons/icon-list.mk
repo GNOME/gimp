@@ -103,6 +103,7 @@ scalable_images = \
 	scalable/gimp-image-reload.svg			\
 	scalable/gimp-indent.svg			\
 	scalable/gimp-info.svg				\
+	scalable/gimp-information.svg			\
 	scalable/gimp-input-device.svg			\
 	scalable/gimp-invert.svg			\
 	scalable/gimp-join-bevel.svg			\
@@ -338,6 +339,7 @@ vector24_images = \
 	24/gimp-image.svg				\
 	24/gimp-images.svg				\
 	24/gimp-info.svg				\
+	24/gimp-information.svg				\
 	24/gimp-landscape.svg				\
 	24/gimp-layer.svg				\
 	24/gimp-layer-mask.svg				\
@@ -555,6 +557,7 @@ icons16_images = \
 	16/gimp-image-open.png				\
 	16/gimp-image-reload.png			\
 	16/gimp-info.png				\
+	16/gimp-information.png				\
 	16/gimp-input-device.png			\
 	16/gimp-invert.png				\
 	16/gimp-join-bevel.png				\
@@ -827,6 +830,7 @@ icons24_images = \
 	24/gimp-image.png			\
 	24/gimp-images.png			\
 	24/gimp-info.png			\
+	24/gimp-information.png			\
 	24/gimp-layer-mask.png			\
 	24/gimp-layer.png			\
 	24/gimp-layers.png			\
@@ -980,6 +984,7 @@ icons64_images = \
 	64/gimp-error.png		\
 	64/gimp-frame.png		\
 	64/gimp-info.png		\
+	64/gimp-information.png		\
 	64/gimp-question.png		\
 	64/gimp-texture.png		\
 	64/gimp-user-manual.png		\
