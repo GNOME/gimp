@@ -112,7 +112,7 @@ find_mnemonic_widget (GtkWidget *widget,
  * @label_text: The text for the #GtkLabel which will be attached left of
  *              the widget.
  * @xalign:     The horizontal alignment of the #GtkLabel.
- * @yalign:     The vertival alignment of the #GtkLabel.
+ * @yalign:     The vertical alignment of the #GtkLabel.
  * @widget:     The #GtkWidget to attach right of the label.
  * @colspan:    The number of columns the widget will use.
  * @left_align: %TRUE if the widget should be left-aligned.
@@ -184,7 +184,7 @@ gimp_table_attach_aligned (GtkTable    *table,
  *
  * This function is useful if you want to change the font attributes
  * of a #GtkLabel. This is an alternative to using PangoMarkup which
- * is slow to parse and akward to handle in an i18n-friendly way.
+ * is slow to parse and awkward to handle in an i18n-friendly way.
  *
  * The attributes are set on the complete label, from start to end. If
  * you need to set attributes on part of the label, you will have to

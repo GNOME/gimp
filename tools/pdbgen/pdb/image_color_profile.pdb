@@ -258,7 +258,7 @@ sub image_convert_color_profile_from_file {
 
     $help = <<'HELP';
 This procedure converts from the image's color profile (or the default
-RGB or grayscale profile if none is set) to an ICC profile precified by
+RGB or grayscale profile if none is set) to an ICC profile specified by
 'uri'.  Only RGB and grayscale color profiles are accepted, according to
 the image's type.
 HELP

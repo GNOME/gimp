@@ -94,7 +94,7 @@
 #include "fits-io.h"
 
 
-/* Declaration of local funtions */
+/* Declaration of local functions */
 
 static FitsFile       * fits_new_filestruct    (void);
 static FitsHduList    * fits_new_hdulist       (void);
@@ -1795,7 +1795,7 @@ fits_decode_card (const gchar  *card,
 /* char *keyword         [I] : keyword identifying the card                  */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
-/* A card is searched in the reord list. Only the first eight characters of  */
+/* A card is searched in the record list. Only the first eight characters of */
 /* keyword are significant. If keyword is less than 8 characters, its filled */
 /* with blanks.                                                              */
 /* If the card is found, a pointer to the card is returned.                  */
@@ -1979,7 +1979,7 @@ fits_read_pixel (FitsFile         *ff,
     return -1;   /* Not open for reading */
 
   if (trans->dsttyp != 'k')
-    return -1;  /* Currently we only return types equavalent to the image format */
+    return -1;  /* Currently we only return types equivalent to the image format */
 
   if (npix <= 0)
     return npix;

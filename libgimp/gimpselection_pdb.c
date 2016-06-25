@@ -49,7 +49,7 @@
  * specified image. If there is one, the upper left and lower right
  * corners of the bounding box are returned. These coordinates are
  * relative to the image. Please note that the pixel specified by the
- * lower righthand coordinate of the bounding box is not part of the
+ * lower right coordinate of the bounding box is not part of the
  * selection. The selection ends at the upper left corner of this
  * pixel. This means the width of the selection can be calculated as
  * (x2 - x1), its height as (y2 - y1).
@@ -472,7 +472,7 @@ gimp_selection_grow (gint32 image_ID,
  *
  * Shrink the image's selection
  *
- * This procedure shrinks the selection. Shrinking invovles trimming
+ * This procedure shrinks the selection. Shrinking involves trimming
  * the existing selection boundary on all sides by the specified number
  * of pixels.
  *

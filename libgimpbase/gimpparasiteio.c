@@ -20,7 +20,7 @@
  */
 
 /*
- * Functions for bulding and parsing string representations of
+ * Functions for building and parsing string representations of
  * various standard parasite types.
  */
 

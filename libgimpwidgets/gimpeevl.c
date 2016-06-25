@@ -26,13 +26,13 @@
  * expression as it goes along, and does not create a parse tree or
  * anything, and will not optimize anything. It uses doubles for
  * precision, with the given use case, that's enough to combat any
- * rounding errors (as opposed to optimizing the evalutation).
+ * rounding errors (as opposed to optimizing the evaluation).
  *
  * It relies on external unit resolving through a callback and does
  * elementary dimensionality constraint check (e.g. "2 mm + 3 px * 4
  * in" is an error, as L + L^2 is a missmatch). It uses setjmp/longjmp
  * for try/catch like pattern on error, it uses g_strtod() for numeric
- * conversions and it's non-destructive in terms of the paramters, and
+ * conversions and it's non-destructive in terms of the parameters, and
  * it's reentrant.
  *
  * EBNF:
@@ -156,7 +156,7 @@ static void             gimp_eevl_error                    (GimpEevl            
  * @unit_resolver_proc: Unit resolver callback.
  * @result:             Result of evaluation.
  * @data:               Data passed to unit resolver.
- * @error_pos:          Will point to the poisiton within the string,
+ * @error_pos:          Will point to the positon within the string,
  *                      before which the parse / evaluation error
  *                      occurred. Will be set to null of no error occurred.
  * @error_message:      Will point to a static string with a semi-descriptive
@@ -171,7 +171,7 @@ static void             gimp_eevl_error                    (GimpEevl            
  *
  * Returns: A #GimpEevlQuantity with a value given in the base unit along with
  * the order of the dimension (i.e. if the base unit is inches, a dimension
- * order of two menas in^2).
+ * order of two means in^2).
  **/
 gboolean
 gimp_eevl_evaluate (const gchar               *string,
@@ -277,7 +277,7 @@ gimp_eevl_expression (GimpEevl *eva)
     {
       GimpEevlQuantity new_term = gimp_eevl_term (eva);
 
-      /* If dimensions missmatch, attempt default unit assignent */
+      /* If dimensions missmatch, attempt default unit assignment */
       if (new_term.dimension != evaluated_terms.dimension)
         {
           GimpEevlQuantity default_unit_factor;
@@ -447,7 +447,7 @@ gimp_eevl_lex (GimpEevl *eva)
     }
   else if (s[0] == '+' || s[0] == '-')
     {
-      /* Snatch these before the g_strtod() does, othewise they might
+      /* Snatch these before the g_strtod() does, otherwise they might
        * be used in a numeric conversion.
        */
       gimp_eevl_lex_accept_count (eva, 1, s[0]);

@@ -1667,7 +1667,7 @@ register_gradient_procs (GimpPDB *pdb)
                                "gimp-gradient-get-custom-samples");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradient-get-custom-samples",
-                                     "Sample the spacified gradient in custom positions.",
+                                     "Sample the specified gradient in custom positions.",
                                      "This procedure samples the active gradient in the specified number of points. The procedure will sample the gradient in the specified positions from the list. The left endpoint of the gradient corresponds to position 0.0, and the right endpoint corresponds to 1.0. The procedure returns a list of floating-point values which correspond to the RGBA values for each sample.",
                                      "Federico Mena Quintero",
                                      "Federico Mena Quintero",
@@ -1928,7 +1928,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradient-segment-set-left-pos",
                                      "Sets the left endpoint position of the specified segment",
-                                     "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segement.\n"
+                                     "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segment.\n"
                                      "This procedure returns the final position.",
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
@@ -2589,7 +2589,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradient-segment-range-move",
                                      "Move the position of an entire segment range by a delta.",
-                                     "This funtions moves the position of an entire segment range by a delta. The actual delta (which is returned) will be limited by the control points of the neighboring segments.",
+                                     "This function moves the position of an entire segment range by a delta. The actual delta (which is returned) will be limited by the control points of the neighboring segments.",
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
                                      "2003",

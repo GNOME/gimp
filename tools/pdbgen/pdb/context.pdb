@@ -879,7 +879,7 @@ sub context_set_line_dash_pattern {
 This procedure modifies the line dash pattern setting for stroking lines.
 
 The unit of the dash pattern segments is the actual line width used
-for the stroke opertation, in other words a segment length of 1.0
+for the stroke operation, in other words a segment length of 1.0
 results in a square segment shape (or gap shape).
 
 This setting affects the following procedures:
@@ -2307,7 +2307,7 @@ This procedure modifies the diagonal neighbors setting. If the affected
 region of an operation is based on a seed point, like when doing a seed
 fill, then, when this setting is TRUE, all eight neighbors of each pixel
 are considered when calculating the affected region; in contrast, when
-this setting is FALSE, only the four orthogonal neighors of each pixel
+this setting is FALSE, only the four orthogonal neighbors of each pixel
 are considered.
 
 This setting affects the following procedures:

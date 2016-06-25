@@ -22,7 +22,7 @@
  * ----
  *
  * 1. Run in non-interactive mode (need to figure out useful way for a
- *    script to give the 19N paramters for an image).  Perhaps just
+ *    script to give the 19N parameters for an image).  Perhaps just
  *    support saving parameters to a file, script passes file name.
  * 2. Figure out if we need multiple phases for supersampled brushes.
  */
@@ -264,7 +264,7 @@ static void ifs_compose_options_callback  (GtkAction *action,
 static void ifs_compose_load              (GtkWidget *parent);
 static void ifs_compose_save              (GtkWidget *parent);
 static void ifs_compose_response          (GtkWidget *widget,
-                                           gint       repsonse_id,
+                                           gint       response_id,
                                            gpointer   data);
 
 /*

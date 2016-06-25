@@ -10130,7 +10130,7 @@ msgstr "Mandala"
 #: ../app/core/gimpsymmetry-mandala.c:118
 #| msgctxt "guides-type"
 #| msgid "Center lines"
-msgid "Center abscisse"
+msgid "Center abscissa"
 msgstr "Miðja á x-ás"
 
 #: ../app/core/gimpsymmetry-mandala.c:123

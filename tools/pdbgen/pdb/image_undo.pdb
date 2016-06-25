@@ -253,7 +253,7 @@ as gimp_image_undo_enable() does, so is suited for situations where
 one wishes to leave the undo stack in the same state in which one
 found it despite non-destructively playing with the image in the
 meantime.  An example would be in-situ plugin previews.  Balancing
-freezes and thaws and ensuring image consistancy is the responsibility
+freezes and thaws and ensuring image consistency is the responsibility
 of the caller.
 HELP
 

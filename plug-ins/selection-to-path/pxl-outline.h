@@ -39,7 +39,7 @@ typedef struct
 /* Whether the outline moves clockwise or counterclockwise.  */
 #define O_CLOCKWISE(p_o) ((p_o).clockwise)
 
-/* Since a pixel outline is cyclic, the index of thenext coordinate
+/* Since a pixel outline is cyclic, the index of the next coordinate
    after the last is the first, and the previous coordinate before the
    first is the last.  */
 #define O_NEXT(p_o, n) (((n) + 1) % O_LENGTH (p_o))

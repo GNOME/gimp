@@ -125,7 +125,7 @@ typedef struct
 static void         gimp_number_pair_entry_finalize          (GObject             *entry);
 
 static gboolean     gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
-                                                              gunichar             canditate);
+                                                              gunichar             candidate);
 static void         gimp_number_pair_entry_ratio_to_fraction (gdouble              ratio,
                                                               gdouble             *numerator,
                                                               gdouble             *denominator);
@@ -139,7 +139,7 @@ static void         gimp_number_pair_entry_get_property      (GObject           
                                                               GValue              *value,
                                                               GParamSpec          *pspec);
 static void         gimp_number_pair_entry_changed           (GimpNumberPairEntry *entry);
-static gboolean     gimp_number_pair_entry_events            (GtkWidget           *widgett,
+static gboolean     gimp_number_pair_entry_events            (GtkWidget           *widget,
                                                               GdkEvent            *event);
 
 static void         gimp_number_pair_entry_update_text       (GimpNumberPairEntry *entry);
@@ -636,7 +636,7 @@ gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
  * gimp_number_pair_entry_get_default_text:
  * @entry:  A #GimpNumberPairEntry widget.
  *
- * Returns: the string manully set to be shown, or %NULL if values are
+ * Returns: the string manually set to be shown, or %NULL if values are
  *          shown in a normal fashion.
  *
  * Since: 2.4
@@ -898,7 +898,7 @@ gimp_number_pair_entry_events (GtkWidget *widget,
             break;
           }
 
-        /* Mak sure the entry text is up to date */
+        /* Make sure the entry text is up to date */
 
         gimp_number_pair_entry_update_text (entry);
 

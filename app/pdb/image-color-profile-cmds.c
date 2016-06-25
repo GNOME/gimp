@@ -513,7 +513,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-color-profile-from-file",
                                      "Convert the image's layers to a color profile",
-                                     "This procedure converts from the image's color profile (or the default RGB or grayscale profile if none is set) to an ICC profile precified by 'uri'. Only RGB and grayscale color profiles are accepted, according to the image's type.",
+                                     "This procedure converts from the image's color profile (or the default RGB or grayscale profile if none is set) to an ICC profile specified by 'uri'. Only RGB and grayscale color profiles are accepted, according to the image's type.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",

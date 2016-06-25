@@ -864,7 +864,7 @@ create_fits_header (FitsFile *ofp,
       hdulist->datamax = 65535;
       break;
     case 32:
-      hdulist->datamax = 4294967295.0; /* .0 to slinence gcc */
+      hdulist->datamax = 4294967295.0; /* .0 to silence gcc */
       break;
     case -32:
       hdulist->datamax = 1.0;

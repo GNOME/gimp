@@ -418,7 +418,7 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
  * @adjustment:     Returns the spinbutton's #GtkAdjustment.
  * @value:          The initial value of the spinbutton.
  * @lower:          The lower boundary.
- * @upper:          The uppper boundary.
+ * @upper:          The upper boundary.
  * @step_increment: The spinbutton's step increment.
  * @page_increment: The spinbutton's page increment (mouse button 2).
  * @page_size:      Ignored, spin buttons must always have a zero page size.
@@ -968,7 +968,7 @@ gimp_uint_adjustment_update (GtkAdjustment *adjustment,
 /**
  * gimp_float_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data:       A pointer to a #gfloat varaiable which will store the
+ * @data:       A pointer to a #gfloat variable which will store the
  *              @adjustment's value.
  **/
 void

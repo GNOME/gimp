@@ -116,7 +116,7 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CENTER_X,
                            "center-x",
-                           _("Center abscisse"),
+                           _("Center abscissa"),
                            NULL,
                            0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |

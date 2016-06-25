@@ -217,7 +217,7 @@ gfig_preview_events (GtkWidget *widget,
           /* If constraining save start pnt */
           if (selvals.opts.snap2grid)
             {
-              /* Save point to constained point ... if button 3 down */
+              /* Save point to constrained point ... if button 3 down */
               if (bevent->button == 3)
                 {
                   find_grid_pos (&point, &point, FALSE);

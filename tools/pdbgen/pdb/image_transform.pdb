@@ -270,7 +270,7 @@ CODE
 
 $desc = 'Image Transform';
 $doc_title = 'gimpimagetransform';
-$doc_short_desc = 'Transformations onm images.';
+$doc_short_desc = 'Transformations on images.';
 $doc_long_desc = 'Operations to scale, resize, crop, flip and rotate images.';
 
 1;

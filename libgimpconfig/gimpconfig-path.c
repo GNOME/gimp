@@ -130,7 +130,7 @@ gimp_param_config_path_class_init (GParamSpecClass *class)
  * gimp_param_spec_config_path:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
- * @blurb:         Brief desciption of param.
+ * @blurb:         Brief description of param.
  * @type:          a #GimpConfigPathType value.
  * @default_value: Value to use if none is assigned.
  * @flags:         a combination of #GParamFlags

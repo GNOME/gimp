@@ -517,7 +517,7 @@ gimp_icons_set_icon_theme (GFile *path)
  * You don't need to call this function as gimp_ui_init() already does
  * this for you.
  *
- * Deprecated: 2.10: USe gimp_icons_init() instead.
+ * Deprecated: 2.10: Use gimp_icons_init() instead.
  */
 void
 gimp_stock_init (void)

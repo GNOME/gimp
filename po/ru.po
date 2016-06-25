@@ -10442,7 +10442,7 @@ msgstr "Мандала"
 
 #: ../app/core/gimpsymmetry-mandala.c:119
 #, fuzzy
-msgid "Center abscisse"
+msgid "Center abscissa"
 msgstr "Линии по центру"
 
 #: ../app/core/gimpsymmetry-mandala.c:127

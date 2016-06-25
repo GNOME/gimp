@@ -10106,7 +10106,7 @@ msgid "Mandala"
 msgstr "Mandala"
 
 #: ../app/core/gimpsymmetry-mandala.c:119
-msgid "Center abscisse"
+msgid "Center abscissa"
 msgstr "Središči absciso"
 
 #: ../app/core/gimpsymmetry-mandala.c:127

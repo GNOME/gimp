@@ -55,7 +55,7 @@ gimp_status_func_dummy (const gchar *text1,
  * gimp_init_for_testing:
  *
  * Initialize the GIMP object system for unit testing. This is a
- * selected subset of the initialization happning in app_run().
+ * selected subset of the initialization happening in app_run().
  **/
 Gimp *
 gimp_init_for_testing (void)

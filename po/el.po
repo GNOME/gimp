@@ -10534,7 +10534,7 @@ msgid "Mandala"
 msgstr "Μάνταλα"
 
 #: ../app/core/gimpsymmetry-mandala.c:119
-msgid "Center abscisse"
+msgid "Center abscissa"
 msgstr "Τετμημένη κέντρου"
 
 #: ../app/core/gimpsymmetry-mandala.c:127

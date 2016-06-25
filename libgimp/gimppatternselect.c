@@ -67,7 +67,7 @@ gimp_pattern_select_new (const gchar            *title,
   {
     { GIMP_PDB_STRING,   "str",           "String"                      },
     { GIMP_PDB_INT32,    "mask width",    "Pattern width"               },
-    { GIMP_PDB_INT32,    "mask height",   "Pattern heigth"              },
+    { GIMP_PDB_INT32,    "mask height",   "Pattern height"              },
     { GIMP_PDB_INT32,    "mask bpp",      "Pattern bytes per pixel"     },
     { GIMP_PDB_INT32,    "mask len",      "Length of pattern mask data" },
     { GIMP_PDB_INT8ARRAY,"mask data",     "The pattern mask data"       },

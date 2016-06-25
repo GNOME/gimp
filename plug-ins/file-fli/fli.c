@@ -554,8 +554,8 @@ void fli_write_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 /*
  * This is the delta-compression method from the classic Autodesk
  * Animator.  It's basically the RLE method from above, but it
- * supports skiping unchanged lines at the beginning and end of an
- * image, and unchanged pixels in a line This chunk is used in FLI
+ * supports skipping unchanged lines at the beginning and end of an
+ * image, and unchanged pixels in a line. This chunk is used in FLI
  * files.
  */
 void fli_read_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *framebuf)
