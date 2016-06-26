@@ -54,7 +54,7 @@ static const GimpActionEntry text_tool_actions[] =
     NC_("text-tool-action", "Input _Methods"), NULL, NULL, NULL,
     NULL },
 
-  { "text-tool-cut", "edit-cut",
+  { "text-tool-cut", GIMP_STOCK_EDIT_CUT,
     NC_("text-tool-action", "Cu_t"), NULL, "<primary>X",
     G_CALLBACK (text_tool_cut_cmd_callback),
     NULL },
@@ -64,7 +64,7 @@ static const GimpActionEntry text_tool_actions[] =
     G_CALLBACK (text_tool_copy_cmd_callback),
     NULL },
 
-  { "text-tool-paste", "edit-paste",
+  { "text-tool-paste", GIMP_STOCK_PASTE,
     NC_("text-tool-action", "_Paste"), NULL, "<primary>V",
     G_CALLBACK (text_tool_paste_cmd_callback),
     NULL },

@@ -108,7 +108,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_fade_cmd_callback),
     GIMP_HELP_EDIT_FADE },
 
-  { "edit-cut", "edit-cut",
+  { "edit-cut", GIMP_STOCK_EDIT_CUT,
     NC_("edit-action", "Cu_t"), "<primary>X",
     NC_("edit-action", "Move the selected pixels to the clipboard"),
     G_CALLBACK (edit_cut_cmd_callback),
@@ -126,7 +126,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_copy_visible_cmd_callback),
     GIMP_HELP_EDIT_COPY_VISIBLE },
 
-  { "edit-paste", "edit-paste",
+  { "edit-paste", GIMP_STOCK_PASTE,
     NC_("edit-action", "_Paste"), "<primary>V",
     NC_("edit-action", "Paste the content of the clipboard"),
     G_CALLBACK (edit_paste_cmd_callback),
@@ -157,7 +157,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_paste_as_new_layer_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER },
 
-  { "edit-named-cut", "edit-cut",
+  { "edit-named-cut", GIMP_STOCK_EDIT_CUT,
     NC_("edit-action", "Cu_t Named..."), NULL,
     NC_("edit-action", "Move the selected pixels to a named buffer"),
     G_CALLBACK (edit_named_cut_cmd_callback),
@@ -176,7 +176,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_named_copy_visible_cmd_callback),
     GIMP_HELP_BUFFER_COPY },
 
-  { "edit-named-paste", "edit-paste",
+  { "edit-named-paste", GIMP_STOCK_PASTE,
     NC_("edit-action", "_Paste Named..."), NULL,
     NC_("edit-action", "Paste the content of a named buffer"),
     G_CALLBACK (edit_named_paste_cmd_callback),

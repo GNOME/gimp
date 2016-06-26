@@ -137,7 +137,7 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_copy_cmd_callback),
     GIMP_HELP_PATH_COPY },
 
-  { "vectors-paste", "edit-paste",
+  { "vectors-paste", GIMP_STOCK_PASTE,
     NC_("vectors-action", "Paste Pat_h"), "", NULL,
     G_CALLBACK (vectors_paste_cmd_callback),
     GIMP_HELP_PATH_PASTE },

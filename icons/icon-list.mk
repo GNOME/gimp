@@ -60,6 +60,7 @@ scalable_images = \
 	scalable/gimp-dynamics.svg			\
 	scalable/gimp-edit.svg				\
 	scalable/gimp-edit-clear.svg			\
+	scalable/gimp-edit-cut.svg			\
 	scalable/gimp-error.svg				\
 	scalable/gimp-file-manager.svg			\
 	scalable/gimp-first.svg				\
@@ -138,6 +139,7 @@ scalable_images = \
 	scalable/gimp-no.svg				\
 	scalable/gimp-okay.svg				\
 	scalable/gimp-open.svg				\
+	scalable/gimp-paste.svg				\
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
 	scalable/gimp-path.svg				\
@@ -527,6 +529,7 @@ icons16_images = \
 	16/gimp-dynamics.png				\
 	16/gimp-edit.png				\
 	16/gimp-edit-clear.png				\
+	16/gimp-edit-cut.png				\
 	16/gimp-error.png				\
 	16/gimp-file-manager.png			\
 	16/gimp-first.png				\
@@ -583,6 +586,7 @@ icons16_images = \
 	16/gimp-no.png					\
 	16/gimp-okay.png				\
 	16/gimp-open.png				\
+	16/gimp-paste.png				\
 	16/gimp-paste-as-new.png			\
 	16/gimp-paste-into.png				\
 	16/gimp-path.png				\

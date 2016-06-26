@@ -42,7 +42,7 @@ static const GimpActionEntry buffers_actions[] =
     NC_("buffers-action", "Buffers Menu"), NULL, NULL, NULL,
     GIMP_HELP_BUFFER_DIALOG },
 
-  { "buffers-paste", "edit-paste",
+  { "buffers-paste", GIMP_STOCK_PASTE,
     NC_("buffers-action", "_Paste Buffer"), NULL,
     NC_("buffers-action", "Paste the selected buffer"),
     G_CALLBACK (buffers_paste_cmd_callback),
