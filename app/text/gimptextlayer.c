@@ -694,8 +694,11 @@ gimp_text_layer_render (GimpTextLayer *layer)
           g_free (tmp);
         }
 
-      if (! name)
-        name = g_strdup (_("Empty Text Layer"));
+      if (! name || ! name[0])
+        {
+          g_free (name);
+          name = g_strdup (_("Empty Text Layer"));
+        }
 
       if (gimp_item_is_attached (item))
         {
