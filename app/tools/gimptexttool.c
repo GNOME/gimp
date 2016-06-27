@@ -318,6 +318,37 @@ gimp_text_tool_finalize (GObject *object)
 }
 
 static void
+gimp_text_tool_remove_empty_text_layer (GimpTextTool *text_tool)
+{
+  GimpTextLayer *text_layer = text_tool->layer;
+
+  if (text_layer && text_layer->auto_rename)
+    {
+      GimpText *text = gimp_text_layer_get_text (text_layer);
+
+      if (text->box_mode == GIMP_TEXT_BOX_DYNAMIC &&
+          (! text->text || text->text[0] == '\0') &&
+          (! text->markup || text->markup[0] == '\0'))
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (text_layer));
+
+          if (text_tool->image == image)
+            g_signal_handlers_block_by_func (image,
+                                             gimp_text_tool_layer_changed,
+                                             text_tool);
+
+          gimp_image_remove_layer (image, GIMP_LAYER (text_layer), TRUE, NULL);
+          gimp_image_flush (image);
+
+          if (text_tool->image == image)
+            g_signal_handlers_unblock_by_func (image,
+                                               gimp_text_tool_layer_changed,
+                                               text_tool);
+        }
+    }
+}
+
+static void
 gimp_text_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
                         GimpDisplay    *display)
@@ -1091,6 +1122,8 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
         g_signal_handlers_disconnect_by_func (text_tool->layer,
                                               gimp_text_tool_layer_notify,
                                               text_tool);
+
+      gimp_text_tool_remove_empty_text_layer (text_tool);
 
       text_tool->layer = layer;
 
