@@ -304,7 +304,11 @@ scalable_images = \
 	scalable/gimp-wilber-eek.svg			\
 	scalable/gimp-wilber-outline.svg		\
 	scalable/gimp-yes.svg				\
-	scalable/gimp-zoom-follow-window.svg
+	scalable/gimp-zoom-fit-best.svg			\
+	scalable/gimp-zoom-follow-window.svg		\
+	scalable/gimp-zoom-in.svg			\
+	scalable/gimp-zoom-original.svg			\
+	scalable/gimp-zoom-out.svg
 
 vector24_images = \
 	24/gimp-center.svg				\
@@ -722,7 +726,11 @@ icons16_images = \
 	16/gimp-warning.png				\
 	16/gimp-web.png					\
 	16/gimp-wilber.png				\
-	16/gimp-yes.png
+	16/gimp-yes.png					\
+	16/gimp-zoom-fit-best.png			\
+	16/gimp-zoom-in.png				\
+	16/gimp-zoom-original.png			\
+	16/gimp-zoom-out.png
 
 icons18_images = \
 	18/gimp-color-picker-black.png		\

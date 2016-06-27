@@ -113,7 +113,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
                               gimp_get_user_context (shell->display->gimp),
                               _("Zoom Ratio"), "display_scale",
-                              "zoom-original",
+                              GIMP_STOCK_ZOOM_ORIGINAL,
                               _("Select Zoom Ratio"),
                               GTK_WIDGET (shell),
                               gimp_standard_help_func,

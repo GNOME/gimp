@@ -347,12 +347,12 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
 
   editor = GIMP_EDITOR (popup->editor->view);
 
-  gimp_editor_add_button (editor, "zoom-out",
+  gimp_editor_add_button (editor, GIMP_STOCK_ZOOM_OUT,
                           _("Smaller Previews"), NULL,
                           G_CALLBACK (gimp_container_popup_smaller_clicked),
                           NULL,
                           popup);
-  gimp_editor_add_button (editor, "zoom-in",
+  gimp_editor_add_button (editor, GIMP_STOCK_ZOOM_IN,
                           _("Larger Previews"), NULL,
                           G_CALLBACK (gimp_container_popup_larger_clicked),
                           NULL,

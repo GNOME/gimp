@@ -69,6 +69,10 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_NO                       "gimp-no"
 #define GIMP_STOCK_YES                      "gimp-yes"
 #define GIMP_STOCK_OKAY                     "gimp-okay"
+#define GIMP_STOCK_ZOOM_FIT_BEST            "gimp-zoom-fit-best"
+#define GIMP_STOCK_ZOOM_IN                  "gimp-zoom-in"
+#define GIMP_STOCK_ZOOM_ORIGINAL            "gimp-zoom-original"
+#define GIMP_STOCK_ZOOM_OUT                 "gimp-zoom-out"
 
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"

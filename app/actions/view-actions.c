@@ -97,19 +97,19 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
-  { "view-zoom-fit-in", "zoom-fit-best",
+  { "view-zoom-fit-in", GIMP_STOCK_ZOOM_FIT_BEST,
     NC_("view-action", "_Fit Image in Window"), "<primary><shift>J",
     NC_("view-action", "Adjust the zoom ratio so that the image becomes fully visible"),
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
-  { "view-zoom-fill", "zoom-fit-best",
+  { "view-zoom-fill", GIMP_STOCK_ZOOM_FIT_BEST,
     NC_("view-action", "Fi_ll Window"), NULL,
     NC_("view-action", "Adjust the zoom ratio so that the entire window is used"),
     G_CALLBACK (view_zoom_fill_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FILL },
 
-  { "view-zoom-selection", "gimp-selection",
+  { "view-zoom-selection", GIMP_STOCK_SELECTION,
     NC_("view-action", "Zoom to _Selection"), NULL,
     NC_("view-action", "Adjust the zoom ratio so that the selection fills the window"),
     G_CALLBACK (view_zoom_selection_cmd_callback),
@@ -146,7 +146,7 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_color_management_reset_cmd_callback),
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
-  { "view-shrink-wrap", "zoom-fit-best",
+  { "view-shrink-wrap", GIMP_STOCK_ZOOM_FIT_BEST,
     NC_("view-action", "Shrink _Wrap"), "<primary>J",
     NC_("view-action", "Reduce the image window to the size of the image display"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
@@ -310,23 +310,23 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
-  { "view-zoom-minimum", "zoom-out",
+  { "view-zoom-minimum", GIMP_STOCK_ZOOM_OUT,
     "Zoom out as far as possible", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-maximum", "zoom-in",
+  { "view-zoom-maximum", GIMP_STOCK_ZOOM_IN,
     "Zoom in as far as possible", NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-out", "zoom-out",
+  { "view-zoom-out", GIMP_STOCK_ZOOM_OUT,
     NC_("view-zoom-action", "Zoom _Out"), "minus",
     NC_("view-zoom-action", "Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-in", "zoom-in",
+  { "view-zoom-in", GIMP_STOCK_ZOOM_IN,
     NC_("view-zoom-action", "Zoom _In"), "plus",
     NC_("view-zoom-action", "Zoom in"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
@@ -344,12 +344,12 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-out-skip", "zoom-out",
+  { "view-zoom-out-skip", GIMP_STOCK_ZOOM_OUT,
     "Zoom out a lot", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-in-skip", "zoom-in",
+  { "view-zoom-in-skip", GIMP_STOCK_ZOOM_IN,
     "Zoom in a lot", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN }
@@ -405,13 +405,13 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     20000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-1-1", "zoom-original",
+  { "view-zoom-1-1", GIMP_STOCK_ZOOM_ORIGINAL,
     NC_("view-zoom-action", "_1:1  (100%)"), "1",
     NC_("view-zoom-action", "Zoom 1:1"),
     10000,
     GIMP_HELP_VIEW_ZOOM_100 },
 
-  { "view-zoom-1-1-accel", "zoom-original",
+  { "view-zoom-1-1-accel", GIMP_STOCK_ZOOM_ORIGINAL,
     NC_("view-zoom-action", "_1:1  (100%)"), "KP_1",
     NC_("view-zoom-action", "Zoom 1:1"),
     10000,
@@ -585,7 +585,7 @@ static const GimpEnumActionEntry view_padding_color_actions[] =
     GIMP_CANVAS_PADDING_MODE_DARK_CHECK, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
 
-  { "view-padding-color-custom", "gtk-select-color",
+  { "view-padding-color-custom", GIMP_STOCK_TOOL_BY_COLOR_SELECT,
     NC_("view-padding-color", "_Custom Color..."), NULL,
     NC_("view-padding-color", "Use an arbitrary color"),
     GIMP_CANVAS_PADDING_MODE_CUSTOM, FALSE,

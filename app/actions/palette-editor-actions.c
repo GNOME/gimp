@@ -85,19 +85,19 @@ static const GimpEnumActionEntry palette_editor_new_actions[] =
 
 static const GimpEnumActionEntry palette_editor_zoom_actions[] =
 {
-  { "palette-editor-zoom-in", "zoom-in",
+  { "palette-editor-zoom-in", GIMP_STOCK_ZOOM_IN,
     N_("Zoom _In"), NULL,
     N_("Zoom in"),
     GIMP_ZOOM_IN, FALSE,
     GIMP_HELP_PALETTE_EDITOR_ZOOM_IN },
 
-  { "palette-editor-zoom-out", "zoom-out",
+  { "palette-editor-zoom-out", GIMP_STOCK_ZOOM_OUT,
     N_("Zoom _Out"), NULL,
     N_("Zoom out"),
     GIMP_ZOOM_OUT, FALSE,
     GIMP_HELP_PALETTE_EDITOR_ZOOM_OUT },
 
-  { "palette-editor-zoom-all", "zoom-fit-best",
+  { "palette-editor-zoom-all", GIMP_STOCK_ZOOM_FIT_BEST,
     N_("Zoom _All"), NULL,
     N_("Zoom all"),
     GIMP_ZOOM_OUT_MAX, FALSE,

@@ -526,7 +526,7 @@ gimp_zoom_button_new (GimpZoomModel *model,
   switch (zoom_type)
     {
     case GIMP_ZOOM_IN:
-      button = zoom_button_new ("zoom-in", icon_size);
+      button = zoom_button_new ("gimp-zoom-in", icon_size);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_in),
                                 model);
@@ -536,7 +536,7 @@ gimp_zoom_button_new (GimpZoomModel *model,
       break;
 
     case GIMP_ZOOM_OUT:
-      button = zoom_button_new ("zoom-out", icon_size);
+      button = zoom_button_new ("gimp-zoom-out", icon_size);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_out),
                                 model);

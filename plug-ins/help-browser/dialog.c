@@ -577,23 +577,23 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (home_callback)
     },
     {
-      "copy-location", "edit-copy",
+      "copy-location", "gimp-clipboard",
       N_("C_opy location"), "",
       N_("Copy the location of this page to the clipboard"),
       G_CALLBACK (copy_location_callback)
     },
     {
-      "copy-selection", "edit-copy",
+      "copy-selection", "gimp-clipboard",
       NULL, "<control>C", NULL,
       G_CALLBACK (copy_selection_callback)
     },
     {
-      "zoom-in", "zoom-in",
+      "zoom-in", "gimp-zoom-in",
       NULL, "<control>plus", NULL,
       G_CALLBACK (zoom_in_callback)
     },
     {
-      "zoom-out", "zoom-out",
+      "zoom-out", "gimp-zoom-out",
       NULL, "<control>minus", NULL,
       G_CALLBACK (zoom_out_callback)
     },

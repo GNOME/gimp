@@ -370,19 +370,19 @@ static const GimpRadioActionEntry gradient_editor_coloring_actions[] =
 
 static const GimpEnumActionEntry gradient_editor_zoom_actions[] =
 {
-  { "gradient-editor-zoom-in", "zoom-in",
+  { "gradient-editor-zoom-in", GIMP_STOCK_ZOOM_IN,
     N_("Zoom In"), NULL,
     N_("Zoom in"),
     GIMP_ZOOM_IN, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN },
 
-  { "gradient-editor-zoom-out", "zoom-out",
+  { "gradient-editor-zoom-out", GIMP_STOCK_ZOOM_OUT,
     N_("Zoom Out"), NULL,
     N_("Zoom out"),
     GIMP_ZOOM_OUT, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT },
 
-  { "gradient-editor-zoom-all", "zoom-fit-best",
+  { "gradient-editor-zoom-all", GIMP_STOCK_ZOOM_FIT_BEST,
     N_("Zoom All"), NULL,
     N_("Zoom all"),
     GIMP_ZOOM_OUT_MAX, FALSE,

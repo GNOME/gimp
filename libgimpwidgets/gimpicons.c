@@ -94,6 +94,10 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_NO,                            NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_YES,                           NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_OKAY,                          NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_ZOOM_FIT_BEST,                 NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_ZOOM_IN,                       NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_ZOOM_ORIGINAL,                 NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_ZOOM_OUT,                      NULL,   0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },
