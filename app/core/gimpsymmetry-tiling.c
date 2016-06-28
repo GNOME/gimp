@@ -398,5 +398,5 @@ gimp_tiling_image_size_changed_cb (GimpImage    *image,
 
   if (previous_width != gimp_image_get_width (image) ||
       previous_height != gimp_image_get_height (image))
-    g_signal_emit_by_name (sym, "update-ui", sym->image);
+    g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
 }

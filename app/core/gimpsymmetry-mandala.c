@@ -557,6 +557,6 @@ gimp_mandala_image_size_changed_cb (GimpImage    *image,
       g_object_set_data_full (G_OBJECT (sym), "center-x:max", x_max, g_free);
       g_object_set_data_full (G_OBJECT (sym), "center-y:max", y_max, g_free);
 
-      g_signal_emit_by_name (sym, "update-ui", sym->image);
+      g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
     }
 }

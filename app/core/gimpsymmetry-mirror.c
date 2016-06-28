@@ -615,7 +615,7 @@ gimp_mirror_guide_removed_cb (GObject    *object,
   else
     {
       gimp_mirror_reset (mirror);
-      g_signal_emit_by_name (mirror, "update-ui",
+      g_signal_emit_by_name (mirror, "gui-param-changed",
                              GIMP_SYMMETRY (mirror)->image);
     }
 }
@@ -756,6 +756,6 @@ gimp_mirror_image_size_changed_cb (GimpImage    *image,
       g_object_set_data_full (G_OBJECT (sym), "vertical-position:max", x_max, g_free);
       g_object_set_data_full (G_OBJECT (sym), "horizontal-position:max", y_max, g_free);
 
-      g_signal_emit_by_name (sym, "update-ui", sym->image);
+      g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
     }
 }
