@@ -82,7 +82,7 @@ static const GimpActionEntry tool_presets_actions[] =
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_TOOL_PRESET_DELETE },
 
-  { "tool-presets-refresh", "view-refresh",
+  { "tool-presets-refresh", GIMP_STOCK_VIEW_REFRESH,
     NC_("tool-presets-action", "_Refresh Tool Presets"), NULL,
     NC_("tool-presets-action", "Refresh tool presets"),
     G_CALLBACK (data_refresh_cmd_callback),

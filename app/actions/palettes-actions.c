@@ -86,7 +86,7 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PALETTE_DELETE },
 
-  { "palettes-refresh", "view-refresh",
+  { "palettes-refresh", GIMP_STOCK_VIEW_REFRESH,
     NC_("palettes-action", "_Refresh Palettes"), NULL,
     NC_("palettes-action", "Refresh palettes"),
     G_CALLBACK (data_refresh_cmd_callback),

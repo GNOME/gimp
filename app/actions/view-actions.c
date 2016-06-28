@@ -85,7 +85,7 @@ static const GimpActionEntry view_actions[] =
     NC_("view-action", "Move to Screen"), NULL, NULL, NULL,
     GIMP_HELP_VIEW_CHANGE_SCREEN },
 
-  { "view-new", "window-new",
+  { "view-new", GIMP_STOCK_WINDOW_NEW,
     NC_("view-action", "_New View"), NULL,
     NC_("view-action", "Create another view on this image"),
     G_CALLBACK (view_new_cmd_callback),
@@ -295,7 +295,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_STATUSBAR },
 
-  { "view-fullscreen", "view-fullscreen",
+  { "view-fullscreen", GIMP_STOCK_VIEW_FULLSCREEN,
     NC_("view-action", "Fullscr_een"), "F11",
     NC_("view-action", "Toggle fullscreen view"),
     G_CALLBACK (view_fullscreen_cmd_callback),

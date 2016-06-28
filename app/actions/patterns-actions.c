@@ -79,7 +79,7 @@ static const GimpActionEntry patterns_actions[] =
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PATTERN_DELETE },
 
-  { "patterns-refresh", "view-refresh",
+  { "patterns-refresh", GIMP_STOCK_VIEW_REFRESH,
     NC_("patterns-action", "_Refresh Patterns"), NULL,
     NC_("patterns-action", "Refresh patterns"),
     G_CALLBACK (data_refresh_cmd_callback),

@@ -562,7 +562,7 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (forward_callback)
     },
     {
-      "reload", "view-refresh",
+      "reload", "gimp-view-refresh",
        N_("_Reload"), "<control>R", N_("Reload current page"),
       G_CALLBACK (reload_callback)
     },

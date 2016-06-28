@@ -80,7 +80,7 @@ static const GimpActionEntry gradients_actions[] =
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_GRADIENT_DELETE },
 
-  { "gradients-refresh", "view-refresh",
+  { "gradients-refresh", GIMP_STOCK_VIEW_REFRESH,
     NC_("gradients-action", "_Refresh Gradients"), NULL,
     NC_("gradients-action", "Refresh gradients"),
     G_CALLBACK (data_refresh_cmd_callback),

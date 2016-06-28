@@ -79,7 +79,7 @@ static const GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_BRUSH_DELETE },
 
-  { "brushes-refresh", "view-refresh",
+  { "brushes-refresh", GIMP_STOCK_VIEW_REFRESH,
     NC_("brushes-action", "_Refresh Brushes"), NULL,
     NC_("brushes-action", "Refresh brushes"),
     G_CALLBACK (data_refresh_cmd_callback),

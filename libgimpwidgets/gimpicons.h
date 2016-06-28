@@ -73,6 +73,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_ZOOM_IN                  "gimp-zoom-in"
 #define GIMP_STOCK_ZOOM_ORIGINAL            "gimp-zoom-original"
 #define GIMP_STOCK_ZOOM_OUT                 "gimp-zoom-out"
+#define GIMP_STOCK_VIEW_FULLSCREEN          "gimp-view-fullscreen"
+#define GIMP_STOCK_VIEW_REFRESH             "gimp-view-refresh"
+#define GIMP_STOCK_WINDOW_NEW               "gimp-window-new"
 
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"

@@ -73,7 +73,7 @@ static const GimpActionEntry dynamics_actions[] =
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_DYNAMICS_DELETE },
 
-  { "dynamics-refresh", "view-refresh",
+  { "dynamics-refresh", GIMP_STOCK_VIEW_REFRESH,
     NC_("dynamics-action", "_Refresh Dynamics"), NULL,
     NC_("dynamics-action", "Refresh dynamics"),
     G_CALLBACK (data_refresh_cmd_callback),

@@ -600,7 +600,7 @@ ui_manager_new (GtkWidget *window)
       NULL, NULL, N_("Rewind the animation"),
       G_CALLBACK (rewind_callback) },
 
-    { "refresh", "view-refresh",
+    { "refresh", "gimp-view-refresh",
       NULL, "<control>R", N_("Reload the image"),
       G_CALLBACK (refresh_callback) },
 

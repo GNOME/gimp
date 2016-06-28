@@ -297,9 +297,12 @@ scalable_images = \
 	scalable/gimp-vchain-broken.svg			\
 	scalable/gimp-vfill.svg				\
 	scalable/gimp-video.svg				\
+	scalable/gimp-view-fullscreen.svg		\
+	scalable/gimp-view-refresh.svg			\
 	scalable/gimp-visible.svg			\
 	scalable/gimp-warning.svg			\
 	scalable/gimp-web.svg				\
+	scalable/gimp-window-new.svg			\
 	scalable/gimp-wilber.svg			\
 	scalable/gimp-wilber-eek.svg			\
 	scalable/gimp-wilber-outline.svg		\
@@ -723,8 +726,11 @@ icons16_images = \
 	16/gimp-up.png					\
 	16/gimp-user-manual.png				\
 	16/gimp-video.png				\
+	16/gimp-view-fullscreen.png			\
+	16/gimp-view-refresh.png			\
 	16/gimp-warning.png				\
 	16/gimp-web.png					\
+	16/gimp-window-new.png				\
 	16/gimp-wilber.png				\
 	16/gimp-yes.png					\
 	16/gimp-zoom-fit-best.png			\

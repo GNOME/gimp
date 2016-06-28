@@ -84,7 +84,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_clear_cmd_callback),
     GIMP_HELP_DOCUMENT_CLEAR },
 
-  { "documents-recreate-preview", "view-refresh",
+  { "documents-recreate-preview", GIMP_STOCK_VIEW_REFRESH,
     NC_("documents-action", "Recreate _Preview"), NULL,
     NC_("documents-action", "Recreate preview"),
     G_CALLBACK (documents_recreate_preview_cmd_callback),
