@@ -309,8 +309,12 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
 
   switch (press_type)
     {
+      GtkTextIter start, end;
+
     case GIMP_BUTTON_PRESS_NORMAL:
-      gtk_text_buffer_place_cursor (buffer, &cursor);
+      if (gtk_text_buffer_get_selection_bounds (buffer, &start, &end) ||
+          gtk_text_iter_compare (&start, &cursor))
+        gtk_text_buffer_place_cursor (buffer, &cursor);
       break;
 
     case GIMP_BUTTON_PRESS_DOUBLE:
