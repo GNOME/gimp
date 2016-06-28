@@ -598,7 +598,7 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (zoom_out_callback)
     },
     {
-      "find", "edit-find",
+      "find", "gimp-tool-zoom",
       NULL, "<control>F", N_("Find text in current page"),
       G_CALLBACK (find_callback)
     },

@@ -357,7 +357,7 @@ gimp_search_popup_constructed (GObject *object)
 
   popup->priv->keyword_entry = gtk_entry_new ();
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (popup->priv->keyword_entry),
-                                     GTK_ENTRY_ICON_PRIMARY, "edit-find");
+                                     GTK_ENTRY_ICON_PRIMARY, GIMP_STOCK_TOOL_ZOOM);
   gtk_box_pack_start (GTK_BOX (main_vbox),
                       popup->priv->keyword_entry,
                       FALSE, FALSE, 0);
