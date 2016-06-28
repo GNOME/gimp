@@ -165,9 +165,9 @@ gimp_tiling_constructed (GObject *object)
   g_object_set_data_full (object, "y-interval:max", y_max, g_free);
   g_object_set_data_full (object, "shift:max", shift_max, g_free);
 
-  g_signal_connect (sym->image, "size-changed-detailed",
-                    G_CALLBACK (gimp_tiling_image_size_changed_cb),
-                    sym);
+  g_signal_connect_object (sym->image, "size-changed-detailed",
+                           G_CALLBACK (gimp_tiling_image_size_changed_cb),
+                           sym, 0);
 
   /* Set reasonable defaults. */
   tiling->interval_x = gimp_image_get_width (sym->image) / 2;

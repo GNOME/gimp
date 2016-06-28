@@ -193,9 +193,9 @@ gimp_mirror_constructed (GObject *object)
   g_object_set_data_full (object, "horizontal-position:max", y_max, g_free);
   g_object_set_data_full (object, "vertical-position:max", x_max, g_free);
 
-  g_signal_connect (sym->image, "size-changed-detailed",
-                    G_CALLBACK (gimp_mirror_image_size_changed_cb),
-                    sym);
+  g_signal_connect_object (sym->image, "size-changed-detailed",
+                           G_CALLBACK (gimp_mirror_image_size_changed_cb),
+                           sym, 0);
 }
 
 static void

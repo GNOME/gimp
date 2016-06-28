@@ -167,20 +167,16 @@ gimp_mandala_constructed (GObject *object)
   g_object_set_data_full (object, "center-x:max", x_max, g_free);
   g_object_set_data_full (object, "center-y:max", y_max, g_free);
 
-  g_signal_connect (sym->image, "size-changed-detailed",
-                    G_CALLBACK (gimp_mandala_image_size_changed_cb),
-                    sym);
+  g_signal_connect_object (sym->image, "size-changed-detailed",
+                           G_CALLBACK (gimp_mandala_image_size_changed_cb),
+                           sym, 0);
 }
 
 static void
 gimp_mandala_finalize (GObject *object)
 {
-  GimpSymmetry *sym     = GIMP_SYMMETRY (object);
   GimpMandala  *mandala = GIMP_MANDALA (object);
 
-  g_signal_handlers_disconnect_by_func (sym->image,
-                                        gimp_mandala_image_size_changed_cb,
-                                        object);
   if (mandala->horizontal_guide)
     g_object_unref (mandala->horizontal_guide);
   mandala->horizontal_guide = NULL;
