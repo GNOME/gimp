@@ -30,7 +30,7 @@
      id="namedview1509"
      showgrid="true"
      inkscape:zoom="14.75"
-     inkscape:cx="1.1525424"
+     inkscape:cx="14.440678"
      inkscape:cy="9.1864407"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -107,7 +107,7 @@
            y="0" />
         <path
            style="fill:url(#linearGradient8141);fill-opacity:1;stroke:none"
-           d="M 1,1 V 15 H 15 V 8 C 14.826668,8.1266586 14.426971,7.9219776 14,7.666 V 14 H 2 V 5 H 9.514 C 9.715962,4.4637578 9.43544,4.361572 9.209,4 H 2 V 2 h 8.395 c 0.178268,-0.161658 0.324924,-0.5845492 0.478,-1 z"
+           d="M 1,1 V 15 H 15 V 6 c -0.173332,0.1266586 -0.573029,0.2559776 -1,0 v 8 H 2 V 5 H 7 C 7.201962,4.4637578 7.22644,4.361572 7,4 H 2 V 2 h 8 C 10.178268,1.838342 9.846924,1.4154508 10,1 Z"
            transform="translate(15.00001)"
            id="path15296"
            inkscape:connector-curvature="0"
@@ -115,9 +115,19 @@
       </g>
     </g>
   </g>
-  <path
-     style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7460-6);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
-     d="m 15.001747,6.9999998 c -0.40319,0.30064 -1.98997,-1.1236 -2.48694,-1.12573 -0.49718,-0.002 -2.11373,1.42971 -2.51481,1.12573 -0.40093,-0.30387 0.74435,-2.04513 0.59271,-2.53484 -0.15168,-0.48991 -1.73746,-1.32666 -1.582,-1.81529 0.15541,-0.48846 1.95505,-0.31906 2.35832,-0.6196 0.40342,-0.30066 0.63836,-1.98624004 1.13554,-1.98425004 0.49697,0.002 0.76103,1.68027004 1.16188,1.98425004 0.40101,0.30409 2.15927,0.1595 2.31108,0.64934 0.15174,0.48967 -1.44059,1.3123 -1.59612,1.80072 -0.15559,0.48859 1.02369,2.2189 0.62034,2.51967 z"
-     id="path12190"
-     inkscape:connector-curvature="0" />
+  <rect
+     ry="0"
+     y="9.2651362e-08"
+     x="11"
+     height="7.9999976"
+     width="2"
+     id="rect11686"
+     style="fill:#bebebe;fill-opacity:0.99607843;stroke:none" />
+  <rect
+     y="3"
+     x="8"
+     height="2"
+     width="8"
+     id="rect11688"
+     style="fill:#bebebe;fill-opacity:0.99607843;stroke:none" />
 </svg>

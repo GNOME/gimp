@@ -29,7 +29,7 @@
      id="namedview1700"
      showgrid="true"
      inkscape:zoom="36.087908"
-     inkscape:cx="7.3391294"
+     inkscape:cx="9.2256006"
      inkscape:cy="5.6966425"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
@@ -118,11 +118,9 @@
        rx="0.083351634"
        ry="0.074090302" />
   </g>
-  <circle
-     r="3"
-     cy="2.9998465"
-     cx="13"
-     id="path4167"
-     stroke-miterlimit="10"
-     style="color:#000000;fill:url(#radialGradient4175);stroke-width:0.21428572;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+  <path
+     id="rect11686-3"
+     d="M 7,4.0053464 V 7.0012465 H 3.996202 v 1.9986 H 7 V 11.995847 H 9.002532 V 8.9998465 h 3.003798 v -1.9986 H 9.002532 V 4.0053464 Z"
+     style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:connector-curvature="0" />
 </svg>
