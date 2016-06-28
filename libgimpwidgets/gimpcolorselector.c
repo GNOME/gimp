@@ -96,7 +96,7 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
 
   klass->name                  = "Unnamed";
   klass->help_id               = NULL;
-  klass->icon_name             = "gtk-select-color";
+  klass->icon_name             = GIMP_STOCK_TOOL_BY_COLOR_SELECT;
 
   klass->set_toggles_visible   = NULL;
   klass->set_toggles_sensitive = NULL;
