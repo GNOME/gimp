@@ -72,7 +72,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_show_in_file_manager_cmd_callback),
     GIMP_HELP_DOCUMENT_SHOW_IN_FILE_MANAGER },
 
-  { "documents-remove", "list-remove",
+  { "documents-remove", GIMP_STOCK_DELETE,
     NC_("documents-action", "Remove _Entry"), NULL,
     NC_("documents-action", "Remove the selected entry"),
     G_CALLBACK (documents_remove_cmd_callback),

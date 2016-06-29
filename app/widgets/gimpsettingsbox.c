@@ -284,7 +284,7 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_NEW, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 

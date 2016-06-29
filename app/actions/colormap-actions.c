@@ -54,13 +54,13 @@ static const GimpActionEntry colormap_actions[] =
 
 static const GimpEnumActionEntry colormap_add_color_actions[] =
 {
-  { "colormap-add-color-from-fg", "list-add",
+  { "colormap-add-color-from-fg", GIMP_STOCK_NEW,
     NC_("colormap-action", "_Add Color from FG"), "",
     NC_("colormap-action", "Add current foreground color"),
     FALSE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_ADD },
 
-  { "colormap-add-color-from-bg", "list-add",
+  { "colormap-add-color-from-bg", GIMP_STOCK_NEW,
     NC_("colormap-action", "_Add Color from BG"), "",
     NC_("colormap-action", "Add current background color"),
     TRUE, FALSE,
