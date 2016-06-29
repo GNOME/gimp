@@ -220,7 +220,7 @@ query (void)
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Animation");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) "media-playback-start");
+                             (const guint8 *) "gimp-media-playback-start");
 }
 
 static void
@@ -588,15 +588,15 @@ ui_manager_new (GtkWidget *window)
 {
   static GtkActionEntry actions[] =
   {
-    { "step-back", "media-skip-backward",
+    { "step-back", "gimp-media-skip-backward",
       N_("Step _back"), "d", N_("Step back to previous frame"),
       G_CALLBACK (step_back_callback) },
 
-    { "step", "media-skip-forward",
+    { "step", "gimp-media-skip-forward",
       N_("_Step"), "f", N_("Step to next frame"),
       G_CALLBACK (step_callback) },
 
-    { "rewind", "media-seek-backward",
+    { "rewind", "gimp-media-seek-backward",
       NULL, NULL, N_("Rewind the animation"),
       G_CALLBACK (rewind_callback) },
 
@@ -636,7 +636,7 @@ ui_manager_new (GtkWidget *window)
 
   static GtkToggleActionEntry toggle_actions[] =
   {
-    { "play", "media-playback-start",
+    { "play", "gimp-media-playback-start",
       NULL, "space", N_("Start playback"),
       G_CALLBACK (play_callback), FALSE },
 

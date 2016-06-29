@@ -155,6 +155,12 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PATTERN                  "gimp-pattern"
 #define GIMP_STOCK_BUFFER                   "gimp-buffer"
 
+#define GIMP_STOCK_MEDIA_PLAYBACK_PAUSE,    "gimp-media-playback-pause"
+#define GIMP_STOCK_MEDIA_PLAYBACK_START,    "gimp-media-playback-start"
+#define GIMP_STOCK_MEDIA_SEEK_BACKWARD,     "gimp-media-seek-backward"
+#define GIMP_STOCK_MEDIA_SKIP_BACKWARD,     "gimp-media-skip-backward"
+#define GIMP_STOCK_MEDIA_SKIP_FORWARD,      "gimp-media-skip-forward"
+
 #define GIMP_STOCK_TEXT_DIR_LTR             "gimp-text-dir-ltr"
 #define GIMP_STOCK_TEXT_DIR_RTL             "gimp-text-dir-rtl"
 

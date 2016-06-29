@@ -129,6 +129,11 @@ scalable_images = \
 	scalable/gimp-line-spacing.svg			\
 	scalable/gimp-linked.svg			\
 	scalable/gimp-list.svg				\
+	scalable/gimp-media-playback-pause.svg		\
+	scalable/gimp-media-playback-start.svg		\
+	scalable/gimp-media-seek-backward.svg		\
+	scalable/gimp-media-skip-backward.svg		\
+	scalable/gimp-media-skip-forward.svg		\
 	scalable/gimp-menu-left.svg			\
 	scalable/gimp-menu-right.svg			\
 	scalable/gimp-merge-down.svg			\
@@ -585,6 +590,11 @@ icons16_images = \
 	16/gimp-layer-to-imagesize.png			\
 	16/gimp-layer-up.png				\
 	16/gimp-list.png				\
+	16/gimp-media-playback-pause.png		\
+	16/gimp-media-playback-start.png		\
+	16/gimp-media-seek-backward.png			\
+	16/gimp-media-skip-backward.png			\
+	16/gimp-media-skip-forward.png			\
 	16/gimp-merge-down.png				\
 	16/gimp-move-to-screen.png			\
 	16/gimp-navigation.png				\
