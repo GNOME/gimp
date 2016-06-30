@@ -54,6 +54,10 @@ static void   gimp_dynamics_editor_notify_data     (GimpDynamics       *options,
                                                     const GParamSpec   *pspec,
                                                     GimpDynamicsEditor *editor);
 
+static void   gimp_dynamics_editor_add_icon_editor (GimpDynamics       *dynamics,
+                                                    Gimp               *gimp,
+                                                    GtkWidget          *vbox);
+
 static void   gimp_dynamics_editor_add_output_row  (GObject     *config,
                                                     const gchar *row_label,
                                                     GtkTable    *table,
@@ -97,14 +101,10 @@ static void
 gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  GimpDynamics   *dynamics;
-  GtkWidget      *input_labels[7];
-  gint            n_inputs    = G_N_ELEMENTS (input_labels);
-  gint            i;
 
-  dynamics = editor->dynamics_model = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
+  editor->dynamics_model = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
 
-  g_signal_connect (dynamics, "notify",
+  g_signal_connect (editor->dynamics_model, "notify",
                     G_CALLBACK (gimp_dynamics_editor_notify_model),
                     editor);
 
@@ -119,25 +119,44 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (editor->notebook), FALSE);
   gtk_box_pack_start (GTK_BOX (editor), editor->notebook, TRUE, TRUE, 0);
   gtk_widget_show (editor->notebook);
+}
 
-  editor->check_grid = gtk_table_new (10, n_inputs + 2, FALSE);
+static void
+gimp_dynamics_editor_constructed (GObject *object)
+{
+  GimpDataEditor     *data_editor = GIMP_DATA_EDITOR (object);
+  GimpDynamicsEditor *editor      = GIMP_DYNAMICS_EDITOR (object);
+  GimpDynamics       *dynamics    = editor->dynamics_model;
+  GtkWidget          *input_labels[7];
+  GtkWidget          *vbox;
+  GtkWidget          *icon_box;
+  GtkWidget          *table;
+  gint                n_inputs    = G_N_ELEMENTS (input_labels);
+  gint                i;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_notebook_append_page (GTK_NOTEBOOK (editor->notebook),
+                            vbox, NULL);
+  gtk_widget_show (vbox);
+
+  icon_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), icon_box, FALSE, FALSE, 0);
+  gtk_widget_show (icon_box);
+
+  gimp_dynamics_editor_add_icon_editor (dynamics,
+                                        data_editor->context->gimp,
+                                        vbox);
+
+  table = gtk_table_new (10, n_inputs + 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   gimp_dynamics_editor_init_output_editors (dynamics,
                                             editor->view_selector,
                                             editor->notebook,
-                                            editor->check_grid);
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (editor->notebook),
-                            editor->check_grid, NULL);
-  gtk_widget_show (editor->check_grid);
-
-  gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (editor->view_selector),
-                              GIMP_INT_STORE_VALUE,     -1,
-                              GIMP_INT_STORE_LABEL,     _("Mapping matrix"),
-                              GIMP_INT_STORE_USER_DATA, editor->check_grid,
-                              -1);
-
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->view_selector), -1);
+                                            table);
 
   input_labels[0] = gtk_label_new (_("Pressure"));
   input_labels[1] = gtk_label_new (_("Velocity"));
@@ -152,17 +171,19 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
       gtk_label_set_angle (GTK_LABEL (input_labels[i]), 90);
       gtk_misc_set_alignment (GTK_MISC (input_labels[i]), 0.5, 1.0);
 
-      gtk_table_attach (GTK_TABLE (editor->check_grid), input_labels[i],
+      gtk_table_attach (GTK_TABLE (table), input_labels[i],
                         i + 1, i + 2, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (input_labels[i]);
     }
-}
 
-static void
-gimp_dynamics_editor_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
+  gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (editor->view_selector),
+                              GIMP_INT_STORE_VALUE,     -1,
+                              GIMP_INT_STORE_LABEL,     _("Mapping matrix"),
+                              GIMP_INT_STORE_USER_DATA, vbox,
+                              -1);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->view_selector), -1);
 
   gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
 }
@@ -228,7 +249,8 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
                           GIMP_INT_STORE_USER_DATA, &widget,
                           -1);
 
-      gtk_widget_set_sensitive (widget, editor->data_editable);
+      if (widget)
+        gtk_widget_set_sensitive (widget, editor->data_editable);
     }
 }
 
@@ -296,6 +318,28 @@ gimp_dynamics_editor_notify_data (GimpDynamics       *options,
   g_signal_handlers_unblock_by_func (editor->dynamics_model,
                                      gimp_dynamics_editor_notify_model,
                                      editor);
+}
+
+static void
+gimp_dynamics_editor_add_icon_editor (GimpDynamics *dynamics,
+                                      Gimp         *gimp,
+                                      GtkWidget    *vbox)
+{
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *button;
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Icon:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  button = gimp_prop_icon_picker_new (GIMP_VIEWABLE (dynamics), gimp);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 }
 
 static void
