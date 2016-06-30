@@ -101,6 +101,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_VIEW_FULLSCREEN,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VIEW_REFRESH,                  NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WINDOW_NEW,                    NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PREFS_SYSTEM,                  NULL,   0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },

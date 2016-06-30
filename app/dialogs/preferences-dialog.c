@@ -1704,7 +1704,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Use dynamic keyboard shortcuts"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add ("preferences-system",
+  button = prefs_button_add (GIMP_STOCK_PREFS_SYSTEM,
                              _("Configure _Keyboard Shortcuts..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -2543,7 +2543,7 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Extended Input Devices"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  button = prefs_button_add ("preferences-system",
+  button = prefs_button_add (GIMP_STOCK_PREFS_SYSTEM,
                              _("Configure E_xtended Input Devices..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",

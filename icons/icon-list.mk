@@ -191,6 +191,7 @@ scalable_images = \
 	scalable/gimp-prefs-new-image.svg		\
 	scalable/gimp-prefs-playground.svg		\
 	scalable/gimp-prefs-session.svg			\
+	scalable/gimp-prefs-system.svg			\
 	scalable/gimp-prefs-system-resources.svg	\
 	scalable/gimp-prefs-theme.svg			\
 	scalable/gimp-prefs-toolbox.svg			\
@@ -636,6 +637,7 @@ icons16_images = \
 	16/gimp-prefs-icon-theme.png			\
 	16/gimp-prefs-image-windows.png			\
 	16/gimp-prefs-interface.png			\
+	16/gimp-prefs-system.png			\
 	16/gimp-prefs-theme.png				\
 	16/gimp-prefs-toolbox.png			\
 	16/gimp-prefs-window-management.png		\

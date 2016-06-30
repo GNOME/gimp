@@ -240,7 +240,7 @@ gint n_dialogs_dockable_actions = G_N_ELEMENTS (dialogs_dockable_actions);
 
 static const GimpStringActionEntry dialogs_toplevel_actions[] =
 {
-  { "dialogs-preferences", "preferences-system",
+  { "dialogs-preferences", GIMP_STOCK_PREFS_SYSTEM,
     NC_("dialogs-action", "_Preferences"), NULL,
     NC_("dialogs-action", "Open the preferences dialog"),
     "gimp-preferences-dialog",

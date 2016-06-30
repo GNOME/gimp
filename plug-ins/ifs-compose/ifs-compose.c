@@ -1047,7 +1047,7 @@ design_op_menu_create (GtkWidget *window)
       N_("Re_center"), "<control>C", N_("Recompute Center"),
       G_CALLBACK (recompute_center_cb) },
 
-    { "options", "preferences-system",
+    { "options", GIMP_STOCK_PREFS_SYSTEM,
       N_("Render Options"), NULL, NULL,
       G_CALLBACK (ifs_compose_options_callback) }
   };

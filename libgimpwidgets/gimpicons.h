@@ -76,6 +76,8 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_VIEW_FULLSCREEN          "gimp-view-fullscreen"
 #define GIMP_STOCK_VIEW_REFRESH             "gimp-view-refresh"
 #define GIMP_STOCK_WINDOW_NEW               "gimp-window-new"
+#define GIMP_STOCK_PREFS_SYSTEM             "gimp-prefs-system"
+
 
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
