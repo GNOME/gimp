@@ -21,6 +21,7 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -62,6 +63,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   gint          mask_offset_x = 0;
   gint          mask_offset_y = 0;
   gboolean      selection;
+  gint          sel_x1, sel_y1, sel_x2, sel_y2;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -69,9 +71,10 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  selection = gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2);
+  selection = gimp_item_mask_bounds (GIMP_ITEM (drawable),
+                                     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
-  if ((x1 == x2) || (y1 == y2))
+  if ((sel_x1 == sel_x2) || (sel_y1 == sel_y2))
     return;
 
   gimp_set_busy (image->gimp);
@@ -82,8 +85,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
     pickable = GIMP_PICKABLE (drawable);
 
   /*  Do a seed bucket fill...To do this, calculate a new
-   *  contiguous region. If there is a selection, calculate the
-   *  intersection of this region with the existing selection.
+   *  contiguous region.
    */
   mask_buffer = gimp_pickable_contiguous_region_by_seed (pickable,
                                                          TRUE,
@@ -94,24 +96,41 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                                                          (gint) x,
                                                          (gint) y);
 
+  gimp_gegl_mask_bounds (mask_buffer, &x1, &y1, &x2, &y2);
+
+  /*  If there is a selection, inersect the region bounds
+   *  with the selection bounds, to avoid processing areas
+   *  that are going to be masked out anyway.  The actual
+   *  intersection of the fill region with the mask data
+   *  happens when combining the fill buffer, in
+   *  gimp_drawable_apply_buffer().
+   */
   if (selection)
     {
-      GimpDrawable *sel;
-      gint          off_x = 0;
-      gint          off_y = 0;
+      gint off_x = 0;
+      gint off_y = 0;
 
-      if (! sample_merged)
+      if (sample_merged)
         gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      sel = GIMP_DRAWABLE (gimp_image_get_mask (image));
+      if (gimp_rectangle_intersect (x1,              y1,
+                                    x2 - x1,         y2 - y1,
 
-      gimp_gegl_mask_combine_buffer (mask_buffer,
-                                     gimp_drawable_get_buffer (sel),
-                                     GIMP_CHANNEL_OP_INTERSECT,
-                                     -off_x, -off_y);
+                                    sel_x1 + off_x,  sel_y1 + off_y,
+                                    sel_x2 - sel_x1, sel_y2 - sel_y1,
+
+                                    &x1,             &y1,
+                                    &x2,             &y2))
+        {
+          x2 += x1;
+          y2 += y1;
+        }
+      else
+        {
+          /*  The fill region and the selection are disjoint; bail.  */
+          return;
+        }
     }
-
-  gimp_gegl_mask_bounds (mask_buffer, &x1, &y1, &x2, &y2);
 
   /*  make sure we handle the mask correctly if it was sample-merged  */
   if (sample_merged)
