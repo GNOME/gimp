@@ -128,6 +128,11 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
       else
         {
           /*  The fill region and the selection are disjoint; bail.  */
+
+          g_object_unref (mask_buffer);
+
+          gimp_unset_busy (image->gimp);
+
           return;
         }
     }
