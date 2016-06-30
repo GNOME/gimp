@@ -205,6 +205,7 @@ scalable_images = \
 	scalable/gimp-quit.svg				\
 	scalable/gimp-redo.svg				\
 	scalable/gimp-reset.svg				\
+	scalable/gimp-repeat-filter.svg			\
 	scalable/gimp-reshow-filter.svg			\
 	scalable/gimp-resize.svg			\
 	scalable/gimp-revert.svg			\
@@ -233,6 +234,7 @@ scalable_images = \
 	scalable/gimp-shape-square.svg			\
 	scalable/gimp-shred.svg				\
 	scalable/gimp-swap-colors.svg			\
+	scalable/gimp-system-run.svg			\
 	scalable/gimp-symmetry.svg			\
 	scalable/gimp-template.svg			\
 	scalable/gimp-text-dir-ltr.svg			\
@@ -647,6 +649,7 @@ icons16_images = \
 	16/gimp-quit.png				\
 	16/gimp-redo.png				\
 	16/gimp-reset.png				\
+	16/gimp-repeat-filter.png			\
 	16/gimp-reshow-filter.png			\
 	16/gimp-resize.png				\
 	16/gimp-revert.png				\
@@ -675,6 +678,7 @@ icons16_images = \
 	16/gimp-shape-square.png			\
 	16/gimp-shred.png				\
 	16/gimp-symmetry.png				\
+	16/gimp-system-run.png				\
 	16/gimp-template.png				\
 	16/gimp-text-layer.png				\
 	16/gimp-toilet-paper.png			\

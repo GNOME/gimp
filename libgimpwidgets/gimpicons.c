@@ -102,6 +102,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_VIEW_REFRESH,                  NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WINDOW_NEW,                    NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PREFS_SYSTEM,                  NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SYSTEM_RUN,                    NULL,   0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },
@@ -189,6 +190,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_MERGE_DOWN,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYER_TO_IMAGESIZE,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PLUGIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_REPEAT_FILTER,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_RESHOW_FILTER,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_ROTATE_90,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_ROTATE_180,               NULL,        0, 0, LIBGIMP_DOMAIN },

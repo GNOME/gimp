@@ -121,7 +121,7 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
 
   gimp_object_class->get_memsize    = gimp_plug_in_procedure_get_memsize;
 
-  viewable_class->default_icon_name = "system-run";
+  viewable_class->default_icon_name = "gimp-system-run";
   viewable_class->get_description   = gimp_plug_in_procedure_get_description;
 
   proc_class->get_label             = gimp_plug_in_procedure_get_label;

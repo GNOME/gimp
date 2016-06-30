@@ -77,6 +77,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_VIEW_REFRESH             "gimp-view-refresh"
 #define GIMP_STOCK_WINDOW_NEW               "gimp-window-new"
 #define GIMP_STOCK_PREFS_SYSTEM             "gimp-prefs-system"
+#define GIMP_STOCK_SYSTEM_RUN               "gimp-system-run"
 
 
 
@@ -227,6 +228,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_LAYER_TO_IMAGESIZE       "gimp-layer-to-imagesize"
 #define GIMP_STOCK_PLUGIN                   "gimp-plugin"
 #define GIMP_STOCK_UNDO_HISTORY             "gimp-undo-history"
+#define GIMP_STOCK_REPEAT_FILTER            "gimp-repeat-filter"
 #define GIMP_STOCK_RESHOW_FILTER            "gimp-reshow-filter"
 #define GIMP_STOCK_ROTATE_90                "gimp-rotate-90"
 #define GIMP_STOCK_ROTATE_180               "gimp-rotate-180"
