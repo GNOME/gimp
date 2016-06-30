@@ -300,11 +300,11 @@ quit_close_all_dialog_container_changed (GimpContainer  *images,
                                             dialog->accel_mods);
 
   gimp_message_box_set_primary_text (dialog->box,
-				     ngettext ("There is one image with "
-					       "unsaved changes:",
-					       "There are %d images with "
-					       "unsaved changes:",
-					       num_images), num_images);
+                                     ngettext ("There is one image with "
+                                               "unsaved changes:",
+                                               "There are %d images with "
+                                               "unsaved changes:",
+                                               num_images), num_images);
 
   if (num_images == 0)
     {
