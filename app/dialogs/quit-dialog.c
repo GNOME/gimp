@@ -158,6 +158,9 @@ quit_close_all_dialog_new (Gimp     *gimp,
   dialog->ok_button = gtk_dialog_add_button (GTK_DIALOG (dialog->dialog),
                                              "", GTK_RESPONSE_OK);
 
+  g_object_set (gtk_widget_get_settings (dialog->dialog),
+                "gtk-alternative-button-order", TRUE,
+                NULL);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
