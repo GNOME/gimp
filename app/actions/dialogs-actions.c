@@ -270,7 +270,7 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-tips-dialog",
     GIMP_HELP_TIPS_DIALOG },
 
-  { "dialogs-about", "help-about",
+  { "dialogs-about", GIMP_STOCK_HELP_ABOUT,
 #if defined(G_OS_WIN32)
     NC_("dialogs-action", "About GIMP"),
 #elif defined(PLATFORM_OSX)

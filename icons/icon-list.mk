@@ -94,6 +94,7 @@ scalable_images = \
 	scalable/gimp-hcenter.svg			\
 	scalable/gimp-hchain-broken.svg			\
 	scalable/gimp-hchain.svg			\
+	scalable/gimp-help-about.svg			\
 	scalable/gimp-hfill.svg				\
 	scalable/gimp-histogram-linear.svg		\
 	scalable/gimp-histogram-logarithmic.svg		\
@@ -570,6 +571,7 @@ icons16_images = \
 	16/gimp-gradient-square.png			\
 	16/gimp-grid.png				\
 	16/gimp-group-layer.png				\
+	16/gimp-help-about.png				\
 	16/gimp-histogram-linear.png			\
 	16/gimp-histogram-logarithmic.png		\
 	16/gimp-histogram.png				\

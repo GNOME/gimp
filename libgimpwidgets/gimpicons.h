@@ -80,6 +80,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SYSTEM_RUN               "gimp-system-run"
 #define GIMP_STOCK_PROCESS_STOP             "gimp-process-stop"
 #define GIMP_STOCK_DETACH                   "gimp-detach"
+#define GIMP_STOCK_HELP_ABOUT               "gimp-help-about"
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
 #define GIMP_STOCK_GRADIENT_BILINEAR             "gimp-gradient-bilinear"

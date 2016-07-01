@@ -604,7 +604,7 @@ ui_manager_new (GtkWidget *window)
       NULL, "<control>R", N_("Reload the image"),
       G_CALLBACK (refresh_callback) },
 
-    { "help", "help-browser",
+    { "help", "gimp-prefs-help-system",
       NULL, NULL, NULL,
       G_CALLBACK (help_callback) },
 

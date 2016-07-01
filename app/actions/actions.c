@@ -179,7 +179,7 @@ static const GimpActionFactoryEntry action_groups[] =
   { "tool-preset-editor", N_("Tool Preset Editor"), GIMP_STOCK_TOOL_PRESET,
     tool_preset_editor_actions_setup,
     tool_preset_editor_actions_update },
-  { "help", N_("Help"), "help-browser",
+  { "help", N_("Help"), GIMP_STOCK_PREFS_HELP_SYSTEM,
     help_actions_setup,
     help_actions_update },
   { "image", N_("Image"), GIMP_STOCK_IMAGE,
