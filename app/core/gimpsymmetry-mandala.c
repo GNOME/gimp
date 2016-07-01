@@ -207,33 +207,41 @@ gimp_mandala_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CENTER_X:
-      mandala->center_x = g_value_get_double (value);
-      if (mandala->vertical_guide)
+      if (g_value_get_double (value) > 0.0 &&
+          g_value_get_double (value) < (gdouble) gimp_image_get_width (image))
         {
-          g_signal_handlers_block_by_func (mandala->vertical_guide,
-                                           gimp_mandala_guide_position_cb,
-                                           mandala);
-          gimp_image_move_guide (image, mandala->vertical_guide,
-                                 mandala->center_x,
-                                 FALSE);
-          g_signal_handlers_unblock_by_func (mandala->vertical_guide,
-                                             gimp_mandala_guide_position_cb,
-                                             mandala);
+          mandala->center_x = g_value_get_double (value);
+          if (mandala->vertical_guide)
+            {
+              g_signal_handlers_block_by_func (mandala->vertical_guide,
+                                               gimp_mandala_guide_position_cb,
+                                               mandala);
+              gimp_image_move_guide (image, mandala->vertical_guide,
+                                     mandala->center_x,
+                                     FALSE);
+              g_signal_handlers_unblock_by_func (mandala->vertical_guide,
+                                                 gimp_mandala_guide_position_cb,
+                                                 mandala);
+            }
         }
       break;
     case PROP_CENTER_Y:
-      mandala->center_y = g_value_get_double (value);
-      if (mandala->horizontal_guide)
+      if (g_value_get_double (value) > 0.0 &&
+          g_value_get_double (value) < (gdouble) gimp_image_get_height (image))
         {
-          g_signal_handlers_block_by_func (mandala->horizontal_guide,
-                                           gimp_mandala_guide_position_cb,
-                                           mandala);
-          gimp_image_move_guide (image, mandala->horizontal_guide,
-                                 mandala->center_y,
-                                 FALSE);
-          g_signal_handlers_unblock_by_func (mandala->horizontal_guide,
-                                             gimp_mandala_guide_position_cb,
-                                             mandala);
+          mandala->center_y = g_value_get_double (value);
+          if (mandala->horizontal_guide)
+            {
+              g_signal_handlers_block_by_func (mandala->horizontal_guide,
+                                               gimp_mandala_guide_position_cb,
+                                               mandala);
+              gimp_image_move_guide (image, mandala->horizontal_guide,
+                                     mandala->center_y,
+                                     FALSE);
+              g_signal_handlers_unblock_by_func (mandala->horizontal_guide,
+                                                 gimp_mandala_guide_position_cb,
+                                                 mandala);
+            }
         }
       break;
     case PROP_SIZE:
