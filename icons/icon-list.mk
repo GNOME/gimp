@@ -199,6 +199,7 @@ scalable_images = \
 	scalable/gimp-prefs-window-management.svg	\
 	scalable/gimp-previous.svg			\
 	scalable/gimp-print-resolution.svg		\
+	scalable/gimp-process-stop.svg			\
 	scalable/gimp-question.svg			\
 	scalable/gimp-quick-mask-off.svg		\
 	scalable/gimp-quick-mask-on.svg			\
@@ -645,6 +646,7 @@ icons16_images = \
 	16/gimp-prefs-window-management.png		\
 	16/gimp-previous.png				\
 	16/gimp-print-resolution.png			\
+	16/gimp-process-stop.png			\
 	16/gimp-question.png				\
 	16/gimp-quit.png				\
 	16/gimp-redo.png				\

@@ -78,8 +78,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_WINDOW_NEW               "gimp-window-new"
 #define GIMP_STOCK_PREFS_SYSTEM             "gimp-prefs-system"
 #define GIMP_STOCK_SYSTEM_RUN               "gimp-system-run"
-
-
+#define GIMP_STOCK_PROCESS_STOP             "gimp-process-stop"
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
 #define GIMP_STOCK_GRADIENT_BILINEAR             "gimp-gradient-bilinear"

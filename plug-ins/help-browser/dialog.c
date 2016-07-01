@@ -567,7 +567,7 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (reload_callback)
     },
     {
-      "stop", "process-stop",
+      "stop", "gimp-process-stop",
        N_("_Stop"), "Escape", N_("Stop loading this page"),
       G_CALLBACK (stop_callback)
     },
