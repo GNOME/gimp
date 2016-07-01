@@ -207,9 +207,6 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
                                GimpData       *data)
 {
   GimpDynamicsEditor *dynamics_editor = GIMP_DYNAMICS_EDITOR (editor);
-  GtkTreeModel       *model;
-  GtkTreeIter         iter;
-  gboolean            iter_valid;
 
   if (editor->data)
     g_signal_handlers_disconnect_by_func (editor->data,
@@ -237,21 +234,7 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
                         editor);
     }
 
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (dynamics_editor->view_selector));
-
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      gpointer widget;
-
-      gtk_tree_model_get (model, &iter,
-                          GIMP_INT_STORE_USER_DATA, &widget,
-                          -1);
-
-      if (widget)
-        gtk_widget_set_sensitive (widget, editor->data_editable);
-    }
+  gtk_widget_set_sensitive (dynamics_editor->notebook, editor->data_editable);
 }
 
 
