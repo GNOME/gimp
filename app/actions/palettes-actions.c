@@ -50,7 +50,7 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_PALETTE_NEW },
 
-  { "palettes-import", "gtk-convert",
+  { "palettes-import", GIMP_STOCK_PALETTE,
     NC_("palettes-action", "_Import Palette..."), NULL,
     NC_("palettes-action", "Import palette"),
     G_CALLBACK (palettes_import_cmd_callback),

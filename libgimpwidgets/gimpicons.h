@@ -157,6 +157,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_FONT                     "gimp-font"
 #define GIMP_STOCK_PATTERN                  "gimp-pattern"
 #define GIMP_STOCK_BUFFER                   "gimp-buffer"
+#define GIMP_STOCK_PALETTE                  "gimp-palette"
 
 #define GIMP_STOCK_MEDIA_PLAYBACK_PAUSE,    "gimp-media-playback-pause"
 #define GIMP_STOCK_MEDIA_PLAYBACK_START,    "gimp-media-playback-start"

@@ -145,6 +145,7 @@ scalable_images = \
 	scalable/gimp-no.svg				\
 	scalable/gimp-okay.svg				\
 	scalable/gimp-open.svg				\
+	scalable/gimp-palette.svg			\
 	scalable/gimp-paste.svg				\
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
@@ -609,6 +610,7 @@ icons16_images = \
 	16/gimp-no.png					\
 	16/gimp-okay.png				\
 	16/gimp-open.png				\
+	16/gimp-palette.png				\
 	16/gimp-paste.png				\
 	16/gimp-paste-as-new.png			\
 	16/gimp-paste-into.png				\
