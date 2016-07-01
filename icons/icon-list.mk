@@ -45,6 +45,7 @@ scalable_images = \
 	scalable/gimp-curve-smooth.svg			\
 	scalable/gimp-default-colors.svg		\
 	scalable/gimp-delete.svg			\
+	scalable/gimp-detach.svg			\
 	scalable/gimp-document-new.svg			\
 	scalable/gimp-down.svg   			\
 	scalable/gimp-device-status.svg			\
@@ -530,6 +531,7 @@ icons16_images = \
 	16/gimp-curve-free.png				\
 	16/gimp-curve-smooth.png			\
 	16/gimp-delete.png				\
+	16/gimp-detach.png				\
 	16/gimp-document-new.png			\
 	16/gimp-down.png				\
 	16/gimp-device-status.png			\

@@ -79,6 +79,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PREFS_SYSTEM             "gimp-prefs-system"
 #define GIMP_STOCK_SYSTEM_RUN               "gimp-system-run"
 #define GIMP_STOCK_PROCESS_STOP             "gimp-process-stop"
+#define GIMP_STOCK_DETACH                   "gimp-detach"
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
 #define GIMP_STOCK_GRADIENT_BILINEAR             "gimp-gradient-bilinear"
@@ -366,7 +367,6 @@ G_BEGIN_DECLS
 /*  missing icons:  */
 
 #define GIMP_STOCK_BRUSH                    GIMP_STOCK_TOOL_PAINTBRUSH
-#define GIMP_STOCK_DETACH                   GTK_STOCK_CONVERT
 #define GIMP_STOCK_GRADIENT                 GIMP_STOCK_TOOL_BLEND
 #define GIMP_STOCK_MYPAINT_BRUSH            GIMP_STOCK_TOOL_MYPAINT_BRUSH
 #define GIMP_STOCK_PALETTE                  GIMP_STOCK_COLOR_PALETTE
