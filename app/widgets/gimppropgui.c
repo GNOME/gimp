@@ -160,36 +160,11 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
       else
         {
           gdouble value;
-          gdouble *config_value;
-          gchar   *config_key;
 
           /* Get the min and max for the given property. */
           _gimp_prop_widgets_get_numeric_values (config, pspec,
                                                  &value, &lower, &upper,
                                                  G_STRFUNC);
-
-          /* A given config object may have locale min/max. */
-          config_key = g_strconcat (pspec->name, ":min", NULL);
-          config_value = g_object_get_data (G_OBJECT (config),
-                                            config_key);
-          if (config_value &&
-              *config_value > lower &&
-              *config_value < upper)
-            {
-              lower = *config_value;
-            }
-          g_free (config_key);
-
-          config_key = g_strconcat (pspec->name, ":max", NULL);
-          config_value = g_object_get_data (G_OBJECT (config),
-                                            config_key);
-          if (config_value &&
-              *config_value > lower &&
-              *config_value < upper)
-            {
-              upper = *config_value;
-            }
-          g_free (config_key);
 
           if ((upper - lower <= 1.0) &&
               (G_IS_PARAM_SPEC_FLOAT (pspec) ||

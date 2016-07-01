@@ -181,17 +181,12 @@ gimp_mirror_init (GimpMirror *mirror)
 static void
 gimp_mirror_constructed (GObject *object)
 {
-  GimpSymmetry *sym;
-  gdouble      *x_max = g_new (gdouble, 1);
-  gdouble      *y_max = g_new (gdouble, 1);
+  GimpSymmetry *sym = GIMP_SYMMETRY (object);
 
-  sym = GIMP_SYMMETRY (object);
-
-  *x_max = gimp_image_get_width (sym->image);
-  *y_max = gimp_image_get_height (sym->image);
-
-  g_object_set_data_full (object, "horizontal-position:max", y_max, g_free);
-  g_object_set_data_full (object, "vertical-position:max", x_max, g_free);
+  /* TODO:
+   * - "horizontal-position" property should be soft-limited by the height;
+   * - "vertical-position" property should be soft-limited by the width.
+   */
 
   g_signal_connect_object (sym->image, "size-changed-detailed",
                            G_CALLBACK (gimp_mirror_image_size_changed_cb),
@@ -747,15 +742,8 @@ gimp_mirror_image_size_changed_cb (GimpImage    *image,
   if (previous_width != gimp_image_get_width (image) ||
       previous_height != gimp_image_get_height (image))
     {
-      gdouble *x_max = g_new (gdouble, 1);
-      gdouble *y_max = g_new (gdouble, 1);
-
-      *x_max = gimp_image_get_width (image);
-      *y_max = gimp_image_get_height (image);
-
-      g_object_set_data_full (G_OBJECT (sym), "vertical-position:max", x_max, g_free);
-      g_object_set_data_full (G_OBJECT (sym), "horizontal-position:max", y_max, g_free);
-
+      /* TODO: change soft limits of "vertical-position" and
+       * "horizontal-position" properties. */
       g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
     }
 }

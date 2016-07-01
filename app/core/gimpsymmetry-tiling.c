@@ -150,21 +150,14 @@ gimp_tiling_init (GimpTiling *tiling)
 static void
 gimp_tiling_constructed (GObject *object)
 {
-  GimpSymmetry *sym       = GIMP_SYMMETRY (object);
-  GimpTiling   *tiling    = GIMP_TILING (object);
-  gdouble      *x_max     = g_new (gdouble, 1);
-  gdouble      *y_max     = g_new (gdouble, 1);
-  gdouble      *shift_max = g_new (gdouble, 1);
+  GimpSymmetry *sym    = GIMP_SYMMETRY (object);
+  GimpTiling   *tiling = GIMP_TILING (object);
 
-  /* Set property values to actual image size. */
-  *x_max     = gimp_image_get_width (sym->image);
-  *y_max     = gimp_image_get_height (sym->image);
-  *shift_max = *x_max;
-
-  g_object_set_data_full (object, "x-interval:max", x_max, g_free);
-  g_object_set_data_full (object, "y-interval:max", y_max, g_free);
-  g_object_set_data_full (object, "shift:max", shift_max, g_free);
-
+  /* TODO:
+   * - "x-interval" property should be soft-limited by the image width;
+   * - "shift" property should be soft-limited by the width;
+   * - "y-interval" property should be soft-limited by the height.
+   */
   g_signal_connect_object (sym->image, "size-changed-detailed",
                            G_CALLBACK (gimp_tiling_image_size_changed_cb),
                            sym, 0);
@@ -373,30 +366,11 @@ gimp_tiling_image_size_changed_cb (GimpImage    *image,
                                    gint          previous_height,
                                    GimpSymmetry *sym)
 {
-  if (previous_width != gimp_image_get_width (image))
-    {
-      gdouble *x_max     = g_new (gdouble, 1);
-      gdouble *shift_max = g_new (gdouble, 1);
-
-      *x_max     = gimp_image_get_width (sym->image);
-      *shift_max = *x_max;
-
-      g_object_set_data_full (G_OBJECT (sym), "x-interval:max",
-                              x_max, g_free);
-      g_object_set_data_full (G_OBJECT (sym), "shift:max",
-                              shift_max, g_free);
-    }
-  if (previous_height != gimp_image_get_height (image))
-    {
-      gdouble *y_max     = g_new (gdouble, 1);
-
-      *y_max = gimp_image_get_height (sym->image);
-
-      g_object_set_data_full (G_OBJECT (sym), "y-interval:max",
-                              y_max, g_free);
-    }
-
   if (previous_width != gimp_image_get_width (image) ||
       previous_height != gimp_image_get_height (image))
-    g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
+    {
+      /* TODO: change soft limits of "x-interval", "y-interval" and
+       * "shift" properties. */
+      g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
+    }
 }
