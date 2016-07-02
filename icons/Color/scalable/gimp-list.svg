@@ -12,7 +12,7 @@
    viewBox="0 0 16 16"
    id="svg30571"
    version="1.1"
-   inkscape:version="0.91+devel r"
+   inkscape:version="0.92pre1 unknown"
    sodipodi:docname="gimp-list.svg">
   <defs
      id="defs30573" />
@@ -23,9 +23,9 @@
      borderopacity="1"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16"
-     inkscape:cx="-18.581429"
-     inkscape:cy="11.175586"
+     inkscape:zoom="18.024202"
+     inkscape:cx="8.493278"
+     inkscape:cy="10.093707"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -45,11 +45,11 @@
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
      showborder="false"
-     inkscape:window-width="1920"
+     inkscape:window-width="1346"
      inkscape:window-height="1016"
-     inkscape:window-x="0"
+     inkscape:window-x="50"
      inkscape:window-y="27"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      inkscape:snap-global="false"
      showguides="false">
     <inkscape:grid
@@ -71,7 +71,7 @@
             <dc:title>Klaus Staedtler       </dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -98,28 +98,12 @@
          id="rect6884"
          style="opacity:0.3;fill:none;stroke:none" />
       <rect
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none"
-         width="9.8114691"
-         height="1.811469"
-         id="rect7356"
-         y="1039.4564"
-         x="5.0942655"
-         inkscape:label="a" />
-      <rect
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none"
-         width="9.8114691"
-         height="1.811469"
-         id="rect7358"
-         y="1043.4564"
-         x="5.0942655"
-         inkscape:label="a" />
-      <rect
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none"
-         width="9.8114691"
-         height="1.811469"
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21215953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none"
+         width="10"
+         height="2"
          id="rect7360"
-         y="1047.4564"
-         x="5.0942655"
+         y="1047.3623"
+         x="5"
          inkscape:label="a" />
       <path
          d="m 3.8476949,1040.3622 a 1.3476949,1.3476949 0 0 1 -1.3466247,1.3477 1.3476949,1.3476949 0 0 1 -1.3487634,-1.3456 1.3476949,1.3476949 0 0 1 1.3444825,-1.3498 1.3476949,1.3476949 0 0 1 1.3508988,1.3434"
@@ -158,5 +142,21 @@
          id="path3148-7"
          style="opacity:1;fill:#f57900;fill-opacity:1;stroke:#ce5c00;stroke-width:0.30461028;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
+    <rect
+       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21215953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none"
+       width="10"
+       height="2"
+       id="rect7360-3"
+       y="1043.3622"
+       x="5"
+       inkscape:label="a" />
+    <rect
+       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21215953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none"
+       width="10"
+       height="2"
+       id="rect7360-6"
+       y="1039.3622"
+       x="5"
+       inkscape:label="a" />
   </g>
 </svg>

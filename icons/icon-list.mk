@@ -829,6 +829,7 @@ icons24_images = \
 	24/gimp-tool-pencil.png			\
 	24/gimp-tool-perspective-clone.png	\
 	24/gimp-tool-perspective.png		\
+	24/gimp-tool-preset.png			\
 	24/gimp-tool-posterize.png		\
 	24/gimp-tool-rect-select.png		\
 	24/gimp-tool-rotate.png			\

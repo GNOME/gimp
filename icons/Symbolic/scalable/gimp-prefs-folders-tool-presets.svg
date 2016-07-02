@@ -14,7 +14,7 @@
    height="16"
    width="16"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92pre1 unknown"
    sodipodi:docname="gimp-prefs-folders-tool-presets.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -25,17 +25,21 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="501"
-     inkscape:window-height="405"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
      id="namedview1507"
-     showgrid="false"
-     inkscape:zoom="14.75"
-     inkscape:cx="-723.22388"
-     inkscape:cy="-55.63375"
+     showgrid="true"
+     inkscape:zoom="16.347398"
+     inkscape:cx="-1.4609825"
+     inkscape:cy="11.415684"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg7384" />
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4256" />
+  </sodipodi:namedview>
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -44,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -107,36 +111,47 @@
          style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
-       gradientTransform="translate(746.22388,399.27766)"
+       gradientTransform="translate(774.93754,420.28591)"
        gradientUnits="userSpaceOnUse"
-       y2="14"
-       x2="16"
-       y1="14"
-       x1="0"
-       id="linearGradient8292"
+       y2="-32"
+       x2="31"
+       y1="-32"
+       x1="15"
+       id="linearGradient8286"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(542.07359,263.99385)"
+       gradientUnits="userSpaceOnUse"
+       y2="104.96255"
+       x2="100.26245"
+       y1="104.96255"
+       x1="84.262444"
+       id="linearGradient7524"
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     transform="translate(-132.90327,-241.27766)"
+     transform="translate(-176.61693,-222.28591)"
      style="display:inline"
      id="preferences">
     <g
-       transform="translate(117.90327,281.27766)"
-       id="gimp-prefs-folders-tool-presets"
-       style="display:inline">
+       transform="translate(161.61693,262.28591)"
+       id="gimp-prefs-folders">
       <path
-         id="rect3845-47"
-         transform="translate(15,-46)"
-         d="M 0.53125,6 C 0.24212,6 0,6.24212 0,6.53125 l 0,14.9375 C 0,21.76725 0.23264,22 0.53125,22 l 14.9375,0 C 15.76735,22 16,21.76735 16,21.46875 l 0,-9.9375 C 16,11.24215 15.75788,11 15.46875,11 L 3,11 3,19.5 C 3,19.777 2.777,20 2.5,20 2.223,20 2,19.777 2,19.5 l 0,-9 C 2,10.223 2.223,10 2.5,10 L 5.46875,10 14,10 14,8.59375 C 14,8.26655 13.73334,8 13.40625,8 L 6,8 6,6.53125 C 6,6.2421 5.75788,6 5.46875,6 Z m 12.140625,5.988281 0.707031,1.785157 0.0957,4.939453 c -0.419494,0.445106 -1.247219,0.501028 -1.65625,0.111328 l -0.03125,-4.853516 z m -7.2324219,0.02344 0.7089844,1.785156 0.09375,4.939453 c -0.4194943,0.445106 -1.2472192,0.499075 -1.65625,0.109375 l -0.03125,-4.851562 z m 3.4453125,0.0059 0.7070313,1.785156 0.095703,4.939454 C 9.2680057,19.187294 8.4402808,19.241262 8.03125,18.851562 L 8,14 Z m 4.5410154,7.371094 0.02149,1.230469 c -0.419496,0.445106 -1.249159,0.495168 -1.658204,0.105468 l 0.01758,-1.269531 c 0.396297,0.37755 1.188812,0.341237 1.61914,-0.06641 z m -7.2324216,0.02344 0.023437,1.230469 C 5.7973009,21.08773 4.9676381,21.137793 4.5585933,20.748093 l 0.017578,-1.269531 c 0.3962974,0.377549 1.1868594,0.341237 1.6171875,-0.06641 z m 3.4453125,0.0059 0.021484,1.230469 c -0.4194949,0.44502 -1.249158,0.495082 -1.6582028,0.105382 l 0.017578,-1.269531 c 0.3962977,0.37755 1.1888126,0.341237 1.6191407,-0.06641 z"
-         style="display:inline;fill:url(#linearGradient8292);fill-opacity:1;stroke:none"
-         inkscape:connector-curvature="0" />
+         style="display:inline;fill:url(#linearGradient8286);fill-opacity:1;stroke:none"
+         d="M 0.53125 0 C 0.24212 0 0 0.24212 0 0.53125 L 0 15.46875 C 0 15.76725 0.23264 16 0.53125 16 L 15.46875 16 C 15.76735 16 16 15.76735 16 15.46875 L 16 5.53125 C 16 5.24215 15.75788 5 15.46875 5 L 3 5 L 3 13.5 C 3 13.777 2.777 14 2.5 14 C 2.223 14 2 13.777 2 13.5 L 2 4.5 C 2 4.223 2.223 4 2.5 4 L 5.46875 4 L 14 4 L 14 2.59375 C 14 2.26655 13.73334 2 13.40625 2 L 6 2 L 6 0.53125 C 6 0.2421 5.75788 0 5.46875 0 L 0.53125 0 z M 9.9765625 6 C 10.1563 6 10.428228 6.1413821 10.544922 6.3242188 L 11.177734 7.5 L 15 7.5 L 15 15 L 5 15 L 5 7.5 L 8.8867188 7.5 L 9.4140625 6.4003906 C 9.4483125 6.2379316 9.7939188 6 9.9765625 6 z M 10 6.75 L 9.6875 7.5 L 10.3125 7.5 L 10 6.75 z M 5.625 8.25 L 5.625 14.25 L 14.375 14.25 L 14.375 8.25 L 5.625 8.25 z "
+         transform="translate(15,-40)"
+         id="rect3845" />
       <rect
          style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
-         id="rect14152-0"
+         id="rect14152"
          width="16"
          height="16"
          x="15"
          y="-40" />
     </g>
   </g>
+  <g
+     transform="matrix(0.6249998,0,0,0.75000694,-47.664011,-66.722631)"
+     style="display:inline;fill:#000000;fill-opacity:1"
+     id="stock" />
 </svg>

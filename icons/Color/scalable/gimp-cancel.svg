@@ -24,8 +24,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="21.166144"
-     inkscape:cx="10.160577"
-     inkscape:cy="11.818655"
+     inkscape:cx="19.531027"
+     inkscape:cy="12.125749"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -70,7 +70,7 @@
             <dc:title>Klaus Staedtler       </dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -80,9 +80,8 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <path
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#cc0000;fill-opacity:1;fill-rule:nonzero;stroke:#a40000;stroke-width:0.36808872;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.7075099;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       d="M 8.1171875,0.25 C 4.8167276,0.194 1.7285019,2.276225 0.640625,5.578125 c -1.33892881,4.0641 0.8741414,8.44155 4.9355469,9.78125 4.0614052,1.3398 8.4364701,-0.875553 9.7753901,-4.939453 l 0.07227,-0.19336 C 16.627225,6.2066625 14.398917,1.9526719 10.416016,0.63867188 9.6545045,0.38747188 8.8788214,0.263 8.1171875,0.25 Z M 7.9960938,2.5761719 C 10.989575,2.5761719 13.416016,5.0045 13.416016,8 c 0,1.0031481 -0.277448,1.9381035 -0.751954,2.744141 L 5.2539062,3.3261719 c 0.8050157,-0.4739784 1.7406013,-0.75 2.7421876,-0.75 z M 3.3320312,5.2480469 10.740234,12.669922 C 9.9347049,13.144734 8.9986327,13.421875 7.9960938,13.421875 5.0025926,13.421875 2.5761719,10.9953 2.5761719,8 c 0,-1.0057327 0.2791454,-1.9445359 0.7558593,-2.7519531 z"
-       transform="translate(0,1036.3622)"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#cc0000;fill-opacity:1;fill-rule:nonzero;stroke:#a40000;stroke-width:0.37105447;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 8.1181827,1036.5488 c -3.3280239,-0.056 -6.4420412,2.043 -7.53900353,5.372 -1.35011096,4.0977 0.88144193,8.5113 4.97676643,9.8621 4.0953243,1.3508 8.5069284,-0.8828 9.8570304,-4.9803 l 0.07287,-0.1949 c 1.213443,-4.053 -1.033475,-8.3421 -5.04964,-9.667 -0.7678713,-0.2532 -1.5500326,-0.3787 -2.3180263,-0.3919 z m -0.122105,2.3454 c 3.0184813,0 5.4651873,2.4483 5.4651873,5.4685 0,1.0114 -0.279766,1.9541 -0.758234,2.7667 l -7.4720424,-7.479 c 0.8117387,-0.4779 1.755138,-0.7562 2.7650891,-0.7562 z m -4.7030148,2.6939 7.4700731,7.483 c -0.8122568,0.4788 -1.7561467,0.7583 -2.7670583,0.7583 -3.0185016,0 -5.4651868,-2.4467 -5.4651868,-5.4667 0,-1.014 0.2814768,-1.9605 0.762172,-2.7746 z"
        id="path6388-7-7-4-7"
        inkscape:connector-curvature="0" />
   </g>
