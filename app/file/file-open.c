@@ -183,6 +183,9 @@ file_open_image (Gimp                *gimp,
   if (! entered_uri)
     entered_uri = g_strdup (path);
 
+  if (progress)
+    g_object_add_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
+
   return_vals =
     gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                         context, progress, error,
@@ -191,6 +194,9 @@ file_open_image (Gimp                *gimp,
                                         G_TYPE_STRING,   path,
                                         G_TYPE_STRING,   entered_uri,
                                         G_TYPE_NONE);
+
+  if (progress)
+    g_object_remove_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
 
   g_free (path);
   g_free (entered_uri);
