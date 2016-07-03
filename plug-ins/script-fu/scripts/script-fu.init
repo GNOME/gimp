@@ -681,7 +681,7 @@
 ;; SRFI-0
 ;; COND-EXPAND
 ;; Implemented as a macro
-(define *features* '(srfi-0))
+(define *features* '(srfi-0 tinyscheme))
 
 (define-macro (cond-expand . cond-action-list)
   (cond-expand-runtime cond-action-list))

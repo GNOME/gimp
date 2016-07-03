@@ -25,6 +25,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
@@ -248,6 +250,10 @@ gimp_color_panel_set_context (GimpColorPanel *panel,
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   panel->context = context;
+
+  if (context)
+    gimp_color_area_set_color_config (GIMP_COLOR_AREA (GIMP_COLOR_BUTTON (panel)->color_area),
+                                      context->gimp->config->color_management);
 }
 
 

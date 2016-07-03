@@ -122,7 +122,7 @@ query (void)
   /* Thumbnail load */
   gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads thumbnails from the Photoshop PSD file format",
-                          "This plug-in loads thumnail images from Adobe "
+                          "This plug-in loads thumbnail images from Adobe "
                           "Photoshop (TM) native PSD format files.",
                           "John Marshall",
                           "John Marshall",

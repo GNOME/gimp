@@ -46,6 +46,10 @@ struct _GimpTextBuffer
   GList         *font_tags;
   GList         *color_tags;
 
+  GtkTextTag    *preedit_underline_tag;
+  GList         *preedit_color_tags;
+  GList         *preedit_bg_color_tags;
+
   gboolean       insert_tags_set;
   GList         *insert_tags;
   GList         *remove_tags;
@@ -130,6 +134,19 @@ void             gimp_text_buffer_set_color         (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      const GimpRGB     *color);
+
+GtkTextTag * gimp_text_buffer_get_preedit_color_tag    (GimpTextBuffer    *buffer,
+                                                        const GimpRGB     *color);
+void         gimp_text_buffer_set_preedit_color        (GimpTextBuffer    *buffer,
+                                                        const GtkTextIter *start,
+                                                        const GtkTextIter *end,
+                                                        const GimpRGB     *color);
+GtkTextTag * gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer    *buffer,
+                                                        const GimpRGB     *color);
+void         gimp_text_buffer_set_preedit_bg_color     (GimpTextBuffer    *buffer,
+                                                        const GtkTextIter *start,
+                                                        const GtkTextIter *end,
+                                                        const GimpRGB     *color);
 
 const gchar    * gimp_text_buffer_tag_to_name       (GimpTextBuffer    *buffer,
                                                      GtkTextTag        *tag,

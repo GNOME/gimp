@@ -64,32 +64,30 @@ struct _ColorselWaterClass
 };
 
 
-static GType      colorsel_water_get_type         (void);
+static GType      colorsel_water_get_type          (void);
 
-static void       colorsel_water_dispose          (GObject           *object);
+static void       colorsel_water_dispose           (GObject           *object);
 
-static void       colorsel_water_set_config       (GimpColorSelector *selector,
-                                                   GimpColorConfig   *config);
+static void       colorsel_water_set_config        (GimpColorSelector *selector,
+                                                    GimpColorConfig   *config);
 
-static void       colorsel_water_config_notify    (GimpColorConfig   *config,
-                                                   const GParamSpec  *pspec,
-                                                   ColorselWater     *water);
-static void       colorsel_water_create_transform (ColorselWater     *water);
+static void       colorsel_water_create_transform  (ColorselWater     *water);
+static void       colorsel_water_destroy_transform (ColorselWater     *water);
 
-static gboolean   select_area_expose              (GtkWidget         *widget,
-                                                   GdkEventExpose    *event,
-                                                   ColorselWater     *water);
-static gboolean   button_press_event              (GtkWidget         *widget,
-                                                   GdkEventButton    *event,
-                                                   ColorselWater     *water);
-static gboolean   motion_notify_event             (GtkWidget         *widget,
-                                                   GdkEventMotion    *event,
-                                                   ColorselWater     *water);
-static gboolean   proximity_out_event             (GtkWidget         *widget,
-                                                   GdkEventProximity *event,
-                                                   ColorselWater     *water);
-static void       pressure_adjust_update          (GtkAdjustment     *adj,
-                                                   ColorselWater     *water);
+static gboolean   select_area_expose               (GtkWidget         *widget,
+                                                    GdkEventExpose    *event,
+                                                    ColorselWater     *water);
+static gboolean   button_press_event               (GtkWidget         *widget,
+                                                    GdkEventButton    *event,
+                                                    ColorselWater     *water);
+static gboolean   motion_notify_event              (GtkWidget         *widget,
+                                                    GdkEventMotion    *event,
+                                                    ColorselWater     *water);
+static gboolean   proximity_out_event              (GtkWidget         *widget,
+                                                    GdkEventProximity *event,
+                                                    ColorselWater     *water);
+static void       pressure_adjust_update           (GtkAdjustment     *adj,
+                                                    ColorselWater     *water);
 
 
 static const GimpModuleInfo colorsel_water_info =
@@ -131,7 +129,7 @@ colorsel_water_class_init (ColorselWaterClass *klass)
 
   selector_class->name       = _("Watercolor");
   selector_class->help_id    = "gimp-colorselector-watercolor";
-  selector_class->icon_name  = GIMP_STOCK_TOOL_PAINTBRUSH;
+  selector_class->icon_name  = GIMP_STOCK_COLOR_WATER;
   selector_class->set_config = colorsel_water_set_config;
 }
 
@@ -203,6 +201,10 @@ colorsel_water_init (ColorselWater *water)
   gtk_box_pack_start (GTK_BOX (hbox), scale, FALSE, FALSE, 0);
 
   gtk_widget_show_all (hbox);
+
+  gimp_widget_track_monitor (GTK_WIDGET (water),
+                             G_CALLBACK (colorsel_water_destroy_transform),
+                             NULL);
 }
 
 static gdouble
@@ -230,44 +232,29 @@ colorsel_water_set_config (GimpColorSelector *selector,
 {
   ColorselWater *water = COLORSEL_WATER (selector);
 
-  if (water->config)
+  if (config != water->config)
     {
-      g_signal_handlers_disconnect_by_func (water->config,
-                                            colorsel_water_config_notify,
-                                            water);
-      g_object_unref (water->config);
-
-      if (water->transform)
+      if (water->config)
         {
-          g_object_unref (water->transform);
-          water->transform = NULL;
+          g_signal_handlers_disconnect_by_func (water->config,
+                                                colorsel_water_destroy_transform,
+                                                water);
+          g_object_unref (water->config);
+
+          colorsel_water_destroy_transform (water);
+        }
+
+      water->config = config;
+
+      if (water->config)
+        {
+          g_object_ref (water->config);
+
+          g_signal_connect_swapped (water->config, "notify",
+                                    G_CALLBACK (colorsel_water_destroy_transform),
+                                    water);
         }
     }
-
-  water->config = config;
-
-  if (water->config)
-    {
-      g_object_ref (water->config);
-
-      g_signal_connect (water->config, "notify",
-                        G_CALLBACK (colorsel_water_config_notify),
-                        water);
-    }
-}
-
-static void
-colorsel_water_config_notify (GimpColorConfig   *config,
-                              const GParamSpec  *pspec,
-                              ColorselWater     *water)
-{
-  if (water->transform)
-    {
-      g_object_unref (water->transform);
-      water->transform = NULL;
-    }
-
-  gtk_widget_queue_draw (GTK_WIDGET (water->area));
 }
 
 static void
@@ -288,6 +275,18 @@ colorsel_water_create_transform (ColorselWater *water)
                                                           format,
                                                           format);
     }
+}
+
+static void
+colorsel_water_destroy_transform (ColorselWater *water)
+{
+  if (water->transform)
+    {
+      g_object_unref (water->transform);
+      water->transform = NULL;
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (water->area));
 }
 
 static gboolean

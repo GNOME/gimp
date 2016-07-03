@@ -87,6 +87,28 @@ G_DEFINE_TYPE (GimpColorTransform, gimp_color_transform,
 
 static guint gimp_color_transform_signals[LAST_SIGNAL] = { 0 };
 
+static gchar *lcms_last_error = NULL;
+
+
+static void
+lcms_error_clear (void)
+{
+  if (lcms_last_error)
+    {
+      g_free (lcms_last_error);
+      lcms_last_error = NULL;
+    }
+}
+
+static void
+lcms_error_handler (cmsContext       ContextID,
+                    cmsUInt32Number  ErrorCode,
+                    const gchar     *text)
+{
+  lcms_error_clear ();
+
+  lcms_last_error = g_strdup_printf ("lcms2 error %d: %s", ErrorCode, text);
+}
 
 static void
 gimp_color_transform_class_init (GimpColorTransformClass *klass)
@@ -107,6 +129,8 @@ gimp_color_transform_class_init (GimpColorTransformClass *klass)
                   G_TYPE_DOUBLE);
 
   g_type_class_add_private (klass, sizeof (GimpColorTransformPrivate));
+
+  cmsSetLogErrorHandler (lcms_error_handler);
 }
 
 static void
@@ -195,10 +219,29 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   priv->dest_format = gimp_color_profile_get_format (dest_format,
                                                      &lcms_dest_format);
 
+  lcms_error_clear ();
+
   priv->transform = cmsCreateTransform (src_lcms,  lcms_src_format,
                                         dest_lcms, lcms_dest_format,
                                         rendering_intent,
-                                        flags | cmsFLAGS_NOOPTIMIZE);
+                                        flags);
+
+  if (lcms_last_error)
+    {
+      if (priv->transform)
+        {
+          cmsDeleteTransform (priv->transform);
+          priv->transform = NULL;
+        }
+
+      g_printerr ("%s\n", lcms_last_error);
+    }
+
+  if (! priv->transform)
+    {
+      g_object_unref (transform);
+      transform = NULL;
+    }
 
   return transform;
 }
@@ -257,12 +300,31 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
   priv->dest_format = gimp_color_profile_get_format (dest_format,
                                                      &lcms_dest_format);
 
+  lcms_error_clear ();
+
   priv->transform = cmsCreateProofingTransform (src_lcms,  lcms_src_format,
                                                 dest_lcms, lcms_dest_format,
                                                 proof_lcms,
                                                 proof_intent,
                                                 display_intent,
                                                 flags | cmsFLAGS_SOFTPROOFING);
+
+  if (lcms_last_error)
+    {
+      if (priv->transform)
+        {
+          cmsDeleteTransform (priv->transform);
+          priv->transform = NULL;
+        }
+
+      g_printerr ("%s\n", lcms_last_error);
+    }
+
+  if (! priv->transform)
+    {
+      g_object_unref (transform);
+      transform = NULL;
+    }
 
   return transform;
 }
@@ -353,7 +415,7 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
  * @dest_format:
  * @dest_rect:
  *
- * This function transforms a contiguous line of pixels.
+ * This function transforms buffer into another buffer.
  *
  * Since: 2.10
  **/
@@ -366,7 +428,6 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 {
   GimpColorTransformPrivate *priv;
   GeglBufferIterator        *iter;
-  const Babl                *fish = NULL;
   gint                       total_pixels;
   gint                       done_pixels = 0;
 
@@ -386,34 +447,58 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
                       gegl_buffer_get_height (src_buffer));
     }
 
-  if (babl_format_has_alpha (priv->dest_format))
-    fish = babl_fish (priv->src_format,
-                      priv->dest_format);
-
-  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
-                                   priv->src_format,
-                                   GEGL_ACCESS_READ,
-                                   GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            priv->dest_format,
-                            GEGL_ACCESS_WRITE,
-                            GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
+  if (src_buffer != dest_buffer)
     {
-      /* make sure the alpha channel is copied too, lcms doesn't copy it */
-      if (fish)
-        babl_process (fish, iter->data[0], iter->data[1], iter->length);
+      const Babl *fish = NULL;
 
-      cmsDoTransform (priv->transform,
-                      iter->data[0], iter->data[1], iter->length);
+      if (babl_format_has_alpha (priv->dest_format))
+        fish = babl_fish (priv->src_format,
+                          priv->dest_format);
 
-      done_pixels += iter->roi[0].width * iter->roi[0].height;
+      iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
+                                       priv->src_format,
+                                       GEGL_ACCESS_READ,
+                                       GEGL_ABYSS_NONE);
 
-      g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
-                     (gdouble) done_pixels /
-                     (gdouble) total_pixels);
+      gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
+                                priv->dest_format,
+                                GEGL_ACCESS_WRITE,
+                                GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          /* make sure the alpha channel is copied too, lcms doesn't copy it */
+          if (fish)
+            babl_process (fish, iter->data[0], iter->data[1], iter->length);
+
+          cmsDoTransform (priv->transform,
+                          iter->data[0], iter->data[1], iter->length);
+
+          done_pixels += iter->roi[0].width * iter->roi[0].height;
+
+          g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
+                         (gdouble) done_pixels /
+                         (gdouble) total_pixels);
+        }
+    }
+  else
+    {
+      iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
+                                       priv->src_format,
+                                       GEGL_ACCESS_READWRITE,
+                                       GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          cmsDoTransform (priv->transform,
+                          iter->data[0], iter->data[0], iter->length);
+
+          done_pixels += iter->roi[0].width * iter->roi[0].height;
+
+          g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
+                         (gdouble) done_pixels /
+                         (gdouble) total_pixels);
+        }
     }
 
   g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,

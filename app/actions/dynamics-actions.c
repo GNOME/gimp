@@ -55,13 +55,13 @@ static const GimpActionEntry dynamics_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_DYNAMICS_DUPLICATE },
 
-  { "dynamics-copy-location", "edit-copy",
+  { "dynamics-copy-location", GIMP_STOCK_CLIPBOARD,
     NC_("dynamics-action", "Copy Dynamics _Location"), NULL,
     NC_("dynamics-action", "Copy dynamics file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_DYNAMICS_COPY_LOCATION },
 
-  { "dynamics-show-in-file-manager", "gtk-directory",
+  { "dynamics-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
     NC_("dynamics-action", "Show in _File Manager"), NULL,
     NC_("dynamics-action", "Show dynamics file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),

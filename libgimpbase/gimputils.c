@@ -356,7 +356,7 @@ gimp_file_show_in_file_manager (GFile   *file,
 
     ret = FALSE;
 
-    /* Calling this function mutiple times should do no harm, but it is
+    /* Calling this function multiple times should do no harm, but it is
        easier to put this here as it needs linking against ole32. */
     CoInitialize (NULL);
 

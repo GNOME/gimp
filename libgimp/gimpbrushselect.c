@@ -75,7 +75,7 @@ gimp_brush_select_new (const gchar          *title,
     { GIMP_PDB_INT32,     "spacing",       "Spacing"                    },
     { GIMP_PDB_INT32,     "paint mode",    "Paint mode"                 },
     { GIMP_PDB_INT32,     "mask width",    "Brush width"                },
-    { GIMP_PDB_INT32,     "mask height"    "Brush heigth"               },
+    { GIMP_PDB_INT32,     "mask height"    "Brush height"               },
     { GIMP_PDB_INT32,     "mask len",      "Length of brush mask data"  },
     { GIMP_PDB_INT8ARRAY, "mask data",     "The brush mask data"        },
     { GIMP_PDB_INT32,     "dialog status", "If the dialog was closing "

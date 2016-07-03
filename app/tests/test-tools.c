@@ -110,7 +110,7 @@ gimp_tools_setup_image (GimpTestFixture *fixture,
 {
   Gimp *gimp = GIMP (data);
 
-  gimp_test_utils_create_image (gimp, 
+  gimp_test_utils_create_image (gimp,
                                 GIMP_TEST_IMAGE_WIDTH,
                                 GIMP_TEST_IMAGE_HEIGHT);
   gimp_test_run_mainloop_until_idle ();

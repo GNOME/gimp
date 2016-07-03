@@ -1075,7 +1075,7 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
  * This procedure modifies the line dash pattern setting for stroking
  * lines.
  * The unit of the dash pattern segments is the actual line width used
- * for the stroke opertation, in other words a segment length of 1.0
+ * for the stroke operation, in other words a segment length of 1.0
  * results in a square segment shape (or gap shape).
  * This setting affects the following procedures: gimp_edit_stroke(),
  * gimp_edit_stroke_vectors().
@@ -2620,7 +2620,7 @@ gimp_context_get_diagonal_neighbors (void)
  * doing a seed fill, then, when this setting is TRUE, all eight
  * neighbors of each pixel are considered when calculating the affected
  * region; in contrast, when this setting is FALSE, only the four
- * orthogonal neighors of each pixel are considered.
+ * orthogonal neighbors of each pixel are considered.
  * This setting affects the following procedures:
  * gimp_image_select_contiguous_color().
  *

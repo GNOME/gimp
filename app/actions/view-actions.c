@@ -79,7 +79,7 @@ static const GimpActionEntry view_actions[] =
     NC_("view-action", "Display _Rendering Intent") },
 
   { "view-softproof-intent-menu", NULL,
-    NC_("view-action", "Simulation Re_ndering Intent") },
+    NC_("view-action", "Soft-Proofing Re_ndering Intent") },
 
   { "view-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
     NC_("view-action", "Move to Screen"), NULL, NULL, NULL,
@@ -91,7 +91,7 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_new_cmd_callback),
     GIMP_HELP_VIEW_NEW },
 
-  { "view-close", "window-close",
+  { "view-close", GIMP_STOCK_QUIT,
     NC_("view-action",  "_Close View"), "<primary>W",
     NC_("view-action", "Close the active image view"),
     G_CALLBACK (view_close_cmd_callback),
@@ -169,15 +169,15 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_DOT_FOR_DOT },
 
   { "view-color-management-enable", NULL,
-    NC_("view-action", "_Color Manage this View"), NULL,
-    NC_("view-action", "Color manage this view"),
+    NC_("view-action", "_Color-Manage this View"), NULL,
+    NC_("view-action", "Use color management for this view"),
     G_CALLBACK (view_color_management_enable_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-color-management-softproof", NULL,
-    NC_("view-action", "_Print Simulation"), NULL,
-    NC_("view-action", "Use this view for softproofing"),
+    NC_("view-action", "_Proof Colors"), NULL,
+    NC_("view-action", "Use this view for soft-proofing"),
     G_CALLBACK (view_color_management_softproof_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
@@ -191,14 +191,14 @@ static const GimpToggleActionEntry view_toggle_actions[] =
 
   { "view-softproof-black-point-compensation", NULL,
     NC_("view-action", "_Black Point Compensation"), NULL,
-    NC_("view-action", "Use black point compensation for softproofing"),
+    NC_("view-action", "Use black point compensation for soft-proofing"),
     G_CALLBACK (view_softproof_bpc_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-gamut-check", NULL,
     NC_("view-action", "_Mark Out Of Gamut Colors"), NULL,
-    NC_("view-action", "When softproofing, mark colors which cannot "
+    NC_("view-action", "When soft-proofing, mark colors which cannot "
         "be represented in the target color space"),
     G_CALLBACK (view_softproof_gamut_check_cmd_callback),
     FALSE,
@@ -542,25 +542,25 @@ static const GimpRadioActionEntry view_softproof_intent_actions[] =
 {
   { "view-softproof-intent-perceptual", NULL,
     NC_("view-action", "_Perceptual"), NULL,
-    NC_("view-action", "Softproof rendering intent is perceptual"),
+    NC_("view-action", "Soft-proofing rendering intent is perceptual"),
     GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-intent-relative-colorimetric", NULL,
     NC_("view-action", "_Relative Colorimetric"), NULL,
-    NC_("view-action", "Softproof rendering intent is relative colorimetric"),
+    NC_("view-action", "Soft-proofing rendering intent is relative colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-intent-saturation", NULL,
     NC_("view-action", "_Saturation"), NULL,
-    NC_("view-action", "Softproof rendering intent is saturation"),
+    NC_("view-action", "Soft-proofing rendering intent is saturation"),
     GIMP_COLOR_RENDERING_INTENT_SATURATION,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-intent-absolute-colorimetric", NULL,
     NC_("view-action", "_Absolute Colorimetric"), NULL,
-    NC_("view-action", "Softproof rendering intent is absolute colorimetric"),
+    NC_("view-action", "Soft-proofing rendering intent is absolute colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT }
 };
@@ -814,7 +814,7 @@ view_actions_update (GimpActionGroup *group,
 
       color_config = gimp_display_shell_get_color_config (shell);
 
-      switch (color_config->mode)
+      switch (gimp_color_config_get_mode (color_config))
         {
         case GIMP_COLOR_MANAGEMENT_OFF:
           break;
@@ -829,7 +829,7 @@ view_actions_update (GimpActionGroup *group,
           break;
         }
 
-      switch (color_config->display_intent)
+      switch (gimp_color_config_get_display_intent (color_config))
         {
         case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
           action = "view-display-intent-perceptual";
@@ -850,7 +850,7 @@ view_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      switch (color_config->simulation_intent)
+      switch (gimp_color_config_get_simulation_intent (color_config))
         {
         case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
           action = "view-softproof-intent-perceptual";
@@ -871,9 +871,9 @@ view_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      d_bpc  = color_config->display_use_black_point_compensation;
-      s_bpc  = color_config->simulation_use_black_point_compensation;
-      gammut = color_config->simulation_gamut_check;
+      d_bpc  = gimp_color_config_get_display_bpc (color_config);
+      s_bpc  = gimp_color_config_get_simulation_bpc (color_config);
+      gammut = gimp_color_config_get_simulation_gamut_check (color_config);
     }
 
 #define SET_ACTIVE(action,condition) \

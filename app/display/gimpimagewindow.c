@@ -20,6 +20,12 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef G_OS_WIN32
+#include <windef.h>
+#include <winbase.h>
+#include <windows.h>
+#endif
+
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
 #include <gdk/gdkquartz.h>
@@ -1003,6 +1009,11 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
   gint                    right_docks_width     = G_MININT;
   gboolean                wait_with_right_docks = FALSE;
   gboolean                maximized             = FALSE;
+#ifdef G_OS_WIN32
+  STARTUPINFO             StartupInfo;
+
+  GetStartupInfo (&StartupInfo);
+#endif
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (session_managed));
 
@@ -1074,10 +1085,32 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
         }
     }
 
-  if (maximized)
+#ifdef G_OS_WIN32
+  /* On Windows, user can provide startup hints to have a program
+   * maximized/minimized on startup. This can be done through command
+   * line: `start /max gimp-2.9.exe` or with the shortcut's "run"
+   * property.
+   * When such a hint is given, we should follow it and bypass the
+   * session's information.
+   */
+  if (StartupInfo.wShowWindow == SW_SHOWMAXIMIZED)
     gtk_window_maximize (GTK_WINDOW (session_managed));
+  else if (StartupInfo.wShowWindow == SW_SHOWMINIMIZED   ||
+           StartupInfo.wShowWindow == SW_SHOWMINNOACTIVE ||
+           StartupInfo.wShowWindow == SW_MINIMIZE)
+    /* XXX Iconification does not seem to work. I see the
+     * window being iconified and immediately re-raised.
+     * I leave this piece of code for later improvement. */
+    gtk_window_iconify (GTK_WINDOW (session_managed));
   else
-    gtk_window_unmaximize (GTK_WINDOW (session_managed));
+    /* Another show property not relevant to min/max.
+     * Defaults is: SW_SHOWNORMAL
+     */
+#endif
+    if (maximized)
+      gtk_window_maximize (GTK_WINDOW (session_managed));
+    else
+      gtk_window_unmaximize (GTK_WINDOW (session_managed));
 }
 
 

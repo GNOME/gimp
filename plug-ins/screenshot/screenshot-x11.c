@@ -407,7 +407,6 @@ create_image (cairo_surface_t *surface,
   gint32     image;
   gint32     layer;
   gdouble    xres, yres;
-  gchar     *comment;
   gint       width, height;
 
   gimp_progress_init (_("Importing screenshot"));
@@ -420,20 +419,6 @@ create_image (cairo_surface_t *surface,
 
   gimp_get_monitor_resolution (&xres, &yres);
   gimp_image_set_resolution (image, xres, yres);
-
-  comment = gimp_get_default_comment ();
-  if (comment)
-    {
-      GimpParasite *parasite;
-
-      parasite = gimp_parasite_new ("gimp-comment", GIMP_PARASITE_PERSISTENT,
-                                    strlen (comment) + 1, comment);
-
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
-
-      g_free (comment);
-    }
 
   layer = gimp_layer_new_from_surface (image,
                                        name ? name : _("Screenshot"),
@@ -555,6 +540,8 @@ screenshot_x11_get_capabilities (void)
 #ifdef HAVE_XFIXES
   capabilities |= SCREENSHOT_CAN_SHOOT_POINTER;
 #endif
+
+  capabilities |= SCREENSHOT_CAN_SHOOT_REGION;
 
   return capabilities;
 }

@@ -155,6 +155,8 @@ static GimpColorProfilePolicy
                                                   GimpImage           *image,
                                                   GimpContext         *context,
                                                   GimpColorProfile   **dest_profile,
+                                                  GimpColorRenderingIntent *intent,
+                                                  gboolean            *bpc,
                                                   gboolean            *dont_ask);
 
 
@@ -771,12 +773,16 @@ gui_get_mount_operation (Gimp         *gimp,
 }
 
 static GimpColorProfilePolicy
-gui_query_profile_policy (Gimp              *gimp,
-                          GimpImage         *image,
-                          GimpContext       *context,
-                          GimpColorProfile **dest_profile,
-                          gboolean          *dont_ask)
+gui_query_profile_policy (Gimp                      *gimp,
+                          GimpImage                 *image,
+                          GimpContext               *context,
+                          GimpColorProfile         **dest_profile,
+                          GimpColorRenderingIntent  *intent,
+                          gboolean                  *bpc,
+                          gboolean                  *dont_ask)
 {
   return color_profile_import_dialog_run (image, context, NULL,
-                                          dest_profile, dont_ask);
+                                          dest_profile,
+                                          intent, bpc,
+                                          dont_ask);
 }

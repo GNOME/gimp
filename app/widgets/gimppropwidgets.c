@@ -492,6 +492,8 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  * gdouble property in a very space-efficient way.
  * If @label is #NULL, the @property_name's nick will be used as label
  * of the returned widget.
+ * The property's lower and upper values will be used as min/max of the
+ * #GimpSpinScale.
  *
  * Return value:  A new #GimpSpinScale widget.
  *
@@ -516,14 +518,17 @@ gimp_prop_spin_scale_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
+  /* The generic min and max for the property. */
   if (! _gimp_prop_widgets_get_numeric_values (config, param_spec,
                                                &value, &lower, &upper,
                                                G_STRFUNC))
     return NULL;
 
+  /* Get label. */
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
+  /* Also usable on int properties. */
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 

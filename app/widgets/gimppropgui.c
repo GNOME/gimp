@@ -161,6 +161,7 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
         {
           gdouble value;
 
+          /* Get the min and max for the given property. */
           _gimp_prop_widgets_get_numeric_values (config, pspec,
                                                  &value, &lower, &upper,
                                                  G_STRFUNC);
@@ -344,6 +345,7 @@ static const struct
   const gchar        *config_type;
   GimpPropGuiNewFunc  gui_new_func;
 }
+
 gui_new_funcs[] =
 {
   { "GimpGegl-gegl-color-rotate-config",

@@ -13,6 +13,8 @@
 
 ;The random number generator routines below have been slightly reformatted.
 ;A couple of define blocks which are not needed have been commented out.
+;It has also been extended to enable it to generate numbers with exactly 31
+;bits or more.
 ;The original file was called rand2.scm and can be found in:
 ;http://www-2.cs.cmu.edu/afs/cs/project/ai-repository/ai/lang/scheme/code/math/random/
 
@@ -65,15 +67,98 @@
 ; Bust           (abcde)      0.3024      0.3058
 
 (define (random n)
-  (let* (
-        (n (inexact->exact (truncate n)))
-        (M 2147483647)
-        (slop (modulo M n))
+  (define (internal-random n)
+    (let* (
+          (n (inexact->exact (truncate n)))
+          (M 2147483647)
+          (slop (modulo M (abs n)))
+          )
+      (let loop ((r (msrg-rand)))
+        (if (>= r slop)
+          (modulo r n)
+          (loop (msrg-rand))
         )
-    (let loop ((r (msrg-rand)))
-      (if (> r slop)
-        (modulo r n)
-        (loop (msrg-rand))
+      )
+    )
+  )
+
+  ; Negative numbers have a bigger range in twos complement platforms
+  ; (nearly all platforms out there) than positive ones, so we deal with
+  ; the numbers in negative form.
+  (if (> n 0)
+    (+ n (random (- n)))
+
+    (if (>= n -2147483647)
+      (internal-random n)
+
+      ; 31-or-more-bits number requested - needs multiple extractions
+      ; because we don't generate enough random bits.
+      (if (>= n -1152921504606846975)
+        ; Up to 2^60-1, two extractions are enough
+        (let ((q (- (quotient (+ n 1) 1073741824) 1))) ; q=floor(n/2^30)
+          (let loop ()
+            (let ((big (+ (* (internal-random q) 1073741824)
+                          (internal-random -1073741824)
+                       )
+                 ))
+              (if (> big n)
+                big
+                (loop)
+              )
+            )
+          )
+        )
+
+        ; From 2^60 up, we do three extractions.
+        ; The code is better understood if seen as generating three
+        ; digits in base 2^30. q is the maximum value the first digit
+        ; can take. The other digits can take the full range.
+        ;
+        ; The strategy is to generate a random number digit by digit.
+        ; Here's an example in base 10. Say the input n is 348
+        ; (thus requesting a number between 0 and 347). Then the algorithm
+        ; first calls (internal-random 4) to get a digit betweeen 0 and 3,
+        ; then (internal-random 10) twice to get two more digits between
+        ; 0 and 9. Say the result is 366: since it is greater than 347,
+        ; it's discarded and the process restarted. When the result is
+        ; <= 347, that's the returned value. The probability of it being
+        ; greater than the max is always strictly less than 1/2.
+        ;
+        ; This is the same idea but in base 2^30 (1073741824). The
+        ; first digit's weight is (2^30)^2 = 1152921504606846976,
+        ; similarly to how in our base 10 example, the first digit's
+        ; weight is 10^2 = 100. In the base 10 example we first divide
+        ; the target number 348 by 100, taking the ceiling, to get 4.
+        ; Here we divide by (2^30)^2 instead, taking the ceiling too.
+        ;
+        ; The math is a bit obscured by the fact that we generate
+        ; the digits as negative, so that the result is negative as
+        ; well, but it's really the same thing. Changing the sign of
+        ; every digit just changes the sign of the result.
+        ;
+        ; This method works for n up to (2^30)^2*(2^31-1) which is
+        ; 2475880077417839045191401472 (slightly under 91 bits). That
+        ; covers the 64-bit range comfortably, and some more. If larger
+        ; numbers are needed, they'll have to be composed with a
+        ; user-defined procedure.
+
+        (if (>= n -2475880077417839045191401472)
+          (let ((q (- (quotient (+ n 1) 1152921504606846976) 1))) ; q=floor(n/2^60)
+            (let loop ()
+              (let ((big (+ (* (internal-random q) 1152921504606846976)
+                            (* (internal-random -1073741824) 1073741824)
+                            (internal-random -1073741824)
+                         )
+                   ))
+                (if (> big n)
+                  big
+                  (loop)
+                )
+              )
+            )
+          )
+          (error "requested (random n) range too large")
+        )
       )
     )
   )

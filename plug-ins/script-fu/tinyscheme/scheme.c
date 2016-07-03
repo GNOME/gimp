@@ -498,7 +498,7 @@ static num num_rem(num a, num b) {
  e1=num_ivalue(a);
  e2=num_ivalue(b);
  res=e1%e2;
- /* remainder should have same sign as second operand */
+ /* remainder should have same sign as first operand */
  if (res > 0) {
      if (e1 < 0) {
         res -= labs(e2);
@@ -520,7 +520,7 @@ static num num_mod(num a, num b) {
  e2=num_ivalue(b);
  res=e1%e2;
  /* modulo should have same sign as second operand */
- if (res * e2 < 0) {
+ if ((res < 0) != (e2 < 0) && res) { /* if their sign is different... */
    res+=e2;
  }
  ret.value.ivalue=res;
@@ -2197,13 +2197,14 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
                     } else if(c<32) {
                          snprintf(p,STRBUFFSIZE, "#\\%s", charnames[c]);
                          break;
-                     }
+                    }
 #else
                     if(c<32) {
-                      snprintf(p,STRBUFFSIZE,"#\\x%x",c); break;
+                      snprintf(p,STRBUFFSIZE,"#\\x%x",c);
+                      break;
                     }
 #endif
-                    snprintf(p,STRBUFFSIZE,"#\\%c",c); break;
+                    snprintf(p,STRBUFFSIZE,"#\\%c",c);
                     break;
                }
           }

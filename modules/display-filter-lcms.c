@@ -278,7 +278,7 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
   if (GTK_IS_WIDGET (managed))
     widget = gtk_widget_get_toplevel (GTK_WIDGET (managed));
 
-  if (config->display_profile_from_gdk)
+  if (gimp_color_config_get_display_profile_from_gdk (config))
     profile = gimp_widget_get_color_profile (widget);
 
   if (! profile)
@@ -347,7 +347,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
     }
   else if (strcmp (name, "printer-profile") == 0)
     {
-      profile = gimp_color_config_get_printer_color_profile (config, NULL);
+      profile = gimp_color_config_get_simulation_color_profile (config, NULL);
     }
   else
     {

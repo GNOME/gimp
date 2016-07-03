@@ -1110,7 +1110,7 @@ save_layer_and_mask (FILE   *fd,
   IFDBG printf ("\t\tTotal layers info section length: %d\n",
                 (int) (eof_pos - LayerInfoPos - sizeof (gint32)));
 
-  /* Write actual size of Layer and mask information secton */
+  /* Write actual size of Layer and mask information section */
 
   fseek (fd, LayerMaskPos, SEEK_SET);
   write_gint32 (fd, eof_pos - LayerMaskPos - sizeof (gint32), "layers & mask information length");

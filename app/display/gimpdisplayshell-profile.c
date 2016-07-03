@@ -65,9 +65,12 @@ gimp_display_shell_profile_init (GimpDisplayShell *shell)
 
   shell->color_config = gimp_config_duplicate (GIMP_CONFIG (color_config));
 
-  g_signal_connect (shell->color_config, "notify",
-                    G_CALLBACK (gimp_display_shell_color_config_notify),
-                    shell);
+  /* use after so we are called after the profile cache is invalidated
+   * in gimp_widget_get_color_transform()
+   */
+  g_signal_connect_after (shell->color_config, "notify",
+                          G_CALLBACK (gimp_display_shell_color_config_notify),
+                          shell);
 }
 
 void
@@ -154,9 +157,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 gboolean
 gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
 {
-  GimpImage *image;
-
-  image = gimp_display_get_image (shell->display);
+  GimpImage *image = gimp_display_get_image (shell->display);
 
   if (image)
     {
@@ -178,19 +179,6 @@ gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
     }
 
   return FALSE;
-}
-
-void
-gimp_display_shell_profile_convert_buffer (GimpDisplayShell *shell,
-                                           GeglBuffer       *src_buffer,
-                                           GeglRectangle    *src_area,
-                                           GeglBuffer       *dest_buffer,
-                                           GeglRectangle    *dest_area)
-{
-  if (shell->profile_transform)
-    gimp_color_transform_process_buffer (shell->profile_transform,
-                                         src_buffer,  src_area,
-                                         dest_buffer, dest_area);
 }
 
 
@@ -236,7 +224,7 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
 #define SET_ACTIVE(action, active) \
       gimp_display_shell_set_action_active (shell, action, active);
 
-      switch (config->mode)
+      switch (gimp_color_config_get_mode (config))
         {
         case GIMP_COLOR_MANAGEMENT_OFF:
           break;
@@ -254,7 +242,7 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
       SET_ACTIVE ("view-color-management-enable",    managed);
       SET_ACTIVE ("view-color-management-softproof", softproof);
 
-      switch (config->display_intent)
+      switch (gimp_color_config_get_display_intent (config))
         {
         case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
           action = "view-display-intent-perceptual";
@@ -282,9 +270,9 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
 
       SET_SENSITIVE ("view-display-black-point-compensation", managed);
       SET_ACTIVE    ("view-display-black-point-compensation",
-                     config->display_use_black_point_compensation);
+                     gimp_color_config_get_display_bpc (config));
 
-      switch (config->simulation_intent)
+      switch (gimp_color_config_get_simulation_intent (config))
         {
         case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
           action = "view-softproof-intent-perceptual";
@@ -312,11 +300,11 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
 
       SET_SENSITIVE ("view-softproof-black-point-compensation", softproof);
       SET_ACTIVE    ("view-softproof-black-point-compensation",
-                     config->simulation_use_black_point_compensation);
+                     gimp_color_config_get_simulation_bpc (config));
 
       SET_SENSITIVE ("view-softproof-gamut-check", softproof);
       SET_ACTIVE    ("view-softproof-gamut-check",
-                     config->simulation_gamut_check);
+                     gimp_color_config_get_simulation_gamut_check (config));
     }
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));

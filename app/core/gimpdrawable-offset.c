@@ -35,6 +35,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-offset.h"
 #include "gimpimage.h"
+#include "gimppickable.h"
 
 #include "gimp-intl.h"
 
@@ -97,6 +98,8 @@ gimp_drawable_offset (GimpDrawable   *drawable,
           GeglColor *color;
 
           gimp_context_get_background (context, &bg);
+          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                             &bg, &bg);
 
           color = gimp_gegl_color_new (&bg);
           gegl_buffer_set_color (new_buffer, NULL, color);

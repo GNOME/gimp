@@ -9,12 +9,12 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 15.999984 15.999955"
+   viewBox="0 0 15.999999 16"
    id="svg7384"
-   height="15.999955"
-   width="15.999985"
+   height="16"
+   width="16"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92pre1 unknown"
    sodipodi:docname="gimp-wilber.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -31,7 +31,7 @@
      showgrid="false"
      inkscape:zoom="14.750041"
      inkscape:cx="-272.71189"
-     inkscape:cy="488.08229"
+     inkscape:cy="488.52297"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -162,7 +162,7 @@
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     transform="translate(36.099066,-96.96252)"
+     transform="translate(36.099066,-96.962475)"
      style="display:inline"
      id="stock">
     <g

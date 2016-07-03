@@ -891,7 +891,7 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  * @range: A string representing the set of selected pages.
  *
- * Selectes the pages described by @range. The range string is a
+ * Selects the pages described by @range. The range string is a
  * user-editable list of pages and ranges, e.g. "1,3,5-7,9-12,14".
  * Note that the page numbering in the range string starts with 1,
  * not 0.

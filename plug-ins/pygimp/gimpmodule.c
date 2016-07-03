@@ -1682,7 +1682,6 @@ id2vectors(PyObject *self, PyObject *args)
 static PyObject *
 pygimp_export_image (PyObject *self, PyObject *args, PyObject *kwargs)
 {
-    
     PyGimpImage *img;
     PyGimpDrawable *drw = NULL;
     gchar *format_name = NULL;
@@ -1691,7 +1690,7 @@ pygimp_export_image (PyObject *self, PyObject *args, PyObject *kwargs)
     gint32  img_id;
     gint32  drw_id;
     PyObject *return_values;
-    
+
     static char *kwlist[] = { "image", "drawable", "format_name", "capabilities", NULL };
     if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O!|OsI:export_image", kwlist,
                                     &PyGimpImage_Type, &img,
@@ -1705,14 +1704,14 @@ pygimp_export_image (PyObject *self, PyObject *args, PyObject *kwargs)
                          "a combination of the "
                          "EXPORT_CAN_HANDLE_*/EXPORT_NEEDS_ALPHA values. "
                          "(check developer documentation on the C function "
-                         "gimp_export_image for details)" 
+                         "gimp_export_image for details)"
                          );
         return NULL;
     }
-    
+
     /* If no drawable is given, assume the active drawable */
     if (drw == NULL) {
-        drw = (PyGimpDrawable *)PyObject_GetAttrString((PyObject *)img, 
+        drw = (PyGimpDrawable *)PyObject_GetAttrString((PyObject *)img,
                                                        "active_drawable");
         if ((PyObject *)drw == Py_None) {
             PyErr_SetString(PyExc_ValueError,
@@ -1724,9 +1723,9 @@ pygimp_export_image (PyObject *self, PyObject *args, PyObject *kwargs)
     }
     img_id = img->ID;
     drw_id = drw->ID;
-    
+
     result = gimp_export_image(&img_id, &drw_id, format_name, capabilities);
-    
+
     if (img_id != img->ID) {
         img = (PyGimpImage *)pygimp_image_new(img_id);
     }
@@ -1739,23 +1738,23 @@ pygimp_export_image (PyObject *self, PyObject *args, PyObject *kwargs)
     else {
         Py_INCREF(drw);
     }
-        
+
     return_values = PyTuple_New(3);
-    PyTuple_SetItem(return_values, 0, PyInt_FromLong(result));    
+    PyTuple_SetItem(return_values, 0, PyInt_FromLong(result));
     PyTuple_SetItem(return_values, 1, (PyObject *)img);
     PyTuple_SetItem(return_values, 2, (PyObject *)drw);
-    
+
     return return_values;
 }
 
 static PyObject *
 pygimp_export_dialog_new (PyObject *self, PyObject *args, PyObject *kwargs)
-{    
+{
     gchar *format_name;
     gchar *role = NULL;
     gchar *help_id = NULL;
     GtkWidget *dialog = NULL;
-    
+
     static char *kwlist[] = { "format_name", "role", "help_id", NULL };
     if (!PyArg_ParseTupleAndKeywords(args, kwargs, "s|ss:export_dialog", kwlist,
                                      &format_name,
@@ -1766,13 +1765,13 @@ pygimp_export_dialog_new (PyObject *self, PyObject *args, PyObject *kwargs)
     if (role == NULL) {
         role = "gimp_export_image";
     }
-    
+
     dialog = gimp_export_dialog_new(format_name, role, help_id);
-    
+
     /* pyobject_new handles NULL values */
-    
+
     return pygobject_new((GObject *)dialog);
-            
+
 }
 
 /* No need to expose "gimp_export_dialog_get_content_area",
@@ -2014,7 +2013,7 @@ initgimp(void)
 
     Py_INCREF(&PyGimpLayer_Type);
     PyModule_AddObject(m, "Layer", (PyObject *)&PyGimpLayer_Type);
-    
+
     Py_INCREF(&PyGimpGroupLayer_Type);
     PyModule_AddObject(m, "GroupLayer", (PyObject *)&PyGimpGroupLayer_Type);
 

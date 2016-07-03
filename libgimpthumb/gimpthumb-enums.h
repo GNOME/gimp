@@ -66,7 +66,7 @@ typedef enum
  * @GIMP_THUMB_SIZE_NORMAL: normal thumbnail size (128 pixels)
  * @GIMP_THUMB_SIZE_LARGE:  large thumbnail size (256 pixels)
  *
- * Possible thumbnail sizes as defined by the Thumbnail Managaging
+ * Possible thumbnail sizes as defined by the Thumbnail Managing
  * Standard.
  **/
 #define GIMP_TYPE_THUMB_SIZE (gimp_thumb_size_get_type ())

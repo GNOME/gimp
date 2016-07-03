@@ -1,19 +1,19 @@
 /* A Bison parser, made by GNU Bison 2.6.1.  */
 
 /* Bison implementation for Yacc-like parsers in C
-   
+
       Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
-   
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
@@ -26,7 +26,7 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-   
+
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
@@ -1491,7 +1491,7 @@ yyreduce:
 		   MapInfo_t *info = get_map_info();
 		   gchar *description;
 
-		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n", 
+		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n",
 					     NULL);
 		   g_strreplace(&info->description, description);
 		   g_free ((yyvsp[(2) - (2)].id));
@@ -1502,7 +1502,7 @@ yyreduce:
 /* Line 1787 of yacc.c  */
 #line 117 "imap_ncsa.y"
     {
-		   MapInfo_t *info = get_map_info();		      
+		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->default_url, (yyvsp[(2) - (2)].id));
 		   g_free ((yyvsp[(2) - (2)].id));
 		}
@@ -1566,7 +1566,7 @@ yyreduce:
     {
 		   Polygon_t *polygon = ObjectToPolygon(current_object);
 		   GdkPoint *point = new_point((gint) (yyvsp[(1) - (3)].value), (gint) (yyvsp[(3) - (3)].value));
-		   polygon->points = g_list_append(polygon->points, 
+		   polygon->points = g_list_append(polygon->points,
 						   (gpointer) point);
 		}
     break;
@@ -1806,7 +1806,7 @@ yyreturn:
 #line 173 "imap_ncsa.y"
 
 
-static void 
+static void
 ncsa_error(char* s)
 {
    extern FILE *ncsa_in;

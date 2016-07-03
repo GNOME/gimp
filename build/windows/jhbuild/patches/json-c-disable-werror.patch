@@ -1,0 +1,11 @@
+--- a/Makefile.in	2015-03-30 20:34:35.930327000 -0400
++++ b/Makefile.in	2015-03-30 20:34:49.070330097 -0400
+@@ -378,7 +378,7 @@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CFLAGS = -Wall -Werror -Wno-error=deprecated-declarations -Wextra -Wwrite-strings -Wno-unused-parameter -std=gnu99 -D_GNU_SOURCE -D_REENTRANT
++AM_CFLAGS = -Wall -Wno-error=deprecated-declarations -Wextra -Wwrite-strings -Wno-unused-parameter -std=gnu99 -D_GNU_SOURCE -D_REENTRANT
+ EXTRA_DIST = README.html README-WIN32.html config.h.win32 doc json-c.vcproj
+ SUBDIRS = . tests
+ lib_LTLIBRARIES = libjson-c.la 

@@ -9,12 +9,12 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 15.999999 16.000027"
+   viewBox="0 0 15.999999 16"
    id="svg7384"
-   height="16.000027"
+   height="16"
    width="16"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92pre1 unknown"
    sodipodi:docname="gimp-prefs-playground.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -30,8 +30,8 @@
      id="namedview1509"
      showgrid="false"
      inkscape:zoom="14.75"
-     inkscape:cx="-824.7537"
-     inkscape:cy="980.96195"
+     inkscape:cx="16.567264"
+     inkscape:cy="19.068263"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -180,7 +180,7 @@
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     transform="translate(-219.43309,-197.51115)"
+     transform="translate(-219.43309,-197.51118)"
      style="display:inline"
      id="preferences">
     <g
@@ -196,13 +196,13 @@
          style="opacity:1;fill:url(#linearGradient8246);fill-opacity:1;stroke:url(#linearGradient8258);stroke-width:0.94302762;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path4371-8"
          d="m 1047.8907,-7.9997163 a 3.5284863,3.5284863 0 0 1 -1.7643,3.0557588 3.5284863,3.5284863 0 0 1 -3.5285,-1e-7 3.5284863,3.5284863 0 0 1 -1.7642,-3.0557588"
-         transform="matrix(0,1,-1,0,0,0)"
+         transform="rotate(90)"
          inkscape:connector-curvature="0" />
       <path
          style="opacity:1;fill:url(#linearGradient8244);fill-opacity:1;stroke:url(#linearGradient8256);stroke-width:0.94302762;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path4371-8-8"
          d="m -8.4715137,-1048.3622 a 3.5284863,3.5284863 0 0 1 -1.7642433,3.0558 3.5284863,3.5284863 0 0 1 -3.528486,0 3.5284863,3.5284863 0 0 1 -1.764243,-3.0558"
-         transform="scale(-1,-1)"
+         transform="scale(-1)"
          inkscape:connector-curvature="0" />
       <path
          style="opacity:1;fill:url(#linearGradient8242);fill-opacity:1;stroke:url(#linearGradient8254);stroke-width:0.94302762;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

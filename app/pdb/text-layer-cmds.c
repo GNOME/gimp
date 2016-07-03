@@ -2038,7 +2038,7 @@ register_text_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-layer-get-letter-spacing",
                                      "Get the letter spacing used in a text layer.",
-                                     "This procedure returns the additional spacing between the single glyps in a text layer.",
+                                     "This procedure returns the additional spacing between the single glyphs in a text layer.",
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
                                      "2008",

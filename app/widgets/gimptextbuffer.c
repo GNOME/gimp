@@ -106,6 +106,11 @@ gimp_text_buffer_constructed (GObject *object)
                                                       "underline", PANGO_UNDERLINE_SINGLE,
                                                       NULL);
 
+  buffer->preedit_underline_tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                                              "preedit-underline",
+                                                              "underline", PANGO_UNDERLINE_SINGLE,
+                                                              NULL);
+
   buffer->strikethrough_tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                                           "strikethrough",
                                                           "strikethrough", TRUE,
@@ -153,6 +158,18 @@ gimp_text_buffer_finalize (GObject *object)
     {
       g_list_free (buffer->color_tags);
       buffer->color_tags = NULL;
+    }
+
+  if (buffer->preedit_color_tags)
+    {
+      g_list_free (buffer->preedit_color_tags);
+      buffer->preedit_color_tags = NULL;
+    }
+
+  if (buffer->preedit_bg_color_tags)
+    {
+      g_list_free (buffer->preedit_bg_color_tags);
+      buffer->preedit_bg_color_tags = NULL;
     }
 
   gimp_text_buffer_clear_insert_tags (buffer);
@@ -856,6 +873,7 @@ gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
                                     name,
                                     "font", description,
                                     NULL);
+  gtk_text_tag_set_priority (tag, 0);
   g_free (description);
   buffer->font_tags = g_list_prepend (buffer->font_tags, tag);
 
@@ -1001,13 +1019,181 @@ gimp_text_buffer_set_color (GimpTextBuffer    *buffer,
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
+GtkTextTag *
+gimp_text_buffer_get_preedit_color_tag (GimpTextBuffer *buffer,
+                                        const GimpRGB  *color)
+{
+  GList      *list;
+  GtkTextTag *tag;
+  gchar       name[256];
+  GdkColor    gdk_color;
+  guchar      r, g, b;
+
+  gimp_rgb_get_uchar (color, &r, &g, &b);
+
+  for (list = buffer->preedit_color_tags; list; list = g_list_next (list))
+    {
+      GimpRGB tag_color;
+      guchar  tag_r, tag_g, tag_b;
+
+      tag = list->data;
+
+      gimp_text_tag_get_color (tag, &tag_color);
+
+      gimp_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
+
+      /* Do not compare the alpha channel, since it's unused */
+      if (tag_r == r &&
+          tag_g == g &&
+          tag_b == b)
+        {
+          return tag;
+        }
+    }
+
+  g_snprintf (name, sizeof (name), "preedit-color-#%02x%02x%02x",
+              r, g, b);
+
+  gimp_rgb_get_gdk_color (color, &gdk_color);
+
+  tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                    name,
+                                    "foreground-gdk", &gdk_color,
+                                    "foreground-set", TRUE,
+                                    NULL);
+
+  buffer->preedit_color_tags = g_list_prepend (buffer->preedit_color_tags, tag);
+
+  return tag;
+}
+
+void
+gimp_text_buffer_set_preedit_color (GimpTextBuffer    *buffer,
+                                    const GtkTextIter *start,
+                                    const GtkTextIter *end,
+                                    const GimpRGB     *color)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (start, end))
+    return;
+
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
+  for (list = buffer->preedit_color_tags; list; list = g_list_next (list))
+    {
+      gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                  start, end);
+    }
+
+  if (color)
+    {
+      GtkTextTag *tag = gimp_text_buffer_get_preedit_color_tag (buffer, color);
+
+      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                 start, end);
+    }
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
+}
+
+GtkTextTag *
+gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer *buffer,
+                                           const GimpRGB  *color)
+{
+  GList      *list;
+  GtkTextTag *tag;
+  gchar       name[256];
+  GdkColor    gdk_color;
+  guchar      r, g, b;
+
+  gimp_rgb_get_uchar (color, &r, &g, &b);
+
+  for (list = buffer->preedit_bg_color_tags; list; list = g_list_next (list))
+    {
+      GimpRGB tag_color;
+      guchar  tag_r, tag_g, tag_b;
+
+      tag = list->data;
+
+      gimp_text_tag_get_bg_color (tag, &tag_color);
+
+      gimp_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
+
+      /* Do not compare the alpha channel, since it's unused */
+      if (tag_r == r &&
+          tag_g == g &&
+          tag_b == b)
+        {
+          return tag;
+        }
+    }
+
+  g_snprintf (name, sizeof (name), "bg-color-#%02x%02x%02x",
+              r, g, b);
+
+  gimp_rgb_get_gdk_color (color, &gdk_color);
+
+  tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                    name,
+                                    "background-gdk", &gdk_color,
+                                    "background-set", TRUE,
+                                    NULL);
+
+  buffer->preedit_bg_color_tags = g_list_prepend (buffer->preedit_bg_color_tags, tag);
+
+  return tag;
+}
+
+void
+gimp_text_buffer_set_preedit_bg_color (GimpTextBuffer    *buffer,
+                                       const GtkTextIter *start,
+                                       const GtkTextIter *end,
+                                       const GimpRGB     *color)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (start, end))
+    return;
+
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
+  for (list = buffer->preedit_bg_color_tags; list; list = g_list_next (list))
+    {
+      gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                  start, end);
+    }
+
+  if (color)
+    {
+      GtkTextTag *tag = gimp_text_buffer_get_preedit_bg_color_tag (buffer, color);
+
+      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                 start, end);
+    }
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
+}
+
 /*  Pango markup attribute names  */
 
-#define GIMP_TEXT_ATTR_NAME_SIZE     "size"
-#define GIMP_TEXT_ATTR_NAME_BASELINE "rise"
-#define GIMP_TEXT_ATTR_NAME_KERNING  "letter_spacing"
-#define GIMP_TEXT_ATTR_NAME_FONT     "font"
-#define GIMP_TEXT_ATTR_NAME_COLOR    "foreground"
+#define GIMP_TEXT_ATTR_NAME_SIZE      "size"
+#define GIMP_TEXT_ATTR_NAME_BASELINE  "rise"
+#define GIMP_TEXT_ATTR_NAME_KERNING   "letter_spacing"
+#define GIMP_TEXT_ATTR_NAME_FONT      "font"
+#define GIMP_TEXT_ATTR_NAME_STYLE     "style"
+#define GIMP_TEXT_ATTR_NAME_COLOR     "foreground"
+#define GIMP_TEXT_ATTR_NAME_FG_COLOR  "fgcolor"
+#define GIMP_TEXT_ATTR_NAME_BG_COLOR  "background"
+#define GIMP_TEXT_ATTR_NAME_UNDERLINE "underline"
 
 const gchar *
 gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
@@ -1095,6 +1281,55 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
 
           *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
         }
+
+      return "span";
+    }
+  else if (g_list_find (buffer->preedit_color_tags, tag))
+    {
+      /* "foreground" and "fgcolor" attributes are similar, but I use
+       * one or the other as a trick to differentiate the color chosen
+       * from the user and a display color for preedit. */
+      if (attribute)
+        *attribute = GIMP_TEXT_ATTR_NAME_FG_COLOR;
+
+      if (value)
+        {
+          GimpRGB color;
+          guchar  r, g, b;
+
+          gimp_text_tag_get_color (tag, &color);
+          gimp_rgb_get_uchar (&color, &r, &g, &b);
+
+          *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
+        }
+
+      return "span";
+    }
+  else if (g_list_find (buffer->preedit_bg_color_tags, tag))
+    {
+      if (attribute)
+        *attribute = GIMP_TEXT_ATTR_NAME_BG_COLOR;
+
+      if (value)
+        {
+          GimpRGB color;
+          guchar  r, g, b;
+
+          gimp_text_tag_get_bg_color (tag, &color);
+          gimp_rgb_get_uchar (&color, &r, &g, &b);
+
+          *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
+        }
+
+      return "span";
+    }
+  else if (tag == buffer->preedit_underline_tag)
+    {
+      if (attribute)
+        *attribute = GIMP_TEXT_ATTR_NAME_UNDERLINE;
+
+      if (value)
+        *value = g_strdup ("single");
 
       return "span";
     }

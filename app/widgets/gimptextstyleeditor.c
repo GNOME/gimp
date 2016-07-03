@@ -240,7 +240,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     G_CALLBACK (gimp_text_style_editor_clear_tags),
                     editor);
 
-  image = gtk_image_new_from_icon_name ("edit-clear", GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_EDIT_CLEAR, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
   gtk_widget_show (image);
 

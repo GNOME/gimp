@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * Utitility functions for GimpConfig.
+ * Utility functions for GimpConfig.
  * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
  *
  * This library is free software: you can redistribute it and/or

@@ -266,7 +266,7 @@ object_draw(Object_t *obj, cairo_t *cr)
       fg = &colors->normal_fg;
       bg = &colors->normal_bg;
    }
-   
+
    cairo_save (cr);
    gdk_cairo_set_source_color (cr, bg);
    obj->class->draw(obj, cr);

@@ -1007,8 +1007,8 @@ drw_get_data(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     } else if (g_str_has_suffix (format, "u8")) {
         array_data_type = 'B';
     } else {
-        PyErr_Warn (PyExc_Warning, 
-            "Could not find apropriate data format - returning raw bytes");
+        PyErr_Warn (PyExc_Warning,
+            "Could not find appropriate data format - returning raw bytes");
         array_data_type = 'B';
     }
 
@@ -2010,7 +2010,7 @@ pygimp_layer_new(gint32 ID)
 /* End of code for Layer objects */
 /* -------------------------------------------------------- */
 
-/* Since this help will primaly be seen from within
+/* Since this help will primarily be seen from within
  * GIMP's Python console, we should make it fit in that
  * window's default size.
  */

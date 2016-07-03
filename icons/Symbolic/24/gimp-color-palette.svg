@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-color-palette-24.svg">
+  <defs
+     id="defs30573" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.3472814"
+     inkscape:cx="11.320301"
+     inkscape:cy="16.060596"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid24" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>
+          image/svg+xml
+        </dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler       </dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1028.3622)">
+    <g
+       id="g946"
+       transform="matrix(1.4999314,0,0,1.4999314,-1.9996329e-7,-526.10888)">
+      <g
+         transform="scale(0.99995371,1)"
+         id="g4017">
+        <g
+           id="g4007"
+           transform="translate(-2.3419761,0.78065922)">
+          <g
+             transform="translate(2.3419765,-0.78065884)"
+             id="g4142">
+            <path
+               inkscape:connector-curvature="0"
+               id="rect28186-4"
+               d="m 0,1036.3622 h 16 v 16 H 0 Z"
+               style="fill:none;stroke:none" />
+          </g>
+          <g
+             id="g4010"
+             transform="matrix(1.0501565,0,0,1.0501565,-0.29003914,-52.708266)">
+            <path
+               style="opacity:1;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:#bebebe;stroke-width:0.60283387;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 10.037109 0.30273438 C 6.4836236 0.34998919 1.7203465 1.5555435 1.8007812 5.4238281 C 1.8865907 9.5496518 6.9502851 7.9208894 7.1425781 9.7539062 C 7.453362 12.716787 0.98216052 21.729083 10.816406 23.496094 C 17.381721 24.676049 24.350458 20.623903 23.650391 12.451172 C 23.020808 5.1008332 16.880434 0.48970612 10.740234 0.30273438 L 10.037109 0.30273438 z M 8.5078125 2.7050781 C 10.179538 2.7050781 11.533203 3.6453677 11.533203 4.8046875 C 11.533203 5.9636923 10.179538 6.9023436 8.5078125 6.9023438 C 6.8360871 6.9023438 5.4746094 5.9636923 5.4746094 4.8046875 C 5.4746094 3.6453677 6.8360871 2.7050781 8.5078125 2.7050781 z M 18.5 7 A 2.5 2.5 0 0 1 21 9.5 A 2.5 2.5 0 0 1 18.5 12 A 2.5 2.5 0 0 1 16 9.5 A 2.5 2.5 0 0 1 18.5 7 z M 17.5 14 C 18.880712 14 20 15.119288 20 16.5 C 20 17.880712 18.880712 19 17.5 19 C 16.119288 19 15 17.880712 15 16.5 C 15 15.119288 16.119288 14 17.5 14 z M 10.539062 15.941406 C 11.919776 15.941406 13.039062 17.060694 13.039062 18.441406 C 13.039062 19.822118 11.919776 20.941406 10.539062 20.941406 C 9.1583513 20.941406 8.0390625 19.822118 8.0390625 18.441406 C 8.0390625 17.060694 9.1583513 15.941406 10.539062 15.941406 z "
+               transform="matrix(0.63488444,0,0,0.63485505,2.5063077,1036.3113)"
+               id="path2193" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -346,7 +346,7 @@ static const GimpDialogFactoryEntry entries[] =
             N_("Buffers"), NULL, GIMP_STOCK_BUFFER,
             GIMP_HELP_BUFFER_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
   LISTGRID (document, document,
-            N_("History"), N_("Document History"), "document-open-recent",
+            N_("History"), N_("Document History"), GIMP_STOCK_DOCUMENT_RECENT,
             GIMP_HELP_DOCUMENT_DIALOG, GIMP_VIEW_SIZE_LARGE),
   LISTGRID (template, template,
             N_("Templates"), N_("Image Templates"), GIMP_STOCK_TEMPLATE,

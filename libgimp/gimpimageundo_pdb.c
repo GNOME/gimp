@@ -250,7 +250,7 @@ gimp_image_undo_freeze (gint32 image_ID)
  * where one wishes to leave the undo stack in the same state in which
  * one found it despite non-destructively playing with the image in the
  * meantime. An example would be in-situ plugin previews. Balancing
- * freezes and thaws and ensuring image consistancy is the
+ * freezes and thaws and ensuring image consistency is the
  * responsibility of the caller.
  *
  * Returns: TRUE if the image undo has been thawed.

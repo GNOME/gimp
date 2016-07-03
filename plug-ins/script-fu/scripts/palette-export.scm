@@ -10,7 +10,7 @@
 ; Numbers and Math
 ; -----------------------------------------------------------------------------
 
-; For all the opertations below, this is the order of respectable digits:
+; For all the operations below, this is the order of respectable digits:
 (define conversion-digits (list "0" "1" "2" "3" "4" "5" "6" "7" "8" "9"
                                 "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k"
 				"l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v"

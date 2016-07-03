@@ -61,7 +61,9 @@ lib_LTLIBRARIES = libgimpconfig-@GIMP_API_VERSION@.la
 
 libgimpconfig_sources = 		\
 	gimpconfig.h			\
+	gimpconfigenums.h		\
 	gimpconfigtypes.h		\
+	\
 	gimpconfig-iface.c		\
 	gimpconfig-iface.h		\
 	gimpconfig-deserialize.c	\
@@ -80,11 +82,10 @@ libgimpconfig_sources = 		\
 	gimpscanner.c			\
 	gimpscanner.h			\
 	gimpcolorconfig.c		\
-	gimpcolorconfig.h		\
-	gimpcolorconfig-enums.h
+	gimpcolorconfig.h
 
 libgimpconfig_built_sources = \
-	gimpcolorconfig-enums.c
+	gimpconfigenums.c
 
 libgimpconfig_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimpconfig_sources)	\
@@ -93,6 +94,7 @@ libgimpconfig_@GIMP_API_VERSION@_la_SOURCES = \
 
 libgimpconfiginclude_HEADERS = \
 	gimpconfig.h			\
+	gimpconfigenums.h		\
 	gimpconfigtypes.h		\
 	gimpconfig-iface.h		\
 	gimpconfig-deserialize.h	\
@@ -103,8 +105,7 @@ libgimpconfiginclude_HEADERS = \
 	gimpconfig-utils.h		\
 	gimpconfigwriter.h		\
 	gimpscanner.h			\
-	gimpcolorconfig.h		\
-	gimpcolorconfig-enums.h
+	gimpcolorconfig.h
 
 
 libgimpconfig_@GIMP_API_VERSION@_la_LDFLAGS = \
@@ -137,9 +138,9 @@ uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 gen_sources = xgen-cec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/gimpcolorconfig-enums.c: $(srcdir)/gimpcolorconfig-enums.h $(GIMP_MKENUMS)
+$(srcdir)/gimpconfigenums.c: $(srcdir)/gimpconfigenums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpcolorconfig-enums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
+		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpconfigenums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
@@ -147,6 +148,6 @@ $(srcdir)/gimpcolorconfig-enums.c: $(srcdir)/gimpcolorconfig-enums.h $(GIMP_MKEN
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		$(srcdir)/gimpcolorconfig-enums.h > xgen-cec \
+		$(srcdir)/gimpconfigenums.h > xgen-cec \
 	&& cp xgen-cec $(@F) \
 	&& rm -f xgen-cec

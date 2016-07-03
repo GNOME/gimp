@@ -28,8 +28,8 @@ libgimpbase/gimputils.c
 
 libgimpcolor/gimpcolorprofile.c
 
+libgimpconfig/gimpconfigenums.c
 libgimpconfig/gimpcolorconfig.c
-libgimpconfig/gimpcolorconfig-enums.c
 libgimpconfig/gimpconfig-deserialize.c
 libgimpconfig/gimpconfig-iface.c
 libgimpconfig/gimpconfig-path.c

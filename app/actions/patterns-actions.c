@@ -43,7 +43,7 @@ static const GimpActionEntry patterns_actions[] =
     NC_("patterns-action", "Patterns Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATTERN_DIALOG },
 
-  { "patterns-open-as-image", "document-open",
+  { "patterns-open-as-image", GIMP_STOCK_OPEN,
     NC_("patterns-action", "_Open Pattern as Image"), NULL,
     NC_("patterns-action", "Open this pattern as an image"),
     G_CALLBACK (data_open_as_image_cmd_callback),
@@ -61,13 +61,13 @@ static const GimpActionEntry patterns_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_PATTERN_DUPLICATE },
 
-  { "patterns-copy-location", "edit-copy",
+  { "patterns-copy-location", GIMP_STOCK_CLIPBOARD,
     NC_("patterns-action", "Copy Pattern _Location"), NULL,
     NC_("patterns-action", "Copy pattern file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_PATTERN_COPY_LOCATION },
 
-  { "patterns-show-in-file-manager", "gtk-directory",
+  { "patterns-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
     NC_("patterns-action", "Show in _File Manager"), NULL,
     NC_("patterns-action", "Show pattern file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),

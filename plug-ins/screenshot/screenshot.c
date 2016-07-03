@@ -273,6 +273,24 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      gchar *comment = gimp_get_default_comment ();
+
+      if (comment)
+        {
+          GimpParasite *parasite;
+
+          parasite = gimp_parasite_new ("gimp-comment",
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (comment) + 1, comment);
+
+          gimp_image_attach_parasite (image_ID, parasite);
+          gimp_parasite_free (parasite);
+
+          g_free (comment);
+        }
+
+      gimp_image_clean_all (image_ID);
+
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           /* Store variable states for next run */

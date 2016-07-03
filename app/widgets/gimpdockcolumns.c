@@ -337,7 +337,7 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
 
   GIMP_LOG (DND, "Adding GimpDock %p to GimpDockColumns %p", dock, dock_columns);
 
-  dock_columns->p->docks = g_list_append (dock_columns->p->docks, dock);
+  dock_columns->p->docks = g_list_insert (dock_columns->p->docks, dock, index);
 
   gimp_dock_update_with_context (dock, dock_columns->p->context);
 

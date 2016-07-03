@@ -115,7 +115,7 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
 
   selector_class->name       = _("CMYK");
   selector_class->help_id    = "gimp-colorselector-cmyk";
-  selector_class->icon_name  = "document-print";  /* FIXME */
+  selector_class->icon_name  = GIMP_STOCK_COLOR_CMYK;
   selector_class->set_color  = colorsel_cmyk_set_color;
   selector_class->set_config = colorsel_cmyk_set_config;
 }
@@ -268,28 +268,28 @@ colorsel_cmyk_set_config (GimpColorSelector *selector,
 {
   ColorselCmyk *module = COLORSEL_CMYK (selector);
 
-  if (config == module->config)
-    return;
-
-  if (module->config)
+  if (config != module->config)
     {
-      g_signal_handlers_disconnect_by_func (module->config,
-                                            G_CALLBACK (colorsel_cmyk_config_changed),
-                                            module);
-      g_object_unref (module->config);
+      if (module->config)
+        {
+          g_signal_handlers_disconnect_by_func (module->config,
+                                                colorsel_cmyk_config_changed,
+                                                module);
+          g_object_unref (module->config);
+        }
+
+      module->config = config;
+
+      if (module->config)
+        {
+          g_object_ref (module->config);
+          g_signal_connect_swapped (module->config, "notify",
+                                    G_CALLBACK (colorsel_cmyk_config_changed),
+                                    module);
+        }
+
+      colorsel_cmyk_config_changed (module);
     }
-
-  module->config = config;
-
-  if (module->config)
-    {
-      g_object_ref (module->config);
-      g_signal_connect_swapped (module->config, "notify",
-                                G_CALLBACK (colorsel_cmyk_config_changed),
-                                module);
-    }
-
-  colorsel_cmyk_config_changed (module);
 }
 
 static void
@@ -398,23 +398,20 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
                            gimp_color_profile_get_summary (cmyk_profile),
                            NULL);
 
-  if (config->display_intent ==
-      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
-    {
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
-    }
+  flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+  flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
   module->rgb2cmyk = gimp_color_transform_new (rgb_profile,
                                                babl_format ("R'G'B' double"),
                                                cmyk_profile,
                                                babl_format ("CMYK double"),
-                                               config->display_intent,
+                                               GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                                flags);
   module->cmyk2rgb = gimp_color_transform_new (cmyk_profile,
                                                babl_format ("CMYK double"),
                                                rgb_profile,
                                                babl_format ("R'G'B' double"),
-                                               config->display_intent,
+                                               GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                                flags);
 
  out:

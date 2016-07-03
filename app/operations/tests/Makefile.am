@@ -33,7 +33,7 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type	
+	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type
 
 # Note that we have some duplicate entries here too to work around
 # circular dependencies and systems on the same architectural layer as

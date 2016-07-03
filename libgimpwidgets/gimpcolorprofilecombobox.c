@@ -525,7 +525,7 @@ gimp_color_profile_combo_box_set_active_file (GimpColorProfileComboBox *combo,
  *               This is a newly allocated string and should be released
  *               using g_free() when it is not any longer needed.
  *
- * Deprecated: use gimp_color_profile_combo_box_get_active_file() inatead.
+ * Deprecated: use gimp_color_profile_combo_box_get_active_file() instead.
  *
  * Since: 2.4
  **/

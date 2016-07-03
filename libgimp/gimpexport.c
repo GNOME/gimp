@@ -451,7 +451,7 @@ confirm_save_dialog (const gchar *message,
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_icon_name ("dialog-warning",
+  image = gtk_image_new_from_icon_name ("gimp-warning",
                                         GTK_ICON_SIZE_DIALOG);
   gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
@@ -1012,7 +1012,7 @@ gimp_export_dialog_new (const gchar *format_name,
   button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
                                    _("_Export"), GTK_RESPONSE_OK);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name ("document-save",
+                        gtk_image_new_from_icon_name ("gimp-save",
                                                       GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),

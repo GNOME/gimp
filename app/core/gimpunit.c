@@ -78,7 +78,7 @@ static const GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
  */
 static const GimpUnitDef gimp_unit_percent =
 {
-    FALSE,  0.0, 0, "percent",     "%",  "%", 
+    FALSE,  0.0, 0, "percent",     "%",  "%",
     NC_("singular", "percent"),    NC_("plural", "percent")
 };
 

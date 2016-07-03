@@ -3895,7 +3895,7 @@ gimp_prop_stock_image_new (GObject     *config,
 }
 
 /**
- * gimp_prop_icom_image_new:
+ * gimp_prop_icon_image_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of string property.
  * @icon_size:     Size of desired icon image.

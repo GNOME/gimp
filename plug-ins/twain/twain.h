@@ -1272,7 +1272,7 @@ typedef struct {
 /*  This has a couple implications:                                         */
 /*  1) Any additional DAT_ features require modifications to the thunk code */
 /*     for thunker support.                                                 */
-/*  2) Any applications which use the custom capabailites are not supported */
+/*  2) Any applications which use the custom capabilities are not supported */
 /*     under thunking since we have no way of knowing what size data (if    */
 /*     any) is being passed.                                                */
 

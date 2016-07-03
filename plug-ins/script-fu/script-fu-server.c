@@ -42,7 +42,7 @@
 typedef short sa_family_t;	/* Not defined by winsock */
 
 #ifndef AI_ADDRCONFIG
-/* Missing from mingw headers, but value is publicly documented 
+/* Missing from mingw headers, but value is publicly documented
  * on http://msdn.microsoft.com/en-us/library/ms737530%28v=VS.85%29.aspx
  */
 #define AI_ADDRCONFIG 0x0400

@@ -80,12 +80,6 @@ header files installed.
      not be disabled.
 
  10. For MyPaint brushes, brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@ is used.
-
-     To build and install libmypaint:
-
-       `scons prefix=<your prefix>`
-       `scons prefix=<your prefix> install`
-
      The libmypaint repository is hosted at:
 
         https://github.com/mypaint/libmypaint
@@ -109,19 +103,25 @@ header files installed.
      or newer) to be present. You will also need PyGTK and the
      respective development headers.
 
- 13. Configure GIMP by running the `configure' script. You may want
+ 13. Windows builds can now generate backtrace logs upon a crash.
+     The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
+     The feature depends on Dr.MinGW's ExcHndl library:
+
+        https://github.com/jrfonseca/drmingw
+
+ 14. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 14. Build GIMP by running `make'. The use of GNU make is recommended.
+ 15. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 15. Install GIMP by running `make install'. In order to avoid clashes
+ 16. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-@GIMP_APP_VERSION@.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-@GIMP_APP_VERSION@.
 
- 16. Summary of required packages and what version you need:
+ 17. Summary of required packages and what version you need:
 
      Package Name	Version
 
@@ -146,7 +146,7 @@ header files installed.
      pangocairo 	@PANGOCAIRO_REQUIRED_VERSION@
      zlib
 
- 17. Summary of optional packages:
+ 18. Summary of optional packages:
 
      Package Name	Version		Feature
 
@@ -164,8 +164,9 @@ header files installed.
      libwmf		@WMF_REQUIRED_VERSION@		WMF
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
+     ExcHndl		-		Crash logs on Windows with Dr. MinGW
 
- 18. Summary of optional runtime dependencies:
+ 19. Summary of optional runtime dependencies:
 
      darktable >= 1.7, with lua support enabled for raw loading
      xdg-email for sending emails
@@ -183,9 +184,9 @@ compilation and installation output is not shown.
 
   % tar xvfz gimp-@GIMP_VERSION@.tar.gz   # unpack the sources
   % cd gimp-@GIMP_VERSION@                # change to the toplevel directory
-  % ./configure                  # run the `configure' script
-  % make                         # build GIMP
-  % make install                 # install GIMP
+  % ./configure                           # run the `configure' script
+  % make                                  # build GIMP
+  % make install                          # install GIMP
 
 
 The `configure' script examines your system, and adapts GIMP to run on
@@ -194,6 +195,9 @@ generic instructions included at the end of this file. All of the
 options can be listed using the command `./configure --help'. There
 are several special options the GIMP `configure' script recognizes.
 These are:
+
+  --enable-vector-icons.  This option installs vectorial icons instead
+    of raster icons.
 
   --enable-shared and --disable-shared.  This option affects whether
      shared libraries will be built or not. Shared libraries provide
@@ -206,7 +210,7 @@ These are:
      on. The default is for debugging to be disabled. NOTE: This
      option is intended primarily as a convenience for developers.
 
-  --enable-profile and --disable-profile. This options causes the build
+  --enable-profile and --disable-profile. This option causes the build
      process to compile with execution profiling enabled. The default is
      for profiling to be disabled. NOTE: This option is intended primarily
      as a convenience for developers.
@@ -298,9 +302,10 @@ These are:
   --disable-mp. This option allows you to disable support for multiple
      processors. It is enabled by default.
 
-  --with-sendmail=[PATH]. This option is used to tell GIMP where to find
-     the sendmail command. Normally this options don't have to be used
-     because configure tries to find it in the usual places.
+  --with-sendmail[=PATH]. This option is used to tell GIMP to send email
+     through sendmail instead of xdg-email. You can optionally indicate
+     where to find the sendmail command. Otherwise sendmail will simply
+     be searched in your $PATH at runtime.
 
   --with-desktop-dir=[PATH]. This option specifies where to install
      desktop files. These files are used by desktop environments that

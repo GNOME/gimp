@@ -161,7 +161,7 @@ GimpColorTransform *
                                                   GtkWidget        *widget,
                                                   const Babl       *src_format,
                                                   const Babl       *dest_format);
-
+void   gimp_view_renderer_free_color_transform   (GimpViewRenderer *renderer);
 
 
 #endif /* __GIMP_VIEW_RENDERER_H__ */

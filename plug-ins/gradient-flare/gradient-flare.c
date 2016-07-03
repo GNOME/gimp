@@ -2129,7 +2129,7 @@ calc_rays_pix (guchar *dest_pix, gdouble x, gdouble y)
  *  Calc sflare's pixel (RGBA) value
  *
  *  the sflare (second flares) are needed to be rendered one each
- *  sequencially, onto the source image, such as like usual layer
+ *  sequentially, onto the source image, such as like usual layer
  *  operations. So the function takes src_pix as argment.  glow, rays
  *  routines don't have src_pix as argment, because of convienience.
  *
@@ -3286,7 +3286,7 @@ dlg_selector_do_delete_callback (GtkWidget *widget,
 /*************************************************************************/
 
 /*
-        This is gflare editor dilaog, one which opens by clicking
+        This is gflare editor dialog, one which opens by clicking
         "Edit" button on the selector page in the main dialog.
  */
 

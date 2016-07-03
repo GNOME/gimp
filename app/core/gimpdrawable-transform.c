@@ -210,9 +210,15 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
 
       /*  "Outside" a channel is transparency, not the bg color  */
       if (GIMP_IS_CHANNEL (drawable))
-        gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
+        {
+          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
+        }
       else
-        gimp_context_get_background (context, &bg);
+        {
+          gimp_context_get_background (context, &bg);
+          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                             &bg, &bg);
+        }
 
       color = gimp_gegl_color_new (&bg);
       gegl_buffer_set_color (new_buffer, NULL, color);
@@ -418,9 +424,15 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
       /*  "Outside" a channel is transparency, not the bg color  */
       if (GIMP_IS_CHANNEL (drawable))
-        gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
+        {
+          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
+        }
       else
-        gimp_context_get_background (context, &bg);
+        {
+          gimp_context_get_background (context, &bg);
+          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                             &bg, &bg);
+        }
 
       color = gimp_gegl_color_new (&bg);
       gegl_buffer_set_color (new_buffer, NULL, color);

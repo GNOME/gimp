@@ -57,7 +57,7 @@ static const GimpActionEntry dockable_actions[] =
   { "dockable-tab-style-menu",    NULL, NC_("dockable-action",
                                             "_Tab Style")      },
 
-  { "dockable-close-tab", "window-close",
+  { "dockable-close-tab", GIMP_STOCK_QUIT,
     NC_("dockable-action", "_Close Tab"), "", NULL,
     G_CALLBACK (dockable_close_tab_cmd_callback),
     GIMP_HELP_DOCK_TAB_CLOSE },

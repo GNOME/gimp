@@ -29,6 +29,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 #include "core/gimpsymmetry.h"
 
 #include "gimperaser.h"
@@ -95,7 +96,8 @@ gimp_eraser_paint (GimpPaintCore    *paint_core,
           if (! gimp_drawable_has_alpha (drawable))
             {
               /* Erasing on a drawable without alpha is equivalent to
-               * drawing with background color. So let's save history. */
+               * drawing with background color. So let's save history.
+               */
               GimpContext *context = GIMP_CONTEXT (paint_options);
               GimpRGB      background;
 
@@ -153,6 +155,8 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
     return;
 
   gimp_context_get_background (context, &background);
+  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                     &background, &background);
   color = gimp_gegl_color_new (&background);
 
   if (options->anti_erase)

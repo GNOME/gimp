@@ -103,6 +103,8 @@ struct _GimpGui
                                              GimpImage           *image,
                                              GimpContext         *context,
                                              GimpColorProfile   **dest_profile,
+                                             GimpColorRenderingIntent *intent,
+                                             gboolean            *bpc,
                                              gboolean            *dont_ask);
 };
 
@@ -192,6 +194,8 @@ GimpColorProfilePolicy
                                             GimpImage           *image,
                                             GimpContext         *context,
                                             GimpColorProfile   **dest_profile,
+                                            GimpColorRenderingIntent *intent,
+                                            gboolean            *bpc,
                                             gboolean            *dont_ask);
 
 

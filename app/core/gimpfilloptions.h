@@ -48,28 +48,32 @@ struct _GimpFillOptionsClass
 
 GType             gimp_fill_options_get_type         (void) G_GNUC_CONST;
 
-GimpFillOptions * gimp_fill_options_new              (Gimp               *gimp,
-                                                      GimpContext        *context,
-                                                      gboolean            use_context_color);
+GimpFillOptions * gimp_fill_options_new              (Gimp                *gimp,
+                                                      GimpContext         *context,
+                                                      gboolean             use_context_color);
 
-GimpFillStyle     gimp_fill_options_get_style        (GimpFillOptions    *options);
-void              gimp_fill_options_set_style        (GimpFillOptions    *options,
-                                                      GimpFillStyle       style);
+GimpFillStyle     gimp_fill_options_get_style        (GimpFillOptions     *options);
+void              gimp_fill_options_set_style        (GimpFillOptions     *options,
+                                                      GimpFillStyle        style);
 
-gboolean          gimp_fill_options_get_antialias    (GimpFillOptions    *options);
-void              gimp_fill_options_set_antialias    (GimpFillOptions    *options,
-                                                      gboolean            antialias);
+gboolean          gimp_fill_options_get_antialias    (GimpFillOptions     *options);
+void              gimp_fill_options_set_antialias    (GimpFillOptions     *options,
+                                                      gboolean             antialias);
 
-gboolean          gimp_fill_options_set_by_fill_type (GimpFillOptions    *options,
-                                                      GimpContext        *context,
-                                                      GimpFillType        fill_type,
-                                                      GError            **error);
-gboolean          gimp_fill_options_set_by_fill_mode (GimpFillOptions    *options,
-                                                      GimpContext        *context,
-                                                      GimpBucketFillMode  fill_mode,
-                                                      GError            **error);
+gboolean          gimp_fill_options_set_by_fill_type (GimpFillOptions     *options,
+                                                      GimpContext         *context,
+                                                      GimpFillType         fill_type,
+                                                      GError             **error);
+gboolean          gimp_fill_options_set_by_fill_mode (GimpFillOptions     *options,
+                                                      GimpContext         *context,
+                                                      GimpBucketFillMode   fill_mode,
+                                                      GError             **error);
 
-const gchar     * gimp_fill_options_get_undo_desc    (GimpFillOptions    *options);
+const gchar     * gimp_fill_options_get_undo_desc    (GimpFillOptions     *options);
+
+GeglBuffer      * gimp_fill_options_create_buffer    (GimpFillOptions     *options,
+                                                      GimpDrawable        *drawable,
+                                                      const GeglRectangle *rect);
 
 
 #endif /* __GIMP_FILL_OPTIONS_H__ */

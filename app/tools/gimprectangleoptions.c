@@ -689,7 +689,7 @@ gimp_rectangle_options_get_width_entry (GimpRectangleOptions *rectangle_options)
 
   return private->width_entry;
 }
-  
+
 /**
  * gimp_rectangle_options_fixed_rule_changed:
  * @combo_box:

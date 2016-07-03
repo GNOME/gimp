@@ -11,7 +11,7 @@ tagsdata_DATA =	$(tagsdata_data_files)
 EXTRA_DIST = \
 	$(tagsdata_DATA)	\
 	$(tagsdata_in_files)	\
-	gimp-tags.dtd		
+	gimp-tags.dtd
 
 DISTCLEANFILES = $(tagsdata_data_files)
 

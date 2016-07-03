@@ -135,7 +135,7 @@ static void        cdisplay_colorblind_set_deficiency  (CdisplayColorblind    *c
   /* The RGB<->LMS transforms above are computed from the human cone
    * photo-pigment absorption spectra and the monitor phosphor
    * emission spectra. These parameters are fairly constant for most
-   * humans and most montiors (at least for modern CRTs). However,
+   * humans and most monitors (at least for modern CRTs). However,
    * gamma will vary quite a bit, as it is a property of the monitor
    * (eg. amplifier gain), the video card, and even the
    * software. Further, users can adjust their gammas (either via

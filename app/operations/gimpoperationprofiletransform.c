@@ -250,6 +250,8 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
       if (self->bpc)
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
+      flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+
       self->transform = gimp_color_transform_new (self->src_profile,  format,
                                                   self->dest_profile, format,
                                                   self->intent, flags);

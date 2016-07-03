@@ -40,13 +40,13 @@ static const GimpActionEntry text_editor_actions[] =
     "Text Editor Toolbar", NULL, NULL, NULL,
     GIMP_HELP_TEXT_EDITOR_DIALOG },
 
-  { "text-editor-load", "document-open",
+  { "text-editor-load", GIMP_STOCK_OPEN,
     NC_("text-editor-action", "Open"), NULL,
     NC_("text-editor-action", "Load text from file"),
     G_CALLBACK (text_editor_load_cmd_callback),
     NULL },
 
-  { "text-editor-clear", "edit-clear",
+  { "text-editor-clear", GIMP_STOCK_EDIT_CLEAR,
     NC_("text-editor-action", "Clear"), NULL,
     NC_("text-editor-action", "Clear all text"),
     G_CALLBACK (text_editor_clear_cmd_callback),

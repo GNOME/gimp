@@ -14,7 +14,7 @@
    height="16"
    width="16"
    version="1.1"
-   inkscape:version="0.91+devel r"
+   inkscape:version="0.92pre1 unknown"
    sodipodi:docname="gimp-prefs-system-resources.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -28,14 +28,18 @@
      inkscape:window-width="1051"
      inkscape:window-height="480"
      id="namedview1523"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="14.75"
-     inkscape:cx="-845.11117"
-     inkscape:cy="-78.32236"
+     inkscape:cx="5.6509021"
+     inkscape:cy="5.4619747"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg7384" />
+     inkscape:current-layer="svg7384">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4288" />
+  </sodipodi:namedview>
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -44,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -218,6 +222,15 @@
        x1="-121"
        id="linearGradient8131"
        xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(-836.87388,-376.58905)"
+       gradientUnits="userSpaceOnUse"
+       y2="18"
+       x2="-120"
+       y1="18"
+       x1="-121"
+       id="linearGradient8131-0"
+       xlink:href="#linearGradient19282-4" />
   </defs>
   <g
      transform="translate(-334.55327,-198.58905)"
@@ -258,14 +271,6 @@
          y="17"
          rx="2"
          ry="2"
-         transform="scale(-1,-1)" />
-      <rect
-         style="fill:url(#linearGradient8127);fill-opacity:1;stroke:none"
-         id="rect22443"
-         width="1"
-         height="2"
-         x="-125"
-         y="17"
          transform="scale(-1,-1)" />
       <rect
          style="fill:url(#linearGradient8125);fill-opacity:1;stroke:none"
@@ -391,4 +396,14 @@
          style="fill:url(#linearGradient8117);fill-opacity:1;stroke:none" />
     </g>
   </g>
+  <rect
+     style="display:inline;fill:url(#linearGradient8131-0);fill-opacity:1;stroke:none"
+     id="rect22439-1"
+     width="1"
+     height="2"
+     x="-10"
+     y="-3"
+     rx="2"
+     ry="2"
+     transform="scale(-1)" />
 </svg>

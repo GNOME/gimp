@@ -44,7 +44,7 @@ struct _GimpCropOptions
    * will resize the image/layer.
    */
   gboolean         allow_growing;
-  
+
 };
 
 

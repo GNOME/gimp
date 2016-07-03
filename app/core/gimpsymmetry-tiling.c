@@ -105,7 +105,7 @@ gimp_tiling_class_init (GimpTilingClass *klass)
                            "x-interval",
                            _("Interval X"),
                            _("Interval on the X axis (pixels)"),
-                           0.0, 10000.0, 0.0,
+                           0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
@@ -113,7 +113,7 @@ gimp_tiling_class_init (GimpTilingClass *klass)
                            "y-interval",
                            _("Interval Y"),
                            _("Interval on the Y axis (pixels)"),
-                           0.0, 10000.0, 0.0,
+                           0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
@@ -121,7 +121,7 @@ gimp_tiling_class_init (GimpTilingClass *klass)
                            "shift",
                            _("Shift"),
                            _("X-shift between lines (pixels)"),
-                           0.0, 10000.0, 0.0,
+                           0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
@@ -150,26 +150,17 @@ gimp_tiling_init (GimpTiling *tiling)
 static void
 gimp_tiling_constructed (GObject *object)
 {
-  GimpSymmetry     *sym    = GIMP_SYMMETRY (object);
-  GimpTiling       *tiling = GIMP_TILING (object);
-  GParamSpecDouble *dspec;
+  GimpSymmetry *sym    = GIMP_SYMMETRY (object);
+  GimpTiling   *tiling = GIMP_TILING (object);
 
-  /* Update property values to actual image size. */
-  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                                             "x-interval"));
-  dspec->maximum = gimp_image_get_width (sym->image);
-
-  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                                             "shift"));
-  dspec->maximum = gimp_image_get_width (sym->image);
-
-  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                                             "y-interval"));
-  dspec->maximum = gimp_image_get_height (sym->image);
-
-  g_signal_connect (sym->image, "size-changed-detailed",
-                    G_CALLBACK (gimp_tiling_image_size_changed_cb),
-                    sym);
+  /* TODO:
+   * - "x-interval" property should be soft-limited by the image width;
+   * - "shift" property should be soft-limited by the width;
+   * - "y-interval" property should be soft-limited by the height.
+   */
+  g_signal_connect_object (sym->image, "size-changed-detailed",
+                           G_CALLBACK (gimp_tiling_image_size_changed_cb),
+                           sym, 0);
 
   /* Set reasonable defaults. */
   tiling->interval_x = gimp_image_get_width (sym->image) / 2;
@@ -375,26 +366,11 @@ gimp_tiling_image_size_changed_cb (GimpImage    *image,
                                    gint          previous_height,
                                    GimpSymmetry *sym)
 {
-  GParamSpecDouble *dspec;
-
-  if (previous_width != gimp_image_get_width (image))
-    {
-      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                                                 "x-interval"));
-      dspec->maximum = gimp_image_get_width (sym->image);
-
-      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                                                 "shift"));
-      dspec->maximum = gimp_image_get_width (sym->image);
-    }
-  if (previous_height != gimp_image_get_height (image))
-    {
-      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
-                                                                 "y-interval"));
-      dspec->maximum = gimp_image_get_height (sym->image);
-    }
-
   if (previous_width != gimp_image_get_width (image) ||
       previous_height != gimp_image_get_height (image))
-    g_signal_emit_by_name (sym, "update-ui", sym->image);
+    {
+      /* TODO: change soft limits of "x-interval", "y-interval" and
+       * "shift" properties. */
+      g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
+    }
 }

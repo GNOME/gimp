@@ -167,7 +167,7 @@ void   _gimp_pick_button_quartz_pick (GimpPickButton *button);
    * CGWindowListCreateImage expects a rectangle in screen coordinates
    * with the origin in the upper left (contrary to Cocoa). The origin is
    * on the screen showing the menu bar (this is the screen at index 0 in the
-   * screens array). So, after convering the rectangle to Cocoa screen
+   * screens array). So, after converting the rectangle to Cocoa screen
    * coordinates, we use the height of this particular screen to translate
    * to the coordinate space expected by CGWindowListCreateImage.
    */

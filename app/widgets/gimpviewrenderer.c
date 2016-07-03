@@ -113,8 +113,6 @@ static cairo_pattern_t *
                  gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
                                                        GtkWidget          *widget);
 
-static void      gimp_view_renderer_transform_free    (GimpViewRenderer   *renderer);
-
 
 G_DEFINE_TYPE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
 
@@ -362,7 +360,7 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
       renderer->priv->pixbuf = NULL;
     }
 
-  gimp_view_renderer_transform_free (renderer);
+  gimp_view_renderer_free_color_transform (renderer);
 
   if (renderer->viewable)
     {
@@ -887,8 +885,7 @@ static void
 gimp_view_renderer_profile_changed (GimpViewRenderer *renderer,
                                     GimpViewable     *viewable)
 {
-  gimp_view_renderer_transform_free (renderer);
-  gimp_view_renderer_invalidate (renderer);
+  gimp_view_renderer_free_color_transform (renderer);
 }
 
 static void
@@ -896,8 +893,7 @@ gimp_view_renderer_config_notify (GObject          *config,
                                   const GParamSpec *pspec,
                                   GimpViewRenderer *renderer)
 {
-  gimp_view_renderer_transform_free (renderer);
-  gimp_view_renderer_invalidate (renderer);
+  gimp_view_renderer_free_color_transform (renderer);
 }
 
 
@@ -983,9 +979,8 @@ gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
 
   format = gimp_pixbuf_get_format (pixbuf);
 
-  transform =
-    gimp_view_renderer_get_color_transform (renderer, widget,
-                                            format, format);
+  transform = gimp_view_renderer_get_color_transform (renderer, widget,
+                                                      format, format);
 
   if (transform)
     {
@@ -1133,6 +1128,19 @@ gimp_view_renderer_get_color_transform (GimpViewRenderer *renderer,
   return renderer->priv->profile_transform;
 }
 
+void
+gimp_view_renderer_free_color_transform (GimpViewRenderer *renderer)
+{
+  g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
+
+  if (renderer->priv->profile_transform)
+    {
+      g_object_unref (renderer->priv->profile_transform);
+      renderer->priv->profile_transform = NULL;
+    }
+
+  gimp_view_renderer_invalidate (renderer);
+}
 
 /*  private functions  */
 
@@ -1412,14 +1420,4 @@ gimp_view_renderer_create_background (GimpViewRenderer *renderer,
     }
 
   return pattern;
-}
-
-static void
-gimp_view_renderer_transform_free (GimpViewRenderer *renderer)
-{
-  if (renderer->priv->profile_transform)
-    {
-      g_object_unref (renderer->priv->profile_transform);
-      renderer->priv->profile_transform = NULL;
-    }
 }

@@ -75,6 +75,9 @@
 /* To get PROCESS_DEP_* defined we need _WIN32_WINNT at 0x0601. We still
  * use the API optionally only if present, though.
  */
+#ifdef _WIN32_WINNT
+#undef _WIN32_WINNT
+#endif
 #define _WIN32_WINNT 0x0601
 #include <windows.h>
 #include <conio.h>
@@ -321,8 +324,9 @@ main (int    argc,
     typedef BOOL (WINAPI *t_SetDllDirectoryA) (LPCSTR lpPathName);
     t_SetDllDirectoryA p_SetDllDirectoryA;
 
-    p_SetDllDirectoryA = GetProcAddress (GetModuleHandle ("kernel32.dll"),
-					 "SetDllDirectoryA");
+    p_SetDllDirectoryA =
+      (t_SetDllDirectoryA) GetProcAddress (GetModuleHandle ("kernel32.dll"),
+                                           "SetDllDirectoryA");
     if (p_SetDllDirectoryA)
       (*p_SetDllDirectoryA) ("");
   }
@@ -396,8 +400,9 @@ main (int    argc,
     typedef BOOL (WINAPI *t_SetProcessDEPPolicy) (DWORD dwFlags);
     t_SetProcessDEPPolicy p_SetProcessDEPPolicy;
 
-    p_SetProcessDEPPolicy = GetProcAddress (GetModuleHandle ("kernel32.dll"),
-					    "SetProcessDEPPolicy");
+    p_SetProcessDEPPolicy =
+      (t_SetProcessDEPPolicy) GetProcAddress (GetModuleHandle ("kernel32.dll"),
+                                              "SetProcessDEPPolicy");
     if (p_SetProcessDEPPolicy)
       (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
   }
@@ -408,8 +413,9 @@ main (int    argc,
     typedef HRESULT (WINAPI *t_SetCurrentProcessExplicitAppUserModelID) (PCWSTR lpPathName);
     t_SetCurrentProcessExplicitAppUserModelID p_SetCurrentProcessExplicitAppUserModelID;
 
-    p_SetCurrentProcessExplicitAppUserModelID = GetProcAddress (GetModuleHandle ("shell32.dll"),
-                                                                "SetCurrentProcessExplicitAppUserModelID");
+    p_SetCurrentProcessExplicitAppUserModelID =
+      (t_SetCurrentProcessExplicitAppUserModelID) GetProcAddress (GetModuleHandle ("shell32.dll"),
+                                                                  "SetCurrentProcessExplicitAppUserModelID");
     if (p_SetCurrentProcessExplicitAppUserModelID)
       (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
   }
@@ -520,8 +526,8 @@ main (int    argc,
   if (! new_instance && gimp_unique_open (filenames, as_new))
     {
       if (be_verbose)
-	g_print ("%s\n",
-		 _("Another GIMP instance is already running."));
+        g_print ("%s\n",
+                 _("Another GIMP instance is already running."));
 
       if (batch_commands)
         gimp_unique_batch_run (batch_interpreter, batch_commands);

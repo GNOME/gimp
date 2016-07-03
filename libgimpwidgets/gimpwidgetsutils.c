@@ -112,7 +112,7 @@ find_mnemonic_widget (GtkWidget *widget,
  * @label_text: The text for the #GtkLabel which will be attached left of
  *              the widget.
  * @xalign:     The horizontal alignment of the #GtkLabel.
- * @yalign:     The vertival alignment of the #GtkLabel.
+ * @yalign:     The vertical alignment of the #GtkLabel.
  * @widget:     The #GtkWidget to attach right of the label.
  * @colspan:    The number of columns the widget will use.
  * @left_align: %TRUE if the widget should be left-aligned.
@@ -184,7 +184,7 @@ gimp_table_attach_aligned (GtkTable    *table,
  *
  * This function is useful if you want to change the font attributes
  * of a #GtkLabel. This is an alternative to using PangoMarkup which
- * is slow to parse and akward to handle in an i18n-friendly way.
+ * is slow to parse and awkward to handle in an i18n-friendly way.
  *
  * The attributes are set on the complete label, from start to end. If
  * you need to set attributes on part of the label, you will have to
@@ -352,6 +352,123 @@ gimp_get_monitor_at_pointer (GdkScreen **screen)
   return gdk_screen_get_monitor_at_point (*screen, x, y);
 }
 
+typedef void (* MonitorChangedCallback) (GtkWidget *, gpointer);
+
+typedef struct
+{
+  GtkWidget *widget;
+  gint       monitor;
+
+  MonitorChangedCallback callback;
+  gpointer               user_data;
+} TrackMonitorData;
+
+static gboolean
+track_monitor_configure_event (GtkWidget        *toplevel,
+                               GdkEvent         *event,
+                               TrackMonitorData *track_data)
+{
+  gint monitor = gimp_widget_get_monitor (toplevel);
+
+  if (monitor != track_data->monitor)
+    {
+      track_data->monitor = monitor;
+
+      track_data->callback (track_data->widget, track_data->user_data);
+    }
+
+  return FALSE;
+}
+
+static void
+track_monitor_hierarchy_changed (GtkWidget        *widget,
+                                 GtkWidget        *previous_toplevel,
+                                 TrackMonitorData *track_data)
+{
+  GtkWidget *toplevel;
+
+  if (previous_toplevel)
+    {
+      g_signal_handlers_disconnect_by_func (previous_toplevel,
+                                            track_monitor_configure_event,
+                                            track_data);
+    }
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  if (GTK_IS_WINDOW (toplevel))
+    {
+      GClosure *closure;
+      gint      monitor;
+
+      closure = g_cclosure_new (G_CALLBACK (track_monitor_configure_event),
+                                track_data, NULL);
+      g_object_watch_closure (G_OBJECT (widget), closure);
+      g_signal_connect_closure (toplevel, "configure-event", closure, FALSE);
+
+      monitor = gimp_widget_get_monitor (toplevel);
+
+      if (monitor != track_data->monitor)
+        {
+          track_data->monitor = monitor;
+
+          track_data->callback (track_data->widget, track_data->user_data);
+        }
+    }
+}
+
+/**
+ * gimp_widget_track_monitor:
+ * @widget:                   a #GtkWidget
+ * @monitor_changed_callback: the callback when @widget's monitor changes
+ * @user_data:                data passed to @monitor_changed_callback
+ *
+ * This function behaves as if #GtkWidget had a signal
+ *
+ * GtkWidget::monitor_changed(GtkWidget *widget, gpointer user_data)
+ *
+ * That is emitted whenever @widget's toplevel window is moved from
+ * one monitor to another. This function automatically connects to
+ * the right toplevel #GtkWindow, even across moving @widget between
+ * toplevel windows.
+ *
+ * Note that this function tracks the toplevel, not @widget itself, so
+ * all a window's widgets are always considered to be on the same
+ * monitor. This is because this function is mainly used for fetching
+ * the new monitor's color profile, and it makes little sense to use
+ * different profiles for the widgets of one window.
+ *
+ * Since: 2.10
+ **/
+void
+gimp_widget_track_monitor (GtkWidget *widget,
+                           GCallback  monitor_changed_callback,
+                           gpointer   user_data)
+{
+  TrackMonitorData *track_data;
+  GtkWidget        *toplevel;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (monitor_changed_callback != NULL);
+
+  track_data = g_new0 (TrackMonitorData, 1);
+
+  track_data->widget    = widget;
+  track_data->callback  = (MonitorChangedCallback) monitor_changed_callback;
+  track_data->user_data = user_data;
+
+  g_object_weak_ref (G_OBJECT (widget), (GWeakNotify) g_free, track_data);
+
+  g_signal_connect (widget, "hierarchy-changed",
+                    G_CALLBACK (track_monitor_hierarchy_changed),
+                    track_data);
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  if (GTK_IS_WINDOW (toplevel))
+    track_monitor_hierarchy_changed (widget, NULL, track_data);
+}
+
 GimpColorProfile *
 gimp_widget_get_color_profile (GtkWidget *widget)
 {
@@ -441,10 +558,10 @@ gimp_widget_get_color_profile (GtkWidget *widget)
         gchar  *path;
         gint32  len = 0;
 
-        GetICMProfile (hdc, &len, NULL);
+        GetICMProfile (hdc, (LPDWORD) &len, NULL);
         path = g_new (gchar, len);
 
-        if (GetICMProfile (hdc, &len, path))
+        if (GetICMProfile (hdc, (LPDWORD) &len, path))
           {
             GFile *file = g_file_new_for_path (path);
 
@@ -467,8 +584,9 @@ get_display_profile (GtkWidget       *widget,
 {
   GimpColorProfile *profile = NULL;
 
-  if (config->display_profile_from_gdk)
-    profile = gimp_widget_get_color_profile (widget);
+  if (gimp_color_config_get_display_profile_from_gdk (config))
+    /* get the toplevel's profile so all a window's colors look the same */
+    profile = gimp_widget_get_color_profile (gtk_widget_get_toplevel (widget));
 
   if (! profile)
     profile = gimp_color_config_get_display_color_profile (config, NULL);
@@ -547,7 +665,9 @@ transform_cache_config_notify (GObject          *config,
 
   g_signal_handler_disconnect (config, cache->notify_id);
 
-  g_object_unref (cache->transform);
+  if (cache->transform)
+    g_object_unref (cache->transform);
+
   g_object_unref (cache->src_profile);
   g_object_unref (cache->dest_profile);
 
@@ -585,13 +705,14 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       debug_cache = g_getenv ("GIMP_DEBUG_TRANSFORM_CACHE") != NULL;
     }
 
-  switch (config->mode)
+  switch (gimp_color_config_get_mode (config))
     {
     case GIMP_COLOR_MANAGEMENT_OFF:
       return NULL;
 
     case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-      proof_profile = gimp_color_config_get_printer_color_profile (config, NULL);
+      proof_profile = gimp_color_config_get_simulation_color_profile (config,
+                                                                      NULL);
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
@@ -650,12 +771,13 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
     {
       GimpColorTransformFlags flags = 0;
 
-      if (config->simulation_use_black_point_compensation)
-        {
-          flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
-        }
+      if (gimp_color_config_get_simulation_bpc (config))
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-      if (config->simulation_gamut_check)
+      if (! gimp_color_config_get_simulation_optimize (config))
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+
+      if (gimp_color_config_get_simulation_gamut_check (config))
         {
           cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0, };
           guchar          r, g, b;
@@ -677,25 +799,26 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
                                            cache->dest_profile,
                                            cache->dest_format,
                                            cache->proof_profile,
-                                           config->simulation_intent,
-                                           config->display_intent,
+                                           gimp_color_config_get_simulation_intent (config),
+                                           gimp_color_config_get_display_intent (config),
                                            flags);
     }
   else
     {
       GimpColorTransformFlags flags = 0;
 
-      if (config->display_use_black_point_compensation)
-        {
-          flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
-        }
+      if (gimp_color_config_get_display_bpc (config))
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+
+      if (! gimp_color_config_get_display_optimize (config))
+        flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
 
       cache->transform =
         gimp_color_transform_new (cache->src_profile,
                                   cache->src_format,
                                   cache->dest_profile,
                                   cache->dest_format,
-                                  config->display_intent,
+                                  gimp_color_config_get_display_intent (config),
                                   flags);
     }
 

@@ -49,17 +49,22 @@
 /*  public functions  */
 
 GimpColorProfilePolicy
-color_profile_import_dialog_run (GimpImage         *image,
-                                 GimpContext       *context,
-                                 GtkWidget         *parent,
-                                 GimpColorProfile **dest_profile,
-                                 gboolean          *dont_ask)
+color_profile_import_dialog_run (GimpImage                 *image,
+                                 GimpContext               *context,
+                                 GtkWidget                 *parent,
+                                 GimpColorProfile         **dest_profile,
+                                 GimpColorRenderingIntent  *intent,
+                                 gboolean                  *bpc,
+                                 gboolean                  *dont_ask)
 {
   GtkWidget              *dialog;
   GtkWidget              *main_vbox;
+  GtkWidget              *vbox;
   GtkWidget              *frame;
   GtkWidget              *label;
-  GtkWidget              *toggle;
+  GtkWidget              *intent_combo;
+  GtkWidget              *bpc_toggle;
+  GtkWidget              *dont_ask_toggle;
   GimpColorProfile       *src_profile;
   GimpColorProfilePolicy  policy;
   const gchar            *title;
@@ -133,12 +138,54 @@ color_profile_import_dialog_run (GimpImage         *image,
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
+  if (intent && bpc)
+    {
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+      gtk_widget_show (vbox);
+    }
+  else
+    {
+      vbox = main_vbox;
+    }
+
+  if (intent)
+    {
+      GtkWidget *hbox;
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new_with_mnemonic (_("_Rendering Intent:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      intent_combo = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_RENDERING_INTENT);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (intent_combo),
+                                     *intent);
+      gtk_box_pack_start (GTK_BOX (hbox), intent_combo, TRUE, TRUE, 0);
+      gtk_widget_show (intent_combo);
+
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), intent_combo);
+    }
+
+  if (bpc)
+    {
+      bpc_toggle =
+        gtk_check_button_new_with_mnemonic (_("_Black Point Compensation"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bpc_toggle), *bpc);
+      gtk_box_pack_start (GTK_BOX (vbox), bpc_toggle, FALSE, FALSE, 0);
+      gtk_widget_show (bpc_toggle);
+    }
+
   if (dont_ask)
     {
-      toggle = gtk_check_button_new_with_mnemonic (_("_Don't ask me again"));
-      gtk_box_pack_end (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
-      gtk_widget_show (toggle);
+      dont_ask_toggle =
+        gtk_check_button_new_with_mnemonic (_("_Don't ask me again"));
+      gtk_box_pack_end (GTK_BOX (main_vbox), dont_ask_toggle, FALSE, FALSE, 0);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dont_ask_toggle), FALSE);
+      gtk_widget_show (dont_ask_toggle);
     }
 
   switch (gtk_dialog_run (GTK_DIALOG (dialog)))
@@ -153,10 +200,15 @@ color_profile_import_dialog_run (GimpImage         *image,
       break;
     }
 
+  if (intent)
+    gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (intent_combo),
+                                   (gint *) intent);
+
+  if (bpc)
+    *bpc = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (bpc_toggle));
+
   if (dont_ask)
-    {
-      *dont_ask = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-    }
+    *dont_ask = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dont_ask_toggle));
 
   gtk_widget_destroy (dialog);
 

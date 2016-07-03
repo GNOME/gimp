@@ -77,8 +77,11 @@ struct _GimpTextTool
   GtkIMContext   *im_context;
   gboolean        needs_im_reset;
 
+  gboolean        preedit_active;
   gchar          *preedit_string;
   gint            preedit_cursor;
+  GtkTextMark    *preedit_start;
+  GtkTextMark    *preedit_end;
 
   gboolean        overwrite_mode;
   gint            x_pos;
@@ -116,6 +119,8 @@ void       gimp_text_tool_create_vectors_warped  (GimpTextTool *text_tool);
 /*  only for the text editor  */
 void       gimp_text_tool_clear_layout           (GimpTextTool *text_tool);
 gboolean   gimp_text_tool_ensure_layout          (GimpTextTool *text_tool);
+gboolean   gimp_text_tool_apply                  (GimpTextTool *text_tool,
+                                                  gboolean      push_undo);
 
 
 #endif /* __GIMP_TEXT_TOOL_H__ */

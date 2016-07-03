@@ -848,10 +848,6 @@ gimp_image_constructed (GObject *object)
                            G_CALLBACK (gimp_viewable_size_changed),
                            image, G_CONNECT_SWAPPED);
 
-  g_signal_connect_object (config->color_management, "notify",
-                           G_CALLBACK (gimp_color_managed_profile_changed),
-                           image, G_CONNECT_SWAPPED);
-
   gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
 }
 
@@ -3413,6 +3409,25 @@ gimp_image_parasite_validate (GimpImage           *image,
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     {
       return gimp_image_validate_icc_parasite (image, parasite, NULL, error);
+    }
+  else if (strcmp (name, "gimp-comment") == 0)
+    {
+      const gchar *data   = gimp_parasite_data (parasite);
+      gssize       length = gimp_parasite_data_size (parasite);
+      gboolean     valid;
+
+      if (data[length - 1] == '\0')
+        valid = g_utf8_validate (data, -1, NULL);
+      else
+        valid = g_utf8_validate (data, length, NULL);
+
+      if (! valid)
+        {
+          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                       _("'gimp-comment' parasite validation failed: "
+                         "comment contains invalid UTF-8"));
+          return FALSE;
+        }
     }
 
   return TRUE;

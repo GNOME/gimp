@@ -43,8 +43,8 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.14])
-m4_define([gegl_required_version], [0.3.6])
+m4_define([babl_required_version], [0.1.18])
+m4_define([gegl_required_version], [0.3.8])
 m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
@@ -220,6 +220,7 @@ AS_IF([test "x$0" != "x./configure"], [
 
 # Determine a C compiler to use
 AC_PROG_CC
+AX_PROG_CC_FOR_BUILD
 AM_PROG_CC_C_O
 
 # Determine a C++ compiler to use
@@ -238,39 +239,41 @@ AM_MAINTAINER_MODE([enable])
 PKG_PROG_PKG_CONFIG(0.16)
 
 
-###########################
-# Check target architecture
-###########################
+#########################
+# Check host architecture
+#########################
 
-AC_MSG_CHECKING([for target architecture])
-case x"$target" in
-  xNONE | x)
-    target_or_host="$host" ;;
-  *)
-    target_or_host="$target" ;;
-esac
-AC_MSG_RESULT([$target_or_host])
+AC_CANONICAL_HOST
 
-case "$target_or_host" in
-  i*86-*-*)
+AC_MSG_CHECKING([for host type])
+AC_MSG_RESULT([$host])
+
+AC_MSG_CHECKING([for host processor])
+case "$host_cpu" in
+  i*86)
     have_x86=yes
     AC_DEFINE(ARCH_X86, 1, [Define to 1 if you are compiling for ix86.])
+    AC_MSG_RESULT([x86])
     ;;
-  x86_64-*-*)
+  x86_64)
     have_x86=yes
     AC_DEFINE(ARCH_X86, 1, [Define to 1 if you are compiling for ix86.])
     AC_DEFINE(ARCH_X86_64, 1, [Define to 1 if you are compiling for amd64.])
+    AC_MSG_RESULT([x86-64])
     ;;
-  ppc-*-* | powerpc-*)
+  ppc | powerpc)
     have_ppc=yes
     AC_DEFINE(ARCH_PPC, 1, [Define to 1 if you are compiling for PowerPC.])
+    AC_MSG_RESULT([PowerPC])
     ;;
-  ppc64-*-* | powerpc64-*)
+  ppc64 | powerpc64)
     have_ppc=yes
     AC_DEFINE(ARCH_PPC, 1, [Define to 1 if you are compiling for PowerPC.])
     AC_DEFINE(ARCH_PPC64, 1, [Define to 1 if you are compiling for PowerPC64.])
+    AC_MSG_RESULT([64-bit PowerPC])
     ;;
   *)
+    AC_MSG_RESULT([unknown])
     ;;
 esac
 
@@ -279,9 +282,9 @@ esac
 # Check for Win32
 #################
 
-AC_MSG_CHECKING([for some Win32 platform])
-case "$target_or_host" in
-  *-*-mingw* | *-*-cygwin*)
+AC_MSG_CHECKING([if compiling for Win32])
+case "$host_os" in
+  mingw* | cygwin*)
     platform_win32=yes
     ;;
   *)
@@ -291,25 +294,27 @@ esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
 
-AC_MSG_CHECKING([for native Win32])
-case "$target_or_host" in
-  *-*-mingw*)
-    os_win32=yes
-    case "$host" in
-      x86_64-*-*)
-	;;
-      *)
-	WIN32_LARGE_ADDRESS_AWARE='-Wl,--large-address-aware'
-	;;
-    esac
-    PATHSEP=';'
-    ;;
-  *)
-    os_win32=no
-    PATHSEP=':'
-    ;;
-esac
-AC_MSG_RESULT([$os_win32])
+PATHSEP=':'
+os_win32=no
+if test "x$platform_win32" != xno; then
+  AC_MSG_CHECKING([if this is native Win32])
+  case "$host_os" in
+    mingw*)
+      os_win32=yes
+      case "$host_cpu" in
+        x86_64)
+        ;;
+        *)
+        WIN32_LARGE_ADDRESS_AWARE='-Wl,--large-address-aware'
+        ;;
+      esac
+      PATHSEP=';'
+      ;;
+    *)
+      ;;
+  esac
+  AC_MSG_RESULT([$os_win32])
+fi
 AC_SUBST(WIN32_LARGE_ADDRESS_AWARE)
 AC_SUBST(PATHSEP)
 AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
@@ -326,6 +331,25 @@ AM_CONDITIONAL(MS_LIB_AVAILABLE, test "x$ms_librarian" = xyes)
 AM_CONDITIONAL(HAVE_WINDRES, test "x$WINDRES" != "x:")
 
 AC_SUBST(WINDRES)
+
+
+####################
+# Check for Mac OS X
+####################
+
+platform_osx=no
+AC_MSG_CHECKING([if compiling for Mac OS X])
+case "$host_os" in
+  darwin*)
+     AC_MSG_RESULT(yes)
+     AC_DEFINE(PLATFORM_OSX, 1, [define to 1 if compiling for Mac OS X])
+     platform_osx=yes
+     ;;
+  *)
+     ;;
+esac
+AC_MSG_RESULT($platform_osx)
+AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
 
 
 ###############
@@ -790,11 +814,17 @@ PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version,,
 # Check for Dr. Mingw
 #####################
 
+enable_drmingw="no"
 if test "x$platform_win32" = "xyes"; then
    # Check for Dr. Mingw
    AC_CHECK_LIB(exchndl, ExcHndlSetLogFileNameA,
-		[AC_DEFINE(HAVE_EXCHNDL, 1, [Define to 1 when Dr. MingW is available])]
-		)
+                [
+                 AC_DEFINE(HAVE_EXCHNDL, 1, [Define to 1 when Dr. MingW is available])
+                 LIBS="-lexchndl $LIBS"
+                 enable_drmingw="yes"
+                ],
+                [enable_drmingw="no (ExcHndl library missing)"]
+               )
 fi
 AM_CONDITIONAL(HAVE_EXCHNDL, test "x$ac_cv_lib_exchndl_ExcHndlSetLogFileNameA" = "xyes")
 
@@ -1000,8 +1030,8 @@ if test "x$enable_altivec" = xyes; then
     AC_MSG_RESULT(no)
     AC_MSG_WARN([The compiler does not support the AltiVec command set.])
   else
-    case "$target_or_host" in
-      *-*-darwin*)
+    case "$host_os" in
+      darwin*)
         can_use_altivec=yes
         AC_DEFINE(HAVE_ALTIVEC_SYSCTL, 1,
          [Define to 1 if the altivec runtime test should use a sysctl.])
@@ -1030,8 +1060,8 @@ fi
 ###################################
 
 # MacOS X has broken SysV shm
-case "$target_or_host" in
-  *-*-darwin* | *-*-rhapsody* | *-*-machten*)
+case "$host_os" in
+  darwin* | rhapsody* | machten*)
     shmdefault=posix
     ;;
   *)
@@ -1831,22 +1861,24 @@ fi
 
 have_email="no (xdg-email not found)"
 
-AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]   use sendmail instead of xdg-email])
+AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]     use sendmail instead of xdg-email])
 
 have_sendmail=no
 # Sendmail must be explicitely enabled to replace xdg-email implementation.
 if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
   if test "x$with_sendmail" = "xyes"; then
       sendmail_path=$PATH:/usr/sbin:/usr/lib
+      AC_DEFINE_UNQUOTED(SENDMAIL, "",
+                         [The MTA used by the mail plug-in.])
   else
       sendmail_path=$with_sendmail
+      AC_DEFINE_UNQUOTED(SENDMAIL, "$with_sendmail",
+                         [The MTA used by the mail plug-in.])
   fi
 
   AC_PATH_PROG(SENDMAIL, sendmail, , $sendmail_path)
   if test "x$SENDMAIL" != "x"; then
     have_email="yes (sendmail)"
-    AC_DEFINE_UNQUOTED(SENDMAIL, "$SENDMAIL",
-                       [The MTA used by the mail plug-in.])
   else
     # Not having sendmail at runtime is not a blocker.
     have_email="needs runtime dependency: sendmail"
@@ -1969,26 +2001,6 @@ fi
 AC_SUBST(MAIL)
 
 
-####################
-# Check for Mac OS X
-####################
-
-platform_osx=no
-AC_MSG_CHECKING([if compiling for Mac OS X])
-case "$target_or_host" in
-  *-*-darwin*)
-     AC_MSG_RESULT(yes)
-     AC_DEFINE(PLATFORM_OSX, 1, [define to 1 if compiling for Mac OS X])
-     platform_osx=yes
-     ;;
-  *)
-     AC_MSG_RESULT(no)
-     ;;
-esac
-
-AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
-
-
 ###############################
 # Check for GTK Mac Integration
 ###############################
@@ -2050,11 +2062,32 @@ if test "x$enable_vector_icons" = "xyes"; then
   else
     # Check if librsvg was built with --disable-pixbuf-loader.
     gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
-    AC_CHECK_FILE(["$gdk_pixbuf_moduledir/libpixbufloader-svg.*"],
-                  [enable_vector_icons="yes"],
-                  [enable_vector_icons="no (librsvg GdkPixbuf loader missing)"])
+    # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
+    # error: cannot check for file existence when cross compiling
+    # So let's test files the shell way.
+    if (test "x$platform_win32" = "xyes" &&
+        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
+       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
+      enable_vector_icons="yes"
+    else
+      enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
+    fi
   fi
 fi
+
+if test "x$enable_vector_icons" = "xyes"; then
+  # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
+  # to make sure we use the native pkg-config (in case we cross-compile).
+  if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+     pkg-config gio-2.0; then
+    NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
+    NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+  else
+    enable_vector_icons="no (missing native glib > glib_required_version or gio)"
+  fi
+fi
+AC_SUBST(NATIVE_GLIB_LIBS)
+AC_SUBST(NATIVE_GLIB_CFLAGS)
 AM_CONDITIONAL(ENABLE_VECTOR_ICONS, test "x$enable_vector_icons" = "xyes")
 
 if test "x$enable_vector_icons" = "xyes"; then
@@ -2513,6 +2546,7 @@ Extra Binaries:
 Optional Features:
   Language selection:  $have_iso_codes
   Vectorial icons:     $enable_vector_icons
+  Dr. Mingw (Win32):   $enable_drmingw
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa
@@ -2552,11 +2586,13 @@ $optional_deps]);
 else
   AC_MSG_ERROR([
 
+== Summary of optional features ==
+$optional_deps
+
+== Missing mandatory dependencies ==
+
 GIMP configuration failed.
 The following mandatory dependencies are missing:$required_deps
 
-See the file 'INSTALL' for more help
-
-== Additional information (options) ==
-$optional_deps]);
+See the file 'INSTALL' for more help.]);
 fi

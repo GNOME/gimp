@@ -25,7 +25,11 @@
 
 #include "tools-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorframe.h"
 #include "widgets/gimphelp-ids.h"
@@ -321,7 +325,8 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
 static void
 gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 {
-  GimpTool         *tool = GIMP_TOOL (picker_tool);
+  GimpTool         *tool    = GIMP_TOOL (picker_tool);
+  GimpContext      *context = GIMP_CONTEXT (tool->tool_info->tool_options);
   GimpDisplayShell *shell;
   GtkWidget        *hbox;
   GtkWidget        *frame;
@@ -385,6 +390,8 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
                          GIMP_COLOR_AREA_LARGE_CHECKS :
                          GIMP_COLOR_AREA_FLAT,
                          GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+  gimp_color_area_set_color_config (GIMP_COLOR_AREA (picker_tool->color_area),
+                                    context->gimp->config->color_management);
   gtk_widget_set_size_request (picker_tool->color_area, 48, -1);
   gtk_drag_dest_unset (picker_tool->color_area);
   gtk_container_add (GTK_CONTAINER (frame), picker_tool->color_area);

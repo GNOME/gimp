@@ -1512,30 +1512,37 @@ gimp_color_profile_get_format (const Babl *format,
 
       return babl_format ("R'G'B'A u8");
     }
-  else if (model == babl_model ("RGB") ||
-           model == babl_model ("RGBA"))
+  else if (model == babl_model ("RGB")  ||
+           model == babl_model ("RGBA") ||
+           model == babl_model ("RaGaBaA"))
     {
       rgb    = TRUE;
       linear = TRUE;
     }
-  else if (model == babl_model ("R'G'B'") ||
-           model == babl_model ("R'G'B'A"))
+  else if (model == babl_model ("R'G'B'")  ||
+           model == babl_model ("R'G'B'A") ||
+           model == babl_model ("R'aG'aB'aA"))
     {
       rgb = TRUE;
     }
-  else if (model == babl_model ("Y") ||
-           model == babl_model ("YA"))
+  else if (model == babl_model ("Y")  ||
+           model == babl_model ("YA") ||
+           model == babl_model ("YaA"))
     {
       gray   = TRUE;
       linear = TRUE;
     }
-  else if (model == babl_model ("Y'") ||
-           model == babl_model ("Y'A"))
+  else if (model == babl_model ("Y'")  ||
+           model == babl_model ("Y'A") ||
+           model == babl_model ("Y'aA"))
     {
       gray = TRUE;
     }
-  else if (model == babl_model ("CMYK") ||
-           model == babl_model ("CMYKA"))
+  else if (model == babl_model ("CMYK"))
+#if 0
+    /* FIXME missing from babl */
+           || model == babl_model ("CMYKA"))
+#endif
     {
       cmyk = TRUE;
     }
@@ -1687,7 +1694,7 @@ gimp_color_profile_get_format (const Babl *format,
 
   if (*lcms_format == 0)
     {
-      g_printerr ("%s: layer format %s not supported, "
+      g_printerr ("%s: format %s not supported, "
                   "falling back to float\n",
                   G_STRFUNC, babl_get_name (format));
 

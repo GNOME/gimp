@@ -68,7 +68,7 @@ noinst_PROGRAMS = jpegqual
 jpegqual_SOURCES = \
 	jpeg-quality.c  \
 	jpeg-quality.h  \
-	jpegqual.c	
+	jpegqual.c
 
 jpegqual_LDADD = \
 	$(JPEG_LIBS)		\

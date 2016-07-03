@@ -952,7 +952,7 @@ gimp_text_layer_set_line_spacing (gint32  layer_ID,
  * Get the letter spacing used in a text layer.
  *
  * This procedure returns the additional spacing between the single
- * glyps in a text layer.
+ * glyphs in a text layer.
  *
  * Returns: The letter-spacing value.
  *

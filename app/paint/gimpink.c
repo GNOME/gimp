@@ -32,6 +32,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimppickable.h"
 #include "core/gimpsymmetry.h"
 #include "core/gimptempbuf.h"
 
@@ -398,6 +399,8 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
         continue;
 
       gimp_context_get_foreground (context, &foreground);
+      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                         &foreground, &foreground);
       color = gimp_gegl_color_new (&foreground);
 
       gegl_buffer_set_color (paint_buffer, NULL, color);

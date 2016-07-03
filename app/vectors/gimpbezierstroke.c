@@ -365,7 +365,7 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
                    position,   &(subdivided[4]),
                    &(subdivided[3]));
 
-  /* subdivided 0-6 contains the bezier segement subdivided at <position> */
+  /* subdivided 0-6 contains the bezier segment subdivided at <position> */
 
   list = segment_start;
 

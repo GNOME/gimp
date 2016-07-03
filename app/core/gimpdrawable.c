@@ -586,9 +586,15 @@ gimp_drawable_resize (GimpItem    *item,
       GeglColor *col;
 
       if (! gimp_drawable_has_alpha (drawable) && ! GIMP_IS_CHANNEL (drawable))
-        gimp_context_get_background (context, &bg);
+        {
+          gimp_context_get_background (context, &bg);
+          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                             &bg, &bg);
+        }
       else
-        gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
+        {
+          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
+        }
 
       col = gimp_gegl_color_new (&bg);
 

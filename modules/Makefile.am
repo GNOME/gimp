@@ -47,7 +47,7 @@ lib_LTLIBRARIES = \
 
 modules_libadd = $(libgimpmodule) $(libgimpwidgets) $(GTK_LIBS)
 
-color_selector_libadd = $(libgimpcolor) $(modules_libadd)
+color_selector_libadd = $(libgimpconfig) $(libgimpcolor) $(modules_libadd) $(BABL_LIBS)
 display_filter_libadd = $(libgimpbase) $(libgimpconfig) $(libgimpcolor) $(modules_libadd) $(GEGL_LIBS)
 controller_libadd = $(modules_libadd)
 

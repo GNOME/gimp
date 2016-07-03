@@ -186,7 +186,7 @@ gimp_param_matrix2_values_cmp (GParamSpec   *pspec,
  * gimp_param_spec_matrix2:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
- * @blurb:         Brief desciption of param.
+ * @blurb:         Brief description of param.
  * @default_value: Value to use if none is assigned.
  * @flags:         a combination of #GParamFlags
  *
@@ -404,7 +404,7 @@ gimp_param_matrix3_values_cmp (GParamSpec   *pspec,
  * gimp_param_spec_matrix3:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
- * @blurb:         Brief desciption of param.
+ * @blurb:         Brief description of param.
  * @default_value: Value to use if none is assigned.
  * @flags:         a combination of #GParamFlags
  *

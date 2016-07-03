@@ -204,7 +204,7 @@ gimp_symmetry_editor_symmetry_notify (GimpImage          *image,
       symmetry = gimp_image_get_active_symmetry (image);
 
       if (symmetry)
-        g_signal_connect (symmetry, "update-ui",
+        g_signal_connect (symmetry, "gui-param-changed",
                           G_CALLBACK (gimp_symmetry_editor_symmetry_updated),
                           editor);
     }

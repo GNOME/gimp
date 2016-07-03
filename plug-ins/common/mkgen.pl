@@ -141,9 +141,14 @@ foreach (sort keys %plugins) {
 
     my $glib;
     if (exists $plugins{$_}->{ui}) {
-	$glib = "\$(GTK_LIBS)\t\t\\"
+	$glib = "\$(GTK_LIBS)\t\t\\";
     } else {
-	$glib = "\$(CAIRO_LIBS)\t\t\\\n\t\$(GDK_PIXBUF_LIBS)\t\\"
+	$glib = "\$(CAIRO_LIBS)\t\t\\\n\t\$(GDK_PIXBUF_LIBS)\t\\";
+
+	if (exists $plugins{$_}->{gio} &&
+	    ! exists $plugins{$_}->{gegl}) {
+	    $glib .= "\n\t\$(GIO_LIBS)\t\t\\";
+	}
     }
 
     if (exists $plugins{$_}->{gegl}) {

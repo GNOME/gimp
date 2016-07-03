@@ -23,7 +23,7 @@ sub selection_bounds {
 This procedure returns whether there is a selection for the specified image. If
 there is one, the upper left and lower right corners of the bounding box are
 returned. These coordinates are relative to the image. Please note that the
-pixel specified by the lower righthand coordinate of the bounding box is not
+pixel specified by the lower right coordinate of the bounding box is not
 part of the selection. The selection ends at the upper left corner of this
 pixel. This means the width of the selection can be calculated as (x2 - x1),
 its height as (y2 - y1).
@@ -401,7 +401,7 @@ sub selection_shrink {
     $blurb = "Shrink the image's selection";
 
     $help .= <<'HELP';
-This procedure shrinks the selection. Shrinking invovles trimming the
+This procedure shrinks the selection. Shrinking involves trimming the
 existing selection boundary on all sides by the specified number of
 pixels.
 HELP

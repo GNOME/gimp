@@ -38,7 +38,7 @@ file_psd_SOURCES = \
 	psd-image-res-load.c	\
 	psd-image-res-load.h	\
 	psd-layer-res-load.c	\
-	psd-layer-res-load.h		
+	psd-layer-res-load.h
 
 EXTRA_DIST = \
 	TODO.txt		\
