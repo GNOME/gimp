@@ -291,6 +291,8 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_TOILET_PAPER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WEB,                      NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VIDEO,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_FLOPPY,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CDROM,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GEGL,                     NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_SHAPE_CIRCLE,             NULL,        0, 0, LIBGIMP_DOMAIN },

@@ -6,6 +6,7 @@ scalable_images = \
 	scalable/gimp-cap-butt.svg			\
 	scalable/gimp-cap-round.svg			\
 	scalable/gimp-cap-square.svg			\
+	scalable/gimp-cdrom.svg				\
 	scalable/gimp-center.svg			\
 	scalable/gimp-channel-alpha.svg			\
 	scalable/gimp-channel-blue.svg			\
@@ -68,6 +69,7 @@ scalable_images = \
 	scalable/gimp-flip-horizontal.svg		\
 	scalable/gimp-flip-vertical.svg			\
 	scalable/gimp-floating-selection.svg		\
+	scalable/gimp-floppy.svg			\
 	scalable/gimp-font.svg				\
 	scalable/gimp-gegl.svg				\
 	scalable/gimp-gradient-bilinear.svg		\
@@ -326,6 +328,7 @@ scalable_images = \
 	scalable/gimp-zoom-out.svg
 
 vector24_images = \
+	24/gimp-cdrom.svg					\
 	24/gimp-center.svg				\
 	24/gimp-channel.svg				\
 	24/gimp-channel-alpha.svg			\
@@ -354,6 +357,7 @@ vector24_images = \
 	24/gimp-dynamics.svg				\
 	24/gimp-error.svg				\
 	24/gimp-floating-selection.svg			\
+	24/gimp-floppy.svg				\
 	24/gimp-gegl.svg				\
 	24/gimp-grid.svg				\
 	24/gimp-histogram.svg				\
@@ -499,6 +503,7 @@ icons16_images = \
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\
 	16/gimp-cap-square.png				\
+	16/gimp-cdrom.png					\
 	16/gimp-center.png				\
 	16/gimp-channel-alpha.png			\
 	16/gimp-channel-blue.png			\
@@ -556,6 +561,7 @@ icons16_images = \
 	16/gimp-flip-horizontal.png			\
 	16/gimp-flip-vertical.png			\
 	16/gimp-floating-selection.png			\
+	16/gimp-floppy.png				\
 	16/gimp-font.png				\
 	16/gimp-gegl.png				\
 	16/gimp-gradient-bilinear.png			\
@@ -775,7 +781,7 @@ icons22_images = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
 	22/gimp-histogram.png			\
-	22/gimp-indent.png				\
+	22/gimp-indent.png			\
 	22/gimp-input-device.png		\
 	22/gimp-justify-center.png		\
 	22/gimp-justify-fill.png		\
@@ -829,6 +835,7 @@ icons22_images = \
 	22/gimp-wilber.png
 
 icons24_images = \
+	24/gimp-cdrom.png				\
 	24/gimp-center.png			\
 	24/gimp-channel-alpha.png		\
 	24/gimp-channel-blue.png		\
@@ -855,6 +862,7 @@ icons24_images = \
 	24/gimp-display-filter.png		\
 	24/gimp-error.png			\
 	24/gimp-floating-selection.png		\
+	24/gimp-floppy.png			\
 	24/gimp-gegl.png			\
 	24/gimp-grid.png			\
 	24/gimp-gravity-east.png		\

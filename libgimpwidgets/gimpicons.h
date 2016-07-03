@@ -338,6 +338,8 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_WEB                      "gimp-web"
 #define GIMP_STOCK_VIDEO                    "gimp-video"
+#define GIMP_STOCK_FLOPPY                   "gimp-floppy"
+#define GIMP_STOCK_CDROM                    "gimp-cdrom"
 #define GIMP_STOCK_GEGL                     "gimp-gegl"
 
 #define GIMP_STOCK_SHAPE_CIRCLE             "gimp-shape-circle"
