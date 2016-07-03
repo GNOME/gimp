@@ -115,10 +115,15 @@ gimp_plug_in_progress_start (GimpPlugIn  *plug_in,
   if (proc_frame->progress)
     {
       if (! proc_frame->progress_cancel_id)
-        proc_frame->progress_cancel_id =
-          g_signal_connect (proc_frame->progress, "cancel",
-                            G_CALLBACK (gimp_plug_in_progress_cancel_callback),
-                            plug_in);
+        {
+          g_object_add_weak_pointer (G_OBJECT (proc_frame->progress),
+                                     (gpointer) &proc_frame->progress);
+
+          proc_frame->progress_cancel_id =
+            g_signal_connect (proc_frame->progress, "cancel",
+                              G_CALLBACK (gimp_plug_in_progress_cancel_callback),
+                              plug_in);
+        }
 
       if (gimp_progress_is_active (proc_frame->progress))
         {
@@ -151,6 +156,9 @@ gimp_plug_in_progress_end (GimpPlugIn          *plug_in,
           g_signal_handler_disconnect (proc_frame->progress,
                                        proc_frame->progress_cancel_id);
           proc_frame->progress_cancel_id = 0;
+
+          g_object_remove_weak_pointer (G_OBJECT (proc_frame->progress),
+                                        (gpointer) &proc_frame->progress);
         }
 
       if (gimp_plug_in_progress_detach (proc_frame->progress) < 1 &&
