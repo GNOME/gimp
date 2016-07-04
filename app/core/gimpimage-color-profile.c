@@ -478,6 +478,12 @@ gimp_image_import_color_profile (GimpImage    *image,
 
       if (policy == GIMP_COLOR_PROFILE_POLICY_CONVERT)
         {
+          if (! dest_profile)
+            {
+              dest_profile = gimp_image_get_builtin_color_profile (image);
+              g_object_ref (dest_profile);
+            }
+
           gimp_image_convert_color_profile (image, dest_profile,
                                             intent, bpc,
                                             progress, NULL);
