@@ -2,6 +2,7 @@ scalable_images = \
 	scalable/gimp-anchor.svg			\
 	scalable/gimp-bottom-svg			\
 	scalable/gimp-buffer.svg			\
+	scalable/gimp-business-card.svg			\
 	scalable/gimp-cancel.svg			\
 	scalable/gimp-cap-butt.svg			\
 	scalable/gimp-cap-round.svg			\
@@ -50,6 +51,7 @@ scalable_images = \
 	scalable/gimp-document-new.svg			\
 	scalable/gimp-down.svg   			\
 	scalable/gimp-device-status.svg			\
+	scalable/gimp-display.svg			\
 	scalable/gimp-display-filter-colorblind.svg	\
 	scalable/gimp-display-filter-contrast.svg	\
 	scalable/gimp-display-filter-gamma.svg		\
@@ -239,6 +241,7 @@ scalable_images = \
 	scalable/gimp-shape-diamond.svg			\
 	scalable/gimp-shape-square.svg			\
 	scalable/gimp-shred.svg				\
+	scalable/gimp-smartphone.svg			\
 	scalable/gimp-swap-colors.svg			\
 	scalable/gimp-system-run.svg			\
 	scalable/gimp-symmetry.svg			\
@@ -328,7 +331,8 @@ scalable_images = \
 	scalable/gimp-zoom-out.svg
 
 vector24_images = \
-	24/gimp-cdrom.svg					\
+	24/gimp-business-card.svg			\
+	24/gimp-cdrom.svg				\
 	24/gimp-center.svg				\
 	24/gimp-channel.svg				\
 	24/gimp-channel-alpha.svg			\
@@ -348,6 +352,7 @@ vector24_images = \
 	24/gimp-controller-wheel.svg			\
 	24/gimp-cursor.svg				\
 	24/gimp-device-status.svg			\
+	24/gimp-display.svg				\
 	24/gimp-display-filter.svg			\
 	24/gimp-display-filter-colorblind.svg		\
 	24/gimp-display-filter-contrast.svg		\
@@ -421,6 +426,7 @@ vector24_images = \
 	24/gimp-sample-point.svg			\
 	24/gimp-scale.svg				\
 	24/gimp-selection.svg				\
+	24/gimp-smartphone.svg				\
 	24/gimp-symmetry.svg				\
 	24/gimp-template.svg				\
 	24/gimp-text-layer.svg				\
@@ -499,11 +505,12 @@ icons16_images = \
 	16/gimp-anchor.png				\
 	16/gimp-bottom.png				\
 	16/gimp-buffer.png				\
+	16/gimp-business-card.png			\
 	16/gimp-cancel.png				\
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\
 	16/gimp-cap-square.png				\
-	16/gimp-cdrom.png					\
+	16/gimp-cdrom.png				\
 	16/gimp-center.png				\
 	16/gimp-channel-alpha.png			\
 	16/gimp-channel-blue.png			\
@@ -542,6 +549,7 @@ icons16_images = \
 	16/gimp-document-new.png			\
 	16/gimp-down.png				\
 	16/gimp-device-status.png			\
+	16/gimp-display.png				\
 	16/gimp-display-filter-colorblind.png		\
 	16/gimp-display-filter-contrast.png		\
 	16/gimp-display-filter-gamma.png		\
@@ -691,6 +699,7 @@ icons16_images = \
 	16/gimp-shape-diamond.png			\
 	16/gimp-shape-square.png			\
 	16/gimp-shred.png				\
+	16/gimp-smartphone.png				\
 	16/gimp-symmetry.png				\
 	16/gimp-system-run.png				\
 	16/gimp-template.png				\
@@ -835,7 +844,8 @@ icons22_images = \
 	22/gimp-wilber.png
 
 icons24_images = \
-	24/gimp-cdrom.png				\
+	24/gimp-business-card.png		\
+	24/gimp-cdrom.png			\
 	24/gimp-center.png			\
 	24/gimp-channel-alpha.png		\
 	24/gimp-channel-blue.png		\
@@ -854,12 +864,13 @@ icons24_images = \
 	24/gimp-controller.png			\
 	24/gimp-cursor.png			\
 	24/gimp-device-status.png		\
+	24/gimp-display.png			\
+	24/gimp-display-filter.png		\
 	24/gimp-display-filter-colorblind.png	\
 	24/gimp-display-filter-contrast.png	\
 	24/gimp-display-filter-gamma.png	\
 	24/gimp-display-filter-lcms.png		\
 	24/gimp-display-filter-proof.png	\
-	24/gimp-display-filter.png		\
 	24/gimp-error.png			\
 	24/gimp-floating-selection.png		\
 	24/gimp-floppy.png			\
@@ -892,6 +903,7 @@ icons24_images = \
 	24/gimp-sample-point.png		\
 	24/gimp-scale.png			\
 	24/gimp-selection.png			\
+	24/gimp-smartphone.png			\
 	24/gimp-symmetry.png			\
 	24/gimp-template.png			\
 	24/gimp-text-dir-ltr.png		\

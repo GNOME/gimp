@@ -293,6 +293,9 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_VIDEO,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FLOPPY,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CDROM,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DISPLAY                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SMARTPHONE                NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_BUSINESS_CARD             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GEGL,                     NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_SHAPE_CIRCLE,             NULL,        0, 0, LIBGIMP_DOMAIN },
