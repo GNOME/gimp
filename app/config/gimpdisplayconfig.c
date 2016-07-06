@@ -337,7 +337,8 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                             "perfect-mouse",
                             NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
