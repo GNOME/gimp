@@ -7,6 +7,55 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.8.16 to GIMP 2.8.18
+===================================================
+
+
+Core:
+
+ - Initialize fontconfig cache in separate thread to keep GUI
+   responsive on first startup
+ - Properly recognize layer masks as dectivated, e.g. for moving layers
+ - Create $XDG_DATA_HOME if it doesn't exist
+ - (CVE-2016-4994) Multiple Use-After-Free when parsing XCF channel
+   and layer properties
+ - Fix progress access to prevent crash on rapid sequence of commands
+
+
+GUI:
+
+ - Disable color picker buttons on OS X to prevent a GUI lockup
+ - Disable "new-style" fullscreen mode on OS X to prevent a crash
+ - Pulsing progress bar in splash screen to indicate unknown durations
+ - Fix gamut warning color for lcms display filter
+ - Fix unbolding of bold font on edit
+ - Prevent accidental renaming of wrong adjacent item
+
+
+Installer:
+
+ - Change compression settings to decrease size by 20%
+ - Add Catalan, Danish, French, Dutch
+
+
+Plug-ins:
+
+ - Fix crash on sRGB JPEG image drag & drop
+ - Fix ambiguous octal-escaped output of c-source
+ - Fix KISS CEL export
+ - Fix progress bar for file-compressor
+ - Make Script-Fu regex match return proper charater indexes for
+   unicode characters
+ - Fix Script-Fu modulo for large numbers
+
+
+General:
+
+ - Documentation updates
+ - Bug fixes
+ - Translation updates
+
+
 Overview of Changes from GIMP 2.8.14 to GIMP 2.8.16
 ===================================================
 
