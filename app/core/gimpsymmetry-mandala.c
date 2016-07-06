@@ -103,6 +103,7 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpSymmetryClass *symmetry_class = GIMP_SYMMETRY_CLASS (klass);
+  GParamSpec        *pspec;
 
   object_class->constructed         = gimp_mandala_constructed;
   object_class->finalize            = gimp_mandala_finalize;
@@ -122,6 +123,10 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
+  pspec = g_object_class_find_property (object_class, "center-x");
+  gegl_param_spec_set_property_key (pspec, "unit", "pixel-coordinate");
+  gegl_param_spec_set_property_key (pspec, "axis", "x");
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CENTER_Y,
                            "center-y",
                            _("Center ordinate"),
@@ -129,6 +134,10 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
                            0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
+
+  pspec = g_object_class_find_property (object_class, "center-y");
+  gegl_param_spec_set_property_key (pspec, "unit", "pixel-coordinate");
+  gegl_param_spec_set_property_key (pspec, "axis", "y");
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_SIZE,
                         "size",
@@ -157,10 +166,6 @@ gimp_mandala_constructed (GObject *object)
 {
   GimpSymmetry *sym = GIMP_SYMMETRY (object);
 
-  /* TODO:
-   * - "center-x" property should be soft-limited by the width;
-   * - "center-y" property should be soft-limited by the height.
-   */
   g_signal_connect_object (sym->image, "size-changed-detailed",
                            G_CALLBACK (gimp_mandala_image_size_changed_cb),
                            sym, 0);
@@ -188,6 +193,7 @@ gimp_mandala_finalize (GObject *object)
           if (iter->data)
             g_object_unref (G_OBJECT (iter->data));
         }
+
       g_list_free (mandala->ops);
       mandala->ops = NULL;
     }
@@ -211,6 +217,7 @@ gimp_mandala_set_property (GObject      *object,
           g_value_get_double (value) < (gdouble) gimp_image_get_width (image))
         {
           mandala->center_x = g_value_get_double (value);
+
           if (mandala->vertical_guide)
             {
               g_signal_handlers_block_by_func (mandala->vertical_guide,
@@ -225,11 +232,13 @@ gimp_mandala_set_property (GObject      *object,
             }
         }
       break;
+
     case PROP_CENTER_Y:
       if (g_value_get_double (value) > 0.0 &&
           g_value_get_double (value) < (gdouble) gimp_image_get_height (image))
         {
           mandala->center_y = g_value_get_double (value);
+
           if (mandala->horizontal_guide)
             {
               g_signal_handlers_block_by_func (mandala->horizontal_guide,
@@ -244,12 +253,15 @@ gimp_mandala_set_property (GObject      *object,
             }
         }
       break;
+
     case PROP_SIZE:
       mandala->size = g_value_get_int (value);
       break;
+
     case PROP_DISABLE_TRANSFORMATION:
       mandala->disable_transformation = g_value_get_boolean (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -258,9 +270,9 @@ gimp_mandala_set_property (GObject      *object,
 
 static void
 gimp_mandala_get_property (GObject    *object,
-                          guint       property_id,
-                          GValue     *value,
-                          GParamSpec *pspec)
+                           guint       property_id,
+                           GValue     *value,
+                           GParamSpec *pspec)
 {
   GimpMandala *mandala = GIMP_MANDALA (object);
 
@@ -293,6 +305,7 @@ gimp_mandala_active_changed (GimpSymmetry *sym)
     {
       if (! mandala->horizontal_guide)
         gimp_mandala_add_guide (mandala, GIMP_ORIENTATION_HORIZONTAL);
+
       if (! mandala->vertical_guide)
         gimp_mandala_add_guide (mandala, GIMP_ORIENTATION_VERTICAL);
     }
@@ -300,6 +313,7 @@ gimp_mandala_active_changed (GimpSymmetry *sym)
     {
       if (mandala->horizontal_guide)
         gimp_mandala_remove_guide (mandala, GIMP_ORIENTATION_HORIZONTAL);
+
       if (mandala->vertical_guide)
         gimp_mandala_remove_guide (mandala, GIMP_ORIENTATION_VERTICAL);
     }
@@ -329,6 +343,7 @@ gimp_mandala_add_guide (GimpMandala         *mandala,
       /* Mandala guide position at first activation is at canvas middle. */
       if (mandala->center_y < 1.0)
         mandala->center_y = (gdouble) gimp_image_get_height (image) / 2.0;
+
       position = (gint) mandala->center_y;
     }
   else
@@ -338,8 +353,10 @@ gimp_mandala_add_guide (GimpMandala         *mandala,
       /* Mandala guide position at first activation is at canvas middle. */
       if (mandala->center_x < 1.0)
         mandala->center_x = (gdouble) gimp_image_get_width (image) / 2.0;
+
       position = (gint) mandala->center_x;
     }
+
   g_signal_connect (guide, "removed",
                     G_CALLBACK (gimp_mandala_guide_removed_cb),
                     mandala);
@@ -550,8 +567,6 @@ gimp_mandala_image_size_changed_cb (GimpImage    *image,
   if (previous_width != gimp_image_get_width (image) ||
       previous_height != gimp_image_get_height (image))
     {
-      /* TODO: change soft limits of "center-x" and "center-y"
-       * properties. */
       g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
     }
 }

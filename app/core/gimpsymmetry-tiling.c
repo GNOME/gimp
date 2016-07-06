@@ -45,11 +45,11 @@ enum
 {
   PROP_0,
 
-  PROP_X_INTERVAL,
-  PROP_Y_INTERVAL,
+  PROP_INTERVAL_X,
+  PROP_INTERVAL_Y,
   PROP_SHIFT,
-  PROP_X_MAX,
-  PROP_Y_MAX
+  PROP_MAX_X,
+  PROP_MAX_Y
 };
 
 
@@ -91,6 +91,7 @@ gimp_tiling_class_init (GimpTilingClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpSymmetryClass *symmetry_class = GIMP_SYMMETRY_CLASS (klass);
+  GParamSpec        *pspec;
 
   object_class->constructed       = gimp_tiling_constructed;
   object_class->finalize          = gimp_tiling_finalize;
@@ -101,21 +102,29 @@ gimp_tiling_class_init (GimpTilingClass *klass)
   symmetry_class->update_strokes  = gimp_tiling_update_strokes;
   symmetry_class->get_operation   = gimp_tiling_get_operation;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_X_INTERVAL,
-                           "x-interval",
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_INTERVAL_X,
+                           "interval-x",
                            _("Interval X"),
                            _("Interval on the X axis (pixels)"),
                            0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_Y_INTERVAL,
-                           "y-interval",
+  pspec = g_object_class_find_property (object_class, "interval-x");
+  gegl_param_spec_set_property_key (pspec, "unit", "pixel-distance");
+  gegl_param_spec_set_property_key (pspec, "axis", "x");
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_INTERVAL_Y,
+                           "interval-y",
                            _("Interval Y"),
                            _("Interval on the Y axis (pixels)"),
                            0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
+
+  pspec = g_object_class_find_property (object_class, "interval-y");
+  gegl_param_spec_set_property_key (pspec, "unit", "pixel-distance");
+  gegl_param_spec_set_property_key (pspec, "axis", "y");
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SHIFT,
                            "shift",
@@ -125,16 +134,16 @@ gimp_tiling_class_init (GimpTilingClass *klass)
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_X_MAX,
-                        "x-max",
+  GIMP_CONFIG_PROP_INT (object_class, PROP_MAX_X,
+                        "max-x",
                         _("Max strokes X"),
                         _("Maximum number of strokes on the X axis"),
                         0, 100, 0,
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_Y_MAX,
-                        "y-max",
+  GIMP_CONFIG_PROP_INT (object_class, PROP_MAX_Y,
+                        "max-y",
                         _("Max strokes Y"),
                         _("Maximum number of strokes on the Y axis"),
                         0, 100, 0,
@@ -153,11 +162,6 @@ gimp_tiling_constructed (GObject *object)
   GimpSymmetry *sym    = GIMP_SYMMETRY (object);
   GimpTiling   *tiling = GIMP_TILING (object);
 
-  /* TODO:
-   * - "x-interval" property should be soft-limited by the image width;
-   * - "shift" property should be soft-limited by the width;
-   * - "y-interval" property should be soft-limited by the height.
-   */
   g_signal_connect_object (sym->image, "size-changed-detailed",
                            G_CALLBACK (gimp_tiling_image_size_changed_cb),
                            sym, 0);
@@ -184,7 +188,7 @@ gimp_tiling_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_X_INTERVAL:
+    case PROP_INTERVAL_X:
       if (sym->image)
         {
           gdouble new_x = g_value_get_double (value);
@@ -206,7 +210,8 @@ gimp_tiling_set_property (GObject      *object,
             }
         }
       break;
-    case PROP_Y_INTERVAL:
+
+    case PROP_INTERVAL_Y:
         {
           gdouble new_y = g_value_get_double (value);
 
@@ -227,6 +232,7 @@ gimp_tiling_set_property (GObject      *object,
             }
         }
       break;
+
     case PROP_SHIFT:
         {
           gdouble new_shift = g_value_get_double (value);
@@ -240,16 +246,19 @@ gimp_tiling_set_property (GObject      *object,
             }
         }
       break;
-    case PROP_X_MAX:
+
+    case PROP_MAX_X:
       tiling->max_x = g_value_get_int (value);
       if (sym->drawable)
         gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
       break;
-    case PROP_Y_MAX:
+
+    case PROP_MAX_Y:
       tiling->max_y = g_value_get_int (value);
       if (sym->drawable)
         gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -266,19 +275,19 @@ gimp_tiling_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_X_INTERVAL:
+    case PROP_INTERVAL_X:
       g_value_set_double (value, tiling->interval_x);
       break;
-    case PROP_Y_INTERVAL:
+    case PROP_INTERVAL_Y:
       g_value_set_double (value, tiling->interval_y);
       break;
     case PROP_SHIFT:
       g_value_set_double (value, tiling->shift);
       break;
-    case PROP_X_MAX:
+    case PROP_MAX_X:
       g_value_set_int (value, tiling->max_x);
       break;
-    case PROP_Y_MAX:
+    case PROP_MAX_Y:
       g_value_set_int (value, tiling->max_y);
       break;
     default:
@@ -312,33 +321,41 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
 
   if (origin->x > 0 && tiling->max_x == 0)
     startx = origin->x - tiling->interval_x * (gint) (origin->x / tiling->interval_x + 1);
+
   if (origin->y > 0 && tiling->max_y == 0)
     {
       starty = origin->y - tiling->interval_y * (gint) (origin->y / tiling->interval_y + 1);
+
       if (tiling->shift > 0.0)
         startx -= tiling->shift * (gint) (origin->y / tiling->interval_y + 1);
     }
+
   for (y_count = 0, y = starty; y < height + tiling->interval_y;
        y_count++, y += tiling->interval_y)
     {
       if (tiling->max_y && y_count >= (gint) tiling->max_y)
         break;
+
       for (x_count = 0, x = startx; x < width + tiling->interval_x;
            x_count++, x += tiling->interval_x)
         {
           if (tiling->max_x && x_count >= (gint) tiling->max_x)
             break;
+
           coords = g_memdup (origin, sizeof (GimpCoords));
           coords->x = x;
           coords->y = y;
           strokes = g_list_prepend (strokes, coords);
+
           if (tiling->interval_x < 1.0)
             break;
         }
+
       if (tiling->max_x || startx + tiling->shift <= 0.0)
         startx = startx + tiling->shift;
       else
         startx = startx - tiling->interval_x + tiling->shift;
+
       if (tiling->interval_y < 1.0)
         break;
     }
@@ -366,11 +383,9 @@ gimp_tiling_image_size_changed_cb (GimpImage    *image,
                                    gint          previous_height,
                                    GimpSymmetry *sym)
 {
-  if (previous_width != gimp_image_get_width (image) ||
+  if (previous_width  != gimp_image_get_width  (image) ||
       previous_height != gimp_image_get_height (image))
     {
-      /* TODO: change soft limits of "x-interval", "y-interval" and
-       * "shift" properties. */
       g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
     }
 }
