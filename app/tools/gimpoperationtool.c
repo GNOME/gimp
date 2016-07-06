@@ -736,9 +736,23 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   if (filter_tool->config)
     {
+      GeglRectangle *area = NULL;
+      GeglRectangle  tmp  = { 0, };
+
+      if (GIMP_TOOL (tool)->drawable)
+        {
+          GimpDrawable *drawable = GIMP_TOOL (tool)->drawable;
+
+          tmp.width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          tmp.height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+          area = &tmp;
+        }
+
       tool->options_gui =
         gimp_prop_gui_new (G_OBJECT (filter_tool->config),
                            G_TYPE_FROM_INSTANCE (filter_tool->config), 0,
+                           area,
                            GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)),
                            (GimpCreatePickerFunc) gimp_filter_tool_add_color_picker,
                            tool);
