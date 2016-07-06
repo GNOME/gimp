@@ -90,9 +90,13 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
   g_return_val_if_fail (matrix != NULL, NULL);
+  g_return_val_if_fail (buffer_profile != NULL, NULL);
   g_return_val_if_fail (new_offset_x != NULL, NULL);
   g_return_val_if_fail (new_offset_y != NULL, NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+
+  *buffer_profile =
+    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
 
   m = *matrix;
 
@@ -131,9 +135,6 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
                              interpolation_type,
                              &gegl_matrix);
 
-  *buffer_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
-
   *new_offset_x = x1;
   *new_offset_y = y1;
 
@@ -166,6 +167,12 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
+  g_return_val_if_fail (buffer_profile != NULL, NULL);
+  g_return_val_if_fail (new_offset_x != NULL, NULL);
+  g_return_val_if_fail (new_offset_y != NULL, NULL);
+
+  *buffer_profile =
+    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
 
   orig_x      = orig_offset_x;
   orig_y      = orig_offset_y;
@@ -298,9 +305,6 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
       break;
     }
 
-  *buffer_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
-
   return new_buffer;
 }
 
@@ -365,6 +369,12 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
+  g_return_val_if_fail (buffer_profile != NULL, NULL);
+  g_return_val_if_fail (new_offset_x != NULL, NULL);
+  g_return_val_if_fail (new_offset_y != NULL, NULL);
+
+  *buffer_profile =
+    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
 
   orig_x      = orig_offset_x;
   orig_y      = orig_offset_y;
@@ -624,9 +634,6 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       }
       break;
     }
-
-  *buffer_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
 
   return new_buffer;
 }
