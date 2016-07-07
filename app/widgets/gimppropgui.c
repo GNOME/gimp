@@ -238,7 +238,7 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
             {
               if (HAS_KEY (pspec, "axis", "x"))
                 {
-                  g_printerr ("XXX setting widht %d on %s\n",
+                  g_printerr ("XXX setting width %d on %s\n",
                               area->width, pspec->name);
 
                   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
