@@ -15,7 +15,7 @@ Core:
 
  - Initialize fontconfig cache in separate thread to keep GUI
    responsive on first startup
- - Properly recognize layer masks as dectivated, e.g. for moving layers
+ - Properly recognize layer masks as deactivated, e.g. for moving layers
  - Create $XDG_DATA_HOME if it doesn't exist
  - (CVE-2016-4994) Multiple Use-After-Free when parsing XCF channel
    and layer properties
@@ -25,7 +25,7 @@ Core:
 GUI:
 
  - Disable color picker buttons on OS X to prevent a GUI lockup
- - Disable "new-style" fullscreen mode on OS X to prevent a crash
+ - Disable "new-style" full-screen mode on OS X to prevent a crash
  - Pulsing progress bar in splash screen to indicate unknown durations
  - Fix gamut warning color for lcms display filter
  - Fix unbolding of bold font on edit
@@ -44,8 +44,8 @@ Plug-ins:
  - Fix ambiguous octal-escaped output of c-source
  - Fix KISS CEL export
  - Fix progress bar for file-compressor
- - Make Script-Fu regex match return proper charater indexes for
-   unicode characters
+ - Make Script-Fu regex match return proper character indexes for
+   Unicode characters
  - Fix Script-Fu modulo for large numbers
 
 
