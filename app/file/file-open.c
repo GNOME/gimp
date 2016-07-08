@@ -809,5 +809,5 @@ file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
 {
   return !(file_proc &&
            file_proc->mime_type &&
-           strcmp (file_proc->mime_type, "image/xcf") == 0);
+           strcmp (file_proc->mime_type, "image/x-xcf") == 0);
 }
