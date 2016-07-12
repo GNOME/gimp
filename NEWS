@@ -20,6 +20,7 @@ Core:
  - (CVE-2016-4994) Multiple Use-After-Free when parsing XCF channel
    and layer properties
  - Fix progress access to prevent crash on rapid sequence of commands
+ - Fix crash in gimp-gradient-segment-range-move
 
 
 GUI:
