@@ -124,7 +124,6 @@ gimp_search_popup_class_init (GimpSearchPopupClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GimpPopupClass *popup_class  = GIMP_POPUP_CLASS (klass);
-  GtkBindingSet  *binding_set;
 
   object_class->constructed   = gimp_search_popup_constructed;
   object_class->set_property  = gimp_search_popup_set_property;
@@ -163,13 +162,6 @@ gimp_search_popup_class_init (GimpSearchPopupClass *klass)
                                    g_param_spec_pointer ("callback-data", NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
-
-  /* We don't want space to activate actions in the search widget, since
-   * we allow search with spaces in it. */
-  binding_set = gtk_binding_set_by_class (g_type_class_peek (GIMP_TYPE_POPUP));
-
-  gtk_binding_entry_remove (binding_set, GDK_KEY_space, 0);
-  gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Space, 0);
 
   g_type_class_add_private (klass, sizeof (GimpSearchPopupPrivate));
 }
