@@ -61,6 +61,7 @@ def do_console():
                                             _("_Browse..."), RESPONSE_BROWSE,
                                             gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
 
+            self.set_name (PROC_NAME)
             self.set_alternative_button_order((gtk.RESPONSE_CLOSE,
                                                RESPONSE_BROWSE,
                                                RESPONSE_CLEAR,
@@ -68,7 +69,10 @@ def do_console():
 
             self.cons = GimpConsole(quit_func=lambda: gtk.main_quit())
 
+            self.style_set (None, None)
+
             self.connect('response', self.response)
+            self.connect('style-set', self.style_set)
 
             self.browse_dlg = None
             self.save_dlg = None
@@ -90,6 +94,11 @@ def do_console():
             # the text view gets a width of 80 characters. We don't care
             # so much whether the height will be exactly 40 characters.
             self.set_default_size(width + sb_width + 2 * 12, height)
+
+        def style_set(self, old_style, user_data):
+            style = self.get_style ()
+            self.cons.stdout_tag.set_property ("foreground", style.text[gtk.STATE_SELECTED])
+            self.cons.stderr_tag.set_property ("foreground", style.text[gtk.STATE_INSENSITIVE])
 
         def response(self, dialog, response_id):
             if response_id == RESPONSE_BROWSE:
