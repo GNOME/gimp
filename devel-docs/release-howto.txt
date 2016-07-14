@@ -4,15 +4,16 @@
                   a check-list for doing a GIMP release
 
 
- ( ) Check that you have working ssh access to ftp.gimp.org and that you
-     are a member of the ftp group.
+ ( ) Check that you have working ssh access to pentagon.gnome.org and
+     that you are a member of the gimpadmins group.
 
- ( ) Check that ftp.gimp.org has enough space to upload the release and to
-     place it into the FTP area. If not, make place or ask Yosh to do that.
+ ( ) Check that download.gimp.org has enough space to upload the
+     release and to place it into the download area. If not, make
+     place or ask Michael Natterer or Michael Schumacher to do that.
 
  ( ) Check that you have admin access to the GIMP product on
-     bugzilla.gimp.org and to the news section on www.gimp.org, or that
-     someone can do the changes for you.
+     bugzilla.gimp.org and commit access to the gimp-web module, or
+     that someone can do the changes for you.
 
  ( ) Check if NEWS, authors.xml (and the generated AUTHORS), README or
      INSTALL need to be updated, as well as any release notes on
@@ -26,13 +27,17 @@
      release you are about to make. Releases always have even micro
      numbers.
 
+     [ ] In configure.ac, modify gimp_micro_version accordingly.
+
+     [ ] In configure.ac, modify gimp_interface_age accordingly.
+
  ( ) Make dist tarballs:
 
-     [ ] Start with a checkout of the GIMP tree. Make sure the checkout
-         is up to date, clean from uncommitted changes.
+     [ ] Start with a checkout of the GIMP tree. Make sure the
+         checkout is up to date, clean from uncommitted changes.
 
-     [ ] Run 'git clean -x -d -f' (Warning: you will lose any files that
-         are not added).
+     [ ] Run 'git clean -x -d -f' (Warning: you will lose any files
+         that are not added).
 
      [ ] Run 'git diff'. This should not generate any output, or your
          tree has local modifications.
@@ -45,52 +50,76 @@
          cause mysterious fails.
 
      [ ] If changes to generated files are made by the above command
-         (run 'git diff' to find out), commit+push them and repeat from
-         the beginning of this sub-section.
+         (run 'git diff' to find out), commit+push them and repeat
+         from the beginning of this sub-section.
 
      [ ] If there are problems reported by 'make distcheck', fix
          them. If you made changes in the tree to get 'make distcheck'
-         running, commit+push them and repeat from the beginning of this
-         sub-section.
+         running, commit+push them and repeat from the beginning of
+         this sub-section.
 
-     [ ] If 'make distcheck' passed and created tarballs, go to the next
-         item.
+     [ ] If 'make distcheck' passed and created tarballs, go to the
+         next item.
 
  [ ] A successful run of the 'make distcheck' would create the final
-     dist tarballs. It will include a ChangeLog generated from the 'git
-     log'. Note that we don't bother with any release commit, that's
-     what tags are for (see below).
+     dist tarballs. It will include a ChangeLog generated from the
+     'git log'. Note that we don't bother with any release commit,
+     that's what tags are for (see below).
 
- ( ) Use md5sum to create a checksum of the tarball (tar.bz2).
+ [ ] Tag the release (don't forget to push the tag)
+       git tag -s GIMP_2_x_y
+       git push origin GIMP_2_x_y
 
- ( ) Upload the tarball (tar.bz2) and the .md5 file to your home directory
-     on ftp.gimp.org.  Keep a copy of the .md5 file around.
-
- ( ) Tag the release (don't forget to push the tag)
-        git tag -s GIMP_2_x_y
-        git push origin GIMP_2_x_y
-
- ( ) Move the tarball and the .md5 file to its final destination in the
-     FTP area (/ftp/pub/gimp/v2.x).
-
- ( ) Update the 0.0_LATEST-IS- file in the directory on the FTP server.
-
- ( ) Change permissions of the new files to make them writable by the 'ftp'
-     group. This will allow other members of this group to correct mistakes
-     and to update the 0.0_LATEST-IS- file next time.
-
- ( ) Add the new version to the GIMP product on bugzilla.gimp.org.
-
- ( ) Check out or update the 'gimp-web' module and change
-     downloads/index.htrw.  Commit this change, the web server should
-     then update itself soon (usually less than an hour).
-
- ( ) Bump the version number (past the tagged version) in configure.ac
-     to the next odd micro and commit this change. GIT version always
+ [ ] Bump the version number (past the tagged version) in configure.ac
+     to the next odd micro and commit this change. GIT versions always
      have odd micro numbers.
 
- ( ) Grab a properly chilled beverage and enjoy yourself.
+ [ ] Publish dist tarballs:
 
- ( ) Give the mirrors a reasonably long time to update, then announce
+     [ ] Use md5sum to create a checksum of the tarball (tar.bz2).
+
+     [ ] Upload the tarball (tar.bz2) and the .md5 file to your home
+         directory on pentagon.gnome.org.  Keep a copy of the .md5
+         file around.
+
+     [ ] Copy the tarball and the .md5 file to its final destination
+         in the download area (/srv/ftp/pub/gimp/v2.x).
+
+     [ ] Update the 0.0_LATEST-IS- file in the corresponding directory
+         on the download server.
+
+     [ ] Change permissions of the new files to make them writable by
+       	 the 'gimpadmins' group. This will allow other members of this
+       	 group to correct mistakes and to update the 0.0_LATEST-IS-
+       	 file next time.
+
+ [ ] Add the new version to the GIMP product on bugzilla.gimp.org.
+
+ [ ] Check out or update the 'gimp-web' module, check out its testing
+     branch.
+
+     [ ] Change the file content/downloads/index.md to reference the
+         new source release.
+
+     [ ] Create a news items for the release in content/news/
+
+     [ ] Commit and push the changes, the web server should then
+         update itself soon (every 5 minutes). Go to
+         https://testing.gimp.org to verify the changes.
+
+     [ ] If everything is correct, check out the gimp-web master
+         branch and merge the change from the testing branch.
+
+     [ ] Push the changes, the web server should then update itself
+         soon (every 15 minutes). Got to https://www.gimp.org to
+         verify the changes.
+
+ [ ] Grab a properly chilled beverage and enjoy yourself.
+
+ [ ] Give the mirrors a reasonably long time to update, then announce
      the release on gimp.org and on the gimp-user and gimp-developer
      mailing lists.
+
+     [ ] Due to the tendency of news sites to front-run release
+         articles even before actual announcements appear, just
+         publish everything as fast as possible.
