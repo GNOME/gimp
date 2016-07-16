@@ -61,20 +61,20 @@
      [ ] If 'make distcheck' passed and created tarballs, go to the
          next item.
 
- [ ] A successful run of the 'make distcheck' would create the final
+ ( ) A successful run of the 'make distcheck' would create the final
      dist tarballs. It will include a ChangeLog generated from the
      'git log'. Note that we don't bother with any release commit,
      that's what tags are for (see below).
 
- [ ] Tag the release (don't forget to push the tag)
+ ( ) Tag the release (don't forget to push the tag)
        git tag -s GIMP_2_x_y
        git push origin GIMP_2_x_y
 
- [ ] Bump the version number (past the tagged version) in configure.ac
+ ( ) Bump the version number (past the tagged version) in configure.ac
      to the next odd micro and commit this change. GIT versions always
      have odd micro numbers.
 
- [ ] Publish dist tarballs:
+ ( ) Publish dist tarballs:
 
      [ ] Use md5sum to create a checksum of the tarball (tar.bz2).
 
@@ -93,9 +93,9 @@
        	 group to correct mistakes and to update the 0.0_LATEST-IS-
        	 file next time.
 
- [ ] Add the new version to the GIMP product on bugzilla.gimp.org.
+ ( ) Add the new version to the GIMP product on bugzilla.gimp.org.
 
- [ ] Check out or update the 'gimp-web' module, check out its testing
+ ( ) Check out or update the 'gimp-web' module, check out its testing
      branch.
 
      [ ] Change the file content/downloads/index.md to reference the
@@ -107,18 +107,18 @@
          update itself soon (every 5 minutes). Go to
          https://testing.gimp.org to verify the changes.
 
-     [ ] If everything is correct, check out the gimp-web master
-         branch and merge the change from the testing branch.
+ ( ) Grab a properly chilled beverage and enjoy yourself.
+
+ ( ) Give the mirrors a reasonably long time to update, then announce
+     the release on gimp.org and send a release announcement to the
+     gimp-user and gimp-developer mailing lists.
+
+     [ ] Check out the gimp-web master branch and merge or cherry-pick
+         the changes you did in the testing branch.
 
      [ ] Push the changes, the web server should then update itself
          soon (every 15 minutes). Got to https://www.gimp.org to
          verify the changes.
-
- [ ] Grab a properly chilled beverage and enjoy yourself.
-
- [ ] Give the mirrors a reasonably long time to update, then announce
-     the release on gimp.org and on the gimp-user and gimp-developer
-     mailing lists.
 
      [ ] Due to the tendency of news sites to front-run release
          articles even before actual announcements appear, just
