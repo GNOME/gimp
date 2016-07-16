@@ -260,6 +260,7 @@
 	<autotools id="gtk+-2.24" autogen-sh="configure"
 		autogenargs="--with-gdktarget=quartz --enable-debug=yes --disable-gtk-doc --enable-quartz-relocation --without-x --with-xinput --enable-xinerama">
 		<branch module="gtk+/2.24/gtk+-2.24.30.tar.xz" version="2.24.30">
+			<patch file="gtk2-quartz-handle-didMove-and-didResize-in-the-same-way.patch" strip="1" />
 		</branch>
 		<dependencies>
 			<dep package="glib" />
