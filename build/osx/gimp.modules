@@ -121,7 +121,7 @@
 
 	<autotools id="libpng" autogenargs="--enable-shared"
 		autogen-sh="configure">
-		<branch module="libpng/libpng-1.6.12.tar.xz" version="1.6.12"
+		<branch module="libpng/libpng-1.6.23.tar.xz" version="1.6.23"
 			repo="sourceforge" />
 	</autotools>
 
@@ -141,14 +141,14 @@
 	</autotools>
 
 	<autotools id="libjpeg">
-		<branch module="jpegsrc.v8d.tar.gz" version="8d" repo="jpeg"
-			checkoutdir="jpeg-8">
+		<branch module="jpegsrc.v9b.tar.gz" version="9b" repo="jpeg"
+			checkoutdir="jpeg-9">
 		</branch>
 	</autotools>
 
 	<autotools id="libtiff" autogen-sh="configure"
 		autogenargs="--without-x --without-apple-opengl-framework">
-		<branch version="4.0.3" module="libtiff/tiff-4.0.3.tar.gz"
+		<branch version="4.0.6" module="libtiff/tiff-4.0.6.tar.gz"
 			repo="libtiff" />
 		<dependencies>
 			<dep package="libjpeg" />
@@ -172,21 +172,21 @@
 	</autotools>
 
 	<autotools id="libxml2" autogen-sh="configure">
-		<branch version="2.9.1" module="libxml2-2.9.1.tar.gz" repo="xmlsoft.org" />
+		<branch version="2.9.4" module="libxml2-2.9.4.tar.gz" repo="xmlsoft.org" />
 		<dependencies>
 			<!--<dep package="python"/> -->
 		</dependencies>
 	</autotools>
 
 	<autotools id="libxslt" autogen-sh="configure">
-		<branch version="1.1.28" module="libxslt-1.1.28.tar.gz" repo="xmlsoft.org" />
+		<branch version="1.1.29" module="libxslt-1.1.29.tar.gz" repo="xmlsoft.org" />
 		<dependencies>
 			<dep package="libxml2" />
 		</dependencies>
 	</autotools>
 
 	<autotools id="freetype" autogen-sh="configure">
-		<branch module="freetype/freetype-2.5.3.tar.gz" version="2.5.3"
+		<branch module="freetype/freetype-2.6.5.tar.gz" version="2.6.5"
 			repo="sourceforge">
 		</branch>
 		<dependencies>
@@ -259,9 +259,7 @@
 
 	<autotools id="gtk+-2.24" autogen-sh="configure"
 		autogenargs="--with-gdktarget=quartz --enable-debug=yes --disable-gtk-doc --enable-quartz-relocation --without-x --with-xinput --enable-xinerama">
-		<branch module="gtk+/2.24/gtk+-2.24.24.tar.xz" version="2.24.24">
-			<patch file="gtk2-add-missing-information-to-po-translation-files.patch"
-				strip="1" />
+		<branch module="gtk+/2.24/gtk+-2.24.30.tar.xz" version="2.24.30">
 		</branch>
 		<dependencies>
 			<dep package="glib" />
@@ -368,10 +366,8 @@
 	</autotools>
 
 	<autotools id="libffi" autogenargs="--disable-builddir">
-		<branch module="libffi/libffi-3.1.tar.gz" repo="sourceware.org"
-			version="3.1" checkoutdir="libffi-3.1">
-			<patch file="libffi-fix-wrong-variable-substitution-in-configure.patch"
-				strip="1" />
+		<branch module="libffi/libffi-3.2.1.tar.gz" repo="sourceware.org"
+			version="3.2.1" checkoutdir="libffi-3.2.1">
 		</branch>
 	</autotools>
 
@@ -411,7 +407,7 @@
 	</autotools>
 
 	<autotools id="atk" autogen-sh="configure">
-		<branch module="atk/2.12/atk-2.12.0.tar.xz" version="2.12"/>
+		<branch module="atk/2.20/atk-2.20.0.tar.xz" version="2.20"/>
 		<dependencies>
 			<dep package="glib" />
 			<dep package="shared-mime-info" />
@@ -422,7 +418,7 @@
 
 	<autotools id="pixman" autogenargs="--disable-gtk"
 		autogen-sh="configure">
-		<branch version="0.32.6" module="pixman-0.32.6.tar.gz" repo="cairographics"/>
+		<branch version="0.34.0" module="pixman-0.34.0.tar.gz" repo="cairographics"/>
 		<dependencies>
 			>
 			<dep package="fontconfig" />
@@ -432,8 +428,8 @@
 
 	<autotools id="cairo" autogen-sh="configure"
 		autogenargs="--enable-quartz --enable-quartz-font --enable-quartz-image --enable-pdf --enable-ft --enable-png --enable-xlib=no --without-x">
-		<branch module="cairo-1.12.16.tar.xz" version="1.12.16" repo="cairographics"
-			hash="sha1:4f6e337d5d3edd7ea79d1426f575331552b003ec">
+		<branch module="cairo-1.14.6.tar.xz" version="1.14.6" repo="cairographics"
+			hash="sha1:0a59324e6cbe031b5b898ff8b9e2ffceb9d114f5">
 		</branch>
 		<dependencies>
 			<dep package="pixman" />
@@ -451,7 +447,7 @@
 	</autotools>
 
 	<autotools id="harfbuzz" autogen-sh="configure" autogenargs="">
-		<branch version="0.9.32" repo="harfbuzz" module="harfbuzz-0.9.32.tar.bz2">
+		<branch version="1.2.7" repo="harfbuzz" module="harfbuzz-1.2.7.tar.bz2">
 		</branch>
 		<dependencies>
 			<dep package="cairo" />
@@ -462,7 +458,7 @@
 
 	<autotools id="pango" autogen-sh="configure"
 		autogenargs="--enable-shared --disable-silent-rules --with-cairo">
-		<branch version="1.36.5" module="pango/1.36/pango-1.36.5.tar.xz">
+		<branch version="1.40.1" module="pango/1.40/pango-1.40.1.tar.xz">
 		</branch>
 		<dependencies>
 			<dep package="cairo" />
@@ -476,9 +472,9 @@
 
 	<autotools id="gdk-pixbuf" autogen-sh="configure"
 		autogenargs="">
-		<branch module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.7.tar.xz"
-			version="2.30.7"
-			hash="sha256:0aafc365eab1083a53f15e4828333b968219ffcb1a995ac6289c0147c9ffad06" />
+		<branch module="gdk-pixbuf/2.34/gdk-pixbuf-2.34.0.tar.xz"
+			version="2.34.0"
+			hash="sha256:d55e5b383ee219bd0e23bf6ed4427d56a7db5379729a6e3e0a0e0eba9a8d8879" />
 		<dependencies>
 			<dep package="libpng" />
 			<dep package="libjpeg" />
@@ -556,8 +552,8 @@
 		</dependencies>
 	</autotools>
 
-	<autotools id="gnutls" autogen-sh="configure" autogenargs="--disable-cxx">
-		<branch module="gnutls/v3.2/gnutls-3.2.15.tar.xz" version="3.2.15"
+	<autotools id="gnutls" autogen-sh="configure" autogenargs="--disable-cxx --with-included-libtasn1 --without-p11-kit">
+		<branch module="gnutls/v3.4/gnutls-3.4.9.tar.xz" version="3.4.9"
 			repo="gnutls" />
 		<dependencies>
 			<dep package="nettle" />
@@ -566,7 +562,7 @@
 	</autotools>
 
 	<autotools id="curl" autogen-sh="configure" autogenargs="">
-		<branch module="curl-7.37.1.tar.gz" version="7.37.1" repo="curl" />
+		<branch module="curl-7.49.1.tar.gz" version="7.49.1" repo="curl" />
 		<dependencies>
 			<dep package="gnutls" />
 		</dependencies>
@@ -591,7 +587,7 @@
 	</autotools>
 
 	<autotools id="nettle" autogen-sh="configure" autogenargs="">
-		<branch module="nettle-2.7.1.tar.gz" version="2.7.1" repo="nettle" />
+		<branch module="nettle-3.2.tar.gz" version="3.2" repo="nettle" />
 		<dependencies>
 			<dep package="gmp5" />
 		</dependencies>
@@ -744,7 +740,7 @@
 
 	<autotools id="dbus" autogen-sh="configure"
 		autogenargs="--disable-doxygen-docs --disable-xml-docs --disable-selinux --without-x --disable-tests --enable-verbose-mode --enable-asserts">
-		<branch module="dbus/dbus-1.10.6.tar.gz" version="1.10.6" repo="dbus">
+		<branch module="dbus/dbus-1.10.8.tar.gz" version="1.10.8" repo="dbus">
 		</branch>
 		<dependencies>
 		</dependencies>
@@ -799,7 +795,7 @@
 	<autotools id="gimp-2.8" autogen-sh="autogen.sh"
 		autogenargs="--without-x --disable-gtk-doc --without-dbus --without-wmf --enable-binreloc --without-gs --without-gvfs --with-libcurl"
 		skip-autogen="never">
-		<branch repo="git.gnome.org" module="gimp" revision="GIMP_2_8_16"
+		<branch repo="git.gnome.org" module="gimp" revision="GIMP_2_8_18"
 			checkoutdir="gimp-2.8" />
 		<dependencies>
 			<dep package="libpng" />
@@ -1277,14 +1273,14 @@
 	<autotools id="gettext-runtime-update" autogen-sh="configure"
 		autogenargs="--without-emacs --disable-java --disable-native-java --disable-libasprintf --disable-csharp --disable-rpath --enable-nls">
 		<branch repo="ftp.gnu.org" source-subdir="gettext-runtime"
-			module="gettext/gettext-0.19.2.tar.gz" version="0.19.2">
+			module="gettext/gettext-0.19.4.tar.gz" version="0.19.4">
 		</branch>
 	</autotools>
 
 	<autotools id="gettext-tools-update" autogen-sh="configure"
 		autogenargs="--without-emacs --disable-java --disable-native-java --disable-libasprintf --disable-csharp --with-included-glib --enable-nls --disable-rpath">
 		<branch repo="ftp.gnu.org" source-subdir="gettext-tools"
-			module="gettext/gettext-0.19.2.tar.gz" version="0.19.2">
+			module="gettext/gettext-0.19.4.tar.gz" version="0.19.4">
 		</branch>
 	</autotools>
 
