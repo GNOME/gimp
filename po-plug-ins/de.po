@@ -1047,7 +1047,7 @@ msgstr "_Farben tauschen"
 #: ../plug-ins/common/colormap-remap.c:298
 #: ../plug-ins/common/colormap-remap.c:309
 msgid "Invalid remap array was passed to remap function"
-msgstr "Es wurde eine ungültige Liste an die Farbneuzordnungsfunktion übergeben"
+msgstr "Es wurde eine ungültige Liste an die Farbneuzuordnungsfunktion übergeben"
 
 #: ../plug-ins/common/colormap-remap.c:333
 msgid "Rearranging the colormap"
@@ -11313,7 +11313,7 @@ msgstr "Daten werden vom Scanner/von Kamera übertragen"
 #~ msgstr "NEF-Bild"
 
 #~ msgid "Error writing output file."
-#~ msgstr "Fehler beim Schreiben der Asugabedatei."
+#~ msgstr "Fehler beim Schreiben der Ausgabedatei."
 
 #~ msgid "Grab"
 #~ msgstr "Aufnehmen"
