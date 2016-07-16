@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -1468,7 +1470,8 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
   GdkRectangle      rect;
   gint              monitor;
   gint              disp_width, disp_height;
-  gint              width, height;
+  gdouble           x, y;
+  gdouble           width, height;
   gint              max_auto_width, max_auto_height;
   gint              border_width, border_height;
   gboolean          resize = FALSE;
@@ -1496,8 +1499,15 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                               gtk_widget_get_window (widget));
   gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
-  width  = SCALEX (active_shell, gimp_image_get_width  (image));
-  height = SCALEY (active_shell, gimp_image_get_height (image));
+  gimp_display_shell_transform_bounds (active_shell,
+                                       0, 0,
+                                       gimp_image_get_width (image),
+                                       gimp_image_get_height (image),
+                                       &x, &y,
+                                       &width, &height);
+
+  width  = ceil (width  - x);
+  height = ceil (height - y);
 
   disp_width  = active_shell->disp_width;
   disp_height = active_shell->disp_height;

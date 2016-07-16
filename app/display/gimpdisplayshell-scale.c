@@ -409,41 +409,41 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
                                        gdouble           height,
                                        gboolean          resize_window)
 {
-  GimpImage *image;
-  gdouble    current_scale;
-  gdouble    new_scale;
-  gdouble    display_width;
-  gdouble    display_height;
-  gdouble    factor   = 1.0;
-  gint       offset_x = 0;
-  gint       offset_y = 0;
-  gdouble    xres;
-  gdouble    yres;
-  gdouble    screen_xres;
-  gdouble    screen_yres;
+  gdouble current_scale;
+  gdouble new_scale;
+  gdouble factor   = 1.0;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
+  gimp_display_shell_transform_bounds (shell,
+                                       x, y,
+                                       x + width, y + height,
+                                       &x, &y,
+                                       &width, &height);
+
+  /* Convert scrolled (x1, y1, x2, y2) to unscrolled (x, y, width, height). */
+  width  -= x;
+  height -= y;
+  x      += shell->offset_x;
+  y      += shell->offset_y;
 
   width  = MAX (1.0, width);
   height = MAX (1.0, height);
 
   current_scale = gimp_zoom_model_get_factor (shell->zoom);
 
-  display_width  = FUNSCALEX (shell, shell->disp_width);
-  display_height = FUNSCALEY (shell, shell->disp_height);
-
   switch (zoom_type)
     {
     case GIMP_ZOOM_IN:
-      factor = MIN ((display_width  / width),
-                    (display_height / height));
+      factor = MIN ((shell->disp_width  / width),
+                    (shell->disp_height / height));
       break;
 
     case GIMP_ZOOM_OUT:
-      factor = MAX ((width  / display_width),
-                    (height / display_height));
+      factor = MAX ((width  / shell->disp_width),
+                    (height / shell->disp_height));
       break;
 
     default:
@@ -452,10 +452,6 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
     }
 
   new_scale = current_scale * factor;
-
-  gimp_image_get_resolution (image, &xres, &yres);
-  gimp_display_shell_scale_get_screen_resolution (shell,
-                                                  &screen_xres, &screen_yres);
 
   switch (zoom_type)
     {
@@ -469,12 +465,10 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
        *               center of viewport in screen coords without
        *               offset
        */
-      offset_x = RINT (new_scale * (x + width / 2.0) *
-                       screen_xres / xres -
+      offset_x = RINT (factor * (x + width / 2.0) -
                        (shell->disp_width / 2.0));
 
-      offset_y = RINT (new_scale * (y + height / 2.0) *
-                       screen_yres / yres -
+      offset_y = RINT (factor * (y + height / 2.0) -
                        (shell->disp_height / 2.0));
       break;
 
@@ -488,19 +482,11 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
        *               center of rectangle in screen coords without
        *               offset
        */
-      offset_x = RINT (new_scale * UNSCALEX (shell,
-                                             shell->offset_x +
-                                             shell->disp_width / 2.0) *
-                       screen_xres / xres -
-                       (SCALEX (shell, x + width / 2.0) -
-                        shell->offset_x));
+      offset_x = RINT (factor * (shell->offset_x + shell->disp_width / 2.0) -
+                       ((x + width / 2.0) - shell->offset_x));
 
-      offset_y = RINT (new_scale * UNSCALEY (shell,
-                                             shell->offset_y +
-                                             shell->disp_height / 2.0) *
-                       screen_yres / yres -
-                       (SCALEY (shell, y + height / 2.0) -
-                        shell->offset_y));
+      offset_y = RINT (factor * (shell->offset_y + shell->disp_height / 2.0) -
+                       ((y + height / 2.0) - shell->offset_y));
       break;
 
     default:
@@ -529,29 +515,46 @@ void
 gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 {
   GimpImage *image;
-  gint       image_width;
-  gint       image_height;
-  gdouble    xres;
-  gdouble    yres;
+  gdouble    image_x;
+  gdouble    image_y;
+  gdouble    image_width;
+  gdouble    image_height;
   gdouble    zoom_factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   image = gimp_display_get_image (shell->display);
 
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
+  gimp_display_shell_transform_bounds (shell,
+                                       0, 0,
+                                       gimp_image_get_width  (image),
+                                       gimp_image_get_height  (image),
+                                       &image_x, &image_y,
+                                       &image_width, &image_height);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_display_shell_unzoom_xy_f (shell,
+                                  image_x, image_y,
+                                  &image_x, &image_y);
+  gimp_display_shell_unzoom_xy_f (shell,
+                                  image_width, image_height,
+                                  &image_width, &image_height);
+
+  image_width  -= image_x;
+  image_height -= image_y;
 
   if (! shell->dot_for_dot)
     {
-      image_width  = ROUND (image_width  * shell->monitor_xres / xres);
-      image_height = ROUND (image_height * shell->monitor_yres / yres);
+      gdouble xres;
+      gdouble yres;
+
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      image_width  = RINT (image_width  * shell->monitor_xres / xres);
+      image_height = RINT (image_height * shell->monitor_yres / yres);
     }
 
-  zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,
-                     (gdouble) shell->disp_height / (gdouble) image_height);
+  zoom_factor = MIN (shell->disp_width  / image_width,
+                     shell->disp_height / image_height);
 
   gimp_display_shell_scale (shell,
                             GIMP_ZOOM_TO,
@@ -572,29 +575,46 @@ void
 gimp_display_shell_scale_fill (GimpDisplayShell *shell)
 {
   GimpImage *image;
-  gint       image_width;
-  gint       image_height;
-  gdouble    xres;
-  gdouble    yres;
+  gdouble    image_x;
+  gdouble    image_y;
+  gdouble    image_width;
+  gdouble    image_height;
   gdouble    zoom_factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   image = gimp_display_get_image (shell->display);
 
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
+  gimp_display_shell_transform_bounds (shell,
+                                       0, 0,
+                                       gimp_image_get_width  (image),
+                                       gimp_image_get_height  (image),
+                                       &image_x, &image_y,
+                                       &image_width, &image_height);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_display_shell_unzoom_xy_f (shell,
+                                  image_x, image_y,
+                                  &image_x, &image_y);
+  gimp_display_shell_unzoom_xy_f (shell,
+                                  image_width, image_height,
+                                  &image_width, &image_height);
+
+  image_width  -= image_x;
+  image_height -= image_y;
 
   if (! shell->dot_for_dot)
     {
-      image_width  = ROUND (image_width  * shell->monitor_xres / xres);
-      image_height = ROUND (image_height * shell->monitor_yres / yres);
+      gdouble xres;
+      gdouble yres;
+
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      image_width  = RINT (image_width  * shell->monitor_xres / xres);
+      image_height = RINT (image_height * shell->monitor_yres / yres);
     }
 
-  zoom_factor = MAX ((gdouble) shell->disp_width  / (gdouble) image_width,
-                     (gdouble) shell->disp_height / (gdouble) image_height);
+  zoom_factor = MAX (shell->disp_width  / image_width,
+                     shell->disp_height / image_height);
 
   gimp_display_shell_scale (shell,
                             GIMP_ZOOM_TO,
