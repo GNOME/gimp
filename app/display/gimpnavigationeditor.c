@@ -92,6 +92,8 @@ static void        gimp_navigation_editor_shell_scaled      (GimpDisplayShell   
                                                              GimpNavigationEditor *editor);
 static void        gimp_navigation_editor_shell_scrolled    (GimpDisplayShell     *shell,
                                                              GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_rotated     (GimpDisplayShell     *shell,
+                                                             GimpNavigationEditor *editor);
 static void        gimp_navigation_editor_shell_reconnect   (GimpDisplayShell     *shell,
                                                              GimpNavigationEditor *editor);
 static void        gimp_navigation_editor_update_marker     (GimpNavigationEditor *editor);
@@ -464,6 +466,9 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
                                             gimp_navigation_editor_shell_scrolled,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->shell,
+                                            gimp_navigation_editor_shell_rotated,
+                                            editor);
+      g_signal_handlers_disconnect_by_func (editor->shell,
                                             gimp_navigation_editor_shell_reconnect,
                                             editor);
     }
@@ -486,6 +491,9 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
                         editor);
       g_signal_connect (editor->shell, "scrolled",
                         G_CALLBACK (gimp_navigation_editor_shell_scrolled),
+                        editor);
+      g_signal_connect (editor->shell, "rotated",
+                        G_CALLBACK (gimp_navigation_editor_shell_rotated),
                         editor);
       g_signal_connect (editor->shell, "reconnect",
                         G_CALLBACK (gimp_navigation_editor_shell_reconnect),
@@ -680,6 +688,17 @@ gimp_navigation_editor_shell_scrolled (GimpDisplayShell     *shell,
 }
 
 static void
+gimp_navigation_editor_shell_rotated (GimpDisplayShell     *shell,
+                                      GimpNavigationEditor *editor)
+{
+  gimp_navigation_editor_update_marker (editor);
+
+  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
+    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+}
+
+static void
 gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
                                         GimpNavigationEditor *editor)
 {
@@ -714,6 +733,10 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
                                            shell->disp_height / 2,
                                            &x, &y);
 
-      gimp_navigation_view_set_marker (view, x, y, w, h);
+      gimp_navigation_view_set_marker (view,
+                                       x, y, w, h,
+                                       shell->flip_horizontally,
+                                       shell->flip_vertically,
+                                       shell->rotate_angle);
     }
 }
