@@ -34,6 +34,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
+#include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
@@ -641,6 +642,8 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
 
   shell->offset_x = offset_x;
   shell->offset_y = offset_y;
+
+  gimp_display_shell_rotate_update_transform (shell);
 
   gimp_display_shell_scale_resize (shell, resize_window, FALSE);
 

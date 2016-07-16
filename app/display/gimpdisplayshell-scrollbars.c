@@ -22,9 +22,12 @@
 
 #include "display-types.h"
 
+#include "core/gimpimage.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-scale.h"
+#include "gimpdisplayshell-transform.h"
 #include "gimpdisplayshell-scrollbars.h"
 
 
@@ -87,28 +90,42 @@ void
 gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
                                                 gdouble           value)
 {
-  gint    sw;
-  gdouble lower;
-  gdouble upper;
+  GimpImage *image;
+  gdouble    dx, dy;
+  gdouble    dw, dh;
+  gdouble    lower;
+  gdouble    upper;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display ||
-      ! gimp_display_get_image (shell->display))
+  if (! shell->display)
     return;
 
-  gimp_display_shell_scale_get_image_size (shell, &sw, NULL);
+  image = gimp_display_get_image (shell->display);
+  if (! image)
+    return;
 
-  if (shell->disp_width < sw)
+  gimp_display_shell_transform_bounds (shell,
+                                       0, 0,
+                                       gimp_image_get_width (image),
+                                       gimp_image_get_height (image),
+                                       &dx, &dy,
+                                       &dw, &dh);
+
+  /* Convert scrolled (x1, x2) to unscrolled (x, width). */
+  dw -= dx;
+  dx += shell->offset_x;
+
+  if (shell->disp_width < dw)
     {
-      lower = MIN (value, 0);
-      upper = MAX (value + shell->disp_width, sw);
+      lower = MIN (value, dx);
+      upper = MAX (value + shell->disp_width, dx + dw);
     }
   else
     {
-      lower = MIN (value, -(shell->disp_width - sw) / 2);
+      lower = MIN (value, dx - (shell->disp_width - dw) / 2);
       upper = MAX (value + shell->disp_width,
-                   sw + (shell->disp_width - sw) / 2);
+                   dx + dw + (shell->disp_width - dw) / 2);
     }
 
   g_object_set (shell->hsbdata,
@@ -130,28 +147,42 @@ void
 gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
                                               gdouble           value)
 {
-  gint    sh;
-  gdouble lower;
-  gdouble upper;
+  GimpImage *image;
+  gdouble    dx, dy;
+  gdouble    dw, dh;
+  gdouble    lower;
+  gdouble    upper;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display ||
-      ! gimp_display_get_image (shell->display))
+  if (! shell->display)
     return;
 
-  gimp_display_shell_scale_get_image_size (shell, NULL, &sh);
+  image = gimp_display_get_image (shell->display);
+  if (! image)
+    return;
 
-  if (shell->disp_height < sh)
+  gimp_display_shell_transform_bounds (shell,
+                                       0, 0,
+                                       gimp_image_get_width (image),
+                                       gimp_image_get_height (image),
+                                       &dx, &dy,
+                                       &dw, &dh);
+
+  /* Convert scrolled (y1, y2) to unscrolled (y, height). */
+  dh -= dy;
+  dy += shell->offset_y;
+
+  if (shell->disp_height < dh)
     {
-      lower = MIN (value, 0);
-      upper = MAX (value + shell->disp_height, sh);
+      lower = MIN (value, dy);
+      upper = MAX (value + shell->disp_height, dy + dh);
     }
   else
     {
-      lower = MIN (value, -(shell->disp_height - sh) / 2);
+      lower = MIN (value, dy - (shell->disp_height - dh) / 2);
       upper = MAX (value + shell->disp_height,
-                   sh + (shell->disp_height - sh) / 2);
+                   dy + dh + (shell->disp_height - dh) / 2);
     }
 
   g_object_set (shell->vsbdata,
