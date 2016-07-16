@@ -28,7 +28,7 @@ $ if [ -f $HOME/.profile ]; \
    platforms if needed.
 
    For GIMP 2.8.x we build against the Mac OS X 10.6 SDK. If this is not
-   installed, you need to obtain XCode 4.3 (Apple Developer ID reqired).
+   installed, you need to obtain XCode 4.3 (Apple Developer ID required).
    The following steps install the 10.6 SDK from the XCode 4.3 image:
    a) Mount the DMG.
    b) $ cd /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
