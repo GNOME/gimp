@@ -9518,7 +9518,7 @@ msgstr ""
 
 #: ../app/core/gimpimage-color-profile.c:154
 msgid "ICC profile validation failed: "
-msgstr "La validació del perfil ICC ha fallat"
+msgstr "La validació del perfil ICC ha fallat: "
 
 #: ../app/core/gimpimage-color-profile.c:298
 #, fuzzy
@@ -10044,7 +10044,7 @@ msgstr "El fitxer del pinzell és excessivament gran, s'està ometent."
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
 msgid "Failed to deserialize MyPaint brush."
-msgstr "Errada en desserialitzar el pinzell El Meu Pinzell"
+msgstr "Errada en desserialitzar el pinzell El Meu Pinzell."
 
 #: ../app/core/gimppalette-import.c:419
 #, c-format
