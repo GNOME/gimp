@@ -5,14 +5,14 @@
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2015.
-# Aviary.pl <gnomepl@aviary.pl>, 2011-2015.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
+# Aviary.pl <gnomepl@aviary.pl>, 2011-2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-27 21:47+0100\n"
-"PO-Revision-Date: 2015-11-27 21:48+0100\n"
+"POT-Creation-Date: 2016-07-18 01:09+0200\n"
+"PO-Revision-Date: 2016-07-18 01:10+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -25,22 +25,22 @@ msgstr ""
 "X-Poedit-Country: Poland\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1136
+#: ../libgimp/gimp.c:1141
 msgid "success"
 msgstr "powodzenie"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1140
+#: ../libgimp/gimp.c:1145
 msgid "execution error"
 msgstr "błąd wykonania"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1144
+#: ../libgimp/gimp.c:1149
 msgid "calling error"
 msgstr "błąd wywołania"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1148
+#: ../libgimp/gimp.c:1153
 msgid "cancelled"
 msgstr "anulowano"
 
@@ -1173,15 +1173,15 @@ msgstr "Brak"
 msgid "Scales"
 msgstr "Skale"
 
-#: ../libgimpwidgets/gimpcolorselection.c:220
+#: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
 msgstr "Bieżący:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:229
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr "Poprzedni:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:314
+#: ../libgimpwidgets/gimpcolorselection.c:318
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1189,7 +1189,7 @@ msgstr ""
 "Szesnastkowy zapis koloru jest używany w językach HTML i CSS. To pole "
 "dopuszcza również nazwy kolorów CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:320
+#: ../libgimpwidgets/gimpcolorselection.c:324
 msgid "HTML _notation:"
 msgstr "_Zapis języka HTML:"
 
@@ -1309,7 +1309,7 @@ msgstr "Wyśrodk_uj"
 
 #: ../libgimpwidgets/gimpstock.c:129
 msgid "_Duplicate"
-msgstr "_Duplikuj"
+msgstr "_Powiel"
 
 #: ../libgimpwidgets/gimpstock.c:130
 msgid "_Edit"
