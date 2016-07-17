@@ -156,7 +156,6 @@
 	<translations name="shared-mime-info">${prefix}/share/locale</translations>
 	<data dest="${bundle}/Contents/Resources">${prefix}/share/strings</data>
 
-	<!-- Copy in mime data -->
 	<!-- Used for opening up help in browser -->
 	<!--<data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop"> 
 		${project}/custom/gimp.desktop </data> -->
@@ -164,14 +163,15 @@
 	<data dest="${bundle}/Contents/Resources/share/applications/open.desktop">
 		${project}/custom/open.desktop
 	</data>
+
+	<!-- Copy in mime data -->
 	<data dest="${bundle}/Contents/Resources/share/applications/mimeinfo.cache">
 		${project}/custom/mimeinfo.cache
 	</data>
 
 	<data>
-		${prefix}/share/mime/*
+		${prefix}/share/mime
 	</data>
-	<!--<data> ${prefix}/share/mime-info/* </data> -->
 
 	<!-- Copy in D-Bus Launch session support -->
 	<data>${prefix}/etc/dbus-1/system.conf</data>
