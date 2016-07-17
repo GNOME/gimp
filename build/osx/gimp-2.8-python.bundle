@@ -237,5 +237,5 @@
 	<data dest="${bundle}/Contents/Resources">${project}/xcf.icns</data>
 
 	<!-- Copy in base icon theme -->
-	<icon-theme icons="auto">Tango</icon-theme>
+	<icon-theme icons="all">Tango</icon-theme>
 </app-bundle>
