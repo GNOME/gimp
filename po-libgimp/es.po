@@ -3,22 +3,23 @@
 # Copyright © 1998-2000,2003, 2006, 2007, 2008, 2009, 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
-# 
+#
 # Francisco Javier Fernandez <serrador@cvs.gnome.org>, 2003, 2004, 2006.
 # Pablo G. del Campo <pablodc@par001001-703>, 2003, 2004.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
 # Jorge González <jorgegonz@svn.gnome.org>, 2009.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007, 2008, 2009, 2011.
-# 
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2015., 2016.
+#
+# Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-06-25 12:17+0000\n"
-"PO-Revision-Date: 2016-07-01 14:18+0200\n"
+"POT-Creation-Date: 2016-07-12 20:38+0000\n"
+"PO-Revision-Date: 2016-07-17 12:38+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -493,24 +494,19 @@ msgid "Pattern fill"
 msgstr "Relleno con patrón"
 
 #: ../libgimpbase/gimpbaseenums.c:162
-#, fuzzy
-#| msgid "Button 0"
 msgctxt "cap-style"
 msgid "Butt"
-msgstr "Botón 0"
+msgstr "Extremo"
 
 #: ../libgimpbase/gimpbaseenums.c:163
 msgctxt "cap-style"
 msgid "Round"
-msgstr ""
+msgstr "Redondo"
 
 #: ../libgimpbase/gimpbaseenums.c:164
-#, fuzzy
-#| msgctxt "brush-generated-shape"
-#| msgid "Square"
 msgctxt "cap-style"
 msgid "Square"
-msgstr "Cuadrada"
+msgstr "Cuadrado"
 
 #: ../libgimpbase/gimpbaseenums.c:195
 msgctxt "channel-ops"
@@ -685,7 +681,7 @@ msgstr "Claridad"
 #: ../libgimpbase/gimpbaseenums.c:470
 msgctxt "desaturate-mode"
 msgid "Luma"
-msgstr ""
+msgstr "Luma"
 
 #: ../libgimpbase/gimpbaseenums.c:471
 msgctxt "desaturate-mode"
@@ -695,7 +691,7 @@ msgstr "Promedio"
 #: ../libgimpbase/gimpbaseenums.c:472
 msgctxt "desaturate-mode"
 msgid "Luminance"
-msgstr ""
+msgstr "Luminosidad"
 
 #: ../libgimpbase/gimpbaseenums.c:501
 msgctxt "dodge-burn-type"
@@ -916,17 +912,17 @@ msgstr "LoHalo"
 #: ../libgimpbase/gimpbaseenums.c:960
 msgctxt "join-style"
 msgid "Miter"
-msgstr ""
+msgstr "Esquinas unidas"
 
 #: ../libgimpbase/gimpbaseenums.c:961
 msgctxt "join-style"
 msgid "Round"
-msgstr ""
+msgstr "Redondo"
 
 #: ../libgimpbase/gimpbaseenums.c:962
 msgctxt "join-style"
 msgid "Bevel"
-msgstr ""
+msgstr "Bisel"
 
 #: ../libgimpbase/gimpbaseenums.c:1118
 msgctxt "orientation-type"
@@ -1104,7 +1100,6 @@ msgid "Value"
 msgstr "Valor"
 
 #: ../libgimpbase/gimpbaseenums.c:1550
-#| msgid "Alpha"
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
@@ -1121,16 +1116,14 @@ msgid "Points"
 msgstr "Puntos"
 
 #: ../libgimpbase/gimpbaseenums.c:1641
-#, fuzzy
-#| msgid "_Stroke"
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "_Trazo"
+msgstr "Trazar línea"
 
 #: ../libgimpbase/gimpbaseenums.c:1642
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
-msgstr ""
+msgstr "Trazar con una herramienta de pintura"
 
 #: ../libgimpbase/gimpbaseenums.c:1671
 msgctxt "text-direction"
@@ -1295,7 +1288,6 @@ msgstr "(perfil sin nombre)"
 
 #: ../libgimpcolor/gimpcolorprofile.c:632
 #, c-format
-#| msgid "Profile: %s"
 msgid "Model: %s"
 msgstr "Modelo: %s"
 
@@ -1306,7 +1298,6 @@ msgstr "Fabricante: %s"
 
 #: ../libgimpcolor/gimpcolorprofile.c:650
 #, c-format
-#| msgid "Copyright:"
 msgid "Copyright: %s"
 msgstr "Copyright: %s"
 
@@ -1316,8 +1307,6 @@ msgid "No color management"
 msgstr "Sin gestión del color"
 
 #: ../libgimpconfig/gimpconfigenums.c:25
-#| msgctxt "color-management-mode"
-#| msgid "Color managed display"
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "Pantalla de color gestionado"
@@ -1325,7 +1314,7 @@ msgstr "Pantalla de color gestionado"
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr ""
+msgstr "Pseudoprueba"
 
 #: ../libgimpconfig/gimpconfigenums.c:57
 msgctxt "color-rendering-intent"
@@ -1377,23 +1366,23 @@ msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
+"El perfil de color del espacio de trabajo RGB preferido. Se ofrecerá junto "
+"al perfil RGB incorporado cuando se pueda elegir un perfil de color."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
+"El perfil de color del espacio de trabajo de escala de grises preferido. Se "
+"ofrecerá junto al perfil de escala de grises incorporado cuando se pueda "
+"elegir un perfil de color."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "El perfil de color CMYK utilizado para convertir entre RGB y CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:74
-#, fuzzy
-#| msgid ""
-#| "The color profile to use for soft proofing from your image's color space "
-#| "to some other color space, including soft proofing to a printer or other "
-#| "output device profile. "
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
@@ -1417,20 +1406,18 @@ msgstr ""
 "un colorímetro relativo."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
-#, fuzzy
-#| msgid ""
-#| "Do use black point compensation (unless you know you have a reason not "
-#| "to). "
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
 "Usar compensación de puntos negros (a menos que tenga una razón para no "
-"hacerlo). "
+"hacerlo)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
+"Cuando se desactiva, la visualización de la imagen puede ser de mejor "
+"calidad a costa de la velocidad."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
@@ -1451,25 +1438,22 @@ msgstr ""
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
+"Cuando se desactiva, la pseudoprueba puede ser de mejor calidad a costa de "
+"la velocidad."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
-#, fuzzy
-#| msgid ""
-#| "When enabled, the print simulation will mark colors which can not be "
-#| "represented in the target color space."
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Cuando se encuentre activado, la prueba de impresión simulada marcará los "
-"colores que no se pueden representar en el espacio de colores de destino."
+"Cuando se encuentre activado, la pseudoprueba marcará los colores que no se "
+"pueden representar en el espacio de colores de destino."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "Qué color utilizar para marcar los colores que están fuera del gamut."
+msgstr "El color que usar para marcar los colores que están fuera del gamut."
 
 #: ../libgimpconfig/gimpcolorconfig.c:199
-#| msgid "Mode of operation:"
 msgid "Mode of operation"
 msgstr "Modo de funcionamiento"
 
@@ -1482,57 +1466,52 @@ msgid "Preferred grayscale profile"
 msgstr "Perfil de escala de grises favorito"
 
 #: ../libgimpconfig/gimpcolorconfig.c:221
-#| msgid "Monitor profile:"
 msgid "CMYK profile"
 msgstr "Perfil CMYK"
 
 #: ../libgimpconfig/gimpcolorconfig.c:228
-#| msgid "Monitor profile:"
 msgid "Monitor profile"
 msgstr "Perfil del monitor"
 
 #: ../libgimpconfig/gimpcolorconfig.c:235
-#| msgid "Monitor profile:"
 msgid "Use the system monitor profile"
 msgstr "Usar el perfil del monitor del sistema"
 
 #: ../libgimpconfig/gimpcolorconfig.c:243
 msgid "Simulation profile for soft-proofing"
-msgstr ""
+msgstr "Perfil de simulación para pseudoprueba"
 
 #: ../libgimpconfig/gimpcolorconfig.c:250
 msgid "Display rendering intent"
-msgstr ""
+msgstr "Mostrar prueba de renderizado"
 
 #: ../libgimpconfig/gimpcolorconfig.c:258
-#, fuzzy
-#| msgid "_Black Point Compensation"
 msgid "Use black point compensation for the display"
-msgstr "Compensación de punto _negro"
+msgstr "Usar compensación de punto negro para la pantalla"
 
 #: ../libgimpconfig/gimpcolorconfig.c:265
 msgid "Optimize display color transformations"
-msgstr ""
+msgstr "Optimizar las transformaciones de color en pantalla"
 
 #: ../libgimpconfig/gimpcolorconfig.c:272
 msgid "Soft-proofing rendering intent"
-msgstr ""
+msgstr "Prueba de renderizado de pseudoprueba"
 
 #: ../libgimpconfig/gimpcolorconfig.c:280
 msgid "Use black point compensation for soft-proofing"
-msgstr ""
+msgstr "Utilizar la compensación de punto negro para la pseudoprueba"
 
 #: ../libgimpconfig/gimpcolorconfig.c:287
 msgid "Optimize soft-proofing color transformations"
-msgstr ""
+msgstr "Optimizar las transformaciones de color de pseudoprueba"
 
 #: ../libgimpconfig/gimpcolorconfig.c:294
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "Marca de colores de gama"
 
 #: ../libgimpconfig/gimpcolorconfig.c:301
 msgid "Out of gamut warning color"
-msgstr ""
+msgstr "Falta de color de aviso de gama"
 
 #: ../libgimpconfig/gimpcolorconfig.c:656
 #: ../libgimpconfig/gimpcolorconfig.c:818
@@ -1542,10 +1521,9 @@ msgstr "El perfil de color «%s» no es para el espacio de color RGB."
 
 #: ../libgimpconfig/gimpcolorconfig.c:694
 #: ../libgimpconfig/gimpcolorconfig.c:859
-#, fuzzy, c-format
-#| msgid "Color profile '%s' is not for RGB color space."
+#, c-format
 msgid "Color profile '%s' is not for GRAY color space."
-msgstr "El perfil de color «%s» no es para el espacio de color RGB."
+msgstr "El perfil de color «%s» no es para el espacio de color gris."
 
 #: ../libgimpconfig/gimpcolorconfig.c:732
 #: ../libgimpconfig/gimpcolorconfig.c:900
@@ -1722,7 +1700,6 @@ msgid "Manufacturer: "
 msgstr "Fabricante:"
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:186
-#| msgid "Copyright:"
 msgid "Copyright: "
 msgstr "Copyright: "
 
@@ -1837,7 +1814,6 @@ msgid "Save as"
 msgstr "Guardar como"
 
 #: ../libgimpwidgets/gimpicons.c:75
-#| msgid "cancelled"
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -1859,7 +1835,7 @@ msgstr "Espaciado de la l_ínea"
 
 #: ../libgimpwidgets/gimpicons.c:152
 msgid "I_ndent"
-msgstr ""
+msgstr "Sa_ngrar"
 
 #: ../libgimpwidgets/gimpicons.c:176
 msgid "Re_size"
@@ -2227,13 +2203,11 @@ msgstr "Pulsar botón %d"
 msgid "Button %d Release"
 msgstr "Soltar botón %d"
 
-#: ../modules/controller-dx-dinput.c:442
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "Moverse a la izquierda en X"
 
-#: ../modules/controller-dx-dinput.c:445
-#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "Moverse a la derecha en X"
 
@@ -2245,13 +2219,11 @@ msgstr "Alejar en Y"
 msgid "Y Move Near"
 msgstr "Acercar en Y"
 
-#: ../modules/controller-dx-dinput.c:460
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Subir en Z"
 
-#: ../modules/controller-dx-dinput.c:463
-#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Bajar en Z"
 
@@ -2263,8 +2235,7 @@ msgstr "Bascular en el eje X para alejar"
 msgid "X Axis Tilt Near"
 msgstr "Bascular en el eje X para acercar"
 
-#: ../modules/controller-dx-dinput.c:478
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Bascular en el eje Y hacia la derecha "
 
@@ -2638,18 +2609,14 @@ msgid "Color proof filter using ICC color profile"
 msgstr "Filtro de color seguro usando el perfil de color ICC"
 
 #: ../modules/display-filter-proof.c:129
-#, fuzzy
-#| msgid "_Intent:"
 msgid "Intent"
-msgstr "_Objetivo:"
+msgstr "Objetivo"
 
 #: ../modules/display-filter-proof.c:137
-#| msgid "_Black Point Compensation"
 msgid "Black point compensation"
 msgstr "Compensación de punto negro"
 
 #: ../modules/display-filter-proof.c:144
-#| msgid "_Profile:"
 msgid "Profile"
 msgstr "Perfil"
 
