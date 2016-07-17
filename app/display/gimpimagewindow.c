@@ -547,7 +547,7 @@ gimp_image_window_map (GtkWidget *widget)
    * as soon as GTK+ has proper support for this, we will migrate to the
    * new-style full screen mode.
    */
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
+#if defined (MAC_OS_X_VERSION_10_7) && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
   ns_window.collectionBehavior |= NSWindowCollectionBehaviorFullScreenAuxiliary;
 #else
   /* Hard code the define ... */
