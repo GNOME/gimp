@@ -119,11 +119,6 @@
 		${prefix}/lib/gdk-pixbuf-2.0/${pkg:gdk-pixbuf-2.0:gdk_pixbuf_binary_version}/
 	</binary>
 
-	<!-- Copy in pango modules -->
-	<binary>
-		${prefix}/lib/pango/${pkg:pango:pango_module_version}/modules/*.so
-	</binary>
-
 	<!-- Translations -->
 	<data>${prefix}/share/xml/iso-codes/iso_639.xml</data>
 
