@@ -23,7 +23,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"ULL NAME <EMAIL@ADDRESS>\n"
 
 #: libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
