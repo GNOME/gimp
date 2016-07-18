@@ -1,0 +1,45 @@
+From d7aa7682d890669d131b646d812c21b5760054bf Mon Sep 17 00:00:00 2001
+From: Kristian Rietveld <kris@loopnest.org>
+Date: Mon, 18 Jul 2016 21:59:28 +0200
+Subject: [PATCH 1/2] quartz: introduce gdk_quartz_window_is_quartz function
+
+This function can be used to check whether a GdkWindow is a quartz
+window. It is equivalent to it's win32 counterpart. The function
+is necessary because the macro necessary for this check is private.
+---
+ gdk/quartz/gdkquartz.h        | 1 +
+ gdk/quartz/gdkwindow-quartz.c | 6 ++++++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/gdk/quartz/gdkquartz.h b/gdk/quartz/gdkquartz.h
+index 3c42983..70155c0 100644
+--- a/gdk/quartz/gdkquartz.h
++++ b/gdk/quartz/gdkquartz.h
+@@ -52,6 +52,7 @@ typedef enum
+   GDK_OSX_NEW = 99
+ } GdkOSXVersion;
+ 
++gboolean  gdk_quartz_window_is_quartz                           (GdkWindow      *window);
+ NSWindow *gdk_quartz_window_get_nswindow                        (GdkWindow      *window);
+ NSView   *gdk_quartz_window_get_nsview                          (GdkWindow      *window);
+ NSImage  *gdk_quartz_pixbuf_to_ns_image_libgtk_only             (GdkPixbuf      *pixbuf);
+diff --git a/gdk/quartz/gdkwindow-quartz.c b/gdk/quartz/gdkwindow-quartz.c
+index a7ee444..90aaa19 100644
+--- a/gdk/quartz/gdkwindow-quartz.c
++++ b/gdk/quartz/gdkwindow-quartz.c
+@@ -57,6 +57,12 @@ static FullscreenSavedGeometry *get_fullscreen_geometry (GdkWindow *window);
+ 
+ static void gdk_window_impl_iface_init (GdkWindowImplIface *iface);
+ 
++gboolean
++gdk_quartz_window_is_quartz (GdkWindow *window)
++{
++  return GDK_WINDOW_IS_QUARTZ (window);
++}
++
+ NSView *
+ gdk_quartz_window_get_nsview (GdkWindow *window)
+ {
+-- 
+1.9.5 (Apple Git-50.3)
+
