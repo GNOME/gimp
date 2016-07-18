@@ -13,7 +13,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-cut.svg">
+   sodipodi:docname="gimp-edit-cut.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -23,11 +23,11 @@
      borderopacity="1"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.5218"
+     inkscape:zoom="4.1484962"
      inkscape:cx="26.2677"
      inkscape:cy="1.1319681"
      inkscape:document-units="px"
-     inkscape:current-layer="svg30571"
+     inkscape:current-layer="layer1"
      showgrid="true"
      units="px"
      inkscape:snap-page="true"
@@ -82,12 +82,12 @@
      transform="translate(0,-1036.3622)">
     <g
        id="g4060"
-       transform="matrix(0.9999994,0,0,0.99760656,-2.9021432e-4,2.4807377)">
+       transform="matrix(0,0.9999994,-0.99760656,0,1049.8815,1036.3619)">
       <g
          id="g3994"
          transform="translate(-2.9467144,1005.4207)">
         <path
-           style="fill:#ffffff;stroke:#888a85;stroke-width:0.34893051;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+           style="fill:#ffffff;fill-opacity:1;stroke:#888a85;stroke-width:0.34893051;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m 14.548103,31.153875 c 0.07396,0.02391 0.145595,0.05048 0.217727,0.07589 0.227299,0.766601 1.281093,1.541826 0.880373,2.305255 -1.334954,2.226312 -2.660363,4.482163 -3.985343,6.726032 -0.260214,0.05126 -0.522707,0.07918 -0.785709,0.08538 -0.553541,0.01403 -1.1217881,-0.06786 -1.647149,-0.256139 1.762403,-2.983801 3.525548,-5.974181 5.320101,-8.936421 z"
            id="path16717"
            inkscape:connector-curvature="0" />
@@ -100,14 +100,15 @@
            transform="matrix(1.2693718,0,0,1.2109197,-365.88744,25.001449)"
            style="fill:#ff4c4c;fill-opacity:1;stroke:#9a0c00;stroke-width:0.28144068;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m 294.73242,13.672852 1.01416,-1.712403 1.29785,0.339844 -0.64502,1.084473 -1.2666,1.333984 z"
-           id="polygon45129" />
+           id="polygon45129"
+           inkscape:connector-curvature="0" />
         <path
            style="fill:#ff4c4c;fill-opacity:1;stroke:none;stroke-width:1.00000012;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m 9.7440071,39.997082 c -0.4265135,0.169831 -0.423608,0.710136 -0.6716836,1.034235 -0.1194469,0.249762 -0.3293167,0.469739 -0.4187243,0.732226 -0.00338,0.179836 0.1563045,0.474624 0.3598346,0.316218 0.4832604,-0.399988 0.8947855,-0.885822 1.2017952,-1.439991 0.08108,-0.170987 0.277662,-0.312001 0.302968,-0.49003 -0.187924,-0.199173 -0.5278687,-0.185989 -0.7741899,-0.152658 z"
            id="polygon16896"
            inkscape:connector-curvature="0" />
         <path
-           style="fill:#ffffff;stroke:#888a85;stroke-width:0.34893051;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+           style="fill:#ffffff;fill-opacity:1;stroke:#888a85;stroke-width:0.34893051;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m 7.1458179,31.153875 c -0.072624,0.02391 -0.1429722,0.05048 -0.2138058,0.07589 -0.2232053,0.766601 -1.2580219,1.541826 -0.8645183,2.305255 1.3109135,2.226312 2.6124532,4.482163 3.9135728,6.726032 0.2555274,0.05126 0.5132944,0.07918 0.7715604,0.08538 0.543572,0.01403 1.101586,-0.06786 1.617486,-0.256139 -1.730665,-2.983801 -3.462059,-5.974181 -5.2242951,-8.936421 z"
            id="polygon45097"
            inkscape:connector-curvature="0" />
@@ -130,7 +131,8 @@
            transform="matrix(1.264677,0,0,1.264677,-364.86263,24.708361)"
            style="fill:#ef2929;fill-opacity:1;stroke:url(#linearGradient2265);stroke-width:0.27590489;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m 299.26807,13.672852 -1.01416,-1.712403 -1.29786,0.339844 0.64405,1.084473 1.26709,1.333984 z"
-           id="polygon45101" />
+           id="polygon45101"
+           inkscape:connector-curvature="0" />
       </g>
       <rect
          ry="0.34441933"

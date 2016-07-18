@@ -13,7 +13,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-cut.svg">
+   sodipodi:docname="gimp-edit-cut.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -23,7 +23,7 @@
      borderopacity="1"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16.294286"
+     inkscape:zoom="5.8668597"
      inkscape:cx="7.77165"
      inkscape:cy="13.217469"
      inkscape:document-units="px"
@@ -82,7 +82,7 @@
      transform="translate(0,-1036.3622)">
     <g
        id="g3953"
-       transform="matrix(1.0009674,0,0,0.99917568,17.696871,1.3604765)">
+       transform="matrix(0,1.0009674,-0.99917568,0,1051.0017,1054.0591)">
       <path
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:4.79973984;marker:none;enable-background:accumulate"
          id="path3940"
