@@ -44,8 +44,8 @@ struct _GimpMirror
   gboolean         point_symmetry;
   gboolean         disable_transformation;
 
-  gdouble          horizontal_position;
-  gdouble          vertical_position;
+  gdouble          horizontal_axis_position;
+  gdouble          vertical_axis_position;
   GimpGuide       *horizontal_guide;
   GimpGuide       *vertical_guide;
 
