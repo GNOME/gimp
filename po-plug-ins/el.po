@@ -4,22 +4,22 @@
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
 # Nikos Charonitakis <charosn@her.forthnet.gr>, 2003, 2004.
 # Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012.
-# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2012, 2013, 2014.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2012, 2013, 2014, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-14 18:20+0000\n"
-"PO-Revision-Date: 2016-04-18 04:20+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
+"ywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-07-18 08:01+0000\n"
+"PO-Revision-Date: 2016-07-19 08:20+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: www.gnome.gr\n"
+"Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:120
@@ -639,8 +639,8 @@ msgstr "Κά_θετος"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:442
-#: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:445
+#: ../plug-ins/common/file-cel.c:448 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
@@ -654,8 +654,7 @@ msgstr "Κά_θετος"
 #: ../plug-ins/file-jpeg/jpeg-load.c:824
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1655 ../plug-ins/file-sgi/sgi.c:409
-#: ../plug-ins/gfig/gfig-dialog.c:1321
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -1064,8 +1063,8 @@ msgstr "Φόρτωση ρυθμίσεων μείκτη καναλιού"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:349
-#: ../plug-ins/common/file-cel.c:580 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:352
+#: ../plug-ins/common/file-cel.c:583 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:357
 #: ../plug-ins/common/file-gih.c:642 ../plug-ins/common/file-jp2-load.c:196
 #: ../plug-ins/common/file-jp2-load.c:205 ../plug-ins/common/file-mng.c:1156
@@ -1103,7 +1102,7 @@ msgstr "Αποθήκευση ρυθμίσεων μείκτη καναλιών"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
 #: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -2036,8 +2035,7 @@ msgid "Stretch brightness values to cover the full range"
 msgstr "Επέκταση τιμών φωτεινότητας για κάλυψη όλης της περιοχής"
 
 #
-#: ../plug-ins/common/contrast-normalize.c:91
-#: ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
 msgid "_Normalize"
 msgstr "Κα_νονικοποίηση"
 
@@ -2156,9 +2154,9 @@ msgid "E_xtend"
 msgstr "Ε_πέκταση"
 
 #
-#: ../plug-ins/common/convolution-matrix.c:74
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:700
-#: ../plug-ins/common/fractal-trace.c:737 ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/convolution-matrix.c:74 ../plug-ins/common/displace.c:477
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/fractal-trace.c:737
+#: ../plug-ins/common/ripple.c:585
 msgid "_Wrap"
 msgstr "Ανα_δίπλωση"
 
@@ -3132,8 +3130,8 @@ msgstr "KISS CEL"
 msgid "Load KISS Palette"
 msgstr "Φόρτωση παλέτας KISS"
 
-#: ../plug-ins/common/file-cel.c:309 ../plug-ins/common/file-cel.c:364
-#: ../plug-ins/common/file-cel.c:384
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-cel.c:367
+#: ../plug-ins/common/file-cel.c:387
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλίδας εικόνας"
@@ -3142,7 +3140,7 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:354 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:357 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:375 ../plug-ins/common/file-gif-load.c:362
 #: ../plug-ins/common/file-gih.c:647 ../plug-ins/common/file-jp2-load.c:189
 #: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
@@ -3161,17 +3159,17 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 msgid "Opening '%s'"
 msgstr "Άνοιγμα του '%s'"
 
-#: ../plug-ins/common/file-cel.c:392
+#: ../plug-ins/common/file-cel.c:395
 #, c-format
 msgid "is not a CEL image file"
 msgstr "δεν είναι αρχείο εικόνας CEL"
 
-#: ../plug-ins/common/file-cel.c:406
+#: ../plug-ins/common/file-cel.c:409
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "μη αποδεκτή τιμή bpp στην εικόνα: %hhu"
 
-#: ../plug-ins/common/file-cel.c:420
+#: ../plug-ins/common/file-cel.c:423
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
@@ -3180,51 +3178,51 @@ msgstr ""
 "μη αποδεκτές διαστάσεις εικόνας: πλάτος: %d, οριζόντια αντιστάθμιση: %d, "
 "ύψος: %d, κάθετη αντιστάθμιση: %d"
 
-#: ../plug-ins/common/file-cel.c:433
+#: ../plug-ins/common/file-cel.c:436
 #, c-format
 msgid "Can't create a new image"
 msgstr "Αδυναμία δημιουργίας νέας εικόνας"
 
-#: ../plug-ins/common/file-cel.c:471 ../plug-ins/common/file-cel.c:506
-#: ../plug-ins/common/file-cel.c:531
+#: ../plug-ins/common/file-cel.c:474 ../plug-ins/common/file-cel.c:509
+#: ../plug-ins/common/file-cel.c:534
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης δεδομένων εικόνας"
 
-#: ../plug-ins/common/file-cel.c:548
+#: ../plug-ins/common/file-cel.c:551
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Μη υποστηριζόμενη βάθος δυαδικού ψηφίου (%d)!"
 
-#: ../plug-ins/common/file-cel.c:630 ../plug-ins/common/file-cel.c:642
+#: ../plug-ins/common/file-cel.c:633 ../plug-ins/common/file-cel.c:645
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr "'%s': Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλίδας παλέτας"
 
-#: ../plug-ins/common/file-cel.c:651
+#: ../plug-ins/common/file-cel.c:654
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "'%s': δεν είναι αρχείο παλέτας KCF"
 
-#: ../plug-ins/common/file-cel.c:660
+#: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "'%s': απαράδεκτη τιμή bpp σε παλέτα: %hhu"
 
-#: ../plug-ins/common/file-cel.c:669
+#: ../plug-ins/common/file-cel.c:672
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "'%s': απαράδεκτος αριθμός χρωμάτων: %u"
 
-#: ../plug-ins/common/file-cel.c:684 ../plug-ins/common/file-cel.c:701
-#: ../plug-ins/common/file-cel.c:721
+#: ../plug-ins/common/file-cel.c:687 ../plug-ins/common/file-cel.c:704
+#: ../plug-ins/common/file-cel.c:724
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δεδομένων παλέτας"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:670
+#: ../plug-ins/common/file-cel.c:781 ../plug-ins/common/file-gbr.c:670
 #: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
@@ -4455,8 +4453,7 @@ msgid "_Millimeter"
 msgstr "_Χιλιοστό"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3302
-#: ../plug-ins/map-object/map-object-ui.c:989
+#: ../plug-ins/common/file-ps.c:3302 ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Περιστροφή"
 
@@ -4832,8 +4829,7 @@ msgstr "%s-%d-από-%d-σελίδες"
 msgid "TIFF Channel"
 msgstr "Κανάλι TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1038
-#: ../plug-ins/file-psd/psd-load.c:333
+#: ../plug-ins/common/file-tiff-load.c:1038 ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -9076,19 +9072,25 @@ msgstr "32 δυαδικά ψηφία"
 msgid "Windows BMP image"
 msgstr "Εικόνα Windows BMP"
 
-#: ../plug-ins/file-compressor/file-compressor.c:166
+#: ../plug-ins/file-compressor/file-compressor.c:167
 msgid "gzip archive"
 msgstr "αρχείο gzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:185
+#: ../plug-ins/file-compressor/file-compressor.c:186
 msgid "bzip archive"
 msgstr "αρχείο bzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:392
+#: ../plug-ins/file-compressor/file-compressor.c:393
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Χωρίς λογική επέκταση αρχείου, αποθήκευση ως συμπιεσμένο XCF."
 
-#: ../plug-ins/file-compressor/file-compressor.c:448
+#: ../plug-ins/file-compressor/file-compressor.c:416
+#, c-format
+#| msgid "Compression"
+msgid "Compressing '%s'"
+msgstr "Συμπιέζεται το '%s'"
+
+#: ../plug-ins/file-compressor/file-compressor.c:453
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Χωρίς λογική επέκταση αρχείου, προσπάθεια φόρτωσης με μαγικό αρχείο."
 
@@ -10535,8 +10537,7 @@ msgstr "Προβολή σημείων ελέγχου"
 msgid "Max undo:"
 msgstr "Μέγιστες αναιρέσεις:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1320
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Διαφανές"
 
@@ -11726,8 +11727,7 @@ msgstr "Τυχαίος σπόρος:"
 msgid "_Second Flares"
 msgstr "_Δεύτερες λάμψεις"
 
-#: ../plug-ins/help-browser/dialog.c:184
-#: ../plug-ins/help-browser/dialog.c:1133
+#: ../plug-ins/help-browser/dialog.c:184 ../plug-ins/help-browser/dialog.c:1133
 msgid "GIMP Help Browser"
 msgstr "Περιηγητής βοήθειας GIMP"
 
@@ -11821,9 +11821,6 @@ msgstr "Το εγχειρίδιο χρήστη του GIMP δεν είναι δ�
 #. * Cf. bug 762282.
 #.
 #: ../plug-ins/help/gimphelpdomain.c:193
-#| msgid ""
-#| "Please install the additional help package or use the online user manual "
-#| "at http://docs.gimp.org/."
 msgid ""
 "Please install the additional help package or use the online user manual at: "
 "http://docs.gimp.org/"
@@ -12061,8 +12058,7 @@ msgstr "Κέντρο _x:"
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
 #: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:249
-#: ../plug-ins/imagemap/imap_grid.c:255
-#: ../plug-ins/imagemap/imap_polygon.c:505
+#: ../plug-ins/imagemap/imap_grid.c:255 ../plug-ins/imagemap/imap_polygon.c:505
 #: ../plug-ins/imagemap/imap_polygon.c:513
 #: ../plug-ins/imagemap/imap_rectangle.c:392
 #: ../plug-ins/imagemap/imap_rectangle.c:399
