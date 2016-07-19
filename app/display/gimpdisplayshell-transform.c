@@ -380,7 +380,7 @@ gimp_display_shell_unrotate_xy (GimpDisplayShell *shell,
       gdouble fx = x;
       gdouble fy = y;
 
-      cairo_matrix_transform_point (shell->rotate_untransform, &fy, &fy);
+      cairo_matrix_transform_point (shell->rotate_untransform, &fx, &fy);
 
       *nx = CLAMP (fx, G_MININT, G_MAXINT);
       *ny = CLAMP (fy, G_MININT, G_MAXINT);
@@ -689,7 +689,7 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
       gdouble fx = x;
       gdouble fy = y;
 
-      cairo_matrix_transform_point (shell->rotate_untransform, &fy, &fy);
+      cairo_matrix_transform_point (shell->rotate_untransform, &fx, &fy);
 
       x = fx;
       y = fy;
