@@ -17,10 +17,13 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -30,6 +33,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-rulers.h"
+#include "gimpdisplayshell-scale.h"
 
 
 /**
@@ -43,6 +47,10 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
   GimpImage *image;
   gint       image_width;
   gint       image_height;
+  gdouble    offset_x     = 0.0;
+  gdouble    offset_y     = 0.0;
+  gdouble    scale_x      = 1.0;
+  gdouble    scale_y      = 1.0;
   gdouble    resolution_x = 1.0;
   gdouble    resolution_y = 1.0;
   gdouble    horizontal_lower;
@@ -59,17 +67,43 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
 
   if (image)
     {
-      image_width  = gimp_image_get_width  (image);
-      image_height = gimp_image_get_height (image);
+      gint    image_x, image_y;
+      gdouble res_x, res_y;
+      gdouble cos_a, sin_a;
 
-      gimp_image_get_resolution (image, &resolution_x, &resolution_y);
+      gimp_display_shell_scale_get_image_bounds (shell,
+                                                 &image_x, &image_y,
+                                                 &image_width, &image_height);
+
+      gimp_display_shell_get_rotated_scale (shell, &scale_x, &scale_y);
+
+      image_width  /= scale_x;
+      image_height /= scale_y;
+
+      offset_x = shell->offset_x - image_x;
+      offset_y = shell->offset_y - image_y;
+
+      gimp_image_get_resolution (image, &res_x, &res_y);
+
+      cos_a = cos (G_PI * shell->rotate_angle / 180.0);
+      sin_a = sin (G_PI * shell->rotate_angle / 180.0);
+
+      if (shell->dot_for_dot)
+        {
+          resolution_x = 1.0 / sqrt (SQR (cos_a / res_x) + SQR (sin_a / res_y));
+          resolution_y = 1.0 / sqrt (SQR (cos_a / res_y) + SQR (sin_a / res_x));
+        }
+      else
+        {
+          resolution_x = sqrt (SQR (res_x * cos_a) + SQR (res_y * sin_a));
+          resolution_y = sqrt (SQR (res_y * cos_a) + SQR (res_x * sin_a));
+        }
     }
   else
     {
       image_width  = shell->disp_width;
       image_height = shell->disp_height;
     }
-
 
   /* Initialize values */
 
@@ -78,8 +112,7 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
 
   if (image)
     {
-      horizontal_upper    = gimp_pixels_to_units (FUNSCALEX (shell,
-                                                             shell->disp_width),
+      horizontal_upper    = gimp_pixels_to_units (shell->disp_width / scale_x,
                                                   shell->unit,
                                                   resolution_x);
       horizontal_max_size = gimp_pixels_to_units (MAX (image_width,
@@ -87,8 +120,7 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
                                                   shell->unit,
                                                   resolution_x);
 
-      vertical_upper      = gimp_pixels_to_units (FUNSCALEY (shell,
-                                                             shell->disp_height),
+      vertical_upper      = gimp_pixels_to_units (shell->disp_height / scale_y,
                                                   shell->unit,
                                                   resolution_y);
       vertical_max_size   = gimp_pixels_to_units (MAX (image_width,
@@ -110,18 +142,8 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
 
   if (image)
     {
-      gdouble offset_x;
-      gdouble offset_y;
-
-      offset_x = gimp_pixels_to_units (FUNSCALEX (shell,
-                                                  (gdouble) shell->offset_x),
-                                       shell->unit,
-                                       resolution_x);
-
-      offset_y = gimp_pixels_to_units (FUNSCALEX (shell,
-                                                  (gdouble) shell->offset_y),
-                                       shell->unit,
-                                       resolution_y);
+      offset_x *= horizontal_upper / shell->disp_width;
+      offset_y *= vertical_upper   / shell->disp_height;
 
       horizontal_lower += offset_x;
       horizontal_upper += offset_x;

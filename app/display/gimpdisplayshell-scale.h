@@ -70,6 +70,9 @@ void     gimp_display_shell_set_initial_scale        (GimpDisplayShell *shell,
                                                       gint             *display_width,
                                                       gint             *display_height);
 
+void     gimp_display_shell_get_rotated_scale        (GimpDisplayShell *shell,
+                                                      gdouble          *scale_x,
+                                                      gdouble          *scale_y);
 
 /*  debug API for testing  */
 

@@ -765,6 +765,41 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
 }
 
 /**
+ * gimp_display_shell_get_rotated_scale:
+ * @shell:   the #GimpDisplayShell
+ * @scale_x: horizontal scale output
+ * @scale_y: vertical scale output
+ *
+ * Returns the screen space horizontal and vertical scaling
+ * factors, taking rotation into account.
+ **/
+void
+gimp_display_shell_get_rotated_scale (GimpDisplayShell *shell,
+                                      gdouble          *scale_x,
+                                      gdouble          *scale_y)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->rotate_angle == 0.0)
+    {
+      if (scale_x) *scale_x = shell->scale_x;
+      if (scale_y) *scale_y = shell->scale_y;
+    }
+  else
+    {
+      gdouble a     = G_PI * shell->rotate_angle / 180.0;
+      gdouble cos_a = cos (a);
+      gdouble sin_a = sin (a);
+
+      if (scale_x) *scale_x = 1.0 / sqrt (SQR (cos_a / shell->scale_x) +
+                                          SQR (sin_a / shell->scale_y));
+
+      if (scale_y) *scale_y = 1.0 / sqrt (SQR (cos_a / shell->scale_y) +
+                                          SQR (sin_a / shell->scale_x));
+    }
+}
+
+/**
  * gimp_display_shell_push_zoom_focus_pointer_pos:
  * @shell:
  * @x:

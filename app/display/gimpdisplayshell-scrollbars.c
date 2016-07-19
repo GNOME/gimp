@@ -95,6 +95,7 @@ gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
   gint    bounds_width;
   gdouble lower;
   gdouble upper;
+  gdouble scale_x;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -114,11 +115,12 @@ gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
   lower = MIN (value, bounds_x);
   upper = MAX (value + shell->disp_width, bounds_x + bounds_width);
 
+  gimp_display_shell_get_rotated_scale (shell, &scale_x, NULL);
+
   g_object_set (shell->hsbdata,
                 "lower",          lower,
                 "upper",          upper,
-                "step-increment", (gdouble) MAX (shell->scale_x,
-                                                 MINIMUM_STEP_AMOUNT),
+                "step-increment", (gdouble) MAX (scale_x, MINIMUM_STEP_AMOUNT),
                 NULL);
 }
 
@@ -137,6 +139,7 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
   gint    bounds_height;
   gdouble lower;
   gdouble upper;
+  gdouble scale_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -156,11 +159,12 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
   lower = MIN (value, bounds_y);
   upper = MAX (value + shell->disp_height, bounds_y + bounds_height);
 
+  gimp_display_shell_get_rotated_scale (shell, NULL, &scale_y);
+
   g_object_set (shell->vsbdata,
                 "lower",          lower,
                 "upper",          upper,
-                "step-increment", (gdouble) MAX (shell->scale_y,
-                                                 MINIMUM_STEP_AMOUNT),
+                "step-increment", (gdouble) MAX (scale_y, MINIMUM_STEP_AMOUNT),
                 NULL);
 }
 
