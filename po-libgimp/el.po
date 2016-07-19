@@ -9,10 +9,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master.el.po\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-06-07 09:41+0000\n"
-"PO-Revision-Date: 2016-06-07 12:44+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
+"ywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-07-17 23:34+0000\n"
+"PO-Revision-Date: 2016-07-19 08:19+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -1319,13 +1319,16 @@ msgid "No color management"
 msgstr "Καμία διαχείριση χρωμάτων"
 
 #: ../libgimpconfig/gimpconfigenums.c:25
+#| msgctxt "color-management-mode"
+#| msgid "Color managed display"
 msgctxt "color-management-mode"
-msgid "Color managed display"
-msgstr "Οθόνη με διαχείριση χρωμάτων"
+msgid "Color-managed display"
+msgstr "Εμφάνιση χρωματικής διαχείρισης"
 
 #: ../libgimpconfig/gimpconfigenums.c:26
+#| msgid "Softproof rendering intent"
 msgctxt "color-management-mode"
-msgid "Print simulation"
+msgid "Soft-proofing"
 msgstr "Προσομοίωση εκτύπωσης"
 
 #: ../libgimpconfig/gimpconfigenums.c:57
@@ -1396,12 +1399,16 @@ msgstr ""
 "Η χρησιμοποιούμενη χρωματική κατατομή CMYK για μετατροπή μεταξύ RGB και CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:74
+#| msgid ""
+#| "The color profile to use for soft proofing from your image's color space "
+#| "to some other color space, including soft proofing to a printer or other "
+#| "output device profile. "
 msgid ""
-"The color profile to use for soft proofing from your image's color space to "
-"some other color space, including soft proofing to a printer or other output "
+"The color profile to use for soft-proofing from your image's color space to "
+"some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
-"Η χρησιμοποιούμενη χρωματική κατατομή για δοκιμασία εκτύπωσης από τον "
+"Η χρησιμοποιούμενη χρωματική κατατομή για προσομοίωση εκτύπωσης από τον "
 "χρωματικό χώρο της εικόνας σας σε κάποιον άλλο χρωματικό χώρο, "
 "συμπεριλαμβανομένης της δοκιμασίας εκτύπωσης σε έναν εκτυπωτή ή σε κάποια "
 "άλλη κατατομή συσκευής εξόδου. "
@@ -1451,15 +1458,20 @@ msgstr ""
 "καλύτερα. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
+#| msgid ""
+#| "When disabled, simulation might be of better quality at the cost of speed."
 msgid ""
-"When disabled, simulation might be of better quality at the cost of speed."
+"When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Όταν απενεργοποιηθεί, η προσομοίωση μπορεί να έχει καλύτερη ποιότητα σε "
-"βάρος της ταχύτητας."
+"Όταν απενεργοποιηθεί, η προσομοίωση εκτύπωσης μπορεί να έχει καλύτερη "
+"ποιότητα σε βάρος της ταχύτητας."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
+#| msgid ""
+#| "When enabled, the print simulation will mark colors which can not be "
+#| "represented in the target color space."
 msgid ""
-"When enabled, the print simulation will mark colors which can not be "
+"When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
 "Όταν ενεργοποιηθεί, η προσομοίωση εκτύπωσης θα σημειώσει τα χρώματα που δεν "
@@ -1494,8 +1506,9 @@ msgid "Use the system monitor profile"
 msgstr "Χρήση της κατατομής οθόνης του συστήματος"
 
 #: ../libgimpconfig/gimpcolorconfig.c:243
-msgid "Simulation profile for softproofing"
-msgstr "Κατατομή προσομοίωσης για προσομοίωση εκτύπωσης"
+#| msgid "Simulation profile for softproofing"
+msgid "Simulation profile for soft-proofing"
+msgstr "Κατατομή προσομοίωσης για την προσομοίωση εκτύπωσης"
 
 #: ../libgimpconfig/gimpcolorconfig.c:250
 msgid "Display rendering intent"
@@ -1510,16 +1523,19 @@ msgid "Optimize display color transformations"
 msgstr "Βελτιστοποίηση μετασχηματισμών χρωματικής εμφάνισης"
 
 #: ../libgimpconfig/gimpcolorconfig.c:272
-msgid "Softproof rendering intent"
+#| msgid "Softproof rendering intent"
+msgid "Soft-proofing rendering intent"
 msgstr "Στόχος χρωματικής απόδοσης προσομοίωσης εκτύπωσης"
 
 #: ../libgimpconfig/gimpcolorconfig.c:280
-msgid "Use black point compensation for softproofing"
-msgstr "Χρήση αντιστάθμισης μαύρου σημείου για την προεπισκόπηση εκτύπωσης"
+#| msgid "Use black point compensation for softproofing"
+msgid "Use black point compensation for soft-proofing"
+msgstr "Χρήση αντιστάθμισης μαύρου σημείου για την προσομοίωση εκτύπωσης"
 
 #: ../libgimpconfig/gimpcolorconfig.c:287
-msgid "Optimize simulation color transformations"
-msgstr "Βελτιστοποίηση μετασχηματισμών χρωματικής προσομοίωσης"
+#| msgid "Optimize simulation color transformations"
+msgid "Optimize soft-proofing color transformations"
+msgstr "Βελτιστοποίηση μετασχηματισμών χρωματικής προσομοίωσης εκτύπωσης"
 
 #: ../libgimpconfig/gimpcolorconfig.c:294
 msgid "Mark out of gamut colors"
@@ -1694,12 +1710,12 @@ msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Κατατομή χρωμάτων ICC (*.icc, *.icm)"
 
 #
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:312
-#: ../libgimpwidgets/gimppatheditor.c:248
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
+#: ../libgimpwidgets/gimppatheditor.c:249
 msgid "Folder"
 msgstr "Φάκελος"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:317
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:330
 msgid "Not a regular file."
 msgstr "Δεν είναι κανονικό αρχείο."
 
@@ -1744,30 +1760,30 @@ msgstr ""
 msgid "HTML _notation:"
 msgstr "_Σημειογραφία HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:150
+#: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
 msgstr "Εμφάνιση της θέσης του αρχείου στον διαχειριστή αρχείων"
 
-#: ../libgimpwidgets/gimpfileentry.c:227
+#: ../libgimpwidgets/gimpfileentry.c:229
 msgid "Open a file selector to browse your folders"
 msgstr "Άνοιγμα επιλογέα αρχείων για περιήγηση των φακέλων σας"
 
-#: ../libgimpwidgets/gimpfileentry.c:228
+#: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your files"
 msgstr "Άνοιγμα επιλογέα αρχείων για περιήγηση των αρχείων σας"
 
-#: ../libgimpwidgets/gimpfileentry.c:395
+#: ../libgimpwidgets/gimpfileentry.c:397
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Αδύνατη η εμφάνιση του αρχείου στον διαχειριστή αρχείων: %s"
 
 #
-#: ../libgimpwidgets/gimpfileentry.c:422
+#: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select Folder"
 msgstr "Επιλογή φακέλου"
 
 #
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:426
 msgid "Select File"
 msgstr "Επιλογή αρχείου"
 
@@ -1811,46 +1827,79 @@ msgstr "_Επαναφορά"
 msgid "Visible"
 msgstr "Ορατό"
 
-#: ../libgimpwidgets/gimpicons.c:108 ../libgimpwidgets/gimpicons.c:112
+#: ../libgimpwidgets/gimpicons.c:70
+msgid "Ne_xt"
+msgstr "Επό_μενο"
+
+#: ../libgimpwidgets/gimpicons.c:71
+msgid "Pre_vious"
+msgstr "Προ_ηγούμενο"
+
+#: ../libgimpwidgets/gimpicons.c:72
+msgid "_Open"
+msgstr "Ά_νοιγμα"
+
+#: ../libgimpwidgets/gimpicons.c:73
+msgid "_Save"
+msgstr "_Αποθήκευση"
+
+#: ../libgimpwidgets/gimpicons.c:74
+msgid "Save as"
+msgstr "Αποθήκευση ως"
+
+#: ../libgimpwidgets/gimpicons.c:75
+#| msgid "cancelled"
+msgid "_Cancel"
+msgstr "Ά_κυρο"
+
+#: ../libgimpwidgets/gimpicons.c:76
+msgid "_Quit"
+msgstr "Έ_ξοδος"
+
+#: ../libgimpwidgets/gimpicons.c:127 ../libgimpwidgets/gimpicons.c:131
 msgid "_Stroke"
 msgstr "_Περίγραμμα"
 
-#: ../libgimpwidgets/gimpicons.c:127
+#: ../libgimpwidgets/gimpicons.c:150
 msgid "L_etter Spacing"
 msgstr "Διάκενο γ_ραμμάτων"
 
-#: ../libgimpwidgets/gimpicons.c:128
+#: ../libgimpwidgets/gimpicons.c:151
 msgid "L_ine Spacing"
 msgstr "Διάκενο _γραμμών"
 
-#: ../libgimpwidgets/gimpicons.c:144
+#: ../libgimpwidgets/gimpicons.c:152
+msgid "I_ndent"
+msgstr "Ε_σοχή"
+
+#: ../libgimpwidgets/gimpicons.c:176
 msgid "Re_size"
 msgstr "Αυ_ξομείωση"
 
-#: ../libgimpwidgets/gimpicons.c:145 ../libgimpwidgets/gimpicons.c:280
+#: ../libgimpwidgets/gimpicons.c:177 ../libgimpwidgets/gimpicons.c:312
 msgid "_Scale"
 msgstr "Κ_λιμάκωση"
 
 #
-#: ../libgimpwidgets/gimpicons.c:252
+#: ../libgimpwidgets/gimpicons.c:284
 msgid "Cr_op"
 msgstr "_Περικοπή"
 
 #
-#: ../libgimpwidgets/gimpicons.c:260
+#: ../libgimpwidgets/gimpicons.c:292
 msgid "_Select"
 msgstr "_Επιλογή"
 
-#: ../libgimpwidgets/gimpicons.c:263 ../libgimpwidgets/gimpicons.c:275
-#: ../libgimpwidgets/gimpicons.c:286
+#: ../libgimpwidgets/gimpicons.c:295 ../libgimpwidgets/gimpicons.c:307
+#: ../libgimpwidgets/gimpicons.c:318
 msgid "_Transform"
 msgstr "_Μετασχηματισμός"
 
-#: ../libgimpwidgets/gimpicons.c:279
+#: ../libgimpwidgets/gimpicons.c:311
 msgid "_Rotate"
 msgstr "_Περιστροφή"
 
-#: ../libgimpwidgets/gimpicons.c:282
+#: ../libgimpwidgets/gimpicons.c:314
 msgid "_Shear"
 msgstr "_Στρέβλωση"
 
@@ -1904,7 +1953,7 @@ msgid_plural "All %d pages selected"
 msgstr[0] "Επιλέχτηκε η %d σελίδα"
 msgstr[1] "Επιλέχτηκε κάθε %d σελίδα"
 
-#: ../libgimpwidgets/gimppatheditor.c:239
+#: ../libgimpwidgets/gimppatheditor.c:240
 msgid "Writable"
 msgstr "Εγγράψιμος"
 
@@ -2626,6 +2675,10 @@ msgstr "_Στόχος:"
 #: ../modules/display-filter-proof.c:325
 msgid "_Black Point Compensation"
 msgstr "_Αντιστάθμιση μαύρου σημείου"
+
+#~ msgctxt "color-management-mode"
+#~ msgid "Print simulation"
+#~ msgstr "Προσομοίωση εκτύπωσης"
 
 #~| msgid "Print simulation profile:"
 #~ msgid "Print simulation profile"
