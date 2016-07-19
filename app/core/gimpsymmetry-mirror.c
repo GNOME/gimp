@@ -50,8 +50,8 @@ enum
   PROP_VERTICAL_SYMMETRY,
   PROP_POINT_SYMMETRY,
   PROP_DISABLE_TRANSFORMATION,
-  PROP_HORIZONTAL_AXIS_POSITION,
-  PROP_VERTICAL_AXIS_POSITION
+  PROP_MIRROR_POSITION_X,
+  PROP_MIRROR_POSITION_Y
 };
 
 
@@ -157,29 +157,29 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HORIZONTAL_AXIS_POSITION,
-                           "horizontal-axis-position",
-                           _("Horizontal axis position"),
-                           NULL,
-                           0.0, G_MAXDOUBLE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_SYMMETRY_PARAM_GUI);
-
-  pspec = g_object_class_find_property (object_class, "horizontal-axis-position");
-  gegl_param_spec_set_property_key (pspec, "unit", "pixel-coordinate");
-  gegl_param_spec_set_property_key (pspec, "axis", "y");
-
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_VERTICAL_AXIS_POSITION,
-                           "vertical-axis-position",
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_MIRROR_POSITION_X,
+                           "mirror-position-x",
                            _("Vertical axis position"),
                            NULL,
                            0.0, G_MAXDOUBLE, 0.0,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
-  pspec = g_object_class_find_property (object_class, "vertical-axis-position");
+  pspec = g_object_class_find_property (object_class, "mirror-position-x");
   gegl_param_spec_set_property_key (pspec, "unit", "pixel-coordinate");
   gegl_param_spec_set_property_key (pspec, "axis", "x");
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_MIRROR_POSITION_Y,
+                           "mirror-position-y",
+                           _("Horizontal axis position"),
+                           NULL,
+                           0.0, G_MAXDOUBLE, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_SYMMETRY_PARAM_GUI);
+
+  pspec = g_object_class_find_property (object_class, "mirror-position-y");
+  gegl_param_spec_set_property_key (pspec, "unit", "pixel-coordinate");
+  gegl_param_spec_set_property_key (pspec, "axis", "y");
 }
 
 static void
@@ -255,32 +255,11 @@ gimp_mirror_set_property (GObject      *object,
       mirror->disable_transformation = g_value_get_boolean (value);
       break;
 
-    case PROP_HORIZONTAL_AXIS_POSITION:
-      if (g_value_get_double (value) > 0.0 &&
-          g_value_get_double (value) < (gdouble) gimp_image_get_height (image))
-        {
-          mirror->horizontal_axis_position = g_value_get_double (value);
-
-          if (mirror->horizontal_guide)
-            {
-              g_signal_handlers_block_by_func (mirror->horizontal_guide,
-                                               gimp_mirror_guide_position_cb,
-                                               mirror);
-              gimp_image_move_guide (image, mirror->horizontal_guide,
-                                     mirror->horizontal_axis_position,
-                                     FALSE);
-              g_signal_handlers_unblock_by_func (mirror->horizontal_guide,
-                                                 gimp_mirror_guide_position_cb,
-                                                 mirror);
-            }
-        }
-      break;
-
-    case PROP_VERTICAL_AXIS_POSITION:
+    case PROP_MIRROR_POSITION_X:
       if (g_value_get_double (value) > 0.0 &&
           g_value_get_double (value) < (gdouble) gimp_image_get_width (image))
         {
-          mirror->vertical_axis_position = g_value_get_double (value);
+          mirror->mirror_position_x = g_value_get_double (value);
 
           if (mirror->vertical_guide)
             {
@@ -288,9 +267,30 @@ gimp_mirror_set_property (GObject      *object,
                                                gimp_mirror_guide_position_cb,
                                                mirror);
               gimp_image_move_guide (image, mirror->vertical_guide,
-                                     mirror->vertical_axis_position,
+                                     mirror->mirror_position_x,
                                      FALSE);
               g_signal_handlers_unblock_by_func (mirror->vertical_guide,
+                                                 gimp_mirror_guide_position_cb,
+                                                 mirror);
+            }
+        }
+      break;
+
+    case PROP_MIRROR_POSITION_Y:
+      if (g_value_get_double (value) > 0.0 &&
+          g_value_get_double (value) < (gdouble) gimp_image_get_height (image))
+        {
+          mirror->mirror_position_y = g_value_get_double (value);
+
+          if (mirror->horizontal_guide)
+            {
+              g_signal_handlers_block_by_func (mirror->horizontal_guide,
+                                               gimp_mirror_guide_position_cb,
+                                               mirror);
+              gimp_image_move_guide (image, mirror->horizontal_guide,
+                                     mirror->mirror_position_y,
+                                     FALSE);
+              g_signal_handlers_unblock_by_func (mirror->horizontal_guide,
                                                  gimp_mirror_guide_position_cb,
                                                  mirror);
             }
@@ -325,11 +325,11 @@ gimp_mirror_get_property (GObject    *object,
     case PROP_DISABLE_TRANSFORMATION:
       g_value_set_boolean (value, mirror->disable_transformation);
       break;
-    case PROP_HORIZONTAL_AXIS_POSITION:
-      g_value_set_double (value, mirror->horizontal_axis_position);
+    case PROP_MIRROR_POSITION_X:
+      g_value_set_double (value, mirror->mirror_position_x);
       break;
-    case PROP_VERTICAL_AXIS_POSITION:
-      g_value_set_double (value, mirror->vertical_axis_position);
+    case PROP_MIRROR_POSITION_Y:
+      g_value_set_double (value, mirror->mirror_position_y);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -353,22 +353,22 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
   if (mirror->horizontal_mirror)
     {
       coords = g_memdup (origin, sizeof (GimpCoords));
-      coords->y = 2.0 * mirror->horizontal_axis_position - origin->y;
+      coords->y = 2.0 * mirror->mirror_position_y - origin->y;
       strokes = g_list_prepend (strokes, coords);
     }
 
   if (mirror->vertical_mirror)
     {
       coords = g_memdup (origin, sizeof (GimpCoords));
-      coords->x = 2.0 * mirror->vertical_axis_position - origin->x;
+      coords->x = 2.0 * mirror->mirror_position_x - origin->x;
       strokes = g_list_prepend (strokes, coords);
     }
 
   if (mirror->point_symmetry)
     {
       coords = g_memdup (origin, sizeof (GimpCoords));
-      coords->x = 2.0 * mirror->vertical_axis_position - origin->x;
-      coords->y = 2.0 * mirror->horizontal_axis_position - origin->y;
+      coords->x = 2.0 * mirror->mirror_position_x - origin->x;
+      coords->y = 2.0 * mirror->mirror_position_y - origin->y;
       strokes = g_list_prepend (strokes, coords);
     }
 
@@ -484,13 +484,13 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
   if (orientation == GIMP_ORIENTATION_HORIZONTAL)
     {
       /* Mirror guide position at first activation is at canvas middle. */
-      if (mirror->horizontal_axis_position < 1.0)
+      if (mirror->mirror_position_y < 1.0)
         position = gimp_image_get_height (image) / 2.0;
       else
-        position = mirror->horizontal_axis_position;
+        position = mirror->mirror_position_y;
 
       g_object_set (mirror,
-                    "horizontal-axis-position", position,
+                    "mirror-position-y", position,
                     NULL);
 
       mirror->horizontal_guide = guide;
@@ -498,13 +498,13 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
   else
     {
       /* Mirror guide position at first activation is at canvas middle. */
-      if (mirror->vertical_axis_position < 1.0)
+      if (mirror->mirror_position_x < 1.0)
         position = gimp_image_get_width (image) / 2.0;
       else
-        position = mirror->vertical_axis_position;
+        position = mirror->mirror_position_x;
 
       g_object_set (mirror,
-                    "vertical-axis-position", position,
+                    "mirror-position-x", position,
                     NULL);
 
       mirror->vertical_guide = guide;
@@ -570,7 +570,7 @@ gimp_mirror_guide_removed_cb (GObject    *object,
       mirror->horizontal_mirror   = FALSE;
       mirror->point_symmetry      = FALSE;
       g_object_set (mirror,
-                    "horizontal-axis-position", 0.0,
+                    "mirror-position-y", 0.0,
                     NULL);
 
       if (mirror->vertical_guide &&
@@ -597,7 +597,7 @@ gimp_mirror_guide_removed_cb (GObject    *object,
       mirror->vertical_mirror   = FALSE;
       mirror->point_symmetry    = FALSE;
       g_object_set (mirror,
-                    "vertical-axis-position", 0.0,
+                    "mirror-position-x", 0.0,
                     NULL);
 
       if (mirror->horizontal_guide &&
@@ -641,13 +641,13 @@ gimp_mirror_guide_position_cb (GObject    *object,
   if (guide == mirror->horizontal_guide)
     {
       g_object_set (mirror,
-                    "horizontal-axis-position", (gdouble) gimp_guide_get_position (guide),
+                    "mirror-position-y", (gdouble) gimp_guide_get_position (guide),
                     NULL);
     }
   else if (guide == mirror->vertical_guide)
     {
       g_object_set (mirror,
-                    "vertical-axis-position", (gdouble) gimp_guide_get_position (guide),
+                    "mirror-position-x", (gdouble) gimp_guide_get_position (guide),
                     NULL);
     }
 }
