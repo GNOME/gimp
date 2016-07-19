@@ -150,7 +150,7 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DISABLE_TRANSFORMATION,
                             "disable-transformation",
                             _("Disable brush transform"),
-                            _("Disable brush transformation (faster)"),
+                            _("Disable brush rotation"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_SYMMETRY_PARAM_GUI);
