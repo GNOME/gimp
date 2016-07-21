@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 01:29+0200\n"
-"PO-Revision-Date: 2016-07-18 01:30+0200\n"
+"POT-Creation-Date: 2016-07-22 01:48+0200\n"
+"PO-Revision-Date: 2016-07-22 01:49+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -10461,33 +10461,49 @@ msgstr "Liczba punktów"
 msgid "Disable brush transform"
 msgstr "Wyłączenie przekształcenia pędzla"
 
-#: ../app/core/gimpsymmetry-mandala.c:153 ../app/core/gimpsymmetry-mirror.c:155
-msgid "Disable brush transformation (faster)"
-msgstr "Wyłączenie przekształcenia pędzla (szybsze)"
+#: ../app/core/gimpsymmetry-mandala.c:153
+msgid "Disable brush rotation"
+msgstr "Wyłączenie obrotu pędzla"
 
 #: ../app/core/gimpsymmetry-mirror.c:123
 msgid "Mirror"
 msgstr "Lustrzane odbicie"
 
 #: ../app/core/gimpsymmetry-mirror.c:130
-msgid "Horizontal Mirror"
-msgstr "Poziome lustrzane odbicie"
+msgid "Horizontal Symmetry"
+msgstr "Pozioma symetria"
+
+#: ../app/core/gimpsymmetry-mirror.c:131
+msgid "Reflect the initial stroke across a horizontal axis"
+msgstr "Odbicie początkowego pociągnięcia wzdłuż osi poziomej"
 
 #: ../app/core/gimpsymmetry-mirror.c:138
-msgid "Vertical Mirror"
-msgstr "Pionowe lustrzane odbicie"
+msgid "Vertical Symmetry"
+msgstr "Pionowa symetria"
+
+#: ../app/core/gimpsymmetry-mirror.c:139
+msgid "Reflect the initial stroke across a vertical axis"
+msgstr "Odbicie początkowego pociągnięcia wzdłuż osi pionowej"
 
 #: ../app/core/gimpsymmetry-mirror.c:146
 msgid "Central Symmetry"
 msgstr "Wyśrodkowana symetria"
 
-#: ../app/core/gimpsymmetry-mirror.c:162
-msgid "Horizontal axis position"
-msgstr "Położenie poziomej osi"
+#: ../app/core/gimpsymmetry-mirror.c:147
+msgid "Invert the initial stroke through a point"
+msgstr "Odwrócenie początkowego pociągnięcia przez punkt"
 
-#: ../app/core/gimpsymmetry-mirror.c:174
+#: ../app/core/gimpsymmetry-mirror.c:155
+msgid "Disable brush reflection"
+msgstr "Wyłączenie odbicia pędzla"
+
+#: ../app/core/gimpsymmetry-mirror.c:162
 msgid "Vertical axis position"
 msgstr "Położenie pionowej osi"
+
+#: ../app/core/gimpsymmetry-mirror.c:174
+msgid "Horizontal axis position"
+msgstr "Położenie poziomej osi"
 
 #: ../app/core/gimpsymmetry-tiling.c:101
 msgid "Tiling"
