@@ -121,5 +121,5 @@
          verify the changes.
 
      [ ] Due to the tendency of news sites to front-run release
-         articles even before actual announcements appear, just
-         publish everything as fast as possible.
+         articles even before actual announcements appear, publish
+         everything as fast as possible.
