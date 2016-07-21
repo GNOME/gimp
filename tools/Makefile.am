@@ -3,12 +3,10 @@
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if WITH_PDBGEN
-D_pdbgen = pdbgen
-else
-D_pdbgen =
+PDBGEN = pdbgen
 endif
 
-SUBDIRS = $(D_pdbgen)
+SUBDIRS = $(PDBEN)
 
 if OS_WIN32
 
@@ -24,39 +22,43 @@ bin_PROGRAMS = gimptool-2.0
 
 endif
 
-noinst_PROGRAMS = test-clipboard
+noinst_PROGRAMS = \
+	test-clipboard	\
+	invert-svg	\
+	compute-svg-viewbox
 
 EXTRA_PROGRAMS = \
 	kernelgen
 
-gimptool_2_0_SOURCES = \
-	gimptool.c
+
+gimptool_2_0_SOURCES = gimptool.c
 
 gimptool_2_0_LDADD = \
-	$(libgimpbase)			\
+	$(libgimpbase)	\
 	$(GTK_LIBS)
+
 
 kernelgen_SOURCES = kernelgen.c
 
+
 test_clipboard_SOURCES = test-clipboard.c
 
-test_clipboard_LDADD = \
-	$(GTK_LIBS)
+test_clipboard_LDADD = $(GTK_LIBS)
 
-if ENABLE_VECTOR_ICONS
-invert-svg$(BUILD_EXEEXT): invert-svg.c
-	$(CC_FOR_BUILD) -o $@ $< $(NATIVE_GLIB_LIBS) $(NATIVE_GLIB_CFLAGS)
+
+invert_svg_SOURCES = invert-svg.c
+
+invert_svg_CFLAGS = $(SVG_CFLAGS)
+
+invert_svg_LDADD = $(SVG_LIBS)
+
 
 compute_svg_viewbox_SOURCES = compute-svg-viewbox.c
 
-compute_svg_viewbox_CFLAGS = \
-	$(SVG_CFLAGS)
+compute_svg_viewbox_CFLAGS = $(SVG_CFLAGS)
 
-compute_svg_viewbox_LDADD = \
-	$(SVG_LIBS)
+compute_svg_viewbox_LDADD = $(SVG_LIBS)
 
-all: invert-svg$(BUILD_EXEEXT)
-endif
 
 AM_CPPFLAGS = \
 	-DGIMP_APP_VERSION=\"@GIMP_APP_VERSION@\"		\
