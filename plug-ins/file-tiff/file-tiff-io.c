@@ -94,7 +94,7 @@ tiff_open (GFile        *file,
                                                         G_FILE_CREATE_NONE,
                                                         NULL, error));
       if (! tiff_io.output)
-        return FALSE;
+        return NULL;
 
       tiff_io.stream = G_OBJECT (tiff_io.output);
     }
