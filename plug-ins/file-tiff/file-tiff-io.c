@@ -122,6 +122,7 @@ tiff_io_warning (const gchar *module,
 {
   gint tag = 0;
 
+  /* Before libtiff 4.0.0alpha. */
   if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered"))
     {
       va_list ap_test;
@@ -133,7 +134,9 @@ tiff_io_warning (const gchar *module,
       tag = va_arg (ap_test, int);
     }
   /* for older versions of libtiff? */
-  else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
+  else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored") ||
+           /* Since libtiff 4.0.0alpha. */
+           ! strcmp (fmt, "Unknown field with tag %d (0x%x) encountered"))
     {
       va_list ap_test;
 
