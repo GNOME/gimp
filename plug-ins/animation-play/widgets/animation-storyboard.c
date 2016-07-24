@@ -244,6 +244,8 @@ animation_storyboard_load (Animation           *animation,
   gint               i;
 
   image_id = animation_get_image_id (animation);
+  image_id = gimp_image_duplicate (image_id);
+  gimp_image_undo_disable (image_id);
 
   /* Cleaning previous loads. */
   gtk_container_foreach (GTK_CONTAINER (view),
@@ -318,6 +320,7 @@ animation_storyboard_load (Animation           *animation,
                         1, 1);
       gtk_widget_show (event_box);
 
+      gimp_layer_resize_to_image_size (layers[i]);
       thumbnail = gimp_drawable_get_thumbnail (layers[i], 250, 250,
                                                GIMP_PIXBUF_SMALL_CHECKS);
       image = gtk_image_new_from_pixbuf (thumbnail);
@@ -424,6 +427,7 @@ animation_storyboard_load (Animation           *animation,
   g_signal_connect (animation, "render",
                     (GCallback) animation_storyboard_rendered,
                     view);
+  gimp_image_delete (image_id);
 }
 
 static void
