@@ -279,7 +279,7 @@ class _ReadLine(object):
 
         if not state:
             if keyval == _keys.Escape:
-                return True;
+                pass
             elif keyval == _keys.Return:
                 self._commit()
             elif keyval == _keys.Up:
