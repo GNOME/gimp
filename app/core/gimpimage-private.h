@@ -60,6 +60,7 @@ struct _GimpImagePrivate
   GimpColorProfile  *color_profile;         /*  image's color profile        */
 
   /*  Cached color transforms: from layer to sRGB u8 and double, and back    */
+  gboolean            color_transforms_created;
   GimpColorTransform *transform_to_srgb_u8;
   GimpColorTransform *transform_from_srgb_u8;
   GimpColorTransform *transform_to_srgb_double;
