@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -27,7 +29,6 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-transform.h"
 #include "gimpdisplayshell-scrollbars.h"
 
 
@@ -90,43 +91,28 @@ void
 gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
                                                 gdouble           value)
 {
-  GimpImage *image;
-  gdouble    dx, dy;
-  gdouble    dw, dh;
-  gdouble    lower;
-  gdouble    upper;
+  gint    bounds_x;
+  gint    bounds_width;
+  gdouble lower;
+  gdouble upper;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display)
+  if (! shell->display || ! gimp_display_get_image (shell->display))
     return;
 
-  image = gimp_display_get_image (shell->display);
-  if (! image)
-    return;
+  gimp_display_shell_scale_get_image_bounds (shell,
+                                             &bounds_x, NULL,
+                                             &bounds_width, NULL);
 
-  gimp_display_shell_transform_bounds (shell,
-                                       0, 0,
-                                       gimp_image_get_width (image),
-                                       gimp_image_get_height (image),
-                                       &dx, &dy,
-                                       &dw, &dh);
-
-  /* Convert scrolled (x1, x2) to unscrolled (x, width). */
-  dw -= dx;
-  dx += shell->offset_x;
-
-  if (shell->disp_width < dw)
+  if (shell->disp_width > bounds_width)
     {
-      lower = MIN (value, dx);
-      upper = MAX (value + shell->disp_width, dx + dw);
+      bounds_x     -= (shell->disp_width - bounds_width) / 2;
+      bounds_width  = shell->disp_width;
     }
-  else
-    {
-      lower = MIN (value, dx - (shell->disp_width - dw) / 2);
-      upper = MAX (value + shell->disp_width,
-                   dx + dw + (shell->disp_width - dw) / 2);
-    }
+
+  lower = MIN (value, bounds_x);
+  upper = MAX (value + shell->disp_width, bounds_x + bounds_width);
 
   g_object_set (shell->hsbdata,
                 "lower",          lower,
@@ -147,43 +133,28 @@ void
 gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
                                               gdouble           value)
 {
-  GimpImage *image;
-  gdouble    dx, dy;
-  gdouble    dw, dh;
-  gdouble    lower;
-  gdouble    upper;
+  gint    bounds_y;
+  gint    bounds_height;
+  gdouble lower;
+  gdouble upper;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display)
+  if (! shell->display || ! gimp_display_get_image (shell->display))
     return;
 
-  image = gimp_display_get_image (shell->display);
-  if (! image)
-    return;
+  gimp_display_shell_scale_get_image_bounds (shell,
+                                             NULL, &bounds_y,
+                                             NULL, &bounds_height);
 
-  gimp_display_shell_transform_bounds (shell,
-                                       0, 0,
-                                       gimp_image_get_width (image),
-                                       gimp_image_get_height (image),
-                                       &dx, &dy,
-                                       &dw, &dh);
-
-  /* Convert scrolled (y1, y2) to unscrolled (y, height). */
-  dh -= dy;
-  dy += shell->offset_y;
-
-  if (shell->disp_height < dh)
+  if (shell->disp_height > bounds_height)
     {
-      lower = MIN (value, dy);
-      upper = MAX (value + shell->disp_height, dy + dh);
+      bounds_y      -= (shell->disp_height - bounds_height) / 2;
+      bounds_height  = shell->disp_height;
     }
-  else
-    {
-      lower = MIN (value, dy - (shell->disp_height - dh) / 2);
-      upper = MAX (value + shell->disp_height,
-                   dy + dh + (shell->disp_height - dh) / 2);
-    }
+
+  lower = MIN (value, bounds_y);
+  upper = MAX (value + shell->disp_height, bounds_y + bounds_height);
 
   g_object_set (shell->vsbdata,
                 "lower",          lower,
