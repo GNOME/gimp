@@ -60,12 +60,10 @@ typedef struct _AnimationAnimaticPrivate AnimationAnimaticPrivate;
 
 struct _AnimationAnimaticPrivate
 {
-  gint         preview_width;
-  gint         preview_height;
+  gdouble      proxy_ratio;
 
-  /* Panel images are associated to an unused image (used as backend
-   * for GEGL buffers). */
-  gint32       panels;
+  /* Panels are cached as GEGL buffers. */
+  GeglBuffer **cache;
   /* The number of panels. */
   gint         n_panels;
   /* Layers associated to each panel. For serialization. */
@@ -126,6 +124,9 @@ static void      animation_animatic_text          (GMarkupParseContext  *context
 
 /* Utils */
 
+static void         animation_animatic_cache      (AnimationAnimatic *animation,
+                                                   gint               panel,
+                                                   gboolean           recursion);
 static gint         animation_animatic_get_layer  (AnimationAnimatic *animation,
                                                    gint               pos);
 
@@ -195,8 +196,8 @@ static void
 animation_animatic_finalize (GObject *object)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (object);
+  gint                      i;
 
-  gimp_image_delete (priv->panels);
   if (priv->tattoos)
     g_free (priv->tattoos);
   if (priv->durations)
@@ -205,13 +206,20 @@ animation_animatic_finalize (GObject *object)
     g_free (priv->combine);
   if (priv->comments)
     {
-      gint i;
-
       for (i = 0; i < priv->n_panels; i++)
         {
           g_free (priv->comments[i]);
         }
       g_free (priv->comments);
+    }
+  if (priv->cache)
+    {
+      for (i = 0; i < priv->n_panels; i++)
+        {
+          if (priv->cache[i])
+            g_object_unref (priv->cache[i]);
+        }
+      g_free (priv->cache);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -320,26 +328,14 @@ animation_animatic_set_combine (AnimationAnimatic *animatic,
                                 gboolean           combine)
 {
   AnimationAnimaticPrivate *priv      = GET_PRIVATE (animatic);
-  Animation                *animation = ANIMATION (animatic);
-  gint                      position;
-
-  position = animation_get_position (animation);
 
   g_return_if_fail (panel_num > 0 &&
                     panel_num <= priv->n_panels);
 
-  priv->combine[panel_num - 1] = combine;
-  if (animation_animatic_get_panel (animatic, position) == panel_num)
+  if (priv->combine[panel_num - 1] != combine)
     {
-      GeglBuffer *buffer;
-
-      buffer = animation_get_frame (animation, position);
-      g_signal_emit_by_name (animation, "render",
-                             position, buffer, TRUE);
-      if (buffer)
-        {
-          g_object_unref (buffer);
-        }
+      priv->combine[panel_num - 1] = combine;
+      animation_animatic_cache (animatic, panel_num, TRUE);
     }
 }
 
@@ -362,8 +358,6 @@ animation_animatic_get_panel (AnimationAnimatic *animation,
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   gint                      count = 0;
   gint                      i     = -1;
-
-  g_return_val_if_fail (priv->panels, -1);
 
   if (pos >= 1       &&
       pos <= animation_animatic_get_length (ANIMATION (animation)))
@@ -390,7 +384,7 @@ void animation_animatic_jump_panel (AnimationAnimatic *animation,
   gint                      pos = 1;
   gint                      i;
 
-  g_return_if_fail (priv->panels && panel <= priv->n_panels);
+  g_return_if_fail (panel <= priv->n_panels);
 
   for (i = 0; i < panel - 1; i++)
     {
@@ -423,9 +417,22 @@ animation_animatic_get_size (Animation *animation,
                              gint      *height)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
+  gint32                    image_id;
+  gint                      image_width;
+  gint                      image_height;
 
-  *width  = priv->preview_width;
-  *height = priv->preview_height;
+  image_id = animation_get_image_id (animation);
+
+  image_width  = gimp_image_width (image_id);
+  image_height = gimp_image_height (image_id);
+
+  /* Full preview size. */
+  *width  = image_width;
+  *height = image_height;
+
+  /* Apply proxy ratio. */
+  *width  *= priv->proxy_ratio;
+  *height *= priv->proxy_ratio;
 }
 
 static void
@@ -435,18 +442,13 @@ animation_animatic_load (Animation *animation,
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   gint32                   *layers;
   gint32                    image_id;
-  gint32                    new_frame;
-  gint32                    previous_frame = 0;
-  gint                      image_width;
-  gint                      image_height;
   gint                      i;
 
   g_return_if_fail (proxy_ratio > 0.0 && proxy_ratio <= 1.0);
 
   /* Cleaning. */
-  if (gimp_image_is_valid (priv->panels))
+  if (priv->cache)
     {
-      gimp_image_delete (priv->panels);
       g_free (priv->tattoos);
       g_free (priv->durations);
       g_free (priv->combine);
@@ -454,8 +456,11 @@ animation_animatic_load (Animation *animation,
       for (i = 0; i < priv->n_panels; i++)
         {
           g_free (priv->comments[i]);
+          if (priv->cache[i])
+            g_object_unref (priv->cache[i]);
         }
       g_free (priv->comments);
+      g_free (priv->cache);
     }
 
   image_id = animation_get_image_id (animation);
@@ -465,38 +470,22 @@ animation_animatic_load (Animation *animation,
   priv->durations = g_try_malloc0_n (priv->n_panels, sizeof (gint));
   priv->combine   = g_try_malloc0_n (priv->n_panels, sizeof (gboolean));
   priv->comments  = g_try_malloc0_n (priv->n_panels, sizeof (gchar*));
+  priv->cache     = g_try_malloc0_n (priv->n_panels, sizeof (GeglBuffer*));
   if (! priv->tattoos || ! priv->durations ||
-      ! priv->combine || ! priv->comments)
+      ! priv->combine || ! priv->comments  ||
+      ! priv->cache)
     {
       gimp_message (_("Memory could not be allocated to the animatic."));
       gimp_quit ();
       return;
     }
-
-  /* We default at full preview size. */
-  image_width  = gimp_image_width (image_id);
-  image_height = gimp_image_height (image_id);
-
-  priv->preview_width = image_width;
-  priv->preview_height = image_height;
-
-  /* Apply proxy ratio. */
-  priv->preview_width  *= proxy_ratio;
-  priv->preview_height *= proxy_ratio;
-
-  priv->panels = gimp_image_new (priv->preview_width,
-                                 priv->preview_width,
-                                 GIMP_RGB);
-
-  gimp_image_undo_disable (priv->panels);
+  priv->proxy_ratio = proxy_ratio;
 
   for (i = 0; i < priv->n_panels; i++)
     {
-      gchar       *layer_name;
-      gint         duration;
-      gboolean     combine;
-      gint         layer_offx;
-      gint         layer_offy;
+      gchar    *layer_name;
+      gint      duration;
+      gboolean  combine;
 
       g_signal_emit_by_name (animation, "loading",
                              (gdouble) i / ((gdouble) priv->n_panels - 0.999));
@@ -513,31 +502,8 @@ animation_animatic_load (Animation *animation,
       /* Layer names are used as default comments. */
       priv->comments[i]  = layer_name;
 
-      /* Frame disposal. */
-      if (i > 0 && combine)
-        {
-          previous_frame = gimp_layer_copy (previous_frame);
-          gimp_image_insert_layer (priv->panels, previous_frame, 0, 0);
-          gimp_item_set_visible (previous_frame, TRUE);
-        }
-
-      new_frame = gimp_layer_new_from_drawable (layers[priv->n_panels - (i + 1)],
-                                                priv->panels);
-      gimp_image_insert_layer (priv->panels, new_frame, 0, 0);
-      gimp_layer_scale (new_frame,
-                        (gimp_drawable_width (layers[priv->n_panels - (i + 1)]) * (gint) priv->preview_width) / image_width,
-                        (gimp_drawable_height (layers[priv->n_panels - (i + 1)]) * (gint) priv->preview_height) / image_height,
-                        FALSE);
-      gimp_drawable_offsets (layers[priv->n_panels - (i + 1)], &layer_offx, &layer_offy);
-      gimp_layer_set_offsets (new_frame,
-                              (layer_offx * (gint) priv->preview_width) / image_width,
-                              (layer_offy * (gint) priv->preview_height) / image_height);
-      gimp_layer_resize_to_image_size (new_frame);
-      gimp_item_set_visible (new_frame, TRUE);
-      new_frame = gimp_image_merge_visible_layers (priv->panels, GIMP_CLIP_TO_IMAGE);
-      gimp_item_set_visible (new_frame, FALSE);
-
-      previous_frame = new_frame;
+      /* Panel image. */
+      animation_animatic_cache (ANIMATION_ANIMATIC (animation), i + 1, FALSE);
     }
   g_free (layers);
 }
@@ -583,6 +549,7 @@ animation_animatic_load_xml (Animation   *animation,
         g_warning ("Error parsing XML: %s", error->message);
     }
   g_markup_parse_context_free (context);
+
   /* If XML parsing failed, just reset the animation. */
   if (error)
     animation_animatic_load (animation, proxy_ratio);
@@ -592,67 +559,13 @@ static GeglBuffer *
 animation_animatic_get_frame (Animation *animation,
                               gint       pos)
 {
-  GeglBuffer *buffer = NULL;
-  gint        panel;
+  AnimationAnimaticPrivate *priv;
+  gint                      panel;
 
+  priv = GET_PRIVATE (animation);
   panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
                                         pos);
-  if (panel > 0)
-    {
-      AnimationAnimaticPrivate *priv;
-      GeglBuffer               *panel_buffer;
-      gint32                   *layers;
-      gint32                    num_layers;
-
-      priv = GET_PRIVATE (animation);
-      layers = gimp_image_get_layers (priv->panels, &num_layers);
-      panel_buffer = gimp_drawable_get_buffer (layers[num_layers - panel]);
-
-      if (panel > 1 && priv->combine[panel - 1] &&
-          gimp_drawable_has_alpha (layers[num_layers - panel]))
-        {
-          GeglNode   *graph, *backdrop, *source, *blend, *target;
-          GeglBuffer *prev_panel_buffer;
-
-          prev_panel_buffer = gimp_drawable_get_buffer (layers[num_layers - panel + 1]);
-
-          graph  = gegl_node_new ();
-          backdrop = gegl_node_new_child (graph,
-                                        "operation", "gegl:buffer-source",
-                                        "buffer", prev_panel_buffer,
-                                        NULL);
-          source = gegl_node_new_child (graph,
-                                        "operation", "gegl:buffer-source",
-                                        "buffer", panel_buffer,
-                                        NULL);
-          blend =  gegl_node_new_child (graph,
-                                        "operation", "gegl:over",
-                                        NULL);
-
-          target = gegl_node_new_child (graph,
-                                        "operation", "gegl:buffer-sink",
-                                        "buffer", &buffer,
-                                        "format", gegl_buffer_get_format (panel_buffer),
-                                        NULL);
-
-          gegl_node_link_many (backdrop, blend, target, NULL);
-          gegl_node_connect_to (source, "output",
-                                blend, "aux");
-          gegl_node_process (target);
-
-          g_object_unref (graph);
-          g_object_unref (panel_buffer);
-          g_object_unref (prev_panel_buffer);
-        }
-      else
-        {
-          buffer = panel_buffer;
-        }
-
-      g_free (layers);
-    }
-
-  return buffer;
+  return g_object_ref (priv->cache[panel - 1]);
 }
 
 static gchar *
@@ -757,6 +670,7 @@ animation_animatic_start_element (GMarkupParseContext *context,
   const gchar              **values = attribute_values;
   ParseStatus               *status = (ParseStatus *) user_data;
   AnimationAnimaticPrivate  *priv   = GET_PRIVATE (status->animation);
+  gboolean                   combine;
 
   status->xml_level++;
   switch (status->state)
@@ -821,6 +735,7 @@ animation_animatic_start_element (GMarkupParseContext *context,
           return;
         }
       status->panel++;
+      combine = FALSE;
       while (*names && *values)
         {
           if (strcmp (*names, "duration") == 0 && **values)
@@ -834,11 +749,17 @@ animation_animatic_start_element (GMarkupParseContext *context,
                    strcmp (*values, "normal") == 0)
             {
               /* Only the "normal" blend mode is supported currently. */
-              priv->combine[status->panel - 1] = TRUE;
+              combine = TRUE;
             }
 
           names++;
           values++;
+        }
+      if (priv->combine[status->panel - 1] != combine)
+        {
+          priv->combine[status->panel - 1] = combine;
+          animation_animatic_cache (ANIMATION_ANIMATIC (status->animation),
+                                    status->panel, FALSE);
         }
       status->state = PANEL_STATE;
       break;
@@ -970,34 +891,139 @@ animation_animatic_text (GMarkupParseContext  *context,
 
 /**** Utils ****/
 
+static void
+animation_animatic_cache (AnimationAnimatic *animatic,
+                          gint               panel,
+                          gboolean           recursion)
+{
+  AnimationAnimaticPrivate *priv      = GET_PRIVATE (animatic);
+  Animation                *animation = ANIMATION (animatic);
+  GeglBuffer               *buffer;
+  GeglNode                 *graph, *source, *scale, *translate, *target;
+  GeglNode                 *backdrop, *blend;
+  gint                      layer_offx;
+  gint                      layer_offy;
+  gdouble                   panel_offx;
+  gdouble                   panel_offy;
+  gint                      position;
+  gint                      preview_width;
+  gint                      preview_height;
+  gint32                    image_id;
+  gint32                    layer;
+
+  image_id = animation_get_image_id (animation);
+  layer = gimp_image_get_layer_by_tattoo (image_id,
+                                          priv->tattoos[panel - 1]);
+  if (! layer)
+    {
+      g_warning ("Caching failed: a layer must have been deleted.");
+      return;
+    }
+
+  /* Destroy existing cache. */
+  if (priv->cache[panel - 1])
+    {
+      g_object_unref (priv->cache[panel - 1]);
+    }
+
+  /* Panel image. */
+  buffer = gimp_drawable_get_buffer (layer);
+  animation_get_size (animation, &preview_width, &preview_height);
+  priv->cache[panel - 1] = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                            preview_width,
+                                                            preview_height),
+                                            gegl_buffer_get_format (buffer));
+  graph  = gegl_node_new ();
+  source = gegl_node_new_child (graph,
+                                "operation", "gegl:buffer-source",
+                                "buffer", buffer,
+                                NULL);
+  scale  = gegl_node_new_child (graph,
+                                "operation", "gegl:scale-ratio",
+                                "sampler", GEGL_SAMPLER_NEAREST,
+                                "x", priv->proxy_ratio,
+                                "y", priv->proxy_ratio,
+                                NULL);
+
+  gimp_drawable_offsets (layer,
+                         &layer_offx, &layer_offy);
+  panel_offx = layer_offx * priv->proxy_ratio;
+  panel_offy = layer_offy * priv->proxy_ratio;
+  translate =  gegl_node_new_child (graph,
+                                    "operation", "gegl:translate",
+                                    "x", panel_offx,
+                                    "y", panel_offy,
+                                    NULL);
+
+  target = gegl_node_new_child (graph,
+                                "operation", "gegl:write-buffer",
+                                "buffer", priv->cache[panel - 1],
+                                NULL);
+
+  if (panel > 1 && priv->combine[panel - 1])
+    {
+      backdrop = gegl_node_new_child (graph,
+                                      "operation", "gegl:buffer-source",
+                                      "buffer", priv->cache[panel - 2],
+                                      NULL);
+      blend =  gegl_node_new_child (graph,
+                                    "operation", "gegl:over",
+                                    NULL);
+      gegl_node_link_many (source, scale, translate, NULL);
+      gegl_node_link_many (backdrop, blend, target, NULL);
+      gegl_node_connect_to (translate, "output",
+                            blend, "aux");
+    }
+  else
+    {
+      gegl_node_link_many (source, scale, translate, target, NULL);
+    }
+  gegl_node_process (target);
+
+  g_object_unref (graph);
+  g_object_unref (buffer);
+
+  /* If next panel is in "combine" mode, it must also be re-cached.
+   * And so on, recursively. */
+  if (recursion              &&
+      panel < priv->n_panels &&
+      priv->combine[panel])
+    {
+      animation_animatic_cache (animatic, panel + 1, TRUE);
+    }
+
+  /* Finally re-render if we are currently showing this panel. */
+  position = animation_get_position (animation);
+  if (animation_animatic_get_panel (animatic, position) == panel)
+    {
+      buffer = animation_get_frame (animation, position);
+      g_signal_emit_by_name (animation, "render",
+                             position, buffer, TRUE);
+      if (buffer)
+        {
+          g_object_unref (buffer);
+        }
+    }
+}
+
 static gint
 animation_animatic_get_layer (AnimationAnimatic *animation,
                               gint               pos)
 {
-  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
-  gint                      i = -1;
+  AnimationAnimaticPrivate *priv  = GET_PRIVATE (animation);
+  gint                      count = 0;
+  gint                      i     = -1;
 
-  if (priv->panels)
+  if (priv->n_panels > 0 &&
+      pos >= 1           &&
+      pos <= animation_animatic_get_length (ANIMATION (animation)))
     {
-      gint32 *layers;
-      gint32  num_layers;
-      gint    count = 0;
-
-      layers = gimp_image_get_layers (priv->panels, &num_layers);
-
-      if (num_layers > 0 &&
-          pos >= 1       &&
-          pos <= animation_animatic_get_length (ANIMATION (animation)))
+      for (i = priv->n_panels - 1; i >= 0; i--)
         {
-          for (i = num_layers - 1; i >= 0; i--)
-            {
-              count += priv->durations[i];
-              if (count >= pos)
-                break;
-            }
+          count += priv->durations[i];
+          if (count >= pos)
+            break;
         }
-
-      g_free (layers);
     }
 
   return i;
