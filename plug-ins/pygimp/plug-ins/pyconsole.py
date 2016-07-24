@@ -278,7 +278,9 @@ class _ReadLine(object):
         keyval = event.keyval
 
         if not state:
-            if keyval == _keys.Return:
+            if keyval == _keys.Escape:
+                return True;
+            elif keyval == _keys.Return:
                 self._commit()
             elif keyval == _keys.Up:
                 self.__history(-1)
