@@ -45,6 +45,7 @@ struct _AnimationStoryboardPrivate
   gint                current_panel;
 
   GList              *panel_buttons;
+  GList              *disposal_buttons;
   GList              *comments;
 };
 
@@ -82,6 +83,8 @@ static gboolean animation_storyboard_comment_keypress  (GtkWidget           *ent
                                                         GdkEventKey         *event,
                                                         AnimationStoryboard *view);
 static void animation_storyboard_comment_changed       (GtkTextBuffer       *text_buffer,
+                                                        AnimationAnimatic   *animatic);
+static void animation_storyboard_disposal_toggled      (GtkToggleButton     *button,
                                                         AnimationAnimatic   *animatic);
 static void animation_storyboard_button_clicked        (GtkWidget           *widget,
                                                         AnimationAnimatic   *animatic);
@@ -206,6 +209,10 @@ animation_storyboard_finalize (GObject *object)
     {
       g_list_free (view->priv->panel_buttons);
     }
+  if (view->priv->disposal_buttons)
+    {
+      g_list_free (view->priv->disposal_buttons);
+    }
   if (view->priv->comments)
     {
       g_list_free (view->priv->comments);
@@ -230,10 +237,11 @@ animation_storyboard_load (Animation           *animation,
                            gint                 preview_height,
                            AnimationStoryboard *view)
 {
-  gint   *layers;
-  gint32  image_id;
-  gint    n_images;
-  gint    i;
+  AnimationAnimatic *animatic = ANIMATION_ANIMATIC (animation);
+  gint              *layers;
+  gint32             image_id;
+  gint               n_images;
+  gint               i;
 
   image_id = animation_get_image_id (animation);
 
@@ -246,6 +254,12 @@ animation_storyboard_load (Animation           *animation,
       g_list_free_full (view->priv->panel_buttons,
                         (GDestroyNotify) gtk_widget_destroy);
       view->priv->panel_buttons = NULL;
+    }
+  if (view->priv->disposal_buttons)
+    {
+      g_list_free_full (view->priv->disposal_buttons,
+                        (GDestroyNotify) gtk_widget_destroy);
+      view->priv->disposal_buttons = NULL;
     }
   if (view->priv->comments)
     {
@@ -363,7 +377,7 @@ animation_storyboard_load (Animation           *animation,
       gtk_spin_button_set_increments (GTK_SPIN_BUTTON (duration), 1.0, 10.0);
       gtk_spin_button_set_snap_to_ticks (GTK_SPIN_BUTTON (duration), TRUE);
       gtk_spin_button_set_value (GTK_SPIN_BUTTON (duration),
-                                 animation_animatic_get_duration (ANIMATION_ANIMATIC (animation),
+                                 animation_animatic_get_duration (animatic,
                                                                   panel_num));
       gtk_entry_set_width_chars (GTK_ENTRY (duration), 2);
       /* Allowing non-numeric text to type "ms" or "s". */
@@ -384,6 +398,9 @@ animation_storyboard_load (Animation           *animation,
       gtk_widget_show (duration);
 
       disposal = gtk_toggle_button_new ();
+      gtk_button_set_relief (GTK_BUTTON (disposal), GTK_RELIEF_NONE);
+      g_object_set_data (G_OBJECT (disposal), "panel-num",
+                         GINT_TO_POINTER (panel_num));
       image = gtk_image_new_from_icon_name (GIMP_STOCK_TRANSPARENCY,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (disposal), image);
@@ -394,6 +411,14 @@ animation_storyboard_load (Animation           *animation,
                         5 * panel_num - 2,
                         GTK_EXPAND, GTK_EXPAND,
                         0, 1);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (disposal),
+                                    animation_animatic_get_combine (animatic,
+                                                                    panel_num));
+      g_signal_connect (disposal, "toggled",
+                        G_CALLBACK (animation_storyboard_disposal_toggled),
+                        animation);
+      view->priv->disposal_buttons = g_list_prepend (view->priv->disposal_buttons,
+                                                    disposal);
       gtk_widget_show (disposal);
     }
   g_signal_connect (animation, "render",
@@ -495,6 +520,19 @@ animation_storyboard_comment_changed (GtkTextBuffer     *text_buffer,
                                   GPOINTER_TO_INT (panel_num),
                                   text);
   g_free (text);
+}
+
+static void
+animation_storyboard_disposal_toggled (GtkToggleButton   *button,
+                                       AnimationAnimatic *animatic)
+{
+  gpointer panel_num;
+
+  panel_num = g_object_get_data (G_OBJECT (button), "panel-num");
+
+  animation_animatic_set_combine (animatic,
+                                  GPOINTER_TO_INT (panel_num),
+                                  gtk_toggle_button_get_active (button));
 }
 
 static void

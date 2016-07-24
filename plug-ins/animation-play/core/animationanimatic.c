@@ -319,12 +319,28 @@ animation_animatic_set_combine (AnimationAnimatic *animatic,
                                 gint               panel_num,
                                 gboolean           combine)
 {
-  AnimationAnimaticPrivate *priv = GET_PRIVATE (animatic);
+  AnimationAnimaticPrivate *priv      = GET_PRIVATE (animatic);
+  Animation                *animation = ANIMATION (animatic);
+  gint                      position;
+
+  position = animation_get_position (animation);
 
   g_return_if_fail (panel_num > 0 &&
                     panel_num <= priv->n_panels);
 
-  priv->combine[panel_num] = combine;
+  priv->combine[panel_num - 1] = combine;
+  if (animation_animatic_get_panel (animatic, position) == panel_num)
+    {
+      GeglBuffer *buffer;
+
+      buffer = animation_get_frame (animation, position);
+      g_signal_emit_by_name (animation, "render",
+                             position, buffer, TRUE);
+      if (buffer)
+        {
+          g_object_unref (buffer);
+        }
+    }
 }
 
 const gboolean
@@ -576,19 +592,63 @@ static GeglBuffer *
 animation_animatic_get_frame (Animation *animation,
                               gint       pos)
 {
-  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
-  GeglBuffer               *buffer = NULL;
-  gint                      panel;
+  GeglBuffer *buffer = NULL;
+  gint        panel;
 
   panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
                                         pos);
   if (panel > 0)
     {
-      gint32 *layers;
-      gint32  num_layers;
+      AnimationAnimaticPrivate *priv;
+      GeglBuffer               *panel_buffer;
+      gint32                   *layers;
+      gint32                    num_layers;
 
+      priv = GET_PRIVATE (animation);
       layers = gimp_image_get_layers (priv->panels, &num_layers);
-      buffer = gimp_drawable_get_buffer(layers[num_layers - panel]);
+      panel_buffer = gimp_drawable_get_buffer (layers[num_layers - panel]);
+
+      if (panel > 1 && priv->combine[panel - 1] &&
+          gimp_drawable_has_alpha (layers[num_layers - panel]))
+        {
+          GeglNode   *graph, *backdrop, *source, *blend, *target;
+          GeglBuffer *prev_panel_buffer;
+
+          prev_panel_buffer = gimp_drawable_get_buffer (layers[num_layers - panel + 1]);
+
+          graph  = gegl_node_new ();
+          backdrop = gegl_node_new_child (graph,
+                                        "operation", "gegl:buffer-source",
+                                        "buffer", prev_panel_buffer,
+                                        NULL);
+          source = gegl_node_new_child (graph,
+                                        "operation", "gegl:buffer-source",
+                                        "buffer", panel_buffer,
+                                        NULL);
+          blend =  gegl_node_new_child (graph,
+                                        "operation", "gegl:over",
+                                        NULL);
+
+          target = gegl_node_new_child (graph,
+                                        "operation", "gegl:buffer-sink",
+                                        "buffer", &buffer,
+                                        "format", gegl_buffer_get_format (panel_buffer),
+                                        NULL);
+
+          gegl_node_link_many (backdrop, blend, target, NULL);
+          gegl_node_connect_to (source, "output",
+                                blend, "aux");
+          gegl_node_process (target);
+
+          g_object_unref (graph);
+          g_object_unref (panel_buffer);
+          g_object_unref (prev_panel_buffer);
+        }
+      else
+        {
+          buffer = panel_buffer;
+        }
+
       g_free (layers);
     }
 
@@ -612,10 +672,17 @@ animation_animatic_serialize (Animation *animation)
     {
       gchar  *panel;
 
-      panel = g_markup_printf_escaped ("<panel duration=\"%d\">"
-                                       "<layer id=\"%d\"/></panel>",
-                                       priv->durations[i],
-                                       priv->tattoos[i]);
+      if (priv->combine[i])
+        panel = g_markup_printf_escaped ("<panel duration=\"%d\" "
+                                         "blend-mode=\"normal\">"
+                                         "<layer id=\"%d\"/></panel>",
+                                         priv->durations[i],
+                                         priv->tattoos[i]);
+      else
+        panel = g_markup_printf_escaped ("<panel duration=\"%d\">"
+                                         "<layer id=\"%d\"/></panel>",
+                                         priv->durations[i],
+                                         priv->tattoos[i]);
 
       tmp = text;
       text = g_strconcat (text, panel, NULL);
@@ -762,6 +829,12 @@ animation_animatic_start_element (GMarkupParseContext *context,
 
               if (duration > 0)
                 priv->durations[status->panel - 1] = duration;
+            }
+          else if (strcmp (*names, "blend-mode") == 0 && **values &&
+                   strcmp (*values, "normal") == 0)
+            {
+              /* Only the "normal" blend mode is supported currently. */
+              priv->combine[status->panel - 1] = TRUE;
             }
 
           names++;
