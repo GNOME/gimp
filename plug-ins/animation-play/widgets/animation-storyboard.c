@@ -253,20 +253,17 @@ animation_storyboard_load (Animation           *animation,
                          NULL);
   if (view->priv->panel_buttons)
     {
-      g_list_free_full (view->priv->panel_buttons,
-                        (GDestroyNotify) gtk_widget_destroy);
+      g_list_free (view->priv->panel_buttons);
       view->priv->panel_buttons = NULL;
     }
   if (view->priv->disposal_buttons)
     {
-      g_list_free_full (view->priv->disposal_buttons,
-                        (GDestroyNotify) gtk_widget_destroy);
+      g_list_free (view->priv->disposal_buttons);
       view->priv->disposal_buttons = NULL;
     }
   if (view->priv->comments)
     {
-      g_list_free_full (view->priv->comments,
-                        (GDestroyNotify) gtk_widget_destroy);
+      g_list_free (view->priv->comments);
       view->priv->comments = NULL;
     }
 
