@@ -54,6 +54,10 @@ class plugin:
         pass
 
     def _run(self, name, params):
+        import sys
+        if "gimpui" in sys.modules.keys():
+            sys.modules["gimpui"].gimp_ui_init ()
+
         if hasattr(self, name):
             return apply(getattr(self, name), params)
         else:

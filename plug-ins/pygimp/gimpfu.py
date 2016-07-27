@@ -372,6 +372,7 @@ def _interact(proc_name, start_params):
     import gimpui
     import gtk
 #    import pango
+    gimpui.gimp_ui_init ()
 
     defaults = _get_defaults(proc_name)
     defaults = defaults[len(start_params):]
