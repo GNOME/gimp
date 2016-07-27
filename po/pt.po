@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-06-18 12:58+0000\n"
-"PO-Revision-Date: 2016-06-18 14:23+0100\n"
+"POT-Creation-Date: 2016-07-21 21:32+0000\n"
+"PO-Revision-Date: 2016-07-27 07:54+0100\n"
 "Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Language-Team: Português\n"
 "Language: pt\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
@@ -356,7 +356,7 @@ msgid "Paint Dynamics"
 msgstr "Dinâmicas de pintura"
 
 #: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:419
-#: ../app/widgets/gimpdynamicseditor.c:93
+#: ../app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Editor de dinâmicas de pintura"
 
@@ -785,8 +785,7 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Intersetar este canal com a seleção atual"
 
-#: ../app/actions/channels-commands.c:86
-#: ../app/actions/channels-commands.c:403
+#: ../app/actions/channels-commands.c:86 ../app/actions/channels-commands.c:403
 msgid "Channel Attributes"
 msgstr "Atributos do canal"
 
@@ -798,8 +797,7 @@ msgstr "Editar atributos do canal"
 msgid "Edit Channel Color"
 msgstr "Editar cor do canal"
 
-#: ../app/actions/channels-commands.c:92
-#: ../app/actions/channels-commands.c:124
+#: ../app/actions/channels-commands.c:92 ../app/actions/channels-commands.c:124
 msgid "_Fill opacity:"
 msgstr "_Opacidade do preenchimento:"
 
@@ -1069,8 +1067,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114
-#: ../app/actions/tool-options-commands.c:74
+#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1994
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
@@ -4215,15 +4212,13 @@ msgstr "A redimensionar"
 msgid "Set Image Print Resolution"
 msgstr "Definir resolução de impressão da imagem"
 
-#: ../app/actions/image-commands.c:714
-#: ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:714 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "A inverter"
 
-#: ../app/actions/image-commands.c:738
-#: ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:738 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
@@ -5648,7 +5643,7 @@ msgstr "Abrir ficheiro de texto (UTF-8)"
 #: ../app/core/gimppalette-import.c:506 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:233
 #: ../app/tools/gimpfiltertool-settings.c:168
-#: ../app/widgets/gimptextbuffer.c:1646
+#: ../app/widgets/gimptextbuffer.c:1647
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossível abrir \"%s\" para leitura: %s"
@@ -6255,8 +6250,6 @@ msgid "Display _Rendering Intent"
 msgstr "Mostra_r Intenção do renderizador"
 
 #: ../app/actions/view-actions.c:82
-#| msgctxt "view-action"
-#| msgid "Simulation Re_ndering Intent"
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "I_ntenção do renderizador da prova por software"
@@ -6398,29 +6391,21 @@ msgid "A pixel on the screen represents an image pixel"
 msgstr "Um pixel no ecrã representa um pixel na imagem"
 
 #: ../app/actions/view-actions.c:172
-#| msgctxt "view-action"
-#| msgid "_Color Manage this View"
 msgctxt "view-action"
 msgid "_Color-Manage this View"
 msgstr "Gerir _cor nesta vista"
 
 #: ../app/actions/view-actions.c:173
-#| msgctxt "view-action"
-#| msgid "Color manage this view"
 msgctxt "view-action"
 msgid "Use color management for this view"
 msgstr "Utilizar a gestão de cor para esta vista"
 
 #: ../app/actions/view-actions.c:179
-#| msgctxt "context-action"
-#| msgid "_Colors"
 msgctxt "view-action"
 msgid "_Proof Colors"
 msgstr "Testar _Cores"
 
 #: ../app/actions/view-actions.c:180
-#| msgctxt "view-action"
-#| msgid "Use this view for softproofing"
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
 msgstr "Utilizar esta vista para prova por software"
@@ -6436,8 +6421,6 @@ msgid "Use black point compensation for image display"
 msgstr "Utilizar compensação de ponto negro para o ecrã"
 
 #: ../app/actions/view-actions.c:194
-#| msgctxt "view-action"
-#| msgid "Use black point compensation for softproofing"
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Utilizar compensação de ponto negro para prova por software"
@@ -6448,10 +6431,6 @@ msgid "_Mark Out Of Gamut Colors"
 msgstr "Des_marcação de cores da gama"
 
 #: ../app/actions/view-actions.c:201
-#| msgctxt "view-action"
-#| msgid ""
-#| "When softproofing, mark colors which cannot be represented in the target "
-#| "color space"
 msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
@@ -6847,30 +6826,22 @@ msgid "Display rendering intent is absolute colorimetric"
 msgstr "Intensão de desenho do monitor é colorimétrica absoluta"
 
 #: ../app/actions/view-actions.c:545
-#| msgctxt "view-action"
-#| msgid "Softproof rendering intent is perceptual"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
 msgstr "Intenção do renderizador da prova por software é perceptual"
 
 #: ../app/actions/view-actions.c:551
-#| msgctxt "view-action"
-#| msgid "Softproof rendering intent is relative colorimetric"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
 msgstr ""
 "Intenção do renderizador  da prova por software é colorimétrica relativa"
 
 #: ../app/actions/view-actions.c:557
-#| msgctxt "view-action"
-#| msgid "Softproof rendering intent is saturation"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
 msgstr "Intenção do renderizador da prova por software é saturação"
 
 #: ../app/actions/view-actions.c:563
-#| msgctxt "view-action"
-#| msgid "Softproof rendering intent is absolute colorimetric"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr ""
@@ -8392,7 +8363,7 @@ msgid "Text"
 msgstr "Texto"
 
 #: ../app/core/core-enums.c:906 ../app/core/core-enums.c:954
-#: ../app/core/gimpdrawable-transform.c:661
+#: ../app/core/gimpdrawable-transform.c:668
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformar"
@@ -8613,7 +8584,6 @@ msgid "Keep embedded profile"
 msgstr "Manter o perfil embutido"
 
 #: ../app/core/core-enums.c:1106
-#| msgid "Select Preferred RGB Color Profile"
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
 msgstr "Converter para o perfil de cor RGB preferido"
@@ -9057,7 +9027,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Rodar canal"
 
-#: ../app/core/gimpchannel.c:296 ../app/core/gimpdrawable-transform.c:982
+#: ../app/core/gimpchannel.c:296 ../app/core/gimpdrawable-transform.c:989
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transformar canal"
@@ -9335,7 +9305,7 @@ msgstr "Misturar"
 msgid "Calculating distance map"
 msgstr "A calcular mapa de distâncias"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:159
+#: ../app/core/gimpdrawable-bucket-fill.c:183
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Balde de tinta"
@@ -9378,22 +9348,22 @@ msgstr "Desviar desenho"
 msgid "Not enough points to stroke"
 msgstr "Sem pontos suficientes para traçar"
 
-#: ../app/core/gimpdrawable-transform.c:750
+#: ../app/core/gimpdrawable-transform.c:757
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Inverter"
 
-#: ../app/core/gimpdrawable-transform.c:835
+#: ../app/core/gimpdrawable-transform.c:842
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Rodar"
 
-#: ../app/core/gimpdrawable-transform.c:980 ../app/core/gimplayer.c:332
+#: ../app/core/gimpdrawable-transform.c:987 ../app/core/gimplayer.c:332
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transformar camada"
 
-#: ../app/core/gimpdrawable-transform.c:993
+#: ../app/core/gimpdrawable-transform.c:1000
 msgid "Transformation"
 msgstr "Transformação"
 
@@ -9912,12 +9882,12 @@ msgstr ""
 "Não há caminhos visíveis suficientes para união. Devem existir pelo menos "
 "dois."
 
-#: ../app/core/gimpimage-quick-mask.c:87
+#: ../app/core/gimpimage-quick-mask.c:89
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
 msgstr "Ativar máscara rápida"
 
-#: ../app/core/gimpimage-quick-mask.c:137
+#: ../app/core/gimpimage-quick-mask.c:121
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
 msgstr "Desativar máscara rápida"
@@ -10457,97 +10427,122 @@ msgstr "Ativo"
 msgid "Activate symmetry painting"
 msgstr "Ativar pintura simétrica "
 
-#: ../app/core/gimpsymmetry-mandala.c:112
+#: ../app/core/gimpsymmetry-mandala.c:113
 msgid "Mandala"
 msgstr "Mandala"
 
-#: ../app/core/gimpsymmetry-mandala.c:119
+#: ../app/core/gimpsymmetry-mandala.c:120
 msgid "Center abscissa"
 msgstr "Centrar abcissa"
 
-#: ../app/core/gimpsymmetry-mandala.c:127
+#: ../app/core/gimpsymmetry-mandala.c:132
 msgid "Center ordinate"
 msgstr "Centrar ordenada"
 
-#: ../app/core/gimpsymmetry-mandala.c:135
+#: ../app/core/gimpsymmetry-mandala.c:144
 msgid "Number of points"
 msgstr "Número de pontos"
 
-#: ../app/core/gimpsymmetry-mandala.c:143
-#: ../app/core/gimpsymmetry-mirror.c:153
+#: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
 msgstr "Desativar transformação de pincel"
 
-#: ../app/core/gimpsymmetry-mandala.c:144
-#: ../app/core/gimpsymmetry-mirror.c:154
-msgid "Disable brush transformation (faster)"
-msgstr "Desativar transformação de pincel (mais rápido)"
+#: ../app/core/gimpsymmetry-mandala.c:153
+#, fuzzy
+#| msgid "Disable brush transform"
+msgid "Disable brush rotation"
+msgstr "Desativar transformação de pincel"
 
-#: ../app/core/gimpsymmetry-mirror.c:122
+#: ../app/core/gimpsymmetry-mirror.c:123
 msgid "Mirror"
 msgstr "Espelhar"
 
-#: ../app/core/gimpsymmetry-mirror.c:129
-msgid "Horizontal Mirror"
-msgstr "Espelhar na horizontal"
+#: ../app/core/gimpsymmetry-mirror.c:130
+#, fuzzy
+#| msgid "Central Symmetry"
+msgid "Horizontal Symmetry"
+msgstr "Simetria central"
 
-#: ../app/core/gimpsymmetry-mirror.c:137
-msgid "Vertical Mirror"
-msgstr "Espelhar na vertical"
+#: ../app/core/gimpsymmetry-mirror.c:131
+msgid "Reflect the initial stroke across a horizontal axis"
+msgstr "Refletir a pincelada inicial por todo o eixo horizontal"
 
-#: ../app/core/gimpsymmetry-mirror.c:145
+#: ../app/core/gimpsymmetry-mirror.c:138
+#, fuzzy
+#| msgid "Central Symmetry"
+msgid "Vertical Symmetry"
+msgstr "Simetria central"
+
+#: ../app/core/gimpsymmetry-mirror.c:139
+msgid "Reflect the initial stroke across a vertical axis"
+msgstr "Refletir a pincelada inicial por todo o eixo vertical"
+
+#: ../app/core/gimpsymmetry-mirror.c:146
 msgid "Central Symmetry"
 msgstr "Simetria central"
 
-#: ../app/core/gimpsymmetry-mirror.c:161
-msgid "Horizontal axis position"
-msgstr "Posição do eixo horizontal"
+#: ../app/core/gimpsymmetry-mirror.c:147
+#, fuzzy
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 16 bit floating point"
+msgid "Invert the initial stroke through a point"
+msgstr "Converte a imagem para ponto flutuante de 16 bits"
 
-#: ../app/core/gimpsymmetry-mirror.c:169
+#: ../app/core/gimpsymmetry-mirror.c:155
+#, fuzzy
+#| msgid "Disable brush transform"
+msgid "Disable brush reflection"
+msgstr "Desativar transformação de pincel"
+
+#: ../app/core/gimpsymmetry-mirror.c:162
 msgid "Vertical axis position"
 msgstr "Posição do eixo vertical"
 
-#: ../app/core/gimpsymmetry-tiling.c:100
+#: ../app/core/gimpsymmetry-mirror.c:174
+msgid "Horizontal axis position"
+msgstr "Posição do eixo horizontal"
+
+#: ../app/core/gimpsymmetry-tiling.c:101
 msgid "Tiling"
 msgstr "Mosaico"
 
-#: ../app/core/gimpsymmetry-tiling.c:106
+#: ../app/core/gimpsymmetry-tiling.c:107
 msgid "Interval X"
 msgstr "Intervalo X"
 
-#: ../app/core/gimpsymmetry-tiling.c:107
+#: ../app/core/gimpsymmetry-tiling.c:108
 msgid "Interval on the X axis (pixels)"
 msgstr "Intervalo no eixo dos X (pixeis)"
 
-#: ../app/core/gimpsymmetry-tiling.c:114
+#: ../app/core/gimpsymmetry-tiling.c:119
 msgid "Interval Y"
 msgstr "Intervalo Y"
 
-#: ../app/core/gimpsymmetry-tiling.c:115
+#: ../app/core/gimpsymmetry-tiling.c:120
 msgid "Interval on the Y axis (pixels)"
 msgstr "Intervalo no eixo dos Y (pixeis)"
 
-#: ../app/core/gimpsymmetry-tiling.c:122
+#: ../app/core/gimpsymmetry-tiling.c:131
 msgid "Shift"
 msgstr "Shift"
 
-#: ../app/core/gimpsymmetry-tiling.c:123
+#: ../app/core/gimpsymmetry-tiling.c:132
 msgid "X-shift between lines (pixels)"
 msgstr "X-desvio entre linhas (pixeis)"
 
-#: ../app/core/gimpsymmetry-tiling.c:130
+#: ../app/core/gimpsymmetry-tiling.c:139
 msgid "Max strokes X"
 msgstr "Máximo de pinceladas X"
 
-#: ../app/core/gimpsymmetry-tiling.c:131
+#: ../app/core/gimpsymmetry-tiling.c:140
 msgid "Maximum number of strokes on the X axis"
 msgstr "Número máximo de pinceladas no eixo X"
 
-#: ../app/core/gimpsymmetry-tiling.c:138
+#: ../app/core/gimpsymmetry-tiling.c:147
 msgid "Max strokes Y"
 msgstr "Máximo de pinceladas Y"
 
-#: ../app/core/gimpsymmetry-tiling.c:139
+#: ../app/core/gimpsymmetry-tiling.c:148
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Número máximo de pinceladas no eixo Y"
 
@@ -11589,7 +11584,7 @@ msgstr "I_ntervalo:"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:361
-#: ../app/tools/gimpforegroundselecttool.c:1223
+#: ../app/tools/gimpforegroundselecttool.c:1229
 msgid "Preview"
 msgstr "Antevisão"
 
@@ -11810,12 +11805,10 @@ msgstr "Velocidade"
 
 #: ../app/dialogs/preferences-dialog.c:1391
 #: ../app/dialogs/preferences-dialog.c:1426
-#| msgid "Precision Conversion"
 msgid "Precision / Color Fidelity"
 msgstr "Fidelidade da precisão / cor"
 
 #: ../app/dialogs/preferences-dialog.c:1392
-#| msgid "Image display _mode:"
 msgid "_Optimize image display for:"
 msgstr "_Optimizar a apresentação da imagem para:"
 
@@ -11825,12 +11818,10 @@ msgid "Soft-Proofing"
 msgstr "Prova-Suave"
 
 #: ../app/dialogs/preferences-dialog.c:1406
-#| msgid "Select Printer Color Profile"
 msgid "Select Soft-Proofing Color Profile"
 msgstr "Selecionar o perfil de cor para a prova por software"
 
 #: ../app/dialogs/preferences-dialog.c:1407
-#| msgid "_Monitor profile:"
 msgid "_Soft-proofing profile:"
 msgstr "Perfil da prova por _software:"
 
@@ -12086,8 +12077,7 @@ msgstr "Selecionar um tema dos ícones"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1981
-#: ../app/dialogs/preferences-dialog.c:2374
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2374 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Aparência"
 
@@ -12190,9 +12180,8 @@ msgid "Monitor Resolution"
 msgstr "Resolução do monitor"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2138
-#: ../app/display/gimpcursorview.c:207 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2138 ../app/display/gimpcursorview.c:207
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Pixels"
 
@@ -12669,8 +12658,7 @@ msgstr "Clique em %s para descartar as alterações e sair."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Clique em %s para descartar as alterações e fechar as imagens."
 
-#: ../app/dialogs/quit-dialog.c:341
-#: ../app/display/gimpdisplayshell-close.c:179
+#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:179
 msgid "_Discard Changes"
 msgstr "_Descartar alterações"
 
@@ -12947,8 +12935,8 @@ msgstr "Alternar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar pela visualização da imagem"
 
-#: ../app/display/gimpdisplayshell.c:778
-#: ../app/display/gimpdisplayshell.c:1483 ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:778 ../app/display/gimpdisplayshell.c:1483
+#: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Largue aqui os ficheiros para abri-los"
 
@@ -13164,21 +13152,21 @@ msgstr "Não é um ficheiro normal"
 msgid "Permission denied"
 msgstr "Permissão negada"
 
-#: ../app/file/file-open.c:230
+#: ../app/file/file-open.c:236
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "A extensão %s devolveu \"SUCESSO\", mas não devolveu uma imagem"
 
-#: ../app/file/file-open.c:241
+#: ../app/file/file-open.c:247
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "A extensão %s não pôde abrir a imagem"
 
-#: ../app/file/file-open.c:637
+#: ../app/file/file-open.c:643
 msgid "Image doesn't contain any layers"
 msgstr "A imagem não contém nenhuma camada"
 
-#: ../app/file/file-open.c:696
+#: ../app/file/file-open.c:702
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Falha ao abrir \"%s\": %s"
@@ -13617,7 +13605,7 @@ msgstr "Tamanho da gota de tinta"
 msgid "Angle"
 msgstr "Ângulo"
 
-#: ../app/paint/gimpinkoptions.c:99 ../app/widgets/gimpdynamicseditor.c:145
+#: ../app/paint/gimpinkoptions.c:99 ../app/widgets/gimpdynamicseditor.c:164
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Tilt"
 msgstr "Inclinação"
@@ -13692,8 +13680,7 @@ msgid "Aspect Ratio"
 msgstr "Proporção"
 
 #: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaçamento"
 
@@ -14792,7 +14779,7 @@ msgstr ""
 "Erro de execução no procedimento \"%s\" :\n"
 "%s"
 
-#: ../app/plug-in/gimpplugin-progress.c:331
+#: ../app/plug-in/gimpplugin-progress.c:339
 msgid "Cancelled"
 msgstr "Cancelada"
 
@@ -14883,7 +14870,7 @@ msgstr ""
 "À noite, o avô Kowalsky vê o ímã cair no pé do pinguim queixoso\n"
 "e a avó feliz põe açúcar no chá de tâmaras sem bujão."
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1372
+#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1405
 msgid "Add Text Layer"
 msgstr "Adicionar camada de texto"
 
@@ -14929,11 +14916,11 @@ msgstr ""
 "Devido à inexistência de quaisquer letras, a funcionalidade de texto está "
 "indisponível."
 
-#: ../app/text/gimptextlayer.c:698
+#: ../app/text/gimptextlayer.c:700
 msgid "Empty Text Layer"
 msgstr "Camada de texto vazia"
 
-#: ../app/text/gimptextlayer.c:750
+#: ../app/text/gimptextlayer.c:753
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -15071,12 +15058,10 @@ msgid "Distribute targets evenly in the vertical"
 msgstr "Distribuir alvos uniformemente na vertical"
 
 #: ../app/tools/gimpalignoptions.c:380
-#| msgid "Offset X"
 msgid "Offset X:"
 msgstr "Desvio X:"
 
 #: ../app/tools/gimpalignoptions.c:393
-#| msgid "Offset Y"
 msgid "Offset Y:"
 msgstr "Desvio Y:"
 
@@ -15126,8 +15111,7 @@ msgstr "Superamostragem adaptativa"
 msgid "Max depth"
 msgstr "Profundidade Máx.:"
 
-#: ../app/tools/gimpblendoptions.c:112
-#: ../app/tools/gimpbucketfilloptions.c:126
+#: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:126
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
@@ -15147,9 +15131,8 @@ msgstr "_Misturar"
 
 #: ../app/tools/gimpblendtool.c:259 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpfiltertool.c:315
-#: ../app/tools/gimpforegroundselecttool.c:290
-#: ../app/tools/gimppainttool.c:285 ../app/tools/gimptransformtool.c:1850
-#: ../app/tools/gimpwarptool.c:586
+#: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimptransformtool.c:1850 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "A camada ativa não é visível."
 
@@ -15463,18 +15446,15 @@ msgstr "Colorir a imagem"
 msgid "Select Color"
 msgstr "Selecionar cor"
 
-#: ../app/tools/gimpcolorizetool.c:174
-#: ../app/tools/gimphuesaturationtool.c:312
+#: ../app/tools/gimpcolorizetool.c:174 ../app/tools/gimphuesaturationtool.c:312
 msgid "_Hue"
 msgstr "_Matiz"
 
-#: ../app/tools/gimpcolorizetool.c:181
-#: ../app/tools/gimphuesaturationtool.c:326
+#: ../app/tools/gimpcolorizetool.c:181 ../app/tools/gimphuesaturationtool.c:326
 msgid "_Saturation"
 msgstr "_Saturação"
 
-#: ../app/tools/gimpcolorizetool.c:188
-#: ../app/tools/gimphuesaturationtool.c:319
+#: ../app/tools/gimpcolorizetool.c:188 ../app/tools/gimphuesaturationtool.c:319
 msgid "_Lightness"
 msgstr "_Luminosidade"
 
@@ -16021,7 +16001,7 @@ msgstr "Prima Enter para antever."
 msgid "press Escape to exit preview or Enter to apply."
 msgstr "Prima Esc para sair da antevisão ou Enter para aplicar."
 
-#: ../app/tools/gimpforegroundselecttool.c:1219
+#: ../app/tools/gimpforegroundselecttool.c:1225
 msgid "Paint mask"
 msgstr "Máscara de pintura"
 
@@ -16414,9 +16394,8 @@ msgstr "Autoredimensionar janela"
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Redimensionar janela de imagem para acomodar o novo nível de ampliação"
 
-#: ../app/tools/gimpmagnifyoptions.c:91
-#: ../app/tools/gimptransformoptions.c:116
-#: ../app/widgets/gimpdynamicseditor.c:144
+#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
+#: ../app/widgets/gimpdynamicseditor.c:163
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
 msgstr "Direção"
@@ -17022,8 +17001,7 @@ msgstr "Ativar esbatimento das margens da seleção"
 msgid "Radius of feathering"
 msgstr "Raio de esbatimento"
 
-#: ../app/tools/gimpselectionoptions.c:222
-#: ../app/widgets/gimpbrushselect.c:190
+#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Modo:"
 
@@ -17230,19 +17208,19 @@ msgstr "Ferramenta Texto: criar ou editar camadas de texto"
 msgid "Te_xt"
 msgstr "Te_xto"
 
-#: ../app/tools/gimptexttool.c:983
+#: ../app/tools/gimptexttool.c:1014
 msgid "Reshape Text Layer"
 msgstr "Remodelar camada de texto"
 
-#: ../app/tools/gimptexttool.c:1483 ../app/tools/gimptexttool.c:1486
+#: ../app/tools/gimptexttool.c:1516 ../app/tools/gimptexttool.c:1519
 msgid "Confirm Text Editing"
 msgstr "Confirmar edição de texto"
 
-#: ../app/tools/gimptexttool.c:1490
+#: ../app/tools/gimptexttool.c:1523
 msgid "Create _New Layer"
 msgstr "Criar _nova camada"
 
-#: ../app/tools/gimptexttool.c:1514
+#: ../app/tools/gimptexttool.c:1547
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -17257,7 +17235,7 @@ msgstr ""
 "Pode editar a camada ou criar uma nova camada de texto a partir dos seus "
 "atributos de texto."
 
-#: ../app/tools/gimptexttool-editor.c:1297
+#: ../app/tools/gimptexttool-editor.c:1293
 msgid "GIMP Text Editor"
 msgstr "Editor de texto GIMP"
 
@@ -18552,7 +18530,7 @@ msgid "Pressure curve"
 msgstr "Curva de pressão"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:141
-#: ../app/widgets/gimpdynamicseditor.c:142
+#: ../app/widgets/gimpdynamicseditor.c:161
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Pressão"
@@ -18567,7 +18545,7 @@ msgstr "Inclinação do eixo Y"
 
 #. Wheel as in mouse or input device wheel
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
-#: ../app/widgets/gimpdynamicseditor.c:146
+#: ../app/widgets/gimpdynamicseditor.c:165
 #: ../app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "Roda"
@@ -18642,6 +18620,7 @@ msgstr "Deseja substituí-lo com a imagem que está a gravar?"
 
 #. String used to separate dockables, e.g. "Tool Options, Layers"
 #: ../app/widgets/gimpdock.h:34
+#, fuzzy
 msgctxt "dock"
 msgid ", "
 msgstr ", "
@@ -18650,6 +18629,7 @@ msgstr ", "
 #. e.g. "Tool Options, Layers - Brushes"
 #.
 #: ../app/widgets/gimpdock.h:39
+#, fuzzy
 msgctxt "dock"
 msgid " - "
 msgstr " - "
@@ -18658,6 +18638,7 @@ msgstr " - "
 #. e.g. "Tool Options, Layers - Brushes | Gradients"
 #.
 #: ../app/widgets/gimpdock.h:44
+#, fuzzy
 msgctxt "dock"
 msgid " | "
 msgstr " | "
@@ -18686,24 +18667,29 @@ msgstr "Trancar pixels"
 msgid "Lock position and size"
 msgstr "Bloquear posição e tamanho"
 
-#: ../app/widgets/gimpdynamicseditor.c:136
-msgid "Mapping matrix"
-msgstr "Matriz de mapeamento"
-
-#: ../app/widgets/gimpdynamicseditor.c:143
+#: ../app/widgets/gimpdynamicseditor.c:162
 #: ../app/widgets/gimpdynamicsoutputeditor.c:71
 msgid "Velocity"
 msgstr "Velocidade"
 
-#: ../app/widgets/gimpdynamicseditor.c:147
+#: ../app/widgets/gimpdynamicseditor.c:166
 #: ../app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Random"
 msgstr "Aleatório"
 
-#: ../app/widgets/gimpdynamicseditor.c:148
+#: ../app/widgets/gimpdynamicseditor.c:167
 #: ../app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Fade"
 msgstr "Desvanecer"
+
+#: ../app/widgets/gimpdynamicseditor.c:182
+msgid "Mapping matrix"
+msgstr "Matriz de mapeamento"
+
+#: ../app/widgets/gimpdynamicseditor.c:319
+#: ../app/widgets/gimptoolpreseteditor.c:149
+msgid "Icon:"
+msgstr "Ícone:"
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Too many error messages!"
@@ -19102,139 +19088,139 @@ msgstr "Selecionar uma imagem no painel esquerdo"
 msgid "Progress"
 msgstr "Progresso"
 
-#: ../app/widgets/gimppropgui-constructors.c:168
+#: ../app/widgets/gimppropgui-constructors.c:171
 msgid "Pick coordinates from the image"
 msgstr "Obter coordenadas a partir da imagem"
 
-#: ../app/widgets/gimppropgui-constructors.c:326
+#: ../app/widgets/gimppropgui-constructors.c:330
 msgid "Clockwise"
 msgstr "À direita"
 
-#: ../app/widgets/gimppropgui-constructors.c:330
+#: ../app/widgets/gimppropgui-constructors.c:334
 msgid "Invert Range"
 msgstr "Inverter intervalo"
 
-#: ../app/widgets/gimppropgui-constructors.c:334
+#: ../app/widgets/gimppropgui-constructors.c:338
 msgid "Select All"
 msgstr "Selecionar tudo"
 
-#: ../app/widgets/gimppropgui-constructors.c:412
+#: ../app/widgets/gimppropgui-constructors.c:417
 msgid "Source Range"
 msgstr "Intervalo origem"
 
-#: ../app/widgets/gimppropgui-constructors.c:423
+#: ../app/widgets/gimppropgui-constructors.c:428
 msgid "Destination Range"
 msgstr "Intervalo destino"
 
-#: ../app/widgets/gimppropgui-constructors.c:434
+#: ../app/widgets/gimppropgui-constructors.c:439
 msgid "Gray Handling"
 msgstr "Gestão de cinzentos"
 
-#: ../app/widgets/gimppropgui-constructors.c:572
+#: ../app/widgets/gimppropgui-constructors.c:576
 msgid "Red channel"
 msgstr "Canal vermelho"
 
-#: ../app/widgets/gimppropgui-constructors.c:596
+#: ../app/widgets/gimppropgui-constructors.c:600
 msgid "Green channel"
 msgstr "Canal verde"
 
-#: ../app/widgets/gimppropgui-constructors.c:620
+#: ../app/widgets/gimppropgui-constructors.c:624
 msgid "Blue channel"
 msgstr "Canal azul"
 
-#: ../app/widgets/gimppropgui-constructors.c:678
+#: ../app/widgets/gimppropgui-constructors.c:682
 msgid "Frequencies"
 msgstr "Frequências"
 
-#: ../app/widgets/gimppropgui-constructors.c:688
+#: ../app/widgets/gimppropgui-constructors.c:691
 msgid "Contours"
 msgstr "Contornos"
 
-#: ../app/widgets/gimppropgui-constructors.c:698
+#: ../app/widgets/gimppropgui-constructors.c:700
 msgid "Sharp Edges"
 msgstr "Bordos aguçados"
 
-#: ../app/widgets/gimppropgui-constructors.c:708
+#: ../app/widgets/gimppropgui-constructors.c:709
 msgid "Other Options"
 msgstr "Outras opções"
 
-#: ../app/widgets/gimppropgui.c:117
+#: ../app/widgets/gimppropgui.c:119
 msgid "New Seed"
 msgstr "Nova semente"
 
-#: ../app/widgets/gimppropgui.c:344
+#: ../app/widgets/gimppropgui.c:346
 msgid "Pick color from the image"
 msgstr "Escolher cor a partir de uma imagem"
 
-#: ../app/widgets/gimppropgui.c:452
+#: ../app/widgets/gimppropgui.c:457
 msgid "This operation has no editable properties"
 msgstr "Esta operação não tem propriedades editáveis"
 
-#: ../app/widgets/gimppropgui.c:522
+#: ../app/widgets/gimppropgui.c:527
 msgid "1,700 K – Match flame"
 msgstr "1,700 K – chama de fósforo"
 
-#: ../app/widgets/gimppropgui.c:523
+#: ../app/widgets/gimppropgui.c:528
 msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1,850 K – chama de vela, nascer/pôr do Sol"
 
-#: ../app/widgets/gimppropgui.c:524
+#: ../app/widgets/gimppropgui.c:529
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr "3,000 K – lâmpadas fluorescentes compactas brancas suaves (ou mornas)"
 
-#: ../app/widgets/gimppropgui.c:525
+#: ../app/widgets/gimppropgui.c:530
 msgid "3,300 K – Incandescent lamps"
 msgstr "3,300 K – lâmpadas incandescentes"
 
-#: ../app/widgets/gimppropgui.c:526
+#: ../app/widgets/gimppropgui.c:531
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr "3,200 K – lâmpadas de estúdio, flashes, etc."
 
-#: ../app/widgets/gimppropgui.c:527
+#: ../app/widgets/gimppropgui.c:532
 msgid "3,350 K – Studio \"CP\" light"
 msgstr "3,350 K – luz de estúdio \"CP\""
 
-#: ../app/widgets/gimppropgui.c:528
+#: ../app/widgets/gimppropgui.c:533
 msgid "4,100 K – Moonlight"
 msgstr "4,100 K – luar"
 
-#: ../app/widgets/gimppropgui.c:529
+#: ../app/widgets/gimppropgui.c:534
 msgid "5,000 K – D50"
 msgstr "5,000 K – D50"
 
-#: ../app/widgets/gimppropgui.c:530
+#: ../app/widgets/gimppropgui.c:535
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr "5,000 K – lâmpadas fluorescentes compactas brancas/luz do dia"
 
-#: ../app/widgets/gimppropgui.c:531
+#: ../app/widgets/gimppropgui.c:536
 msgid "5,000 K – Horizon daylight"
 msgstr "5,000 K – luz do dia no horizonte"
 
-#: ../app/widgets/gimppropgui.c:532
+#: ../app/widgets/gimppropgui.c:537
 msgid "5,500 K – D55"
 msgstr "5,500 K – D55"
 
-#: ../app/widgets/gimppropgui.c:533
+#: ../app/widgets/gimppropgui.c:538
 msgid "5,500 K – Vertical daylight, electronic flash"
 msgstr "5,500 K – luz do dia vertical, flash eletrónico"
 
-#: ../app/widgets/gimppropgui.c:534
+#: ../app/widgets/gimppropgui.c:539
 msgid "6,200 K – Xenon short-arc lamp"
 msgstr "6,200 K – lâmpada de xenon short-arc"
 
-#: ../app/widgets/gimppropgui.c:535
+#: ../app/widgets/gimppropgui.c:540
 msgid "6,500 K – D65"
 msgstr "6,500 K – D65"
 
-#: ../app/widgets/gimppropgui.c:536
+#: ../app/widgets/gimppropgui.c:541
 msgid "6,500 K – Daylight, overcast"
 msgstr "6,500 K – luz de dia nublado"
 
-#: ../app/widgets/gimppropgui.c:537
+#: ../app/widgets/gimppropgui.c:542
 msgid "7,500 K – D75"
 msgstr "7,500 K – D75"
 
-#: ../app/widgets/gimppropgui.c:538
+#: ../app/widgets/gimppropgui.c:543
 msgid "9,300 K"
 msgstr "9,300 K"
 
@@ -19370,6 +19356,7 @@ msgstr "Insira as etiquetas"
 #. * http://unicode.org/review/pr-23.html
 #.
 #: ../app/widgets/gimptagentry.c:1751
+#, fuzzy
 msgid ","
 msgstr ","
 
@@ -19428,27 +19415,27 @@ msgstr "%d × %d ppi, %s"
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:351
+#: ../app/widgets/gimptextbuffer-serialize.c:276
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr "Atributo \"%s\" é inválido no elemento <%s> deste contexto"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:423
+#: ../app/widgets/gimptextbuffer-serialize.c:348
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "O elemento mais extremo no texto deve ser <markup> e não <%s> "
 
-#: ../app/widgets/gimptextbuffer.c:1683
+#: ../app/widgets/gimptextbuffer.c:1684
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
 msgstr "O ficheiro de entrada \"%s\" parece truncado: %s"
 
-#: ../app/widgets/gimptextbuffer.c:1701
+#: ../app/widgets/gimptextbuffer.c:1702
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Dados UTF-8 inválidos no ficheiro \"%s\"."
 
-#: ../app/widgets/gimptextbuffer.c:1750
+#: ../app/widgets/gimptextbuffer.c:1751
 #, c-format
 msgid "Writing palette file '%s' failed: %s"
 msgstr "Falha ao escrever ficheiro de paleta \"%s\": %s"
@@ -19619,10 +19606,6 @@ msgstr "Restaurar predefinições da ferramenta..."
 #: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Delete Tool Preset..."
 msgstr "Eliminar predefinições da ferramenta..."
-
-#: ../app/widgets/gimptoolpreseteditor.c:149
-msgid "Icon:"
-msgstr "Ícone:"
 
 #: ../app/widgets/gimptoolpreseteditor.c:291
 #, c-format
@@ -19945,3 +19928,12 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difuso"
+
+#~ msgid "Disable brush transformation (faster)"
+#~ msgstr "Desativar transformação de pincel (mais rápido)"
+
+#~ msgid "Horizontal Mirror"
+#~ msgstr "Espelhar na horizontal"
+
+#~ msgid "Vertical Mirror"
+#~ msgstr "Espelhar na vertical"
