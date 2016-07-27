@@ -60,8 +60,6 @@ typedef struct _AnimationAnimaticPrivate AnimationAnimaticPrivate;
 
 struct _AnimationAnimaticPrivate
 {
-  gdouble      proxy_ratio;
-
   /* Panels are cached as GEGL buffers. */
   GeglBuffer **cache;
   /* The number of panels. */
@@ -86,15 +84,10 @@ static void         animation_animatic_finalize   (GObject           *object);
 /* Virtual methods */
 
 static gint         animation_animatic_get_length  (Animation         *animation);
-static void         animation_animatic_get_size    (Animation         *animation,
-                                                    gint              *width,
-                                                    gint              *height);
 
-static void         animation_animatic_load        (Animation         *animation,
-                                                    gdouble            proxy_ratio);
+static void         animation_animatic_load        (Animation         *animation);
 static void         animation_animatic_load_xml    (Animation         *animation,
-                                                    const gchar       *xml,
-                                                    gdouble            proxy_ratio);
+                                                    const gchar       *xml);
 static GeglBuffer * animation_animatic_get_frame   (Animation         *animation,
                                                     gint               pos);
 static gchar      * animation_animatic_serialize   (Animation         *animation);
@@ -177,7 +170,6 @@ animation_animatic_class_init (AnimationAnimaticClass *klass)
   object_class->finalize = animation_animatic_finalize;
 
   anim_class->get_length  = animation_animatic_get_length;
-  anim_class->get_size    = animation_animatic_get_size;
   anim_class->load        = animation_animatic_load;
   anim_class->load_xml    = animation_animatic_load_xml;
   anim_class->get_frame   = animation_animatic_get_frame;
@@ -412,39 +404,12 @@ animation_animatic_get_length (Animation *animation)
 }
 
 static void
-animation_animatic_get_size (Animation *animation,
-                             gint      *width,
-                             gint      *height)
-{
-  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
-  gint32                    image_id;
-  gint                      image_width;
-  gint                      image_height;
-
-  image_id = animation_get_image_id (animation);
-
-  image_width  = gimp_image_width (image_id);
-  image_height = gimp_image_height (image_id);
-
-  /* Full preview size. */
-  *width  = image_width;
-  *height = image_height;
-
-  /* Apply proxy ratio. */
-  *width  *= priv->proxy_ratio;
-  *height *= priv->proxy_ratio;
-}
-
-static void
-animation_animatic_load (Animation *animation,
-                         gdouble    proxy_ratio)
+animation_animatic_load (Animation *animation)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   gint32                   *layers;
   gint32                    image_id;
   gint                      i;
-
-  g_return_if_fail (proxy_ratio > 0.0 && proxy_ratio <= 1.0);
 
   /* Cleaning. */
   if (priv->cache)
@@ -479,7 +444,6 @@ animation_animatic_load (Animation *animation,
       gimp_quit ();
       return;
     }
-  priv->proxy_ratio = proxy_ratio;
 
   for (i = 0; i < priv->n_panels; i++)
     {
@@ -510,8 +474,7 @@ animation_animatic_load (Animation *animation,
 
 static void
 animation_animatic_load_xml (Animation   *animation,
-                             const gchar *xml,
-                             gdouble      proxy_ratio)
+                             const gchar *xml)
 {
   const GMarkupParser markup_parser =
     {
@@ -528,7 +491,7 @@ animation_animatic_load_xml (Animation   *animation,
   g_return_if_fail (xml != NULL);
 
   /* Init with a default load. */
-  animation_animatic_load (animation, proxy_ratio);
+  animation_animatic_load (animation);
 
   /* Parse XML to update. */
   status.state = START_STATE;
@@ -552,7 +515,7 @@ animation_animatic_load_xml (Animation   *animation,
 
   /* If XML parsing failed, just reset the animation. */
   if (error)
-    animation_animatic_load (animation, proxy_ratio);
+    animation_animatic_load (animation);
 }
 
 static GeglBuffer *
@@ -910,6 +873,7 @@ animation_animatic_cache (AnimationAnimatic *animatic,
   gint                      preview_height;
   gint32                    image_id;
   gint32                    layer;
+  gdouble                   proxy_ratio;
 
   image_id = animation_get_image_id (animation);
   layer = gimp_image_get_layer_by_tattoo (image_id,
@@ -927,6 +891,7 @@ animation_animatic_cache (AnimationAnimatic *animatic,
     }
 
   /* Panel image. */
+  proxy_ratio = animation_get_proxy (animation);
   buffer = gimp_drawable_get_buffer (layer);
   animation_get_size (animation, &preview_width, &preview_height);
   priv->cache[panel - 1] = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -941,14 +906,14 @@ animation_animatic_cache (AnimationAnimatic *animatic,
   scale  = gegl_node_new_child (graph,
                                 "operation", "gegl:scale-ratio",
                                 "sampler", GEGL_SAMPLER_NEAREST,
-                                "x", priv->proxy_ratio,
-                                "y", priv->proxy_ratio,
+                                "x", proxy_ratio,
+                                "y", proxy_ratio,
                                 NULL);
 
   gimp_drawable_offsets (layer,
                          &layer_offx, &layer_offy);
-  panel_offx = layer_offx * priv->proxy_ratio;
-  panel_offy = layer_offy * priv->proxy_ratio;
+  panel_offx = layer_offx * proxy_ratio;
+  panel_offy = layer_offy * proxy_ratio;
   translate =  gegl_node_new_child (graph,
                                     "operation", "gegl:translate",
                                     "x", panel_offx,

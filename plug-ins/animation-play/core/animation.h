@@ -49,17 +49,11 @@ struct _AnimationClass
                                       gint       next_pos);
 
   /* These virtual methods must be implemented by any subclass. */
-  void         (*load)          (Animation   *animation,
-                                 gdouble      proxy_ratio);
+  void         (*load)          (Animation   *animation);
   void         (*load_xml)      (Animation   *animation,
-                                 const gchar *xml,
-                                 gdouble      proxy_ratio);
+                                 const gchar *xml);
   gint         (*get_length)    (Animation   *animation);
 
-
-  void         (*get_size)      (Animation   *animation,
-                                 gint        *width,
-                                 gint        *height);
 
   GeglBuffer * (*get_frame)     (Animation   *animation,
                                  gint         pos);
@@ -74,8 +68,7 @@ Animation   * animation_new                (gint32       image_id,
 
 gint32        animation_get_image_id       (Animation   *animation);
 
-void          animation_load               (Animation   *animation,
-                                            gdouble      proxy_ratio);
+void          animation_load               (Animation   *animation);
 
 gchar       * animation_serialize          (Animation   *animation);
 
@@ -83,10 +76,12 @@ gint          animation_get_start_position (Animation   *animation);
 gint          animation_get_position       (Animation   *animation);
 gint          animation_get_length         (Animation   *animation);
 
+void          animation_set_proxy          (Animation   *animation,
+                                            gdouble      ratio);
+gdouble       animation_get_proxy          (Animation   *animation);
 void          animation_get_size           (Animation   *animation,
                                             gint        *width,
                                             gint        *height);
-gdouble       animation_get_proxy          (Animation   *animation);
 
 GeglBuffer  * animation_get_frame          (Animation   *animation,
                                             gint         frame_number);

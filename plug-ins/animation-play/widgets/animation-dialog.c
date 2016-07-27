@@ -75,7 +75,6 @@ struct _AnimationDialogPrivate
 
   GtkWidget      *fpscombo;
   GtkWidget      *zoomcombo;
-  GtkWidget      *proxycheckbox;
   GtkWidget      *proxycombo;
 
   GtkWidget      *progress;
@@ -164,9 +163,6 @@ static void        zoom_out_callback         (GtkAction        *action,
 static void        zoom_reset_callback       (GtkAction        *action,
                                               AnimationDialog  *dialog);
 
-static void        proxy_checkbox_expanded   (GtkExpander      *expander,
-                                              GParamSpec       *param_spec,
-                                              AnimationDialog  *dialog);
 static void        proxycombo_activated      (GtkEntry         *combo_entry,
                                               AnimationDialog  *dialog);
 static void        proxycombo_changed        (GtkWidget        *combo,
@@ -359,8 +355,7 @@ animation_dialog_new (gint32 image_id)
                          NULL);
   animation_dialog_set_animation (ANIMATION_DIALOG (dialog),
                                   animation);
-
-  animation_load (animation, 1.0);
+  animation_load (animation);
 
   return dialog;
 }
@@ -439,23 +434,18 @@ animation_dialog_constructed (GObject *object)
   gtk_widget_show (priv->settings_bar);
 
   /* Settings: expander to display the proxy settings. */
-  priv->proxycheckbox = gtk_expander_new_with_mnemonic (_("_Proxy Quality"));
-  gtk_expander_set_expanded (GTK_EXPANDER (priv->proxycheckbox), FALSE);
+  widget = gtk_expander_new_with_mnemonic (_("_Proxy"));
+  gtk_expander_set_expanded (GTK_EXPANDER (widget), FALSE);
 
-  g_signal_connect (GTK_EXPANDER (priv->proxycheckbox),
-                    "notify::expanded",
-                    G_CALLBACK (proxy_checkbox_expanded),
-                    dialog);
-
-  gimp_help_set_help_data (priv->proxycheckbox,
+  gimp_help_set_help_data (widget,
                            _("Degrade image quality for lower memory footprint"),
                            NULL);
 
-  gtk_box_pack_end (GTK_BOX (priv->settings_bar), priv->proxycheckbox,
+  gtk_box_pack_end (GTK_BOX (priv->settings_bar), widget,
                     FALSE, FALSE, 0);
-  gtk_widget_show (priv->proxycheckbox);
+  gtk_widget_show (widget);
 
-  /* Settings: proxy image. */
+  /* Settings: proxy. */
   priv->proxycombo = gtk_combo_box_text_new_with_entry ();
 
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->proxycombo),
@@ -480,7 +470,7 @@ animation_dialog_constructed (GObject *object)
   gimp_help_set_help_data (priv->proxycombo, _("Proxy resolution quality"), NULL);
 
   gtk_widget_show (priv->proxycombo);
-  gtk_container_add (GTK_CONTAINER (priv->proxycheckbox),
+  gtk_container_add (GTK_CONTAINER (widget),
                      priv->proxycombo);
 
   /* Settings: fps */
@@ -1096,9 +1086,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
     }
 
   /* Block all handlers on UI widgets. */
-  g_signal_handlers_block_by_func (GTK_EXPANDER (priv->proxycheckbox),
-                                   G_CALLBACK (proxy_checkbox_expanded),
-                                   dialog);
   g_signal_handlers_block_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
                                    G_CALLBACK (proxycombo_activated),
                                    dialog);
@@ -1137,9 +1124,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   priv->animation = animation;
 
   /* Settings: proxy image. */
-  g_signal_handlers_unblock_by_func (GTK_EXPANDER (priv->proxycheckbox),
-                                     G_CALLBACK (proxy_checkbox_expanded),
-                                     dialog);
   g_signal_handlers_unblock_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
                                    G_CALLBACK (proxycombo_activated),
                                    dialog);
@@ -1518,31 +1502,6 @@ zoom_reset_callback (GtkAction       *action,
 }
 
 /*
- * Callback emitted when the user toggle the proxy checkbox.
- */
-static void
-proxy_checkbox_expanded (GtkExpander     *expander,
-                         GParamSpec      *param_spec,
-                         AnimationDialog *dialog)
-{
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-
-  if (gtk_expander_get_expanded (expander))
-    {
-      proxycombo_activated (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
-                            dialog);
-    }
-  else if (animation_get_proxy (priv->animation) != 1.0)
-    {
-      /* Closing the expander. Proxy is deactived. */
-      gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (priv->zoomcombo));
-
-      animation_load (priv->animation, 1.0);
-      update_scale (dialog, get_zoom (dialog, index));
-    }
-}
-
-/*
  * Callback emitted when the user hits the Enter key of the fps combo.
  */
 static void
@@ -1581,7 +1540,7 @@ proxycombo_activated (GtkEntry        *combo_entry,
 
       was_playing = animation_is_playing (priv->animation);
 
-      animation_load (priv->animation, ratio);
+      animation_set_proxy (priv->animation, ratio);
       update_scale (dialog, get_zoom (dialog, -1));
 
       if (was_playing)
@@ -1809,8 +1768,7 @@ refresh_callback (GtkAction       *action,
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
 
   animation_dialog_refresh (dialog);
-  animation_load (priv->animation,
-                  animation_get_proxy (priv->animation));
+  animation_load (priv->animation);
 }
 
 static void
@@ -2019,9 +1977,6 @@ proxy_changed (Animation       *animation,
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   gchar                  *text;
 
-  g_signal_handlers_block_by_func (GTK_EXPANDER (priv->proxycheckbox),
-                                   G_CALLBACK (proxy_checkbox_expanded),
-                                   dialog);
   g_signal_handlers_block_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
                                    G_CALLBACK (proxycombo_activated),
                                    dialog);
@@ -2033,14 +1988,6 @@ proxy_changed (Animation       *animation,
   gtk_entry_set_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))), text);
   g_free (text);
 
-  if (proxy == 1.0)
-    gtk_expander_set_expanded (GTK_EXPANDER (priv->proxycheckbox), FALSE);
-  else
-    gtk_expander_set_expanded (GTK_EXPANDER (priv->proxycheckbox), TRUE);
-
-  g_signal_handlers_unblock_by_func (GTK_EXPANDER (priv->proxycheckbox),
-                                     G_CALLBACK (proxy_checkbox_expanded),
-                                     dialog);
   g_signal_handlers_unblock_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
                                    G_CALLBACK (proxycombo_activated),
                                    dialog);

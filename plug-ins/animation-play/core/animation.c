@@ -368,8 +368,7 @@ animation_get_image_id (Animation   *animation)
 }
 
 void
-animation_load (Animation *animation,
-                gdouble    proxy_ratio)
+animation_load (Animation *animation)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
   GeglBuffer       *buffer;
@@ -379,15 +378,11 @@ animation_load (Animation *animation,
   priv->loaded = FALSE;
   g_signal_emit (animation, animation_signals[LOADING_START], 0);
 
-  priv->proxy_ratio = proxy_ratio;
-  g_signal_emit (animation, animation_signals[PROXY], 0, proxy_ratio);
-
   if (priv->xml)
     ANIMATION_GET_CLASS (animation)->load_xml (animation,
-                                               priv->xml,
-                                               proxy_ratio);
+                                               priv->xml);
   else
-    ANIMATION_GET_CLASS (animation)->load (animation, proxy_ratio);
+    ANIMATION_GET_CLASS (animation)->load (animation);
   /* XML is only used for the first load.
    * Any next loads will use internal data. */
   g_free (priv->xml);
@@ -447,19 +442,50 @@ animation_get_length (Animation *animation)
 }
 
 void
-animation_get_size (Animation *animation,
-                    gint      *width,
-                    gint      *height)
+animation_set_proxy (Animation *animation,
+                     gdouble    ratio)
 {
-  ANIMATION_GET_CLASS (animation)->get_size (animation, width, height);
+  AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
+
+  g_return_if_fail (ratio > 0.0 && ratio <= 1.0);
+
+  if (priv->proxy_ratio != ratio)
+    {
+      priv->proxy_ratio = ratio;
+      g_signal_emit (animation, animation_signals[PROXY], 0, ratio);
+
+      /* A proxy change implies a reload. */
+      animation_load (animation);
+    }
 }
 
 gdouble
-animation_get_proxy (Animation   *animation)
+animation_get_proxy (Animation *animation)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
 
   return priv->proxy_ratio;
+}
+
+void
+animation_get_size (Animation *animation,
+                    gint      *width,
+                    gint      *height)
+{
+  AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
+  gint              image_width;
+  gint              image_height;
+
+  image_width  = gimp_image_width (priv->image_id);
+  image_height = gimp_image_height (priv->image_id);
+
+  /* Full preview size. */
+  *width  = image_width;
+  *height = image_height;
+
+  /* Apply proxy ratio. */
+  *width  *= priv->proxy_ratio;
+  *height *= priv->proxy_ratio;
 }
 
 GeglBuffer *
