@@ -626,9 +626,12 @@ def _interact(proc_name, start_params):
                                  gtk.FILE_CHOOSER_ACTION_OPEN),
                          buttons=(gtk.STOCK_CANCEL,
                                 gtk.RESPONSE_CANCEL,
+                                gtk.STOCK_SAVE
+                                     if self.save_mode else
                                 gtk.STOCK_OPEN,
                                 gtk.RESPONSE_OK)
                         )
+            dialog.set_alternative_button_order ((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
             dialog.show_all()
             response = dialog.run()
             if response == gtk.RESPONSE_OK:
