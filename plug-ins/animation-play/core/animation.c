@@ -29,6 +29,16 @@
 
 #include "animation.h"
 #include "animationanimatic.h"
+#include "animation-celanimation.h"
+
+/* Settings we cache assuming they may be the user's
+ * favorite, like a framerate.
+ * These will be used only for image without stored animation. */
+typedef struct
+{
+  gdouble framerate;
+}
+CachedSettings;
 
 enum
 {
@@ -100,6 +110,7 @@ static gint       animation_real_get_start_position (Animation *animation);
 static gboolean   animation_real_same               (Animation *animation,
                                                      gint       prev_pos,
                                                      gint       next_pos);
+gchar           * animation_real_serialize          (Animation *animation);
 
 /* Timer callback for playback. */
 static gboolean   animation_advance_frame_callback  (Animation *animation);
@@ -316,6 +327,7 @@ animation_class_init (AnimationClass *klass)
 
   klass->get_start_position  = animation_real_get_start_position;
   klass->same                = animation_real_same;
+  klass->serialize           = animation_real_serialize;
 
   /**
    * Animation:image:
@@ -335,9 +347,16 @@ static void
 animation_init (Animation *animation)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
+  CachedSettings    settings;
+
+  /* Acceptable default settings. */
+  settings.framerate = 24.0;
+
+  /* If we saved any settings globally, use the one from the last run. */
+  gimp_get_data (PLUG_IN_PROC, &settings);
 
   /* Acceptable settings for the default. */
-  priv->framerate   = 24.0; /* fps */
+  priv->framerate   = settings.framerate; /* fps */
   priv->proxy_ratio = 1.0;
 }
 
@@ -345,12 +364,14 @@ animation_init (Animation *animation)
 
 Animation *
 animation_new (gint32       image_id,
+               gboolean     animatic,
                const gchar *xml)
 {
   Animation        *animation;
   AnimationPrivate *priv;
 
-  animation = g_object_new (ANIMATION_TYPE_ANIMATIC,
+  animation = g_object_new (animatic? ANIMATION_TYPE_ANIMATIC :
+                                      ANIMATION_TYPE_CEL_ANIMATION,
                             "image", image_id,
                             NULL);
   priv = ANIMATION_GET_PRIVATE (animation);
@@ -415,10 +436,57 @@ animation_load (Animation *animation)
     g_object_unref (buffer);
 }
 
-gchar *
-animation_serialize (Animation   *animation)
+void
+animation_save_to_parasite (Animation *animation)
 {
-  return ANIMATION_GET_CLASS (animation)->serialize (animation);
+  AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
+  GimpParasite     *old_parasite;
+  const gchar      *parasite_name;
+  gchar            *xml;
+  gboolean          undo_step_started = FALSE;
+  CachedSettings    settings;
+
+  /* First saving in cache as default in the same session. */
+  settings.framerate = animation_get_framerate (animation);
+  gimp_set_data (PLUG_IN_PROC, &settings, sizeof (&settings));
+
+  /* Then as a parasite for the specific image. */
+  xml = ANIMATION_GET_CLASS (animation)->serialize (animation);
+
+  if (ANIMATION_IS_ANIMATIC (animation))
+    {
+      parasite_name = PLUG_IN_PROC "/animatic";
+    }
+  else /* ANIMATION_IS_CEL_ANIMATION */
+    {
+      parasite_name = PLUG_IN_PROC "/cel-animation";
+    }
+  /* If there was already parasites and they were all the same as the
+   * current state, do not resave them.
+   * This prevents setting the image in a dirty state while it stayed
+   * the same. */
+  old_parasite = gimp_image_get_parasite (priv->image_id, parasite_name);
+  if (xml && (! old_parasite ||
+              g_strcmp0 ((gchar *) gimp_parasite_data (old_parasite), xml)))
+    {
+      GimpParasite *parasite;
+      if (! undo_step_started)
+        {
+          gimp_image_undo_group_start (priv->image_id);
+          undo_step_started = TRUE;
+        }
+      parasite = gimp_parasite_new (parasite_name,
+                                    GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
+                                    strlen (xml) + 1, xml);
+      gimp_image_attach_parasite (priv->image_id, parasite);
+      gimp_parasite_free (parasite);
+    }
+  gimp_parasite_free (old_parasite);
+
+  if (undo_step_started)
+    {
+      gimp_image_undo_group_end (priv->image_id);
+    }
 }
 
 gint
@@ -799,6 +867,12 @@ animation_real_same (Animation *animation,
 {
   /* By default all frames are supposed different. */
   return (previous_pos == next_pos);
+}
+
+gchar *
+animation_real_serialize (Animation   *animation)
+{
+  return NULL;
 }
 
 static gboolean

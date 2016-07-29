@@ -47,6 +47,8 @@ animation_play_SOURCES = \
 	core/animation.c				\
 	core/animationanimatic.h		\
 	core/animationanimatic.c		\
+	core/animation-celanimation.h	\
+	core/animation-celanimation.c	\
 	widgets/animation-dialog.h		\
 	widgets/animation-dialog.c		\
 	widgets/animation-storyboard.h	\

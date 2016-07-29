@@ -64,13 +64,14 @@ struct _AnimationClass
 GType         animation_get_type (void);
 
 Animation   * animation_new                (gint32       image_id,
+                                            gboolean     animatic,
                                             const gchar *xml);
 
 gint32        animation_get_image_id       (Animation   *animation);
 
 void          animation_load               (Animation   *animation);
 
-gchar       * animation_serialize          (Animation   *animation);
+void          animation_save_to_parasite   (Animation   *animation);
 
 gint          animation_get_start_position (Animation   *animation);
 gint          animation_get_position       (Animation   *animation);

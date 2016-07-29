@@ -169,12 +169,12 @@ animation_animatic_class_init (AnimationAnimaticClass *klass)
 
   object_class->finalize = animation_animatic_finalize;
 
-  anim_class->get_length  = animation_animatic_get_length;
-  anim_class->load        = animation_animatic_load;
-  anim_class->load_xml    = animation_animatic_load_xml;
-  anim_class->get_frame   = animation_animatic_get_frame;
-  anim_class->serialize   = animation_animatic_serialize;
-  anim_class->same        = animation_animatic_same;
+  anim_class->get_length = animation_animatic_get_length;
+  anim_class->load       = animation_animatic_load;
+  anim_class->load_xml   = animation_animatic_load_xml;
+  anim_class->get_frame  = animation_animatic_get_frame;
+  anim_class->serialize  = animation_animatic_serialize;
+  anim_class->same       = animation_animatic_same;
 
   g_type_class_add_private (klass, sizeof (AnimationAnimaticPrivate));
 }
@@ -189,6 +189,9 @@ animation_animatic_finalize (GObject *object)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (object);
   gint                      i;
+
+  /* Save first, before cleaning anything. */
+  animation_save_to_parasite (ANIMATION (object));
 
   if (priv->tattoos)
     g_free (priv->tattoos);
@@ -862,12 +865,9 @@ animation_animatic_cache (AnimationAnimatic *animatic,
   AnimationAnimaticPrivate *priv      = GET_PRIVATE (animatic);
   Animation                *animation = ANIMATION (animatic);
   GeglBuffer               *buffer;
-  GeglNode                 *graph, *source, *scale, *translate, *target;
-  GeglNode                 *backdrop, *blend;
+  GeglBuffer               *backdrop_buffer = NULL;
   gint                      layer_offx;
   gint                      layer_offy;
-  gdouble                   panel_offx;
-  gdouble                   panel_offy;
   gint                      position;
   gint                      preview_width;
   gint                      preview_height;
@@ -890,62 +890,21 @@ animation_animatic_cache (AnimationAnimatic *animatic,
       g_object_unref (priv->cache[panel - 1]);
     }
 
-  /* Panel image. */
   proxy_ratio = animation_get_proxy (animation);
   buffer = gimp_drawable_get_buffer (layer);
   animation_get_size (animation, &preview_width, &preview_height);
-  priv->cache[panel - 1] = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                            preview_width,
-                                                            preview_height),
-                                            gegl_buffer_get_format (buffer));
-  graph  = gegl_node_new ();
-  source = gegl_node_new_child (graph,
-                                "operation", "gegl:buffer-source",
-                                "buffer", buffer,
-                                NULL);
-  scale  = gegl_node_new_child (graph,
-                                "operation", "gegl:scale-ratio",
-                                "sampler", GEGL_SAMPLER_NEAREST,
-                                "x", proxy_ratio,
-                                "y", proxy_ratio,
-                                NULL);
-
   gimp_drawable_offsets (layer,
                          &layer_offx, &layer_offy);
-  panel_offx = layer_offx * proxy_ratio;
-  panel_offy = layer_offy * proxy_ratio;
-  translate =  gegl_node_new_child (graph,
-                                    "operation", "gegl:translate",
-                                    "x", panel_offx,
-                                    "y", panel_offy,
-                                    NULL);
-
-  target = gegl_node_new_child (graph,
-                                "operation", "gegl:write-buffer",
-                                "buffer", priv->cache[panel - 1],
-                                NULL);
 
   if (panel > 1 && priv->combine[panel - 1])
     {
-      backdrop = gegl_node_new_child (graph,
-                                      "operation", "gegl:buffer-source",
-                                      "buffer", priv->cache[panel - 2],
-                                      NULL);
-      blend =  gegl_node_new_child (graph,
-                                    "operation", "gegl:over",
-                                    NULL);
-      gegl_node_link_many (source, scale, translate, NULL);
-      gegl_node_link_many (backdrop, blend, target, NULL);
-      gegl_node_connect_to (translate, "output",
-                            blend, "aux");
+      backdrop_buffer = priv->cache[panel - 2];
     }
-  else
-    {
-      gegl_node_link_many (source, scale, translate, target, NULL);
-    }
-  gegl_node_process (target);
 
-  g_object_unref (graph);
+  priv->cache[panel - 1] = normal_blend (preview_width, preview_height,
+                                         backdrop_buffer, 1.0, 0, 0,
+                                         buffer, proxy_ratio,
+                                         layer_offx, layer_offy);
   g_object_unref (buffer);
 
   /* If next panel is in "combine" mode, it must also be re-cached.

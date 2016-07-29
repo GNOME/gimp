@@ -28,9 +28,20 @@
 #define MAX_FRAMERATE      300.0
 #define DEFAULT_FRAMERATE  24.0
 
-void total_alpha_preview (guchar *drawing_data,
-                          guint   drawing_width,
-                          guint   drawing_height);
+void         total_alpha_preview (guchar     *drawing_data,
+                                  guint       drawing_width,
+                                  guint       drawing_height);
+
+GeglBuffer * normal_blend        (gint        width,
+                                  gint        height,
+                                  GeglBuffer *backdrop,
+                                  gdouble     backdrop_scale_ratio,
+                                  gint        backdrop_offset_x,
+                                  gint        backdrop_offset_y,
+                                  GeglBuffer *source,
+                                  gdouble     source_scale_ratio,
+                                  gint        source_offset_x,
+                                  gint        source_offset_y);
 
 #endif  /*  __ANIMATION_UTILS_H__  */
 

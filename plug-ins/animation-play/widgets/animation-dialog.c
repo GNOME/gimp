@@ -38,15 +38,6 @@
 
 #define DITHERTYPE     GDK_RGB_DITHER_NORMAL
 
-/* Settings we cache assuming they may be the user's
- * favorite, like a framerate.
- * These will be used only for image without stored animation. */
-typedef struct
-{
-  gdouble framerate;
-}
-CachedSettings;
-
 /* for shaping */
 typedef struct
 {
@@ -73,6 +64,7 @@ struct _AnimationDialogPrivate
   GtkWidget      *progress_bar;
   GtkWidget      *settings_bar;
 
+  GtkWidget      *animation_type_combo;
   GtkWidget      *fpscombo;
   GtkWidget      *zoomcombo;
   GtkWidget      *proxycombo;
@@ -135,8 +127,6 @@ static void        connect_accelerators      (GtkUIManager     *ui_manager,
 static void        animation_dialog_set_animation (AnimationDialog *dialog,
                                                    Animation       *animation);
 /* Finalization. */
-static void        animation_dialog_save_settings (AnimationDialog *dialog);
-
 static void        animation_dialog_refresh  (AnimationDialog  *dialog);
 
 static void        update_ui_sensitivity     (AnimationDialog  *dialog);
@@ -145,6 +135,9 @@ static void        update_ui_sensitivity     (AnimationDialog  *dialog);
 static void        close_callback            (GtkAction        *action,
                                               AnimationDialog  *dialog);
 static void        help_callback             (GtkAction        *action,
+                                              AnimationDialog  *dialog);
+
+static void        animation_type_changed    (GtkWidget        *combo,
                                               AnimationDialog  *dialog);
 
 static void        fpscombo_activated        (GtkEntry         *combo,
@@ -329,24 +322,40 @@ animation_dialog_new (gint32 image_id)
   Animation      *animation;
   GimpParasite   *parasite;
   const gchar    *xml = NULL;
-  CachedSettings  settings;
-
-  /* Acceptable default settings. */
-  settings.framerate = 24.0;
-
-  /* If we saved any settings globally, use the one from the last run. */
-  gimp_get_data (PLUG_IN_PROC, &settings);
+  gboolean        animatic_selected = TRUE;
 
   /* If this animation has specific settings already, override the global ones. */
   parasite = gimp_image_get_parasite (image_id,
-                                      PLUG_IN_PROC "/animation-0");
+                                      PLUG_IN_PROC "/selected");
+  if (parasite)
+    {
+      const gchar *selected;
+
+      selected = gimp_parasite_data (parasite);
+      if (g_strcmp0 (selected, "cel-animation") == 0)
+        {
+          animatic_selected = FALSE;
+        }
+      gimp_parasite_free (parasite);
+    }
+
+  if (animatic_selected)
+    {
+      parasite = gimp_image_get_parasite (image_id,
+                                          PLUG_IN_PROC "/animatic");
+    }
+  else
+    {
+      parasite = gimp_image_get_parasite (image_id,
+                                          PLUG_IN_PROC "/cel-animation");
+    }
   if (parasite)
     {
       xml = g_strdup (gimp_parasite_data (parasite));
       gimp_parasite_free (parasite);
     }
 
-  animation = animation_new (image_id, xml);
+  animation = animation_new (image_id, animatic_selected, xml);
   g_free ((gchar *) xml);
 
   dialog = g_object_new (ANIMATION_TYPE_DIALOG,
@@ -498,6 +507,27 @@ animation_dialog_constructed (GObject *object)
 
   gtk_box_pack_end (GTK_BOX (priv->settings_bar), priv->fpscombo, FALSE, FALSE, 0);
   gtk_widget_show (priv->fpscombo);
+
+  /* Settings: animation type */
+  priv->animation_type_combo = gtk_combo_box_text_new ();
+
+  text = _("Animatic");
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->animation_type_combo),
+                                  text);
+  text = _("Cel Animation");
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->animation_type_combo),
+                                  text);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 0);
+
+  g_signal_connect (priv->animation_type_combo, "changed",
+                    G_CALLBACK (animation_type_changed),
+                    dialog);
+
+  gimp_help_set_help_data (priv->animation_type_combo, _("Animation Type"), NULL);
+
+  gtk_box_pack_end (GTK_BOX (priv->settings_bar),
+                    priv->animation_type_combo, FALSE, FALSE, 0);
+  gtk_widget_show (priv->animation_type_combo);
 
   /*************/
   /* View box. */
@@ -822,8 +852,6 @@ animation_dialog_finalize (GObject *object)
   AnimationDialog        *dialog = ANIMATION_DIALOG (object);
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
 
-  animation_dialog_save_settings (ANIMATION_DIALOG (dialog));
-
   if (priv->shape_window)
     gtk_widget_destroy (GTK_WIDGET (priv->shape_window));
 
@@ -1051,6 +1079,7 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                 Animation       *animation)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  GtkWidget              *right_pane;
   gchar                  *text;
   gdouble                 fps;
   gint                    index;
@@ -1086,6 +1115,10 @@ animation_dialog_set_animation (AnimationDialog *dialog,
     }
 
   /* Block all handlers on UI widgets. */
+  g_signal_handlers_block_by_func (priv->animation_type_combo,
+                                   G_CALLBACK (animation_type_changed),
+                                   dialog);
+
   g_signal_handlers_block_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
                                    G_CALLBACK (proxycombo_activated),
                                    dialog);
@@ -1167,6 +1200,10 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      G_CALLBACK (zoomcombo_changed),
                                      dialog);
 
+  /* Animation type. */
+  g_signal_handlers_unblock_by_func (priv->animation_type_combo,
+                                     G_CALLBACK (animation_type_changed),
+                                     dialog);
 
   /* Progress bar. */
   g_signal_handlers_unblock_by_func (priv->progress,
@@ -1182,16 +1219,15 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      G_CALLBACK (progress_button),
                                      dialog);
 
-  /* The layer list. */
+  right_pane = gtk_paned_get_child2 (GTK_PANED (priv->hpaned));
+  if (right_pane)
+    gtk_widget_destroy (right_pane);
+
+  /* The Storyboard view. */
   if (ANIMATION_IS_ANIMATIC (animation))
     {
       GtkWidget *scrolled_win;
-      GtkWidget *layer_list;
       GtkWidget *frame;
-
-      layer_list = gtk_paned_get_child2 (GTK_PANED (priv->hpaned));
-      if (layer_list)
-        gtk_widget_destroy (layer_list);
 
       frame = gtk_frame_new (_("Storyboard"));
       gtk_paned_pack2 (GTK_PANED (priv->hpaned), frame,
@@ -1202,11 +1238,11 @@ animation_dialog_set_animation (AnimationDialog *dialog,
       gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
       gtk_widget_show (scrolled_win);
 
-      layer_list = animation_storyboard_new (ANIMATION_ANIMATIC (animation));
+      right_pane = animation_storyboard_new (ANIMATION_ANIMATIC (animation));
       gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                             layer_list);
+                                             right_pane);
 
-      gtk_widget_show (layer_list);
+      gtk_widget_show (right_pane);
     }
 
   /* Animation. */
@@ -1237,50 +1273,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                     G_CALLBACK (low_framerate_cb),
                     dialog);
 
-}
-
-static void
-animation_dialog_save_settings (AnimationDialog *dialog)
-{
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GimpParasite           *old_parasite;
-  gchar                  *xml;
-  gboolean                undo_step_started = FALSE;
-  CachedSettings          cached_settings;
-
-  /* First saving in cache for any image. */
-  cached_settings.framerate = animation_get_framerate (priv->animation);
-
-  gimp_set_data (PLUG_IN_PROC, &cached_settings, sizeof (&cached_settings));
-
-  xml = animation_serialize (priv->animation);
-  /* Then as a parasite for the specific image.
-   * If there was already parasites and they were all the same as the
-   * current state, do not resave them.
-   * This prevents setting the image in a dirty state while it stayed
-   * the same. */
-  old_parasite = gimp_image_get_parasite (priv->image_id, PLUG_IN_PROC "/animation-0");
-  if (! old_parasite ||
-      (gchar *) gimp_parasite_data (old_parasite) != xml)
-    {
-      GimpParasite *parasite;
-      if (! undo_step_started)
-        {
-          gimp_image_undo_group_start (priv->image_id);
-          undo_step_started = TRUE;
-        }
-      parasite = gimp_parasite_new (PLUG_IN_PROC "/animation-0",
-                                    GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
-                                    strlen (xml) + 1, xml);
-      gimp_image_attach_parasite (priv->image_id, parasite);
-      gimp_parasite_free (parasite);
-    }
-  gimp_parasite_free (old_parasite);
-
-  if (undo_step_started)
-    {
-      gimp_image_undo_group_end (priv->image_id);
-    }
 }
 
 static void
@@ -1365,6 +1357,52 @@ help_callback (GtkAction           *action,
 {
   gimp_standard_help_func (PLUG_IN_PROC, dialog);
 }
+
+static void
+animation_type_changed (GtkWidget       *combo,
+                        AnimationDialog *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  Animation              *animation;
+  GimpParasite           *parasite;
+  const gchar            *xml = NULL;
+  gint                    index;
+
+  index = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+
+  if (! priv->animation ||
+      ! animation_loaded (priv->animation))
+    return;
+
+  if (index == 0)
+    {
+      parasite = gimp_image_get_parasite (priv->image_id,
+                                          PLUG_IN_PROC "/animatic");
+      if (parasite)
+        {
+          xml = g_strdup (gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+    }
+  else
+    {
+      parasite = gimp_image_get_parasite (priv->image_id,
+                                          PLUG_IN_PROC "/cel-animation");
+    }
+  if (parasite)
+    {
+      xml = g_strdup (gimp_parasite_data (parasite));
+      gimp_parasite_free (parasite);
+    }
+  animation = animation_new (priv->image_id,
+                             (index == 0),
+                             xml);
+  g_free ((gchar *) xml);
+  animation_dialog_set_animation (ANIMATION_DIALOG (dialog),
+                                  animation);
+  animation_load (animation);
+}
+
 
 /*
  * Callback emitted when the user hits the Enter key of the fps combo.
@@ -2373,11 +2411,8 @@ render_frame (AnimationDialog *dialog,
       total_alpha_preview (preview_data, drawing_width, drawing_height);
     }
 
-  if (buffer == NULL)
-    return;
-
   /* When there is no frame to show, we simply display the alpha background and return. */
-  if (animation_get_length (priv->animation) > 0)
+  if (buffer && animation_get_length (priv->animation) > 0)
     {
       /* Update the rawframe. */
       if (rawframe_size < drawing_width * drawing_height * 4)

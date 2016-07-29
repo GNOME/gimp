@@ -96,3 +96,140 @@ total_alpha_preview (guchar *drawing_data,
         }
     }
 }
+
+/**
+ * normal_blend:
+ * @width: width of the returned #GeglBuffer.
+ * @height: height of the returned #GeglBuffer.
+ * @backdrop_buffer: optional backdrop image (may be %NULL).
+ * @backdrop_scale_ratio: scale ratio (`]0.0, 1.0]`) for @backdrop_buffer.
+ * @backdrop_offset_x: original X offset of the backdrop (not processed
+ * with @backdrop_scale_ratio yet).
+ * @backdrop_offset_y: original Y offset of the backdrop (not processed
+ * with @backdrop_scale_ratio yet).
+ * @source_buffer: source image (cannot be %NULL).
+ * @source_scale_ratio: scale ratio (`]0.0, 1.0]`) for @source_buffer.
+ * @source_offset_x: original X offset of the source (not processed with
+ * @source_scale_ratio yet).
+ * @source_offset_y: original Y offset of the source (not processed with
+ * @source_scale_ratio yet).
+ *
+ * Creates a new #GeglBuffer of size @widthx@height with @source_buffer
+ * scaled with @source_scale_ratio r, and translated by offsets:
+ * (@source_offset_x * @source_scale_ratio,
+ *  @source_offset_y * @source_scale_ratio).
+ *
+ * If @backdrop_buffer is not %NULL, it is resized with
+ * @backdrop_scale_ratio, and offsetted by:
+ * (@backdrop_offset_x * @backdrop_scale_ratio,
+ *  @backdrop_offset_y * @backdrop_scale_ratio)
+ *
+ * Finally @source_buffer is composited over @backdrop_buffer in normal
+ * blend mode.
+ *
+ * Returns: the newly allocated #GeglBuffer containing the result of
+ * said scaling, translation and blending.
+ */
+GeglBuffer *
+normal_blend (gint        width,
+              gint        height,
+              GeglBuffer *backdrop_buffer,
+              gdouble     backdrop_scale_ratio,
+              gint        backdrop_offset_x,
+              gint        backdrop_offset_y,
+              GeglBuffer *source_buffer,
+              gdouble     source_scale_ratio,
+              gint        source_offset_x,
+              gint        source_offset_y)
+{
+  GeglBuffer *buffer;
+  GeglNode   *graph;
+  GeglNode   *source, *src_scale, *src_translate;
+  GeglNode   *backdrop, *bd_scale, *bd_translate;
+  GeglNode   *blend, *target;
+  gdouble     offx;
+  gdouble     offy;
+
+  g_return_val_if_fail (source_scale_ratio >  0.0 &&
+                        source_scale_ratio <= 1.0 &&
+                        source_buffer             &&
+                        (! backdrop_buffer ||
+                         (backdrop_scale_ratio >= 0.1 &&
+                          backdrop_scale_ratio <= 1.0)),
+                        NULL);
+
+  /* Panel image. */
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                            gegl_buffer_get_format (source_buffer));
+  graph  = gegl_node_new ();
+
+  /* Source */
+  source = gegl_node_new_child (graph,
+                                "operation", "gegl:buffer-source",
+                                "buffer", source_buffer,
+                                NULL);
+  src_scale  = gegl_node_new_child (graph,
+                                    "operation", "gegl:scale-ratio",
+                                    "sampler", GEGL_SAMPLER_NEAREST,
+                                    "x", source_scale_ratio,
+                                    "y", source_scale_ratio,
+                                    NULL);
+
+  offx = source_offset_x * source_scale_ratio;
+  offy = source_offset_y * source_scale_ratio;
+  src_translate =  gegl_node_new_child (graph,
+                                        "operation", "gegl:translate",
+                                        "x", offx,
+                                        "y", offy,
+                                        NULL);
+
+  /* Target */
+  target = gegl_node_new_child (graph,
+                                "operation", "gegl:write-buffer",
+                                "buffer", buffer,
+                                NULL);
+
+  if (backdrop_buffer)
+    {
+      /* Backdrop */
+      backdrop = gegl_node_new_child (graph,
+                                      "operation", "gegl:buffer-source",
+                                      "buffer", backdrop_buffer,
+                                      NULL);
+      bd_scale  = gegl_node_new_child (graph,
+                                       "operation", "gegl:scale-ratio",
+                                       "sampler", GEGL_SAMPLER_NEAREST,
+                                       "x", backdrop_scale_ratio,
+                                       "y", backdrop_scale_ratio,
+                                       NULL);
+
+      offx = backdrop_offset_x * backdrop_scale_ratio;
+      offy = backdrop_offset_y * backdrop_scale_ratio;
+      bd_translate =  gegl_node_new_child (graph,
+                                           "operation", "gegl:translate",
+                                           "x", offx,
+                                           "y", offy,
+                                           NULL);
+
+      gegl_node_link_many (source, src_scale, src_translate, NULL);
+      gegl_node_link_many (backdrop, bd_scale, bd_translate, NULL);
+
+      /* Blending */
+      blend =  gegl_node_new_child (graph,
+                                    "operation", "gegl:over",
+                                    NULL);
+
+      gegl_node_link_many (bd_translate, blend, target, NULL);
+      gegl_node_connect_to (src_translate, "output",
+                            blend, "aux");
+    }
+  else
+    {
+      gegl_node_link_many (source, src_scale, src_translate, target, NULL);
+    }
+
+  gegl_node_process (target);
+  g_object_unref (graph);
+
+  return buffer;
+}
