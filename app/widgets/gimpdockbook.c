@@ -345,10 +345,10 @@ gimp_dockbook_size_allocate (GtkWidget      *widget,
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
-
   /* Update tab styles, also recreates if changed */
   gimp_dockbook_update_automatic_tab_style (dockbook);
+
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 }
 
 static void
