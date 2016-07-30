@@ -165,7 +165,7 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   gtk_style_context_save (style);
   gtk_style_context_add_class (style, GTK_STYLE_CLASS_BUTTON);
 
-  gtk_style_context_get_border (style, gtk_widget_get_state_flags (widget),
+  gtk_style_context_get_border (style, gtk_style_context_get_state (style),
                                 &border);
 
   rect_w = allocation.width  * 3 / 4;
