@@ -166,6 +166,8 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
                                                         GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpSpinScalePrivate));
+
+  gtk_widget_class_set_css_name (widget_class, "spinbutton");
 }
 
 static void
@@ -181,7 +183,6 @@ gimp_spin_scale_init (GimpSpinScale *scale)
                          GDK_LEAVE_NOTIFY_MASK);
 
   gtk_entry_set_alignment (GTK_ENTRY (scale), 1.0);
-  gtk_entry_set_has_frame (GTK_ENTRY (scale), FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (scale), TRUE);
 
   private->mnemonic_keyval = GDK_KEY_VoidSymbol;
