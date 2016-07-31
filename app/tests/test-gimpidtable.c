@@ -29,7 +29,7 @@
               GimpTestFixture, \
               NULL, \
               gimp_test_id_table_setup, \
-              gimp_test_id_ ## function, \
+              gimp_test_id_table_ ## function, \
               gimp_test_id_table_teardown);
 
 
@@ -59,13 +59,13 @@ gimp_test_id_table_teardown (GimpTestFixture *fixture,
 }
 
 /**
- * gimp_test_id_insert_and_lookup:
+ * gimp_test_id_table_insert_and_lookup:
  *
  * Test that insert and lookup works.
  **/
 static void
-gimp_test_id_insert_and_lookup (GimpTestFixture *f,
-                                gconstpointer    data)
+gimp_test_id_table_insert_and_lookup (GimpTestFixture *f,
+                                      gconstpointer    data)
 {
   gint     ret_id   = gimp_id_table_insert (f->id_table, data1);
   gpointer ret_data = gimp_id_table_lookup (f->id_table, ret_id);
@@ -74,13 +74,13 @@ gimp_test_id_insert_and_lookup (GimpTestFixture *f,
 }
 
 /**
- * gimp_test_id_insert_twice:
+ * gimp_test_id_table_insert_twice:
  *
  * Test that two consecutive inserts generates different IDs.
  **/
 static void
-gimp_test_id_insert_twice (GimpTestFixture *f,
-                           gconstpointer    data)
+gimp_test_id_table_insert_twice (GimpTestFixture *f,
+                                 gconstpointer    data)
 {
   gint     ret_id    = gimp_id_table_insert (f->id_table, data1);
   gpointer ret_data  = gimp_id_table_lookup (f->id_table, ret_id);
@@ -93,13 +93,13 @@ gimp_test_id_insert_twice (GimpTestFixture *f,
 }
 
 /**
- * gimp_test_id_insert_with_id:
+ * gimp_test_id_table_insert_with_id:
  *
  * Test that it is possible to insert data with a specific ID.
  **/
 static void
-gimp_test_id_insert_with_id (GimpTestFixture *f,
-                             gconstpointer    data)
+gimp_test_id_table_insert_with_id (GimpTestFixture *f,
+                                   gconstpointer    data)
 {
   const int id = 10;
 
@@ -111,14 +111,14 @@ gimp_test_id_insert_with_id (GimpTestFixture *f,
 }
 
 /**
- * gimp_test_id_insert_with_id_existing:
+ * gimp_test_id_table_insert_with_id_existing:
  *
  * Test that it is not possible to insert data with a specific ID if
  * that ID already is inserted.
  **/
 static void
-gimp_test_id_insert_with_id_existing (GimpTestFixture *f,
-                                      gconstpointer    data)
+gimp_test_id_table_insert_with_id_existing (GimpTestFixture *f,
+                                            gconstpointer    data)
 {
   const int id = 10;
 
@@ -134,14 +134,14 @@ gimp_test_id_insert_with_id_existing (GimpTestFixture *f,
 }
 
 /**
- * gimp_test_id_replace:
+ * gimp_test_id_table_replace:
  *
  * Test that it is possible to replace data with a given ID with
  * different data.
  **/
 static void
-gimp_test_id_replace (GimpTestFixture *f,
-                      gconstpointer    data)
+gimp_test_id_table_replace (GimpTestFixture *f,
+                            gconstpointer    data)
 {
   int ret_id = gimp_id_table_insert (f->id_table, data1);
   gpointer ret_data;
@@ -153,14 +153,14 @@ gimp_test_id_replace (GimpTestFixture *f,
 }
 
 /**
- * gimp_test_id_replace_as_insert:
+ * gimp_test_id_table_replace_as_insert:
  *
  * Test that replace works like insert when there is no data to
  * replace.
  **/
 static void
-gimp_test_id_replace_as_insert (GimpTestFixture *f,
-                                gconstpointer    data)
+gimp_test_id_table_replace_as_insert (GimpTestFixture *f,
+                                      gconstpointer    data)
 {
   const int id = 10;
 
@@ -173,13 +173,13 @@ gimp_test_id_replace_as_insert (GimpTestFixture *f,
 }
 
 /**
- * gimp_test_id_remove:
+ * gimp_test_id_table_remove:
  *
  * Test that it is possible to remove data identified by the ID:
  **/
 static void
-gimp_test_id_remove (GimpTestFixture *f,
-                     gconstpointer    data)
+gimp_test_id_table_remove (GimpTestFixture *f,
+                           gconstpointer    data)
 {
   gint     ret_id            = gimp_id_table_insert (f->id_table, data1);
   void    *ret_data          = gimp_id_table_lookup (f->id_table, ret_id);
@@ -192,14 +192,14 @@ gimp_test_id_remove (GimpTestFixture *f,
 }
 
 /**
- * gimp_test_id_remove_non_existing:
+ * gimp_test_id_table_remove_non_existing:
  *
  * Tests that things work properly when trying to remove data with an
  * ID that doesn't exist.
  **/
 static void
-gimp_test_id_remove_non_existing (GimpTestFixture *f,
-                                  gconstpointer    data)
+gimp_test_id_table_remove_non_existing (GimpTestFixture *f,
+                                        gconstpointer    data)
 {
   const int id = 10;
 
