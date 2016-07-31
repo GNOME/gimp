@@ -1311,14 +1311,18 @@ save_dialog (gint32 image_ID)
 
   frame  = GTK_WIDGET (gtk_builder_get_object (builder, "animation-frame"));
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "as-animation"));
-  gtk_widget_set_sensitive (toggle, animation_supported);
   if (! animation_supported)
-    gimp_help_set_help_data (toggle,
-                             _("You can only export as animation when the "
-                               "image has more than one layer. The image "
-                               "you are trying to export only has one "
-                               "layer."),
-                             NULL);
+    {
+      gimp_help_set_help_data (toggle,
+                               _("You can only export as animation when the "
+                                 "image has more than one layer. The image "
+                                 "you are trying to export only has one "
+                                 "layer."),
+                               NULL);
+      /* Make sure the checkbox is not checked from session data. */
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
+    }
+  gtk_widget_set_sensitive (toggle, animation_supported);
 
   g_object_bind_property (toggle, "active",
                           frame,  "sensitive",
