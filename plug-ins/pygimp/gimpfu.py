@@ -589,7 +589,7 @@ def _interact(proc_name, start_params):
             if default == "/": default = ""
             return DirnameSelector(default)
         else:
-            return FilenameSelector(default, title=title)
+            return FilenameSelector(default, title=title, save_mode=False)
 
     class FilenameSelector(gtk.HBox):
         #gimpfu.FileChooserButton

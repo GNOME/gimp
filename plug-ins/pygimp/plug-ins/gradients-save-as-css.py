@@ -94,7 +94,7 @@ register(
         "",
         [
           (PF_GRADIENT, "gradient", N_("Gradient to use"),""),
-          (PF_FILE, "file_name", N_("File Name"), ""),
+          (PF_FILENAME, "file_name", N_("File Name"), ""),
         ],
         [],
         gradient_css_save,

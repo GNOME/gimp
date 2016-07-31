@@ -94,7 +94,7 @@ register(
     "*",
     [(PF_IMAGE,  "img", _("_Image"), None),
      (PF_DRAWABLE, "drw", _("_Drawable"), None),
-     (PF_FILE, "filename", _("Histogram _File"), ""),
+     (PF_FILENAME, "filename", _("Histogram _File"), ""),
      (PF_FLOAT, "bucket_size", _("_Bucket Size"), 1.0),
      (PF_BOOL, "sample_average", _("Sample _Average"), False),
      (PF_RADIO, "output_format", _("Output format"), "pixel count",
