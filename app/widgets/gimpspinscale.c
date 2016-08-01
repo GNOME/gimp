@@ -297,25 +297,14 @@ gimp_spin_scale_get_preferred_height (GtkWidget *widget,
                                       gint      *minimum_height,
                                       gint      *natural_height)
 {
-  PangoContext     *context = gtk_widget_get_pango_context (widget);
-  PangoFontMetrics *metrics;
-  gint              height;
-
   GTK_WIDGET_CLASS (parent_class)->get_preferred_height (widget,
                                                          minimum_height,
                                                          natural_height);
 
-  metrics = pango_context_get_metrics (context,
-                                       pango_context_get_font_description (context),
-                                       pango_context_get_language (context));
-
-  height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
-                         pango_font_metrics_get_descent (metrics));
-
-  *minimum_height += height;
-  *natural_height += height;
-
-  pango_font_metrics_unref (metrics);
+  /* Just increase this a bit to make the clickable area larger */
+  *minimum_height *= 1.2;
+  *natural_height *= 1.2;
+  return;
 }
 
 static void
