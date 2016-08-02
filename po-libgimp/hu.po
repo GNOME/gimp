@@ -13,15 +13,15 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-29 06:28+0000\n"
-"PO-Revision-Date: 2016-04-29 09:37+0200\n"
+"POT-Creation-Date: 2016-07-27 06:59+0000\n"
+"PO-Revision-Date: 2016-08-02 12:25+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
@@ -1258,37 +1258,72 @@ msgstr "Az org.freedesktop.FileManager1 helyhez való kapcsolódás sikertelen: 
 msgid "Calling ShowItems failed: "
 msgstr "A ShowItems hívása nem sikerült: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:252
+#: ../libgimpcolor/gimpcolorprofile.c:269
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "„%s” nem tűnik ICC-színprofilnak"
 
-#: ../libgimpcolor/gimpcolorprofile.c:298
+#: ../libgimpcolor/gimpcolorprofile.c:315
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Az adat nem tűnik ICC-színprofilnak"
 
-#: ../libgimpcolor/gimpcolorprofile.c:355
+#: ../libgimpcolor/gimpcolorprofile.c:372
 msgid "Could not save color profile to memory"
 msgstr "Nem sikerült a színprofilt elmenteni a memóriába"
 
-#: ../libgimpcolor/gimpcolorprofile.c:542
+#: ../libgimpcolor/gimpcolorprofile.c:590
 msgid "(unnamed profile)"
 msgstr "(névtelen profil)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:584
+#: ../libgimpcolor/gimpcolorprofile.c:632
 #, c-format
 msgid "Model: %s"
 msgstr "Modell: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:593
+#: ../libgimpcolor/gimpcolorprofile.c:641
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Gyártó: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:602
+#: ../libgimpcolor/gimpcolorprofile.c:650
 #, c-format
 msgid "Copyright: %s"
 msgstr "Copyright: %s"
+
+#: ../libgimpconfig/gimpconfigenums.c:24
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr "Nincs színkezelés"
+
+#: ../libgimpconfig/gimpconfigenums.c:25
+msgctxt "color-management-mode"
+msgid "Color-managed display"
+msgstr "Színkezeléssel rendelkező kijelző"
+
+#: ../libgimpconfig/gimpconfigenums.c:26
+msgctxt "color-management-mode"
+msgid "Soft-proofing"
+msgstr "Próbanyomat"
+
+#: ../libgimpconfig/gimpconfigenums.c:57
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr "Érzékelési"
+
+#: ../libgimpconfig/gimpconfigenums.c:58
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "Relatív színmérési"
+
+#: ../libgimpconfig/gimpconfigenums.c:59
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "Telítettség"
+
+#: ../libgimpconfig/gimpconfigenums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr "Abszolút színmérési"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1297,15 +1332,15 @@ msgstr "Copyright: %s"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:54
-msgid "Mode of operation for color management."
-msgstr "Működési mód a színkezelés számára."
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "How images are displayed on screen."
+msgstr "Hogyan jelennek meg a képek a képernyőn."
 
-#: ../libgimpconfig/gimpcolorconfig.c:57
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Az elsődleges monitor színprofilja."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -1315,7 +1350,7 @@ msgstr ""
 "próbálja használni. Ekkor a beállított monitorprofil csak tartalékként lesz "
 "használva."
 
-#: ../libgimpconfig/gimpcolorconfig.c:65
+#: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
@@ -1323,7 +1358,7 @@ msgstr ""
 "Az előnyben részesített RGB munkaterület színprofil. A beépített RGB profil "
 "mellett lesz felajánlva, amikor színprofilt lehet kiválasztani."
 
-#: ../libgimpconfig/gimpcolorconfig.c:69
+#: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
@@ -1332,21 +1367,21 @@ msgstr ""
 "beépített szürkeárnyalatos profil melett lesz felajánlva, amikor színprofilt "
 "lehet választani."
 
-#: ../libgimpconfig/gimpcolorconfig.c:73
+#: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Az RGB és a CMYK közti átalakításhoz használt CMYK színprofil."
 
-#: ../libgimpconfig/gimpcolorconfig.c:76
+#: ../libgimpconfig/gimpcolorconfig.c:74
 msgid ""
-"The color profile to use for soft proofing from your image's color space to "
-"some other color space, including soft proofing to a printer or other output "
+"The color profile to use for soft-proofing from your image's color space to "
+"some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
 "A képének színteréből egy másik színtérhez való színhelyesség-ellenőrzéshez "
 "használandó színprofil, beleértve a színhelyesség-ellenőrzést egy "
 "nyomtatóhoz vagy más kimeneti eszköz profiljához."
 
-#: ../libgimpconfig/gimpcolorconfig.c:81
+#: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1358,14 +1393,19 @@ msgstr ""
 "monitorprofilt használ (a legtöbb monitorprofil mátrix-elvű), akkor az "
 "aránytartó módszer valójában relatív színmérést eredményez."
 
-#: ../libgimpconfig/gimpcolorconfig.c:88
+#: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
-"Do use black point compensation (unless you know you have a reason not to). "
-msgstr ""
-"Feketepont-kompenzáció használata (kivéve ha tudja, hogy van oka, hogy miért "
-"ne). "
+"Do use black point compensation (unless you know you have a reason not to)."
+msgstr "Feketepont-kompenzáció használata (kivéve ha oka van, hogy miért ne)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:92
+#: ../libgimpconfig/gimpcolorconfig.c:90
+msgid ""
+"When disabled, image display might be of better quality at the cost of speed."
+msgstr ""
+"Ha ki van kapcsolva, akkor a képmegjelenítés minősége jobb lehet a sebesség "
+"kárára."
+
+#: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1375,154 +1415,134 @@ msgstr ""
 "színterére (általában a monitorára). Próbálja ki mindet, és válassza azt, "
 "amelyik a legjobban néz ki. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:97
+#: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 "Próbálja meg feketepont-kompenzációval és anélkül, és válassza ki, hogy "
 "melyik néz ki jobban. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:101
+#: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
-"When enabled, the print simulation will mark colors which can not be "
+"When disabled, soft-proofing might be of better quality at the cost of speed."
+msgstr ""
+"Ha ki van kapcsolva, akkor a próbanyomat minősége jobb lehet a sebesség "
+"kárára."
+
+#: ../libgimpconfig/gimpcolorconfig.c:107
+msgid ""
+"When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Ha be van kapcsolva, akkor a nyomtatásszimuláció megjelöli azon színeket, "
+"Ha be van kapcsolva, akkor a próbanyomat készítés megjelöli azon színeket, "
 "amelyek nem ábrázolhatók a cél-színtérben."
 
-#: ../libgimpconfig/gimpcolorconfig.c:105
+#: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "A színskálán kívüli színek megjelölésére használandó szín."
 
-#: ../libgimpconfig/gimpcolorconfig.c:177
+#: ../libgimpconfig/gimpcolorconfig.c:199
 msgid "Mode of operation"
 msgstr "Működési mód"
 
-#: ../libgimpconfig/gimpcolorconfig.c:185
+#: ../libgimpconfig/gimpcolorconfig.c:207
 msgid "Preferred RGB profile"
 msgstr "Előnyben részesített RGB profil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:192
+#: ../libgimpconfig/gimpcolorconfig.c:214
 msgid "Preferred grayscale profile"
 msgstr "Előnyben részesített szürkeárnyalatos profil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:199
+#: ../libgimpconfig/gimpcolorconfig.c:221
 msgid "CMYK profile"
 msgstr "CMYK profil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:206
+#: ../libgimpconfig/gimpcolorconfig.c:228
 msgid "Monitor profile"
 msgstr "Monitorprofil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:213
+#: ../libgimpconfig/gimpcolorconfig.c:235
 msgid "Use the system monitor profile"
 msgstr "A rendszermonitor profiljának használata"
 
-#: ../libgimpconfig/gimpcolorconfig.c:220
-msgid "Print simulation profile"
-msgstr "Nyomtatásszimulációs profil"
+#: ../libgimpconfig/gimpcolorconfig.c:243
+msgid "Simulation profile for soft-proofing"
+msgstr "Szimulációs profil a próbanyomat készítéshez"
 
-#: ../libgimpconfig/gimpcolorconfig.c:227
+#: ../libgimpconfig/gimpcolorconfig.c:250
 msgid "Display rendering intent"
 msgstr "Képernyős megjelenítési cél"
 
-#: ../libgimpconfig/gimpcolorconfig.c:235
+#: ../libgimpconfig/gimpcolorconfig.c:258
 msgid "Use black point compensation for the display"
 msgstr "Feketepont-kompenzáció használata a megjelenítőhöz"
 
-#: ../libgimpconfig/gimpcolorconfig.c:242
-msgid "Softproof rendering intent"
+#: ../libgimpconfig/gimpcolorconfig.c:265
+msgid "Optimize display color transformations"
+msgstr "Megjelenítés színátalakításának optimalizációja"
+
+#: ../libgimpconfig/gimpcolorconfig.c:272
+msgid "Soft-proofing rendering intent"
 msgstr "Próbanyomat-megjelenítési cél"
 
-#: ../libgimpconfig/gimpcolorconfig.c:250
-msgid "Use black point compensation for softproofing"
-msgstr "Feketepont-kompenzáció használata a próbanyomathoz"
+#: ../libgimpconfig/gimpcolorconfig.c:280
+msgid "Use black point compensation for soft-proofing"
+msgstr "Feketepont-kompenzáció használata a próbanyomat készítéshez"
 
-#: ../libgimpconfig/gimpcolorconfig.c:257
+#: ../libgimpconfig/gimpcolorconfig.c:287
+msgid "Optimize soft-proofing color transformations"
+msgstr "Próbanyomat készítés színátalakításának optimalizációja"
+
+#: ../libgimpconfig/gimpcolorconfig.c:294
 msgid "Mark out of gamut colors"
 msgstr "A színskálán kívüli színek megjelölése"
 
-#: ../libgimpconfig/gimpcolorconfig.c:264
-msgid "Out of gammut warning color"
+#: ../libgimpconfig/gimpcolorconfig.c:301
+msgid "Out of gamut warning color"
 msgstr "A színskálán kívül esés figyelmeztető színe"
 
-#: ../libgimpconfig/gimpcolorconfig.c:464
-#: ../libgimpconfig/gimpcolorconfig.c:598
+#: ../libgimpconfig/gimpcolorconfig.c:656
+#: ../libgimpconfig/gimpcolorconfig.c:818
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "A(z) „%s” színprofil nem RGB színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig.c:495
-#: ../libgimpconfig/gimpcolorconfig.c:639
+#: ../libgimpconfig/gimpcolorconfig.c:694
+#: ../libgimpconfig/gimpcolorconfig.c:859
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "A(z) „%s” színprofil nem szürkeárnyalatos színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig.c:526
-#: ../libgimpconfig/gimpcolorconfig.c:680
+#: ../libgimpconfig/gimpcolorconfig.c:732
+#: ../libgimpconfig/gimpcolorconfig.c:900
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "A(z) „%s” színprofil nem CMYK színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:24
-msgctxt "color-management-mode"
-msgid "No color management"
-msgstr "Nincs színkezelés"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:25
-msgctxt "color-management-mode"
-msgid "Color managed display"
-msgstr "Színkezeléssel rendelkező kijelző"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:26
-msgctxt "color-management-mode"
-msgid "Print simulation"
-msgstr "Nyomtatásszimuláció"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57
-msgctxt "color-rendering-intent"
-msgid "Perceptual"
-msgstr "Érzékelési"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:58
-msgctxt "color-rendering-intent"
-msgid "Relative colorimetric"
-msgstr "Relatív színmérési"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59
-msgctxt "color-rendering-intent"
-msgid "Saturation"
-msgstr "Telítettség"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:60
-msgctxt "color-rendering-intent"
-msgid "Absolute colorimetric"
-msgstr "Abszolút színmérési"
-
-#: ../libgimpconfig/gimpconfig-deserialize.c:110
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s kifejezés értéke nem egy érvényes UTF-8 szöveg"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:452
+#: ../libgimpconfig/gimpconfig-deserialize.c:464
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "csak „yes” vagy „no” érték szerepelhetne %s logikai kifejezésben, de „%s” "
 "szerepel"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:526
+#: ../libgimpconfig/gimpconfig-deserialize.c:538
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "érvénytelen érték („%s”) %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:541
+#: ../libgimpconfig/gimpconfig-deserialize.c:553
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "érvénytelen érték („%ld”) %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:610
+#: ../libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "„%s” kifejezés elemzése közben: %s"
@@ -1641,20 +1661,20 @@ msgstr "Fe_kete"
 msgid "_White"
 msgstr "_Fehér"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
 msgid "All files (*.*)"
 msgstr "Minden fájl (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:109
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC színprofil (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:216
-#: ../libgimpwidgets/gimppatheditor.c:248
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
+#: ../libgimpwidgets/gimppatheditor.c:249
 msgid "Folder"
 msgstr "Mappa"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:221
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:330
 msgid "Not a regular file."
 msgstr "Nem szabályos fájl."
 
@@ -1675,7 +1695,7 @@ msgstr "Gyártó: "
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:109
+#: ../libgimpwidgets/gimpcolorscales.c:111
 msgid "Scales"
 msgstr "Színskála"
 
@@ -1699,28 +1719,28 @@ msgstr ""
 msgid "HTML _notation:"
 msgstr "H_TML-jelölés:"
 
-#: ../libgimpwidgets/gimpfileentry.c:150
+#: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
 msgstr "A fájl helyének megjelenítése a fájlkezelőben"
 
-#: ../libgimpwidgets/gimpfileentry.c:227
+#: ../libgimpwidgets/gimpfileentry.c:229
 msgid "Open a file selector to browse your folders"
 msgstr "Fájlválasztó megnyitása a mappák böngészéséhez"
 
-#: ../libgimpwidgets/gimpfileentry.c:228
+#: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your files"
 msgstr "Fájlválasztó megnyitása a fájlok böngészéséhez"
 
-#: ../libgimpwidgets/gimpfileentry.c:395
+#: ../libgimpwidgets/gimpfileentry.c:397
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Nem lehet megjeleníteni a fájlt a fájlkezelőben: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:422
+#: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select Folder"
 msgstr "Mappa kiválasztása"
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:426
 msgid "Select File"
 msgstr "Fájl kiválasztása"
 
@@ -1764,44 +1784,76 @@ msgstr "_Visszaállítás"
 msgid "Visible"
 msgstr "Látható"
 
-#: ../libgimpwidgets/gimpicons.c:108 ../libgimpwidgets/gimpicons.c:112
+#: ../libgimpwidgets/gimpicons.c:70
+msgid "Ne_xt"
+msgstr "Kö_vetkező"
+
+#: ../libgimpwidgets/gimpicons.c:71
+msgid "Pre_vious"
+msgstr "_Előző"
+
+#: ../libgimpwidgets/gimpicons.c:72
+msgid "_Open"
+msgstr "Me_gnyitás"
+
+#: ../libgimpwidgets/gimpicons.c:73
+msgid "_Save"
+msgstr "M_entés"
+
+#: ../libgimpwidgets/gimpicons.c:74
+msgid "Save as"
+msgstr "Mentés másként"
+
+#: ../libgimpwidgets/gimpicons.c:75
+msgid "_Cancel"
+msgstr "Mé_gse"
+
+#: ../libgimpwidgets/gimpicons.c:76
+msgid "_Quit"
+msgstr "_Kilépés"
+
+#: ../libgimpwidgets/gimpicons.c:127 ../libgimpwidgets/gimpicons.c:131
 msgid "_Stroke"
 msgstr "_Körberajzolás"
 
-#: ../libgimpwidgets/gimpicons.c:124
+#: ../libgimpwidgets/gimpicons.c:150
 msgid "L_etter Spacing"
 msgstr "B_etűköz"
 
-#: ../libgimpwidgets/gimpicons.c:125
+#: ../libgimpwidgets/gimpicons.c:151
 msgid "L_ine Spacing"
 msgstr "S_orköz"
 
-#: ../libgimpwidgets/gimpicons.c:141
+#: ../libgimpwidgets/gimpicons.c:152
+msgid "I_ndent"
+msgstr "_Behúzás"
+
+#: ../libgimpwidgets/gimpicons.c:176
 msgid "Re_size"
 msgstr "Át_méretezés"
 
-#: ../libgimpwidgets/gimpicons.c:142 ../libgimpwidgets/gimpicons.c:277
+#: ../libgimpwidgets/gimpicons.c:177 ../libgimpwidgets/gimpicons.c:312
 msgid "_Scale"
 msgstr "Átmére_tezés"
 
-#: ../libgimpwidgets/gimpicons.c:249
+#: ../libgimpwidgets/gimpicons.c:284
 msgid "Cr_op"
 msgstr "Vá_gás"
 
-#: ../libgimpwidgets/gimpicons.c:257
+#: ../libgimpwidgets/gimpicons.c:292
 msgid "_Select"
 msgstr "_Kijelölés"
 
-#: ../libgimpwidgets/gimpicons.c:260 ../libgimpwidgets/gimpicons.c:272
-#: ../libgimpwidgets/gimpicons.c:283
+#: ../libgimpwidgets/gimpicons.c:295 ../libgimpwidgets/gimpicons.c:307
+#: ../libgimpwidgets/gimpicons.c:318
 msgid "_Transform"
 msgstr "Á_talakítás"
 
-#: ../libgimpwidgets/gimpicons.c:276
+#: ../libgimpwidgets/gimpicons.c:311
 msgid "_Rotate"
 msgstr "_Forgatás"
 
-#: ../libgimpwidgets/gimpicons.c:279
+#: ../libgimpwidgets/gimpicons.c:314
 msgid "_Shear"
 msgstr "_Nyírás"
 
@@ -1853,7 +1905,7 @@ msgid_plural "All %d pages selected"
 msgstr[0] "%d lap van kijelölve"
 msgstr[1] "Mind a(z) %d lap ki van jelölve"
 
-#: ../libgimpwidgets/gimppatheditor.c:239
+#: ../libgimpwidgets/gimppatheditor.c:240
 msgid "Writable"
 msgstr "Írható"
 
@@ -1870,11 +1922,11 @@ msgstr ""
 msgid "_Preview"
 msgstr "Előké_p"
 
-#: ../libgimpwidgets/gimppreviewarea.c:103
+#: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr "Négyzetek mérete"
 
-#: ../libgimpwidgets/gimppreviewarea.c:110
+#: ../libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr "Négyzetek stílusa"
 
@@ -2036,76 +2088,76 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: ../modules/color-selector-cmyk.c:84
+#: ../modules/color-selector-cmyk.c:82
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK színválasztó (színprofillal)"
 
-#: ../modules/color-selector-cmyk.c:118
+#: ../modules/color-selector-cmyk.c:116
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk.c:140
+#: ../modules/color-selector-cmyk.c:138
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk.c:142
+#: ../modules/color-selector-cmyk.c:140
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk.c:144
+#: ../modules/color-selector-cmyk.c:142
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk.c:146
+#: ../modules/color-selector-cmyk.c:144
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk.c:150
+#: ../modules/color-selector-cmyk.c:148
 msgid "Cyan"
 msgstr "Ciánkék"
 
-#: ../modules/color-selector-cmyk.c:151
+#: ../modules/color-selector-cmyk.c:149
 msgid "Magenta"
 msgstr "Bíborvörös"
 
-#: ../modules/color-selector-cmyk.c:152
+#: ../modules/color-selector-cmyk.c:150
 msgid "Yellow"
 msgstr "Sárga"
 
-#: ../modules/color-selector-cmyk.c:153
+#: ../modules/color-selector-cmyk.c:151
 msgid "Black"
 msgstr "Fekete"
 
-#: ../modules/color-selector-cmyk.c:374
+#: ../modules/color-selector-cmyk.c:380
 msgid "Profile: (none)"
 msgstr "Profil: (nincs)"
 
-#: ../modules/color-selector-cmyk.c:386
+#: ../modules/color-selector-cmyk.c:392
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: ../modules/color-selector-water.c:82
+#: ../modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
 msgstr "Vízfestmény stílusú színválasztó"
 
-#: ../modules/color-selector-water.c:113
+#: ../modules/color-selector-water.c:130
 msgid "Watercolor"
 msgstr "Vízfestmény"
 
-#: ../modules/color-selector-water.c:183
+#: ../modules/color-selector-water.c:200
 msgid "Pressure"
 msgstr "Nyomás"
 
-#: ../modules/color-selector-wheel.c:70
+#: ../modules/color-selector-wheel.c:72
 msgid "HSV color wheel"
 msgstr "HSV-színkerék"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:104
 msgid "Wheel"
 msgstr "Kerék"
 
@@ -2501,15 +2553,15 @@ msgstr "Kontraszt"
 msgid "Contrast c_ycles:"
 msgstr "Kontraszt_ciklusok:"
 
-#: ../modules/display-filter-lcms.c:102
+#: ../modules/display-filter-lcms.c:92
 msgid "Color management display filter using ICC color profiles"
 msgstr "ICC színprofilt használó színkezelési megjelenítési szűrő"
 
-#: ../modules/display-filter-lcms.c:134
+#: ../modules/display-filter-lcms.c:124
 msgid "Color Management"
 msgstr "Színkezelés"
 
-#: ../modules/display-filter-lcms.c:184
+#: ../modules/display-filter-lcms.c:173
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -2517,61 +2569,71 @@ msgstr ""
 "Ez a szűrő a beállítási párbeszédablak színkezelési részéből veszi a "
 "beállításait."
 
-#: ../modules/display-filter-lcms.c:198
+#: ../modules/display-filter-lcms.c:187
 msgid "Mode of operation:"
 msgstr "Működési mód:"
 
-#: ../modules/display-filter-lcms.c:205
+#: ../modules/display-filter-lcms.c:194
 msgid "Image profile:"
 msgstr "Képprofil:"
 
-#: ../modules/display-filter-lcms.c:213
+#: ../modules/display-filter-lcms.c:202
 msgid "Monitor profile:"
 msgstr "Monitorprofil:"
 
-#: ../modules/display-filter-lcms.c:221
+#: ../modules/display-filter-lcms.c:210
 msgid "Print simulation profile:"
 msgstr "Nyomtatásszimulációs profil:"
 
-#: ../modules/display-filter-lcms.c:390
+#: ../modules/display-filter-lcms.c:364
 msgid "None"
 msgstr "Nincs"
 
-#: ../modules/display-filter-proof.c:93
+#: ../modules/display-filter-proof.c:91
 msgid "Color proof filter using ICC color profile"
 msgstr "ICC színprofilt használó „színes próbanyomat” szűrő"
 
-#: ../modules/display-filter-proof.c:131
+#: ../modules/display-filter-proof.c:129
 msgid "Intent"
 msgstr "Cél"
 
-#: ../modules/display-filter-proof.c:139
+#: ../modules/display-filter-proof.c:137
 msgid "Black point compensation"
 msgstr "Feketepont-kompenzáció"
 
-#: ../modules/display-filter-proof.c:146
+#: ../modules/display-filter-proof.c:144
 msgid "Profile"
 msgstr "Profil"
 
-#: ../modules/display-filter-proof.c:151
+#: ../modules/display-filter-proof.c:149
 msgid "Color Proof"
 msgstr "Színes próbanyomat"
 
-#: ../modules/display-filter-proof.c:304
+#: ../modules/display-filter-proof.c:292
 msgid "Choose an ICC Color Profile"
 msgstr "Válasszon egy ICC színprofilt"
 
-#: ../modules/display-filter-proof.c:324
+#: ../modules/display-filter-proof.c:314
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:330
+#: ../modules/display-filter-proof.c:320
 msgid "_Intent:"
 msgstr "_Cél:"
 
-#: ../modules/display-filter-proof.c:335
+#: ../modules/display-filter-proof.c:325
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
+
+#~ msgid "Mode of operation for color management."
+#~ msgstr "Működési mód a színkezelés számára."
+
+#~ msgid "Print simulation profile"
+#~ msgstr "Nyomtatásszimulációs profil"
+
+#~ msgctxt "color-management-mode"
+#~ msgid "Print simulation"
+#~ msgstr "Nyomtatásszimuláció"
 
 #~ msgid "Sans"
 #~ msgstr "Sans"
