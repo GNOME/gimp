@@ -181,6 +181,7 @@ style "tdsog-default-style"
   GtkComboBoxText::shadow_type = GTK_SHADOW_NONE
   GtkVScale::shadow_type = GTK_SHADOW_NONE
   GtkHScale::shadow_type = GTK_SHADOW_NONE
+  GtkMenuItem::horizontal-padding = 4
 
   GtkWidget::tooltip-radius = 2
   GtkWidget::tooltip-alpha = 235
