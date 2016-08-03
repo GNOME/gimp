@@ -408,9 +408,9 @@ borderaverage_dialog (gint32        image_ID,
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
   buffer = gimp_drawable_get_buffer (drawable_id);
   if (buffer)
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
-                                MIN (gegl_buffer_get_width(buffer),
-                                     gegl_buffer_get_height(buffer)));
+    gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
+                              MIN (gegl_buffer_get_width (buffer),
+                                   gegl_buffer_get_height (buffer)));
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
                                          1.0, 256.0);
