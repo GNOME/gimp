@@ -104,9 +104,10 @@ Some known sizes:
 Testing icons
 -------------
 
-Icons in menus are not always shown. In particular some desktop environments
-would not show them by default, for instance GNOME. You can force them to
-show up by setting the environment variable `GIMP_ICONS_LIKE_A_BOSS`.
+Menu items and buttons are not supposed to have icons any longer. Yet
+our actions have icons and some desktop environments would enable them
+in menus and buttons regardless. To test how we do on systems which do
+so, set the environment variable `GIMP_ICONS_LIKE_A_BOSS`.
 
 For instance, start GIMP like this:
 
