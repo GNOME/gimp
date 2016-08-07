@@ -442,6 +442,7 @@ animation_save_to_parasite (Animation *animation)
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
   GimpParasite     *old_parasite;
   const gchar      *parasite_name;
+  const gchar      *selected;
   gchar            *xml;
   gboolean          undo_step_started = FALSE;
   CachedSettings    settings;
@@ -455,10 +456,12 @@ animation_save_to_parasite (Animation *animation)
 
   if (ANIMATION_IS_ANIMATIC (animation))
     {
+      selected = "animatic";
       parasite_name = PLUG_IN_PROC "/animatic";
     }
   else /* ANIMATION_IS_CEL_ANIMATION */
     {
+      selected = "cel-animation";
       parasite_name = PLUG_IN_PROC "/cel-animation";
     }
   /* If there was already parasites and they were all the same as the
@@ -470,6 +473,7 @@ animation_save_to_parasite (Animation *animation)
               g_strcmp0 ((gchar *) gimp_parasite_data (old_parasite), xml)))
     {
       GimpParasite *parasite;
+
       if (! undo_step_started)
         {
           gimp_image_undo_group_start (priv->image_id);
@@ -478,6 +482,26 @@ animation_save_to_parasite (Animation *animation)
       parasite = gimp_parasite_new (parasite_name,
                                     GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
                                     strlen (xml) + 1, xml);
+      gimp_image_attach_parasite (priv->image_id, parasite);
+      gimp_parasite_free (parasite);
+    }
+  gimp_parasite_free (old_parasite);
+
+  old_parasite = gimp_image_get_parasite (priv->image_id,
+                                          PLUG_IN_PROC "/selected");
+  if (! old_parasite ||
+      g_strcmp0 ((gchar *) gimp_parasite_data (old_parasite), selected))
+    {
+      GimpParasite *parasite;
+
+      if (! undo_step_started)
+        {
+          gimp_image_undo_group_start (priv->image_id);
+          undo_step_started = TRUE;
+        }
+      parasite = gimp_parasite_new (PLUG_IN_PROC "/selected",
+                                    GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
+                                    strlen (selected) + 1, selected);
       gimp_image_attach_parasite (priv->image_id, parasite);
       gimp_parasite_free (parasite);
     }
@@ -598,7 +622,7 @@ animation_play (Animation *animation)
 }
 
 void
-animation_stop (Animation   *animation)
+animation_stop (Animation *animation)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
 
@@ -672,8 +696,8 @@ void
 animation_jump (Animation *animation,
                 gint       index)
 {
-  AnimationPrivate *priv           = ANIMATION_GET_PRIVATE (animation);
-  GeglBuffer       *buffer         = NULL;
+  AnimationPrivate *priv     = ANIMATION_GET_PRIVATE (animation);
+  GeglBuffer       *buffer   = NULL;
   gint              prev_pos = priv->position;
   gboolean          identical;
 

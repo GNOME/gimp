@@ -93,8 +93,8 @@ static GeglBuffer * animation_animatic_get_frame   (Animation         *animation
 static gchar      * animation_animatic_serialize   (Animation         *animation);
 
 static gboolean     animation_animatic_same        (Animation         *animation,
-                                                    gint               previous_pos,
-                                                    gint               next_pos);
+                                                    gint               pos1,
+                                                    gint               pos2);
 
 /* XML parsing */
 
@@ -598,8 +598,8 @@ animation_animatic_serialize (Animation *animation)
 
 static gboolean
 animation_animatic_same (Animation *animation,
-                         gint       previous_pos,
-                         gint       next_pos)
+                         gint       pos1,
+                         gint       pos2)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   gint                      count = 0;
@@ -609,12 +609,12 @@ animation_animatic_same (Animation *animation,
   for (i = 0; i < priv->n_panels; i++)
     {
       count += priv->durations[i];
-      if (count >= previous_pos && count >= next_pos)
+      if (count >= pos1 && count >= pos2)
         {
           identical = TRUE;
           break;
         }
-      else if (count >= previous_pos || count >= next_pos)
+      else if (count >= pos1 || count >= pos2)
         {
           identical = FALSE;
           break;

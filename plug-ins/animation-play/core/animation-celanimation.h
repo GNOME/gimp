@@ -55,4 +55,8 @@ void             animation_cel_animation_set_comment  (AnimationCelAnimation *an
 const gchar    * animation_cel_animation_get_comment  (AnimationCelAnimation *animation,
                                                        gint                   position);
 
+void             animation_cel_animation_set_duration (AnimationCelAnimation *animation,
+                                                       gint                   duration);
+
+
 #endif  /*  __ANIMATION_CEL_ANIMATION_H__  */

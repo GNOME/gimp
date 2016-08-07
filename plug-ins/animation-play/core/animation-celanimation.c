@@ -68,31 +68,78 @@ struct _AnimationCelAnimationPrivate
   GList *tracks;
 };
 
+typedef enum
+{
+  START_STATE,
+  ANIMATION_STATE,
+  SEQUENCE_STATE,
+  FRAME_STATE,
+  LAYER_STATE,
+  COMMENTS_STATE,
+  COMMENT_STATE,
+  END_STATE
+} AnimationParseState;
+
+typedef struct
+{
+  Animation           *animation;
+  AnimationParseState  state;
+
+  Track               *track;
+  gint                 frame_position;
+  gint                 frame_duration;
+} ParseStatus;
+
 #define GET_PRIVATE(animation) \
         G_TYPE_INSTANCE_GET_PRIVATE (animation, \
                                      ANIMATION_TYPE_CEL_ANIMATION, \
                                      AnimationCelAnimationPrivate)
 
-static void         animation_cel_animation_finalize   (GObject           *object);
+static void         animation_cel_animation_finalize     (GObject           *object);
 
 /* Virtual methods */
 
-static gint         animation_cel_animation_get_length  (Animation         *animation);
+static gint         animation_cel_animation_get_length   (Animation         *animation);
 
-static void         animation_cel_animation_load        (Animation         *animation);
-static GeglBuffer * animation_cel_animation_get_frame   (Animation         *animation,
-                                                         gint               pos);
-static gboolean     animation_cel_animation_same        (Animation         *animation,
-                                                         gint               previous_pos,
-                                                         gint               next_pos);
+static void         animation_cel_animation_load         (Animation         *animation);
+static void         animation_cel_animation_load_xml     (Animation         *animation,
+                                                          const gchar       *xml);
+static GeglBuffer * animation_cel_animation_get_frame    (Animation         *animation,
+                                                          gint               pos);
+static gchar      * animation_cel_animation_serialize    (Animation         *animation);
+
+static gboolean     animation_cel_animation_same         (Animation         *animation,
+                                                          gint               previous_pos,
+                                                          gint               next_pos);
+
+/* XML parsing */
+
+static void      animation_cel_animation_start_element   (GMarkupParseContext *context,
+                                                          const gchar         *element_name,
+                                                          const gchar        **attribute_names,
+                                                          const gchar        **attribute_values,
+                                                          gpointer             user_data,
+                                                          GError             **error);
+static void      animation_cel_animation_end_element     (GMarkupParseContext *context,
+                                                          const gchar         *element_name,
+                                                          gpointer             user_data,
+                                                          GError             **error);
+
+static void      animation_cel_animation_text            (GMarkupParseContext  *context,
+                                                          const gchar          *text,
+                                                          gsize                 text_len,
+                                                          gpointer              user_data,
+                                                          GError              **error);
 
 /* Utils */
 
-static void         animation_cel_animation_cleanup   (AnimationCelAnimation  *animation);
-static void         animation_cel_animation_cache      (AnimationCelAnimation *animation,
-                                                        gint                   position);
-static gboolean     animation_cel_animation_cache_cmp (Cache *cache1,
-                                                       Cache *cache2);
+static void         animation_cel_animation_cleanup      (AnimationCelAnimation  *animation);
+static void         animation_cel_animation_cache        (AnimationCelAnimation  *animation,
+                                                          gint                    position);
+static gboolean     animation_cel_animation_cache_cmp    (Cache                   *cache1,
+                                                          Cache                   *cache2);
+static void         animation_cel_animation_clean_cache  (Cache                   *cache);
+static void         animation_cel_animation_clean_track  (Track                   *track);
 
 G_DEFINE_TYPE (AnimationCelAnimation, animation_cel_animation, ANIMATION_TYPE_ANIMATION)
 
@@ -108,7 +155,9 @@ animation_cel_animation_class_init (AnimationCelAnimationClass *klass)
 
   anim_class->get_length = animation_cel_animation_get_length;
   anim_class->load       = animation_cel_animation_load;
+  anim_class->load_xml   = animation_cel_animation_load_xml;
   anim_class->get_frame  = animation_cel_animation_get_frame;
+  anim_class->serialize  = animation_cel_animation_serialize;
   anim_class->same       = animation_cel_animation_same;
 
   g_type_class_add_private (klass, sizeof (AnimationCelAnimationPrivate));
@@ -125,6 +174,9 @@ animation_cel_animation_init (AnimationCelAnimation *animation)
 static void
 animation_cel_animation_finalize (GObject *object)
 {
+  /* Save first, before cleaning anything. */
+  animation_save_to_parasite (ANIMATION (object));
+
   animation_cel_animation_cleanup (ANIMATION_CEL_ANIMATION (object));
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -143,7 +195,7 @@ animation_cel_animation_set_comment (AnimationCelAnimation *animation,
                     position <= animation->priv->duration);
 
   item = g_list_nth (animation->priv->comments, position - 1);
-  if (item->data)
+  if (item && item->data)
     {
       g_free (item->data);
     }
@@ -160,6 +212,57 @@ animation_cel_animation_get_comment (AnimationCelAnimation *animation,
                         0);
 
   return g_list_nth_data (animation->priv->comments, position - 1);
+}
+
+void
+animation_cel_animation_set_duration (AnimationCelAnimation *animation,
+                                      gint                   duration)
+{
+  if (duration < animation->priv->duration)
+    {
+      GList *iter;
+
+      /* Free memory. */
+      iter = g_list_nth (animation->priv->cache, duration);
+      if (iter && iter->prev)
+        {
+          iter->prev->next = NULL;
+          iter->prev = NULL;
+        }
+      g_list_free_full (iter, (GDestroyNotify) animation_cel_animation_clean_cache);
+
+      iter = g_list_nth (animation->priv->tracks, duration);
+      if (iter && iter->prev)
+        {
+          iter->prev->next = NULL;
+          iter->prev = NULL;
+        }
+      g_list_free_full (iter, (GDestroyNotify) animation_cel_animation_clean_track);
+
+      iter = g_list_nth (animation->priv->comments, duration);
+      if (iter && iter->prev)
+        {
+          iter->prev->next = NULL;
+          iter->prev = NULL;
+        }
+      g_list_free_full (iter, (GDestroyNotify) g_free);
+
+      for (iter = animation->priv->tracks; iter; iter = iter->next)
+        {
+          Track *track = iter->data;
+          GList *iter2;
+
+          iter2 = g_list_nth (track->frames, duration);
+          if (iter2 && iter2->prev)
+            {
+              iter2->prev->next = NULL;
+              iter2->prev = NULL;
+            }
+          g_list_free (iter2);
+        }
+    }
+
+  animation->priv->duration = duration;
 }
 
 /**** Virtual methods ****/
@@ -224,6 +327,65 @@ animation_cel_animation_load (Animation *animation)
     }
 }
 
+static void
+animation_cel_animation_load_xml (Animation   *animation,
+                                  const gchar *xml)
+{
+  const GMarkupParser markup_parser =
+    {
+      animation_cel_animation_start_element,
+      animation_cel_animation_end_element,
+      animation_cel_animation_text,
+      NULL,  /*  passthrough  */
+      NULL   /*  error        */
+    };
+  GMarkupParseContext *context;
+  ParseStatus          status = { 0, };
+  GError              *error  = NULL;
+
+  g_return_if_fail (xml != NULL);
+
+  /* Parse XML to update. */
+  status.state = START_STATE;
+  status.animation = animation;
+
+  context = g_markup_parse_context_new (&markup_parser,
+                                        0, &status, NULL);
+  g_markup_parse_context_parse (context, xml, strlen (xml), &error);
+  if (error)
+    {
+      g_warning ("Error parsing XML: %s", error->message);
+    }
+  else
+    {
+      g_markup_parse_context_end_parse (context, &error);
+      if (error)
+        g_warning ("Error parsing XML: %s", error->message);
+    }
+  g_markup_parse_context_free (context);
+
+  /* If XML parsing failed, just reset the animation. */
+  if (error)
+    {
+      animation_cel_animation_load (animation);
+    }
+  else
+    {
+      /* cache. */
+      gint i;
+      gint duration = animation_get_length (animation);
+
+      for (i = 0; i < duration; i++)
+        {
+          g_signal_emit_by_name (animation, "loading",
+                                 (gdouble) i / ((gdouble) duration - 0.999));
+
+          /* Panel image. */
+          animation_cel_animation_cache (ANIMATION_CEL_ANIMATION (animation), i);
+        }
+    }
+}
+
 static GeglBuffer *
 animation_cel_animation_get_frame (Animation *animation,
                                    gint       pos)
@@ -243,6 +405,94 @@ animation_cel_animation_get_frame (Animation *animation,
   return frame;
 }
 
+static gchar *
+animation_cel_animation_serialize (Animation *animation)
+{
+  AnimationCelAnimationPrivate *priv;
+  gchar                        *xml;
+  gchar                        *xml2;
+  gchar                        *tmp;
+  GList                        *iter;
+  gint                          i;
+
+  priv = ANIMATION_CEL_ANIMATION (animation)->priv;
+
+  xml = g_strdup_printf ("<animation type=\"cels\" framerate=\"%f\" "
+                          " duration=\"%d\" width=\"\" height=\"\">",
+                          animation_get_framerate (animation),
+                          priv->duration);
+
+  for (iter = priv->tracks; iter; iter = iter->next)
+    {
+      Track *track = iter->data;
+      GList *iter2;
+      gint   pos;
+      gint   duration;
+
+      xml2 = g_markup_printf_escaped ("<sequence name=\"%s\">",
+                                      track->title);
+      tmp = xml;
+      xml = g_strconcat (xml, xml2, NULL);
+      g_free (tmp);
+      g_free (xml2);
+
+      pos = 1;
+      duration = 0;
+      for (iter2 = track->frames; iter2; iter2 = iter2->next)
+        {
+          if (GPOINTER_TO_INT (iter2->data))
+            {
+              duration++;
+              if (! iter2->next || iter2->next->data != iter2->data)
+                {
+                  xml2 = g_markup_printf_escaped ("<frame position=\"%d\""
+                                                  " duration=\"%d\">"
+                                                  "<layer id=\"%d\"/>"
+                                                  "</frame>",
+                                                  pos - duration, duration,
+                                                  GPOINTER_TO_INT (iter2->data));
+                  tmp = xml;
+                  xml = g_strconcat (xml, xml2, NULL);
+                  g_free (tmp);
+                  g_free (xml2);
+                }
+            }
+          pos++;
+        }
+
+      tmp = xml;
+      xml = g_strconcat (xml, "</sequence>", NULL);
+      g_free (tmp);
+    }
+
+  tmp = xml;
+  xml = g_strconcat (xml, "<comments title=\"\">", NULL);
+  g_free (tmp);
+
+  /* New loop for comments. */
+  for (iter = priv->comments, i = 0; iter; iter = iter->next, i++)
+    {
+      if (iter->data)
+        {
+          gchar *comment = iter->data;
+
+          /* Comments are for a given panel, not for a frame position. */
+          xml2 = g_markup_printf_escaped ("<comment frame-position=\"%d\">%s</comment>",
+                                          i + 1,
+                                          comment);
+          tmp = xml;
+          xml = g_strconcat (xml, xml2, NULL);
+          g_free (tmp);
+          g_free (xml2);
+        }
+    }
+  tmp = xml;
+  xml = g_strconcat (xml, "</comments></animation>", NULL);
+  g_free (tmp);
+
+  return xml;
+}
+
 static gboolean
 animation_cel_animation_same (Animation *animation,
                               gint       pos1,
@@ -254,10 +504,10 @@ animation_cel_animation_same (Animation *animation,
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
 
-  g_return_val_if_fail (pos1 > 0                              &&
-                        pos1 <= cel_animation->priv->duration &&
-                        pos2 > 0                              &&
-                        pos2 <= cel_animation->priv->duration,
+  g_return_val_if_fail (pos1 >= 0                            &&
+                        pos1 < cel_animation->priv->duration &&
+                        pos2 >= 0                            &&
+                        pos2 < cel_animation->priv->duration,
                         FALSE);
 
   cache1 = g_list_nth_data (cel_animation->priv->cache,
@@ -268,59 +518,305 @@ animation_cel_animation_same (Animation *animation,
   return animation_cel_animation_cache_cmp (cache1, cache2);
 }
 
+static void
+animation_cel_animation_start_element (GMarkupParseContext  *context,
+                                       const gchar          *element_name,
+                                       const gchar         **attribute_names,
+                                       const gchar         **attribute_values,
+                                       gpointer              user_data,
+                                       GError              **error)
+{
+  const gchar                  **names  = attribute_names;
+  const gchar                  **values = attribute_values;
+  ParseStatus                   *status = (ParseStatus *) user_data;
+  AnimationCelAnimation         *animation = ANIMATION_CEL_ANIMATION (status->animation);
+  AnimationCelAnimationPrivate  *priv   = GET_PRIVATE (status->animation);
+
+  switch (status->state)
+    {
+    case START_STATE:
+      if (g_strcmp0 (element_name, "animation") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Tag <animation> expected. "
+                         "Got \"%s\" instead."),
+                       element_name);
+          return;
+        }
+      while (*names && *values)
+        {
+          if (strcmp (*names, "type") == 0)
+            {
+              if (! **values || strcmp (*values, "cels") != 0)
+                {
+                  g_set_error (error, 0, 0,
+                               _("Unknown animation type: \"%s\"."),
+                               *values);
+                  return;
+                }
+            }
+          else if (strcmp (*names, "framerate") == 0 && **values)
+            {
+              gdouble fps = g_strtod (*values, NULL);
+              if (fps >= MAX_FRAMERATE)
+                {
+                  /* Let's avoid huge frame rates. */
+                  fps = MAX_FRAMERATE;
+                }
+              else if (fps <= 0)
+                {
+                  /* Null or negative framerates are impossible. */
+                  fps = DEFAULT_FRAMERATE;
+                }
+              animation_set_framerate (status->animation, fps);
+            }
+          else if (strcmp (*names, "duration") == 0 && **values)
+            {
+              gint duration = (gint) g_ascii_strtoull (*values, NULL, 10);
+
+              animation_cel_animation_set_duration (animation, duration);
+            }
+
+          names++;
+          values++;
+        }
+      status->state = ANIMATION_STATE;
+      break;
+    case ANIMATION_STATE:
+      if (g_strcmp0 (element_name, "sequence") == 0)
+        {
+          status->track = g_new0 (Track, 1);
+          while (*names && *values)
+            {
+              if (strcmp (*names, "name") == 0)
+                {
+                  status->track->title = g_strdup (*values);
+                }
+              names++;
+              values++;
+            }
+          priv->tracks = g_list_prepend (priv->tracks, status->track);
+          status->state = SEQUENCE_STATE;
+        }
+      else if (g_strcmp0 (element_name, "comments") == 0)
+        {
+          status->state = COMMENTS_STATE;
+        }
+      else
+        {
+          g_set_error (error, 0, 0,
+                       _("Tags <sequence> or <comments> expected. "
+                         "Got \"%s\" instead."),
+                       element_name);
+          return;
+        }
+      break;
+    case SEQUENCE_STATE:
+      if (g_strcmp0 (element_name, "frame") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Tag <frame> expected. "
+                         "Got \"%s\" instead."),
+                       element_name);
+          return;
+        }
+      status->frame_position = -1;
+      status->frame_duration = -1;
+
+      while (*names && *values)
+        {
+          if (strcmp (*names, "position") == 0 && **values)
+            {
+              gint position = g_ascii_strtoll (*values, NULL, 10);
+
+              if (position >= 0)
+                status->frame_position = position;
+            }
+          else if (strcmp (*names, "duration") == 0 && **values)
+            {
+              gint duration = g_ascii_strtoll (*values, NULL, 10);
+
+              if (duration > 0)
+                status->frame_duration = duration;
+            }
+
+          names++;
+          values++;
+        }
+      if (status->frame_position == -1 ||
+          status->frame_duration == -1)
+        {
+          g_set_error (error, 0, 0,
+                       _("Tag <frame> expects the properties: "
+                         "position, duration."));
+        }
+      status->state = FRAME_STATE;
+      break;
+    case FRAME_STATE:
+      if (g_strcmp0 (element_name, "layer") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Tag <layer> expected. "
+                         "Got \"%s\" instead."),
+                       element_name);
+          return;
+        }
+      while (*names && *values)
+        {
+          if (strcmp (*names, "id") == 0 && **values)
+            {
+              GList *iter;
+              gint   tattoo = g_ascii_strtoll (*values, NULL, 10);
+              gint   track_length;
+              gint   i;
+
+              track_length = g_list_length (status->track->frames);
+
+              if (track_length < status->frame_position + status->frame_duration)
+                {
+                  /* Make sure the list is long enough. */
+                  for (i = track_length; i < status->frame_position + status->frame_duration; i++)
+                    {
+                      status->track->frames = g_list_prepend (status->track->frames,
+                                                              NULL);
+                    }
+                }
+              iter = status->track->frames;
+              for (i = 0; i < status->frame_position + status->frame_duration; i++)
+                {
+                  if (i >= status->frame_position)
+                    {
+                      iter->data = GINT_TO_POINTER (tattoo);
+                    }
+                  iter = iter->next;
+                }
+            }
+
+          names++;
+          values++;
+        }
+      status->state = LAYER_STATE;
+      break;
+    case LAYER_STATE:
+      /* <layer> should have no child tag. */
+      g_set_error (error, 0, 0,
+                   _("Unexpected child of <layer>: \"%s\"."),
+                   element_name);
+      return;
+    case COMMENTS_STATE:
+      if (g_strcmp0 (element_name, "comment") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Tag <comment> expected. "
+                         "Got \"%s\" instead."),
+                       element_name);
+          return;
+        }
+      status->frame_position = -1;
+      status->frame_duration = -1;
+
+      while (*names && *values)
+        {
+          if (strcmp (*names, "position") == 0 && **values)
+            {
+              gint position = (gint) g_ascii_strtoll (*values, NULL, 10);
+
+              status->frame_position = position;
+              break;
+            }
+
+          names++;
+          values++;
+        }
+      status->state = COMMENT_STATE;
+      break;
+    case COMMENT_STATE:
+      /* <comment> should have no child tag. */
+      g_set_error (error, 0, 0,
+                   _("Unexpected child of <comment>: <\"%s\">."),
+                   element_name);
+      return;
+    default:
+      g_set_error (error, 0, 0,
+                   _("Unknown state!"));
+      break;
+    }
+}
+
+static void
+animation_cel_animation_end_element (GMarkupParseContext *context,
+                                const gchar         *element_name,
+                                gpointer             user_data,
+                                GError             **error)
+{
+  ParseStatus *status = (ParseStatus *) user_data;
+
+  switch (status->state)
+    {
+    case SEQUENCE_STATE:
+    case COMMENTS_STATE:
+      status->state = ANIMATION_STATE;
+      break;
+    case FRAME_STATE:
+      status->state = SEQUENCE_STATE;
+      break;
+    case LAYER_STATE:
+      status->state = FRAME_STATE;
+      break;
+    case ANIMATION_STATE:
+      status->state = END_STATE;
+      break;
+    case COMMENT_STATE:
+      status->state = COMMENTS_STATE;
+      break;
+    default: /* START/END_STATE */
+      /* invalid XML. I expect the parser to raise an error anyway.*/
+      break;
+    }
+}
+
+static void
+animation_cel_animation_text (GMarkupParseContext  *context,
+                         const gchar          *text,
+                         gsize                 text_len,
+                         gpointer              user_data,
+                         GError              **error)
+{
+  ParseStatus *status = (ParseStatus *) user_data;
+  AnimationCelAnimation *cel_animation = ANIMATION_CEL_ANIMATION (status->animation);
+
+  switch (status->state)
+    {
+    case COMMENT_STATE:
+      if (status->frame_position == -1)
+        /* invalid comment tag. */
+        break;
+      /* Setting comment to a panel. */
+      animation_cel_animation_set_comment (cel_animation,
+                                           status->frame_position,
+                                           text);
+      status->frame_position = -1;
+      break;
+    default:
+      /* Ignoring text everywhere else. */
+      break;
+    }
+}
+
 /**** Utils ****/
 
 static void
 animation_cel_animation_cleanup (AnimationCelAnimation *animation)
 {
-  AnimationCelAnimationPrivate *priv;
-  GList                        *iter;
-
-  priv = ANIMATION_CEL_ANIMATION (animation)->priv;
-
-  if (priv->cache)
-    {
-      for (iter = priv->cache; iter; iter = iter->next)
-        {
-          if (iter->data)
-            {
-              Cache *cache = iter->data;
-
-              if (--(cache->refs) == 0)
-                {
-                  g_object_unref (cache->buffer);
-                  g_free (cache->composition);
-                }
-            }
-        }
-      g_list_free (priv->cache);
-    }
-  if (priv->comments)
-    {
-      for (iter = priv->comments; iter; iter = iter->next)
-        {
-          if (iter->data)
-            {
-              g_free (iter->data);
-            }
-        }
-      g_list_free (priv->comments);
-    }
-  if (priv->tracks)
-    {
-      for (iter = priv->tracks; iter; iter = iter->next)
-        {
-          Track *track = iter->data;
-
-          /* The item's data must always exist. */
-          g_free (track->title);
-          g_list_free (track->frames);
-        }
-      g_list_free (priv->tracks);
-    }
-  priv->cache    = NULL;
-  priv->comments = NULL;
-  priv->tracks   = NULL;
+  g_list_free_full (animation->priv->cache,
+                    (GDestroyNotify) animation_cel_animation_clean_cache);
+  animation->priv->cache    = NULL;
+  g_list_free_full (animation->priv->comments,
+                    (GDestroyNotify) g_free);
+  animation->priv->comments = NULL;
+  g_list_free_full (animation->priv->tracks,
+                    (GDestroyNotify) animation_cel_animation_clean_track);
+  animation->priv->tracks   = NULL;
 }
 
 static void
@@ -490,4 +986,23 @@ animation_cel_animation_cache_cmp (Cache *cache1,
         }
     }
   return identical;
+}
+
+static void
+animation_cel_animation_clean_cache (Cache *cache)
+{
+  if (--(cache->refs) == 0)
+    {
+      g_object_unref (cache->buffer);
+      g_free (cache->composition);
+      g_free (cache);
+    }
+}
+
+static void
+animation_cel_animation_clean_track (Track *track)
+{
+  g_free (track->title);
+  g_list_free (track->frames);
+  g_free (track);
 }

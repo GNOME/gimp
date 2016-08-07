@@ -337,6 +337,7 @@ animation_dialog_new (gint32 image_id)
           animatic_selected = FALSE;
         }
       gimp_parasite_free (parasite);
+      parasite = NULL;
     }
 
   if (animatic_selected)
@@ -1200,11 +1201,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      G_CALLBACK (zoomcombo_changed),
                                      dialog);
 
-  /* Animation type. */
-  g_signal_handlers_unblock_by_func (priv->animation_type_combo,
-                                     G_CALLBACK (animation_type_changed),
-                                     dialog);
-
   /* Progress bar. */
   g_signal_handlers_unblock_by_func (priv->progress,
                                      G_CALLBACK (progress_entered),
@@ -1223,12 +1219,12 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   if (right_pane)
     gtk_widget_destroy (right_pane);
 
-  /* The Storyboard view. */
   if (ANIMATION_IS_ANIMATIC (animation))
     {
       GtkWidget *scrolled_win;
       GtkWidget *frame;
 
+      /* The Storyboard view. */
       frame = gtk_frame_new (_("Storyboard"));
       gtk_paned_pack2 (GTK_PANED (priv->hpaned), frame,
                        TRUE, TRUE);
@@ -1243,7 +1239,20 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                              right_pane);
 
       gtk_widget_show (right_pane);
+
+      /* The animation type box. */
+      gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 0);
     }
+  else
+    {
+      /* The animation type box. */
+      gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 1);
+    }
+
+  /* Animation type. */
+  g_signal_handlers_unblock_by_func (priv->animation_type_combo,
+                                     G_CALLBACK (animation_type_changed),
+                                     dialog);
 
   /* Animation. */
   g_signal_connect (priv->animation, "proxy",
@@ -1364,7 +1373,7 @@ animation_type_changed (GtkWidget       *combo,
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   Animation              *animation;
-  GimpParasite           *parasite;
+  GimpParasite           *parasite = NULL;
   const gchar            *xml = NULL;
   gint                    index;
 
@@ -1378,11 +1387,6 @@ animation_type_changed (GtkWidget       *combo,
     {
       parasite = gimp_image_get_parasite (priv->image_id,
                                           PLUG_IN_PROC "/animatic");
-      if (parasite)
-        {
-          xml = g_strdup (gimp_parasite_data (parasite));
-          gimp_parasite_free (parasite);
-        }
     }
   else
     {
