@@ -32,6 +32,7 @@
 #include "core/animationanimatic.h"
 
 #include "animation-dialog.h"
+#include "animation-layer-view.h"
 #include "animation-storyboard.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -89,6 +90,7 @@ struct _AnimationDialogPrivate
 
   /* The hpaned (left is preview, right is layer list. */
   GtkWidget      *hpaned;
+  GtkWidget      *layer_list;
 
   /* The vpaned (bottom is timeline, above is preview). */
   GtkWidget      *vpaned;
@@ -1080,7 +1082,8 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                 Animation       *animation)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GtkWidget              *right_pane;
+  GtkWidget              *scrolled_win;
+  GtkWidget              *frame;
   gchar                  *text;
   gdouble                 fps;
   gint                    index;
@@ -1215,36 +1218,48 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      G_CALLBACK (progress_button),
                                      dialog);
 
-  right_pane = gtk_paned_get_child2 (GTK_PANED (priv->hpaned));
-  if (right_pane)
-    gtk_widget_destroy (right_pane);
+  frame = gtk_paned_get_child2 (GTK_PANED (priv->hpaned));
+  if (frame)
+    {
+      gtk_widget_destroy (frame);
+      priv->layer_list = NULL;
+    }
+
+  frame = gtk_frame_new (NULL);
+  gtk_paned_pack2 (GTK_PANED (priv->hpaned), frame,
+                   TRUE, TRUE);
+  gtk_widget_show (frame);
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
+  gtk_widget_show (scrolled_win);
 
   if (ANIMATION_IS_ANIMATIC (animation))
     {
-      GtkWidget *scrolled_win;
-      GtkWidget *frame;
+      GtkWidget *storyboard;
+
+      gtk_frame_set_label (GTK_FRAME (frame), _("Storyboard"));
 
       /* The Storyboard view. */
-      frame = gtk_frame_new (_("Storyboard"));
-      gtk_paned_pack2 (GTK_PANED (priv->hpaned), frame,
-                       TRUE, TRUE);
-      gtk_widget_show (frame);
-
-      scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-      gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
-      gtk_widget_show (scrolled_win);
-
-      right_pane = animation_storyboard_new (ANIMATION_ANIMATIC (animation));
+      storyboard = animation_storyboard_new (ANIMATION_ANIMATIC (animation));
       gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                             right_pane);
-
-      gtk_widget_show (right_pane);
+                                             storyboard);
+      gtk_widget_show (storyboard);
 
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 0);
     }
   else
     {
+      gtk_frame_set_label (GTK_FRAME (frame), _("Layers"));
+
+      /* The layer list view. */
+      priv->layer_list = animation_layer_view_new (priv->image_id);
+      gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+                                             priv->layer_list);
+      animation_layer_view_refresh (ANIMATION_LAYER_VIEW (priv->layer_list));
+      gtk_widget_show (priv->layer_list);
+
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 1);
     }
@@ -1319,6 +1334,10 @@ animation_dialog_refresh (AnimationDialog *dialog)
 
       gtk_window_reshow_with_initial_size (GTK_WINDOW (dialog));
   }
+  if (priv->layer_list)
+    {
+      animation_layer_view_refresh (ANIMATION_LAYER_VIEW (priv->layer_list));
+    }
 }
 
 /* Update the tool sensitivity for playing, depending on the number of frames. */
