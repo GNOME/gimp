@@ -30,10 +30,12 @@
 
 #include "core/animation.h"
 #include "core/animationanimatic.h"
+#include "core/animation-celanimation.h"
 
 #include "animation-dialog.h"
 #include "animation-layer-view.h"
 #include "animation-storyboard.h"
+#include "animation-xsheet.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -94,6 +96,7 @@ struct _AnimationDialogPrivate
 
   /* The vpaned (bottom is timeline, above is preview). */
   GtkWidget      *vpaned;
+  GtkWidget      *xsheet;
 
   /* Actions */
   GtkUIManager   *ui_manager;
@@ -1218,6 +1221,7 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      G_CALLBACK (progress_button),
                                      dialog);
 
+  /* The right panel. */
   frame = gtk_paned_get_child2 (GTK_PANED (priv->hpaned));
   if (frame)
     {
@@ -1262,6 +1266,27 @@ animation_dialog_set_animation (AnimationDialog *dialog,
 
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 1);
+    }
+
+  /* The bottom panel. */
+  frame = gtk_paned_get_child2 (GTK_PANED (priv->vpaned));
+  if (frame)
+    {
+      gtk_widget_destroy (frame);
+      priv->xsheet = NULL;
+    }
+
+  if (ANIMATION_IS_CEL_ANIMATION (animation))
+    {
+      frame = gtk_frame_new (_("X-Sheet"));
+      gtk_paned_pack2 (GTK_PANED (priv->vpaned), frame,
+                       TRUE, TRUE);
+      gtk_widget_show (frame);
+
+      priv->xsheet = animation_xsheet_new (ANIMATION_CEL_ANIMATION (animation),
+                                           priv->layer_list);
+      gtk_container_add (GTK_CONTAINER (frame), priv->xsheet);
+      gtk_widget_show (priv->xsheet);
     }
 
   /* Animation type. */

@@ -265,6 +265,29 @@ animation_cel_animation_set_duration (AnimationCelAnimation *animation,
   animation->priv->duration = duration;
 }
 
+gint
+animation_cel_animation_get_levels (AnimationCelAnimation *animation)
+{
+  return g_list_length (animation->priv->tracks);
+}
+
+const gchar *
+animation_cel_animation_get_track_title (AnimationCelAnimation *animation,
+                                         gint                   level)
+{
+  gchar *title = NULL;
+  GList *track;
+
+  track = g_list_nth (animation->priv->tracks, level);
+
+  if (track)
+    {
+      title = ((Track *) track->data)->title;
+    }
+
+  return title;
+}
+
 /**** Virtual methods ****/
 
 static gint

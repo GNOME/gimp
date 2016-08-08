@@ -46,17 +46,21 @@ struct _AnimationCelAnimationClass
   AnimationClass  parent_class;
 };
 
-GType            animation_cel_animation_get_type (void);
+GType         animation_cel_animation_get_type (void);
 
 
-void             animation_cel_animation_set_comment  (AnimationCelAnimation *animation,
+void          animation_cel_animation_set_comment     (AnimationCelAnimation *animation,
                                                        gint                   position,
                                                        const gchar           *comment);
-const gchar    * animation_cel_animation_get_comment  (AnimationCelAnimation *animation,
+const gchar * animation_cel_animation_get_comment     (AnimationCelAnimation *animation,
                                                        gint                   position);
 
-void             animation_cel_animation_set_duration (AnimationCelAnimation *animation,
+void          animation_cel_animation_set_duration    (AnimationCelAnimation *animation,
                                                        gint                   duration);
 
+gint          animation_cel_animation_get_levels      (AnimationCelAnimation *animation);
+
+const gchar * animation_cel_animation_get_track_title (AnimationCelAnimation *animation,
+                                                       gint                   level);
 
 #endif  /*  __ANIMATION_CEL_ANIMATION_H__  */

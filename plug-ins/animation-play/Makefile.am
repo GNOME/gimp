@@ -55,6 +55,8 @@ animation_play_SOURCES = \
 	widgets/animation-storyboard.c	\
 	widgets/animation-layer-view.h	\
 	widgets/animation-layer-view.c	\
+	widgets/animation-xsheet.h		\
+	widgets/animation-xsheet.c		\
 	animation-utils.h				\
 	animation-utils.c				\
 	animation-play.c
