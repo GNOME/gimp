@@ -37,6 +37,16 @@
 #include "gimpdisplayshell-transform.h"
 
 
+/*  local function prototypes  */
+
+static void gimp_display_shell_transform_xy_f_noround (GimpDisplayShell *shell,
+                                                       gdouble           x,
+                                                       gdouble           y,
+                                                       gdouble          *nx,
+                                                       gdouble          *ny);
+
+/*  public functions  */
+
 /**
  * gimp_display_shell_zoom_coords:
  * @shell:          a #GimpDisplayShell
@@ -795,10 +805,10 @@ gimp_display_shell_transform_bounds (GimpDisplayShell *shell,
       gdouble tx3, ty3;
       gdouble tx4, ty4;
 
-      gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1);
-      gimp_display_shell_transform_xy_f (shell, x1, y2, &tx2, &ty2);
-      gimp_display_shell_transform_xy_f (shell, x2, y1, &tx3, &ty3);
-      gimp_display_shell_transform_xy_f (shell, x2, y2, &tx4, &ty4);
+      gimp_display_shell_transform_xy_f_noround (shell, x1, y1, &tx1, &ty1);
+      gimp_display_shell_transform_xy_f_noround (shell, x1, y2, &tx2, &ty2);
+      gimp_display_shell_transform_xy_f_noround (shell, x2, y1, &tx3, &ty3);
+      gimp_display_shell_transform_xy_f_noround (shell, x2, y2, &tx4, &ty4);
 
       *nx1 = MIN4 (tx1, tx2, tx3, tx4);
       *ny1 = MIN4 (ty1, ty2, ty3, ty4);
@@ -807,8 +817,8 @@ gimp_display_shell_transform_bounds (GimpDisplayShell *shell,
     }
   else
     {
-      gimp_display_shell_transform_xy_f (shell, x1, y1, nx1, ny1);
-      gimp_display_shell_transform_xy_f (shell, x2, y2, nx2, ny2);
+      gimp_display_shell_transform_xy_f_noround (shell, x1, y1, nx1, ny1);
+      gimp_display_shell_transform_xy_f_noround (shell, x2, y2, nx2, ny2);
     }
 }
 
@@ -905,4 +915,24 @@ gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
   if (y)      *y      = y1;
   if (width)  *width  = x2 - x1;
   if (height) *height = y2 - y1;
+}
+
+
+/*  private functions  */
+
+/* Same as gimp_display_shell_transform_xy_f(), but doesn't do any rounding
+ * for the transformed coordiantes.
+ */
+static void
+gimp_display_shell_transform_xy_f_noround (GimpDisplayShell *shell,
+                                           gdouble           x,
+                                           gdouble           y,
+                                           gdouble          *nx,
+                                           gdouble          *ny)
+{
+  *nx = shell->scale_x * x - shell->offset_x;
+  *ny = shell->scale_y * y - shell->offset_y;
+
+  if (shell->rotate_transform)
+    cairo_matrix_transform_point (shell->rotate_transform, nx, ny);
 }
