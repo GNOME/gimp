@@ -780,7 +780,7 @@ gimp_display_shell_get_rotated_scale (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->rotate_angle == 0.0)
+  if (shell->rotate_angle == 0.0 || shell->scale_x == shell->scale_y)
     {
       if (scale_x) *scale_x = shell->scale_x;
       if (scale_y) *scale_y = shell->scale_y;

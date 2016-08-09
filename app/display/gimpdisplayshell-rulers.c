@@ -69,7 +69,6 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
     {
       gint    image_x, image_y;
       gdouble res_x, res_y;
-      gdouble cos_a, sin_a;
 
       gimp_display_shell_scale_get_image_bounds (shell,
                                                  &image_x, &image_y,
@@ -85,18 +84,28 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
 
       gimp_image_get_resolution (image, &res_x, &res_y);
 
-      cos_a = cos (G_PI * shell->rotate_angle / 180.0);
-      sin_a = sin (G_PI * shell->rotate_angle / 180.0);
-
-      if (shell->dot_for_dot)
+      if (shell->rotate_angle == 0.0 || res_x == res_y)
         {
-          resolution_x = 1.0 / sqrt (SQR (cos_a / res_x) + SQR (sin_a / res_y));
-          resolution_y = 1.0 / sqrt (SQR (cos_a / res_y) + SQR (sin_a / res_x));
+          resolution_x = res_x;
+          resolution_y = res_y;
         }
       else
         {
-          resolution_x = sqrt (SQR (res_x * cos_a) + SQR (res_y * sin_a));
-          resolution_y = sqrt (SQR (res_y * cos_a) + SQR (res_x * sin_a));
+          gdouble cos_a = cos (G_PI * shell->rotate_angle / 180.0);
+          gdouble sin_a = sin (G_PI * shell->rotate_angle / 180.0);
+
+          if (shell->dot_for_dot)
+            {
+              resolution_x = 1.0 / sqrt (SQR (cos_a / res_x) +
+                                         SQR (sin_a / res_y));
+              resolution_y = 1.0 / sqrt (SQR (cos_a / res_y) +
+                                         SQR (sin_a / res_x));
+            }
+          else
+            {
+              resolution_x = sqrt (SQR (res_x * cos_a) + SQR (res_y * sin_a));
+              resolution_y = sqrt (SQR (res_y * cos_a) + SQR (res_x * sin_a));
+            }
         }
     }
   else
