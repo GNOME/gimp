@@ -921,7 +921,7 @@ gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
 /*  private functions  */
 
 /* Same as gimp_display_shell_transform_xy_f(), but doesn't do any rounding
- * for the transformed coordiantes.
+ * for the transformed coordinates.
  */
 static void
 gimp_display_shell_transform_xy_f_noround (GimpDisplayShell *shell,

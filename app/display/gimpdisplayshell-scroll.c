@@ -199,8 +199,8 @@ gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
 
       if (shell->disp_height < bounds_height)
         {
-          min_offset_y = bounds_y
-                         - shell->disp_height * OVERPAN_FACTOR;
+          min_offset_y = bounds_y -
+                         shell->disp_height * OVERPAN_FACTOR;
           max_offset_y = bounds_y + bounds_height -
                          shell->disp_height * (1.0 - OVERPAN_FACTOR);
         }
