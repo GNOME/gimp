@@ -185,6 +185,78 @@ animation_cel_animation_finalize (GObject *object)
 /**** Public Functions ****/
 
 void
+animation_cel_animation_set_layers (AnimationCelAnimation *animation,
+                                    gint                   level,
+                                    gint                   position,
+                                    GList                 *layers)
+{
+  Track *track;
+
+  track = g_list_nth_data (animation->priv->tracks, level);
+
+  if (track)
+    {
+      GList *frame_layer = g_list_nth (track->frames, position);
+
+      if (! frame_layer)
+        {
+          gint frames_length = g_list_length (track->frames);
+          gint i;
+
+          track->frames = g_list_reverse (track->frames);
+          for (i = frames_length; i < position + 1; i++)
+            {
+              track->frames = g_list_prepend (track->frames, 0);
+              frame_layer = track->frames;
+            }
+          track->frames = g_list_reverse (track->frames);
+        }
+      if (layers)
+        {
+          frame_layer->data = layers->data;
+        }
+      else
+        {
+          frame_layer->data = 0;
+        }
+      animation_cel_animation_cache (animation, position);
+      if (animation_get_position (ANIMATION (animation)) - 1 == position)
+        {
+          GeglBuffer *buffer;
+
+          buffer = animation_get_frame (ANIMATION (animation), position + 1);
+          g_signal_emit_by_name (animation, "render",
+                                 position, buffer, TRUE);
+          if (buffer)
+            g_object_unref (buffer);
+        }
+    }
+}
+
+GList *
+animation_cel_animation_get_layers (AnimationCelAnimation *animation,
+                                    gint                   level,
+                                    gint                   position)
+{
+  GList *layers = NULL;
+  Track *track;
+
+  track = g_list_nth_data (animation->priv->tracks, level);
+
+  if (track)
+    {
+      gpointer layer = g_list_nth_data (track->frames, position);
+
+      if (layer)
+        {
+          layers = g_list_prepend (layers, layer);
+        }
+    }
+
+  return layers;
+}
+
+void
 animation_cel_animation_set_comment (AnimationCelAnimation *animation,
                                      gint                   position,
                                      const gchar           *comment)
@@ -512,6 +584,7 @@ animation_cel_animation_serialize (Animation *animation)
                   xml = g_strconcat (xml, xml2, NULL);
                   g_free (tmp);
                   g_free (xml2);
+                  duration = 0;
                 }
             }
           pos++;
@@ -561,16 +634,16 @@ animation_cel_animation_same (Animation *animation,
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
 
-  g_return_val_if_fail (pos1 >= 0                            &&
-                        pos1 < cel_animation->priv->duration &&
-                        pos2 >= 0                            &&
-                        pos2 < cel_animation->priv->duration,
+  g_return_val_if_fail (pos1 > 0                              &&
+                        pos1 <= cel_animation->priv->duration &&
+                        pos2 > 0                              &&
+                        pos2 <= cel_animation->priv->duration,
                         FALSE);
 
   cache1 = g_list_nth_data (cel_animation->priv->cache,
-                            pos1);
+                            pos1 - 1);
   cache2 = g_list_nth_data (cel_animation->priv->cache,
-                            pos2);
+                            pos2 - 1);
 
   return animation_cel_animation_cache_cmp (cache1, cache2);
 }
@@ -732,11 +805,13 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
               if (track_length < status->frame_position + status->frame_duration)
                 {
                   /* Make sure the list is long enough. */
+                  status->track->frames = g_list_reverse (status->track->frames);
                   for (i = track_length; i < status->frame_position + status->frame_duration; i++)
                     {
                       status->track->frames = g_list_prepend (status->track->frames,
                                                               NULL);
                     }
+                  status->track->frames = g_list_reverse (status->track->frames);
                 }
               iter = status->track->frames;
               for (i = 0; i < status->frame_position + status->frame_duration; i++)
@@ -1048,7 +1123,7 @@ animation_cel_animation_cache_cmp (Cache *cache1,
 static void
 animation_cel_animation_clean_cache (Cache *cache)
 {
-  if (--(cache->refs) == 0)
+  if (cache != NULL && --(cache->refs) == 0)
     {
       g_object_unref (cache->buffer);
       g_free (cache->composition);

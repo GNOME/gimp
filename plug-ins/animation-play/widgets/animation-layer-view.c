@@ -37,7 +37,7 @@ enum
 /* Tree model rows. */
 enum
 {
-  COLUMN_LAYER_ID,
+  COLUMN_LAYER_TATTOO,
   COLUMN_LAYER_NAME,
   COLUMN_SIZE
 };
@@ -75,7 +75,7 @@ static void          animation_layer_view_fill    (AnimationLayerView *view,
                                                    gint                parent_layer,
                                                    GtkTreeIter        *parent);
 static GtkTreePath * animation_layer_view_get_row (AnimationLayerView *view,
-                                                   gint                layer_id,
+                                                   gint                tattoo,
                                                    GtkTreeIter        *parent);
 
 /* Signal handlers */
@@ -212,9 +212,9 @@ animation_layer_view_select (AnimationLayerView *view,
   for (layer = layers; layer; layer = layer->next)
     {
       GtkTreePath *path;
-      gint         layer_id = GPOINTER_TO_INT (layer->data);
+      gint         tattoo = GPOINTER_TO_INT (layer->data);
       
-      path = animation_layer_view_get_row (view, layer_id, NULL);
+      path = animation_layer_view_get_row (view, tattoo, NULL);
       g_warn_if_fail (path != NULL);
       if (path)
         {
@@ -236,7 +236,8 @@ animation_layer_view_constructed (GObject *object)
   GtkTreeSelection *selection;
 
   selection = gtk_tree_view_get_selection (view);
-  gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
+  /*gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);*/
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
   g_signal_connect (selection, "changed",
                     G_CALLBACK (on_selection_changed),
@@ -379,7 +380,7 @@ animation_layer_view_fill (AnimationLayerView *view,
     {
       gtk_tree_store_insert (store, &iter, parent, i);
       gtk_tree_store_set (store, &iter,
-                          COLUMN_LAYER_ID, layers[i],
+                          COLUMN_LAYER_TATTOO, gimp_item_get_tattoo (layers[i]),
                           COLUMN_LAYER_NAME, gimp_item_get_name (layers[i]),
                           -1);
       if (gimp_item_is_group (layers[i]))
@@ -391,16 +392,16 @@ animation_layer_view_fill (AnimationLayerView *view,
 
 /* animation_layer_view_get_row:
  * @view: the #AnimationLayerView.
- * @layer_id: the #GimpLayer id.
+ * @tattoo: the #GimpLayer tattoo.
  * @parent: %NULL to search from the first call (used for recursivity).
  *
- * Returns: the #GtkTreePath for the row of @layer_id, NULL if not found
+ * Returns: the #GtkTreePath for the row of @tattoo, NULL if not found
  * in @view.
  * The returned path should be freed with gtk_tree_path_free()
  */
 static GtkTreePath *
 animation_layer_view_get_row (AnimationLayerView *view,
-                              gint                layer_id,
+                              gint                tattoo,
                               GtkTreeIter        *parent)
 {
   GtkTreeModel *model;
@@ -416,9 +417,9 @@ animation_layer_view_get_row (AnimationLayerView *view,
       GValue       value = { 0, };
 
       gtk_tree_model_get_value (model, &iter,
-                                COLUMN_LAYER_ID,
+                                COLUMN_LAYER_TATTOO,
                                 &value);
-      if (g_value_get_int (&value) == layer_id)
+      if (g_value_get_int (&value) == tattoo)
         path = gtk_tree_model_get_path (model, &iter);
 
       g_value_unset (&value);
@@ -431,7 +432,7 @@ animation_layer_view_get_row (AnimationLayerView *view,
         {
           GtkTreePath *found_path;
 
-          found_path = animation_layer_view_get_row (view, layer_id, &iter);
+          found_path = animation_layer_view_get_row (view, tattoo, &iter);
 
           if (found_path)
             return found_path;
@@ -465,7 +466,7 @@ on_selection_changed (GtkTreeSelection   *selection,
           GValue value = { 0, };
 
           gtk_tree_model_get_value (model, &iter,
-                                    COLUMN_LAYER_ID,
+                                    COLUMN_LAYER_TATTOO,
                                     &value);
           layers = g_list_prepend (layers,
                                    GINT_TO_POINTER (g_value_get_int (&value)));

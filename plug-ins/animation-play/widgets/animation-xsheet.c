@@ -77,6 +77,11 @@ static void on_animation_loaded           (Animation       *animation,
                                            gint             preview_height,
                                            AnimationXSheet *xsheet);
 
+/* Callbacks on layer view. */
+static void on_layer_selection            (AnimationLayerView *view,
+                                           GList              *layers,
+                                           AnimationXSheet    *xsheet);
+
 /* UI Signals */
 static gboolean animation_xsheet_cel_clicked         (GtkWidget       *button,
                                                       GdkEvent        *event,
@@ -169,6 +174,10 @@ animation_xsheet_constructed (GObject *object)
   gtk_table_set_col_spacings (GTK_TABLE (xsheet->priv->track_layout), 0);
 
   gtk_widget_show (xsheet->priv->track_layout);
+
+  /* Tie the layer view to the xsheet. */
+  g_signal_connect (xsheet->priv->layer_view, "layer-selection",
+                    G_CALLBACK (on_layer_selection), xsheet);
 
   /* Reload everything when we reload the animation. */
   g_signal_connect_after (xsheet->priv->animation, "loaded",
@@ -401,6 +410,29 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 }
 
 static void
+on_layer_selection (AnimationLayerView *view,
+                    GList              *layers,
+                    AnimationXSheet    *xsheet)
+{
+  GQueue   *frames;
+  gpointer  position;
+
+  if (g_queue_is_empty (xsheet->priv->selected_frames))
+    return;
+
+  frames = g_queue_copy (xsheet->priv->selected_frames);
+  while (! g_queue_is_empty (frames))
+    {
+      position = g_queue_pop_head (frames);
+      animation_cel_animation_set_layers (xsheet->priv->animation,
+                                          xsheet->priv->selected_track,
+                                          GPOINTER_TO_INT (position),
+                                          layers);
+    }
+  g_queue_free (frames);
+}
+
+static void
 on_animation_loaded (Animation       *animation,
                      gint             first_frame,
                      gint             num_frames,
@@ -484,6 +516,26 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
         {
           gtk_toggle_button_set_active (frame_iter->data, TRUE);
         }
+    }
+
+  /* Finally update the layer view. */
+  if (g_queue_is_empty (xsheet->priv->selected_frames))
+    {
+      animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                   NULL);
+    }
+  else
+    {
+      GList *layers;
+
+      /* When several frames are selected, show layers of the first selected. */
+      position = g_queue_peek_tail (xsheet->priv->selected_frames);
+
+      layers = animation_cel_animation_get_layers (xsheet->priv->animation,
+                                                   GPOINTER_TO_INT (track_num),
+                                                   GPOINTER_TO_INT (position));
+      animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                   layers);
     }
 
   /* All handled here. */
