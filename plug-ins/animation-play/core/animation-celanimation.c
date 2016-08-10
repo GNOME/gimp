@@ -288,6 +288,22 @@ animation_cel_animation_get_track_title (AnimationCelAnimation *animation,
   return title;
 }
 
+void
+animation_cel_animation_set_track_title (AnimationCelAnimation *animation,
+                                         gint                   level,
+                                         const gchar           *title)
+{
+  GList *track;
+
+  track = g_list_nth (animation->priv->tracks, level);
+
+  if (track)
+    {
+      g_free (((Track *) track->data)->title);
+      ((Track *) track->data)->title = g_strdup (title);
+    }
+}
+
 /**** Virtual methods ****/
 
 static gint

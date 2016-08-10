@@ -60,6 +60,9 @@ void          animation_cel_animation_set_duration    (AnimationCelAnimation *an
 
 gint          animation_cel_animation_get_levels      (AnimationCelAnimation *animation);
 
+void          animation_cel_animation_set_track_title (AnimationCelAnimation *animation,
+                                                       gint                   level,
+                                                       const gchar           *title);
 const gchar * animation_cel_animation_get_track_title (AnimationCelAnimation *animation,
                                                        gint                   level);
 

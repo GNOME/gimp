@@ -75,9 +75,12 @@ static void on_animation_loaded           (Animation       *animation,
                                            AnimationXSheet *xsheet);
 
 /* UI Signals */
-static gboolean animation_xsheet_cel_clicked  (GtkWidget       *button,
-                                               GdkEvent        *event,
-                                               AnimationXSheet *xsheet);
+static gboolean animation_xsheet_cel_clicked         (GtkWidget       *button,
+                                                      GdkEvent        *event,
+                                                      AnimationXSheet *xsheet);
+static void     animation_xsheet_track_title_updated (GtkEntryBuffer  *buffer,
+                                                      GParamSpec      *param_spec,
+                                                      AnimationXSheet *xsheet);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -326,7 +329,8 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   /* Titles. */
   for (j = 0; j < n_tracks; j++)
     {
-      const gchar *title;
+      const gchar    *title;
+      GtkEntryBuffer *entry_buffer;
 
       title = animation_cel_animation_get_track_title (xsheet->priv->animation, j);
 
@@ -335,7 +339,15 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
       gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
                         frame, j + 1, j + 2, 0, 1,
                         GTK_FILL, GTK_FILL, 0, 0);
-      label = gtk_label_new (title);
+      label = gtk_entry_new ();
+      gtk_entry_set_text (GTK_ENTRY (label), title);
+      entry_buffer = gtk_entry_get_buffer (GTK_ENTRY (label));
+      g_object_set_data (G_OBJECT (entry_buffer), "track-num",
+                         GINT_TO_POINTER (j));
+      g_signal_connect (entry_buffer,
+                        "notify::text",
+                        G_CALLBACK (animation_xsheet_track_title_updated),
+                        xsheet);
       gtk_container_add (GTK_CONTAINER (frame), label);
       gtk_widget_show (label);
       gtk_widget_show (frame);
@@ -443,4 +455,20 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
 
   /* All handled here. */
   return TRUE;
+}
+
+static void
+animation_xsheet_track_title_updated (GtkEntryBuffer  *buffer,
+                                      GParamSpec      *param_spec,
+                                      AnimationXSheet *xsheet)
+{
+  const gchar *title;
+  gpointer     track_num;
+
+  track_num = g_object_get_data (G_OBJECT (buffer), "track-num");
+  title = gtk_entry_buffer_get_text (buffer);
+
+  animation_cel_animation_set_track_title (xsheet->priv->animation,
+                                           GPOINTER_TO_INT (track_num),
+                                           title);
 }
