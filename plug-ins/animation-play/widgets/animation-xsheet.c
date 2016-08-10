@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include "gdk/gdkkeysyms.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -48,6 +49,8 @@ struct _AnimationXSheetPrivate
   GList                 *cels;
   gint                   selected_track;
   GQueue                *selected_frames;
+
+  GList                 *comment_fields;
 };
 
 static void animation_xsheet_constructed  (GObject      *object);
@@ -80,6 +83,11 @@ static gboolean animation_xsheet_cel_clicked         (GtkWidget       *button,
                                                       AnimationXSheet *xsheet);
 static void     animation_xsheet_track_title_updated (GtkEntryBuffer  *buffer,
                                                       GParamSpec      *param_spec,
+                                                      AnimationXSheet *xsheet);
+static void     animation_xsheet_comment_changed     (GtkTextBuffer   *text_buffer,
+                                                      AnimationXSheet *xsheet);
+static gboolean animation_xsheet_comment_keypress    (GtkWidget       *entry,
+                                                      GdkEventKey     *event,
                                                       AnimationXSheet *xsheet);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
@@ -153,7 +161,7 @@ animation_xsheet_constructed (GObject *object)
                                   GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS);
 
   /* We don't know the size yet. */
-  xsheet->priv->track_layout = gtk_table_new (1, 1, TRUE);
+  xsheet->priv->track_layout = gtk_table_new (1, 1, FALSE);
   
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (xsheet),
                                          xsheet->priv->track_layout);
@@ -224,6 +232,9 @@ animation_xsheet_finalize (GObject *object)
     g_object_unref (xsheet->priv->layer_view);
   g_queue_free (xsheet->priv->selected_frames);
 
+  g_list_free_full (xsheet->priv->cels, (GDestroyNotify) g_list_free);
+  g_list_free (xsheet->priv->comment_fields);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -242,7 +253,8 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   gtk_container_foreach (GTK_CONTAINER (xsheet->priv->track_layout),
                          (GtkCallback) gtk_widget_destroy,
                          NULL);
-  g_list_free (xsheet->priv->cels);
+  g_list_free_full (xsheet->priv->cels, (GDestroyNotify) g_list_free);
+  g_list_free (xsheet->priv->comment_fields);
   xsheet->priv->cels = NULL;
   xsheet->priv->selected_track = -1;
   g_queue_clear (xsheet->priv->selected_frames);
@@ -269,7 +281,9 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
                     (guint) (n_tracks + 6));
   for (i = 0; i < n_frames; i++)
     {
-      gchar     *num_str;
+      GtkTextBuffer *text_buffer;
+      const gchar   *comment;
+      gchar         *num_str;
 
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
@@ -317,6 +331,24 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
                         frame, n_tracks + 1, n_tracks + 6, i + 1, i + 2,
                         GTK_FILL, GTK_FILL, 0, 0);
       comment_field = gtk_text_view_new ();
+      xsheet->priv->comment_fields = g_list_prepend (xsheet->priv->comment_fields,
+                                                     comment_field);
+      text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (comment_field));
+      comment = animation_cel_animation_get_comment (xsheet->priv->animation,
+                                                     i);
+      if (comment != NULL)
+        gtk_text_buffer_insert_at_cursor (text_buffer, comment, -1);
+
+      g_object_set_data (G_OBJECT (comment_field), "frame-position",
+                         GINT_TO_POINTER (i));
+      g_object_set_data (G_OBJECT (text_buffer), "frame-position",
+                         GINT_TO_POINTER (i));
+      g_signal_connect (comment_field, "key-press-event",
+                        G_CALLBACK (animation_xsheet_comment_keypress),
+                        xsheet);
+      g_signal_connect (text_buffer, "changed",
+                        (GCallback) animation_xsheet_comment_changed,
+                        xsheet);
       gtk_container_add (GTK_CONTAINER (frame), comment_field);
       gtk_widget_show (comment_field);
       gtk_widget_show (frame);
@@ -325,6 +357,7 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
     {
       iter->data = g_list_reverse (iter->data);
     }
+  xsheet->priv->comment_fields = g_list_reverse (xsheet->priv->comment_fields);
 
   /* Titles. */
   for (j = 0; j < n_tracks; j++)
@@ -471,4 +504,55 @@ animation_xsheet_track_title_updated (GtkEntryBuffer  *buffer,
   animation_cel_animation_set_track_title (xsheet->priv->animation,
                                            GPOINTER_TO_INT (track_num),
                                            title);
+}
+
+static void
+animation_xsheet_comment_changed (GtkTextBuffer   *text_buffer,
+                                  AnimationXSheet *xsheet)
+{
+  gchar       *text;
+  GtkTextIter  start;
+  GtkTextIter  end;
+  gpointer     position;
+
+  position = g_object_get_data (G_OBJECT (text_buffer), "frame-position");
+
+  gtk_text_buffer_get_bounds (text_buffer, &start, &end);
+  text = gtk_text_buffer_get_text (text_buffer, &start, &end, FALSE);
+  animation_cel_animation_set_comment (xsheet->priv->animation,
+                                       GPOINTER_TO_INT (position),
+                                       text);
+  g_free (text);
+}
+
+static gboolean
+animation_xsheet_comment_keypress (GtkWidget       *entry,
+                                   GdkEventKey     *event,
+                                   AnimationXSheet *xsheet)
+{
+  gpointer position;
+
+  position = g_object_get_data (G_OBJECT (entry), "frame-position");
+
+  if (event->keyval == GDK_KEY_Tab    ||
+      event->keyval == GDK_KEY_KP_Tab ||
+      event->keyval == GDK_KEY_ISO_Left_Tab)
+    {
+      GtkWidget *comment;
+
+      comment = g_list_nth_data (xsheet->priv->comment_fields,
+                                 GPOINTER_TO_INT (position) + 1);
+      if (comment)
+        {
+          /* Grab the next comment widget. */
+          gtk_widget_grab_focus (comment);
+        }
+      else
+        {
+          /* Loop to the first comment after the last. */
+          gtk_widget_grab_focus (xsheet->priv->comment_fields->data);
+        }
+      return TRUE;
+    }
+  return FALSE;
 }

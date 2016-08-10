@@ -191,13 +191,26 @@ animation_cel_animation_set_comment (AnimationCelAnimation *animation,
 {
   GList *item;
 
-  g_return_if_fail (position > 0 &&
-                    position <= animation->priv->duration);
+  g_return_if_fail (position >= 0 &&
+                    position < animation->priv->duration);
 
-  item = g_list_nth (animation->priv->comments, position - 1);
+  item = g_list_nth (animation->priv->comments, position);
   if (item && item->data)
     {
       g_free (item->data);
+    }
+  else if (! item)
+    {
+      gint length = g_list_length (animation->priv->comments);
+      gint i;
+
+      animation->priv->comments = g_list_reverse (animation->priv->comments);
+      for (i = length; i < position + 1; i++)
+        {
+          animation->priv->comments = g_list_prepend (animation->priv->comments, NULL);
+          item = animation->priv->comments;
+        }
+      animation->priv->comments = g_list_reverse (animation->priv->comments);
     }
 
   item->data = g_strdup (comment);
@@ -207,11 +220,11 @@ const gchar *
 animation_cel_animation_get_comment (AnimationCelAnimation *animation,
                                      gint                   position)
 {
-  g_return_val_if_fail (position > 0 &&
-                        position <= animation->priv->duration,
+  g_return_val_if_fail (position >= 0 &&
+                        position < animation->priv->duration,
                         0);
 
-  return g_list_nth_data (animation->priv->comments, position - 1);
+  return g_list_nth_data (animation->priv->comments, position);
 }
 
 void
@@ -516,13 +529,13 @@ animation_cel_animation_serialize (Animation *animation)
   /* New loop for comments. */
   for (iter = priv->comments, i = 0; iter; iter = iter->next, i++)
     {
-      if (iter->data)
+      if (iter->data && strlen (iter->data) > 0)
         {
           gchar *comment = iter->data;
 
           /* Comments are for a given panel, not for a frame position. */
           xml2 = g_markup_printf_escaped ("<comment frame-position=\"%d\">%s</comment>",
-                                          i + 1,
+                                          i,
                                           comment);
           tmp = xml;
           xml = g_strconcat (xml, xml2, NULL);
@@ -761,7 +774,7 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
 
       while (*names && *values)
         {
-          if (strcmp (*names, "position") == 0 && **values)
+          if (strcmp (*names, "frame-position") == 0 && **values)
             {
               gint position = (gint) g_ascii_strtoll (*values, NULL, 10);
 
@@ -835,7 +848,7 @@ animation_cel_animation_text (GMarkupParseContext  *context,
       if (status->frame_position == -1)
         /* invalid comment tag. */
         break;
-      /* Setting comment to a panel. */
+      /* Setting comment to a frame. */
       animation_cel_animation_set_comment (cel_animation,
                                            status->frame_position,
                                            text);
