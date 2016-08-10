@@ -410,10 +410,15 @@ animation_cel_animation_load_xml (Animation   *animation,
     }
   else
     {
-      /* cache. */
-      gint i;
-      gint duration = animation_get_length (animation);
+      AnimationCelAnimation *cel_animation;
+      gint                   duration = animation_get_length (animation);
+      gint                   i;
 
+      cel_animation = ANIMATION_CEL_ANIMATION (animation);
+      /* Reverse track order. */
+      cel_animation->priv->tracks = g_list_reverse (cel_animation->priv->tracks);
+
+      /* cache. */
       for (i = 0; i < duration; i++)
         {
           g_signal_emit_by_name (animation, "loading",
