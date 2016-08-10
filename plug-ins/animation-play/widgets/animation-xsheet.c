@@ -44,6 +44,10 @@ struct _AnimationXSheetPrivate
   GtkWidget             *layer_view;
 
   GtkWidget             *track_layout;
+
+  GList                 *cels;
+  gint                   selected_track;
+  GQueue                *selected_frames;
 };
 
 static void animation_xsheet_constructed  (GObject      *object);
@@ -69,6 +73,11 @@ static void on_animation_loaded           (Animation       *animation,
                                            gint             preview_width,
                                            gint             preview_height,
                                            AnimationXSheet *xsheet);
+
+/* UI Signals */
+static gboolean animation_xsheet_cel_clicked  (GtkWidget       *button,
+                                               GdkEvent        *event,
+                                               AnimationXSheet *xsheet);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -111,6 +120,7 @@ animation_xsheet_init (AnimationXSheet *xsheet)
   xsheet->priv = G_TYPE_INSTANCE_GET_PRIVATE (xsheet,
                                               ANIMATION_TYPE_XSHEET,
                                               AnimationXSheetPrivate);
+  xsheet->priv->selected_frames = g_queue_new ();
 }
 
 /************ Public Functions ****************/
@@ -209,6 +219,7 @@ animation_xsheet_finalize (GObject *object)
     g_object_unref (xsheet->priv->animation);
   if (xsheet->priv->layer_view)
     g_object_unref (xsheet->priv->layer_view);
+  g_queue_free (xsheet->priv->selected_frames);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -219,11 +230,19 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   GtkWidget *frame;
   GtkWidget *label;
   GtkWidget *comment_field;
+  GList     *iter;
   gint       n_tracks;
   gint       n_frames;
   gint       i;
   gint       j;
 
+  gtk_container_foreach (GTK_CONTAINER (xsheet->priv->track_layout),
+                         (GtkCallback) gtk_widget_destroy,
+                         NULL);
+  g_list_free (xsheet->priv->cels);
+  xsheet->priv->cels = NULL;
+  xsheet->priv->selected_track = -1;
+  g_queue_clear (xsheet->priv->selected_frames);
   /*
    * | Frame | Background | Track 1 | Track 2 | ... | Comments (x5) |
    * | 1     |            |         |         |     |               |
@@ -234,6 +253,12 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 
   n_tracks = animation_cel_animation_get_levels (xsheet->priv->animation);
   n_frames = animation_get_length (ANIMATION (xsheet->priv->animation));
+
+  /* The cels structure is a matrix of every cel widget. */
+  for (j = 0; j < n_tracks; j++)
+    {
+      xsheet->priv->cels = g_list_prepend (xsheet->priv->cels, NULL);
+    }
 
   /* Add 4 columns for track names and 1 row for frame numbers. */
   gtk_table_resize (GTK_TABLE (xsheet->priv->track_layout),
@@ -258,12 +283,28 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 
       for (j = 0; j < n_tracks; j++)
         {
+          GtkWidget *cel;
+          GList     *track_cels = g_list_nth (xsheet->priv->cels, j);
+
           frame = gtk_frame_new (NULL);
           gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
           gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
                             frame, j + 1, j + 2, i + 1, i + 2,
                             GTK_FILL, GTK_FILL, 0, 0);
 
+          cel = gtk_toggle_button_new ();
+          track_cels->data = g_list_prepend (track_cels->data, cel);
+          g_object_set_data (G_OBJECT (cel), "track-num",
+                             GINT_TO_POINTER (j));
+          g_object_set_data (G_OBJECT (cel), "frame-position",
+                             GINT_TO_POINTER (i));
+          g_signal_connect (cel, "button-release-event",
+                            G_CALLBACK (animation_xsheet_cel_clicked),
+                            xsheet);
+          gtk_button_set_relief (GTK_BUTTON (cel), GTK_RELIEF_NONE);
+          gtk_button_set_focus_on_click (GTK_BUTTON (cel), FALSE);
+          gtk_container_add (GTK_CONTAINER (frame), cel);
+          gtk_widget_show (cel);
           gtk_widget_show (frame);
         }
       /* Comments */
@@ -276,6 +317,10 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
       gtk_container_add (GTK_CONTAINER (frame), comment_field);
       gtk_widget_show (comment_field);
       gtk_widget_show (frame);
+    }
+  for (iter = xsheet->priv->cels; iter; iter = iter->next)
+    {
+      iter->data = g_list_reverse (iter->data);
     }
 
   /* Titles. */
@@ -321,4 +366,81 @@ on_animation_loaded (Animation       *animation,
                      AnimationXSheet *xsheet)
 {
   animation_xsheet_reset_layout (xsheet);
+}
+
+static gboolean
+animation_xsheet_cel_clicked (GtkWidget       *button,
+                              GdkEvent        *event,
+                              AnimationXSheet *xsheet)
+{
+  gpointer track_num;
+  gpointer position;
+  gboolean toggled;
+  gboolean shift;
+  gboolean ctrl;
+
+  track_num = g_object_get_data (G_OBJECT (button), "track-num");
+  position  = g_object_get_data (G_OBJECT (button), "frame-position");
+
+  toggled = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+  shift   = ((GdkEventButton *) event)->state & GDK_SHIFT_MASK;
+  ctrl    = ((GdkEventButton *) event)->state & GDK_CONTROL_MASK;
+
+  if ((! shift && ! ctrl) ||
+      (xsheet->priv->selected_track >= 0 &&
+       xsheet->priv->selected_track != GPOINTER_TO_INT (track_num)))
+    {
+      GList *track_iter;
+      GList *frame_iter;
+
+      for (track_iter = xsheet->priv->cels; track_iter; track_iter = track_iter->next)
+        {
+          for (frame_iter = track_iter->data; frame_iter; frame_iter = frame_iter->next)
+            {
+              gtk_toggle_button_set_active (frame_iter->data, FALSE);
+            }
+        }
+      g_queue_clear (xsheet->priv->selected_frames);
+    }
+  else
+    {
+      g_queue_remove (xsheet->priv->selected_frames, position);
+    }
+  xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
+
+  if (! toggled)
+    {
+      GList *frame_iter;
+      gint   prev_selection = GPOINTER_TO_INT (position);
+      gint   direction = 1;
+      gint   selection_size;
+      gint   i;
+
+      frame_iter = g_list_nth (xsheet->priv->cels, GPOINTER_TO_INT (track_num))->data;
+
+      if (shift)
+        {
+          prev_selection = GPOINTER_TO_INT (g_queue_pop_head (xsheet->priv->selected_frames));
+          if (prev_selection > GPOINTER_TO_INT (position))
+            {
+              direction = -1;
+            }
+        }
+
+      selection_size = MAX (GPOINTER_TO_INT (position), prev_selection) - MIN (GPOINTER_TO_INT (position), prev_selection) + 1;
+      for (i = prev_selection; selection_size; i = i + direction, selection_size--)
+        {
+          g_queue_push_head (xsheet->priv->selected_frames, GINT_TO_POINTER (i));
+        }
+
+      frame_iter = g_list_nth (frame_iter, MIN (GPOINTER_TO_INT (position), prev_selection));
+      selection_size = MAX (GPOINTER_TO_INT (position), prev_selection) - MIN (GPOINTER_TO_INT (position), prev_selection) + 1;
+      for (; frame_iter && selection_size > 0; frame_iter = frame_iter->next, selection_size--)
+        {
+          gtk_toggle_button_set_active (frame_iter->data, TRUE);
+        }
+    }
+
+  /* All handled here. */
+  return TRUE;
 }
