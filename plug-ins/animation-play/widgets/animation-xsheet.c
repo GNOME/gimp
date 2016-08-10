@@ -267,6 +267,7 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   xsheet->priv->cels = NULL;
   xsheet->priv->selected_track = -1;
   g_queue_clear (xsheet->priv->selected_frames);
+
   /*
    * | Frame | Background | Track 1 | Track 2 | ... | Comments (x5) |
    * | 1     |            |         |         |     |               |
@@ -463,10 +464,11 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
   shift   = ((GdkEventButton *) event)->state & GDK_SHIFT_MASK;
   ctrl    = ((GdkEventButton *) event)->state & GDK_CONTROL_MASK;
 
-  if ((! shift && ! ctrl) ||
+  if ((! shift && ! ctrl)                                         ||
       (xsheet->priv->selected_track >= 0 &&
        xsheet->priv->selected_track != GPOINTER_TO_INT (track_num)))
     {
+      /* Changing track and normal click resets selection. */
       GList *track_iter;
       GList *frame_iter;
 
@@ -478,44 +480,77 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
             }
         }
       g_queue_clear (xsheet->priv->selected_frames);
+      xsheet->priv->selected_track = -1;
     }
-  else
+
+  if (ctrl)
     {
-      g_queue_remove (xsheet->priv->selected_frames, position);
-    }
-  xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
-
-  if (! toggled)
-    {
-      GList *frame_iter;
-      gint   prev_selection = GPOINTER_TO_INT (position);
-      gint   direction = 1;
-      gint   selection_size;
-      gint   i;
-
-      frame_iter = g_list_nth (xsheet->priv->cels, GPOINTER_TO_INT (track_num))->data;
-
-      if (shift)
+      /* Ctrl toggle the clicked selection. */
+      if (toggled)
         {
-          prev_selection = GPOINTER_TO_INT (g_queue_pop_head (xsheet->priv->selected_frames));
-          if (prev_selection > GPOINTER_TO_INT (position))
+          g_queue_remove (xsheet->priv->selected_frames, position);
+          if (g_queue_is_empty (xsheet->priv->selected_frames))
             {
-              direction = -1;
+              xsheet->priv->selected_track = -1;
             }
         }
-
-      selection_size = MAX (GPOINTER_TO_INT (position), prev_selection) - MIN (GPOINTER_TO_INT (position), prev_selection) + 1;
-      for (i = prev_selection; selection_size; i = i + direction, selection_size--)
+      else
         {
-          g_queue_push_head (xsheet->priv->selected_frames, GINT_TO_POINTER (i));
+          g_queue_push_head (xsheet->priv->selected_frames, position);
+          xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
         }
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                    ! toggled);
+    }
+  else if (shift)
+    {
+      /* Shift selects all from the first selection, and unselects
+       * anything else. */
+      GList    *track_iter;
+      GList    *frame_iter;
+      gint      from = GPOINTER_TO_INT (position);
+      gint      to   = from;
+      gint      direction;
+      gint      min;
+      gint      max;
+      gint      i;
 
-      frame_iter = g_list_nth (frame_iter, MIN (GPOINTER_TO_INT (position), prev_selection));
-      selection_size = MAX (GPOINTER_TO_INT (position), prev_selection) - MIN (GPOINTER_TO_INT (position), prev_selection) + 1;
-      for (; frame_iter && selection_size > 0; frame_iter = frame_iter->next, selection_size--)
+      xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
+      for (track_iter = xsheet->priv->cels; track_iter; track_iter = track_iter->next)
         {
-          gtk_toggle_button_set_active (frame_iter->data, TRUE);
+          for (frame_iter = track_iter->data; frame_iter; frame_iter = frame_iter->next)
+            {
+              gtk_toggle_button_set_active (frame_iter->data, FALSE);
+            }
         }
+      if (! g_queue_is_empty (xsheet->priv->selected_frames))
+        {
+          from = GPOINTER_TO_INT (g_queue_pop_tail (xsheet->priv->selected_frames));
+          g_queue_clear (xsheet->priv->selected_frames);
+        }
+      direction = from > to? -1 : 1;
+      for (i = from; i != to + direction; i = i + direction)
+        {
+          g_queue_push_head (xsheet->priv->selected_frames,
+                             GINT_TO_POINTER (i));
+        }
+      min = MIN (to, from);
+      max = MAX (to, from);
+      track_iter = g_list_nth (xsheet->priv->cels, xsheet->priv->selected_track);
+      frame_iter = track_iter->data;
+      for (i = 0; frame_iter && i <= max; frame_iter = frame_iter->next, i++)
+        {
+          if (i >= min)
+            {
+              gtk_toggle_button_set_active (frame_iter->data, TRUE);
+            }
+        }
+    }
+  else /* ! shift && ! ctrl */
+    {
+      xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+      g_queue_push_head (xsheet->priv->selected_frames, position);
     }
 
   /* Finally update the layer view. */
