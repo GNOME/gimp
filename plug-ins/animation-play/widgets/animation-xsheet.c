@@ -46,6 +46,9 @@ struct _AnimationXSheetPrivate
 
   GtkWidget             *track_layout;
 
+  GtkWidget             *active_pos_button;
+  GList                 *position_buttons;
+
   GList                 *cels;
   gint                   selected_track;
   GQueue                *selected_frames;
@@ -76,6 +79,11 @@ static void on_animation_loaded           (Animation       *animation,
                                            gint             preview_width,
                                            gint             preview_height,
                                            AnimationXSheet *xsheet);
+static void on_animation_rendered         (Animation       *animation,
+                                           gint             frame_number,
+                                           GeglBuffer      *buffer,
+                                           gboolean         must_draw_null,
+                                           AnimationXSheet *xsheet);
 
 /* Callbacks on layer view. */
 static void on_layer_selection            (AnimationLayerView *view,
@@ -83,6 +91,9 @@ static void on_layer_selection            (AnimationLayerView *view,
                                            AnimationXSheet    *xsheet);
 
 /* UI Signals */
+static gboolean animation_xsheet_frame_clicked       (GtkWidget       *button,
+                                                      GdkEvent        *event,
+                                                      AnimationXSheet *xsheet);
 static gboolean animation_xsheet_cel_clicked         (GtkWidget       *button,
                                                       GdkEvent        *event,
                                                       AnimationXSheet *xsheet);
@@ -187,6 +198,8 @@ animation_xsheet_constructed (GObject *object)
   /* Reload everything when we reload the animation. */
   g_signal_connect_after (xsheet->priv->animation, "loaded",
                           G_CALLBACK (on_animation_loaded), xsheet);
+  g_signal_connect (xsheet->priv->animation, "render",
+                    G_CALLBACK (on_animation_rendered), xsheet);
 }
 
 static void
@@ -307,7 +320,18 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
                         GTK_FILL, GTK_FILL, 0, 0);
 
       num_str = g_strdup_printf ("%d", i + 1);
-      label = gtk_label_new (num_str);
+      label = gtk_toggle_button_new ();
+      xsheet->priv->position_buttons = g_list_prepend (xsheet->priv->position_buttons,
+                                                       label);
+      gtk_button_set_label (GTK_BUTTON (label), num_str);
+      g_free (num_str);
+      g_object_set_data (G_OBJECT (label), "frame-position",
+                         GINT_TO_POINTER (i));
+      gtk_button_set_relief (GTK_BUTTON (label), GTK_RELIEF_NONE);
+      gtk_button_set_focus_on_click (GTK_BUTTON (label), FALSE);
+      g_signal_connect (label, "button-press-event",
+                        G_CALLBACK (animation_xsheet_frame_clicked),
+                        xsheet);
       gtk_container_add (GTK_CONTAINER (frame), label);
 
       gtk_widget_show (label);
@@ -374,6 +398,7 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
       iter->data = g_list_reverse (iter->data);
     }
   xsheet->priv->comment_fields = g_list_reverse (xsheet->priv->comment_fields);
+  xsheet->priv->position_buttons = g_list_reverse (xsheet->priv->position_buttons);
 
   /* Titles. */
   for (j = 0; j < n_tracks; j++)
@@ -461,6 +486,55 @@ on_animation_loaded (Animation       *animation,
                      AnimationXSheet *xsheet)
 {
   animation_xsheet_reset_layout (xsheet);
+}
+
+static void
+on_animation_rendered (Animation       *animation,
+                       gint             frame_number,
+                       GeglBuffer      *buffer,
+                       gboolean         must_draw_null,
+                       AnimationXSheet *xsheet)
+{
+  GtkWidget *button;
+
+  button = g_list_nth_data (xsheet->priv->position_buttons,
+                            frame_number - 1);
+  if (xsheet->priv->active_pos_button)
+    {
+      GtkToggleButton *active_button;
+
+      active_button = GTK_TOGGLE_BUTTON (xsheet->priv->active_pos_button);
+      gtk_toggle_button_set_active (active_button, FALSE);
+    }
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                TRUE);
+  xsheet->priv->active_pos_button = button;
+}
+
+static gboolean
+animation_xsheet_frame_clicked (GtkWidget       *button,
+                                GdkEvent        *event,
+                                AnimationXSheet *xsheet)
+{
+  gpointer position;
+
+  position = g_object_get_data (G_OBJECT (button), "frame-position");
+
+  animation_jump (ANIMATION (xsheet->priv->animation),
+                  GPOINTER_TO_INT (position) + 1);
+  if (xsheet->priv->active_pos_button)
+    {
+      GtkToggleButton *active_button;
+
+      active_button = GTK_TOGGLE_BUTTON (xsheet->priv->active_pos_button);
+      gtk_toggle_button_set_active (active_button, FALSE);
+    }
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                TRUE);
+  xsheet->priv->active_pos_button = button;
+
+  /* All handled here. */
+  return TRUE;
 }
 
 static gboolean
