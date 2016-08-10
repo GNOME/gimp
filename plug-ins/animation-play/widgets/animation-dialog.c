@@ -417,17 +417,17 @@ animation_dialog_constructed (GObject *object)
   priv->ui_manager = ui_manager_new (dialog);
 
   /* Window paned. */
-  priv->vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
-  gtk_container_add (GTK_CONTAINER (dialog), priv->vpaned);
-  gtk_widget_show (priv->vpaned);
-
   priv->hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_paned_pack1 (GTK_PANED (priv->vpaned), priv->hpaned, TRUE, TRUE);
+  gtk_container_add (GTK_CONTAINER (dialog), priv->hpaned);
   gtk_widget_show (priv->hpaned);
+
+  priv->vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
+  gtk_paned_pack1 (GTK_PANED (priv->hpaned), priv->vpaned, TRUE, TRUE);
+  gtk_widget_show (priv->vpaned);
 
   /* Playback vertical box. */
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_paned_pack1 (GTK_PANED (priv->hpaned), main_vbox, TRUE, TRUE);
+  gtk_paned_pack1 (GTK_PANED (priv->vpaned), main_vbox, TRUE, TRUE);
   gtk_widget_show (main_vbox);
 
   /* Upper Bar */
