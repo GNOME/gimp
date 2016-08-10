@@ -143,16 +143,17 @@ run (const gchar      *name,
   gint32            drawable_ID;
   GError           *error = NULL;
 
-  /* Determine the current run mode */
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
   run_mode = param[0].data.d_int32;
 
-  /* Fill in the return values */
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  /* Determine which procedure is being invoked */
   if (! strcmp (name, LOAD_PROCEDURE))
     {
       /* No need to determine whether the plugin is being invoked
@@ -180,7 +181,7 @@ run (const gchar      *name,
       gint32            n_layers;
 
       /* Initialize the parameters to their defaults */
-      params.preset        = "default";
+      params.preset        = g_strdup ("default");
       params.lossless      = FALSE;
       params.animation     = FALSE;
       params.loop          = TRUE;
@@ -198,13 +199,11 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-
           gimp_ui_init (BINARY_NAME, FALSE);
 
           /* Attempt to export the image */
-          export_ret = gimp_export_image (&image_ID,
-                                          &drawable_ID,
-                                          "WEBP",
+          export_ret = gimp_export_image (&image_ID, &drawable_ID,
+                                          "WebP",
                                           GIMP_EXPORT_CAN_HANDLE_RGB |
                                           GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
@@ -216,16 +215,14 @@ run (const gchar      *name,
             }
 
           /* Display the dialog */
-          if (save_dialog (&params, image_ID, n_layers) != GTK_RESPONSE_OK)
+          if (! save_dialog (&params, image_ID, n_layers))
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
               return;
             }
-
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-
           /* Ensure the correct number of parameters were supplied */
           if (nparams != 10)
             {
@@ -234,13 +231,13 @@ run (const gchar      *name,
             }
 
           /* Load the parameters */
-          params.preset        = param[5].data.d_string;
+          g_free (params.preset);
+          params.preset        = g_strdup (param[5].data.d_string);
           params.lossless      = param[6].data.d_int32;
           params.quality       = param[7].data.d_float;
           params.alpha_quality = param[8].data.d_float;
           params.animation     = param[9].data.d_int32;
           params.loop          = param[10].data.d_int32;
-
           break;
         }
 
@@ -255,6 +252,7 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
 
+      g_free (params.preset);
       g_free (layers);
     }
 

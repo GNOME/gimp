@@ -123,8 +123,6 @@ load_image (const gchar *filename,
       return -1;
     }
 
-  gegl_init (NULL, NULL);
-
   wp_data.bytes = indata;
   wp_data.size = indatalen;
 

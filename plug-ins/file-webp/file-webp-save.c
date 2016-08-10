@@ -574,8 +574,6 @@ save_image (const gchar    *filename,
   if (nLayers == 0)
     return FALSE;
 
-  gegl_init (NULL, NULL);
-
   g_printerr("Saving WebP file %s\n", filename);
 
   if (nLayers == 1)

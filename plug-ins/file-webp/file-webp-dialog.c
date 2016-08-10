@@ -30,17 +30,14 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-void          save_dialog_response      (GtkWidget *widget,
-                                         gint       response_id,
-                                         gpointer   data);
-GtkListStore * save_dialog_presets      (void);
-void           save_dialog_set_preset   (GtkWidget *widget,
-                                         gpointer   data);
-void           save_dialog_toggle_scale (GtkWidget *widget,
-                                         gpointer   data);
+static GtkListStore * save_dialog_presets        (void);
+static void           save_dialog_preset_changed (GtkWidget  *widget,
+                                                  gchar     **data);
+static void           save_dialog_toggle_scale   (GtkWidget  *widget,
+                                                  gpointer   data);
 
 
-struct
+static struct
 {
   const gchar *id;
   const gchar *label;
@@ -48,58 +45,42 @@ struct
 {
   { "default", "Default" },
   { "picture", "Picture" },
-  { "photo",   "Photo" },
+  { "photo",   "Photo"   },
   { "drawing", "Drawing" },
-  { "icon",    "Icon" },
-  { "text",    "Text" },
+  { "icon",    "Icon"    },
+  { "text",    "Text"    },
   { 0 }
 };
 
 
-void
-save_dialog_response (GtkWidget *widget,
-                      gint       response_id,
-                      gpointer   data)
-{
-  /* Store the response */
-  *(GtkResponseType *)data = response_id;
-
-  /* Close the dialog */
-  gtk_widget_destroy (widget);
-}
-
-GtkListStore *
+static GtkListStore *
 save_dialog_presets (void)
 {
   GtkListStore *list_store;
-  int           i;
+  gint          i;
 
-  /* Create the model */
   list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
 
-  /* Insert the entries */
   for (i = 0; presets[i].id; ++i)
-    {
-      gtk_list_store_insert_with_values (list_store,
-                                         NULL,
-                                         -1,
-                                         0, presets[i].id,
-                                         1, presets[i].label,
-                                         -1);
-    }
+    gtk_list_store_insert_with_values (list_store,
+                                       NULL,
+                                       -1,
+                                       0, presets[i].id,
+                                       1, presets[i].label,
+                                       -1);
 
   return list_store;
 }
 
-void
-save_dialog_set_preset (GtkWidget *widget,
-                        gpointer   data)
+static void
+save_dialog_preset_changed (GtkWidget  *widget,
+                            gchar     **data)
 {
-  *(gchar **) data =
-    gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (widget));
+  g_free (*data);
+  *data = gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (widget));
 }
 
-void
+static void
 save_dialog_toggle_scale (GtkWidget *widget,
                           gpointer   data)
 {
@@ -107,42 +88,32 @@ save_dialog_toggle_scale (GtkWidget *widget,
                                   ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
 }
 
-GtkResponseType
+gboolean
 save_dialog (WebPSaveParams *params,
              gint32          image_ID,
-             gint32          nLayers)
+             gint32          n_layers)
 {
-  GtkWidget       *dialog;
-  GtkWidget       *vbox;
-  GtkWidget       *label;
-  GtkWidget       *table;
-  GtkWidget       *preset_label;
-  GtkListStore    *preset_list;
-  GtkWidget       *preset_combo;
-  GtkWidget       *lossless_checkbox;
-  GtkWidget       *animation_checkbox;
-  GtkWidget       *loop_anim_checkbox;
-  GtkObject       *quality_scale;
-  GtkObject       *alpha_quality_scale;
-  GtkResponseType  response;
-  gboolean         animation_supported = FALSE;
-  int              slider1 , slider2;
+  GtkWidget    *dialog;
+  GtkWidget    *vbox;
+  GtkWidget    *label;
+  GtkWidget    *table;
+  GtkWidget    *preset_label;
+  GtkListStore *preset_list;
+  GtkWidget    *preset_combo;
+  GtkWidget    *lossless_checkbox;
+  GtkWidget    *animation_checkbox;
+  GtkWidget    *loop_anim_checkbox;
+  GtkObject    *quality_scale;
+  GtkObject    *alpha_quality_scale;
+  gboolean      animation_supported = FALSE;
+  gint          slider1 , slider2;
+  gboolean      run;
 
-  animation_supported = nLayers > 1;
+  animation_supported = n_layers > 1;
 
   /* Create the dialog */
   dialog = gimp_export_dialog_new (_("WebP"),BINARY_NAME,
                                    SAVE_PROCEDURE);
-
-  /* Store the response when the dialog is closed */
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (save_dialog_response),
-                    &response);
-
-  /* Quit the main loop when the dialog is closed */
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /* Create the vbox */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -165,9 +136,10 @@ save_dialog (WebPSaveParams *params,
 
   /* Create the label for the selecting a preset */
   preset_label = gtk_label_new (_("Preset:"));
+  gtk_misc_set_alignment (GTK_MISC (preset_label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), preset_label,
                     0, 1, 0, 1,
-                    0, 0, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (preset_label);
 
   /* Create the combobox containing the presets */
@@ -183,7 +155,7 @@ save_dialog (WebPSaveParams *params,
   gtk_widget_show (preset_combo);
 
   g_signal_connect (preset_combo, "changed",
-                    G_CALLBACK (save_dialog_set_preset),
+                    G_CALLBACK (save_dialog_preset_changed),
                     &params->preset);
 
   /* Create the lossless checkbox */
@@ -192,7 +164,7 @@ save_dialog (WebPSaveParams *params,
                                 params->lossless);
   gtk_table_attach (GTK_TABLE (table), lossless_checkbox,
                     1, 3, 1, 2,
-                   GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (lossless_checkbox);
 
   g_signal_connect (lossless_checkbox, "toggled",
@@ -279,9 +251,11 @@ save_dialog (WebPSaveParams *params,
                     G_CALLBACK (save_dialog_toggle_scale),
                     alpha_quality_scale);
 
-  /* Display the dialog and enter the main event loop */
   gtk_widget_show (dialog);
-  gtk_main ();
 
-  return response;
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
+
+  return run;
 }

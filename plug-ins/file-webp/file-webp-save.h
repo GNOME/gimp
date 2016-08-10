@@ -25,12 +25,12 @@
 
 typedef struct
 {
-    gchar   *preset;
-    gboolean lossless;
-    gboolean animation;
-    gboolean loop;
-    gfloat   quality;
-    gfloat   alpha_quality;
+  gchar    *preset;
+  gboolean  lossless;
+  gboolean  animation;
+  gboolean  loop;
+  gfloat    quality;
+  gfloat    alpha_quality;
 } WebPSaveParams;
 
 
