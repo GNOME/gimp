@@ -110,6 +110,8 @@ static gboolean animation_xsheet_comment_keypress    (GtkWidget       *entry,
 static void     animation_xsheet_rename_cel          (AnimationXSheet *xsheet,
                                                       GtkWidget       *cel,
                                                       gboolean         recursively);
+static void     animation_xsheet_show_child          (AnimationXSheet *xsheet,
+                                                      GtkWidget       *child);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -509,6 +511,8 @@ on_animation_rendered (Animation       *animation,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 TRUE);
   xsheet->priv->active_pos_button = button;
+
+  animation_xsheet_show_child (xsheet, button);
 }
 
 static gboolean
@@ -838,5 +842,43 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
               animation_xsheet_rename_cel (xsheet, next_cel, TRUE);
             }
         }
+    }
+}
+
+static void
+animation_xsheet_show_child (AnimationXSheet *xsheet,
+                             GtkWidget       *child)
+{
+  GtkScrolledWindow *window = GTK_SCROLLED_WINDOW (xsheet);
+  GtkAdjustment     *hadj;
+  GtkAdjustment     *vadj;
+  GtkAllocation      xsheet_allocation;
+  GtkAllocation      child_allocation;
+  gint               x;
+  gint               y;
+  gint               x_xsheet;
+  gint               y_xsheet;
+
+  hadj = gtk_scrolled_window_get_vadjustment (window);
+  vadj = gtk_scrolled_window_get_vadjustment (window);
+
+  gtk_widget_translate_coordinates (child, GTK_WIDGET (xsheet),
+                                    0, 0, &x_xsheet, &y_xsheet);
+  gtk_widget_translate_coordinates (child,
+                                    xsheet->priv->track_layout,
+                                    0, 0, &x, &y);
+
+  gtk_widget_get_allocation (child, &child_allocation);
+  gtk_widget_get_allocation (GTK_WIDGET (xsheet),
+                             &xsheet_allocation);
+
+  /* Scroll only if the widget is not already visible. */
+  if (x_xsheet < 0 || x_xsheet + child_allocation.width > xsheet_allocation.width)
+    {
+      gtk_adjustment_set_value (hadj, x);
+    }
+  if (y_xsheet < 0 || y_xsheet + child_allocation.height > xsheet_allocation.height)
+    {
+      gtk_adjustment_set_value (vadj, y);
     }
 }
