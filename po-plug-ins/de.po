@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: gimp plugins master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-06-05 19:08+0000\n"
-"PO-Revision-Date: 2016-07-15 23:54+0200\n"
+"POT-Creation-Date: 2016-08-09 19:26+0000\n"
+"PO-Revision-Date: 2016-08-10 23:17+0200\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -357,7 +357,8 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
-#: ../plug-ins/file-tiff/file-tiff-load.c:922 ../plug-ins/gfig/gfig-dialog.c:1319
+#: ../plug-ins/file-tiff/file-tiff-load.c:922
+#: ../plug-ins/file-webp/file-webp-load.c:177 ../plug-ins/gfig/gfig-dialog.c:1319
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/screenshot/screenshot-win32.c:230 ../plug-ins/twain/twain.c:567
@@ -414,12 +415,12 @@ msgid "_Thickness:"
 msgstr "_Dicke:"
 
 #. Number of Colors frame
-#: ../plug-ins/common/border-average.c:423
+#: ../plug-ins/common/border-average.c:426
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:910
 msgid "Number of Colors"
 msgstr "Anzahl der Farben"
 
-#: ../plug-ins/common/border-average.c:431
+#: ../plug-ins/common/border-average.c:434
 msgid "_Bucket size:"
 msgstr "_Eimergröße:"
 
@@ -2292,7 +2293,8 @@ msgstr "Abstand:"
 msgid "OpenEXR image"
 msgstr "OpenEXR-Bild"
 
-#: ../plug-ins/common/file-gegl.c:87
+#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-webp/file-webp.c:99
+#: ../plug-ins/file-webp/file-webp.c:120
 msgid "WebP image"
 msgstr "WebP-Bild"
 
@@ -2325,6 +2327,7 @@ msgid "Opening '%s' (frame %d)"
 msgstr "»%s« (Einzelbild %d) wird geöffnet"
 
 #: ../plug-ins/common/file-gif-load.c:1034
+#: ../plug-ins/file-webp/file-webp-load.c:210
 #, c-format
 msgid "Frame %d"
 msgstr "Einzelbild %d"
@@ -2421,7 +2424,7 @@ msgstr ""
 "Ebene."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2529
+#: ../plug-ins/common/file-gif-save.c:2533
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Der Standardkommentar ist auf %d Zeichen beschränkt."
@@ -4032,7 +4035,9 @@ msgstr "Geben Sie einen weiteren Kommentar bei Bedarf ein."
 msgid "Comment is limited to %d characters."
 msgstr "Der Standardkommentar ist auf %d Zeichen beschränkt."
 
-#: ../plug-ins/common/file-xmc.c:1462
+#. Begin displaying export progress
+#: ../plug-ins/common/file-xmc.c:1462 ../plug-ins/file-webp/file-webp-save.c:202
+#: ../plug-ins/file-webp/file-webp-save.c:395
 #, c-format
 msgid "Saving '%s'"
 msgstr "»%s« wird gespeichert"
@@ -6431,7 +6436,7 @@ msgstr "Logitech PXN-Raw"
 
 #: ../plug-ins/file-darktable/file-formats.h:237
 msgid "Raw Apple QuickTake QTK"
-msgstr ""
+msgstr "Rohes Apple QuickTake QTK"
 
 #: ../plug-ins/file-darktable/file-formats.h:248
 msgid "Raw Fujifilm RAF"
@@ -6443,7 +6448,7 @@ msgstr "Panasonic-Raw"
 
 #: ../plug-ins/file-darktable/file-formats.h:270
 msgid "Raw Digital Foto Maker RDC"
-msgstr ""
+msgstr "Rohes Digital Foto Maker RDC"
 
 #: ../plug-ins/file-darktable/file-formats.h:281
 msgid "Raw Leica RWL"
@@ -7053,6 +7058,113 @@ msgstr "CCITT-Gruppe-_3-Fax"
 #: ../plug-ins/file-tiff/file-tiff-save.c:867
 msgid "CCITT Group _4 fax"
 msgstr "CCITT-Gruppe-_4-Fax"
+
+#. Create the dialog
+#: ../plug-ins/file-webp/file-webp-dialog.c:134
+msgid "WebP"
+msgstr "WebP"
+
+#. Create the descriptive label at the top
+#: ../plug-ins/file-webp/file-webp-dialog.c:155
+msgid "Use the options below to customize the image."
+msgstr "Verwenden Sie die Einstellungen unten, um das Bild anzupassen."
+
+#. Create the label for the selecting a preset
+#: ../plug-ins/file-webp/file-webp-dialog.c:167
+msgid "Preset:"
+msgstr "Voreinstellung:"
+
+#. Create the lossless checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:190
+msgid "Lossless"
+msgstr "Verlustlos"
+
+#. Create the animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:210
+msgid "Use animation"
+msgstr "Animation verwenden"
+
+#. Create the loop animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:223
+msgid "Loop infinitely"
+msgstr "Endlosschleife"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:239
+msgid "Image quality:"
+msgstr "Bildqualität:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:247
+msgid "Image quality"
+msgstr "Bildqualität"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
+msgid "Alpha quality:"
+msgstr "Alpha-Qualität:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:266
+msgid "Alpha channel quality"
+msgstr "Qualität des Alphakanals"
+
+#: ../plug-ins/file-webp/file-webp-save.c:142
+msgid "out of memory"
+msgstr "Nicht genügend Speicher"
+
+# flush bedeutet so viel wie wegschreiben von Daten
+#: ../plug-ins/file-webp/file-webp-save.c:144
+msgid "not enough memory to flush bits"
+msgstr "Nicht genug Speicher zum Schreiben der Bits"
+
+#: ../plug-ins/file-webp/file-webp-save.c:146
+msgid "NULL parameter"
+msgstr "NULL-Parameter"
+
+#: ../plug-ins/file-webp/file-webp-save.c:148
+msgid "invalid configuration"
+msgstr "Ungültige Konfiguration"
+
+#: ../plug-ins/file-webp/file-webp-save.c:150
+msgid "bad image dimensions"
+msgstr "Falsche Bildgröße"
+
+#: ../plug-ins/file-webp/file-webp-save.c:152
+msgid "partition is bigger than 512K"
+msgstr "Partition ist größer als 512 KB"
+
+#: ../plug-ins/file-webp/file-webp-save.c:154
+msgid "partition is bigger than 16M"
+msgstr "Partition ist größer als 16 MB"
+
+# flush bedeutet so viel wie wegschreiben von Daten
+#: ../plug-ins/file-webp/file-webp-save.c:156
+msgid "unable to flush bytes"
+msgstr "Byte können nicht geschrieben werden"
+
+#: ../plug-ins/file-webp/file-webp-save.c:158
+msgid "file is larger than 4GiB"
+msgstr "Datei ist größer als 4GiB"
+
+#: ../plug-ins/file-webp/file-webp-save.c:160
+msgid "user aborted encoding"
+msgstr "Kodierung durch Benutzer abgebrochen"
+
+#: ../plug-ins/file-webp/file-webp-save.c:162
+msgid "list terminator"
+msgstr ""
+
+#: ../plug-ins/file-webp/file-webp-save.c:164
+msgid "unknown error"
+msgstr "Unbekannter Fehler"
+
+#: ../plug-ins/file-webp/file-webp-save.c:210
+#: ../plug-ins/file-webp/file-webp-save.c:403
+#, c-format
+msgid "Unable to open '%s' for writing"
+msgstr "»%s« konnte nicht zum Schreiben geöffnet werden"
+
+#: ../plug-ins/file-webp/file-webp-save.c:270
+#, c-format
+msgid "WebP error: '%s'"
+msgstr "WebP-Fehler »%s«"
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
@@ -8880,10 +8992,8 @@ msgid "Country"
 msgstr "Land"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:30
-#, fuzzy
-#| msgid "Origin"
 msgid "Credits/Origin"
-msgstr "Koordinatenursprung"
+msgstr "Mitwirkende/Herkunft"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:31
 msgid "Write IPTC Data"
@@ -11201,10 +11311,8 @@ msgstr ""
 "eher umzuwandeln."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:285
-#, fuzzy
-#| msgid "_Threshold:"
 msgid "Line Threshold:"
-msgstr "_Schwellwert:"
+msgstr "Zeilenschwellwert:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:289
 msgid ""
@@ -12462,9 +12570,6 @@ msgstr "Daten werden vom Scanner/von Kamera übertragen"
 #~ msgid "Second color"
 #~ msgstr "Zweite Farbe"
 
-#~ msgid "Alpha Channels"
-#~ msgstr "Alphakanäle"
-
 #~ msgid "F_irst color:"
 #~ msgstr "_Erste Farbe:"
 
@@ -12862,9 +12967,6 @@ msgstr "Daten werden vom Scanner/von Kamera übertragen"
 #~ msgctxt "metadata-value"
 #~ msgid "Value"
 #~ msgstr "Wert"
-
-#~ msgid "Image _title:"
-#~ msgstr "Bild_titel:"
 
 #~ msgid "Empty"
 #~ msgstr "Leer"
