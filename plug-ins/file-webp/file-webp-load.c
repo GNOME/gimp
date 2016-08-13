@@ -50,7 +50,7 @@ create_layer (gint32   image_ID,
               gint32   offsety)
 {
   gint32         layer_ID;
-  GeglBuffer    *geglbuffer;
+  GeglBuffer    *buffer;
   GeglRectangle  extent;
 
   layer_ID = gimp_layer_new (image_ID, name,
@@ -67,18 +67,16 @@ create_layer (gint32   image_ID,
     }
 
   /* Retrieve the buffer for the layer */
-  geglbuffer = gimp_drawable_get_buffer (layer_ID);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
   /* Copy the image data to the region */
   gegl_rectangle_set (&extent, 0, 0, width, height);
-  gegl_buffer_set (geglbuffer, &extent, 0, NULL, layer_data,
+  gegl_buffer_set (buffer, &extent, 0, NULL, layer_data,
                    GEGL_AUTO_ROWSTRIDE);
 
   /* Flush the drawable and detach */
-  gegl_buffer_flush (geglbuffer);
-
-  if (geglbuffer)
-    g_object_unref (geglbuffer);
+  gegl_buffer_flush (buffer);
+  g_object_unref (buffer);
 }
 
 gint32
@@ -86,24 +84,18 @@ load_image (const gchar *filename,
             gboolean     interactive,
             GError      **error)
 {
-  uint8_t              *indata = NULL;
-  uint8_t              *outdata;
-  gsize                 indatalen;
-  gint                  width;
-  gint                  height;
-  gint32                image_ID;
-  GFile                *file;
-  GimpMetadata         *metadata;
-  WebPMux              *mux;
-  WebPBitstreamFeatures features;
-  WebPData              wp_data;
-  uint32_t              flag;
-  int                   animation = FALSE;
-  int                   icc = FALSE;
-  int                   exif = FALSE;
-  int                   xmp = FALSE;
-  int                   frames = 0;
-  gchar                *name;
+  uint8_t  *indata = NULL;
+  gsize     indatalen;
+  gint      width;
+  gint      height;
+  gint32    image_ID;
+  WebPMux  *mux;
+  WebPData  wp_data;
+  uint32_t  flags;
+  gboolean  animation = FALSE;
+  gboolean  icc       = FALSE;
+  gboolean  exif      = FALSE;
+  gboolean  xmp       = FALSE;
 
   /* Attempt to read the file contents from disk */
   if (! g_file_get_contents (filename,
@@ -124,35 +116,25 @@ load_image (const gchar *filename,
     }
 
   wp_data.bytes = indata;
-  wp_data.size = indatalen;
+  wp_data.size  = indatalen;
 
   mux = WebPMuxCreate (&wp_data, 1);
   if (! mux)
     return -1;
 
-  WebPMuxGetFeatures (mux, &flag);
-  if (flag == 0)
-    {
-      animation = FALSE;
-      icc = FALSE;
-      exif = FALSE;
-      xmp = FALSE;
-      frames = 0;
-    }
-  else
-    {
-      if (flag & ANIMATION_FLAG)
-        animation = TRUE;
+  WebPMuxGetFeatures (mux, &flags);
 
-      if (flag & ICCP_FLAG)
-        icc = TRUE;
+  if (flags & ANIMATION_FLAG)
+    animation = TRUE;
 
-      if (flag & EXIF_FLAG)
-        exif = TRUE;
+  if (flags & ICCP_FLAG)
+    icc = TRUE;
 
-      if (flag & XMP_FLAG)
-        xmp = TRUE;
-    }
+  if (flags & EXIF_FLAG)
+    exif = TRUE;
+
+  if (flags & XMP_FLAG)
+    xmp = TRUE;
 
   /* TODO: decode the image in "chunks" or "tiles" */
   /* TODO: check if an alpha channel is present */
@@ -162,6 +144,8 @@ load_image (const gchar *filename,
 
   if (! animation)
     {
+      uint8_t *outdata;
+
       /* Attempt to decode the data as a WebP image */
       outdata = WebPDecodeRGBA (indata, indatalen, &width, &height);
 
@@ -182,19 +166,23 @@ load_image (const gchar *filename,
     {
       const WebPChunkId id = WEBP_CHUNK_ANMF;
       WebPMuxAnimParams params;
-      gint              loop;
+      gint              frames = 0;
+      gint              i;
 
       WebPMuxGetAnimationParams (mux, &params);
       WebPMuxNumChunks (mux, id, &frames);
 
       /* Attempt to decode the data as a WebP animation image */
-      for (loop = 0; loop < frames; loop++)
+      for (i = 0; i < frames; i++)
         {
           WebPMuxFrameInfo thisframe;
-          gint             i = loop;
 
           if (WebPMuxGetFrame (mux, i, &thisframe) == WEBP_MUX_OK)
             {
+              WebPBitstreamFeatures  features;
+              uint8_t               *outdata;
+              gchar                 *name;
+
               WebPGetFeatures (thisframe.bitstream.bytes,
                                thisframe.bitstream.size, &features);
 
@@ -205,7 +193,7 @@ load_image (const gchar *filename,
               if (! outdata)
                 return -1;
 
-              name = g_strdup_printf (_("Frame %d"), loop + 1);
+              name = g_strdup_printf (_("Frame %d"), i + 1);
               create_layer (image_ID, outdata, 0,
                             name, width, height,
                             thisframe.x_offset,
@@ -218,9 +206,9 @@ load_image (const gchar *filename,
 
           WebPDataClear (&thisframe.bitstream);
         }
-
-      WebPDataClear (&wp_data);
     }
+
+  WebPDataClear (&wp_data);
 
   if (icc)
     {
@@ -239,6 +227,9 @@ load_image (const gchar *filename,
 
   if (exif || xmp)
     {
+      GimpMetadata *metadata;
+      GFile        *file;
+
       if (exif)
         {
           WebPData exif;
