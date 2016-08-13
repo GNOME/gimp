@@ -6,7 +6,7 @@ if WITH_PDBGEN
 PDBGEN = pdbgen
 endif
 
-SUBDIRS = $(PDBEN)
+SUBDIRS = $(PDBGEN)
 
 if OS_WIN32
 
