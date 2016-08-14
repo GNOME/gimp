@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-07 11:38+0200\n"
-"PO-Revision-Date: 2016-06-07 11:39+0200\n"
+"POT-Creation-Date: 2016-08-14 23:54+0200\n"
+"PO-Revision-Date: 2016-08-14 23:55+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -23,8 +23,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: Poland\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -337,7 +335,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:611
-#: ../plug-ins/common/file-gegl.c:429 ../plug-ins/common/file-gif-load.c:980
+#: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:671
@@ -350,6 +348,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
+#: ../plug-ins/file-webp/file-webp-load.c:159
 #: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/screenshot/screenshot-win32.c:230 ../plug-ins/twain/twain.c:567
@@ -405,12 +404,12 @@ msgid "_Thickness:"
 msgstr "_Grubość:"
 
 #. Number of Colors frame
-#: ../plug-ins/common/border-average.c:423
+#: ../plug-ins/common/border-average.c:426
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:910
 msgid "Number of Colors"
 msgstr "Liczba kolorów"
 
-#: ../plug-ins/common/border-average.c:431
+#: ../plug-ins/common/border-average.c:434
 msgid "_Bucket size:"
 msgstr "Rozmiar _kubełka:"
 
@@ -2010,7 +2009,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:313
+#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:668
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
@@ -2270,11 +2269,7 @@ msgstr "Odstęp:"
 msgid "OpenEXR image"
 msgstr "Obraz OpenEXR"
 
-#: ../plug-ins/common/file-gegl.c:87
-msgid "WebP image"
-msgstr "Obraz WebP"
-
-#: ../plug-ins/common/file-gegl.c:337
+#: ../plug-ins/common/file-gegl.c:322
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Nie można otworzyć „%s”"
@@ -2305,6 +2300,7 @@ msgid "Opening '%s' (frame %d)"
 msgstr "Otwieranie „%s” (klatka %d)"
 
 #: ../plug-ins/common/file-gif-load.c:1034
+#: ../plug-ins/file-webp/file-webp-load.c:196
 #, c-format
 msgid "Frame %d"
 msgstr "Klatka %d"
@@ -2400,7 +2396,7 @@ msgstr ""
 "warstwę. Eksportowany obraz posiada tylko jedną warstwę."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2529
+#: ../plug-ins/common/file-gif-save.c:2533
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Długość domyślnego komentarza jest ograniczona do %d znaków."
@@ -4003,7 +3999,10 @@ msgstr "Proszę wprowadzić inne komentarze, jeśli są potrzebne."
 msgid "Comment is limited to %d characters."
 msgstr "Komentarz jest ograniczony do %d znaków."
 
+#. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1462
+#: ../plug-ins/file-webp/file-webp-save.c:202
+#: ../plug-ins/file-webp/file-webp-save.c:395
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
@@ -7017,6 +7016,115 @@ msgstr "Faks CCITT Group _3"
 #: ../plug-ins/file-tiff/file-tiff-save.c:867
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
+
+#: ../plug-ins/file-webp/file-webp.c:99 ../plug-ins/file-webp/file-webp.c:120
+msgid "WebP image"
+msgstr "Obraz WebP"
+
+#. Create the dialog
+#: ../plug-ins/file-webp/file-webp-dialog.c:115
+msgid "WebP"
+msgstr "WebP"
+
+#. Create the descriptive label at the top
+#: ../plug-ins/file-webp/file-webp-dialog.c:126
+msgid "Use the options below to customize the image."
+msgstr "Poniższe opcje umożliwiają dostosowanie obrazu."
+
+#. Create the label for the selecting a preset
+#: ../plug-ins/file-webp/file-webp-dialog.c:138
+msgid "Preset:"
+msgstr "Ustawienia:"
+
+#. Create the lossless checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:162
+msgid "Lossless"
+msgstr "Bezstratne"
+
+#. Create the animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:182
+msgid "Use animation"
+msgstr "Animacja"
+
+#. Create the loop animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:195
+msgid "Loop infinitely"
+msgstr "Zapętlenie w nieskończoność"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:211
+msgid "Image quality:"
+msgstr "Jakość obrazu:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:219
+msgid "Image quality"
+msgstr "Jakość obrazu"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:230
+msgid "Alpha quality:"
+msgstr "Jakość alfy:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:238
+msgid "Alpha channel quality"
+msgstr "Jakość kanału alfa"
+
+#: ../plug-ins/file-webp/file-webp-save.c:142
+msgid "out of memory"
+msgstr "brak pamięci"
+
+#: ../plug-ins/file-webp/file-webp-save.c:144
+msgid "not enough memory to flush bits"
+msgstr "za mało pamięci, aby wyczyścić bity"
+
+#: ../plug-ins/file-webp/file-webp-save.c:146
+msgid "NULL parameter"
+msgstr "Parametr NULL"
+
+#: ../plug-ins/file-webp/file-webp-save.c:148
+msgid "invalid configuration"
+msgstr "nieprawidłowa konfiguracja"
+
+#: ../plug-ins/file-webp/file-webp-save.c:150
+msgid "bad image dimensions"
+msgstr "błędne wymiary obrazu"
+
+#: ../plug-ins/file-webp/file-webp-save.c:152
+msgid "partition is bigger than 512K"
+msgstr "partycja jest większa niż 512 K"
+
+#: ../plug-ins/file-webp/file-webp-save.c:154
+msgid "partition is bigger than 16M"
+msgstr "partycja jest większa niż 16 M"
+
+#: ../plug-ins/file-webp/file-webp-save.c:156
+msgid "unable to flush bytes"
+msgstr "nie można wyczyścić bajtów"
+
+#: ../plug-ins/file-webp/file-webp-save.c:158
+msgid "file is larger than 4GiB"
+msgstr "plik jest większy niż 4 GiB"
+
+#: ../plug-ins/file-webp/file-webp-save.c:160
+msgid "user aborted encoding"
+msgstr "użytkownik przerwał kodowanie"
+
+#: ../plug-ins/file-webp/file-webp-save.c:162
+msgid "list terminator"
+msgstr "znak zakończenia listy"
+
+#: ../plug-ins/file-webp/file-webp-save.c:164
+msgid "unknown error"
+msgstr "nieznany błąd"
+
+#: ../plug-ins/file-webp/file-webp-save.c:210
+#: ../plug-ins/file-webp/file-webp-save.c:403
+#, c-format
+msgid "Unable to open '%s' for writing"
+msgstr "Nie można otworzyć pliku „%s” do zapisania"
+
+#: ../plug-ins/file-webp/file-webp-save.c:270
+#, c-format
+msgid "WebP error: '%s'"
+msgstr "Błąd WebP: „%s”"
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
