@@ -32,7 +32,7 @@
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/gimpdialogconfig.h"
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
@@ -450,7 +450,7 @@ gimp_image_import_color_profile (GimpImage    *image,
       GimpColorRenderingIntent   intent;
       gboolean                   bpc;
 
-      policy = image->gimp->config->color_profile_policy;
+      policy = GIMP_DIALOG_CONFIG (image->gimp->config)->color_profile_policy;
       intent = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
       bpc    = TRUE;
 
