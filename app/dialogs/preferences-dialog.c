@@ -1145,15 +1145,15 @@ prefs_help_func (const gchar *help_id,
 {
   GtkWidget *prefs_box;
   GtkWidget *notebook;
-  GtkWidget *event_box;
+  GtkWidget *page;
   gint       page_num;
 
   prefs_box = g_object_get_data (G_OBJECT (help_data), "prefs-box");
   notebook  = gimp_prefs_box_get_notebook (GIMP_PREFS_BOX (prefs_box));
   page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
-  event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
+  page      = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
-  help_id = g_object_get_data (G_OBJECT (event_box), "gimp-help-id");
+  help_id = g_object_get_data (G_OBJECT (page), "gimp-help-id");
   gimp_standard_help_func (help_id, NULL);
 }
 
