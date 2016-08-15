@@ -149,9 +149,6 @@ load_image (const gchar *filename,
       /* Attempt to decode the data as a WebP image */
       outdata = WebPDecodeRGBA (indata, indatalen, &width, &height);
 
-      /* Free the original compressed data */
-      g_free (indata);
-
       /* Check to ensure the image data was loaded correctly */
       if (! outdata)
         return -1;
@@ -208,7 +205,8 @@ load_image (const gchar *filename,
         }
     }
 
-  WebPDataClear (&wp_data);
+  /* Free the original compressed data */
+  g_free (indata);
 
   if (icc)
     {
