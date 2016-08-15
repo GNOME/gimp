@@ -48,9 +48,9 @@ test_clipboard_LDADD = $(GTK_LIBS)
 
 invert_svg_SOURCES = invert-svg.c
 
-invert_svg_CFLAGS = $(SVG_CFLAGS)
+invert_svg_CFLAGS = $(SVG_CFLAGS) $(GLIB_CFLAGS) $(GIO_CFLAGS)
 
-invert_svg_LDADD = $(SVG_LIBS)
+invert_svg_LDADD = $(SVG_LIBS) $(GLIB_LIBS) $(GIO_LIBS)
 
 
 compute_svg_viewbox_SOURCES = compute-svg-viewbox.c
