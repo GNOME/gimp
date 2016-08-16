@@ -165,6 +165,7 @@ header files installed.
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
      ExcHndl		-		Crash logs on Windows with Dr. MinGW
+     libwebp		@WEBP_REQUIRED_VERSION@		WebP
 
  19. Summary of optional runtime dependencies:
 
