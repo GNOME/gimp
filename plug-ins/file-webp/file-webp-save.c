@@ -387,6 +387,8 @@ save_animation (const gchar    *filename,
   if (nLayers < 1)
     return FALSE;
 
+  gimp_image_undo_freeze (image_ID);
+
   do
     {
       gint loop;
@@ -422,6 +424,9 @@ save_animation (const gchar    *filename,
 
           /* Obtain the drawable type */
           drawable_type = gimp_drawable_type (allLayers[loop]);
+
+          /* fix layers to avoid offset errors */
+          gimp_layer_resize_to_image_size (allLayers[loop]);
 
           /* Retrieve the buffer for the layer */
           geglbuffer = gimp_drawable_get_buffer (allLayers[loop]);
