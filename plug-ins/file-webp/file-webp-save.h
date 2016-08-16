@@ -31,6 +31,9 @@ typedef struct
   gboolean  loop;
   gfloat    quality;
   gfloat    alpha_quality;
+  gboolean  exif;
+  gboolean  iptc;
+  gboolean  xmp;
 } WebPSaveParams;
 
 

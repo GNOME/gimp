@@ -87,7 +87,10 @@ query (void)
     { GIMP_PDB_FLOAT,    "quality",       "Quality of the image (0 <= quality <= 100)" },
     { GIMP_PDB_FLOAT,    "alpha-quality", "Quality of the image's alpha channel (0 <= alpha-quality <= 100)" },
     { GIMP_PDB_INT32,    "animation",     "Use layers for animation (0/1)" },
-    { GIMP_PDB_INT32,    "anim-loop",     "Loop animation infinitely (0/1)" }
+    { GIMP_PDB_INT32,    "anim-loop",     "Loop animation infinitely (0/1)" },
+    { GIMP_PDB_INT32,    "exif",          "Toggle saving exif data (0/1)" },
+    { GIMP_PDB_INT32,    "iptc",          "Toggle saving iptc data (0/1)" },
+    { GIMP_PDB_INT32,    "xmp",           "Toggle saving xmp data (0/1)" }
   };
 
   gimp_install_procedure (LOAD_PROCEDURE,
@@ -187,6 +190,9 @@ run (const gchar      *name,
       params.loop          = TRUE;
       params.quality       = 90.0f;
       params.alpha_quality = 100.0f;
+      params.exif          = TRUE;
+      params.iptc          = TRUE;
+      params.xmp           = TRUE;
 
       /* Load the image and drawable IDs */
       image_ID    = param[1].data.d_int32;
@@ -238,6 +244,9 @@ run (const gchar      *name,
           params.alpha_quality = param[8].data.d_float;
           params.animation     = param[9].data.d_int32;
           params.loop          = param[10].data.d_int32;
+          params.exif          = param[11].data.d_int32;
+          params.iptc          = param[12].data.d_int32;
+          params.xmp           = param[13].data.d_int32;
           break;
         }
 

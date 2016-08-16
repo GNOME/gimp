@@ -609,25 +609,6 @@ save_image (const gchar    *filename,
   if (metadata)
     {
       gimp_metadata_set_bits_per_sample (metadata, 8);
-
-      if (params->exif)
-        metadata_flags |= GIMP_METADATA_SAVE_EXIF;
-      else
-        metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
-
-      /* WebP doesn't support iptc natively and
-         sets it via xmp */
-      if (params->xmp)
-        {
-          metadata_flags |= GIMP_METADATA_SAVE_XMP;
-          metadata_flags |= GIMP_METADATA_SAVE_IPTC;
-        }
-      else
-        {
-          metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
-          metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
-        }
-
       file = g_file_new_for_path (filename);
       gimp_image_metadata_save_finish (image_ID,
                                        "image/webp",
