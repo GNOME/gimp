@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-07-28 16:00+0000\n"
-"PO-Revision-Date: 2016-07-30 13:23+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
+"POT-Creation-Date: 2016-08-09 19:26+0000\n"
+"PO-Revision-Date: 2016-08-10 18:15+0200\n"
+"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -349,6 +349,7 @@ msgstr "Függő_leges"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
+#: ../plug-ins/file-webp/file-webp-load.c:177
 #: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/screenshot/screenshot-win32.c:230 ../plug-ins/twain/twain.c:567
@@ -404,12 +405,12 @@ msgid "_Thickness:"
 msgstr "_Vastagság:"
 
 #. Number of Colors frame
-#: ../plug-ins/common/border-average.c:423
+#: ../plug-ins/common/border-average.c:426
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:910
 msgid "Number of Colors"
 msgstr "Színek száma"
 
-#: ../plug-ins/common/border-average.c:431
+#: ../plug-ins/common/border-average.c:434
 msgid "_Bucket size:"
 msgstr "Vö_dör mérete:"
 
@@ -2280,7 +2281,8 @@ msgstr "Távolság:"
 msgid "OpenEXR image"
 msgstr "OpenEXR kép"
 
-#: ../plug-ins/common/file-gegl.c:87
+#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-webp/file-webp.c:99
+#: ../plug-ins/file-webp/file-webp.c:120
 msgid "WebP image"
 msgstr "WebP-kép"
 
@@ -2314,6 +2316,7 @@ msgid "Opening '%s' (frame %d)"
 msgstr "„%s” megnyitása (%d. képkocka)"
 
 #: ../plug-ins/common/file-gif-load.c:1034
+#: ../plug-ins/file-webp/file-webp-load.c:210
 #, c-format
 msgid "Frame %d"
 msgstr "%d. képkocka"
@@ -2407,7 +2410,7 @@ msgstr ""
 "exportálni kíván, csak egy réteget tartalmaz."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2529
+#: ../plug-ins/common/file-gif-save.c:2533
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Az alapértelmezett megjegyzés hossza maximum %d karakter."
@@ -4010,7 +4013,10 @@ msgstr "Írjon be egyéb megjegyzéseket, ha kívánja."
 msgid "Comment is limited to %d characters."
 msgstr "A megjegyzés hossza maximum %d karakter."
 
+#. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1462
+#: ../plug-ins/file-webp/file-webp-save.c:202
+#: ../plug-ins/file-webp/file-webp-save.c:395
 #, c-format
 msgid "Saving '%s'"
 msgstr "„%s” mentése"
@@ -7020,6 +7026,111 @@ msgstr "CCITT Group _3 fax"
 #: ../plug-ins/file-tiff/file-tiff-save.c:867
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 fax"
+
+#. Create the dialog
+#: ../plug-ins/file-webp/file-webp-dialog.c:134
+msgid "WebP"
+msgstr "WebP"
+
+#. Create the descriptive label at the top
+#: ../plug-ins/file-webp/file-webp-dialog.c:155
+msgid "Use the options below to customize the image."
+msgstr "Használja a lenti beállításokat a kép testreszabásához."
+
+#. Create the label for the selecting a preset
+#: ../plug-ins/file-webp/file-webp-dialog.c:167
+msgid "Preset:"
+msgstr "Előbeállítás:"
+
+#. Create the lossless checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:190
+msgid "Lossless"
+msgstr "Veszteségmentes"
+
+#. Create the animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:210
+msgid "Use animation"
+msgstr "Animáció használata"
+
+#. Create the loop animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:223
+msgid "Loop infinitely"
+msgstr "Végtelen ciklus"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:239
+msgid "Image quality:"
+msgstr "Képminőség:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:247
+msgid "Image quality"
+msgstr "Képminőség"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
+msgid "Alpha quality:"
+msgstr "Alfa minőség:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:266
+msgid "Alpha channel quality"
+msgstr "Alfa-csatorna minősége"
+
+#: ../plug-ins/file-webp/file-webp-save.c:142
+msgid "out of memory"
+msgstr "nincs több memória"
+
+#: ../plug-ins/file-webp/file-webp-save.c:144
+msgid "not enough memory to flush bits"
+msgstr "nincs elég memória a bitek kiürítéséhez"
+
+#: ../plug-ins/file-webp/file-webp-save.c:146
+msgid "NULL parameter"
+msgstr "NULL paraméter"
+
+#: ../plug-ins/file-webp/file-webp-save.c:148
+msgid "invalid configuration"
+msgstr "érvénytelen beállítások"
+
+#: ../plug-ins/file-webp/file-webp-save.c:150
+msgid "bad image dimensions"
+msgstr "hibás képméret"
+
+#: ../plug-ins/file-webp/file-webp-save.c:152
+msgid "partition is bigger than 512K"
+msgstr "a partíció nagyobb mint 512 kB"
+
+#: ../plug-ins/file-webp/file-webp-save.c:154
+msgid "partition is bigger than 16M"
+msgstr "a partíció nagyobb mint 16 MiB"
+
+#: ../plug-ins/file-webp/file-webp-save.c:156
+msgid "unable to flush bytes"
+msgstr "a bájtok nem üríthetőek ki"
+
+#: ../plug-ins/file-webp/file-webp-save.c:158
+msgid "file is larger than 4GiB"
+msgstr "a fájl nagyobb mint 4 GiB"
+
+#: ../plug-ins/file-webp/file-webp-save.c:160
+msgid "user aborted encoding"
+msgstr "a felhasználó megszakította a kódolást"
+
+#: ../plug-ins/file-webp/file-webp-save.c:162
+msgid "list terminator"
+msgstr "lista lezáró"
+
+#: ../plug-ins/file-webp/file-webp-save.c:164
+msgid "unknown error"
+msgstr "ismeretlen hiba"
+
+#: ../plug-ins/file-webp/file-webp-save.c:210
+#: ../plug-ins/file-webp/file-webp-save.c:403
+#, c-format
+msgid "Unable to open '%s' for writing"
+msgstr "A(z) „%s” nem nyitható meg írásra"
+
+#: ../plug-ins/file-webp/file-webp-save.c:270
+#, c-format
+msgid "WebP error: '%s'"
+msgstr "WebP hiba: „%s”"
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
@@ -11077,8 +11188,8 @@ msgid ""
 "around that point."
 msgstr ""
 "Az eredeti adatpontok simítási száma. A szám drámai növelése – kb. 50-ig – "
-"sokkal jobb eredményt adhat. De ha bármely pontot nem talál meg, "
-"amely sarok „kellene” legyen, akkor a görbe elszáll a pont körül."
+"sokkal jobb eredményt adhat. De ha bármely pontot nem talál meg, amely sarok "
+"„kellene” legyen, akkor a görbe elszáll a pont körül."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:214
 msgid "Filter Percent:"
@@ -11131,9 +11242,9 @@ msgid ""
 "likely to be reverted."
 msgstr ""
 "Ha egy spline ennél közelebb van egy egyenes vonalhoz, akkor az egyenes "
-"marad, akkor is, ha különben görbére kellene visszaállítani. Ezt a görbehossz "
-"négyzetével súlyozzuk, hogy a rövidebb görbék nagyobb eséllyel legyenek "
-"visszaállítva."
+"marad, akkor is, ha különben görbére kellene visszaállítani. Ezt a "
+"görbehossz négyzetével súlyozzuk, hogy a rövidebb görbék nagyobb eséllyel "
+"legyenek visszaállítva."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:285
 msgid "Line Threshold:"
@@ -12112,9 +12223,6 @@ msgstr "Adatok átvitele a lapolvasóról/kameráról"
 #~ msgid "Second color"
 #~ msgstr "Második szín"
 
-#~ msgid "Alpha Channels"
-#~ msgstr "Alfa-csatornák"
-
 #~ msgid "F_irst color:"
 #~ msgstr "E_lső szín:"
 
@@ -12679,9 +12787,6 @@ msgstr "Adatok átvitele a lapolvasóról/kameráról"
 #~ msgctxt "metadata-value"
 #~ msgid "Value"
 #~ msgstr "Érték"
-
-#~ msgid "Image _title:"
-#~ msgstr "Kép _címe:"
 
 #~ msgid "Empty"
 #~ msgstr "Üres"
@@ -13317,9 +13422,6 @@ msgstr "Adatok átvitele a lapolvasóról/kameráról"
 
 #~ msgid "Clear transparent"
 #~ msgstr "Átlátszó részek törlése"
-
-#~ msgid "Quality:"
-#~ msgstr "Minőség:"
 
 #~ msgid "Smoothing:"
 #~ msgstr "Simítás:"
