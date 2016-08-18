@@ -1,0 +1,4 @@
+kate: indent-mode cstyle;
+kate: indent-width 2; tab-width 8;
+kate: tab-indents off; replace-tabs on;
+kate: remove-trailing-spaces modified;
