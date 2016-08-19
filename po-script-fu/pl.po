@@ -1,23 +1,21 @@
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Aviary.pl
-# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
-# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
-# gnomepl@aviary.pl
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Polish translation for gimp-script-fu.
+# Copyright © 1999-2016 the gimp authors.
+# This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999-2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2007.
 # Łukasz Jernaś <deejay1@srem.org>, 2010.
 # Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <gnomepl@aviary.pl>, 2011-2016.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 00:00+0200\n"
-"PO-Revision-Date: 2016-08-15 00:01+0200\n"
+"POT-Creation-Date: 2016-08-19 13:40+0200\n"
+"PO-Revision-Date: 2016-08-19 13:42+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +25,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
-msgstr "Interaktywna konsola do programowania w Script-Fu"
+msgstr "Interaktywna konsola do programowania w Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
@@ -43,7 +41,7 @@ msgstr "Uruchom _serwer…"
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_GIMP Online"
-msgstr "_GIMP w sieci"
+msgstr "_GIMP w sieci"
 
 #: ../plug-ins/script-fu/script-fu.c:307
 msgid "_User Manual"
@@ -103,7 +101,7 @@ msgid ""
 "Please close all Script-Fu windows and try again."
 msgstr ""
 "Nie można używać funkcji „Odśwież skrypty”, kiedy okno Script-Fu jest "
-"otwarte. Proszę zamknąć wszystkie okna Script-Fu i spróbować ponownie."
+"otwarte. Proszę zamknąć wszystkie okna Script-Fu i spróbować ponownie."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
 #: ../plug-ins/script-fu/script-fu-console.c:194
@@ -112,11 +110,11 @@ msgstr "Konsola Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
-msgstr "Witamy w TinyScheme"
+msgstr "Witamy w TinyScheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Interactive Scheme Development"
-msgstr "Interaktywne programowanie w języku Scheme"
+msgstr "Interaktywne programowanie w języku Scheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
@@ -311,8 +309,8 @@ msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr ""
-"Tworzy szybkie warstwy nad tłem, aby połączyć dwie lub więcej warstw w "
-"animację"
+"Tworzy szybkie warstwy nad tłem, aby połączyć dwie lub więcej warstw "
+"w animację"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
@@ -332,8 +330,8 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Skrypt wypalenia potrzebuje dwóch warstw: warstwy pierwszoplanowej z "
-"przezroczystością oraz warstwy tła."
+"Skrypt wypalenia potrzebuje dwóch warstw: warstwy pierwszoplanowej "
+"z przezroczystością oraz warstwy tła."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
 msgid "B_urn-In..."
@@ -407,7 +405,7 @@ msgstr "Schem_atyczne wyżłobienie…"
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
-"Używa podanego obszaru rysowania jako szablonu do wyżłobienia z podanego "
+"Używa podanego obszaru rysowania jako szablonu do wyżłobienia z podanego "
 "obrazu."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:190
@@ -529,7 +527,7 @@ msgstr "Oddzielna warstwa"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:51
 msgid "_Clothify..."
-msgstr "Przekształcenie w _tkaninę…"
+msgstr "Przekształcenie w _tkaninę…"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:52
 msgid "Add a cloth-like texture to the selected region (or alpha)"
@@ -662,7 +660,7 @@ msgstr "Czyść co drugi wi_ersz…"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:40
 msgid "Erase every other row or column"
-msgstr "Czyści wszystkie inne wiersze i kolumny"
+msgstr "Czyści wszystkie inne wiersze i kolumny"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows/cols"
@@ -801,11 +799,11 @@ msgstr "_Przetwarzanie obrazów dla stron WWW"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
-msgstr "_Praca ze zdjęciami z aparatu cyfrowego"
+msgstr "_Praca ze zdjęciami z aparatu cyfrowego"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:98
 msgid "Create, Open and Save _Files"
-msgstr "_Tworzenie, otwieranie i zapisywanie plików"
+msgstr "_Tworzenie, otwieranie i zapisywanie plików"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:111
 msgid "_Basic Concepts"
@@ -821,7 +819,7 @@ msgstr "Ry_sowanie prostych obiektów"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "Create and Use _Selections"
-msgstr "Tworzenie i używanie _zaznaczeń"
+msgstr "Tworzenie i używanie _zaznaczeń"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:178
 msgid "_Main Web Site"
@@ -883,7 +881,7 @@ msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
-"Rysuje siatkę ustawioną w liście położeń X i Y używając bieżącego pędzla"
+"Rysuje siatkę ustawioną w liście położeń X i Y używając bieżącego pędzla"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
@@ -895,7 +893,7 @@ msgstr "Podziały Y"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
-msgstr "Nowa prowadnica z _zaznaczenia"
+msgstr "Nowa prowadnica z _zaznaczenia"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
@@ -934,7 +932,7 @@ msgstr "Nowa p_rowadnica…"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "Dodaje prowadnice w ustalonym położeniu (w pikselach)"
+msgstr "Dodaje prowadnice w ustalonym położeniu (w pikselach)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "Position"
@@ -946,7 +944,7 @@ msgstr "Usuń _wszystkie prowadnice"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
-msgstr "Usuwa wszystkie poziome i pionowe prowadnice"
+msgstr "Usuwa wszystkie poziome i pionowe prowadnice"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:117
 msgid "_Lava..."
@@ -1035,7 +1033,7 @@ msgstr "_Prostokątny, zmiękczony…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:132
 msgid "Create a rectangular brush with feathered edges"
-msgstr "Tworzy prostokątny pędzel z rozmytymi krawędziami"
+msgstr "Tworzy prostokątny pędzel z rozmytymi krawędziami"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:140
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:265
@@ -1056,7 +1054,7 @@ msgstr "Eli_ptyczny, zmiękczony…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:257
 msgid "Create an elliptical brush with feathered edges"
-msgstr "Tworzy eliptyczny pędzel z rozmytymi krawędziami"
+msgstr "Tworzy eliptyczny pędzel z rozmytymi krawędziami"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
@@ -1090,7 +1088,7 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"Nazwa pliku do utworzenia (jeśli plik o tej nazwie już istnieje, to zostanie "
+"Nazwa pliku do utworzenia (jeśli plik o tej nazwie już istnieje, to zostanie "
 "zastąpiony)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
@@ -1102,16 +1100,16 @@ msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
 msgstr ""
-"Wszystkie znaki w nazwie są białymi znakami lub znakami, których nie można "
-"używać w nazwach plików."
+"Wszystkie znaki w nazwie są białymi znakami lub znakami, których nie można "
+"używać w nazwach plików."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
-"Eksportuje aktywną paletę jako arkusz stylów CSS z nazwą wpisu koloru jako "
-"ich nazwą klasy, a nazwą koloru jako atrybut"
+"Eksportuje aktywną paletę jako arkusz stylów CSS z nazwą wpisu koloru jako "
+"ich nazwą klasy, a nazwą koloru jako atrybut"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
@@ -1127,7 +1125,7 @@ msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
-"Zapisywanie wszystkich kolorów w palecie do pliku tekstowego, jedna wartość "
+"Zapisywanie wszystkich kolorów w palecie do pliku tekstowego, jedna wartość "
 "szesnastkowa na wiersz (bez nazw)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:399
@@ -1137,7 +1135,7 @@ msgstr "Eksportowanie aktywnej palety jako java.util.Hashtable<String, Color>"
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
 msgid "There is no image data in the clipboard to paste."
-msgstr "Nie odnaleziono danych obrazu w schowku do wklejenia."
+msgstr "Nie odnaleziono danych obrazu w schowku do wklejenia."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
 msgid "New _Brush..."
@@ -1179,7 +1177,7 @@ msgstr "_Perspektywa…"
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
 msgid "Add a perspective shadow to the selected region (or alpha)"
 msgstr ""
-"Dodaje cień z perspektywą do zaznaczonego obszaru (lub przezroczystości)"
+"Dodaje cień z perspektywą do zaznaczonego obszaru (lub przezroczystości)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
 msgid "Angle"
@@ -1267,7 +1265,7 @@ msgstr "_Zaokrąglone rogi…"
 #: ../plug-ins/script-fu/scripts/round-corners.scm:130
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr "Zaokrągla rogi obrazu oraz opcjonalnie dodaje cień i tło"
+msgstr "Zaokrągla rogi obrazu oraz opcjonalnie dodaje cień i tło"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:137
 msgid "Edge radius"
@@ -1295,7 +1293,7 @@ msgstr "Us_taw mapę kolorów…"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr "Zmienia mapę kolorów obrazu na kolory z podanej palety."
+msgstr "Zmienia mapę kolorów obrazu na kolory z podanej palety."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
 msgid "Palette"
@@ -1347,7 +1345,7 @@ msgstr "S_lajd…"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:237
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr "Dodaje ramkę podobną do slajdu, perforacje i etykiety do obrazu"
+msgstr "Dodaje ramkę podobną do slajdu, perforacje i etykiety do obrazu"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:244
 msgid "Text"
@@ -1401,7 +1399,7 @@ msgstr "Spy_rogimp…"
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr "Dodaje spirogramy, epitrochoidy i krzywe Lissajous do bieżącej warstwy"
+msgstr "Dodaje spirogramy, epitrochoidy i krzywe Lissajous do bieżącej warstwy"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
@@ -1564,7 +1562,7 @@ msgstr "F_ale…"
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr "Tworzy wielowarstwowy obraz z efektem rzuconego kamienia"
+msgstr "Tworzy wielowarstwowy obraz z efektem rzuconego kamienia"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
