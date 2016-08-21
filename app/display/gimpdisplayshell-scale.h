@@ -29,6 +29,11 @@ void     gimp_display_shell_scale_set_dot_for_dot    (GimpDisplayShell *shell,
 void     gimp_display_shell_scale_get_image_size     (GimpDisplayShell *shell,
                                                       gint             *w,
                                                       gint             *h);
+void     gimp_display_shell_scale_get_image_bounds   (GimpDisplayShell *shell,
+                                                      gint             *x,
+                                                      gint             *y,
+                                                      gint             *w,
+                                                      gint             *h);
 gboolean gimp_display_shell_scale_image_is_within_viewport
                                                      (GimpDisplayShell *shell,
                                                       gboolean         *horizontally,
@@ -65,6 +70,9 @@ void     gimp_display_shell_set_initial_scale        (GimpDisplayShell *shell,
                                                       gint             *display_width,
                                                       gint             *display_height);
 
+void     gimp_display_shell_get_rotated_scale        (GimpDisplayShell *shell,
+                                                      gdouble          *scale_x,
+                                                      gdouble          *scale_y);
 
 /*  debug API for testing  */
 

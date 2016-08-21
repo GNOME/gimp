@@ -222,19 +222,39 @@ static gboolean
 gimp_popup_key_press (GtkWidget   *widget,
                       GdkEventKey *kevent)
 {
-  GtkBindingSet *binding_set;
+  GtkWidget *focus            = gtk_window_get_focus (GTK_WINDOW (widget));
+  gboolean   activate_binding = TRUE;
 
-  binding_set = gtk_binding_set_by_class (g_type_class_peek (GIMP_TYPE_POPUP));
-
-  /*  invoke the popup's binding entries manually, because otherwise
-   *  the focus widget (GtkTreeView e.g.) would consume it
-   */
-  if (gtk_binding_set_activate (binding_set,
-                                kevent->keyval,
-                                kevent->state,
-                                GTK_OBJECT (widget)))
+  if (focus &&
+      (GTK_IS_EDITABLE (focus) ||
+       GTK_IS_TEXT_VIEW (focus)) &&
+      (kevent->keyval == GDK_KEY_space ||
+       kevent->keyval == GDK_KEY_KP_Space))
     {
-      return TRUE;
+      /*  if a text widget has the focus, and the key was space,
+       *  don't manually activate the binding to allow entering the
+       *  space in the focus widget.
+       */
+      activate_binding = FALSE;
+    }
+
+  if (activate_binding)
+    {
+      GtkBindingSet *binding_set;
+
+      binding_set = gtk_binding_set_by_class (g_type_class_peek (GIMP_TYPE_POPUP));
+
+      /*  invoke the popup's binding entries manually, because
+       *  otherwise the focus widget (GtkTreeView e.g.) would consume
+       *  it
+       */
+      if (gtk_binding_set_activate (binding_set,
+                                    kevent->keyval,
+                                    kevent->state,
+                                    GTK_OBJECT (widget)))
+        {
+          return TRUE;
+        }
     }
 
   return GTK_WIDGET_CLASS (parent_class)->key_press_event (widget, kevent);

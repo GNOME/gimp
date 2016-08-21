@@ -27,6 +27,7 @@ plug-ins/file-psd
 plug-ins/file-sgi
 plug-ins/file-tiff
 plug-ins/file-uri
+plug-ins/file-webp
 plug-ins/file-xjt
 plug-ins/flame
 plug-ins/fractal-explorer

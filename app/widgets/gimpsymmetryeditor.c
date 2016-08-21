@@ -238,11 +238,16 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
 
   if (symmetry && G_TYPE_FROM_INSTANCE (symmetry) != GIMP_TYPE_SYMMETRY)
     {
-      GtkWidget *gui;
+      GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+      GimpImage       *image        = image_editor->image;
+      GtkWidget       *gui;
 
       gui = gimp_prop_gui_new (G_OBJECT (symmetry),
                                GIMP_TYPE_SYMMETRY,
                                GIMP_SYMMETRY_PARAM_GUI,
+                               GEGL_RECTANGLE (0, 0,
+                                               gimp_image_get_width  (image),
+                                               gimp_image_get_height (image)),
                                GIMP_IMAGE_EDITOR (editor)->context,
                                NULL, NULL);
       gtk_box_pack_start (GTK_BOX (editor->p->options_vbox), gui,

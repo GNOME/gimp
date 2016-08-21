@@ -40,6 +40,8 @@ libappconfig_a_sources = \
 	gimpconfig-utils.h		\
 	gimpcoreconfig.c		\
 	gimpcoreconfig.h		\
+	gimpdialogconfig.c		\
+	gimpdialogconfig.h		\
 	gimpdisplayconfig.c		\
 	gimpdisplayconfig.h		\
 	gimpdisplayoptions.c		\

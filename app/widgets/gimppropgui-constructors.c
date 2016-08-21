@@ -59,6 +59,7 @@ GtkWidget *
 _gimp_prop_gui_new_generic (GObject              *config,
                             GParamSpec          **param_specs,
                             guint                 n_param_specs,
+                            GeglRectangle        *area,
                             GimpContext          *context,
                             GimpCreatePickerFunc  create_picker_func,
                             gpointer              picker_creator)
@@ -100,11 +101,13 @@ _gimp_prop_gui_new_generic (GObject              *config,
 
           i++;
 
-          widget_x = gimp_prop_widget_new_from_pspec (config, pspec, context,
+          widget_x = gimp_prop_widget_new_from_pspec (config, pspec,
+                                                      area, context,
                                                       create_picker_func,
                                                       picker_creator,
                                                       &label_x);
-          widget_y = gimp_prop_widget_new_from_pspec (config, next_pspec, context,
+          widget_y = gimp_prop_widget_new_from_pspec (config, next_pspec,
+                                                      area, context,
                                                       create_picker_func,
                                                       picker_creator,
                                                       &label_y);
@@ -179,7 +182,8 @@ _gimp_prop_gui_new_generic (GObject              *config,
           const gchar *label;
           gboolean     expand = FALSE;
 
-          widget = gimp_prop_widget_new_from_pspec (config, pspec, context,
+          widget = gimp_prop_widget_new_from_pspec (config, pspec,
+                                                    area, context,
                                                     create_picker_func,
                                                     picker_creator,
                                                     &label);
@@ -393,6 +397,7 @@ GtkWidget *
 _gimp_prop_gui_new_color_rotate (GObject              *config,
                                  GParamSpec          **param_specs,
                                  guint                 n_param_specs,
+                                 GeglRectangle        *area,
                                  GimpContext          *context,
                                  GimpCreatePickerFunc  create_picker_func,
                                  gpointer              picker_creator)
@@ -441,9 +446,8 @@ _gimp_prop_gui_new_color_rotate (GObject              *config,
 
   box = _gimp_prop_gui_new_generic (config,
                                     param_specs + 6, 2,
-                                    context,
-                                    create_picker_func,
-                                    picker_creator);
+                                    area, context,
+                                    create_picker_func, picker_creator);
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
@@ -460,6 +464,7 @@ GtkWidget *
 _gimp_prop_gui_new_convolution_matrix (GObject              *config,
                                        GParamSpec          **param_specs,
                                        guint                 n_param_specs,
+                                       GeglRectangle        *area,
                                        GimpContext          *context,
                                        GimpCreatePickerFunc  create_picker_func,
                                        gpointer              picker_creator)
@@ -512,12 +517,12 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   gtk_widget_show (hbox);
 
   scale = gimp_prop_widget_new (config, "divisor",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "offset",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
 
@@ -528,18 +533,16 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 27, 4,
-                                     context,
-                                     create_picker_func,
-                                     picker_creator);
+                                     area, context,
+                                     create_picker_func, picker_creator);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 31,
                                      n_param_specs - 31,
-                                     context,
-                                     create_picker_func,
-                                     picker_creator);
+                                     area, context,
+                                     create_picker_func, picker_creator);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -550,6 +553,7 @@ GtkWidget *
 _gimp_prop_gui_new_channel_mixer (GObject              *config,
                                   GParamSpec          **param_specs,
                                   guint                 n_param_specs,
+                                  GeglRectangle        *area,
                                   GimpContext          *context,
                                   GimpCreatePickerFunc  create_picker_func,
                                   gpointer              picker_creator)
@@ -578,17 +582,17 @@ _gimp_prop_gui_new_channel_mixer (GObject              *config,
   gtk_widget_show (vbox);
 
   scale = gimp_prop_widget_new (config, "rr-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "rg-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "rb-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -602,17 +606,17 @@ _gimp_prop_gui_new_channel_mixer (GObject              *config,
   gtk_widget_show (vbox);
 
   scale = gimp_prop_widget_new (config, "gr-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "gg-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "gb-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -626,23 +630,23 @@ _gimp_prop_gui_new_channel_mixer (GObject              *config,
   gtk_widget_show (vbox);
 
   scale = gimp_prop_widget_new (config, "br-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "bg-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "bb-gain",
-                                context, NULL, NULL, &label);
+                                area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
 
   checkbox = gimp_prop_widget_new (config, "preserve-luminosity",
-                                   context, NULL, NULL, &label);
+                                   area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (main_vbox), checkbox, FALSE, FALSE, 0);
   gtk_widget_show (checkbox);
 
@@ -654,6 +658,7 @@ GtkWidget *
 _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
                                          GParamSpec          **param_specs,
                                          guint                 n_param_specs,
+                                         GeglRectangle        *area,
                                          GimpContext          *context,
                                          GimpCreatePickerFunc  create_picker_func,
                                          gpointer              picker_creator)
@@ -670,9 +675,8 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 0, 3,
-                                     context,
-                                     create_picker_func,
-                                     picker_creator);
+                                     area, context,
+                                     create_picker_func, picker_creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Frequencies")));
@@ -680,9 +684,8 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 3, 3,
-                                     context,
-                                     create_picker_func,
-                                     picker_creator);
+                                     area, context,
+                                     create_picker_func, picker_creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Contours")));
@@ -690,9 +693,8 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 6, 3,
-                                     context,
-                                     create_picker_func,
-                                     picker_creator);
+                                     area, context,
+                                     create_picker_func, picker_creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Sharp Edges")));
@@ -700,9 +702,8 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 9, 3,
-                                     context,
-                                     create_picker_func,
-                                     picker_creator);
+                                     area, context,
+                                     create_picker_func, picker_creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Other Options")));

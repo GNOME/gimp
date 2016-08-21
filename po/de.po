@@ -21,8 +21,8 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-06-24 10:45+0000\n"
-"PO-Revision-Date: 2016-06-25 11:15+0200\n"
+"POT-Creation-Date: 2016-08-05 10:26+0000\n"
+"PO-Revision-Date: 2016-08-05 23:16+0200\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Project-Style: gnome\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -371,7 +371,7 @@ msgid "Paint Dynamics"
 msgstr "Zeichendynamik"
 
 #: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:419
-#: ../app/widgets/gimpdynamicseditor.c:93
+#: ../app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Editor für Zeichendynamik"
 
@@ -1083,7 +1083,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1994
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1998
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:89
@@ -8436,7 +8436,7 @@ msgid "Text"
 msgstr "Text"
 
 #: ../app/core/core-enums.c:906 ../app/core/core-enums.c:954
-#: ../app/core/gimpdrawable-transform.c:661
+#: ../app/core/gimpdrawable-transform.c:668
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformation"
@@ -9110,7 +9110,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Kanal drehen"
 
-#: ../app/core/gimpchannel.c:296 ../app/core/gimpdrawable-transform.c:982
+#: ../app/core/gimpchannel.c:296 ../app/core/gimpdrawable-transform.c:989
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Kanal transformieren"
@@ -9199,12 +9199,9 @@ msgid "Shrink Channel"
 msgstr "Kanal verkleinern"
 
 #: ../app/core/gimpchannel.c:337
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Flip Channel"
 msgctxt "undo-type"
 msgid "Flood Channel"
-msgstr "Kanal spiegeln"
+msgstr "Kanal fluten"
 
 #: ../app/core/gimpchannel.c:836
 msgid "Cannot fill empty channel."
@@ -9391,7 +9388,7 @@ msgstr "Farbverlauf"
 msgid "Calculating distance map"
 msgstr "Entfernungstabelle wird berechnet"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:159
+#: ../app/core/gimpdrawable-bucket-fill.c:183
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Füllen"
@@ -9434,22 +9431,22 @@ msgstr "Ebene verschieben"
 msgid "Not enough points to stroke"
 msgstr "Es sind nicht genügend Punkte vorhanden, um diese nachzuziehen."
 
-#: ../app/core/gimpdrawable-transform.c:750
+#: ../app/core/gimpdrawable-transform.c:757
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Spiegeln"
 
-#: ../app/core/gimpdrawable-transform.c:835
+#: ../app/core/gimpdrawable-transform.c:842
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Drehen"
 
-#: ../app/core/gimpdrawable-transform.c:980 ../app/core/gimplayer.c:332
+#: ../app/core/gimpdrawable-transform.c:987 ../app/core/gimplayer.c:332
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Ebene transformieren"
 
-#: ../app/core/gimpdrawable-transform.c:993
+#: ../app/core/gimpdrawable-transform.c:1000
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -9643,75 +9640,75 @@ msgstr "Ebenengruppe transformieren"
 msgid "Symmetry"
 msgstr "Symmetrie"
 
-#: ../app/core/gimpimage.c:2246
+#: ../app/core/gimpimage.c:2250
 msgid " (exported)"
 msgstr "(exportiert)"
 
-#: ../app/core/gimpimage.c:2250
+#: ../app/core/gimpimage.c:2254
 msgid " (overwritten)"
 msgstr "(überschrieben)"
 
-#: ../app/core/gimpimage.c:2259
+#: ../app/core/gimpimage.c:2263
 msgid " (imported)"
 msgstr "(importiert)"
 
-#: ../app/core/gimpimage.c:2493
+#: ../app/core/gimpimage.c:2497
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Bildauflösung ändern"
 
-#: ../app/core/gimpimage.c:2545
+#: ../app/core/gimpimage.c:2549
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Bildeinheit ändern"
 
-#: ../app/core/gimpimage.c:3425
+#: ../app/core/gimpimage.c:3429
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: ../app/core/gimpimage.c:3477
+#: ../app/core/gimpimage.c:3481
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Parasit an Bild anheften"
 
-#: ../app/core/gimpimage.c:3518
+#: ../app/core/gimpimage.c:3522
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Parasit von Bild entfernen"
 
-#: ../app/core/gimpimage.c:4227
+#: ../app/core/gimpimage.c:4231
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: ../app/core/gimpimage.c:4277 ../app/core/gimpimage.c:4297
+#: ../app/core/gimpimage.c:4281 ../app/core/gimpimage.c:4301
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: ../app/core/gimpimage.c:4291
+#: ../app/core/gimpimage.c:4295
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Schwebende Auswahl entfernen"
 
-#: ../app/core/gimpimage.c:4456
+#: ../app/core/gimpimage.c:4460
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: ../app/core/gimpimage.c:4494 ../app/core/gimpimage.c:4507
+#: ../app/core/gimpimage.c:4498 ../app/core/gimpimage.c:4511
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: ../app/core/gimpimage.c:4561
+#: ../app/core/gimpimage.c:4565
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: ../app/core/gimpimage.c:4592
+#: ../app/core/gimpimage.c:4596
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pfad entfernen"
@@ -9721,13 +9718,13 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Objekte anordnen"
 
-#: ../app/core/gimpimage-color-profile.c:120
+#: ../app/core/gimpimage-color-profile.c:122
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 "ICC Profil Prüfung fehlgeschlagen. Der Name des parasite ist nicht 'icc-"
 "profile'"
 
-#: ../app/core/gimpimage-color-profile.c:129
+#: ../app/core/gimpimage-color-profile.c:131
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -9735,29 +9732,29 @@ msgstr ""
 "ICC Profil Prüfung fehlgeschlagen. Der Modus des parasite ist nicht "
 "(PERSISTENT | UNDOABLE)"
 
-#: ../app/core/gimpimage-color-profile.c:186
+#: ../app/core/gimpimage-color-profile.c:188
 msgid "ICC profile validation failed: "
 msgstr "Prüfen des ICC-Farbprofils fehlgeschlagen: "
 
-#: ../app/core/gimpimage-color-profile.c:330
+#: ../app/core/gimpimage-color-profile.c:332
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "Prüfen des ICC-Farbprofils fehlgeschlagen: Das Farbprofil ist nicht für den "
 "Graustufen-Farbraum"
 
-#: ../app/core/gimpimage-color-profile.c:340
+#: ../app/core/gimpimage-color-profile.c:342
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Prüfen des ICC-Farbprofils fehlgeschlagen: Das Farbprofil ist nicht für den "
 "RGB-Farbraum"
 
-#: ../app/core/gimpimage-color-profile.c:395
+#: ../app/core/gimpimage-color-profile.c:397
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Umwandeln von »%s« nach »%s«"
 
-#: ../app/core/gimpimage-color-profile.c:400
+#: ../app/core/gimpimage-color-profile.c:402
 msgid "Color profile conversion"
 msgstr "Farbprofilumwandlung"
 
@@ -9971,12 +9968,12 @@ msgstr ""
 "Es sind nicht genügend Pfade als »Sichtbar« markiert, um den Vorgang "
 "»Sichtbare Pfade vereinen« auszuführen. Es müssen mindestens zwei Pfade sein."
 
-#: ../app/core/gimpimage-quick-mask.c:87
+#: ../app/core/gimpimage-quick-mask.c:89
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
 msgstr "Schnellmaske aktivieren"
 
-#: ../app/core/gimpimage-quick-mask.c:137
+#: ../app/core/gimpimage-quick-mask.c:121
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
 msgstr "Schnellmaske deaktivieren"
@@ -10529,97 +10526,118 @@ msgstr "Aktiv"
 msgid "Activate symmetry painting"
 msgstr "Symmetrisches Malen aktivieren"
 
-#: ../app/core/gimpsymmetry-mandala.c:112
+#: ../app/core/gimpsymmetry-mandala.c:113
 msgid "Mandala"
 msgstr "Mandala"
 
-#: ../app/core/gimpsymmetry-mandala.c:119
+#: ../app/core/gimpsymmetry-mandala.c:120
 msgid "Center abscissa"
 msgstr "Abszisse des Zentrums"
 
-#: ../app/core/gimpsymmetry-mandala.c:127
+#: ../app/core/gimpsymmetry-mandala.c:132
 msgid "Center ordinate"
 msgstr "Ordinate des Zentrums"
 
-#: ../app/core/gimpsymmetry-mandala.c:135
+#: ../app/core/gimpsymmetry-mandala.c:144
 msgid "Number of points"
 msgstr "Anzahl der Punkte"
 
-#: ../app/core/gimpsymmetry-mandala.c:143 ../app/core/gimpsymmetry-mirror.c:153
+#: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
 msgstr "Pinseltransformation deaktivieren"
 
-#: ../app/core/gimpsymmetry-mandala.c:144 ../app/core/gimpsymmetry-mirror.c:154
-msgid "Disable brush transformation (faster)"
-msgstr "Pinseltransformation deaktivieren (schneller)"
+#: ../app/core/gimpsymmetry-mandala.c:153
+msgid "Disable brush rotation"
+msgstr "Pinseldrehung deaktivieren"
 
-#: ../app/core/gimpsymmetry-mirror.c:122
+#: ../app/core/gimpsymmetry-mirror.c:123
 msgid "Mirror"
 msgstr "Spiegeln"
 
-#: ../app/core/gimpsymmetry-mirror.c:129
-msgid "Horizontal Mirror"
-msgstr "Horizontal spiegeln"
+#: ../app/core/gimpsymmetry-mirror.c:130
+msgid "Horizontal Symmetry"
+msgstr "Horizontale Symmetrie"
 
-#: ../app/core/gimpsymmetry-mirror.c:137
-msgid "Vertical Mirror"
-msgstr "Vertikal spiegeln"
+#: ../app/core/gimpsymmetry-mirror.c:131
+msgid "Reflect the initial stroke across a horizontal axis"
+msgstr ""
 
-#: ../app/core/gimpsymmetry-mirror.c:145
+#: ../app/core/gimpsymmetry-mirror.c:138
+msgid "Vertical Symmetry"
+msgstr "Vertikale Symmetrie"
+
+#: ../app/core/gimpsymmetry-mirror.c:139
+msgid "Reflect the initial stroke across a vertical axis"
+msgstr ""
+
+#: ../app/core/gimpsymmetry-mirror.c:146
 msgid "Central Symmetry"
 msgstr "Zentralsymmetrie"
 
-#: ../app/core/gimpsymmetry-mirror.c:161
-msgid "Horizontal axis position"
-msgstr "Horizontale Achsenposition"
+#: ../app/core/gimpsymmetry-mirror.c:147
+#, fuzzy
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to 16 bit floating point"
+msgid "Invert the initial stroke through a point"
+msgstr "Das Bild in 16-Bit Fließkommazahl umwandeln (linearer Farbraum)"
 
-#: ../app/core/gimpsymmetry-mirror.c:169
+#: ../app/core/gimpsymmetry-mirror.c:155
+#, fuzzy
+#| msgid "Disable brush transform"
+msgid "Disable brush reflection"
+msgstr "Pinseltransformation deaktivieren"
+
+#: ../app/core/gimpsymmetry-mirror.c:162
 msgid "Vertical axis position"
 msgstr "Vertikale Achsenposition"
 
-#: ../app/core/gimpsymmetry-tiling.c:100
+#: ../app/core/gimpsymmetry-mirror.c:174
+msgid "Horizontal axis position"
+msgstr "Horizontale Achsenposition"
+
+#: ../app/core/gimpsymmetry-tiling.c:101
 msgid "Tiling"
 msgstr "Kacheln"
 
-#: ../app/core/gimpsymmetry-tiling.c:106
+#: ../app/core/gimpsymmetry-tiling.c:107
 msgid "Interval X"
 msgstr "X-Intervall"
 
-#: ../app/core/gimpsymmetry-tiling.c:107
+#: ../app/core/gimpsymmetry-tiling.c:108
 msgid "Interval on the X axis (pixels)"
 msgstr "Intervall auf der X-Achse (Pixel)"
 
-#: ../app/core/gimpsymmetry-tiling.c:114
+#: ../app/core/gimpsymmetry-tiling.c:119
 msgid "Interval Y"
 msgstr "Y-Intervall"
 
-#: ../app/core/gimpsymmetry-tiling.c:115
+#: ../app/core/gimpsymmetry-tiling.c:120
 msgid "Interval on the Y axis (pixels)"
 msgstr "Intervall auf der Y-Achse (Pixel)"
 
-#: ../app/core/gimpsymmetry-tiling.c:122
+#: ../app/core/gimpsymmetry-tiling.c:131
 msgid "Shift"
 msgstr "Verschieben"
 
-#: ../app/core/gimpsymmetry-tiling.c:123
+#: ../app/core/gimpsymmetry-tiling.c:132
 msgid "X-shift between lines (pixels)"
 msgstr "X-Verschiebung zwischen Linien (Pixel)"
 
 # CHECK
-#: ../app/core/gimpsymmetry-tiling.c:130
+#: ../app/core/gimpsymmetry-tiling.c:139
 msgid "Max strokes X"
 msgstr "Max. X-Pinselstriche"
 
-#: ../app/core/gimpsymmetry-tiling.c:131
+#: ../app/core/gimpsymmetry-tiling.c:140
 msgid "Maximum number of strokes on the X axis"
 msgstr "Maximale Anzahl der Pinselstriche auf der X-Achse"
 
 # CHECK
-#: ../app/core/gimpsymmetry-tiling.c:138
+#: ../app/core/gimpsymmetry-tiling.c:147
 msgid "Max strokes Y"
 msgstr "Max. Y-Pinselstriche"
 
-#: ../app/core/gimpsymmetry-tiling.c:139
+#: ../app/core/gimpsymmetry-tiling.c:148
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Maximale Anzahl der Pinselstriche auf der Y-Achse"
 
@@ -11654,7 +11672,7 @@ msgstr "I_ntervall:"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:361
-#: ../app/tools/gimpforegroundselecttool.c:1223
+#: ../app/tools/gimpforegroundselecttool.c:1229
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -12734,7 +12752,7 @@ msgid "Press %s to discard all changes and close all images."
 msgstr ""
 "Drücken Sie %s, um alle Änderungen zu verwerfen und alle Bilder zu schließen."
 
-#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:179
+#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:183
 msgid "_Discard Changes"
 msgstr "Änderungen _verwerfen"
 
@@ -13235,23 +13253,23 @@ msgstr "Keine reguläre Datei"
 msgid "Permission denied"
 msgstr "Zugriff verweigert"
 
-#: ../app/file/file-open.c:230
+#: ../app/file/file-open.c:236
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr ""
 "Das Plugin %s meldete einen Erfolg, es wurde jedoch kein Bild zurück "
 "geliefert"
 
-#: ../app/file/file-open.c:241
+#: ../app/file/file-open.c:247
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Das Plugin %s konnte das Bild nicht öffnen"
 
-#: ../app/file/file-open.c:637
+#: ../app/file/file-open.c:643
 msgid "Image doesn't contain any layers"
 msgstr "Das Bild enthält keine Ebenen"
 
-#: ../app/file/file-open.c:696
+#: ../app/file/file-open.c:702
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "»%s« konnte nicht geöffnet werden: %s"
@@ -13688,7 +13706,7 @@ msgstr "Größe des Tintenkleckses"
 msgid "Angle"
 msgstr "Winkel"
 
-#: ../app/paint/gimpinkoptions.c:99 ../app/widgets/gimpdynamicseditor.c:145
+#: ../app/paint/gimpinkoptions.c:99 ../app/widgets/gimpdynamicseditor.c:164
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Tilt"
 msgstr "Neigung"
@@ -14883,7 +14901,7 @@ msgstr ""
 "Fehler beim Ausführen der Prozedur »%s«:\n"
 "%s"
 
-#: ../app/plug-in/gimpplugin-progress.c:331
+#: ../app/plug-in/gimpplugin-progress.c:339
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
@@ -14974,7 +14992,7 @@ msgstr ""
 "Franz jagt im komplett verwahrlosten\n"
 "Taxi quer durch Bayern. 012345689"
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1372
+#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1405
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -15019,11 +15037,11 @@ msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "Die Textfunktion ist nicht verfügbar, weil keine Schriften vorhanden sind."
 
-#: ../app/text/gimptextlayer.c:698
+#: ../app/text/gimptextlayer.c:700
 msgid "Empty Text Layer"
 msgstr "Leere Textebene"
 
-#: ../app/text/gimptextlayer.c:750
+#: ../app/text/gimptextlayer.c:753
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -16098,7 +16116,7 @@ msgstr ""
 "Drücken Sie ESC zum Verlassen der Vorschau oder die Eingabetaste zum "
 "Anwenden."
 
-#: ../app/tools/gimpforegroundselecttool.c:1219
+#: ../app/tools/gimpforegroundselecttool.c:1225
 msgid "Paint mask"
 msgstr "Zeichenmaske"
 
@@ -16491,7 +16509,7 @@ msgid "Resize image window to accommodate new zoom level"
 msgstr "Größe des Bildfensters an die neue Vergrößerungsstufe anpassen"
 
 #: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
-#: ../app/widgets/gimpdynamicseditor.c:144
+#: ../app/widgets/gimpdynamicseditor.c:163
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
 msgstr "Richtung"
@@ -17305,19 +17323,19 @@ msgstr "Text: Eine Ebene mit Text anlegen oder bearbeiten"
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:983
+#: ../app/tools/gimptexttool.c:1014
 msgid "Reshape Text Layer"
 msgstr "Textebene umgestalten"
 
-#: ../app/tools/gimptexttool.c:1483 ../app/tools/gimptexttool.c:1486
+#: ../app/tools/gimptexttool.c:1516 ../app/tools/gimptexttool.c:1519
 msgid "Confirm Text Editing"
 msgstr "Textbearbeitung bestätigen"
 
-#: ../app/tools/gimptexttool.c:1490
+#: ../app/tools/gimptexttool.c:1523
 msgid "Create _New Layer"
 msgstr "_Neue Ebene"
 
-#: ../app/tools/gimptexttool.c:1514
+#: ../app/tools/gimptexttool.c:1547
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -17332,7 +17350,7 @@ msgstr ""
 "Sie können die Ebene bearbeiten oder eine neue Text-Ebene mit denselben "
 "Textattributen erstellen."
 
-#: ../app/tools/gimptexttool-editor.c:1297
+#: ../app/tools/gimptexttool-editor.c:1293
 msgid "GIMP Text Editor"
 msgstr "GIMP-Texteditor"
 
@@ -17457,7 +17475,7 @@ msgstr "Drehung auf 15-Grad-Abstufungen einschränken (%s)"
 #: ../app/tools/gimptransformoptions.c:523
 #, c-format
 msgid "Shear along edge direction only (%s)"
-msgstr ""
+msgstr "Nur entlang der Kantenrichtung scheren (%s)"
 
 #: ../app/tools/gimptransformoptions.c:525
 #, c-format
@@ -18638,7 +18656,7 @@ msgid "Pressure curve"
 msgstr "Druckkurve"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:141
-#: ../app/widgets/gimpdynamicseditor.c:142
+#: ../app/widgets/gimpdynamicseditor.c:161
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Druck"
@@ -18653,7 +18671,7 @@ msgstr "Y-Neigung"
 
 #. Wheel as in mouse or input device wheel
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
-#: ../app/widgets/gimpdynamicseditor.c:146
+#: ../app/widgets/gimpdynamicseditor.c:165
 #: ../app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "Mausrad"
@@ -18773,24 +18791,29 @@ msgstr "Pixel sperren"
 msgid "Lock position and size"
 msgstr "Position und Größe sperren"
 
-#: ../app/widgets/gimpdynamicseditor.c:136
-msgid "Mapping matrix"
-msgstr "Abbildungsmatrix"
-
-#: ../app/widgets/gimpdynamicseditor.c:143
+#: ../app/widgets/gimpdynamicseditor.c:162
 #: ../app/widgets/gimpdynamicsoutputeditor.c:71
 msgid "Velocity"
 msgstr "Geschwindigkeit"
 
-#: ../app/widgets/gimpdynamicseditor.c:147
+#: ../app/widgets/gimpdynamicseditor.c:166
 #: ../app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Random"
 msgstr "Zufall"
 
-#: ../app/widgets/gimpdynamicseditor.c:148
+#: ../app/widgets/gimpdynamicseditor.c:167
 #: ../app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Fade"
 msgstr "Verblassen"
+
+#: ../app/widgets/gimpdynamicseditor.c:182
+msgid "Mapping matrix"
+msgstr "Abbildungsmatrix"
+
+#: ../app/widgets/gimpdynamicseditor.c:319
+#: ../app/widgets/gimptoolpreseteditor.c:149
+msgid "Icon:"
+msgstr "Symbol:"
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Too many error messages!"
@@ -19189,141 +19212,141 @@ msgstr "Wählen Sie ein Bild in der linken Leiste"
 msgid "Progress"
 msgstr "Fortschritt"
 
-#: ../app/widgets/gimppropgui-constructors.c:168
+#: ../app/widgets/gimppropgui-constructors.c:171
 msgid "Pick coordinates from the image"
 msgstr "Koordinaten aus dem Bild wählen"
 
-#: ../app/widgets/gimppropgui-constructors.c:326
+#: ../app/widgets/gimppropgui-constructors.c:330
 msgid "Clockwise"
 msgstr "Im Uhrzeigersinn"
 
-#: ../app/widgets/gimppropgui-constructors.c:330
+#: ../app/widgets/gimppropgui-constructors.c:334
 msgid "Invert Range"
 msgstr "Bereich umkehren"
 
-#: ../app/widgets/gimppropgui-constructors.c:334
+#: ../app/widgets/gimppropgui-constructors.c:338
 msgid "Select All"
 msgstr "Alles auswählen"
 
-#: ../app/widgets/gimppropgui-constructors.c:412
+#: ../app/widgets/gimppropgui-constructors.c:417
 msgid "Source Range"
 msgstr "Quellbereich"
 
-#: ../app/widgets/gimppropgui-constructors.c:423
+#: ../app/widgets/gimppropgui-constructors.c:428
 msgid "Destination Range"
 msgstr "Zielbereich"
 
-#: ../app/widgets/gimppropgui-constructors.c:434
+#: ../app/widgets/gimppropgui-constructors.c:439
 msgid "Gray Handling"
 msgstr "Grauverarbeitung"
 
-#: ../app/widgets/gimppropgui-constructors.c:572
+#: ../app/widgets/gimppropgui-constructors.c:576
 msgid "Red channel"
 msgstr "Roter Kanal"
 
-#: ../app/widgets/gimppropgui-constructors.c:596
+#: ../app/widgets/gimppropgui-constructors.c:600
 msgid "Green channel"
 msgstr "Grüner Kanal"
 
-#: ../app/widgets/gimppropgui-constructors.c:620
+#: ../app/widgets/gimppropgui-constructors.c:624
 msgid "Blue channel"
 msgstr "Blauer Kanal"
 
-#: ../app/widgets/gimppropgui-constructors.c:678
+#: ../app/widgets/gimppropgui-constructors.c:682
 msgid "Frequencies"
 msgstr "Frequenzen"
 
-#: ../app/widgets/gimppropgui-constructors.c:688
+#: ../app/widgets/gimppropgui-constructors.c:691
 msgid "Contours"
 msgstr "Konturen"
 
-#: ../app/widgets/gimppropgui-constructors.c:698
+#: ../app/widgets/gimppropgui-constructors.c:700
 msgid "Sharp Edges"
 msgstr "Kanten schärfen"
 
-#: ../app/widgets/gimppropgui-constructors.c:708
+#: ../app/widgets/gimppropgui-constructors.c:709
 msgid "Other Options"
 msgstr "weitere Optionen"
 
-#: ../app/widgets/gimppropgui.c:117
+#: ../app/widgets/gimppropgui.c:119
 msgid "New Seed"
 msgstr "Neue Zufallsdaten"
 
-#: ../app/widgets/gimppropgui.c:344
+#: ../app/widgets/gimppropgui.c:346
 msgid "Pick color from the image"
 msgstr "Farben aus dem Bild übernehmen"
 
-#: ../app/widgets/gimppropgui.c:452
+#: ../app/widgets/gimppropgui.c:457
 msgid "This operation has no editable properties"
 msgstr "Dieser Vorgang hat keine Eigenschaften, die bearbeitet werden können"
 
-#: ../app/widgets/gimppropgui.c:522
+#: ../app/widgets/gimppropgui.c:527
 msgid "1,700 K – Match flame"
 msgstr "1,700 K – Streichholzflamme"
 
-#: ../app/widgets/gimppropgui.c:523
+#: ../app/widgets/gimppropgui.c:528
 msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1,850 K – kerzenflamme, Sonnenaufgang/-untergang"
 
-#: ../app/widgets/gimppropgui.c:524
+#: ../app/widgets/gimppropgui.c:529
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr "3,000 K – Softe (oder warme) weiße kompakte fluoreszierende Lampen"
 
-#: ../app/widgets/gimppropgui.c:525
+#: ../app/widgets/gimppropgui.c:530
 msgid "3,300 K – Incandescent lamps"
 msgstr "3,300 K – Weißglühende Lampen"
 
 # am ehesten »Flutlicht«
-#: ../app/widgets/gimppropgui.c:526
+#: ../app/widgets/gimppropgui.c:531
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr "3,200 K – Studiolampen, etc."
 
-#: ../app/widgets/gimppropgui.c:527
+#: ../app/widgets/gimppropgui.c:532
 msgid "3,350 K – Studio \"CP\" light"
 msgstr "3,350 K – Studio \"CP\" Licht"
 
-#: ../app/widgets/gimppropgui.c:528
+#: ../app/widgets/gimppropgui.c:533
 msgid "4,100 K – Moonlight"
 msgstr "4,100 K – Mondlicht"
 
-#: ../app/widgets/gimppropgui.c:529
+#: ../app/widgets/gimppropgui.c:534
 msgid "5,000 K – D50"
 msgstr "5,000 K – D50"
 
 # Kaltkathodenlampe?
-#: ../app/widgets/gimppropgui.c:530
+#: ../app/widgets/gimppropgui.c:535
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr "5,000 K – Kühles weiß/Tageslicht kompakter fluoreszierender Lampen"
 
-#: ../app/widgets/gimppropgui.c:531
+#: ../app/widgets/gimppropgui.c:536
 msgid "5,000 K – Horizon daylight"
 msgstr "5,000 K – Tageslicht am Horizont"
 
-#: ../app/widgets/gimppropgui.c:532
+#: ../app/widgets/gimppropgui.c:537
 msgid "5,500 K – D55"
 msgstr "5,500 K – D55"
 
-#: ../app/widgets/gimppropgui.c:533
+#: ../app/widgets/gimppropgui.c:538
 msgid "5,500 K – Vertical daylight, electronic flash"
 msgstr "5,500 K – Vertikales Tageslicht, elektronischer Blitz"
 
-#: ../app/widgets/gimppropgui.c:534
+#: ../app/widgets/gimppropgui.c:539
 msgid "6,200 K – Xenon short-arc lamp"
 msgstr "6,200 K – Xenon-Kurzbogenlampe  "
 
-#: ../app/widgets/gimppropgui.c:535
+#: ../app/widgets/gimppropgui.c:540
 msgid "6,500 K – D65"
 msgstr "6,500 K – D65"
 
-#: ../app/widgets/gimppropgui.c:536
+#: ../app/widgets/gimppropgui.c:541
 msgid "6,500 K – Daylight, overcast"
 msgstr "6,500 K – Tageslicht, Bewölkung"
 
-#: ../app/widgets/gimppropgui.c:537
+#: ../app/widgets/gimppropgui.c:542
 msgid "7,500 K – D75"
 msgstr "7,500 K – D75"
 
-#: ../app/widgets/gimppropgui.c:538
+#: ../app/widgets/gimppropgui.c:543
 msgid "9,300 K"
 msgstr "9,300 K"
 
@@ -19714,10 +19737,6 @@ msgstr "Werkzeug-Voreinstellung wiederherstellen …"
 msgid "Delete Tool Preset..."
 msgstr "Werkzeug-Voreinstellung _löschen …"
 
-#: ../app/widgets/gimptoolpreseteditor.c:149
-msgid "Icon:"
-msgstr "Symbol:"
-
 #: ../app/widgets/gimptoolpreseteditor.c:291
 #, c-format
 msgid "%s Preset"
@@ -20041,6 +20060,15 @@ msgstr "Rund"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "unscharf"
+
+#~ msgid "Disable brush transformation (faster)"
+#~ msgstr "Pinseltransformation deaktivieren (schneller)"
+
+#~ msgid "Horizontal Mirror"
+#~ msgstr "Horizontal spiegeln"
+
+#~ msgid "Vertical Mirror"
+#~ msgstr "Vertikal spiegeln"
 
 #~ msgctxt "view-action"
 #~ msgid "_Print Simulation"

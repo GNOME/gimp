@@ -10,14 +10,14 @@ include $(top_srcdir)/icons/icon-list.mk
 # As exceptions, we do not want to invert some icons.
 # Just use these as-is: gimp-default-colors, gimp-toilet-paper.png.
 12/gimp-default-colors.png: $(top_srcdir)/icons/Symbolic/12/gimp-default-colors.png
-	mkdir -p `dirname $<` && cp -f $< $@
+	mkdir -p `dirname $@` && cp -f $< $@
 scalable/gimp-default-colors.svg: ../Symbolic/scalable/gimp-default-colors.svg
-	mkdir -p `dirname $<` && cp -f $< $@
+	mkdir -p `dirname $@` && cp -f $< $@
 
 %/gimp-toilet-paper.png: $(top_srcdir)/icons/Symbolic/$(@D)/gimp-toilet-paper.png
-	mkdir -p `dirname $<` && cp -f $< $@
+	mkdir -p `dirname $@` && cp -f $< $@
 scalable/gimp-toilet-paper.svg: ../Symbolic/scalable/gimp-toilet-paper.svg
-	mkdir -p `dirname $<` && cp -f $< $@
+	mkdir -p `dirname $@` && cp -f $< $@
 
 # Other exceptions: inverted gimp-color-picker-white|black are generated
 # from each other.

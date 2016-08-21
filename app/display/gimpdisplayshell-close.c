@@ -176,12 +176,12 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_free (title);
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          _("_Discard Changes"), GTK_RESPONSE_CLOSE,
-                          GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
                           (file ?
                            GTK_STOCK_SAVE :
                            GTK_STOCK_SAVE_AS),   RESPONSE_SAVE,
-                          NULL);
+                          GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+                          _("_Discard Changes"), GTK_RESPONSE_CLOSE,
+                         NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 

@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6119176k)
+# (tile-cache-size 6118966k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -231,6 +231,8 @@
 #     (resolution-unit inches)
 #     (image-type rgb)
 #     (precision u8-gamma)
+#     (color-managed yes)
+#     (color-profile NULL)
 #     (fill-type background-fill)
 #     (comment "Created with GIMP"))
 
@@ -260,7 +262,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1529794k)
+# (undo-size 1566455296)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -268,8 +270,8 @@
 # 
 # (undo-preview-size large)
 
-# How many recently used plug-ins to keep on the Filters menu.  This is an
-# integer value.
+# How many recently used filters and plug-ins to keep on the Filters menu. 
+# This is an integer value.
 # 
 # (plug-in-history-size 10)
 
@@ -309,8 +311,10 @@
 #     (display-profile-from-gdk no)
 #     (display-rendering-intent relative-colorimetric)
 #     (display-use-black-point-compensation yes)
+#     (display-optimize yes)
 #     (simulation-rendering-intent perceptual)
 #     (simulation-use-black-point-compensation no)
+#     (simulation-optimize yes)
 #     (simulation-gamut-check no)
 #     (out-of-gamut-color (color-rgb 0.501961 0.501961 0.501961))
 #     (display-module "CdisplayLcms"))
@@ -354,12 +358,14 @@
 # (marching-ants-speed 200)
 
 # When enabled, the image window will automatically resize itself when
-# zooming into and out of images.  Possible values are yes and no.
+# zooming into and out of images. This setting only takes effect in
+# multi-window mode.  Possible values are yes and no.
 # 
 # (resize-windows-on-zoom no)
 
 # When enabled, the image window will automatically resize itself whenever
-# the physical image size changes.  Possible values are yes and no.
+# the physical image size changes. This setting only takes effect in
+# multi-window mode.  Possible values are yes and no.
 # 
 # (resize-windows-on-resize no)
 
@@ -373,14 +379,6 @@
 # values are yes and no.
 # 
 # (initial-zoom-to-fit yes)
-
-# When enabled, the X server is queried for the mouse's current position on
-# each motion event, rather than relying on the position hint.  This means
-# painting with large brushes should be more accurate, but it may be slower. 
-# Conversely, on some X servers enabling this option results in faster
-# painting.  Possible values are yes and no.
-# 
-# (perfect-mouse yes)
 
 # Sets the type of mouse pointers to use.  Possible values are tool-icon,
 # tool-crosshair and crosshair.
@@ -567,10 +565,10 @@
 # 
 # (move-tool-changes-active no)
 
-# How many recent settings to keep around in color correction tools  This is
-# an integer value.
+# How many recent settings to keep around in filter tools  This is an integer
+# value.
 # 
-# (image-map-tool-max-recent 10)
+# (filter-tool-max-recent 10)
 
 # When enabled, GIMP will not save an image if it has not been changed since
 # it was opened.  Possible values are yes and no.

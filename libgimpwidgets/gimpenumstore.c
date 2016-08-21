@@ -153,14 +153,20 @@ gimp_enum_store_add_value (GtkListStore *store,
 {
   GtkTreeIter  iter = { 0, };
   const gchar *desc;
+  gchar       *stripped;
 
   desc = gimp_enum_value_get_desc (GIMP_ENUM_STORE (store)->enum_class, value);
+
+  /* no mnemonics in combo boxes */
+  stripped = gimp_strip_uline (desc);
 
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
                       GIMP_INT_STORE_VALUE, value->value,
-                      GIMP_INT_STORE_LABEL, desc,
+                      GIMP_INT_STORE_LABEL, stripped,
                       -1);
+
+  g_free (stripped);
 }
 
 

@@ -21,7 +21,7 @@
 #ifndef __GIMP_PLUGIN_CONFIG_H__
 #define __GIMP_PLUGIN_CONFIG_H__
 
-#include "config/gimpguiconfig.h"
+#include "config/gimpdialogconfig.h"
 
 
 #define GIMP_TYPE_PLUGIN_CONFIG            (gimp_plugin_config_get_type ())
@@ -35,7 +35,7 @@ typedef struct _GimpPluginConfigClass GimpPluginConfigClass;
 
 struct _GimpPluginConfig
 {
-  GimpGuiConfig       parent_instance;
+  GimpDialogConfig    parent_instance;
 
   gchar              *fractalexplorer_path;
   gchar              *gfig_path;

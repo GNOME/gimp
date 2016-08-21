@@ -57,12 +57,15 @@ init_pycairo(void)
   return TRUE;
 }
 
+extern const char *prog_name;
+
+const char *prog_name = "pygimp";
+
 PyMODINIT_FUNC
 init_gimpui(void)
 {
     PyObject *m, *d;
     PyObject *av;
-    char *prog_name = "pygimp";
 
     av = PySys_GetObject("argv");
     if (av != NULL) {
@@ -74,7 +77,6 @@ init_gimpui(void)
 		       "ignoring sys.argv: it must be a list of strings");
     }
 
-    gimp_ui_init(prog_name, FALSE);
 
     pygimp_init_pygobject();
 

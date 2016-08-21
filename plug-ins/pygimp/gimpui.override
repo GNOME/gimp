@@ -2061,3 +2061,15 @@ _wrap_gimp_zoom_preview_get_source(PyGObject *self)
 
   return Py_BuildValue("(Niii)", pyimage, width, height, bpp);
 }
+%%
+override gimp_ui_init noargs
+static PyObject *
+_wrap_gimp_ui_init(PyObject *self)
+{
+  extern const char *prog_name;
+
+  gimp_ui_init (prog_name, FALSE);
+
+  Py_INCREF(Py_None);
+  return Py_None;
+}

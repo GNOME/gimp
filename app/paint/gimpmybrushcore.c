@@ -49,38 +49,42 @@
 
 struct _GimpMybrushCorePrivate
 {
-  GimpMybrush             *mybrush;
-  GimpMybrushSurface      *surface;
-  GList                   *brushes;
-  gboolean                 synthetic;
-  gint64                   last_time;
+  GimpMybrush        *mybrush;
+  GimpMybrushSurface *surface;
+  GList              *brushes;
+  gboolean            synthetic;
+  gint64              last_time;
 };
 
 
 /*  local function prototypes  */
 
-static void      gimp_mybrush_core_finalize    (GObject          *object);
+static void      gimp_mybrush_core_finalize       (GObject           *object);
 
-static gboolean  gimp_mybrush_core_start       (GimpPaintCore     *paint_core,
-                                                GimpDrawable      *drawable,
-                                                GimpPaintOptions  *paint_options,
-                                                const GimpCoords  *coords,
-                                                GError           **error);
-static void      gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
-                                                GimpDrawable     *drawable,
-                                                GimpPaintOptions *paint_options,
-                                                guint32           time);
-static void      gimp_mybrush_core_paint       (GimpPaintCore     *paint_core,
-                                                GimpDrawable      *drawable,
-                                                GimpPaintOptions  *paint_options,
-                                                GimpSymmetry      *sym,
-                                                GimpPaintState     paint_state,
-                                                guint32            time);
-static void      gimp_mybrush_core_motion      (GimpPaintCore     *paint_core,
-                                                GimpDrawable      *drawable,
-                                                GimpPaintOptions  *paint_options,
-                                                GimpSymmetry      *sym,
-                                                guint32            time);
+static gboolean  gimp_mybrush_core_start          (GimpPaintCore     *paint_core,
+                                                   GimpDrawable      *drawable,
+                                                   GimpPaintOptions  *paint_options,
+                                                   const GimpCoords  *coords,
+                                                   GError           **error);
+static void      gimp_mybrush_core_interpolate    (GimpPaintCore     *paint_core,
+                                                   GimpDrawable      *drawable,
+                                                   GimpPaintOptions  *paint_options,
+                                                   guint32            time);
+static void      gimp_mybrush_core_paint          (GimpPaintCore     *paint_core,
+                                                   GimpDrawable      *drawable,
+                                                   GimpPaintOptions  *paint_options,
+                                                   GimpSymmetry      *sym,
+                                                   GimpPaintState     paint_state,
+                                                   guint32            time);
+static void      gimp_mybrush_core_motion         (GimpPaintCore     *paint_core,
+                                                   GimpDrawable      *drawable,
+                                                   GimpPaintOptions  *paint_options,
+                                                   GimpSymmetry      *sym,
+                                                   guint32            time);
+static void      gimp_mybrush_core_create_brushes (GimpMybrushCore   *mybrush,
+                                                   GimpDrawable      *drawable,
+                                                   GimpPaintOptions  *paint_options,
+                                                   GimpSymmetry      *sym);
 
 
 G_DEFINE_TYPE (GimpMybrushCore, gimp_mybrush_core, GIMP_TYPE_PAINT_CORE)
@@ -172,8 +176,9 @@ gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
    * we're being asked to draw a synthetic stroke in line mode
    */
   if (mybrush->private->last_time < 0)
-  {
+    {
       GimpCoords saved_coords = paint_core->cur_coords;
+
       paint_core->cur_coords = paint_core->last_coords;
 
       mybrush->private->synthetic = TRUE;
@@ -182,7 +187,7 @@ gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
                              GIMP_PAINT_STATE_MOTION, time);
 
       paint_core->cur_coords = saved_coords;
-  }
+    }
 
   gimp_paint_core_paint (paint_core, drawable, paint_options,
                          GIMP_PAINT_STATE_MOTION, time);
@@ -198,14 +203,9 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
                          GimpPaintState    paint_state,
                          guint32           time)
 {
-  GimpMybrushCore    *mybrush = GIMP_MYBRUSH_CORE (paint_core);
-  GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
-  GimpContext        *context = GIMP_CONTEXT (paint_options);
-  const gchar        *brush_data;
-  GimpRGB             fg;
-  GimpHSV             hsv;
-  gint                n_strokes;
-  gint                i;
+  GimpMybrushCore *mybrush = GIMP_MYBRUSH_CORE (paint_core);
+  GimpContext     *context = GIMP_CONTEXT (paint_options);
+  GimpRGB          fg;
 
   switch (paint_state)
     {
@@ -213,59 +213,15 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
       gimp_context_get_foreground (context, &fg);
       gimp_palettes_add_color_history (context->gimp, &fg);
 
-      mybrush->private->surface = gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawable),
-                                                            gimp_drawable_get_active_mask (drawable),
-                                                            paint_core->mask_buffer,
-                                                            paint_core->mask_x_offset,
-                                                            paint_core->mask_y_offset);
+      mybrush->private->surface =
+        gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawable),
+                                  gimp_drawable_get_active_mask (drawable),
+                                  paint_core->mask_buffer,
+                                  paint_core->mask_x_offset,
+                                  paint_core->mask_y_offset);
 
-      gimp_rgb_to_hsv (&fg, &hsv);
+      gimp_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
 
-      if (mybrush->private->brushes)
-        {
-          g_list_free_full (mybrush->private->brushes,
-                            (GDestroyNotify) mypaint_brush_unref);
-          mybrush->private->brushes = NULL;
-        }
-
-      n_strokes = gimp_symmetry_get_size (sym);
-      for (i = 0; i < n_strokes; i++)
-        {
-          MyPaintBrush *brush = mypaint_brush_new ();
-
-          mypaint_brush_from_defaults (brush);
-          brush_data = gimp_mybrush_get_brush_json (mybrush->private->mybrush);
-          if (brush_data)
-            mypaint_brush_from_string (brush, brush_data);
-
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_COLOR_H,
-                                        hsv.h);
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_COLOR_S,
-                                        hsv.s);
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_COLOR_V,
-                                        hsv.v);
-
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_RADIUS_LOGARITHMIC,
-                                        options->radius);
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_OPAQUE,
-                                        options->opaque * gimp_context_get_opacity (context));
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_HARDNESS,
-                                        options->hardness);
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_ERASER,
-                                        options->eraser ? 1.0f : 0.0f);
-
-          mypaint_brush_new_stroke (brush);
-
-          mybrush->private->brushes = g_list_prepend (mybrush->private->brushes, brush);
-        }
-      mybrush->private->brushes = g_list_reverse (mybrush->private->brushes);
       mybrush->private->last_time = -1;
       mybrush->private->synthetic = FALSE;
       break;
@@ -294,71 +250,20 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                           guint32           time)
 {
   GimpMybrushCore  *mybrush = GIMP_MYBRUSH_CORE (paint_core);
-  GimpContext      *context = GIMP_CONTEXT (paint_options);
-  MyPaintBrush     *brush;
-  GimpCoords       *coords;
   MyPaintRectangle  rect;
-  gdouble           pressure;
+  GList            *iter;
   gdouble           dt = 0.0;
   gint              n_strokes;
   gint              i;
-  GList            *iter;
 
   n_strokes = gimp_symmetry_get_size (sym);
 
-  /* Number of strokes may change during a motion, depending on the type
-   * of symmetry. When that happens, we reset the brushes. */
+  /* The number of strokes may change during a motion, depending on
+   * the type of symmetry. When that happens, reset the brushes.
+   */
   if (g_list_length (mybrush->private->brushes) != n_strokes)
     {
-      const gchar        *brush_data;
-      GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
-      GimpRGB             fg;
-      GimpHSV             hsv;
-
-      gimp_context_get_foreground (context, &fg);
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                         &fg, &fg);
-      gimp_rgb_to_hsv (&fg, &hsv);
-
-      g_list_free_full (mybrush->private->brushes,
-                        (GDestroyNotify) mypaint_brush_unref);
-      mybrush->private->brushes = NULL;
-      for (i = 0; i < n_strokes; i++)
-        {
-          brush = mypaint_brush_new ();
-
-          mypaint_brush_from_defaults (brush);
-          brush_data = gimp_mybrush_get_brush_json (mybrush->private->mybrush);
-          if (brush_data)
-            mypaint_brush_from_string (brush, brush_data);
-
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_COLOR_H,
-                                        hsv.h);
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_COLOR_S,
-                                        hsv.s);
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_COLOR_V,
-                                        hsv.v);
-
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_RADIUS_LOGARITHMIC,
-                                        options->radius);
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_OPAQUE,
-                                        options->opaque * gimp_context_get_opacity (context));
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_HARDNESS,
-                                        options->hardness);
-          mypaint_brush_set_base_value (brush,
-                                        MYPAINT_BRUSH_SETTING_ERASER,
-                                        options->eraser ? 1.0f : 0.0f);
-
-          mypaint_brush_new_stroke (brush);
-          mybrush->private->brushes = g_list_prepend (mybrush->private->brushes, brush);
-        }
-      mybrush->private->brushes = g_list_reverse (mybrush->private->brushes);
+      gimp_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
     }
 
   mypaint_surface_begin_atomic ((MyPaintSurface *) mybrush->private->surface);
@@ -366,10 +271,13 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
   if (mybrush->private->last_time < 0)
     {
       /* First motion, so we need zero pressure events to start the strokes */
-      for (iter = mybrush->private->brushes, i = 0; iter ; iter = g_list_next (iter), i++)
+      for (iter = mybrush->private->brushes, i = 0;
+           iter;
+           iter = g_list_next (iter), i++)
         {
-          brush  = iter->data;
-          coords = gimp_symmetry_get_coords (sym, i);
+          MyPaintBrush *brush  = iter->data;
+          GimpCoords   *coords = gimp_symmetry_get_coords (sym, i);
+
           mypaint_brush_stroke_to (brush,
                                    (MyPaintSurface *) mybrush->private->surface,
                                    coords->x,
@@ -379,23 +287,28 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                                    coords->ytilt,
                                    1.0f /* Pretend the cursor hasn't moved in a while */);
         }
+
       dt = 0.015;
     }
   else if (mybrush->private->synthetic)
     {
-      dt = 0.0005 * gimp_vector2_length_val ((GimpVector2){paint_core->cur_coords.x - paint_core->last_coords.x,
-                                                           paint_core->cur_coords.y - paint_core->last_coords.y});
+      GimpVector2 v = { paint_core->cur_coords.x - paint_core->last_coords.x,
+                        paint_core->cur_coords.y - paint_core->last_coords.y };
+
+      dt = 0.0005 * gimp_vector2_length_val (v);
     }
   else
     {
       dt = (time - mybrush->private->last_time) * 0.001;
     }
 
-  for (iter = mybrush->private->brushes, i = 0; iter ; iter = g_list_next (iter), i++)
+  for (iter = mybrush->private->brushes, i = 0;
+       iter;
+       iter = g_list_next (iter), i++)
     {
-      brush  = iter->data;
-      coords = gimp_symmetry_get_coords (sym, i);
-      pressure = coords->pressure;
+      MyPaintBrush *brush    = iter->data;
+      GimpCoords   *coords   = gimp_symmetry_get_coords (sym, i);
+      gdouble       pressure = coords->pressure;
 
       /* libmypaint expects non-extended devices to default to 0.5 pressure */
       if (! coords->extended)
@@ -425,4 +338,74 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
 
       gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
     }
+}
+
+static void
+gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
+                                  GimpDrawable     *drawable,
+                                  GimpPaintOptions *paint_options,
+                                  GimpSymmetry     *sym)
+{
+  GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
+  GimpContext        *context = GIMP_CONTEXT (paint_options);
+  GimpRGB             fg;
+  GimpHSV             hsv;
+  gint                n_strokes;
+  gint                i;
+
+  if (mybrush->private->brushes)
+    {
+      g_list_free_full (mybrush->private->brushes,
+                        (GDestroyNotify) mypaint_brush_unref);
+      mybrush->private->brushes = NULL;
+    }
+
+  gimp_context_get_foreground (context, &fg);
+  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                     &fg, &fg);
+  gimp_rgb_to_hsv (&fg, &hsv);
+
+  n_strokes = gimp_symmetry_get_size (sym);
+
+  for (i = 0; i < n_strokes; i++)
+    {
+      MyPaintBrush *brush = mypaint_brush_new ();
+      const gchar  *brush_data;
+
+      mypaint_brush_from_defaults (brush);
+      brush_data = gimp_mybrush_get_brush_json (mybrush->private->mybrush);
+      if (brush_data)
+        mypaint_brush_from_string (brush, brush_data);
+
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_COLOR_H,
+                                    hsv.h);
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_COLOR_S,
+                                    hsv.s);
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_COLOR_V,
+                                    hsv.v);
+
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_RADIUS_LOGARITHMIC,
+                                    options->radius);
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_OPAQUE,
+                                    options->opaque *
+                                    gimp_context_get_opacity (context));
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_HARDNESS,
+                                    options->hardness);
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_ERASER,
+                                    options->eraser ? 1.0f : 0.0f);
+
+      mypaint_brush_new_stroke (brush);
+
+      mybrush->private->brushes = g_list_prepend (mybrush->private->brushes,
+                                                  brush);
+    }
+
+  mybrush->private->brushes = g_list_reverse (mybrush->private->brushes);
 }

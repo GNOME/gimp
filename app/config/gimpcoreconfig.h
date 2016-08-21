@@ -88,7 +88,6 @@ struct _GimpCoreConfig
   GimpThumbnailSize       thumbnail_size;
   guint64                 thumbnail_filesize_limit;
   GimpColorConfig        *color_management;
-  GimpColorProfilePolicy  color_profile_policy;
   gboolean                save_document_history;
   GimpRGB                 quick_mask_color;
 };
