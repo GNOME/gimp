@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-07 19:08+0000\n"
-"PO-Revision-Date: 2016-02-08 12:46+0000\n"
+"POT-Creation-Date: 2016-08-04 10:47+0000\n"
+"PO-Revision-Date: 2016-08-22 21:29+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -42,7 +42,25 @@ msgstr ""
 "Höfundarréttur © 1995-%s\n"
 "Spencer Kimball, Peter Mattis og GIMP þróunarhópurinn"
 
-#: ../app/about.h:34
+#. TRANSLATORS: do not end the license URL with a dot, because it would
+#. * be in the link. Because of technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../app/about.h:39
+#| msgid ""
+#| "GIMP is free software: you can redistribute it and/or modify it under the "
+#| "terms of the GNU General Public License as published by the Free Software "
+#| "Foundation; either version 3 of the License, or (at your option) any "
+#| "later version.\n"
+#| "\n"
+#| "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY "
+#| "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+#| "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+#| "details.\n"
+#| "\n"
+#| "You should have received a copy of the GNU General Public License along "
+#| "with GIMP.  If not, see http://www.gnu.org/licenses/."
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -55,7 +73,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP. If not, see: http://www.gnu.org/licenses/"
 msgstr ""
 "GIMP er frjáls hugbúnaður; þú getur dreift honum eða breytt að vild undir "
 "GNU General Public License eins og það er gefið út af Free Software "
@@ -68,8 +86,7 @@ msgstr ""
 "upplýsingar má sjá GNU General Public License.\n"
 "\n"
 "Með GIMP hefði átt að fylgja eintak af GNU General Public License; en ef svo "
-"er ekki þá er hægt að senda bréf til Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301 Bandaríkjunum (USA)"
+"er ekki þá skaltu skoða: http://www.gnu.org/licenses/"
 
 #: ../app/app.c:225
 #, c-format
@@ -8508,7 +8525,7 @@ msgstr "Ekki hægt að hækka lagið frekar."
 msgid "Layer cannot be lowered more."
 msgstr "Ekki hægt að lækka lag frekar."
 
-#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1529
+#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1532
 #: ../app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -8523,47 +8540,47 @@ msgstr ""
 "Fljótandi val\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1449
+#: ../app/core/gimplayer.c:1452
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Get ekki sett hulu á lag\n"
 "þar sem lag er þegar með hulu."
 
-#: ../app/core/gimplayer.c:1460
+#: ../app/core/gimplayer.c:1463
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Get ekki bætt við hulu af annarri stærð en viðkomandi lag."
 
-#: ../app/core/gimplayer.c:1466
+#: ../app/core/gimplayer.c:1469
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Bæta inn laghulu"
 
-#: ../app/core/gimplayer.c:1584
+#: ../app/core/gimplayer.c:1587
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Færa alfalitrás í laghulu"
 
-#: ../app/core/gimplayer.c:1754
+#: ../app/core/gimplayer.c:1757
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Beita laghulu"
 
-#: ../app/core/gimplayer.c:1755
+#: ../app/core/gimplayer.c:1758
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Eyða laghulu"
 
-#: ../app/core/gimplayer.c:1874
+#: ../app/core/gimplayer.c:1877
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Bæta inn alfa-gegnsæislitrás"
 
-#: ../app/core/gimplayer.c:1928
+#: ../app/core/gimplayer.c:1931
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Fjarlægja alfa-gegnsæislitrás"
 
-#: ../app/core/gimplayer.c:1948
+#: ../app/core/gimplayer.c:1951
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Lag að myndstærð"
@@ -10783,26 +10800,26 @@ msgstr "Hætta við <i>%s</i>"
 msgid "Not a regular file"
 msgstr "Ekki venjuleg skrá"
 
-#: ../app/file/file-open.c:191
+#: ../app/file/file-open.c:197
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "%s hjálparforritið skilaði SUCCESS en opnaði enga mynd"
 
-#: ../app/file/file-open.c:202
+#: ../app/file/file-open.c:208
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "%s hjálparforritið gat ekki opnað myndina"
 
-#: ../app/file/file-open.c:533
+#: ../app/file/file-open.c:539
 msgid "Image doesn't contain any layers"
 msgstr "Myndin inniheldur engin lög"
 
-#: ../app/file/file-open.c:593
+#: ../app/file/file-open.c:599
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Tókst ekki að opna '%s': %s"
 
-#: ../app/file/file-open.c:703
+#: ../app/file/file-open.c:709
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10887,7 +10904,7 @@ msgstr "default:LTR"
 msgid "Documents"
 msgstr "Skjöl"
 
-#: ../app/gui/splash.c:115
+#: ../app/gui/splash.c:112
 msgid "GIMP Startup"
 msgstr "GIMP ræsing"
 
@@ -11509,11 +11526,11 @@ msgstr ""
 "Keyrsluvilla í ferlinu '%s':\n"
 "%s"
 
-#: ../app/plug-in/gimpplugin-progress.c:331
+#: ../app/plug-in/gimpplugin-progress.c:339
 msgid "Cancelled"
 msgstr "Hætt við"
 
-#: ../app/plug-in/gimpplugin.c:643
+#: ../app/plug-in/gimpplugin.c:648
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -11528,9 +11545,9 @@ msgstr ""
 "Við hrun gæti hjálparforritið hafa ruglað innri stöðugleika GIMP. Þú gætir "
 "viljað vista myndirnar þínar og endurræsa GIMP til öryggis."
 
-#: ../app/plug-in/gimppluginmanager-call.c:173
-#: ../app/plug-in/gimppluginmanager-call.c:223
-#: ../app/plug-in/gimppluginmanager-call.c:321
+#: ../app/plug-in/gimppluginmanager-call.c:185
+#: ../app/plug-in/gimppluginmanager-call.c:235
+#: ../app/plug-in/gimppluginmanager-call.c:333
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Tókst ekki að keyra hjálparforritið \"%s\""
@@ -12588,7 +12605,7 @@ msgstr "Afstaða:"
 #: ../app/tools/gimpflipoptions.c:142
 #, c-format
 msgid "Flip Type  (%s)"
-msgstr "Tegun flettingar  (%s)"
+msgstr "Tegund flettingar  (%s)"
 
 #: ../app/tools/gimpfliptool.c:84
 msgid "Flip"
@@ -14426,7 +14443,7 @@ msgstr "Fjarlægja '%s‘ af listanum yfir virkar síur"
 msgid "No filter selected"
 msgstr "Engin sía valin"
 
-#: ../app/widgets/gimpcoloreditor.c:260
+#: ../app/widgets/gimpcoloreditor.c:264
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -15543,17 +15560,17 @@ msgstr "%d × %d pát, %s"
 msgid "%d ppi, %s"
 msgstr "%d pát, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:344
+#: ../app/widgets/gimptextbuffer-serialize.c:269
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr "Eigindið \"%s\" er ógilt á <%s> stakinu í þessu samhengi"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:416
+#: ../app/widgets/gimptextbuffer-serialize.c:341
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Ysta stakið í textanum verður að vera <text_view_markup> og ekki <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1459
+#: ../app/widgets/gimptextbuffer.c:1460
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ógild UTF-8 gögn í skrá '%s'."
