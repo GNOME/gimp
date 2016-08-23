@@ -1479,13 +1479,11 @@ prefs_dialog_new (Gimp       *gimp,
     /*  Policies  */
     vbox2 = prefs_frame_new (_("Policies"), GTK_CONTAINER (vbox),
                              FALSE);
-
-    table = prefs_table_new (3, GTK_CONTAINER (vbox2));
-    row = 0;
+    table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
     button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                        _("File Open behaviour:"),
-                                       GTK_TABLE (table), row++, size_group);
+                                       GTK_TABLE (table), 0, size_group);
 
     g_object_unref (size_group);
 
@@ -2006,6 +2004,45 @@ prefs_dialog_new (Gimp       *gimp,
 
   gtk_box_pack_start (GTK_BOX (vbox2), tool_editor, TRUE, TRUE, 0);
   gtk_widget_show (tool_editor);
+
+
+  /*********************************/
+  /*  Interface / Dialog Defaults  */
+  /*********************************/
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  /* FIXME need an icon */
+                                  "gimp-prefs-controllers",
+                                  _("Dialog Defaults"),
+                                  _("Dialog Defaults"),
+                                  GIMP_HELP_PREFS_DIALOG_DEFAULTS,
+                                  &top_iter,
+                                  &child_iter);
+
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  /*  Color profile import dialog  */
+  vbox2 = prefs_frame_new (_("Color Profile Import dialog"), GTK_CONTAINER (vbox),
+                           FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
+                                     _("Color profile policy:"),
+                                     GTK_TABLE (table), 0, size_group);
+
+  /*  Add Layer Mask Dialog  */
+  vbox2 = prefs_frame_new (_("Add Layer Mask Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "layer-add-mask-type", 0, 0,
+                            _("Layer mask type:"),
+                            GTK_TABLE (table), 0, size_group);
+
+  prefs_check_button_add (object, "layer-add-mask-invert",
+                          _("Invert mask"),
+                          GTK_BOX (vbox2));
+
+  g_object_unref (size_group);
 
 
   /*****************************/

@@ -225,6 +225,23 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_mask_add_cmd_callback),
     GIMP_HELP_LAYER_MASK_ADD },
 
+  /* this is the same as layers-mask-add, except it's sensitive even if
+   * there is a mask on the layer
+   */
+  { "layers-mask-add-button", GIMP_STOCK_LAYER_MASK,
+    NC_("layers-action", "Add La_yer Mask..."), NULL,
+    NC_("layers-action",
+        "Add a mask that allows non-destructive editing of transparency"),
+    G_CALLBACK (layers_mask_add_cmd_callback),
+    GIMP_HELP_LAYER_MASK_ADD },
+
+  { "layers-mask-add-last-values", GIMP_STOCK_LAYER_MASK,
+    NC_("layers-action", "Add La_yer Mask"), NULL,
+    NC_("layers-action",
+        "Add a mask with last used values"),
+    G_CALLBACK (layers_mask_add_last_vals_cmd_callback),
+    GIMP_HELP_LAYER_MASK_ADD },
+
   { "layers-alpha-add", GIMP_STOCK_TRANSPARENCY,
     NC_("layers-action", "Add Alpha C_hannel"), NULL,
     NC_("layers-action", "Add transparency information to the layer"),
@@ -660,7 +677,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask && !children);
+  SET_SENSITIVE ("layers-mask-add",             layer && !fs && !ac && !mask && !children);
+  SET_SENSITIVE ("layers-mask-add-button",      layer && !fs && !ac && !children);
+  SET_SENSITIVE ("layers-mask-add-last-values", layer && !fs && !ac && !mask && !children);
+
   SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask && !children);
   SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
 

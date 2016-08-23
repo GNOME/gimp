@@ -36,7 +36,9 @@
 enum
 {
   PROP_0,
-  PROP_COLOR_PROFILE_POLICY
+  PROP_COLOR_PROFILE_POLICY,
+  PROP_LAYER_ADD_MASK_TYPE,
+  PROP_LAYER_ADD_MASK_INVERT
 };
 
 
@@ -70,6 +72,21 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          GIMP_TYPE_COLOR_PROFILE_POLICY,
                          GIMP_COLOR_PROFILE_POLICY_ASK,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_ADD_MASK_TYPE,
+                         "layer-add-mask-type",
+                         "Default layer mask type",
+                         LAYER_ADD_MASK_TYPE_BLURB,
+                         GIMP_TYPE_ADD_MASK_TYPE,
+                         GIMP_ADD_MASK_WHITE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ADD_MASK_INVERT,
+                            "layer-add-mask-invert",
+                            "Default layer mask invert",
+                            LAYER_ADD_MASK_INVERT_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -83,12 +100,19 @@ gimp_dialog_config_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpDialogConfig *dialog_config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
 
   switch (property_id)
     {
     case PROP_COLOR_PROFILE_POLICY:
-      dialog_config->color_profile_policy = g_value_get_enum (value);
+      config->color_profile_policy = g_value_get_enum (value);
+      break;
+
+    case PROP_LAYER_ADD_MASK_TYPE:
+      config->layer_add_mask_type = g_value_get_enum (value);
+      break;
+    case PROP_LAYER_ADD_MASK_INVERT:
+      config->layer_add_mask_invert = g_value_get_boolean (value);
       break;
 
     default:
@@ -103,12 +127,19 @@ gimp_dialog_config_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDialogConfig *dialog_config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
 
   switch (property_id)
     {
     case PROP_COLOR_PROFILE_POLICY:
-      g_value_set_enum (value, dialog_config->color_profile_policy);
+      g_value_set_enum (value, config->color_profile_policy);
+      break;
+
+    case PROP_LAYER_ADD_MASK_TYPE:
+      g_value_set_enum (value, config->layer_add_mask_type);
+      break;
+    case PROP_LAYER_ADD_MASK_INVERT:
+      g_value_set_boolean (value, config->layer_add_mask_invert);
       break;
 
     default:

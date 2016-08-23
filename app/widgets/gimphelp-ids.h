@@ -491,6 +491,7 @@
 #define GIMP_HELP_PREFS_ICON_THEME                "gimp-prefs-icon-theme"
 #define GIMP_HELP_PREFS_TOOL_OPTIONS              "gimp-prefs-tool-options"
 #define GIMP_HELP_PREFS_TOOLBOX                   "gimp-prefs-toolbox"
+#define GIMP_HELP_PREFS_DIALOG_DEFAULTS           "gimp-prefs-dialog-defaults"
 #define GIMP_HELP_PREFS_INPUT_DEVICES             "gimp-prefs-input-devices"
 #define GIMP_HELP_PREFS_INPUT_CONTROLLERS         "gimp-prefs-input-controllers"
 #define GIMP_HELP_PREFS_IMAGE_WINDOW              "gimp-prefs-image-window"

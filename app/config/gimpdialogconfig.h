@@ -38,6 +38,8 @@ struct _GimpDialogConfig
   GimpGuiConfig           parent_instance;
 
   GimpColorProfilePolicy  color_profile_policy;
+  GimpAddMaskType         layer_add_mask_type;
+  gboolean                layer_add_mask_invert;
 };
 
 struct _GimpDialogConfigClass

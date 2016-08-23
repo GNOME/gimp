@@ -389,6 +389,22 @@ gimp_layer_tree_view_constructed (GObject *object)
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
                          button, 6);
+
+  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+                                          "layers-mask-add-button",
+                                          "layers-mask-add-last-values",
+                                          gimp_get_extend_selection_mask (),
+                                          "layers-mask-delete",
+                                          gimp_get_modify_selection_mask (),
+                                          "layers-mask-apply",
+                                          gimp_get_extend_selection_mask () |
+                                          gimp_get_modify_selection_mask (),
+                                          NULL);
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
+                                  GTK_BUTTON (button),
+                                  GIMP_TYPE_LAYER);
+  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
+                         button, 7);
 }
 
 static void
@@ -1299,18 +1315,18 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
                                     GimpLayerTreeView        *layer_view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
-  GtkTreePath           *path;
+  GtkTreePath           *path      = gtk_tree_path_new_from_string (path_str);
   GtkTreeIter            iter;
 
-  path = gtk_tree_path_new_from_string (path_str);
-
-  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path) &&
+      ! (state & GDK_MOD1_MASK))
     {
-      GimpUIManager    *ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
+      GimpUIManager    *ui_manager;
       GimpActionGroup  *group;
       GimpViewRenderer *renderer;
 
-      group = gimp_ui_manager_get_action_group (ui_manager, "layers");
+      ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
+      group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
                           GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
@@ -1318,13 +1334,43 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 
       if (renderer)
         {
-          GimpLayer *layer = GIMP_LAYER (renderer->viewable);
+          GimpLayer     *layer = GIMP_LAYER (renderer->viewable);
+          GimpLayerMask *mask  = gimp_layer_get_mask (layer);
 
-          if (gimp_layer_get_mask (layer) &&
-              gimp_layer_get_edit_mask (layer))
+          if (state & gimp_get_extend_selection_mask ())
             {
-              gimp_action_group_set_action_active (group,
-                                                   "layers-mask-edit", FALSE);
+              if (state & gimp_get_modify_selection_mask ())
+                {
+                  /* Shift-Control-click apply a layer mask */
+
+                  if (mask)
+                    gimp_ui_manager_activate_action (ui_manager, "layers",
+                                                     "layers-mask-apply");
+                }
+              else
+                {
+                  /* Shift-click add a layer mask with last values */
+
+                  if (! mask)
+                    gimp_ui_manager_activate_action (ui_manager, "layers",
+                                                     "layers-mask-add-last-values");
+                }
+            }
+          else if (state & gimp_get_modify_selection_mask ())
+            {
+              /* Control-click remove a layer mask */
+
+              if (mask)
+                gimp_ui_manager_activate_action (ui_manager, "layers",
+                                                 "layers-mask-delete");
+            }
+          else if (mask && gimp_layer_get_edit_mask (layer))
+            {
+              /* other clicks activate the layer */
+
+              if (mask)
+                gimp_action_group_set_action_active (group,
+                                                     "layers-mask-edit", FALSE);
             }
 
           g_object_unref (renderer);
