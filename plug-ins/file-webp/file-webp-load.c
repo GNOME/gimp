@@ -45,9 +45,7 @@ create_layer (gint32   image_ID,
               gint32   position,
               gchar   *name,
               gint     width,
-              gint     height,
-              gint32   offsetx,
-              gint32   offsety)
+              gint     height)
 {
   gint32         layer_ID;
   GeglBuffer    *buffer;
@@ -60,11 +58,6 @@ create_layer (gint32   image_ID,
                              GIMP_NORMAL_MODE);
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, position);
-
-  if (offsetx > 0 || offsety > 0)
-    {
-      gimp_layer_set_offsets (layer_ID, offsetx, offsety);
-    }
 
   /* Retrieve the buffer for the layer */
   buffer = gimp_drawable_get_buffer (layer_ID);
@@ -110,7 +103,7 @@ load_image (const gchar *filename,
   if (! WebPGetInfo (indata, indatalen, &width, &height))
     {
       g_set_error (error, G_FILE_ERROR, 0,
-                   "Invalid WebP file '%s'",
+                   _("Invalid WebP file '%s'"),
                    gimp_filename_to_utf8 (filename));
       return -1;
     }
@@ -154,55 +147,69 @@ load_image (const gchar *filename,
         return -1;
 
       create_layer (image_ID, outdata, 0, _("Background"),
-                    width, height, 0, 0);
+                    width, height);
 
       /* Free the image data */
       free (outdata);
     }
   else
     {
-      const WebPChunkId id = WEBP_CHUNK_ANMF;
-      WebPMuxAnimParams params;
-      gint              frames = 0;
-      gint              i;
+      WebPAnimDecoder       *dec = NULL;
+      WebPAnimInfo           anim_info;
+      WebPAnimDecoderOptions dec_options;
+      gint                   frame_num = 1;
 
-      WebPMuxGetAnimationParams (mux, &params);
-      WebPMuxNumChunks (mux, id, &frames);
+
+      if (! WebPAnimDecoderOptionsInit (&dec_options))
+        {
+        error:
+          if (dec)
+            WebPAnimDecoderDelete (dec);
+
+          return -1;
+        }
+
+      /* dec_options.color_mode is MODE_RGBA by default here */
+      dec = WebPAnimDecoderNew (&wp_data, &dec_options);
+      if (! dec)
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       _("Failed to decode animated WebP file '%s'"),
+                       gimp_filename_to_utf8 (filename));
+          goto error;
+        }
+
+      if (! WebPAnimDecoderGetInfo (dec, &anim_info))
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       _("Failed to decode animated WebP information from '%s'"),
+                       gimp_filename_to_utf8 (filename));
+          goto error;
+        }
 
       /* Attempt to decode the data as a WebP animation image */
-      for (i = 0; i < frames; i++)
+      while (WebPAnimDecoderHasMoreFrames (dec))
         {
-          WebPMuxFrameInfo thisframe;
+          uint8_t *outdata;
+          int      timestamp;
+          gchar   *name;
 
-          if (WebPMuxGetFrame (mux, i, &thisframe) == WEBP_MUX_OK)
+          if (! WebPAnimDecoderGetNext (dec, &outdata, &timestamp))
             {
-              WebPBitstreamFeatures  features;
-              uint8_t               *outdata;
-              gchar                 *name;
-
-              WebPGetFeatures (thisframe.bitstream.bytes,
-                               thisframe.bitstream.size, &features);
-
-              outdata = WebPDecodeRGBA (thisframe.bitstream.bytes,
-                                        thisframe.bitstream.size,
-                                        &width, &height);
-
-              if (! outdata)
-                return -1;
-
-              name = g_strdup_printf (_("Frame %d"), i + 1);
-              create_layer (image_ID, outdata, 0,
-                            name, width, height,
-                            thisframe.x_offset,
-                            thisframe.y_offset);
-              g_free (name);
-
-              /* Free the image data */
-              free (outdata);
+              g_set_error (error, G_FILE_ERROR, 0,
+                           _("Failed to decode animated WebP frame from '%s'"),
+                           gimp_filename_to_utf8 (filename));
+              goto error;
             }
 
-          WebPDataClear (&thisframe.bitstream);
+          name = g_strdup_printf (_("Frame %d"), frame_num);
+          create_layer (image_ID, outdata, 0, name, width, height);
+          g_free (name);
+
+          frame_num++;
         }
+
+      WebPAnimDecoderDelete (dec);
     }
 
   /* Free the original compressed data */
