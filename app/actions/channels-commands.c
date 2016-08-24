@@ -28,6 +28,9 @@
 
 #include "actions-types.h"
 
+#include "config/gimpdialogconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
@@ -57,12 +60,6 @@ static void   channels_new_channel_response  (GtkWidget            *widget,
 static void   channels_edit_channel_response (GtkWidget            *widget,
                                               gint                  response_id,
                                               ChannelOptionsDialog *options);
-
-
-/*  private variables  */
-
-static gchar   *channel_name  = NULL;
-static GimpRGB  channel_color = { 0.0, 0.0, 0.0, 0.5 };
 
 
 /*  public functions  */
@@ -106,15 +103,17 @@ channels_new_cmd_callback (GtkAction *action,
   ChannelOptionsDialog *options;
   GimpImage            *image;
   GtkWidget            *widget;
+  GimpDialogConfig     *config;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   options = channel_options_dialog_new (image, NULL,
                                         action_data_get_context (data),
                                         widget,
-                                        &channel_color,
-                                        channel_name ? channel_name :
-                                        _("Channel"),
+                                        &config->channel_new_color,
+                                        config->channel_new_name,
                                         _("New Channel"),
                                         "gimp-channel-new",
                                         GIMP_STOCK_CHANNEL,
@@ -135,11 +134,14 @@ void
 channels_new_last_vals_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  GimpImage   *image;
-  GimpChannel *new_channel;
-  gint         width, height;
-  GimpRGB      color;
+  GimpImage        *image;
+  GimpChannel      *new_channel;
+  gint              width, height;
+  GimpRGB           color;
+  GimpDialogConfig *config;
   return_if_no_image (image, data);
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   if (GIMP_IS_CHANNEL (GIMP_ACTION (action)->viewable))
     {
@@ -153,14 +155,14 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
     {
       width  = gimp_image_get_width (image);
       height = gimp_image_get_height (image);
-      color  = channel_color;
+      color  = config->channel_new_color;
     }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Channel"));
 
   new_channel = gimp_channel_new (image, width, height,
-                                  channel_name, &color);
+                                  config->channel_new_name, &color);
 
   gimp_drawable_fill (GIMP_DRAWABLE (new_channel),
                       action_data_get_context (data),
@@ -325,52 +327,56 @@ channels_to_selection_cmd_callback (GtkAction *action,
 static void
 channels_new_channel_response (GtkWidget            *widget,
                                gint                  response_id,
-                               ChannelOptionsDialog *options)
+                               ChannelOptionsDialog *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpChannel *new_channel;
+      GimpDialogConfig *config;
+      GimpChannel      *channel;
+      GimpRGB           channel_color;
 
-      if (channel_name)
-        g_free (channel_name);
+      config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
 
-      channel_name =
-        g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
+      gimp_color_button_get_color (GIMP_COLOR_BUTTON (dialog->color_panel),
                                    &channel_color);
 
-      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (options->save_sel_checkbutton)))
+      g_object_set (config,
+                    "channel-new-name",
+                    gtk_entry_get_text (GTK_ENTRY (dialog->name_entry)),
+		    "channel-new-color", &channel_color,
+                    NULL);
+
+      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->save_sel_checkbutton)))
         {
-          GimpChannel *selection = gimp_image_get_mask (options->image);
+          GimpChannel *selection = gimp_image_get_mask (dialog->image);
 
-          new_channel =
-            GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
-                                               GIMP_TYPE_CHANNEL));
+          channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
+						       GIMP_TYPE_CHANNEL));
 
-          gimp_object_set_name (GIMP_OBJECT (new_channel), channel_name);
-          gimp_channel_set_color (new_channel, &channel_color, FALSE);
+          gimp_object_set_name (GIMP_OBJECT (channel),
+				config->channel_new_name);
+          gimp_channel_set_color (channel, &config->channel_new_color, FALSE);
         }
       else
         {
-          new_channel = gimp_channel_new (options->image,
-                                          gimp_image_get_width  (options->image),
-                                          gimp_image_get_height (options->image),
-                                          channel_name,
-                                          &channel_color);
+          channel = gimp_channel_new (dialog->image,
+				      gimp_image_get_width  (dialog->image),
+				      gimp_image_get_height (dialog->image),
+				      config->channel_new_name,
+				      &config->channel_new_color);
 
-          gimp_drawable_fill (GIMP_DRAWABLE (new_channel),
-                              options->context,
+          gimp_drawable_fill (GIMP_DRAWABLE (channel),
+                              dialog->context,
                               GIMP_FILL_TRANSPARENT);
         }
 
-      gimp_image_add_channel (options->image, new_channel,
+      gimp_image_add_channel (dialog->image, channel,
                               GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
-      gimp_image_flush (options->image);
+      gimp_image_flush (dialog->image);
     }
 
-  gtk_widget_destroy (options->dialog);
+  gtk_widget_destroy (dialog->dialog);
 }
 
 static void

@@ -891,11 +891,22 @@ prefs_color_button_add (GObject      *config,
                         gint          table_row,
                         GtkSizeGroup *group)
 {
-  GtkWidget *button = gimp_prop_color_button_new (config, property_name,
-                                                  title,
-                                                  COLOR_BUTTON_WIDTH,
-                                                  COLOR_BUTTON_HEIGHT,
-                                                  GIMP_COLOR_AREA_FLAT);
+  GtkWidget  *button;
+  GParamSpec *pspec;
+  gboolean    has_alpha;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                        property_name);
+
+  has_alpha = gimp_param_spec_rgb_has_alpha (pspec);
+
+  button = gimp_prop_color_button_new (config, property_name,
+                                       title,
+                                       COLOR_BUTTON_WIDTH,
+                                       COLOR_BUTTON_HEIGHT,
+                                       has_alpha ?
+                                       GIMP_COLOR_AREA_SMALL_CHECKS :
+                                       GIMP_COLOR_AREA_FLAT);
 
   if (button)
     prefs_widget_add_aligned (button, label, table, table_row, TRUE, group);
@@ -1102,9 +1113,9 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
 static void
 prefs_behavior_options_frame_add (Gimp         *gimp,
-                                 GObject      *object,
-                                 const gchar  *label,
-                                 GtkContainer *parent)
+                                  GObject      *object,
+                                  const gchar  *label,
+                                  GtkContainer *parent)
 {
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -2061,6 +2072,23 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "layer-add-mask-invert",
                           _("Invert mask"),
                           GTK_BOX (vbox2));
+
+  /*  New Channel Dialog  */
+  vbox2 = prefs_frame_new (_("New Channel Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
+
+  entry = gimp_prop_entry_new (object, "channel-new-name", -1);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Channel name:"), 0.0, 0.5,
+                             entry, 1, FALSE);
+
+  button = prefs_color_button_add (object, "channel-new-color",
+                                   _("Color and opacity:"),
+                                   _("Default New Channel Color and Opacity"),
+                                   GTK_TABLE (table), 1, size_group);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                gimp_get_user_context (gimp));
 
   g_object_unref (size_group);
 

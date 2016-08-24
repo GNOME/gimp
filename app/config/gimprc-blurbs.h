@@ -432,6 +432,12 @@ _("Sets the default mask for the 'Add Layer Mask' dialog.")
 #define LAYER_ADD_MASK_INVERT_BLURB \
 _("Sets the default 'invert mask' state for the 'Add Layer Mask' dialog.")
 
+#define CHANNEL_NEW_NAME_BLURB \
+_("Sets the default channel name for the 'New Channel' dialog.")
+
+#define CHANNEL_NEW_COLOR_BLURB \
+_("Sets the default color and opacity for the 'New Channel' dialog.")
+
 #define THUMBNAIL_SIZE_BLURB \
 _("Sets the size of the thumbnail shown in the Open dialog.")
 

@@ -20,9 +20,12 @@
 
 #include "config.h"
 
-#include <gio/gio.h>
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "config-types.h"
@@ -42,7 +45,10 @@ enum
   PROP_LAYER_NEW_FILL_TYPE,
 
   PROP_LAYER_ADD_MASK_TYPE,
-  PROP_LAYER_ADD_MASK_INVERT
+  PROP_LAYER_ADD_MASK_INVERT,
+
+  PROP_CHANNEL_NEW_NAME,
+  PROP_CHANNEL_NEW_COLOR
 };
 
 
@@ -65,7 +71,8 @@ G_DEFINE_TYPE (GimpDialogConfig, gimp_dialog_config, GIMP_TYPE_GUI_CONFIG)
 static void
 gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class     = G_OBJECT_CLASS (klass);
+  GimpRGB       half_transparent = { 0.0, 0.0, 0.0, 0.5 };
 
   object_class->finalize     = gimp_dialog_config_finalize;
   object_class->set_property = gimp_dialog_config_set_property;
@@ -108,6 +115,21 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                             LAYER_ADD_MASK_INVERT_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_CHANNEL_NEW_NAME,
+                           "channel-new-name",
+                           "Default new channel name",
+                           CHANNEL_NEW_NAME_BLURB,
+                           _("Channel"),
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_CHANNEL_NEW_COLOR,
+                        "channel-new-color",
+                        "Default new channel color and opacity",
+                        CHANNEL_NEW_COLOR_BLURB,
+                        TRUE,
+                        &half_transparent,
+                        GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -124,6 +146,12 @@ gimp_dialog_config_finalize (GObject *object)
     {
       g_free (config->layer_new_name);
       config->layer_new_name = NULL;
+    }
+
+  if (config->channel_new_name)
+    {
+      g_free (config->channel_new_name);
+      config->channel_new_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -159,6 +187,15 @@ gimp_dialog_config_set_property (GObject      *object,
       config->layer_add_mask_invert = g_value_get_boolean (value);
       break;
 
+    case PROP_CHANNEL_NEW_NAME:
+      if (config->channel_new_name)
+        g_free (config->channel_new_name);
+      config->channel_new_name = g_value_dup_string (value);
+      break;
+    case PROP_CHANNEL_NEW_COLOR:
+      gimp_value_get_rgb (value, &config->channel_new_color);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -191,6 +228,13 @@ gimp_dialog_config_get_property (GObject    *object,
       break;
     case PROP_LAYER_ADD_MASK_INVERT:
       g_value_set_boolean (value, config->layer_add_mask_invert);
+      break;
+
+    case PROP_CHANNEL_NEW_NAME:
+      g_value_set_string (value, config->channel_new_name);
+      break;
+    case PROP_CHANNEL_NEW_COLOR:
+      gimp_value_set_rgb (value, &config->channel_new_color);
       break;
 
     default:
