@@ -43,21 +43,25 @@ struct _GimpPrefsBoxClass
 };
 
 
-GType       gimp_prefs_box_get_type      (void) G_GNUC_CONST;
+GType       gimp_prefs_box_get_type            (void) G_GNUC_CONST;
 
-GtkWidget * gimp_prefs_box_new           (void);
+GtkWidget * gimp_prefs_box_new                 (void);
 
-GtkWidget * gimp_prefs_box_add_page      (GimpPrefsBox      *box,
-                                          const gchar       *icon_name,
-                                          const gchar       *notebook_label,
-                                          const gchar       *tree_label,
-                                          const gchar       *help_id,
-                                          GtkTreeIter       *parent,
-                                          GtkTreeIter       *iter);
+GtkWidget * gimp_prefs_box_add_page            (GimpPrefsBox *box,
+						const gchar  *icon_name,
+						const gchar  *notebook_label,
+						const gchar  *tree_label,
+						const gchar  *help_id,
+						GtkTreeIter  *parent,
+						GtkTreeIter  *iter);
 
-GtkWidget * gimp_prefs_box_get_tree_view (GimpPrefsBox      *box);
-GtkWidget * gimp_prefs_box_get_notebook  (GimpPrefsBox      *box);
-GtkWidget * gimp_prefs_box_get_image     (GimpPrefsBox      *box);
+void        gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
+						GtkWidget    *page,
+						gboolean      scrollable);
+
+GtkWidget * gimp_prefs_box_get_tree_view       (GimpPrefsBox *box);
+GtkWidget * gimp_prefs_box_get_notebook        (GimpPrefsBox *box);
+GtkWidget * gimp_prefs_box_get_image           (GimpPrefsBox *box);
 
 
 #endif  /*  __GIMP_PREFS_BOX_H__  */

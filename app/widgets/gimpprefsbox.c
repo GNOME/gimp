@@ -316,23 +316,29 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
                          GtkTreeIter       *iter)
 {
   GimpPrefsBoxPrivate *private;
-  GtkWidget           *event_box;
+  GtkWidget           *scrolled_win;
   GtkWidget           *vbox;
+  GtkWidget           *viewport;
 
   g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
 
   private = GET_PRIVATE (box);
 
-  event_box = gtk_event_box_new ();
-  gtk_event_box_set_visible_window (GTK_EVENT_BOX (event_box), FALSE);
-  gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook), event_box, NULL);
-  gtk_widget_show (event_box);
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_NEVER, GTK_POLICY_NEVER);
+  gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook), scrolled_win, NULL);
+  gtk_widget_show (scrolled_win);
 
-  gimp_help_set_help_data (event_box, NULL, help_id);
+  gimp_help_set_help_data (scrolled_win, NULL, help_id);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_add (GTK_CONTAINER (event_box), vbox);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+                                         vbox);
   gtk_widget_show (vbox);
+
+  viewport = gtk_bin_get_child (GTK_BIN (scrolled_win));
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
 
   gtk_tree_store_append (private->store, iter, parent);
   gtk_tree_store_set (private->store, iter,
@@ -346,6 +352,30 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
                       -1);
 
   return vbox;
+}
+
+void
+gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
+				    GtkWidget    *page,
+				    gboolean      scrollable)
+{
+  GimpPrefsBoxPrivate *private;
+  GtkWidget           *scrolled_win;
+
+  g_return_if_fail (GIMP_IS_PREFS_BOX (box));
+  g_return_if_fail (GTK_IS_BOX (page));
+  g_return_if_fail (gtk_widget_is_ancestor (page, GTK_WIDGET (box)));
+
+  private = GET_PRIVATE (box);
+
+  scrolled_win = gtk_widget_get_ancestor (page, GTK_TYPE_SCROLLED_WINDOW);
+
+  g_return_if_fail (gtk_widget_get_parent (scrolled_win) == private->notebook);
+
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_NEVER,
+				  scrollable ?
+				  GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
 }
 
 GtkWidget *

@@ -1325,6 +1325,8 @@ prefs_dialog_new (Gimp       *gimp,
                                   NULL,
                                   &top_iter);
 
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+
   {
     GObject      *color_config;
     GtkListStore *store;
@@ -1607,6 +1609,8 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_NEW_IMAGE,
                                   NULL,
                                   &top_iter);
+
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox));
 
@@ -2017,6 +2021,8 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_DIALOG_DEFAULTS,
                                   &top_iter,
                                   &child_iter);
+
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
