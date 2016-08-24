@@ -48,7 +48,9 @@ enum
   PROP_LAYER_ADD_MASK_INVERT,
 
   PROP_CHANNEL_NEW_NAME,
-  PROP_CHANNEL_NEW_COLOR
+  PROP_CHANNEL_NEW_COLOR,
+
+  PROP_VECTORS_NEW_NAME
 };
 
 
@@ -130,6 +132,13 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                         TRUE,
                         &half_transparent,
                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_VECTORS_NEW_NAME,
+                           "path-new-name",
+                           "Default new path name",
+                           VECTORS_NEW_NAME_BLURB,
+                           _("Path"),
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -152,6 +161,12 @@ gimp_dialog_config_finalize (GObject *object)
     {
       g_free (config->channel_new_name);
       config->channel_new_name = NULL;
+    }
+
+  if (config->vectors_new_name)
+    {
+      g_free (config->vectors_new_name);
+      config->vectors_new_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -196,6 +211,12 @@ gimp_dialog_config_set_property (GObject      *object,
       gimp_value_get_rgb (value, &config->channel_new_color);
       break;
 
+    case PROP_VECTORS_NEW_NAME:
+      if (config->vectors_new_name)
+        g_free (config->vectors_new_name);
+      config->vectors_new_name = g_value_dup_string (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -235,6 +256,10 @@ gimp_dialog_config_get_property (GObject    *object,
       break;
     case PROP_CHANNEL_NEW_COLOR:
       gimp_value_set_rgb (value, &config->channel_new_color);
+      break;
+
+    case PROP_VECTORS_NEW_NAME:
+      g_value_set_string (value, config->vectors_new_name);
       break;
 
     default:

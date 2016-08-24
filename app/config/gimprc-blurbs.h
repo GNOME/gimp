@@ -438,6 +438,9 @@ _("Sets the default channel name for the 'New Channel' dialog.")
 #define CHANNEL_NEW_COLOR_BLURB \
 _("Sets the default color and opacity for the 'New Channel' dialog.")
 
+#define VECTORS_NEW_NAME_BLURB \
+_("Sets the default path name for the 'New Path' dialog.")
+
 #define THUMBNAIL_SIZE_BLURB \
 _("Sets the size of the thumbnail shown in the Open dialog.")
 
