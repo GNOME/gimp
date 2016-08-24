@@ -2029,6 +2029,20 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Color profile policy:"),
                                      GTK_TABLE (table), 0, size_group);
 
+  /*  New Layer Dialog  */
+  vbox2 = prefs_frame_new (_("New Layer Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
+
+  entry = gimp_prop_entry_new (object, "layer-new-name", -1);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Layer name:"), 0.0, 0.5,
+                             entry, 1, FALSE);
+
+  prefs_enum_combo_box_add (object, "layer-new-fill-type", 0, 0,
+                            _("Fill type:"),
+                            GTK_TABLE (table), 1, size_group);
+
   /*  Add Layer Mask Dialog  */
   vbox2 = prefs_frame_new (_("Add Layer Mask Dialog"),
                            GTK_CONTAINER (vbox), FALSE);

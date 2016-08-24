@@ -420,6 +420,12 @@ _("Sets the folder for temporary storage. Files will appear here " \
 #define ICON_THEME_PATH_BLURB \
 "Sets the icon theme search path."
 
+#define LAYER_NEW_NAME_BLURB \
+_("Sets the default layer name for the 'New Layer' dialog.")
+
+#define LAYER_NEW_FILL_TYPE_BLURB \
+_("Sets the default fill type for the 'New Layer' dialog.")
+
 #define LAYER_ADD_MASK_TYPE_BLURB \
 _("Sets the default mask for the 'Add Layer Mask' dialog.")
 

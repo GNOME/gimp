@@ -37,11 +37,16 @@ enum
 {
   PROP_0,
   PROP_COLOR_PROFILE_POLICY,
+
+  PROP_LAYER_NEW_NAME,
+  PROP_LAYER_NEW_FILL_TYPE,
+
   PROP_LAYER_ADD_MASK_TYPE,
   PROP_LAYER_ADD_MASK_INVERT
 };
 
 
+static void  gimp_dialog_config_finalize     (GObject      *object);
 static void  gimp_dialog_config_set_property (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
@@ -62,6 +67,7 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize     = gimp_dialog_config_finalize;
   object_class->set_property = gimp_dialog_config_set_property;
   object_class->get_property = gimp_dialog_config_get_property;
 
@@ -71,6 +77,21 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          COLOR_PROFILE_POLICY_BLURB,
                          GIMP_TYPE_COLOR_PROFILE_POLICY,
                          GIMP_COLOR_PROFILE_POLICY_ASK,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_LAYER_NEW_NAME,
+                           "layer-new-name",
+                           "Default new layer name",
+                           LAYER_NEW_NAME_BLURB,
+                           _("Layer"),
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_FILL_TYPE,
+                         "layer-new-fill-type",
+                         "Default new layer fill type",
+                         LAYER_NEW_FILL_TYPE_BLURB,
+                         GIMP_TYPE_FILL_TYPE,
+                         GIMP_FILL_TRANSPARENT,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_ADD_MASK_TYPE,
@@ -95,6 +116,20 @@ gimp_dialog_config_init (GimpDialogConfig *config)
 }
 
 static void
+gimp_dialog_config_finalize (GObject *object)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
+
+  if (config->layer_new_name)
+    {
+      g_free (config->layer_new_name);
+      config->layer_new_name = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_dialog_config_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
@@ -106,6 +141,15 @@ gimp_dialog_config_set_property (GObject      *object,
     {
     case PROP_COLOR_PROFILE_POLICY:
       config->color_profile_policy = g_value_get_enum (value);
+      break;
+
+    case PROP_LAYER_NEW_NAME:
+      if (config->layer_new_name)
+        g_free (config->layer_new_name);
+      config->layer_new_name = g_value_dup_string (value);
+      break;
+    case PROP_LAYER_NEW_FILL_TYPE:
+      config->layer_new_fill_type = g_value_get_enum (value);
       break;
 
     case PROP_LAYER_ADD_MASK_TYPE:
@@ -133,6 +177,13 @@ gimp_dialog_config_get_property (GObject    *object,
     {
     case PROP_COLOR_PROFILE_POLICY:
       g_value_set_enum (value, config->color_profile_policy);
+      break;
+
+    case PROP_LAYER_NEW_NAME:
+      g_value_set_string (value, config->layer_new_name);
+      break;
+    case PROP_LAYER_NEW_FILL_TYPE:
+      g_value_set_enum (value, config->layer_new_fill_type);
       break;
 
     case PROP_LAYER_ADD_MASK_TYPE:

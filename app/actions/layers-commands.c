@@ -147,8 +147,6 @@ static gint   layers_mode_index            (GimpLayerModeEffects   layer_mode);
 
 /*  private variables  */
 
-static GimpFillType           layer_fill_type     = GIMP_FILL_TRANSPARENT;
-static gchar                 *layer_name          = NULL;
 static GimpUnit               layer_resize_unit   = GIMP_UNIT_PIXEL;
 static GimpUnit               layer_scale_unit    = GIMP_UNIT_PIXEL;
 static GimpInterpolationType  layer_scale_interp  = -1;
@@ -199,15 +197,18 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
   GimpImage          *image;
   GimpLayer          *layer;
   GtkWidget          *widget;
+  GimpDialogConfig   *config;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   dialog = layer_options_dialog_new (gimp_item_get_image (GIMP_ITEM (layer)),
                                      layer,
                                      action_data_get_context (data),
                                      widget,
                                      gimp_object_get_name (layer),
-                                     layer_fill_type,
+                                     config->layer_new_fill_type,
                                      _("Layer Attributes"),
                                      "gimp-layer-edit",
                                      "gtk-edit",
@@ -229,8 +230,11 @@ layers_new_cmd_callback (GtkAction *action,
   GimpImage          *image;
   GtkWidget          *widget;
   GimpLayer          *floating_sel;
+  GimpDialogConfig   *config;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
@@ -255,8 +259,8 @@ layers_new_cmd_callback (GtkAction *action,
   dialog = layer_options_dialog_new (image, NULL,
                                      action_data_get_context (data),
                                      widget,
-                                     layer_name ? layer_name : _("Layer"),
-                                     layer_fill_type,
+                                     config->layer_new_name,
+                                     config->layer_new_fill_type,
                                      _("New Layer"),
                                      "gimp-layer-new",
                                      GIMP_STOCK_LAYER,
@@ -282,25 +286,18 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   gint                  off_x, off_y;
   gdouble               opacity;
   GimpLayerModeEffects  mode;
+  GimpDialogConfig     *config;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
    */
   if ((floating_sel = gimp_image_get_floating_selection (image)))
     {
-      GError *error = NULL;
-
-      if (! floating_sel_to_layer (floating_sel, &error))
-        {
-          gimp_message_literal (image->gimp, G_OBJECT (widget),
-                                GIMP_MESSAGE_WARNING, error->message);
-          g_clear_error (&error);
-          return;
-        }
-
-      gimp_image_flush (image);
+      layers_new_cmd_callback (action, data);
       return;
     }
 
@@ -329,12 +326,12 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
 
   new_layer = gimp_layer_new (image, width, height,
                               gimp_image_get_layer_format (image, TRUE),
-                              layer_name,
+                              config->layer_new_name,
                               opacity, mode);
 
   gimp_drawable_fill (GIMP_DRAWABLE (new_layer),
                       action_data_get_context (data),
-                      layer_fill_type);
+                      config->layer_new_fill_type);
   gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
 
   gimp_image_add_layer (image, new_layer,
@@ -1074,15 +1071,16 @@ layers_new_layer_response (GtkWidget          *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpLayer *layer;
+      GimpDialogConfig *config;
+      GimpLayer        *layer;
 
-      if (layer_name)
-        g_free (layer_name);
+      config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
 
-      layer_name =
-        g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->name_entry)));
-
-      layer_fill_type = dialog->fill_type;
+      g_object_set (config,
+                    "layer-new-fill-type", dialog->fill_type,
+                    "layer-new-name",
+                    gtk_entry_get_text (GTK_ENTRY (dialog->name_entry)),
+                    NULL);
 
       dialog->xsize =
         RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->size_se),
@@ -1095,14 +1093,14 @@ layers_new_layer_response (GtkWidget          *widget,
                               dialog->xsize,
                               dialog->ysize,
                               gimp_image_get_layer_format (dialog->image, TRUE),
-                              layer_name,
+                              config->layer_new_name,
                               GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
       if (layer)
         {
           gimp_drawable_fill (GIMP_DRAWABLE (layer),
                               dialog->context,
-                              layer_fill_type);
+                              config->layer_new_fill_type);
 
           gimp_image_add_layer (dialog->image, layer,
                                 GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
