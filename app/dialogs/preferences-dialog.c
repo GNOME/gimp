@@ -2051,7 +2051,7 @@ prefs_dialog_new (Gimp       *gimp,
   entry = gimp_prop_entry_new (object, "layer-new-name", -1);
   prefs_widget_add_aligned (entry,
                             _("Layer name:"),
-                            GTK_WIDGET (table), 0, FALSE,
+                            GTK_TABLE (table), 0, FALSE,
                             size_group);
 
   prefs_enum_combo_box_add (object, "layer-new-fill-type", 0, 0,
@@ -2079,7 +2079,7 @@ prefs_dialog_new (Gimp       *gimp,
   entry = gimp_prop_entry_new (object, "channel-new-name", -1);
   prefs_widget_add_aligned (entry,
                             _("Channel name:"),
-                            GTK_WIDGET (table), 0, FALSE,
+                            GTK_TABLE (table), 0, FALSE,
                             size_group);
 
   button = prefs_color_button_add (object, "channel-new-color",
@@ -2097,7 +2097,7 @@ prefs_dialog_new (Gimp       *gimp,
   entry = gimp_prop_entry_new (object, "path-new-name", -1);
   prefs_widget_add_aligned (entry,
                             _("Path name:"),
-                            GTK_WIDGET (table), 0, FALSE,
+                            GTK_TABLE (table), 0, FALSE,
                             size_group);
 
   g_object_unref (size_group);
