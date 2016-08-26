@@ -11,16 +11,15 @@ msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-08-22 21:58+0000\n"
-"PO-Revision-Date: 2016-08-25 19:28+0200\n"
+"POT-Creation-Date: 2016-08-25 19:36+0000\n"
+"PO-Revision-Date: 2016-08-26 16:59+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 1.8.8\n"
 
@@ -1485,11 +1484,11 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:280
 msgid "Use black point compensation for soft-proofing"
-msgstr ""
+msgstr "Uporabi kompenzacijo črne točke za preverjanje videza"
 
 #: ../libgimpconfig/gimpcolorconfig.c:287
 msgid "Optimize soft-proofing color transformations"
-msgstr ""
+msgstr "Optimiziraj barvne transformacije za preverjanje"
 
 #: ../libgimpconfig/gimpcolorconfig.c:294
 msgid "Mark out of gamut colors"
@@ -2515,7 +2514,7 @@ msgstr "Filter simulacije barvne slepote (Brettel-Vienot-Mollonov algoritem)"
 
 #: ../modules/display-filter-color-blind.c:252
 msgid "Deficiency"
-msgstr ""
+msgstr "Barvna slepota"
 
 #: ../modules/display-filter-color-blind.c:258
 msgid "Color Deficient Vision"
