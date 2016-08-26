@@ -633,7 +633,7 @@ required_deps=''
 # add_deps_error([dependency], [first line, second line])
 m4_define([add_deps_error], [
   required_deps="$required_deps
-  - $1"
+  - Error: missing dependency $1"
   m4_foreach([more], [$2], [
   required_deps="$required_deps
       *** more"])])
@@ -2621,14 +2621,10 @@ Desktop files install into $DESKTOP_DATADIR
 $optional_deps]);
 else
   AC_MSG_ERROR([
-
-== Summary of optional features ==
 $optional_deps
 
-== Missing mandatory dependencies ==
-
-GIMP configuration failed.
-The following mandatory dependencies are missing:$required_deps
+Error: GIMP configuration failed.
+$required_deps
 
 See the file 'INSTALL' for more help.]);
 fi
