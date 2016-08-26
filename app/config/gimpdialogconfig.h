@@ -49,6 +49,17 @@ struct _GimpDialogConfig
   GimpRGB                 channel_new_color;
 
   gchar                  *vectors_new_name;
+
+  gdouble                 selection_feather_radius;
+
+  gdouble                 selection_grow_radius;
+
+  gdouble                 selection_shrink_radius;
+  gboolean                selection_shrink_edge_lock;
+
+  gdouble                 selection_border_radius;
+  gboolean                selection_border_edge_lock;
+  GimpChannelBorderStyle  selection_border_style;
 };
 
 struct _GimpDialogConfigClass

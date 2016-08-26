@@ -50,7 +50,18 @@ enum
   PROP_CHANNEL_NEW_NAME,
   PROP_CHANNEL_NEW_COLOR,
 
-  PROP_VECTORS_NEW_NAME
+  PROP_VECTORS_NEW_NAME,
+
+  PROP_SELECTION_FEATHER_RADIUS,
+
+  PROP_SELECTION_GROW_RADIUS,
+
+  PROP_SELECTION_SHRINK_RADIUS,
+  PROP_SELECTION_SHRINK_EDGE_LOCK,
+
+  PROP_SELECTION_BORDER_RADIUS,
+  PROP_SELECTION_BORDER_STYLE,
+  PROP_SELECTION_BORDER_EDGE_LOCK
 };
 
 
@@ -139,6 +150,56 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            VECTORS_NEW_NAME_BLURB,
                            _("Path"),
                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_FEATHER_RADIUS,
+                           "selection-feather-radius",
+                           "Selection feather radius",
+                           SELECTION_FEATHER_RADIUS_BLURB,
+                           0.0, 32767.0, 5.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_GROW_RADIUS,
+                           "selection-grow-radius",
+                           "Selection grow radius",
+                           SELECTION_GROW_RADIUS_BLURB,
+                           1.0, 32767.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_SHRINK_RADIUS,
+                           "selection-shrink-radius",
+                           "Selection shrink radius",
+                           SELECTION_SHRINK_RADIUS_BLURB,
+                           1.0, 32767.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_SHRINK_EDGE_LOCK,
+                            "selection-shrink-edge-lock",
+                            "Selection shrink edge lock",
+                            SELECTION_SHRINK_EDGE_LOCK_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_BORDER_RADIUS,
+                           "selection-border-radius",
+                           "Selection border radius",
+                           SELECTION_BORDER_RADIUS_BLURB,
+                           1.0, 32767.0, 5.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_BORDER_EDGE_LOCK,
+                            "selection-border-edge-lock",
+                            "Selection border edge lock",
+                            SELECTION_BORDER_EDGE_LOCK_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SELECTION_BORDER_STYLE,
+                         "selection-border-style",
+                         "Selection border style",
+                         SELECTION_BORDER_STYLE_BLURB,
+                         GIMP_TYPE_CHANNEL_BORDER_STYLE,
+                         GIMP_CHANNEL_BORDER_STYLE_SMOOTH,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -217,6 +278,31 @@ gimp_dialog_config_set_property (GObject      *object,
       config->vectors_new_name = g_value_dup_string (value);
       break;
 
+    case PROP_SELECTION_FEATHER_RADIUS:
+      config->selection_feather_radius = g_value_get_double (value);
+      break;
+
+    case PROP_SELECTION_GROW_RADIUS:
+      config->selection_grow_radius = g_value_get_double (value);
+      break;
+
+    case PROP_SELECTION_SHRINK_RADIUS:
+      config->selection_shrink_radius = g_value_get_double (value);
+      break;
+    case PROP_SELECTION_SHRINK_EDGE_LOCK:
+      config->selection_shrink_edge_lock = g_value_get_boolean (value);
+      break;
+
+    case PROP_SELECTION_BORDER_RADIUS:
+      config->selection_border_radius = g_value_get_double (value);
+      break;
+    case PROP_SELECTION_BORDER_EDGE_LOCK:
+      config->selection_border_edge_lock = g_value_get_boolean (value);
+      break;
+    case PROP_SELECTION_BORDER_STYLE:
+      config->selection_border_style = g_value_get_enum (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -260,6 +346,31 @@ gimp_dialog_config_get_property (GObject    *object,
 
     case PROP_VECTORS_NEW_NAME:
       g_value_set_string (value, config->vectors_new_name);
+      break;
+
+    case PROP_SELECTION_FEATHER_RADIUS:
+      g_value_set_double (value, config->selection_feather_radius);
+      break;
+
+    case PROP_SELECTION_GROW_RADIUS:
+      g_value_set_double (value, config->selection_grow_radius);
+      break;
+
+    case PROP_SELECTION_SHRINK_RADIUS:
+      g_value_set_double (value, config->selection_shrink_radius);
+      break;
+    case PROP_SELECTION_SHRINK_EDGE_LOCK:
+      g_value_set_boolean (value, config->selection_shrink_edge_lock);
+      break;
+
+    case PROP_SELECTION_BORDER_RADIUS:
+      g_value_set_double (value, config->selection_border_radius);
+      break;
+    case PROP_SELECTION_BORDER_EDGE_LOCK:
+      g_value_set_boolean (value, config->selection_border_edge_lock);
+      break;
+    case PROP_SELECTION_BORDER_STYLE:
+      g_value_set_enum (value, config->selection_border_style);
       break;
 
     default:

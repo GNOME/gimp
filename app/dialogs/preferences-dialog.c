@@ -2100,6 +2100,54 @@ prefs_dialog_new (Gimp       *gimp,
                             GTK_TABLE (table), 0, FALSE,
                             size_group);
 
+  /*  Feather Selection Dialog  */
+  vbox2 = prefs_frame_new (_("Feather Selection Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "selection-feather-radius", 1.0, 10.0, 2,
+                         _("Feather radius:"),
+                         GTK_TABLE (table), 0, size_group);
+
+  /*  Grow Selection Dialog  */
+  vbox2 = prefs_frame_new (_("Grow Selection Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "selection-grow-radius", 1.0, 10.0, 0,
+                         _("Grow radius:"),
+                         GTK_TABLE (table), 0, size_group);
+
+  /*  Shrink Selection Dialog  */
+  vbox2 = prefs_frame_new (_("Shrink Selection Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "selection-shrink-radius", 1.0, 10.0, 0,
+                         _("Shrink radius:"),
+                         GTK_TABLE (table), 0, size_group);
+
+  prefs_check_button_add (object, "selection-shrink-edge-lock",
+                          _("Selected areas continue outside the image"),
+                          GTK_BOX (vbox2));
+
+  /*  Border Selection Dialog  */
+  vbox2 = prefs_frame_new (_("Border Selection Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "selection-border-radius", 1.0, 10.0, 0,
+                         _("Border radius:"),
+                         GTK_TABLE (table), 0, size_group);
+
+  prefs_enum_combo_box_add (object, "selection-border-style", 0, 0,
+                            _("Border style:"),
+                            GTK_TABLE (table), 1, size_group);
+
+  prefs_check_button_add (object, "selection-border-edge-lock",
+                          _("Selected areas continue outside the image"),
+                          GTK_BOX (vbox2));
+
   g_object_unref (size_group);
 
 
