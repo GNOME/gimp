@@ -11,16 +11,15 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-08-24 17:50+0000\n"
-"PO-Revision-Date: 2016-08-25 19:22+0200\n"
+"POT-Creation-Date: 2016-08-25 19:12+0000\n"
+"PO-Revision-Date: 2016-08-26 17:08+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.8.8\n"
 
@@ -6211,10 +6210,9 @@ msgstr "_Pokaži namen upodabljanja"
 
 #: ../app/actions/view-actions.c:82
 #, fuzzy
-#| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "_Preverjanje namena upodabljanja:"
+msgstr "Namena upo_dabljanja preverjanja"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -6363,18 +6361,15 @@ msgstr "Uporabi upravljanje barv za ta pogled"
 
 #: ../app/actions/view-actions.c:179
 #, fuzzy
-#| msgctxt "context-action"
-#| msgid "_Colors"
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr "_Barve"
+msgstr "_Preveri barve"
 
 #: ../app/actions/view-actions.c:180
 #, fuzzy
-#| msgid "Use black _point compensation for softproofing"
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
-msgstr "Uporabi kompenzacijo črne _točke za odobritev izdaje"
+msgstr "Uporabi ta pogled za odobritev izdaje"
 
 #: ../app/actions/view-actions.c:186 ../app/actions/view-actions.c:193
 msgctxt "view-action"
@@ -6787,31 +6782,27 @@ msgstr "Namen upodabljanja prikaza je absolutno kolorimetričen"
 
 #: ../app/actions/view-actions.c:545
 #, fuzzy
-#| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "_Preverjanje namena upodabljanja:"
+msgstr "Namen upodabljanja preverjanja je zaznaven"
 
 #: ../app/actions/view-actions.c:551
 #, fuzzy
-#| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "_Preverjanje namena upodabljanja:"
+msgstr "Namen upodabljanja preverjanja je relativno kolorimetričen"
 
 #: ../app/actions/view-actions.c:557
 #, fuzzy
-#| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "_Preverjanje namena upodabljanja:"
+msgstr "Namen upodabljanja preverjanja je nasičenost"
 
 #: ../app/actions/view-actions.c:563
 #, fuzzy
-#| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "_Preverjanje namena upodabljanja:"
+msgstr "Namen upodabljanja preverjanja je absolutno kolorimetričen"
 
 #: ../app/actions/view-actions.c:571
 msgctxt "view-padding-color"
@@ -7188,6 +7179,22 @@ msgid ""
 msgstr ""
 "Napaka pri razčlenjevanju datoteke '%s'. Uporabljene bodo privzete "
 "vrednosti. Varnostna kopija nastavitev je bila shranjena v '%s'."
+
+#: ../app/config/gimpdialogconfig.c:95 ../app/core/gimplayer.c:325
+msgid "Layer"
+msgstr "Plast"
+
+#: ../app/config/gimpdialogconfig.c:125 ../app/core/gimpchannel.c:289
+#: ../app/operations/gimpcurvesconfig.c:104
+#: ../app/operations/gimplevelsconfig.c:105
+#: ../app/widgets/gimpchanneltreeview.c:333
+msgid "Channel"
+msgstr "Kanal"
+
+#: ../app/config/gimpdialogconfig.c:140 ../app/vectors/gimpvectors.c:222
+#: ../app/widgets/gimpvectorstreeview.c:254
+msgid "Path"
+msgstr "Pot"
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -7642,15 +7649,15 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:424
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr ""
+msgstr "Nastavi privzeto ime plasti v pogovornem oknu Nova plast."
 
 #: ../app/config/gimprc-blurbs.h:427
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr ""
+msgstr "Nastavi privzeto vrsto polnila v pogovornem oknu Nova plast."
 
 #: ../app/config/gimprc-blurbs.h:430
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
-msgstr ""
+msgstr "Nastavi privzeto masko v pogovornem oknu Dodaj masko plasti."
 
 #: ../app/config/gimprc-blurbs.h:433
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
@@ -7658,11 +7665,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:436
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr ""
+msgstr "Določi privzeto ime kanala v pogovornem oknu Nov kanal."
 
 #: ../app/config/gimprc-blurbs.h:439
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr ""
+msgstr "Nastavi privzeto barvo in prekrivnost v pogovornem oknu Nov kanal."
 
 #: ../app/config/gimprc-blurbs.h:442
 msgid "Sets the default path name for the 'New Path' dialog."
@@ -8635,16 +8642,14 @@ msgid "Use the entire layer as input"
 msgstr "Uporabi celotno plast kot vhod"
 
 #: ../app/core/core-enums.c:1211
-#, fuzzy
-#| msgid "Hardness"
 msgctxt "channel-border-style"
 msgid "Hard"
-msgstr "Trdota"
+msgstr "Ostro"
 
 #: ../app/core/core-enums.c:1212
 msgctxt "channel-border-style"
 msgid "Smooth"
-msgstr "Zgladi"
+msgstr "Gladko"
 
 #: ../app/core/core-enums.c:1213
 msgctxt "channel-border-style"
@@ -8977,12 +8982,6 @@ msgstr "Izbor po barvi"
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Izbor po indeksirani barvi"
-
-#: ../app/core/gimpchannel.c:289 ../app/operations/gimpcurvesconfig.c:104
-#: ../app/operations/gimplevelsconfig.c:105
-#: ../app/widgets/gimpchanneltreeview.c:333
-msgid "Channel"
-msgstr "Kanal"
 
 #: ../app/core/gimpchannel.c:290
 msgctxt "undo-type"
@@ -9993,10 +9992,6 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Plavajoči izbor v plast"
 
-#: ../app/core/gimplayer.c:325
-msgid "Layer"
-msgstr "Plast"
-
 #: ../app/core/gimplayer.c:326
 msgctxt "undo-type"
 msgid "Rename Layer"
@@ -10433,10 +10428,8 @@ msgid "Disable brush transform"
 msgstr "Onemogoči transformacijo čopiča"
 
 #: ../app/core/gimpsymmetry-mandala.c:153
-#, fuzzy
-#| msgid "Disable brush transform"
 msgid "Disable brush rotation"
-msgstr "Onemogoči transformacijo čopiča"
+msgstr "Onemogoči vrrtenje čopiča"
 
 #: ../app/core/gimpsymmetry-mirror.c:123
 msgid "Mirror"
@@ -10447,27 +10440,26 @@ msgid "Horizontal Symmetry"
 msgstr "Vodoravna simetrija"
 
 #: ../app/core/gimpsymmetry-mirror.c:131
+#, fuzzy
 msgid "Reflect the initial stroke across a horizontal axis"
-msgstr ""
+msgstr "Odsevaj začetno potezo prek vodoravne osi"
 
 #: ../app/core/gimpsymmetry-mirror.c:138
 msgid "Vertical Symmetry"
 msgstr "Navpična simetrija"
 
 #: ../app/core/gimpsymmetry-mirror.c:139
+#, fuzzy
 msgid "Reflect the initial stroke across a vertical axis"
-msgstr ""
+msgstr "Odsevaj začetno potezo prek navpične osi"
 
 #: ../app/core/gimpsymmetry-mirror.c:146
 msgid "Central Symmetry"
 msgstr "Centralna simetrija"
 
 #: ../app/core/gimpsymmetry-mirror.c:147
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit floating point"
 msgid "Invert the initial stroke through a point"
-msgstr "Pretvori sliko v 16-bitno s plavajočo vejico"
+msgstr "Preobrni začetno potezo skozi točko"
 
 #: ../app/core/gimpsymmetry-mirror.c:155
 msgid "Disable brush reflection"
@@ -10579,6 +10571,8 @@ msgid ""
 "Whether the image is color managed. Disabling color management is equivalent "
 "to choosing a built-in sRGB profile. Better leave color management enabled."
 msgstr ""
+"Ali je slika barvno upravljana. Onemogočanje barvnega upravljanja je enako "
+"izbiranju vgrajenega profila sRGB. Raje pustite barvno upravljanje omogočeno."
 
 #: ../app/core/gimptemplate.c:203
 msgid "Color profile"
@@ -11766,20 +11760,19 @@ msgstr "Optimizitaj prikaz slike za:"
 
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1409
+#, fuzzy
 msgid "Soft-Proofing"
-msgstr ""
+msgstr "Preverjanje/odobritev izdaje"
 
 #: ../app/dialogs/preferences-dialog.c:1419
 #, fuzzy
-#| msgid "Select Printer Color Profile"
 msgid "Select Soft-Proofing Color Profile"
-msgstr "Izberite barvni profil tiskalnika"
+msgstr "Izberite barvni profil za preverjanje"
 
 #: ../app/dialogs/preferences-dialog.c:1420
 #, fuzzy
-#| msgid "_Softproof rendering intent:"
 msgid "_Soft-proofing profile:"
-msgstr "_Preverjanje namena upodabljanja:"
+msgstr "_Profil preverjanja:"
 
 #: ../app/dialogs/preferences-dialog.c:1425
 msgid "Re_ndering intent:"
@@ -11790,8 +11783,9 @@ msgid "Use black _point compensation"
 msgstr "Uporabi kompenzacijo _črne točke"
 
 #: ../app/dialogs/preferences-dialog.c:1440
+#, fuzzy
 msgid "O_ptimize soft-proofing for:"
-msgstr ""
+msgstr "O_ptimiziraj preverjanje za:"
 
 #: ../app/dialogs/preferences-dialog.c:1449
 msgid "Mark out of gamut colors"
@@ -11832,8 +11826,9 @@ msgstr "Profil _CMYK:"
 
 #. Policies
 #: ../app/dialogs/preferences-dialog.c:1493
+#, fuzzy
 msgid "Policies"
-msgstr ""
+msgstr "Politike"
 
 #: ../app/dialogs/preferences-dialog.c:1498
 msgid "File Open behaviour:"
@@ -11971,10 +11966,8 @@ msgid "_Default layer & channel preview size:"
 msgstr "Privzeta _velikost predogleda plasti in kanalov:"
 
 #: ../app/dialogs/preferences-dialog.c:1715
-#, fuzzy
-#| msgid "Na_vigation preview size:"
 msgid "_Undo preview size:"
-msgstr "Velikost predogleda _krmarjenja:"
+msgstr "Razve_ljavi velikost predogleda:"
 
 #: ../app/dialogs/preferences-dialog.c:1718
 msgid "Na_vigation preview size:"
@@ -15814,10 +15807,8 @@ msgid "_Split view"
 msgstr "_Razdeli pogled"
 
 #: ../app/tools/gimpfiltertool.c:633
-#, fuzzy
-#| msgid "Click to pick this guide as first item"
 msgid "Click to switch the original and filtered sides"
-msgstr "Kliknite za izbor tega vodila kot prvega"
+msgstr "Kliknite za preklop med izvirno in filtrirano stranjo"
 
 #: ../app/tools/gimpfiltertool.c:637
 msgid "Click to switch between vertical and horizontal"
@@ -17843,10 +17834,6 @@ msgstr "Pobriši ukrivljanje"
 msgctxt "warp-behavior"
 msgid "Smooth warping"
 msgstr "Gladko ukrivljanje"
-
-#: ../app/vectors/gimpvectors.c:222 ../app/widgets/gimpvectorstreeview.c:254
-msgid "Path"
-msgstr "Pot"
 
 #: ../app/vectors/gimpvectors.c:223
 msgctxt "undo-type"
