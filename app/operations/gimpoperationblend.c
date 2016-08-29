@@ -31,12 +31,12 @@
 
 #include "operations-types.h"
 
-#include "core/gimp.h"
 #include "core/gimpgradient.h"
 
 #include "gimpoperationblend.h"
 
 #include "gimp-intl.h"
+
 
 //#define USE_GRADIENT_CACHE 1
 
@@ -90,15 +90,15 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void     gimp_operation_blend_dispose      (GObject       *gobject);
+static void     gimp_operation_blend_dispose      (GObject      *gobject);
 static void     gimp_operation_blend_get_property (GObject      *object,
-                                                    guint         property_id,
-                                                    GValue       *value,
-                                                    GParamSpec   *pspec);
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
 static void     gimp_operation_blend_set_property (GObject      *object,
-                                                    guint         property_id,
-                                                    const GValue *value,
-                                                    GParamSpec   *pspec);
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
 
 static void     gimp_operation_blend_prepare      (GeglOperation *operation);
 
@@ -165,10 +165,12 @@ static gboolean gimp_operation_blend_process (GeglOperation       *operation,
                                               const GeglRectangle *result,
                                               gint                 level);
 
+
 G_DEFINE_TYPE (GimpOperationBlend, gimp_operation_blend,
                GEGL_TYPE_OPERATION_FILTER)
 
 #define parent_class gimp_operation_blend_parent_class
+
 
 static void
 gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
@@ -177,9 +179,9 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
 
-  object_class->dispose        = gimp_operation_blend_dispose;
-  object_class->set_property   = gimp_operation_blend_set_property;
-  object_class->get_property   = gimp_operation_blend_get_property;
+  object_class->dispose             = gimp_operation_blend_dispose;
+  object_class->set_property        = gimp_operation_blend_set_property;
+  object_class->get_property        = gimp_operation_blend_get_property;
 
   operation_class->prepare          = gimp_operation_blend_prepare;
   operation_class->get_bounding_box = gimp_operation_blend_get_bounding_box;
