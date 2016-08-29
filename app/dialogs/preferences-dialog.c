@@ -889,7 +889,8 @@ prefs_color_button_add (GObject      *config,
                         const gchar  *title,
                         GtkTable     *table,
                         gint          table_row,
-                        GtkSizeGroup *group)
+                        GtkSizeGroup *group,
+                        GimpContext  *context)
 {
   GtkWidget  *button;
   GParamSpec *pspec;
@@ -909,9 +910,30 @@ prefs_color_button_add (GObject      *config,
                                        GIMP_COLOR_AREA_FLAT);
 
   if (button)
-    prefs_widget_add_aligned (button, label, table, table_row, TRUE, group);
+    {
+      if (context)
+        gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), context);
+
+      prefs_widget_add_aligned (button, label, table, table_row, TRUE, group);
+    }
 
   return button;
+}
+
+static GtkWidget *
+prefs_entry_add (GObject      *config,
+                 const gchar  *property_name,
+                 const gchar  *label,
+                 GtkTable     *table,
+                 gint          table_row,
+                 GtkSizeGroup *group)
+{
+  GtkWidget *entry = gimp_prop_entry_new (config, property_name, -1);
+
+  if (entry)
+    prefs_widget_add_aligned (entry, label, table, table_row, FALSE, group);
+
+  return entry;
 }
 
 static GtkWidget *
@@ -1102,9 +1124,8 @@ prefs_display_options_frame_add (Gimp         *gimp,
   button = prefs_color_button_add (object, "padding-color",
                                    _("Custom p_adding color:"),
                                    _("Select Custom Canvas Padding Color"),
-                                   GTK_TABLE (table), 1, NULL);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                gimp_get_user_context (gimp));
+                                   GTK_TABLE (table), 1, NULL,
+                                   gimp_get_user_context (gimp));
 
   g_signal_connect (button, "color-changed",
                     G_CALLBACK (prefs_canvas_padding_color_changed),
@@ -1651,12 +1672,11 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Quick Mask"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
-  button = prefs_color_button_add (object, "quick-mask-color",
-                                   _("Quick Mask color:"),
-                                   _("Set the default Quick Mask color"),
-                                   GTK_TABLE (table), 0, NULL);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                gimp_get_user_context (gimp));
+  prefs_color_button_add (object, "quick-mask-color",
+                          _("Quick Mask color:"),
+                          _("Set the default Quick Mask color"),
+                          GTK_TABLE (table), 0, NULL,
+                          gimp_get_user_context (gimp));
 
 
   /**********************************/
@@ -2048,11 +2068,9 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
-  entry = gimp_prop_entry_new (object, "layer-new-name", -1);
-  prefs_widget_add_aligned (entry,
-                            _("Layer name:"),
-                            GTK_TABLE (table), 0, FALSE,
-                            size_group);
+  prefs_entry_add (object, "layer-new-name",
+                   _("Layer name:"),
+                   GTK_TABLE (table), 0, size_group);
 
   prefs_enum_combo_box_add (object, "layer-new-fill-type", 0, 0,
                             _("Fill type:"),
@@ -2076,29 +2094,24 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
-  entry = gimp_prop_entry_new (object, "channel-new-name", -1);
-  prefs_widget_add_aligned (entry,
-                            _("Channel name:"),
-                            GTK_TABLE (table), 0, FALSE,
-                            size_group);
+  prefs_entry_add (object, "channel-new-name",
+                   _("Channel name:"),
+                   GTK_TABLE (table), 0, size_group);
 
-  button = prefs_color_button_add (object, "channel-new-color",
-                                   _("Color and opacity:"),
-                                   _("Default New Channel Color and Opacity"),
-                                   GTK_TABLE (table), 1, size_group);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                gimp_get_user_context (gimp));
+  prefs_color_button_add (object, "channel-new-color",
+                          _("Color and opacity:"),
+                          _("Default New Channel Color and Opacity"),
+                          GTK_TABLE (table), 1, size_group,
+                          gimp_get_user_context (gimp));
 
   /*  New Path Dialog  */
   vbox2 = prefs_frame_new (_("New Path Dialog"),
                            GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
-  entry = gimp_prop_entry_new (object, "path-new-name", -1);
-  prefs_widget_add_aligned (entry,
-                            _("Path name:"),
-                            GTK_TABLE (table), 0, FALSE,
-                            size_group);
+  prefs_entry_add (object, "path-new-name",
+                   _("Path name:"),
+                   GTK_TABLE (table), 0, size_group);
 
   /*  Feather Selection Dialog  */
   vbox2 = prefs_frame_new (_("Feather Selection Dialog"),
