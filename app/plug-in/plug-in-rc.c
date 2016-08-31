@@ -793,6 +793,8 @@ plug_in_rc_write (GSList  *plug_in_defs,
 {
   GimpConfigWriter *writer;
   GEnumClass       *enum_class;
+  const gchar      *plug_in_dir;
+  gint              plug_in_dir_length;
   GSList           *list;
 
   writer = gimp_config_writer_new_gfile (file,
@@ -806,6 +808,9 @@ plug_in_rc_write (GSList  *plug_in_defs,
     return FALSE;
 
   enum_class = g_type_class_ref (GIMP_TYPE_ICON_TYPE);
+
+  plug_in_dir        = gimp_plug_in_directory ();
+  plug_in_dir_length = strlen (plug_in_dir);
 
   gimp_config_writer_open (writer, "protocol-version");
   gimp_config_writer_printf (writer, "%d", GIMP_PROTOCOL_VERSION);
@@ -828,6 +833,20 @@ plug_in_rc_write (GSList  *plug_in_defs,
           gchar  *utf8;
 
           path = g_file_get_path (plug_in_def->file);
+
+          /* if possible, replace the beginning of path with a literal
+           * "${gimp_plug_in_dir}", to help things like app bundles
+           * which are mounted at random temo locations.
+           */
+          if (g_str_has_prefix (path, plug_in_dir))
+            {
+              gchar *tmp = g_strconcat ("${gimp_plug_in_dir}",
+                                        path + plug_in_dir_length,
+                                        NULL);
+              g_free (path);
+              path = tmp;
+            }
+
           utf8 = g_filename_to_utf8 (path, -1, NULL, NULL, NULL);
           g_free (path);
 
