@@ -36,6 +36,7 @@ EXPORTS
 	gimp_config_path_expand
 	gimp_config_path_expand_to_files
 	gimp_config_path_get_type
+	gimp_config_path_unexpand
 	gimp_config_reset
 	gimp_config_reset_properties
 	gimp_config_reset_property
