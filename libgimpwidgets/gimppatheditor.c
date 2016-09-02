@@ -781,7 +781,7 @@ gimp_path_editor_selection_changed (GtkTreeSelection *sel,
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
       gtk_tree_model_get (GTK_TREE_MODEL (editor->dir_list), &iter,
-                          0, &directory,
+                          COLUMN_DIRECTORY, &directory,
                           -1);
 
       g_signal_handlers_block_by_func (editor->file_entry,
