@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor
+iconsdir = $(gimpdatadir)/icons/Symbolic-Inverted
 
 icons_DATA = \
 	index.theme

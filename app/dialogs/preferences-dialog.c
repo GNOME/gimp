@@ -1945,12 +1945,16 @@ prefs_dialog_new (Gimp       *gimp,
       {
         GtkTreeIter   iter;
         GFile        *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_themes[i]);
+        GFile        *icon_theme_search_path = g_file_get_parent (icon_theme_dir);
         GtkIconTheme *theme;
         gchar        *example;
         GdkPixbuf    *pixbuf;
 
         theme = gtk_icon_theme_new ();
-        gtk_icon_theme_prepend_search_path (theme, gimp_file_get_utf8_name(icon_theme_dir));
+        gtk_icon_theme_prepend_search_path (theme, gimp_file_get_utf8_name(icon_theme_search_path));
+        g_object_unref (icon_theme_search_path);
+        gtk_icon_theme_set_custom_theme (theme, icon_themes[i]);
+
         example = gtk_icon_theme_get_example_icon_name (theme);
         if (! example)
           {

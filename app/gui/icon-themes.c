@@ -101,14 +101,12 @@ icon_themes_init (Gimp *gimp)
                       g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
                     {
                       GFile *file;
-                      GFile *hicolor;
                       GFile *index_theme;
 
                       file = g_file_enumerator_get_child (enumerator, info);
 
                       /* make sure there is a hicolor/index.theme file */
-                      hicolor = g_file_get_child (file, "hicolor");
-                      index_theme = g_file_get_child (hicolor, "index.theme");
+                      index_theme = g_file_get_child (file, "index.theme");
 
                       if (g_file_query_exists (index_theme, NULL))
                         {
@@ -118,16 +116,22 @@ icon_themes_init (Gimp *gimp)
                           name     = gimp_file_get_utf8_name (file);
                           basename = g_path_get_basename (name);
 
-                          if (gimp->be_verbose)
-                            g_print ("Adding icon theme '%s' (%s)\n",
-                                     basename, name);
+                          if (strcmp ("hicolor", basename))
+                            {
+                              if (gimp->be_verbose)
+                                g_print ("Adding icon theme '%s' (%s)\n",
+                                         basename, name);
 
-                          g_hash_table_insert (icon_themes_hash, basename,
-                                               g_object_ref (file));
+                              g_hash_table_insert (icon_themes_hash, basename,
+                                                   g_object_ref (file));
+                            }
+                          else
+                            {
+                              g_free (basename);
+                            }
                         }
 
                       g_object_unref (index_theme);
-                      g_object_unref (hicolor);
                       g_object_unref (file);
                     }
 

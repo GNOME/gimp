@@ -1,24 +1,24 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir    = $(gimpdatadir)/icons/Legacy/hicolor
-icons12dir  = $(gimpdatadir)/icons/Legacy/hicolor/12x12/apps
-icons16dir  = $(gimpdatadir)/icons/Legacy/hicolor/16x16/apps
-icons18dir  = $(gimpdatadir)/icons/Legacy/hicolor/18x18/apps
-icons20dir  = $(gimpdatadir)/icons/Legacy/hicolor/20x20/apps
-icons22dir  = $(gimpdatadir)/icons/Legacy/hicolor/22x22/apps
+iconsdir    = $(gimpdatadir)/icons/Legacy/
+icons12dir  = $(gimpdatadir)/icons/Legacy/12x12/apps
+icons16dir  = $(gimpdatadir)/icons/Legacy/16x16/apps
+icons18dir  = $(gimpdatadir)/icons/Legacy/18x18/apps
+icons20dir  = $(gimpdatadir)/icons/Legacy/20x20/apps
+icons22dir  = $(gimpdatadir)/icons/Legacy/22x22/apps
 # 22x22 tool icons will go in their own directory and we tell GTK+
 # that this directory contains icons for 24x24 requests.
 # This is a special trick to let the theme override the default
 # 24x24 size request.
-tools22dir  = $(gimpdatadir)/icons/Legacy/hicolor/22x22/tools
-icons24dir  = $(gimpdatadir)/icons/Legacy/hicolor/24x24/apps
-icons32dir  = $(gimpdatadir)/icons/Legacy/hicolor/32x32/apps
-icons48dir  = $(gimpdatadir)/icons/Legacy/hicolor/48x48/apps
-icons64dir  = $(gimpdatadir)/icons/Legacy/hicolor/64x64/apps
-icons96dir  = $(gimpdatadir)/icons/Legacy/hicolor/96x96/apps
-icons128dir = $(gimpdatadir)/icons/Legacy/hicolor/128x128/apps
-icons192dir = $(gimpdatadir)/icons/Legacy/hicolor/192x192/apps
-icons256dir = $(gimpdatadir)/icons/Legacy/hicolor/256x256/apps
+tools22dir  = $(gimpdatadir)/icons/Legacy/22x22/tools
+icons24dir  = $(gimpdatadir)/icons/Legacy/24x24/apps
+icons32dir  = $(gimpdatadir)/icons/Legacy/32x32/apps
+icons48dir  = $(gimpdatadir)/icons/Legacy/48x48/apps
+icons64dir  = $(gimpdatadir)/icons/Legacy/64x64/apps
+icons96dir  = $(gimpdatadir)/icons/Legacy/96x96/apps
+icons128dir = $(gimpdatadir)/icons/Legacy/128x128/apps
+icons192dir = $(gimpdatadir)/icons/Legacy/192x192/apps
+icons256dir = $(gimpdatadir)/icons/Legacy/256x256/apps
 
 ## The icon theme images
 
