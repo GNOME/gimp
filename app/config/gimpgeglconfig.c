@@ -158,7 +158,7 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 
   GIMP_CONFIG_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                             "tile-cache-size",
-                            "Tile cach size",
+                            "Tile cache size",
                             TILE_CACHE_SIZE_BLURB,
                             0, GIMP_MAX_MEM_PROCESS,
                             memory_size,
