@@ -91,7 +91,7 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_new_cmd_callback),
     GIMP_HELP_VIEW_NEW },
 
-  { "view-close", GIMP_STOCK_QUIT,
+  { "view-close", "window-close",
     NC_("view-action",  "_Close View"), "<primary>W",
     NC_("view-action", "Close the active image view"),
     G_CALLBACK (view_close_cmd_callback),

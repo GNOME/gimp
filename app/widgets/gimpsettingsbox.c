@@ -315,13 +315,13 @@ gimp_settings_box_constructed (GObject *object)
 
   private->import_item =
     gimp_settings_box_menu_item_add (box,
-                                     GIMP_STOCK_OPEN,
+                                     "document-open",
                                      _("_Import Settings from File..."),
                                      G_CALLBACK (gimp_settings_box_import_activate));
 
   private->export_item =
     gimp_settings_box_menu_item_add (box,
-                                     GIMP_STOCK_SAVE,
+                                     "document-save",
                                      _("_Export Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 

@@ -40,7 +40,7 @@
 
 static const GimpActionEntry fonts_actions[] =
 {
-  { "fonts-popup", GIMP_STOCK_FONT,
+  { "fonts-popup", "gtk-select-font",
     NC_("fonts-action", "Fonts Menu"), NULL, NULL, NULL,
     GIMP_HELP_FONT_DIALOG },
 

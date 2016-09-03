@@ -58,7 +58,7 @@ static const GimpActionEntry tool_presets_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_TOOL_PRESET_DUPLICATE },
 
-  { "tool-presets-copy-location", GIMP_STOCK_CLIPBOARD,
+  { "tool-presets-copy-location", "edit-copy",
     NC_("tool-presets-action", "Copy Tool Preset _Location"), NULL,
     NC_("tool-presets-action", "Copy tool preset file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
@@ -70,7 +70,7 @@ static const GimpActionEntry tool_presets_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER },
 
-  { "tool-presets-restore", GIMP_STOCK_REVERT,
+  { "tool-presets-restore", "document-revert",
     NC_("tool-presets-action", "_Restore Tool Preset"), NULL,
     NC_("tool-presets-action", "Restore this tool preset"),
     G_CALLBACK (tool_presets_restore_cmd_callback),

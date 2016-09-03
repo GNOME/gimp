@@ -114,7 +114,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_cut_cmd_callback),
     GIMP_HELP_EDIT_CUT },
 
-  { "edit-copy", GIMP_STOCK_CLIPBOARD,
+  { "edit-copy", "edit-copy",
     NC_("edit-action", "_Copy"), "<primary>C",
     NC_("edit-action", "Copy the selected pixels to the clipboard"),
     G_CALLBACK (edit_copy_cmd_callback),
@@ -163,7 +163,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_named_cut_cmd_callback),
     GIMP_HELP_BUFFER_CUT },
 
-  { "edit-named-copy", GIMP_STOCK_DUPLICATE,
+  { "edit-named-copy", "edit-copy",
     NC_("edit-action", "_Copy Named..."), NULL,
     NC_("edit-action", "Copy the selected pixels to a named buffer"),
     G_CALLBACK (edit_named_copy_cmd_callback),
@@ -182,7 +182,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_named_paste_cmd_callback),
     GIMP_HELP_BUFFER_PASTE },
 
-  { "edit-clear", GIMP_STOCK_EDIT_CLEAR,
+  { "edit-clear", "edit-clear",
     NC_("edit-action", "Cl_ear"), "Delete",
     NC_("edit-action", "Clear the selected pixels"),
     G_CALLBACK (edit_clear_cmd_callback),

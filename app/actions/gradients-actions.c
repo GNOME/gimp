@@ -56,7 +56,7 @@ static const GimpActionEntry gradients_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_GRADIENT_DUPLICATE },
 
-  { "gradients-copy-location", GIMP_STOCK_CLIPBOARD,
+  { "gradients-copy-location", "edit-copy",
     NC_("gradients-action", "Copy Gradient _Location"), NULL,
     NC_("gradients-action", "Copy gradient file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
@@ -68,7 +68,7 @@ static const GimpActionEntry gradients_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_GRADIENT_SHOW_IN_FILE_MANAGER },
 
-  { "gradients-save-as-pov", GIMP_STOCK_SAVE_AS,
+  { "gradients-save-as-pov", "document-save-as",
     NC_("gradients-action", "Save as _POV-Ray..."), NULL,
     NC_("gradients-action", "Save gradient as POV-Ray"),
     G_CALLBACK (gradients_save_as_pov_ray_cmd_callback),

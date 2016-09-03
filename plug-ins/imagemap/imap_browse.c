@@ -140,7 +140,7 @@ browse_widget_new (const gchar *name)
    gtk_widget_show (browse->file);
 
    browse->button = button = gtk_button_new ();
-   icon = gtk_image_new_from_icon_name ("gimp-open", GTK_ICON_SIZE_BUTTON);
+   icon = gtk_image_new_from_icon_name ("document-open", GTK_ICON_SIZE_BUTTON);
    gtk_container_add (GTK_CONTAINER (button), icon);
    gtk_widget_show (icon);
 

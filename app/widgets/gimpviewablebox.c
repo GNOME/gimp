@@ -527,7 +527,7 @@ font_box_new (GimpContainer *container,
   return gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
                                 "gimp-font-list|gimp-font-grid",
-                                GIMP_STOCK_FONT,
+                                "gtk-select-font",
                                 _("Open the font selection dialog"),
                                 NULL);
 }

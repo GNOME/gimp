@@ -1,7 +1,25 @@
 scalable_images = \
+	scalable/document-open.svg					\
+	scalable/document-open-recent.svg			\
+	scalable/document-revert.svg				\
+	scalable/document-save.svg					\
+	scalable/document-save-as.svg				\
+	scalable/edit-clear.svg			\
+	scalable/format-indent-more.svg				\
+	scalable/go-next.svg						\
+	scalable/go-previous.svg					\
+	scalable/window-close.svg					\
+												\
+	scalable/gtk-cancel.svg						\
+	scalable/gtk-justify-fill.svg				\
+	scalable/gtk-justify-center.svg				\
+	scalable/gtk-justify-left.svg				\
+	scalable/gtk-justify-right.svg				\
+	scalable/gtk-select-color.svg				\
+	scalable/gtk-select-font.svg				\
+												\
 	scalable/gimp-anchor.svg			\
 	scalable/gimp-buffer.svg			\
-	scalable/gimp-cancel.svg			\
 	scalable/gimp-cap-butt.svg			\
 	scalable/gimp-cap-round.svg			\
 	scalable/gimp-cap-square.svg			\
@@ -24,7 +42,6 @@ scalable_images = \
 	scalable/gimp-color-picker-white.svg		\
 	scalable/gimp-color-pick-from-screen.svg	\
 	scalable/gimp-color-cmyk.svg			\
-	scalable/gimp-color-palette.svg			\
 	scalable/gimp-color-triangle.svg		\
 	scalable/gimp-color-water.svg			\
 	scalable/gimp-controller-keyboard.svg		\
@@ -46,17 +63,14 @@ scalable_images = \
 	scalable/gimp-display-filter-lcms.svg		\
 	scalable/gimp-display-filter-proof.svg		\
 	scalable/gimp-display-filter.svg		\
-	scalable/gimp-document-recent.svg		\
 	scalable/gimp-duplicate.svg			\
 	scalable/gimp-dynamics.svg			\
 	scalable/gimp-edit.svg				\
-	scalable/gimp-edit-clear.svg			\
 	scalable/gimp-error.svg				\
 	scalable/gimp-file-manager.svg			\
 	scalable/gimp-flip-horizontal.svg		\
 	scalable/gimp-flip-vertical.svg			\
 	scalable/gimp-floating-selection.svg		\
-	scalable/gimp-font.svg				\
 	scalable/gimp-gegl.svg				\
 	scalable/gimp-gradient-bilinear.svg		\
 	scalable/gimp-gradient-conical-asymmetric.svg	\
@@ -90,17 +104,12 @@ scalable_images = \
 	scalable/gimp-image.svg				\
 	scalable/gimp-image-open.svg			\
 	scalable/gimp-image-reload.svg			\
-	scalable/gimp-indent.svg				\
 	scalable/gimp-info.svg				\
 	scalable/gimp-input-device.svg			\
 	scalable/gimp-invert.svg			\
 	scalable/gimp-join-bevel.svg			\
 	scalable/gimp-join-miter.svg			\
 	scalable/gimp-join-round.svg			\
-	scalable/gimp-justify-fill.svg			\
-	scalable/gimp-justify-center.svg		\
-	scalable/gimp-justify-left.svg			\
-	scalable/gimp-justify-right.svg			\
 	scalable/gimp-landscape.svg			\
 	scalable/gimp-layer-mask.svg			\
 	scalable/gimp-layers.svg			\
@@ -115,8 +124,6 @@ scalable_images = \
 	scalable/gimp-merge-down.svg			\
 	scalable/gimp-move-to-screen.svg		\
 	scalable/gimp-navigation.svg			\
-	scalable/gimp-next.svg				\
-	scalable/gimp-open.svg				\
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
 	scalable/gimp-path.svg				\
@@ -168,22 +175,17 @@ scalable_images = \
 	scalable/gimp-prefs-toolbox.svg			\
 	scalable/gimp-prefs-tool-options.svg		\
 	scalable/gimp-prefs-window-management.svg	\
-	scalable/gimp-previous.svg			\
 	scalable/gimp-print-resolution.svg		\
 	scalable/gimp-question.svg			\
 	scalable/gimp-quick-mask-off.svg		\
 	scalable/gimp-quick-mask-on.svg			\
-	scalable/gimp-quit.svg				\
 	scalable/gimp-reset.svg				\
 	scalable/gimp-reshow-filter.svg			\
 	scalable/gimp-resize.svg			\
-	scalable/gimp-revert.svg			\
 	scalable/gimp-rotate-180.svg			\
 	scalable/gimp-rotate-270.svg			\
 	scalable/gimp-rotate-90.svg			\
 	scalable/gimp-sample-point.svg			\
-	scalable/gimp-save.svg				\
-	scalable/gimp-save-as.svg			\
 	scalable/gimp-scale.svg				\
 	scalable/gimp-selection.svg			\
 	scalable/gimp-selection-add.svg			\
@@ -278,6 +280,8 @@ scalable_images = \
 	scalable/gimp-zoom-follow-window.svg
 
 vector24_images = \
+	24/gtk-select-color.svg						\
+												\
 	24/gimp-center.svg				\
 	24/gimp-channel.svg				\
 	24/gimp-channel-alpha.svg			\
@@ -289,7 +293,6 @@ vector24_images = \
 	24/gimp-channels.svg				\
 	24/gimp-char-picker.svg				\
 	24/gimp-colormap.svg				\
-	24/gimp-color-palette.svg			\
 	24/gimp-controller.svg				\
 	24/gimp-controller-keyboard.svg			\
 	24/gimp-controller-linux-input.svg		\
@@ -443,226 +446,228 @@ icons12_images = \
 	12/gimp-zoom-follow-window.png
 
 icons16_images = \
-	16/gimp-anchor.png				\
-	16/gimp-buffer.png				\
-	16/gimp-cancel.png				\
-	16/gimp-cap-butt.png				\
-	16/gimp-cap-round.png				\
-	16/gimp-cap-square.png				\
-	16/gimp-center.png				\
-	16/gimp-channel-alpha.png			\
-	16/gimp-channel-blue.png			\
-	16/gimp-channel-gray.png			\
-	16/gimp-channel-green.png			\
-	16/gimp-channel-indexed.png			\
-	16/gimp-channel-red.png				\
-	16/gimp-channel.png				\
-	16/gimp-channels.png				\
-	16/gimp-char-picker.png				\
-	16/gimp-clipboard.png				\
-	16/gimp-close-all.png				\
-	16/gimp-color-pick-from-screen.png		\
-	16/gimp-color-cmyk.png				\
-	16/gimp-color-palette.png			\
-	16/gimp-color-triangle.png			\
-	16/gimp-color-water.png				\
-	16/gimp-colormap.png				\
-	16/gimp-controller-keyboard.png			\
-	16/gimp-controller-linux-input.png		\
-	16/gimp-controller-midi.png			\
-	16/gimp-controller-wheel.png			\
-	16/gimp-controller.png				\
-	16/gimp-convert-grayscale.png			\
-	16/gimp-convert-indexed.png			\
-	16/gimp-convert-rgb.png				\
-	16/gimp-cursor.png				\
-	16/gimp-curve-free.png				\
-	16/gimp-curve-smooth.png			\
-	16/gimp-device-status.png			\
+	16/document-open.png						\
+	16/document-open-recent.png					\
+	16/document-revert.png						\
+	16/document-save.png						\
+	16/document-save-as.png						\
+	16/edit-clear.png							\
+	16/go-next.png								\
+	16/go-previous.png							\
+	16/window-close.png							\
+												\
+	16/gtk-cancel.png							\
+	16/gtk-select-color.png						\
+	16/gtk-select-font.png						\
+												\
+	16/gimp-anchor.png							\
+	16/gimp-buffer.png							\
+	16/gimp-cap-butt.png						\
+	16/gimp-cap-round.png						\
+	16/gimp-cap-square.png						\
+	16/gimp-center.png							\
+	16/gimp-channel-alpha.png					\
+	16/gimp-channel-blue.png					\
+	16/gimp-channel-gray.png					\
+	16/gimp-channel-green.png					\
+	16/gimp-channel-indexed.png					\
+	16/gimp-channel-red.png						\
+	16/gimp-channel.png							\
+	16/gimp-channels.png						\
+	16/gimp-char-picker.png						\
+	16/gimp-clipboard.png						\
+	16/gimp-close-all.png						\
+	16/gimp-color-pick-from-screen.png			\
+	16/gimp-color-cmyk.png						\
+	16/gimp-color-triangle.png					\
+	16/gimp-color-water.png						\
+	16/gimp-colormap.png						\
+	16/gimp-controller-keyboard.png				\
+	16/gimp-controller-linux-input.png			\
+	16/gimp-controller-midi.png					\
+	16/gimp-controller-wheel.png				\
+	16/gimp-controller.png						\
+	16/gimp-convert-grayscale.png				\
+	16/gimp-convert-indexed.png					\
+	16/gimp-convert-rgb.png						\
+	16/gimp-cursor.png							\
+	16/gimp-curve-free.png						\
+	16/gimp-curve-smooth.png					\
+	16/gimp-device-status.png					\
 	16/gimp-display-filter-colorblind.png		\
-	16/gimp-display-filter-contrast.png		\
-	16/gimp-display-filter-gamma.png		\
-	16/gimp-display-filter-lcms.png			\
-	16/gimp-display-filter-proof.png		\
-	16/gimp-display-filter.png			\
-	16/gimp-document-recent.png			\
-	16/gimp-duplicate.png				\
-	16/gimp-dynamics.png				\
-	16/gimp-edit.png				\
-	16/gimp-edit-clear.png				\
-	16/gimp-error.png				\
-	16/gimp-file-manager.png			\
-	16/gimp-flip-horizontal.png			\
-	16/gimp-flip-vertical.png			\
-	16/gimp-floating-selection.png			\
-	16/gimp-font.png				\
-	16/gimp-gegl.png				\
-	16/gimp-gradient-bilinear.png			\
+	16/gimp-display-filter-contrast.png			\
+	16/gimp-display-filter-gamma.png			\
+	16/gimp-display-filter-lcms.png				\
+	16/gimp-display-filter-proof.png			\
+	16/gimp-display-filter.png					\
+	16/gimp-duplicate.png						\
+	16/gimp-dynamics.png						\
+	16/gimp-edit.png							\
+	16/gimp-error.png							\
+	16/gimp-file-manager.png					\
+	16/gimp-flip-horizontal.png					\
+	16/gimp-flip-vertical.png					\
+	16/gimp-floating-selection.png				\
+	16/gimp-gegl.png							\
+	16/gimp-gradient-bilinear.png				\
 	16/gimp-gradient-conical-asymmetric.png		\
 	16/gimp-gradient-conical-symmetric.png		\
-	16/gimp-gradient-linear.png			\
-	16/gimp-gradient-radial.png			\
+	16/gimp-gradient-linear.png					\
+	16/gimp-gradient-radial.png					\
 	16/gimp-gradient-shapeburst-angular.png		\
 	16/gimp-gradient-shapeburst-dimpled.png		\
 	16/gimp-gradient-shapeburst-spherical.png	\
 	16/gimp-gradient-spiral-anticlockwise.png	\
 	16/gimp-gradient-spiral-clockwise.png		\
-	16/gimp-gradient-square.png			\
-	16/gimp-grid.png				\
-	16/gimp-group-layer.png				\
-	16/gimp-histogram-linear.png			\
-	16/gimp-histogram-logarithmic.png		\
-	16/gimp-histogram.png				\
-	16/gimp-image.png				\
-	16/gimp-images.png				\
-	16/gimp-image-open.png				\
-	16/gimp-image-reload.png			\
-	16/gimp-info.png				\
-	16/gimp-input-device.png			\
-	16/gimp-invert.png				\
-	16/gimp-join-bevel.png				\
-	16/gimp-join-miter.png				\
-	16/gimp-join-round.png				\
-	16/gimp-landscape.png				\
-	16/gimp-layer-mask.png				\
-	16/gimp-layer-to-imagesize.png			\
-	16/gimp-layer.png				\
-	16/gimp-layers.png				\
-	16/gimp-list.png				\
-	16/gimp-merge-down.png				\
-	16/gimp-move-to-screen.png			\
-	16/gimp-navigation.png				\
-	16/gimp-next.png				\
-	16/gimp-open.png				\
-	16/gimp-paste-as-new.png			\
-	16/gimp-paste-into.png				\
-	16/gimp-path-delete.png				\
-	16/gimp-path-down.png				\
-	16/gimp-path-new.png				\
-	16/gimp-path-stroke.png				\
-	16/gimp-path-up.png				\
-	16/gimp-path.png				\
-	16/gimp-paths.png				\
-	16/gimp-pattern.png				\
-	16/gimp-plugin.png				\
-	16/gimp-portrait.png				\
-	16/gimp-prefs-folders-brushes.png		\
-	16/gimp-prefs-folders-dynamics.png		\
-	16/gimp-prefs-folders-environ.png		\
-	16/gimp-prefs-folders-fonts.png			\
-	16/gimp-prefs-folders-gradients.png		\
+	16/gimp-gradient-square.png					\
+	16/gimp-grid.png							\
+	16/gimp-group-layer.png						\
+	16/gimp-histogram-linear.png				\
+	16/gimp-histogram-logarithmic.png			\
+	16/gimp-histogram.png						\
+	16/gimp-image.png							\
+	16/gimp-images.png							\
+	16/gimp-image-open.png						\
+	16/gimp-image-reload.png					\
+	16/gimp-info.png							\
+	16/gimp-input-device.png					\
+	16/gimp-invert.png							\
+	16/gimp-join-bevel.png						\
+	16/gimp-join-miter.png						\
+	16/gimp-join-round.png						\
+	16/gimp-landscape.png						\
+	16/gimp-layer-mask.png						\
+	16/gimp-layer-to-imagesize.png				\
+	16/gimp-layer.png							\
+	16/gimp-layers.png							\
+	16/gimp-list.png							\
+	16/gimp-merge-down.png						\
+	16/gimp-move-to-screen.png					\
+	16/gimp-navigation.png						\
+	16/gimp-paste-as-new.png					\
+	16/gimp-paste-into.png						\
+	16/gimp-path-delete.png						\
+	16/gimp-path-down.png						\
+	16/gimp-path-new.png						\
+	16/gimp-path-stroke.png						\
+	16/gimp-path-up.png							\
+	16/gimp-path.png							\
+	16/gimp-paths.png							\
+	16/gimp-pattern.png							\
+	16/gimp-plugin.png							\
+	16/gimp-portrait.png						\
+	16/gimp-prefs-folders-brushes.png			\
+	16/gimp-prefs-folders-dynamics.png			\
+	16/gimp-prefs-folders-environ.png			\
+	16/gimp-prefs-folders-fonts.png				\
+	16/gimp-prefs-folders-gradients.png			\
 	16/gimp-prefs-folders-icon-themes.png		\
-	16/gimp-prefs-folders-interp.png		\
-	16/gimp-prefs-folders-modules.png		\
+	16/gimp-prefs-folders-interp.png			\
+	16/gimp-prefs-folders-modules.png			\
 	16/gimp-prefs-folders-mypaint-brushes.png	\
-	16/gimp-prefs-folders-palettes.png		\
-	16/gimp-prefs-folders-patterns.png		\
-	16/gimp-prefs-folders-plug-ins.png		\
-	16/gimp-prefs-folders-scripts.png		\
-	16/gimp-prefs-folders-themes.png		\
+	16/gimp-prefs-folders-palettes.png			\
+	16/gimp-prefs-folders-patterns.png			\
+	16/gimp-prefs-folders-plug-ins.png			\
+	16/gimp-prefs-folders-scripts.png			\
+	16/gimp-prefs-folders-themes.png			\
 	16/gimp-prefs-folders-tool-plug-ins.png		\
 	16/gimp-prefs-folders-tool-presets.png		\
-	16/gimp-prefs-folders-tools.png			\
-	16/gimp-prefs-icon-theme.png			\
-	16/gimp-prefs-image-windows.png			\
-	16/gimp-prefs-interface.png			\
-	16/gimp-prefs-theme.png				\
-	16/gimp-prefs-toolbox.png			\
-	16/gimp-prefs-window-management.png		\
-	16/gimp-previous.png				\
-	16/gimp-print-resolution.png			\
-	16/gimp-question.png				\
-	16/gimp-quit.png				\
-	16/gimp-reset.png				\
-	16/gimp-reshow-filter.png			\
-	16/gimp-resize.png				\
-	16/gimp-revert.png				\
-	16/gimp-rotate-180.png				\
-	16/gimp-rotate-270.png				\
-	16/gimp-rotate-90.png				\
-	16/gimp-sample-point.png			\
-	16/gimp-save.png				\
-	16/gimp-save-as.png				\
-	16/gimp-scale.png				\
-	16/gimp-selection-add.png			\
-	16/gimp-selection-all.png			\
-	16/gimp-selection-border.png			\
-	16/gimp-selection-grow.png			\
-	16/gimp-selection-intersect.png			\
-	16/gimp-selection-none.png			\
-	16/gimp-selection-replace.png			\
-	16/gimp-selection-shrink.png			\
-	16/gimp-selection-stroke.png			\
-	16/gimp-selection-subtract.png			\
-	16/gimp-selection-to-channel.png		\
-	16/gimp-selection-to-path.png			\
-	16/gimp-selection.png				\
-	16/gimp-shape-circle.png			\
-	16/gimp-shape-diamond.png			\
-	16/gimp-shape-square.png			\
-	16/gimp-shred.png				\
-	16/gimp-symmetry.png				\
-	16/gimp-template.png				\
-	16/gimp-text-layer.png				\
-	16/gimp-toilet-paper.png			\
-	16/gimp-tool-airbrush.png			\
-	16/gimp-tool-align.png				\
-	16/gimp-tool-blend.png				\
-	16/gimp-tool-blur.png				\
+	16/gimp-prefs-folders-tools.png				\
+	16/gimp-prefs-icon-theme.png				\
+	16/gimp-prefs-image-windows.png				\
+	16/gimp-prefs-interface.png					\
+	16/gimp-prefs-theme.png						\
+	16/gimp-prefs-toolbox.png					\
+	16/gimp-prefs-window-management.png			\
+	16/gimp-print-resolution.png				\
+	16/gimp-question.png						\
+	16/gimp-reset.png							\
+	16/gimp-reshow-filter.png					\
+	16/gimp-resize.png							\
+	16/gimp-rotate-180.png						\
+	16/gimp-rotate-270.png						\
+	16/gimp-rotate-90.png						\
+	16/gimp-sample-point.png					\
+	16/gimp-scale.png							\
+	16/gimp-selection-add.png					\
+	16/gimp-selection-all.png					\
+	16/gimp-selection-border.png				\
+	16/gimp-selection-grow.png					\
+	16/gimp-selection-intersect.png				\
+	16/gimp-selection-none.png					\
+	16/gimp-selection-replace.png				\
+	16/gimp-selection-shrink.png				\
+	16/gimp-selection-stroke.png				\
+	16/gimp-selection-subtract.png				\
+	16/gimp-selection-to-channel.png			\
+	16/gimp-selection-to-path.png				\
+	16/gimp-selection.png						\
+	16/gimp-shape-circle.png					\
+	16/gimp-shape-diamond.png					\
+	16/gimp-shape-square.png					\
+	16/gimp-shred.png							\
+	16/gimp-symmetry.png						\
+	16/gimp-template.png						\
+	16/gimp-text-layer.png						\
+	16/gimp-toilet-paper.png					\
+	16/gimp-tool-airbrush.png					\
+	16/gimp-tool-align.png						\
+	16/gimp-tool-blend.png						\
+	16/gimp-tool-blur.png						\
 	16/gimp-tool-brightness-contrast.png		\
-	16/gimp-tool-bucket-fill.png			\
-	16/gimp-tool-by-color-select.png		\
-	16/gimp-tool-cage.png				\
-	16/gimp-tool-clone.png				\
-	16/gimp-tool-color-balance.png			\
-	16/gimp-tool-color-picker.png			\
-	16/gimp-tool-colorize.png			\
-	16/gimp-tool-crop.png				\
-	16/gimp-tool-curves.png				\
-	16/gimp-tool-desaturate.png			\
-	16/gimp-tool-dodge.png				\
-	16/gimp-tool-ellipse-select.png			\
-	16/gimp-tool-eraser.png				\
-	16/gimp-tool-flip.png				\
-	16/gimp-tool-foreground-select.png		\
-	16/gimp-tool-free-select.png			\
-	16/gimp-tool-fuzzy-select.png			\
-	16/gimp-tool-handle-transform.png		\
-	16/gimp-tool-heal.png				\
-	16/gimp-tool-hue-saturation.png			\
-	16/gimp-tool-ink.png				\
-	16/gimp-tool-iscissors.png			\
-	16/gimp-tool-levels.png				\
-	16/gimp-tool-measure.png			\
-	16/gimp-tool-move.png				\
-	16/gimp-tool-mypaint-brush.png			\
+	16/gimp-tool-bucket-fill.png				\
+	16/gimp-tool-by-color-select.png			\
+	16/gimp-tool-cage.png						\
+	16/gimp-tool-clone.png						\
+	16/gimp-tool-color-balance.png				\
+	16/gimp-tool-color-picker.png				\
+	16/gimp-tool-colorize.png					\
+	16/gimp-tool-crop.png						\
+	16/gimp-tool-curves.png						\
+	16/gimp-tool-desaturate.png					\
+	16/gimp-tool-dodge.png						\
+	16/gimp-tool-ellipse-select.png				\
+	16/gimp-tool-eraser.png						\
+	16/gimp-tool-flip.png						\
+	16/gimp-tool-foreground-select.png			\
+	16/gimp-tool-free-select.png				\
+	16/gimp-tool-fuzzy-select.png				\
+	16/gimp-tool-handle-transform.png			\
+	16/gimp-tool-heal.png						\
+	16/gimp-tool-hue-saturation.png				\
+	16/gimp-tool-ink.png						\
+	16/gimp-tool-iscissors.png					\
+	16/gimp-tool-levels.png						\
+	16/gimp-tool-measure.png					\
+	16/gimp-tool-move.png						\
+	16/gimp-tool-mypaint-brush.png				\
 	16/gimp-tool-n-point-deformation.png		\
-	16/gimp-tool-options.png			\
-	16/gimp-tool-paintbrush.png			\
-	16/gimp-tool-path.png				\
-	16/gimp-tool-pencil.png				\
-	16/gimp-tool-perspective-clone.png		\
-	16/gimp-tool-perspective.png			\
-	16/gimp-tool-posterize.png			\
-	16/gimp-tool-preset.png				\
-	16/gimp-tool-rect-select.png			\
-	16/gimp-tool-rotate.png				\
-	16/gimp-tool-scale.png				\
-	16/gimp-tool-seamless-clone.png			\
-	16/gimp-tool-shear.png				\
-	16/gimp-tool-smudge.png				\
-	16/gimp-tool-text.png				\
-	16/gimp-tool-threshold.png			\
-	16/gimp-tool-unified-transform.png		\
-	16/gimp-tool-warp.png				\
-	16/gimp-tool-zoom.png				\
-	16/gimp-tools.png				\
-	16/gimp-transparency.png			\
-	16/gimp-undo-history.png			\
-	16/gimp-user-manual.png				\
-	16/gimp-video.png				\
-	16/gimp-warning.png				\
-	16/gimp-web.png					\
+	16/gimp-tool-options.png					\
+	16/gimp-tool-paintbrush.png					\
+	16/gimp-tool-path.png						\
+	16/gimp-tool-pencil.png						\
+	16/gimp-tool-perspective-clone.png			\
+	16/gimp-tool-perspective.png				\
+	16/gimp-tool-posterize.png					\
+	16/gimp-tool-preset.png						\
+	16/gimp-tool-rect-select.png				\
+	16/gimp-tool-rotate.png						\
+	16/gimp-tool-scale.png						\
+	16/gimp-tool-seamless-clone.png				\
+	16/gimp-tool-shear.png						\
+	16/gimp-tool-smudge.png						\
+	16/gimp-tool-text.png						\
+	16/gimp-tool-threshold.png					\
+	16/gimp-tool-unified-transform.png			\
+	16/gimp-tool-warp.png						\
+	16/gimp-tool-zoom.png						\
+	16/gimp-tools.png							\
+	16/gimp-transparency.png					\
+	16/gimp-undo-history.png					\
+	16/gimp-user-manual.png						\
+	16/gimp-video.png							\
+	16/gimp-warning.png							\
+	16/gimp-web.png								\
 	16/gimp-wilber.png
 
 icons18_images = \
@@ -675,15 +680,17 @@ icons20_images = \
 	20/gimp-visible.png
 
 icons22_images = \
+	22/format-indent-more.png					\
+												\
+	22/gtk-justify-center.png					\
+	22/gtk-justify-fill.png						\
+	22/gtk-justify-left.png						\
+	22/gtk-justify-right.png					\
+												\
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
 	22/gimp-histogram.png			\
-	22/gimp-indent.png				\
 	22/gimp-input-device.png		\
-	22/gimp-justify-center.png		\
-	22/gimp-justify-fill.png		\
-	22/gimp-justify-left.png		\
-	22/gimp-justify-right.png		\
 	22/gimp-landscape.png			\
 	22/gimp-letter-spacing.png		\
 	22/gimp-line-spacing.png		\
@@ -732,6 +739,8 @@ icons22_images = \
 	22/gimp-wilber.png
 
 icons24_images = \
+	24/gtk-select-color.png					\
+											\
 	24/gimp-center.png			\
 	24/gimp-channel-alpha.png		\
 	24/gimp-channel-blue.png		\
@@ -742,7 +751,6 @@ icons24_images = \
 	24/gimp-channel.png			\
 	24/gimp-channels.png			\
 	24/gimp-colormap.png			\
-	24/gimp-color-palette.png		\
 	24/gimp-controller-keyboard.png		\
 	24/gimp-controller-linux-input.png	\
 	24/gimp-controller-midi.png		\

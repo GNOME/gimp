@@ -67,25 +67,13 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_PASTE_INTO,     N_("Paste Into"),      0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_RESET,          N_("_Reset"),          0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VISIBLE,        N_("Visible"),         0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_NEXT,           N_("Ne_xt"),           0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_PREVIOUS,       N_("Pre_vious"),       0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_OPEN,           N_("_Open"),           0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_SAVE,           N_("_Save"),           0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_SAVE_AS,        N_("Save as"),         0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_CANCEL,         N_("_Cancel"),         0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_QUIT,           N_("_Quit"),           0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_IMAGE_OPEN,                    NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_IMAGE_RELOAD,                  NULL,   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_REVERT,                        NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CLOSE_ALL,                     NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CLIPBOARD,                     NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FILE_MANAGER,                  NULL,   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_EDIT_CLEAR,                    NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SHRED,                         NULL,   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_DOCUMENT_RECENT,               NULL,   0, 0, LIBGIMP_DOMAIN },
-
-
 
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },
@@ -143,22 +131,15 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_COLOR_TRIANGLE,           NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_CMYK,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_WATER,              NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_COLOR_PALETTE,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_PICK_FROM_SCREEN,   NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CHAR_PICKER,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LETTER_SPACING, N_("L_etter Spacing"), 0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_INDENT,         N_("I_ndent"),         0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_JUSTIFY_CENTER,           NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_JUSTIFY_FILL,             NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_JUSTIFY_LEFT,             NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_JUSTIFY_RIGHT,            NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_TEXT_DIR_LTR,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEXT_DIR_RTL,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PRINT_RESOLUTION,         NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_FONT,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATTERN,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_BUFFER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
 

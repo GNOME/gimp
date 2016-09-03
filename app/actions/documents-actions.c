@@ -38,11 +38,11 @@
 
 static const GimpActionEntry documents_actions[] =
 {
-  { "documents-popup", GIMP_STOCK_DOCUMENT_RECENT,
+  { "documents-popup", "document-open-recent",
     NC_("documents-action", "Documents Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCUMENT_DIALOG },
 
-  { "documents-open", GIMP_STOCK_OPEN,
+  { "documents-open", "document-open",
     NC_("documents-action", "_Open Image"), NULL,
     NC_("documents-action", "Open the selected entry"),
     G_CALLBACK (documents_open_cmd_callback),
@@ -60,7 +60,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_file_open_dialog_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
-  { "documents-copy-location", GIMP_STOCK_CLIPBOARD,
+  { "documents-copy-location", "edit-copy",
     NC_("documents-action", "Copy Image _Location"), NULL,
     NC_("documents-action", "Copy image location to clipboard"),
     G_CALLBACK (documents_copy_location_cmd_callback),
