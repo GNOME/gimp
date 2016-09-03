@@ -360,7 +360,11 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
       mybrush->private->brushes = NULL;
     }
 
-  gimp_context_get_foreground (context, &fg);
+  if (options->eraser)
+    gimp_context_get_background (context, &fg);
+  else
+    gimp_context_get_foreground (context, &fg);
+
   gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
                                      &fg, &fg);
   gimp_rgb_to_hsv (&fg, &hsv);
@@ -399,7 +403,9 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
                                     options->hardness);
       mypaint_brush_set_base_value (brush,
                                     MYPAINT_BRUSH_SETTING_ERASER,
-                                    options->eraser ? 1.0f : 0.0f);
+                                    (options->eraser &&
+                                     gimp_drawable_has_alpha (drawable)) ?
+                                    1.0f : 0.0f);
 
       mypaint_brush_new_stroke (brush);
 
