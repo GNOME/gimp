@@ -619,8 +619,6 @@ gimp_config_path_unexpand_only (const gchar *path)
                                         dir + strlen (identifiers[i].prefix),
                                         NULL);
 
-              g_printerr ("old: %s\nnew: %s\n", dir, tmp);
-
               g_free (dir);
               list->data = tmp;
 
