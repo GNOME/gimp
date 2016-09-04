@@ -256,19 +256,19 @@ static ExportAction export_action_merge_single =
 
 static ExportAction export_action_animate_or_merge =
 {
-  export_merge,
   NULL,
+  export_merge,
   N_("%s plug-in can only handle layers as animation frames"),
-  { N_("Merge Visible Layers"), N_("Save as Animation")},
+  { N_("Save as Animation"), N_("Merge Visible Layers") },
   0
 };
 
 static ExportAction export_action_animate_or_flatten =
 {
-  export_flatten,
   NULL,
+  export_flatten,
   N_("%s plug-in can only handle layers as animation frames"),
-  { N_("Flatten Image"), N_("Save as Animation") },
+  { N_("Save as Animation"), N_("Flatten Image") },
   0
 };
 
@@ -381,10 +381,14 @@ static ExportFunc
 export_action_get_func (const ExportAction *action)
 {
   if (action->choice == 0 && action->default_action)
-    return action->default_action;
+    {
+      return action->default_action;
+    }
 
   if (action->choice == 1 && action->alt_action)
-    return action->alt_action;
+    {
+      return action->alt_action;
+    }
 
   return export_void;
 }
