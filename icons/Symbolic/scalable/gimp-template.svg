@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 15.999999 16"
    id="svg7384"
    height="16"
    width="16"
    version="1.1"
-   inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-template.svg">
+   sodipodi:docname="gimp-template.svg"
+   viewBox="0 0 16 16"
+   inkscape:version="0.92pre1 unknown">
+  <defs
+     id="defs25" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -25,16 +27,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1051"
-     inkscape:window-height="480"
-     id="namedview1511"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview23"
      showgrid="false"
-     inkscape:zoom="14.75"
-     inkscape:cx="-584.4754"
-     inkscape:cy="406.60914"
+     inkscape:zoom="19.047689"
+     inkscape:cx="8"
+     inkscape:cy="8.5616128"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg7384" />
   <metadata
      id="metadata90">
@@ -44,113 +46,141 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
-        <dc:contributor>
-          <cc:Agent>
-            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
-          </cc:Agent>
-        </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:title>Gnome Symbolic Icon Theme</dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <defs
-     id="defs7386">
-    <linearGradient
-       gradientTransform="matrix(0.34682586,0,0,0.30620888,-93.351872,122.03851)"
-       osb:paint="solid"
-       id="linearGradient19282-4">
-      <stop
-         id="stop19284-0"
-         offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       gradientTransform="translate(633.23831,182.52055)"
-       gradientUnits="userSpaceOnUse"
-       y2="434.5"
-       x2="-168"
-       y1="434.5"
-       x1="-176"
-       id="linearGradient7033"
-       xlink:href="#linearGradient19282-4" />
-    <linearGradient
-       gradientTransform="translate(633.23831,182.52055)"
-       gradientUnits="userSpaceOnUse"
-       y2="432.5"
-       x2="-168"
-       y1="432.5"
-       x1="-176"
-       id="linearGradient7035"
-       xlink:href="#linearGradient19282-4" />
-    <linearGradient
-       gradientTransform="translate(633.23831,182.52055)"
-       gradientUnits="userSpaceOnUse"
-       y2="428"
-       x2="-172"
-       y1="428"
-       x1="-176"
-       id="linearGradient7037"
-       xlink:href="#linearGradient19282-4" />
-    <linearGradient
-       gradientTransform="translate(-182.52055,633.23831)"
-       gradientUnits="userSpaceOnUse"
-       y2="308"
-       x2="617.00018"
-       y1="308"
-       x1="602.00018"
-       id="linearGradient7039"
-       xlink:href="#linearGradient19282-4" />
-  </defs>
+  <title
+     id="title9167">Gnome Symbolic Icon Theme</title>
   <g
-     transform="translate(-175.42716,-15.48931)"
-     style="display:inline"
-     id="stock">
+     id="g4269">
+    <rect
+       y="0"
+       x="0"
+       height="16"
+       width="16"
+       id="rect4248"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0.1741863;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     <g
-       id="gimp-template"
-       style="display:inline"
-       transform="translate(114.42696,-623.51069)">
+       transform="translate(-560.99736,-195)"
+       id="layer13">
       <rect
-         y="639"
-         x="61.000198"
-         height="16"
-         width="16"
-         id="rect22281-6"
-         style="fill:none;stroke:none" />
-      <g
-         id="g1829"
-         style="display:inline"
-         transform="matrix(0,-1,1,0,-238.99979,1257.0002)">
-        <path
-           id="path22285-9"
-           d="m 602.0002,301.99998 0,12 12,2e-5 3,-3 0,0 0,-9.00001 z m 1,1.00001 13,10e-6 0,7 -3,0 0,3 -10,-10e-6 z"
-           style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7039);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:new"
-           inkscape:connector-curvature="0" />
-      </g>
-      <rect
-         style="opacity:0.3;fill:url(#linearGradient7037);fill-opacity:1;stroke:none"
-         id="rect7033"
-         width="4"
-         height="4"
-         x="-176"
-         y="426"
-         transform="translate(241.0002,217)" />
-      <rect
-         style="opacity:0.3;fill:url(#linearGradient7035);fill-opacity:1;stroke:none"
-         id="rect7035"
-         width="8"
+         x="564"
+         y="204"
+         width="0.99997997"
          height="1"
-         x="-176"
-         y="432"
-         transform="translate(241.0002,217)" />
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12037" />
       <rect
-         style="opacity:0.3;fill:url(#linearGradient7033);fill-opacity:1;stroke:none"
-         id="rect7037"
-         width="8"
+         x="563"
+         y="205"
+         width="0.99997997"
          height="1"
-         x="-176"
-         y="434"
-         transform="translate(241.0002,217)" />
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12039" />
+      <rect
+         x="564"
+         y="206"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12041" />
+      <rect
+         x="563"
+         y="207"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12043" />
+      <rect
+         x="564"
+         y="208"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12045" />
+      <rect
+         x="563"
+         y="209"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12047" />
+      <rect
+         x="565"
+         y="209"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12051" />
+      <rect
+         x="567"
+         y="209"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12055" />
+      <rect
+         x="569"
+         y="209"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12059" />
+      <rect
+         x="571"
+         y="209"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12063" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 563.81,196 c -0.4584,0.0875 -0.82072,0.5334 -0.8125,1 v 8 h 2 v -7 h 5 v 3 h 3 v 7.9975 h 2 v -8.435 c 0.006,-0.26406 -0.0976,-0.52897 -0.28125,-0.71875 l -3.5625,-3.5625 c -0.19,-0.18 -0.46,-0.29 -0.72,-0.28 h -6.4375 c -0.0312,-0.001 -0.0625,-0.001 -0.0937,0 -0.0312,-0.001 -0.0625,-0.001 -0.0937,0 z"
+         style="color:#000000;text-indent:0;text-transform:none;fill:#bebebe"
+         id="path1234-5" />
+      <rect
+         x="564"
+         y="210"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12326" />
+      <rect
+         x="566"
+         y="210"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12328" />
+      <rect
+         x="568"
+         y="210"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12330" />
+      <rect
+         x="570"
+         y="210"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12332" />
+      <rect
+         x="572"
+         y="210"
+         width="0.99997997"
+         height="1"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12334" />
+      <rect
+         x="573"
+         y="208.81"
+         width="0.99997997"
+         height="1.1875"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd;enable-background:new"
+         id="rect12336" />
     </g>
   </g>
 </svg>

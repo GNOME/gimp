@@ -70,7 +70,7 @@
             <dc:title>Klaus Staedtler       </dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -81,7 +81,7 @@
      transform="translate(0,-1036.3622)">
     <g
        id="g3946"
-       transform="matrix(1.03125,0,0,1.03125,-0.00757575,-32.87871)">
+       transform="matrix(-1.03125,0,0,1.03125,16.492425,-32.87871)">
       <g
          transform="matrix(0.74272062,0,0,0.74272062,31.29055,291.82008)"
          id="refresh">
