@@ -1228,7 +1228,7 @@ save_image (GFile     *file,
       if (pbm)
         {
           header_string = "P1\n";
-          format = babl_format ("Y' u8");
+          format = gegl_buffer_get_format (buffer);
           np = 0;
           rowbufsize = xres + (int) (xres / 70) + 1;
           saverow = pnmsaverow_ascii_pbm;
@@ -1272,7 +1272,7 @@ save_image (GFile     *file,
       if (pbm)
         {
           header_string = "P4\n";
-          format = babl_format ("Y' u8");
+          format = gegl_buffer_get_format (buffer);
           np = 0;
           rowbufsize = (gint) ceil ((gdouble) xres / 8.0);
           saverow = pnmsaverow_raw_pbm;
