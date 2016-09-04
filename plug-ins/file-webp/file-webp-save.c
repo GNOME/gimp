@@ -179,9 +179,10 @@ save_layer (const gchar    *filename,
   WebPPicture       picture  = {0};
   guchar           *buffer   = NULL;
   gint              w, h;
+  gboolean          has_alpha;
+  const Babl       *format;
   gint              bpp;
   GimpColorProfile *profile;
-  GimpImageType     drawable_type;
   GeglBuffer       *geglbuffer = NULL;
   GeglRectangle     extent;
   gchar            *indata;
@@ -213,12 +214,18 @@ save_layer (const gchar    *filename,
         }
 
       /* Obtain the drawable type */
-      drawable_type = gimp_drawable_type (drawable_ID);
+      has_alpha = gimp_drawable_has_alpha (drawable_ID);
+
+      if (has_alpha)
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B' u8");
+
+      bpp = babl_format_get_bytes_per_pixel (format);
 
       /* Retrieve the buffer for the layer */
       geglbuffer = gimp_drawable_get_buffer (drawable_ID);
       extent = *gegl_buffer_get_extent (geglbuffer);
-      bpp = gimp_drawable_bpp (drawable_ID);
       w = extent.width;
       h = extent.height;
 
@@ -247,11 +254,11 @@ save_layer (const gchar    *filename,
         break;
 
       /* Read the region into the buffer */
-      gegl_buffer_get (geglbuffer, &extent, 1.0, NULL, buffer,
+      gegl_buffer_get (geglbuffer, &extent, 1.0, format, buffer,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       /* Use the appropriate function to import the data from the buffer */
-      if (drawable_type == GIMP_RGB_IMAGE)
+      if (! has_alpha)
         {
           WebPPictureImportRGB (&picture, buffer, w * bpp);
         }
@@ -374,8 +381,10 @@ save_animation (const gchar    *filename,
   gboolean               status   = FALSE;
   FILE                  *outfile  = NULL;
   guchar                *buffer   = NULL;
-  gint                   w, h, bpp;
-  GimpImageType          drawable_type;
+  gint                   w, h;
+  gint                   bpp;
+  gboolean               has_alpha;
+  const Babl            *format;
   GimpColorProfile      *profile;
   WebPAnimEncoderOptions enc_options;
   WebPData               webp_data;
@@ -423,7 +432,14 @@ save_animation (const gchar    *filename,
           WebPMemoryWriter  mw = { 0 };
 
           /* Obtain the drawable type */
-          drawable_type = gimp_drawable_type (allLayers[loop]);
+          has_alpha = gimp_drawable_has_alpha (allLayers[loop]);
+
+          if (has_alpha)
+            format = babl_format ("R'G'B'A u8");
+          else
+            format = babl_format ("R'G'B' u8");
+
+          bpp = babl_format_get_bytes_per_pixel (format);
 
           /* fix layers to avoid offset errors */
           gimp_layer_resize_to_image_size (allLayers[loop]);
@@ -431,7 +447,6 @@ save_animation (const gchar    *filename,
           /* Retrieve the buffer for the layer */
           geglbuffer = gimp_drawable_get_buffer (allLayers[loop]);
           extent = *gegl_buffer_get_extent (geglbuffer);
-          bpp = gimp_drawable_bpp (allLayers[loop]);
           w = extent.width;
           h = extent.height;
 
@@ -477,11 +492,11 @@ save_animation (const gchar    *filename,
           picture.progress_hook = webp_file_progress;
 
           /* Read the region into the buffer */
-          gegl_buffer_get (geglbuffer, &extent, 1.0, NULL, buffer,
+          gegl_buffer_get (geglbuffer, &extent, 1.0, format, buffer,
                            GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
           /* Use the appropriate function to import the data from the buffer */
-          if (drawable_type == GIMP_RGB_IMAGE)
+          if (! has_alpha)
             {
               WebPPictureImportRGB (&picture, buffer, w * bpp);
             }

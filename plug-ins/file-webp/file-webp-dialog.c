@@ -98,7 +98,7 @@ save_dialog (WebPSaveParams *params,
   GtkWidget    *table;
   GtkWidget    *expander;
   GtkWidget    *frame;
-  GtkWidget    *table2;
+  GtkWidget    *vbox2;
   GtkWidget    *save_exif;
   GtkWidget    *save_xmp;
   GtkWidget    *preset_label;
@@ -117,8 +117,7 @@ save_dialog (WebPSaveParams *params,
   animation_supported = n_layers > 1;
 
   /* Create the dialog */
-  dialog = gimp_export_dialog_new (_("WebP"),BINARY_NAME,
-                                   SAVE_PROCEDURE);
+  dialog = gimp_export_dialog_new (_("WebP"), PLUG_IN_BINARY, SAVE_PROC);
 
   /* Create the vbox */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -272,18 +271,14 @@ save_dialog (WebPSaveParams *params,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table2 = gtk_table_new (2, 1, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table2), 6);
-  gtk_table_set_col_spacing (GTK_TABLE (table2), 1, 12);
-  gtk_container_add (GTK_CONTAINER (frame), table2);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
   /* Save EXIF data */
   save_exif = gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (save_exif), params->exif);
-  gtk_widget_set_sensitive (save_exif, TRUE);
-  gtk_table_attach (GTK_TABLE (table2), save_exif, 0, 1,
-                    0, 1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), save_exif, FALSE, FALSE, 0);
   gtk_widget_show (save_exif);
 
   g_signal_connect (save_exif, "toggled",
@@ -293,17 +288,12 @@ save_dialog (WebPSaveParams *params,
   /* XMP metadata */
   save_xmp = gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (save_xmp), params->xmp);
-  gtk_table_attach (GTK_TABLE (table2), save_xmp, 0, 1,
-                    1, 2, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), save_xmp, FALSE, FALSE, 0);
   gtk_widget_show (save_xmp);
 
   g_signal_connect (save_xmp, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &params->xmp);
-
-  gtk_widget_set_sensitive (save_xmp, TRUE);
-
-  gtk_widget_show (table2);
 
   gtk_widget_show (dialog);
 

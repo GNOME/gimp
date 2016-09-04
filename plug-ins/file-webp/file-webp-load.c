@@ -25,14 +25,14 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#include <webp/decode.h>
+#include <webp/demux.h>
+#include <webp/mux.h>
+
 #include <gegl.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
-#include <webp/decode.h>
-#include <webp/demux.h>
-#include <webp/mux.h>
 
 #include "file-webp-load.h"
 
@@ -106,12 +106,12 @@ load_image (const gchar *filename,
       return -1;
     }
 
-  g_printerr ("Loading WebP file %s\n", filename);
-
   /* Validate WebP data */
   if (! WebPGetInfo (indata, indatalen, &width, &height))
     {
-      g_printerr ("Invalid WebP file\n");
+      g_set_error (error, G_FILE_ERROR, 0,
+                   "Invalid WebP file '%s'",
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
