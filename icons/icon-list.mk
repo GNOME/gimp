@@ -1,22 +1,58 @@
 scalable_images = \
+	scalable/dialog-information.svg				\
+	scalable/document-new.svg					\
 	scalable/document-open.svg					\
 	scalable/document-open-recent.svg			\
 	scalable/document-revert.svg				\
 	scalable/document-save.svg					\
 	scalable/document-save-as.svg				\
-	scalable/edit-clear.svg			\
+	scalable/edit-clear.svg						\
+	scalable/edit-cut.svg						\
+	scalable/edit-paste.svg						\
+	scalable/edit-redo.svg						\
+	scalable/edit-undo.svg						\
 	scalable/format-indent-more.svg				\
+	scalable/go-bottom.svg						\
+	scalable/go-down.svg						\
+	scalable/go-first.svg						\
+	scalable/go-home.svg						\
+	scalable/go-last.svg						\
 	scalable/go-next.svg						\
 	scalable/go-previous.svg					\
+	scalable/go-top.svg							\
+	scalable/go-up.svg							\
+	scalable/help-about.svg						\
+	scalable/list-add.svg						\
+	scalable/list-remove.svg					\
+	scalable/media-floppy.svg					\
+	scalable/media-optical.svg					\
+	scalable/media-playback-pause.svg			\
+	scalable/media-playback-start.svg			\
+	scalable/media-seek-backward.svg			\
+	scalable/media-skip-backward.svg			\
+	scalable/media-skip-forward.svg				\
+	scalable/preferences-system.svg				\
+	scalable/process-stop.svg					\
+	scalable/system-run.svg						\
+	scalable/view-fullscreen.svg				\
+	scalable/view-refresh.svg					\
 	scalable/window-close.svg					\
+	scalable/window-new.svg						\
+	scalable/zoom-fit-best.svg					\
+	scalable/zoom-in.svg						\
+	scalable/zoom-original.svg					\
+	scalable/zoom-out.svg						\
 												\
 	scalable/gtk-cancel.svg						\
 	scalable/gtk-justify-fill.svg				\
 	scalable/gtk-justify-center.svg				\
 	scalable/gtk-justify-left.svg				\
 	scalable/gtk-justify-right.svg				\
+	scalable/gtk-no.svg							\
+	scalable/gtk-ok.svg							\
 	scalable/gtk-select-color.svg				\
 	scalable/gtk-select-font.svg				\
+	scalable/gtk-yes.svg						\
 												\
 	scalable/gimp-anchor.svg			\
 	scalable/gimp-buffer.svg			\
@@ -280,6 +316,10 @@ scalable_images = \
 	scalable/gimp-zoom-follow-window.svg
 
 vector24_images = \
+	24/dialog-information.svg					\
+	24/media-floppy.svg 						\
+	24/media-optical.svg						\
+												\
 	24/gtk-select-color.svg						\
 												\
 	24/gimp-center.svg				\
@@ -446,19 +486,55 @@ icons12_images = \
 	12/gimp-zoom-follow-window.png
 
 icons16_images = \
+	16/dialog-information.png					\
+	16/document-new.png							\
 	16/document-open.png						\
 	16/document-open-recent.png					\
 	16/document-revert.png						\
 	16/document-save.png						\
 	16/document-save-as.png						\
 	16/edit-clear.png							\
+	16/edit-cut.png								\
+	16/edit-paste.png							\
+	16/edit-redo.png							\
+	16/edit-undo.png							\
+	16/go-bottom.png							\
+	16/go-down.png								\
+	16/go-first.png								\
+	16/go-home.png								\
+	16/go-last.png								\
 	16/go-next.png								\
 	16/go-previous.png							\
+	16/go-top.png								\
+	16/go-up.png								\
+	16/help-about.png							\
+	16/list-add.png								\
+	16/list-remove.png							\
+	16/media-floppy.png							\
+	16/media-optical.png						\
+	16/media-playback-pause.png					\
+	16/media-playback-start.png					\
+	16/media-seek-backward.png					\
+	16/media-skip-backward.png					\
+	16/media-skip-forward.png					\
+	16/preferences-system.png					\
+	16/process-stop.png							\
+	16/system-run.png							\
+	16/view-fullscreen.png						\
+	16/view-refresh.png							\
 	16/window-close.png							\
+	16/window-new.png							\
+	16/zoom-fit-best.png						\
+	16/zoom-in.png								\
+	16/zoom-original.png						\
+	16/zoom-out.png								\
 												\
 	16/gtk-cancel.png							\
+	16/gtk-no.png								\
+	16/gtk-ok.png								\
 	16/gtk-select-color.png						\
 	16/gtk-select-font.png						\
+	16/gtk-yes.png								\
 												\
 	16/gimp-anchor.png							\
 	16/gimp-buffer.png							\
@@ -739,6 +815,10 @@ icons22_images = \
 	22/gimp-wilber.png
 
 icons24_images = \
+	24/dialog-information.png					\
+	24/media-floppy.png							\
+	24/media-optical.png 						\
+												\
 	24/gtk-select-color.png					\
 											\
 	24/gimp-center.png			\
@@ -934,6 +1014,7 @@ icons48_images = \
 	48/gimp-wilber.png
 
 icons64_images = \
+	64/dialog-information.png            \
 	64/gimp-error.png		\
 	64/gimp-frame.png		\
 	64/gimp-info.png		\
