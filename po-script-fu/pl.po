@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-19 13:40+0200\n"
-"PO-Revision-Date: 2016-08-19 13:42+0200\n"
+"POT-Creation-Date: 2016-09-04 16:32+0200\n"
+"PO-Revision-Date: 2016-09-04 16:33+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -901,7 +901,7 @@ msgstr "Tworzy cztery prowadnice dookoła granic bieżącego zaznaczenia"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "Nowa prowadnica (w p_rocentach)…"
+msgstr "Nowa prowadnica (w p_rocentach)…"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -924,7 +924,7 @@ msgstr "Pionowe"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
 msgid "Position (in %)"
-msgstr "Położenie (w %)"
+msgstr "Położenie (w %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
@@ -932,7 +932,7 @@ msgstr "Nowa p_rowadnica…"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "Dodaje prowadnice w ustalonym położeniu (w pikselach)"
+msgstr "Dodaje prowadnice w ustalonym położeniu (w pikselach)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "Position"

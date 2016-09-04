@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-19 13:40+0200\n"
-"PO-Revision-Date: 2016-08-19 13:42+0200\n"
+"POT-Creation-Date: 2016-09-04 16:32+0200\n"
+"PO-Revision-Date: 2016-09-04 16:33+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -763,12 +763,12 @@ msgstr "Rozlany (dół)"
 #: ../libgimpbase/gimpbaseenums.c:683
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
-msgstr "Spiralny (w prawo)"
+msgstr "Spiralny (w prawo)"
 
 #: ../libgimpbase/gimpbaseenums.c:684
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
-msgstr "Spiralny (w lewo)"
+msgstr "Spiralny (w lewo)"
 
 #: ../libgimpbase/gimpbaseenums.c:716
 msgctxt "grid-style"
@@ -1546,11 +1546,11 @@ msgstr "podczas przetwarzaniu tokenu „%s”: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:658
 #: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
 #: ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:703
+#: ../libgimpwidgets/gimpcolorprofilestore.c:719
 msgid "fatal parse error"
 msgstr "krytyczny błąd podczas przetwarzania"
 
-#: ../libgimpconfig/gimpconfig-path.c:439
+#: ../libgimpconfig/gimpconfig-path.c:487
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nie można rozwinąć ${%s}"
@@ -1777,76 +1777,44 @@ msgstr "_Przywróć"
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../libgimpwidgets/gimpicons.c:70
-msgid "Ne_xt"
-msgstr "_Dalej"
-
-#: ../libgimpwidgets/gimpicons.c:71
-msgid "Pre_vious"
-msgstr "_Wstecz"
-
-#: ../libgimpwidgets/gimpicons.c:72
-msgid "_Open"
-msgstr "_Otwórz"
-
-#: ../libgimpwidgets/gimpicons.c:73
-msgid "_Save"
-msgstr "_Zapisz"
-
-#: ../libgimpwidgets/gimpicons.c:74
-msgid "Save as"
-msgstr "Zapisz jako"
-
-#: ../libgimpwidgets/gimpicons.c:75
-msgid "_Cancel"
-msgstr "_Anuluj"
-
-#: ../libgimpwidgets/gimpicons.c:76
-msgid "_Quit"
-msgstr "Za_kończ"
-
-#: ../libgimpwidgets/gimpicons.c:127 ../libgimpwidgets/gimpicons.c:131
+#: ../libgimpwidgets/gimpicons.c:115 ../libgimpwidgets/gimpicons.c:119
 msgid "_Stroke"
 msgstr "Ry_suj"
 
-#: ../libgimpwidgets/gimpicons.c:150
+#: ../libgimpwidgets/gimpicons.c:137
 msgid "L_etter Spacing"
 msgstr "Odstępy międzyz_nakowe"
 
-#: ../libgimpwidgets/gimpicons.c:151
+#: ../libgimpwidgets/gimpicons.c:138
 msgid "L_ine Spacing"
 msgstr "Odstępy między_wierszowe"
 
-#: ../libgimpwidgets/gimpicons.c:152
-msgid "I_ndent"
-msgstr "W_cięcie"
-
-#: ../libgimpwidgets/gimpicons.c:176
+#: ../libgimpwidgets/gimpicons.c:157
 msgid "Re_size"
 msgstr "Zmień _rozmiar"
 
-#: ../libgimpwidgets/gimpicons.c:177 ../libgimpwidgets/gimpicons.c:312
+#: ../libgimpwidgets/gimpicons.c:158 ../libgimpwidgets/gimpicons.c:293
 msgid "_Scale"
 msgstr "Prze_skaluj"
 
-#: ../libgimpwidgets/gimpicons.c:284
+#: ../libgimpwidgets/gimpicons.c:265
 msgid "Cr_op"
 msgstr "K_adruj"
 
-#: ../libgimpwidgets/gimpicons.c:292
+#: ../libgimpwidgets/gimpicons.c:273
 msgid "_Select"
 msgstr "_Zaznacz"
 
-#: ../libgimpwidgets/gimpicons.c:295 ../libgimpwidgets/gimpicons.c:307
-#: ../libgimpwidgets/gimpicons.c:318
+#: ../libgimpwidgets/gimpicons.c:276 ../libgimpwidgets/gimpicons.c:288
+#: ../libgimpwidgets/gimpicons.c:299
 msgid "_Transform"
 msgstr "_Przekształć"
 
-#: ../libgimpwidgets/gimpicons.c:311
+#: ../libgimpwidgets/gimpicons.c:292
 msgid "_Rotate"
 msgstr "O_bróć"
 
-#: ../libgimpwidgets/gimpicons.c:314
+#: ../libgimpwidgets/gimpicons.c:295
 msgid "_Shear"
 msgstr "_Zetnij"
 
