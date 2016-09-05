@@ -44,6 +44,7 @@ scalable_images = \
 	scalable/zoom-out.svg						\
 												\
 	scalable/gtk-cancel.svg						\
+	scalable/gtk-edit.svg						\
 	scalable/gtk-justify-fill.svg				\
 	scalable/gtk-justify-center.svg				\
 	scalable/gtk-justify-left.svg				\
@@ -101,7 +102,6 @@ scalable_images = \
 	scalable/gimp-display-filter.svg		\
 	scalable/gimp-duplicate.svg			\
 	scalable/gimp-dynamics.svg			\
-	scalable/gimp-edit.svg				\
 	scalable/gimp-error.svg				\
 	scalable/gimp-file-manager.svg			\
 	scalable/gimp-flip-horizontal.svg		\
@@ -530,6 +530,7 @@ icons16_images = \
 	16/zoom-out.png								\
 												\
 	16/gtk-cancel.png							\
+	16/gtk-edit.png								\
 	16/gtk-no.png								\
 	16/gtk-ok.png								\
 	16/gtk-select-color.png						\
@@ -578,7 +579,6 @@ icons16_images = \
 	16/gimp-display-filter.png					\
 	16/gimp-duplicate.png						\
 	16/gimp-dynamics.png						\
-	16/gimp-edit.png							\
 	16/gimp-error.png							\
 	16/gimp-file-manager.png					\
 	16/gimp-flip-horizontal.png					\

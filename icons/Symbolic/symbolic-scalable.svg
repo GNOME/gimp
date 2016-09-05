@@ -26228,8 +26228,8 @@
     <g
        transform="translate(-96.0906,-437.50285)"
        style="display:inline"
-       id="gimp-edit"
-       inkscape:label="gimp-edit">
+       id="gtk-edit"
+       inkscape:label="gtk-edit">
       <rect
          transform="translate(241.0002,217)"
          y="182"

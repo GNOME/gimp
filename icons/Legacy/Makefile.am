@@ -38,6 +38,8 @@ icons12_DATA = \
 	12/gimp-zoom-follow-window.png
 
 icons16_DATA = \
+	16/gtk-edit.png						\
+										\
 	16/gimp-anchor.png				\
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\
@@ -74,7 +76,6 @@ icons16_DATA = \
 	16/gimp-display-filter.png			\
 	16/gimp-duplicate.png				\
 	16/gimp-dynamics.png				\
-	16/gimp-edit.png				\
 	16/gimp-flip-horizontal.png			\
 	16/gimp-flip-vertical.png			\
 	16/gimp-floating-selection.png			\
