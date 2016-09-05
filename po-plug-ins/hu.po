@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-09 19:26+0000\n"
-"PO-Revision-Date: 2016-08-10 18:15+0200\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-09-04 17:00+0000\n"
+"PO-Revision-Date: 2016-09-05 08:52+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -336,7 +336,7 @@ msgstr "Függő_leges"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:611
-#: ../plug-ins/common/file-gegl.c:429 ../plug-ins/common/file-gif-load.c:980
+#: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:671
@@ -349,7 +349,7 @@ msgstr "Függő_leges"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
-#: ../plug-ins/file-webp/file-webp-load.c:177
+#: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/screenshot/screenshot-win32.c:230 ../plug-ins/twain/twain.c:567
@@ -2017,7 +2017,7 @@ msgstr "Fájl vége vagy hiba a képfejléc olvasása közben"
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:313
+#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:668
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
@@ -2281,12 +2281,7 @@ msgstr "Távolság:"
 msgid "OpenEXR image"
 msgstr "OpenEXR kép"
 
-#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-webp/file-webp.c:99
-#: ../plug-ins/file-webp/file-webp.c:120
-msgid "WebP image"
-msgstr "WebP-kép"
-
-#: ../plug-ins/common/file-gegl.c:337
+#: ../plug-ins/common/file-gegl.c:322
 #, c-format
 msgid "Could not open '%s'"
 msgstr "„%s” nem nyitható meg"
@@ -2316,7 +2311,7 @@ msgid "Opening '%s' (frame %d)"
 msgstr "„%s” megnyitása (%d. képkocka)"
 
 #: ../plug-ins/common/file-gif-load.c:1034
-#: ../plug-ins/file-webp/file-webp-load.c:210
+#: ../plug-ins/file-webp/file-webp-load.c:205
 #, c-format
 msgid "Frame %d"
 msgstr "%d. képkocka"
@@ -4015,8 +4010,8 @@ msgstr "A megjegyzés hossza maximum %d karakter."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1462
-#: ../plug-ins/file-webp/file-webp-save.c:202
-#: ../plug-ins/file-webp/file-webp-save.c:395
+#: ../plug-ins/file-webp/file-webp-save.c:203
+#: ../plug-ins/file-webp/file-webp-save.c:406
 #, c-format
 msgid "Saving '%s'"
 msgstr "„%s” mentése"
@@ -6306,6 +6301,7 @@ msgstr ""
 
 #. Advanced Options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
 msgid "_Advanced Options"
 msgstr "S_peciális beállítások"
 
@@ -6658,7 +6654,9 @@ msgstr ""
 msgid "_Progressive"
 msgstr "_Progresszív"
 
+#. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
+#: ../plug-ins/file-webp/file-webp-dialog.c:279
 msgid "Save _Exif data"
 msgstr "E_xif-adatok mentése"
 
@@ -6666,7 +6664,9 @@ msgstr "E_xif-adatok mentése"
 msgid "Save _thumbnail"
 msgstr "Bél_yegkép mentése"
 
+#. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
+#: ../plug-ins/file-webp/file-webp-dialog.c:289
 msgid "Save _XMP data"
 msgstr "XMP-_adatok mentése"
 
@@ -7027,51 +7027,75 @@ msgstr "CCITT Group _3 fax"
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 fax"
 
+#: ../plug-ins/file-webp/file-webp.c:97 ../plug-ins/file-webp/file-webp.c:118
+msgid "WebP image"
+msgstr "WebP-kép"
+
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:134
+#: ../plug-ins/file-webp/file-webp-dialog.c:120
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the descriptive label at the top
-#: ../plug-ins/file-webp/file-webp-dialog.c:155
+#: ../plug-ins/file-webp/file-webp-dialog.c:130
 msgid "Use the options below to customize the image."
 msgstr "Használja a lenti beállításokat a kép testreszabásához."
 
 #. Create the label for the selecting a preset
-#: ../plug-ins/file-webp/file-webp-dialog.c:167
+#: ../plug-ins/file-webp/file-webp-dialog.c:142
 msgid "Preset:"
 msgstr "Előbeállítás:"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:190
+#: ../plug-ins/file-webp/file-webp-dialog.c:166
 msgid "Lossless"
 msgstr "Veszteségmentes"
 
 #. Create the animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:210
+#: ../plug-ins/file-webp/file-webp-dialog.c:186
 msgid "Use animation"
 msgstr "Animáció használata"
 
 #. Create the loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:223
+#: ../plug-ins/file-webp/file-webp-dialog.c:199
 msgid "Loop infinitely"
 msgstr "Végtelen ciklus"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:239
+#: ../plug-ins/file-webp/file-webp-dialog.c:215
 msgid "Image quality:"
 msgstr "Képminőség:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:247
+#: ../plug-ins/file-webp/file-webp-dialog.c:223
 msgid "Image quality"
 msgstr "Képminőség"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:258
+#: ../plug-ins/file-webp/file-webp-dialog.c:234
 msgid "Alpha quality:"
 msgstr "Alfa minőség:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:266
+#: ../plug-ins/file-webp/file-webp-dialog.c:242
 msgid "Alpha channel quality"
 msgstr "Alfa-csatorna minősége"
+
+#: ../plug-ins/file-webp/file-webp-load.c:106
+#, c-format
+msgid "Invalid WebP file '%s'"
+msgstr "Érvénytelen WebP fájl: „%s”"
+
+#: ../plug-ins/file-webp/file-webp-load.c:177
+#, c-format
+msgid "Failed to decode animated WebP file '%s'"
+msgstr "Nem sikerült dekódolni az animált WebP fájlt: „%s”"
+
+#: ../plug-ins/file-webp/file-webp-load.c:185
+#, c-format
+msgid "Failed to decode animated WebP information from '%s'"
+msgstr "Nem sikerült dekódolni az animált WebP információkat innen: „%s”"
+
+#: ../plug-ins/file-webp/file-webp-load.c:200
+#, c-format
+msgid "Failed to decode animated WebP frame from '%s'"
+msgstr "Nem sikerült dekódolni az animált WebP képkockát innen: „%s”"
 
 #: ../plug-ins/file-webp/file-webp-save.c:142
 msgid "out of memory"
@@ -7121,13 +7145,13 @@ msgstr "lista lezáró"
 msgid "unknown error"
 msgstr "ismeretlen hiba"
 
-#: ../plug-ins/file-webp/file-webp-save.c:210
-#: ../plug-ins/file-webp/file-webp-save.c:403
+#: ../plug-ins/file-webp/file-webp-save.c:211
+#: ../plug-ins/file-webp/file-webp-save.c:414
 #, c-format
 msgid "Unable to open '%s' for writing"
 msgstr "A(z) „%s” nem nyitható meg írásra"
 
-#: ../plug-ins/file-webp/file-webp-save.c:270
+#: ../plug-ins/file-webp/file-webp-save.c:277
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "WebP hiba: „%s”"
@@ -13601,9 +13625,6 @@ msgstr "Adatok átvitele a lapolvasóról/kameráról"
 
 #~ msgid "Uploading %s of image data"
 #~ msgstr "%s képadat feltöltése"
-
-#~ msgid "Failed to read %s from '%s': %s"
-#~ msgstr "Nem sikerült olvasni %s mennyiséget innen: „%s”: %s"
 
 #~ msgid "Failed to write %s to '%s': %s"
 #~ msgstr "Nem sikerült írni %s mennyiséget ide: „%s”: %s"
