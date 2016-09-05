@@ -21,7 +21,7 @@ open MK, "> $outmk";
 open IGNORE, "> $outignore";
 open RC, "> $outrc";
 
-require 'plugin-defs.pl';
+require './plugin-defs.pl';
 
 $bins = ""; $opts = "";
 
