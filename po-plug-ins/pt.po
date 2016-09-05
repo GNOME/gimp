@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-09 19:26+0000\n"
-"PO-Revision-Date: 2016-08-10 21:23+0100\n"
-"Last-Translator: Tiago Santos <iagofsantos81@sapo.pt>\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-09-04 17:00+0000\n"
+"PO-Revision-Date: 2016-09-05 21:22+0100\n"
+"Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Language-Team: Português\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
@@ -336,7 +336,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:611
-#: ../plug-ins/common/file-gegl.c:429 ../plug-ins/common/file-gif-load.c:980
+#: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:671
@@ -349,7 +349,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
-#: ../plug-ins/file-webp/file-webp-load.c:177
+#: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/screenshot/screenshot-win32.c:230 ../plug-ins/twain/twain.c:567
@@ -2012,7 +2012,7 @@ msgstr "EOF ou erro ao ler cabeçalho da imagem"
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:313
+#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:668
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
@@ -2273,12 +2273,7 @@ msgstr "Espaçamento:"
 msgid "OpenEXR image"
 msgstr "Imagem OpenEXR"
 
-#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-webp/file-webp.c:99
-#: ../plug-ins/file-webp/file-webp.c:120
-msgid "WebP image"
-msgstr "Imagem WebP"
-
-#: ../plug-ins/common/file-gegl.c:337
+#: ../plug-ins/common/file-gegl.c:322
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Impossível abrir \"%s\""
@@ -2308,7 +2303,7 @@ msgid "Opening '%s' (frame %d)"
 msgstr "A abrir \"%s\" (moldura %d)"
 
 #: ../plug-ins/common/file-gif-load.c:1034
-#: ../plug-ins/file-webp/file-webp-load.c:210
+#: ../plug-ins/file-webp/file-webp-load.c:205
 #, c-format
 msgid "Frame %d"
 msgstr "Moldura %d"
@@ -4016,8 +4011,8 @@ msgstr "O comentário está limitado a %d caracteres."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1462
-#: ../plug-ins/file-webp/file-webp-save.c:202
-#: ../plug-ins/file-webp/file-webp-save.c:395
+#: ../plug-ins/file-webp/file-webp-save.c:203
+#: ../plug-ins/file-webp/file-webp-save.c:406
 #, c-format
 msgid "Saving '%s'"
 msgstr "A gravar \"%s\""
@@ -6308,6 +6303,7 @@ msgstr ""
 
 #. Advanced Options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
 msgid "_Advanced Options"
 msgstr "_Opções avançadas"
 
@@ -6658,7 +6654,9 @@ msgstr ""
 msgid "_Progressive"
 msgstr "_Progressivo"
 
+#. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
+#: ../plug-ins/file-webp/file-webp-dialog.c:279
 msgid "Save _Exif data"
 msgstr "Gravar dados _EXIF"
 
@@ -6666,7 +6664,9 @@ msgstr "Gravar dados _EXIF"
 msgid "Save _thumbnail"
 msgstr "Gravar minia_tura"
 
+#. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
+#: ../plug-ins/file-webp/file-webp-dialog.c:289
 msgid "Save _XMP data"
 msgstr "Gravar dados _XMP"
 
@@ -7025,51 +7025,75 @@ msgstr "Fax CCIT Group _3"
 msgid "CCITT Group _4 fax"
 msgstr "Fax CCITT Group _4"
 
+#: ../plug-ins/file-webp/file-webp.c:97 ../plug-ins/file-webp/file-webp.c:118
+msgid "WebP image"
+msgstr "Imagem WebP"
+
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:134
+#: ../plug-ins/file-webp/file-webp-dialog.c:120
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the descriptive label at the top
-#: ../plug-ins/file-webp/file-webp-dialog.c:155
+#: ../plug-ins/file-webp/file-webp-dialog.c:130
 msgid "Use the options below to customize the image."
 msgstr "Utilizar a opção abaixo para personalizar a imagem"
 
 #. Create the label for the selecting a preset
-#: ../plug-ins/file-webp/file-webp-dialog.c:167
+#: ../plug-ins/file-webp/file-webp-dialog.c:142
 msgid "Preset:"
 msgstr "Predefinição"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:190
+#: ../plug-ins/file-webp/file-webp-dialog.c:166
 msgid "Lossless"
 msgstr "Sem perda"
 
 #. Create the animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:210
+#: ../plug-ins/file-webp/file-webp-dialog.c:186
 msgid "Use animation"
 msgstr "Utilizar animação"
 
 #. Create the loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:223
+#: ../plug-ins/file-webp/file-webp-dialog.c:199
 msgid "Loop infinitely"
 msgstr "Repetir indefinidamente"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:239
+#: ../plug-ins/file-webp/file-webp-dialog.c:215
 msgid "Image quality:"
 msgstr "Qualidade da imagem:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:247
+#: ../plug-ins/file-webp/file-webp-dialog.c:223
 msgid "Image quality"
 msgstr "Qualidade da imagem\t"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:258
+#: ../plug-ins/file-webp/file-webp-dialog.c:234
 msgid "Alpha quality:"
 msgstr "Qualidade da transparência:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:266
+#: ../plug-ins/file-webp/file-webp-dialog.c:242
 msgid "Alpha channel quality"
 msgstr "Qualidade do canal de transparência"
+
+#: ../plug-ins/file-webp/file-webp-load.c:106
+#, c-format
+msgid "Invalid WebP file '%s'"
+msgstr "Ficheiro WebP '%s' inválido."
+
+#: ../plug-ins/file-webp/file-webp-load.c:177
+#, c-format
+msgid "Failed to decode animated WebP file '%s'"
+msgstr "Falha ao descodificar o ficheiro WebP animado '%s'"
+
+#: ../plug-ins/file-webp/file-webp-load.c:185
+#, c-format
+msgid "Failed to decode animated WebP information from '%s'"
+msgstr "Falha ao descodificar a informação do WebP animado de '%s'"
+
+#: ../plug-ins/file-webp/file-webp-load.c:200
+#, c-format
+msgid "Failed to decode animated WebP frame from '%s'"
+msgstr "Falha ao descodificar o quadro WebP animado de '%s'"
 
 #: ../plug-ins/file-webp/file-webp-save.c:142
 msgid "out of memory"
@@ -7119,13 +7143,13 @@ msgstr "terminador de lista"
 msgid "unknown error"
 msgstr "erro desconhecido"
 
-#: ../plug-ins/file-webp/file-webp-save.c:210
-#: ../plug-ins/file-webp/file-webp-save.c:403
+#: ../plug-ins/file-webp/file-webp-save.c:211
+#: ../plug-ins/file-webp/file-webp-save.c:414
 #, c-format
 msgid "Unable to open '%s' for writing"
 msgstr "Impossível abrir \"%s\" para escrita"
 
-#: ../plug-ins/file-webp/file-webp-save.c:270
+#: ../plug-ins/file-webp/file-webp-save.c:277
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Erro WebP: '%s'"
