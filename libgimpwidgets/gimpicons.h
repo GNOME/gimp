@@ -308,6 +308,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CONTROLLER_MOUSE         GIMP_STOCK_CURSOR
 #define GIMP_STOCK_CONVERT_PRECISION        GIMP_STOCK_CONVERT_RGB
 
+/* Deprecated icons: */
+
+#define GIMP_STOCK_EDIT                     "gtk-edit"
 
 GIMP_DEPRECATED_FOR(gimp_icons_init)
 void   gimp_stock_init           (void);
