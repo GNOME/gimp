@@ -57,6 +57,7 @@ enum
 #define COLOR_AREA_SIZE      20
 
 static void   gimp_color_history_constructed   (GObject           *object);
+static void   gimp_color_history_finalize      (GObject           *object);
 static void   gimp_color_history_set_property  (GObject           *object,
                                                 guint              property_id,
                                                 const GValue      *value,
@@ -90,6 +91,7 @@ gimp_color_history_class_init (GimpColorHistoryClass *klass)
   object_class->constructed  = gimp_color_history_constructed;
   object_class->set_property = gimp_color_history_set_property;
   object_class->get_property = gimp_color_history_get_property;
+  object_class->finalize     = gimp_color_history_finalize;
 
   history_signals[COLOR_SELECTED] =
     g_signal_new ("color-selected",
@@ -138,6 +140,17 @@ gimp_color_history_constructed (GObject *object)
                            G_OBJECT (history), 0);
 
   gimp_color_history_palette_dirty (palette, history);
+}
+
+static void
+gimp_color_history_finalize (GObject *object)
+{
+  GimpColorHistory *history = GIMP_COLOR_HISTORY (object);
+
+  g_free (history->color_areas);
+  history->color_areas = NULL;
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
