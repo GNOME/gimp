@@ -13,6 +13,11 @@ else
 libm = -lm
 endif
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
+endif
+
 if HAVE_WINDRES
 include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
 include gimprc.common
@@ -2599,6 +2604,7 @@ warp_LDADD = \
 	$(INTLLIBS)		\
 	$(warp_RC)
 
+<<<<<<< HEAD
 waves_SOURCES = \
 	waves.c
 
@@ -2615,6 +2621,11 @@ waves_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(waves_RC)
+=======
+web_browser_LDFLAGS = $(framework_cocoa)
+
+web_browser_CFLAGS = $(xobjective_c)
+>>>>>>> 308efbb... Bug 767830 - Help browser does not launch on OS X
 
 web_browser_SOURCES = \
 	web-browser.c

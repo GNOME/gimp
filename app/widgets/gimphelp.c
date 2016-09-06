@@ -141,6 +141,17 @@ gimp_help_show (Gimp         *gimp,
 }
 
 gboolean
+gimp_help_browser_is_installed (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  if (gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-browser"))
+    return TRUE;
+
+  return FALSE;
+}
+
+gboolean
 gimp_help_user_manual_is_installed (Gimp *gimp)
 {
   gchar    *basedir;
@@ -340,7 +351,8 @@ gimp_help_browser (Gimp         *gimp,
                                _("Help browser doesn't start"),
                                _("Could not start the GIMP help browser "
                                  "plug-in."),
-                               NULL);
+                               _("You may instead use the web browser "
+                                 "for reading the help pages."));
       busy = FALSE;
 
       return FALSE;
