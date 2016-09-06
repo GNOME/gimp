@@ -99,7 +99,7 @@ gimp_color_history_class_init (GimpColorHistoryClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorHistoryClass, color_selected),
                   NULL, NULL,
-                  gimp_marshal_VOID__OBJECT_POINTER,
+                  gimp_marshal_VOID__POINTER,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
