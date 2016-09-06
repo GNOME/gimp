@@ -64,6 +64,11 @@ else
 libm = -lm
 endif
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
+endif
+
 if HAVE_WINDRES
 include \$(top_srcdir)/build/windows/gimprc-plug-ins.rule
 include $rcfile
@@ -159,6 +164,15 @@ foreach (sort keys %plugins) {
 
     if (exists $plugins{$_}->{libs}) {
 		$optlib = "\n\t\$(" . $plugins{$_}->{libs} . ")\t\t\\";
+    }
+
+    if (exists $plugins{$_}->{ldflags}) {
+	my $ldflags = $plugins{$_}->{ldflags};
+
+	print MK <<EOT;
+
+${makename}_LDFLAGS = $ldflags
+EOT
     }
 
     if (exists $plugins{$_}->{cflags}) {

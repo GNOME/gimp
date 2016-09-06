@@ -24,14 +24,19 @@
 
 #include <gtk/gtk.h>
 
+#ifdef PLATFORM_OSX
+#import <Cocoa/Cocoa.h>
+#endif
+
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifdef G_OS_WIN32
-#include <windows.h>
-#endif
 
 #define PLUG_IN_PROC   "plug-in-web-browser"
 #define PLUG_IN_BINARY "web-browser"
@@ -122,6 +127,7 @@ browser_open_url (const gchar  *url,
                   GError      **error)
 {
 #ifdef G_OS_WIN32
+
   HINSTANCE hinst = ShellExecute (GetDesktopWindow(),
                                   "open", url, NULL, NULL, SW_SHOW);
 
@@ -180,12 +186,28 @@ browser_open_url (const gchar  *url,
     }
 
   return TRUE;
+
+#elif defined(PLATFORM_OSX)
+
+  NSURL    *ns_url;
+  gboolean  retval;
+
+  @autoreleasepool
+    {
+      ns_url = [NSURL URLWithString: [NSString stringWithUTF8String: url]];
+      retval = [[NSWorkspace sharedWorkspace] openURL: ns_url];
+    }
+
+  return retval;
+
 #else
+
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   return gtk_show_uri (gdk_screen_get_default (),
                        url,
                        gtk_get_current_event_time(),
                        error);
+
 #endif
 }
