@@ -47,7 +47,8 @@ ico_dialog_new (IcoSaveInfo *info)
   GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *scrolledwindow;
+  GtkWidget *scrolled_window;
+  GtkWidget *viewport;
   GtkWidget *warning;
 
   dialog = gimp_export_dialog_new (_("Windows Icon"),
@@ -74,17 +75,20 @@ ico_dialog_new (IcoSaveInfo *info)
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (frame), scrolledwindow);
-  gtk_widget_show (scrolledwindow);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
+  gtk_widget_show (viewport);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   g_object_set_data (G_OBJECT (dialog), "icons_vbox", vbox);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolledwindow),
-                                         vbox);
+  gtk_container_add (GTK_CONTAINER (viewport), vbox);
   gtk_widget_show (vbox);
 
   warning = g_object_new (GIMP_TYPE_HINT_BOX,

@@ -317,8 +317,8 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
 {
   GimpPrefsBoxPrivate *private;
   GtkWidget           *scrolled_win;
-  GtkWidget           *vbox;
   GtkWidget           *viewport;
+  GtkWidget           *vbox;
 
   g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
 
@@ -332,13 +332,14 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
 
   gimp_help_set_help_data (scrolled_win, NULL, help_id);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                         vbox);
-  gtk_widget_show (vbox);
-
-  viewport = gtk_bin_get_child (GTK_BIN (scrolled_win));
+  viewport = gtk_viewport_new (NULL, NULL);
   gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), viewport);
+  gtk_widget_show (viewport);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_add (GTK_CONTAINER (viewport), vbox);
+  gtk_widget_show (vbox);
 
   gtk_tree_store_append (private->store, iter, parent);
   gtk_tree_store_set (private->store, iter,

@@ -97,6 +97,7 @@ gimp_browser_init (GimpBrowser *browser)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *scrolled_window;
+  GtkWidget *viewport;
 
   browser->search_type = -1;
 
@@ -155,10 +156,13 @@ gimp_browser_init (GimpBrowser *browser)
   gtk_paned_pack2 (GTK_PANED (browser), scrolled_window, TRUE, TRUE);
   gtk_widget_show (scrolled_window);
 
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
+  gtk_widget_show (viewport);
+
   browser->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (browser->right_vbox), 12);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
-                                         browser->right_vbox);
+  gtk_container_add (GTK_CONTAINER (viewport), browser->right_vbox);
   gtk_widget_show (browser->right_vbox);
 
   gtk_widget_grab_focus (browser->search_entry);
