@@ -1,28 +1,24 @@
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Aviary.pl
-# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
-# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
-# gnomepl@aviary.pl
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Polish translation for gimp-libgimp.
+# Copyright © 2005-2016 the gimp authors.
+# This file is distributed under the same license as the gimp package.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 # Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <gnomepl@aviary.pl>, 2011-2016.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 01:09+0200\n"
-"PO-Revision-Date: 2016-07-18 01:10+0200\n"
+"POT-Creation-Date: 2016-09-07 18:48+0200\n"
+"PO-Revision-Date: 2016-09-07 18:49+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: Poland\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1141
@@ -109,7 +105,7 @@ msgstr "Konwertuj na RGB"
 #: ../libgimp/gimpexport.c:315
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Wtyczka %s obsługuje tylko obrazy w odcieniach szarości"
+msgstr "Wtyczka %s obsługuje tylko obrazy w odcieniach szarości"
 
 #: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:366
@@ -127,7 +123,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konwertuj na indeksowany używając ustawień domyślnych\n"
+"Konwertuj na indeksowany za pomocą ustawień domyślnych\n"
 "(ręczna konwersja pozwoli na lepsze dopasowanie ustawień)"
 
 #: ../libgimp/gimpexport.c:334
@@ -140,13 +136,13 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konwertuj na indeksowany używając ustawień domyślnych dla bitmap\n"
+"Konwertuj na indeksowany za pomocą ustawień domyślnych dla bitmap\n"
 "(ręczna konwersja pozwoli na lepsze dopasowanie ustawień)"
 
 #: ../libgimp/gimpexport.c:344
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Wtyczka %s obsługuje tylko obrazy RGB lub w odcieniach szarości"
+msgstr "Wtyczka %s obsługuje tylko obrazy RGB lub w odcieniach szarości"
 
 #: ../libgimp/gimpexport.c:353
 #, c-format
@@ -157,7 +153,7 @@ msgstr "Wtyczka %s obsługuje tylko obrazy RGB lub indeksowane"
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
-"Wtyczka %s obsługuje tylko obrazy indeksowane lub w odcieniach szarości"
+"Wtyczka %s obsługuje tylko obrazy indeksowane lub w odcieniach szarości"
 
 #: ../libgimp/gimpexport.c:374
 #, c-format
@@ -195,8 +191,8 @@ msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"Przed zapisaniem w formacie %s obraz powinien zostać wyeksportowany z "
-"poniższych powodów:"
+"Przed zapisaniem w formacie %s obraz powinien zostać wyeksportowany "
+"z poniższych powodów:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:622
@@ -398,7 +394,7 @@ msgstr "_Zaznaczenie"
 #: ../libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
-msgstr "Kop_ia warstwy w odcieniach szarości"
+msgstr "Kop_ia warstwy w odcieniach szarości"
 
 #: ../libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
@@ -458,7 +454,7 @@ msgstr "Zastępuje bieżące zaznaczenie"
 #: ../libgimpbase/gimpbaseenums.c:134
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr "Część wspólna z bieżącym zaznaczeniem"
+msgstr "Część wspólna z bieżącym zaznaczeniem"
 
 #: ../libgimpbase/gimpbaseenums.c:167
 msgctxt "channel-type"
@@ -618,12 +614,12 @@ msgstr "Rozlany (dół)"
 #: ../libgimpbase/gimpbaseenums.c:409
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
-msgstr "Spiralny (w prawo)"
+msgstr "Spiralny (w prawo)"
 
 #: ../libgimpbase/gimpbaseenums.c:410
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
-msgstr "Spiralny (w lewo)"
+msgstr "Spiralny (w lewo)"
 
 #: ../libgimpbase/gimpbaseenums.c:442
 msgctxt "grid-style"
@@ -768,7 +764,7 @@ msgstr "Uruchom wsadowo"
 #: ../libgimpbase/gimpbaseenums.c:676
 msgctxt "run-mode"
 msgid "Run with last used values"
-msgstr "Uruchom z ostatnio użytymi wartościami"
+msgstr "Uruchom z ostatnio użytymi wartościami"
 
 #: ../libgimpbase/gimpbaseenums.c:705
 msgctxt "size-type"
@@ -823,7 +819,7 @@ msgstr "Kadrowanie do wyniku"
 #: ../libgimpbase/gimpbaseenums.c:802
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "Kadrowanie z proporcjami"
+msgstr "Kadrowanie z proporcjami"
 
 #: ../libgimpbase/gimpbaseenums.c:935
 msgctxt "pdb-proc-type"
@@ -923,8 +919,8 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Kiedy jest włączone, to program GIMP będzie próbował użyć profilu kolorów z "
-"menedżera okien. Skonfigurowany profil monitora jest używany w przypadku "
+"Kiedy jest włączone, to program GIMP będzie próbował użyć profilu kolorów "
+"z menedżera okien. Skonfigurowany profil monitora jest używany w przypadku "
 "niepowodzenia."
 
 #: ../libgimpconfig/gimpcolorconfig.c:60
@@ -933,7 +929,7 @@ msgstr "Domyślny profil kolorów przestrzeni roboczej RGB."
 
 #: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "Profil kolorów CMYK, używany do konwersji między RGB a CMYK."
+msgstr "Profil kolorów CMYK, używany do konwersji między RGB a CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color profile used for simulating a printed version (softproof)."
@@ -948,7 +944,7 @@ msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
-"Ustawia, jak kolory są konwertowane z obszaru roboczego RGB do urządzenia "
+"Ustawia, jak kolory są konwertowane z obszaru roboczego RGB do urządzenia "
 "symulującego drukowanie."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
@@ -957,7 +953,7 @@ msgid ""
 "represented in the target color space."
 msgstr ""
 "Kiedy jest włączone, to symulacja druku będzie oznaczała kolory, które nie "
-"mogą być przedstawione w docelowej przestrzeni kolorów."
+"mogą być przedstawione w docelowej przestrzeni kolorów."
 
 #: ../libgimpconfig/gimpcolorconfig.c:74
 msgid "The color to use for marking colors which are out of gamut."
@@ -971,7 +967,7 @@ msgstr "Bez zarządzania kolorami"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
 msgctxt "color-management-mode"
 msgid "Color managed display"
-msgstr "Z zarządzaniem kolorami"
+msgstr "Z zarządzaniem kolorami"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
 msgctxt "color-management-mode"
@@ -1023,7 +1019,7 @@ msgstr "nieprawidłowa wartość „%ld” tokenu %s"
 #: ../libgimpconfig/gimpconfig-deserialize.c:609
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "podczas przetwarzaniu tokenu „%s”: %s"
+msgstr "podczas przetwarzania tokenu „%s”: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
 #: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
@@ -1091,7 +1087,7 @@ msgstr "oczekiwano wartości „yes” lub „no” tokenu logicznego, otrzymano
 #: ../libgimpconfig/gimpscanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Błąd podczas przetwarzania „%s” w wierszu %d: %s"
+msgstr "Błąd podczas przetwarzania „%s” w %d. wierszu: %s"
 
 #: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
 #: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
@@ -1123,7 +1119,7 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Nie można ustalić prawidłowego katalogu domowego.\n"
-"Miniatury będą przechowywane w katalogu na pliki tymczasowe (%s)."
+"Miniatury będą przechowywane w katalogu na pliki tymczasowe (%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
 #, c-format
@@ -1162,7 +1158,7 @@ msgstr "_Biały"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:146
 msgid "Select color profile from disk..."
-msgstr "Wybierz profil kolorów z dysku…"
+msgstr "Wybierz profil kolorów z dysku…"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgctxt "profile"
@@ -1186,7 +1182,7 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Szesnastkowy zapis koloru jest używany w językach HTML i CSS. To pole "
+"Szesnastkowy zapis koloru jest używany w językach HTML i CSS. To pole "
 "dopuszcza również nazwy kolorów CSS."
 
 #: ../libgimpwidgets/gimpcolorselection.c:324
@@ -1275,7 +1271,7 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Kliknięcie zakraplacza, a następnie dowolnego punktu obrazu pobierze z niego "
+"Kliknięcie zakraplacza, a następnie dowolnego punktu obrazu pobierze z niego "
 "kolor."
 
 #. toggle button to (de)activate the instant preview
@@ -1392,7 +1388,7 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Wartość ta może zostać użyta w roli ziarna generatora liczb losowych, co "
+"Wartość ta może zostać użyta w roli ziarna generatora liczb losowych, co "
 "pozwala na dokładne powtórzenie wykonanego „losowego” działania"
 
 #: ../libgimpwidgets/gimpwidgets.c:520
@@ -1524,7 +1520,7 @@ msgstr "Zmniejszenie"
 
 #: ../modules/color-selector-cmyk-lcms.c:91
 msgid "CMYK color selector (using color profile)"
-msgstr "Wybór koloru z przestrzeni CMYK (używając profilu kolorów)"
+msgstr "Wybór koloru z przestrzeni CMYK (za pomocą profilu kolorów)"
 
 #: ../modules/color-selector-cmyk-lcms.c:154
 #: ../modules/color-selector-cmyk.c:101
@@ -1586,7 +1582,7 @@ msgstr "Profil: %s"
 
 #: ../modules/color-selector-cmyk.c:70
 msgid "CMYK color selector"
-msgstr "Wybór koloru z przestrzeni CMYK"
+msgstr "Wybór koloru z przestrzeni CMYK"
 
 #: ../modules/color-selector-cmyk.c:171
 msgid "Black _pullout:"
@@ -1650,11 +1646,11 @@ msgstr "Zwolnienie przycisku %d"
 
 #: ../modules/controller-dx-dinput.c:441 ../modules/controller-linux-input.c:89
 msgid "X Move Left"
-msgstr "Ruch w lewo X"
+msgstr "Ruch w lewo X"
 
 #: ../modules/controller-dx-dinput.c:444 ../modules/controller-linux-input.c:90
 msgid "X Move Right"
-msgstr "Ruch w prawo X"
+msgstr "Ruch w prawo X"
 
 #: ../modules/controller-dx-dinput.c:450
 msgid "Y Move Away"
@@ -1682,21 +1678,21 @@ msgstr "Wychylenie Y małe"
 
 #: ../modules/controller-dx-dinput.c:477 ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
-msgstr "Wychylenie Y w prawo"
+msgstr "Wychylenie Y w prawo"
 
 #: ../modules/controller-dx-dinput.c:480 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
-msgstr "Wychylenie Y w lewo"
+msgstr "Wychylenie Y w lewo"
 
 #: ../modules/controller-dx-dinput.c:486
 #: ../modules/controller-linux-input.c:100
 msgid "Z Axis Turn Left"
-msgstr "Wychylenie Z skręt w lewo"
+msgstr "Wychylenie Z skręt w lewo"
 
 #: ../modules/controller-dx-dinput.c:489
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Right"
-msgstr "Wychylenie Z skręt w prawo"
+msgstr "Wychylenie Z skręt w prawo"
 
 #: ../modules/controller-dx-dinput.c:500
 #, c-format
@@ -1807,7 +1803,7 @@ msgstr "Przedni przycisk"
 
 #: ../modules/controller-linux-input.c:74
 msgid "Button Back"
-msgstr "Tylni przycisk"
+msgstr "Tylny przycisk"
 
 #: ../modules/controller-linux-input.c:75
 msgid "Button Task"
@@ -1831,7 +1827,7 @@ msgstr "Ruch naprzód Y"
 
 #: ../modules/controller-linux-input.c:92
 msgid "Y Move Back"
-msgstr "Ruch w tył Y"
+msgstr "Ruch w tył Y"
 
 #: ../modules/controller-linux-input.c:96
 msgid "X Axis Tilt Forward"
@@ -1843,27 +1839,27 @@ msgstr "Wychylenie X do tyłu"
 
 #: ../modules/controller-linux-input.c:103
 msgid "Horiz. Wheel Turn Back"
-msgstr "Poziome kółko w tył"
+msgstr "Poziome kółko w tył"
 
 #: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Forward"
-msgstr "Poziome kółko w przód"
+msgstr "Poziome kółko w przód"
 
 #: ../modules/controller-linux-input.c:105
 msgid "Dial Turn Left"
-msgstr "Skręt w lewo"
+msgstr "Skręt w lewo"
 
 #: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Right"
-msgstr "Skręt w prawo"
+msgstr "Skręt w prawo"
 
 #: ../modules/controller-linux-input.c:107
 msgid "Wheel Turn Left"
-msgstr "Obrót kółka w lewo"
+msgstr "Obrót kółka w lewo"
 
 #: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Right"
-msgstr "Obrót kółka w prawo"
+msgstr "Obrót kółka w prawo"
 
 #: ../modules/controller-linux-input.c:177
 msgid "Linux input event controller"
@@ -1885,7 +1881,7 @@ msgstr "Zdarzenia wprowadzania systemu Linux"
 #: ../modules/controller-midi.c:479
 #, c-format
 msgid "Reading from %s"
-msgstr "Odczytywanie z %s"
+msgstr "Odczytywanie z %s"
 
 #: ../modules/controller-linux-input.c:568
 #: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
@@ -1979,7 +1975,7 @@ msgstr "Typ ślepoty _barw:"
 
 #: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
-msgstr "Filtr wyświetlania kolorów z korekcją gamma"
+msgstr "Filtr wyświetlania kolorów z korekcją gamma"
 
 #: ../modules/display-filter-gamma.c:125
 msgid "Gamma"
@@ -1991,7 +1987,7 @@ msgstr "_Gamma:"
 
 #: ../modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
-msgstr "Filtr wyświetlania kolorów z wysokim kontrastem"
+msgstr "Filtr wyświetlania kolorów z wysokim kontrastem"
 
 #: ../modules/display-filter-high-contrast.c:125
 msgid "Contrast"
@@ -2018,7 +2014,7 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Ten filtr pobiera konfigurację z sekcji Zarządzanie kolorami okna "
+"Ten filtr pobiera konfigurację z sekcji Zarządzanie kolorami okna "
 "Preferencji."
 
 #: ../modules/display-filter-lcms.c:303
@@ -2039,7 +2035,7 @@ msgstr "Profil symulacji wydruku:"
 
 #: ../modules/display-filter-proof.c:98
 msgid "Color proof filter using ICC color profile"
-msgstr "Filtr korygujący kolory używając profilu ICC"
+msgstr "Filtr korygujący kolory za pomocą profilu ICC"
 
 #: ../modules/display-filter-proof.c:146
 msgid "Color Proof"

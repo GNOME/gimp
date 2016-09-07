@@ -1,35 +1,31 @@
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Aviary.pl
-# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
-# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
-# gnomepl@aviary.pl
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Polish translation for gimp-python.
+# Copyright © 1999-2016 the gimp authors.
+# This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999, 2000.
 # Hubert Stachurski <hubi@forest.sggw.waw.pl>, 2008.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2015.
-# Aviary.pl <gnomepl@aviary.pl>, 2011-2015.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-29 18:17+0200\n"
-"PO-Revision-Date: 2015-08-29 18:18+0200\n"
+"POT-Creation-Date: 2016-09-07 18:48+0200\n"
+"PO-Revision-Date: 2016-09-07 18:49+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: Poland\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
-msgstr "Brak informacji o wyjątku"
+msgstr "Brak informacji o wyjątku"
 
 #: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
@@ -100,7 +96,7 @@ msgstr "_Plik do odczytu lub znak do użycia"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
-msgstr "Rozmiar _czcionki w pikselach"
+msgstr "Rozmiar _czcionki w pikselach"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
@@ -144,7 +140,7 @@ msgstr "K_rycie"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
-msgstr "Przesuwa kolory w palecie "
+msgstr "Przesuwa kolory w palecie "
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
@@ -163,7 +159,7 @@ msgstr "Prze_suń"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
-msgstr "Porządkuje kolory w palecie"
+msgstr "Porządkuje kolory w palecie"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
@@ -203,7 +199,7 @@ msgstr "_Rosnąco"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Tworzy powtarzający się gradient używając kolorów z palety"
+msgstr "Tworzy powtarzający się gradient za pomocą kolorów z palety"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
@@ -211,7 +207,7 @@ msgstr "Paleta na po_wtarzający się gradient"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
-msgstr "Tworzy gradient używając kolorów z palety"
+msgstr "Tworzy gradient za pomocą kolorów z palety"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
@@ -224,7 +220,7 @@ msgstr "Przycinanie"
 #. table snippet means a small piece of HTML code here
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Obcina obraz wzdłuż prowadnic, tworzy obrazy i fragmenty tabel HTML "
+msgstr "Obcina obraz wzdłuż prowadnic, tworzy obrazy i fragmenty tabel HTML "
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
@@ -260,7 +256,7 @@ msgstr "Odstęp między elementami tablicy"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
-msgstr "JavaScript dla zdarzeń „onmouseover” i „clicked”"
+msgstr "JavaScript dla zdarzeń „onmouseover” i „clicked”"
 
 #. table caps are table cells on the edge of the table
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:448
@@ -303,11 +299,11 @@ msgstr "_Konsola"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Rzuca cień na warstwę i opcjonalnie krawędź"
+msgstr "Rzuca cień na warstwę i opcjonalnie krawędź"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Rzuć cień i krawędź…"
+msgstr "_Rzuć cień i krawędź…"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
@@ -321,23 +317,23 @@ msgstr "_Krawędź"
 msgid "_Drop shadow"
 msgstr "_Rzuć cień"
 
-# "drop shadow" pominięte ze względu na zgodność z aktualnym tłumaczeniem (filtr->rzucanie cienia)
+# "drop shadow" pominięte ze względu na zgodność z obecnym tłumaczeniem (filtr→rzucanie cienia)
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
 msgstr "Przesunięcie _X cienia"
 
-# "drop shadow" pominięte ze względu na zgodność z aktualnym tłumaczeniem (filtr->rzucanie cienia)
+# "drop shadow" pominięte ze względu na zgodność z obecnym tłumaczeniem (filtr→rzucanie cienia)
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Przesunięcie _Y cienia"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:76
 msgid "Create a new brush with characters from a text sequence"
-msgstr "Tworzy nowy pędzel za pomocą znaków z tekstu"
+msgstr "Tworzy nowy pędzel za pomocą znaków z tekstu"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:82
 msgid "New Brush from _Text..."
-msgstr "Nowy pędzel z _tekstu…"
+msgstr "Nowy pędzel z _tekstu…"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:85
 msgid "Font"
