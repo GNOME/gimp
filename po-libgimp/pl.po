@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-04 16:32+0200\n"
-"PO-Revision-Date: 2016-09-04 16:33+0200\n"
+"POT-Creation-Date: 2016-09-07 19:34+0200\n"
+"PO-Revision-Date: 2016-09-07 19:35+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -123,7 +123,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konwertuj na indeksowany używając ustawień domyślnych\n"
+"Konwertuj na indeksowany za pomocą ustawień domyślnych\n"
 "(ręczna konwersja pozwoli na lepsze dopasowanie ustawień)"
 
 #: ../libgimp/gimpexport.c:334
@@ -136,7 +136,7 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konwertuj na indeksowany używając ustawień domyślnych dla bitmap\n"
+"Konwertuj na indeksowany za pomocą ustawień domyślnych dla bitmap\n"
 "(ręczna konwersja pozwoli na lepsze dopasowanie ustawień)"
 
 #: ../libgimp/gimpexport.c:344
@@ -164,28 +164,28 @@ msgstr "Wtyczka %s wymaga kanału alfa"
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanał alfa"
 
-#: ../libgimp/gimpexport.c:430
+#: ../libgimp/gimpexport.c:434
 msgid "Confirm Save"
 msgstr "Potwierdzenie zapisu"
 
-#: ../libgimp/gimpexport.c:436
+#: ../libgimp/gimpexport.c:440
 msgid "Confirm"
 msgstr "Potwierdź"
 
-#: ../libgimp/gimpexport.c:512
+#: ../libgimp/gimpexport.c:516
 msgid "Export File"
 msgstr "Eksport pliku"
 
-#: ../libgimp/gimpexport.c:516
+#: ../libgimp/gimpexport.c:520
 msgid "_Ignore"
 msgstr "Z_ignoruj"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
+#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1017
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
 #. the headline
-#: ../libgimp/gimpexport.c:548
+#: ../libgimp/gimpexport.c:552
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -195,11 +195,11 @@ msgstr ""
 "z poniższych powodów:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:622
+#: ../libgimp/gimpexport.c:626
 msgid "The export conversion won't modify your original image."
 msgstr "Konwersja podczas eksportu nie zmodyfikuje pierwotnego obrazu."
 
-#: ../libgimp/gimpexport.c:729
+#: ../libgimp/gimpexport.c:733
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -208,7 +208,7 @@ msgstr ""
 "Próba zapisu maski warstwy jako %s.\n"
 "Widoczne warstwy nie zostaną zapisane."
 
-#: ../libgimp/gimpexport.c:735
+#: ../libgimp/gimpexport.c:739
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -217,7 +217,7 @@ msgstr ""
 "Próba zapisania kanału (zapisanego zaznaczenia) jako %s.\n"
 "Widoczne warstwy nie zostaną zapisane."
 
-#: ../libgimp/gimpexport.c:1004
+#: ../libgimp/gimpexport.c:1008
 msgid "Export Image as "
 msgstr "Eksport obrazu jako "
 
@@ -1541,7 +1541,7 @@ msgstr "nieprawidłowa wartość „%ld” tokenu %s"
 #: ../libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "podczas przetwarzaniu tokenu „%s”: %s"
+msgstr "podczas przetwarzania tokenu „%s”: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:658
 #: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
@@ -1585,7 +1585,7 @@ msgstr "oczekiwano wartości „yes” lub „no” tokenu logicznego, otrzymano
 #: ../libgimpconfig/gimpscanner.c:843
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Błąd podczas przetwarzania „%s” w wierszu %d: %s"
+msgstr "Błąd podczas przetwarzania „%s” w %d. wierszu: %s"
 
 #: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
 #: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
@@ -1638,19 +1638,19 @@ msgstr "Nie można utworzyć miniatury dla „%s”: %s"
 msgid "_Search:"
 msgstr "Wy_szukiwanie:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:136
+#: ../libgimpwidgets/gimpcolorbutton.c:137
 msgid "_Foreground Color"
 msgstr "_Kolor pierwszoplanowy"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:140
+#: ../libgimpwidgets/gimpcolorbutton.c:141
 msgid "_Background Color"
 msgstr "Kolor _tła"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:144
+#: ../libgimpwidgets/gimpcolorbutton.c:145
 msgid "Blac_k"
 msgstr "_Czarny"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:148
+#: ../libgimpwidgets/gimpcolorbutton.c:149
 msgid "_White"
 msgstr "_Biały"
 
@@ -1754,67 +1754,63 @@ msgid "_Duplicate"
 msgstr "_Powiel"
 
 #: ../libgimpwidgets/gimpicons.c:64
-msgid "_Edit"
-msgstr "_Modyfikuj"
-
-#: ../libgimpwidgets/gimpicons.c:65
 msgid "Linked"
 msgstr "Przyłączony"
 
-#: ../libgimpwidgets/gimpicons.c:66
+#: ../libgimpwidgets/gimpicons.c:65
 msgid "Paste as New"
 msgstr "Wklej jako nowy"
 
-#: ../libgimpwidgets/gimpicons.c:67
+#: ../libgimpwidgets/gimpicons.c:66
 msgid "Paste Into"
 msgstr "Wklej do"
 
-#: ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpicons.c:67
 msgid "_Reset"
 msgstr "_Przywróć"
 
-#: ../libgimpwidgets/gimpicons.c:69
+#: ../libgimpwidgets/gimpicons.c:68
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../libgimpwidgets/gimpicons.c:115 ../libgimpwidgets/gimpicons.c:119
+#: ../libgimpwidgets/gimpicons.c:114 ../libgimpwidgets/gimpicons.c:118
 msgid "_Stroke"
 msgstr "Ry_suj"
 
-#: ../libgimpwidgets/gimpicons.c:137
+#: ../libgimpwidgets/gimpicons.c:136
 msgid "L_etter Spacing"
 msgstr "Odstępy międzyz_nakowe"
 
-#: ../libgimpwidgets/gimpicons.c:138
+#: ../libgimpwidgets/gimpicons.c:137
 msgid "L_ine Spacing"
 msgstr "Odstępy między_wierszowe"
 
-#: ../libgimpwidgets/gimpicons.c:157
+#: ../libgimpwidgets/gimpicons.c:156
 msgid "Re_size"
 msgstr "Zmień _rozmiar"
 
-#: ../libgimpwidgets/gimpicons.c:158 ../libgimpwidgets/gimpicons.c:293
+#: ../libgimpwidgets/gimpicons.c:157 ../libgimpwidgets/gimpicons.c:292
 msgid "_Scale"
 msgstr "Prze_skaluj"
 
-#: ../libgimpwidgets/gimpicons.c:265
+#: ../libgimpwidgets/gimpicons.c:264
 msgid "Cr_op"
 msgstr "K_adruj"
 
-#: ../libgimpwidgets/gimpicons.c:273
+#: ../libgimpwidgets/gimpicons.c:272
 msgid "_Select"
 msgstr "_Zaznacz"
 
-#: ../libgimpwidgets/gimpicons.c:276 ../libgimpwidgets/gimpicons.c:288
-#: ../libgimpwidgets/gimpicons.c:299
+#: ../libgimpwidgets/gimpicons.c:275 ../libgimpwidgets/gimpicons.c:287
+#: ../libgimpwidgets/gimpicons.c:298
 msgid "_Transform"
 msgstr "_Przekształć"
 
-#: ../libgimpwidgets/gimpicons.c:292
+#: ../libgimpwidgets/gimpicons.c:291
 msgid "_Rotate"
 msgstr "O_bróć"
 
-#: ../libgimpwidgets/gimpicons.c:295
+#: ../libgimpwidgets/gimpicons.c:294
 msgid "_Shear"
 msgstr "_Zetnij"
 
@@ -2053,7 +2049,7 @@ msgstr "Zmniejszenie"
 
 #: ../modules/color-selector-cmyk.c:82
 msgid "CMYK color selector (using color profile)"
-msgstr "Wybór koloru z przestrzeni CMYK (używając profilu kolorów)"
+msgstr "Wybór koloru z przestrzeni CMYK (za pomocą profilu kolorów)"
 
 #: ../modules/color-selector-cmyk.c:116
 msgid "CMYK"
@@ -2106,7 +2102,7 @@ msgstr "Profil: %s"
 
 #: ../modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
-msgstr "Wybór koloru oparty na akwareli"
+msgstr "Wybór koloru na podstawie akwareli"
 
 #: ../modules/color-selector-water.c:130
 msgid "Watercolor"
@@ -2316,7 +2312,7 @@ msgstr "Przedni przycisk"
 
 #: ../modules/controller-linux-input.c:75
 msgid "Button Back"
-msgstr "Tylni przycisk"
+msgstr "Tylny przycisk"
 
 #: ../modules/controller-linux-input.c:76
 msgid "Button Task"
@@ -2553,7 +2549,7 @@ msgstr "Brak"
 
 #: ../modules/display-filter-proof.c:91
 msgid "Color proof filter using ICC color profile"
-msgstr "Filtr korygujący kolory używając profilu ICC"
+msgstr "Filtr korygujący kolory za pomocą profilu ICC"
 
 #: ../modules/display-filter-proof.c:129
 msgid "Intent"

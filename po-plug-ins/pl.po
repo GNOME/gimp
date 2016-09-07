@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-04 16:32+0200\n"
-"PO-Revision-Date: 2016-09-04 16:33+0200\n"
+"POT-Creation-Date: 2016-09-07 19:34+0200\n"
+"PO-Revision-Date: 2016-09-07 19:35+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -168,7 +168,7 @@ msgstr "Optymalizowanie animacji"
 
 #: ../plug-ins/common/animation-play.c:210
 msgid "Preview a GIMP layer-based animation"
-msgstr "Podgląd animacji programu GIMP opartej na warstwach"
+msgstr "Podgląd animacji programu GIMP na podstawie warstw"
 
 #: ../plug-ins/common/animation-play.c:215
 msgid "_Playback..."
@@ -346,7 +346,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
-#: ../plug-ins/file-webp/file-webp-load.c:156
+#: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/screenshot/screenshot-win32.c:230 ../plug-ins/twain/twain.c:567
@@ -546,35 +546,35 @@ msgstr "Minimalnie (x-d, -)"
 
 #: ../plug-ins/common/cml-explorer.c:173
 msgid "Max (x+d, -), (x < 0.5)"
-msgstr "Maksymalnie (x+d, -), (x < 0.5)"
+msgstr "Maksymalnie (x+d, -), (x < 0,5)"
 
 #: ../plug-ins/common/cml-explorer.c:174
 msgid "Max (x+d, -), (0.5 < x)"
-msgstr "Maksymalnie (x+d, -), (0.5 < x)"
+msgstr "Maksymalnie (x+d, -), (0,5 < x)"
 
 #: ../plug-ins/common/cml-explorer.c:175
 msgid "Max (x-d, -), (x < 0.5)"
-msgstr "Maksymalnie (x-d, -), (x < 0.5)"
+msgstr "Maksymalnie (x-d, -), (x < 0,5)"
 
 #: ../plug-ins/common/cml-explorer.c:176
 msgid "Max (x-d, -), (0.5 < x)"
-msgstr "Maksymalnie (x-d, -), (0.5 < x)"
+msgstr "Maksymalnie (x-d, -), (0,5 < x)"
 
 #: ../plug-ins/common/cml-explorer.c:177
 msgid "Min (x+d, -), (x < 0.5)"
-msgstr "Minimalnie (x+d, -), (x < 0.5)"
+msgstr "Minimalnie (x+d, -), (x < 0,5)"
 
 #: ../plug-ins/common/cml-explorer.c:178
 msgid "Min (x+d, -), (0.5 < x)"
-msgstr "Minimalnie (x+d, -), (0.5 < x)"
+msgstr "Minimalnie (x+d, -), (0,5 < x)"
 
 #: ../plug-ins/common/cml-explorer.c:179
 msgid "Min (x-d, -), (x < 0.5)"
-msgstr "Minimalnie (x-d, -), (x < 0.5)"
+msgstr "Minimalnie (x-d, -), (x < 0,5)"
 
 #: ../plug-ins/common/cml-explorer.c:180
 msgid "Min (x-d, -), (0.5 < x)"
-msgstr "Minimalnie (x-d, -), (0.5 < x)"
+msgstr "Minimalnie (x-d, -), (0,5 < x)"
 
 #: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1757
 msgid "Standard"
@@ -875,7 +875,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:734
-#: ../plug-ins/common/file-pdf-save.c:432 ../plug-ins/common/file-png.c:1504
+#: ../plug-ins/common/file-pdf-save.c:432 ../plug-ins/common/file-png.c:1538
 #: ../plug-ins/common/file-raw-data.c:799
 #: ../plug-ins/common/file-raw-data.c:827 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1473
@@ -1226,7 +1226,7 @@ msgstr "YCbCr_ITU_R709_256"
 
 #: ../plug-ins/common/compose.c:400
 msgid "Create an image using multiple gray images as color channels"
-msgstr "Tworzy obraz używając wielu szarych obrazów jako kanały kolorów"
+msgstr "Tworzy obraz za pomocą wielu szarych obrazów jako kanały kolorów"
 
 #: ../plug-ins/common/compose.c:406
 msgid "C_ompose..."
@@ -1251,7 +1251,8 @@ msgstr ""
 #: ../plug-ins/common/compose.c:510
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
-"Błąd podczas skanowania pasożytu „decompose-data”: odnaleziono za mało warstw"
+"Błąd podczas skanowania danych pasożytniczych „decompose-data”: odnaleziono "
+"za mało warstw"
 
 #: ../plug-ins/common/compose.c:543
 #, c-format
@@ -1323,7 +1324,7 @@ msgstr "Normalizacja"
 
 #: ../plug-ins/common/contrast-retinex.c:156
 msgid "Enhance contrast using the Retinex method"
-msgstr "Uwydatnia kontrast używając metody Retinex"
+msgstr "Uwydatnia kontrast za pomocą metody Retinex"
 
 #: ../plug-ins/common/contrast-retinex.c:166
 msgid "Retine_x..."
@@ -1387,7 +1388,7 @@ msgstr "Nie ma nic do kadrowania."
 
 #: ../plug-ins/common/curve-bend.c:526
 msgid "Bend the image using two control curves"
-msgstr "Wygina obraz używając dwóch krzywych kontrolnych"
+msgstr "Wygina obraz za pomocą dwóch krzywych kontrolnych"
 
 #: ../plug-ins/common/curve-bend.c:547
 msgid "_Curve Bend..."
@@ -1746,7 +1747,7 @@ msgstr ""
 
 #: ../plug-ins/common/depth-merge.c:183
 msgid "Combine two images using depth maps (z-buffers)"
-msgstr "Łączy dwa obrazy używając map głębi (buforów Z)"
+msgstr "Łączy dwa obrazy za pomocą map głębi (buforów Z)"
 
 #: ../plug-ins/common/depth-merge.c:192
 msgid "_Depth Merge..."
@@ -1806,11 +1807,11 @@ msgstr "Środkowy"
 
 #: ../plug-ins/common/despeckle.c:479
 msgid "_Adaptive"
-msgstr "_Adaptacyjnie"
+msgstr "_Adaptatywne"
 
 #: ../plug-ins/common/despeckle.c:489
 msgid "R_ecursive"
-msgstr "_Rekurencyjnie"
+msgstr "_Rekurencyjne"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
 #: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
@@ -2100,7 +2101,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1294
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:533
 #: ../plug-ins/common/file-pcx.c:660 ../plug-ins/common/file-pix.c:536
-#: ../plug-ins/common/file-png.c:1497 ../plug-ins/common/file-pnm.c:1208
+#: ../plug-ins/common/file-png.c:1531 ../plug-ins/common/file-pnm.c:1208
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
@@ -2298,7 +2299,7 @@ msgid "Opening '%s' (frame %d)"
 msgstr "Otwieranie „%s” (klatka %d)"
 
 #: ../plug-ins/common/file-gif-load.c:1034
-#: ../plug-ins/file-webp/file-webp-load.c:193
+#: ../plug-ins/file-webp/file-webp-load.c:205
 #, c-format
 msgid "Frame %d"
 msgstr "Klatka %d"
@@ -2390,8 +2391,8 @@ msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
 msgstr ""
-"Można wyeksportować animację tylko, jeśli obraz posiada więcej niż jedną "
-"warstwę. Eksportowany obraz posiada tylko jedną warstwę."
+"Można wyeksportować animację tylko, jeśli obraz ma więcej niż jedną warstwę. "
+"Eksportowany obraz ma tylko jedną warstwę."
 
 #. translators: the %d is *always* 240 here
 #: ../plug-ins/common/file-gif-save.c:2533
@@ -2650,13 +2651,13 @@ msgid ""
 "Image component %d of image '%s' does not have the same size as the image. "
 "This is currently not supported."
 msgstr ""
-"Składowa obrazu %d obrazu „%s” nie posiada tego samego rozmiaru co obraz. "
-"Nie jest to obecnie obsługiwane."
+"Składowa obrazu %d obrazu „%s” nie ma tego samego rozmiaru co obraz. Nie "
+"jest to obecnie obsługiwane."
 
 #: ../plug-ins/common/file-jp2-load.c:375
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
-msgstr "Składowa obrazu %d obrazu „%s” nie posiada hstep i vstep."
+msgstr "Składowa obrazu %d obrazu „%s” nie ma hstep i vstep."
 
 #: ../plug-ins/common/file-jp2-load.c:384
 #, c-format
@@ -2668,7 +2669,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2123
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2191
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Nie można bezstratnie zapisać przezroczystości, zapisano zamiast tego krycie."
@@ -2702,7 +2703,7 @@ msgid "Save creation time"
 msgstr "Zapis czasu powstania"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2174
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2242
 msgid "PNG"
 msgstr "PNG"
 
@@ -2779,8 +2780,8 @@ msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
 msgstr ""
-"Te opcje są dostępne tylko, jeśli eksportowany obraz posiada więcej niż "
-"jedną warstwę. Eksportowany obraz posiada tylko jedną warstwę."
+"Te opcje są dostępne tylko, jeśli eksportowany obraz ma więcej niż jedną "
+"warstwę. Eksportowany obraz ma tylko jedną warstwę."
 
 #: ../plug-ins/common/file-mng.c:1622
 msgid "MNG animation"
@@ -3071,23 +3072,23 @@ msgstr ""
 "Importowany obraz PNG określa przesunięcie %d, %d. Zastosować to "
 "przesunięcie do warstwy?"
 
-#: ../plug-ins/common/file-png.c:1473
+#: ../plug-ins/common/file-png.c:1507
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Błąd podczas tworzenia struktur zapisu PNG podczas eksportowania „%s”."
 
-#: ../plug-ins/common/file-png.c:1483
+#: ../plug-ins/common/file-png.c:1517
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
-#: ../plug-ins/common/file-png.c:2191
+#: ../plug-ins/common/file-png.c:2259
 #: ../plug-ins/file-tiff/file-tiff-save.c:841
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2192
+#: ../plug-ins/common/file-png.c:2260
 #: ../plug-ins/file-tiff/file-tiff-save.c:842
 msgid "Unknown error"
 msgstr "Nieznany błąd"
@@ -3138,7 +3139,7 @@ msgstr "Nieprawidłowa rozdzielczość X."
 
 #: ../plug-ins/common/file-pnm.c:625
 msgid "Image width is larger than GIMP can handle."
-msgstr "Szerokość obrazu jest większa niż program GIMP może obsłużyć."
+msgstr "Szerokość obrazu jest większa, niż program GIMP może obsłużyć."
 
 #: ../plug-ins/common/file-pnm.c:632
 msgid "Invalid Y resolution."
@@ -3146,7 +3147,7 @@ msgstr "Nieprawidłowa rozdzielczość Y."
 
 #: ../plug-ins/common/file-pnm.c:634
 msgid "Image height is larger than GIMP can handle."
-msgstr "Wysokość obrazu jest większa niż program GIMP może obsłużyć."
+msgstr "Wysokość obrazu jest większa, niż program GIMP może obsłużyć."
 
 #: ../plug-ins/common/file-pnm.c:646
 msgid "Bogus scale factor."
@@ -3183,7 +3184,7 @@ msgstr "Dokument PostScript"
 
 #: ../plug-ins/common/file-ps.c:673 ../plug-ins/common/file-ps.c:763
 msgid "Encapsulated PostScript image"
-msgstr "Zagnieżdżalny obraz PostScript"
+msgstr "Osadzony obraz PostScript"
 
 #: ../plug-ins/common/file-ps.c:693
 msgid "PDF document"
@@ -3341,7 +3342,7 @@ msgstr "_PostScript poziom 2"
 
 #: ../plug-ins/common/file-ps.c:3804
 msgid "_Encapsulated PostScript"
-msgstr "Zag_nieżdżalny PostScript"
+msgstr "_Osadzony PostScript"
 
 #: ../plug-ins/common/file-ps.c:3813
 msgid "P_review"
@@ -3532,7 +3533,7 @@ msgid ""
 "Image width is larger than GIMP can handle"
 msgstr ""
 "'%s':\n"
-"Szerokość obrazu jest większa niż program GIMP może obsłużyć"
+"Szerokość obrazu jest większa, niż program GIMP może obsłużyć"
 
 #: ../plug-ins/common/file-sunras.c:518 ../plug-ins/common/file-xbm.c:848
 #: ../plug-ins/common/file-xwd.c:540
@@ -3552,7 +3553,7 @@ msgid ""
 "Image height is larger than GIMP can handle"
 msgstr ""
 "'%s':\n"
-"Wysokość obrazu jest większa niż program GIMP może obsłużyć"
+"Wysokość obrazu jest większa, niż program GIMP może obsłużyć"
 
 #: ../plug-ins/common/file-sunras.c:562
 msgid "This image depth is not supported"
@@ -3834,7 +3835,7 @@ msgid ""
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
 "Nie można ustawić gorącego punktu.\n"
-"Należy uporządkować warstwy, aby wszystkie posiadały przecięcie."
+"Należy uporządkować warstwy, aby wszystkie miały przecięcie."
 
 #: ../plug-ins/common/file-xmc.c:666
 #, c-format
@@ -3905,7 +3906,7 @@ msgstr ""
 "Zmniejsza to rozmiar pliku i może naprawić problem z dużymi kursorami "
 "zniekształcającymi ekran.\n"
 "Należy odznaczyć, jeśli planowane jest modyfikowanie wyeksportowanego "
-"kursora używając innych programów."
+"kursora za pomocą innych programów."
 
 #: ../plug-ins/common/file-xmc.c:1148
 msgid ""
@@ -3918,7 +3919,7 @@ msgid ""
 "theme-size\"."
 msgstr ""
 "Wybiera nominalny rozmiar klatek.\n"
-"Jeśli kursor nie ma posiadać wielu rozmiarów lub nie wiadomo, co wybrać, to "
+"Jeśli kursor nie ma mieć wielu rozmiarów lub nie wiadomo, co wybrać, to "
 "należy zostawić „32px”.\n"
 "Nominalny rozmiar nie jest powiązany z właściwym rozmiarem (szerokością lub "
 "wysokością).\n"
@@ -3999,8 +4000,8 @@ msgstr "Komentarz jest ograniczony do %d znaków."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1462
-#: ../plug-ins/file-webp/file-webp-save.c:202
-#: ../plug-ins/file-webp/file-webp-save.c:397
+#: ../plug-ins/file-webp/file-webp-save.c:203
+#: ../plug-ins/file-webp/file-webp-save.c:406
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
@@ -4021,7 +4022,7 @@ msgstr ""
 #: ../plug-ins/common/file-xmc.c:1546
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
-msgstr "Szerokość i/lub wysokość klatki „%s” wynosi zero."
+msgstr "Szerokość lub wysokość klatki „%s” wynosi zero."
 
 #: ../plug-ins/common/file-xmc.c:1585
 #, c-format
@@ -4065,8 +4066,8 @@ msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
 "fit."
 msgstr ""
-"Pasożyt „%s” jest za długi dla komentarza kursora systemu X. Został "
-"skrócony, aby pasował."
+"Dane pasożytnicze „%s” są za długie dla komentarza kursora systemu X. "
+"Zostały skrócone, aby pasowały."
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2195
@@ -4515,7 +4516,7 @@ msgstr "Ćwiczenie kozy"
 
 #: ../plug-ins/common/gradient-map.c:77
 msgid "Recolor the image using colors from the active gradient"
-msgstr "Ponownie koloruje obraz używając kolorów z aktywnego gradientu"
+msgstr "Ponownie koloruje obraz za pomocą kolorów z aktywnego gradientu"
 
 #: ../plug-ins/common/gradient-map.c:90
 msgid "_Gradient Map"
@@ -4523,7 +4524,7 @@ msgstr "Odwzorowanie g_radientu"
 
 #: ../plug-ins/common/gradient-map.c:99
 msgid "Recolor the image using colors from the active palette"
-msgstr "Ponownie koloruje obraz używając kolorów z aktywnej palety"
+msgstr "Ponownie koloruje obraz za pomocą kolorów z aktywnej palety"
 
 #: ../plug-ins/common/gradient-map.c:112
 msgid "_Palette Map"
@@ -4595,7 +4596,7 @@ msgstr "Kolor przecięcia"
 
 #: ../plug-ins/common/guillotine.c:74
 msgid "Slice the image into subimages using guides"
-msgstr "Dzieli obraz na podobrazy używając prowadnic"
+msgstr "Dzieli obraz na podobrazy za pomocą prowadnic"
 
 #: ../plug-ins/common/guillotine.c:81
 msgid "_Guillotine"
@@ -4799,7 +4800,7 @@ msgstr "Metadane obrazu"
 
 #: ../plug-ins/common/metadata.c:180
 msgid "This image has no metadata attached to it."
-msgstr "Ten obraz nie posiada załączonych metadanych."
+msgstr "Ten obraz nie ma załączonych metadanych."
 
 #: ../plug-ins/common/newsprint.c:118
 msgid "Round"
@@ -5198,7 +5199,7 @@ msgstr "_Przesunięcie fazy:"
 
 #: ../plug-ins/common/sample-colorize.c:298
 msgid "Colorize image using a sample image as a guide"
-msgstr "Koloryzuje obraz używając próbki obrazu jako przewodnika"
+msgstr "Koloryzuje obraz za pomocą próbki obrazu jako przewodnika"
 
 #: ../plug-ins/common/sample-colorize.c:303
 msgid "_Sample Colorize..."
@@ -5814,7 +5815,7 @@ msgstr "Tworzy zupełnie nową jednostkę"
 
 #: ../plug-ins/common/unit-editor.c:127
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Tworzy nową jednostkę używając wybranej jednostki jako szablon"
+msgstr "Tworzy nową jednostkę za pomocą wybranej jednostki jako szablon"
 
 #: ../plug-ins/common/unit-editor.c:145
 msgid "Create or alter units used in GIMP"
@@ -6085,66 +6086,66 @@ msgstr "Wyszukiwanie gradientu XY"
 msgid "Flow step %d"
 msgstr "Płynący krok %d"
 
-#: ../plug-ins/common/web-browser.c:135
+#: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
 msgstr "W systemie operacyjnym brakuje pamięci lub zasobów."
 
-#: ../plug-ins/common/web-browser.c:138
+#: ../plug-ins/common/web-browser.c:144
 msgid "The specified file was not found."
 msgstr "Nie odnaleziono podanego pliku."
 
-#: ../plug-ins/common/web-browser.c:141
+#: ../plug-ins/common/web-browser.c:147
 msgid "The specified path was not found."
 msgstr "Nie odnaleziono podanej ścieżki."
 
-#: ../plug-ins/common/web-browser.c:144
+#: ../plug-ins/common/web-browser.c:150
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Plik .exe jest nieprawidłowy (nie jest plikiem .exe systemu Microsoft Win32 "
 "lub obraz .exe zawiera błąd)."
 
-#: ../plug-ins/common/web-browser.c:147
+#: ../plug-ins/common/web-browser.c:153
 msgid "The operating system denied access to the specified file."
 msgstr "System operacyjny zabronił dostępu do podanego pliku."
 
-#: ../plug-ins/common/web-browser.c:150
+#: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
 msgstr "Powiązanie nazwy pliku jest niepełne lub nieprawidłowe."
 
-#: ../plug-ins/common/web-browser.c:153
+#: ../plug-ins/common/web-browser.c:159
 msgid "DDE transaction busy"
 msgstr "Zajęta transakcja DDE"
 
-#: ../plug-ins/common/web-browser.c:156
+#: ../plug-ins/common/web-browser.c:162
 msgid "The DDE transaction failed."
 msgstr "Transakcja DDE się nie powiodła."
 
-#: ../plug-ins/common/web-browser.c:159
+#: ../plug-ins/common/web-browser.c:165
 msgid "The DDE transaction timed out."
 msgstr "Transakcja DDE przekroczyła czas oczekiwania."
 
-#: ../plug-ins/common/web-browser.c:162
+#: ../plug-ins/common/web-browser.c:168
 msgid "The specified DLL was not found."
 msgstr "Nie odnaleziono podanego pliku DLL."
 
-#: ../plug-ins/common/web-browser.c:165
+#: ../plug-ins/common/web-browser.c:171
 msgid "There is no application associated with the given file name extension."
 msgstr "Brak powiązanego programu z podanym rozszerzeniem nazwy pliku."
 
-#: ../plug-ins/common/web-browser.c:168
+#: ../plug-ins/common/web-browser.c:174
 msgid "There was not enough memory to complete the operation."
 msgstr "Za mało pamięci, aby ukończyć działanie."
 
-#: ../plug-ins/common/web-browser.c:171
+#: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
 msgstr "Wystąpiło naruszenie współdzielenia."
 
-#: ../plug-ins/common/web-browser.c:174
+#: ../plug-ins/common/web-browser.c:180
 msgid "Unknown Microsoft Windows error."
 msgstr "Nieznany błąd systemu Microsoft Windows."
 
-#: ../plug-ins/common/web-browser.c:177
+#: ../plug-ins/common/web-browser.c:183
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Otwarcie „%s” się nie powiodło: %s"
@@ -6293,7 +6294,7 @@ msgstr ""
 
 #. Advanced Options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
-#: ../plug-ins/file-webp/file-webp-dialog.c:259
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
 msgid "_Advanced Options"
 msgstr "Ustawienia za_awansowane"
 
@@ -6648,7 +6649,7 @@ msgstr "_Przyrostowy"
 
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
-#: ../plug-ins/file-webp/file-webp-dialog.c:282
+#: ../plug-ins/file-webp/file-webp-dialog.c:279
 msgid "Save _Exif data"
 msgstr "Zapisanie danych _Exif"
 
@@ -6658,7 +6659,7 @@ msgstr "Zapisanie _miniatury"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
-#: ../plug-ins/file-webp/file-webp-dialog.c:294
+#: ../plug-ins/file-webp/file-webp-dialog.c:289
 msgid "Save _XMP data"
 msgstr "Zapisanie danych _XMP"
 
@@ -6676,9 +6677,9 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
-"Jeśli pierwotny obraz został wczytany z pliku JPEG używając niestandardowych "
-"ustawień jakości (tablice kwantyzacji), to włączenie tej opcji umożliwia "
-"uzyskanie prawie takiej samej jakości i rozmiaru pliku."
+"Jeśli pierwotny obraz został wczytany z pliku JPEG za pomocą "
+"niestandardowych ustawień jakości (tablice kwantyzacji), to włączenie tej "
+"opcji umożliwia uzyskanie prawie takiej samej jakości i rozmiaru pliku."
 
 #. Subsampling
 #: ../plug-ins/file-jpeg/jpeg-save.c:1068
@@ -6976,7 +6977,7 @@ msgid ""
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
 "Format TIFF obsługuje tylko komentarze\n"
-"zapisane w 7 bitowym kodowaniu ASCII.\n"
+"zapisane w 7-bitowym kodowaniu ASCII.\n"
 "Komentarz nie został zapisany."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:706
@@ -7020,7 +7021,7 @@ msgstr "Faks CCITT Group _3"
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
-#: ../plug-ins/file-webp/file-webp.c:102 ../plug-ins/file-webp/file-webp.c:123
+#: ../plug-ins/file-webp/file-webp.c:97 ../plug-ins/file-webp/file-webp.c:118
 msgid "WebP image"
 msgstr "Obraz WebP"
 
@@ -7030,45 +7031,65 @@ msgid "WebP"
 msgstr "WebP"
 
 #. Create the descriptive label at the top
-#: ../plug-ins/file-webp/file-webp-dialog.c:131
+#: ../plug-ins/file-webp/file-webp-dialog.c:130
 msgid "Use the options below to customize the image."
 msgstr "Poniższe opcje umożliwiają dostosowanie obrazu."
 
 #. Create the label for the selecting a preset
-#: ../plug-ins/file-webp/file-webp-dialog.c:143
+#: ../plug-ins/file-webp/file-webp-dialog.c:142
 msgid "Preset:"
 msgstr "Ustawienia:"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:167
+#: ../plug-ins/file-webp/file-webp-dialog.c:166
 msgid "Lossless"
 msgstr "Bezstratne"
 
 #. Create the animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:187
+#: ../plug-ins/file-webp/file-webp-dialog.c:186
 msgid "Use animation"
 msgstr "Animacja"
 
 #. Create the loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:200
+#: ../plug-ins/file-webp/file-webp-dialog.c:199
 msgid "Loop infinitely"
 msgstr "Zapętlenie w nieskończoność"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:216
+#: ../plug-ins/file-webp/file-webp-dialog.c:215
 msgid "Image quality:"
 msgstr "Jakość obrazu:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:224
+#: ../plug-ins/file-webp/file-webp-dialog.c:223
 msgid "Image quality"
 msgstr "Jakość obrazu"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:235
+#: ../plug-ins/file-webp/file-webp-dialog.c:234
 msgid "Alpha quality:"
 msgstr "Jakość alfy:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:243
+#: ../plug-ins/file-webp/file-webp-dialog.c:242
 msgid "Alpha channel quality"
 msgstr "Jakość kanału alfa"
+
+#: ../plug-ins/file-webp/file-webp-load.c:106
+#, c-format
+msgid "Invalid WebP file '%s'"
+msgstr "Nieprawidłowy plik WebP „%s”."
+
+#: ../plug-ins/file-webp/file-webp-load.c:177
+#, c-format
+msgid "Failed to decode animated WebP file '%s'"
+msgstr "Dekodowanie animowanego pliku WebP „%s” się nie powiodło"
+
+#: ../plug-ins/file-webp/file-webp-load.c:185
+#, c-format
+msgid "Failed to decode animated WebP information from '%s'"
+msgstr "Dekodowanie informacji animowanego pliku WebP z „%s” się nie powiodło"
+
+#: ../plug-ins/file-webp/file-webp-load.c:200
+#, c-format
+msgid "Failed to decode animated WebP frame from '%s'"
+msgstr "Dekodowanie klatki animowanego pliku WebP z „%s” się nie powiodło"
 
 #: ../plug-ins/file-webp/file-webp-save.c:142
 msgid "out of memory"
@@ -7118,13 +7139,13 @@ msgstr "znak zakończenia listy"
 msgid "unknown error"
 msgstr "nieznany błąd"
 
-#: ../plug-ins/file-webp/file-webp-save.c:210
-#: ../plug-ins/file-webp/file-webp-save.c:405
+#: ../plug-ins/file-webp/file-webp-save.c:211
+#: ../plug-ins/file-webp/file-webp-save.c:414
 #, c-format
 msgid "Unable to open '%s' for writing"
 msgstr "Nie można otworzyć pliku „%s” do zapisania"
 
-#: ../plug-ins/file-webp/file-webp-save.c:270
+#: ../plug-ins/file-webp/file-webp-save.c:277
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Błąd WebP: „%s”"
@@ -7607,7 +7628,7 @@ msgstr "Zastosowuje aktywny gradient do obrazu"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1159
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Tworzy paletę kolorów używając gradientu z edytora gradientów"
+msgstr "Tworzy paletę kolorów za pomocą gradientu z edytora gradientów"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1170
 msgid "FractalExplorer Gradient"
@@ -7638,7 +7659,7 @@ msgstr "Plik „%s” nie jest plikiem przeglądarki fraktali"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1880
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr "Plik „%s” jest uszkodzony. Wiersz %d w sekcji Option jest niepoprawny"
+msgstr "Plik „%s” jest uszkodzony. %d wiersz w sekcji Option jest niepoprawny"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:236
 msgid "Render fractal art"
@@ -7674,7 +7695,7 @@ msgid ""
 "Line %d Option section incorrect"
 msgstr ""
 "Plik „%s” jest uszkodzony.\n"
-"Wiersz %d w sekcji Option jest niepoprawny"
+"%d. wiersz w sekcji Option jest niepoprawny"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1000
 msgid "My first fractal"
@@ -7886,7 +7907,7 @@ msgstr "Zaznacza obiekt"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1052
 msgid "This tool has no options"
-msgstr "To narzędzie nie posiada opcji"
+msgstr "To narzędzie nie ma opcji"
 
 #. Put buttons in
 #: ../plug-ins/gfig/gfig-dialog.c:1263
@@ -8050,13 +8071,15 @@ msgstr "_Gfigury…"
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
-"Błąd podczas próby zapisania figury jako pasożytu: nie można dołączyć "
-"pasożytu do obszaru rysowania."
+"Błąd podczas próby zapisania figury jako danych pasożytniczych: nie można "
+"dołączyć danych pasożytniczych do obszaru rysowania."
 
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
-msgstr "Nie można otworzyć pliku tymczasowego „%s” do wczytania pasożytu: %s"
+msgstr ""
+"Nie można otworzyć pliku tymczasowego „%s” do wczytania danych "
+"pasożytniczych: %s"
 
 #: ../plug-ins/gimpressionist/brush.c:247
 msgid "Can only save drawables!"
@@ -8320,7 +8343,7 @@ msgstr "Kierunek rysowania jest wyznaczany przez barwę obszaru"
 #: ../plug-ins/gimpressionist/orientation.c:183
 #: ../plug-ins/gimpressionist/size.c:186
 msgid "Adaptive"
-msgstr "Adaptacyjne"
+msgstr "Adaptatywne"
 
 #: ../plug-ins/gimpressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
@@ -8948,7 +8971,7 @@ msgstr "Pokrywanie"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:807
 msgid "Produce a lense flare effect using gradients"
-msgstr "Tworzy efekt błysku soczewki używając gradientów"
+msgstr "Tworzy efekt błysku soczewki za pomocą gradientów"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:812
 msgid "_Gradient Flare..."
@@ -9989,7 +10012,7 @@ msgstr "_Odznacz wszystko"
 
 #: ../plug-ins/imagemap/imap_menu.c:164
 msgid "Edit Area _Info..."
-msgstr "Modyfikuj  _informacje o obszarze…"
+msgstr "Modyfikuj _informacje o obszarze…"
 
 #: ../plug-ins/imagemap/imap_menu.c:165
 msgid "Edit selected area info"
@@ -10298,7 +10321,7 @@ msgstr ""
 
 #: ../plug-ins/lighting/lighting-ui.c:318
 msgid "Cre_ate new image"
-msgstr "U_tworz nowy obraz"
+msgstr "U_twórz nowy obraz"
 
 #: ../plug-ins/lighting/lighting-ui.c:328
 #: ../plug-ins/map-object/map-object-ui.c:481
@@ -11146,7 +11169,7 @@ msgid ""
 "Amount of error at which a fitted spline is unacceptable.  If any pixel is "
 "further away than this from the fitted curve, we try again."
 msgstr ""
-"Liczba błędów po których dopasowana krzywa składana nie jest przyjmowana. "
+"Liczba błędów, po których dopasowana krzywa składana nie jest przyjmowana. "
 "Jeśli jakikolwiek piksel jest dalej od krzywej niż ta wartość, to "
 "podejmowana jest następna próba."
 
@@ -11239,7 +11262,7 @@ msgid ""
 "likely to be reverted."
 msgstr ""
 "Jeśli krzywa składana jest bliższa do prostej linii niż ta wartość, to "
-"pozostaje ona prostą linią, nawet jeśli w innym przypadku zostałby "
+"pozostaje ona prostą linią, nawet jeśli w innym przypadku zostałaby "
 "przywrócona do krzywej. Wartość jest ważona przez pierwiastek kwadratowy "
 "długości krzywej, aby krótsze krzywe były częściej przywracane."
 

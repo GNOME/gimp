@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-04 16:32+0200\n"
-"PO-Revision-Date: 2016-09-04 16:33+0200\n"
+"POT-Creation-Date: 2016-09-07 19:34+0200\n"
+"PO-Revision-Date: 2016-09-07 19:35+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -454,8 +454,8 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"Dodaje efekt chromu do zaznaczonego obszaru (lub przezroczystości), używając "
-"specyficznego szablonu (odcienie szarości)"
+"Dodaje efekt chromu do zaznaczonego obszaru (lub przezroczystości) za pomocą "
+"podanego szablonu (odcienie szarości)"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:222
 msgid "Chrome saturation"
@@ -593,7 +593,7 @@ msgstr "Zaburzenie zaznaczenia"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr "Próg (większy 1<-->254 mniejszy)"
+msgstr "Próg (większy 1←—→254 mniejszy)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
 msgid "Spread"
@@ -881,7 +881,7 @@ msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
-"Rysuje siatkę ustawioną w liście położeń X i Y używając bieżącego pędzla"
+"Rysuje siatkę ustawioną w liście położeń X i Y za pomocą bieżącego pędzla"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
@@ -984,7 +984,7 @@ msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr ""
-"Wypełnia warstwę promieniami emanującymi ze środka obrazu, używając koloru "
+"Wypełnia warstwę promieniami emanującymi ze środka obrazu za pomocą koloru "
 "pierwszoplanowego"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:116
@@ -1113,12 +1113,12 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr "Eksportowanie aktywnej palety jako katalog języka PHP (nazwa => kolor)"
+msgstr "Eksportowanie aktywnej palety jako katalog języka PHP (nazwa → kolor)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr ""
-"Eksportowanie aktywnej palety jako katalog języka Python (nazwa => kolor)"
+"Eksportowanie aktywnej palety jako katalog języka Python (nazwa: kolor)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
@@ -1130,7 +1130,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr "Eksportowanie aktywnej palety jako java.util.Hashtable<String, Color>"
+msgstr ""
+"Eksportowanie aktywnej palety jako „java.util.Hashtable<String, Color>”"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
@@ -1585,7 +1586,7 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Tworzy nową warstwę używając efektu fali do użycia jako nałożenie lub mapę "
+"Tworzy nową warstwę za pomocą efektu fali do użycia jako nałożenie lub mapę "
 "wypukłości"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:397
