@@ -7,6 +7,8 @@ require 'util.pl';
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
+$destdir = ".";
+
 $ignorefile = ".gitignore";
 $rcfile     = "gimprc.common";
 
@@ -208,7 +210,7 @@ close RC;
 close MK;
 close IGNORE;
 
-&write_file($outmk);
-&write_file($outignore);
-&write_file($outrc);
+&write_file($outmk, $destdir);
+&write_file($outignore, $destdir);
+&write_file($outrc, $destdir);
 
