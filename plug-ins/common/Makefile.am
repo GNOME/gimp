@@ -1769,7 +1769,7 @@ warp_LDADD = \
 
 web_browser_LDFLAGS = $(framework_cocoa)
 
-web_browser_CFLAGS = $(xobjective_c)
+web_browser_CPPFLAGS = $(AM_CPPFLAGS) $(xobjective_c)
 
 web_browser_SOURCES = \
 	web-browser.c
