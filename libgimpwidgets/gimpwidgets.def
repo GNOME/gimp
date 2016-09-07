@@ -34,11 +34,15 @@ EXPORTS
 	gimp_color_area_set_type
 	gimp_color_area_type_get_type
 	gimp_color_button_get_color
+	gimp_color_button_get_title
 	gimp_color_button_get_type
+	gimp_color_button_get_ui_manager
 	gimp_color_button_get_update
 	gimp_color_button_has_alpha
 	gimp_color_button_new
 	gimp_color_button_set_color
+	gimp_color_button_set_color_config
+	gimp_color_button_set_title
 	gimp_color_button_set_type
 	gimp_color_button_set_update
 	gimp_color_display_changed
