@@ -43,7 +43,7 @@ static void
 save_dialog_toggle_scale (GtkWidget *widget,
                           gpointer   data)
 {
-  gimp_scale_entry_set_sensitive (GTK_OBJECT (data),
+  gimp_scale_entry_set_sensitive (data,
                                   ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
 }
 
@@ -60,22 +60,22 @@ save_dialog (WebPSaveParams *params,
              gint32          image_ID,
              gint32          n_layers)
 {
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *expander;
-  GtkWidget *frame;
-  GtkWidget *vbox2;
-  GtkWidget *label;
-  GtkWidget *toggle;
-  GtkWidget *toggle_minsize;
-  GtkWidget *combo;
-  GtkObject *quality_scale;
-  GtkObject *alpha_quality_scale;
-  gboolean   animation_supported = FALSE;
-  gboolean   run;
-  gchar     *text;
-  gint       row = 0;
+  GtkWidget     *dialog;
+  GtkWidget     *vbox;
+  GtkWidget     *table;
+  GtkWidget     *expander;
+  GtkWidget     *frame;
+  GtkWidget     *vbox2;
+  GtkWidget     *label;
+  GtkWidget     *toggle;
+  GtkWidget     *toggle_minsize;
+  GtkWidget     *combo;
+  GtkAdjustment *quality_scale;
+  GtkAdjustment *alpha_quality_scale;
+  gboolean       animation_supported = FALSE;
+  gboolean       run;
+  gchar         *text;
+  gint           row = 0;
 
   animation_supported = n_layers > 1;
 
@@ -291,8 +291,7 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (label);
 
       /* default delay */
-      adj = (GtkAdjustment *) gtk_adjustment_new (params->delay,
-                                                  1, 10000, 1, 10, 0);
+      adj = gtk_adjustment_new (params->delay, 1, 10000, 1, 10, 0);
       delay = gtk_spin_button_new (adj, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (delay), TRUE);
       gtk_box_pack_start (GTK_BOX (hbox), delay, FALSE, FALSE, 0);
