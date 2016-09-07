@@ -185,6 +185,15 @@ ${makename}_CFLAGS = $cflagsvalue
 EOT
     }
 
+    if (exists $plugins{$_}->{cppflags}) {
+	my $cppflags = $plugins{$_}->{cppflags};
+
+	print MK <<EOT;
+
+${makename}_CPPFLAGS = $cppflags
+EOT
+    }
+
     my $deplib = "\$(RT_LIBS)\t\t\\\n\t\$(INTLLIBS)";
     if (exists $plugins{$_}->{libdep}) {
 	my @lib = split(/:/, $plugins{$_}->{libdep});
