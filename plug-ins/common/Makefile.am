@@ -2604,7 +2604,6 @@ warp_LDADD = \
 	$(INTLLIBS)		\
 	$(warp_RC)
 
-<<<<<<< HEAD
 waves_SOURCES = \
 	waves.c
 
@@ -2621,11 +2620,10 @@ waves_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(waves_RC)
-=======
+
 web_browser_LDFLAGS = $(framework_cocoa)
 
 web_browser_CFLAGS = $(xobjective_c)
->>>>>>> 308efbb... Bug 767830 - Help browser does not launch on OS X
 
 web_browser_SOURCES = \
 	web-browser.c
