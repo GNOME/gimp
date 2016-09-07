@@ -47,7 +47,6 @@ emboss_RC = emboss.rc.o
 engrave_RC = engrave.rc.o
 file_aa_RC = file-aa.rc.o
 file_cel_RC = file-cel.rc.o
-file_compressor_RC = file-compressor.rc.o
 file_csource_RC = file-csource.rc.o
 file_desktop_link_RC = file-desktop-link.rc.o
 file_dicom_RC = file-dicom.rc.o
