@@ -140,7 +140,7 @@
     'video' => { ui => 1 },
     'warp' => { ui => 1 },
     'waves' => { ui => 1 },
-    'web-browser' => { ui => 1, ldflags => '$(framework_cocoa)', cflags => '$(xobjective_c)' },
+    'web-browser' => { ui => 1, ldflags => '$(framework_cocoa)', cppflags => '$(AM_CPPFLAGS) $(xobjective_c)' },
     'web-page' => { ui => 1, optional => 1, libs => 'WEBKIT_LIBS', cflags => 'WEBKIT_CFLAGS' },
     'whirl-pinch' => { ui => 1 },
     'wind' => { ui => 1 }
