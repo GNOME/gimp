@@ -435,6 +435,10 @@ EXPORTS
 	gimp_zoom_type_get_type
 	gtk_box_new
 	gtk_button_box_new
+	gtk_label_get_xalign
+	gtk_label_get_yalign
+	gtk_label_set_xalign
+	gtk_label_set_yalign
 	gtk_paned_new
 	gtk_scale_new
 	gtk_scrollbar_new

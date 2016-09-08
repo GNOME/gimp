@@ -44,13 +44,6 @@ GtkWidget * gtk_scrollbar_new  (GtkOrientation  orientation,
 GtkWidget * gtk_separator_new  (GtkOrientation  orientation);
 
 
-/* These functions are even more evil. They exist only since GTK+ 3.3
- * and need to be taken care of carefully when building against GTK+
- * 3.x. This is not an issue as long as we don't have any GIMP 3.x
- * release, and this file will be gone until then.
- */
-
-#if ! GTK_CHECK_VERSION (3, 3, 0)
 typedef enum
 {
   GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR,
@@ -65,13 +58,20 @@ GdkModifierType gdk_keymap_get_modifier_mask    (GdkKeymap         *keymap,
                                                  GdkModifierIntent  intent);
 GdkModifierType gtk_widget_get_modifier_mask    (GtkWidget         *widget,
                                                  GdkModifierIntent  intent);
-#endif
 
 gboolean        gdk_cairo_get_clip_rectangle    (cairo_t           *cr,
                                                  GdkRectangle      *rect);
 void            gdk_screen_get_monitor_workarea (GdkScreen         *screen,
                                                  gint               monitor_num,
                                                  GdkRectangle      *dest);
+
+void            gtk_label_set_xalign            (GtkLabel          *label,
+                                                 gfloat             xalign);
+gfloat          gtk_label_get_xalign            (GtkLabel          *label);
+
+void            gtk_label_set_yalign            (GtkLabel          *label,
+                                                 gfloat             yalign);
+gfloat          gtk_label_get_yalign            (GtkLabel          *label);
 
 
 #endif /* __GIMP_3_MIGRATION_H__ */
