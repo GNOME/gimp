@@ -717,7 +717,7 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
         }
 
       label_widget = gtk_label_new (label);
-      gtk_misc_set_alignment (GTK_MISC (label_widget), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label_widget), 0.0);
       gtk_size_group_add_widget (view->priv->options_group, label_widget);
       gtk_box_pack_start (GTK_BOX (hbox), label_widget, FALSE, FALSE, 0);
       gtk_widget_show (label_widget);

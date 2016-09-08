@@ -473,7 +473,7 @@ confirm_save_dialog (const gchar *message,
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
@@ -558,7 +558,7 @@ export_dialog (GSList      *actions,
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
@@ -611,7 +611,7 @@ export_dialog (GSList      *actions,
       else if (action->possibilities[0])
         {
           label = gtk_label_new (gettext (action->possibilities[0]));
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+          gtk_label_set_xalign (GTK_LABEL (label), 0.0);
           gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
           gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
           gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -628,7 +628,7 @@ export_dialog (GSList      *actions,
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);

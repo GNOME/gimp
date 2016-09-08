@@ -218,7 +218,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   markup = g_strdup_printf ("<i><small>%s</small></i>", hint);
 
   label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_markup (GTK_LABEL (label), markup);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);

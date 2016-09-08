@@ -171,7 +171,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                                  PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                                  PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                                  -1);
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 1.0);
       gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
                         GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
       gtk_widget_show (label);

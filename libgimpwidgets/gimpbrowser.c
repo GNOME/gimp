@@ -139,7 +139,7 @@ gimp_browser_init (GimpBrowser *browser)
   /* count label */
 
   browser->count_label = gtk_label_new (_("No matches"));
-  gtk_misc_set_alignment (GTK_MISC (browser->count_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (browser->count_label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (browser->count_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);

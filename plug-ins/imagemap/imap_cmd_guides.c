@@ -147,13 +147,13 @@ make_guides_dialog (void)
    gtk_widget_show (hbox);
 
    data->image_dimensions = gtk_label_new ("");
-   gtk_misc_set_alignment (GTK_MISC (data->image_dimensions), 0.0, 0.5);
+   gtk_label_set_xalign (GTK_LABEL (data->image_dimensions), 0.0);
    gtk_box_pack_start (GTK_BOX (dialog->vbox),
                        data->image_dimensions, FALSE, FALSE, 0);
    gtk_widget_show (data->image_dimensions);
 
    data->guide_bounds = gtk_label_new ("");
-   gtk_misc_set_alignment (GTK_MISC (data->guide_bounds), 0.0, 0.5);
+   gtk_label_set_xalign (GTK_LABEL (data->guide_bounds), 0.0);
    gtk_box_pack_start (GTK_BOX (dialog->vbox),
                        data->guide_bounds, FALSE, FALSE, 0);
    gtk_widget_show (data->guide_bounds);

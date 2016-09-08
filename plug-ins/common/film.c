@@ -877,7 +877,7 @@ add_image_list (gboolean   add_box_flag,
   label = gtk_label_new (add_box_flag ?
                          _("Available images:") :
                          _("On film:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

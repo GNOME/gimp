@@ -191,7 +191,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_label_set_selectable (GTK_LABEL (tip_label), TRUE);
   gtk_label_set_justify (GTK_LABEL (tip_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (tip_label), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (tip_label), 0.5, 0.0);
+  gtk_label_set_yalign (GTK_LABEL (tip_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), tip_label, TRUE, TRUE, 0);
   gtk_widget_show (tip_label);
 

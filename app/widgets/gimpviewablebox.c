@@ -619,7 +619,7 @@ gimp_viewable_box_new (GimpContainer *container,
   if (label)
     {
       l = gtk_label_new_with_mnemonic (label);
-      gtk_misc_set_alignment (GTK_MISC (l), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (l), 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), l, FALSE, FALSE, 0);
       gtk_widget_show (l);
     }

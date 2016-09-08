@@ -177,7 +177,7 @@ gimp_pickable_popup_constructed (GObject *object)
   gtk_widget_show (vbox);
 
   label = gtk_label_new (_("Images"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -204,7 +204,7 @@ gimp_pickable_popup_constructed (GObject *object)
 
   popup->priv->layer_label = label =
     gtk_label_new (_("Select an image in the left pane"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

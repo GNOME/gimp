@@ -140,7 +140,7 @@ save_dialog (WebPSaveParams *params,
 
   /* Create the label for the selecting a preset */
   preset_label = gtk_label_new (_("Preset:"));
-  gtk_misc_set_alignment (GTK_MISC (preset_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (preset_label), 0.0);
   gtk_table_attach (GTK_TABLE (table), preset_label,
                     0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);

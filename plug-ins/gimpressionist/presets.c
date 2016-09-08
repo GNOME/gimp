@@ -664,7 +664,7 @@ create_save_preset (GtkWidget *parent)
   gtk_widget_show (box);
 
   label = gtk_label_new (_("Description:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1088,7 +1088,8 @@ create_presetpage (GtkNotebook *notebook)
    * */
   gtk_widget_set_size_request (tmpw, 240, -1);
 
-  gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (tmpw), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (tmpw), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
   gtk_widget_show (tmpw);
 

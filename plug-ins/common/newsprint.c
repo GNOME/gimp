@@ -1020,7 +1020,7 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
   gtk_widget_show (hbox2);
 
   label = gtk_label_new_with_mnemonic (_("_Spot function:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

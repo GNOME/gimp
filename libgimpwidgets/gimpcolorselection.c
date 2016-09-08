@@ -219,7 +219,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_show (vbox);
 
   label = gtk_label_new (_("Current:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
@@ -228,7 +228,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   g_object_unref (new_group);
 
   label = gtk_label_new (_("Old:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 

@@ -345,7 +345,7 @@ gimp_save_dialog_add_compat_toggle (GimpSaveDialog *dialog)
 
   /* Additional information explaining what this mode does. */
   dialog->compat_info = gtk_label_new ("");
-  gtk_misc_set_alignment (GTK_MISC (dialog->compat_info), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (dialog->compat_info), 0.0);
   gimp_label_set_attributes (GTK_LABEL (dialog->compat_info),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);

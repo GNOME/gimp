@@ -411,7 +411,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
 
   tool->description_label = gtk_label_new ("");
   gtk_label_set_line_wrap (GTK_LABEL (tool->description_label), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (tool->description_label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (tool->description_label), 0.0);
   gtk_box_pack_start (GTK_BOX (main_vbox), tool->description_label,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (main_vbox), tool->description_label, 1);

@@ -500,7 +500,7 @@ tileit_dialog (void)
   gtk_widget_show (toggle);
 
   label = gtk_label_new_with_mnemonic (_("Ro_w:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3,
                     GTK_FILL | GTK_SHRINK , GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -526,7 +526,7 @@ tileit_dialog (void)
                           G_BINDING_SYNC_CREATE);
 
   label = gtk_label_new_with_mnemonic (_("Col_umn:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 3, 4,
                     GTK_FILL , GTK_FILL, 0, 0);

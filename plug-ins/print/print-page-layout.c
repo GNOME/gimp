@@ -403,7 +403,7 @@ print_offset_frame (PrintData    *data,
 
   label = gtk_label_new_with_mnemonic (_("_Left:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
@@ -424,7 +424,7 @@ print_offset_frame (PrintData    *data,
 
   label = gtk_label_new_with_mnemonic (_("_Right:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 0, 1);
   gtk_widget_show (label);
 
@@ -440,7 +440,7 @@ print_offset_frame (PrintData    *data,
 
   label = gtk_label_new_with_mnemonic (_("_Top:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
@@ -461,7 +461,7 @@ print_offset_frame (PrintData    *data,
 
   label = gtk_label_new_with_mnemonic (_("_Bottom:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 1, 2);
   gtk_widget_show (label);
 
@@ -481,7 +481,7 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("C_enter:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);

@@ -221,7 +221,7 @@ create_query_box (const gchar   *title,
   if (message)
     {
       label = gtk_label_new (message);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (query_box->vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);

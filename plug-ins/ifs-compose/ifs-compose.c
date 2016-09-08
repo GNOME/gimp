@@ -510,7 +510,7 @@ ifs_compose_trans_page (void)
   /* X */
 
   label = gtk_label_new (_("X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -524,7 +524,7 @@ ifs_compose_trans_page (void)
   /* Y */
 
   label = gtk_label_new (_("Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -538,7 +538,7 @@ ifs_compose_trans_page (void)
   /* Scale */
 
   label = gtk_label_new (_("Scale:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -552,7 +552,7 @@ ifs_compose_trans_page (void)
   /* Angle */
 
   label = gtk_label_new (_("Angle:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -566,7 +566,7 @@ ifs_compose_trans_page (void)
   /* Asym */
 
   label = gtk_label_new (_("Asymmetry:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 4, 5, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -580,7 +580,7 @@ ifs_compose_trans_page (void)
   /* Shear */
 
   label = gtk_label_new (_("Shear:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -640,7 +640,7 @@ ifs_compose_color_page (void)
   gtk_widget_show (ifsD->target_cmap->hbox);
 
   label = gtk_label_new (_("Scale hue by:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -655,7 +655,7 @@ ifs_compose_color_page (void)
   gtk_widget_show (ifsD->hue_scale_pair->spin);
 
   label = gtk_label_new (_("Scale value by:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -852,13 +852,13 @@ ifs_compose_dialog (gint32 drawable_id)
 
   page = ifs_compose_trans_page ();
   label = gtk_label_new (_("Spatial Transformation"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.5);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
   gtk_widget_show (page);
 
   page = ifs_compose_color_page ();
   label = gtk_label_new (_("Color Transformation"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.5);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
   gtk_widget_show (page);
 
@@ -868,7 +868,7 @@ ifs_compose_dialog (gint32 drawable_id)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Relative probability:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1181,7 +1181,7 @@ ifs_options_dialog (GtkWidget *parent)
       gtk_widget_show (table);
 
       label = gtk_label_new (_("Max. memory:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
@@ -1194,7 +1194,7 @@ ifs_options_dialog (GtkWidget *parent)
       gtk_widget_show (ifsOptD->memory_pair->spin);
 
       label = gtk_label_new (_("Iterations:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
@@ -1208,7 +1208,7 @@ ifs_options_dialog (GtkWidget *parent)
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Subdivide:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
@@ -1221,7 +1221,7 @@ ifs_options_dialog (GtkWidget *parent)
       gtk_widget_show (ifsOptD->subdivide_pair->spin);
 
       label = gtk_label_new (_("Spot radius:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);

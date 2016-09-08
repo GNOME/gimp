@@ -1401,7 +1401,7 @@ offsets_dialog (gint offset_x,
                                "this offset to the layer?"),
                              offset_x, offset_y);
   label = gtk_label_new (message);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);

@@ -471,7 +471,8 @@ create_frame (void)
 
   frame = gimp_frame_new ("Frame");
   content = gtk_label_new ("Frame Content\nThis Frame is HIG compliant");
-  gtk_misc_set_alignment (GTK_MISC (content), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (content), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (content), 0.0);
   gtk_container_add (GTK_CONTAINER (frame), content);
 
   return new_widget_info ("gimp-widget-frame", frame, MEDIUM);

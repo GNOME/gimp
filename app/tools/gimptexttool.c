@@ -1551,7 +1551,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                            "\n\n"
                            "You can edit the layer or create a new "
                            "text layer from its text attributes."));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

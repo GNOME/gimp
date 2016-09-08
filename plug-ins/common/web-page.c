@@ -261,7 +261,7 @@ webpage_dialog (void)
   gtk_widget_show (vbox);
 
   label = gtk_label_new (_("Enter location (URI):"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -286,7 +286,7 @@ webpage_dialog (void)
   label = gtk_label_new (_("Width (pixels):"));
   gtk_size_group_add_widget (sizegroup, label);
 
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -307,7 +307,7 @@ webpage_dialog (void)
   label = gtk_label_new (_("Font size:"));
   gtk_size_group_add_widget (sizegroup, label);
 
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

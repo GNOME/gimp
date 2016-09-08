@@ -210,7 +210,7 @@ module_dialog_new (Gimp *gimp)
   gtk_widget_show (image);
 
   dialog->error_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (dialog->error_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (dialog->error_label), 0.0);
   gtk_box_pack_start (GTK_BOX (dialog->error_box),
                       dialog->error_label, TRUE, TRUE, 0);
   gtk_widget_show (dialog->error_label);
@@ -506,13 +506,13 @@ dialog_info_init (ModuleDialog *dialog,
   for (i = 0; i < G_N_ELEMENTS (text); i++)
     {
       label = gtk_label_new (gettext (text[i]));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i + 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
       gtk_widget_show (label);
 
       dialog->label[i] = gtk_label_new ("");
-      gtk_misc_set_alignment (GTK_MISC (dialog->label[i]), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (dialog->label[i]), 0.0);
       gtk_label_set_ellipsize (GTK_LABEL (dialog->label[i]),
                                PANGO_ELLIPSIZE_END);
       gtk_table_attach (GTK_TABLE (dialog->table), dialog->label[i],

@@ -66,7 +66,7 @@ GtkWidget*
 create_label_in_table(GtkWidget *table, int row, int col, const char *text)
 {
    GtkWidget *label = gtk_label_new_with_mnemonic(text);
-   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
+   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
    return add_widget_to_table(table, row, col, label);
 }
 

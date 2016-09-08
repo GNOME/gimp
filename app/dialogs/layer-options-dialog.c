@@ -140,13 +140,13 @@ layer_options_dialog_new (GimpImage    *image,
 
       /*  The size labels  */
       label = gtk_label_new (_("Width:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Height:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
       gtk_widget_show (label);

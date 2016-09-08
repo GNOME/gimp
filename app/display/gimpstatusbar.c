@@ -213,7 +213,6 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     statusbar);
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
-  gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cursor_label);
 
