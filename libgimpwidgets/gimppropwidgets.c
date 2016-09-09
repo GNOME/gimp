@@ -1286,9 +1286,10 @@ gimp_prop_hscale_new (GObject     *config,
   adjustment = gtk_adjustment_new (value, lower, upper,
                                    step_increment, page_increment, 0.0);
 
-  scale = g_object_new (GTK_TYPE_HSCALE,
-                        "adjustment", adjustment,
-                        "digits",     digits,
+  scale = g_object_new (GTK_TYPE_SCALE,
+                        "orientation", GTK_ORIENTATION_HORIZONTAL,
+                        "adjustment",  adjustment,
+                        "digits",      digits,
                         NULL);
 
   set_param_spec (G_OBJECT (adjustment), scale, param_spec);
