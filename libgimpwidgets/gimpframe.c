@@ -149,7 +149,7 @@ gimp_frame_size_allocate (GtkWidget     *widget,
   GtkWidget     *child        = gtk_bin_get_child (GTK_BIN (widget));
   GtkAllocation  child_allocation;
 
-  gtk_widget_set_allocation (widget, allocation);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   gimp_frame_child_allocate (frame, &child_allocation);
 

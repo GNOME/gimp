@@ -863,7 +863,7 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
   resized = (widget_allocation.width  != allocation->width ||
              widget_allocation.height != allocation->height);
 
-  gtk_widget_set_allocation (widget, allocation);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   if (gtk_widget_get_realized (widget))
     {
