@@ -855,6 +855,13 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
 {
   GimpRuler        *ruler = GIMP_RULER (widget);
   GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkAllocation     widget_allocation;
+  gboolean          resized;
+
+  gtk_widget_get_allocation (widget, &widget_allocation);
+
+  resized = (widget_allocation.width  != allocation->width ||
+             widget_allocation.height != allocation->height);
 
   gtk_widget_set_allocation (widget, allocation);
 
@@ -864,7 +871,8 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
                               allocation->x, allocation->y,
                               allocation->width, allocation->height);
 
-      gimp_ruler_make_pixmap (ruler);
+      if (resized)
+        gimp_ruler_make_pixmap (ruler);
     }
 }
 
