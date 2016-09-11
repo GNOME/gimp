@@ -300,7 +300,7 @@ gimp_action_history_excluded_action (const gchar *action_name)
           g_str_has_prefix (action_name, "plug-in-recent-") ||
           g_strcmp0 (action_name, "plug-in-repeat") == 0    ||
           g_strcmp0 (action_name, "plug-in-reshow") == 0    ||
-          g_strcmp0 (action_name, "help-action-search") == 0);
+          g_strcmp0 (action_name, "dialogs-action-search") == 0);
 }
 
 /* Callback run on the `activate` signal of an action.
