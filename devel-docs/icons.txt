@@ -70,7 +70,7 @@ Symbolic as well as the Color icons drawn before adding them.
 Pixel perfection
 ----------------
 
-Even as vectorial, icons should be pixel-perfect when possible.
+Even as vector images, icons should be pixel-perfect when possible.
 Therefore the first step before making an icon is to determine which
 size it is supposed to appear at.
 If the icon could appear in several sizes:

@@ -7,7 +7,7 @@ icons_DATA = \
 
 include $(top_srcdir)/icons/icon-list.mk
 
-# Vectorial icons are now committed into the repository.
+# Vector icons are now committed into the repository.
 # librsvg is just too buggy to handle build-time extraction with
 # acceptable quality.
 #scalable/%.svg: color-scalable.svg ../../tools/compute-svg-viewbox

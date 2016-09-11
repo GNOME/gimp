@@ -2084,9 +2084,9 @@ AM_CONDITIONAL(HAVE_XMLLINT, test "x$XMLLINT" != "xno")
 AC_PATH_PROG(XSLTPROC, xsltproc, no)
 AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 
-###########################
-# Check for vectorial icons
-###########################
+########################
+# Check for vector icons
+########################
 
 AC_ARG_ENABLE(vector-icons, [  --enable-vector-icons   generate vector icons], ,
               enable_vector_icons=no)
@@ -2580,7 +2580,7 @@ Extra Binaries:
 
 Optional Features:
   Language selection:  $have_iso_codes
-  Vectorial icons:     $enable_vector_icons
+  Vector icons:        $enable_vector_icons
   Dr. Mingw (Win32):   $enable_drmingw
 
 Optional Plug-Ins:
