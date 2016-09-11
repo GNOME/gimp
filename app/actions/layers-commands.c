@@ -68,6 +68,7 @@
 #include "tools/gimptexttool.h"
 #include "tools/tool_manager.h"
 
+#include "dialogs/dialogs.h"
 #include "dialogs/layer-add-mask-dialog.h"
 #include "dialogs/layer-options-dialog.h"
 #include "dialogs/resize-dialog.h"
@@ -610,30 +611,42 @@ void
 layers_resize_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
-  GimpDisplay *display = NULL;
-  GimpImage   *image;
-  GimpLayer   *layer;
-  GtkWidget   *widget;
-  GtkWidget   *dialog;
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  GtkWidget *dialog;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  if (GIMP_IS_IMAGE_WINDOW (data))
-    display = action_data_get_display (data);
+#define RESIZE_DIALOG_KEY "gimp-resize-dialog"
 
-  if (layer_resize_unit != GIMP_UNIT_PERCENT && display)
-    layer_resize_unit = gimp_display_get_shell (display)->unit;
+  dialog = dialogs_get_dialog (G_OBJECT (layer), RESIZE_DIALOG_KEY);
 
-  dialog = resize_dialog_new (GIMP_VIEWABLE (layer),
-                              action_data_get_context (data),
-                              _("Set Layer Boundary Size"), "gimp-layer-resize",
-                              widget,
-                              gimp_standard_help_func, GIMP_HELP_LAYER_RESIZE,
-                              layer_resize_unit,
-                              layers_resize_layer_callback,
-                              action_data_get_context (data));
+  if (! dialog)
+    {
+      GimpDisplay *display = NULL;
 
-  gtk_widget_show (dialog);
+      if (GIMP_IS_IMAGE_WINDOW (data))
+        display = action_data_get_display (data);
+
+      if (layer_resize_unit != GIMP_UNIT_PERCENT && display)
+        layer_resize_unit = gimp_display_get_shell (display)->unit;
+
+      dialog = resize_dialog_new (GIMP_VIEWABLE (layer),
+                                  action_data_get_context (data),
+                                  _("Set Layer Boundary Size"),
+                                  "gimp-layer-resize",
+                                  widget,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_LAYER_RESIZE,
+                                  layer_resize_unit,
+                                  layers_resize_layer_callback,
+                                  action_data_get_context (data));
+
+      dialogs_attach_dialog (G_OBJECT (layer), RESIZE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void

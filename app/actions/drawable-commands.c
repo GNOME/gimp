@@ -35,6 +35,7 @@
 #include "core/gimplayermask.h"
 #include "core/gimpprogress.h"
 
+#include "dialogs/dialogs.h"
 #include "dialogs/offset-dialog.h"
 
 #include "actions.h"
@@ -189,9 +190,20 @@ drawable_offset_cmd_callback (GtkAction *action,
   return_if_no_drawable (image, drawable, data);
   return_if_no_widget (widget, data);
 
-  dialog = offset_dialog_new (drawable, action_data_get_context (data),
-                              widget);
-  gtk_widget_show (dialog);
+#define OFFSET_DIALOG_KEY "gimp-offset-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (drawable), OFFSET_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = offset_dialog_new (drawable, action_data_get_context (data),
+                                  widget);
+
+      dialogs_attach_dialog (G_OBJECT (drawable),
+                             OFFSET_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 

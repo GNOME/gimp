@@ -58,6 +58,7 @@
 #include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 
+#include "dialogs/dialogs.h"
 #include "dialogs/fill-dialog.h"
 #include "dialogs/stroke-dialog.h"
 #include "dialogs/vectors-export-dialog.h"
@@ -397,13 +398,24 @@ vectors_fill_cmd_callback (GtkAction *action,
       return;
     }
 
-  dialog = fill_dialog_new (GIMP_ITEM (vectors),
-                            action_data_get_context (data),
-                            _("Fill Path"),
-                            GIMP_STOCK_TOOL_BUCKET_FILL,
-                            GIMP_HELP_PATH_FILL,
-                            widget);
-  gtk_widget_show (dialog);
+
+#define FILL_DIALOG_KEY "gimp-vectors-fill-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (drawable), FILL_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = fill_dialog_new (GIMP_ITEM (vectors),
+                                action_data_get_context (data),
+                                _("Fill Path"),
+                                GIMP_STOCK_TOOL_BUCKET_FILL,
+                                GIMP_HELP_PATH_FILL,
+                                widget);
+
+      dialogs_attach_dialog (G_OBJECT (drawable), FILL_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -474,13 +486,23 @@ vectors_stroke_cmd_callback (GtkAction *action,
       return;
     }
 
-  dialog = stroke_dialog_new (GIMP_ITEM (vectors),
-                              action_data_get_context (data),
-                              _("Stroke Path"),
-                              GIMP_STOCK_PATH_STROKE,
-                              GIMP_HELP_PATH_STROKE,
-                              widget);
-  gtk_widget_show (dialog);
+#define STROKE_DIALOG_KEY "gimp-vectors-stroke-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (drawable), STROKE_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = stroke_dialog_new (GIMP_ITEM (vectors),
+                                  action_data_get_context (data),
+                                  _("Stroke Path"),
+                                  GIMP_STOCK_PATH_STROKE,
+                                  GIMP_HELP_PATH_STROKE,
+                                  widget);
+
+      dialogs_attach_dialog (G_OBJECT (drawable), STROKE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void

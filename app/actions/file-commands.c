@@ -57,15 +57,13 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
+#include "dialogs/dialogs.h"
 #include "dialogs/file-save-dialog.h"
 
 #include "actions.h"
 #include "file-commands.h"
 
 #include "gimp-intl.h"
-
-
-#define REVERT_DATA_KEY "revert-confirm-dialog"
 
 
 /*  local function prototypes  */
@@ -89,13 +87,9 @@ static GtkWidget * file_export_dialog_show      (Gimp         *gimp,
 static void        file_save_dialog_response    (GtkWidget    *dialog,
                                                  gint          response_id,
                                                  gpointer      data);
-static void        file_save_dialog_destroyed   (GtkWidget    *dialog,
-                                                 GimpImage    *image);
 static void        file_export_dialog_response  (GtkWidget    *dialog,
                                                  gint          response_id,
                                                  gpointer      data);
-static void        file_export_dialog_destroyed (GtkWidget    *dialog,
-                                                 GimpImage    *image);
 static void        file_new_template_callback   (GtkWidget    *widget,
                                                  const gchar  *name,
                                                  gpointer      data);
@@ -423,20 +417,20 @@ file_revert_cmd_callback (GtkAction *action,
   if (! file)
     file = gimp_image_get_imported_file (image);
 
-  dialog = g_object_get_data (G_OBJECT (image), REVERT_DATA_KEY);
-
   if (! file)
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (display), GIMP_MESSAGE_ERROR,
                             _("Revert failed. "
                               "No file name associated with this image."));
+      return;
     }
-  else if (dialog)
-    {
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
-  else
+
+#define REVERT_DIALOG_KEY "gimp-revert-confirm-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (image), REVERT_DIALOG_KEY);
+
+  if (! dialog)
     {
       dialog =
         gimp_message_dialog_new (_("Revert Image"), "document-revert",
@@ -472,10 +466,10 @@ file_revert_cmd_callback (GtkAction *action,
                                    "on disk, you will lose all changes, "
                                    "including all undo information."));
 
-      g_object_set_data (G_OBJECT (image), REVERT_DATA_KEY, dialog);
-
-      gtk_widget_show (dialog);
+      dialogs_attach_dialog (G_OBJECT (image), REVERT_DIALOG_KEY, dialog);
     }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -638,7 +632,9 @@ file_save_dialog_show (Gimp        *gimp,
 {
   GtkWidget *dialog;
 
-  dialog = g_object_get_data (G_OBJECT (image), "gimp-file-save-dialog");
+#define SAVE_DIALOG_KEY "gimp-file-save-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (image), SAVE_DIALOG_KEY);
 
   if (! dialog)
     {
@@ -654,14 +650,13 @@ file_save_dialog_show (Gimp        *gimp,
           gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                         GTK_WINDOW (gtk_widget_get_toplevel (parent)));
 
-          g_object_set_data_full (G_OBJECT (image),
-                                  "gimp-file-save-dialog", dialog,
-                                  (GDestroyNotify) gtk_widget_destroy);
+          dialogs_attach_dialog (G_OBJECT (image), SAVE_DIALOG_KEY, dialog);
+          g_signal_connect_object (image, "disconnect",
+                                   G_CALLBACK (gtk_widget_destroy),
+                                   dialog, G_CONNECT_SWAPPED);
+
           g_signal_connect (dialog, "response",
                             G_CALLBACK (file_save_dialog_response),
-                            image);
-          g_signal_connect (dialog, "destroy",
-                            G_CALLBACK (file_save_dialog_destroyed),
                             image);
         }
     }
@@ -713,14 +708,6 @@ file_save_dialog_response (GtkWidget *dialog,
     }
 }
 
-static void
-file_save_dialog_destroyed (GtkWidget *dialog,
-                            GimpImage *image)
-{
-  if (GIMP_FILE_DIALOG (dialog)->image == image)
-    g_object_set_data (G_OBJECT (image), "gimp-file-save-dialog", NULL);
-}
-
 static GtkWidget *
 file_export_dialog_show (Gimp      *gimp,
                          GimpImage *image,
@@ -728,7 +715,9 @@ file_export_dialog_show (Gimp      *gimp,
 {
   GtkWidget *dialog;
 
-  dialog = g_object_get_data (G_OBJECT (image), "gimp-file-export-dialog");
+#define EXPORT_DIALOG_KEY "gimp-file-export-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY);
 
   if (! dialog)
     {
@@ -744,14 +733,13 @@ file_export_dialog_show (Gimp      *gimp,
           gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                         GTK_WINDOW (gtk_widget_get_toplevel (parent)));
 
-          g_object_set_data_full (G_OBJECT (image),
-                                  "gimp-file-export-dialog", dialog,
-                                  (GDestroyNotify) gtk_widget_destroy);
+          dialogs_attach_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY, dialog);
+          g_signal_connect_object (image, "disconnect",
+                                   G_CALLBACK (gtk_widget_destroy),
+                                   dialog, G_CONNECT_SWAPPED);
+
           g_signal_connect (dialog, "response",
                             G_CALLBACK (file_export_dialog_response),
-                            image);
-          g_signal_connect (dialog, "destroy",
-                            G_CALLBACK (file_export_dialog_destroyed),
                             image);
         }
     }
@@ -802,14 +790,6 @@ file_export_dialog_response (GtkWidget *dialog,
 }
 
 static void
-file_export_dialog_destroyed (GtkWidget *dialog,
-                              GimpImage *image)
-{
-  if (GIMP_FILE_DIALOG (dialog)->image == image)
-    g_object_set_data (G_OBJECT (image), "gimp-file-export-dialog", NULL);
-}
-
-static void
 file_new_template_callback (GtkWidget   *widget,
                             const gchar *name,
                             gpointer     data)
@@ -836,8 +816,6 @@ file_revert_confirm_response (GtkWidget   *dialog,
   GimpImage *old_image = gimp_display_get_image (display);
 
   gtk_widget_destroy (dialog);
-
-  g_object_set_data (G_OBJECT (old_image), REVERT_DATA_KEY, NULL);
 
   if (response_id == GTK_RESPONSE_OK)
     {

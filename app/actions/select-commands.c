@@ -41,6 +41,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "dialogs/dialogs.h"
 #include "dialogs/fill-dialog.h"
 #include "dialogs/stroke-dialog.h"
 
@@ -135,31 +136,41 @@ void
 select_feather_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDialogConfig *config;
-  GtkWidget        *dialog;
-  gdouble           xres;
-  gdouble           yres;
+  GimpDisplay *display;
+  GimpImage   *image;
+  GtkWidget   *dialog;
   return_if_no_display (display, data);
 
-  image  = gimp_display_get_image (display);
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  image = gimp_display_get_image (display);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+#define FEATHER_DIALOG_KEY "gimp-selection-feather-dialog"
 
-  dialog = gimp_query_size_box (_("Feather Selection"),
-                                GTK_WIDGET (gimp_display_get_shell (display)),
-                                gimp_standard_help_func,
-                                GIMP_HELP_SELECTION_FEATHER,
-                                _("Feather selection by"),
-                                config->selection_feather_radius, 0, 32767, 3,
-                                gimp_display_get_shell (display)->unit,
-                                MIN (xres, yres),
-                                FALSE,
-                                G_OBJECT (image), "disconnect",
-                                select_feather_callback, image);
-  gtk_widget_show (dialog);
+  dialog = dialogs_get_dialog (G_OBJECT (image), FEATHER_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      gdouble           xres;
+      gdouble           yres;
+
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      dialog = gimp_query_size_box (_("Feather Selection"),
+                                    GTK_WIDGET (gimp_display_get_shell (display)),
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_SELECTION_FEATHER,
+                                    _("Feather selection by"),
+                                    config->selection_feather_radius, 0, 32767, 3,
+                                    gimp_display_get_shell (display)->unit,
+                                    MIN (xres, yres),
+                                    FALSE,
+                                    G_OBJECT (image), "disconnect",
+                                    select_feather_callback, image);
+
+      dialogs_attach_dialog (G_OBJECT (image), FEATHER_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -177,136 +188,165 @@ void
 select_shrink_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDialogConfig *config;
-  GtkWidget        *dialog;
-  GtkWidget        *button;
-  gdouble           xres;
-  gdouble           yres;
+  GimpDisplay *display;
+  GimpImage   *image;
+  GtkWidget   *dialog;
   return_if_no_display (display, data);
 
-  image  = gimp_display_get_image (display);
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  image = gimp_display_get_image (display);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+#define SHRINK_DIALOG_KEY "gimp-selection-shrink-dialog"
 
-  dialog = gimp_query_size_box (_("Shrink Selection"),
-                                GTK_WIDGET (gimp_display_get_shell (display)),
-                                gimp_standard_help_func,
-                                GIMP_HELP_SELECTION_SHRINK,
-                                _("Shrink selection by"),
-                                config->selection_shrink_radius, 1, 32767, 0,
-                                gimp_display_get_shell (display)->unit,
-                                MIN (xres, yres),
-                                FALSE,
-                                G_OBJECT (image), "disconnect",
-                                select_shrink_callback, image);
+  dialog = dialogs_get_dialog (G_OBJECT (image), SHRINK_DIALOG_KEY);
 
-  /* Edge lock button */
-  button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
-  g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
-  gimp_help_set_help_data (button,
-                           _("When shrinking, act as if selected areas "
-                             "continued outside the image."),
-                           NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                config->selection_shrink_edge_lock);
-  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GtkWidget        *button;
+      gdouble           xres;
+      gdouble           yres;
 
-  gtk_widget_show (dialog);
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      dialog = gimp_query_size_box (_("Shrink Selection"),
+                                    GTK_WIDGET (gimp_display_get_shell (display)),
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_SELECTION_SHRINK,
+                                    _("Shrink selection by"),
+                                    config->selection_shrink_radius, 1, 32767, 0,
+                                    gimp_display_get_shell (display)->unit,
+                                    MIN (xres, yres),
+                                    FALSE,
+                                    G_OBJECT (image), "disconnect",
+                                    select_shrink_callback, image);
+
+      /* Edge lock button */
+      button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
+      g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
+      gimp_help_set_help_data (button,
+                               _("When shrinking, act as if selected areas "
+                                 "continued outside the image."),
+                               NULL);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                    config->selection_shrink_edge_lock);
+      gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      dialogs_attach_dialog (G_OBJECT (image), SHRINK_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
 select_grow_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDialogConfig *config;
-  GtkWidget        *dialog;
-  gdouble           xres;
-  gdouble           yres;
+  GimpDisplay *display;
+  GimpImage   *image;
+  GtkWidget   *dialog;
   return_if_no_display (display, data);
 
-  image  = gimp_display_get_image (display);
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  image = gimp_display_get_image (display);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+#define GROW_DIALOG_KEY "gimp-selection-grow-dialog"
 
-  dialog = gimp_query_size_box (_("Grow Selection"),
-                                GTK_WIDGET (gimp_display_get_shell (display)),
-                                gimp_standard_help_func,
-                                GIMP_HELP_SELECTION_GROW,
-                                _("Grow selection by"),
-                                config->selection_grow_radius, 1, 32767, 0,
-                                gimp_display_get_shell (display)->unit,
-                                MIN (xres, yres),
-                                FALSE,
-                                G_OBJECT (image), "disconnect",
-                                select_grow_callback, image);
-  gtk_widget_show (dialog);
+  dialog = dialogs_get_dialog (G_OBJECT (image), GROW_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      gdouble           xres;
+      gdouble           yres;
+
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      dialog = gimp_query_size_box (_("Grow Selection"),
+                                    GTK_WIDGET (gimp_display_get_shell (display)),
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_SELECTION_GROW,
+                                    _("Grow selection by"),
+                                    config->selection_grow_radius, 1, 32767, 0,
+                                    gimp_display_get_shell (display)->unit,
+                                    MIN (xres, yres),
+                                    FALSE,
+                                    G_OBJECT (image), "disconnect",
+                                    select_grow_callback, image);
+
+      dialogs_attach_dialog (G_OBJECT (image), GROW_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
 select_border_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDialogConfig *config;
-  GtkWidget        *dialog;
-  GtkWidget        *combo;
-  GtkWidget        *button;
-  gdouble           xres;
-  gdouble           yres;
+  GimpDisplay *display;
+  GimpImage   *image;
+  GtkWidget   *dialog;
   return_if_no_display (display, data);
 
-  image  = gimp_display_get_image (display);
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  image = gimp_display_get_image (display);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+#define BORDER_DIALOG_KEY "gimp-selection-border-dialog"
 
-  dialog = gimp_query_size_box (_("Border Selection"),
-                                GTK_WIDGET (gimp_display_get_shell (display)),
-                                gimp_standard_help_func,
-                                GIMP_HELP_SELECTION_BORDER,
-                                _("Border selection by"),
-                                config->selection_border_radius, 1, 32767, 0,
-                                gimp_display_get_shell (display)->unit,
-                                MIN (xres, yres),
-                                FALSE,
-                                G_OBJECT (image), "disconnect",
-                                select_border_callback, image);
+  dialog = dialogs_get_dialog (G_OBJECT (image), BORDER_DIALOG_KEY);
 
-  /* Border style combo */
-  combo = gimp_enum_combo_box_new (GIMP_TYPE_CHANNEL_BORDER_STYLE);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Border style"));
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GtkWidget        *combo;
+      GtkWidget        *button;
+      gdouble           xres;
+      gdouble           yres;
 
-  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), combo,
-                      FALSE, FALSE, 0);
+      gimp_image_get_resolution (image, &xres, &yres);
 
-  g_object_set_data (G_OBJECT (dialog), "border-style-combo", combo);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 config->selection_border_style);
-  gtk_widget_show (combo);
+      dialog = gimp_query_size_box (_("Border Selection"),
+                                    GTK_WIDGET (gimp_display_get_shell (display)),
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_SELECTION_BORDER,
+                                    _("Border selection by"),
+                                    config->selection_border_radius, 1, 32767, 0,
+                                    gimp_display_get_shell (display)->unit,
+                                    MIN (xres, yres),
+                                    FALSE,
+                                    G_OBJECT (image), "disconnect",
+                                    select_border_callback, image);
 
-  /* Edge lock button */
-  button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
-  g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
-  gimp_help_set_help_data (button,
-                           _("When bordering, act as if selected areas "
-                             "continued outside the image."),
-                           NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                config->selection_border_edge_lock);
-  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (button);
+      /* Border style combo */
+      combo = gimp_enum_combo_box_new (GIMP_TYPE_CHANNEL_BORDER_STYLE);
+      gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo),
+                                    _("Border style"));
 
-  gtk_widget_show (dialog);
+      gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), combo,
+                          FALSE, FALSE, 0);
+
+      g_object_set_data (G_OBJECT (dialog), "border-style-combo", combo);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     config->selection_border_style);
+      gtk_widget_show (combo);
+
+      /* Edge lock button */
+      button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
+      g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
+      gimp_help_set_help_data (button,
+                               _("When bordering, act as if selected areas "
+                                 "continued outside the image."),
+                               NULL);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                    config->selection_border_edge_lock);
+      gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      dialogs_attach_dialog (G_OBJECT (image), BORDER_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -361,13 +401,23 @@ select_fill_cmd_callback (GtkAction *action,
       return;
     }
 
-  dialog = fill_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
-                            action_data_get_context (data),
-                            _("Fill Selection Outline"),
-                            GIMP_STOCK_TOOL_BUCKET_FILL,
-                            GIMP_HELP_SELECTION_FILL,
-                            widget);
-  gtk_widget_show (dialog);
+#define FILL_DIALOG_KEY "gimp-selection-fill-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (drawable), FILL_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = fill_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
+                                action_data_get_context (data),
+                                _("Fill Selection Outline"),
+                                GIMP_STOCK_TOOL_BUCKET_FILL,
+                                GIMP_HELP_SELECTION_FILL,
+                                widget);
+
+      dialogs_attach_dialog (G_OBJECT (drawable), FILL_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -437,13 +487,23 @@ select_stroke_cmd_callback (GtkAction *action,
       return;
     }
 
-  dialog = stroke_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
-                              action_data_get_context (data),
-                              _("Stroke Selection"),
-                              GIMP_STOCK_SELECTION_STROKE,
-                              GIMP_HELP_SELECTION_STROKE,
-                              widget);
-  gtk_widget_show (dialog);
+#define STROKE_DIALOG_KEY "gimp-selection-stroke-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (drawable), STROKE_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = stroke_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
+                                  action_data_get_context (data),
+                                  _("Stroke Selection"),
+                                  GIMP_STOCK_SELECTION_STROKE,
+                                  GIMP_HELP_SELECTION_STROKE,
+                                  widget);
+
+      dialogs_attach_dialog (G_OBJECT (drawable), STROKE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void

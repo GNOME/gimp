@@ -33,4 +33,16 @@ void        dialogs_save_recent_docks (Gimp            *gimp);
 GtkWidget * dialogs_get_toolbox       (void);
 
 
+/* attaching dialogs to arbitrary objects, and detaching them
+ * automatically upon destruction
+ */
+GtkWidget * dialogs_get_dialog        (GObject         *attach_object,
+                                       const gchar     *attach_key);
+void        dialogs_attach_dialog     (GObject         *attach_object,
+                                       const gchar     *attach_key,
+                                       GtkWidget       *dialog);
+void        dialogs_detach_dialog     (GObject         *attach_object,
+                                       GtkWidget       *dialog);
+
+
 #endif /* __DIALOGS_H__ */

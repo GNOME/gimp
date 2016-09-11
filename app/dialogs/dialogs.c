@@ -679,3 +679,53 @@ dialogs_get_toolbox (void)
 
   return NULL;
 }
+
+GtkWidget *
+dialogs_get_dialog (GObject     *attach_object,
+                    const gchar *attach_key)
+{
+  g_return_val_if_fail (G_IS_OBJECT (attach_object), NULL);
+  g_return_val_if_fail (attach_key != NULL, NULL);
+
+  return g_object_get_data (attach_object, attach_key);
+}
+
+void
+dialogs_attach_dialog (GObject     *attach_object,
+                       const gchar *attach_key,
+                       GtkWidget   *dialog)
+{
+  g_return_if_fail (G_IS_OBJECT (attach_object));
+  g_return_if_fail (attach_key != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
+
+  g_object_set_data (attach_object, attach_key, dialog);
+  g_object_set_data (G_OBJECT (dialog), "gimp-dialogs-attach-key",
+                     (gpointer) attach_key);
+
+  g_signal_connect_object (dialog, "destroy",
+                           G_CALLBACK (dialogs_detach_dialog),
+                           attach_object,
+                           G_CONNECT_SWAPPED);
+}
+
+void
+dialogs_detach_dialog (GObject   *attach_object,
+                       GtkWidget *dialog)
+{
+  const gchar *attach_key;
+
+  g_return_if_fail (G_IS_OBJECT (attach_object));
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
+
+  attach_key = g_object_get_data (G_OBJECT (dialog),
+                                  "gimp-dialogs-attach-key");
+
+  g_return_if_fail (attach_key != NULL);
+
+  g_object_set_data (attach_object, attach_key, NULL);
+
+  g_signal_handlers_disconnect_by_func (dialog,
+                                        dialogs_detach_dialog,
+                                        attach_object);
+}
