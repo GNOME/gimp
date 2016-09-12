@@ -98,6 +98,7 @@ app/core/core-enums.c
 app/core/gimp.c
 app/core/gimp-batch.c
 app/core/gimp-contexts.c
+app/core/gimp-data-factories.c
 app/core/gimp-edit.c
 app/core/gimp-gradients.c
 app/core/gimp-gui.c
