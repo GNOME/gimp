@@ -13,6 +13,7 @@ scalable_images = \
 	scalable/edit-paste.svg						\
 	scalable/edit-redo.svg						\
 	scalable/edit-undo.svg						\
+	scalable/folder-new.svg						\
 	scalable/format-indent-more.svg				\
 	scalable/go-bottom.svg						\
 	scalable/go-down.svg						\
@@ -501,6 +502,7 @@ icons16_images = \
 	16/edit-paste.png							\
 	16/edit-redo.png							\
 	16/edit-undo.png							\
+	16/folder-new.png							\
 	16/go-bottom.png							\
 	16/go-down.png								\
 	16/go-first.png								\

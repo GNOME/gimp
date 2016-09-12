@@ -49,9 +49,9 @@
      inkscape:window-height="741"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="1.1847467"
-     inkscape:cx="104.79558"
-     inkscape:cy="-95.942855"
+     inkscape:zoom="4.7389868"
+     inkscape:cx="34.897208"
+     inkscape:cy="-84.768784"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -6419,15 +6419,6 @@
        y1="-33"
        x2="8"
        y2="-33"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient19282-4"
-       id="linearGradient8286"
-       x1="15"
-       y1="-32"
-       x2="31"
-       y2="-32"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
@@ -18508,6 +18499,25 @@
        x2="15.200001"
        y2="1044.3622"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient9239"
+       gradientUnits="userSpaceOnUse"
+       x1="15"
+       y1="-32"
+       x2="31"
+       y2="-32" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient9254"
+       gradientUnits="userSpaceOnUse"
+       x1="15"
+       y1="-32"
+       x2="31"
+       y2="-32"
+       gradientTransform="translate(87.2708,506.4328)" />
   </defs>
   <g
      inkscape:groupmode="layer"
@@ -23442,24 +23452,6 @@
          style="opacity:0.3;fill:url(#linearGradient8280);fill-opacity:1;stroke:none" />
     </g>
     <g
-       id="gimp-prefs-folders"
-       inkscape:label="gimp-prefs-folders"
-       transform="translate(568.85139,84.04218)">
-      <path
-         sodipodi:nodetypes="ccccccccccsccccccccccc"
-         id="rect3845"
-         d="M 15.53125,-40 C 15.24212,-40 15,-39.75788 15,-39.46875 l 0,14.93755 C 15,-24.2327 15.23264,-24 15.53125,-24 l 14.9375,0 C 30.76735,-24 31,-24.2326 31,-24.5312 l 0,-9.9376 C 31,-34.7579 30.75788,-35 30.46875,-35 L 18,-35 l 0,8.5 c 0,0.277 -0.223,0.5 -0.5,0.5 -0.277,0 -0.5,-0.223 -0.5,-0.5 l 0,-9 c 0,-0.277 0.223,-0.5 0.5,-0.5 l 2.96875,0 8.53125,0 0,-1.4062 C 29,-37.7334 28.73334,-38 28.40625,-38 L 21,-38 21,-39.46875 C 21,-39.7579 20.75788,-40 20.46875,-40 Z"
-         style="display:inline;fill:url(#linearGradient8286);fill-opacity:1;stroke:none"
-         inkscape:connector-curvature="0" />
-      <rect
-         y="-40"
-         x="15"
-         height="16"
-         width="16"
-         id="rect14152"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
-    </g>
-    <g
        id="gimp-prefs-folders-brushes"
        inkscape:label="gimp-prefs-folders-brushes"
        transform="translate(527.07332,103.28096)">
@@ -23470,8 +23462,8 @@
         <g
            style="display:inline"
            transform="translate(-192.9998,-1036)"
-           inkscape:label="folder"
-           id="folder">
+           inkscape:label=""
+           id="folder-1">
           <path
              sodipodi:nodetypes="sssssssscsssssccsccssscssssccssssccssssccssssccccscccccccccc"
              inkscape:connector-curvature="0"
@@ -25025,6 +25017,10 @@
         </g>
       </g>
     </g>
+    <g
+       id="g4288-3"
+       transform="matrix(1.0020323,0,0,1.0044172,-682.96602,-727.12441)"
+       style="fill:#000000;fill-opacity:1" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -37802,6 +37798,47 @@
          style="fill:#bebebe;fill-opacity:1;stroke:none"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="sssssssssccccccccccccc" />
+    </g>
+    <g
+       style="display:inline"
+       id="folder-new"
+       inkscape:label="#folder-new"
+       transform="translate(37.01439,500.71476)"
+       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/folder-new.png"
+       inkscape:export-xdpi="423.35001"
+       inkscape:export-ydpi="423.35001">
+      <path
+         style="display:inline;fill:url(#linearGradient9254);fill-opacity:1;stroke:none"
+         d="m 102.80273,466.43359 c -0.28913,0 -0.53125,0.24212 -0.53125,0.53125 l 0,14.9375 c 0,0.2985 0.23264,0.53125 0.53125,0.53125 l 14.9375,0 c 0.2986,0 0.53125,-0.23265 0.53125,-0.53125 l 0,-9.9375 c 0,-0.2891 -0.24212,-0.53125 -0.53125,-0.53125 l -12.46875,0 0,8.5 c 0,0.277 -0.223,0.5 -0.5,0.5 -0.277,0 -0.5,-0.223 -0.5,-0.5 l 0,-9 c 0,-0.277 0.223,-0.5 0.5,-0.5 l 2.96875,0 8.53125,0 0,-1.40625 c 0,-0.3272 -0.26666,-0.59375 -0.59375,-0.59375 l -7.40625,0 0,-1.46875 c 0,-0.28915 -0.24212,-0.53125 -0.53125,-0.53125 l -4.9375,0 z m 8.21289,6.28125 2,0 0,3 3,0 0,2 -3,0 0,3 -2,0 0,-3 -3,0 0,-2 3,0 0,-3 z"
+         transform="translate(-87.2708,-506.4328)"
+         id="rect3845-53"
+         inkscape:connector-curvature="0" />
+      <rect
+         y="-40"
+         x="15"
+         height="16"
+         width="16"
+         id="rect14152-5"
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
+    </g>
+    <g
+       style="display:inline"
+       id="folder"
+       inkscape:label="#folder"
+       transform="translate(11.01507,500.71476)">
+      <path
+         sodipodi:nodetypes="ccccccccccsccccccccccc"
+         id="rect3845"
+         d="M 15.53125,-40 C 15.24212,-40 15,-39.75788 15,-39.46875 l 0,14.93755 C 15,-24.2327 15.23264,-24 15.53125,-24 l 14.9375,0 C 30.76735,-24 31,-24.2326 31,-24.5312 l 0,-9.9376 C 31,-34.7579 30.75788,-35 30.46875,-35 L 18,-35 l 0,8.5 c 0,0.277 -0.223,0.5 -0.5,0.5 -0.277,0 -0.5,-0.223 -0.5,-0.5 l 0,-9 c 0,-0.277 0.223,-0.5 0.5,-0.5 l 2.96875,0 8.53125,0 0,-1.4062 C 29,-37.7334 28.73334,-38 28.40625,-38 L 21,-38 21,-39.46875 C 21,-39.7579 20.75788,-40 20.46875,-40 Z"
+         style="display:inline;fill:url(#linearGradient9239);fill-opacity:1;stroke:none"
+         inkscape:connector-curvature="0" />
+      <rect
+         y="-40"
+         x="15"
+         height="16"
+         width="16"
+         id="rect14152"
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
     </g>
   </g>
   <text
