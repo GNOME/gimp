@@ -230,6 +230,8 @@ gimp_init (Gimp *gimp)
 
   gimp->parasites = gimp_parasite_list_new ();
 
+  gimp_units_init (gimp);
+
   gimp->images = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->images), "images");
 
@@ -268,7 +270,6 @@ gimp_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_units_init (gimp);
   gimp_modules_init (gimp);
 
   gimp->plug_in_manager = gimp_plug_in_manager_new (gimp);

@@ -59,8 +59,6 @@ libapp_sources = \
 	tests.h			\
 	unique.c		\
 	unique.h		\
-	units.c			\
-	units.h			\
 	version.c		\
 	version.h		\
 	gimp-debug.c		\

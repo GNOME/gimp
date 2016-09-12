@@ -68,7 +68,6 @@
 #include "sanity.h"
 #include "signals.h"
 #include "unique.h"
-#include "units.h"
 #include "version.h"
 
 #ifdef G_OS_WIN32
@@ -716,10 +715,8 @@ gimp_option_dump_gimprc (const gchar  *option_name,
       Gimp     *gimp;
       gboolean  success;
 
-      gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
-
-      units_init (gimp);
       babl_init ();
+      gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
       success = gimp_config_dump (format);
 

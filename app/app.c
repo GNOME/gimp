@@ -61,7 +61,6 @@
 
 #include "app.h"
 #include "errors.h"
-#include "units.h"
 #include "language.h"
 #include "gimp-debug.h"
 
@@ -209,8 +208,6 @@ app_run (const gchar         *full_prog_name,
   gimp_cpu_accel_set_use (use_cpu_accel);
 
   errors_init (gimp, full_prog_name, use_debug_handler, stack_trace_mode);
-
-  units_init (gimp);
 
   /*  Check if the user's gimp_directory exists
    */
