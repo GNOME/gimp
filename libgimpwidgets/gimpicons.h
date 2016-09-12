@@ -112,7 +112,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_LINE_SPACING             "gimp-line-spacing"
 #define GIMP_STOCK_PRINT_RESOLUTION         "gimp-print-resolution"
 #define GIMP_STOCK_PATTERN                  "gimp-pattern"
-#define GIMP_STOCK_BUFFER                   "gimp-buffer"
 
 #define GIMP_STOCK_TEXT_DIR_LTR             "gimp-text-dir-ltr"
 #define GIMP_STOCK_TEXT_DIR_RTL             "gimp-text-dir-rtl"
@@ -301,6 +300,7 @@ G_BEGIN_DECLS
 /*  missing icons:  */
 
 #define GIMP_STOCK_BRUSH                    GIMP_STOCK_TOOL_PAINTBRUSH
+#define GIMP_STOCK_BUFFER                   "edit-paste"
 #define GIMP_STOCK_DETACH                   GTK_STOCK_CONVERT
 #define GIMP_STOCK_GRADIENT                 GIMP_STOCK_TOOL_BLEND
 #define GIMP_STOCK_MYPAINT_BRUSH            GIMP_STOCK_TOOL_MYPAINT_BRUSH

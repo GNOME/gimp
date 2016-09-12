@@ -7,6 +7,7 @@ scalable_images = \
 	scalable/document-save.svg					\
 	scalable/document-save-as.svg				\
 	scalable/edit-clear.svg						\
+	scalable/edit-copy.svg						\
 	scalable/edit-cut.svg						\
 	scalable/edit-paste.svg						\
 	scalable/edit-redo.svg						\
@@ -56,7 +57,6 @@ scalable_images = \
 	scalable/gtk-yes.svg						\
 												\
 	scalable/gimp-anchor.svg			\
-	scalable/gimp-buffer.svg			\
 	scalable/gimp-cap-butt.svg			\
 	scalable/gimp-cap-round.svg			\
 	scalable/gimp-cap-square.svg			\
@@ -494,6 +494,7 @@ icons16_images = \
 	16/document-save.png						\
 	16/document-save-as.png						\
 	16/edit-clear.png							\
+	16/edit-copy.png							\
 	16/edit-cut.png								\
 	16/edit-paste.png							\
 	16/edit-redo.png							\
@@ -538,7 +539,6 @@ icons16_images = \
 	16/gtk-yes.png								\
 												\
 	16/gimp-anchor.png							\
-	16/gimp-buffer.png							\
 	16/gimp-cap-butt.png						\
 	16/gimp-cap-round.png						\
 	16/gimp-cap-square.png						\
