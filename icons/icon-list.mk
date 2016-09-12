@@ -9,6 +9,7 @@ scalable_images = \
 	scalable/edit-clear.svg						\
 	scalable/edit-copy.svg						\
 	scalable/edit-cut.svg						\
+	scalable/edit-delete.svg					\
 	scalable/edit-paste.svg						\
 	scalable/edit-redo.svg						\
 	scalable/edit-undo.svg						\
@@ -496,6 +497,7 @@ icons16_images = \
 	16/edit-clear.png							\
 	16/edit-copy.png							\
 	16/edit-cut.png								\
+	16/edit-delete.png							\
 	16/edit-paste.png							\
 	16/edit-redo.png							\
 	16/edit-undo.png							\
