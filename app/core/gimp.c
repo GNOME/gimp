@@ -341,6 +341,26 @@ gimp_dispose (GObject *object)
 
   gimp_filter_history_clear (gimp);
 
+  if (gimp->edit_config)
+    {
+      g_object_unref (gimp->edit_config);
+      gimp->edit_config = NULL;
+    }
+
+  if (gimp->config)
+    {
+      g_object_unref (gimp->config);
+      gimp->config = NULL;
+    }
+
+  gimp_contexts_exit (gimp);
+
+  if (gimp->image_new_last_template)
+    {
+      g_object_unref (gimp->image_new_last_template);
+      gimp->image_new_last_template = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -365,14 +385,6 @@ gimp_finalize (GObject *object)
                               gimp_gradient_get_standard (gimp->user_context));
   standards = g_list_prepend (standards,
                               gimp_palette_get_standard (gimp->user_context));
-
-  gimp_contexts_exit (gimp);
-
-  if (gimp->image_new_last_template)
-    {
-      g_object_unref (gimp->image_new_last_template);
-      gimp->image_new_last_template = NULL;
-    }
 
   if (gimp->templates)
     {
@@ -459,12 +471,6 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->parasites);
       gimp->parasites = NULL;
-    }
-
-  if (gimp->edit_config)
-    {
-      g_object_unref (gimp->edit_config);
-      gimp->edit_config = NULL;
     }
 
   if (gimp->default_folder)
