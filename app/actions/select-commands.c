@@ -424,11 +424,11 @@ void
 select_fill_last_vals_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
-  GimpImage       *image;
-  GimpDrawable    *drawable;
-  GtkWidget       *widget;
-  GimpFillOptions *options;
-  GError          *error = NULL;
+  GimpImage        *image;
+  GimpDrawable     *drawable;
+  GtkWidget        *widget;
+  GimpDialogConfig *config;
+  GError           *error = NULL;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
@@ -442,16 +442,10 @@ select_fill_last_vals_cmd_callback (GtkAction *action,
       return;
     }
 
-  options = g_object_get_data (G_OBJECT (image->gimp), "saved-fill-options");
-
-  if (options)
-    g_object_ref (options);
-  else
-    options = gimp_fill_options_new (image->gimp,
-                                     action_data_get_context (data), TRUE);
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   if (! gimp_item_fill (GIMP_ITEM (gimp_image_get_mask (image)),
-                        drawable, options, TRUE, NULL, &error))
+                        drawable, config->fill_options, TRUE, NULL, &error))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
@@ -462,8 +456,6 @@ select_fill_last_vals_cmd_callback (GtkAction *action,
     {
       gimp_image_flush (image);
     }
-
-  g_object_unref (options);
 }
 
 void
@@ -510,12 +502,12 @@ void
 select_stroke_last_vals_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  GimpImage         *image;
-  GimpDrawable      *drawable;
-  GimpContext       *context;
-  GtkWidget         *widget;
-  GimpStrokeOptions *options;
-  GError            *error = NULL;
+  GimpImage        *image;
+  GimpDrawable     *drawable;
+  GimpContext      *context;
+  GtkWidget        *widget;
+  GimpDialogConfig *config;
+  GError           *error = NULL;
   return_if_no_image (image, data);
   return_if_no_context (context, data);
   return_if_no_widget (widget, data);
@@ -530,15 +522,10 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
       return;
     }
 
-  options = g_object_get_data (G_OBJECT (image->gimp), "saved-stroke-options");
-
-  if (options)
-    g_object_ref (options);
-  else
-    options = gimp_stroke_options_new (image->gimp, context, TRUE);
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   if (! gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                          drawable, context, options, NULL,
+                          drawable, context, config->stroke_options, NULL,
                           TRUE, NULL, &error))
     {
       gimp_message_literal (image->gimp,
@@ -550,8 +537,6 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
     {
       gimp_image_flush (image);
     }
-
-  g_object_unref (options);
 }
 
 

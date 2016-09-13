@@ -26,7 +26,8 @@ typedef void  (* GimpUserInstallLogFunc) (const gchar *message,
                                           gpointer     user_data);
 
 
-GimpUserInstall * gimp_user_install_new  (gboolean          verbose);
+GimpUserInstall * gimp_user_install_new  (GObject          *gimp,
+                                          gboolean          verbose);
 gboolean          gimp_user_install_run  (GimpUserInstall  *install);
 void              gimp_user_install_free (GimpUserInstall  *install);
 

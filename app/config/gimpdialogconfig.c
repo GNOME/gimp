@@ -28,6 +28,10 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
+#include "core/core-types.h" /* fill and stroke options */
+#include "core/gimp.h"
+#include "core/gimpstrokeoptions.h"
+
 #include "config-types.h"
 
 #include "gimprc-blurbs.h"
@@ -39,6 +43,9 @@
 enum
 {
   PROP_0,
+
+  PROP_GIMP,
+
   PROP_COLOR_PROFILE_POLICY,
 
   PROP_LAYER_NEW_NAME,
@@ -61,19 +68,43 @@ enum
 
   PROP_SELECTION_BORDER_RADIUS,
   PROP_SELECTION_BORDER_STYLE,
-  PROP_SELECTION_BORDER_EDGE_LOCK
+  PROP_SELECTION_BORDER_EDGE_LOCK,
+
+  PROP_FILL_OPTIONS,
+  PROP_STROKE_OPTIONS
 };
 
 
-static void  gimp_dialog_config_finalize     (GObject      *object);
-static void  gimp_dialog_config_set_property (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void  gimp_dialog_config_get_property (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
+typedef struct _GimpDialogConfigPrivate GimpDialogConfigPrivate;
+
+struct _GimpDialogConfigPrivate
+{
+  Gimp *gimp;
+};
+
+#define GET_PRIVATE(config) \
+        G_TYPE_INSTANCE_GET_PRIVATE (config, \
+                                     GIMP_TYPE_DIALOG_CONFIG, \
+                                     GimpDialogConfigPrivate)
+
+
+static void  gimp_dialog_config_constructed           (GObject      *object);
+static void  gimp_dialog_config_finalize              (GObject      *object);
+static void  gimp_dialog_config_set_property          (GObject      *object,
+                                                       guint         property_id,
+                                                       const GValue *value,
+                                                       GParamSpec   *pspec);
+static void  gimp_dialog_config_get_property          (GObject      *object,
+                                                       guint         property_id,
+                                                       GValue       *value,
+                                                       GParamSpec   *pspec);
+
+static void  gimp_dialog_config_fill_options_notify   (GObject      *object,
+                                                       GParamSpec   *pspec,
+                                                       gpointer      data);
+static void  gimp_dialog_config_stroke_options_notify (GObject      *object,
+                                                       GParamSpec   *pspec,
+                                                       gpointer      data);
 
 
 G_DEFINE_TYPE (GimpDialogConfig, gimp_dialog_config, GIMP_TYPE_GUI_CONFIG)
@@ -87,9 +118,17 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
   GObjectClass *object_class     = G_OBJECT_CLASS (klass);
   GimpRGB       half_transparent = { 0.0, 0.0, 0.0, 0.5 };
 
+  object_class->constructed  = gimp_dialog_config_constructed;
   object_class->finalize     = gimp_dialog_config_finalize;
   object_class->set_property = gimp_dialog_config_set_property;
   object_class->get_property = gimp_dialog_config_get_property;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_COLOR_PROFILE_POLICY,
                          "color-profile-policy",
@@ -200,11 +239,59 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          GIMP_TYPE_CHANNEL_BORDER_STYLE,
                          GIMP_CHANNEL_BORDER_STYLE_SMOOTH,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_FILL_OPTIONS,
+                           "fill-options",
+                           "Fill Options",
+                           FILL_OPTIONS_BLURB,
+                           GIMP_TYPE_FILL_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_STROKE_OPTIONS,
+                           "stroke-options",
+                           "Stroke Options",
+                           STROKE_OPTIONS_BLURB,
+                           GIMP_TYPE_STROKE_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  g_type_class_add_private (klass, sizeof (GimpDialogConfigPrivate));
 }
 
 static void
 gimp_dialog_config_init (GimpDialogConfig *config)
 {
+}
+
+static void
+gimp_dialog_config_constructed (GObject *object)
+{
+  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
+  GimpContext             *context;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (GIMP_IS_GIMP (priv->gimp));
+
+  context = gimp_get_user_context (priv->gimp);
+
+  config->fill_options = gimp_fill_options_new (priv->gimp, context, TRUE);
+  gimp_context_set_serialize_properties (GIMP_CONTEXT (config->fill_options),
+                                         0);
+
+  g_signal_connect (config->fill_options, "notify",
+                    G_CALLBACK (gimp_dialog_config_fill_options_notify),
+                    config);
+
+  config->stroke_options = gimp_stroke_options_new (priv->gimp, context, TRUE);
+  gimp_context_set_serialize_properties (GIMP_CONTEXT (config->stroke_options),
+                                         0);
+
+  g_signal_connect (config->stroke_options, "notify",
+                    G_CALLBACK (gimp_dialog_config_stroke_options_notify),
+                    config);
 }
 
 static void
@@ -230,6 +317,18 @@ gimp_dialog_config_finalize (GObject *object)
       config->vectors_new_name = NULL;
     }
 
+  if (config->fill_options)
+    {
+      g_object_unref (config->fill_options);
+      config->fill_options = NULL;
+    }
+
+  if (config->stroke_options)
+    {
+      g_object_unref (config->stroke_options);
+      config->stroke_options = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -239,10 +338,15 @@ gimp_dialog_config_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      priv->gimp = g_value_get_object (value); /* don't ref */
+      break;
+
     case PROP_COLOR_PROFILE_POLICY:
       config->color_profile_policy = g_value_get_enum (value);
       break;
@@ -303,6 +407,17 @@ gimp_dialog_config_set_property (GObject      *object,
       config->selection_border_style = g_value_get_enum (value);
       break;
 
+    case PROP_FILL_OPTIONS:
+      if (g_value_get_object (value))
+        gimp_config_sync (g_value_get_object (value) ,
+                          G_OBJECT (config->fill_options), 0);
+      break;
+    case PROP_STROKE_OPTIONS:
+      if (g_value_get_object (value))
+        gimp_config_sync (g_value_get_object (value) ,
+                          G_OBJECT (config->stroke_options), 0);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -315,10 +430,15 @@ gimp_dialog_config_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, priv->gimp);
+      break;
+
     case PROP_COLOR_PROFILE_POLICY:
       g_value_set_enum (value, config->color_profile_policy);
       break;
@@ -373,8 +493,31 @@ gimp_dialog_config_get_property (GObject    *object,
       g_value_set_enum (value, config->selection_border_style);
       break;
 
+    case PROP_FILL_OPTIONS:
+      g_value_set_object (value, config->fill_options);
+      break;
+    case PROP_STROKE_OPTIONS:
+      g_value_set_object (value, config->stroke_options);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_dialog_config_fill_options_notify (GObject    *object,
+                                        GParamSpec *pspec,
+                                        gpointer    data)
+{
+  g_object_notify (G_OBJECT (data), "fill-options");
+}
+
+static void
+gimp_dialog_config_stroke_options_notify (GObject    *object,
+                                          GParamSpec *pspec,
+                                          gpointer    data)
+{
+  g_object_notify (G_OBJECT (data), "stroke-options");
 }

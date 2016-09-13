@@ -61,6 +61,8 @@
 
 struct _GimpUserInstall
 {
+  GObject                 *gimp;
+
   gboolean                verbose;
 
   gchar                  *old_dir;
@@ -145,10 +147,12 @@ static gboolean  user_install_migrate_files      (GimpUserInstall    *install);
 /*  public functions  */
 
 GimpUserInstall *
-gimp_user_install_new (gboolean verbose)
+gimp_user_install_new (GObject  *gimp,
+                       gboolean  verbose)
 {
   GimpUserInstall *install = g_slice_new0 (GimpUserInstall);
 
+  install->gimp    = gimp;
   install->verbose = verbose;
 
   user_install_detect_old (install, gimp_directory ());
@@ -782,7 +786,7 @@ user_install_migrate_files (GimpUserInstall *install)
 
   gimp_templates_migrate (install->old_dir);
 
-  gimprc = gimp_rc_new (NULL, NULL, FALSE);
+  gimprc = gimp_rc_new (install->gimp, NULL, NULL, FALSE);
   gimp_rc_migrate (gimprc);
   gimp_rc_save (gimprc);
   g_object_unref (gimprc);

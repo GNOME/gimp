@@ -28,6 +28,8 @@
 
 #include "dialogs-types.h"
 
+#include "config/gimpdialogconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -61,11 +63,11 @@ fill_dialog_new (GimpItem    *item,
                  const gchar *help_id,
                  GtkWidget   *parent)
 {
-  GimpFillOptions *options;
-  GimpFillOptions *saved_options;
-  GtkWidget       *dialog;
-  GtkWidget       *main_vbox;
-  GtkWidget       *fill_editor;
+  GimpDialogConfig *config;
+  GimpFillOptions  *options;
+  GtkWidget        *dialog;
+  GtkWidget        *main_vbox;
+  GtkWidget        *fill_editor;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -73,13 +75,12 @@ fill_dialog_new (GimpItem    *item,
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
+  config = GIMP_DIALOG_CONFIG (context->gimp->config);
+
   options = gimp_fill_options_new (context->gimp, context, TRUE);
 
-  saved_options = g_object_get_data (G_OBJECT (context->gimp),
-                                     "saved-fill-options");
-
-  if (saved_options)
-    gimp_config_sync (G_OBJECT (saved_options), G_OBJECT (options), 0);
+  gimp_config_sync (G_OBJECT (config->fill_options),
+                    G_OBJECT (options), 0);
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-fill-options",
@@ -151,9 +152,9 @@ fill_dialog_response (GtkWidget  *widget,
 
     case GTK_RESPONSE_OK:
       {
-        GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
-        GimpFillOptions *saved_options;
-        GError          *error    = NULL;
+        GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (context->gimp->config);
+        GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+        GError           *error    = NULL;
 
         if (! drawable)
           {
@@ -164,19 +165,8 @@ fill_dialog_response (GtkWidget  *widget,
             return;
           }
 
-        saved_options = g_object_get_data (G_OBJECT (context->gimp),
-                                           "saved-fill-options");
-
-        if (saved_options)
-          g_object_ref (saved_options);
-        else
-          saved_options = gimp_fill_options_new (context->gimp, context, TRUE);
-
-        gimp_config_sync (G_OBJECT (options), G_OBJECT (saved_options), 0);
-
-        g_object_set_data_full (G_OBJECT (context->gimp), "saved-fill-options",
-                                saved_options,
-                                (GDestroyNotify) g_object_unref);
+        gimp_config_sync (G_OBJECT (options),
+                          G_OBJECT (config->fill_options), 0);
 
         if (! gimp_item_fill (item, drawable, options, TRUE, NULL, &error))
           {

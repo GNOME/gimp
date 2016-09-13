@@ -719,7 +719,7 @@ gimp_option_dump_gimprc (const gchar  *option_name,
       gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
       gimp_load_config (gimp, NULL, NULL);
 
-      success = gimp_config_dump (format);
+      success = gimp_config_dump (G_OBJECT (gimp), format);
 
       g_object_unref (gimp);
 

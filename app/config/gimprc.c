@@ -230,7 +230,17 @@ gimp_rc_duplicate_unknown_token (const gchar *key,
 static GimpConfig *
 gimp_rc_duplicate (GimpConfig *config)
 {
-  GimpConfig *dup = g_object_new (GIMP_TYPE_RC, NULL);
+  GObject    *gimp;
+  GimpConfig *dup;
+
+  g_object_get (config, "gimp", &gimp, NULL);
+
+  dup = g_object_new (GIMP_TYPE_RC,
+                      "gimp", gimp,
+                      NULL);
+
+  if (gimp)
+    g_object_unref (gimp);
 
   gimp_config_sync (G_OBJECT (config), G_OBJECT (dup), 0);
 
@@ -302,6 +312,7 @@ gimp_rc_notify (GimpRc     *rc,
 
 /**
  * gimp_rc_new:
+ * @gimp:          a #Gimp
  * @system_gimprc: the name of the system-wide gimprc file or %NULL to
  *                 use the standard location
  * @user_gimprc:   the name of the user gimprc file or %NULL to use the
@@ -314,18 +325,21 @@ gimp_rc_notify (GimpRc     *rc,
  * Returns: the new #GimpRc.
  */
 GimpRc *
-gimp_rc_new (GFile    *system_gimprc,
+gimp_rc_new (GObject  *gimp,
+             GFile    *system_gimprc,
              GFile    *user_gimprc,
              gboolean  verbose)
 {
   GimpRc *rc;
 
+  g_return_val_if_fail (G_IS_OBJECT (gimp), NULL);
   g_return_val_if_fail (system_gimprc == NULL || G_IS_FILE (system_gimprc),
                         NULL);
   g_return_val_if_fail (user_gimprc == NULL || G_IS_FILE (user_gimprc),
                         NULL);
 
   rc = g_object_new (GIMP_TYPE_RC,
+                     "gimp",          gimp,
                      "verbose",       verbose,
                      "system-gimprc", system_gimprc,
                      "user-gimprc",   user_gimprc,
@@ -488,9 +502,10 @@ gimp_rc_set_unknown_token (GimpRc      *rc,
 void
 gimp_rc_save (GimpRc *rc)
 {
-  GimpRc *global;
-  gchar  *header;
-  GError *error = NULL;
+  GObject *gimp;
+  GimpRc  *global;
+  gchar   *header;
+  GError  *error = NULL;
 
   const gchar *top =
     "GIMP gimprc\n"
@@ -506,7 +521,14 @@ gimp_rc_save (GimpRc *rc)
 
   g_return_if_fail (GIMP_IS_RC (rc));
 
-  global = g_object_new (GIMP_TYPE_RC, NULL);
+  g_object_get (rc, "gimp", &gimp, NULL);
+
+  global = g_object_new (GIMP_TYPE_RC,
+                         "gimp", gimp,
+                         NULL);
+
+  if (gimp)
+    g_object_unref (gimp);
 
   gimp_config_deserialize_gfile (GIMP_CONFIG (global),
                                  rc->system_gimprc, NULL, NULL);

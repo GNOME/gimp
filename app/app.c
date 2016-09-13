@@ -216,7 +216,8 @@ app_run (const gchar         *full_prog_name,
   if (g_file_query_file_type (gimpdir, G_FILE_QUERY_INFO_NONE, NULL) !=
       G_FILE_TYPE_DIRECTORY)
     {
-      GimpUserInstall *install = gimp_user_install_new (be_verbose);
+      GimpUserInstall *install = gimp_user_install_new (G_OBJECT (gimp),
+                                                        be_verbose);
 
 #ifdef GIMP_CONSOLE_COMPILATION
       gimp_user_install_run (install);

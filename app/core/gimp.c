@@ -799,7 +799,8 @@ gimp_load_config (Gimp  *gimp,
    */
   gimp_unitrc_load (gimp);
 
-  gimprc = gimp_rc_new (alternate_system_gimprc,
+  gimprc = gimp_rc_new (G_OBJECT (gimp),
+                        alternate_system_gimprc,
                         alternate_gimprc,
                         gimp->be_verbose);
 

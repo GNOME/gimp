@@ -24,6 +24,13 @@
 #include "config/gimpguiconfig.h"
 
 
+/* We don't want to include stuff from core/ here, instead do the next
+ * less ugly hack...
+ */
+typedef struct _GimpFillOptions   GimpFillOptions;
+typedef struct _GimpStrokeOptions GimpStrokeOptions;
+
+
 #define GIMP_TYPE_DIALOG_CONFIG            (gimp_dialog_config_get_type ())
 #define GIMP_DIALOG_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DIALOG_CONFIG, GimpDialogConfig))
 #define GIMP_DIALOG_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIALOG_CONFIG, GimpDialogConfigClass))
@@ -60,6 +67,9 @@ struct _GimpDialogConfig
   gdouble                 selection_border_radius;
   gboolean                selection_border_edge_lock;
   GimpChannelBorderStyle  selection_border_style;
+
+  GimpFillOptions        *fill_options;
+  GimpStrokeOptions      *stroke_options;
 };
 
 struct _GimpDialogConfigClass

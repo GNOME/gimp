@@ -50,6 +50,7 @@
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpprefsbox.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpstrokeeditor.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptooleditor.h"
 #include "widgets/gimpwidgets-constructors.h"
@@ -2201,6 +2202,24 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "selection-border-edge-lock",
                           _("Selected areas continue outside the image"),
                           GTK_BOX (vbox2));
+
+  /*  Fill Options Dialog  */
+  vbox2 = prefs_frame_new (_("Fill Selection Outline & Fill Path Dialogs"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  table = gimp_fill_editor_new (GIMP_DIALOG_CONFIG (object)->fill_options,
+                                FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  /*  Stroke Options Dialog  */
+  vbox2 = prefs_frame_new (_("Stroke Selection & Stroke Path Dialogs"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  table = gimp_stroke_editor_new (GIMP_DIALOG_CONFIG (object)->stroke_options,
+                                  96.0 /* FIXME */, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   g_object_unref (size_group);
 

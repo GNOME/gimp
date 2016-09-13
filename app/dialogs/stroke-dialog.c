@@ -27,6 +27,8 @@
 
 #include "dialogs-types.h"
 
+#include "config/gimpdialogconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -64,8 +66,8 @@ stroke_dialog_new (GimpItem    *item,
                    const gchar *help_id,
                    GtkWidget   *parent)
 {
+  GimpDialogConfig  *config;
   GimpStrokeOptions *options;
-  GimpStrokeOptions *saved_options;
   GimpImage         *image;
   GtkWidget         *dialog;
   GtkWidget         *main_vbox;
@@ -83,13 +85,12 @@ stroke_dialog_new (GimpItem    *item,
 
   image = gimp_item_get_image (item);
 
+  config = GIMP_DIALOG_CONFIG (context->gimp->config);
+
   options = gimp_stroke_options_new (context->gimp, context, TRUE);
 
-  saved_options = g_object_get_data (G_OBJECT (context->gimp),
-                                     "saved-stroke-options");
-
-  if (saved_options)
-    gimp_config_sync (G_OBJECT (saved_options), G_OBJECT (options), 0);
+  gimp_config_sync (G_OBJECT (config->stroke_options),
+                    G_OBJECT (options), 0);
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-stroke-options",
@@ -270,9 +271,9 @@ stroke_dialog_response (GtkWidget  *widget,
 
     case GTK_RESPONSE_OK:
       {
-        GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
-        GimpStrokeOptions *saved_options;
-        GError            *error    = NULL;
+        GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (context->gimp->config);
+        GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+        GError           *error    = NULL;
 
         if (! drawable)
           {
@@ -283,19 +284,8 @@ stroke_dialog_response (GtkWidget  *widget,
             return;
           }
 
-        saved_options = g_object_get_data (G_OBJECT (context->gimp),
-                                           "saved-stroke-options");
-
-        if (saved_options)
-          g_object_ref (saved_options);
-        else
-          saved_options = gimp_stroke_options_new (context->gimp, context, TRUE);
-
-        gimp_config_sync (G_OBJECT (options), G_OBJECT (saved_options), 0);
-
-        g_object_set_data_full (G_OBJECT (context->gimp), "saved-stroke-options",
-                                saved_options,
-                                (GDestroyNotify) g_object_unref);
+        gimp_config_sync (G_OBJECT (options),
+                          G_OBJECT (config->stroke_options), 0);
 
         if (! gimp_item_stroke (item, drawable, context, options, NULL,
                                 TRUE, NULL, &error))

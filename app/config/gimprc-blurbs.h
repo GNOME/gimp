@@ -464,6 +464,12 @@ _("Sets the default 'Selected areas continue outside the image' setting " \
 #define SELECTION_BORDER_STYLE_BLURB \
 _("Sets the default border style for the 'Border Selection' dialog.")
 
+#define FILL_OPTIONS_BLURB \
+"The default fill options for the fill dialogs."
+
+#define STROKE_OPTIONS_BLURB \
+"The default stroke options for the stroke dialogs."
+
 #define THUMBNAIL_SIZE_BLURB \
 _("Sets the size of the thumbnail shown in the Open dialog.")
 

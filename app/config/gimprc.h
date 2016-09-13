@@ -51,7 +51,8 @@ struct _GimpRcClass
 
 
 GType     gimp_rc_get_type          (void) G_GNUC_CONST;
-GimpRc  * gimp_rc_new               (GFile       *system_gimprc,
+GimpRc  * gimp_rc_new               (GObject     *gimp,
+                                     GFile       *system_gimprc,
                                      GFile       *user_gimprc,
                                      gboolean     verbose);
 
