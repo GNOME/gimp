@@ -252,12 +252,18 @@ gimp_init (Gimp *gimp)
   gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
                                "named buffers");
 
+  gimp_fonts_init (gimp);
+
+  gimp_data_factories_init (gimp);
+
   gimp->tool_info_list = g_object_new (GIMP_TYPE_LIST,
                                        "children-type", GIMP_TYPE_TOOL_INFO,
                                        "append",        TRUE,
                                        NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
                                "tool infos");
+
+  gimp->documents = gimp_document_list_new (gimp);
 
   gimp->templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->templates), "templates");
@@ -272,12 +278,15 @@ gimp_constructed (GObject *object)
 
   gimp_modules_init (gimp);
 
+  gimp_paint_init (gimp);
+
   gimp->plug_in_manager = gimp_plug_in_manager_new (gimp);
   gimp->pdb             = gimp_pdb_new (gimp);
 
   xcf_init (gimp);
 
-  gimp->documents = gimp_document_list_new (gimp);
+  /*  create user and default context  */
+  gimp_contexts_init (gimp);
 }
 
 static void
@@ -397,11 +406,7 @@ gimp_finalize (GObject *object)
 
   gimp_data_factories_exit (gimp);
 
-  if (gimp->fonts)
-    {
-      g_object_unref (gimp->fonts);
-      gimp->fonts = NULL;
-    }
+  gimp_fonts_exit (gimp);
 
   if (gimp->named_buffers)
     {
@@ -563,19 +568,11 @@ gimp_real_initialize (Gimp               *gimp,
 
   status_callback (_("Initialization"), NULL, 0.0);
 
-  gimp_fonts_init (gimp);
-
-  /*  create the data factories & tag cache  */
-  gimp_data_factories_init (gimp);
-
-  gimp_paint_init (gimp);
+  gimp_fonts_set_config (gimp);
 
   /* Set the last values used to default values. */
   gimp->image_new_last_template =
     gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
-
-  /*  create user and default context  */
-  gimp_contexts_init (gimp);
 
   /*  add data objects that need the user context  */
   gimp_data_factories_add_builtin (gimp);

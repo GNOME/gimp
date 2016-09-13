@@ -53,9 +53,31 @@ gimp_fonts_init (Gimp *gimp)
 
   gimp->fonts = gimp_font_list_new (72.0, 72.0);
   gimp_object_set_name (GIMP_OBJECT (gimp->fonts), "fonts");
+}
+
+void
+gimp_fonts_set_config (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_signal_connect_swapped (gimp->config, "notify::font-path",
                             G_CALLBACK (gimp_fonts_load), gimp);
+}
+
+void
+gimp_fonts_exit (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->fonts)
+    {
+      g_signal_handlers_disconnect_by_func (gimp->config,
+                                            G_CALLBACK (gimp_fonts_load),
+                                            gimp);
+
+      g_object_unref (gimp->fonts);
+      gimp->fonts = NULL;
+    }
 }
 
 typedef struct
