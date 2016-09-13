@@ -479,7 +479,7 @@ gimp_config_serialize_value (const GValue *value,
         }
       else
         {
-          g_string_append (str, "NULL");
+          g_string_append (str, "0");
         }
 
       return TRUE;
