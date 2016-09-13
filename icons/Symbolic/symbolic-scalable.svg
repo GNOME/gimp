@@ -29513,7 +29513,7 @@
     <g
        transform="translate(-130.61031,-521.32537)"
        style="display:inline"
-       id="gimp-print-resolution"
+       id="document-print"
        inkscape:label="gimp-print-resolution">
       <rect
          ry="0"
@@ -35298,7 +35298,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,366.66434,-1098.7512)"
-       id="gimp-print-resolution-24">
+       id="document-print-24">
       <rect
          ry="0"
          rx="0.89061975"

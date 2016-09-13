@@ -3,6 +3,7 @@ scalable_images = \
 	scalable/document-new.svg					\
 	scalable/document-open.svg					\
 	scalable/document-open-recent.svg			\
+	scalable/document-print.svg					\
 	scalable/document-revert.svg				\
 	scalable/document-save.svg					\
 	scalable/document-save-as.svg				\
@@ -214,7 +215,6 @@ scalable_images = \
 	scalable/gimp-prefs-toolbox.svg			\
 	scalable/gimp-prefs-tool-options.svg		\
 	scalable/gimp-prefs-window-management.svg	\
-	scalable/gimp-print-resolution.svg		\
 	scalable/gimp-question.svg			\
 	scalable/gimp-quick-mask-off.svg		\
 	scalable/gimp-quick-mask-on.svg			\
@@ -320,6 +320,7 @@ scalable_images = \
 
 vector24_images = \
 	24/dialog-information.svg					\
+	24/document-print.svg						\
 	24/media-floppy.svg 						\
 	24/media-optical.svg						\
 												\
@@ -408,7 +409,6 @@ vector24_images = \
 	24/gimp-prefs-toolbox.svg			\
 	24/gimp-prefs-tool-options.svg			\
 	24/gimp-prefs-window-management.svg		\
-	24/gimp-print-resolution.svg			\
 	24/gimp-question.svg				\
 	24/gimp-resize.svg				\
 	24/gimp-sample-point.svg			\
@@ -493,6 +493,7 @@ icons16_images = \
 	16/document-new.png							\
 	16/document-open.png						\
 	16/document-open-recent.png					\
+	16/document-print.png						\
 	16/document-revert.png						\
 	16/document-save.png						\
 	16/document-save-as.png						\
@@ -661,7 +662,6 @@ icons16_images = \
 	16/gimp-prefs-theme.png						\
 	16/gimp-prefs-toolbox.png					\
 	16/gimp-prefs-window-management.png			\
-	16/gimp-print-resolution.png				\
 	16/gimp-question.png						\
 	16/gimp-reset.png							\
 	16/gimp-reshow-filter.png					\
@@ -823,6 +823,7 @@ icons22_images = \
 
 icons24_images = \
 	24/dialog-information.png					\
+	24/document-print.png						\
 	24/media-floppy.png							\
 	24/media-optical.png 						\
 												\
@@ -875,7 +876,6 @@ icons24_images = \
 	24/gimp-layers.png			\
 	24/gimp-move-to-screen.png		\
 	24/gimp-navigation.png			\
-	24/gimp-print-resolution.png		\
 	24/gimp-question.png			\
 	24/gimp-resize.png			\
 	24/gimp-sample-point.png		\
