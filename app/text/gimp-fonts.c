@@ -61,7 +61,8 @@ gimp_fonts_set_config (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_signal_connect_swapped (gimp->config, "notify::font-path",
-                            G_CALLBACK (gimp_fonts_load), gimp);
+                            G_CALLBACK (gimp_fonts_load),
+                            gimp);
 }
 
 void
@@ -71,9 +72,10 @@ gimp_fonts_exit (Gimp *gimp)
 
   if (gimp->fonts)
     {
-      g_signal_handlers_disconnect_by_func (gimp->config,
-                                            G_CALLBACK (gimp_fonts_load),
-                                            gimp);
+      if (gimp->config)
+        g_signal_handlers_disconnect_by_func (gimp->config,
+                                              G_CALLBACK (gimp_fonts_load),
+                                              gimp);
 
       g_object_unref (gimp->fonts);
       gimp->fonts = NULL;
