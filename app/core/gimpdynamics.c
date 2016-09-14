@@ -219,7 +219,7 @@ gimp_dynamics_init (GimpDynamics *dynamics)
   private->flow_output =
     gimp_dynamics_create_output (dynamics,
                                  "flow-output",
-                                 GIMP_DYNAMICS_OUTPUT_RATE);
+                                 GIMP_DYNAMICS_OUTPUT_FLOW);
 
   private->size_output =
     gimp_dynamics_create_output (dynamics,
