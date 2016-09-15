@@ -59,6 +59,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   GimpPickable *pickable;
   GeglBuffer   *buffer;
   GeglBuffer   *mask_buffer;
+  gboolean      antialias;
   gint          x1, y1, x2, y2;
   gint          mask_offset_x = 0;
   gint          mask_offset_y = 0;
@@ -84,11 +85,13 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   else
     pickable = GIMP_PICKABLE (drawable);
 
+  antialias = gimp_fill_options_get_antialias (options);
+
   /*  Do a seed bucket fill...To do this, calculate a new
    *  contiguous region.
    */
   mask_buffer = gimp_pickable_contiguous_region_by_seed (pickable,
-                                                         TRUE,
+                                                         antialias,
                                                          threshold,
                                                          fill_transparent,
                                                          fill_criterion,

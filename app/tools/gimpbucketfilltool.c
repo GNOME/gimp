@@ -182,6 +182,8 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                               options->fill_mode,
                                               &error))
         {
+          gimp_fill_options_set_antialias (fill_options, options->antialias);
+
           gimp_context_set_opacity (GIMP_CONTEXT (fill_options),
                                     gimp_context_get_opacity (context));
           gimp_context_set_paint_mode (GIMP_CONTEXT (fill_options),
