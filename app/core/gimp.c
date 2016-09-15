@@ -848,9 +848,11 @@ gimp_restore (Gimp               *gimp,
   gimp_data_factories_load (gimp, status_callback);
 
   /*  initialize the list of fonts  */
-  status_callback (NULL, _("Fonts (this may take a while)"), 0.7);
   if (! gimp->no_fonts)
-    gimp_fonts_load (gimp, status_callback);
+    {
+      status_callback (NULL, _("Fonts (this may take a while)"), 0.7);
+      gimp_fonts_load (gimp, status_callback);
+    }
 
   /*  initialize the template list  */
   status_callback (NULL, _("Templates"), 0.8);
@@ -863,7 +865,7 @@ gimp_restore (Gimp               *gimp,
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 
   /* when done, make sure everything is clean, to clean out dirty
-   * states from data object which reference each other and got
+   * states from data objects which reference each other and got
    * dirtied by loading the referenced object
    */
   gimp_data_factories_data_clean (gimp);
