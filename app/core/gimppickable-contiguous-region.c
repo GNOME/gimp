@@ -53,6 +53,7 @@ static gboolean find_contiguous_segment   (const gfloat        *col,
                                            GeglBuffer          *src_buffer,
                                            GeglBuffer          *mask_buffer,
                                            const Babl          *src_format,
+                                           const Babl          *mask_format,
                                            gint                 n_components,
                                            gboolean             has_alpha,
                                            gint                 width,
@@ -337,16 +338,8 @@ pixel_difference (const gfloat        *col1,
           break;
 
         case GIMP_SELECT_CRITERION_H:
-          {
-            /* wrap around candidates for the actual distance */
-            gfloat dist1 = fabs (col1[0] - col2[0]);
-            gfloat dist2 = fabs (col1[0] - 1.0 - col2[0]);
-            gfloat dist3 = fabs (col1[0] - col2[0] + 1.0);
-
-            max = MIN (dist1, dist2);
-            if (max > dist3)
-              max = dist3;
-          }
+          max = fabs (col1[0] - col2[0]);
+          max = MIN (max, 1.0 - max);
           break;
 
         case GIMP_SELECT_CRITERION_S:
@@ -385,7 +378,8 @@ static gboolean
 find_contiguous_segment (const gfloat        *col,
                          GeglBuffer          *src_buffer,
                          GeglBuffer          *mask_buffer,
-                         const Babl          *format,
+                         const Babl          *src_format,
+                         const Babl          *mask_format,
                          gint                 n_components,
                          gboolean             has_alpha,
                          gint                 width,
@@ -405,13 +399,13 @@ find_contiguous_segment (const gfloat        *col,
 
 #ifdef FETCH_ROW
   gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, initial_y, width, 1), 1.0,
-                   format,
+                   src_format,
                    row, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
   s = row + initial_x * n_components;
 #else
   s = g_alloca (n_components * sizeof (gfloat));
 
-  gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, format,
+  gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, src_format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 #endif
 
@@ -430,59 +424,56 @@ find_contiguous_segment (const gfloat        *col,
   s = row + *start * n_components;
 #endif
 
-  while (*start >= 0 && diff)
+  while (*start >= 0)
     {
 #ifndef FETCH_ROW
-      gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, format,
+      gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, src_format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 #endif
 
       diff = pixel_difference (col, s, antialias, threshold,
                                n_components, has_alpha, select_transparent,
                                select_criterion);
+      if (diff == 0.0)
+        break;
 
       mask_row[*start] = diff;
 
-      if (diff)
-        {
-          (*start)--;
+      (*start)--;
 #ifdef FETCH_ROW
-          s -= n_components;
+      s -= n_components;
 #endif
-        }
     }
 
-  diff = 1;
   *end = initial_x + 1;
 #ifdef FETCH_ROW
   s = row + *end * n_components;
 #endif
 
-  while (*end < width && diff)
+  while (*end < width)
     {
 #ifndef FETCH_ROW
-      gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, format,
+      gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, src_format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 #endif
 
       diff = pixel_difference (col, s, antialias, threshold,
                                n_components, has_alpha, select_transparent,
                                select_criterion);
+      if (diff == 0.0)
+        break;
 
       mask_row[*end] = diff;
 
-      if (diff)
-        {
-          (*end)++;
+      (*end)++;
 #ifdef FETCH_ROW
-          s += n_components;
+      s += n_components;
 #endif
-        }
     }
 
-  gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (*start, initial_y,
-                                                *end - *start, 1),
-                   0, babl_format ("Y float"), &mask_row[*start],
+  gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (*start + 1, initial_y,
+                                                *end - *start - 1, 1),
+                   0, mask_format, &mask_row[*start + 1],
                    GEGL_AUTO_ROWSTRIDE);
 
   return TRUE;
@@ -503,10 +494,11 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                         gint                 y,
                         const gfloat        *col)
 {
-  gint    start, end;
-  gint    new_start, new_end;
-  GQueue *coord_stack;
-  gfloat *row = NULL;
+  const Babl *mask_format = babl_format ("Y float");
+  gint        start, end;
+  gint        new_start, new_end;
+  GQueue     *coord_stack;
+  gfloat     *row = NULL;
 
 #ifdef FETCH_ROW
   row = g_new (gfloat, gegl_buffer_get_width (src_buffer) * n_components);
@@ -534,13 +526,20 @@ find_contiguous_region (GeglBuffer          *src_buffer,
           gfloat val;
 
           gegl_buffer_sample (mask_buffer, x, y, NULL, &val,
-                              babl_format ("Y float"),
+                              mask_format,
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
           if (val != 0.0)
-            continue;
+            {
+              /* If the current pixel is selected, then we've already visited
+               * the next pixel.  (Note that we assume that the maximal image
+               * width is sufficiently low that `x` won't overflow.)
+               */
+              x++;
+              continue;
+            }
 
           if (! find_contiguous_segment (col, src_buffer, mask_buffer,
-                                         format,
+                                         format, mask_format,
                                          n_components,
                                          has_alpha,
                                          gegl_buffer_get_width (src_buffer),
@@ -549,6 +548,14 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                                          &new_start, &new_end,
                                          row))
             continue;
+
+          /* We can skip directly to `new_end + 1` on the next iteration, since
+           * we've just selected all pixels in the range `[x, new_end)`, and
+           * the pixel at `new_end` is above threshold.  (Note that we assume
+           * that the maximal image width is sufficiently low that `x` won't
+           * overflow.)
+           */
+          x = new_end;
 
           if (diagonal_neighbors)
             {
