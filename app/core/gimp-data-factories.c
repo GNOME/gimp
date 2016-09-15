@@ -355,12 +355,12 @@ gimp_data_factories_load (Gimp               *gimp,
                                gimp->no_data);
 
   /*  initialize the list of gimp dynamics   */
-  status_callback (NULL, _("Dynamics"), 0.2);
+  status_callback (NULL, _("Dynamics"), 0.15);
   gimp_data_factory_data_init (gimp->dynamics_factory, gimp->user_context,
                                gimp->no_data);
 
   /*  initialize the list of mypaint brushes    */
-  status_callback (NULL, _("MyPaint Brushes"), 0.25);
+  status_callback (NULL, _("MyPaint Brushes"), 0.2);
   gimp_data_factory_data_init (gimp->mybrush_factory, gimp->user_context,
                                gimp->no_data);
 
@@ -380,6 +380,7 @@ gimp_data_factories_load (Gimp               *gimp,
                                gimp->no_data);
 
   /*  initialize the color history   */
+  status_callback (NULL, _("Color History"), 0.55);
   gimp_palettes_load (gimp);
 
   /*  initialize the list of gimp tool presets if we have a GUI  */
@@ -391,7 +392,7 @@ gimp_data_factories_load (Gimp               *gimp,
     }
 
   /* update tag cache */
-  status_callback (NULL, _("Updating tag cache"), 0.7);
+  status_callback (NULL, _("Updating tag cache"), 0.65);
   gimp_tag_cache_load (gimp->tag_cache);
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->brush_factory));

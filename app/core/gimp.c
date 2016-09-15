@@ -847,6 +847,11 @@ gimp_restore (Gimp               *gimp,
   /*  initialize the lists of gimp brushes, dynamics, patterns etc.  */
   gimp_data_factories_load (gimp, status_callback);
 
+  /*  initialize the list of fonts  */
+  status_callback (NULL, _("Fonts (this may take a while)"), 0.7);
+  if (! gimp->no_fonts)
+    gimp_fonts_load (gimp, status_callback);
+
   /*  initialize the template list  */
   status_callback (NULL, _("Templates"), 0.8);
   gimp_templates_load (gimp);
