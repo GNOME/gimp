@@ -22,6 +22,7 @@
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <lcms2.h>
 #include <gexiv2/gexiv2.h>
 #include <gegl.h>
 
@@ -39,6 +40,7 @@ static gchar * sanity_check_pango             (void);
 static gchar * sanity_check_fontconfig        (void);
 static gchar * sanity_check_freetype          (void);
 static gchar * sanity_check_gdk_pixbuf        (void);
+static gchar * sanity_check_lcms              (void);
 static gchar * sanity_check_gexiv2            (void);
 static gchar * sanity_check_babl              (void);
 static gchar * sanity_check_gegl              (void);
@@ -70,6 +72,9 @@ sanity_check (void)
 
   if (! abort_message)
     abort_message = sanity_check_gdk_pixbuf ();
+
+  if (! abort_message)
+    abort_message = sanity_check_lcms ();
 
   if (! abort_message)
     abort_message = sanity_check_gexiv2 ();
@@ -347,6 +352,54 @@ sanity_check_gdk_pixbuf (void)
 #undef GDK_PIXBUF_REQUIRED_MAJOR
 #undef GDK_PIXBUF_REQUIRED_MINOR
 #undef GDK_PIXBUF_REQUIRED_MICRO
+
+  return NULL;
+}
+
+static gchar *
+sanity_check_lcms (void)
+{
+#define LCMS_REQUIRED_MAJOR 2
+#define LCMS_REQUIRED_MINOR 7
+
+  gint lcms_version = cmsGetEncodedCMMversion ();
+
+  if (LCMS_VERSION > lcms_version)
+    {
+      return g_strdup_printf
+        ("Liblcms2 version mismatch!\n\n"
+         "GIMP was compiled against LittleCMS version %d.%d, but the\n"
+         "LittleCMS version found at runtime is only %d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install a LittleCMS that is older than what GIMP was\n"
+         "built against.\n\n"
+         "Please make sure that the installed LittleCMS version\n"
+         "is at least %d.%d and that headers and library match.",
+         LCMS_VERSION / 1000, LCMS_VERSION % 100 / 10,
+         lcms_version / 1000, lcms_version % 100 / 10,
+         LCMS_VERSION / 1000, LCMS_VERSION % 100 / 10);
+    }
+
+  if (lcms_version < (LCMS_REQUIRED_MAJOR * 1000 +
+                      LCMS_REQUIRED_MINOR * 10))
+    {
+      const gint lcms_major_version = lcms_version / 1000;
+      const gint lcms_minor_version = lcms_version % 100 / 10;
+
+      return g_strdup_printf
+        ("Liblcms2 version too old!\n\n"
+         "GIMP requires LittleCMS version %d.%d or later.\n"
+         "Installed LittleCMS version is %d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install GIMP with an older LittleCMS version.\n\n"
+         "Please upgrade to LittleCMS version %d.%d or later.",
+         LCMS_REQUIRED_MAJOR, LCMS_REQUIRED_MINOR,
+         lcms_major_version, lcms_minor_version,
+         LCMS_REQUIRED_MAJOR, LCMS_REQUIRED_MINOR);
+    }
+
+#undef LCMS_REQUIRED_MAJOR
+#undef LCMS_REQUIRED_MINOR
 
   return NULL;
 }
