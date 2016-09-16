@@ -32,6 +32,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"
 #include "gimpfilloptions.h"
@@ -52,19 +53,18 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gdouble               threshold,
                            gboolean              sample_merged,
                            gboolean              diagonal_neighbors,
-                           gdouble               x,
-                           gdouble               y)
+                           gdouble               seed_x,
+                           gdouble               seed_y)
 {
   GimpImage    *image;
   GimpPickable *pickable;
   GeglBuffer   *buffer;
   GeglBuffer   *mask_buffer;
   gboolean      antialias;
-  gint          x1, y1, x2, y2;
+  gint          x, y, width, height;
   gint          mask_offset_x = 0;
   gint          mask_offset_y = 0;
-  gboolean      selection;
-  gint          sel_x1, sel_y1, sel_x2, sel_y2;
+  gint          sel_x, sel_y, sel_width, sel_height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -72,10 +72,8 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  selection = gimp_item_mask_bounds (GIMP_ITEM (drawable),
-                                     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  if ((sel_x1 == sel_x2) || (sel_y1 == sel_y2))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                  &sel_x, &sel_y, &sel_width, &sel_height))
     return;
 
   gimp_set_busy (image->gimp);
@@ -96,10 +94,12 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                                                          fill_transparent,
                                                          fill_criterion,
                                                          diagonal_neighbors,
-                                                         (gint) x,
-                                                         (gint) y);
+                                                         (gint) seed_x,
+                                                         (gint) seed_y);
 
-  gimp_gegl_mask_bounds (mask_buffer, &x1, &y1, &x2, &y2);
+  gimp_gegl_mask_bounds (mask_buffer, &x, &y, &width, &height);
+  width  -= x;
+  height -= y;
 
   /*  If there is a selection, inersect the region bounds
    *  with the selection bounds, to avoid processing areas
@@ -108,7 +108,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
    *  happens when combining the fill buffer, in
    *  gimp_drawable_apply_buffer().
    */
-  if (selection)
+  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       gint off_x = 0;
       gint off_y = 0;
@@ -116,19 +116,12 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
       if (sample_merged)
         gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      if (gimp_rectangle_intersect (x1,              y1,
-                                    x2 - x1,         y2 - y1,
+      if (! gimp_rectangle_intersect (x, y, width, height,
 
-                                    sel_x1 + off_x,  sel_y1 + off_y,
-                                    sel_x2 - sel_x1, sel_y2 - sel_y1,
+                                      sel_x + off_x, sel_y + off_y,
+                                      sel_width,     sel_height,
 
-                                    &x1,             &y1,
-                                    &x2,             &y2))
-        {
-          x2 += x1;
-          y2 += y1;
-        }
-      else
+                                      &x, &y, &width, &height))
         {
           /*  The fill region and the selection are disjoint; bail.  */
 
@@ -149,29 +142,30 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
       /*  Limit the channel bounds to the drawable's extents  */
       gimp_item_get_offset (item, &off_x, &off_y);
 
-      x1 = CLAMP (x1, off_x, (off_x + gimp_item_get_width (item)));
-      y1 = CLAMP (y1, off_y, (off_y + gimp_item_get_height (item)));
-      x2 = CLAMP (x2, off_x, (off_x + gimp_item_get_width (item)));
-      y2 = CLAMP (y2, off_y, (off_y + gimp_item_get_height (item)));
+      gimp_rectangle_intersect (x, y, width, height,
 
-      mask_offset_x = x1;
-      mask_offset_y = y1;
+                                off_x, off_y,
+                                gimp_item_get_width (item),
+                                gimp_item_get_height (item),
+
+                                &x, &y, &width, &height);
+
+      mask_offset_x = x;
+      mask_offset_y = y;
 
      /*  translate mask bounds to drawable coords  */
-      x1 -= off_x;
-      y1 -= off_y;
-      x2 -= off_x;
-      y2 -= off_y;
+      x -= off_x;
+      y -= off_y;
     }
   else
     {
-      mask_offset_x = x1;
-      mask_offset_y = y1;
+      mask_offset_x = x;
+      mask_offset_y = y;
     }
 
   buffer = gimp_fill_options_create_buffer (options, drawable,
                                             GEGL_RECTANGLE (0, 0,
-                                                            x2 - x1, y2 - y1));
+                                                            width, height));
 
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
                            mask_buffer,
@@ -182,15 +176,15 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   /*  Apply it to the image  */
   gimp_drawable_apply_buffer (drawable, buffer,
-                              GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
+                              GEGL_RECTANGLE (0, 0, width, height),
                               TRUE, C_("undo-type", "Bucket Fill"),
                               gimp_context_get_opacity (GIMP_CONTEXT (options)),
                               gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
-                              NULL, x1, y1);
+                              NULL, x, y);
 
   g_object_unref (buffer);
 
-  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (drawable, x, y, width, height);
 
   gimp_unset_busy (image->gimp);
 }
