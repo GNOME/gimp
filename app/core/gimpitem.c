@@ -2215,7 +2215,7 @@ gimp_item_mask_bounds (GimpItem *item,
 {
   GimpImage   *image;
   GimpChannel *selection;
-  gint         x, y, w, h;
+  gint         x, y, width, height;
   gboolean     retval;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
@@ -2225,40 +2225,40 @@ gimp_item_mask_bounds (GimpItem *item,
   selection = gimp_image_get_mask (image);
 
   if (GIMP_ITEM (selection) != item &&
-      gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &w, &h))
+      gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &width, &height))
     {
       gint off_x, off_y;
       gint x2, y2;
 
       gimp_item_get_offset (item, &off_x, &off_y);
 
-      x2 = x + w;
-      y2 = y + h;
+      x2 = x + width;
+      y2 = y + height;
 
       x  = CLAMP (x  - off_x, 0, gimp_item_get_width  (item));
       y  = CLAMP (y  - off_y, 0, gimp_item_get_height (item));
       x2 = CLAMP (x2 - off_x, 0, gimp_item_get_width  (item));
       y2 = CLAMP (y2 - off_y, 0, gimp_item_get_height (item));
 
-      w = x2 - x;
-      h = y2 - y;
+      width  = x2 - x;
+      height = y2 - y;
 
       retval = TRUE;
     }
   else
     {
-      x = 0;
-      y = 0;
-      w = gimp_item_get_width  (item);
-      h = gimp_item_get_height (item);
+      x      = 0;
+      y      = 0;
+      width  = gimp_item_get_width  (item);
+      height = gimp_item_get_height (item);
 
       retval = FALSE;
     }
 
   if (x1) *x1 = x;
   if (y1) *y1 = y;
-  if (x2) *x2 = x + w;
-  if (y2) *y2 = y + h;
+  if (x2) *x2 = x + width;
+  if (y2) *y2 = y + height;
 
   return retval;
 }
