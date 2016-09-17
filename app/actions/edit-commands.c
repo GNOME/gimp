@@ -203,6 +203,27 @@ edit_undo_clear_cmd_callback (GtkAction *action,
 }
 
 void
+edit_fade_cmd_callback (GtkAction *action,
+                        gpointer   data)
+{
+  GimpImage *image;
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
+
+  dialog = fade_dialog_new (image, widget);
+
+  if (dialog)
+    {
+      g_signal_connect_object (image, "disconnect",
+                               G_CALLBACK (gtk_widget_destroy),
+                               dialog, G_CONNECT_SWAPPED);
+      gtk_widget_show (dialog);
+    }
+}
+
+void
 edit_cut_cmd_callback (GtkAction *action,
                        gpointer   data)
 {
@@ -399,27 +420,6 @@ edit_named_cut_cmd_callback (GtkAction *action,
                                   G_OBJECT (image), "disconnect",
                                   cut_named_buffer_callback, image);
   gtk_widget_show (dialog);
-}
-
-void
-edit_fade_cmd_callback (GtkAction *action,
-                        gpointer   data)
-{
-  GimpImage *image;
-  GtkWidget *widget;
-  GtkWidget *dialog;
-  return_if_no_image (image, data);
-  return_if_no_widget (widget, data);
-
-  dialog = fade_dialog_new (image, widget);
-
-  if (dialog)
-    {
-      g_signal_connect_object (image, "disconnect",
-                               G_CALLBACK (gtk_widget_destroy),
-                               dialog, G_CONNECT_SWAPPED);
-      gtk_widget_show (dialog);
-    }
 }
 
 void
