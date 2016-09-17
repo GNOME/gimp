@@ -39,8 +39,8 @@ struct _GimpBufferView
 {
   GimpContainerEditor  parent_instance;
 
-  GtkWidget           *global_view;
-  GtkWidget           *global_label;
+  GtkWidget           *clipboard_view;
+  GtkWidget           *clipboard_label;
 
   GtkWidget           *paste_button;
   GtkWidget           *paste_into_button;

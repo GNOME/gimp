@@ -78,7 +78,7 @@ enum
   INITIALIZE,
   RESTORE,
   EXIT,
-  BUFFER_CHANGED,
+  CLIPBOARD_CHANGED,
   FILTER_HISTORY_CHANGED,
   IMAGE_OPENED,
   LAST_SIGNAL
@@ -164,11 +164,11 @@ gimp_class_init (GimpClass *klass)
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_BOOLEAN);
 
-  gimp_signals[BUFFER_CHANGED] =
-    g_signal_new ("buffer-changed",
+  gimp_signals[CLIPBOARD_CHANGED] =
+    g_signal_new ("clipboard-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpClass, buffer_changed),
+                  G_STRUCT_OFFSET (GimpClass, clipboard_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -203,7 +203,7 @@ gimp_class_init (GimpClass *klass)
   klass->initialize              = gimp_real_initialize;
   klass->restore                 = gimp_real_restore;
   klass->exit                    = gimp_real_exit;
-  klass->buffer_changed          = NULL;
+  klass->clipboard_changed       = NULL;
 
   g_object_class_install_property (object_class, PROP_VERBOSE,
                                    g_param_spec_boolean ("verbose", NULL, NULL,
@@ -426,10 +426,10 @@ gimp_finalize (GObject *object)
       gimp->named_buffers = NULL;
     }
 
-  if (gimp->global_buffer)
+  if (gimp->clipboard_buffer)
     {
-      g_object_unref (gimp->global_buffer);
-      gimp->global_buffer = NULL;
+      g_object_unref (gimp->clipboard_buffer);
+      gimp->clipboard_buffer = NULL;
     }
 
   if (gimp->displays)
@@ -536,7 +536,7 @@ gimp_get_memsize (GimpObject *object,
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->displays), gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->global_buffer),
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->clipboard_buffer),
                                       gui_size);
 
   memsize += gimp_data_factories_get_memsize (gimp, gui_size);
@@ -966,24 +966,32 @@ gimp_get_tool_info_iter (Gimp *gimp)
 }
 
 void
-gimp_set_global_buffer (Gimp       *gimp,
-                        GimpBuffer *buffer)
+gimp_set_clipboard_buffer (Gimp       *gimp,
+                           GimpBuffer *buffer)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (buffer == NULL || GIMP_IS_BUFFER (buffer));
 
-  if (buffer == gimp->global_buffer)
+  if (buffer == gimp->clipboard_buffer)
     return;
 
-  if (gimp->global_buffer)
-    g_object_unref (gimp->global_buffer);
+  if (gimp->clipboard_buffer)
+    g_object_unref (gimp->clipboard_buffer);
 
-  gimp->global_buffer = buffer;
+  gimp->clipboard_buffer = buffer;
 
-  if (gimp->global_buffer)
-    g_object_ref (gimp->global_buffer);
+  if (gimp->clipboard_buffer)
+    g_object_ref (gimp->clipboard_buffer);
 
-  g_signal_emit (gimp, gimp_signals[BUFFER_CHANGED], 0);
+  g_signal_emit (gimp, gimp_signals[CLIPBOARD_CHANGED], 0);
+}
+
+GimpBuffer *
+gimp_get_clipboard_buffer (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return gimp->clipboard_buffer;
 }
 
 GimpImage *

@@ -658,7 +658,7 @@ gimp_selection_data_get_buffer (GtkSelectionData *selection,
   return (GimpBuffer *)
     gimp_selection_data_get_object (selection,
                                     gimp->named_buffers,
-                                    GIMP_OBJECT (gimp->global_buffer));
+                                    GIMP_OBJECT (gimp_get_clipboard_buffer (gimp)));
 }
 
 GimpImagefile *

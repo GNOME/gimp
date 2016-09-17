@@ -54,7 +54,7 @@ static void   gimp_buffer_view_set_context       (GimpDocked          *docked,
 static void   gimp_buffer_view_activate_item     (GimpContainerEditor *editor,
                                                   GimpViewable        *viewable);
 
-static void   gimp_buffer_view_buffer_changed    (Gimp                *gimp,
+static void   gimp_buffer_view_clipboard_changed (Gimp                *gimp,
                                                   GimpBufferView      *buffer_view);
 static void   gimp_buffer_view_view_notify       (GimpContainerView   *view,
                                                   GParamSpec          *pspec,
@@ -107,7 +107,7 @@ gimp_buffer_view_set_context (GimpDocked  *docked,
 
   parent_docked_iface->set_context (docked, context);
 
-  gimp_view_renderer_set_context (GIMP_VIEW (view->global_view)->renderer,
+  gimp_view_renderer_set_context (GIMP_VIEW (view->clipboard_view)->renderer,
                                   context);
 }
 
@@ -159,15 +159,15 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  buffer_view->global_view =
+  buffer_view->clipboard_view =
     gimp_view_new_full_by_types (NULL,
                                  GIMP_TYPE_VIEW,
                                  GIMP_TYPE_BUFFER,
                                  view_size, view_size, view_border_width,
                                  FALSE, FALSE, TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), buffer_view->global_view,
+  gtk_box_pack_start (GTK_BOX (hbox), buffer_view->clipboard_view,
                       FALSE, FALSE, 0);
-  gtk_widget_show (buffer_view->global_view);
+  gtk_widget_show (buffer_view->clipboard_view);
 
   g_signal_connect_object (editor->view, "notify::view-size",
                            G_CALLBACK (gimp_buffer_view_view_notify),
@@ -176,16 +176,16 @@ gimp_buffer_view_new (GimpViewType     view_type,
                            G_CALLBACK (gimp_buffer_view_view_notify),
                            buffer_view, 0);
 
-  buffer_view->global_label = gtk_label_new (_("(None)"));
-  gtk_box_pack_start (GTK_BOX (hbox), buffer_view->global_label,
+  buffer_view->clipboard_label = gtk_label_new (_("(None)"));
+  gtk_box_pack_start (GTK_BOX (hbox), buffer_view->clipboard_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (buffer_view->global_label);
+  gtk_widget_show (buffer_view->clipboard_label);
 
-  g_signal_connect_object (context->gimp, "buffer-changed",
-                           G_CALLBACK (gimp_buffer_view_buffer_changed),
+  g_signal_connect_object (context->gimp, "clipboard-changed",
+                           G_CALLBACK (gimp_buffer_view_clipboard_changed),
                            G_OBJECT (buffer_view), 0);
 
-  gimp_buffer_view_buffer_changed (context->gimp, buffer_view);
+  gimp_buffer_view_clipboard_changed (context->gimp, buffer_view);
 
   buffer_view->paste_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
@@ -244,24 +244,24 @@ gimp_buffer_view_activate_item (GimpContainerEditor *editor,
 }
 
 static void
-gimp_buffer_view_buffer_changed (Gimp           *gimp,
-                                 GimpBufferView *buffer_view)
+gimp_buffer_view_clipboard_changed (Gimp           *gimp,
+                                    GimpBufferView *buffer_view)
 {
-  gimp_view_set_viewable (GIMP_VIEW (buffer_view->global_view),
-                          (GimpViewable *) gimp->global_buffer);
+  GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
 
-  if (gimp->global_buffer)
+  gimp_view_set_viewable (GIMP_VIEW (buffer_view->clipboard_view),
+                          GIMP_VIEWABLE (buffer));
+
+  if (buffer)
     {
-      gchar *desc;
-
-      desc = gimp_viewable_get_description (GIMP_VIEWABLE (gimp->global_buffer),
-                                            NULL);
-      gtk_label_set_text (GTK_LABEL (buffer_view->global_label), desc);
+      gchar *desc = gimp_viewable_get_description (GIMP_VIEWABLE (buffer),
+                                                   NULL);
+      gtk_label_set_text (GTK_LABEL (buffer_view->clipboard_label), desc);
       g_free (desc);
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (buffer_view->global_label), _("(None)"));
+      gtk_label_set_text (GTK_LABEL (buffer_view->clipboard_label), _("(None)"));
     }
 }
 
@@ -270,7 +270,7 @@ gimp_buffer_view_view_notify (GimpContainerView *container_view,
                               GParamSpec        *pspec,
                               GimpBufferView    *buffer_view)
 {
-  GimpView *view = GIMP_VIEW (buffer_view->global_view);
+  GimpView *view = GIMP_VIEW (buffer_view->clipboard_view);
   gint      view_size;
   gint      view_border_width;
 

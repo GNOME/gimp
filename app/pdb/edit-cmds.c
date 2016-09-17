@@ -203,13 +203,15 @@ edit_paste_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp->global_buffer &&
+      GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
+
+      if (buffer &&
           gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                          drawable, gimp->global_buffer,
+                                          drawable, buffer,
                                           paste_into, -1, -1, -1, -1);
 
           if (! floating_sel)
@@ -240,9 +242,11 @@ edit_paste_as_new_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image = NULL;
 
-  if (gimp->global_buffer)
+  GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
+
+  if (buffer)
     {
-      image = gimp_image_new_from_buffer (gimp, NULL, gimp->global_buffer);
+      image = gimp_image_new_from_buffer (gimp, NULL, buffer);
 
       if (! image)
         success = FALSE;

@@ -81,10 +81,10 @@ gimp_edit_cut (GimpImage     *image,
 
   if (buffer)
     {
-      gimp_set_global_buffer (image->gimp, buffer);
+      gimp_set_clipboard_buffer (image->gimp, buffer);
       g_object_unref (buffer);
 
-      return image->gimp->global_buffer;
+      return gimp_get_clipboard_buffer (image->gimp);
     }
 
   return NULL;
@@ -109,10 +109,10 @@ gimp_edit_copy (GimpImage     *image,
 
   if (buffer)
     {
-      gimp_set_global_buffer (image->gimp, buffer);
+      gimp_set_clipboard_buffer (image->gimp, buffer);
       g_object_unref (buffer);
 
-      return image->gimp->global_buffer;
+      return gimp_get_clipboard_buffer (image->gimp);
     }
 
   return NULL;
@@ -134,10 +134,10 @@ gimp_edit_copy_visible (GimpImage    *image,
 
   if (buffer)
     {
-      gimp_set_global_buffer (image->gimp, buffer);
+      gimp_set_clipboard_buffer (image->gimp, buffer);
       g_object_unref (buffer);
 
-      return image->gimp->global_buffer;
+      return gimp_get_clipboard_buffer (image->gimp);
     }
 
   return NULL;

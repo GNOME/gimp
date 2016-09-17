@@ -89,7 +89,7 @@ struct _Gimp
 
   GList                  *image_windows;
 
-  GimpBuffer             *global_buffer;
+  GimpBuffer             *clipboard_buffer;
   GimpContainer          *named_buffers;
 
   GimpContainer          *fonts;
@@ -137,7 +137,7 @@ struct _GimpClass
   gboolean (* exit)                   (Gimp               *gimp,
                                        gboolean            force);
 
-  void     (* buffer_changed)         (Gimp               *gimp);
+  void     (* clipboard_changed)      (Gimp               *gimp);
 
   void     (* filter_history_changed) (Gimp               *gimp);
 
@@ -184,8 +184,9 @@ GList        * gimp_get_image_windows      (Gimp                *gimp);
 GList        * gimp_get_paint_info_iter    (Gimp                *gimp);
 GList        * gimp_get_tool_info_iter     (Gimp                *gimp);
 
-void           gimp_set_global_buffer      (Gimp                *gimp,
+void           gimp_set_clipboard_buffer   (Gimp                *gimp,
                                             GimpBuffer          *buffer);
+GimpBuffer   * gimp_get_clipboard_buffer   (Gimp                *gimp);
 
 GimpImage    * gimp_create_image           (Gimp                *gimp,
                                             gint                 width,

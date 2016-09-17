@@ -123,7 +123,7 @@ static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GtkUIManager       *manager);
 
-static void       gui_global_buffer_changed     (Gimp               *gimp);
+static void       gui_clipboard_changed         (Gimp               *gimp);
 
 static void       gui_menu_show_tooltip         (GimpUIManager      *manager,
                                                  const gchar        *tooltip,
@@ -444,10 +444,10 @@ gui_restore_callback (Gimp               *gimp,
   dialogs_init (gimp, global_menu_factory);
 
   gimp_clipboard_init (gimp);
-  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
+  gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
 
-  g_signal_connect (gimp, "buffer-changed",
-                    G_CALLBACK (gui_global_buffer_changed),
+  g_signal_connect (gimp, "clipboard-changed",
+                    G_CALLBACK (gui_clipboard_changed),
                     NULL);
 
   gimp_devices_init (gimp);
@@ -715,7 +715,7 @@ gui_exit_after_callback (Gimp     *gimp,
    *  a whole lot of code paths. See bug #731389.
    */
   g_signal_handlers_disconnect_by_func (gimp,
-                                        G_CALLBACK (gui_global_buffer_changed),
+                                        G_CALLBACK (gui_clipboard_changed),
                                         NULL);
   gimp_clipboard_exit (gimp);
 
@@ -779,9 +779,9 @@ gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
 }
 
 static void
-gui_global_buffer_changed (Gimp *gimp)
+gui_clipboard_changed (Gimp *gimp)
 {
-  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
+  gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
 }
 
 static void

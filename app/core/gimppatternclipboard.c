@@ -57,7 +57,7 @@ static void       gimp_pattern_clipboard_get_property (GObject      *object,
 static GimpData * gimp_pattern_clipboard_duplicate    (GimpData     *data);
 #endif
 
-static void     gimp_pattern_clipboard_buffer_changed (Gimp         *gimp,
+static void       gimp_pattern_clipboard_changed      (Gimp         *gimp,
                                                        GimpPattern  *pattern);
 
 
@@ -104,11 +104,11 @@ gimp_pattern_clipboard_constructed (GObject *object)
 
   g_assert (GIMP_IS_GIMP (pattern->gimp));
 
-  g_signal_connect_object (pattern->gimp, "buffer-changed",
-                           G_CALLBACK (gimp_pattern_clipboard_buffer_changed),
+  g_signal_connect_object (pattern->gimp, "clipboard-changed",
+                           G_CALLBACK (gimp_pattern_clipboard_changed),
                            pattern, 0);
 
-  gimp_pattern_clipboard_buffer_changed (pattern->gimp, GIMP_PATTERN (pattern));
+  gimp_pattern_clipboard_changed (pattern->gimp, GIMP_PATTERN (pattern));
 }
 
 static void
@@ -174,28 +174,31 @@ gimp_pattern_clipboard_new (Gimp *gimp)
 /*  private functions  */
 
 static void
-gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
-                                       GimpPattern *pattern)
+gimp_pattern_clipboard_changed (Gimp        *gimp,
+                                GimpPattern *pattern)
 {
+  GimpBuffer *gimp_buffer;
+
   if (pattern->mask)
     {
       gimp_temp_buf_unref (pattern->mask);
       pattern->mask = NULL;
     }
 
-  if (gimp->global_buffer)
-    {
-      GimpBuffer *buffer = gimp->global_buffer;
-      gint        width;
-      gint        height;
+  gimp_buffer = gimp_get_clipboard_buffer (gimp);
 
-      width  = MIN (gimp_buffer_get_width  (buffer), 1024);
-      height = MIN (gimp_buffer_get_height (buffer), 1024);
+  if (gimp_buffer)
+    {
+      gint width;
+      gint height;
+
+      width  = MIN (gimp_buffer_get_width  (gimp_buffer), 1024);
+      height = MIN (gimp_buffer_get_height (gimp_buffer), 1024);
 
       pattern->mask = gimp_temp_buf_new (width, height,
-                                         gimp_buffer_get_format (buffer));
+                                         gimp_buffer_get_format (gimp_buffer));
 
-      gegl_buffer_get (gimp_buffer_get_buffer (buffer),
+      gegl_buffer_get (gimp_buffer_get_buffer (gimp_buffer),
                        GEGL_RECTANGLE (0, 0, width, height), 1.0,
                        NULL,
                        gimp_temp_buf_get_data (pattern->mask),

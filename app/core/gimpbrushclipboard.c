@@ -57,7 +57,7 @@ static void       gimp_brush_clipboard_get_property (GObject      *object,
 static GimpData * gimp_brush_clipboard_duplicate    (GimpData     *data);
 #endif
 
-static void     gimp_brush_clipboard_buffer_changed (Gimp         *gimp,
+static void       gimp_brush_clipboard_changed      (Gimp         *gimp,
                                                      GimpBrush    *brush);
 
 
@@ -104,11 +104,11 @@ gimp_brush_clipboard_constructed (GObject *object)
 
   g_assert (GIMP_IS_GIMP (brush->gimp));
 
-  g_signal_connect_object (brush->gimp, "buffer-changed",
-                           G_CALLBACK (gimp_brush_clipboard_buffer_changed),
+  g_signal_connect_object (brush->gimp, "clipboard-changed",
+                           G_CALLBACK (gimp_brush_clipboard_changed),
                            brush, 0);
 
-  gimp_brush_clipboard_buffer_changed (brush->gimp, GIMP_BRUSH (brush));
+  gimp_brush_clipboard_changed (brush->gimp, GIMP_BRUSH (brush));
 }
 
 static void
@@ -174,11 +174,12 @@ gimp_brush_clipboard_new (Gimp *gimp)
 /*  private functions  */
 
 static void
-gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
-                                     GimpBrush *brush)
+gimp_brush_clipboard_changed (Gimp      *gimp,
+                              GimpBrush *brush)
 {
-  gint width;
-  gint height;
+  GimpBuffer *gimp_buffer;
+  gint        width;
+  gint        height;
 
   if (brush->priv->mask)
     {
@@ -192,14 +193,16 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       brush->priv->pixmap = NULL;
     }
 
-  if (gimp->global_buffer)
+  gimp_buffer = gimp_get_clipboard_buffer (gimp);
+
+  if (gimp_buffer)
     {
-      GeglBuffer *buffer = gimp_buffer_get_buffer (gimp->global_buffer);
+      GeglBuffer *buffer = gimp_buffer_get_buffer (gimp_buffer);
       const Babl *format = gegl_buffer_get_format (buffer);
       GeglBuffer *dest_buffer;
 
-      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 1024);
-      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 1024);
+      width  = MIN (gimp_buffer_get_width  (gimp_buffer), 1024);
+      height = MIN (gimp_buffer_get_height (gimp_buffer), 1024);
 
       brush->priv->mask   = gimp_temp_buf_new (width, height,
                                                babl_format ("Y u8"));
