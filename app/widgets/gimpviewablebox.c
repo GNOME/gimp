@@ -56,7 +56,8 @@ static GtkWidget * gimp_viewable_box_new       (GimpContainer *container,
                                                 const gchar   *dialog_identifier,
                                                 const gchar   *dialog_icon_name,
                                                 const gchar   *dialog_tooltip,
-                                                const gchar   *editor_id);
+                                                const gchar   *editor_id,
+                                                const gchar   *editor_tooltip);
 static GtkWidget * view_props_connect          (GtkWidget     *box,
                                                 GimpContext   *context,
                                                 const gchar   *view_type_prop,
@@ -77,7 +78,8 @@ brush_box_new (GimpContainer *container,
                gint           spacing,
                GimpViewType   view_type,
                GimpViewSize   view_size,
-               const gchar   *editor_id)
+               const gchar   *editor_id,
+               const gchar   *editor_tooltip)
 {
   if (! container)
     container = gimp_data_factory_get_container (context->gimp->brush_factory);
@@ -87,7 +89,7 @@ brush_box_new (GimpContainer *container,
                                 "gimp-brush-grid|gimp-brush-list",
                                 GIMP_STOCK_BRUSH,
                                 _("Open the brush selection dialog"),
-                                editor_id);
+                                editor_id, editor_tooltip);
 }
 
 GtkWidget *
@@ -102,7 +104,7 @@ gimp_brush_box_new (GimpContainer *container,
 
   return brush_box_new (container, context, label, spacing,
                         GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_SMALL,
-                        NULL);
+                        NULL, NULL);
 }
 
 GtkWidget *
@@ -112,7 +114,8 @@ gimp_prop_brush_box_new (GimpContainer *container,
                          gint           spacing,
                          const gchar   *view_type_prop,
                          const gchar   *view_size_prop,
-                         const gchar   *editor_id)
+                         const gchar   *editor_id,
+                         const gchar   *editor_tooltip)
 {
   GimpViewType view_type;
   GimpViewSize view_size;
@@ -128,7 +131,7 @@ gimp_prop_brush_box_new (GimpContainer *container,
 
   return view_props_connect (brush_box_new (container, context, label, spacing,
                                             view_type, view_size,
-                                            editor_id),
+                                            editor_id, editor_tooltip),
                              context,
                              view_type_prop, view_size_prop);
 }
@@ -142,7 +145,8 @@ dynamics_box_new (GimpContainer *container,
                   const gchar   *label,
                   gint           spacing,
                   GimpViewSize   view_size,
-                  const gchar   *editor_id)
+                  const gchar   *editor_id,
+                  const gchar   *editor_tooltip)
 {
   if (! container)
     container = gimp_data_factory_get_container (context->gimp->dynamics_factory);
@@ -152,7 +156,7 @@ dynamics_box_new (GimpContainer *container,
                                 "gimp-dynamics-list",
                                 GIMP_STOCK_DYNAMICS,
                                 _("Open the dynamics selection dialog"),
-                                editor_id);
+                                editor_id, editor_tooltip);
 }
 
 GtkWidget *
@@ -167,7 +171,7 @@ gimp_dynamics_box_new (GimpContainer *container,
 
   return dynamics_box_new (container, context, label, spacing,
                            GIMP_VIEW_SIZE_SMALL,
-                           NULL);
+                           NULL, NULL);
 }
 
 GtkWidget *
@@ -177,7 +181,8 @@ gimp_prop_dynamics_box_new (GimpContainer *container,
                             gint           spacing,
                             const gchar   *view_type_prop,
                             const gchar   *view_size_prop,
-                            const gchar   *editor_id)
+                            const gchar   *editor_id,
+                            const gchar   *editor_tooltip)
 {
   GimpViewType view_type;
   GimpViewSize view_size;
@@ -193,7 +198,7 @@ gimp_prop_dynamics_box_new (GimpContainer *container,
 
   return view_props_connect (dynamics_box_new (container, context, label,
                                                spacing, view_size,
-                                               editor_id),
+                                               editor_id, editor_tooltip),
                              context,
                              view_type_prop, view_size_prop);
 }
@@ -217,7 +222,7 @@ mybrush_box_new (GimpContainer *container,
                                 "gimp-mypaint-brush-grid|gimp-mypaint-brush-list",
                                 GIMP_STOCK_BRUSH,
                                 _("Open the MyPaint brush selection dialog"),
-                                NULL);
+                                NULL, NULL);
 }
 
 GtkWidget *
@@ -280,7 +285,7 @@ pattern_box_new (GimpContainer *container,
                                 "gimp-pattern-grid|gimp-pattern-list",
                                 GIMP_STOCK_PATTERN,
                                 _("Open the pattern selection dialog"),
-                                NULL);
+                                NULL, NULL);
 }
 
 GtkWidget *
@@ -334,7 +339,8 @@ gradient_box_new (GimpContainer *container,
                   GimpViewType   view_type,
                   GimpViewSize   view_size,
                   const gchar   *reverse_prop,
-                  const gchar   *editor_id)
+                  const gchar   *editor_id,
+                  const gchar   *editor_tooltip)
 {
   GtkWidget *hbox;
   GtkWidget *button;
@@ -348,7 +354,7 @@ gradient_box_new (GimpContainer *container,
                                 "gimp-gradient-list|gimp-gradient-grid",
                                 GIMP_STOCK_GRADIENT,
                                 _("Open the gradient selection dialog"),
-                                editor_id);
+                                editor_id, editor_tooltip);
 
   children = gtk_container_get_children (GTK_CONTAINER (hbox));
   button = children->data;
@@ -411,7 +417,7 @@ gimp_gradient_box_new (GimpContainer *container,
   return gradient_box_new (container, context, label, spacing,
                            GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_LARGE,
                            reverse_prop,
-                           NULL);
+                           NULL, NULL);
 }
 
 GtkWidget *
@@ -422,7 +428,8 @@ gimp_prop_gradient_box_new (GimpContainer *container,
                             const gchar   *view_type_prop,
                             const gchar   *view_size_prop,
                             const gchar   *reverse_prop,
-                            const gchar   *editor_id)
+                            const gchar   *editor_id,
+                            const gchar   *editor_tooltip)
 {
   GimpViewType view_type;
   GimpViewSize view_size;
@@ -439,7 +446,7 @@ gimp_prop_gradient_box_new (GimpContainer *container,
   return view_props_connect (gradient_box_new (container, context, label, spacing,
                                                view_type, view_size,
                                                reverse_prop,
-                                               editor_id),
+                                               editor_id, editor_tooltip),
                              context,
                              view_type_prop, view_size_prop);
 }
@@ -454,7 +461,8 @@ palette_box_new (GimpContainer *container,
                  gint           spacing,
                  GimpViewType   view_type,
                  GimpViewSize   view_size,
-                 const gchar   *editor_id)
+                 const gchar   *editor_id,
+                 const gchar   *editor_tooltip)
 {
   if (! container)
     container = gimp_data_factory_get_container (context->gimp->palette_factory);
@@ -464,7 +472,7 @@ palette_box_new (GimpContainer *container,
                                 "gimp-palette-list|gimp-palette-grid",
                                 GIMP_STOCK_PALETTE,
                                 _("Open the palette selection dialog"),
-                                editor_id);
+                                editor_id, editor_tooltip);
 }
 
 GtkWidget *
@@ -479,7 +487,7 @@ gimp_palette_box_new (GimpContainer *container,
 
   return palette_box_new (container, context, label, spacing,
                           GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_MEDIUM,
-                          NULL);
+                          NULL, NULL);
 }
 
 GtkWidget *
@@ -489,7 +497,8 @@ gimp_prop_palette_box_new (GimpContainer *container,
                            gint           spacing,
                            const gchar   *view_type_prop,
                            const gchar   *view_size_prop,
-                           const gchar   *editor_id)
+                           const gchar   *editor_id,
+                           const gchar   *editor_tooltip)
 {
   GimpViewType view_type;
   GimpViewSize view_size;
@@ -505,7 +514,7 @@ gimp_prop_palette_box_new (GimpContainer *container,
 
   return view_props_connect (palette_box_new (container, context, label, spacing,
                                               view_type, view_size,
-                                              editor_id),
+                                              editor_id, editor_tooltip),
                              context,
                              view_type_prop, view_size_prop);
 }
@@ -529,7 +538,7 @@ font_box_new (GimpContainer *container,
                                 "gimp-font-list|gimp-font-grid",
                                 "gtk-select-font",
                                 _("Open the font selection dialog"),
-                                NULL);
+                                NULL, NULL);
 }
 
 GtkWidget *
@@ -586,7 +595,8 @@ gimp_viewable_box_new (GimpContainer *container,
                        const gchar   *dialog_identifier,
                        const gchar   *dialog_icon_name,
                        const gchar   *dialog_tooltip,
-                       const gchar   *editor_id)
+                       const gchar   *editor_id,
+                       const gchar   *editor_tooltip)
 {
   GtkWidget *hbox;
   GtkWidget *button;
@@ -654,6 +664,9 @@ gimp_viewable_box_new (GimpContainer *container,
       gtk_button_set_relief (GTK_BUTTON (edit_button), GTK_RELIEF_NONE);
       gtk_box_pack_end (GTK_BOX (entry_hbox), edit_button, FALSE, FALSE, 0);
       gtk_widget_show (edit_button);
+
+      if (editor_tooltip)
+        gimp_help_set_help_data (edit_button, editor_tooltip, NULL);
 
       image = gtk_image_new_from_icon_name (GTK_STOCK_EDIT,
                                             GTK_ICON_SIZE_BUTTON);

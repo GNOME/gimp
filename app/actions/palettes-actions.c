@@ -97,7 +97,7 @@ static const GimpStringActionEntry palettes_edit_actions[] =
 {
   { "palettes-edit", "gtk-edit",
     NC_("palettes-action", "_Edit Palette..."), NULL,
-    NC_("palettes-action", "Edit palette"),
+    NC_("palettes-action", "Edit this palette"),
     "gimp-palette-editor",
     GIMP_HELP_PALETTE_EDIT }
 };

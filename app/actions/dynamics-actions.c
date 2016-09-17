@@ -84,7 +84,7 @@ static const GimpStringActionEntry dynamics_edit_actions[] =
 {
   { "dynamics-edit", "gtk-edit",
     NC_("dynamics-action", "_Edit Dynamics..."), NULL,
-    NC_("dynamics-action", "Edit dynamics"),
+    NC_("dynamics-action", "Edit this dynamics"),
     "gimp-dynamics-editor",
     GIMP_HELP_DYNAMICS_EDIT }
 };

@@ -226,7 +226,8 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                                        "gradient-view-type",
                                        "gradient-view-size",
                                        "gradient-reverse",
-                                       "gimp-gradient-editor");
+                                       "gimp-gradient-editor",
+                                       _("Edit this gradient"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
