@@ -225,7 +225,8 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   gimp_item_set_linked (GIMP_ITEM (new_layer), FALSE, FALSE);
   gimp_layer_set_mode (new_layer, GIMP_NORMAL_MODE, FALSE);
   gimp_layer_set_opacity (new_layer, GIMP_OPACITY_OPAQUE, FALSE);
-  gimp_layer_set_lock_alpha (new_layer, FALSE, FALSE);
+  if (gimp_layer_can_lock_alpha (new_layer))
+    gimp_layer_set_lock_alpha (new_layer, FALSE, FALSE);
 
   gimp_image_add_layer (new_image, new_layer, NULL, 0, TRUE);
 
