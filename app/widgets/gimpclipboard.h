@@ -22,15 +22,19 @@
 void         gimp_clipboard_init       (Gimp        *gimp);
 void         gimp_clipboard_exit       (Gimp        *gimp);
 
+gboolean     gimp_clipboard_has_image  (Gimp        *gimp);
 gboolean     gimp_clipboard_has_buffer (Gimp        *gimp);
 gboolean     gimp_clipboard_has_svg    (Gimp        *gimp);
 gboolean     gimp_clipboard_has_curve  (Gimp        *gimp);
 
+GimpImage  * gimp_clipboard_get_image  (Gimp        *gimp);
 GimpBuffer * gimp_clipboard_get_buffer (Gimp        *gimp);
 gchar      * gimp_clipboard_get_svg    (Gimp        *gimp,
                                         gsize       *svg_length);
 GimpCurve  * gimp_clipboard_get_curve  (Gimp        *gimp);
 
+void         gimp_clipboard_set_image  (Gimp        *gimp,
+                                        GimpImage   *image);
 void         gimp_clipboard_set_buffer (Gimp        *gimp,
                                         GimpBuffer  *buffer);
 void         gimp_clipboard_set_svg    (Gimp        *gimp,
