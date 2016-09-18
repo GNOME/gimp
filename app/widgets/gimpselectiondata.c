@@ -377,7 +377,12 @@ gimp_selection_data_get_xcf (GtkSelectionData *selection,
 
   image = xcf_load_stream (gimp, input, NULL, NULL, &error);
 
-  if (! image)
+  if (image)
+    {
+      /*  don't keep clipboard images in the image list  */
+      gimp_container_remove (gimp->images, GIMP_OBJECT (image));
+    }
+  else
     {
       g_warning ("Recieved invalid XCF data: %s", error->message);
       g_clear_error (&error);
