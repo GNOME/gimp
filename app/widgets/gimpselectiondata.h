@@ -34,6 +34,14 @@ gboolean        gimp_selection_data_get_color     (GtkSelectionData *selection,
                                                    GimpRGB          *color);
 
 
+/*  image (xcf)  */
+
+void            gimp_selection_data_set_xcf       (GtkSelectionData *selection,
+                                                   GimpImage        *image);
+GimpImage     * gimp_selection_data_get_xcf       (GtkSelectionData *selection,
+                                                   Gimp             *gimp);
+
+
 /*  stream (svg/png)  */
 
 void            gimp_selection_data_set_stream    (GtkSelectionData *selection,
