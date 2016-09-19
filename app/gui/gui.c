@@ -444,7 +444,10 @@ gui_restore_callback (Gimp               *gimp,
   dialogs_init (gimp, global_menu_factory);
 
   gimp_clipboard_init (gimp);
-  gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
+  if (gimp_get_clipboard_image (gimp))
+    gimp_clipboard_set_image (gimp, gimp_get_clipboard_image (gimp));
+  else
+    gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
 
   g_signal_connect (gimp, "clipboard-changed",
                     G_CALLBACK (gui_clipboard_changed),
@@ -781,7 +784,10 @@ gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
 static void
 gui_clipboard_changed (Gimp *gimp)
 {
-  gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
+  if (gimp_get_clipboard_image (gimp))
+    gimp_clipboard_set_image (gimp, gimp_get_clipboard_image (gimp));
+  else
+    gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
 }
 
 static void
