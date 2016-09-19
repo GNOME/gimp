@@ -424,17 +424,23 @@ void
 edit_paste_as_new_layer_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  Gimp       *gimp;
-  GimpImage  *image;
-  GimpBuffer *buffer;
+  Gimp        *gimp;
+  GimpImage   *image;
+  GimpDisplay *display;
+  GimpBuffer  *buffer;
   return_if_no_gimp (gimp, data);
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
 
   buffer = gimp_clipboard_get_buffer (gimp);
 
   if (buffer)
     {
       GimpLayer *layer;
+      gint       x, y;
+      gint       width, height;
+      gint       offset_x;
+      gint       offset_y;
 
       layer = gimp_layer_new_from_buffer (buffer, image,
                                           gimp_image_get_layer_format (image,
@@ -443,6 +449,18 @@ edit_paste_as_new_layer_cmd_callback (GtkAction *action,
                                           GIMP_OPACITY_OPAQUE,
                                           GIMP_NORMAL_MODE);
       g_object_unref (buffer);
+
+      gimp_display_shell_untransform_viewport (gimp_display_get_shell (display),
+                                               &x, &y, &width, &height);
+
+      gimp_edit_get_paste_offset (image,
+                                  gimp_image_get_active_drawable (image),
+                                  GIMP_OBJECT (buffer),
+                                  x, y, width, height,
+                                  &offset_x,
+                                  &offset_y);
+
+      gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 
       gimp_image_add_layer (image, layer,
                             GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

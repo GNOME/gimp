@@ -143,54 +143,35 @@ gimp_edit_copy_visible (GimpImage    *image,
   return NULL;
 }
 
-GimpLayer *
-gimp_edit_paste (GimpImage    *image,
-                 GimpDrawable *drawable,
-                 GimpBuffer   *paste,
-                 gboolean      paste_into,
-                 gint          viewport_x,
-                 gint          viewport_y,
-                 gint          viewport_width,
-                 gint          viewport_height)
+void
+gimp_edit_get_paste_offset (GimpImage    *image,
+                            GimpDrawable *drawable,
+                            GimpObject   *paste,
+                            gint          viewport_x,
+                            gint          viewport_y,
+                            gint          viewport_width,
+                            gint          viewport_height,
+                            gint         *offset_x,
+                            gint         *offset_y)
 {
-  GimpLayer  *layer;
-  const Babl *format;
-  gint        image_width;
-  gint        image_height;
-  gint        width;
-  gint        height;
-  gint        offset_x;
-  gint        offset_y;
-  gboolean    clamp_to_image = TRUE;
+  gint     image_width;
+  gint     image_height;
+  gint     width;
+  gint     height;
+  gboolean clamp_to_image = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (drawable == NULL ||
-                        gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
-
-  /*  Make a new layer: if drawable == NULL,
-   *  user is pasting into an empty image.
-   */
-
-  if (drawable)
-    format = gimp_drawable_get_format_with_alpha (drawable);
-  else
-    format = gimp_image_get_layer_format (image, TRUE);
-
-  layer = gimp_layer_new_from_buffer (paste, image,
-                                      format,
-                                      _("Pasted Layer"),
-                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-
-  if (! layer)
-    return NULL;
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (drawable == NULL ||
+                    gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (GIMP_IS_VIEWABLE (paste));
+  g_return_if_fail (offset_x != NULL);
+  g_return_if_fail (offset_y != NULL);
 
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
 
-  width  = gimp_item_get_width  (GIMP_ITEM (layer));
-  height = gimp_item_get_height (GIMP_ITEM (layer));
+  gimp_viewable_get_size (GIMP_VIEWABLE (paste), &width, &height);
 
   if (viewport_width  == image_width &&
       viewport_height == image_height)
@@ -233,15 +214,15 @@ gimp_edit_paste (GimpImage    *image,
         {
           /*  center on the viewport  */
 
-          offset_x = paste_x + (paste_width - width)  / 2;
-          offset_y = paste_y + (paste_height- height) / 2;
+          *offset_x = paste_x + (paste_width - width)  / 2;
+          *offset_y = paste_y + (paste_height- height) / 2;
         }
       else
         {
           /*  otherwise center on the target  */
 
-          offset_x = off_x + ((x1 + x2) - width)  / 2;
-          offset_y = off_y + ((y1 + y2) - height) / 2;
+          *offset_x = off_x + ((x1 + x2) - width)  / 2;
+          *offset_y = off_y + ((y1 + y2) - height) / 2;
 
           /*  and keep it that way  */
           clamp_to_image = FALSE;
@@ -254,15 +235,15 @@ gimp_edit_paste (GimpImage    *image,
     {
       /*  center on the viewport  */
 
-      offset_x = viewport_x + (viewport_width  - width)  / 2;
-      offset_y = viewport_y + (viewport_height - height) / 2;
+      *offset_x = viewport_x + (viewport_width  - width)  / 2;
+      *offset_y = viewport_y + (viewport_height - height) / 2;
     }
   else
     {
       /*  otherwise center on the image  */
 
-      offset_x = (image_width  - width)  / 2;
-      offset_y = (image_height - height) / 2;
+      *offset_x = (image_width  - width)  / 2;
+      *offset_y = (image_height - height) / 2;
 
       /*  and keep it that way  */
       clamp_to_image = FALSE;
@@ -273,11 +254,58 @@ gimp_edit_paste (GimpImage    *image,
       /*  Ensure that the pasted layer is always within the image, if it
        *  fits and aligned at top left if it doesn't. (See bug #142944).
        */
-      offset_x = MIN (offset_x, image_width  - width);
-      offset_y = MIN (offset_y, image_height - height);
-      offset_x = MAX (offset_x, 0);
-      offset_y = MAX (offset_y, 0);
+      *offset_x = MIN (*offset_x, image_width  - width);
+      *offset_y = MIN (*offset_y, image_height - height);
+      *offset_x = MAX (*offset_x, 0);
+      *offset_y = MAX (*offset_y, 0);
     }
+}
+
+GimpLayer *
+gimp_edit_paste (GimpImage    *image,
+                 GimpDrawable *drawable,
+                 GimpBuffer   *paste,
+                 gboolean      paste_into,
+                 gint          viewport_x,
+                 gint          viewport_y,
+                 gint          viewport_width,
+                 gint          viewport_height)
+{
+  GimpLayer  *layer;
+  const Babl *format;
+  gint        offset_x;
+  gint        offset_y;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (drawable == NULL ||
+                        gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
+
+  /*  Make a new layer: if drawable == NULL,
+   *  user is pasting into an empty image.
+   */
+
+  if (drawable)
+    format = gimp_drawable_get_format_with_alpha (drawable);
+  else
+    format = gimp_image_get_layer_format (image, TRUE);
+
+  layer = gimp_layer_new_from_buffer (paste, image,
+                                      format,
+                                      _("Pasted Layer"),
+                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  if (! layer)
+    return NULL;
+
+  gimp_edit_get_paste_offset (image, drawable, GIMP_OBJECT (layer),
+                              viewport_x,
+                              viewport_y,
+                              viewport_width,
+                              viewport_height,
+                              &offset_x,
+                              &offset_y);
 
   gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 
