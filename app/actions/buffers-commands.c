@@ -67,8 +67,8 @@ buffers_paste_into_cmd_callback (GtkAction *action,
 }
 
 void
-buffers_paste_as_new_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+buffers_paste_as_new_image_cmd_callback (GtkAction *action,
+                                         gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;

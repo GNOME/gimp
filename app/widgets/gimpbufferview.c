@@ -93,10 +93,6 @@ gimp_buffer_view_docked_iface_init (GimpDockedInterface *iface)
 static void
 gimp_buffer_view_init (GimpBufferView *view)
 {
-  view->paste_button        = NULL;
-  view->paste_into_button   = NULL;
-  view->paste_as_new_button = NULL;
-  view->delete_button       = NULL;
 }
 
 static void
@@ -195,9 +191,9 @@ gimp_buffer_view_new (GimpViewType     view_type,
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
                                    "buffers-paste-into", NULL);
 
-  buffer_view->paste_as_new_button =
+  buffer_view->paste_as_new_image_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
-                                   "buffers-paste-as-new", NULL);
+                                   "buffers-paste-as-new-image", NULL);
 
   buffer_view->delete_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
@@ -210,7 +206,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
                                   GTK_BUTTON (buffer_view->paste_into_button),
                                   GIMP_TYPE_BUFFER);
   gimp_container_view_enable_dnd (editor->view,
-                                  GTK_BUTTON (buffer_view->paste_as_new_button),
+                                  GTK_BUTTON (buffer_view->paste_as_new_image_button),
                                   GIMP_TYPE_BUFFER);
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (buffer_view->delete_button),

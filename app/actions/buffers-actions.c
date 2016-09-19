@@ -54,11 +54,11 @@ static const GimpActionEntry buffers_actions[] =
     G_CALLBACK (buffers_paste_into_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_INTO },
 
-  { "buffers-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
+  { "buffers-paste-as-new-image", GIMP_STOCK_PASTE_AS_NEW,
     NC_("buffers-action", "Paste Buffer as _New"), NULL,
     NC_("buffers-action", "Paste the selected buffer as a new image"),
-    G_CALLBACK (buffers_paste_as_new_cmd_callback),
-    GIMP_HELP_BUFFER_PASTE_AS_NEW },
+    G_CALLBACK (buffers_paste_as_new_image_cmd_callback),
+    GIMP_HELP_BUFFER_PASTE_AS_NEW_IMAGE },
 
   { "buffers-delete", "edit-delete",
     NC_("buffers-action", "_Delete Buffer"), NULL,
@@ -89,10 +89,10 @@ buffers_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("buffers-paste",        buffer);
-  SET_SENSITIVE ("buffers-paste-into",   buffer);
-  SET_SENSITIVE ("buffers-paste-as-new", buffer);
-  SET_SENSITIVE ("buffers-delete",       buffer);
+  SET_SENSITIVE ("buffers-paste",              buffer);
+  SET_SENSITIVE ("buffers-paste-into",         buffer);
+  SET_SENSITIVE ("buffers-paste-as-new-image", buffer);
+  SET_SENSITIVE ("buffers-delete",             buffer);
 
 #undef SET_SENSITIVE
 }

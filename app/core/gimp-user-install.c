@@ -479,10 +479,14 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
 
 /* The regexp pattern of all options changed from menurc of GIMP 2.8.
  * Add any pattern that we want to recognize for replacement in the menurc of
- * the next release*/
-#define MENURC_OVER20_UPDATE_PATTERN "\"<Actions>/file/file-export-to\""         "|" \
-                                     "\"<Actions>/file/file-export\""            "|" \
-                                     "\"<Actions>/tools/tools-value-[1-4]-.*\""
+ * the next release
+ */
+#define MENURC_OVER20_UPDATE_PATTERN \
+  "\"<Actions>/file/file-export-to\""           "|" \
+  "\"<Actions>/file/file-export\""              "|" \
+  "\"<Actions>/edit/edit-paste-as-new\""        "|" \
+  "\"<Actions>/buffers/buffers-paste-as-new\""  "|" \
+  "\"<Actions>/tools/tools-value-[1-4]-.*\""
 
 /**
  * callback to use for updating a menurc from GIMP over 2.0.
@@ -494,11 +498,11 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
                            GString          *new_value,
                            gpointer          data)
 {
-  gchar *match;
-  match = g_match_info_fetch (matched_value, 0);
+  gchar *match = g_match_info_fetch (matched_value, 0);
 
-  /* file-export-* changes to follow file-save-* patterns.
-   * Actions available since GIMP 2.8, changed for 2.10 in commit 4b14ed2. */
+  /* file-export-* changes to follow file-save-* patterns.  Actions
+   * available since GIMP 2.8, changed for 2.10 in commit 4b14ed2.
+   */
   if (g_strcmp0 (match, "\"<Actions>/file/file-export\"") == 0)
     {
       g_string_append (new_value, "\"<Actions>/file/file-export-as\"");
@@ -507,8 +511,19 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
     {
       g_string_append (new_value, "\"<Actions>/file/file-export\"");
     }
-  /* Tools settings renamed more user-friendly.
-   * Actions available since GIMP 2.4, changed for 2.10 in commit 0bdb747. */
+  /* "*-paste-as-new" renamed to "*-paste-as-new-image"
+   */
+  else if (g_strcmp0 (match, "\"<Actions>/edit/edit-paste-as-new\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/edit/edit-paste-as-new-image\"");
+    }
+  else if (g_strcmp0 (match, "\"<Actions>/buffers/buffers-paste-as-new\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/buffers/buffers-paste-as-new-image\"");
+    }
+  /* Tools settings renamed more user-friendly.  Actions available
+   * since GIMP 2.4, changed for 2.10 in commit 0bdb747.
+   */
   else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-1-"))
     {
       g_string_append (new_value, "\"<Actions>/tools/tools-opacity-");
@@ -529,7 +544,9 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
       g_string_append (new_value, "\"<Actions>/tools/tools-angle-");
       g_string_append (new_value, match + 31);
     }
-  /* Should not happen. Just in case we match something unexpected by mistake. */
+  /* Should not happen. Just in case we match something unexpected by
+   * mistake.
+   */
   else
     {
       g_string_append (new_value, match);
@@ -539,7 +556,8 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
   return FALSE;
 }
 
-#define CONTROLLERRC_UPDATE_PATTERN "\\(map \"(scroll|cursor)-[^\"]*\\bcontrol\\b[^\"]*\""
+#define CONTROLLERRC_UPDATE_PATTERN \
+  "\\(map \"(scroll|cursor)-[^\"]*\\bcontrol\\b[^\"]*\""
 
 static gboolean
 user_update_controllerrc (const GMatchInfo *matched_value,
@@ -567,7 +585,8 @@ user_update_controllerrc (const GMatchInfo *matched_value,
   return FALSE;
 }
 
-#define GIMPRC_UPDATE_PATTERN "\\(theme [^)]*\\)"
+#define GIMPRC_UPDATE_PATTERN \
+  "\\(theme [^)]*\\)"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
@@ -757,7 +776,8 @@ user_install_migrate_files (GimpUserInstall *install)
           g_snprintf (dest, sizeof (dest), "%s%c%s",
                       gimp_directory (), G_DIR_SEPARATOR, basename);
 
-          user_install_file_copy (install, source, dest, update_pattern, update_callback);
+          user_install_file_copy (install, source, dest,
+                                  update_pattern, update_callback);
         }
       else if (g_file_test (source, G_FILE_TEST_IS_DIR))
         {

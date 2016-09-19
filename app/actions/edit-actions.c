@@ -139,17 +139,17 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_paste_into_cmd_callback),
     GIMP_HELP_EDIT_PASTE_INTO },
 
-  { "edit-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
+  { "edit-paste-as-new-image", GIMP_STOCK_PASTE_AS_NEW,
     NC_("edit-action", "From _Clipboard"), "<primary><shift>V",
     NC_("edit-action", "Create a new image from the content of the clipboard"),
-    G_CALLBACK (edit_paste_as_new_cmd_callback),
-    GIMP_HELP_EDIT_PASTE_AS_NEW },
+    G_CALLBACK (edit_paste_as_new_image_cmd_callback),
+    GIMP_HELP_EDIT_PASTE_AS_NEW_IMAGE },
 
-  { "edit-paste-as-new-short", GIMP_STOCK_PASTE_AS_NEW,
+  { "edit-paste-as-new-image-short", GIMP_STOCK_PASTE_AS_NEW,
     NC_("edit-action", "_New Image"), NULL,
     NC_("edit-action", "Create a new image from the content of the clipboard"),
-    G_CALLBACK (edit_paste_as_new_cmd_callback),
-    GIMP_HELP_EDIT_PASTE_AS_NEW },
+    G_CALLBACK (edit_paste_as_new_image_cmd_callback),
+    GIMP_HELP_EDIT_PASTE_AS_NEW_IMAGE },
 
   { "edit-paste-as-new-layer", NULL,
     NC_("edit-action", "New _Layer"), NULL,
@@ -229,8 +229,8 @@ edit_actions_setup (GimpActionGroup *group)
                                       G_CALLBACK (edit_fill_cmd_callback));
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "edit-paste-as-new-short");
-  gtk_action_set_accel_path (action, "<Actions>/edit/edit-paste-as-new");
+                                        "edit-paste-as-new-image-short");
+  gtk_action_set_accel_path (action, "<Actions>/edit/edit-paste-as-new-image");
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         "edit-fill-fg");

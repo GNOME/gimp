@@ -321,7 +321,7 @@ edit_paste_cmd_callback (GtkAction *action,
   if (display && gimp_display_get_image (display))
     edit_paste (display, FALSE);
   else
-    edit_paste_as_new_cmd_callback (action, data);
+    edit_paste_as_new_image_cmd_callback (action, data);
 }
 
 void
@@ -335,8 +335,8 @@ edit_paste_into_cmd_callback (GtkAction *action,
 }
 
 void
-edit_paste_as_new_cmd_callback (GtkAction *action,
-                                gpointer   data)
+edit_paste_as_new_image_cmd_callback (GtkAction *action,
+                                      gpointer   data)
 {
   Gimp       *gimp;
   GimpBuffer *buffer;

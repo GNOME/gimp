@@ -8,7 +8,7 @@
       <menuitem action="image-new" />
       <menu action="file-create-menu" name="Create">
         <placeholder name="Acquire">
-          <menuitem action="edit-paste-as-new" />
+          <menuitem action="edit-paste-as-new-image" />
         </placeholder>
         <separator />
       </menu>
@@ -196,7 +196,7 @@
         <menuitem action="edit-paste-into" />
       </placeholder>
       <menu action="edit-paste-as-menu" name="Paste as">
-        <menuitem action="edit-paste-as-new-short" />
+        <menuitem action="edit-paste-as-new-image-short" />
         <menuitem action="edit-paste-as-new-layer" />
       </menu>
       <menu action="edit-buffer-menu" name="Buffer">

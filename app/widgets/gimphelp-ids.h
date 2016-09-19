@@ -57,7 +57,7 @@
 #define GIMP_HELP_EDIT_COPY_VISIBLE               "gimp-edit-copy-visible"
 #define GIMP_HELP_EDIT_PASTE                      "gimp-edit-paste"
 #define GIMP_HELP_EDIT_PASTE_INTO                 "gimp-edit-paste-into"
-#define GIMP_HELP_EDIT_PASTE_AS_NEW               "gimp-edit-paste-as-new"
+#define GIMP_HELP_EDIT_PASTE_AS_NEW_IMAGE         "gimp-edit-paste-as-new-image"
 #define GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER         "gimp-edit-paste-as-new-layer"
 #define GIMP_HELP_EDIT_CLEAR                      "gimp-edit-clear"
 #define GIMP_HELP_EDIT_FILL_FG                    "gimp-edit-fill-fg"
@@ -442,7 +442,7 @@
 #define GIMP_HELP_BUFFER_COPY                     "gimp-buffer-copy"
 #define GIMP_HELP_BUFFER_PASTE                    "gimp-buffer-paste"
 #define GIMP_HELP_BUFFER_PASTE_INTO               "gimp-buffer-paste-into"
-#define GIMP_HELP_BUFFER_PASTE_AS_NEW             "gimp-buffer-paste-as-new"
+#define GIMP_HELP_BUFFER_PASTE_AS_NEW_IMAGE       "gimp-buffer-paste-as-new-image"
 #define GIMP_HELP_BUFFER_DELETE                   "gimp-buffer-delete"
 
 #define GIMP_HELP_TOOL_PRESET_DIALOG              "gimp-tool-preset-dialog"
