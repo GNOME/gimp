@@ -19,11 +19,11 @@
 #define __GIMP_EDIT_H__
 
 
-GimpBuffer  * gimp_edit_cut                (GimpImage       *image,
+GimpObject  * gimp_edit_cut                (GimpImage       *image,
                                             GimpDrawable    *drawable,
                                             GimpContext     *context,
                                             GError         **error);
-GimpBuffer  * gimp_edit_copy               (GimpImage       *image,
+GimpObject  * gimp_edit_copy               (GimpImage       *image,
                                             GimpDrawable    *drawable,
                                             GimpContext     *context,
                                             GError         **error);
@@ -43,8 +43,8 @@ void          gimp_edit_get_paste_offset   (GimpImage       *image,
 
 GimpLayer   * gimp_edit_paste              (GimpImage       *image,
                                             GimpDrawable    *drawable,
-                                            GimpBuffer      *paste,
-                                            gboolean         paste_into,
+                                            GimpObject      *paste,
+                                            GimpPasteType    paste_type,
                                             gint             viewport_x,
                                             gint             viewport_y,
                                             gint             viewport_width,

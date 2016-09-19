@@ -211,8 +211,11 @@ edit_paste_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                          drawable, buffer,
-                                          paste_into, -1, -1, -1, -1);
+                                          drawable, GIMP_OBJECT (buffer),
+                                          paste_into ?
+                                          GIMP_PASTE_TYPE_FLOATING_INTO :
+                                          GIMP_PASTE_TYPE_FLOATING,
+                                          -1, -1, -1, -1);
 
           if (! floating_sel)
             success = FALSE;
@@ -446,8 +449,11 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                          drawable, buffer,
-                                          paste_into, -1, -1, -1, -1);
+                                          drawable, GIMP_OBJECT (buffer),
+                                          paste_into ?
+                                          GIMP_PASTE_TYPE_FLOATING_INTO :
+                                          GIMP_PASTE_TYPE_FLOATING,
+                                          -1, -1, -1, -1);
           if (! floating_sel)
             success = FALSE;
         }

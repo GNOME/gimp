@@ -47,7 +47,7 @@
 /*  local function prototypes  */
 
 static void   buffers_paste (GimpBufferView *view,
-                             gboolean        paste_into);
+                             GimpPasteType   paste_type);
 
 
 /*  public functionss */
@@ -56,14 +56,14 @@ void
 buffers_paste_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
-  buffers_paste (GIMP_BUFFER_VIEW (data), FALSE);
+  buffers_paste (GIMP_BUFFER_VIEW (data), GIMP_PASTE_TYPE_FLOATING);
 }
 
 void
 buffers_paste_into_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  buffers_paste (GIMP_BUFFER_VIEW (data), TRUE);
+  buffers_paste (GIMP_BUFFER_VIEW (data), GIMP_PASTE_TYPE_FLOATING_INTO);
 }
 
 void
@@ -108,7 +108,7 @@ buffers_delete_cmd_callback (GtkAction *action,
 
 static void
 buffers_paste (GimpBufferView *view,
-               gboolean        paste_into)
+               GimpPasteType   paste_type)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpContainer       *container;
@@ -146,7 +146,8 @@ buffers_paste (GimpBufferView *view,
       if (image)
         {
           gimp_edit_paste (image, gimp_image_get_active_drawable (image),
-                           buffer, paste_into, x, y, width, height);
+                           GIMP_OBJECT (buffer), paste_type,
+                           x, y, width, height);
 
           gimp_image_flush (image);
         }

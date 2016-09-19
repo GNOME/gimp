@@ -39,6 +39,7 @@
 #include "gimpfilloptions.h"
 #include "gimpdrawableundo.h"
 #include "gimpimage.h"
+#include "gimpimage-new.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-selection.h"
@@ -62,57 +63,95 @@ static GimpBuffer * gimp_edit_extract (GimpImage     *image,
 
 /*  public functions  */
 
-GimpBuffer *
+GimpObject *
 gimp_edit_cut (GimpImage     *image,
                GimpDrawable  *drawable,
                GimpContext   *context,
                GError       **error)
 {
-  GimpBuffer *buffer;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, TRUE, error);
-
-  if (buffer)
+  if (GIMP_IS_LAYER (drawable) &&
+      gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
-      gimp_set_clipboard_buffer (image->gimp, buffer);
-      g_object_unref (buffer);
+      GimpImage *clip_image;
 
-      return gimp_get_clipboard_buffer (image->gimp);
+      clip_image = gimp_image_new_from_drawable (image->gimp, drawable);
+      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
+      gimp_set_clipboard_image (image->gimp, clip_image);
+      g_object_unref (clip_image);
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT,
+                                   C_("undo-type", "Cut Layer"));
+
+      gimp_image_remove_layer (image, GIMP_LAYER (drawable),
+                               TRUE, NULL);
+
+      gimp_image_undo_group_end (image);
+
+      return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
+    }
+  else
+    {
+      GimpBuffer *buffer;
+
+      buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+                                  context, TRUE, error);
+
+      if (buffer)
+        {
+          gimp_set_clipboard_buffer (image->gimp, buffer);
+          g_object_unref (buffer);
+
+          return GIMP_OBJECT (gimp_get_clipboard_buffer (image->gimp));
+        }
     }
 
   return NULL;
 }
 
-GimpBuffer *
+GimpObject *
 gimp_edit_copy (GimpImage     *image,
                 GimpDrawable  *drawable,
                 GimpContext   *context,
                 GError       **error)
 {
-  GimpBuffer *buffer;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, FALSE, error);
-
-  if (buffer)
+  if (GIMP_IS_LAYER (drawable) &&
+      gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
-      gimp_set_clipboard_buffer (image->gimp, buffer);
-      g_object_unref (buffer);
+      GimpImage *clip_image;
 
-      return gimp_get_clipboard_buffer (image->gimp);
+      clip_image = gimp_image_new_from_drawable (image->gimp, drawable);
+      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
+      gimp_set_clipboard_image (image->gimp, clip_image);
+      g_object_unref (clip_image);
+
+      return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
+    }
+  else
+    {
+      GimpBuffer *buffer;
+
+      buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+                                  context, FALSE, error);
+
+      if (buffer)
+        {
+          gimp_set_clipboard_buffer (image->gimp, buffer);
+          g_object_unref (buffer);
+
+          return GIMP_OBJECT (gimp_get_clipboard_buffer (image->gimp));
+        }
     }
 
   return NULL;
@@ -262,39 +301,48 @@ gimp_edit_get_paste_offset (GimpImage    *image,
 }
 
 GimpLayer *
-gimp_edit_paste (GimpImage    *image,
-                 GimpDrawable *drawable,
-                 GimpBuffer   *paste,
-                 gboolean      paste_into,
-                 gint          viewport_x,
-                 gint          viewport_y,
-                 gint          viewport_width,
-                 gint          viewport_height)
+gimp_edit_paste (GimpImage     *image,
+                 GimpDrawable  *drawable,
+                 GimpObject    *paste,
+                 GimpPasteType  paste_type,
+                 gint           viewport_x,
+                 gint           viewport_y,
+                 gint           viewport_width,
+                 gint           viewport_height)
 {
-  GimpLayer  *layer;
-  const Babl *format;
-  gint        offset_x;
-  gint        offset_y;
+  GimpLayer *layer;
+  gint       offset_x;
+  gint       offset_y;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (drawable == NULL ||
                         gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
 
-  /*  Make a new layer: if drawable == NULL,
-   *  user is pasting into an empty image.
-   */
+  if (GIMP_IS_IMAGE (paste))
+    {
+      layer = gimp_image_get_layer_iter (GIMP_IMAGE (paste))->data;
 
-  if (drawable)
-    format = gimp_drawable_get_format_with_alpha (drawable);
+      layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (layer),
+                                             image,
+                                             G_TYPE_FROM_INSTANCE (layer)));
+    }
   else
-    format = gimp_image_get_layer_format (image, TRUE);
+    {
+      const Babl *format;
 
-  layer = gimp_layer_new_from_buffer (paste, image,
-                                      format,
-                                      _("Pasted Layer"),
-                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+      /*  If drawable == NULL, user is pasting into an empty image  */
+      if (drawable)
+        format = gimp_drawable_get_format_with_alpha (drawable);
+      else
+        format = gimp_image_get_layer_format (image, TRUE);
+
+      layer = gimp_layer_new_from_buffer (GIMP_BUFFER (paste), image,
+                                          format,
+                                          _("Pasted Layer"),
+                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+    }
 
   if (! layer)
     return NULL;
@@ -309,24 +357,48 @@ gimp_edit_paste (GimpImage    *image,
 
   gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 
-  /*  Start a group undo  */
+  /* change paste type to NEW_LAYER for cases where we can't attach
+   * a floating selection
+   */
+  if (GIMP_IS_IMAGE (paste)                                 ||
+      ! drawable                                            ||
+      gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
+      gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+    {
+      paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
+    }
+
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                C_("undo-type", "Paste"));
 
-  /*  If there is a selection mask clear it--
-   *  this might not always be desired, but in general,
-   *  it seems like the correct behavior.
-   */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (image)) && ! paste_into)
-    gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+  switch (paste_type)
+    {
+    case GIMP_PASTE_TYPE_FLOATING:
+      /*  If there is a selection mask clear it--
+       *  this might not always be desired, but in general,
+       *  it seems like the correct behavior.
+       */
+      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+        gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
 
-  /*  if there's a drawable, add a new floating selection  */
-  if (drawable)
-    floating_sel_attach (layer, drawable);
-  else
-    gimp_image_add_layer (image, layer, NULL, 0, TRUE);
+      /* fall thru */
 
-  /*  end the group undo  */
+    case GIMP_PASTE_TYPE_FLOATING_INTO:
+      floating_sel_attach (layer, drawable);
+      break;
+
+    case GIMP_PASTE_TYPE_NEW_LAYER:
+      /* always add on top of the drawable or the active layer, where
+       * we would attach a floating selection
+       */
+      gimp_image_add_layer (image, layer,
+                            GIMP_IS_LAYER (drawable) ?
+                            gimp_item_get_parent (GIMP_ITEM (drawable)) :
+                            NULL,
+                            -1, TRUE);
+      break;
+    }
+
   gimp_image_undo_group_end (image);
 
   return layer;
