@@ -372,11 +372,9 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-cut",                writable && !children);
   SET_SENSITIVE ("edit-copy",               drawable);
   SET_SENSITIVE ("edit-copy-visible",       image);
-  SET_SENSITIVE ("edit-paste",              !image || (!drawable ||
-                                                       (writable && !children)));
+  /*             "edit-paste" is always active */
   SET_SENSITIVE ("edit-paste-as-new-layer", image);
-  SET_SENSITIVE ("edit-paste-into",         image && (!drawable ||
-                                                      (writable  && !children)));
+  SET_SENSITIVE ("edit-paste-into",         image);
 
   SET_SENSITIVE ("edit-named-cut",          writable && !children);
   SET_SENSITIVE ("edit-named-copy",         drawable);

@@ -319,19 +319,73 @@ edit_paste_cmd_callback (GtkAction *action,
   GimpDisplay *display = action_data_get_display (data);
 
   if (display && gimp_display_get_image (display))
-    edit_paste (display, FALSE);
+    {
+      GimpImage    *image    = gimp_display_get_image (display);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);;
+
+      if (drawable && gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        {
+          gimp_message_literal (display->gimp, G_OBJECT (display),
+                                GIMP_MESSAGE_INFO,
+                                _("Pasting as new layer because the "
+                                  "target is a group layer."));
+
+          edit_paste_as_new_layer_cmd_callback (action, data);
+        }
+      else if (drawable && gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+        {
+          gimp_message_literal (display->gimp, G_OBJECT (display),
+                                GIMP_MESSAGE_INFO,
+                                _("Pasting as new layer because the "
+                                  "target's pixels are locked."));
+
+          edit_paste_as_new_layer_cmd_callback (action, data);
+        }
+      else
+        {
+          edit_paste (display, FALSE);
+        }
+    }
   else
-    edit_paste_as_new_image_cmd_callback (action, data);
+    {
+      edit_paste_as_new_image_cmd_callback (action, data);
+    }
 }
 
 void
 edit_paste_into_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpDisplay *display;
+  GimpImage    *image;
+  GimpDisplay  *display;
+  GimpDrawable *drawable;
+  return_if_no_image (image, data);
   return_if_no_display (display, data);
 
-  edit_paste (display, TRUE);
+  drawable = gimp_image_get_active_drawable (image);;
+
+  if (drawable && gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      gimp_message_literal (display->gimp, G_OBJECT (display),
+                            GIMP_MESSAGE_INFO,
+                            _("Pasting as new layer because the "
+                              "target is a group layer."));
+
+      edit_paste_as_new_layer_cmd_callback (action, data);
+    }
+  else if (drawable && gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+    {
+      gimp_message_literal (display->gimp, G_OBJECT (display),
+                            GIMP_MESSAGE_INFO,
+                            _("Pasting as new layer because the "
+                              "target's pixels are locked."));
+
+      edit_paste_as_new_layer_cmd_callback (action, data);
+    }
+  else
+    {
+      edit_paste (display, TRUE);
+    }
 }
 
 void
