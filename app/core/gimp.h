@@ -89,6 +89,7 @@ struct _Gimp
 
   GList                  *image_windows;
 
+  GimpImage              *clipboard_image;
   GimpBuffer             *clipboard_buffer;
   GimpContainer          *named_buffers;
 
@@ -183,6 +184,10 @@ GList        * gimp_get_display_iter       (Gimp                *gimp);
 GList        * gimp_get_image_windows      (Gimp                *gimp);
 GList        * gimp_get_paint_info_iter    (Gimp                *gimp);
 GList        * gimp_get_tool_info_iter     (Gimp                *gimp);
+
+void           gimp_set_clipboard_image    (Gimp                *gimp,
+                                            GimpImage           *image);
+GimpImage    * gimp_get_clipboard_image    (Gimp                *gimp);
 
 void           gimp_set_clipboard_buffer   (Gimp                *gimp,
                                             GimpBuffer          *buffer);

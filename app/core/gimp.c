@@ -432,6 +432,12 @@ gimp_finalize (GObject *object)
       gimp->clipboard_buffer = NULL;
     }
 
+  if (gimp->clipboard_image)
+    {
+      g_object_unref (gimp->clipboard_image);
+      gimp->clipboard_image = NULL;
+    }
+
   if (gimp->displays)
     {
       g_object_unref (gimp->displays);
@@ -536,7 +542,11 @@ gimp_get_memsize (GimpObject *object,
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->displays), gui_size);
 
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->clipboard_image),
+                                      gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->clipboard_buffer),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers),
                                       gui_size);
 
   memsize += gimp_data_factories_get_memsize (gimp, gui_size);
@@ -966,22 +976,61 @@ gimp_get_tool_info_iter (Gimp *gimp)
 }
 
 void
+gimp_set_clipboard_image (Gimp      *gimp,
+                          GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+
+  /* ref first, it could be the same as gimp->clipboard_image, but
+   * don't bail if equal because always we want the signal emission
+   */
+  if (image)
+    g_object_ref (image);
+
+  if (gimp->clipboard_buffer)
+    {
+      g_object_unref (gimp->clipboard_buffer);
+      gimp->clipboard_buffer = NULL;
+    }
+
+  if (gimp->clipboard_image)
+    g_object_unref (gimp->clipboard_image);
+
+  gimp->clipboard_image = image;
+
+  g_signal_emit (gimp, gimp_signals[CLIPBOARD_CHANGED], 0);
+}
+
+GimpImage *
+gimp_get_clipboard_image (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return gimp->clipboard_image;
+}
+
+void
 gimp_set_clipboard_buffer (Gimp       *gimp,
                            GimpBuffer *buffer)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (buffer == NULL || GIMP_IS_BUFFER (buffer));
 
-  if (buffer == gimp->clipboard_buffer)
-    return;
+  /* see above */
+  if (buffer)
+    g_object_ref (buffer);
+
+  if (gimp->clipboard_image)
+    {
+      g_object_unref (gimp->clipboard_image);
+      gimp->clipboard_image = NULL;
+    }
 
   if (gimp->clipboard_buffer)
     g_object_unref (gimp->clipboard_buffer);
 
   gimp->clipboard_buffer = buffer;
-
-  if (gimp->clipboard_buffer)
-    g_object_ref (gimp->clipboard_buffer);
 
   g_signal_emit (gimp, gimp_signals[CLIPBOARD_CHANGED], 0);
 }
