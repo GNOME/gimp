@@ -16,15 +16,15 @@ msgstr ""
 "Project-Id-Version: gimp-master-po-hu-23139.merged\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-09-13 23:53+0000\n"
-"PO-Revision-Date: 2016-09-14 12:32+0200\n"
+"POT-Creation-Date: 2016-09-19 18:16+0000\n"
+"PO-Revision-Date: 2016-09-19 20:24+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -255,7 +255,7 @@ msgstr "(Az ablak bezárásához nyomjon le egy gombot)\n"
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP-kimenet. Minimalizálhatja az ablakot, de ne zárja be."
 
-#: ../app/sanity.c:608
+#: ../app/sanity.c:661
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -266,7 +266,7 @@ msgstr ""
 "\n"
 "Ellenőrizze a G_FILENAME_ENCODING környezeti változó értékét."
 
-#: ../app/sanity.c:627
+#: ../app/sanity.c:680
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -394,7 +394,7 @@ msgstr "Színátmenet-szerkesztő"
 msgid "Gradients"
 msgstr "Színátmenetek"
 
-#: ../app/actions/actions.c:176 ../app/core/gimp-data-factories.c:388
+#: ../app/actions/actions.c:176 ../app/core/gimp-data-factories.c:389
 #: ../app/dialogs/dialogs.c:360 ../app/dialogs/preferences-dialog.c:2911
 msgid "Tool Presets"
 msgstr "Eszköz előbeállítások"
@@ -464,7 +464,7 @@ msgid "Select"
 msgstr "Kijelölés"
 
 #. initialize the template list
-#: ../app/actions/actions.c:218 ../app/core/gimp.c:851
+#: ../app/actions/actions.c:218 ../app/core/gimp.c:868
 #: ../app/dialogs/dialogs.c:352
 msgid "Templates"
 msgstr "Sablonok"
@@ -478,7 +478,7 @@ msgid "Text Editor"
 msgstr "Szövegszerkesztő"
 
 #: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:307
-#: ../app/gui/gui.c:459
+#: ../app/gui/gui.c:462
 msgid "Tool Options"
 msgstr "Eszközbeállítások"
 
@@ -816,7 +816,7 @@ msgstr "Új csatorna beállításai"
 msgid "New Channel Color"
 msgstr "Új csatornaszín"
 
-#: ../app/actions/channels-commands.c:247 ../app/core/gimpimage-new.c:274
+#: ../app/actions/channels-commands.c:247 ../app/core/gimpimage-new.c:275
 #: ../app/display/gimpdisplayshell-dnd.c:666
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:794
@@ -2021,8 +2021,8 @@ msgstr "Ecsetdinamika s_zerkesztése…"
 
 #: ../app/actions/dynamics-actions.c:87
 msgctxt "dynamics-action"
-msgid "Edit dynamics"
-msgstr "Ecsetdinamika szerkesztése"
+msgid "Edit this dynamics"
+msgstr "Dinamika szerkesztése"
 
 #: ../app/actions/dynamics-editor-actions.c:43
 msgctxt "dynamics-editor-action"
@@ -2319,51 +2319,60 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "A kép visszavonási előzményeinek törlése %s memóriát szabadít fel."
 
 # TODO: vágva?
-#: ../app/actions/edit-commands.c:221
+#: ../app/actions/edit-commands.c:242
 msgid "Cut pixels to the clipboard"
 msgstr "Képpontok vágása a vágólapra"
 
-#: ../app/actions/edit-commands.c:251 ../app/actions/edit-commands.c:280
+#: ../app/actions/edit-commands.c:272 ../app/actions/edit-commands.c:301
 msgid "Copied pixels to the clipboard"
 msgstr "Képpontok átmásolva a vágólapra"
 
-#: ../app/actions/edit-commands.c:344 ../app/actions/edit-commands.c:380
-#: ../app/actions/edit-commands.c:580 ../app/tools/gimpseamlessclonetool.c:295
+#: ../app/actions/edit-commands.c:330 ../app/actions/edit-commands.c:371
+msgid "Pasting as new layer because the target is a group layer."
+msgstr "Beillesztés új rétegként, mert a cél egy csoportréteg."
+
+#: ../app/actions/edit-commands.c:339 ../app/actions/edit-commands.c:380
+msgid "Pasting as new layer because the target's pixels are locked."
+msgstr ""
+"Beillesztés új rétegként, mert az aktív réteg képpontjai zárolva vannak."
+
+#: ../app/actions/edit-commands.c:419 ../app/actions/edit-commands.c:473
+#: ../app/actions/edit-commands.c:652 ../app/tools/gimpseamlessclonetool.c:295
 msgid "There is no image data in the clipboard to paste."
 msgstr "Nincs beilleszthető képadat a vágólapon."
 
-#: ../app/actions/edit-commands.c:367 ../app/core/gimpbrushclipboard.c:168
-#: ../app/core/gimppatternclipboard.c:168 ../app/widgets/gimpclipboard.c:346
+#: ../app/actions/edit-commands.c:448 ../app/core/gimpbrushclipboard.c:168
+#: ../app/core/gimppatternclipboard.c:168 ../app/widgets/gimpclipboard.c:457
 msgid "Clipboard"
 msgstr "Vágólap"
 
-#: ../app/actions/edit-commands.c:394
+#: ../app/actions/edit-commands.c:487
 msgid "Cut Named"
 msgstr "Kivágás név szerint"
 
-#: ../app/actions/edit-commands.c:397 ../app/actions/edit-commands.c:438
-#: ../app/actions/edit-commands.c:458
+#: ../app/actions/edit-commands.c:490 ../app/actions/edit-commands.c:510
+#: ../app/actions/edit-commands.c:530
 msgid "Enter a name for this buffer"
 msgstr "Adja meg a tároló nevét"
 
-#: ../app/actions/edit-commands.c:435
+#: ../app/actions/edit-commands.c:507
 msgid "Copy Named"
 msgstr "Másolás név szerint"
 
-#: ../app/actions/edit-commands.c:455
+#: ../app/actions/edit-commands.c:527
 msgid "Copy Visible Named "
 msgstr "Látható másolása név szerint "
 
-#: ../app/actions/edit-commands.c:597
+#: ../app/actions/edit-commands.c:669
 msgid "There is no active layer or channel to cut from."
 msgstr "Nincs aktív réteg vagy csatorna, ahonnan vágni lehetne."
 
-#: ../app/actions/edit-commands.c:602 ../app/actions/edit-commands.c:634
-#: ../app/actions/edit-commands.c:658
+#: ../app/actions/edit-commands.c:674 ../app/actions/edit-commands.c:706
+#: ../app/actions/edit-commands.c:730
 msgid "(Unnamed Buffer)"
 msgstr "(Névtelen tároló)"
 
-#: ../app/actions/edit-commands.c:629
+#: ../app/actions/edit-commands.c:701
 msgid "There is no active layer or channel to copy from."
 msgstr "Nincs aktív réteg vagy csatorna, ahonnan másolni lehetne."
 
@@ -3740,7 +3749,7 @@ msgstr "Színátmenet s_zerkesztése…"
 
 #: ../app/actions/gradients-actions.c:94
 msgctxt "gradients-action"
-msgid "Edit gradient"
+msgid "Edit this gradient"
 msgstr "Színátmenet szerkesztése"
 
 #: ../app/actions/gradients-commands.c:66
@@ -5110,7 +5119,7 @@ msgstr "Paletta s_zerkesztése…"
 
 #: ../app/actions/palettes-actions.c:100
 msgctxt "palettes-action"
-msgid "Edit palette"
+msgid "Edit this palette"
 msgstr "Paletta szerkesztése"
 
 #: ../app/actions/palettes-commands.c:75
@@ -8463,12 +8472,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Lebegő kijelölés rögzítése"
 
-#: ../app/core/core-enums.c:903 ../app/core/gimp-edit.c:286
+#: ../app/core/core-enums.c:903 ../app/core/gimp-edit.c:314
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: ../app/core/core-enums.c:904 ../app/core/gimp-edit.c:517
+#: ../app/core/core-enums.c:904 ../app/core/gimp-edit.c:545
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Kivágás"
@@ -8784,26 +8793,30 @@ msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Lágy szélű"
 
-#: ../app/core/gimp.c:575
+#: ../app/core/gimp.c:585
 msgid "Initialization"
 msgstr "Inicializálás"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:587
+#: ../app/core/gimp.c:597
 msgid "Internal Procedures"
 msgstr "Belső eljárások"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:844
+#: ../app/core/gimp.c:854
 msgid "Looking for data files"
 msgstr "Adatfájlok keresése"
 
-#: ../app/core/gimp.c:844
+#: ../app/core/gimp.c:854
 msgid "Parasites"
 msgstr "Élősködők"
 
+#: ../app/core/gimp.c:863
+msgid "Fonts (this may take a while)"
+msgstr "Betűkészletek (ez hosszabb ideig is tarthat)"
+
 #. initialize the module list
-#: ../app/core/gimp.c:855 ../app/dialogs/preferences-dialog.c:2927
+#: ../app/core/gimp.c:872 ../app/dialogs/preferences-dialog.c:2927
 msgid "Modules"
 msgstr "Modulok"
 
@@ -8830,25 +8843,30 @@ msgstr "„%s” törlése sikertelen: %s"
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:358 ../app/core/gimpcontext.c:711
 #: ../app/dialogs/preferences-dialog.c:2891
-#: ../app/tools/gimppaintoptions-gui.c:214
+#: ../app/tools/gimppaintoptions-gui.c:215
 msgid "Dynamics"
 msgstr "Dinamika"
 
+#. initialize the color history
+#: ../app/core/gimp-data-factories.c:383 ../app/core/gimp-palettes.c:60
+msgid "Color History"
+msgstr "Színelőzmények"
+
 #. update tag cache
-#: ../app/core/gimp-data-factories.c:394
+#: ../app/core/gimp-data-factories.c:395
 msgid "Updating tag cache"
 msgstr "Címkegyorsítótár frissítése"
 
-#: ../app/core/gimp-edit.c:183 ../app/core/gimpimage-new.c:325
+#: ../app/core/gimp-edit.c:296 ../app/core/gimpimage-new.c:326
 msgid "Pasted Layer"
 msgstr "Beillesztett réteg"
 
-#: ../app/core/gimp-edit.c:418
+#: ../app/core/gimp-edit.c:446
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Törlés"
 
-#: ../app/core/gimp-edit.c:530
+#: ../app/core/gimp-edit.c:558
 msgid "Global Buffer"
 msgstr "Globális tároló"
 
@@ -8871,10 +8889,6 @@ msgstr "Előtérből háttérbe (HSV óramutató járása szerinti színezet)"
 #: ../app/core/gimp-gradients.c:104
 msgid "FG to Transparent"
 msgstr "Előtérből átlátszóba"
-
-#: ../app/core/gimp-palettes.c:60
-msgid "Color History"
-msgstr "Színelőzmények"
 
 #. This is a special string to specify the language identifier to
 #. * look for in the gimp-tags-default.xml file. Please translate the
@@ -9295,7 +9309,7 @@ msgid "Pattern"
 msgstr "Minta"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:362
+#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:364
 msgid "Gradient"
 msgstr "Színátmenet"
 
@@ -9382,7 +9396,7 @@ msgstr "„%s” betöltése közben hiba történt: "
 msgid "Error loading '%s'"
 msgstr "„%s” betöltése közben hiba történt"
 
-#: ../app/core/gimpdatafactory.c:935 ../app/xcf/xcf.c:330
+#: ../app/core/gimpdatafactory.c:935 ../app/xcf/xcf.c:426
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "„%s” nem nyitható meg olvasásra: "
@@ -9412,7 +9426,7 @@ msgstr "Színátmenet"
 msgid "Calculating distance map"
 msgstr "Távolságtérkép kiszámítása"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:183
+#: ../app/core/gimpdrawable-bucket-fill.c:180
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Kitöltés"
@@ -9483,6 +9497,7 @@ msgid "Style"
 msgstr "Stílus"
 
 #: ../app/core/gimpfilloptions.c:116 ../app/pdb/gimppdbcontext.c:99
+#: ../app/tools/gimpbucketfilloptions.c:132
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:150
 msgid "Antialiasing"
 msgstr "Élsimítás"
@@ -10459,20 +10474,20 @@ msgstr "Nincs kitölthető kijelölés."
 msgid "There is no selection to stroke."
 msgstr "Nincs körberajzolható kijelölés."
 
-#: ../app/core/gimpselection.c:745
+#: ../app/core/gimpselection.c:753
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nem lehet kivágni vagy másolni, mert a kijelölt terület üres."
 
-#: ../app/core/gimpselection.c:875
+#: ../app/core/gimpselection.c:871
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nem lehet lebegő kijelölést alkalmazni, mert a kijelölt terület üres."
 
-#: ../app/core/gimpselection.c:882
+#: ../app/core/gimpselection.c:878
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Lebegő kijelölés"
 
-#: ../app/core/gimpselection.c:900
+#: ../app/core/gimpselection.c:896
 msgid "Floated Layer"
 msgstr "Lebegő réteg"
 
@@ -10702,7 +10717,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "Színprofil"
 
-#: ../app/core/gimptemplate.c:210 ../app/tools/gimpbucketfilloptions.c:93
+#: ../app/core/gimptemplate.c:210 ../app/tools/gimpbucketfilloptions.c:94
 msgid "Fill type"
 msgstr "Kitöltés típusa"
 
@@ -13724,7 +13739,7 @@ msgstr "default:LTR"
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:503
+#: ../app/gui/gui.c:506
 msgid "Documents"
 msgstr "Dokumentumok"
 
@@ -13835,7 +13850,7 @@ msgstr "Döntés"
 
 #. Blob shape widgets
 #: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpblendoptions.c:85
-#: ../app/tools/gimpblendoptions.c:235 ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/tools/gimpblendoptions.c:236 ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Forma"
 
@@ -13999,7 +14014,7 @@ msgstr "Halványulás hossza"
 msgid "Distance over which strokes fade out"
 msgstr "Távolság, amely alatt az ecsetvonás elhalványul"
 
-#: ../app/paint/gimppaintoptions.c:320 ../app/widgets/gimpviewablebox.c:373
+#: ../app/paint/gimppaintoptions.c:320 ../app/widgets/gimpviewablebox.c:379
 msgid "Reverse"
 msgstr "Fordított"
 
@@ -14008,7 +14023,7 @@ msgid "Reverse direction of fading"
 msgstr "Halványítás irányának megfordítása"
 
 #: ../app/paint/gimppaintoptions.c:326 ../app/tools/gimpblendoptions.c:92
-#: ../app/tools/gimpblendoptions.c:244 ../app/tools/gimppaintoptions-gui.c:345
+#: ../app/tools/gimpblendoptions.c:245 ../app/tools/gimppaintoptions-gui.c:347
 msgid "Repeat"
 msgstr "Ismétlés"
 
@@ -14064,7 +14079,7 @@ msgid "Alignment"
 msgstr "Igazítás"
 
 #: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:127
-#: ../app/tools/gimpbucketfilloptions.c:113 ../app/tools/gimpcoloroptions.c:69
+#: ../app/tools/gimpbucketfilloptions.c:117 ../app/tools/gimpcoloroptions.c:69
 #: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
 msgstr "Mintakeverés"
@@ -14196,7 +14211,7 @@ msgstr "Kétdimenziós átalakítás"
 msgid "2D Transforming"
 msgstr "Kétdimenziós átalakítás"
 
-#: ../app/pdb/edit-cmds.c:791
+#: ../app/pdb/edit-cmds.c:795
 msgid "Blending"
 msgstr "Színátmenet"
 
@@ -14483,7 +14498,7 @@ msgstr "Mintaküszöbszint"
 msgid "Sample transparent"
 msgstr "Mintaátlátszóság"
 
-#: ../app/pdb/gimppdbcontext.c:156 ../app/tools/gimpbucketfilloptions.c:119
+#: ../app/pdb/gimppdbcontext.c:156 ../app/tools/gimpbucketfilloptions.c:124
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Átlós szomszédok"
@@ -15325,11 +15340,15 @@ msgstr "Adaptív túlmintavételezés"
 msgid "Max depth"
 msgstr "Max. mélység"
 
-#: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:126
+#: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
 msgstr "Küszöb"
+
+#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:369
+msgid "Edit this gradient"
+msgstr "Színátmenet szerkesztése"
 
 #: ../app/tools/gimpblendtool.c:170
 msgid "Blend"
@@ -15404,66 +15423,75 @@ msgstr "K_ontraszt"
 msgid "Edit these Settings as Levels"
 msgstr "Ezen beállítások módosítása szintekként"
 
-#: ../app/tools/gimpbucketfilloptions.c:100
+#: ../app/tools/gimpbucketfilloptions.c:102
 msgid "Fill selection"
 msgstr "Kijelölés kitöltése"
 
-#: ../app/tools/gimpbucketfilloptions.c:101
+#: ../app/tools/gimpbucketfilloptions.c:103
 msgid "Which area will be filled"
 msgstr "Melyik terület legyen kitöltve"
 
-#: ../app/tools/gimpbucketfilloptions.c:106
+#: ../app/tools/gimpbucketfilloptions.c:109
 msgid "Fill transparent areas"
 msgstr "Átlátszó területek kitöltése"
 
-#: ../app/tools/gimpbucketfilloptions.c:107
+#: ../app/tools/gimpbucketfilloptions.c:110
 msgid "Allow completely transparent regions to be filled"
 msgstr "A teljesen átlátszó területek kitöltésének engedélyezése"
 
-#: ../app/tools/gimpbucketfilloptions.c:114
+#: ../app/tools/gimpbucketfilloptions.c:118
 msgid "Base filled area on all visible layers"
 msgstr "A kitöltés az összes látható réteg alapján történjen"
 
-#: ../app/tools/gimpbucketfilloptions.c:120
+#: ../app/tools/gimpbucketfilloptions.c:125
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Az átlósan szomszédos pixelek összekapcsoltként kezelése"
 
-#: ../app/tools/gimpbucketfilloptions.c:127
+#: ../app/tools/gimpbucketfilloptions.c:133
+msgid ""
+"Base fill opacity on color difference from the clicked pixel (see "
+"threshold). Disable antialiasing to fill the entire area uniformly."
+msgstr ""
+"A kitöltés átlátszatlanságának kiszámítása a kiválasztott képpont "
+"színkülönbsége alapján történjen (lásd küszöbérték). Kapcsolja ki az "
+"élsimítást a teljes terület egyenletes kitöltéséhez."
+
+#: ../app/tools/gimpbucketfilloptions.c:143
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "Maximális színkülönbség"
 
-#: ../app/tools/gimpbucketfilloptions.c:132
-#: ../app/tools/gimpbucketfilloptions.c:325
+#: ../app/tools/gimpbucketfilloptions.c:149
+#: ../app/tools/gimpbucketfilloptions.c:353
 msgid "Fill by"
 msgstr "Kitöltés ezzel"
 
-#: ../app/tools/gimpbucketfilloptions.c:133
+#: ../app/tools/gimpbucketfilloptions.c:150
 msgid "Criterion used for determining color similarity"
 msgstr "Feltételek a színek hasonlóságának számításához"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:260
+#: ../app/tools/gimpbucketfilloptions.c:283
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Kitöltés típusa  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:275
+#: ../app/tools/gimpbucketfilloptions.c:298
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Érintett terület  (%s)"
 
-#: ../app/tools/gimpbucketfilloptions.c:279
+#: ../app/tools/gimpbucketfilloptions.c:302
 msgid "Fill whole selection"
 msgstr "Teljes kijelölés kitöltése"
 
-#: ../app/tools/gimpbucketfilloptions.c:280
+#: ../app/tools/gimpbucketfilloptions.c:303
 msgid "Fill similar colors"
 msgstr "Hasonló színűek kitöltése"
 
-#: ../app/tools/gimpbucketfilloptions.c:289
+#: ../app/tools/gimpbucketfilloptions.c:312
 msgid "Finding Similar Colors"
 msgstr "Hasonló színek keresése"
 
@@ -16861,43 +16889,51 @@ msgstr "„Ecset” eszköz: finom vonások festése ecsettel"
 msgid "_Paintbrush"
 msgstr "_Ecset"
 
-#: ../app/tools/gimppaintoptions-gui.c:165
+#: ../app/tools/gimppaintoptions-gui.c:158
+msgid "Edit this brush"
+msgstr "Ecset szerkesztése"
+
+#: ../app/tools/gimppaintoptions-gui.c:166
 msgid "Reset size to brush's native size"
 msgstr "Méret visszaállítása az ecset eredeti méretére"
 
-#: ../app/tools/gimppaintoptions-gui.c:173
+#: ../app/tools/gimppaintoptions-gui.c:174
 msgid "Reset aspect ratio to brush's native"
 msgstr "Méretarány visszaállítása az ecset eredeti méretarányára"
 
-#: ../app/tools/gimppaintoptions-gui.c:181
+#: ../app/tools/gimppaintoptions-gui.c:182
 msgid "Reset angle to zero"
 msgstr "Dőlésszög visszaállítása nullára"
 
-#: ../app/tools/gimppaintoptions-gui.c:189
+#: ../app/tools/gimppaintoptions-gui.c:190
 msgid "Reset spacing to brush's native spacing"
 msgstr "Térköz visszaállítása az ecset eredeti térközére"
 
-#: ../app/tools/gimppaintoptions-gui.c:197
+#: ../app/tools/gimppaintoptions-gui.c:198
 msgid "Reset hardness to default"
 msgstr "Keménység visszaállítása az alapértelmezettre"
 
-#: ../app/tools/gimppaintoptions-gui.c:205
+#: ../app/tools/gimppaintoptions-gui.c:206
 msgid "Reset force to default"
 msgstr "Erő visszaállítása az alapértelmezettre"
 
-#: ../app/tools/gimppaintoptions-gui.c:250
+#: ../app/tools/gimppaintoptions-gui.c:219
+msgid "Edit this dynamics"
+msgstr "Ecsetdinamika szerkesztése"
+
+#: ../app/tools/gimppaintoptions-gui.c:252
 msgid "Lock brush size to zoom"
 msgstr "Ecsetméret zárolása a nagyításhoz"
 
-#: ../app/tools/gimppaintoptions-gui.c:314
+#: ../app/tools/gimppaintoptions-gui.c:316
 msgid "Fade Options"
 msgstr "Halványulás beállításai"
 
-#: ../app/tools/gimppaintoptions-gui.c:357
+#: ../app/tools/gimppaintoptions-gui.c:359
 msgid "Color Options"
 msgstr "Színbeállítások"
 
-#: ../app/tools/gimppaintoptions-gui.c:576
+#: ../app/tools/gimppaintoptions-gui.c:579
 msgid "Link to brush default"
 msgstr "Összekapcsolás az ecset alapértelmezésével"
 
@@ -18264,7 +18300,7 @@ msgstr "Csúcsok"
 msgid "Percentage of width of brush"
 msgstr "Ecset szélességének százaléka"
 
-#: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
+#: ../app/widgets/gimpbufferview.c:175 ../app/widgets/gimpbufferview.c:260
 #: ../app/widgets/gimpeditor.c:745
 msgid "(None)"
 msgstr "(Nincs)"
@@ -19467,7 +19503,7 @@ msgstr ""
 msgid "Save this XCF file with maximum compatibility"
 msgstr "Az XCF fájl mentése a legnagyobb kompatibilitással"
 
-#: ../app/widgets/gimpselectiondata.c:248
+#: ../app/widgets/gimpselectiondata.c:250
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -19478,7 +19514,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/widgets/gimpselectiondata.c:252
+#: ../app/widgets/gimpselectiondata.c:254
 msgid "Invalid UTF-8"
 msgstr "Érvénytelen UTF-8"
 
@@ -19860,31 +19896,31 @@ msgstr "Vonalak zárolása"
 msgid "Lock path position"
 msgstr "Útvonal-pozíció zárolása"
 
-#: ../app/widgets/gimpviewablebox.c:89
+#: ../app/widgets/gimpviewablebox.c:91
 msgid "Open the brush selection dialog"
 msgstr "Ecsetválasztó párbeszédablak megnyitása"
 
-#: ../app/widgets/gimpviewablebox.c:154
+#: ../app/widgets/gimpviewablebox.c:158
 msgid "Open the dynamics selection dialog"
 msgstr "Ecsetdinamika-választó párbeszédablak megnyitása"
 
-#: ../app/widgets/gimpviewablebox.c:219
+#: ../app/widgets/gimpviewablebox.c:224
 msgid "Open the MyPaint brush selection dialog"
 msgstr "MyPaint ecsetválasztó párbeszédablak megnyitása"
 
-#: ../app/widgets/gimpviewablebox.c:282
+#: ../app/widgets/gimpviewablebox.c:287
 msgid "Open the pattern selection dialog"
 msgstr "Mintaválasztó párbeszédablak megnyitása"
 
-#: ../app/widgets/gimpviewablebox.c:350
+#: ../app/widgets/gimpviewablebox.c:356
 msgid "Open the gradient selection dialog"
 msgstr "Színátmenet-választó párbeszédablak megnyitása"
 
-#: ../app/widgets/gimpviewablebox.c:466
+#: ../app/widgets/gimpviewablebox.c:474
 msgid "Open the palette selection dialog"
 msgstr "Palettaválasztó párbeszédablak megnyitása"
 
-#: ../app/widgets/gimpviewablebox.c:531
+#: ../app/widgets/gimpviewablebox.c:540
 msgid "Open the font selection dialog"
 msgstr "Betűkészlet-választó párbeszédablak megnyitása"
 
@@ -20048,7 +20084,11 @@ msgstr "Nem meghatározott"
 msgid "GIMP XCF image"
 msgstr "GIMP XCF kép"
 
-#: ../app/xcf/xcf.c:279
+#: ../app/xcf/xcf.c:268 ../app/xcf/xcf.c:351
+msgid "Memory Stream"
+msgstr "Memóriafolyam"
+
+#: ../app/xcf/xcf.c:278
 #, c-format
 msgid "Opening '%s'"
 msgstr "„%s” megnyitása"
@@ -20058,22 +20098,22 @@ msgstr "„%s” megnyitása"
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF hiba: nem támogatott, %d verziójú XCF fájl"
 
-#: ../app/xcf/xcf.c:393
+#: ../app/xcf/xcf.c:370
 #, c-format
 msgid "Saving '%s'"
 msgstr "„%s” mentése"
 
-#: ../app/xcf/xcf.c:401
+#: ../app/xcf/xcf.c:377
 #, c-format
 msgid "Closing '%s'"
 msgstr "„%s” bezárása"
 
-#: ../app/xcf/xcf.c:409
+#: ../app/xcf/xcf.c:384
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Hiba a(z) „%s” írása közben: "
 
-#: ../app/xcf/xcf.c:420
+#: ../app/xcf/xcf.c:478
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Hiba a(z) „%s” létrehozása közben: "
@@ -20104,7 +20144,7 @@ msgstr ""
 "Sérült „gimp-metadata” élősködő felfedezve.\n"
 "Az XML adatok nem migrálhatóak: %s"
 
-#: ../app/xcf/xcf-load.c:545
+#: ../app/xcf/xcf-load.c:546
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -20112,7 +20152,7 @@ msgstr ""
 "Ez az XCF fájl sérült. A program betöltötte a fájl lehető legnagyobb részét, "
 "de az nem teljes."
 
-#: ../app/xcf/xcf-load.c:556
+#: ../app/xcf/xcf-load.c:557
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -20120,7 +20160,7 @@ msgstr ""
 "Ez az XCF fájl sérült. Még részleges képadatokat sem sikerült kinyerni "
 "belőle."
 
-#: ../app/xcf/xcf-load.c:648
+#: ../app/xcf/xcf-load.c:649
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -20150,6 +20190,3 @@ msgstr "kerek"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "lágy"
-
-#~ msgid "Fonts (this may take a while)"
-#~ msgstr "Betűkészletek (ez hosszabb ideig is tarthat)"
