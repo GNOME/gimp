@@ -228,26 +228,30 @@ gimp_edit_get_paste_offset (GimpImage    *image,
       /*  if pasting to a drawable  */
 
       gint     off_x, off_y;
-      gint     x1, y1, x2, y2;
+      gint     target_x, target_y;
+      gint     target_width, target_height;
       gint     paste_x, paste_y;
       gint     paste_width, paste_height;
       gboolean have_mask;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-      have_mask = gimp_item_mask_bounds (GIMP_ITEM (drawable),
-                                         &x1, &y1, &x2, &y2);
+      have_mask = ! gimp_channel_is_empty (gimp_image_get_mask (image));
 
-      if (! have_mask         && /* if we have no mask */
-          viewport_width  > 0 && /* and we have a viewport */
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                &target_x, &target_y,
+                                &target_width, &target_height);
+
+      if (! have_mask         &&    /* if we have no mask */
+          viewport_width  > 0 &&    /* and we have a viewport */
           viewport_height > 0 &&
-          (width  < (x2 - x1) || /* and the paste is smaller than the target */
-           height < (y2 - y1)) &&
+          (width  < target_width || /* and the paste is smaller than the target */
+           height < target_height) &&
 
           /* and the viewport intersects with the target */
           gimp_rectangle_intersect (viewport_x, viewport_y,
                                     viewport_width, viewport_height,
-                                    off_x, off_y,
-                                    x2 - x1, y2 - y1,
+                                    off_x, off_y, /* target_x,y are 0 */
+                                    target_width, target_height,
                                     &paste_x, &paste_y,
                                     &paste_width, &paste_height))
         {
@@ -260,8 +264,8 @@ gimp_edit_get_paste_offset (GimpImage    *image,
         {
           /*  otherwise center on the target  */
 
-          *offset_x = off_x + ((x1 + x2) - width)  / 2;
-          *offset_y = off_y + ((y1 + y2) - height) / 2;
+          *offset_x = off_x + target_x + (target_width  - width)  / 2;
+          *offset_y = off_y + target_y + (target_height - height) / 2;
 
           /*  and keep it that way  */
           clamp_to_image = FALSE;
