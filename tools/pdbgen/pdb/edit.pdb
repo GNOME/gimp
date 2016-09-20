@@ -178,7 +178,7 @@ the selection mask is non-zero, the pasted buffer will show
 through. The pasted buffer will be a new layer in the image which is
 designated as the image floating selection. If the image has a
 floating selection at the time of pasting, the old floating selection
-will be anchored to it's drawable before the new floating selection is
+will be anchored to its drawable before the new floating selection is
 added. This procedure returns the new floating layer. The resulting
 floating selection will already be attached to the specified drawable,
 and a subsequent call to floating_sel_attach is not needed.
