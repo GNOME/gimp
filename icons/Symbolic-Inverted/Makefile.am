@@ -48,7 +48,7 @@ scalable/%.svg: ../Symbolic/scalable/%.svg $(top_builddir)/tools/invert-svg$(BUI
 # But it doesn't. If someone knows how, feel free to fix it back into
 # a single rule.
 
-MAKE_ICON = mkdir -p `dirname $@`; $(GEGL) $< -o $@ -- gegl:invert-gamma
+MAKE_ICON = mkdir -p `dirname $@`; GEGL_USE_OPENCL=no GEGL_SWAP=ram $(GEGL) $< -o $@ -- gegl:invert-gamma
 
 12/%.png: $(top_srcdir)/icons/Symbolic/12/%.png
 	$(MAKE_ICON)
