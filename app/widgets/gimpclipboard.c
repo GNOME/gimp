@@ -358,10 +358,38 @@ gimp_clipboard_has_curve (Gimp *gimp)
 }
 
 /**
+ * gimp_clipboard_get_object:
+ * @gimp: pointer to #Gimp
+ *
+ * Retrieves either an image or a buffer from the global image cut
+ * buffer of @gimp.
+ *
+ * The returned #GimpObject needs to be unref'ed when it's no longer
+ * needed.
+ *
+ * Return value: a reference to a #GimpObject or %NULL if there's no
+ *               image or buffer in the clipboard
+ **/
+GimpObject *
+gimp_clipboard_get_object (Gimp *gimp)
+{
+  GimpObject *object;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  object = GIMP_OBJECT (gimp_clipboard_get_image (gimp));
+
+  if (! object)
+    object = GIMP_OBJECT (gimp_clipboard_get_buffer (gimp));
+
+  return object;
+}
+
+/**
  * gimp_clipboard_get_image:
  * @gimp: pointer to #Gimp
  *
- * Retrieves either an image from the global image cut buffer of @gimp.
+ * Retrieves an image from the global image cut buffer of @gimp.
  *
  * The returned #GimpImage needs to be unref'ed when it's no longer
  * needed.

@@ -975,6 +975,17 @@ gimp_get_tool_info_iter (Gimp *gimp)
   return GIMP_LIST (gimp->tool_info_list)->queue->head;
 }
 
+GimpObject *
+gimp_get_clipboard_object (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->clipboard_image)
+    return GIMP_OBJECT (gimp->clipboard_image);
+
+  return GIMP_OBJECT (gimp->clipboard_buffer);
+}
+
 void
 gimp_set_clipboard_image (Gimp      *gimp,
                           GimpImage *image)
