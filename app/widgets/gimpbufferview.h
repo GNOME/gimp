@@ -44,6 +44,7 @@ struct _GimpBufferView
 
   GtkWidget           *paste_button;
   GtkWidget           *paste_into_button;
+  GtkWidget           *paste_as_new_layer_button;
   GtkWidget           *paste_as_new_image_button;
   GtkWidget           *delete_button;
 };

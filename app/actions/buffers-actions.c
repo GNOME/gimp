@@ -54,6 +54,12 @@ static const GimpActionEntry buffers_actions[] =
     G_CALLBACK (buffers_paste_into_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_INTO },
 
+  { "buffers-paste-as-new-layer", GIMP_STOCK_PASTE_AS_NEW,
+    NC_("buffers-action", "Paste Buffer as New _Layer"), NULL,
+    NC_("buffers-action", "Paste the selected buffer as a new layer"),
+    G_CALLBACK (buffers_paste_as_new_layer_cmd_callback),
+    GIMP_HELP_BUFFER_PASTE_AS_NEW_LAYER },
+
   { "buffers-paste-as-new-image", GIMP_STOCK_PASTE_AS_NEW,
     NC_("buffers-action", "Paste Buffer as _New"), NULL,
     NC_("buffers-action", "Paste the selected buffer as a new image"),
@@ -91,6 +97,7 @@ buffers_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("buffers-paste",              buffer);
   SET_SENSITIVE ("buffers-paste-into",         buffer);
+  SET_SENSITIVE ("buffers-paste-as-new-layer", buffer);
   SET_SENSITIVE ("buffers-paste-as-new-image", buffer);
   SET_SENSITIVE ("buffers-delete",             buffer);
 

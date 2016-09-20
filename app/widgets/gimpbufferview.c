@@ -191,6 +191,10 @@ gimp_buffer_view_new (GimpViewType     view_type,
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
                                    "buffers-paste-into", NULL);
 
+  buffer_view->paste_as_new_layer_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
+                                   "buffers-paste-as-new-layer", NULL);
+
   buffer_view->paste_as_new_image_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
                                    "buffers-paste-as-new-image", NULL);
@@ -204,6 +208,9 @@ gimp_buffer_view_new (GimpViewType     view_type,
                                   GIMP_TYPE_BUFFER);
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (buffer_view->paste_into_button),
+                                  GIMP_TYPE_BUFFER);
+  gimp_container_view_enable_dnd (editor->view,
+                                  GTK_BUTTON (buffer_view->paste_as_new_layer_button),
                                   GIMP_TYPE_BUFFER);
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (buffer_view->paste_as_new_image_button),

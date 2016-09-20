@@ -196,8 +196,8 @@
         <menuitem action="edit-paste-into" />
       </placeholder>
       <menu action="edit-paste-as-menu" name="Paste as">
-        <menuitem action="edit-paste-as-new-image-short" />
         <menuitem action="edit-paste-as-new-layer" />
+        <menuitem action="edit-paste-as-new-image-short" />
       </menu>
       <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />

@@ -139,6 +139,12 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_paste_into_cmd_callback),
     GIMP_HELP_EDIT_PASTE_INTO },
 
+  { "edit-paste-as-new-layer", NULL,
+    NC_("edit-action", "New _Layer"), NULL,
+    NC_("edit-action", "Create a new layer from the content of the clipboard"),
+    G_CALLBACK (edit_paste_as_new_layer_cmd_callback),
+    GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER },
+
   { "edit-paste-as-new-image", GIMP_STOCK_PASTE_AS_NEW,
     NC_("edit-action", "From _Clipboard"), "<primary><shift>V",
     NC_("edit-action", "Create a new image from the content of the clipboard"),
@@ -150,12 +156,6 @@ static const GimpActionEntry edit_actions[] =
     NC_("edit-action", "Create a new image from the content of the clipboard"),
     G_CALLBACK (edit_paste_as_new_image_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW_IMAGE },
-
-  { "edit-paste-as-new-layer", NULL,
-    NC_("edit-action", "New _Layer"), NULL,
-    NC_("edit-action", "Create a new layer from the content of the clipboard"),
-    G_CALLBACK (edit_paste_as_new_layer_cmd_callback),
-    GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER },
 
   { "edit-named-cut", "edit-cut",
     NC_("edit-action", "Cu_t Named..."), NULL,
@@ -373,13 +373,13 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-copy",               drawable);
   SET_SENSITIVE ("edit-copy-visible",       image);
   /*             "edit-paste" is always active */
-  SET_SENSITIVE ("edit-paste-as-new-layer", image);
   SET_SENSITIVE ("edit-paste-into",         image);
+  SET_SENSITIVE ("edit-paste-as-new-layer", image);
 
   SET_SENSITIVE ("edit-named-cut",          writable && !children);
   SET_SENSITIVE ("edit-named-copy",         drawable);
   SET_SENSITIVE ("edit-named-copy-visible", drawable);
-  SET_SENSITIVE ("edit-named-paste",        TRUE);
+  /*             "edit-named-paste" is always active */
 
   SET_SENSITIVE ("edit-clear",              writable && !children);
   SET_SENSITIVE ("edit-fill-fg",            writable && !children);

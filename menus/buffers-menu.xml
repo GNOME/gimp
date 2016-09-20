@@ -5,6 +5,7 @@
   <popup action="buffers-popup">
     <menuitem action="buffers-paste" />
     <menuitem action="buffers-paste-into" />
+    <menuitem action="buffers-paste-as-new-layer" />
     <menuitem action="buffers-paste-as-new-image" />
     <menuitem action="buffers-delete" />
     <separator />

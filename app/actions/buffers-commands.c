@@ -67,6 +67,13 @@ buffers_paste_into_cmd_callback (GtkAction *action,
 }
 
 void
+buffers_paste_as_new_layer_cmd_callback (GtkAction *action,
+                                         gpointer   data)
+{
+  buffers_paste (GIMP_BUFFER_VIEW (data), GIMP_PASTE_TYPE_NEW_LAYER);
+}
+
+void
 buffers_paste_as_new_image_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {

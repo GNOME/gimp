@@ -353,6 +353,16 @@ edit_paste_into_cmd_callback (GtkAction *action,
 }
 
 void
+edit_paste_as_new_layer_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  GimpDisplay *display;
+  return_if_no_display (display, data);
+
+  edit_paste (display, GIMP_PASTE_TYPE_NEW_LAYER, FALSE);
+}
+
+void
 edit_paste_as_new_image_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
@@ -396,16 +406,6 @@ edit_paste_as_new_image_cmd_callback (GtkAction *action,
                             _("There is no image data in the clipboard "
                               "to paste."));
     }
-}
-
-void
-edit_paste_as_new_layer_cmd_callback (GtkAction *action,
-                                      gpointer   data)
-{
-  GimpDisplay *display;
-  return_if_no_display (display, data);
-
-  edit_paste (display, GIMP_PASTE_TYPE_NEW_LAYER, FALSE);
 }
 
 void
