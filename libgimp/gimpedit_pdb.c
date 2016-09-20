@@ -195,7 +195,7 @@ gimp_edit_paste (gint32   drawable_ID,
 }
 
 /**
- * gimp_edit_paste_as_new:
+ * gimp_edit_paste_as_new_image:
  *
  * Paste buffer to a new image.
  *
@@ -206,16 +206,16 @@ gimp_edit_paste (gint32   drawable_ID,
  *
  * Returns: The new image.
  *
- * Since: 2.4
+ * Since: 2.10
  **/
 gint32
-gimp_edit_paste_as_new (void)
+gimp_edit_paste_as_new_image (void)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 image_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp-edit-paste-as-new",
+  return_vals = gimp_run_procedure ("gimp-edit-paste-as-new-image",
                                     &nreturn_vals,
                                     GIMP_PDB_END);
 
@@ -384,26 +384,26 @@ gimp_edit_named_paste (gint32       drawable_ID,
 }
 
 /**
- * gimp_edit_named_paste_as_new:
+ * gimp_edit_named_paste_as_new_image:
  * @buffer_name: The name of the buffer to paste.
  *
  * Paste named buffer to a new image.
  *
- * This procedure works like gimp_edit_paste_as_new() but pastes a
- * named buffer instead of the global buffer.
+ * This procedure works like gimp_edit_paste_as_new_image() but pastes
+ * a named buffer instead of the global buffer.
  *
  * Returns: The new image.
  *
- * Since: 2.4
+ * Since: 2.10
  **/
 gint32
-gimp_edit_named_paste_as_new (const gchar *buffer_name)
+gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 image_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp-edit-named-paste-as-new",
+  return_vals = gimp_run_procedure ("gimp-edit-named-paste-as-new-image",
                                     &nreturn_vals,
                                     GIMP_PDB_STRING, buffer_name,
                                     GIMP_PDB_END);

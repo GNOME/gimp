@@ -225,7 +225,7 @@ CODE
     );
 }
 
-sub edit_paste_as_new {
+sub edit_paste_as_new_image {
     $blurb = 'Paste buffer to a new image.';
 
     $help = <<'HELP';
@@ -235,7 +235,7 @@ previously made to either gimp_edit_cut() or gimp_edit_copy(). This
 procedure returns the new image or -1 if the edit buffer was empty.
 HELP
 
-    &mitch_pdb_misc('2005', '2.4');
+    &mitch_pdb_misc('2005', '2.10');
 
     @outargs = (
 	{ name => 'image', type => 'image',
@@ -279,6 +279,7 @@ HELP
         { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
+
     @outargs = (
 	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
@@ -334,6 +335,7 @@ HELP
         { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
+
     @outargs = (
 	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
@@ -469,15 +471,15 @@ CODE
     )
 }
 
-sub edit_named_paste_as_new {
+sub edit_named_paste_as_new_image {
     $blurb = 'Paste named buffer to a new image.';
 
     $help = <<'HELP';
-This procedure works like gimp_edit_paste_as_new() but pastes a named buffer
-instead of the global buffer.
+This procedure works like gimp_edit_paste_as_new_image() but pastes a
+named buffer instead of the global buffer.
 HELP
 
-    &mitch_pdb_misc('2005', '2.4');
+    &mitch_pdb_misc('2005', '2.10');
 
     @inargs = (
         { name => 'buffer_name', type => 'string',
@@ -1024,11 +1026,15 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(edit_cut
-            edit_copy edit_copy_visible
-            edit_paste edit_paste_as_new
+            edit_copy
+            edit_copy_visible
+            edit_paste
+            edit_paste_as_new_image
             edit_named_cut
-            edit_named_copy edit_named_copy_visible
-            edit_named_paste edit_named_paste_as_new
+            edit_named_copy
+            edit_named_copy_visible
+            edit_named_paste
+            edit_named_paste_as_new_image
             edit_clear
             edit_fill
             edit_bucket_fill

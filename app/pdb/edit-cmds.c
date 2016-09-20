@@ -234,12 +234,12 @@ edit_paste_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-edit_paste_as_new_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
+edit_paste_as_new_image_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -471,12 +471,12 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-edit_named_paste_as_new_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
-                                 GError               **error)
+edit_named_paste_as_new_image_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -1059,13 +1059,13 @@ register_edit_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-paste-as-new
+   * gimp-edit-paste-as-new-image
    */
-  procedure = gimp_procedure_new (edit_paste_as_new_invoker);
+  procedure = gimp_procedure_new (edit_paste_as_new_image_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-paste-as-new");
+                               "gimp-edit-paste-as-new-image");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-paste-as-new",
+                                     "gimp-edit-paste-as-new-image",
                                      "Paste buffer to a new image.",
                                      "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image or -1 if the edit buffer was empty.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1235,15 +1235,15 @@ register_edit_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-named-paste-as-new
+   * gimp-edit-named-paste-as-new-image
    */
-  procedure = gimp_procedure_new (edit_named_paste_as_new_invoker);
+  procedure = gimp_procedure_new (edit_named_paste_as_new_image_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-named-paste-as-new");
+                               "gimp-edit-named-paste-as-new-image");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-named-paste-as-new",
+                                     "gimp-edit-named-paste-as-new-image",
                                      "Paste named buffer to a new image.",
-                                     "This procedure works like 'gimp-edit-paste-as-new' but pastes a named buffer instead of the global buffer.",
+                                     "This procedure works like 'gimp-edit-paste-as-new-image' but pastes a named buffer instead of the global buffer.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2005",

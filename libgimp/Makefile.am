@@ -208,6 +208,8 @@ libgimp_sources = \
 	gimpchannel.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
+	gimpedit.c		\
+	gimpedit.h		\
 	gimpfontselect.c	\
 	gimpfontselect.h	\
 	gimpgimprc.c		\
@@ -336,6 +338,7 @@ gimpinclude_HEADERS = \
 	gimpbrushselect.h		\
 	gimpchannel.h			\
 	gimpdrawable.h			\
+	gimpedit.h			\
 	gimpfontselect.h		\
 	gimpgimprc.h			\
 	gimpgradients.h			\
