@@ -393,7 +393,7 @@ gimp_edit_paste (GimpImage     *image,
        */
       gimp_image_add_layer (image, layer,
                             GIMP_IS_LAYER (drawable) ?
-                            gimp_item_get_parent (GIMP_ITEM (drawable)) :
+                            GIMP_LAYER (gimp_item_get_parent (GIMP_ITEM (drawable))) :
                             NULL,
                             -1, TRUE);
       break;
