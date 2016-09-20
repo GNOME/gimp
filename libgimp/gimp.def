@@ -292,8 +292,8 @@ EXPORTS
 	gimp_edit_named_paste_as_new
 	gimp_edit_named_paste_as_new_image
 	gimp_edit_paste
-	gimp_edit_paste_as_new_image
 	gimp_edit_paste_as_new
+	gimp_edit_paste_as_new_image
 	gimp_edit_stroke
 	gimp_edit_stroke_vectors
 	gimp_ellipse_select
