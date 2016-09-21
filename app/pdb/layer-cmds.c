@@ -329,7 +329,9 @@ layer_add_alpha_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
-        gimp_layer_add_alpha (layer);
+        {
+          gimp_layer_add_alpha (layer);
+        }
       else
        success = FALSE;
     }
@@ -356,7 +358,9 @@ layer_flatten_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
-        gimp_layer_flatten (layer, context);
+        {
+          gimp_layer_remove_alpha (layer, context);
+        }
       else
        success = FALSE;
     }

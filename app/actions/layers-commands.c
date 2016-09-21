@@ -972,7 +972,7 @@ layers_alpha_remove_cmd_callback (GtkAction *action,
 
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
-      gimp_layer_flatten (layer, action_data_get_context (data));
+      gimp_layer_remove_alpha (layer, action_data_get_context (data));
       gimp_image_flush (image);
     }
 }
