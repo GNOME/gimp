@@ -227,19 +227,35 @@ gimp_edit_get_paste_offset (GimpImage    *image,
     {
       /*  if pasting to a drawable  */
 
-      gint     off_x, off_y;
-      gint     target_x, target_y;
-      gint     target_width, target_height;
-      gint     paste_x, paste_y;
-      gint     paste_width, paste_height;
-      gboolean have_mask;
+      GimpContainer *children;
+      gint           off_x, off_y;
+      gint           target_x, target_y;
+      gint           target_width, target_height;
+      gint           paste_x, paste_y;
+      gint           paste_width, paste_height;
+      gboolean       have_mask;
 
       have_mask = ! gimp_channel_is_empty (gimp_image_get_mask (image));
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-      gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                &target_x, &target_y,
-                                &target_width, &target_height);
+
+      children = gimp_viewable_get_children (GIMP_VIEWABLE (drawable));
+
+      if (children && gimp_container_get_n_children (children) == 0)
+        {
+          /* treat empty layer groups as image-sized, use the selection
+           * as target
+           */
+          gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                            &target_x, &target_y,
+                            &target_width, &target_height);
+        }
+      else
+        {
+          gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                    &target_x, &target_y,
+                                    &target_width, &target_height);
+        }
 
       if (! have_mask         &&    /* if we have no mask */
           viewport_width  > 0 &&    /* and we have a viewport */
