@@ -367,38 +367,36 @@ edit_paste_as_new_image_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
   Gimp       *gimp;
-  GimpImage  *image;
-  GimpImage  *new_image = NULL;
   GtkWidget  *widget;
+  GimpObject *paste;
+  GimpImage  *image = NULL;
   return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
 
-  image = gimp_clipboard_get_image (gimp);
+  paste = gimp_clipboard_get_object (gimp);
+
+  if (paste)
+    {
+      if (GIMP_IS_IMAGE (paste))
+        {
+          image = gimp_image_duplicate (GIMP_IMAGE (paste));
+        }
+      else if (GIMP_IS_BUFFER (paste))
+        {
+          image = gimp_image_new_from_buffer (gimp,
+                                              action_data_get_image (data),
+                                              GIMP_BUFFER (paste));
+        }
+
+      g_object_unref (paste);
+    }
 
   if (image)
     {
-      new_image = gimp_image_duplicate (image);
-      g_object_unref (image);
-    }
-  else
-    {
-      GimpBuffer *buffer = gimp_clipboard_get_buffer (gimp);
-
-      if (buffer)
-        {
-          new_image = gimp_image_new_from_buffer (gimp,
-                                                  action_data_get_image (data),
-                                                  buffer);
-          g_object_unref (buffer);
-        }
-    }
-
-  if (new_image)
-    {
-      gimp_create_display (gimp, new_image, GIMP_UNIT_PIXEL, 1.0,
+      gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0,
                            G_OBJECT (gtk_widget_get_screen (widget)),
                            gimp_widget_get_monitor (widget));
-      g_object_unref (new_image);
+      g_object_unref (image);
     }
   else
     {
@@ -564,11 +562,17 @@ edit_paste (GimpDisplay   *display,
         }
     }
 
-  paste = GIMP_OBJECT (gimp_clipboard_get_image (display->gimp));
+  paste = gimp_clipboard_get_object (display->gimp);
 
   if (paste)
     {
-      if (paste_type != GIMP_PASTE_TYPE_NEW_LAYER)
+      GimpDisplayShell *shell    = gimp_display_get_shell (display);
+      GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+      gint              x, y;
+      gint              width, height;
+
+      if (GIMP_IS_IMAGE (paste) &&
+          paste_type != GIMP_PASTE_TYPE_NEW_LAYER)
         {
           gimp_message_literal (display->gimp, G_OBJECT (display),
                                 GIMP_MESSAGE_INFO,
@@ -577,18 +581,6 @@ edit_paste (GimpDisplay   *display,
 
           paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
         }
-    }
-  else
-    {
-      paste = GIMP_OBJECT (gimp_clipboard_get_buffer (display->gimp));
-    }
-
-  if (paste)
-    {
-      GimpDisplayShell *shell    = gimp_display_get_shell (display);
-      GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
-      gint              x, y;
-      gint              width, height;
 
       if (drawable)
         {
