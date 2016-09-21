@@ -408,14 +408,21 @@ gimp_edit_paste (GimpImage     *image,
       break;
 
     case GIMP_PASTE_TYPE_NEW_LAYER:
-      /* always add on top of the drawable or the active layer, where
-       * we would attach a floating selection
-       */
-      gimp_image_add_layer (image, layer,
-                            GIMP_IS_LAYER (drawable) ?
-                            GIMP_LAYER (gimp_item_get_parent (GIMP_ITEM (drawable))) :
-                            NULL,
-                            -1, TRUE);
+      {
+        GimpLayer *parent   = NULL;
+        gint       position = 0;
+
+        /* always add on top of the passed layer, where we would
+         * attach a floating selection
+         */
+        if (GIMP_IS_LAYER (drawable))
+          {
+            parent   = gimp_layer_get_parent (GIMP_LAYER (drawable));
+            position = gimp_item_get_index (GIMP_ITEM (drawable));
+          }
+
+        gimp_image_add_layer (image, layer, parent, position, TRUE);
+      }
       break;
     }
 
