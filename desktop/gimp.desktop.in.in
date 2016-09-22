@@ -4,6 +4,7 @@ Type=Application
 _Name=GNU Image Manipulation Program
 _GenericName=Image Editor
 _Comment=Create images and edit photographs
+_Keywords=GIMP graphic design illustration painting
 Exec=@GIMP_COMMAND@ %U
 TryExec=gimp-@GIMP_APP_VERSION@
 Icon=gimp
