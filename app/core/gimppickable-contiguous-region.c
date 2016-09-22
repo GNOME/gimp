@@ -49,6 +49,19 @@ static gfloat   pixel_difference          (const gfloat        *col1,
                                            gboolean             has_alpha,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion);
+static void     push_segment              (GQueue              *segment_queue,
+                                           gint                 y,
+                                           gint                 old_y,
+                                           gint                 start,
+                                           gint                 end,
+                                           gint                 new_y,
+                                           gint                 new_start,
+                                           gint                 new_end);
+static void     pop_segment               (GQueue              *segment_queue,
+                                           gint                *y,
+                                           gint                *old_y,
+                                           gint                *start,
+                                           gint                *end);
 static gboolean find_contiguous_segment   (const gfloat        *col,
                                            GeglBuffer          *src_buffer,
                                            GeglBuffer          *mask_buffer,
@@ -372,6 +385,71 @@ pixel_difference (const gfloat        *col1,
     }
 }
 
+static void
+push_segment (GQueue *segment_queue,
+              gint    y,
+              gint    old_y,
+              gint    start,
+              gint    end,
+              gint    new_y,
+              gint    new_start,
+              gint    new_end)
+{
+  /* To avoid excessive memory allocation (y, old_y, start, end) tuples are
+   * stored in interleaved format:
+   *
+   * [y1] [old_y1] [start1] [end1] [y2] [old_y2] [start2] [end2]
+   */
+
+  if (new_y != old_y)
+    {
+      /* If the new segment's y-coordinate is different than the old (source)
+       * segment's y-coordinate, push the entire segment.
+       */
+      g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_y));
+      g_queue_push_tail (segment_queue, GINT_TO_POINTER (y));
+      g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_start));
+      g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_end));
+    }
+  else
+    {
+      /* Otherwise, only push the set-difference between the new segment and
+       * the source segment (since we've already scanned the source segment.)
+       * Note that the `+ 1` and `- 1` terms of the end/start coordinates below
+       * are only necessary when `diagonal_neighbors` is on (and otherwise make
+       * the segments slightly larger than necessary), but, meh...
+       */
+      if (new_start < start)
+        {
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_y));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (y));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_start));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (start + 1));
+        }
+
+      if (new_end > end)
+        {
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_y));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (y));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (end - 1));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_end));
+        }
+    }
+}
+
+static void
+pop_segment (GQueue *segment_queue,
+             gint   *y,
+             gint   *old_y,
+             gint   *start,
+             gint   *end)
+{
+  *y     = GPOINTER_TO_INT (g_queue_pop_head (segment_queue));
+  *old_y = GPOINTER_TO_INT (g_queue_pop_head (segment_queue));
+  *start = GPOINTER_TO_INT (g_queue_pop_head (segment_queue));
+  *end   = GPOINTER_TO_INT (g_queue_pop_head (segment_queue));
+}
+
 /* #define FETCH_ROW 1 */
 
 static gboolean
@@ -495,31 +573,26 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                         const gfloat        *col)
 {
   const Babl *mask_format = babl_format ("Y float");
+  gint        old_y;
   gint        start, end;
   gint        new_start, new_end;
-  GQueue     *coord_stack;
+  GQueue     *segment_queue;
   gfloat     *row = NULL;
 
 #ifdef FETCH_ROW
   row = g_new (gfloat, gegl_buffer_get_width (src_buffer) * n_components);
 #endif
 
-  coord_stack = g_queue_new ();
+  segment_queue = g_queue_new ();
 
-  /* To avoid excessive memory allocation (y, start, end) tuples are
-   * stored in interleaved format:
-   *
-   * [y1] [start1] [end1] [y2] [start2] [end2]
-   */
-  g_queue_push_tail (coord_stack, GINT_TO_POINTER (y));
-  g_queue_push_tail (coord_stack, GINT_TO_POINTER (x - 1));
-  g_queue_push_tail (coord_stack, GINT_TO_POINTER (x + 1));
+  push_segment (segment_queue,
+                y, /* dummy values: */ -1, 0, 0,
+                y, x - 1, x + 1);
 
   do
     {
-      y     = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
-      start = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
-      end   = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
+      pop_segment (segment_queue,
+                   &y, &old_y, &start, &end);
 
       for (x = start + 1; x < end; x++)
         {
@@ -568,22 +641,23 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 
           if (y + 1 < gegl_buffer_get_height (src_buffer))
             {
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (y + 1));
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_end));
+              push_segment (segment_queue,
+                            y, old_y, start, end,
+                            y + 1, new_start, new_end);
             }
 
           if (y - 1 >= 0)
             {
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (y - 1));
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_end));
+              push_segment (segment_queue,
+                            y, old_y, start, end,
+                            y - 1, new_start, new_end);
             }
+
         }
     }
-  while (! g_queue_is_empty (coord_stack));
+  while (! g_queue_is_empty (segment_queue));
 
-  g_queue_free (coord_stack);
+  g_queue_free (segment_queue);
 
 #ifdef FETCH_ROW
   g_free (row);
