@@ -94,6 +94,11 @@ static void        prefs_message                  (GtkMessageType  type,
                                                    gboolean        destroy,
                                                    const gchar    *message);
 
+static void   prefs_color_management_reset        (GtkWidget  *widget,
+                                                   GObject    *config);
+static void   prefs_dialog_defaults_reset         (GtkWidget  *widget,
+                                                   GObject    *config);
+
 static void   prefs_resolution_source_callback    (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
@@ -430,6 +435,39 @@ prefs_response (GtkWidget *widget,
   gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
 
   gtk_widget_destroy (dialog);
+}
+
+static void
+prefs_color_management_reset (GtkWidget *widget,
+                              GObject   *config)
+{
+  gimp_config_reset (GIMP_CONFIG (config));
+}
+
+static void
+prefs_dialog_defaults_reset (GtkWidget *widget,
+                             GObject   *config)
+{
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+  guint        i;
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
+                                           &n_pspecs);
+
+  g_object_freeze_notify (config);
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+
+      if (pspec->owner_type == GIMP_TYPE_DIALOG_CONFIG)
+        gimp_config_reset_property (config, pspec->name);
+    }
+
+  g_object_thaw_notify (config);
+
+  g_free (pspecs);
 }
 
 static void
@@ -1397,14 +1435,18 @@ prefs_dialog_new (Gimp       *gimp,
 
   gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
+  button = gimp_prefs_box_set_page_resettable (GIMP_PREFS_BOX (prefs_box),
+                                               vbox,
+                                               _("Reset Color Management"));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_color_management_reset),
+                    core_config->color_management);
+
   {
-    GObject      *color_config;
+    GObject      *color_config = G_OBJECT (core_config->color_management);
     GtkListStore *store;
     gchar        *filename;
     gint          row = 0;
-
-    g_object_get (object, "color-management", &color_config, NULL);
-    g_object_unref (color_config);
 
     filename = gimp_personal_rc_file ("profilerc");
     store = gimp_color_profile_store_new (filename);
@@ -2093,6 +2135,13 @@ prefs_dialog_new (Gimp       *gimp,
                                   &child_iter);
 
   gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+
+  button = gimp_prefs_box_set_page_resettable (GIMP_PREFS_BOX (prefs_box),
+                                               vbox,
+                                               _("Reset Dialog Defaults"));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_dialog_defaults_reset),
+                    config);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
