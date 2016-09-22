@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpprefsbox.h
- * Copyright (C) 2013 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2013-2016 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,9 @@ GtkWidget * gimp_prefs_box_add_page            (GimpPrefsBox *box,
 void        gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
                                                 GtkWidget    *page,
                                                 gboolean      scrollable);
+GtkWidget * gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
+                                                GtkWidget    *page,
+                                                const gchar  *label);
 
 GtkWidget * gimp_prefs_box_get_tree_view       (GimpPrefsBox *box);
 GtkWidget * gimp_prefs_box_get_notebook        (GimpPrefsBox *box);
