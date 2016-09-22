@@ -320,6 +320,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   GIMP_LOG (TOOL_EVENTS, "event (display %p): %s",
             display, gimp_print_event (event));
 
+  /* See bug 771444 */
+  if (shell->pointer_grabbed &&
+      event->type == GDK_MOTION_NOTIFY)
+    {
+      GimpDeviceManager *manager = gimp_devices_get_manager (gimp);
+      GimpDeviceInfo    *info;
+
+      info = gimp_device_manager_get_current_device (manager);
+
+      if (info->device != event->motion.device)
+        return FALSE;
+    }
+
   /*  Find out what device the event occurred upon  */
   if (! gimp->busy &&
       ! shell->inferior_ignore_mode &&
