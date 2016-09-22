@@ -659,6 +659,12 @@ gimp_ruler_set_position (GimpRuler *ruler,
           (ABS (xdiff) > IMMEDIATE_REDRAW_THRESHOLD ||
            ABS (ydiff) > IMMEDIATE_REDRAW_THRESHOLD))
         {
+          if (priv->pos_redraw_idle_id)
+            {
+              g_source_remove (priv->pos_redraw_idle_id);
+              priv->pos_redraw_idle_id = 0;
+            }
+
           gimp_ruler_queue_pos_redraw (ruler);
         }
       else if (! priv->pos_redraw_idle_id)
@@ -1289,15 +1295,16 @@ gimp_ruler_queue_pos_redraw (GimpRuler *ruler)
   GimpRulerPrivate  *priv = GIMP_RULER_GET_PRIVATE (ruler);
   const GdkRectangle rect = gimp_ruler_get_pos_rect (ruler, priv->position);
 
-  gtk_widget_queue_draw_area (GTK_WIDGET(ruler),
+  gtk_widget_queue_draw_area (GTK_WIDGET (ruler),
                               rect.x,
                               rect.y,
                               rect.width,
                               rect.height);
 
-  if (priv->last_pos_rect.width != 0 || priv->last_pos_rect.height != 0)
+  if (priv->last_pos_rect.width  != 0 &&
+      priv->last_pos_rect.height != 0)
     {
-      gtk_widget_queue_draw_area (GTK_WIDGET(ruler),
+      gtk_widget_queue_draw_area (GTK_WIDGET (ruler),
                                   priv->last_pos_rect.x,
                                   priv->last_pos_rect.y,
                                   priv->last_pos_rect.width,
@@ -1349,7 +1356,17 @@ gimp_ruler_draw_pos (GimpRuler *ruler,
       cairo_fill (cr);
     }
 
-  priv->last_pos_rect = pos_rect;
+  if (priv->last_pos_rect.width  != 0 &&
+      priv->last_pos_rect.height != 0)
+    {
+      gdk_rectangle_union (&priv->last_pos_rect,
+                           &pos_rect,
+                           &priv->last_pos_rect);
+    }
+  else
+    {
+      priv->last_pos_rect = pos_rect;
+    }
 }
 
 static void
