@@ -16,15 +16,15 @@ msgstr ""
 "Project-Id-Version: gimp-master-po-hu-23139.merged\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-09-19 18:16+0000\n"
-"PO-Revision-Date: 2016-09-19 20:24+0200\n"
+"POT-Creation-Date: 2016-09-21 23:16+0000\n"
+"PO-Revision-Date: 2016-09-22 11:58+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -633,20 +633,30 @@ msgstr "A kijelölt tároló beillesztése a kijelölésbe"
 
 #: ../app/actions/buffers-actions.c:58
 msgctxt "buffers-action"
+msgid "Paste Buffer as New _Layer"
+msgstr "Tároló beillesztése új _rétegként"
+
+#: ../app/actions/buffers-actions.c:59
+msgctxt "buffers-action"
+msgid "Paste the selected buffer as a new layer"
+msgstr "A kijelölt tároló beillesztése új rétegként"
+
+#: ../app/actions/buffers-actions.c:64
+msgctxt "buffers-action"
 msgid "Paste Buffer as _New"
 msgstr "Tároló beillesztése ú_jként"
 
-#: ../app/actions/buffers-actions.c:59
+#: ../app/actions/buffers-actions.c:65
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
 msgstr "A kijelölt tároló beillesztése új képként"
 
-#: ../app/actions/buffers-actions.c:64
+#: ../app/actions/buffers-actions.c:70
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
 msgstr "Tároló _törlése"
 
-#: ../app/actions/buffers-actions.c:65
+#: ../app/actions/buffers-actions.c:71
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
 msgstr "A kijelölt tároló törlése"
@@ -817,7 +827,7 @@ msgid "New Channel Color"
 msgstr "Új csatornaszín"
 
 #: ../app/actions/channels-commands.c:247 ../app/core/gimpimage-new.c:275
-#: ../app/display/gimpdisplayshell-dnd.c:666
+#: ../app/display/gimpdisplayshell-dnd.c:672
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:794
 #, c-format
@@ -1051,7 +1061,7 @@ msgstr "Az összes látható réteg összesített színe alapján"
 #: ../app/dialogs/file-open-dialog.c:253
 #: ../app/dialogs/file-open-location-dialog.c:218
 #: ../app/dialogs/file-open-location-dialog.c:228
-#: ../app/display/gimpdisplayshell-dnd.c:610
+#: ../app/display/gimpdisplayshell-dnd.c:616
 #: ../app/widgets/gimplayertreeview.c:754 ../app/widgets/gimptoolbox.c:809
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
@@ -2172,29 +2182,29 @@ msgstr "A vágólap tartalmának beillesztése a kijelölésbe"
 # TODO: ellenorzendo a mnemonic
 #: ../app/actions/edit-actions.c:143
 msgctxt "edit-action"
+msgid "New _Layer"
+msgstr "Új _réteg"
+
+#: ../app/actions/edit-actions.c:144
+msgctxt "edit-action"
+msgid "Create a new layer from the content of the clipboard"
+msgstr "Új réteg létrehozása a vágólap tartalma alapján"
+
+# TODO: ellenorzendo a mnemonic
+#: ../app/actions/edit-actions.c:149
+msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "A _vágólapról"
 
-#: ../app/actions/edit-actions.c:144 ../app/actions/edit-actions.c:150
+#: ../app/actions/edit-actions.c:150 ../app/actions/edit-actions.c:156
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Új kép létrehozása a vágólap tartalma alapján"
 
-#: ../app/actions/edit-actions.c:149
+#: ../app/actions/edit-actions.c:155
 msgctxt "edit-action"
 msgid "_New Image"
 msgstr "Új _kép"
-
-# TODO: ellenorzendo a mnemonic
-#: ../app/actions/edit-actions.c:155
-msgctxt "edit-action"
-msgid "New _Layer"
-msgstr "Új _réteg"
-
-#: ../app/actions/edit-actions.c:156
-msgctxt "edit-action"
-msgid "Create a new layer from the content of the clipboard"
-msgstr "Új réteg létrehozása a vágólap tartalma alapján"
 
 #: ../app/actions/edit-actions.c:161
 msgctxt "edit-action"
@@ -2305,74 +2315,81 @@ msgstr "Új_ra"
 msgid "_Fade..."
 msgstr "H_alványítás…"
 
-#: ../app/actions/edit-commands.c:152
+#: ../app/actions/edit-commands.c:154
 msgid "Clear Undo History"
 msgstr "Visszavonási előzmények törlése"
 
-#: ../app/actions/edit-commands.c:178
+#: ../app/actions/edit-commands.c:180
 msgid "Really clear image's undo history?"
 msgstr "Valóban szeretné törölni a kép visszavonási előzményeit?"
 
-#: ../app/actions/edit-commands.c:191
+#: ../app/actions/edit-commands.c:193
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "A kép visszavonási előzményeinek törlése %s memóriát szabadít fel."
 
 # TODO: vágva?
-#: ../app/actions/edit-commands.c:242
-msgid "Cut pixels to the clipboard"
-msgstr "Képpontok vágása a vágólapra"
+#: ../app/actions/edit-commands.c:249
+msgid "Cut layer to the clipboard."
+msgstr "Réteg kivágása a vágólapra."
 
-#: ../app/actions/edit-commands.c:272 ../app/actions/edit-commands.c:301
-msgid "Copied pixels to the clipboard"
-msgstr "Képpontok átmásolva a vágólapra"
+# TODO: vágva?
+#: ../app/actions/edit-commands.c:250
+msgid "Cut pixels to the clipboard."
+msgstr "Képpontok kivágása a vágólapra."
 
-#: ../app/actions/edit-commands.c:330 ../app/actions/edit-commands.c:371
-msgid "Pasting as new layer because the target is a group layer."
-msgstr "Beillesztés új rétegként, mert a cél egy csoportréteg."
+#: ../app/actions/edit-commands.c:285
+msgid "Copied layer to the clipboard."
+msgstr "Réteg átmásolva a vágólapra."
 
-#: ../app/actions/edit-commands.c:339 ../app/actions/edit-commands.c:380
-msgid "Pasting as new layer because the target's pixels are locked."
-msgstr ""
-"Beillesztés új rétegként, mert az aktív réteg képpontjai zárolva vannak."
+#: ../app/actions/edit-commands.c:286 ../app/actions/edit-commands.c:315
+msgid "Copied pixels to the clipboard."
+msgstr "Képpontok átmásolva a vágólapra."
 
-#: ../app/actions/edit-commands.c:419 ../app/actions/edit-commands.c:473
-#: ../app/actions/edit-commands.c:652 ../app/tools/gimpseamlessclonetool.c:295
+#: ../app/actions/edit-commands.c:404 ../app/actions/edit-commands.c:621
+#: ../app/tools/gimpseamlessclonetool.c:295
 msgid "There is no image data in the clipboard to paste."
 msgstr "Nincs beilleszthető képadat a vágólapon."
 
-#: ../app/actions/edit-commands.c:448 ../app/core/gimpbrushclipboard.c:168
-#: ../app/core/gimppatternclipboard.c:168 ../app/widgets/gimpclipboard.c:457
-msgid "Clipboard"
-msgstr "Vágólap"
-
-#: ../app/actions/edit-commands.c:487
+#: ../app/actions/edit-commands.c:419
 msgid "Cut Named"
 msgstr "Kivágás név szerint"
 
-#: ../app/actions/edit-commands.c:490 ../app/actions/edit-commands.c:510
-#: ../app/actions/edit-commands.c:530
+#: ../app/actions/edit-commands.c:422 ../app/actions/edit-commands.c:442
+#: ../app/actions/edit-commands.c:462
 msgid "Enter a name for this buffer"
 msgstr "Adja meg a tároló nevét"
 
-#: ../app/actions/edit-commands.c:507
+#: ../app/actions/edit-commands.c:439
 msgid "Copy Named"
 msgstr "Másolás név szerint"
 
-#: ../app/actions/edit-commands.c:527
+#: ../app/actions/edit-commands.c:459
 msgid "Copy Visible Named "
 msgstr "Látható másolása név szerint "
 
-#: ../app/actions/edit-commands.c:669
+#: ../app/actions/edit-commands.c:579
+msgid "Pasted as new layer because there was a layer the clipboard."
+msgstr "Beillesztés új rétegként, mert volt egy réteg a vágólapon."
+
+#: ../app/actions/edit-commands.c:591 ../app/display/gimpdisplayshell-dnd.c:481
+msgid "Pasted as new layer because the target is a layer group."
+msgstr "Beillesztés új rétegként, mert a cél egy rétegcsoport."
+
+#: ../app/actions/edit-commands.c:600 ../app/display/gimpdisplayshell-dnd.c:490
+msgid "Pasted as new layer because the target's pixels are locked."
+msgstr "Beillesztés új rétegként, mert cél képpontjai zárolva vannak."
+
+#: ../app/actions/edit-commands.c:638
 msgid "There is no active layer or channel to cut from."
 msgstr "Nincs aktív réteg vagy csatorna, ahonnan vágni lehetne."
 
-#: ../app/actions/edit-commands.c:674 ../app/actions/edit-commands.c:706
-#: ../app/actions/edit-commands.c:730
+#: ../app/actions/edit-commands.c:643 ../app/actions/edit-commands.c:675
+#: ../app/actions/edit-commands.c:699
 msgid "(Unnamed Buffer)"
 msgstr "(Névtelen tároló)"
 
-#: ../app/actions/edit-commands.c:701
+#: ../app/actions/edit-commands.c:670
 msgid "There is no active layer or channel to copy from."
 msgstr "Nincs aktív réteg vagy csatorna, ahonnan másolni lehetne."
 
@@ -4264,8 +4281,8 @@ msgstr "Kép átméretezése"
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
-#: ../app/pdb/item-transform-cmds.c:534 ../app/pdb/layer-cmds.c:396
-#: ../app/pdb/layer-cmds.c:443 ../app/pdb/transform-tools-cmds.c:346
+#: ../app/pdb/item-transform-cmds.c:534 ../app/pdb/layer-cmds.c:400
+#: ../app/pdb/layer-cmds.c:447 ../app/pdb/transform-tools-cmds.c:346
 #: ../app/tools/gimpscaletool.c:119
 msgid "Scaling"
 msgstr "Átméretezés"
@@ -8136,659 +8153,659 @@ msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "Levin mattítás"
 
-#: ../app/core/core-enums.c:472
+#: ../app/core/core-enums.c:503
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Első elem"
 
-#: ../app/core/core-enums.c:473
+#: ../app/core/core-enums.c:504
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Kép"
 
-#: ../app/core/core-enums.c:474
+#: ../app/core/core-enums.c:505
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Kijelölés"
 
-#: ../app/core/core-enums.c:475
+#: ../app/core/core-enums.c:506
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Aktív réteg"
 
-#: ../app/core/core-enums.c:476
+#: ../app/core/core-enums.c:507
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Aktív csatorna"
 
-#: ../app/core/core-enums.c:477
+#: ../app/core/core-enums.c:508
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Aktív útvonal"
 
-#: ../app/core/core-enums.c:505
+#: ../app/core/core-enums.c:536
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Egyenletes szín"
 
-#: ../app/core/core-enums.c:506
+#: ../app/core/core-enums.c:537
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Minta"
 
-#: ../app/core/core-enums.c:543
+#: ../app/core/core-enums.c:574
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Egyéni"
 
-#: ../app/core/core-enums.c:544
+#: ../app/core/core-enums.c:575
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Vonal"
 
-#: ../app/core/core-enums.c:545
+#: ../app/core/core-enums.c:576
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Hosszú szakaszok"
 
-#: ../app/core/core-enums.c:546
+#: ../app/core/core-enums.c:577
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Közepes szakaszok"
 
-#: ../app/core/core-enums.c:547
+#: ../app/core/core-enums.c:578
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Rövid szakaszok"
 
-#: ../app/core/core-enums.c:548
+#: ../app/core/core-enums.c:579
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Ritkás pontozás"
 
-#: ../app/core/core-enums.c:549
+#: ../app/core/core-enums.c:580
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Normál pontozás"
 
-#: ../app/core/core-enums.c:550
+#: ../app/core/core-enums.c:581
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Sűrű pontozás"
 
-#: ../app/core/core-enums.c:551
+#: ../app/core/core-enums.c:582
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Keskeny pontok"
 
-#: ../app/core/core-enums.c:552
+#: ../app/core/core-enums.c:583
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Szakasz, pont"
 
-#: ../app/core/core-enums.c:553
+#: ../app/core/core-enums.c:584
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Szakasz, pont, pont"
 
-#: ../app/core/core-enums.c:584
+#: ../app/core/core-enums.c:615
 msgctxt "item-set"
 msgid "None"
 msgstr "Nincs"
 
-#: ../app/core/core-enums.c:585
+#: ../app/core/core-enums.c:616
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Minden réteg"
 
-#: ../app/core/core-enums.c:586
+#: ../app/core/core-enums.c:617
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Kép-méretű rétegek"
 
-#: ../app/core/core-enums.c:587
+#: ../app/core/core-enums.c:618
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Minden látható réteg"
 
-#: ../app/core/core-enums.c:588
+#: ../app/core/core-enums.c:619
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Minden láncolt réteg"
 
-#: ../app/core/core-enums.c:623
+#: ../app/core/core-enums.c:654
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Apró"
 
-#: ../app/core/core-enums.c:624
+#: ../app/core/core-enums.c:655
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Nagyon kicsi"
 
-#: ../app/core/core-enums.c:625
+#: ../app/core/core-enums.c:656
 msgctxt "view-size"
 msgid "Small"
 msgstr "Kicsi"
 
-#: ../app/core/core-enums.c:626
+#: ../app/core/core-enums.c:657
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Közepes"
 
-#: ../app/core/core-enums.c:627
+#: ../app/core/core-enums.c:658
 msgctxt "view-size"
 msgid "Large"
 msgstr "Nagy"
 
-#: ../app/core/core-enums.c:628
+#: ../app/core/core-enums.c:659
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Nagyon nagy"
 
-#: ../app/core/core-enums.c:629
+#: ../app/core/core-enums.c:660
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Óriási"
 
-#: ../app/core/core-enums.c:630
+#: ../app/core/core-enums.c:661
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Roppant nagy"
 
-#: ../app/core/core-enums.c:631
+#: ../app/core/core-enums.c:662
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigászi"
 
-#: ../app/core/core-enums.c:659
+#: ../app/core/core-enums.c:690
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Listanézet"
 
-#: ../app/core/core-enums.c:660
+#: ../app/core/core-enums.c:691
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Rácsnézet"
 
-#: ../app/core/core-enums.c:689
+#: ../app/core/core-enums.c:720
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Nincsenek bélyegképek"
 
-#: ../app/core/core-enums.c:690
+#: ../app/core/core-enums.c:721
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Normál (128x128)"
 
-#: ../app/core/core-enums.c:691
+#: ../app/core/core-enums.c:722
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Nagy (256x256)"
 
-#: ../app/core/core-enums.c:874
+#: ../app/core/core-enums.c:905
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<érvénytelen>>"
 
-#: ../app/core/core-enums.c:875
+#: ../app/core/core-enums.c:906
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Kép átméretezése"
 
-#: ../app/core/core-enums.c:876
+#: ../app/core/core-enums.c:907
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Képméret módosítása"
 
-#: ../app/core/core-enums.c:877
+#: ../app/core/core-enums.c:908
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Kép tükrözése"
 
-#: ../app/core/core-enums.c:878
+#: ../app/core/core-enums.c:909
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Kép forgatása"
 
-#: ../app/core/core-enums.c:879
+#: ../app/core/core-enums.c:910
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Kép vágása"
 
-#: ../app/core/core-enums.c:880
+#: ../app/core/core-enums.c:911
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Kép konvertálása"
 
-#: ../app/core/core-enums.c:881
+#: ../app/core/core-enums.c:912
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Elem eltávolítása"
 
-#: ../app/core/core-enums.c:882
+#: ../app/core/core-enums.c:913
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Rétegek összefésülése"
 
-#: ../app/core/core-enums.c:883
+#: ../app/core/core-enums.c:914
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Útvonalak összefésülése"
 
-#: ../app/core/core-enums.c:884
+#: ../app/core/core-enums.c:915
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Gyorsmaszk"
 
-#: ../app/core/core-enums.c:885 ../app/core/core-enums.c:916
+#: ../app/core/core-enums.c:916 ../app/core/core-enums.c:947
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Rács"
 
-#: ../app/core/core-enums.c:886 ../app/core/core-enums.c:920
+#: ../app/core/core-enums.c:917 ../app/core/core-enums.c:951
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Segédvonal"
 
-#: ../app/core/core-enums.c:887 ../app/core/core-enums.c:921
+#: ../app/core/core-enums.c:918 ../app/core/core-enums.c:952
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Mintapont"
 
-#: ../app/core/core-enums.c:888 ../app/core/core-enums.c:922
+#: ../app/core/core-enums.c:919 ../app/core/core-enums.c:953
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Réteg/csatorna"
 
-#: ../app/core/core-enums.c:889 ../app/core/core-enums.c:923
+#: ../app/core/core-enums.c:920 ../app/core/core-enums.c:954
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Réteg/csatorna módosítása"
 
-#: ../app/core/core-enums.c:890 ../app/core/core-enums.c:924
+#: ../app/core/core-enums.c:921 ../app/core/core-enums.c:955
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Kijelölési maszk"
 
-#: ../app/core/core-enums.c:891 ../app/core/core-enums.c:928
+#: ../app/core/core-enums.c:922 ../app/core/core-enums.c:959
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Elem láthatósága"
 
-#: ../app/core/core-enums.c:892 ../app/core/core-enums.c:929
+#: ../app/core/core-enums.c:923 ../app/core/core-enums.c:960
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Elem láncolása illetve láncolás megszüntetése"
 
-#: ../app/core/core-enums.c:893
+#: ../app/core/core-enums.c:924
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Elem tulajdonságai"
 
-#: ../app/core/core-enums.c:894 ../app/core/core-enums.c:927
+#: ../app/core/core-enums.c:925 ../app/core/core-enums.c:958
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Elem áthelyezése"
 
-#: ../app/core/core-enums.c:895
+#: ../app/core/core-enums.c:926
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Elem átméretezése"
 
-#: ../app/core/core-enums.c:896
+#: ../app/core/core-enums.c:927
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Elem méretének módosítása"
 
-#: ../app/core/core-enums.c:897
+#: ../app/core/core-enums.c:928
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Réteg hozzáadása"
 
-#: ../app/core/core-enums.c:898 ../app/core/core-enums.c:943
+#: ../app/core/core-enums.c:929 ../app/core/core-enums.c:974
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Rétegmaszk hozzáadása"
 
-#: ../app/core/core-enums.c:899 ../app/core/core-enums.c:945
+#: ../app/core/core-enums.c:930 ../app/core/core-enums.c:976
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Rétegmaszk alkalmazása"
 
-#: ../app/core/core-enums.c:900 ../app/core/core-enums.c:953
+#: ../app/core/core-enums.c:931 ../app/core/core-enums.c:984
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Lebegő kijelölést réteggé"
 
-#: ../app/core/core-enums.c:901
+#: ../app/core/core-enums.c:932
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Lebegő kijelölés"
 
-#: ../app/core/core-enums.c:902
+#: ../app/core/core-enums.c:933
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Lebegő kijelölés rögzítése"
 
-#: ../app/core/core-enums.c:903 ../app/core/gimp-edit.c:314
+#: ../app/core/core-enums.c:934 ../app/core/gimp-edit.c:392
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: ../app/core/core-enums.c:904 ../app/core/gimp-edit.c:545
+#: ../app/core/core-enums.c:935 ../app/core/gimp-edit.c:644
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Kivágás"
 
-#: ../app/core/core-enums.c:905
+#: ../app/core/core-enums.c:936
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Szöveg"
 
-#: ../app/core/core-enums.c:906 ../app/core/core-enums.c:954
+#: ../app/core/core-enums.c:937 ../app/core/core-enums.c:985
 #: ../app/core/gimpdrawable-transform.c:668
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Átalakítás"
 
-#: ../app/core/core-enums.c:907 ../app/core/core-enums.c:955
+#: ../app/core/core-enums.c:938 ../app/core/core-enums.c:986
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Festés"
 
-#: ../app/core/core-enums.c:908 ../app/core/core-enums.c:958
+#: ../app/core/core-enums.c:939 ../app/core/core-enums.c:989
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Élősködő hozzáadása"
 
-#: ../app/core/core-enums.c:909 ../app/core/core-enums.c:959
+#: ../app/core/core-enums.c:940 ../app/core/core-enums.c:990
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Élősködő eltávolítása"
 
-#: ../app/core/core-enums.c:910
+#: ../app/core/core-enums.c:941
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Útvonalak importálása"
 
-#: ../app/core/core-enums.c:911
+#: ../app/core/core-enums.c:942
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Bővítmény"
 
-#: ../app/core/core-enums.c:912
+#: ../app/core/core-enums.c:943
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Képtípus"
 
-#: ../app/core/core-enums.c:913
+#: ../app/core/core-enums.c:944
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Képpontosság"
 
-#: ../app/core/core-enums.c:914
+#: ../app/core/core-enums.c:945
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Képméret"
 
-#: ../app/core/core-enums.c:915
+#: ../app/core/core-enums.c:946
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Képfelbontás módosítása"
 
-#: ../app/core/core-enums.c:917
+#: ../app/core/core-enums.c:948
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Metaadatok módosítása"
 
-#: ../app/core/core-enums.c:918
+#: ../app/core/core-enums.c:949
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Indexelt paletta módosítása"
 
-#: ../app/core/core-enums.c:919
+#: ../app/core/core-enums.c:950
 msgctxt "undo-type"
 msgid "Change color managed state"
 msgstr "Színkezelés állapotának változtatása"
 
-#: ../app/core/core-enums.c:925
+#: ../app/core/core-enums.c:956
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Elem átrendezése"
 
-#: ../app/core/core-enums.c:926
+#: ../app/core/core-enums.c:957
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Elem átnevezése"
 
-#: ../app/core/core-enums.c:930
+#: ../app/core/core-enums.c:961
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Tartalom zárolása/feloldása"
 
-#: ../app/core/core-enums.c:931
+#: ../app/core/core-enums.c:962
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Pozíció zárolása/feloldása"
 
-#: ../app/core/core-enums.c:932
+#: ../app/core/core-enums.c:963
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Új réteg"
 
-#: ../app/core/core-enums.c:933
+#: ../app/core/core-enums.c:964
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Réteg törlése"
 
-#: ../app/core/core-enums.c:934
+#: ../app/core/core-enums.c:965
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Rétegmód beállítása"
 
-#: ../app/core/core-enums.c:935
+#: ../app/core/core-enums.c:966
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Réteg átlátszatlanságának beállítása"
 
-#: ../app/core/core-enums.c:936
+#: ../app/core/core-enums.c:967
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Alfa csatorna zárolása/feloldása"
 
-#: ../app/core/core-enums.c:937
+#: ../app/core/core-enums.c:968
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Rétegcsoport-átméretezés felfüggesztése"
 
-#: ../app/core/core-enums.c:938
+#: ../app/core/core-enums.c:969
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Rétegcsoport-átméretezés folytatása"
 
-#: ../app/core/core-enums.c:939
+#: ../app/core/core-enums.c:970
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Rétegcsoport konvertálása"
 
-#: ../app/core/core-enums.c:940
+#: ../app/core/core-enums.c:971
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Szövegréteg"
 
-#: ../app/core/core-enums.c:941
+#: ../app/core/core-enums.c:972
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Szövegréteg módosítása"
 
-#: ../app/core/core-enums.c:942
+#: ../app/core/core-enums.c:973
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Szövegréteg átalakítása"
 
-#: ../app/core/core-enums.c:944
+#: ../app/core/core-enums.c:975
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Rétegmaszk törlése"
 
-#: ../app/core/core-enums.c:946
+#: ../app/core/core-enums.c:977
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Rétegmaszk megjelenítése"
 
-#: ../app/core/core-enums.c:947
+#: ../app/core/core-enums.c:978
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Új csatorna"
 
-#: ../app/core/core-enums.c:948
+#: ../app/core/core-enums.c:979
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Csatorna törlése"
 
-#: ../app/core/core-enums.c:949
+#: ../app/core/core-enums.c:980
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Csatornaszín"
 
-#: ../app/core/core-enums.c:950
+#: ../app/core/core-enums.c:981
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Új útvonal"
 
-#: ../app/core/core-enums.c:951
+#: ../app/core/core-enums.c:982
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Útvonal törlése"
 
-#: ../app/core/core-enums.c:952
+#: ../app/core/core-enums.c:983
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Útvonal módosítása"
 
-#: ../app/core/core-enums.c:956
+#: ../app/core/core-enums.c:987
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Tus"
 
-#: ../app/core/core-enums.c:957
+#: ../app/core/core-enums.c:988
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Előtér kijelölése"
 
-#: ../app/core/core-enums.c:960
+#: ../app/core/core-enums.c:991
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nem vonható vissza"
 
-#: ../app/core/core-enums.c:1073
+#: ../app/core/core-enums.c:1104
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Üzenet"
 
-#: ../app/core/core-enums.c:1074
+#: ../app/core/core-enums.c:1105
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: ../app/core/core-enums.c:1075
+#: ../app/core/core-enums.c:1106
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Hiba"
 
-#: ../app/core/core-enums.c:1104
+#: ../app/core/core-enums.c:1135
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Kérdezze meg, mi a teendő"
 
-#: ../app/core/core-enums.c:1105
+#: ../app/core/core-enums.c:1136
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Beágyazott profil megtartása"
 
-#: ../app/core/core-enums.c:1106
+#: ../app/core/core-enums.c:1137
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
 msgstr "Kép átalakítása az előnyben részesített RGB színprofilra"
 
-#: ../app/core/core-enums.c:1143
+#: ../app/core/core-enums.c:1174
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Átlátszatlanság"
 
-#: ../app/core/core-enums.c:1144
+#: ../app/core/core-enums.c:1175
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Méret"
 
-#: ../app/core/core-enums.c:1145
+#: ../app/core/core-enums.c:1176
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Dőlésszög"
 
-#: ../app/core/core-enums.c:1146
+#: ../app/core/core-enums.c:1177
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Szín"
 
-#: ../app/core/core-enums.c:1147
+#: ../app/core/core-enums.c:1178
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Keménység"
 
-#: ../app/core/core-enums.c:1148
+#: ../app/core/core-enums.c:1179
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Erő"
 
-#: ../app/core/core-enums.c:1149
+#: ../app/core/core-enums.c:1180
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Méretarány"
 
-#: ../app/core/core-enums.c:1150
+#: ../app/core/core-enums.c:1181
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Távolság"
 
-#: ../app/core/core-enums.c:1151
+#: ../app/core/core-enums.c:1182
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Sűrűség"
 
-#: ../app/core/core-enums.c:1152
+#: ../app/core/core-enums.c:1183
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Nyomás"
 
-#: ../app/core/core-enums.c:1153
+#: ../app/core/core-enums.c:1184
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Elszórás"
 
-#: ../app/core/core-enums.c:1181
+#: ../app/core/core-enums.c:1212
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "A kijelölés használata bemenetként"
 
-#: ../app/core/core-enums.c:1182
+#: ../app/core/core-enums.c:1213
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "A teljes réteg használata bemenetként"
 
-#: ../app/core/core-enums.c:1211
+#: ../app/core/core-enums.c:1242
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Kemény"
 
-#: ../app/core/core-enums.c:1212
+#: ../app/core/core-enums.c:1243
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Sima"
 
-#: ../app/core/core-enums.c:1213
+#: ../app/core/core-enums.c:1244
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Lágy szélű"
@@ -8857,16 +8874,21 @@ msgstr "Színelőzmények"
 msgid "Updating tag cache"
 msgstr "Címkegyorsítótár frissítése"
 
-#: ../app/core/gimp-edit.c:296 ../app/core/gimpimage-new.c:326
+#: ../app/core/gimp-edit.c:89
+msgctxt "undo-type"
+msgid "Cut Layer"
+msgstr "Réteg kivágása"
+
+#: ../app/core/gimp-edit.c:363 ../app/core/gimpimage-new.c:326
 msgid "Pasted Layer"
 msgstr "Beillesztett réteg"
 
-#: ../app/core/gimp-edit.c:446
+#: ../app/core/gimp-edit.c:545
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Törlés"
 
-#: ../app/core/gimp-edit.c:558
+#: ../app/core/gimp-edit.c:657
 msgid "Global Buffer"
 msgstr "Globális tároló"
 
@@ -9028,6 +9050,11 @@ msgstr ""
 #: ../app/core/gimpbrush.c:149 ../app/paint/gimppaintoptions.c:219
 msgid "Brush Spacing"
 msgstr "Ecsettávolság"
+
+#: ../app/core/gimpbrushclipboard.c:168 ../app/core/gimppatternclipboard.c:168
+#: ../app/widgets/gimpclipboard.c:485
+msgid "Clipboard"
+msgstr "Vágólap"
 
 #: ../app/core/gimpbrushgenerated-load.c:75
 #, c-format
@@ -13252,8 +13279,8 @@ msgid "The image has been exported to '%s'."
 msgstr "A kép elmentve ide: „%s”"
 
 #: ../app/display/gimpdisplayshell-dnd.c:248
-#: ../app/display/gimpdisplayshell-dnd.c:669
-#: ../app/display/gimpdisplayshell-dnd.c:728
+#: ../app/display/gimpdisplayshell-dnd.c:675
+#: ../app/display/gimpdisplayshell-dnd.c:734
 msgid "Drop New Layer"
 msgstr "Új réteg eldobása"
 
@@ -13261,15 +13288,13 @@ msgstr "Új réteg eldobása"
 msgid "Drop New Path"
 msgstr "Új útvonal eldobása"
 
-#: ../app/display/gimpdisplayshell-dnd.c:362
-#: ../app/display/gimpdisplayshell-dnd.c:478 ../app/tools/gimpblendtool.c:245
+#: ../app/display/gimpdisplayshell-dnd.c:362 ../app/tools/gimpblendtool.c:245
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpfiltertool.c:301
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "A rétegcsoportok képpontjai nem módosíthatók."
 
-#: ../app/display/gimpdisplayshell-dnd.c:370
-#: ../app/display/gimpdisplayshell-dnd.c:486 ../app/tools/gimpblendtool.c:252
+#: ../app/display/gimpdisplayshell-dnd.c:370 ../app/tools/gimpblendtool.c:252
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpfiltertool.c:308 ../app/tools/gimppainttool.c:278
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1842
@@ -13291,14 +13316,14 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Szín dobása a rétegre"
 
-#: ../app/display/gimpdisplayshell-dnd.c:565
+#: ../app/display/gimpdisplayshell-dnd.c:571
 #: ../app/widgets/gimplayertreeview.c:745
 msgid "Drop layers"
 msgstr "Rétegek eldobása"
 
 # rétegnév
-#: ../app/display/gimpdisplayshell-dnd.c:702
-#: ../app/display/gimpdisplayshell-dnd.c:720
+#: ../app/display/gimpdisplayshell-dnd.c:708
+#: ../app/display/gimpdisplayshell-dnd.c:726
 #: ../app/widgets/gimplayertreeview.c:820 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Eldobott tároló"
@@ -14211,7 +14236,7 @@ msgstr "Kétdimenziós átalakítás"
 msgid "2D Transforming"
 msgstr "Kétdimenziós átalakítás"
 
-#: ../app/pdb/edit-cmds.c:795
+#: ../app/pdb/edit-cmds.c:801
 msgid "Blending"
 msgstr "Színátmenet"
 
@@ -18300,7 +18325,7 @@ msgstr "Csúcsok"
 msgid "Percentage of width of brush"
 msgstr "Ecset szélességének százaléka"
 
-#: ../app/widgets/gimpbufferview.c:175 ../app/widgets/gimpbufferview.c:260
+#: ../app/widgets/gimpbufferview.c:175 ../app/widgets/gimpbufferview.c:267
 #: ../app/widgets/gimpeditor.c:745
 msgid "(None)"
 msgstr "(Nincs)"
