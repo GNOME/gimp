@@ -114,9 +114,12 @@ static void   image_scale_callback         (GtkWidget              *dialog,
                                             GimpUnit                resolution_unit,
                                             gpointer                user_data);
 
-static void   image_merge_layers_response  (GtkWidget              *widget,
-                                            gint                    response_id,
-                                            ImageMergeLayersDialog *dialog);
+static void   image_merge_layers_callback  (GtkWidget              *dialog,
+                                            GimpImage              *image,
+                                            GimpContext            *context,
+                                            GimpMergeType           merge_type,
+                                            gboolean                merge_active_group,
+                                            gboolean                discard_invisible);
 
 
 /*  private variables  */
@@ -778,24 +781,31 @@ void
 image_merge_layers_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  ImageMergeLayersDialog *dialog;
-  GimpImage              *image;
-  GtkWidget              *widget;
+  GtkWidget *dialog;
+  GimpImage *image;
+  GtkWidget *widget;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = image_merge_layers_dialog_new (image,
-                                          action_data_get_context (data),
-                                          widget,
-                                          image_merge_layers_type,
-                                          image_merge_layers_merge_active_group,
-                                          image_merge_layers_discard_invisible);
+#define MERGE_LAYERS_DIALOG_KEY "gimp-merge-layers-dialog"
 
-  g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (image_merge_layers_response),
-                    dialog);
+  dialog = dialogs_get_dialog (G_OBJECT (image), MERGE_LAYERS_DIALOG_KEY);
 
-  gtk_widget_show (dialog->dialog);
+  if (! dialog)
+    {
+      dialog = image_merge_layers_dialog_new (image,
+                                              action_data_get_context (data),
+                                              widget,
+                                              image_merge_layers_type,
+                                              image_merge_layers_merge_active_group,
+                                              image_merge_layers_discard_invisible,
+                                              image_merge_layers_callback,
+                                              NULL);
+
+      dialogs_attach_dialog (G_OBJECT (image), MERGE_LAYERS_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -1028,24 +1038,24 @@ image_scale_callback (GtkWidget              *dialog,
 }
 
 static void
-image_merge_layers_response (GtkWidget              *widget,
-                             gint                    response_id,
-                             ImageMergeLayersDialog *dialog)
+image_merge_layers_callback (GtkWidget     *dialog,
+                             GimpImage     *image,
+                             GimpContext   *context,
+                             GimpMergeType  merge_type,
+                             gboolean       merge_active_group,
+                             gboolean       discard_invisible)
 {
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      image_merge_layers_type               = dialog->merge_type;
-      image_merge_layers_merge_active_group = dialog->merge_active_group;
-      image_merge_layers_discard_invisible  = dialog->discard_invisible;
+  image_merge_layers_type               = merge_type;
+  image_merge_layers_merge_active_group = merge_active_group;
+  image_merge_layers_discard_invisible  = discard_invisible;
 
-      gimp_image_merge_visible_layers (dialog->image,
-                                       dialog->context,
-                                       image_merge_layers_type,
-                                       image_merge_layers_merge_active_group,
-                                       image_merge_layers_discard_invisible);
+  gimp_image_merge_visible_layers (image,
+                                   context,
+                                   image_merge_layers_type,
+                                   image_merge_layers_merge_active_group,
+                                   image_merge_layers_discard_invisible);
 
-      gimp_image_flush (dialog->image);
-    }
+  gimp_image_flush (image);
 
-  gtk_widget_destroy (widget);
+  gtk_widget_destroy (dialog);
 }
