@@ -39,6 +39,7 @@
 #include <libgimp/gimpbrushselect.h>
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdrawable.h>
+#include <libgimp/gimpedit.h>
 #include <libgimp/gimpfontselect.h>
 #include <libgimp/gimpgimprc.h>
 #include <libgimp/gimpgradients.h>

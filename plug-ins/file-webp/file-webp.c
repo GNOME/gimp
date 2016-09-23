@@ -36,19 +36,14 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-const char BINARY_NAME[]    = "file-webp";
-const char LOAD_PROCEDURE[] = "file-webp-load";
-const char SAVE_PROCEDURE[] = "file-webp-save";
-
-/* Predeclare our entrypoints. */
 static void   query (void);
-static void   run   (const gchar *,
-                     gint,
-                     const GimpParam *,
-                     gint *,
-                     GimpParam **);
+static void   run   (const gchar      *name,
+                     gint              nparams,
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals);
 
-/* Declare our plugin entry points. */
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
@@ -57,9 +52,9 @@ GimpPlugInInfo PLUG_IN_INFO =
   run
 };
 
+
 MAIN()
 
-/* This function registers our load and save handlers. */
 static void
 query (void)
 {
@@ -93,7 +88,7 @@ query (void)
     { GIMP_PDB_INT32,    "xmp",           "Toggle saving xmp data (0/1)" }
   };
 
-  gimp_install_procedure (LOAD_PROCEDURE,
+  gimp_install_procedure (LOAD_PROC,
                           "Loads images in the WebP file format",
                           "Loads images in the WebP file format",
                           "Nathan Osman, Ben Touchette",
@@ -107,29 +102,29 @@ query (void)
                           load_arguments,
                           load_return_values);
 
-  gimp_register_file_handler_mime (LOAD_PROCEDURE, "image/webp");
-  gimp_register_load_handler (LOAD_PROCEDURE, "webp", "");
-  gimp_register_magic_load_handler (LOAD_PROCEDURE,
+  gimp_register_file_handler_mime (LOAD_PROC, "image/webp");
+  gimp_register_load_handler (LOAD_PROC, "webp", "");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "webp",
                                     "",
                                     "8,string,WEBP");
 
-  gimp_install_procedure (SAVE_PROCEDURE,
+  gimp_install_procedure (SAVE_PROC,
                           "Saves files in the WebP image format",
                           "Saves files in the WebP image format",
                           "Nathan Osman, Ben Touchette",
                           "(C) 2015-2016 Nathan Osman, (C) 2016 Ben Touchette",
                           "2015,2016",
                           N_("WebP image"),
-                          "RGB*",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_arguments),
                           0,
                           save_arguments,
                           NULL);
 
-  gimp_register_file_handler_mime (SAVE_PROCEDURE, "image/webp");
-  gimp_register_save_handler (SAVE_PROCEDURE, "webp", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/webp");
+  gimp_register_save_handler (SAVE_PROC, "webp", "");
 }
 
 static void
@@ -157,14 +152,11 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (! strcmp (name, LOAD_PROCEDURE))
+  if (! strcmp (name, LOAD_PROC))
     {
-      /* No need to determine whether the plugin is being invoked
-       * interactively here since we don't need a UI for loading
-       */
       image_ID = load_image (param[1].data.d_string, FALSE, &error);
 
-      if(image_ID != -1)
+      if (image_ID != -1)
         {
           /* Return the new image that was loaded */
           *nreturn_vals = 2;
@@ -176,10 +168,10 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (! strcmp (name, SAVE_PROCEDURE))
+  else if (! strcmp (name, SAVE_PROC))
     {
       WebPSaveParams    params;
-      GimpExportReturn  export_ret = GIMP_EXPORT_CANCEL;
+      GimpExportReturn  export = GIMP_EXPORT_CANCEL;
       gint32           *layers;
       gint32            n_layers;
 
@@ -194,75 +186,84 @@ run (const gchar      *name,
       params.iptc          = TRUE;
       params.xmp           = TRUE;
 
-      /* Load the image and drawable IDs */
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      layers = gimp_image_get_layers (image_ID, &n_layers);
-
-      /* What happens next depends on the run mode */
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (BINARY_NAME, FALSE);
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-          /* Attempt to export the image */
-          export_ret = gimp_export_image (&image_ID, &drawable_ID,
-                                          "WebP",
-                                          GIMP_EXPORT_CAN_HANDLE_RGB |
-                                          GIMP_EXPORT_CAN_HANDLE_ALPHA);
+          export = gimp_export_image (&image_ID, &drawable_ID, "WebP",
+                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                      GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION);
 
-          /* Return immediately if canceled */
-          if (export_ret == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-
-          /* Display the dialog */
-          if (! save_dialog (&params, image_ID, n_layers))
+          if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
               return;
             }
           break;
 
-        case GIMP_RUN_NONINTERACTIVE:
-          /* Ensure the correct number of parameters were supplied */
-          if (nparams != 10)
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-              break;
-            }
-
-          /* Load the parameters */
-          g_free (params.preset);
-          params.preset        = g_strdup (param[5].data.d_string);
-          params.lossless      = param[6].data.d_int32;
-          params.quality       = param[7].data.d_float;
-          params.alpha_quality = param[8].data.d_float;
-          params.animation     = param[9].data.d_int32;
-          params.loop          = param[10].data.d_int32;
-          params.exif          = param[11].data.d_int32;
-          params.iptc          = param[12].data.d_int32;
-          params.xmp           = param[13].data.d_int32;
+        default:
           break;
         }
 
-      /* Attempt to save the image */
-      if (! save_image (param[3].data.d_string,
-                        n_layers, layers,
-                        image_ID,
-                        drawable_ID,
-                        &params,
-                        &error))
+      layers = gimp_image_get_layers (image_ID, &n_layers);
+
+      switch (run_mode)
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+        case GIMP_RUN_INTERACTIVE:
+          if (! save_dialog (&params, image_ID, n_layers))
+            status = GIMP_PDB_CANCEL;
+          break;
+
+        case GIMP_RUN_NONINTERACTIVE:
+          if (nparams != 10)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              g_free (params.preset);
+              params.preset        = g_strdup (param[5].data.d_string);
+              params.lossless      = param[6].data.d_int32;
+              params.quality       = param[7].data.d_float;
+              params.alpha_quality = param[8].data.d_float;
+              params.animation     = param[9].data.d_int32;
+              params.loop          = param[10].data.d_int32;
+              params.exif          = param[11].data.d_int32;
+              params.iptc          = param[12].data.d_int32;
+              params.xmp           = param[13].data.d_int32;
+            }
+          break;
+
+        default:
+          break;
+        }
+
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          if (! save_image (param[3].data.d_string,
+                            n_layers, layers,
+                            image_ID,
+                            drawable_ID,
+                            &params,
+                            &error))
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
         }
 
       g_free (params.preset);
       g_free (layers);
+
+      if (export == GIMP_EXPORT_EXPORT)
+        gimp_image_delete (image_ID);
     }
 
   /* If an error was supplied, include it in the return values */

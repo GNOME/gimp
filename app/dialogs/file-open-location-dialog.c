@@ -110,7 +110,7 @@ file_open_location_dialog_new (Gimp *gimp)
   gtk_widget_show (vbox);
 
   label = gtk_label_new (_("Enter location (URI):"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

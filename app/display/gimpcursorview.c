@@ -215,13 +215,13 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_widget_show (table);
 
   view->priv->pixel_x_label = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (view->priv->pixel_x_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (view->priv->pixel_x_label), 1.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("X"), 0.5, 0.5,
                              view->priv->pixel_x_label, 1, FALSE);
 
   view->priv->pixel_y_label = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (view->priv->pixel_y_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (view->priv->pixel_y_label), 1.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Y"), 0.5, 0.5,
                              view->priv->pixel_y_label, 1, FALSE);
@@ -240,13 +240,13 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_widget_show (table);
 
   view->priv->unit_x_label = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (view->priv->unit_x_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (view->priv->unit_x_label), 1.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("X"), 0.5, 0.5,
                              view->priv->unit_x_label, 1, FALSE);
 
   view->priv->unit_y_label = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (view->priv->unit_y_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (view->priv->unit_y_label), 1.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Y"), 0.5, 0.5,
                              view->priv->unit_y_label, 1, FALSE);
@@ -265,13 +265,13 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_widget_show (table);
 
   view->priv->selection_x_label = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (view->priv->selection_x_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (view->priv->selection_x_label), 1.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("X"), 0.5, 0.5,
                              view->priv->selection_x_label, 1, FALSE);
 
   view->priv->selection_y_label = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (view->priv->selection_y_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (view->priv->selection_y_label), 1.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Y"), 0.5, 0.5,
                              view->priv->selection_y_label, 1, FALSE);
@@ -287,14 +287,14 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_widget_show (table);
 
   view->priv->selection_width_label = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (view->priv->selection_width_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (view->priv->selection_width_label), 1.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              /* Width */
                              _("W"), 0.5, 0.5,
                              view->priv->selection_width_label, 1, FALSE);
 
   view->priv->selection_height_label = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (view->priv->selection_height_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (view->priv->selection_height_label), 1.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              /* Height */
                              _("H"), 0.5, 0.5,

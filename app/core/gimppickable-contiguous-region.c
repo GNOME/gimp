@@ -49,10 +49,24 @@ static gfloat   pixel_difference          (const gfloat        *col1,
                                            gboolean             has_alpha,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion);
+static void     push_segment              (GQueue              *segment_queue,
+                                           gint                 y,
+                                           gint                 old_y,
+                                           gint                 start,
+                                           gint                 end,
+                                           gint                 new_y,
+                                           gint                 new_start,
+                                           gint                 new_end);
+static void     pop_segment               (GQueue              *segment_queue,
+                                           gint                *y,
+                                           gint                *old_y,
+                                           gint                *start,
+                                           gint                *end);
 static gboolean find_contiguous_segment   (const gfloat        *col,
                                            GeglBuffer          *src_buffer,
                                            GeglBuffer          *mask_buffer,
                                            const Babl          *src_format,
+                                           const Babl          *mask_format,
                                            gint                 n_components,
                                            gboolean             has_alpha,
                                            gint                 width,
@@ -337,16 +351,8 @@ pixel_difference (const gfloat        *col1,
           break;
 
         case GIMP_SELECT_CRITERION_H:
-          {
-            /* wrap around candidates for the actual distance */
-            gfloat dist1 = fabs (col1[0] - col2[0]);
-            gfloat dist2 = fabs (col1[0] - 1.0 - col2[0]);
-            gfloat dist3 = fabs (col1[0] - col2[0] + 1.0);
-
-            max = MIN (dist1, dist2);
-            if (max > dist3)
-              max = dist3;
-          }
+          max = fabs (col1[0] - col2[0]);
+          max = MIN (max, 1.0 - max);
           break;
 
         case GIMP_SELECT_CRITERION_S:
@@ -379,13 +385,79 @@ pixel_difference (const gfloat        *col1,
     }
 }
 
+static void
+push_segment (GQueue *segment_queue,
+              gint    y,
+              gint    old_y,
+              gint    start,
+              gint    end,
+              gint    new_y,
+              gint    new_start,
+              gint    new_end)
+{
+  /* To avoid excessive memory allocation (y, old_y, start, end) tuples are
+   * stored in interleaved format:
+   *
+   * [y1] [old_y1] [start1] [end1] [y2] [old_y2] [start2] [end2]
+   */
+
+  if (new_y != old_y)
+    {
+      /* If the new segment's y-coordinate is different than the old (source)
+       * segment's y-coordinate, push the entire segment.
+       */
+      g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_y));
+      g_queue_push_tail (segment_queue, GINT_TO_POINTER (y));
+      g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_start));
+      g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_end));
+    }
+  else
+    {
+      /* Otherwise, only push the set-difference between the new segment and
+       * the source segment (since we've already scanned the source segment.)
+       * Note that the `+ 1` and `- 1` terms of the end/start coordinates below
+       * are only necessary when `diagonal_neighbors` is on (and otherwise make
+       * the segments slightly larger than necessary), but, meh...
+       */
+      if (new_start < start)
+        {
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_y));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (y));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_start));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (start + 1));
+        }
+
+      if (new_end > end)
+        {
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_y));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (y));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (end - 1));
+          g_queue_push_tail (segment_queue, GINT_TO_POINTER (new_end));
+        }
+    }
+}
+
+static void
+pop_segment (GQueue *segment_queue,
+             gint   *y,
+             gint   *old_y,
+             gint   *start,
+             gint   *end)
+{
+  *y     = GPOINTER_TO_INT (g_queue_pop_head (segment_queue));
+  *old_y = GPOINTER_TO_INT (g_queue_pop_head (segment_queue));
+  *start = GPOINTER_TO_INT (g_queue_pop_head (segment_queue));
+  *end   = GPOINTER_TO_INT (g_queue_pop_head (segment_queue));
+}
+
 /* #define FETCH_ROW 1 */
 
 static gboolean
 find_contiguous_segment (const gfloat        *col,
                          GeglBuffer          *src_buffer,
                          GeglBuffer          *mask_buffer,
-                         const Babl          *format,
+                         const Babl          *src_format,
+                         const Babl          *mask_format,
                          gint                 n_components,
                          gboolean             has_alpha,
                          gint                 width,
@@ -405,13 +477,13 @@ find_contiguous_segment (const gfloat        *col,
 
 #ifdef FETCH_ROW
   gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, initial_y, width, 1), 1.0,
-                   format,
+                   src_format,
                    row, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
   s = row + initial_x * n_components;
 #else
   s = g_alloca (n_components * sizeof (gfloat));
 
-  gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, format,
+  gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, src_format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 #endif
 
@@ -430,59 +502,56 @@ find_contiguous_segment (const gfloat        *col,
   s = row + *start * n_components;
 #endif
 
-  while (*start >= 0 && diff)
+  while (*start >= 0)
     {
 #ifndef FETCH_ROW
-      gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, format,
+      gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, src_format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 #endif
 
       diff = pixel_difference (col, s, antialias, threshold,
                                n_components, has_alpha, select_transparent,
                                select_criterion);
+      if (diff == 0.0)
+        break;
 
       mask_row[*start] = diff;
 
-      if (diff)
-        {
-          (*start)--;
+      (*start)--;
 #ifdef FETCH_ROW
-          s -= n_components;
+      s -= n_components;
 #endif
-        }
     }
 
-  diff = 1;
   *end = initial_x + 1;
 #ifdef FETCH_ROW
   s = row + *end * n_components;
 #endif
 
-  while (*end < width && diff)
+  while (*end < width)
     {
 #ifndef FETCH_ROW
-      gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, format,
+      gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, src_format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 #endif
 
       diff = pixel_difference (col, s, antialias, threshold,
                                n_components, has_alpha, select_transparent,
                                select_criterion);
+      if (diff == 0.0)
+        break;
 
       mask_row[*end] = diff;
 
-      if (diff)
-        {
-          (*end)++;
+      (*end)++;
 #ifdef FETCH_ROW
-          s += n_components;
+      s += n_components;
 #endif
-        }
     }
 
-  gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (*start, initial_y,
-                                                *end - *start, 1),
-                   0, babl_format ("Y float"), &mask_row[*start],
+  gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (*start + 1, initial_y,
+                                                *end - *start - 1, 1),
+                   0, mask_format, &mask_row[*start + 1],
                    GEGL_AUTO_ROWSTRIDE);
 
   return TRUE;
@@ -503,44 +572,47 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                         gint                 y,
                         const gfloat        *col)
 {
-  gint    start, end;
-  gint    new_start, new_end;
-  GQueue *coord_stack;
-  gfloat *row = NULL;
+  const Babl *mask_format = babl_format ("Y float");
+  gint        old_y;
+  gint        start, end;
+  gint        new_start, new_end;
+  GQueue     *segment_queue;
+  gfloat     *row = NULL;
 
 #ifdef FETCH_ROW
   row = g_new (gfloat, gegl_buffer_get_width (src_buffer) * n_components);
 #endif
 
-  coord_stack = g_queue_new ();
+  segment_queue = g_queue_new ();
 
-  /* To avoid excessive memory allocation (y, start, end) tuples are
-   * stored in interleaved format:
-   *
-   * [y1] [start1] [end1] [y2] [start2] [end2]
-   */
-  g_queue_push_tail (coord_stack, GINT_TO_POINTER (y));
-  g_queue_push_tail (coord_stack, GINT_TO_POINTER (x - 1));
-  g_queue_push_tail (coord_stack, GINT_TO_POINTER (x + 1));
+  push_segment (segment_queue,
+                y, /* dummy values: */ -1, 0, 0,
+                y, x - 1, x + 1);
 
   do
     {
-      y     = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
-      start = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
-      end   = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
+      pop_segment (segment_queue,
+                   &y, &old_y, &start, &end);
 
       for (x = start + 1; x < end; x++)
         {
           gfloat val;
 
           gegl_buffer_sample (mask_buffer, x, y, NULL, &val,
-                              babl_format ("Y float"),
+                              mask_format,
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
           if (val != 0.0)
-            continue;
+            {
+              /* If the current pixel is selected, then we've already visited
+               * the next pixel.  (Note that we assume that the maximal image
+               * width is sufficiently low that `x` won't overflow.)
+               */
+              x++;
+              continue;
+            }
 
           if (! find_contiguous_segment (col, src_buffer, mask_buffer,
-                                         format,
+                                         format, mask_format,
                                          n_components,
                                          has_alpha,
                                          gegl_buffer_get_width (src_buffer),
@@ -549,6 +621,14 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                                          &new_start, &new_end,
                                          row))
             continue;
+
+          /* We can skip directly to `new_end + 1` on the next iteration, since
+           * we've just selected all pixels in the range `[x, new_end)`, and
+           * the pixel at `new_end` is above threshold.  (Note that we assume
+           * that the maximal image width is sufficiently low that `x` won't
+           * overflow.)
+           */
+          x = new_end;
 
           if (diagonal_neighbors)
             {
@@ -561,22 +641,23 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 
           if (y + 1 < gegl_buffer_get_height (src_buffer))
             {
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (y + 1));
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_end));
+              push_segment (segment_queue,
+                            y, old_y, start, end,
+                            y + 1, new_start, new_end);
             }
 
           if (y - 1 >= 0)
             {
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (y - 1));
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));
-              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_end));
+              push_segment (segment_queue,
+                            y, old_y, start, end,
+                            y - 1, new_start, new_end);
             }
+
         }
     }
-  while (! g_queue_is_empty (coord_stack));
+  while (! g_queue_is_empty (segment_queue));
 
-  g_queue_free (coord_stack);
+  g_queue_free (segment_queue);
 
 #ifdef FETCH_ROW
   g_free (row);

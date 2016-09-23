@@ -41,7 +41,6 @@
 
 #include "gimp-log.h"
 #include "tests.h"
-#include "units.h"
 
 
 static void
@@ -68,8 +67,6 @@ gimp_init_for_testing (void)
   gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, TRUE,
                    FALSE, FALSE, TRUE, FALSE,
                    GIMP_STACK_TRACE_QUERY, GIMP_PDB_COMPAT_OFF);
-
-  units_init (gimp);
 
   gimp_load_config (gimp, NULL, NULL);
 
@@ -124,8 +121,8 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
   gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, !show_gui,
                    FALSE, FALSE, TRUE, FALSE,
                    GIMP_STACK_TRACE_QUERY, GIMP_PDB_COMPAT_OFF);
+
   gimp_set_show_gui (gimp, show_gui);
-  units_init (gimp);
   gimp_load_config (gimp, gimprc, NULL);
   gimp_gegl_init (gimp);
   gui_init (gimp, TRUE);

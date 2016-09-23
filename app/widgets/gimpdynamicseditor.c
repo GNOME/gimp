@@ -169,7 +169,7 @@ gimp_dynamics_editor_constructed (GObject *object)
   for (i = 0; i < n_inputs; i++)
     {
       gtk_label_set_angle (GTK_LABEL (input_labels[i]), 90);
-      gtk_misc_set_alignment (GTK_MISC (input_labels[i]), 0.5, 1.0);
+      gtk_label_set_yalign (GTK_LABEL (input_labels[i]), 1.0);
 
       gtk_table_attach (GTK_TABLE (table), input_labels[i],
                         i + 1, i + 2, 0, 1,
@@ -335,7 +335,7 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
   gint       column = 1;
 
   label = gtk_label_new (row_label);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);

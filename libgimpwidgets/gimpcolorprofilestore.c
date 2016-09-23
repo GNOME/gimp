@@ -626,12 +626,28 @@ gimp_color_profile_store_load_profile (GimpColorProfileStore *store,
 {
   GtkTreeIter  iter;
   gchar       *label = NULL;
-  gchar       *uri   = NULL;
+  gchar       *path  = NULL;
 
   if (gimp_scanner_parse_string (scanner, &label) &&
-      gimp_scanner_parse_string (scanner, &uri))
+      gimp_scanner_parse_string (scanner, &path))
     {
-      GFile *file = g_file_new_for_uri (uri);
+      GFile *file = NULL;
+
+      if (g_str_has_prefix (path, "file://"))
+        {
+          file = g_file_new_for_uri (path);
+        }
+      else
+        {
+          gchar *expand = gimp_config_path_expand (path, TRUE, NULL);
+
+          if (expand)
+            {
+              file = g_file_new_for_path (expand);
+
+              g_free (expand);
+            }
+        }
 
       if (file)
         {
@@ -645,13 +661,13 @@ gimp_color_profile_store_load_profile (GimpColorProfileStore *store,
         }
 
       g_free (label);
-      g_free (uri);
+      g_free (path);
 
       return G_TOKEN_RIGHT_PAREN;
     }
 
   g_free (label);
-  g_free (uri);
+  g_free (path);
 
   return G_TOKEN_STRING;
 }
@@ -763,16 +779,23 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
     {
       if (files[i] && labels[i])
         {
-          gchar *uri = g_file_get_uri (files[i]);
+          gchar *path = g_file_get_path (files[i]);
 
-          if (uri)
+          if (path)
             {
-              gimp_config_writer_open (writer, "color-profile");
-              gimp_config_writer_string (writer, labels[i]);
-              gimp_config_writer_string (writer, uri);
-              gimp_config_writer_close (writer);
+              gchar *unexpand = gimp_config_path_unexpand (path, TRUE, NULL);
 
-              g_free (uri);
+              if (unexpand)
+                {
+                  gimp_config_writer_open (writer, "color-profile");
+                  gimp_config_writer_string (writer, labels[i]);
+                  gimp_config_writer_string (writer, unexpand);
+                  gimp_config_writer_close (writer);
+
+                  g_free (unexpand);
+                }
+
+              g_free (path);
             }
         }
 

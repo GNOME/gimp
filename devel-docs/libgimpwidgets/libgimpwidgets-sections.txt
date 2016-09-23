@@ -106,6 +106,7 @@ gimp_color_area_get_color
 gimp_color_area_has_alpha
 gimp_color_area_set_type
 gimp_color_area_set_draw_border
+gimp_color_area_set_color_config
 <SUBSECTION Standard>
 GIMP_COLOR_AREA
 GIMP_IS_COLOR_AREA
@@ -124,12 +125,16 @@ gimp_color_area_type_get_type
 <TITLE>GimpColorButton</TITLE>
 GimpColorButton
 gimp_color_button_new
+gimp_color_button_set_title
+gimp_color_button_get_title
 gimp_color_button_set_color
 gimp_color_button_get_color
 gimp_color_button_set_update
 gimp_color_button_get_update
 gimp_color_button_has_alpha
 gimp_color_button_set_type
+gimp_color_button_set_color_config
+gimp_color_button_get_ui_manager
 <SUBSECTION Standard>
 GIMP_COLOR_BUTTON
 GIMP_IS_COLOR_BUTTON
@@ -166,6 +171,7 @@ GimpColorScale
 gimp_color_scale_new
 gimp_color_scale_set_channel
 gimp_color_scale_set_color
+gimp_color_scale_set_color_config
 <SUBSECTION Standard>
 GimpColorScaleClass
 GIMP_COLOR_SCALE
@@ -226,8 +232,11 @@ GimpColorProfileComboBox
 gimp_color_profile_combo_box_new
 gimp_color_profile_combo_box_new_with_model
 gimp_color_profile_combo_box_add
+gimp_color_profile_combo_box_add_file
 gimp_color_profile_combo_box_set_active
+gimp_color_profile_combo_box_set_active_file
 gimp_color_profile_combo_box_get_active
+gimp_color_profile_combo_box_get_active_file
 <SUBSECTION Standard>
 GimpColorProfileComboBoxClass
 GIMP_COLOR_PROFILE_COMBO_BOX
@@ -245,6 +254,7 @@ GIMP_COLOR_PROFILE_COMBO_BOX_GET_CLASS
 GimpColorProfileStore
 gimp_color_profile_store_new
 gimp_color_profile_store_add
+gimp_color_profile_store_add_file
 <SUBSECTION Standard>
 GimpColorProfileStoreClass
 GIMP_COLOR_PROFILE_STORE
@@ -456,6 +466,7 @@ GimpIntStore
 GimpIntStoreColumns
 gimp_int_store_new
 gimp_int_store_lookup_by_value
+gimp_int_store_lookup_by_user_data
 <SUBSECTION Standard>
 GimpIntStoreClass
 GIMP_INT_STORE
@@ -479,6 +490,8 @@ gimp_int_combo_box_prepend
 gimp_int_combo_box_append
 gimp_int_combo_box_set_active
 gimp_int_combo_box_get_active
+gimp_int_combo_box_set_active_by_user_data
+gimp_int_combo_box_get_active_user_data
 gimp_int_combo_box_set_label
 gimp_int_combo_box_get_label
 gimp_int_combo_box_connect
@@ -1048,6 +1061,7 @@ gimp_prop_color_area_new
 gimp_prop_coordinates_connect
 gimp_prop_coordinates_new
 gimp_prop_entry_new
+gimp_prop_pointer_combo_box_new
 gimp_prop_enum_check_button_new
 gimp_prop_enum_combo_box_new
 gimp_prop_enum_label_new
@@ -1225,6 +1239,7 @@ gimp_preview_area_set_offsets
 gimp_preview_area_set_colormap
 gimp_preview_area_set_max_size
 gimp_preview_area_menu_popup
+gimp_preview_area_set_color_config
 <SUBSECTION Standard>
 GimpPreviewAreaClass
 GIMP_PREVIEW_AREA
@@ -1289,6 +1304,7 @@ gimp_table_attach_aligned
 gimp_label_set_attributes
 gimp_widget_get_monitor
 gimp_get_monitor_at_pointer
+gimp_widget_track_monitor
 gimp_widget_get_color_profile
 gimp_widget_get_color_transform
 </SECTION>
@@ -1366,6 +1382,8 @@ GIMP_CONTROLLER_GET_CLASS
 GdkModifierIntent
 gdk_event_triggers_context_menu
 gdk_keymap_get_modifier_mask
+gdk_cairo_get_clip_rectangle
+gdk_screen_get_monitor_workarea
 gtk_box_new
 gtk_button_box_new
 gtk_paned_new
@@ -1373,4 +1391,8 @@ gtk_scale_new
 gtk_scrollbar_new
 gtk_separator_new
 gtk_widget_get_modifier_mask
+gtk_label_get_xalign
+gtk_label_get_yalign
+gtk_label_set_xalign
+gtk_label_set_yalign
 </SECTION>

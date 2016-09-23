@@ -130,7 +130,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "CD cover (300ppi)"
-    (icon-name "gtk-cdrom")
+    (icon-name "media-optical")
     (width 1429)
     (height 1417)
     (unit millimeters)
@@ -140,7 +140,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "Floppy label (300ppi)"
-    (icon-name "gtk-floppy")
+    (icon-name "media-floppy")
     (width 825)
     (height 825)
     (unit millimeters)

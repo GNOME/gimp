@@ -178,7 +178,7 @@ the selection mask is non-zero, the pasted buffer will show
 through. The pasted buffer will be a new layer in the image which is
 designated as the image floating selection. If the image has a
 floating selection at the time of pasting, the old floating selection
-will be anchored to it's drawable before the new floating selection is
+will be anchored to its drawable before the new floating selection is
 added. This procedure returns the new floating layer. The resulting
 floating selection will already be attached to the specified drawable,
 and a subsequent call to floating_sel_attach is not needed.
@@ -201,14 +201,19 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp->global_buffer &&
+  GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
+
+  if (buffer &&
       gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                      drawable, gimp->global_buffer,
-                                      paste_into, -1, -1, -1, -1);
+                                      drawable, GIMP_OBJECT (buffer),
+                                      paste_into ?
+                                      GIMP_PASTE_TYPE_FLOATING_INTO :
+                                      GIMP_PASTE_TYPE_FLOATING,
+                                      -1, -1, -1, -1);
 
       if (! floating_sel)
         success = FALSE;
@@ -220,7 +225,7 @@ CODE
     );
 }
 
-sub edit_paste_as_new {
+sub edit_paste_as_new_image {
     $blurb = 'Paste buffer to a new image.';
 
     $help = <<'HELP';
@@ -230,7 +235,7 @@ previously made to either gimp_edit_cut() or gimp_edit_copy(). This
 procedure returns the new image or -1 if the edit buffer was empty.
 HELP
 
-    &mitch_pdb_misc('2005', '2.4');
+    &mitch_pdb_misc('2005', '2.10');
 
     @outargs = (
 	{ name => 'image', type => 'image',
@@ -239,9 +244,11 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp->global_buffer)
+  GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
+
+  if (buffer)
     {
-      image = gimp_image_new_from_buffer (gimp, NULL, gimp->global_buffer);
+      image = gimp_image_new_from_buffer (gimp, NULL, buffer);
 
       if (! image)
         success = FALSE;
@@ -272,6 +279,7 @@ HELP
         { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
+
     @outargs = (
 	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
@@ -327,6 +335,7 @@ HELP
         { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
+
     @outargs = (
 	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
@@ -447,8 +456,11 @@ HELP
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                      drawable, buffer,
-                                      paste_into, -1, -1, -1, -1);
+                                      drawable, GIMP_OBJECT (buffer),
+                                      paste_into ?
+                                      GIMP_PASTE_TYPE_FLOATING_INTO :
+                                      GIMP_PASTE_TYPE_FLOATING,
+                                      -1, -1, -1, -1);
       if (! floating_sel)
         success = FALSE;
     }
@@ -459,15 +471,15 @@ CODE
     )
 }
 
-sub edit_named_paste_as_new {
+sub edit_named_paste_as_new_image {
     $blurb = 'Paste named buffer to a new image.';
 
     $help = <<'HELP';
-This procedure works like gimp_edit_paste_as_new() but pastes a named buffer
-instead of the global buffer.
+This procedure works like gimp_edit_paste_as_new_image() but pastes a
+named buffer instead of the global buffer.
 HELP
 
-    &mitch_pdb_misc('2005', '2.4');
+    &mitch_pdb_misc('2005', '2.10');
 
     @inargs = (
         { name => 'buffer_name', type => 'string',
@@ -1014,11 +1026,15 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(edit_cut
-            edit_copy edit_copy_visible
-            edit_paste edit_paste_as_new
+            edit_copy
+            edit_copy_visible
+            edit_paste
+            edit_paste_as_new_image
             edit_named_cut
-            edit_named_copy edit_named_copy_visible
-            edit_named_paste edit_named_paste_as_new
+            edit_named_copy
+            edit_named_copy_visible
+            edit_named_paste
+            edit_named_paste_as_new_image
             edit_clear
             edit_fill
             edit_bucket_fill

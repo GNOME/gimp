@@ -27,6 +27,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimp3migration.h"
 #include "gimpframe.h"
 
 
@@ -148,7 +149,7 @@ gimp_frame_size_allocate (GtkWidget     *widget,
   GtkWidget     *child        = gtk_bin_get_child (GTK_BIN (widget));
   GtkAllocation  child_allocation;
 
-  gtk_widget_set_allocation (widget, allocation);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   gimp_frame_child_allocate (frame, &child_allocation);
 
@@ -257,7 +258,8 @@ gimp_frame_label_widget_notify (GtkFrame *frame)
           label = GTK_LABEL (label_widget);
 
           gtk_frame_get_label_align (frame, &xalign, &yalign);
-          gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
+          gtk_label_set_xalign (GTK_LABEL (label), xalign);
+          gtk_label_set_yalign (GTK_LABEL (label), yalign);
         }
       else if (GTK_IS_BIN (label_widget))
         {

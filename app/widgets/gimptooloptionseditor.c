@@ -158,12 +158,12 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 
   /*  The label containing the tool options title */
   editor->p->title_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (editor->p->title_label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (editor->p->title_label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (editor->p->title_label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_box_pack_start (GTK_BOX (editor),
-                      editor->p->title_label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), editor->p->title_label,
+                      FALSE, FALSE, 0);
   gtk_widget_show (editor->p->title_label);
 
   editor->p->scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -198,7 +198,7 @@ gimp_tool_options_editor_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   editor->p->save_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor), GIMP_STOCK_SAVE,
+    gimp_editor_add_button (GIMP_EDITOR (editor), "document-save",
                             _("Save Tool Preset..."),
                             GIMP_HELP_TOOL_OPTIONS_SAVE,
                             G_CALLBACK (gimp_tool_options_editor_save_clicked),
@@ -206,7 +206,7 @@ gimp_tool_options_editor_constructed (GObject *object)
                             editor);
 
   editor->p->restore_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor), GIMP_STOCK_REVERT,
+    gimp_editor_add_button (GIMP_EDITOR (editor), "document-revert",
                             _("Restore Tool Preset..."),
                             GIMP_HELP_TOOL_OPTIONS_RESTORE,
                             G_CALLBACK (gimp_tool_options_editor_restore_clicked),

@@ -828,7 +828,7 @@ plug_in_rc_write (GSList  *plug_in_defs,
           gchar  *utf8;
 
           path = g_file_get_path (plug_in_def->file);
-          utf8 = g_filename_to_utf8 (path, -1, NULL, NULL, NULL);
+          utf8 = gimp_config_path_unexpand (path, TRUE, NULL);
           g_free (path);
 
           if (! utf8)

@@ -167,14 +167,14 @@ print_size_dialog_new (GimpImage              *image,
   private->size_entry = GIMP_SIZE_ENTRY (entry);
 
   label = gtk_label_new_with_mnemonic (_("_Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("H_eight:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -228,14 +228,14 @@ print_size_dialog_new (GimpImage              *image,
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
   label = gtk_label_new_with_mnemonic (_("_X resolution:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("_Y resolution:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

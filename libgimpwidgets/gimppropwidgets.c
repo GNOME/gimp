@@ -1286,9 +1286,10 @@ gimp_prop_hscale_new (GObject     *config,
   adjustment = gtk_adjustment_new (value, lower, upper,
                                    step_increment, page_increment, 0.0);
 
-  scale = g_object_new (GTK_TYPE_HSCALE,
-                        "adjustment", adjustment,
-                        "digits",     digits,
+  scale = g_object_new (GTK_TYPE_SCALE,
+                        "orientation", GTK_ORIENTATION_HORIZONTAL,
+                        "adjustment",  adjustment,
+                        "digits",      digits,
                         NULL);
 
   set_param_spec (G_OBJECT (adjustment), scale, param_spec);
@@ -2421,7 +2422,7 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
     return;
 
   value = gtk_file_chooser_get_filename (button);
-  utf8 = value ? g_filename_to_utf8 (value, -1, NULL, NULL, NULL) : NULL;
+  utf8 = value ? gimp_config_path_unexpand (value, TRUE, NULL) : NULL;
   g_free (value);
 
   g_object_get (config,
@@ -2591,7 +2592,7 @@ gimp_prop_path_editor_path_callback (GimpPathEditor *editor,
     return;
 
   value = gimp_path_editor_get_path (editor);
-  utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+  utf8 = value ? gimp_config_path_unexpand (value, TRUE, NULL) : NULL;
   g_free (value);
 
   g_signal_handlers_block_by_func (config,
@@ -2611,7 +2612,7 @@ gimp_prop_path_editor_path_callback (GimpPathEditor *editor,
   if (writable_param_spec)
     {
       value = gimp_path_editor_get_writable_path (editor);
-      utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+      utf8 = value ? gimp_config_path_unexpand (value, TRUE, NULL) : NULL;
       g_free (value);
 
       g_signal_handlers_block_by_func (config,
@@ -2644,7 +2645,7 @@ gimp_prop_path_editor_writable_callback (GimpPathEditor *editor,
     return;
 
   value = gimp_path_editor_get_writable_path (editor);
-  utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+  utf8 = value ? gimp_config_path_unexpand (value, TRUE, NULL) : NULL;
   g_free (value);
 
   g_signal_handlers_block_by_func (config,

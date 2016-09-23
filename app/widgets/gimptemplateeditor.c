@@ -193,14 +193,14 @@ gimp_template_editor_constructed (GObject *object)
 
   /*  the image size labels  */
   label = gtk_label_new_with_mnemonic (_("_Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("H_eight:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -265,7 +265,7 @@ gimp_template_editor_constructed (GObject *object)
   gimp_label_set_attributes (GTK_LABEL (private->pixel_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (private->pixel_label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (private->pixel_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), private->pixel_label, FALSE, FALSE, 0);
   gtk_widget_show (private->pixel_label);
 
@@ -273,7 +273,7 @@ gimp_template_editor_constructed (GObject *object)
   gimp_label_set_attributes (GTK_LABEL (private->more_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (private->more_label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (private->more_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), private->more_label, FALSE, FALSE, 0);
   gtk_widget_show (private->more_label);
 
@@ -283,7 +283,7 @@ gimp_template_editor_constructed (GObject *object)
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (private->memsize_label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (private->memsize_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), private->memsize_label, FALSE, FALSE, 0);
   gtk_widget_show (private->memsize_label);
 #endif
@@ -322,14 +322,14 @@ gimp_template_editor_constructed (GObject *object)
 
   /*  the resolution labels  */
   label = gtk_label_new_with_mnemonic (_("_X resolution:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), xres);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("_Y resolution:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), yres);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

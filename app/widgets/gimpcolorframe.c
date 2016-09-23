@@ -159,14 +159,14 @@ gimp_color_frame_init (GimpColorFrame *frame)
       gtk_widget_show (hbox);
 
       frame->name_labels[i] = gtk_label_new (" ");
-      gtk_misc_set_alignment (GTK_MISC (frame->name_labels[i]), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (frame->name_labels[i]), 0.0);
       gtk_box_pack_start (GTK_BOX (hbox), frame->name_labels[i],
                           FALSE, FALSE, 0);
       gtk_widget_show (frame->name_labels[i]);
 
       frame->value_labels[i] = gtk_label_new (" ");
       gtk_label_set_selectable (GTK_LABEL (frame->value_labels[i]), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (frame->value_labels[i]), 1.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (frame->value_labels[i]), 1.0);
       gtk_box_pack_end (GTK_BOX (hbox), frame->value_labels[i],
                         FALSE, FALSE, 0);
       gtk_widget_show (frame->value_labels[i]);

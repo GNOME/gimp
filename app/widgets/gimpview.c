@@ -376,7 +376,7 @@ gimp_view_size_allocate (GtkWidget     *widget,
   allocation->width  = width;
   allocation->height = height;
 
-  gtk_widget_set_allocation (widget, allocation);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   if (gtk_widget_get_realized (widget))
     gdk_window_move_resize (view->event_window,

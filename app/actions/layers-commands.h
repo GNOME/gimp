@@ -77,6 +77,8 @@ void   layers_crop_to_content_cmd_callback    (GtkAction   *action,
 
 void   layers_mask_add_cmd_callback           (GtkAction   *action,
                                                gpointer     data);
+void   layers_mask_add_last_vals_cmd_callback (GtkAction   *action,
+                                               gpointer     data);
 void   layers_mask_apply_cmd_callback         (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);

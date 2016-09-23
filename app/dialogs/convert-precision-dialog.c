@@ -202,7 +202,7 @@ convert_precision_dialog_new (GimpImage         *image,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Layers:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_size_group_add_widget (size_group, label);
   gtk_widget_show (label);
@@ -224,7 +224,7 @@ convert_precision_dialog_new (GimpImage         *image,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Text Layers:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_size_group_add_widget (size_group, label);
   gtk_widget_show (label);
@@ -250,7 +250,7 @@ convert_precision_dialog_new (GimpImage         *image,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Channels and Masks:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_size_group_add_widget (size_group, label);
   gtk_widget_show (label);

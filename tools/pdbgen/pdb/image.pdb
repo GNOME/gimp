@@ -2825,7 +2825,6 @@ CODE
               "core/gimpimage-metadata.h"
               "core/gimpprogress.h"
               "core/gimptempbuf.h"
-              "core/gimpunit.h"
               "file/file-utils.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimppluginmanager.h"

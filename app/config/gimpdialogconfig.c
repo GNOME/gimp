@@ -20,10 +20,17 @@
 
 #include "config.h"
 
-#include <gio/gio.h>
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
+
+#include "core/core-types.h" /* fill and stroke options */
+#include "core/gimp.h"
+#include "core/gimpstrokeoptions.h"
 
 #include "config-types.h"
 
@@ -36,18 +43,68 @@
 enum
 {
   PROP_0,
-  PROP_COLOR_PROFILE_POLICY
+
+  PROP_GIMP,
+
+  PROP_COLOR_PROFILE_POLICY,
+
+  PROP_LAYER_NEW_NAME,
+  PROP_LAYER_NEW_FILL_TYPE,
+
+  PROP_LAYER_ADD_MASK_TYPE,
+  PROP_LAYER_ADD_MASK_INVERT,
+
+  PROP_CHANNEL_NEW_NAME,
+  PROP_CHANNEL_NEW_COLOR,
+
+  PROP_VECTORS_NEW_NAME,
+
+  PROP_SELECTION_FEATHER_RADIUS,
+
+  PROP_SELECTION_GROW_RADIUS,
+
+  PROP_SELECTION_SHRINK_RADIUS,
+  PROP_SELECTION_SHRINK_EDGE_LOCK,
+
+  PROP_SELECTION_BORDER_RADIUS,
+  PROP_SELECTION_BORDER_STYLE,
+  PROP_SELECTION_BORDER_EDGE_LOCK,
+
+  PROP_FILL_OPTIONS,
+  PROP_STROKE_OPTIONS
 };
 
 
-static void  gimp_dialog_config_set_property (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void  gimp_dialog_config_get_property (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
+typedef struct _GimpDialogConfigPrivate GimpDialogConfigPrivate;
+
+struct _GimpDialogConfigPrivate
+{
+  Gimp *gimp;
+};
+
+#define GET_PRIVATE(config) \
+        G_TYPE_INSTANCE_GET_PRIVATE (config, \
+                                     GIMP_TYPE_DIALOG_CONFIG, \
+                                     GimpDialogConfigPrivate)
+
+
+static void  gimp_dialog_config_constructed           (GObject      *object);
+static void  gimp_dialog_config_finalize              (GObject      *object);
+static void  gimp_dialog_config_set_property          (GObject      *object,
+                                                       guint         property_id,
+                                                       const GValue *value,
+                                                       GParamSpec   *pspec);
+static void  gimp_dialog_config_get_property          (GObject      *object,
+                                                       guint         property_id,
+                                                       GValue       *value,
+                                                       GParamSpec   *pspec);
+
+static void  gimp_dialog_config_fill_options_notify   (GObject      *object,
+                                                       GParamSpec   *pspec,
+                                                       gpointer      data);
+static void  gimp_dialog_config_stroke_options_notify (GObject      *object,
+                                                       GParamSpec   *pspec,
+                                                       gpointer      data);
 
 
 G_DEFINE_TYPE (GimpDialogConfig, gimp_dialog_config, GIMP_TYPE_GUI_CONFIG)
@@ -58,10 +115,20 @@ G_DEFINE_TYPE (GimpDialogConfig, gimp_dialog_config, GIMP_TYPE_GUI_CONFIG)
 static void
 gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class     = G_OBJECT_CLASS (klass);
+  GimpRGB       half_transparent = { 0.0, 0.0, 0.0, 0.5 };
 
+  object_class->constructed  = gimp_dialog_config_constructed;
+  object_class->finalize     = gimp_dialog_config_finalize;
   object_class->set_property = gimp_dialog_config_set_property;
   object_class->get_property = gimp_dialog_config_get_property;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_COLOR_PROFILE_POLICY,
                          "color-profile-policy",
@@ -70,6 +137,126 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          GIMP_TYPE_COLOR_PROFILE_POLICY,
                          GIMP_COLOR_PROFILE_POLICY_ASK,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_LAYER_NEW_NAME,
+                           "layer-new-name",
+                           "Default new layer name",
+                           LAYER_NEW_NAME_BLURB,
+                           _("Layer"),
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_FILL_TYPE,
+                         "layer-new-fill-type",
+                         "Default new layer fill type",
+                         LAYER_NEW_FILL_TYPE_BLURB,
+                         GIMP_TYPE_FILL_TYPE,
+                         GIMP_FILL_TRANSPARENT,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_ADD_MASK_TYPE,
+                         "layer-add-mask-type",
+                         "Default layer mask type",
+                         LAYER_ADD_MASK_TYPE_BLURB,
+                         GIMP_TYPE_ADD_MASK_TYPE,
+                         GIMP_ADD_MASK_WHITE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ADD_MASK_INVERT,
+                            "layer-add-mask-invert",
+                            "Default layer mask invert",
+                            LAYER_ADD_MASK_INVERT_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_CHANNEL_NEW_NAME,
+                           "channel-new-name",
+                           "Default new channel name",
+                           CHANNEL_NEW_NAME_BLURB,
+                           _("Channel"),
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_CHANNEL_NEW_COLOR,
+                        "channel-new-color",
+                        "Default new channel color and opacity",
+                        CHANNEL_NEW_COLOR_BLURB,
+                        TRUE,
+                        &half_transparent,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_VECTORS_NEW_NAME,
+                           "path-new-name",
+                           "Default new path name",
+                           VECTORS_NEW_NAME_BLURB,
+                           _("Path"),
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_FEATHER_RADIUS,
+                           "selection-feather-radius",
+                           "Selection feather radius",
+                           SELECTION_FEATHER_RADIUS_BLURB,
+                           0.0, 32767.0, 5.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_GROW_RADIUS,
+                           "selection-grow-radius",
+                           "Selection grow radius",
+                           SELECTION_GROW_RADIUS_BLURB,
+                           1.0, 32767.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_SHRINK_RADIUS,
+                           "selection-shrink-radius",
+                           "Selection shrink radius",
+                           SELECTION_SHRINK_RADIUS_BLURB,
+                           1.0, 32767.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_SHRINK_EDGE_LOCK,
+                            "selection-shrink-edge-lock",
+                            "Selection shrink edge lock",
+                            SELECTION_SHRINK_EDGE_LOCK_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_BORDER_RADIUS,
+                           "selection-border-radius",
+                           "Selection border radius",
+                           SELECTION_BORDER_RADIUS_BLURB,
+                           1.0, 32767.0, 5.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_BORDER_EDGE_LOCK,
+                            "selection-border-edge-lock",
+                            "Selection border edge lock",
+                            SELECTION_BORDER_EDGE_LOCK_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SELECTION_BORDER_STYLE,
+                         "selection-border-style",
+                         "Selection border style",
+                         SELECTION_BORDER_STYLE_BLURB,
+                         GIMP_TYPE_CHANNEL_BORDER_STYLE,
+                         GIMP_CHANNEL_BORDER_STYLE_SMOOTH,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_FILL_OPTIONS,
+                           "fill-options",
+                           "Fill Options",
+                           FILL_OPTIONS_BLURB,
+                           GIMP_TYPE_FILL_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_STROKE_OPTIONS,
+                           "stroke-options",
+                           "Stroke Options",
+                           STROKE_OPTIONS_BLURB,
+                           GIMP_TYPE_STROKE_OPTIONS,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
+  g_type_class_add_private (klass, sizeof (GimpDialogConfigPrivate));
 }
 
 static void
@@ -78,17 +265,157 @@ gimp_dialog_config_init (GimpDialogConfig *config)
 }
 
 static void
+gimp_dialog_config_constructed (GObject *object)
+{
+  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
+  GimpContext             *context;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (GIMP_IS_GIMP (priv->gimp));
+
+  context = gimp_get_user_context (priv->gimp);
+
+  config->fill_options = gimp_fill_options_new (priv->gimp, context, TRUE);
+  gimp_context_set_serialize_properties (GIMP_CONTEXT (config->fill_options),
+                                         0);
+
+  g_signal_connect (config->fill_options, "notify",
+                    G_CALLBACK (gimp_dialog_config_fill_options_notify),
+                    config);
+
+  config->stroke_options = gimp_stroke_options_new (priv->gimp, context, TRUE);
+  gimp_context_set_serialize_properties (GIMP_CONTEXT (config->stroke_options),
+                                         0);
+
+  g_signal_connect (config->stroke_options, "notify",
+                    G_CALLBACK (gimp_dialog_config_stroke_options_notify),
+                    config);
+}
+
+static void
+gimp_dialog_config_finalize (GObject *object)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
+
+  if (config->layer_new_name)
+    {
+      g_free (config->layer_new_name);
+      config->layer_new_name = NULL;
+    }
+
+  if (config->channel_new_name)
+    {
+      g_free (config->channel_new_name);
+      config->channel_new_name = NULL;
+    }
+
+  if (config->vectors_new_name)
+    {
+      g_free (config->vectors_new_name);
+      config->vectors_new_name = NULL;
+    }
+
+  if (config->fill_options)
+    {
+      g_object_unref (config->fill_options);
+      config->fill_options = NULL;
+    }
+
+  if (config->stroke_options)
+    {
+      g_object_unref (config->stroke_options);
+      config->stroke_options = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_dialog_config_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpDialogConfig *dialog_config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      priv->gimp = g_value_get_object (value); /* don't ref */
+      break;
+
     case PROP_COLOR_PROFILE_POLICY:
-      dialog_config->color_profile_policy = g_value_get_enum (value);
+      config->color_profile_policy = g_value_get_enum (value);
+      break;
+
+    case PROP_LAYER_NEW_NAME:
+      if (config->layer_new_name)
+        g_free (config->layer_new_name);
+      config->layer_new_name = g_value_dup_string (value);
+      break;
+    case PROP_LAYER_NEW_FILL_TYPE:
+      config->layer_new_fill_type = g_value_get_enum (value);
+      break;
+
+    case PROP_LAYER_ADD_MASK_TYPE:
+      config->layer_add_mask_type = g_value_get_enum (value);
+      break;
+    case PROP_LAYER_ADD_MASK_INVERT:
+      config->layer_add_mask_invert = g_value_get_boolean (value);
+      break;
+
+    case PROP_CHANNEL_NEW_NAME:
+      if (config->channel_new_name)
+        g_free (config->channel_new_name);
+      config->channel_new_name = g_value_dup_string (value);
+      break;
+    case PROP_CHANNEL_NEW_COLOR:
+      gimp_value_get_rgb (value, &config->channel_new_color);
+      break;
+
+    case PROP_VECTORS_NEW_NAME:
+      if (config->vectors_new_name)
+        g_free (config->vectors_new_name);
+      config->vectors_new_name = g_value_dup_string (value);
+      break;
+
+    case PROP_SELECTION_FEATHER_RADIUS:
+      config->selection_feather_radius = g_value_get_double (value);
+      break;
+
+    case PROP_SELECTION_GROW_RADIUS:
+      config->selection_grow_radius = g_value_get_double (value);
+      break;
+
+    case PROP_SELECTION_SHRINK_RADIUS:
+      config->selection_shrink_radius = g_value_get_double (value);
+      break;
+    case PROP_SELECTION_SHRINK_EDGE_LOCK:
+      config->selection_shrink_edge_lock = g_value_get_boolean (value);
+      break;
+
+    case PROP_SELECTION_BORDER_RADIUS:
+      config->selection_border_radius = g_value_get_double (value);
+      break;
+    case PROP_SELECTION_BORDER_EDGE_LOCK:
+      config->selection_border_edge_lock = g_value_get_boolean (value);
+      break;
+    case PROP_SELECTION_BORDER_STYLE:
+      config->selection_border_style = g_value_get_enum (value);
+      break;
+
+    case PROP_FILL_OPTIONS:
+      if (g_value_get_object (value))
+        gimp_config_sync (g_value_get_object (value) ,
+                          G_OBJECT (config->fill_options), 0);
+      break;
+    case PROP_STROKE_OPTIONS:
+      if (g_value_get_object (value))
+        gimp_config_sync (g_value_get_object (value) ,
+                          G_OBJECT (config->stroke_options), 0);
       break;
 
     default:
@@ -103,16 +430,94 @@ gimp_dialog_config_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDialogConfig *dialog_config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
+  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, priv->gimp);
+      break;
+
     case PROP_COLOR_PROFILE_POLICY:
-      g_value_set_enum (value, dialog_config->color_profile_policy);
+      g_value_set_enum (value, config->color_profile_policy);
+      break;
+
+    case PROP_LAYER_NEW_NAME:
+      g_value_set_string (value, config->layer_new_name);
+      break;
+    case PROP_LAYER_NEW_FILL_TYPE:
+      g_value_set_enum (value, config->layer_new_fill_type);
+      break;
+
+    case PROP_LAYER_ADD_MASK_TYPE:
+      g_value_set_enum (value, config->layer_add_mask_type);
+      break;
+    case PROP_LAYER_ADD_MASK_INVERT:
+      g_value_set_boolean (value, config->layer_add_mask_invert);
+      break;
+
+    case PROP_CHANNEL_NEW_NAME:
+      g_value_set_string (value, config->channel_new_name);
+      break;
+    case PROP_CHANNEL_NEW_COLOR:
+      gimp_value_set_rgb (value, &config->channel_new_color);
+      break;
+
+    case PROP_VECTORS_NEW_NAME:
+      g_value_set_string (value, config->vectors_new_name);
+      break;
+
+    case PROP_SELECTION_FEATHER_RADIUS:
+      g_value_set_double (value, config->selection_feather_radius);
+      break;
+
+    case PROP_SELECTION_GROW_RADIUS:
+      g_value_set_double (value, config->selection_grow_radius);
+      break;
+
+    case PROP_SELECTION_SHRINK_RADIUS:
+      g_value_set_double (value, config->selection_shrink_radius);
+      break;
+    case PROP_SELECTION_SHRINK_EDGE_LOCK:
+      g_value_set_boolean (value, config->selection_shrink_edge_lock);
+      break;
+
+    case PROP_SELECTION_BORDER_RADIUS:
+      g_value_set_double (value, config->selection_border_radius);
+      break;
+    case PROP_SELECTION_BORDER_EDGE_LOCK:
+      g_value_set_boolean (value, config->selection_border_edge_lock);
+      break;
+    case PROP_SELECTION_BORDER_STYLE:
+      g_value_set_enum (value, config->selection_border_style);
+      break;
+
+    case PROP_FILL_OPTIONS:
+      g_value_set_object (value, config->fill_options);
+      break;
+    case PROP_STROKE_OPTIONS:
+      g_value_set_object (value, config->stroke_options);
       break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_dialog_config_fill_options_notify (GObject    *object,
+                                        GParamSpec *pspec,
+                                        gpointer    data)
+{
+  g_object_notify (G_OBJECT (data), "fill-options");
+}
+
+static void
+gimp_dialog_config_stroke_options_notify (GObject    *object,
+                                          GParamSpec *pspec,
+                                          gpointer    data)
+{
+  g_object_notify (G_OBJECT (data), "stroke-options");
 }

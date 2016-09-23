@@ -762,7 +762,6 @@ load_dialog (const gchar  *filename,
 
   size_label = gtk_label_new (NULL);
   gtk_label_set_justify (GTK_LABEL (size_label), GTK_JUSTIFY_CENTER);
-  gtk_misc_set_alignment (GTK_MISC (size_label), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), size_label, TRUE, TRUE, 4);
   gtk_widget_show (size_label);
 
@@ -784,13 +783,13 @@ load_dialog (const gchar  *filename,
 
   /*  Width and Height  */
   label = gtk_label_new (_("Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -867,7 +866,7 @@ load_dialog (const gchar  *filename,
 
   label = gtk_label_new_with_mnemonic (_("_X ratio:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -889,7 +888,7 @@ load_dialog (const gchar  *filename,
 
   label = gtk_label_new_with_mnemonic (_("_Y ratio:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -907,7 +906,7 @@ load_dialog (const gchar  *filename,
 
   /*  Resolution   */
   label = gtk_label_new (_("Resolution:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);

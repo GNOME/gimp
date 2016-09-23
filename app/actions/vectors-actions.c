@@ -132,7 +132,7 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_stroke_last_vals_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
-  { "vectors-copy", GIMP_STOCK_CLIPBOARD,
+  { "vectors-copy", "edit-copy",
     NC_("vectors-action", "Co_py Path"), "", NULL,
     G_CALLBACK (vectors_copy_cmd_callback),
     GIMP_HELP_PATH_COPY },
@@ -142,12 +142,12 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_paste_cmd_callback),
     GIMP_HELP_PATH_PASTE },
 
-  { "vectors-export", GIMP_STOCK_SAVE,
+  { "vectors-export", "document-save",
     NC_("vectors-action", "E_xport Path..."), "", NULL,
     G_CALLBACK (vectors_export_cmd_callback),
     GIMP_HELP_PATH_EXPORT },
 
-  { "vectors-import", GIMP_STOCK_OPEN,
+  { "vectors-import", "document-open",
     NC_("vectors-action", "I_mport Path..."), "", NULL,
     G_CALLBACK (vectors_import_cmd_callback),
     GIMP_HELP_PATH_IMPORT }

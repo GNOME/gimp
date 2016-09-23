@@ -199,7 +199,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-tool-preset-list",
     GIMP_HELP_TOOL_PRESET_DIALOG },
 
-  { "dialogs-fonts", GIMP_STOCK_FONT,
+  { "dialogs-fonts", "gtk-select-font",
     NC_("dialogs-action", "_Fonts"), NULL,
     NC_("dialogs-action", "Open the fonts dialog"),
     "gimp-font-list|gimp-font-grid",
@@ -217,7 +217,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-image-list|gimp-image-grid",
     GIMP_HELP_IMAGE_DIALOG },
 
-  { "dialogs-document-history", GIMP_STOCK_DOCUMENT_RECENT,
+  { "dialogs-document-history", "document-open-recent",
     NC_("dialogs-action", "Document Histor_y"), "",
     NC_("dialogs-action", "Open the document history dialog"),
     "gimp-document-list|gimp-document-grid",

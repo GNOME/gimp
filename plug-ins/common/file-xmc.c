@@ -1206,7 +1206,7 @@ save_dialog (const gint32   image_ID,
 
   /* appended "ms" */
   tmpwidget = gtk_label_new ("ms");
-  gtk_misc_set_alignment (GTK_MISC (tmpwidget), 0, 0.5); /*align left*/
+  gtk_label_set_xalign (GTK_LABEL (tmpwidget), 0.0); /*align left*/
   gtk_box_pack_start (GTK_BOX (box), tmpwidget, TRUE, TRUE, 0);
   gtk_widget_show (tmpwidget);
 
@@ -1291,7 +1291,8 @@ save_dialog (const gint32   image_ID,
    * in gtk_entry because We want allow '\n' for "Other". */
   label = gtk_label_new_with_mnemonic (_("_Other:"));
   gtk_widget_show (label);
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0); /*align top-left*/
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0); /*align top-left*/
+  gtk_label_set_yalign (GTK_LABEL (label), 0.0); /*align top-left*/
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 8, 9, GTK_FILL, 0, 0, 0);
   /* content of Other */
   /* scrolled window */

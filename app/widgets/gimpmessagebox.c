@@ -452,7 +452,7 @@ gimp_message_box_repeat (GimpMessageBox *box)
     {
       GtkWidget *label = box->label[2] = gtk_label_new (message);
 
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gimp_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
                                  -1);

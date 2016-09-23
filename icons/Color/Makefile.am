@@ -1,13 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir = $(gimpdatadir)/icons/Color/hicolor
+iconsdir = $(gimpdatadir)/icons/Color
 
 icons_DATA = \
 	index.theme
 
 include $(top_srcdir)/icons/icon-list.mk
 
-# Vectorial icons are now committed into the repository.
+# Vector icons are now committed into the repository.
 # librsvg is just too buggy to handle build-time extraction with
 # acceptable quality.
 #scalable/%.svg: color-scalable.svg ../../tools/compute-svg-viewbox

@@ -405,12 +405,12 @@ create_light_page (void)
 
   /* row labels */
   label = gtk_label_new (_("Type:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Color:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
   gtk_widget_show (label);
 
@@ -467,7 +467,7 @@ create_light_page (void)
 
 
   label = gtk_label_new (_("Position"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 0, 1);
   gtk_widget_show (label);
 
@@ -518,7 +518,7 @@ create_light_page (void)
 
 
   label = gtk_label_new (_("Direction"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 5, 6, 0, 1);
   gtk_widget_show (label);
 
@@ -575,7 +575,7 @@ create_light_page (void)
   gtk_widget_show (isolate_button);
 
   label = gtk_label_new (_("Lighting preset:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_table_set_row_spacing (GTK_TABLE (table), 5, 12);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 2, 6, 7);
   gtk_widget_show (label);

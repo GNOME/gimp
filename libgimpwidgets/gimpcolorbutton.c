@@ -27,6 +27,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gimpwidgetstypes.h"
 
@@ -228,7 +229,7 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
                                    g_param_spec_string ("title", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                                        G_PARAM_CONSTRUCT));
   /**
    * GimpColorButton:color:
    *
@@ -449,8 +450,7 @@ gimp_color_button_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TITLE:
-      g_free (button->title);
-      button->title = g_value_dup_string (value);
+      gimp_color_button_set_title (button, g_value_get_string (value));
       break;
 
     case PROP_COLOR:
@@ -641,6 +641,47 @@ gimp_color_button_new (const gchar       *title,
 }
 
 /**
+ * gimp_color_button_set_title:
+ * @button: a #GimpColorButton.
+ * @color:  the new title.
+ *
+ * Sets the @button dialog's title.
+ *
+ * Since: GIMP 2.10
+ **/
+void
+gimp_color_button_set_title (GimpColorButton *button,
+                             const gchar     *title)
+{
+  g_return_if_fail (GIMP_IS_COLOR_BUTTON (button));
+  g_return_if_fail (title != NULL);
+
+  g_free (button->title);
+  button->title = g_strdup (title);
+
+  if (button->dialog)
+    gtk_window_set_title (GTK_WINDOW (button->dialog), title);
+
+  g_object_notify (G_OBJECT (button), "title");
+}
+
+/**
+ * gimp_color_button_get_title:
+ * @button: a #GimpColorButton.
+ *
+ * Returns: The @button dialog's title.
+ *
+ * Since: GIMP 2.10
+ **/
+const gchar *
+gimp_color_button_get_title (GimpColorButton *button)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_BUTTON (button), NULL);
+
+  return button->title;
+}
+
+/**
  * gimp_color_button_set_color:
  * @button: Pointer to a #GimpColorButton.
  * @color:  Pointer to the new #GimpRGB color.
@@ -768,6 +809,43 @@ gimp_color_button_set_update (GimpColorButton *button,
 
       g_object_notify (G_OBJECT (button), "continuous-update");
     }
+}
+
+/**
+ * gimp_color_button_set_color_config:
+ * @button: a #GimpColorButton widget.
+ * @config: a #GimpColorConfig object.
+ *
+ * Sets the color management configuration to use with this color button's
+ * #GimpColorArea.
+ *
+ * Since: 2.10
+ */
+void
+gimp_color_button_set_color_config (GimpColorButton *button,
+                                    GimpColorConfig *config)
+{
+  g_return_if_fail (GIMP_IS_COLOR_BUTTON (button));
+  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+
+  gimp_color_area_set_color_config (GIMP_COLOR_AREA (button->color_area),
+                                    config);
+}
+
+/**
+ * gimp_color_button_get_ui_manager:
+ * @button: a #GimpColorButton.
+ *
+ * Returns: The @button's #GtkUIManager.
+ *
+ * Since: GIMP 2.10
+ **/
+GtkUIManager *
+gimp_color_button_get_ui_manager (GimpColorButton *button)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_BUTTON (button), NULL);
+
+  return button->popup_menu;
 }
 
 

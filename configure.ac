@@ -68,7 +68,7 @@ m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.10.3])
 m4_define([libmypaint_required_version], [1.3.0])
-m4_define([lcms_required_version], [2.6])
+m4_define([lcms_required_version], [2.7])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
@@ -633,7 +633,7 @@ required_deps=''
 # add_deps_error([dependency], [first line, second line])
 m4_define([add_deps_error], [
   required_deps="$required_deps
-  - $1"
+  - Error: missing dependency $1"
   m4_foreach([more], [$2], [
   required_deps="$required_deps
       *** more"])])
@@ -2084,9 +2084,9 @@ AM_CONDITIONAL(HAVE_XMLLINT, test "x$XMLLINT" != "xno")
 AC_PATH_PROG(XSLTPROC, xsltproc, no)
 AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 
-###########################
-# Check for vectorial icons
-###########################
+########################
+# Check for vector icons
+########################
 
 AC_ARG_ENABLE(vector-icons, [  --enable-vector-icons   generate vector icons], ,
               enable_vector_icons=no)
@@ -2581,7 +2581,7 @@ Extra Binaries:
 
 Optional Features:
   Language selection:  $have_iso_codes
-  Vectorial icons:     $enable_vector_icons
+  Vector icons:        $enable_vector_icons
   Dr. Mingw (Win32):   $enable_drmingw
 
 Optional Plug-Ins:
@@ -2622,14 +2622,10 @@ Desktop files install into $DESKTOP_DATADIR
 $optional_deps]);
 else
   AC_MSG_ERROR([
-
-== Summary of optional features ==
 $optional_deps
 
-== Missing mandatory dependencies ==
-
-GIMP configuration failed.
-The following mandatory dependencies are missing:$required_deps
+Error: GIMP configuration failed.
+$required_deps
 
 See the file 'INSTALL' for more help.]);
 fi

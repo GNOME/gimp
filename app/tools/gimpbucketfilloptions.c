@@ -51,6 +51,7 @@ enum
   PROP_FILL_TRANSPARENT,
   PROP_SAMPLE_MERGED,
   PROP_DIAGONAL_NEIGHBORS,
+  PROP_ANTIALIAS,
   PROP_THRESHOLD,
   PROP_FILL_CRITERION
 };
@@ -95,12 +96,14 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                          GIMP_TYPE_BUCKET_FILL_MODE,
                          GIMP_BUCKET_FILL_FG,
                          GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
                             "fill-selection",
                             _("Fill selection"),
                             _("Which area will be filled"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
                             "fill-transparent",
                             _("Fill transparent areas"),
@@ -108,12 +111,14 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                               "to be filled"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                             "sample-merged",
                             _("Sample merged"),
                             _("Base filled area on all visible layers"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
                             "diagonal-neighbors",
                             _("Diagonal neighbors"),
@@ -121,12 +126,24 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                               "connected"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                            "antialias",
+                            _("Antialiasing"),
+                            _("Base fill opacity on color difference from "
+                              "the clicked pixel (see threshold). Disable "
+                              "antialiasing to fill the entire area "
+                              "uniformly."),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                            "threshold",
                            _("Threshold"),
                            _("Maximum color difference"),
                            0.0, 255.0, 15.0,
                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_CRITERION,
                          "fill-criterion",
                          _("Fill by"),
@@ -174,6 +191,9 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_DIAGONAL_NEIGHBORS:
       options->diagonal_neighbors = g_value_get_boolean (value);
       break;
+    case PROP_ANTIALIAS:
+      options->antialias = g_value_get_boolean (value);
+      break;
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
@@ -211,6 +231,9 @@ gimp_bucket_fill_options_get_property (GObject    *object,
       break;
     case PROP_DIAGONAL_NEIGHBORS:
       g_value_set_boolean (value, options->diagonal_neighbors);
+      break;
+    case PROP_ANTIALIAS:
+      g_value_set_boolean (value, options->antialias);
       break;
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
@@ -311,6 +334,11 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   /*  the diagonal neighbors toggle  */
   button = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /*  the antialias toggle  */
+  button = gimp_prop_check_button_new (config, "antialias", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

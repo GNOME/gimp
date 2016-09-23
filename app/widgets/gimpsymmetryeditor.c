@@ -85,6 +85,7 @@ static void
 gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
 {
   GtkWidget *scrolled_window;
+  GtkWidget *viewport;
 
   editor->p = G_TYPE_INSTANCE_GET_PRIVATE (editor,
                                            GIMP_TYPE_SYMMETRY_EDITOR,
@@ -92,7 +93,6 @@ gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), -1, 200);
 
-  /* Scrolled window to keep the dock size reasonable. */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
@@ -100,11 +100,13 @@ gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  /* A vbox to hold the symmetry options. */
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
+  gtk_widget_show (viewport);
+
   editor->p->options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_set_border_width (GTK_CONTAINER (editor->p->options_vbox), 2);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
-                                         editor->p->options_vbox);
+  gtk_container_add (GTK_CONTAINER (viewport), editor->p->options_vbox);
   gtk_widget_show (editor->p->options_vbox);
 }
 

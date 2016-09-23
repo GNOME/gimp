@@ -268,7 +268,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   /*  Count label  */
 
   priv->count_label = gtk_label_new (_("Nothing selected"));
-  gtk_misc_set_alignment (GTK_MISC (priv->count_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (priv->count_label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (priv->count_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);

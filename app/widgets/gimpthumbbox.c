@@ -343,7 +343,7 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_widget_show (button);
 
   label = gtk_label_new_with_mnemonic (_("Pr_eview"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_container_add (GTK_CONTAINER (button), label);
   gtk_widget_show (label);
 
@@ -409,7 +409,6 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_widget_show (box->filename);
 
   box->info = gtk_label_new (" \n \n \n ");
-  gtk_misc_set_alignment (GTK_MISC (box->info), 0.5, 0.0);
   gtk_label_set_justify (GTK_LABEL (box->info), GTK_JUSTIFY_CENTER);
   gtk_label_set_line_wrap (GTK_LABEL (box->info), TRUE);
   gimp_label_set_attributes (GTK_LABEL (box->info),

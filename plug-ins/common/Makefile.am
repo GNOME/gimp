@@ -13,6 +13,11 @@ else
 libm = -lm
 endif
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
+endif
+
 if HAVE_WINDRES
 include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
 include gimprc.common
@@ -1780,6 +1785,10 @@ warp_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(warp_RC)
+
+web_browser_LDFLAGS = $(framework_cocoa)
+
+web_browser_CPPFLAGS = $(AM_CPPFLAGS) $(xobjective_c)
 
 web_browser_SOURCES = \
 	web-browser.c

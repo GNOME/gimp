@@ -764,6 +764,7 @@ build_dialog (gchar             *imagename)
 {
   GtkWidget   *toolbar;
   GtkWidget   *frame;
+  GtkWidget   *viewport;
   GtkWidget   *main_vbox;
   GtkWidget   *vbox;
   GtkWidget   *hbox;
@@ -816,12 +817,17 @@ build_dialog (gchar             *imagename)
 
   frame = gtk_scrolled_window_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (abox), frame);
-  gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (frame), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (frame),
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_widget_show (frame);
+
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (frame), viewport);
+  gtk_widget_show (viewport);
 
   /* I add the drawing area inside an alignment box to prevent it from being resized. */
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (frame), abox);
+  gtk_container_add (GTK_CONTAINER (viewport), abox);
   gtk_widget_show (abox);
 
   /* Build a drawing area, with a default size same as the image */

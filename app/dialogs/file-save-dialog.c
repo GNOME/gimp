@@ -651,7 +651,7 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
           g_free (markup);
 
           gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+          gtk_label_set_xalign (GTK_LABEL (label), 0.0);
           gtk_box_pack_start (GTK_BOX (GIMP_MESSAGE_DIALOG (dialog)->box), label,
                               FALSE, FALSE, 0);
           gtk_widget_show (label);

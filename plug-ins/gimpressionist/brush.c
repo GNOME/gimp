@@ -542,7 +542,7 @@ create_brushpage (GtkNotebook *notebook)
   gtk_widget_show (box3);
 
   tmpw = gtk_label_new (_("Gamma:"));
-  gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (tmpw), 0.0);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -568,7 +568,7 @@ create_brushpage (GtkNotebook *notebook)
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   tmpw = gtk_label_new (_("Select:"));
-  gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (tmpw), 0.0);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
 

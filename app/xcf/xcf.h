@@ -19,8 +19,20 @@
 #define __XCF_H__
 
 
-void   xcf_init (Gimp *gimp);
-void   xcf_exit (Gimp *gimp);
+void        xcf_init        (Gimp           *gimp);
+void        xcf_exit        (Gimp           *gimp);
 
+GimpImage * xcf_load_stream (Gimp           *gimp,
+                             GInputStream   *input,
+                             GFile          *input_file,
+                             GimpProgress   *progress,
+                             GError        **error);
+
+gboolean    xcf_save_stream (Gimp           *gimp,
+                             GimpImage      *image,
+                             GOutputStream  *output,
+                             GFile          *output_file,
+                             GimpProgress   *progress,
+                             GError        **error);
 
 #endif /* __XCF_H__ */

@@ -420,6 +420,56 @@ _("Sets the folder for temporary storage. Files will appear here " \
 #define ICON_THEME_PATH_BLURB \
 "Sets the icon theme search path."
 
+#define LAYER_NEW_NAME_BLURB \
+_("Sets the default layer name for the 'New Layer' dialog.")
+
+#define LAYER_NEW_FILL_TYPE_BLURB \
+_("Sets the default fill type for the 'New Layer' dialog.")
+
+#define LAYER_ADD_MASK_TYPE_BLURB \
+_("Sets the default mask for the 'Add Layer Mask' dialog.")
+
+#define LAYER_ADD_MASK_INVERT_BLURB \
+_("Sets the default 'invert mask' state for the 'Add Layer Mask' dialog.")
+
+#define CHANNEL_NEW_NAME_BLURB \
+_("Sets the default channel name for the 'New Channel' dialog.")
+
+#define CHANNEL_NEW_COLOR_BLURB \
+_("Sets the default color and opacity for the 'New Channel' dialog.")
+
+#define VECTORS_NEW_NAME_BLURB \
+_("Sets the default path name for the 'New Path' dialog.")
+
+#define SELECTION_FEATHER_RADIUS_BLURB \
+_("Sets the default feather radius for the 'Feather Selection' dialog.")
+
+#define SELECTION_GROW_RADIUS_BLURB \
+_("Sets the default grow radius for the 'Grow Selection' dialog.")
+
+#define SELECTION_SHRINK_RADIUS_BLURB \
+_("Sets the default shrink radius for the 'Shrink Selection' dialog.")
+
+#define SELECTION_SHRINK_EDGE_LOCK_BLURB \
+_("Sets the default 'Selected areas continue outside the image' setting " \
+  "for the 'Shrink Selection' dialog.")
+
+#define SELECTION_BORDER_RADIUS_BLURB \
+_("Sets the default border radius for the 'Border Selection' dialog.")
+
+#define SELECTION_BORDER_EDGE_LOCK_BLURB \
+_("Sets the default 'Selected areas continue outside the image' setting " \
+  "for the 'Border Selection' dialog.")
+
+#define SELECTION_BORDER_STYLE_BLURB \
+_("Sets the default border style for the 'Border Selection' dialog.")
+
+#define FILL_OPTIONS_BLURB \
+"The default fill options for the fill dialogs."
+
+#define STROKE_OPTIONS_BLURB \
+"The default stroke options for the stroke dialogs."
+
 #define THUMBNAIL_SIZE_BLURB \
 _("Sets the size of the thumbnail shown in the Open dialog.")
 

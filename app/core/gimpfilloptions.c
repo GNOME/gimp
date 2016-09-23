@@ -74,17 +74,25 @@ struct _GimpFillOptionsPrivate
                                      GimpFillOptionsPrivate)
 
 
-static void   gimp_fill_options_set_property (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void   gimp_fill_options_get_property (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
+static void     gimp_fill_options_config_init  (GimpConfigInterface *iface);
+
+static void     gimp_fill_options_set_property (GObject             *object,
+                                                guint                property_id,
+                                                const GValue        *value,
+                                                GParamSpec          *pspec);
+static void     gimp_fill_options_get_property (GObject             *object,
+                                                guint                property_id,
+                                                GValue              *value,
+                                                GParamSpec          *pspec);
+
+static gboolean gimp_fill_options_serialize    (GimpConfig          *config,
+                                                GimpConfigWriter    *writer,
+                                                gpointer             data);
 
 
-G_DEFINE_TYPE (GimpFillOptions, gimp_fill_options, GIMP_TYPE_CONTEXT)
+G_DEFINE_TYPE_WITH_CODE (GimpFillOptions, gimp_fill_options, GIMP_TYPE_CONTEXT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_fill_options_config_init))
 
 
 static void
@@ -128,6 +136,12 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                                                      GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpFillOptionsPrivate));
+}
+
+static void
+gimp_fill_options_config_init (GimpConfigInterface *iface)
+{
+  iface->serialize = gimp_fill_options_serialize;
 }
 
 static void
@@ -194,6 +208,14 @@ gimp_fill_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_fill_options_serialize (GimpConfig       *config,
+                             GimpConfigWriter *writer,
+                             gpointer          data)
+{
+  return gimp_config_serialize_properties (config, writer);
 }
 
 

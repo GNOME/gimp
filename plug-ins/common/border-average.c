@@ -386,7 +386,7 @@ borderaverage_dialog (gint32        image_ID,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Thickness:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -432,7 +432,7 @@ borderaverage_dialog (gint32        image_ID,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Bucket size:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

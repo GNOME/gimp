@@ -151,6 +151,12 @@ style is enforced.  The GIMP coding style is defined as follows:
           starting in the first column of the following line. All
           parameters are prototyped and there's a new line for each.
 
+The source tree contains local config files which can be used to set the
+right coding style in common editors: `.dir-locals.el` for Emacs,
+`.kateconfig` for Kate, and `devel-docs/c.vim` for Vim (check the top
+comments to see how to enable it automatically when opening a file in
+the GIMP tree).
+
 Try to make use of GLib's object system as much as possible. Do not
 create wrappers around functions of parent classes. If you end up
 duplicating code, try to create a common parent class and implement

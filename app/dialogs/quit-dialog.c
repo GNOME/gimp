@@ -214,14 +214,14 @@ quit_close_all_dialog_new (Gimp     *gimp,
   else
     dialog->lost_label = gtk_label_new (_("If you close these images now, "
                                           "changes will be lost."));
-  gtk_misc_set_alignment (GTK_MISC (dialog->lost_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (dialog->lost_label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (dialog->lost_label), TRUE);
   gtk_box_pack_start (GTK_BOX (dialog->box), dialog->lost_label,
                       FALSE, FALSE, 0);
   gtk_widget_show (dialog->lost_label);
 
   dialog->hint_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (dialog->hint_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (dialog->hint_label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (dialog->hint_label), TRUE);
   gtk_box_pack_start (GTK_BOX (dialog->box), dialog->hint_label,
                       FALSE, FALSE, 0);

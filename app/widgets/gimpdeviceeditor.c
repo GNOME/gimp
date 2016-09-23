@@ -186,7 +186,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_widget_show (hbox);
 
   private->label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (private->label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (private->label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (private->label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (private->label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,

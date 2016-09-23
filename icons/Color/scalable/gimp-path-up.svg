@@ -13,7 +13,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-up.svg">
+   sodipodi:docname="gimp-path-up.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -23,9 +23,9 @@
      borderopacity="1"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16"
-     inkscape:cx="-1.207795"
-     inkscape:cy="17.488086"
+     inkscape:zoom="13.822296"
+     inkscape:cx="15.432564"
+     inkscape:cy="5.0802573"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -49,10 +49,11 @@
      inkscape:window-height="1016"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="1">
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false">
     <inkscape:grid
        type="xygrid"
-       id="grid4234" />
+       id="grid4267" />
   </sodipodi:namedview>
   <metadata
      id="metadata30576">
@@ -69,7 +70,7 @@
             <dc:title>Klaus Staedtler       </dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -79,24 +80,52 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <g
-       id="g4245">
+       id="g4277"
+       transform="rotate(-180,8,1044.3621)">
+      <path
+         sodipodi:nodetypes="cccccccc"
+         style="fill:#f57900;fill-opacity:1;stroke:#ce5c00;stroke-width:0.48539636;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 3.1976569,1036.6047 h 2.6049028 v 2.5729 h 2.6049027 l -3.9073541,3.8441 -3.90735411,-3.8441 H 3.1976569 Z"
+         id="path19385"
+         inkscape:connector-curvature="0" />
       <g
-         transform="matrix(0.98507463,0,0,-0.98507463,1.7683403e-7,1052.1234)"
-         id="go-down">
-        <title
-           id="title47619">go-down</title>
-        <rect
-           width="16.242424"
-           height="16.242424"
-           x="0"
-           y="-0.24241818"
-           style="fill:none;stroke-width:1.0151515"
-           id="gtk-go-down" />
+         transform="translate(-8.6516419,-8.2741252)"
+         id="g4305">
         <path
+           sodipodi:nodetypes="czc"
            inkscape:connector-curvature="0"
-           style="fill:#f57900;fill-opacity:1;stroke:#ce5c00;stroke-width:0.56827873;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="M 8.121212,12.552282 1.6190706,6.0550481 C 1.396369,5.8325142 1.2992907,5.5288726 1.2992907,5.2384555 V 4.1023272 h 1.1369869 c 0.2906366,0 0.5945078,0.097025 0.8172094,0.3195361 l 4.867725,4.8640499 4.867725,-4.8640499 c 0.222701,-0.2225334 0.526572,-0.3195361 0.817209,-0.3195361 h 1.136987 v 1.1361283 c 0,0.2904171 -0.0971,0.5940587 -0.319778,0.8165926 z"
-           id="path47623" />
+           id="path15631-9-2"
+           d="m 11.070305,1058.5511 c 0,0 3.278731,-2.3644 6.036794,-5.1225 2.758064,-2.758 5.840852,-6.8122 5.840852,-6.8122"
+           style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <g
+           id="g4269"
+           transform="translate(8.6516419,8.274118)">
+          <path
+             sodipodi:nodetypes="czc"
+             inkscape:connector-curvature="0"
+             id="path15631-9"
+             d="m 1.6730026,1050.835 c 0,0 3.8840737,-2.8277 6.8670413,-5.8107 2.9829681,-2.9829 6.3171381,-7.4353 6.3171381,-7.4353"
+             style="fill:none;stroke:#729fcf;stroke-width:0.99432254;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <rect
+             y="1042.8622"
+             x="6.5"
+             height="4.0000005"
+             width="4.0000005"
+             id="rect15633-8"
+             style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <circle
+             r="1.5"
+             cy="1050.7622"
+             cx="1.6"
+             id="path3938-9-3"
+             style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <circle
+             r="1.5"
+             cy="1037.9622"
+             cx="14.4"
+             id="path3938-7-3"
+             style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        </g>
       </g>
     </g>
   </g>

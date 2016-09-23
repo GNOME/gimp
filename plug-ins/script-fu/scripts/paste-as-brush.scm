@@ -20,7 +20,7 @@
 
 (define (script-fu-paste-as-brush name filename spacing)
 
-  (let* ((brush-image (car (gimp-edit-paste-as-new)))
+  (let* ((brush-image (car (gimp-edit-paste-as-new-image)))
          (brush-draw 0)
          (type 0)
          (path 0))

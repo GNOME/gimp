@@ -144,13 +144,13 @@ tips_dialog_create (Gimp *gimp)
   button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
                                   _("_Previous Tip"), RESPONSE_PREVIOUS);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_STOCK_PREVIOUS,
+                        gtk_image_new_from_icon_name ("go-previous",
                                                       GTK_ICON_SIZE_BUTTON));
 
   button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
                                   _("_Next Tip"), RESPONSE_NEXT);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_STOCK_NEXT,
+                        gtk_image_new_from_icon_name ("go-next",
                                                       GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (tips_dialog),
@@ -191,7 +191,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_label_set_selectable (GTK_LABEL (tip_label), TRUE);
   gtk_label_set_justify (GTK_LABEL (tip_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (tip_label), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (tip_label), 0.5, 0.0);
+  gtk_label_set_yalign (GTK_LABEL (tip_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), tip_label, TRUE, TRUE, 0);
   gtk_widget_show (tip_label);
 

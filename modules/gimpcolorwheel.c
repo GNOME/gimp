@@ -353,7 +353,7 @@ gimp_color_wheel_size_allocate (GtkWidget     *widget,
   gint                   focus_width;
   gint                   focus_pad;
 
-  gtk_widget_set_allocation (widget, allocation);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   gtk_widget_style_get (widget,
                         "focus-line-width", &focus_width,

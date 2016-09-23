@@ -154,7 +154,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options),
                                         _("Brush"), 2,
                                         "brush-view-type", "brush-view-size",
-                                        "gimp-brush-editor");
+                                        "gimp-brush-editor",
+                                        _("Edit this brush"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -214,7 +215,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                            _("Dynamics"), 2,
                                            "dynamics-view-type",
                                            "dynamics-view-size",
-                                           "gimp-dynamics-editor");
+                                           "gimp-dynamics-editor",
+                                           _("Edit this dynamics"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -363,7 +365,8 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
                                         "gradient-view-type",
                                         "gradient-view-size",
                                         "gradient-reverse",
-                                        "gimp-gradient-editor");
+                                        "gimp-gradient-editor",
+                                        _("Edit this gradient"));
       gtk_container_add (GTK_CONTAINER (inner_frame), box);
       gtk_widget_show (box);
     }

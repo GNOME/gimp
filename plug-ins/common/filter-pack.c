@@ -931,7 +931,7 @@ fp_create_table_entry (GtkWidget   **box,
   /* Delayed translation applied here */
   label = gtk_label_new (gettext (description));
 
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_widget_show (label);
 
   table = gtk_table_new (2, 1, FALSE);
@@ -1389,7 +1389,8 @@ fp_advanced_dialog (GtkWidget *parent)
           gimp_label_set_attributes (GTK_LABEL (label),
                                      PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                                      -1);
-          gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+          gtk_label_set_xalign (GTK_LABEL (label), 1.0);
+          gtk_label_set_yalign (GTK_LABEL (label), 1.0);
         }
 
       gtk_widget_show (label);

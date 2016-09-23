@@ -112,7 +112,7 @@ gimp_color_panel_button_press (GtkWidget      *widget,
 
       color_button = GIMP_COLOR_BUTTON (widget);
       color_panel  = GIMP_COLOR_PANEL (widget);
-      ui_manager   = GTK_UI_MANAGER (color_button->popup_menu);
+      ui_manager   = gimp_color_button_get_ui_manager (color_button);
 
       group = gtk_ui_manager_get_action_groups (ui_manager)->data;
 
@@ -162,15 +162,17 @@ gimp_color_panel_clicked (GtkButton *button)
 
   if (! panel->color_dialog)
     {
+      GimpColorButton *color_button = GIMP_COLOR_BUTTON (button);
+
       panel->color_dialog =
         gimp_color_dialog_new (NULL, panel->context,
-                               GIMP_COLOR_BUTTON (button)->title,
+                               gimp_color_button_get_title (color_button),
                                NULL, NULL,
                                GTK_WIDGET (button),
                                NULL, NULL,
                                &color,
-                               gimp_color_button_get_update (GIMP_COLOR_BUTTON (button)),
-                               gimp_color_button_has_alpha (GIMP_COLOR_BUTTON (button)));
+                               gimp_color_button_get_update (color_button),
+                               gimp_color_button_has_alpha (color_button));
 
       g_signal_connect (panel->color_dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
@@ -252,8 +254,8 @@ gimp_color_panel_set_context (GimpColorPanel *panel,
   panel->context = context;
 
   if (context)
-    gimp_color_area_set_color_config (GIMP_COLOR_AREA (GIMP_COLOR_BUTTON (panel)->color_area),
-                                      context->gimp->config->color_management);
+    gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (panel),
+                                        context->gimp->config->color_management);
 }
 
 

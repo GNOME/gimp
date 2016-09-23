@@ -21,6 +21,7 @@ GimpAddMaskType
 GimpBlendMode
 GimpBrushGeneratedShape
 GimpBucketFillMode
+GimpCapStyle
 GimpChannelOps
 GimpChannelType
 GimpCheckSize
@@ -43,6 +44,7 @@ GimpImageBaseType
 GimpImageType
 GimpInkBlobType
 GimpInterpolationType
+GimpJoinStyle
 GimpMaskApplyMode
 GimpMergeType
 GimpMessageHandlerType
@@ -61,6 +63,7 @@ GimpRunMode
 GimpSelectCriterion
 GimpSizeType
 GimpStackTraceMode
+GimpStrokeMethod
 GimpTextDirection
 GimpTextHintStyle
 GimpTextJustification
@@ -74,6 +77,7 @@ GIMP_TYPE_ADD_MASK_TYPE
 GIMP_TYPE_BLEND_MODE
 GIMP_TYPE_BRUSH_GENERATED_SHAPE
 GIMP_TYPE_BUCKET_FILL_MODE
+GIMP_TYPE_CAP_STYLE
 GIMP_TYPE_CHANNEL_OPS
 GIMP_TYPE_CHANNEL_TYPE
 GIMP_TYPE_CHECK_SIZE
@@ -96,6 +100,7 @@ GIMP_TYPE_IMAGE_BASE_TYPE
 GIMP_TYPE_IMAGE_TYPE
 GIMP_TYPE_INK_BLOB_TYPE
 GIMP_TYPE_INTERPOLATION_TYPE
+GIMP_TYPE_JOIN_STYLE
 GIMP_TYPE_MASK_APPLY_MODE
 GIMP_TYPE_MERGE_TYPE
 GIMP_TYPE_MESSAGE_HANDLER_TYPE
@@ -114,6 +119,7 @@ GIMP_TYPE_RUN_MODE
 GIMP_TYPE_SELECT_CRITERION
 GIMP_TYPE_SIZE_TYPE
 GIMP_TYPE_STACK_TRACE_MODE
+GIMP_TYPE_STROKE_METHOD
 GIMP_TYPE_TEXT_DIRECTION
 GIMP_TYPE_TEXT_HINT_STYLE
 GIMP_TYPE_TEXT_JUSTIFICATION
@@ -122,7 +128,9 @@ GIMP_TYPE_TRANSFORM_DIRECTION
 GIMP_TYPE_TRANSFORM_RESIZE
 GIMP_TYPE_USER_DIRECTORY
 GIMP_TYPE_VECTORS_STROKE_TYPE
+gimp_add_mask_type_get_type
 gimp_brush_generated_shape_get_type
+gimp_cap_style_get_type
 gimp_component_type_get_type
 gimp_convert_palette_type_get_type
 gimp_convolve_type_get_type
@@ -131,6 +139,7 @@ gimp_gradient_segment_color_get_type
 gimp_gradient_segment_type_get_type
 gimp_hue_range_get_type
 gimp_ink_blob_type_get_type
+gimp_join_style_get_type
 gimp_mask_apply_mode_get_type
 gimp_merge_type_get_type
 gimp_offset_type_get_type
@@ -138,7 +147,6 @@ gimp_orientation_type_get_type
 gimp_precision_get_type
 gimp_rotation_type_get_type
 gimp_select_criterion_get_type
-gimp_add_mask_type_get_type
 gimp_blend_mode_get_type
 gimp_bucket_fill_mode_get_type
 gimp_channel_ops_get_type
@@ -166,6 +174,7 @@ gimp_repeat_mode_get_type
 gimp_run_mode_get_type
 gimp_size_type_get_type
 gimp_stack_trace_mode_get_type
+gimp_stroke_method_get_type
 gimp_text_direction_get_type
 gimp_text_hint_style_get_type
 gimp_text_justification_get_type
@@ -244,6 +253,7 @@ gimp_param_memsize_get_type
 GimpMetadata
 GimpMetadataLoadFlags
 GimpMetadataSaveFlags
+GimpMetadataColorspace
 gimp_metadata_new
 gimp_metadata_duplicate
 gimp_metadata_deserialize
@@ -256,6 +266,8 @@ gimp_metadata_set_pixel_size
 gimp_metadata_set_bits_per_sample
 gimp_metadata_get_resolution
 gimp_metadata_set_resolution
+gimp_metadata_get_colorspace
+gimp_metadata_set_colorspace
 gimp_metadata_is_tag_supported
 </SECTION>
 

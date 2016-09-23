@@ -127,7 +127,7 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_widget_show (vbox);
 
   dialog->desc_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (dialog->desc_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (dialog->desc_label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (dialog->desc_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,

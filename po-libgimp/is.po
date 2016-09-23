@@ -3,14 +3,14 @@
 # Copyright (C) 2008, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-07 07:12+0000\n"
-"PO-Revision-Date: 2015-12-07 14:36+0000\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-08-15 13:10+0000\n"
+"PO-Revision-Date: 2016-08-22 22:04+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -21,22 +21,22 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1167
+#: ../libgimp/gimp.c:1204
 msgid "success"
 msgstr "tókst"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1171
+#: ../libgimp/gimp.c:1208
 msgid "execution error"
 msgstr "keyrsluvilla"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1175
+#: ../libgimp/gimp.c:1212
 msgid "calling error"
 msgstr "villa í kalli"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1179
+#: ../libgimp/gimp.c:1216
 msgid "cancelled"
 msgstr "hætt við"
 
@@ -481,7 +481,6 @@ msgid "Pattern fill"
 msgstr "Mynsturfylla"
 
 #: ../libgimpbase/gimpbaseenums.c:162
-#| msgid "Button 0"
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Endi"
@@ -492,8 +491,6 @@ msgid "Round"
 msgstr "Rúnnað"
 
 #: ../libgimpbase/gimpbaseenums.c:164
-#| msgctxt "brush-generated-shape"
-#| msgid "Square"
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Ferningslaga"
@@ -1089,7 +1086,6 @@ msgid "Value"
 msgstr "Litgildi"
 
 #: ../libgimpbase/gimpbaseenums.c:1550
-#| msgid "Alpha"
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa gegnsæi"
@@ -1105,7 +1101,6 @@ msgid "Points"
 msgstr "Punktar"
 
 #: ../libgimpbase/gimpbaseenums.c:1641
-#| msgid "_Stroke"
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Stroklína"
@@ -1220,12 +1215,12 @@ msgstr "Get aðeins hlaðið inn lýsigögnum úr staðværum skrám"
 msgid "Can save metadata only to local files"
 msgstr "Get aðeins vistað lýsigögn í staðværar skrár"
 
-#: ../libgimpbase/gimpmetadata.c:656
+#: ../libgimpbase/gimpmetadata.c:658
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Þáttun EXIF-gagna mistókst."
 
-#: ../libgimpbase/gimpmetadata.c:710
+#: ../libgimpbase/gimpmetadata.c:709
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Þáttun XMP-gagna mistókst."
@@ -1259,39 +1254,74 @@ msgstr "Tengingin við org.freedesktop.FileManager1 mistókst: "
 msgid "Calling ShowItems failed: "
 msgstr "Mistókst að kalla á ShowItems: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:235
+#: ../libgimpcolor/gimpcolorprofile.c:269
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' lítur ekki út fyrir að vera ICC litasnið"
 
-#: ../libgimpcolor/gimpcolorprofile.c:281
+#: ../libgimpcolor/gimpcolorprofile.c:315
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Gögnin líta ekki út fyrir að vera ICC litasnið"
 
-#: ../libgimpcolor/gimpcolorprofile.c:338
+#: ../libgimpcolor/gimpcolorprofile.c:372
 msgid "Could not save color profile to memory"
 msgstr "Gat ekki vistað litasnið í minni"
 
-#: ../libgimpcolor/gimpcolorprofile.c:525
+#: ../libgimpcolor/gimpcolorprofile.c:590
 msgid "(unnamed profile)"
 msgstr "(nafnlaust litasnið)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:567
+#: ../libgimpcolor/gimpcolorprofile.c:632
 #, c-format
-#| msgid "Profile: %s"
 msgid "Model: %s"
 msgstr "Gerð: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:576
+#: ../libgimpcolor/gimpcolorprofile.c:641
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Framleiðandi: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:585
+#: ../libgimpcolor/gimpcolorprofile.c:650
 #, c-format
-#| msgid "Copyright:"
 msgid "Copyright: %s"
 msgstr "Höfundarréttur: %s"
+
+#: ../libgimpconfig/gimpconfigenums.c:24
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr "Engin litstýring"
+
+#: ../libgimpconfig/gimpconfigenums.c:25
+#| msgctxt "color-management-mode"
+#| msgid "Color managed display"
+msgctxt "color-management-mode"
+msgid "Color-managed display"
+msgstr "Litstýrður skjár"
+
+#: ../libgimpconfig/gimpconfigenums.c:26
+msgctxt "color-management-mode"
+msgid "Soft-proofing"
+msgstr "Sýndarpróförk"
+
+#: ../libgimpconfig/gimpconfigenums.c:57
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr "Skynjanlegt"
+
+#: ../libgimpconfig/gimpconfigenums.c:58
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "Afstæð litmæling"
+
+#: ../libgimpconfig/gimpconfigenums.c:59
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "Litmettun"
+
+#: ../libgimpconfig/gimpconfigenums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr "Algild litmæling"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1300,15 +1330,15 @@ msgstr "Höfundarréttur: %s"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:54
-msgid "Mode of operation for color management."
-msgstr "Vinnsluhamur litastýringar."
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "How images are displayed on screen."
+msgstr "Hvernig myndir eru birtar á skjá."
 
-#: ../libgimpconfig/gimpcolorconfig.c:57
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Litasnið fyrir (aðal)skjáinn þinn."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -1318,7 +1348,7 @@ msgstr ""
 "gluggastjórnunarkerfinu.  Forstillta skjálitasniðið hér er þá einvörðungu "
 "notað til vara."
 
-#: ../libgimpconfig/gimpcolorconfig.c:65
+#: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
@@ -1326,21 +1356,36 @@ msgstr ""
 "Það RGB-litasnið vinnulitrýmdar sem hefur forgang. Boðið verður upp á það "
 "ásamt innbyggðu RGB-litasniði þegar hægt er að velja litasnið."
 
-#: ../libgimpconfig/gimpcolorconfig.c:69
+#: ../libgimpconfig/gimpcolorconfig.c:67
+#| msgid ""
+#| "The preferred RGB working space color profile. It will be offered next to "
+#| "the built-in RGB profile when a color profile can be chosen."
+msgid ""
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
+msgstr ""
+"Það grátóna-litasnið vinnulitrýmdar sem hefur forgang. Boðið verður upp á það "
+"ásamt innbyggðu grátóna-litasniði þegar hægt er að velja litasnið."
+
+#: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK litasniðið sem notað er til að umbreyta á milli RGB og CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:74
+#| msgid ""
+#| "The color profile to use for soft proofing from your image's color space "
+#| "to some other color space, including soft proofing to a printer or other "
+#| "output device profile. "
 msgid ""
-"The color profile to use for soft proofing from your image's color space to "
-"some other color space, including soft proofing to a printer or other output "
+"The color profile to use for soft-proofing from your image's color space to "
+"some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
 "Litasniðið sem á að nota við gerð sýndarprófarkar út frá litrýmd myndar og "
 "sem umbreytir henni í einhverja aðra litrýmd, þar með talið gerð "
 "sýndarprófarkar fyrir prentara eða eitthvað annað úttakstæki. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:77
+#: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1352,14 +1397,21 @@ msgstr ""
 "(flestir skjáir nota umbreytingarfylki) myndi val á skynjanlegu "
 "myndgerðarmarkmiði gefa þér afstæða litmælingu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:84
+#: ../libgimpconfig/gimpcolorconfig.c:86
+#| msgid ""
+#| "Do use black point compensation (unless you know you have a reason not "
+#| "to). "
 msgid ""
-"Do use black point compensation (unless you know you have a reason not to). "
+"Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
-"Nota BPC svartgildismótvægi (nema þú hafir gilda ástæðu til að gera það "
-"ekki). "
+"Nota BPC svartgildismótvægi (nema þú hafir gilda ástæðu til að gera það ekki)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:88
+#: ../libgimpconfig/gimpcolorconfig.c:90
+msgid ""
+"When disabled, image display might be of better quality at the cost of speed."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1369,93 +1421,138 @@ msgstr ""
 "(venjulega skjárinn þinn). Prófaðu alla möguleikana og veldu það sem lítur "
 "best út. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:93
+#: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 "Prófaðu með eða án BPC svartgildisjöfnunar og veldu það sem lítur best út. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:97
+#: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
-"When enabled, the print simulation will mark colors which can not be "
+"When disabled, soft-proofing might be of better quality at the cost of speed."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:107
+#| msgid ""
+#| "When enabled, the print simulation will mark colors which can not be "
+#| "represented in the target color space."
+msgid ""
+"When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
 "Þegar þetta er virkt, mun sýndarprentunin merkja þá liti sem ekki er hægt að "
 "þýða yfir í úttakslitrýmd."
 
-#: ../libgimpconfig/gimpcolorconfig.c:101
+#: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Litur sem notaður er til að merkja þá liti sem falla utan litrófs."
 
-#: ../libgimpconfig/gimpcolorconfig.c:408
-#: ../libgimpconfig/gimpcolorconfig.c:511
+#: ../libgimpconfig/gimpcolorconfig.c:199
+#| msgid "Mode of operation:"
+msgid "Mode of operation"
+msgstr "Aðgerðahamur"
+
+#: ../libgimpconfig/gimpcolorconfig.c:207
+msgid "Preferred RGB profile"
+msgstr "Forgangs-RGB litasnið"
+
+#: ../libgimpconfig/gimpcolorconfig.c:214
+msgid "Preferred grayscale profile"
+msgstr "Forgangs grátóna litasnið"
+
+#: ../libgimpconfig/gimpcolorconfig.c:221
+#| msgid "Monitor profile:"
+msgid "CMYK profile"
+msgstr "CMYK litasnið"
+
+#: ../libgimpconfig/gimpcolorconfig.c:228
+#| msgid "Monitor profile:"
+msgid "Monitor profile"
+msgstr "Litasnið skjás"
+
+#: ../libgimpconfig/gimpcolorconfig.c:235
+#| msgid "Monitor profile:"
+msgid "Use the system monitor profile"
+msgstr "Reyna að nota skjálitasnið kerfisins"
+
+#: ../libgimpconfig/gimpcolorconfig.c:243
+msgid "Simulation profile for soft-proofing"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:250
+msgid "Display rendering intent"
+msgstr "Myndgerðarmarkmið fyrir skjá"
+
+#: ../libgimpconfig/gimpcolorconfig.c:258
+#| msgid "_Black Point Compensation"
+msgid "Use black point compensation for the display"
+msgstr "Nota svartgildismótvægi (BPC) fyrir birtingu á skjá"
+
+#: ../libgimpconfig/gimpcolorconfig.c:265
+msgid "Optimize display color transformations"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:272
+msgid "Soft-proofing rendering intent"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:280
+msgid "Use black point compensation for soft-proofing"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:287
+msgid "Optimize soft-proofing color transformations"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:294
+msgid "Mark out of gamut colors"
+msgstr "Merkja liti utan litrófs"
+
+#: ../libgimpconfig/gimpcolorconfig.c:301
+msgid "Out of gamut warning color"
+msgstr "Litur merkingar fyrir liti utan litrófs"
+
+#: ../libgimpconfig/gimpcolorconfig.c:656
+#: ../libgimpconfig/gimpcolorconfig.c:818
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Litasniðið '%s' er ekki fyrir RGB litrýmd."
 
-#: ../libgimpconfig/gimpcolorconfig.c:439
-#: ../libgimpconfig/gimpcolorconfig.c:552
+#: ../libgimpconfig/gimpcolorconfig.c:694
+#: ../libgimpconfig/gimpcolorconfig.c:859
+#, c-format
+#| msgid "Color profile '%s' is not for RGB color space."
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr "Litasniðið '%s' er ekki fyrir GRÁA litrýmd."
+
+#: ../libgimpconfig/gimpcolorconfig.c:732
+#: ../libgimpconfig/gimpcolorconfig.c:900
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Litasniðið '%s' er ekki fyrir CMYK litrýmd."
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:24
-msgctxt "color-management-mode"
-msgid "No color management"
-msgstr "Engin litstýring"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:25
-msgctxt "color-management-mode"
-msgid "Color managed display"
-msgstr "Litstýrður skjár"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:26
-msgctxt "color-management-mode"
-msgid "Print simulation"
-msgstr "Sýndarprentun"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57
-msgctxt "color-rendering-intent"
-msgid "Perceptual"
-msgstr "Skynjanlegt"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:58
-msgctxt "color-rendering-intent"
-msgid "Relative colorimetric"
-msgstr "Afstæð litmæling"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59
-msgctxt "color-rendering-intent"
-msgid "Saturation"
-msgstr "Litmettun"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:60
-msgctxt "color-rendering-intent"
-msgid "Absolute colorimetric"
-msgstr "Algild litmæling"
-
-#: ../libgimpconfig/gimpconfig-deserialize.c:110
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "gildi teikns %s er ekki gildur UTF-8-strengur"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:452
+#: ../libgimpconfig/gimpconfig-deserialize.c:464
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "vænti 'já' eða 'nei' fyrir bólska teiknið %s, fékk '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:526
+#: ../libgimpconfig/gimpconfig-deserialize.c:538
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ógilt gildi '%s' fyrir teikn %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:541
+#: ../libgimpconfig/gimpconfig-deserialize.c:553
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ógilt gildi '%ld' fyrir teikn %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:610
+#: ../libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "við að þátta teikn '%s': %s"
@@ -1571,20 +1668,20 @@ msgstr "Svar_t"
 msgid "_White"
 msgstr "H_vítt"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
 msgid "All files (*.*)"
 msgstr "Allar skrár (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:109
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC litasnið (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:216
-#: ../libgimpwidgets/gimppatheditor.c:248
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
+#: ../libgimpwidgets/gimppatheditor.c:249
 msgid "Folder"
 msgstr "Mappa"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:221
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:330
 msgid "Not a regular file."
 msgstr "Ekki venjuleg skrá."
 
@@ -1602,11 +1699,10 @@ msgid "Manufacturer: "
 msgstr "Framleiðandi: "
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:186
-#| msgid "Copyright:"
 msgid "Copyright: "
 msgstr "Höfundarréttur: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:109
+#: ../libgimpwidgets/gimpcolorscales.c:111
 msgid "Scales"
 msgstr "Kvarðar"
 
@@ -1630,34 +1726,144 @@ msgstr ""
 msgid "HTML _notation:"
 msgstr "HT_ML litkóði:"
 
-#: ../libgimpwidgets/gimpfileentry.c:150
+#: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
 msgstr "Sýna möppuna sem inniheldur þessa skrá í skráarstjóra"
 
-#: ../libgimpwidgets/gimpfileentry.c:227
+#: ../libgimpwidgets/gimpfileentry.c:229
 msgid "Open a file selector to browse your folders"
 msgstr "Opna skráaveljara til að skoða möppurnar þínar"
 
-#: ../libgimpwidgets/gimpfileentry.c:228
+#: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your files"
 msgstr "Opna skráaveljara til að skoða skrárnar þínar"
 
-#: ../libgimpwidgets/gimpfileentry.c:395
+#: ../libgimpwidgets/gimpfileentry.c:397
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Get ekki birt skrá í skráarstjóra: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:422
+#: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select Folder"
 msgstr "Veldu möppu"
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:426
 msgid "Select File"
 msgstr "Veldu skrá"
 
 #: ../libgimpwidgets/gimphelpui.c:433
 msgid "Press F1 for more help"
 msgstr "Ýttu á F1 til að fá meiri hjálp"
+
+#: ../libgimpwidgets/gimpicons.c:61
+msgid "Anchor"
+msgstr "Akkeri"
+
+#: ../libgimpwidgets/gimpicons.c:62
+msgid "C_enter"
+msgstr "_Miðja"
+
+#: ../libgimpwidgets/gimpicons.c:63
+msgid "_Duplicate"
+msgstr "_Tvítaka"
+
+#: ../libgimpwidgets/gimpicons.c:64
+msgid "_Edit"
+msgstr "Br_eyta"
+
+#: ../libgimpwidgets/gimpicons.c:65
+msgid "Linked"
+msgstr "Tengt"
+
+#: ../libgimpwidgets/gimpicons.c:66
+msgid "Paste as New"
+msgstr "Líma sem nýtt"
+
+#: ../libgimpwidgets/gimpicons.c:67
+msgid "Paste Into"
+msgstr "Líma inn í"
+
+#: ../libgimpwidgets/gimpicons.c:68
+msgid "_Reset"
+msgstr "_Frumstilla"
+
+#: ../libgimpwidgets/gimpicons.c:69
+msgid "Visible"
+msgstr "Sýnilegt"
+
+#: ../libgimpwidgets/gimpicons.c:70
+msgid "Ne_xt"
+msgstr "Næ_sta"
+
+#: ../libgimpwidgets/gimpicons.c:71
+msgid "Pre_vious"
+msgstr "_Fyrri"
+
+#: ../libgimpwidgets/gimpicons.c:72
+msgid "_Open"
+msgstr "_Opna"
+
+#: ../libgimpwidgets/gimpicons.c:73
+msgid "_Save"
+msgstr "Vi_sta"
+
+#: ../libgimpwidgets/gimpicons.c:74
+msgid "Save as"
+msgstr "Vista sem"
+
+#: ../libgimpwidgets/gimpicons.c:75
+#| msgid "cancelled"
+msgid "_Cancel"
+msgstr "_Hætta við"
+
+#: ../libgimpwidgets/gimpicons.c:76
+msgid "_Quit"
+msgstr "Hæ_tta"
+
+#: ../libgimpwidgets/gimpicons.c:127 ../libgimpwidgets/gimpicons.c:131
+msgid "_Stroke"
+msgstr "_Stroka"
+
+#: ../libgimpwidgets/gimpicons.c:150
+msgid "L_etter Spacing"
+msgstr "St_afabil"
+
+#: ../libgimpwidgets/gimpicons.c:151
+msgid "L_ine Spacing"
+msgstr "Línub_il"
+
+#: ../libgimpwidgets/gimpicons.c:152
+msgid "I_ndent"
+msgstr "I_nndráttur"
+
+#: ../libgimpwidgets/gimpicons.c:176
+msgid "Re_size"
+msgstr "_Breyta stærð"
+
+#: ../libgimpwidgets/gimpicons.c:177 ../libgimpwidgets/gimpicons.c:312
+msgid "_Scale"
+msgstr "_Kvarða"
+
+#: ../libgimpwidgets/gimpicons.c:284
+msgid "Cr_op"
+msgstr "_Utansníða"
+
+#: ../libgimpwidgets/gimpicons.c:292
+msgid "_Select"
+msgstr "_Velja"
+
+#: ../libgimpwidgets/gimpicons.c:295 ../libgimpwidgets/gimpicons.c:307
+#: ../libgimpwidgets/gimpicons.c:318
+msgid "_Transform"
+msgstr "Umbrey_ta"
+
+#: ../libgimpwidgets/gimpicons.c:311
+msgid "_Rotate"
+msgstr "S_núa"
+
+#: ../libgimpwidgets/gimpicons.c:314
+msgid "_Shear"
+msgstr "_Skekkja"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:223
 msgid "Kilobytes"
@@ -1707,7 +1913,7 @@ msgid_plural "All %d pages selected"
 msgstr[0] "%d síða valin"
 msgstr[1] "Allar %d síðurnar valdar"
 
-#: ../libgimpwidgets/gimppatheditor.c:239
+#: ../libgimpwidgets/gimppatheditor.c:240
 msgid "Writable"
 msgstr "Skrifanlegt"
 
@@ -1724,97 +1930,20 @@ msgstr ""
 msgid "_Preview"
 msgstr "_Forsýning"
 
-#: ../libgimpwidgets/gimppreviewarea.c:103
+#: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr "Athuga stærð"
 
-#: ../libgimpwidgets/gimppreviewarea.c:110
+#: ../libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr "Athuga stíl"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1971
+#: ../libgimpwidgets/gimppropwidgets.c:2110
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Þessi textareitur er takmarkaður við %d staf."
 msgstr[1] "Þessi textareitur er takmarkaður við %d stafi."
-
-#: ../libgimpwidgets/gimpstock.c:60
-msgid "Anchor"
-msgstr "Akkeri"
-
-#: ../libgimpwidgets/gimpstock.c:61
-msgid "C_enter"
-msgstr "_Miðja"
-
-#: ../libgimpwidgets/gimpstock.c:62
-msgid "_Duplicate"
-msgstr "_Tvítaka"
-
-#: ../libgimpwidgets/gimpstock.c:63
-msgid "_Edit"
-msgstr "Br_eyta"
-
-#: ../libgimpwidgets/gimpstock.c:64
-msgid "Linked"
-msgstr "Tengt"
-
-#: ../libgimpwidgets/gimpstock.c:65
-msgid "Paste as New"
-msgstr "Líma sem nýtt"
-
-#: ../libgimpwidgets/gimpstock.c:66
-msgid "Paste Into"
-msgstr "Líma inn í"
-
-#: ../libgimpwidgets/gimpstock.c:67
-msgid "_Reset"
-msgstr "_Frumstilla"
-
-#: ../libgimpwidgets/gimpstock.c:68
-msgid "Visible"
-msgstr "Sýnilegt"
-
-#: ../libgimpwidgets/gimpstock.c:107 ../libgimpwidgets/gimpstock.c:111
-msgid "_Stroke"
-msgstr "_Stroka"
-
-#: ../libgimpwidgets/gimpstock.c:123
-msgid "L_etter Spacing"
-msgstr "St_afabil"
-
-#: ../libgimpwidgets/gimpstock.c:124
-msgid "L_ine Spacing"
-msgstr "Línub_il"
-
-#: ../libgimpwidgets/gimpstock.c:140
-msgid "Re_size"
-msgstr "_Breyta stærð"
-
-#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:276
-msgid "_Scale"
-msgstr "_Kvarða"
-
-#: ../libgimpwidgets/gimpstock.c:248
-msgid "Cr_op"
-msgstr "_Utansníða"
-
-#: ../libgimpwidgets/gimpstock.c:256
-msgid "_Select"
-msgstr "_Velja"
-
-#: ../libgimpwidgets/gimpstock.c:259 ../libgimpwidgets/gimpstock.c:271
-#: ../libgimpwidgets/gimpstock.c:282
-msgid "_Transform"
-msgstr "Umbrey_ta"
-
-#: ../libgimpwidgets/gimpstock.c:275
-msgid "_Rotate"
-msgstr "S_núa"
-
-#: ../libgimpwidgets/gimpstock.c:278
-msgid "_Shear"
-msgstr "_Skekkja"
 
 #: ../libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -1965,76 +2094,76 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Renna frá"
 
-#: ../modules/color-selector-cmyk.c:84
+#: ../modules/color-selector-cmyk.c:82
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK litaval (notar litasnið)"
 
-#: ../modules/color-selector-cmyk.c:118
+#: ../modules/color-selector-cmyk.c:116
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk.c:140
+#: ../modules/color-selector-cmyk.c:138
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk.c:142
+#: ../modules/color-selector-cmyk.c:140
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk.c:144
+#: ../modules/color-selector-cmyk.c:142
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk.c:146
+#: ../modules/color-selector-cmyk.c:144
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk.c:150
+#: ../modules/color-selector-cmyk.c:148
 msgid "Cyan"
 msgstr "Blágrænt"
 
-#: ../modules/color-selector-cmyk.c:151
+#: ../modules/color-selector-cmyk.c:149
 msgid "Magenta"
 msgstr "Fjólublátt"
 
-#: ../modules/color-selector-cmyk.c:152
+#: ../modules/color-selector-cmyk.c:150
 msgid "Yellow"
 msgstr "Gult"
 
-#: ../modules/color-selector-cmyk.c:153
+#: ../modules/color-selector-cmyk.c:151
 msgid "Black"
 msgstr "Svart"
 
-#: ../modules/color-selector-cmyk.c:374
+#: ../modules/color-selector-cmyk.c:380
 msgid "Profile: (none)"
 msgstr "Litasnið: (ekkert)"
 
-#: ../modules/color-selector-cmyk.c:386
+#: ../modules/color-selector-cmyk.c:392
 #, c-format
 msgid "Profile: %s"
 msgstr "Litasnið: %s"
 
-#: ../modules/color-selector-water.c:82
+#: ../modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
 msgstr "Vatnslitaval"
 
-#: ../modules/color-selector-water.c:118
+#: ../modules/color-selector-water.c:130
 msgid "Watercolor"
 msgstr "Vatnslitur"
 
-#: ../modules/color-selector-water.c:188
+#: ../modules/color-selector-water.c:200
 msgid "Pressure"
 msgstr "Þrýstingur"
 
-#: ../modules/color-selector-wheel.c:70
+#: ../modules/color-selector-wheel.c:72
 msgid "HSV color wheel"
 msgstr "HSV litahringur"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:104
 msgid "Wheel"
 msgstr "Hringur"
 
@@ -2392,11 +2521,15 @@ msgstr "Tritanopia (lágnæmni fyrir bláu)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Hermisía fyrir lithömlun (Brettel-Vienot-Mollon reiknirit)"
 
-#: ../modules/display-filter-color-blind.c:256
+#: ../modules/display-filter-color-blind.c:252
+msgid "Deficiency"
+msgstr "Lithömlun"
+
+#: ../modules/display-filter-color-blind.c:258
 msgid "Color Deficient Vision"
 msgstr "Lithömluð sýn"
 
-#: ../modules/display-filter-color-blind.c:417
+#: ../modules/display-filter-color-blind.c:419
 msgid "Color _deficiency type:"
 msgstr "Tegund _lithömlunar:"
 
@@ -2404,11 +2537,11 @@ msgstr "Tegund _lithömlunar:"
 msgid "Gamma color display filter"
 msgstr "Litrófs-skjálitasía"
 
-#: ../modules/display-filter-gamma.c:127
+#: ../modules/display-filter-gamma.c:124 ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "Litróf (gamma)"
 
-#: ../modules/display-filter-gamma.c:224
+#: ../modules/display-filter-gamma.c:226
 msgid "_Gamma:"
 msgstr "_Litróf:"
 
@@ -2416,23 +2549,24 @@ msgstr "_Litróf:"
 msgid "High Contrast color display filter"
 msgstr "Há-birtuskil skjálitasía"
 
-#: ../modules/display-filter-high-contrast.c:127
+#: ../modules/display-filter-high-contrast.c:124
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "Birtuskil"
 
-#: ../modules/display-filter-high-contrast.c:224
+#: ../modules/display-filter-high-contrast.c:226
 msgid "Contrast c_ycles:"
 msgstr "_Umferðir birtuskila:"
 
-#: ../modules/display-filter-lcms.c:102
+#: ../modules/display-filter-lcms.c:92
 msgid "Color management display filter using ICC color profiles"
 msgstr "Litastýrðar skjásíur sem nota ICC litasnið"
 
-#: ../modules/display-filter-lcms.c:134
+#: ../modules/display-filter-lcms.c:124
 msgid "Color Management"
 msgstr "Litastýring"
 
-#: ../modules/display-filter-lcms.c:184
+#: ../modules/display-filter-lcms.c:173
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -2440,49 +2574,71 @@ msgstr ""
 "Þessi sía fær stillingar sínar úr Litastýring-hlutanum í "
 "kjörstillingaglugganum."
 
-#: ../modules/display-filter-lcms.c:198
+#: ../modules/display-filter-lcms.c:187
 msgid "Mode of operation:"
 msgstr "Aðgerðahamur:"
 
-#: ../modules/display-filter-lcms.c:205
+#: ../modules/display-filter-lcms.c:194
 msgid "Image profile:"
 msgstr "Litasnið myndar:"
 
-#: ../modules/display-filter-lcms.c:213
+#: ../modules/display-filter-lcms.c:202
 msgid "Monitor profile:"
 msgstr "Litasnið skjás:"
 
-#: ../modules/display-filter-lcms.c:221
+#: ../modules/display-filter-lcms.c:210
 msgid "Print simulation profile:"
 msgstr "Litasnið prenthermingar:"
 
-#: ../modules/display-filter-lcms.c:390
+#: ../modules/display-filter-lcms.c:364
 msgid "None"
 msgstr "Ekkert"
 
-#: ../modules/display-filter-proof.c:93
+#: ../modules/display-filter-proof.c:91
 msgid "Color proof filter using ICC color profile"
 msgstr "Litaprófunarsía sem styðst við ICC litasnið"
 
-#: ../modules/display-filter-proof.c:143
+#: ../modules/display-filter-proof.c:129
+#| msgid "_Intent:"
+msgid "Intent"
+msgstr "Myndgerðarmarkmið"
+
+#: ../modules/display-filter-proof.c:137
+#| msgid "_Black Point Compensation"
+msgid "Black point compensation"
+msgstr "BPC svartgildisjöfnun"
+
+#: ../modules/display-filter-proof.c:144
+#| msgid "_Profile:"
+msgid "Profile"
+msgstr "Forsíða"
+
+#: ../modules/display-filter-proof.c:149
 msgid "Color Proof"
 msgstr "Litapróförk"
 
-#: ../modules/display-filter-proof.c:296
+#: ../modules/display-filter-proof.c:292
 msgid "Choose an ICC Color Profile"
 msgstr "Veldu ICC litasnið"
 
-#: ../modules/display-filter-proof.c:316
+#: ../modules/display-filter-proof.c:314
 msgid "_Profile:"
 msgstr "_Litasnið:"
 
-#: ../modules/display-filter-proof.c:322
+#: ../modules/display-filter-proof.c:320
 msgid "_Intent:"
 msgstr "_Myndgerðarmarkmið (intent):"
 
-#: ../modules/display-filter-proof.c:327
+#: ../modules/display-filter-proof.c:325
 msgid "_Black Point Compensation"
 msgstr "_BPC svartgildisjöfnun"
+
+#~ msgid "Mode of operation for color management."
+#~ msgstr "Vinnsluhamur litastýringar."
+
+#~ msgctxt "color-management-mode"
+#~ msgid "Print simulation"
+#~ msgstr "Sýndarprentun"
 
 #~ msgid "Sans"
 #~ msgstr "Steinskrift (sans)"

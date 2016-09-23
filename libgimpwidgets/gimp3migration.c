@@ -214,3 +214,49 @@ gdk_screen_get_monitor_workarea (GdkScreen    *screen,
 {
   gdk_screen_get_monitor_geometry (screen, monitor_num, dest);
 }
+
+void
+gtk_label_set_xalign (GtkLabel *label,
+                      gfloat    xalign)
+{
+  g_return_if_fail (GTK_IS_LABEL (label));
+
+  xalign = CLAMP (xalign, 0.0, 1.0);
+
+  g_object_set (label, "xalign", xalign, NULL);
+}
+
+gfloat
+gtk_label_get_xalign (GtkLabel *label)
+{
+  gfloat xalign;
+
+  g_return_val_if_fail (GTK_IS_LABEL (label), 0.5);
+
+  g_object_get (label, "xalign", &xalign, NULL);
+
+  return xalign;
+}
+
+void
+gtk_label_set_yalign (GtkLabel *label,
+                      gfloat    yalign)
+{
+  g_return_if_fail (GTK_IS_LABEL (label));
+
+  yalign = CLAMP (yalign, 0.0, 1.0);
+
+  g_object_set (label, "yalign", yalign, NULL);
+}
+
+gfloat
+gtk_label_get_yalign (GtkLabel *label)
+{
+  gfloat yalign;
+
+  g_return_val_if_fail (GTK_IS_LABEL (label), 0.5);
+
+  g_object_get (label, "yalign", &yalign, NULL);
+
+  return yalign;
+}

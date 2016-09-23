@@ -144,7 +144,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   GtkAdjustment *return_adj;
 
   label = gtk_label_new_with_mnemonic (text);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label,
                     column, column + 1, row, row + 1,
                     GTK_FILL, GTK_FILL, 0, 0);

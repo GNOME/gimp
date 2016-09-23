@@ -46,7 +46,7 @@ static const GimpActionEntry dock_actions[] =
     NC_("dock-action", "M_ove to Screen"), NULL, NULL, NULL,
     GIMP_HELP_DOCK_CHANGE_SCREEN },
 
-  { "dock-close", GIMP_STOCK_QUIT,
+  { "dock-close", "window-close",
     NC_("dock-action", "Close Dock"), "", NULL,
     G_CALLBACK (window_close_cmd_callback),
     GIMP_HELP_DOCK_CLOSE },

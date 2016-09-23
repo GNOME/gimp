@@ -1573,7 +1573,7 @@ gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
       g_list_free (children);
     }
 
-  gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), alignment);
 
   gtk_table_attach (GTK_TABLE (gre), label, column, column+1, row, row+1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

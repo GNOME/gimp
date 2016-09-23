@@ -1916,8 +1916,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
 }
 
 void
-gimp_layer_flatten (GimpLayer   *layer,
-                    GimpContext *context)
+gimp_layer_remove_alpha (GimpLayer   *layer,
+                         GimpContext *context)
 {
   GeglBuffer *new_buffer;
   GimpRGB     background;

@@ -37,6 +37,8 @@
 
 #include "tools/gimptexttool.h"
 
+#include "dialogs/dialogs.h"
+
 #include "text-tool-commands.h"
 
 #include "gimp-intl.h"
@@ -44,11 +46,9 @@
 
 /*  local function prototypes  */
 
-static void   text_tool_load_dialog_destroyed (GtkWidget    *dialog,
-					       GObject      *tool);
-static void   text_tool_load_dialog_response  (GtkWidget    *dialog,
-					       gint          response_id,
-					       GimpTextTool *tool);
+static void   text_tool_load_dialog_response (GtkWidget    *dialog,
+                                              gint          response_id,
+                                              GimpTextTool *tool);
 
 
 /*  public functions  */
@@ -98,7 +98,7 @@ text_tool_load_cmd_callback (GtkAction *action,
   GtkWidget      *parent    = NULL;
   GtkFileChooser *chooser;
 
-  dialog = g_object_get_data (G_OBJECT (text_tool), "gimp-text-file-dialog");
+  dialog = dialogs_get_dialog (G_OBJECT (text_tool), "gimp-text-file-dialog");
 
   if (dialog)
     {
@@ -131,11 +131,8 @@ text_tool_load_cmd_callback (GtkAction *action,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_object_set_data (G_OBJECT (text_tool), "gimp-text-file-dialog", dialog);
-
-  g_signal_connect (dialog, "destroy",
-		    G_CALLBACK (text_tool_load_dialog_destroyed),
-		    text_tool);
+  dialogs_attach_dialog (G_OBJECT (text_tool),
+                         "gimp-text-file-dialog", dialog);
 
   gtk_window_set_role (GTK_WINDOW (chooser), "gimp-text-load-file");
   gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
@@ -200,13 +197,6 @@ text_tool_direction_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
-
-static void
-text_tool_load_dialog_destroyed (GtkWidget *dialog,
-				 GObject   *tool)
-{
-  g_object_set_data (tool, "gimp-text-file-dialog", NULL);
-}
 
 static void
 text_tool_load_dialog_response (GtkWidget    *dialog,

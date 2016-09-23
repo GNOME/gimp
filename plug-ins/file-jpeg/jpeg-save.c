@@ -788,7 +788,7 @@ save_dialog (void)
                     NULL);
 
   preview_size = gtk_label_new (_("File size: unknown"));
-  gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (preview_size), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (preview_size), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (preview_size),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
@@ -856,7 +856,7 @@ save_dialog (void)
                     NULL);
 
   restart_markers_label = gtk_label_new (_("Interval (MCU rows):"));
-  gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (restart_markers_label), 1.0);
   gtk_table_attach (GTK_TABLE (table), restart_markers_label, 4, 5, 1, 2,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (restart_markers_label);
@@ -1067,7 +1067,7 @@ save_dialog (void)
 
   /* Subsampling */
   label = gtk_label_new_with_mnemonic (_("Su_bsampling:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -1112,7 +1112,7 @@ save_dialog (void)
 
   /* DCT method */
   label = gtk_label_new_with_mnemonic (_("_DCT method:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 3, 4,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);

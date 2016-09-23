@@ -34,6 +34,8 @@ libappcore_a_sources = \
 	gimp-cairo.h				\
 	gimp-contexts.c				\
 	gimp-contexts.h				\
+	gimp-data-factories.c			\
+	gimp-data-factories.h			\
 	gimp-edit.c				\
 	gimp-edit.h				\
 	gimp-filter-history.c			\

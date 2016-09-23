@@ -61,7 +61,6 @@
 
 #include "app.h"
 #include "errors.h"
-#include "units.h"
 #include "language.h"
 #include "gimp-debug.h"
 
@@ -210,8 +209,6 @@ app_run (const gchar         *full_prog_name,
 
   errors_init (gimp, full_prog_name, use_debug_handler, stack_trace_mode);
 
-  units_init (gimp);
-
   /*  Check if the user's gimp_directory exists
    */
   gimpdir = gimp_directory_file (NULL);
@@ -219,7 +216,8 @@ app_run (const gchar         *full_prog_name,
   if (g_file_query_file_type (gimpdir, G_FILE_QUERY_INFO_NONE, NULL) !=
       G_FILE_TYPE_DIRECTORY)
     {
-      GimpUserInstall *install = gimp_user_install_new (be_verbose);
+      GimpUserInstall *install = gimp_user_install_new (G_OBJECT (gimp),
+                                                        be_verbose);
 
 #ifdef GIMP_CONSOLE_COMPILATION
       gimp_user_install_run (install);

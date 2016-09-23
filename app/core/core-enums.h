@@ -201,6 +201,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpMattingEngine;
 
 
+#define GIMP_TYPE_PASTE_TYPE (gimp_paste_type_get_type ())
+
+GType gimp_paste_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_PASTE_TYPE_FLOATING,
+  GIMP_PASTE_TYPE_FLOATING_INTO,
+  GIMP_PASTE_TYPE_NEW_LAYER
+} GimpPasteType;
+
+
 #define GIMP_TYPE_ALIGNMENT_TYPE (gimp_alignment_type_get_type ())
 
 GType gimp_alignment_type_get_type (void) G_GNUC_CONST;

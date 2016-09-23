@@ -1106,7 +1106,7 @@ compose_dialog (const gchar *compose_type,
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   label = gtk_label_new_with_mnemonic (_("Color _model:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1173,7 +1173,7 @@ compose_dialog (const gchar *compose_type,
       gtk_widget_show (image);
 
       composeint.channel_label[j] = label = gtk_label_new_with_mnemonic ("");
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 

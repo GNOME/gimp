@@ -19,7 +19,7 @@
 
 
 (define (script-fu-paste-as-pattern name filename)
-  (let* ((pattern-image (car (gimp-edit-paste-as-new)))
+  (let* ((pattern-image (car (gimp-edit-paste-as-new-image)))
          (pattern-draw 0)
          (path 0))
 

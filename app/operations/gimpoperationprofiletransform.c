@@ -275,12 +275,6 @@ gimp_operation_profile_transform_process (GeglOperation       *operation,
 
   if (self->transform)
     {
-      /* copy the alpha channel */
-      if (babl_format_has_alpha (self->dest_format))
-        babl_process (babl_fish (self->src_format,
-                                 self->dest_format),
-                      src, dest, samples);
-
       gimp_color_transform_process_pixels (self->transform,
                                            self->src_format,
                                            src,

@@ -730,6 +730,8 @@ gimp_selection_extract (GimpSelection *selection,
     {
       non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
                                          &x1, &y1, &x2, &y2);
+
+      gimp_item_get_offset (GIMP_ITEM (pickable), &off_x, &off_y);
     }
   else
     {
@@ -737,6 +739,12 @@ gimp_selection_extract (GimpSelection *selection,
                                     &x1, &y1, &x2, &y2);
       x2 += x1;
       y2 += y1;
+
+      off_x = 0;
+      off_y = 0;
+
+      /* can't cut from non-drawables, fall back to copy */
+      cut_image = FALSE;
     }
 
   if (non_empty && ((x1 == x2) || (y1 == y2)))
@@ -771,15 +779,6 @@ gimp_selection_extract (GimpSelection *selection,
         dest_format = src_format;
     }
 
-  if (GIMP_IS_DRAWABLE (pickable))
-    {
-      gimp_item_get_offset (GIMP_ITEM (pickable), &off_x, &off_y);
-    }
-  else
-    {
-      off_x = off_y = 0;
-    }
-
   gimp_pickable_flush (pickable);
 
   src_buffer = gimp_pickable_get_buffer (pickable);
@@ -807,33 +806,30 @@ gimp_selection_extract (GimpSelection *selection,
                                - (off_y + y1),
                                1.0);
 
-      if (cut_image && GIMP_IS_DRAWABLE (pickable))
+      if (cut_image)
         {
           gimp_edit_clear (image, GIMP_DRAWABLE (pickable), context);
         }
     }
-  else if (cut_image && GIMP_IS_DRAWABLE (pickable))
+  else if (cut_image)
     {
       /*  If we're cutting without selection, remove either the layer
        *  (or floating selection), the layer mask, or the channel
        */
-      if (cut_image && GIMP_IS_DRAWABLE (pickable))
+      if (GIMP_IS_LAYER (pickable))
         {
-          if (GIMP_IS_LAYER (pickable))
-            {
-              gimp_image_remove_layer (image, GIMP_LAYER (pickable),
-                                       TRUE, NULL);
-            }
-          else if (GIMP_IS_LAYER_MASK (pickable))
-            {
-              gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (pickable)),
-                                     GIMP_MASK_DISCARD, TRUE);
-            }
-          else if (GIMP_IS_CHANNEL (pickable))
-            {
-              gimp_image_remove_channel (image, GIMP_CHANNEL (pickable),
-                                         TRUE, NULL);
-            }
+          gimp_image_remove_layer (image, GIMP_LAYER (pickable),
+                                   TRUE, NULL);
+        }
+      else if (GIMP_IS_LAYER_MASK (pickable))
+        {
+          gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (pickable)),
+                                 GIMP_MASK_DISCARD, TRUE);
+        }
+      else if (GIMP_IS_CHANNEL (pickable))
+        {
+          gimp_image_remove_channel (image, GIMP_CHANNEL (pickable),
+                                     TRUE, NULL);
         }
     }
 

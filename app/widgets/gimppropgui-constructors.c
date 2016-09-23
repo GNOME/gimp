@@ -196,7 +196,7 @@ _gimp_prop_gui_new_generic (GObject              *config,
               GtkWidget *l;
 
               l = gtk_label_new_with_mnemonic (label);
-              gtk_misc_set_alignment (GTK_MISC (l), 0.0, 0.5);
+              gtk_label_set_xalign (GTK_LABEL (l), 0.0);
               gtk_widget_show (l);
 
               if (GTK_IS_SCROLLED_WINDOW (widget))

@@ -61,7 +61,7 @@ static const GimpActionEntry context_actions[] =
                                                               "_Palette")    },
   { "context-gradient-menu",   GIMP_STOCK_GRADIENT,       NC_("context-action",
                                                               "_Gradient")   },
-  { "context-font-menu",       GIMP_STOCK_FONT,           NC_("context-action",
+  { "context-font-menu",       "gtk-select-font",         NC_("context-action",
                                                               "_Font")       },
 
   { "context-brush-shape-menu",    NULL,                  NC_("context-action",
@@ -841,23 +841,23 @@ static const GimpEnumActionEntry context_gradient_select_actions[] =
 
 static const GimpEnumActionEntry context_font_select_actions[] =
 {
-  { "context-font-select-set", GIMP_STOCK_FONT,
+  { "context-font-select-set", "gtk-select-font",
     "Select Font by Index", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
-  { "context-font-select-first", GIMP_STOCK_FONT,
+  { "context-font-select-first", "gtk-select-font",
     "First Font", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
-  { "context-font-select-last", GIMP_STOCK_FONT,
+  { "context-font-select-last", "gtk-select-font",
     "Last Font", NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
-  { "context-font-select-previous", GIMP_STOCK_FONT,
+  { "context-font-select-previous", "gtk-select-font",
     "Previous Font", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
-  { "context-font-select-next", GIMP_STOCK_FONT,
+  { "context-font-select-next", "gtk-select-font",
     "Next Font", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL }

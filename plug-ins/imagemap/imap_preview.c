@@ -421,6 +421,7 @@ make_preview (GimpDrawable *drawable)
    GtkAdjustment *vadj;
    GtkWidget *preview;
    GtkWidget *window;
+   GtkWidget *viewport;
    GtkWidget *button, *arrow;
    GtkWidget *ruler;
    GtkWidget *table;
@@ -431,73 +432,84 @@ make_preview (GimpDrawable *drawable)
    data->preview = preview = gimp_preview_area_new ();
 
    g_object_set_data (G_OBJECT (preview), "preview", data);
-   gtk_widget_set_events(GTK_WIDGET(preview), PREVIEW_MASK);
-   g_signal_connect_after(preview, "expose-event",
-                          G_CALLBACK(preview_expose), data);
+   gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK);
+
+   g_signal_connect_after (preview, "expose-event",
+                           G_CALLBACK (preview_expose),
+                           data);
    g_signal_connect (preview, "size-allocate",
-                     G_CALLBACK (preview_size_allocate), (gpointer)data);
+                     G_CALLBACK (preview_size_allocate),
+                     data);
 
    /* Handle drop of links in preview widget */
-   gtk_drag_dest_set(preview, GTK_DEST_DEFAULT_ALL, target_table,
-                     2, GDK_ACTION_COPY);
-   g_signal_connect(preview, "drag-data-received",
-                    G_CALLBACK(handle_drop), NULL);
+   gtk_drag_dest_set (preview, GTK_DEST_DEFAULT_ALL, target_table,
+                      2, GDK_ACTION_COPY);
+
+   g_signal_connect (preview, "drag-data-received",
+                     G_CALLBACK (handle_drop),
+                     NULL);
 
    data->widget_width = data->width =
-       gimp_drawable_width(drawable->drawable_id);
+     gimp_drawable_width (drawable->drawable_id);
    data->widget_height = data->height =
-       gimp_drawable_height(drawable->drawable_id);
+       gimp_drawable_height (drawable->drawable_id);
    gtk_widget_set_size_request (preview, data->widget_width,
                                 data->widget_height);
 
    /* The main table */
-   data->window = table = gtk_table_new(3, 3, FALSE);
+   data->window = table = gtk_table_new (3, 3, FALSE);
    gtk_table_set_col_spacings (GTK_TABLE (table), 1);
    gtk_table_set_row_spacings (GTK_TABLE (table), 1);
 
    /* Create button with arrow */
-   button = gtk_button_new();
+   button = gtk_button_new ();
    gtk_widget_set_can_focus (button, FALSE);
-   gtk_table_attach(GTK_TABLE(table), button, 0, 1, 0, 1, GTK_FILL, GTK_FILL,
-                    0, 0);
-   gtk_widget_set_events(button,
-                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-   g_signal_connect(button, "button-press-event",
-                    G_CALLBACK(arrow_cb), NULL);
-   gtk_widget_show(button);
+   gtk_table_attach (GTK_TABLE (table), button, 0, 1, 0, 1,
+                     GTK_FILL, GTK_FILL, 0, 0);
+   gtk_widget_set_events (button,
+                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+   gtk_widget_show (button);
 
-   arrow = gtk_arrow_new(GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
-   gtk_container_add(GTK_CONTAINER(button), arrow);
-   gtk_widget_show(arrow);
+   g_signal_connect (button, "button-press-event",
+                     G_CALLBACK (arrow_cb),
+                     NULL);
+
+   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
+   gtk_container_add (GTK_CONTAINER (button), arrow);
+   gtk_widget_show (arrow);
 
    /* Create horizontal ruler */
    data->hruler = ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
-   g_signal_connect_swapped(preview, "motion-notify-event",
-                            G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
-                            ruler);
+   g_signal_connect_swapped (preview, "motion-notify-event",
+                             G_CALLBACK (GTK_WIDGET_GET_CLASS (ruler)->motion_notify_event),
+                             ruler);
 
-   gtk_table_attach(GTK_TABLE(table), ruler, 1, 2, 0, 1,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
-   gtk_widget_show(ruler);
+   gtk_table_attach (GTK_TABLE (table), ruler, 1, 2, 0, 1,
+                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+   gtk_widget_show (ruler);
 
    /* Create vertical ruler */
    data->vruler = ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
-   g_signal_connect_swapped(preview, "motion-notify-event",
-                            G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
+   g_signal_connect_swapped (preview, "motion-notify-event",
+                             G_CALLBACK (GTK_WIDGET_GET_CLASS (ruler)->motion_notify_event),
                             ruler);
-   gtk_table_attach(GTK_TABLE(table), ruler, 0, 1, 1, 2,
-                    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-   gtk_widget_show(ruler);
+   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 2,
+                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+   gtk_widget_show (ruler);
 
    window = gtk_scrolled_window_new (NULL, NULL);
-   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(window),
-                                  GTK_POLICY_NEVER, GTK_POLICY_NEVER);
+   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window),
+                                   GTK_POLICY_NEVER, GTK_POLICY_NEVER);
    width = (data->width > 600) ? 600 : data->width;
    height = (data->height > 400) ? 400 : data->height;
-   gtk_widget_set_size_request(window, width, height);
-   gtk_table_attach(GTK_TABLE(table), window, 1, 2, 1, 2, GTK_FILL, GTK_FILL,
-                    0, 0);
-   gtk_widget_show(window);
+   gtk_widget_set_size_request (window, width, height);
+   gtk_table_attach (GTK_TABLE (table), window, 1, 2, 1, 2,
+                     GTK_FILL, GTK_FILL, 0, 0);
+   gtk_widget_show (window);
+
+   viewport = gtk_viewport_new (NULL, NULL);
+   gtk_container_add (GTK_CONTAINER (window), viewport);
+   gtk_widget_show (viewport);
 
    hadj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (window));
 
@@ -517,7 +529,7 @@ make_preview (GimpDrawable *drawable)
                      G_CALLBACK (scroll_adj_changed),
                      data->vruler);
 
-   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(window), preview);
+   gtk_container_add (GTK_CONTAINER (viewport), preview);
 
    scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL, hadj);
    gtk_table_attach(GTK_TABLE(table), scrollbar, 1, 2, 2, 3,
@@ -525,17 +537,17 @@ make_preview (GimpDrawable *drawable)
    gtk_widget_show (scrollbar);
 
    scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, vadj);
-   gtk_table_attach(GTK_TABLE(table), scrollbar,  2, 3, 1, 2,
-                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
+   gtk_table_attach (GTK_TABLE (table), scrollbar,  2, 3, 1, 2,
+                     GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
    gtk_widget_show (scrollbar);
 
    gtk_widget_show (preview);
 
-   gimp_pixel_rgn_init(&data->src_rgn, drawable, 0, 0, data->width,
-                       data->height, FALSE, FALSE);
-   render_preview(data, &data->src_rgn);
+   gimp_pixel_rgn_init (&data->src_rgn, drawable, 0, 0, data->width,
+                        data->height, FALSE, FALSE);
+   render_preview (data, &data->src_rgn);
 
-   gtk_widget_show(table);
+   gtk_widget_show (table);
 
    return data;
 }

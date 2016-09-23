@@ -39,6 +39,7 @@
 #include "gimpfilloptions.h"
 #include "gimpdrawableundo.h"
 #include "gimpimage.h"
+#include "gimpimage-new.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-selection.h"
@@ -62,57 +63,95 @@ static GimpBuffer * gimp_edit_extract (GimpImage     *image,
 
 /*  public functions  */
 
-GimpBuffer *
+GimpObject *
 gimp_edit_cut (GimpImage     *image,
                GimpDrawable  *drawable,
                GimpContext   *context,
                GError       **error)
 {
-  GimpBuffer *buffer;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, TRUE, error);
-
-  if (buffer)
+  if (GIMP_IS_LAYER (drawable) &&
+      gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
-      gimp_set_global_buffer (image->gimp, buffer);
-      g_object_unref (buffer);
+      GimpImage *clip_image;
 
-      return image->gimp->global_buffer;
+      clip_image = gimp_image_new_from_drawable (image->gimp, drawable);
+      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
+      gimp_set_clipboard_image (image->gimp, clip_image);
+      g_object_unref (clip_image);
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT,
+                                   C_("undo-type", "Cut Layer"));
+
+      gimp_image_remove_layer (image, GIMP_LAYER (drawable),
+                               TRUE, NULL);
+
+      gimp_image_undo_group_end (image);
+
+      return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
+    }
+  else
+    {
+      GimpBuffer *buffer;
+
+      buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+                                  context, TRUE, error);
+
+      if (buffer)
+        {
+          gimp_set_clipboard_buffer (image->gimp, buffer);
+          g_object_unref (buffer);
+
+          return GIMP_OBJECT (gimp_get_clipboard_buffer (image->gimp));
+        }
     }
 
   return NULL;
 }
 
-GimpBuffer *
+GimpObject *
 gimp_edit_copy (GimpImage     *image,
                 GimpDrawable  *drawable,
                 GimpContext   *context,
                 GError       **error)
 {
-  GimpBuffer *buffer;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, FALSE, error);
-
-  if (buffer)
+  if (GIMP_IS_LAYER (drawable) &&
+      gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
-      gimp_set_global_buffer (image->gimp, buffer);
-      g_object_unref (buffer);
+      GimpImage *clip_image;
 
-      return image->gimp->global_buffer;
+      clip_image = gimp_image_new_from_drawable (image->gimp, drawable);
+      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
+      gimp_set_clipboard_image (image->gimp, clip_image);
+      g_object_unref (clip_image);
+
+      return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
+    }
+  else
+    {
+      GimpBuffer *buffer;
+
+      buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+                                  context, FALSE, error);
+
+      if (buffer)
+        {
+          gimp_set_clipboard_buffer (image->gimp, buffer);
+          g_object_unref (buffer);
+
+          return GIMP_OBJECT (gimp_get_clipboard_buffer (image->gimp));
+        }
     }
 
   return NULL;
@@ -134,63 +173,44 @@ gimp_edit_copy_visible (GimpImage    *image,
 
   if (buffer)
     {
-      gimp_set_global_buffer (image->gimp, buffer);
+      gimp_set_clipboard_buffer (image->gimp, buffer);
       g_object_unref (buffer);
 
-      return image->gimp->global_buffer;
+      return gimp_get_clipboard_buffer (image->gimp);
     }
 
   return NULL;
 }
 
-GimpLayer *
-gimp_edit_paste (GimpImage    *image,
-                 GimpDrawable *drawable,
-                 GimpBuffer   *paste,
-                 gboolean      paste_into,
-                 gint          viewport_x,
-                 gint          viewport_y,
-                 gint          viewport_width,
-                 gint          viewport_height)
+void
+gimp_edit_get_paste_offset (GimpImage    *image,
+                            GimpDrawable *drawable,
+                            GimpObject   *paste,
+                            gint          viewport_x,
+                            gint          viewport_y,
+                            gint          viewport_width,
+                            gint          viewport_height,
+                            gint         *offset_x,
+                            gint         *offset_y)
 {
-  GimpLayer  *layer;
-  const Babl *format;
-  gint        image_width;
-  gint        image_height;
-  gint        width;
-  gint        height;
-  gint        offset_x;
-  gint        offset_y;
-  gboolean    clamp_to_image = TRUE;
+  gint     image_width;
+  gint     image_height;
+  gint     width;
+  gint     height;
+  gboolean clamp_to_image = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (drawable == NULL ||
-                        gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
-
-  /*  Make a new layer: if drawable == NULL,
-   *  user is pasting into an empty image.
-   */
-
-  if (drawable)
-    format = gimp_drawable_get_format_with_alpha (drawable);
-  else
-    format = gimp_image_get_layer_format (image, TRUE);
-
-  layer = gimp_layer_new_from_buffer (paste, image,
-                                      format,
-                                      _("Pasted Layer"),
-                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-
-  if (! layer)
-    return NULL;
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (drawable == NULL ||
+                    gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (GIMP_IS_VIEWABLE (paste));
+  g_return_if_fail (offset_x != NULL);
+  g_return_if_fail (offset_y != NULL);
 
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
 
-  width  = gimp_item_get_width  (GIMP_ITEM (layer));
-  height = gimp_item_get_height (GIMP_ITEM (layer));
+  gimp_viewable_get_size (GIMP_VIEWABLE (paste), &width, &height);
 
   if (viewport_width  == image_width &&
       viewport_height == image_height)
@@ -207,41 +227,61 @@ gimp_edit_paste (GimpImage    *image,
     {
       /*  if pasting to a drawable  */
 
-      gint     off_x, off_y;
-      gint     x1, y1, x2, y2;
-      gint     paste_x, paste_y;
-      gint     paste_width, paste_height;
-      gboolean have_mask;
+      GimpContainer *children;
+      gint           off_x, off_y;
+      gint           target_x, target_y;
+      gint           target_width, target_height;
+      gint           paste_x, paste_y;
+      gint           paste_width, paste_height;
+      gboolean       have_mask;
+
+      have_mask = ! gimp_channel_is_empty (gimp_image_get_mask (image));
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-      have_mask = gimp_item_mask_bounds (GIMP_ITEM (drawable),
-                                         &x1, &y1, &x2, &y2);
 
-      if (! have_mask         && /* if we have no mask */
-          viewport_width  > 0 && /* and we have a viewport */
+      children = gimp_viewable_get_children (GIMP_VIEWABLE (drawable));
+
+      if (children && gimp_container_get_n_children (children) == 0)
+        {
+          /* treat empty layer groups as image-sized, use the selection
+           * as target
+           */
+          gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                            &target_x, &target_y,
+                            &target_width, &target_height);
+        }
+      else
+        {
+          gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                    &target_x, &target_y,
+                                    &target_width, &target_height);
+        }
+
+      if (! have_mask         &&    /* if we have no mask */
+          viewport_width  > 0 &&    /* and we have a viewport */
           viewport_height > 0 &&
-          (width  < (x2 - x1) || /* and the paste is smaller than the target */
-           height < (y2 - y1)) &&
+          (width  < target_width || /* and the paste is smaller than the target */
+           height < target_height) &&
 
           /* and the viewport intersects with the target */
           gimp_rectangle_intersect (viewport_x, viewport_y,
                                     viewport_width, viewport_height,
-                                    off_x, off_y,
-                                    x2 - x1, y2 - y1,
+                                    off_x, off_y, /* target_x,y are 0 */
+                                    target_width, target_height,
                                     &paste_x, &paste_y,
                                     &paste_width, &paste_height))
         {
           /*  center on the viewport  */
 
-          offset_x = paste_x + (paste_width - width)  / 2;
-          offset_y = paste_y + (paste_height- height) / 2;
+          *offset_x = paste_x + (paste_width - width)  / 2;
+          *offset_y = paste_y + (paste_height- height) / 2;
         }
       else
         {
           /*  otherwise center on the target  */
 
-          offset_x = off_x + ((x1 + x2) - width)  / 2;
-          offset_y = off_y + ((y1 + y2) - height) / 2;
+          *offset_x = off_x + target_x + (target_width  - width)  / 2;
+          *offset_y = off_y + target_y + (target_height - height) / 2;
 
           /*  and keep it that way  */
           clamp_to_image = FALSE;
@@ -254,15 +294,15 @@ gimp_edit_paste (GimpImage    *image,
     {
       /*  center on the viewport  */
 
-      offset_x = viewport_x + (viewport_width  - width)  / 2;
-      offset_y = viewport_y + (viewport_height - height) / 2;
+      *offset_x = viewport_x + (viewport_width  - width)  / 2;
+      *offset_y = viewport_y + (viewport_height - height) / 2;
     }
   else
     {
       /*  otherwise center on the image  */
 
-      offset_x = (image_width  - width)  / 2;
-      offset_y = (image_height - height) / 2;
+      *offset_x = (image_width  - width)  / 2;
+      *offset_y = (image_height - height) / 2;
 
       /*  and keep it that way  */
       clamp_to_image = FALSE;
@@ -273,32 +313,119 @@ gimp_edit_paste (GimpImage    *image,
       /*  Ensure that the pasted layer is always within the image, if it
        *  fits and aligned at top left if it doesn't. (See bug #142944).
        */
-      offset_x = MIN (offset_x, image_width  - width);
-      offset_y = MIN (offset_y, image_height - height);
-      offset_x = MAX (offset_x, 0);
-      offset_y = MAX (offset_y, 0);
+      *offset_x = MIN (*offset_x, image_width  - width);
+      *offset_y = MIN (*offset_y, image_height - height);
+      *offset_x = MAX (*offset_x, 0);
+      *offset_y = MAX (*offset_y, 0);
     }
+}
+
+GimpLayer *
+gimp_edit_paste (GimpImage     *image,
+                 GimpDrawable  *drawable,
+                 GimpObject    *paste,
+                 GimpPasteType  paste_type,
+                 gint           viewport_x,
+                 gint           viewport_y,
+                 gint           viewport_width,
+                 gint           viewport_height)
+{
+  GimpLayer *layer;
+  gint       offset_x;
+  gint       offset_y;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (drawable == NULL ||
+                        gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
+
+  if (GIMP_IS_IMAGE (paste))
+    {
+      layer = gimp_image_get_layer_iter (GIMP_IMAGE (paste))->data;
+
+      layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (layer),
+                                             image,
+                                             G_TYPE_FROM_INSTANCE (layer)));
+    }
+  else
+    {
+      const Babl *format;
+
+      /*  If drawable == NULL, user is pasting into an empty image  */
+      if (drawable)
+        format = gimp_drawable_get_format_with_alpha (drawable);
+      else
+        format = gimp_image_get_layer_format (image, TRUE);
+
+      layer = gimp_layer_new_from_buffer (GIMP_BUFFER (paste), image,
+                                          format,
+                                          _("Pasted Layer"),
+                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+    }
+
+  if (! layer)
+    return NULL;
+
+  gimp_edit_get_paste_offset (image, drawable, GIMP_OBJECT (layer),
+                              viewport_x,
+                              viewport_y,
+                              viewport_width,
+                              viewport_height,
+                              &offset_x,
+                              &offset_y);
 
   gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 
-  /*  Start a group undo  */
+  /* change paste type to NEW_LAYER for cases where we can't attach
+   * a floating selection
+   */
+  if (GIMP_IS_IMAGE (paste)                                 ||
+      ! drawable                                            ||
+      gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
+      gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+    {
+      paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
+    }
+
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                C_("undo-type", "Paste"));
 
-  /*  If there is a selection mask clear it--
-   *  this might not always be desired, but in general,
-   *  it seems like the correct behavior.
-   */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (image)) && ! paste_into)
-    gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+  switch (paste_type)
+    {
+    case GIMP_PASTE_TYPE_FLOATING:
+      /*  If there is a selection mask clear it--
+       *  this might not always be desired, but in general,
+       *  it seems like the correct behavior.
+       */
+      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+        gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
 
-  /*  if there's a drawable, add a new floating selection  */
-  if (drawable)
-    floating_sel_attach (layer, drawable);
-  else
-    gimp_image_add_layer (image, layer, NULL, 0, TRUE);
+      /* fall thru */
 
-  /*  end the group undo  */
+    case GIMP_PASTE_TYPE_FLOATING_INTO:
+      floating_sel_attach (layer, drawable);
+      break;
+
+    case GIMP_PASTE_TYPE_NEW_LAYER:
+      {
+        GimpLayer *parent   = NULL;
+        gint       position = 0;
+
+        /* always add on top of the passed layer, where we would
+         * attach a floating selection
+         */
+        if (GIMP_IS_LAYER (drawable))
+          {
+            parent   = gimp_layer_get_parent (GIMP_LAYER (drawable));
+            position = gimp_item_get_index (GIMP_ITEM (drawable));
+          }
+
+        gimp_image_add_layer (image, layer, parent, position, TRUE);
+      }
+      break;
+    }
+
   gimp_image_undo_group_end (image);
 
   return layer;

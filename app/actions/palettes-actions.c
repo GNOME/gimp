@@ -68,7 +68,7 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (palettes_merge_cmd_callback),
     GIMP_HELP_PALETTE_MERGE },
 
-  { "palettes-copy-location", GIMP_STOCK_CLIPBOARD,
+  { "palettes-copy-location", "edit-copy",
     NC_("palettes-action", "Copy Palette _Location"), NULL,
     NC_("palettes-action", "Copy palette file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
@@ -97,7 +97,7 @@ static const GimpStringActionEntry palettes_edit_actions[] =
 {
   { "palettes-edit", "gtk-edit",
     NC_("palettes-action", "_Edit Palette..."), NULL,
-    NC_("palettes-action", "Edit palette"),
+    NC_("palettes-action", "Edit this palette"),
     "gimp-palette-editor",
     GIMP_HELP_PALETTE_EDIT }
 };

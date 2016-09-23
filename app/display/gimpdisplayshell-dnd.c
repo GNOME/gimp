@@ -448,6 +448,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
   GimpImage        *image = gimp_display_get_image (shell->display);
   GimpDrawable     *drawable;
   GimpBuffer       *buffer;
+  GimpPasteType     paste_type;
   gint              x, y, width, height;
 
   GIMP_LOG (DND, NULL);
@@ -467,6 +468,8 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
       return;
     }
 
+  paste_type = GIMP_PASTE_TYPE_FLOATING;
+
   drawable = gimp_image_get_active_drawable (image);
 
   if (drawable)
@@ -474,17 +477,20 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         {
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                                GIMP_MESSAGE_ERROR,
-                                _("Cannot modify the pixels of layer groups."));
-          return;
-        }
+                                GIMP_MESSAGE_INFO,
+                                _("Pasted as new layer because the "
+                                  "target is a layer group."));
 
-      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+          paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
+        }
+      else if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
         {
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,
-                                _("The active layer's pixels are locked."));
-          return;
+                                _("Pasted as new layer because the "
+                                  "target's pixels are locked."));
+
+          paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
         }
     }
 
@@ -494,8 +500,8 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   /* FIXME: popup a menu for selecting "Paste Into" */
 
-  gimp_edit_paste (image, drawable, buffer, FALSE,
-                   x, y, width, height);
+  gimp_edit_paste (image, drawable, GIMP_OBJECT (buffer),
+                   paste_type, x, y, width, height);
 
   gimp_display_shell_dnd_flush (shell, image);
 }

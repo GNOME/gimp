@@ -135,7 +135,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
   gtk_widget_show (status->vbox);
 
   status->save_button =
-    gimp_editor_add_button (GIMP_EDITOR (status), GIMP_STOCK_SAVE,
+    gimp_editor_add_button (GIMP_EDITOR (status), "document-save",
                             _("Save device status"), NULL,
                             G_CALLBACK (gimp_device_status_save_clicked),
                             NULL,
@@ -274,7 +274,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

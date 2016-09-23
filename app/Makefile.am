@@ -59,8 +59,6 @@ libapp_sources = \
 	tests.h			\
 	unique.c		\
 	unique.h		\
-	units.c			\
-	units.h			\
 	version.c		\
 	version.h		\
 	gimp-debug.c		\
@@ -120,6 +118,7 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS)			\
 	$(PANGOCAIRO_CFLAGS)		\
 	$(GEGL_CFLAGS)			\
+	$(LCMS_CFLAGS)			\
 	$(GEXIV2_CFLAGS)		\
 	-I$(includedir)			\
 	-I$(builddir)/gui
@@ -165,6 +164,7 @@ gimpconsoleldadd = \
 	$(GIO_WINDOWS_LIBS)		\
 	$(GEGL_LIBS)			\
 	$(GLIB_LIBS)			\
+	$(LCMS_LIBS)			\
 	$(GEXIV2_LIBS)			\
 	$(Z_LIBS)			\
 	$(JSON_C_LIBS)			\

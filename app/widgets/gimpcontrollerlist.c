@@ -243,7 +243,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->add_button, FALSE);
   gtk_widget_show (list->add_button);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_NEXT,
+  image = gtk_image_new_from_icon_name ("go-next",
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->add_button), image);
   gtk_widget_show (image);
@@ -260,7 +260,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->remove_button, FALSE);
   gtk_widget_show (list->remove_button);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_PREVIOUS,
+  image = gtk_image_new_from_icon_name ("go-previous",
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->remove_button), image);
   gtk_widget_show (image);

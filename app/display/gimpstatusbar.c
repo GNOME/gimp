@@ -213,7 +213,6 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     statusbar);
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
-  gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cursor_label);
 
@@ -278,7 +277,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_container_add (GTK_CONTAINER (statusbar->cancel_button), hbox2);
   gtk_widget_show (hbox2);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name ("gtk-cancel", GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox2), image, FALSE, FALSE, 2);
   gtk_widget_show (image);
 

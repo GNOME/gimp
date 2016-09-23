@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpprefsbox.c
- * Copyright (C) 2013 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2013-2016 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "gimpprefsbox.h"
+#include "gimpwidgets-constructors.h"
 
 #include "gimp-intl.h"
 
@@ -165,7 +166,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_widget_show (hbox);
 
   private->label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (private->label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (private->label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (private->label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
@@ -316,22 +317,34 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
                          GtkTreeIter       *iter)
 {
   GimpPrefsBoxPrivate *private;
-  GtkWidget           *event_box;
+  GtkWidget           *page_vbox;
+  GtkWidget           *scrolled_win;
+  GtkWidget           *viewport;
   GtkWidget           *vbox;
 
   g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
 
   private = GET_PRIVATE (box);
 
-  event_box = gtk_event_box_new ();
-  gtk_event_box_set_visible_window (GTK_EVENT_BOX (event_box), FALSE);
-  gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook), event_box, NULL);
-  gtk_widget_show (event_box);
+  page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook), page_vbox, NULL);
+  gtk_widget_show (page_vbox);
 
-  gimp_help_set_help_data (event_box, NULL, help_id);
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_NEVER, GTK_POLICY_NEVER);
+  gtk_container_add (GTK_CONTAINER (page_vbox), scrolled_win);
+  gtk_widget_show (scrolled_win);
+
+  gimp_help_set_help_data (scrolled_win, NULL, help_id);
+
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), viewport);
+  gtk_widget_show (viewport);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_add (GTK_CONTAINER (event_box), vbox);
+  gtk_container_add (GTK_CONTAINER (viewport), vbox);
   gtk_widget_show (vbox);
 
   gtk_tree_store_append (private->store, iter, parent);
@@ -346,6 +359,67 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
                       -1);
 
   return vbox;
+}
+
+void
+gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
+				    GtkWidget    *page,
+				    gboolean      scrollable)
+{
+  GimpPrefsBoxPrivate *private;
+  GtkWidget           *scrolled_win;
+  GtkWidget           *page_vbox;
+
+  g_return_if_fail (GIMP_IS_PREFS_BOX (box));
+  g_return_if_fail (GTK_IS_BOX (page));
+  g_return_if_fail (gtk_widget_is_ancestor (page, GTK_WIDGET (box)));
+
+  private = GET_PRIVATE (box);
+
+  scrolled_win = gtk_widget_get_ancestor (page, GTK_TYPE_SCROLLED_WINDOW);
+  page_vbox = gtk_widget_get_parent (scrolled_win);
+
+  g_return_if_fail (gtk_widget_get_parent (page_vbox) == private->notebook);
+
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_NEVER,
+				  scrollable ?
+				  GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
+}
+
+GtkWidget *
+gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
+                                    GtkWidget    *page,
+                                    const gchar  *label)
+{
+  GimpPrefsBoxPrivate *private;
+  GtkWidget           *scrolled_win;
+  GtkWidget           *page_vbox;
+  GtkWidget           *hbox;
+  GtkWidget           *button;
+
+  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+  g_return_val_if_fail (GTK_IS_BOX (page), NULL);
+  g_return_val_if_fail (gtk_widget_is_ancestor (page, GTK_WIDGET (box)), NULL);
+
+  private = GET_PRIVATE (box);
+
+  scrolled_win = gtk_widget_get_ancestor (page, GTK_TYPE_SCROLLED_WINDOW);
+  page_vbox = gtk_widget_get_parent (scrolled_win);
+
+  g_return_val_if_fail (gtk_widget_get_parent (page_vbox) == private->notebook,
+                        NULL);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_pack_start (GTK_BOX (page_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (page_vbox), hbox, 0);
+  gtk_widget_show (hbox);
+
+  button = gimp_icon_button_new (GIMP_STOCK_RESET, label);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  return button;
 }
 
 GtkWidget *

@@ -243,6 +243,155 @@ xcf_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 }
 
+GimpImage *
+xcf_load_stream (Gimp          *gimp,
+                 GInputStream  *input,
+                 GFile         *input_file,
+                 GimpProgress  *progress,
+                 GError       **error)
+{
+  XcfInfo      info  = { 0, };
+  const gchar *filename;
+  GimpImage   *image = NULL;
+  gchar        id[14];
+  gboolean     success;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
+  g_return_val_if_fail (input_file == NULL || G_IS_FILE (input_file), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (input_file)
+    filename = gimp_file_get_utf8_name (input_file);
+  else
+    filename = _("Memory Stream");
+
+  info.gimp        = gimp;
+  info.input       = input;
+  info.seekable    = G_SEEKABLE (input);
+  info.progress    = progress;
+  info.file        = input_file;
+  info.compression = COMPRESS_NONE;
+
+  if (progress)
+    gimp_progress_start (progress, FALSE, _("Opening '%s'"), filename);
+
+  success = TRUE;
+
+  info.cp += xcf_read_int8 (info.input, (guint8 *) id, 14);
+
+  if (! g_str_has_prefix (id, "gimp xcf "))
+    {
+      success = FALSE;
+    }
+  else if (strcmp (id + 9, "file") == 0)
+    {
+      info.file_version = 0;
+    }
+  else if (id[9] == 'v')
+    {
+      info.file_version = atoi (id + 10);
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  if (success)
+    {
+      if (info.file_version >= 0 &&
+          info.file_version < G_N_ELEMENTS (xcf_loaders))
+        {
+          image = (*(xcf_loaders[info.file_version])) (gimp, &info, error);
+
+          if (! image)
+            success = FALSE;
+
+          g_input_stream_close (info.input, NULL, NULL);
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("XCF error: unsupported XCF file version %d "
+                         "encountered"), info.file_version);
+          success = FALSE;
+        }
+    }
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  return image;
+}
+
+gboolean
+xcf_save_stream (Gimp           *gimp,
+                 GimpImage      *image,
+                 GOutputStream  *output,
+                 GFile          *output_file,
+                 GimpProgress   *progress,
+                 GError        **error)
+{
+  XcfInfo      info     = { 0, };
+  const gchar *filename;
+  gboolean     success  = FALSE;
+  GError      *my_error = NULL;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), FALSE);
+  g_return_val_if_fail (output_file == NULL || G_IS_FILE (output_file), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (output_file)
+    filename = gimp_file_get_utf8_name (output_file);
+  else
+    filename = _("Memory Stream");
+
+  info.gimp     = gimp;
+  info.output   = output;
+  info.seekable = G_SEEKABLE (output);
+  info.progress = progress;
+  info.file     = output_file;
+
+  if (gimp_image_get_xcf_compat_mode (image))
+    info.compression = COMPRESS_RLE;
+  else
+    info.compression = COMPRESS_ZLIB;
+
+  info.file_version = gimp_image_get_xcf_version (image,
+                                                  info.compression ==
+                                                  COMPRESS_ZLIB,
+                                                  NULL, NULL);
+
+  if (progress)
+    gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);
+
+  success = xcf_save_image (&info, image, &my_error);
+
+  if (success)
+    {
+      if (progress)
+        gimp_progress_set_text (progress, _("Closing '%s'"), filename);
+
+      success = g_output_stream_close (info.output, NULL, &my_error);
+    }
+
+  if (! success)
+    g_propagate_prefixed_error (error, my_error,
+                                _("Error writing '%s': "), filename);
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  return success;
+}
+
+
+/*  private functions  */
+
 static GimpValueArray *
 xcf_load_invoker (GimpProcedure         *procedure,
                   Gimp                  *gimp,
@@ -251,13 +400,11 @@ xcf_load_invoker (GimpProcedure         *procedure,
                   const GimpValueArray  *args,
                   GError               **error)
 {
-  XcfInfo         info = { 0, };
   GimpValueArray *return_vals;
-  GimpImage      *image   = NULL;
+  GimpImage      *image = NULL;
   const gchar    *uri;
   GFile          *file;
-  gboolean        success = FALSE;
-  gchar           id[14];
+  GInputStream   *input;
   GError         *my_error = NULL;
 
   gimp_set_busy (gimp);
@@ -265,64 +412,13 @@ xcf_load_invoker (GimpProcedure         *procedure,
   uri  = g_value_get_string (gimp_value_array_index (args, 1));
   file = g_file_new_for_uri (uri);
 
-  info.input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
 
-  if (info.input)
+  if (input)
     {
-      info.gimp        = gimp;
-      info.seekable    = G_SEEKABLE (info.input);
-      info.progress    = progress;
-      info.file        = file;
-      info.compression = COMPRESS_NONE;
+      image = xcf_load_stream (gimp, input, file, progress, error);
 
-      if (progress)
-        gimp_progress_start (progress, FALSE, _("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
-
-      success = TRUE;
-
-      info.cp += xcf_read_int8 (info.input, (guint8 *) id, 14);
-
-      if (! g_str_has_prefix (id, "gimp xcf "))
-        {
-          success = FALSE;
-        }
-      else if (strcmp (id + 9, "file") == 0)
-        {
-          info.file_version = 0;
-        }
-      else if (id[9] == 'v')
-        {
-          info.file_version = atoi (id + 10);
-        }
-      else
-        {
-          success = FALSE;
-        }
-
-      if (success)
-        {
-          if (info.file_version >= 0 &&
-              info.file_version < G_N_ELEMENTS (xcf_loaders))
-            {
-              image = (*(xcf_loaders[info.file_version])) (gimp, &info, error);
-
-              if (! image)
-                success = FALSE;
-            }
-          else
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("XCF error: unsupported XCF file version %d "
-                             "encountered"), info.file_version);
-              success = FALSE;
-            }
-        }
-
-      g_object_unref (info.input);
-
-      if (progress)
-        gimp_progress_end (progress);
+      g_object_unref (input);
     }
   else
     {
@@ -333,10 +429,10 @@ xcf_load_invoker (GimpProcedure         *procedure,
 
   g_object_unref (file);
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = gimp_procedure_get_return_values (procedure, image != NULL,
                                                   error ? *error : NULL);
 
-  if (success)
+  if (image)
     gimp_value_set_image (gimp_value_array_index (return_vals, 1), image);
 
   gimp_unset_busy (gimp);
@@ -352,11 +448,11 @@ xcf_save_invoker (GimpProcedure         *procedure,
                   const GimpValueArray  *args,
                   GError               **error)
 {
-  XcfInfo         info = { 0, };
   GimpValueArray *return_vals;
   GimpImage      *image;
   const gchar    *uri;
   GFile          *file;
+  GOutputStream  *output;
   gboolean        success  = FALSE;
   GError         *my_error = NULL;
 
@@ -366,53 +462,15 @@ xcf_save_invoker (GimpProcedure         *procedure,
   uri   = g_value_get_string (gimp_value_array_index (args, 3));
   file  = g_file_new_for_uri (uri);
 
-  info.output = G_OUTPUT_STREAM (g_file_replace (file,
-                                                 NULL, FALSE, G_FILE_CREATE_NONE,
-                                                 NULL, &my_error));
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &my_error));
 
-  if (info.output)
+  if (output)
     {
-      gboolean compat_mode = gimp_image_get_xcf_compat_mode (image);
+      success = xcf_save_stream (gimp, image, output, file, progress, error);
 
-      info.gimp     = gimp;
-      info.seekable = G_SEEKABLE (info.output);
-      info.progress = progress;
-      info.file     = file;
-
-      if (compat_mode)
-        info.compression = COMPRESS_RLE;
-      else
-        info.compression = COMPRESS_ZLIB;
-
-      info.file_version = gimp_image_get_xcf_version (image,
-                                                      info.compression ==
-                                                      COMPRESS_ZLIB,
-                                                      NULL, NULL);
-
-      if (progress)
-        gimp_progress_start (progress, FALSE, _("Saving '%s'"),
-                             gimp_file_get_utf8_name (file));
-
-      success = xcf_save_image (&info, image, &my_error);
-
-      if (success)
-        {
-          if (progress)
-            gimp_progress_set_text (progress, _("Closing '%s'"),
-                                    gimp_file_get_utf8_name (file));
-
-          success = g_output_stream_close (info.output, NULL, &my_error);
-        }
-
-      if (! success)
-        g_propagate_prefixed_error (error, my_error,
-                                    _("Error writing '%s': "),
-                                    gimp_file_get_utf8_name (file));
-
-      g_object_unref (info.output);
-
-      if (progress)
-        gimp_progress_end (progress);
+      g_object_unref (output);
     }
   else
     {

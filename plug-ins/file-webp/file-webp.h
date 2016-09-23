@@ -19,10 +19,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEBP_H__
-#define __WEBP_H__
+#ifndef __FILE_WEBP_H__
+#define __FILE_WEBP_H__
 
-extern const char BINARY_NAME[];
-extern const char SAVE_PROCEDURE[];
 
-#endif /* __WEBP_H__ */
+#define LOAD_PROC      "file-webp-load"
+#define SAVE_PROC      "file-webp-save"
+#define PLUG_IN_BINARY "file-webp"
+#define PLUG_IN_ROLE   "gimp-file-webp"
+
+
+#endif /* __FILE_WEBP_H__ */

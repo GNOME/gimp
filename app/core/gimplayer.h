@@ -105,7 +105,7 @@ void            gimp_layer_set_show_mask       (GimpLayer           *layer,
 gboolean        gimp_layer_get_show_mask       (GimpLayer           *layer);
 
 void            gimp_layer_add_alpha           (GimpLayer            *layer);
-void            gimp_layer_flatten             (GimpLayer            *layer,
+void            gimp_layer_remove_alpha        (GimpLayer            *layer,
                                                 GimpContext          *context);
 
 void            gimp_layer_resize_to_image     (GimpLayer            *layer,
