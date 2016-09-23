@@ -340,13 +340,56 @@ gimp_edit_paste (GimpImage     *image,
                         gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
 
+  /*  change paste type to NEW_LAYER for cases where we can't attach a
+   *  floating selection
+   */
+  if (! drawable                                            ||
+      gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
+      gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+    {
+      paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
+    }
+
   if (GIMP_IS_IMAGE (paste))
     {
+      GType layer_type;
+
       layer = gimp_image_get_layer_iter (GIMP_IMAGE (paste))->data;
 
+      switch (paste_type)
+        {
+        case GIMP_PASTE_TYPE_FLOATING:
+        case GIMP_PASTE_TYPE_FLOATING_INTO:
+          /*  when pasting as floating selection, force creation of a
+           *  plain layer, so gimp_item_convert() will collapse a
+           *  group layer
+           */
+          layer_type = GIMP_TYPE_LAYER;
+          break;
+
+        case GIMP_PASTE_TYPE_NEW_LAYER:
+          layer_type = G_TYPE_FROM_INSTANCE (layer);
+          break;
+
+        default:
+          g_return_val_if_reached (NULL);
+        }
+
       layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (layer),
-                                             image,
-                                             G_TYPE_FROM_INSTANCE (layer)));
+                                             image, layer_type));
+
+      switch (paste_type)
+        {
+        case GIMP_PASTE_TYPE_FLOATING:
+        case GIMP_PASTE_TYPE_FLOATING_INTO:
+          /*  when pasting as floating selection, get rid of the layer mask  */
+          if (gimp_layer_get_mask (layer))
+            gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, FALSE);
+          break;
+
+        default:
+          break;
+        }
     }
   else
     {
@@ -374,19 +417,7 @@ gimp_edit_paste (GimpImage     *image,
                               viewport_height,
                               &offset_x,
                               &offset_y);
-
   gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
-
-  /* change paste type to NEW_LAYER for cases where we can't attach
-   * a floating selection
-   */
-  if (GIMP_IS_IMAGE (paste)                                 ||
-      ! drawable                                            ||
-      gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-      gimp_item_is_content_locked (GIMP_ITEM (drawable)))
-    {
-      paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
-    }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                C_("undo-type", "Paste"));
