@@ -118,10 +118,12 @@ static void   layers_new_layer_response    (GtkWidget             *widget,
 static void   layers_edit_layer_response   (GtkWidget             *widget,
                                             gint                   response_id,
                                             LayerOptionsDialog    *dialog);
-static void   layers_add_mask_response     (GtkWidget             *widget,
-                                            gint                   response_id,
-                                            LayerAddMaskDialog    *dialog);
-
+static void   layers_add_mask_callback     (GtkWidget             *dialog,
+                                            GimpLayer             *layer,
+                                            GimpAddMaskType        add_mask_type,
+                                            GimpChannel           *channel,
+                                            gboolean               invert,
+                                            gpointer               user_data);
 static void   layers_scale_layer_callback  (GtkWidget             *dialog,
                                             GimpViewable          *viewable,
                                             gint                   width,
@@ -778,29 +780,35 @@ void
 layers_mask_add_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  LayerAddMaskDialog *dialog;
-  GimpImage          *image;
-  GimpLayer          *layer;
-  GtkWidget          *widget;
-  GimpDialogConfig   *config;
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  GtkWidget *dialog;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
   if (gimp_layer_get_mask (layer))
     return;
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+#define ADD_MASK_DIALOG_KEY "gimp-add-mask-dialog"
 
-  dialog = layer_add_mask_dialog_new (layer, action_data_get_context (data),
-                                      widget,
-                                      config->layer_add_mask_type,
-                                      config->layer_add_mask_invert);
+  dialog = dialogs_get_dialog (G_OBJECT (layer), ADD_MASK_DIALOG_KEY);
 
-  g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (layers_add_mask_response),
-                    dialog);
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  gtk_widget_show (dialog->dialog);
+      dialog = layer_add_mask_dialog_new (layer, action_data_get_context (data),
+                                          widget,
+                                          config->layer_add_mask_type,
+                                          config->layer_add_mask_invert,
+                                          layers_add_mask_callback,
+                                          NULL);
+
+      dialogs_attach_dialog (G_OBJECT (layer), ADD_MASK_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -1174,55 +1182,43 @@ layers_edit_layer_response (GtkWidget          *widget,
 }
 
 static void
-layers_add_mask_response (GtkWidget          *widget,
-                          gint                response_id,
-                          LayerAddMaskDialog *dialog)
+layers_add_mask_callback (GtkWidget       *dialog,
+                          GimpLayer       *layer,
+                          GimpAddMaskType  add_mask_type,
+                          GimpChannel     *channel,
+                          gboolean         invert,
+                          gpointer         user_data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  GimpImage        *image  = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GimpLayerMask    *mask;
+  GError           *error = NULL;
+
+  g_object_set (config,
+                "layer-add-mask-type",   add_mask_type,
+                "layer-add-mask-invert", invert,
+                NULL);
+
+  mask = gimp_layer_create_mask (layer,
+                                 config->layer_add_mask_type,
+                                 channel);
+
+  if (config->layer_add_mask_invert)
+    gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+
+  if (! gimp_layer_add_mask (layer, mask, TRUE, &error))
     {
-      GimpLayer        *layer = dialog->layer;
-      GimpImage        *image = gimp_item_get_image (GIMP_ITEM (layer));
-      GimpLayerMask    *mask;
-      GimpDialogConfig *config;
-      GError           *error = NULL;
-
-      config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-      if (dialog->add_mask_type == GIMP_ADD_MASK_CHANNEL &&
-          ! dialog->channel)
-        {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                                _("Please select a channel first"));
-          return;
-        }
-
-      g_object_set (config,
-                    "layer-add-mask-type",   dialog->add_mask_type,
-                    "layer-add-mask-invert", dialog->invert,
-                    NULL);
-
-      mask = gimp_layer_create_mask (layer,
-                                     config->layer_add_mask_type,
-                                     dialog->channel);
-
-      if (config->layer_add_mask_invert)
-        gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
-
-      if (! gimp_layer_add_mask (layer, mask, TRUE, &error))
-        {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                                error->message);
-          g_object_unref (mask);
-          g_clear_error (&error);
-          return;
-        }
-
-      gimp_image_flush (image);
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                            error->message);
+      g_object_unref (mask);
+      g_clear_error (&error);
+      return;
     }
 
-  gtk_widget_destroy (dialog->dialog);
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
 }
 
 static void

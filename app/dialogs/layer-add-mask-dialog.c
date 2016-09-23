@@ -24,6 +24,7 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -41,25 +42,44 @@
 #include "gimp-intl.h"
 
 
+typedef struct _LayerAddMaskDialog LayerAddMaskDialog;
+
+struct _LayerAddMaskDialog
+{
+  GimpLayer           *layer;
+  GimpAddMaskType      add_mask_type;
+  GimpChannel         *channel;
+  gboolean             invert;
+  GimpAddMaskCallback  callback;
+  gpointer             user_data;
+};
+
+
 /*  local function prototypes  */
 
 static gboolean   layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
                                                           GimpViewable       *viewable,
                                                           gpointer            insert_data,
                                                           LayerAddMaskDialog *dialog);
-static void       layer_add_mask_dialog_free             (LayerAddMaskDialog *dialog);
+static void       layer_add_mask_dialog_response         (GtkWidget          *dialog,
+                                                          gint                response_id,
+                                                          LayerAddMaskDialog *private);
+static void       layer_add_mask_dialog_free             (LayerAddMaskDialog *private);
 
 
 /*  public functions  */
 
-LayerAddMaskDialog *
-layer_add_mask_dialog_new (GimpLayer       *layer,
-                           GimpContext     *context,
-                           GtkWidget       *parent,
-                           GimpAddMaskType  add_mask_type,
-                           gboolean         invert)
+GtkWidget *
+layer_add_mask_dialog_new (GimpLayer           *layer,
+                           GimpContext         *context,
+                           GtkWidget           *parent,
+                           GimpAddMaskType      add_mask_type,
+                           gboolean             invert,
+                           GimpAddMaskCallback  callback,
+                           gpointer             user_data)
 {
-  LayerAddMaskDialog *dialog;
+  LayerAddMaskDialog *private;
+  GtkWidget          *dialog;
   GtkWidget          *vbox;
   GtkWidget          *frame;
   GtkWidget          *combo;
@@ -71,39 +91,44 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  dialog = g_slice_new0 (LayerAddMaskDialog);
+  private = g_slice_new0 (LayerAddMaskDialog);
 
-  dialog->layer         = layer;
-  dialog->add_mask_type = add_mask_type;
-  dialog->invert        = invert;
+  private->layer         = layer;
+  private->add_mask_type = add_mask_type;
+  private->invert        = invert;
+  private->callback      = callback;
+  private->user_data     = user_data;
 
-  dialog->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (layer), context,
-                              _("Add Layer Mask"), "gimp-layer-add-mask",
-                              GIMP_STOCK_LAYER_MASK,
-                              _("Add a Mask to the Layer"),
-                              parent,
-                              gimp_standard_help_func,
-                              GIMP_HELP_LAYER_MASK_ADD,
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (layer), context,
+                                     _("Add Layer Mask"), "gimp-layer-add-mask",
+                                     GIMP_STOCK_LAYER_MASK,
+                                     _("Add a Mask to the Layer"),
+                                     parent,
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_LAYER_MASK_ADD,
 
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_ADD,    GTK_RESPONSE_OK,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_ADD,    GTK_RESPONSE_OK,
 
-                              NULL);
+                                     NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) layer_add_mask_dialog_free, dialog);
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) layer_add_mask_dialog_free, private);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (layer_add_mask_dialog_response),
+                    private);
+
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -111,10 +136,10 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
     gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
                                gtk_label_new (_("Initialize Layer Mask to:")),
                                G_CALLBACK (gimp_radio_button_update),
-                               &dialog->add_mask_type,
+                               &private->add_mask_type,
                                &button);
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                                   dialog->add_mask_type);
+                                   private->add_mask_type);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -130,7 +155,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
 
   g_signal_connect (combo, "select-item",
                     G_CALLBACK (layer_add_mask_dialog_channel_selected),
-                    dialog);
+                    private);
 
   channel = gimp_image_get_active_channel (image);
 
@@ -141,13 +166,13 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
                                    GIMP_VIEWABLE (channel));
 
   button = gtk_check_button_new_with_mnemonic (_("In_vert mask"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dialog->invert);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), private->invert);
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &dialog->invert);
+                    &private->invert);
 
   return dialog;
 }
@@ -159,15 +184,46 @@ static gboolean
 layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
                                         GimpViewable       *viewable,
                                         gpointer            insert_data,
-                                        LayerAddMaskDialog *dialog)
+                                        LayerAddMaskDialog *private)
 {
-  dialog->channel = GIMP_CHANNEL (viewable);
+  private->channel = GIMP_CHANNEL (viewable);
 
   return TRUE;
 }
 
 static void
-layer_add_mask_dialog_free (LayerAddMaskDialog *dialog)
+layer_add_mask_dialog_response (GtkWidget          *dialog,
+                                gint                response_id,
+                                LayerAddMaskDialog *private)
 {
-  g_slice_free (LayerAddMaskDialog, dialog);
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (private->layer));
+
+      if (private->add_mask_type == GIMP_ADD_MASK_CHANNEL &&
+          ! private->channel)
+        {
+          gimp_message_literal (image->gimp,
+                                G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                                _("Please select a channel first"));
+          return;
+        }
+
+      private->callback (dialog,
+                         private->layer,
+                         private->add_mask_type,
+                         private->channel,
+                         private->invert,
+                         private->user_data);
+    }
+  else
+    {
+      gtk_widget_destroy (dialog);
+    }
+}
+
+static void
+layer_add_mask_dialog_free (LayerAddMaskDialog *private)
+{
+  g_slice_free (LayerAddMaskDialog, private);
 }

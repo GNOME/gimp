@@ -19,24 +19,21 @@
 #define __LAYER_ADD_MASK_DIALOG_H__
 
 
-typedef struct _LayerAddMaskDialog LayerAddMaskDialog;
-
-struct _LayerAddMaskDialog
-{
-  GtkWidget       *dialog;
-
-  GimpLayer       *layer;
-  GimpAddMaskType  add_mask_type;
-  GimpChannel     *channel;
-  gboolean         invert;
-};
+typedef void (* GimpAddMaskCallback) (GtkWidget       *dialog,
+                                      GimpLayer       *layer,
+                                      GimpAddMaskType  add_mask_type,
+                                      GimpChannel     *channel,
+                                      gboolean         invert,
+                                      gpointer         user_data);
 
 
-LayerAddMaskDialog * layer_add_mask_dialog_new (GimpLayer       *layer,
-                                                GimpContext     *context,
-                                                GtkWidget       *parent,
-                                                GimpAddMaskType  add_mask_type,
-                                                gboolean         invert);
+GtkWidget * layer_add_mask_dialog_new (GimpLayer           *layer,
+                                       GimpContext         *context,
+                                       GtkWidget           *parent,
+                                       GimpAddMaskType      add_mask_type,
+                                       gboolean             invert,
+                                       GimpAddMaskCallback  callback,
+                                       gpointer             user_data);
 
 
 #endif /* __LAYER_ADD_MASK_DIALOG_H__ */
