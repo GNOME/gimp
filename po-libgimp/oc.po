@@ -3,23 +3,23 @@
 # Copyright (c) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007, 2008.
-# Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2015.
+# Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2015, 2016.
 # Cédric VALMARY <cvalmary@yahoo.fr>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp20\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-05-16 15:40+0000\n"
-"PO-Revision-Date: 2016-04-01 11:50+0200\n"
-"Last-Translator: Cédric VALMARY <cvalmary@yahoo.fr>\n"
-"Language-Team: Tot en òc (totenoc.eu)\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-09-23 12:42+0000\n"
+"PO-Revision-Date: 2016-09-23 23:50+0200\n"
+"Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
+"Language-Team: Tot En Òc\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Launchpad-Export-Date: 2016-04-01 06:28+0000\n"
 "Langívol-Team: Occitan (lengadocian) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "X-Project-Style: gnome\n"
@@ -55,7 +55,6 @@ msgid "_Browse..."
 msgstr "_Percórrer..."
 
 #: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
-#, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "L'empeuton %s ne pòt gerir los calques"
 
@@ -65,20 +64,18 @@ msgid "Merge Visible Layers"
 msgstr "Fusionar los calques visibles"
 
 #: ../libgimp/gimpexport.c:252
-#, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "L'empeuton %s pòt pas gerir los decalatges de calc, la talha o l'opacitat"
 
 #: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
-#, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "L'empeuton %s pòt pas gerir los calques qu'en tant qu'imatges d'una animacion"
 
 #: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
-msgstr "Enregistrar en tant qu'animation"
+msgstr "Enregistrar en tant qu'animacion"
 
 #: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
 #: ../libgimp/gimpexport.c:289
@@ -86,12 +83,10 @@ msgid "Flatten Image"
 msgstr "Aplatir l'imatge"
 
 #: ../libgimp/gimpexport.c:288
-#, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "L'empeuton %s pòt pas gerir la transparéncia"
 
 #: ../libgimp/gimpexport.c:297
-#, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "L'empeuton %s pòt pas manipular las masquetas de calc"
 
@@ -100,7 +95,6 @@ msgid "Apply Layer Masks"
 msgstr "Aplicar las masquetas de calc"
 
 #: ../libgimp/gimpexport.c:306
-#, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "L'empeuton %s pòt pas gerir que los imatges RVB"
 
@@ -110,7 +104,6 @@ msgid "Convert to RGB"
 msgstr "Convertir en RVB"
 
 #: ../libgimp/gimpexport.c:315
-#, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "L'empeuton %s pòt pas gerir que los imatges en nivèls de gris"
 
@@ -120,7 +113,6 @@ msgid "Convert to Grayscale"
 msgstr "Convertir en nivèls de gris"
 
 #: ../libgimp/gimpexport.c:324
-#, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "L'empeuton %s pòt pas gerir que los imatges indexats"
 
@@ -135,7 +127,6 @@ msgstr ""
 "per optimizar lo resultat)"
 
 #: ../libgimp/gimpexport.c:334
-#, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "L'empeuton %s pòt pas gerir que los imatges indexats bitmap (2 colors)"
 
@@ -148,23 +139,19 @@ msgstr ""
 "(fasètz-lo a la man per optimizar lo resultat)"
 
 #: ../libgimp/gimpexport.c:344
-#, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "L'empeuton %s pòt pas gerir que los imatges RVB o en nivèls de gris"
 
 #: ../libgimp/gimpexport.c:353
-#, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "L'empeuton %s pòt pas gerir que los imatges RVB o indexats"
 
 #: ../libgimp/gimpexport.c:363
-#, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "L'empeuton %s pòt pas gerir que los imatges en nivèls de gris o indexats"
 
 #: ../libgimp/gimpexport.c:374
-#, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "L'empeuton %s a besonh d'un canal alfa"
 
@@ -172,43 +159,41 @@ msgstr "L'empeuton %s a besonh d'un canal alfa"
 msgid "Add Alpha Channel"
 msgstr "Apondre un canal alfa"
 
-#: ../libgimp/gimpexport.c:430
+#: ../libgimp/gimpexport.c:434
 msgid "Confirm Save"
 msgstr "Confirmar l'enregistrament"
 
-#: ../libgimp/gimpexport.c:436
+#: ../libgimp/gimpexport.c:440
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: ../libgimp/gimpexport.c:512
+#: ../libgimp/gimpexport.c:516
 msgid "Export File"
 msgstr "Exportar lo fichièr"
 
-#: ../libgimp/gimpexport.c:516
+#: ../libgimp/gimpexport.c:520
 msgid "_Ignore"
 msgstr "_Ignorar"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
+#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1017
 msgid "_Export"
 msgstr "_Exportar"
 
 #. the headline
-#: ../libgimp/gimpexport.c:548
-#, c-format
+#: ../libgimp/gimpexport.c:552
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
 "Vòstre imatge deuriá èsser exportat abans d'èsser enregistrat en %s per las "
-"rasons seguentas :"
+"rasons seguentas :"
 
 #. the footline
-#: ../libgimp/gimpexport.c:622
+#: ../libgimp/gimpexport.c:626
 msgid "The export conversion won't modify your original image."
 msgstr "La conversion exportar ne modificara pas l'imatge d'origina."
 
-#: ../libgimp/gimpexport.c:729
-#, c-format
+#: ../libgimp/gimpexport.c:733
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
@@ -216,8 +201,7 @@ msgstr ""
 "Sètz a mand d'enregistrar un escondedor de calc coma %s.\n"
 "Aquò salvarà pas los calques visibles."
 
-#: ../libgimp/gimpexport.c:735
-#, c-format
+#: ../libgimp/gimpexport.c:739
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
@@ -225,7 +209,7 @@ msgstr ""
 "Sètz a mand d'enregistrar un canal (seleccion enregistrada) coma %s.\n"
 "Aquò enregistrarà pas los calques visibles."
 
-#: ../libgimp/gimpexport.c:1004
+#: ../libgimp/gimpexport.c:1008
 msgid "Export Image as "
 msgstr "Exportar l'imatge coma "
 
@@ -238,30 +222,28 @@ msgid "Gradient Selection"
 msgstr "Selector de degradat"
 
 #: ../libgimp/gimpimagemetadata.c:605
-#, fuzzy
 #| msgid "_Background Color"
 msgid "Background"
-msgstr "Color de _rèireplan"
+msgstr "Rèireplan"
 
 #: ../libgimp/gimpimagemetadata.c:796
-#, fuzzy, c-format
+#, c-format
 #| msgid "_Rotate"
 msgid "Rotate %s?"
-msgstr "_Rotacion"
+msgstr "Far virar %s ?"
 
 #: ../libgimp/gimpimagemetadata.c:802
 msgid "_Keep Original"
-msgstr ""
+msgstr "_Conservar l'original"
 
 #: ../libgimp/gimpimagemetadata.c:844
 msgid "Original"
-msgstr ""
+msgstr "Original"
 
 #: ../libgimp/gimpimagemetadata.c:860
-#, fuzzy
 #| msgid "_Rotate"
 msgid "Rotated"
-msgstr "_Rotacion"
+msgstr "Virat"
 
 #: ../libgimp/gimpimagemetadata.c:878
 msgid "This image contains Exif orientation metadata."
@@ -280,7 +262,7 @@ msgstr ""
 #.
 #: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:251
 msgid "(Empty)"
-msgstr "(Vide)"
+msgstr "(Void)"
 
 #: ../libgimp/gimppaletteselectbutton.c:139
 msgid "Palette Selection"
@@ -320,13 +302,13 @@ msgstr "per tipe"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:395
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:140
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
 msgid "No matches"
 msgstr "Pas cap de resultat"
 
 #: ../libgimp/gimpprocbrowserdialog.c:398
 msgid "Search term invalid or incomplete"
-msgstr "Terme de recèrca non valide o incomplet"
+msgstr "Tèrme de recèrca invalid o incomplet"
 
 #: ../libgimp/gimpprocbrowserdialog.c:407
 msgid "Searching"
@@ -361,7 +343,6 @@ msgid "Searching by type"
 msgstr "Recèrca per tipe"
 
 #: ../libgimp/gimpprocbrowserdialog.c:484
-#, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d procedura"
@@ -372,7 +353,6 @@ msgid "No matches for your query"
 msgstr "Aucun resultat per vòstra requèsta"
 
 #: ../libgimp/gimpprocbrowserdialog.c:497
-#, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedura correspond a vòstra requèsta"
@@ -390,15 +370,15 @@ msgstr "Valors tornadas"
 msgid "Additional Information"
 msgstr "Informacions suplementàrias"
 
-#: ../libgimp/gimpprocview.c:239
+#: ../libgimp/gimpprocview.c:240
 msgid "Author:"
 msgstr "Autor :"
 
-#: ../libgimp/gimpprocview.c:251
+#: ../libgimp/gimpprocview.c:253
 msgid "Date:"
 msgstr "Data :"
 
-#: ../libgimp/gimpprocview.c:263
+#: ../libgimp/gimpprocview.c:266
 msgid "Copyright:"
 msgstr "Copyright :"
 
@@ -467,7 +447,6 @@ msgid "Circle"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:99
-#, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Square"
 msgctxt "brush-generated-shape"
@@ -495,19 +474,17 @@ msgid "Pattern fill"
 msgstr "Emplenatge amb lo motiu"
 
 #: ../libgimpbase/gimpbaseenums.c:162
-#, fuzzy
 #| msgid "Button 0"
 msgctxt "cap-style"
 msgid "Butt"
-msgstr "Boton 0"
+msgstr "Boton"
 
 #: ../libgimpbase/gimpbaseenums.c:163
 msgctxt "cap-style"
 msgid "Round"
-msgstr ""
+msgstr "Redond"
 
 #: ../libgimpbase/gimpbaseenums.c:164
-#, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Square"
 msgctxt "cap-style"
@@ -557,7 +534,7 @@ msgstr "Gris"
 #: ../libgimpbase/gimpbaseenums.c:235
 msgctxt "channel-type"
 msgid "Indexed"
-msgstr "Indèxat"
+msgstr "Indexat"
 
 #: ../libgimpbase/gimpbaseenums.c:236
 msgctxt "channel-type"
@@ -710,36 +687,31 @@ msgid "Burn"
 msgstr "Escurezir"
 
 #: ../libgimpbase/gimpbaseenums.c:534
-#, fuzzy
 #| msgid "_Foreground Color"
 msgctxt "fill-type"
 msgid "Foreground color"
-msgstr "Color de _primièr plan"
+msgstr "Color de primièr plan"
 
 #: ../libgimpbase/gimpbaseenums.c:535
-#, fuzzy
 #| msgid "_Background Color"
 msgctxt "fill-type"
 msgid "Background color"
-msgstr "Color de _rèireplan"
+msgstr "Color de rèireplan"
 
 #: ../libgimpbase/gimpbaseenums.c:536
-#, fuzzy
 #| msgid "_White"
 msgctxt "fill-type"
 msgid "White"
-msgstr "_Blanc"
+msgstr "Blanc"
 
 #: ../libgimpbase/gimpbaseenums.c:537
-#, fuzzy
 #| msgctxt "blend-mode"
 #| msgid "FG to transparent"
 msgctxt "fill-type"
 msgid "Transparency"
-msgstr "PP cap a transparent"
+msgstr "Transparéncia"
 
 #: ../libgimpbase/gimpbaseenums.c:538
-#, fuzzy
 #| msgctxt "clone-type"
 #| msgid "Pattern"
 msgctxt "fill-type"
@@ -779,17 +751,17 @@ msgstr "Conic (asimetric)"
 #: ../libgimpbase/gimpbaseenums.c:680
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
-msgstr "Segon la forma (angulaire)"
+msgstr "Segon la forma (angulara)"
 
 #: ../libgimpbase/gimpbaseenums.c:681
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
-msgstr "Segon la forma (sphérique)"
+msgstr "Segon la forma (esferica)"
 
 #: ../libgimpbase/gimpbaseenums.c:682
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
-msgstr "Segon la forma (excroissances)"
+msgstr "Segon la forma (excreissenças)"
 
 #: ../libgimpbase/gimpbaseenums.c:683
 msgctxt "gradient-type"
@@ -804,7 +776,7 @@ msgstr "Espirala (sens anti-orari)"
 #: ../libgimpbase/gimpbaseenums.c:716
 msgctxt "grid-style"
 msgid "Intersections (dots)"
-msgstr "Interseccions (points)"
+msgstr "Interseccions (punts)"
 
 #: ../libgimpbase/gimpbaseenums.c:717
 msgctxt "grid-style"
@@ -827,11 +799,10 @@ msgid "Solid"
 msgstr "Plen"
 
 #: ../libgimpbase/gimpbaseenums.c:790
-#, fuzzy
 #| msgid "by name"
 msgctxt "icon-type"
 msgid "Icon name"
-msgstr "per nom"
+msgstr "Nom de l'icòna"
 
 #: ../libgimpbase/gimpbaseenums.c:791
 msgctxt "icon-type"
@@ -881,20 +852,19 @@ msgstr "Nivèls de gris-Alfa"
 #: ../libgimpbase/gimpbaseenums.c:861
 msgctxt "image-type"
 msgid "Indexed"
-msgstr "Indèxat"
+msgstr "Indexat"
 
 #: ../libgimpbase/gimpbaseenums.c:862
 msgctxt "image-type"
 msgid "Indexed-alpha"
-msgstr "Indèxat-Alfa"
+msgstr "Indexat-Alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:892
 msgctxt "ink-blob-type"
 msgid "Circle"
-msgstr ""
+msgstr "Cercle"
 
 #: ../libgimpbase/gimpbaseenums.c:893
-#, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Square"
 msgctxt "ink-blob-type"
@@ -904,7 +874,7 @@ msgstr "Carrat"
 #: ../libgimpbase/gimpbaseenums.c:894
 msgctxt "ink-blob-type"
 msgid "Diamond"
-msgstr ""
+msgstr "Lausange"
 
 #: ../libgimpbase/gimpbaseenums.c:926
 msgctxt "interpolation-type"
@@ -949,17 +919,17 @@ msgstr ""
 #: ../libgimpbase/gimpbaseenums.c:1118
 msgctxt "orientation-type"
 msgid "Horizontal"
-msgstr ""
+msgstr "Orizontal"
 
 #: ../libgimpbase/gimpbaseenums.c:1119
 msgctxt "orientation-type"
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #: ../libgimpbase/gimpbaseenums.c:1120
 msgctxt "orientation-type"
 msgid "Unknown"
-msgstr ""
+msgstr "Desconegut"
 
 #: ../libgimpbase/gimpbaseenums.c:1149
 msgctxt "paint-application-mode"
@@ -1092,49 +1062,42 @@ msgid "Composite"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:1544
-#, fuzzy
 #| msgid "Red"
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Roge"
 
 #: ../libgimpbase/gimpbaseenums.c:1545
-#, fuzzy
 #| msgid "Green"
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Verd"
 
 #: ../libgimpbase/gimpbaseenums.c:1546
-#, fuzzy
 #| msgid "Blue"
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Blau"
 
 #: ../libgimpbase/gimpbaseenums.c:1547
-#, fuzzy
 #| msgid "Hue"
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Tinta"
 
 #: ../libgimpbase/gimpbaseenums.c:1548
-#, fuzzy
 #| msgid "Saturation"
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Saturacion"
 
 #: ../libgimpbase/gimpbaseenums.c:1549
-#, fuzzy
 #| msgid "Value"
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Valor"
 
 #: ../libgimpbase/gimpbaseenums.c:1550
-#, fuzzy
 #| msgid "Alpha"
 msgctxt "select-criterion"
 msgid "Alpha"
@@ -1151,11 +1114,10 @@ msgid "Points"
 msgstr "Punts"
 
 #: ../libgimpbase/gimpbaseenums.c:1641
-#, fuzzy
 #| msgid "_Stroke"
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "_Traçar"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:1642
 msgctxt "stroke-method"
@@ -1205,7 +1167,7 @@ msgstr "Alinhat a dreita"
 #: ../libgimpbase/gimpbaseenums.c:1739
 msgctxt "text-justification"
 msgid "Centered"
-msgstr "Centré"
+msgstr "Centrat"
 
 #: ../libgimpbase/gimpbaseenums.c:1740
 msgctxt "text-justification"
@@ -1306,46 +1268,80 @@ msgstr ""
 msgid "Calling ShowItems failed: "
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:253
-#, fuzzy, c-format
+#: ../libgimpcolor/gimpcolorprofile.c:269
+#, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr ""
-"Filtre de calibracion de las colors qu'utilizan lo perfil colorimetric ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:299
-#, fuzzy
+#: ../libgimpcolor/gimpcolorprofile.c:315
 #| msgid "Color proof filter using ICC color profile"
 msgid "Data does not appear to be an ICC color profile"
 msgstr ""
-"Filtre de calibracion de las colors qu'utilizan lo perfil colorimetric ICC"
+"Filtre de calibracion de las colors utilisant lo perfil colorimetric ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:356
+#: ../libgimpcolor/gimpcolorprofile.c:372
 msgid "Could not save color profile to memory"
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:574
-#, fuzzy
+#: ../libgimpcolor/gimpcolorprofile.c:590
 #| msgid "Image profile:"
 msgid "(unnamed profile)"
-msgstr "Perfil d'imatge :"
+msgstr "(perfil sens nom)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:616
+#: ../libgimpcolor/gimpcolorprofile.c:632
 #, fuzzy, c-format
 #| msgid "Profile: %s"
 msgid "Model: %s"
 msgstr "Perfil : %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:625
+#: ../libgimpcolor/gimpcolorprofile.c:641
 #, c-format
 msgid "Manufacturer: %s"
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:634
-#, fuzzy, c-format
+#: ../libgimpcolor/gimpcolorprofile.c:650
+#, c-format
 #| msgid "Copyright:"
 msgid "Copyright: %s"
-msgstr "Copyright :"
+msgstr "Copyright : %s"
+
+#: ../libgimpconfig/gimpconfigenums.c:24
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr "Pas de gestion des colors"
+
+#: ../libgimpconfig/gimpconfigenums.c:25
+#| msgctxt "color-management-mode"
+#| msgid "Color managed display"
+msgctxt "color-management-mode"
+msgid "Color-managed display"
+msgstr "Afichatge en color gerida"
+
+#: ../libgimpconfig/gimpconfigenums.c:26
+msgctxt "color-management-mode"
+msgid "Soft-proofing"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfigenums.c:57
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr "Perceptiu"
+
+#: ../libgimpconfig/gimpconfigenums.c:58
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "Colorimetria relativa"
+
+#: ../libgimpconfig/gimpconfigenums.c:59
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "Saturacion"
+
+#: ../libgimpconfig/gimpconfigenums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr "Colorimetria absoluda"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1354,15 +1350,15 @@ msgstr "Copyright :"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "How images are displayed on screen."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:57
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Lo perfil colorimetric de vòstre monitor (primari)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -1372,30 +1368,30 @@ msgstr ""
 "del gestionari de fenèstras. Lo perfil monitor configurat es alara utilizat "
 "en secors."
 
-#: ../libgimpconfig/gimpcolorconfig.c:65
+#: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:69
+#: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:73
+#: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Lo perfil colorimetric CMJN utilizat per convertir de RVB a CMJN."
 
-#: ../libgimpconfig/gimpcolorconfig.c:76
+#: ../libgimpconfig/gimpcolorconfig.c:74
 msgid ""
-"The color profile to use for soft proofing from your image's color space to "
-"some other color space, including soft proofing to a printer or other output "
+"The color profile to use for soft-proofing from your image's color space to "
+"some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:81
+#: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1403,239 +1399,205 @@ msgid ""
 "intent really gives you relative colorimetric."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:88
+#: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
-"Do use black point compensation (unless you know you have a reason not to). "
+"Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:92
+#: ../libgimpconfig/gimpcolorconfig.c:90
+msgid ""
+"When disabled, image display might be of better quality at the cost of speed."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:97
+#: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:101
+#: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
-"When enabled, the print simulation will mark colors which can not be "
+"When disabled, soft-proofing might be of better quality at the cost of speed."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:107
+#, fuzzy
+#| msgid ""
+#| "When enabled, the print simulation will mark colors which can not be "
+#| "represented in the target color space."
+msgid ""
+"When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
 "Se activat, la simulacion d'impression marcarà las colors que pòdon pas "
 "èsser representadas dins l'espaci de color cibla."
 
-#: ../libgimpconfig/gimpcolorconfig.c:105
+#: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Color d'utilizar per marcar las colors fòra gama."
 
-#: ../libgimpconfig/gimpcolorconfig.c:177
+#: ../libgimpconfig/gimpcolorconfig.c:199
 #, fuzzy
 #| msgid "Mode of operation:"
 msgid "Mode of operation"
-msgstr "Mòde d'operacion :"
+msgstr "Mòde d'operacion :"
 
-#: ../libgimpconfig/gimpcolorconfig.c:185
+#: ../libgimpconfig/gimpcolorconfig.c:207
 msgid "Preferred RGB profile"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:192
+#: ../libgimpconfig/gimpcolorconfig.c:214
 msgid "Preferred grayscale profile"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:199
-#, fuzzy
+#: ../libgimpconfig/gimpcolorconfig.c:221
 #| msgid "Monitor profile:"
 msgid "CMYK profile"
-msgstr "Perfil del monitor :"
+msgstr "Perfil CMYK"
 
-#: ../libgimpconfig/gimpcolorconfig.c:206
-#, fuzzy
+#: ../libgimpconfig/gimpcolorconfig.c:228
 #| msgid "Monitor profile:"
 msgid "Monitor profile"
-msgstr "Perfil del monitor :"
-
-#: ../libgimpconfig/gimpcolorconfig.c:213
-#, fuzzy
-#| msgid "Monitor profile:"
-msgid "Use the system monitor profile"
-msgstr "Perfil del monitor :"
-
-#: ../libgimpconfig/gimpcolorconfig.c:220
-#, fuzzy
-#| msgid "Print simulation profile:"
-msgid "Print simulation profile"
-msgstr "Perfil de simulacion d'impression :"
-
-#: ../libgimpconfig/gimpcolorconfig.c:227
-msgid "Display rendering intent"
-msgstr ""
+msgstr "Perfil del monitor"
 
 #: ../libgimpconfig/gimpcolorconfig.c:235
-#, fuzzy
-#| msgid "_Black Point Compensation"
-msgid "Use black point compensation for the display"
-msgstr "Punt de _compensacion del negre"
+#| msgid "Monitor profile:"
+msgid "Use the system monitor profile"
+msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:242
-msgid "Softproof rendering intent"
+#: ../libgimpconfig/gimpcolorconfig.c:243
+msgid "Simulation profile for soft-proofing"
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:250
-#, fuzzy
-#| msgid "_Black Point Compensation"
-msgid "Use black point compensation for softproofing"
-msgstr "Punt de _compensacion del negre"
+msgid "Display rendering intent"
+msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:257
+#: ../libgimpconfig/gimpcolorconfig.c:258
+#| msgid "_Black Point Compensation"
+msgid "Use black point compensation for the display"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:265
+msgid "Optimize display color transformations"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:272
+msgid "Soft-proofing rendering intent"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:280
+#| msgid "_Black Point Compensation"
+msgid "Use black point compensation for soft-proofing"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:287
+msgid "Optimize soft-proofing color transformations"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:294
 msgid "Mark out of gamut colors"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:264
+#: ../libgimpconfig/gimpcolorconfig.c:301
 msgid "Out of gamut warning color"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:464
-#: ../libgimpconfig/gimpcolorconfig.c:598
-#, fuzzy, c-format
+#: ../libgimpconfig/gimpcolorconfig.c:656
+#: ../libgimpconfig/gimpcolorconfig.c:818
+#, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for RGB color space."
 msgstr ""
-"Filtre de calibracion de las colors qu'utilizan lo perfil colorimetric ICC"
 
-#: ../libgimpconfig/gimpcolorconfig.c:495
-#: ../libgimpconfig/gimpcolorconfig.c:639
-#, fuzzy, c-format
+#: ../libgimpconfig/gimpcolorconfig.c:694
+#: ../libgimpconfig/gimpcolorconfig.c:859
+#, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr ""
-"Filtre de calibracion de las colors qu'utilizan lo perfil colorimetric ICC"
 
-#: ../libgimpconfig/gimpcolorconfig.c:526
-#: ../libgimpconfig/gimpcolorconfig.c:680
-#, fuzzy, c-format
+#: ../libgimpconfig/gimpcolorconfig.c:732
+#: ../libgimpconfig/gimpcolorconfig.c:900
+#, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr ""
-"Filtre de calibracion de las colors qu'utilizan lo perfil colorimetric ICC"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:24
-msgctxt "color-management-mode"
-msgid "No color management"
-msgstr "Pas de gestion des colors"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:25
-msgctxt "color-management-mode"
-msgid "Color managed display"
-msgstr "Afichatge en color gerida"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:26
-msgctxt "color-management-mode"
-msgid "Print simulation"
-msgstr "Simulacion d'impression"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57
-msgctxt "color-rendering-intent"
-msgid "Perceptual"
-msgstr "Perceptiu"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:58
-msgctxt "color-rendering-intent"
-msgid "Relative colorimetric"
-msgstr "Colorimetria relativa"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59
-msgctxt "color-rendering-intent"
-msgid "Saturation"
-msgstr "Saturacion"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:60
-msgctxt "color-rendering-intent"
-msgid "Absolute colorimetric"
-msgstr "Colorimetria absoluda"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:113
-#, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "La valor de l'expression %s es pas una cadena de caractèr UTF-8 valida"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpconfig-deserialize.c:464
-#, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
-"« òc » o « non » esperats per l'expression booleana %s, « %s » recebuda"
+"« òc » o « non » esperats per l'expression booleana %s, « %s » recebuda"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:538
-#, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "Valor « %s » pas valida per l'expression %s"
+msgstr "Valor « %s » pas valida per l'expression %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:553
-#, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "Valor « %ld » pas valida per l'expression %s"
+msgstr "Valor « %ld » pas valida per l'expression %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:622
-#, c-format
 msgid "while parsing token '%s': %s"
-msgstr "en interpretant l'expression « %s » : %s"
+msgstr "en interpretant l'expression « %s » : %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:658
 #: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
 #: ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:703
+#: ../libgimpwidgets/gimpcolorprofilestore.c:719
 msgid "fatal parse error"
 msgstr "error fatala d'interpretacion"
 
-#: ../libgimpconfig/gimpconfig-path.c:439
-#, c-format
+#: ../libgimpconfig/gimpconfig-path.c:487
 msgid "Cannot expand ${%s}"
 msgstr "Impossible d'espandir ${%s}"
 
 #: ../libgimpconfig/gimpconfigwriter.c:88
 #: ../libgimpconfig/gimpconfigwriter.c:658
-#, c-format
 msgid "Error writing to '%s': %s"
-msgstr "Error al moment de l'escritura de « %s » : %s"
+msgstr "Error al moment de l'escritura de « %s » : %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:184
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not create temporary file for '%s': %s"
 msgid "Could not create temporary file for '%s': "
-msgstr "Impossible de crear un fichièr temporari per « %s » : %s"
+msgstr "Impossible de crear un fichièr temporari per « %s » :"
 
 #: ../libgimpconfig/gimpconfigwriter.c:761
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error writing to '%s': %s"
 msgid "Error writing '%s': %s"
-msgstr "Error al moment de l'escritura de « %s » : %s"
+msgstr "Error al moment de l'escritura de « %s » : %s"
 
 #: ../libgimpconfig/gimpscanner.c:408
-#, c-format
 msgid "invalid UTF-8 string"
 msgstr "Cadena de caractèrs UTF-8 invalida."
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:606
-#, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "« yes » o « no » esperats per l'expression booleana, « %s » recebut"
 
 #: ../libgimpconfig/gimpscanner.c:843
-#, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Error pendent l'interpretacion de « %s » a la linha %d : %s"
+msgstr "Error pendent l'interpretacion de « %s » a la linha %d : %s"
 
 #: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
 #: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
 #: ../libgimpmodule/gimpmodule.c:442
-#, c-format
 msgid "Module '%s' load error: %s"
-msgstr "Error de cargament del modul « %s » : %s"
+msgstr "Error de cargament del modul « %s » : %s"
 
 #: ../libgimpmodule/gimpmodule.c:384
 msgid "Module error"
@@ -1667,37 +1629,34 @@ msgstr ""
 "(%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
-#, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Fracàs al moment de la creacion del dorsièr de vinhetas « %s »."
+msgstr "Fracàs al moment de la creacion del dorsièr de vinhetas « %s »."
 
 #: ../libgimpthumb/gimpthumbnail.c:508
-#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "La vinheta conten pas cap de balisa Thumb::URI"
 
 #: ../libgimpthumb/gimpthumbnail.c:905
-#, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Impossible de crear una vinheta per « %s » : %s"
+msgstr "Impossible de crear una vinheta per « %s » : %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:113
+#: ../libgimpwidgets/gimpbrowser.c:114
 msgid "_Search:"
 msgstr "_Recercar :"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:136
+#: ../libgimpwidgets/gimpcolorbutton.c:137
 msgid "_Foreground Color"
 msgstr "Color de _primièr plan"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:140
+#: ../libgimpwidgets/gimpcolorbutton.c:141
 msgid "_Background Color"
 msgstr "Color de _rèireplan"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:144
+#: ../libgimpwidgets/gimpcolorbutton.c:145
 msgid "Blac_k"
 msgstr "_Negre"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:148
+#: ../libgimpwidgets/gimpcolorbutton.c:149
 msgid "_White"
 msgstr "_Blanc"
 
@@ -1709,12 +1668,12 @@ msgstr "Totes los fichièrs (*.*)"
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Perfil colorimetric ICC (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:312
-#: ../libgimpwidgets/gimppatheditor.c:248
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
+#: ../libgimpwidgets/gimppatheditor.c:249
 msgid "Folder"
 msgstr "Dorsièr"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:317
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:330
 msgid "Not a regular file."
 msgstr ""
 
@@ -1730,21 +1689,20 @@ msgstr "Pas cap"
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:174
 msgid "Manufacturer: "
-msgstr ""
+msgstr "Fabricant :"
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:186
-#, fuzzy
 #| msgid "Copyright:"
 msgid "Copyright: "
 msgstr "Copyright :"
 
-#: ../libgimpwidgets/gimpcolorscales.c:109
+#: ../libgimpwidgets/gimpcolorscales.c:111
 msgid "Scales"
 msgstr "Escalas"
 
 #: ../libgimpwidgets/gimpcolorselection.c:221
 msgid "Current:"
-msgstr "Actuala :"
+msgstr "Actuala :"
 
 #: ../libgimpwidgets/gimpcolorselection.c:230
 msgid "Old:"
@@ -1760,30 +1718,30 @@ msgstr ""
 
 #: ../libgimpwidgets/gimpcolorselection.c:321
 msgid "HTML _notation:"
-msgstr "_Notacion HTML :"
+msgstr "_Notacion HTML :"
 
-#: ../libgimpwidgets/gimpfileentry.c:150
+#: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:227
+#: ../libgimpwidgets/gimpfileentry.c:229
 msgid "Open a file selector to browse your folders"
 msgstr "Dobrís un selector de fichièr per navigar dins vòstres dorsièrs"
 
-#: ../libgimpwidgets/gimpfileentry.c:228
+#: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your files"
 msgstr "Dobrís un selector de fichièr per navigar dins vòstres fichièrs"
 
-#: ../libgimpwidgets/gimpfileentry.c:395
+#: ../libgimpwidgets/gimpfileentry.c:397
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:422
+#: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select Folder"
 msgstr "Seleccionatz un dorsièr"
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:426
 msgid "Select File"
 msgstr "Seleccionatz un fichièr"
 
@@ -1804,72 +1762,66 @@ msgid "_Duplicate"
 msgstr "_Duplicar"
 
 #: ../libgimpwidgets/gimpicons.c:64
-msgid "_Edit"
-msgstr "Mo_dificar"
-
-#: ../libgimpwidgets/gimpicons.c:65
 msgid "Linked"
 msgstr "Ligat"
 
-#: ../libgimpwidgets/gimpicons.c:66
+#: ../libgimpwidgets/gimpicons.c:65
 msgid "Paste as New"
 msgstr "Pegar en tant que novèl"
 
-#: ../libgimpwidgets/gimpicons.c:67
+#: ../libgimpwidgets/gimpicons.c:66
 msgid "Paste Into"
 msgstr "Pegar dins"
 
-#: ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpicons.c:67
 msgid "_Reset"
 msgstr "_Reïnicializar"
 
-#: ../libgimpwidgets/gimpicons.c:69
+#: ../libgimpwidgets/gimpicons.c:68
 msgid "Visible"
 msgstr "Visible"
 
-#: ../libgimpwidgets/gimpicons.c:108 ../libgimpwidgets/gimpicons.c:112
+#: ../libgimpwidgets/gimpicons.c:114 ../libgimpwidgets/gimpicons.c:118
 msgid "_Stroke"
 msgstr "_Traçar"
 
-#: ../libgimpwidgets/gimpicons.c:124
+#: ../libgimpwidgets/gimpicons.c:136
 msgid "L_etter Spacing"
 msgstr "Espaçament de las l_etras"
 
-#: ../libgimpwidgets/gimpicons.c:125
+#: ../libgimpwidgets/gimpicons.c:137
 msgid "L_ine Spacing"
 msgstr "Espaçament de las l_inhas"
 
-#: ../libgimpwidgets/gimpicons.c:141
-#, fuzzy
+#: ../libgimpwidgets/gimpicons.c:154
 #| msgid "_Resize"
 msgid "Re_size"
 msgstr "_Redimensionar"
 
-#: ../libgimpwidgets/gimpicons.c:142 ../libgimpwidgets/gimpicons.c:277
+#: ../libgimpwidgets/gimpicons.c:155 ../libgimpwidgets/gimpicons.c:290
 msgid "_Scale"
 msgstr "_Escala"
 
-#: ../libgimpwidgets/gimpicons.c:249
+#: ../libgimpwidgets/gimpicons.c:262
 msgid "Cr_op"
 msgstr "_Decopar"
 
-#: ../libgimpwidgets/gimpicons.c:257
-#, fuzzy
+#: ../libgimpwidgets/gimpicons.c:270
 #| msgctxt "add-mask-type"
 #| msgid "_Selection"
 msgid "_Select"
 msgstr "_Seleccion"
 
-#: ../libgimpwidgets/gimpicons.c:260 ../libgimpwidgets/gimpicons.c:272
-#: ../libgimpwidgets/gimpicons.c:283
+#: ../libgimpwidgets/gimpicons.c:273 ../libgimpwidgets/gimpicons.c:285
+#: ../libgimpwidgets/gimpicons.c:296
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: ../libgimpwidgets/gimpicons.c:276
+#: ../libgimpwidgets/gimpicons.c:289
 msgid "_Rotate"
 msgstr "_Rotacion"
 
-#: ../libgimpwidgets/gimpicons.c:279
+#: ../libgimpwidgets/gimpicons.c:292
 msgid "_Shear"
 msgstr "_Cisalhar"
 
@@ -1893,7 +1845,7 @@ msgstr "Res es pas seleccionat"
 
 #: ../libgimpwidgets/gimppageselector.c:288
 msgid "Select _All"
-msgstr "Seleccionar _tout"
+msgstr "Seleccionar _tot"
 
 #: ../libgimpwidgets/gimppageselector.c:308
 msgid "Select _range:"
@@ -1905,7 +1857,6 @@ msgstr "Dobrir las _paginas coma"
 
 #: ../libgimpwidgets/gimppageselector.c:449
 #: ../libgimpwidgets/gimppageselector.c:647
-#, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
@@ -1915,13 +1866,12 @@ msgstr "Una pagina seleccionada"
 
 #: ../libgimpwidgets/gimppageselector.c:1079
 #: ../libgimpwidgets/gimppageselector.c:1083
-#, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d pagina seleccionada"
 msgstr[1] "Totas las %d paginas seleccionada"
 
-#: ../libgimpwidgets/gimppatheditor.c:239
+#: ../libgimpwidgets/gimppatheditor.c:240
 msgid "Writable"
 msgstr "Modificable"
 
@@ -1938,16 +1888,15 @@ msgstr ""
 msgid "_Preview"
 msgstr "_Apercebut"
 
-#: ../libgimpwidgets/gimppreviewarea.c:103
+#: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr "Talha del damièr"
 
-#: ../libgimpwidgets/gimppreviewarea.c:110
+#: ../libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr "Estil del damièr"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2110
-#, c-format
+#: ../libgimpwidgets/gimppropwidgets.c:2111
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Aqueste camp de tèxte es limitat a %d caractèr."
@@ -1975,7 +1924,7 @@ msgid ""
 "a given \"random\" operation"
 msgstr ""
 "Utilizar aquesta valor coma gèrme del generador de nombres aleatòris - aquò "
-"vos permet de repetir una operacion « aleatòria » donada."
+"vos permet de repetir una operacion « aleatòria » donada."
 
 #: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
@@ -2017,7 +1966,7 @@ msgstr "Retrait"
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"
-msgstr "Païsage"
+msgstr "Païsatge"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgctxt "color-selector-channel"
@@ -2102,76 +2051,75 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Zoom arrièr"
 
-#: ../modules/color-selector-cmyk.c:84
+#: ../modules/color-selector-cmyk.c:82
 msgid "CMYK color selector (using color profile)"
 msgstr "Selector de colors CMJN (utilizant lo perfil de colors)"
 
-#: ../modules/color-selector-cmyk.c:118
+#: ../modules/color-selector-cmyk.c:116
 msgid "CMYK"
 msgstr "CMJN"
 
 #. Cyan
-#: ../modules/color-selector-cmyk.c:140
+#: ../modules/color-selector-cmyk.c:138
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk.c:142
+#: ../modules/color-selector-cmyk.c:140
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk.c:144
+#: ../modules/color-selector-cmyk.c:142
 msgid "_Y"
 msgstr "_J"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk.c:146
+#: ../modules/color-selector-cmyk.c:144
 msgid "_K"
 msgstr "_N"
 
-#: ../modules/color-selector-cmyk.c:150
+#: ../modules/color-selector-cmyk.c:148
 msgid "Cyan"
 msgstr "Cian"
 
-#: ../modules/color-selector-cmyk.c:151
+#: ../modules/color-selector-cmyk.c:149
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/color-selector-cmyk.c:152
+#: ../modules/color-selector-cmyk.c:150
 msgid "Yellow"
 msgstr "Jaune"
 
-#: ../modules/color-selector-cmyk.c:153
+#: ../modules/color-selector-cmyk.c:151
 msgid "Black"
 msgstr "Negre"
 
-#: ../modules/color-selector-cmyk.c:374
+#: ../modules/color-selector-cmyk.c:380
 msgid "Profile: (none)"
 msgstr "Perfil : (pas cap)"
 
-#: ../modules/color-selector-cmyk.c:386
-#, c-format
+#: ../modules/color-selector-cmyk.c:392
 msgid "Profile: %s"
 msgstr "Perfil : %s"
 
-#: ../modules/color-selector-water.c:82
+#: ../modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
 msgstr "Selector de colors estil Aqüarèla"
 
-#: ../modules/color-selector-water.c:113
+#: ../modules/color-selector-water.c:130
 msgid "Watercolor"
 msgstr "Aqüarèla"
 
-#: ../modules/color-selector-water.c:183
+#: ../modules/color-selector-water.c:200
 msgid "Pressure"
 msgstr "Pression"
 
-#: ../modules/color-selector-wheel.c:70
+#: ../modules/color-selector-wheel.c:72
 msgid "HSV color wheel"
 msgstr "Ròda de colors HSV"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:104
 msgid "Wheel"
 msgstr "Ròda"
 
@@ -2194,17 +2142,14 @@ msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
 #: ../modules/controller-dx-dinput.c:419
-#, c-format
 msgid "Button %d"
 msgstr "Boton %d"
 
 #: ../modules/controller-dx-dinput.c:422
-#, c-format
 msgid "Button %d Press"
 msgstr "Pression del boton %d"
 
 #: ../modules/controller-dx-dinput.c:425
-#, c-format
 msgid "Button %d Release"
 msgstr "Daissar anar del boton %d"
 
@@ -2260,27 +2205,22 @@ msgid "Z Axis Turn Right"
 msgstr "L'axe Z vira cap a dreita"
 
 #: ../modules/controller-dx-dinput.c:501
-#, c-format
 msgid "Slider %d Increase"
 msgstr "Increment de la rodeta %d"
 
 #: ../modules/controller-dx-dinput.c:504
-#, c-format
 msgid "Slider %d Decrease"
 msgstr "Descrement de la rodeta %d"
 
 #: ../modules/controller-dx-dinput.c:514
-#, c-format
 msgid "POV %d X View"
 msgstr "Vista X punt de vista %d"
 
 #: ../modules/controller-dx-dinput.c:517
-#, c-format
 msgid "POV %d Y View"
 msgstr "Vista Y punt de vista %d"
 
 #: ../modules/controller-dx-dinput.c:520
-#, c-format
 msgid "POV %d Return"
 msgstr "Retorn del punt de vista %d"
 
@@ -2444,16 +2384,14 @@ msgstr "Entrada d'eveniments Linux"
 
 #: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
 #: ../modules/controller-midi.c:480
-#, c-format
 msgid "Reading from %s"
 msgstr "Legir dempuèi %s"
 
 #: ../modules/controller-linux-input.c:569
 #: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
 #: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
-#, c-format
 msgid "Device not available: %s"
-msgstr "Periferic indisponible : %s"
+msgstr "Periferic indisponible : %s"
 
 #: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
 msgid "End of file"
@@ -2469,7 +2407,7 @@ msgstr "Lo nom del periferic d'ont se pòt legir los eveniments MIDI."
 
 #: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Picatz « alsa » per utilizar lo sequenciador ALSA."
+msgstr "Picatz « alsa » per utilizar lo sequenciador ALSA."
 
 #: ../modules/controller-midi.c:221
 msgid "Channel:"
@@ -2480,7 +2418,7 @@ msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
-"Lo canal MIDI dempuèi lo qual cal legir los eveniments : reglar a -1 per "
+"Lo canal MIDI dempuèi lo qual cal legir los eveniments : reglar a -1 per "
 "legir totes los canals MIDI."
 
 #: ../modules/controller-midi.c:226
@@ -2488,17 +2426,14 @@ msgid "MIDI"
 msgstr "MIDI"
 
 #: ../modules/controller-midi.c:355
-#, c-format
 msgid "Note %02x on"
-msgstr "Note %02x activada"
+msgstr "Nòta %02x activada"
 
 #: ../modules/controller-midi.c:358
-#, c-format
 msgid "Note %02x off"
-msgstr "Note %02x désactivada"
+msgstr "Nòta %02x désactivada"
 
 #: ../modules/controller-midi.c:361
-#, c-format
 msgid "Controller %03d"
 msgstr "Contrarotlador %03d"
 
@@ -2541,7 +2476,7 @@ msgstr "Vision de las colors deficienta"
 
 #: ../modules/display-filter-color-blind.c:419
 msgid "Color _deficiency type:"
-msgstr "Tipe de _deficiéncia de color :"
+msgstr "Tipe de _deficiéncia de color :"
 
 #: ../modules/display-filter-gamma.c:87
 msgid "Gamma color display filter"
@@ -2553,7 +2488,7 @@ msgstr "Gamma"
 
 #: ../modules/display-filter-gamma.c:226
 msgid "_Gamma:"
-msgstr "_Gamma :"
+msgstr "_Gamma :"
 
 #: ../modules/display-filter-high-contrast.c:87
 msgid "High Contrast color display filter"
@@ -2566,19 +2501,19 @@ msgstr "Contraste"
 
 #: ../modules/display-filter-high-contrast.c:226
 msgid "Contrast c_ycles:"
-msgstr "C_icles de contraste :"
+msgstr "C_icles de contraste :"
 
-#: ../modules/display-filter-lcms.c:102
+#: ../modules/display-filter-lcms.c:92
 msgid "Color management display filter using ICC color profiles"
 msgstr ""
 "Filtre d'afichatge de la gestion de las colors qu'utilizan los perfils "
 "colorimetrics ICC"
 
-#: ../modules/display-filter-lcms.c:134
+#: ../modules/display-filter-lcms.c:124
 msgid "Color Management"
 msgstr "Gestion de las colors"
 
-#: ../modules/display-filter-lcms.c:184
+#: ../modules/display-filter-lcms.c:173
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -2586,68 +2521,77 @@ msgstr ""
 "Aqueste filtre aplica la configuracion de la seccion Gestion de las colors "
 "de las preferéncias."
 
-#: ../modules/display-filter-lcms.c:198
+#: ../modules/display-filter-lcms.c:187
 msgid "Mode of operation:"
-msgstr "Mòde d'operacion :"
+msgstr "Mòde d'operacion :"
 
-#: ../modules/display-filter-lcms.c:205
+#: ../modules/display-filter-lcms.c:194
 msgid "Image profile:"
 msgstr "Perfil d'imatge :"
 
-#: ../modules/display-filter-lcms.c:213
+#: ../modules/display-filter-lcms.c:202
 msgid "Monitor profile:"
-msgstr "Perfil del monitor :"
+msgstr "Perfil del monitor :"
 
-#: ../modules/display-filter-lcms.c:221
+#: ../modules/display-filter-lcms.c:210
 msgid "Print simulation profile:"
-msgstr "Perfil de simulacion d'impression :"
+msgstr "Perfil de simulacion d'impression :"
 
-#: ../modules/display-filter-lcms.c:390
+#: ../modules/display-filter-lcms.c:364
 msgid "None"
 msgstr "Pas cap"
 
-#: ../modules/display-filter-proof.c:93
+#: ../modules/display-filter-proof.c:91
 msgid "Color proof filter using ICC color profile"
 msgstr ""
 "Filtre de calibracion de las colors qu'utilizan lo perfil colorimetric ICC"
 
-#: ../modules/display-filter-proof.c:131
-#, fuzzy
+#: ../modules/display-filter-proof.c:129
 #| msgid "_Intent:"
 msgid "Intent"
-msgstr "_Rendut de las colors :"
+msgstr ""
 
-#: ../modules/display-filter-proof.c:139
-#, fuzzy
+#: ../modules/display-filter-proof.c:137
 #| msgid "_Black Point Compensation"
 msgid "Black point compensation"
-msgstr "Punt de _compensacion del negre"
+msgstr "Compensacion del punt negre"
 
-#: ../modules/display-filter-proof.c:146
-#, fuzzy
+#: ../modules/display-filter-proof.c:144
 #| msgid "_Profile:"
 msgid "Profile"
-msgstr "_Perfil :"
+msgstr "Perfil"
 
-#: ../modules/display-filter-proof.c:151
+#: ../modules/display-filter-proof.c:149
 msgid "Color Proof"
 msgstr "Calibracion de las colors"
 
-#: ../modules/display-filter-proof.c:304
+#: ../modules/display-filter-proof.c:292
 msgid "Choose an ICC Color Profile"
 msgstr "Causir un perfil colorimetric ICC"
 
-#: ../modules/display-filter-proof.c:326
+#: ../modules/display-filter-proof.c:314
 msgid "_Profile:"
 msgstr "_Perfil :"
 
-#: ../modules/display-filter-proof.c:332
+#: ../modules/display-filter-proof.c:320
 msgid "_Intent:"
-msgstr "_Rendut de las colors :"
+msgstr "_Rendut de las colors :"
 
-#: ../modules/display-filter-proof.c:337
+#: ../modules/display-filter-proof.c:325
 msgid "_Black Point Compensation"
 msgstr "Punt de _compensacion del negre"
+
+#, fuzzy
+#~| msgid "Print simulation profile:"
+#~ msgid "Print simulation profile"
+#~ msgstr "Perfil de simulacion d'impression :"
+
+#~ msgctxt "color-management-mode"
+#~ msgid "Print simulation"
+#~ msgstr "Simulacion d'impression"
+
+#~ msgid "_Edit"
+#~ msgstr "Mo_dificar"
 
 #~ msgid "Sans"
 #~ msgstr "Sans"
@@ -2690,31 +2634,34 @@ msgstr "Punt de _compensacion del negre"
 #~ "cap al periferic de simulacion d'impression."
 
 #~ msgid "Could not open '%s' for writing: %s"
-#~ msgstr "Impossible de dobrir « %s » en escritura : %s"
+#~ msgstr "Impossible de dobrir « %s » en escritura : %s"
 
 #~ msgid ""
 #~ "Error writing to temporary file for '%s': %s\n"
 #~ "The original file has not been touched."
 #~ msgstr ""
-#~ "Una error s'es produita pendent l'escritura del fichièr temporari per "
-#~ "« %s » : %s\n"
+#~ "Una error s'es produita pendent l'escritura del fichièr temporari per « "
+#~ "%s » : %s\n"
 #~ "Lo fichièr original es pas estat modificat."
 
 #~ msgid ""
 #~ "Error writing to temporary file for '%s': %s\n"
 #~ "No file has been created."
 #~ msgstr ""
-#~ "Error al moment de l'escritura del fichièr temporari per « %s » : %s\n"
+#~ "Error al moment de l'escritura del fichièr temporari per « %s » : %s\n"
 #~ "Cap de fichièr es pas estat creat."
 
 #~ msgid "Could not create '%s': %s"
-#~ msgstr "Impossible de crear « %s » : %s"
+#~ msgstr "Impossible de crear « %s » : %s"
 
 #~ msgid "CMYK color selector"
 #~ msgstr "Selector de colors CMJN"
 
 #~ msgid "Black _pullout:"
-#~ msgstr "_Suplement de negre :"
+#~ msgstr "_Suplement de negre :"
 
 #~ msgid "The percentage of black to pull out of the colored inks."
 #~ msgstr "Lo percentatge de negre d'apondre a las tintas de color."
+
+#~ msgid "Page 000"
+#~ msgstr "Pagina 000"
