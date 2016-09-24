@@ -32,6 +32,7 @@
 
 #include "widgets/gimphelp-ids.h"
 
+#include "dialogs/dialogs.h"
 #include "dialogs/channel-options-dialog.h"
 
 #include "actions.h"
@@ -42,9 +43,14 @@
 
 /*  local function prototypes  */
 
-static void   quick_mask_configure_response (GtkWidget            *widget,
-                                             gint                  response_id,
-                                             ChannelOptionsDialog *options);
+static void   quick_mask_configure_callback (GtkWidget     *dialog,
+                                             GimpImage     *image,
+                                             GimpChannel   *channel,
+                                             GimpContext   *context,
+                                             const gchar   *channel_name,
+                                             const GimpRGB *channel_color,
+                                             gboolean       save_selection,
+                                             gpointer       user_data);
 
 
 /*  public functionss */
@@ -88,60 +94,66 @@ void
 quick_mask_configure_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  ChannelOptionsDialog *options;
-  GimpImage            *image;
-  GtkWidget            *widget;
-  GimpRGB               color;
+  GimpImage *image;
+  GtkWidget *widget;
+  GtkWidget *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  gimp_image_get_quick_mask_color (image, &color);
+#define CONFIGURE_DIALOG_KEY "gimp-image-quick-mask-configure-dialog"
 
-  options = channel_options_dialog_new (image, NULL,
-                                        action_data_get_context (data),
-                                        widget,
-                                       _("Quick Mask Attributes"),
-                                        "gimp-quick-mask-edit",
-                                        GIMP_STOCK_QUICK_MASK_ON,
-                                        _("Edit Quick Mask Attributes"),
-                                        GIMP_HELP_QUICK_MASK_EDIT,
-                                        &color,
-                                        NULL,
-                                         _("Edit Quick Mask Color"),
-                                        _("_Mask opacity:"),
-                                        FALSE);
+  dialog = dialogs_get_dialog (G_OBJECT (image), CONFIGURE_DIALOG_KEY);
 
-  g_signal_connect (options->dialog, "response",
-                    G_CALLBACK (quick_mask_configure_response),
-                    options);
+  if (! dialog)
+    {
+      GimpRGB color;
 
-  gtk_widget_show (options->dialog);
+      gimp_image_get_quick_mask_color (image, &color);
+
+      dialog = channel_options_dialog_new (image, NULL,
+                                           action_data_get_context (data),
+                                           widget,
+                                           _("Quick Mask Attributes"),
+                                           "gimp-quick-mask-edit",
+                                           GIMP_STOCK_QUICK_MASK_ON,
+                                           _("Edit Quick Mask Attributes"),
+                                           GIMP_HELP_QUICK_MASK_EDIT,
+                                           NULL,
+                                           &color,
+                                           _("Edit Quick Mask Color"),
+                                           _("_Mask opacity:"),
+                                           FALSE,
+                                           quick_mask_configure_callback,
+                                           NULL);
+
+      dialogs_attach_dialog (G_OBJECT (image), CONFIGURE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 
 /*  private functions  */
 
 static void
-quick_mask_configure_response (GtkWidget            *widget,
-                               gint                  response_id,
-                               ChannelOptionsDialog *options)
+quick_mask_configure_callback (GtkWidget     *dialog,
+                               GimpImage     *image,
+                               GimpChannel   *channel,
+                               GimpContext   *context,
+                               const gchar   *channel_name,
+                               const GimpRGB *channel_color,
+                               gboolean       save_selection,
+                               gpointer       user_data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  GimpRGB old_color;
+
+  gimp_image_get_quick_mask_color (image, &old_color);
+
+  if (gimp_rgba_distance (&old_color, channel_color) > 0.0001)
     {
-      GimpRGB old_color;
-      GimpRGB new_color;
-
-      gimp_image_get_quick_mask_color (options->image, &old_color);
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
-                                   &new_color);
-
-      if (gimp_rgba_distance (&old_color, &new_color) > 0.0001)
-        {
-          gimp_image_set_quick_mask_color (options->image, &new_color);
-
-          gimp_image_flush (options->image);
-        }
+      gimp_image_set_quick_mask_color (image, channel_color);
+      gimp_image_flush (image);
     }
 
-  gtk_widget_destroy (options->dialog);
+  gtk_widget_destroy (dialog);
 }

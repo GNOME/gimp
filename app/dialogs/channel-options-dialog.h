@@ -19,35 +19,32 @@
 #define __CHANNEL_OPTIONS_DIALOG_H__
 
 
-typedef struct _ChannelOptionsDialog ChannelOptionsDialog;
-
-struct _ChannelOptionsDialog
-{
-  GtkWidget   *dialog;
-  GtkWidget   *name_entry;
-  GtkWidget   *color_panel;
-  GtkWidget   *save_sel_checkbutton;
-
-  GimpImage   *image;
-  GimpContext *context;
-  GimpChannel *channel;
-};
+typedef void (* GimpChannelOptionsCallback) (GtkWidget     *dialog,
+                                             GimpImage     *image,
+                                             GimpChannel   *channel,
+                                             GimpContext   *context,
+                                             const gchar   *channel_name,
+                                             const GimpRGB *channel_color,
+                                             gboolean       save_selection,
+                                             gpointer       user_data);
 
 
-ChannelOptionsDialog * channel_options_dialog_new (GimpImage     *image,
-                                                   GimpChannel   *channel,
-                                                   GimpContext   *context,
-                                                   GtkWidget     *parent,
-                                                   const gchar   *title,
-                                                   const gchar   *role,
-                                                   const gchar   *icon_name,
-                                                   const gchar   *desc,
-                                                   const gchar   *help_id,
-                                                   const GimpRGB *channel_color,
-                                                   const gchar   *channel_name,
-                                                   const gchar   *color_label,
-                                                   const gchar   *opacity_label,
-                                                   gboolean       show_from_sel);
+GtkWidget * channel_options_dialog_new (GimpImage                  *image,
+                                        GimpChannel                *channel,
+                                        GimpContext                *context,
+                                        GtkWidget                  *parent,
+                                        const gchar                *title,
+                                        const gchar                *role,
+                                        const gchar                *icon_name,
+                                        const gchar                *desc,
+                                        const gchar                *help_id,
+                                        const gchar                *channel_name,
+                                        const GimpRGB              *channel_color,
+                                        const gchar                *color_label,
+                                        const gchar                *opacity_label,
+                                        gboolean                    show_from_sel,
+                                        GimpChannelOptionsCallback  callback,
+                                        gpointer                    user_data);
 
 
 #endif /* __CHANNEL_OPTIONS_DIALOG_H__ */
