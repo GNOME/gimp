@@ -19,36 +19,31 @@
 #define __LAYER_OPTIONS_DIALOG_H__
 
 
-typedef struct _LayerOptionsDialog LayerOptionsDialog;
-
-struct _LayerOptionsDialog
-{
-  GtkWidget    *dialog;
-  GtkWidget    *name_entry;
-  GtkWidget    *size_se;
-  GtkWidget    *rename_toggle;
-
-  GimpFillType  fill_type;
-  gint          xsize;
-  gint          ysize;
-
-  GimpImage    *image;
-  GimpContext  *context;
-  GimpLayer    *layer;
-};
+typedef void (* GimpLayerOptionsCallback) (GtkWidget    *dialog,
+                                           GimpImage    *image,
+                                           GimpLayer    *layer,
+                                           GimpContext  *context,
+                                           const gchar  *layer_name,
+                                           GimpFillType  layer_fill_type,
+                                           gint          layer_width,
+                                           gint          layer_height,
+                                           gboolean      rename_text_layer,
+                                           gpointer      user_data);
 
 
-LayerOptionsDialog * layer_options_dialog_new (GimpImage    *image,
-                                               GimpLayer    *layer,
-                                               GimpContext  *context,
-                                               GtkWidget    *parent,
-                                               const gchar  *title,
-                                               const gchar  *role,
-                                               const gchar  *icon_name,
-                                               const gchar  *desc,
-                                               const gchar  *help_id,
-                                               const gchar  *layer_name,
-                                               GimpFillType  layer_fill_type);
+GtkWidget * layer_options_dialog_new (GimpImage                *image,
+                                      GimpLayer                *layer,
+                                      GimpContext              *context,
+                                      GtkWidget                *parent,
+                                      const gchar              *title,
+                                      const gchar              *role,
+                                      const gchar              *icon_name,
+                                      const gchar              *desc,
+                                      const gchar              *help_id,
+                                      const gchar              *layer_name,
+                                      GimpFillType              layer_fill_type,
+                                      GimpLayerOptionsCallback  callback,
+                                      gpointer                  user_data);
 
 
 #endif /* __LAYER_OPTIONS_DIALOG_H__ */
