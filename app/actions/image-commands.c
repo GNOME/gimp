@@ -833,30 +833,29 @@ void
 image_configure_grid_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDisplayShell *shell;
+  GimpDisplay *display;
+  GimpImage   *image;
+  GtkWidget   *dialog;
   return_if_no_display (display, data);
 
   image = gimp_display_get_image (display);
-  shell = gimp_display_get_shell (display);
 
-  if (! shell->grid_dialog)
+#define GRID_DIALOG_KEY "gimp-grid-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (image), GRID_DIALOG_KEY);
+
+  if (! dialog)
     {
-      shell->grid_dialog = grid_dialog_new (image,
-                                            action_data_get_context (data),
-                                            GTK_WIDGET (shell));
+      GimpDisplayShell *shell = gimp_display_get_shell (display);
 
-      gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
-                                    GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
-      gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->grid_dialog),
-                                          TRUE);
+      dialog = grid_dialog_new (image,
+                                action_data_get_context (data),
+                                GTK_WIDGET (shell));
 
-      g_object_add_weak_pointer (G_OBJECT (shell->grid_dialog),
-                                 (gpointer) &shell->grid_dialog);
+      dialogs_attach_dialog (G_OBJECT (image), GRID_DIALOG_KEY, dialog);
     }
 
-  gtk_window_present (GTK_WINDOW (shell->grid_dialog));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void

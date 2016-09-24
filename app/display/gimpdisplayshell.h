@@ -148,7 +148,6 @@ struct _GimpDisplayShell
   GtkWidget         *scale_dialog;     /*  scale (zoom) dialog                */
   GtkWidget         *rotate_dialog;    /*  rotate dialog                      */
   GtkWidget         *nav_popup;        /*  navigation popup                   */
-  GtkWidget         *grid_dialog;      /*  grid configuration dialog          */
 
   GimpColorConfig   *color_config;     /*  color management settings          */
   gboolean           color_config_set; /*  settings changed from defaults     */
