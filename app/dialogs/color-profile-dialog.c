@@ -33,7 +33,7 @@
 
 #include "dialogs-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/gimpdialogconfig.h"
 
 #include "gegl/gimp-babl.h"
 
@@ -82,12 +82,6 @@ static void        color_profile_dest_changed    (GtkWidget     *combo,
 static void        color_profile_dialog_free     (ProfileDialog *dialog);
 
 
-/*  defaults  */
-
-static GimpColorRenderingIntent saved_intent = -1;
-static gboolean                 saved_bpc    = FALSE;
-
-
 /*  public functions  */
 
 GtkWidget *
@@ -98,6 +92,7 @@ color_profile_dialog_new (ColorProfileDialogType  dialog_type,
                           GimpProgress           *progress)
 {
   ProfileDialog    *dialog;
+  GimpDialogConfig *config;
   GtkWidget        *frame;
   GtkWidget        *vbox;
   GtkWidget        *expander;
@@ -109,23 +104,16 @@ color_profile_dialog_new (ColorProfileDialogType  dialog_type,
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
   dialog = g_slice_new0 (ProfileDialog);
 
   dialog->dialog_type = dialog_type;
   dialog->image       = image;
   dialog->progress    = progress;
   dialog->config      = image->gimp->config->color_management;
-
-  if (saved_intent == -1)
-    {
-      dialog->intent = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
-      dialog->bpc    = TRUE;
-    }
-  else
-    {
-      dialog->intent = saved_intent;
-      dialog->bpc    = saved_bpc;
-    }
+  dialog->intent      = config->image_convert_profile_intent;
+  dialog->bpc         = config->image_convert_profile_bpc;
 
   switch (dialog_type)
     {
@@ -464,8 +452,16 @@ color_profile_dialog_response (GtkWidget     *widget,
 
                 if (success)
                   {
-                    saved_intent = dialog->intent;
-                    saved_bpc    = dialog->bpc;
+                    GimpDialogConfig *config;
+
+                    config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
+
+                    g_object_set (config,
+                                  "image-convert-profile-intent",
+                                  dialog->intent,
+                                  "image-convert-profile-black-point-compensation",
+                                  dialog->bpc,
+                                  NULL);
                   }
               }
               break;

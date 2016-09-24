@@ -42,38 +42,41 @@ typedef struct _GimpDialogConfigClass GimpDialogConfigClass;
 
 struct _GimpDialogConfig
 {
-  GimpGuiConfig           parent_instance;
+  GimpGuiConfig             parent_instance;
 
-  GimpColorProfilePolicy  color_profile_policy;
+  GimpColorProfilePolicy    color_profile_policy;
 
-  gchar                  *layer_new_name;
-  GimpFillType            layer_new_fill_type;
+  GimpColorRenderingIntent  image_convert_profile_intent;
+  gboolean                  image_convert_profile_bpc;
 
-  GimpAddMaskType         layer_add_mask_type;
-  gboolean                layer_add_mask_invert;
+  gchar                    *layer_new_name;
+  GimpFillType              layer_new_fill_type;
 
-  GimpMergeType           layer_merge_type;
-  gboolean                layer_merge_active_group_only;
-  gboolean                layer_merge_discard_invisible;
+  GimpAddMaskType           layer_add_mask_type;
+  gboolean                  layer_add_mask_invert;
 
-  gchar                  *channel_new_name;
-  GimpRGB                 channel_new_color;
+  GimpMergeType             layer_merge_type;
+  gboolean                  layer_merge_active_group_only;
+  gboolean                  layer_merge_discard_invisible;
 
-  gchar                  *vectors_new_name;
+  gchar                    *channel_new_name;
+  GimpRGB                   channel_new_color;
 
-  gdouble                 selection_feather_radius;
+  gchar                    *vectors_new_name;
 
-  gdouble                 selection_grow_radius;
+  gdouble                   selection_feather_radius;
 
-  gdouble                 selection_shrink_radius;
-  gboolean                selection_shrink_edge_lock;
+  gdouble                   selection_grow_radius;
 
-  gdouble                 selection_border_radius;
-  gboolean                selection_border_edge_lock;
-  GimpChannelBorderStyle  selection_border_style;
+  gdouble                   selection_shrink_radius;
+  gboolean                  selection_shrink_edge_lock;
 
-  GimpFillOptions        *fill_options;
-  GimpStrokeOptions      *stroke_options;
+  gdouble                   selection_border_radius;
+  gboolean                  selection_border_edge_lock;
+  GimpChannelBorderStyle    selection_border_style;
+
+  GimpFillOptions          *fill_options;
+  GimpStrokeOptions        *stroke_options;
 };
 
 struct _GimpDialogConfigClass

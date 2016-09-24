@@ -48,6 +48,9 @@ enum
 
   PROP_COLOR_PROFILE_POLICY,
 
+  PROP_IMAGE_CONVERT_PROFILE_INTENT,
+  PROP_IMAGE_CONVERT_PROFILE_BPC,
+
   PROP_LAYER_NEW_NAME,
   PROP_LAYER_NEW_FILL_TYPE,
 
@@ -141,6 +144,22 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          GIMP_TYPE_COLOR_PROFILE_POLICY,
                          GIMP_COLOR_PROFILE_POLICY_ASK,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_CONVERT_PROFILE_INTENT,
+                         "image-convert-profile-intent",
+                         "Default rendering intent fo color profile conversion",
+                         IMAGE_CONVERT_PROFILE_INTENT_BLURB,
+                         GIMP_TYPE_COLOR_RENDERING_INTENT,
+                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMAGE_CONVERT_PROFILE_BPC,
+                            "image-convert-profile-black-point-compensation",
+                            "Default 'Black point compensation' for "
+                            "color profile conversion",
+                            IMAGE_CONVERT_PROFILE_BPC_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_LAYER_NEW_NAME,
                            "layer-new-name",
@@ -377,6 +396,13 @@ gimp_dialog_config_set_property (GObject      *object,
       config->color_profile_policy = g_value_get_enum (value);
       break;
 
+    case PROP_IMAGE_CONVERT_PROFILE_INTENT:
+      config->image_convert_profile_intent = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_PROFILE_BPC:
+      config->image_convert_profile_bpc = g_value_get_boolean (value);
+      break;
+
     case PROP_LAYER_NEW_NAME:
       if (config->layer_new_name)
         g_free (config->layer_new_name);
@@ -477,6 +503,13 @@ gimp_dialog_config_get_property (GObject    *object,
 
     case PROP_COLOR_PROFILE_POLICY:
       g_value_set_enum (value, config->color_profile_policy);
+      break;
+
+    case PROP_IMAGE_CONVERT_PROFILE_INTENT:
+      g_value_set_enum (value, config->image_convert_profile_intent);
+      break;
+    case PROP_IMAGE_CONVERT_PROFILE_BPC:
+      g_value_set_boolean (value, config->image_convert_profile_bpc);
       break;
 
     case PROP_LAYER_NEW_NAME:

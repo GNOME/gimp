@@ -420,6 +420,13 @@ _("Sets the folder for temporary storage. Files will appear here " \
 #define ICON_THEME_PATH_BLURB \
 "Sets the icon theme search path."
 
+#define IMAGE_CONVERT_PROFILE_INTENT_BLURB \
+_("Sets the default rendering intent for the 'Convert to Color Profile' dialog.")
+
+#define IMAGE_CONVERT_PROFILE_BPC_BLURB \
+_("Sets the default 'Black Point Compensation' state for the " \
+  "'Convert to Color Profile' dialog.")
+
 #define LAYER_NEW_NAME_BLURB \
 _("Sets the default layer name for the 'New Layer' dialog.")
 
