@@ -472,18 +472,21 @@ view_display_filters_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpDisplayShell *shell;
+  GtkWidget        *dialog;
   return_if_no_shell (shell, data);
 
-  if (! shell->filters_dialog)
-    {
-      shell->filters_dialog = gimp_display_shell_filter_dialog_new (shell);
+#define FILTERS_DIALOG_KEY "gimp-display-filters-dialog"
 
-      g_signal_connect (shell->filters_dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &shell->filters_dialog);
+  dialog = dialogs_get_dialog (G_OBJECT (shell), FILTERS_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = gimp_display_shell_filter_dialog_new (shell);
+
+      dialogs_attach_dialog (G_OBJECT (shell), FILTERS_DIALOG_KEY, dialog);
     }
 
-  gtk_window_present (GTK_WINDOW (shell->filters_dialog));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
