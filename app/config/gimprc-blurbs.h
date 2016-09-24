@@ -432,6 +432,15 @@ _("Sets the default mask for the 'Add Layer Mask' dialog.")
 #define LAYER_ADD_MASK_INVERT_BLURB \
 _("Sets the default 'invert mask' state for the 'Add Layer Mask' dialog.")
 
+#define LAYER_MERGE_TYPE_BLURB \
+_("Sets the default merge type for the 'Merge Visible Layers' dialog.")
+
+#define LAYER_MERGE_ACTIVE_GROUP_ONLY_BLURB \
+_("Sets the default 'Active group only' for the 'Merge Visible Layers' dialog.")
+
+#define LAYER_MERGE_DISCARD_INVISIBLE_BLURB \
+_("Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog.")
+
 #define CHANNEL_NEW_NAME_BLURB \
 _("Sets the default channel name for the 'New Channel' dialog.")
 

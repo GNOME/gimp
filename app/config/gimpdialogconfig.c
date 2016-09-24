@@ -54,6 +54,10 @@ enum
   PROP_LAYER_ADD_MASK_TYPE,
   PROP_LAYER_ADD_MASK_INVERT,
 
+  PROP_LAYER_MERGE_TYPE,
+  PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY,
+  PROP_LAYER_MERGE_DISCARD_INVISIBLE,
+
   PROP_CHANNEL_NEW_NAME,
   PROP_CHANNEL_NEW_COLOR,
 
@@ -165,6 +169,28 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                             "layer-add-mask-invert",
                             "Default layer mask invert",
                             LAYER_ADD_MASK_INVERT_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_MERGE_TYPE,
+                         "layer-merge-type",
+                         "Default layer merge type",
+                         LAYER_MERGE_TYPE_BLURB,
+                         GIMP_TYPE_MERGE_TYPE,
+                         GIMP_EXPAND_AS_NECESSARY,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY,
+                            "layer-merge-active-group-only",
+                            "Default layer merge active group only",
+                            LAYER_MERGE_ACTIVE_GROUP_ONLY_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_DISCARD_INVISIBLE,
+                            "layer-merge-discard-invisible",
+                            "Default layer merge discard invisible",
+                            LAYER_MERGE_DISCARD_INVISIBLE_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -367,6 +393,16 @@ gimp_dialog_config_set_property (GObject      *object,
       config->layer_add_mask_invert = g_value_get_boolean (value);
       break;
 
+    case PROP_LAYER_MERGE_TYPE:
+      config->layer_merge_type = g_value_get_enum (value);
+      break;
+    case PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY:
+      config->layer_merge_active_group_only = g_value_get_boolean (value);
+      break;
+    case PROP_LAYER_MERGE_DISCARD_INVISIBLE:
+      config->layer_merge_discard_invisible = g_value_get_boolean (value);
+      break;
+
     case PROP_CHANNEL_NEW_NAME:
       if (config->channel_new_name)
         g_free (config->channel_new_name);
@@ -455,6 +491,16 @@ gimp_dialog_config_get_property (GObject    *object,
       break;
     case PROP_LAYER_ADD_MASK_INVERT:
       g_value_set_boolean (value, config->layer_add_mask_invert);
+      break;
+
+    case PROP_LAYER_MERGE_TYPE:
+      g_value_set_enum (value, config->layer_merge_type);
+      break;
+    case PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY:
+      g_value_set_boolean (value, config->layer_merge_active_group_only);
+      break;
+    case PROP_LAYER_MERGE_DISCARD_INVISIBLE:
+      g_value_set_boolean (value, config->layer_merge_discard_invisible);
       break;
 
     case PROP_CHANNEL_NEW_NAME:

@@ -25,7 +25,7 @@
 
 #include "actions-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/gimpdialogconfig.h"
 
 #include "gegl/gimp-babl.h"
 
@@ -124,12 +124,9 @@ static void   image_merge_layers_callback  (GtkWidget              *dialog,
 
 /*  private variables  */
 
-static GimpMergeType         image_merge_layers_type               = GIMP_EXPAND_AS_NECESSARY;
-static gboolean              image_merge_layers_merge_active_group = TRUE;
-static gboolean              image_merge_layers_discard_invisible  = FALSE;
-static GimpUnit              image_resize_unit                     = GIMP_UNIT_PIXEL;
-static GimpUnit              image_scale_unit                      = GIMP_UNIT_PIXEL;
-static GimpInterpolationType image_scale_interp                    = -1;
+static GimpUnit              image_resize_unit  = GIMP_UNIT_PIXEL;
+static GimpUnit              image_scale_unit   = GIMP_UNIT_PIXEL;
+static GimpInterpolationType image_scale_interp = -1;
 
 
 /*  public functions  */
@@ -793,12 +790,14 @@ image_merge_layers_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
       dialog = image_merge_layers_dialog_new (image,
                                               action_data_get_context (data),
                                               widget,
-                                              image_merge_layers_type,
-                                              image_merge_layers_merge_active_group,
-                                              image_merge_layers_discard_invisible,
+                                              config->layer_merge_type,
+                                              config->layer_merge_active_group_only,
+                                              config->layer_merge_discard_invisible,
                                               image_merge_layers_callback,
                                               NULL);
 
@@ -1045,15 +1044,19 @@ image_merge_layers_callback (GtkWidget     *dialog,
                              gboolean       merge_active_group,
                              gboolean       discard_invisible)
 {
-  image_merge_layers_type               = merge_type;
-  image_merge_layers_merge_active_group = merge_active_group;
-  image_merge_layers_discard_invisible  = discard_invisible;
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+  g_object_set (config,
+                "layer-merge-type",              merge_type,
+                "layer-merge-active-group-only", merge_active_group,
+                "layer-merge-discard-invisible", discard_invisible,
+                NULL);
 
   gimp_image_merge_visible_layers (image,
                                    context,
-                                   image_merge_layers_type,
-                                   image_merge_layers_merge_active_group,
-                                   image_merge_layers_discard_invisible);
+                                   config->layer_merge_type,
+                                   config->layer_merge_active_group_only,
+                                   config->layer_merge_discard_invisible);
 
   gimp_image_flush (image);
 

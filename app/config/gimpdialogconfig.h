@@ -52,6 +52,10 @@ struct _GimpDialogConfig
   GimpAddMaskType         layer_add_mask_type;
   gboolean                layer_add_mask_invert;
 
+  GimpMergeType           layer_merge_type;
+  gboolean                layer_merge_active_group_only;
+  gboolean                layer_merge_discard_invisible;
+
   gchar                  *channel_new_name;
   GimpRGB                 channel_new_color;
 
