@@ -19,28 +19,25 @@
 #define __VECTORS_OPTIONS_DIALOG_H__
 
 
-typedef struct _VectorsOptionsDialog VectorsOptionsDialog;
-
-struct _VectorsOptionsDialog
-{
-  GtkWidget   *dialog;
-  GtkWidget   *name_entry;
-
-  GimpImage   *image;
-  GimpVectors *vectors;
-};
+typedef void (* GimpVectorsOptionsCallback) (GtkWidget   *dialog,
+                                             GimpImage   *image,
+                                             GimpVectors *vectors,
+                                             const gchar *vectors_name,
+                                             gpointer     user_data);
 
 
-VectorsOptionsDialog * vectors_options_dialog_new (GimpImage   *image,
-                                                   GimpVectors *vectors,
-                                                   GimpContext *context,
-                                                   GtkWidget   *parent,
-                                                   const gchar *title,
-                                                   const gchar *role,
-                                                   const gchar *icon_name,
-                                                   const gchar *desc,
-                                                   const gchar *help_id,
-                                                   const gchar *vectors_name);
+GtkWidget * vectors_options_dialog_new (GimpImage                  *image,
+                                        GimpVectors                *vectors,
+                                        GimpContext                *context,
+                                        GtkWidget                  *parent,
+                                        const gchar                *title,
+                                        const gchar                *role,
+                                        const gchar                *icon_name,
+                                        const gchar                *desc,
+                                        const gchar                *help_id,
+                                        const gchar                *vectors_name,
+                                        GimpVectorsOptionsCallback  callback,
+                                        gpointer                    user_data);
 
 
 #endif /* __VECTORS_OPTIONS_DIALOG_H__ */

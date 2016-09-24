@@ -73,18 +73,22 @@
 
 /*  local function prototypes  */
 
-static void   vectors_new_vectors_response  (GtkWidget            *widget,
-                                             gint                  response_id,
-                                             VectorsOptionsDialog *options);
-static void   vectors_edit_vectors_response (GtkWidget            *widget,
-                                             gint                  response_id,
-                                             VectorsOptionsDialog *options);
-static void   vectors_import_response       (GtkWidget            *widget,
-                                             gint                  response_id,
-                                             VectorsImportDialog  *dialog);
-static void   vectors_export_response       (GtkWidget            *widget,
-                                             gint                  response_id,
-                                             VectorsExportDialog  *dialog);
+static void   vectors_new_callback             (GtkWidget   *dialog,
+                                                GimpImage   *image,
+                                                GimpVectors *vectors,
+                                                const gchar *vectors_name,
+                                                gpointer     user_data);
+static void   vectors_edit_attributes_callback (GtkWidget   *dialog,
+                                                GimpImage   *image,
+                                                GimpVectors *vectors,
+                                                const gchar *vectors_name,
+                                                gpointer     user_data);
+static void   vectors_import_response          (GtkWidget            *widget,
+                                                gint                  response_id,
+                                                VectorsImportDialog  *dialog);
+static void   vectors_export_response          (GtkWidget            *widget,
+                                                gint                  response_id,
+                                                VectorsExportDialog  *dialog);
 
 
 /*  private variables  */
@@ -127,58 +131,71 @@ void
 vectors_edit_attributes_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  VectorsOptionsDialog *options;
-  GimpImage            *image;
-  GimpVectors          *vectors;
-  GtkWidget            *widget;
+  GimpImage   *image;
+  GimpVectors *vectors;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
   return_if_no_vectors (image, vectors, data);
   return_if_no_widget (widget, data);
 
-  options = vectors_options_dialog_new (image, vectors,
-                                        action_data_get_context (data),
-                                        widget,
-                                        _("Path Attributes"),
-                                        "gimp-vectors-edit",
-                                        "gtk-edit",
-                                        _("Edit Path Attributes"),
-                                        GIMP_HELP_PATH_EDIT,
-                                        gimp_object_get_name (vectors));
+#define EDIT_DIALOG_KEY "gimp-vectors-edit-attributes-dialog"
 
-  g_signal_connect (options->dialog, "response",
-                    G_CALLBACK (vectors_edit_vectors_response),
-                    options);
+  dialog = dialogs_get_dialog (G_OBJECT (vectors), EDIT_DIALOG_KEY);
 
-  gtk_widget_show (options->dialog);
+  if (! dialog)
+    {
+      dialog = vectors_options_dialog_new (image, vectors,
+                                           action_data_get_context (data),
+                                           widget,
+                                           _("Path Attributes"),
+                                           "gimp-vectors-edit",
+                                           "gtk-edit",
+                                           _("Edit Path Attributes"),
+                                           GIMP_HELP_PATH_EDIT,
+                                           gimp_object_get_name (vectors),
+                                           vectors_edit_attributes_callback,
+                                           NULL);
+
+      dialogs_attach_dialog (G_OBJECT (vectors), EDIT_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
 vectors_new_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  VectorsOptionsDialog *options;
-  GimpImage            *image;
-  GtkWidget            *widget;
-  GimpDialogConfig     *config;
+  GimpImage *image;
+  GtkWidget *widget;
+  GtkWidget *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+#define NEW_DIALOG_KEY "gimp-vectors-new-dialog"
 
-  options = vectors_options_dialog_new (image, NULL,
-                                        action_data_get_context (data),
-                                        widget,
-                                        _("New Path"),
-                                        "gimp-vectors-new",
-                                        GIMP_STOCK_PATH,
-                                        _("New Path Options"),
-                                        GIMP_HELP_PATH_NEW,
-                                        config->vectors_new_name);
+  dialog = dialogs_get_dialog (G_OBJECT (image), NEW_DIALOG_KEY);
 
-  g_signal_connect (options->dialog, "response",
-                    G_CALLBACK (vectors_new_vectors_response),
-                    options);
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  gtk_widget_show (options->dialog);
+      dialog = vectors_options_dialog_new (image, NULL,
+                                           action_data_get_context (data),
+                                           widget,
+                                           _("New Path"),
+                                           "gimp-vectors-new",
+                                           GIMP_STOCK_PATH,
+                                           _("New Path Options"),
+                                           GIMP_HELP_PATH_NEW,
+                                           config->vectors_new_name,
+                                           vectors_new_callback,
+                                           NULL);
+
+      dialogs_attach_dialog (G_OBJECT (image), NEW_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -763,53 +780,40 @@ vectors_lock_position_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-vectors_new_vectors_response (GtkWidget            *widget,
-                              gint                  response_id,
-                              VectorsOptionsDialog *dialog)
+vectors_new_callback (GtkWidget   *dialog,
+                      GimpImage   *image,
+                      GimpVectors *vectors,
+                      const gchar *vectors_name,
+                      gpointer     user_data)
 {
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      GimpDialogConfig *config;
-      GimpVectors      *vectors;
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-      config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
+  g_object_set (config,
+                "path-new-name", vectors_name,
+                NULL);
 
-      g_object_set (config,
-                    "path-new-name",
-                    gtk_entry_get_text (GTK_ENTRY (dialog->name_entry)),
-                    NULL);
+  vectors = gimp_vectors_new (image, config->vectors_new_name);
+  gimp_image_add_vectors (image, vectors,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_image_flush (image);
 
-      vectors = gimp_vectors_new (dialog->image, config->vectors_new_name);
-
-      gimp_image_add_vectors (dialog->image, vectors,
-                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
-      gimp_image_flush (dialog->image);
-    }
-
-  gtk_widget_destroy (dialog->dialog);
+  gtk_widget_destroy (dialog);
 }
 
 static void
-vectors_edit_vectors_response (GtkWidget            *widget,
-                               gint                  response_id,
-                               VectorsOptionsDialog *options)
+vectors_edit_attributes_callback (GtkWidget   *dialog,
+                                  GimpImage   *image,
+                                  GimpVectors *vectors,
+                                  const gchar *vectors_name,
+                                  gpointer     user_data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (strcmp (vectors_name, gimp_object_get_name (vectors)))
     {
-      GimpVectors *vectors = options->vectors;
-      const gchar *new_name;
-
-      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
-
-      if (strcmp (new_name, gimp_object_get_name (vectors)))
-        {
-          gimp_item_rename (GIMP_ITEM (vectors), new_name, NULL);
-          gimp_image_flush (options->image);
-        }
+      gimp_item_rename (GIMP_ITEM (vectors), vectors_name, NULL);
+      gimp_image_flush (image);
     }
 
-  gtk_widget_destroy (options->dialog);
+  gtk_widget_destroy (dialog);
 }
 
 static void

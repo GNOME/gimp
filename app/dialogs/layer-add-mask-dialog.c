@@ -113,14 +113,13 @@ layer_add_mask_dialog_new (GimpLayer           *layer,
                                      NULL);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-
-  g_object_weak_ref (G_OBJECT (dialog),
-                     (GWeakNotify) layer_add_mask_dialog_free, private);
-
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) layer_add_mask_dialog_free, private);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (layer_add_mask_dialog_response),
