@@ -35,12 +35,12 @@ VectorsOptionsDialog * vectors_options_dialog_new (GimpImage   *image,
                                                    GimpVectors *vectors,
                                                    GimpContext *context,
                                                    GtkWidget   *parent,
-                                                   const gchar *vectors_name,
                                                    const gchar *title,
                                                    const gchar *role,
                                                    const gchar *icon_name,
                                                    const gchar *desc,
-                                                   const gchar *help_id);
+                                                   const gchar *help_id,
+                                                   const gchar *vectors_name);
 
 
 #endif /* __VECTORS_OPTIONS_DIALOG_H__ */

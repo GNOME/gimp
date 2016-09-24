@@ -137,12 +137,12 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
   options = vectors_options_dialog_new (image, vectors,
                                         action_data_get_context (data),
                                         widget,
-                                        gimp_object_get_name (vectors),
                                         _("Path Attributes"),
                                         "gimp-vectors-edit",
                                         "gtk-edit",
                                         _("Edit Path Attributes"),
-                                        GIMP_HELP_PATH_EDIT);
+                                        GIMP_HELP_PATH_EDIT,
+                                        gimp_object_get_name (vectors));
 
   g_signal_connect (options->dialog, "response",
                     G_CALLBACK (vectors_edit_vectors_response),
@@ -167,12 +167,12 @@ vectors_new_cmd_callback (GtkAction *action,
   options = vectors_options_dialog_new (image, NULL,
                                         action_data_get_context (data),
                                         widget,
-                                        config->vectors_new_name,
                                         _("New Path"),
                                         "gimp-vectors-new",
                                         GIMP_STOCK_PATH,
                                         _("New Path Options"),
-                                        GIMP_HELP_PATH_NEW);
+                                        GIMP_HELP_PATH_NEW,
+                                        config->vectors_new_name);
 
   g_signal_connect (options->dialog, "response",
                     G_CALLBACK (vectors_new_vectors_response),

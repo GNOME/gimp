@@ -53,13 +53,13 @@ channel_options_dialog_new (GimpImage     *image,
                             GimpChannel   *channel,
                             GimpContext   *context,
                             GtkWidget     *parent,
-                            const GimpRGB *channel_color,
-                            const gchar   *channel_name,
                             const gchar   *title,
                             const gchar   *role,
                             const gchar   *icon_name,
                             const gchar   *desc,
                             const gchar   *help_id,
+                            const GimpRGB *channel_color,
+                            const gchar   *channel_name,
                             const gchar   *color_label,
                             const gchar   *opacity_label,
                             gboolean       show_from_sel)
@@ -75,12 +75,12 @@ channel_options_dialog_new (GimpImage     *image,
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
-  g_return_val_if_fail (channel_color != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (desc != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
+  g_return_val_if_fail (channel_color != NULL, NULL);
   g_return_val_if_fail (color_label != NULL, NULL);
   g_return_val_if_fail (opacity_label != NULL, NULL);
 

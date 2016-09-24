@@ -211,13 +211,13 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
                                      layer,
                                      action_data_get_context (data),
                                      widget,
-                                     gimp_object_get_name (layer),
-                                     config->layer_new_fill_type,
                                      _("Layer Attributes"),
                                      "gimp-layer-edit",
                                      "gtk-edit",
                                      _("Edit Layer Attributes"),
-                                     GIMP_HELP_LAYER_EDIT);
+                                     GIMP_HELP_LAYER_EDIT,
+                                     gimp_object_get_name (layer),
+                                     config->layer_new_fill_type);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (layers_edit_layer_response),
@@ -263,13 +263,13 @@ layers_new_cmd_callback (GtkAction *action,
   dialog = layer_options_dialog_new (image, NULL,
                                      action_data_get_context (data),
                                      widget,
-                                     config->layer_new_name,
-                                     config->layer_new_fill_type,
                                      _("New Layer"),
                                      "gimp-layer-new",
                                      GIMP_STOCK_LAYER,
                                      _("Create a New Layer"),
-                                     GIMP_HELP_LAYER_NEW);
+                                     GIMP_HELP_LAYER_NEW,
+                                     config->layer_new_name,
+                                     config->layer_new_fill_type);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (layers_new_layer_response),

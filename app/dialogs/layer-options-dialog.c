@@ -55,13 +55,13 @@ layer_options_dialog_new (GimpImage    *image,
                           GimpLayer    *layer,
                           GimpContext  *context,
                           GtkWidget    *parent,
-                          const gchar  *layer_name,
-                          GimpFillType  layer_fill_type,
                           const gchar  *title,
                           const gchar  *role,
                           const gchar  *icon_name,
                           const gchar  *desc,
-                          const gchar  *help_id)
+                          const gchar  *help_id,
+                          const gchar  *layer_name,
+                          GimpFillType  layer_fill_type)
 {
   LayerOptionsDialog *options;
   GimpViewable       *viewable;
