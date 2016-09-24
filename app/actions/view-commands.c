@@ -55,6 +55,8 @@
 #include "display/gimpdisplayshell-close.h"
 #include "display/gimpimagewindow.h"
 
+#include "dialogs/dialogs.h"
+
 #include "actions.h"
 #include "view-commands.h"
 
@@ -922,12 +924,14 @@ view_padding_color_cmd_callback (GtkAction *action,
   else
     options = shell->options;
 
+#define PADDING_COLOR_DIALOG_KEY "gimp-padding-color-dialog"
+
   switch ((GimpCanvasPaddingMode) value)
     {
     case GIMP_CANVAS_PADDING_MODE_DEFAULT:
     case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
     case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
-      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
+      dialogs_destroy_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
 
       options->padding_mode_set = TRUE;
 
@@ -937,17 +941,16 @@ view_padding_color_cmd_callback (GtkAction *action,
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:
       {
-        GtkWidget *color_dialog;
+        GtkWidget *dialog;
 
-        color_dialog = g_object_get_data (G_OBJECT (shell),
-                                          "padding-color-dialog");
+        dialog = dialogs_get_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
 
-        if (! color_dialog)
+        if (! dialog)
           {
             GimpImage        *image = gimp_display_get_image (display);
             GimpDisplayShell *shell = gimp_display_get_shell (display);
 
-            color_dialog =
+            dialog =
               gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                      action_data_get_context (data),
                                      _("Set Canvas Padding Color"),
@@ -958,21 +961,20 @@ view_padding_color_cmd_callback (GtkAction *action,
                                      &options->padding_color,
                                      FALSE, FALSE);
 
-            g_signal_connect (color_dialog, "update",
+            g_signal_connect (dialog, "update",
                               G_CALLBACK (view_padding_color_dialog_update),
                               shell);
 
-            g_object_set_data_full (G_OBJECT (shell), "padding-color-dialog",
-                                    color_dialog,
-                                    (GDestroyNotify) gtk_widget_destroy);
+            dialogs_attach_dialog (G_OBJECT (shell),
+                                   PADDING_COLOR_DIALOG_KEY, dialog);
           }
 
-        gtk_window_present (GTK_WINDOW (color_dialog));
+        gtk_window_present (GTK_WINDOW (dialog));
       }
       break;
 
     case GIMP_CANVAS_PADDING_MODE_RESET:
-      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
+      dialogs_destroy_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
 
       {
         GimpDisplayOptions *default_options;
@@ -1059,7 +1061,7 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
       /* fallthru */
 
     case GIMP_COLOR_DIALOG_CANCEL:
-      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
+      gtk_widget_destroy (GTK_WIDGET (dialog));
       break;
 
     default:
