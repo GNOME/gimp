@@ -480,8 +480,7 @@ image_color_profile_save_cmd_callback (GtkAction *action,
                         G_CALLBACK (image_profile_save_dialog_response),
                         image);
 
-      dialogs_attach_dialog (G_OBJECT (image),
-                             PROFILE_SAVE_DIALOG_KEY, dialog);
+      dialogs_attach_dialog (G_OBJECT (image), PROFILE_SAVE_DIALOG_KEY, dialog);
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
@@ -600,12 +599,7 @@ image_print_size_cmd_callback (GtkAction *action,
                                       image_print_size_callback,
                                       NULL);
 
-      g_signal_connect_object (display, "disconnect",
-                               G_CALLBACK (gtk_widget_destroy),
-                               dialog, G_CONNECT_SWAPPED);
-
-      dialogs_attach_dialog (G_OBJECT (image),
-                             PRINT_SIZE_DIALOG_KEY, dialog);
+      dialogs_attach_dialog (G_OBJECT (image), PRINT_SIZE_DIALOG_KEY, dialog);
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
@@ -644,12 +638,7 @@ image_scale_cmd_callback (GtkAction *action,
                                        image_scale_callback,
                                        display);
 
-      g_signal_connect_object (display, "disconnect",
-                               G_CALLBACK (gtk_widget_destroy),
-                               dialog, G_CONNECT_SWAPPED);
-
-      dialogs_attach_dialog (G_OBJECT (image),
-                             SCALE_DIALOG_KEY, dialog);
+      dialogs_attach_dialog (G_OBJECT (image), SCALE_DIALOG_KEY, dialog);
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
