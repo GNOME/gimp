@@ -482,10 +482,10 @@ GType gimp_merge_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_EXPAND_AS_NECESSARY,
-  GIMP_CLIP_TO_IMAGE,
-  GIMP_CLIP_TO_BOTTOM_LAYER,
-  GIMP_FLATTEN_IMAGE
+  GIMP_EXPAND_AS_NECESSARY,  /*< desc="Expanded as neccessary"  >*/
+  GIMP_CLIP_TO_IMAGE,        /*< desc="Clipped to image"        >*/
+  GIMP_CLIP_TO_BOTTOM_LAYER, /*< desc="Clipped to bottom layer" >*/
+  GIMP_FLATTEN_IMAGE         /*< desc="Flatten"                 >*/
 } GimpMergeType;
 
 
