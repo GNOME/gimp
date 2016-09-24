@@ -667,34 +667,44 @@ void
 layers_scale_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
-  GimpDisplay *display = NULL;
-  GimpImage   *image;
-  GimpLayer   *layer;
-  GtkWidget   *widget;
-  GtkWidget   *dialog;
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  GtkWidget *dialog;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  if (GIMP_IS_IMAGE_WINDOW (data))
-    display = action_data_get_display (data);
+#define SCALE_DIALOG_KEY "gimp-scale-dialog"
 
-  if (layer_scale_unit != GIMP_UNIT_PERCENT && display)
-    layer_scale_unit = gimp_display_get_shell (display)->unit;
+  dialog = dialogs_get_dialog (G_OBJECT (layer), SCALE_DIALOG_KEY);
 
-  if (layer_scale_interp == -1)
-    layer_scale_interp = image->gimp->config->interpolation_type;
+  if (! dialog)
+    {
+      GimpDisplay *display = NULL;
 
-  dialog = scale_dialog_new (GIMP_VIEWABLE (layer),
-                             action_data_get_context (data),
-                             _("Scale Layer"), "gimp-layer-scale",
-                             widget,
-                             gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
-                             layer_scale_unit,
-                             layer_scale_interp,
-                             layers_scale_layer_callback,
-                             display);
+      if (GIMP_IS_IMAGE_WINDOW (data))
+        display = action_data_get_display (data);
 
-  gtk_widget_show (dialog);
+      if (layer_scale_unit != GIMP_UNIT_PERCENT && display)
+        layer_scale_unit = gimp_display_get_shell (display)->unit;
+
+      if (layer_scale_interp == -1)
+        layer_scale_interp = image->gimp->config->interpolation_type;
+
+      dialog = scale_dialog_new (GIMP_VIEWABLE (layer),
+                                 action_data_get_context (data),
+                                 _("Scale Layer"), "gimp-layer-scale",
+                                 widget,
+                                 gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
+                                 layer_scale_unit,
+                                 layer_scale_interp,
+                                 layers_scale_layer_callback,
+                                 display);
+
+      dialogs_attach_dialog (G_OBJECT (layer), SCALE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
