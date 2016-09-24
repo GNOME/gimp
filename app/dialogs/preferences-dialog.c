@@ -1822,6 +1822,19 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Color profile policy:"),
                                      GTK_TABLE (table), 0, size_group);
 
+  /*  Convert to Color Profile Dialog  */
+  vbox2 = prefs_frame_new (_("Convert to Color Profile Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "image-convert-profile-intent", 0, 0,
+                            _("Rendering intent:"),
+                            GTK_TABLE (table), 0, size_group);
+
+  prefs_check_button_add (object, "image-convert-profile-black-point-compensation",
+                          _("Black point compensation"),
+                          GTK_BOX (vbox2));
+
   /*  New Layer Dialog  */
   vbox2 = prefs_frame_new (_("New Layer Dialog"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1846,6 +1859,24 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add (object, "layer-add-mask-invert",
                           _("Invert mask"),
+                          GTK_BOX (vbox2));
+
+  /*  Merge Layers Dialog  */
+  vbox2 = prefs_frame_new (_("Merge Layers Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "layer-merge-type",
+                            GIMP_EXPAND_AS_NECESSARY,
+                            GIMP_CLIP_TO_BOTTOM_LAYER,
+                            _("Merged layer size:"),
+                            GTK_TABLE (table), 0, size_group);
+
+  prefs_check_button_add (object, "layer-merge-active-group-only",
+                          _("Merge within active group only"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "layer-merge-discard-invisible",
+                          _("Discard invisible layers"),
                           GTK_BOX (vbox2));
 
   /*  New Channel Dialog  */
