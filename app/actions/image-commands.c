@@ -499,23 +499,28 @@ image_resize_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
   return_if_no_display (display, data);
 
-  if (image_resize_unit != GIMP_UNIT_PERCENT)
-    image_resize_unit = gimp_display_get_shell (display)->unit;
+#define RESIZE_DIALOG_KEY "gimp-resize-dialog"
 
-  dialog = resize_dialog_new (GIMP_VIEWABLE (image),
-                              action_data_get_context (data),
-                              _("Set Image Canvas Size"), "gimp-image-resize",
-                              widget,
-                              gimp_standard_help_func, GIMP_HELP_IMAGE_RESIZE,
-                              image_resize_unit,
-                              image_resize_callback,
-                              display);
+  dialog = dialogs_get_dialog (G_OBJECT (image), RESIZE_DIALOG_KEY);
 
-  g_signal_connect_object (display, "disconnect",
-                           G_CALLBACK (gtk_widget_destroy),
-                           dialog, G_CONNECT_SWAPPED);
+  if (! dialog)
+    {
+      if (image_resize_unit != GIMP_UNIT_PERCENT)
+        image_resize_unit = gimp_display_get_shell (display)->unit;
 
-  gtk_widget_show (dialog);
+      dialog = resize_dialog_new (GIMP_VIEWABLE (image),
+                                  action_data_get_context (data),
+                                  _("Set Image Canvas Size"), "gimp-image-resize",
+                                  widget,
+                                  gimp_standard_help_func, GIMP_HELP_IMAGE_RESIZE,
+                                  image_resize_unit,
+                                  image_resize_callback,
+                                  display);
+
+      dialogs_attach_dialog (G_OBJECT (image), RESIZE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
