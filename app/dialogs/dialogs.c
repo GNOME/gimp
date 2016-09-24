@@ -729,3 +729,18 @@ dialogs_detach_dialog (GObject   *attach_object,
                                         dialogs_detach_dialog,
                                         attach_object);
 }
+
+void
+dialogs_destroy_dialog (GObject     *attach_object,
+                        const gchar *attach_key)
+{
+  GtkWidget *dialog;
+
+  g_return_if_fail (G_IS_OBJECT (attach_object));
+  g_return_if_fail (attach_key != NULL);
+
+  dialog = g_object_get_data (attach_object, attach_key);
+
+  if (dialog)
+    gtk_widget_destroy (dialog);
+}
