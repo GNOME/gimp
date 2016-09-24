@@ -46,6 +46,7 @@
 typedef struct
 {
   GimpViewable       *viewable;
+  GimpContext        *context;
   gint                old_width;
   gint                old_height;
   GimpUnit            old_unit;
@@ -135,6 +136,18 @@ resize_dialog_new (GimpViewable       *viewable,
       g_return_val_if_reached (NULL);
     }
 
+  private = g_slice_new0 (ResizeDialog);
+
+  private->viewable           = viewable;
+  private->context            = context;
+  private->old_width          = width;
+  private->old_height         = height;
+  private->old_unit           = unit;
+  private->layer_set          = GIMP_ITEM_SET_NONE;
+  private->resize_text_layers = FALSE;
+  private->callback           = callback;
+  private->user_data          = user_data;
+
   dialog = gimp_viewable_dialog_new (viewable, context,
                                      title, role, GIMP_STOCK_RESIZE, title,
                                      parent,
@@ -154,19 +167,12 @@ resize_dialog_new (GimpViewable       *viewable,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  private = g_slice_new0 (ResizeDialog);
-
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) resize_dialog_free, private);
 
-  private->viewable           = viewable;
-  private->old_width          = width;
-  private->old_height         = height;
-  private->old_unit           = unit;
-  private->layer_set          = GIMP_ITEM_SET_NONE;
-  private->resize_text_layers = FALSE;
-  private->callback           = callback;
-  private->user_data          = user_data;
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (resize_dialog_response),
+                    private);
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -179,10 +185,6 @@ resize_dialog_new (GimpViewable       *viewable,
                                "keep-aspect",     FALSE,
                                "edit-resolution", FALSE,
                                NULL);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (resize_dialog_response),
-                    private);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -352,6 +354,7 @@ resize_dialog_response (GtkWidget    *dialog,
 
       private->callback (dialog,
                          private->viewable,
+                         private->context,
                          width,
                          height,
                          unit,

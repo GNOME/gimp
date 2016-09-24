@@ -133,9 +133,10 @@ static void   layers_scale_layer_callback  (GtkWidget             *dialog,
                                             gdouble                xresolution,
                                             gdouble                yresolution,
                                             GimpUnit               resolution_unit,
-                                            gpointer               data);
+                                            gpointer               user_data);
 static void   layers_resize_layer_callback (GtkWidget             *dialog,
                                             GimpViewable          *viewable,
+                                            GimpContext           *context,
                                             gint                   width,
                                             gint                   height,
                                             GimpUnit               unit,
@@ -643,7 +644,7 @@ layers_resize_cmd_callback (GtkAction *action,
                                   GIMP_HELP_LAYER_RESIZE,
                                   layer_resize_unit,
                                   layers_resize_layer_callback,
-                                  action_data_get_context (data));
+                                  NULL);
 
       dialogs_attach_dialog (G_OBJECT (layer), RESIZE_DIALOG_KEY, dialog);
     }
@@ -1241,9 +1242,9 @@ layers_scale_layer_callback (GtkWidget             *dialog,
                              gdouble                xresolution,    /* unused */
                              gdouble                yresolution,    /* unused */
                              GimpUnit               resolution_unit,/* unused */
-                             gpointer               data)
+                             gpointer               user_data)
 {
-  GimpDisplay *display = GIMP_DISPLAY (data);
+  GimpDisplay *display = GIMP_DISPLAY (user_data);
 
   layer_scale_unit   = unit;
   layer_scale_interp = interpolation;
@@ -1294,6 +1295,7 @@ layers_scale_layer_callback (GtkWidget             *dialog,
 static void
 layers_resize_layer_callback (GtkWidget    *dialog,
                               GimpViewable *viewable,
+                              GimpContext  *context,
                               gint          width,
                               gint          height,
                               GimpUnit      unit,
@@ -1301,10 +1303,8 @@ layers_resize_layer_callback (GtkWidget    *dialog,
                               gint          offset_y,
                               GimpItemSet   unused,
                               gboolean      unused2,
-                              gpointer      data)
+                              gpointer      user_data)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
-
   layer_resize_unit = unit;
 
   if (width > 0 && height > 0)

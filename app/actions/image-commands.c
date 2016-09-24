@@ -75,17 +75,11 @@
 #include "gimp-intl.h"
 
 
-typedef struct
-{
-  GimpContext *context;
-  GimpDisplay *display;
-} ImageResizeOptions;
-
-
 /*  local function prototypes  */
 
 static void   image_resize_callback        (GtkWidget              *dialog,
                                             GimpViewable           *viewable,
+                                            GimpContext            *context,
                                             gint                    width,
                                             gint                    height,
                                             GimpUnit                unit,
@@ -93,15 +87,14 @@ static void   image_resize_callback        (GtkWidget              *dialog,
                                             gint                    offset_y,
                                             GimpItemSet             layer_set,
                                             gboolean                resize_text_layers,
-                                            gpointer                data);
-static void   image_resize_options_free    (ImageResizeOptions     *options);
+                                            gpointer                user_data);
 
 static void   image_print_size_callback    (GtkWidget              *dialog,
                                             GimpImage              *image,
                                             gdouble                 xresolution,
                                             gdouble                 yresolution,
                                             GimpUnit                resolution_unit,
-                                            gpointer                data);
+                                            gpointer                user_data);
 
 static void   image_scale_callback         (GtkWidget              *dialog,
                                             GimpViewable           *viewable,
@@ -498,19 +491,13 @@ void
 image_resize_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
-  ImageResizeOptions *options;
-  GimpImage          *image;
-  GtkWidget          *widget;
-  GimpDisplay        *display;
-  GtkWidget          *dialog;
+  GimpImage   *image;
+  GtkWidget   *widget;
+  GimpDisplay *display;
+  GtkWidget   *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
   return_if_no_display (display, data);
-
-  options = g_slice_new (ImageResizeOptions);
-
-  options->display = display;
-  options->context = action_data_get_context (data);
 
   if (image_resize_unit != GIMP_UNIT_PERCENT)
     image_resize_unit = gimp_display_get_shell (display)->unit;
@@ -522,14 +509,11 @@ image_resize_cmd_callback (GtkAction *action,
                               gimp_standard_help_func, GIMP_HELP_IMAGE_RESIZE,
                               image_resize_unit,
                               image_resize_callback,
-                              options);
+                              display);
 
   g_signal_connect_object (display, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);
-
-  g_object_weak_ref (G_OBJECT (dialog),
-                     (GWeakNotify) image_resize_options_free, options);
 
   gtk_widget_show (dialog);
 }
@@ -850,7 +834,7 @@ image_configure_grid_cmd_callback (GtkAction *action,
 
       dialog = grid_dialog_new (image,
                                 action_data_get_context (data),
-                                GTK_WIDGET (shell));
+                                gtk_widget_get_toplevel (GTK_WIDGET (shell)));
 
       dialogs_attach_dialog (G_OBJECT (image), GRID_DIALOG_KEY, dialog);
     }
@@ -862,23 +846,27 @@ void
 image_properties_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDisplayShell *shell;
-  GtkWidget        *dialog;
+  GimpDisplay *display;
+  GimpImage   *image;
+  GtkWidget   *dialog;
   return_if_no_display (display, data);
 
   image = gimp_display_get_image (display);
-  shell = gimp_display_get_shell (display);
 
-  dialog = image_properties_dialog_new (image,
-                                        action_data_get_context (data),
-                                        GTK_WIDGET (shell));
+#define PROPERTIES_DIALOG_KEY "gimp-image-properties-dialog"
 
-  gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog),
-                                      TRUE);
+  dialog = dialogs_get_dialog (G_OBJECT (image), PROPERTIES_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpDisplayShell *shell = gimp_display_get_shell (display);
+
+      dialog = image_properties_dialog_new (image,
+                                            action_data_get_context (data),
+                                            gtk_widget_get_toplevel (GTK_WIDGET (shell)));
+
+      dialogs_attach_dialog (G_OBJECT (image), PROPERTIES_DIALOG_KEY, dialog);
+    }
 
   gtk_window_present (GTK_WINDOW (dialog));
 }
@@ -889,6 +877,7 @@ image_properties_cmd_callback (GtkAction *action,
 static void
 image_resize_callback (GtkWidget    *dialog,
                        GimpViewable *viewable,
+                       GimpContext  *context,
                        gint          width,
                        gint          height,
                        GimpUnit      unit,
@@ -896,17 +885,15 @@ image_resize_callback (GtkWidget    *dialog,
                        gint          offset_y,
                        GimpItemSet   layer_set,
                        gboolean      resize_text_layers,
-                       gpointer      data)
+                       gpointer      user_data)
 {
-  ImageResizeOptions *options = data;
+  GimpDisplay *display = user_data;
 
   image_resize_unit = unit;
 
   if (width > 0 && height > 0)
     {
-      GimpImage    *image   = GIMP_IMAGE (viewable);
-      GimpDisplay  *display = options->display;
-      GimpContext  *context = options->context;
+      GimpImage    *image = GIMP_IMAGE (viewable);
       GimpProgress *progress;
 
       gtk_widget_destroy (dialog);
@@ -935,12 +922,6 @@ image_resize_callback (GtkWidget    *dialog,
       g_warning ("Resize Error: "
                  "Both width and height must be greater than zero.");
     }
-}
-
-static void
-image_resize_options_free (ImageResizeOptions *options)
-{
-  g_slice_free (ImageResizeOptions, options);
 }
 
 static void
