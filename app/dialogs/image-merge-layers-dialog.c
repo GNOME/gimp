@@ -122,21 +122,16 @@ image_merge_layers_dialog_new (GimpImage               *image,
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Final, Merged Layer should be:"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &private->merge_type, private->merge_type,
-
-                                    _("Expanded as necessary"),
-                                    GIMP_EXPAND_AS_NECESSARY, NULL,
-
-                                    _("Clipped to image"),
-                                    GIMP_CLIP_TO_IMAGE, NULL,
-
-                                    _("Clipped to bottom layer"),
-                                    GIMP_CLIP_TO_BOTTOM_LAYER, NULL,
-
-                                    NULL);
-
+  frame =
+    gimp_enum_radio_frame_new_with_range (GIMP_TYPE_MERGE_TYPE,
+                                          GIMP_EXPAND_AS_NECESSARY,
+                                          GIMP_CLIP_TO_BOTTOM_LAYER,
+                                          gtk_label_new (_("Final, Merged Layer should be:")),
+                                          G_CALLBACK (gimp_radio_button_update),
+                                          &private->merge_type,
+                                          &button);
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
+                                   private->merge_type);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
