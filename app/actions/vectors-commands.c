@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -73,29 +74,22 @@
 
 /*  local function prototypes  */
 
-static void   vectors_new_callback             (GtkWidget   *dialog,
-                                                GimpImage   *image,
-                                                GimpVectors *vectors,
-                                                const gchar *vectors_name,
-                                                gpointer     user_data);
-static void   vectors_edit_attributes_callback (GtkWidget   *dialog,
-                                                GimpImage   *image,
-                                                GimpVectors *vectors,
-                                                const gchar *vectors_name,
-                                                gpointer     user_data);
+static void   vectors_new_callback             (GtkWidget            *dialog,
+                                                GimpImage            *image,
+                                                GimpVectors          *vectors,
+                                                const gchar          *vectors_name,
+                                                gpointer              user_data);
+static void   vectors_edit_attributes_callback (GtkWidget            *dialog,
+                                                GimpImage            *image,
+                                                GimpVectors          *vectors,
+                                                const gchar          *vectors_name,
+                                                gpointer              user_data);
 static void   vectors_import_response          (GtkWidget            *widget,
                                                 gint                  response_id,
                                                 VectorsImportDialog  *dialog);
 static void   vectors_export_response          (GtkWidget            *widget,
                                                 gint                  response_id,
                                                 VectorsExportDialog  *dialog);
-
-
-/*  private variables  */
-
-static gboolean  vectors_import_merge       = FALSE;
-static gboolean  vectors_import_scale       = FALSE;
-static gboolean  vectors_export_active_only = TRUE;
 
 
 /*  public functions  */
@@ -608,22 +602,31 @@ void
 vectors_export_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  VectorsExportDialog *dialog;
   GimpImage           *image;
   GimpVectors         *vectors;
   GtkWidget           *widget;
-  const gchar         *folder;
+  GimpDialogConfig    *config;
+  VectorsExportDialog *dialog;
   return_if_no_vectors (image, vectors, data);
   return_if_no_widget (widget, data);
 
-  dialog = vectors_export_dialog_new (image, widget,
-                                      vectors_export_active_only);
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  folder = g_object_get_data (G_OBJECT (image->gimp),
-                              "gimp-vectors-export-folder");
-  if (folder)
-    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog->dialog),
-                                         folder);
+  dialog = vectors_export_dialog_new (image, widget,
+                                      config->vectors_export_active_only);
+
+  if (config->vectors_export_path)
+    {
+      gchar *folder = gimp_config_path_expand (config->vectors_export_path,
+                                                 TRUE, NULL);
+
+      if (folder)
+        {
+          gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog->dialog),
+                                               folder);
+          g_free (folder);
+        }
+    }
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (vectors_export_response),
@@ -636,22 +639,31 @@ void
 vectors_import_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  VectorsImportDialog *dialog;
   GimpImage           *image;
   GtkWidget           *widget;
-  const gchar         *folder;
+  GimpDialogConfig    *config;
+  VectorsImportDialog *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = vectors_import_dialog_new (image, widget,
-                                      vectors_import_merge,
-                                      vectors_import_scale);
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  folder = g_object_get_data (G_OBJECT (image->gimp),
-                              "gimp-vectors-import-folder");
-  if (folder)
-    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog->dialog),
-                                         folder);
+  dialog = vectors_import_dialog_new (image, widget,
+                                      config->vectors_import_merge,
+                                      config->vectors_import_scale);
+
+  if (config->vectors_import_path)
+    {
+      gchar *folder = gimp_config_path_expand (config->vectors_import_path,
+                                               TRUE, NULL);
+
+      if (folder)
+        {
+          gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog->dialog),
+                                               folder);
+          g_free (folder);
+        }
+    }
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (vectors_import_response),
@@ -820,17 +832,37 @@ vectors_import_response (GtkWidget           *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GtkFileChooser *chooser = GTK_FILE_CHOOSER (widget);
-      GFile          *file;
-      GError         *error = NULL;
+      GimpDialogConfig *config;
+      GtkFileChooser   *chooser = GTK_FILE_CHOOSER (widget);
+      GFile            *file;
+      gchar            *folder;
+      GError           *error = NULL;
 
-      vectors_import_merge = dialog->merge_vectors;
-      vectors_import_scale = dialog->scale_vectors;
+      config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
+
+      folder = gtk_file_chooser_get_current_folder (chooser);
+
+      if (folder)
+        {
+          gchar *tmp = gimp_config_path_unexpand (folder, TRUE, NULL);
+          g_free (folder);
+          folder = tmp;
+        }
+
+      g_object_set (config,
+                    "path-import-path",  folder,
+                    "path-import-merge", dialog->merge_vectors,
+                    "path-import-scale", dialog->scale_vectors,
+                    NULL);
+
+      if (folder)
+        g_free (folder);
 
       file = gtk_file_chooser_get_file (chooser);
 
       if (gimp_vectors_import_file (dialog->image, file,
-                                    vectors_import_merge, vectors_import_scale,
+                                    config->vectors_import_merge,
+                                    config->vectors_import_scale,
                                     GIMP_IMAGE_ACTIVE_PARENT, -1,
                                     NULL, &error))
         {
@@ -846,11 +878,6 @@ vectors_import_response (GtkWidget           *widget,
         }
 
       g_object_unref (file);
-
-      g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                              "gimp-vectors-import-folder",
-                              gtk_file_chooser_get_current_folder (chooser),
-                              (GDestroyNotify) g_free);
     }
 
   gtk_widget_destroy (widget);
@@ -863,16 +890,35 @@ vectors_export_response (GtkWidget           *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GtkFileChooser *chooser = GTK_FILE_CHOOSER (widget);
-      GimpVectors    *vectors = NULL;
-      GFile          *file;
-      GError         *error   = NULL;
+      GimpDialogConfig *config;
+      GtkFileChooser   *chooser = GTK_FILE_CHOOSER (widget);
+      GimpVectors      *vectors = NULL;
+      GFile            *file;
+      gchar            *folder;
+      GError           *error   = NULL;
 
-      vectors_export_active_only = dialog->active_only;
+      config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
+
+      folder = gtk_file_chooser_get_current_folder (chooser);
+
+      if (folder)
+        {
+          gchar *tmp = gimp_config_path_unexpand (folder, TRUE, NULL);
+          g_free (folder);
+          folder = tmp;
+        }
+
+      g_object_set (config,
+                    "path-export-path",        folder,
+                    "path-export-active-only", dialog->active_only,
+                    NULL);
+
+      if (folder)
+        g_free (folder);
 
       file = gtk_file_chooser_get_file (chooser);
 
-      if (vectors_export_active_only)
+      if (config->vectors_export_active_only)
         vectors = gimp_image_get_active_vectors (dialog->image);
 
       if (! gimp_vectors_export_file (dialog->image, vectors, file, &error))
@@ -885,11 +931,6 @@ vectors_export_response (GtkWidget           *widget,
         }
 
       g_object_unref (file);
-
-      g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                              "gimp-vectors-export-folder",
-                              gtk_file_chooser_get_current_folder (chooser),
-                              (GDestroyNotify) g_free);
     }
 
   gtk_widget_destroy (widget);

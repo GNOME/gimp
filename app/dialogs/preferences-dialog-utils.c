@@ -283,6 +283,27 @@ prefs_memsize_entry_add (GObject      *config,
 }
 
 GtkWidget *
+prefs_file_chooser_button_add (GObject      *config,
+                               const gchar  *property_name,
+                               const gchar  *label,
+                               const gchar  *dialog_title,
+                               GtkTable     *table,
+                               gint          table_row,
+                               GtkSizeGroup *group)
+{
+  GtkWidget *button;
+
+  button = gimp_prop_file_chooser_button_new (config, property_name,
+                                              dialog_title,
+                                              GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
+
+  if (button)
+    prefs_widget_add_aligned (button, label, table, table_row, FALSE, group);
+
+  return button;
+}
+
+GtkWidget *
 prefs_enum_combo_box_add (GObject      *config,
                           const gchar  *property_name,
                           gint          minimum,

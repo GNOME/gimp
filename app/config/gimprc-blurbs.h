@@ -457,6 +457,21 @@ _("Sets the default color and opacity for the 'New Channel' dialog.")
 #define VECTORS_NEW_NAME_BLURB \
 _("Sets the default path name for the 'New Path' dialog.")
 
+#define VECTORS_EXPORT_PATH_BLURB \
+_("Sets the default folder path for the 'Export Path' dialog.")
+
+#define VECTORS_EXPORT_ACTIVE_ONLY_BLURB \
+_("Sets the default 'Export the active path' state for the 'Export Path' dialog.")
+
+#define VECTORS_IMPORT_PATH_BLURB \
+_("Sets the default folder path for the 'Import Path' dialog.")
+
+#define VECTORS_IMPORT_MERGE_BLURB \
+_("Sets the default 'Merge imported paths' state for the 'Import Path' dialog.")
+
+#define VECTORS_IMPORT_SCALE_BLURB \
+_("Sets the default 'Scale imported paths to fit size' state for the 'Import Path' dialog.")
+
 #define SELECTION_FEATHER_RADIUS_BLURB \
 _("Sets the default feather radius for the 'Feather Selection' dialog.")
 

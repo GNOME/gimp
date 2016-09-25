@@ -84,6 +84,14 @@ GtkWidget * prefs_memsize_entry_add          (GObject      *config,
                                               gint          table_row,
                                               GtkSizeGroup *group);
 
+GtkWidget * prefs_file_chooser_button_add    (GObject      *config,
+                                              const gchar  *property_name,
+                                              const gchar  *label,
+                                              const gchar  *dialog_title,
+                                              GtkTable     *table,
+                                              gint          table_row,
+                                              GtkSizeGroup *group);
+
 GtkWidget * prefs_enum_combo_box_add         (GObject      *config,
                                               const gchar  *property_name,
                                               gint          minimum,

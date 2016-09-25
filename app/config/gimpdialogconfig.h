@@ -64,6 +64,13 @@ struct _GimpDialogConfig
 
   gchar                    *vectors_new_name;
 
+  gchar                    *vectors_export_path;
+  gboolean                  vectors_export_active_only;
+
+  gchar                    *vectors_import_path;
+  gboolean                  vectors_import_merge;
+  gboolean                  vectors_import_scale;
+
   gdouble                   selection_feather_radius;
 
   gdouble                   selection_grow_radius;

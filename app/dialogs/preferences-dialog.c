@@ -1903,6 +1903,37 @@ prefs_dialog_new (Gimp       *gimp,
                    _("Path name:"),
                    GTK_TABLE (table), 0, size_group);
 
+  /*  Export Path Dialog  */
+  vbox2 = prefs_frame_new (_("Export Paths Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_file_chooser_button_add (object, "path-export-path",
+                                 _("Export folder:"),
+                                 _("Select Default Folder for Exporting Paths"),
+                                 GTK_TABLE (table), 0, size_group);
+
+  prefs_check_button_add (object, "path-export-active-only",
+                          _("Export the active path only"),
+                          GTK_BOX (vbox2));
+
+  /*  Import Path Dialog  */
+  vbox2 = prefs_frame_new (_("Import Paths Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_file_chooser_button_add (object, "path-import-path",
+                                 _("Import folder:"),
+                                 _("Select Default Folder for Importing Paths"),
+                                 GTK_TABLE (table), 0, size_group);
+
+  prefs_check_button_add (object, "path-import-merge",
+                          _("Merge imported paths"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "path-import-scale",
+                          _("Scale imported paths"),
+                          GTK_BOX (vbox2));
+
   /*  Feather Selection Dialog  */
   vbox2 = prefs_frame_new (_("Feather Selection Dialog"),
                            GTK_CONTAINER (vbox), FALSE);

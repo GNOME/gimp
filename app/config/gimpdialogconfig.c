@@ -66,6 +66,13 @@ enum
 
   PROP_VECTORS_NEW_NAME,
 
+  PROP_VECTORS_EXPORT_PATH,
+  PROP_VECTORS_EXPORT_ACTIVE_ONLY,
+
+  PROP_VECTORS_IMPORT_PATH,
+  PROP_VECTORS_IMPORT_MERGE,
+  PROP_VECTORS_IMPORT_SCALE,
+
   PROP_SELECTION_FEATHER_RADIUS,
 
   PROP_SELECTION_GROW_RADIUS,
@@ -234,6 +241,43 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            VECTORS_NEW_NAME_BLURB,
                            _("Path"),
                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_VECTORS_EXPORT_PATH,
+                         "path-export-path",
+                         "Default path export folder path",
+                         VECTORS_EXPORT_PATH_BLURB,
+                         GIMP_CONFIG_PATH_FILE,
+                         NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_EXPORT_ACTIVE_ONLY,
+                            "path-export-active-only",
+                            "Default export only the active path",
+                            VECTORS_EXPORT_ACTIVE_ONLY_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_VECTORS_IMPORT_PATH,
+                         "path-import-path",
+                         "Default path import folder path",
+                         VECTORS_IMPORT_PATH_BLURB,
+                         GIMP_CONFIG_PATH_FILE,
+                         NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_MERGE,
+                            "path-import-merge",
+                            "Default merge imported vectors",
+                            VECTORS_IMPORT_MERGE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_SCALE,
+                            "path-import-scale",
+                            "Default scale imported vectors",
+                            VECTORS_IMPORT_SCALE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_FEATHER_RADIUS,
                            "selection-feather-radius",
@@ -444,6 +488,27 @@ gimp_dialog_config_set_property (GObject      *object,
       config->vectors_new_name = g_value_dup_string (value);
       break;
 
+    case PROP_VECTORS_EXPORT_PATH:
+      if (config->vectors_export_path)
+        g_free (config->vectors_export_path);
+      config->vectors_export_path = g_value_dup_string (value);
+      break;
+    case PROP_VECTORS_EXPORT_ACTIVE_ONLY:
+      config->vectors_export_active_only = g_value_get_boolean (value);
+      break;
+
+    case PROP_VECTORS_IMPORT_PATH:
+      if (config->vectors_import_path)
+        g_free (config->vectors_import_path);
+      config->vectors_import_path = g_value_dup_string (value);
+      break;
+    case PROP_VECTORS_IMPORT_MERGE:
+      config->vectors_import_merge = g_value_get_boolean (value);
+      break;
+    case PROP_VECTORS_IMPORT_SCALE:
+      config->vectors_import_scale = g_value_get_boolean (value);
+      break;
+
     case PROP_SELECTION_FEATHER_RADIUS:
       config->selection_feather_radius = g_value_get_double (value);
       break;
@@ -545,6 +610,23 @@ gimp_dialog_config_get_property (GObject    *object,
 
     case PROP_VECTORS_NEW_NAME:
       g_value_set_string (value, config->vectors_new_name);
+      break;
+
+    case PROP_VECTORS_EXPORT_PATH:
+      g_value_set_string (value, config->vectors_export_path);
+      break;
+    case PROP_VECTORS_EXPORT_ACTIVE_ONLY:
+      g_value_set_boolean (value, config->vectors_export_active_only);
+      break;
+
+    case PROP_VECTORS_IMPORT_PATH:
+      g_value_set_string (value, config->vectors_import_path);
+      break;
+    case PROP_VECTORS_IMPORT_MERGE:
+      g_value_set_boolean (value, config->vectors_import_merge);
+      break;
+    case PROP_VECTORS_IMPORT_SCALE:
+      g_value_set_boolean (value, config->vectors_import_scale);
       break;
 
     case PROP_SELECTION_FEATHER_RADIUS:
