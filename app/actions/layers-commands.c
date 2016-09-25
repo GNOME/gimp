@@ -743,7 +743,8 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("Cannot crop because the current selection is empty."));
+                            _("Cannot crop because the current selection "
+                              "is empty."));
       return;
     }
 
@@ -768,7 +769,8 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
   GimpImage *image;
   GimpLayer *layer;
   GtkWidget *widget;
-  gint       x1, y1, x2, y2;
+  gint       x, y;
+  gint       width, height;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
@@ -776,14 +778,14 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
                                      0, 0,
                                      gimp_item_get_width  (GIMP_ITEM (layer)),
                                      gimp_item_get_height (GIMP_ITEM (layer)),
-                                     &x1, &y1, &x2, &y2))
+                                     &x, &y, &width, &height))
     {
     case GIMP_AUTO_SHRINK_SHRINK:
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                    _("Crop Layer to Content"));
 
       gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
-                        x2 - x1, y2 - y1, -x1, -y1);
+                        width, height, -x, -y);
 
       gimp_image_undo_group_end (image);
       gimp_image_flush (image);
@@ -792,13 +794,15 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
     case GIMP_AUTO_SHRINK_EMPTY:
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_INFO,
-                            _("Cannot crop because the active layer has no content."));
+                            _("Cannot crop because the active layer "
+                              "has no content."));
       break;
 
     case GIMP_AUTO_SHRINK_UNSHRINKABLE:
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_INFO,
-                            _("Cannot crop because the active layer is already cropped to its content."));
+                            _("Cannot crop because the active layer "
+                              "is already cropped to its content."));
       break;
     }
 }
@@ -1319,7 +1323,6 @@ layers_resize_callback (GtkWidget    *dialog,
 
       gimp_item_resize (item, context,
                         width, height, offset_x, offset_y);
-
       gimp_image_flush (gimp_item_get_image (item));
     }
   else

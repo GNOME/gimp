@@ -2500,10 +2500,10 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
   gint                      offset_y = 0;
   gint                      x1, y1;
   gint                      x2, y2;
-  gint                      shrunk_x1;
-  gint                      shrunk_y1;
-  gint                      shrunk_x2;
-  gint                      shrunk_y2;
+  gint                      shrunk_x;
+  gint                      shrunk_y;
+  gint                      shrunk_width;
+  gint                      shrunk_height;
   gboolean                  shrink_merged;
 
   if (! display)
@@ -2540,11 +2540,11 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
     }
 
   switch (gimp_pickable_auto_shrink (pickable,
-                                     x1, y1, x2, y2,
-                                     &shrunk_x1,
-                                     &shrunk_y1,
-                                     &shrunk_x2,
-                                     &shrunk_y2))
+                                     x1, y1, x2 - x1, y2 - y1,
+                                     &shrunk_x,
+                                     &shrunk_y,
+                                     &shrunk_width,
+                                     &shrunk_height))
     {
     case GIMP_AUTO_SHRINK_SHRINK:
       {
@@ -2553,10 +2553,10 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
         gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
         private->function = GIMP_RECTANGLE_TOOL_AUTO_SHRINK;
 
-        private->x1 = offset_x + shrunk_x1;
-        private->y1 = offset_y + shrunk_y1;
-        private->x2 = offset_x + shrunk_x2;
-        private->y2 = offset_y + shrunk_y2;
+        private->x1 = offset_x + shrunk_x;
+        private->y1 = offset_y + shrunk_y;
+        private->x2 = offset_x + shrunk_x + shrunk_width;
+        private->y2 = offset_y + shrunk_y + shrunk_height;
 
         gimp_rectangle_tool_update_int_rect (rect_tool);
 

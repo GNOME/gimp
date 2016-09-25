@@ -28,14 +28,14 @@ typedef enum
 
 
 GimpAutoShrink   gimp_pickable_auto_shrink (GimpPickable *pickable,
-                                            gint         x1,
-                                            gint         y1,
-                                            gint         x2,
-                                            gint         y2,
-                                            gint        *shrunk_x1,
-                                            gint        *shrunk_y1,
-                                            gint        *shrunk_x2,
-                                            gint        *shrunk_y2);
+                                            gint         x,
+                                            gint         y,
+                                            gint         width,
+                                            gint         height,
+                                            gint        *shrunk_x,
+                                            gint        *shrunk_y,
+                                            gint        *shrunk_width,
+                                            gint        *shrunk_height);
 
 
 #endif  /* __GIMP_PICKABLE_AUTO_SHRINK_H__ */

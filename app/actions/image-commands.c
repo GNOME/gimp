@@ -724,7 +724,8 @@ image_crop_to_content_cmd_callback (GtkAction *action,
 {
   GimpImage *image;
   GtkWidget *widget;
-  gint       x1, y1, x2, y2;
+  gint       x, y;
+  gint       width, height;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
@@ -732,11 +733,11 @@ image_crop_to_content_cmd_callback (GtkAction *action,
                                      0, 0,
                                      gimp_image_get_width  (image),
                                      gimp_image_get_height (image),
-                                     &x1, &y1, &x2, &y2))
+                                     &x, &y, &width, &height))
     {
     case GIMP_AUTO_SHRINK_SHRINK:
       gimp_image_crop (image, action_data_get_context (data),
-                       x1, y1, x2 - x1, y2 - y1, TRUE);
+                       x, y, width, height, TRUE);
       gimp_image_flush (image);
       break;
 
