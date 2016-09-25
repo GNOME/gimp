@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 19:34+0200\n"
-"PO-Revision-Date: 2016-09-07 19:35+0200\n"
+"POT-Creation-Date: 2016-09-25 20:52+0200\n"
+"PO-Revision-Date: 2016-09-25 20:53+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -307,7 +307,7 @@ msgstr "według typu"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:395
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:140
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
 msgid "No matches"
 msgstr "Brak wyników"
 
@@ -379,15 +379,15 @@ msgstr "Zwracane wartości"
 msgid "Additional Information"
 msgstr "Dodatkowe informacje"
 
-#: ../libgimp/gimpprocview.c:239
+#: ../libgimp/gimpprocview.c:240
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../libgimp/gimpprocview.c:251
+#: ../libgimp/gimpprocview.c:253
 msgid "Date:"
 msgstr "Data:"
 
-#: ../libgimp/gimpprocview.c:263
+#: ../libgimp/gimpprocview.c:266
 msgid "Copyright:"
 msgstr "Prawa autorskie:"
 
@@ -909,6 +909,26 @@ msgstr "Zaokrąglony"
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Ścięty skośnie"
+
+#: ../libgimpbase/gimpbaseenums.c:1023
+msgctxt "merge-type"
+msgid "Expanded as neccessary"
+msgstr "Rozszerzona w razie potrzeby"
+
+#: ../libgimpbase/gimpbaseenums.c:1024
+msgctxt "merge-type"
+msgid "Clipped to image"
+msgstr "Przycięta do obrazu"
+
+#: ../libgimpbase/gimpbaseenums.c:1025
+msgctxt "merge-type"
+msgid "Clipped to bottom layer"
+msgstr "Przycięta do najniższej warstwy"
+
+#: ../libgimpbase/gimpbaseenums.c:1026
+msgctxt "merge-type"
+msgid "Flatten"
+msgstr "Spłaszczona"
 
 #: ../libgimpbase/gimpbaseenums.c:1118
 msgctxt "orientation-type"
@@ -1634,7 +1654,7 @@ msgstr "Miniatura nie zawiera znacznika Thumb::URI"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nie można utworzyć miniatury dla „%s”: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:113
+#: ../libgimpwidgets/gimpbrowser.c:114
 msgid "_Search:"
 msgstr "Wy_szukiwanie:"
 
@@ -1785,32 +1805,32 @@ msgstr "Odstępy międzyz_nakowe"
 msgid "L_ine Spacing"
 msgstr "Odstępy między_wierszowe"
 
-#: ../libgimpwidgets/gimpicons.c:156
+#: ../libgimpwidgets/gimpicons.c:154
 msgid "Re_size"
 msgstr "Zmień _rozmiar"
 
-#: ../libgimpwidgets/gimpicons.c:157 ../libgimpwidgets/gimpicons.c:292
+#: ../libgimpwidgets/gimpicons.c:155 ../libgimpwidgets/gimpicons.c:290
 msgid "_Scale"
 msgstr "Prze_skaluj"
 
-#: ../libgimpwidgets/gimpicons.c:264
+#: ../libgimpwidgets/gimpicons.c:262
 msgid "Cr_op"
 msgstr "K_adruj"
 
-#: ../libgimpwidgets/gimpicons.c:272
+#: ../libgimpwidgets/gimpicons.c:270
 msgid "_Select"
 msgstr "_Zaznacz"
 
-#: ../libgimpwidgets/gimpicons.c:275 ../libgimpwidgets/gimpicons.c:287
-#: ../libgimpwidgets/gimpicons.c:298
+#: ../libgimpwidgets/gimpicons.c:273 ../libgimpwidgets/gimpicons.c:285
+#: ../libgimpwidgets/gimpicons.c:296
 msgid "_Transform"
 msgstr "_Przekształć"
 
-#: ../libgimpwidgets/gimpicons.c:291
+#: ../libgimpwidgets/gimpicons.c:289
 msgid "_Rotate"
 msgstr "O_bróć"
 
-#: ../libgimpwidgets/gimpicons.c:294
+#: ../libgimpwidgets/gimpicons.c:292
 msgid "_Shear"
 msgstr "_Zetnij"
 
@@ -1888,7 +1908,7 @@ msgstr "Rozmiar szachownicy"
 msgid "Check Style"
 msgstr "Wygląd szachownicy"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2110
+#: ../libgimpwidgets/gimppropwidgets.c:2111
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
