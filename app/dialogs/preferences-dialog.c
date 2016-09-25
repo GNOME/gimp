@@ -436,7 +436,10 @@ static void
 prefs_color_management_reset (GtkWidget *widget,
                               GObject   *config)
 {
-  gimp_config_reset (GIMP_CONFIG (config));
+  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (config);
+
+  gimp_config_reset (GIMP_CONFIG (core_config->color_management));
+  gimp_config_reset_property (config, "color-profile-policy");
 }
 
 static void
@@ -1108,7 +1111,7 @@ prefs_dialog_new (Gimp       *gimp,
                                                _("Reset Color Management"));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_color_management_reset),
-                    core_config->color_management);
+                    config);
 
   {
     GObject      *color_config = G_OBJECT (core_config->color_management);
