@@ -2616,7 +2616,7 @@ prefs_dialog_new (Gimp       *gimp,
     {
       const gchar *property_name;
       const gchar *label;
-      const gchar *fs_label;
+      const gchar *dialog_title;
     }
     dirs[] =
     {
@@ -2636,13 +2636,10 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (dirs); i++)
       {
-        button = gimp_prop_file_chooser_button_new (object,
-                                                    dirs[i].property_name,
-                                                    gettext (dirs[i].fs_label),
-                                                    GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
-                                   gettext (dirs[i].label), 0.0, 0.5,
-                                   button, 1, FALSE);
+        prefs_file_chooser_button_add (object, dirs[i].property_name,
+                                       gettext (dirs[i].label),
+                                       gettext (dirs[i].dialog_title),
+                                       GTK_TABLE (table), i, NULL);
       }
   }
 
