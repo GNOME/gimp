@@ -297,7 +297,6 @@ channels_duplicate_cmd_callback (GtkAction *action,
     }
 
   gimp_image_add_channel (image, new_channel, parent, -1, TRUE);
-
   gimp_image_flush (image);
 }
 

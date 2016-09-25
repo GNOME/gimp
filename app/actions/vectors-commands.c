@@ -210,10 +210,8 @@ vectors_new_last_vals_cmd_callback (GtkAction *action,
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   vectors = gimp_vectors_new (image, config->vectors_new_name);
-
   gimp_image_add_vectors (image, vectors,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
   gimp_image_flush (image);
 }
 
@@ -276,7 +274,6 @@ vectors_duplicate_cmd_callback (GtkAction *action,
 
   new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
                                                    G_TYPE_FROM_INSTANCE (vectors)));
-
   /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
    *  the latter would add a duplicated group inside itself instead of
    *  above it
@@ -284,7 +281,6 @@ vectors_duplicate_cmd_callback (GtkAction *action,
   gimp_image_add_vectors (image, new_vectors,
                           gimp_vectors_get_parent (vectors), -1,
                           TRUE);
-
   gimp_image_flush (image);
 }
 
@@ -776,6 +772,7 @@ vectors_lock_position_cmd_callback (GtkAction *action,
       gimp_image_flush (image);
     }
 }
+
 
 /*  private functions  */
 

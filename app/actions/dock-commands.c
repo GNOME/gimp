@@ -59,6 +59,7 @@ dock_toggle_image_menu_cmd_callback (GtkAction *action,
   if (dock_window)
     {
       gboolean active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
       gimp_dock_window_set_show_image_menu (dock_window, active);
     }
 }
@@ -76,6 +77,7 @@ dock_toggle_auto_cmd_callback (GtkAction *action,
   if (dock_window)
     {
       gboolean active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
       gimp_dock_window_set_auto_follow_active (dock_window, active);
     }
 }

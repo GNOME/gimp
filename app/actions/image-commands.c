@@ -244,8 +244,8 @@ image_convert_base_type_cmd_callback (GtkAction *action,
       gtk_window_present (GTK_WINDOW (dialog));
     }
 
-  /*  always flush, also when only the indexed dialog was shown, so the
-   *  menu items get updated back to the current image type
+  /*  always flush, also when only the indexed dialog was shown, so
+   *  the menu items get updated back to the current image type
    */
   gimp_image_flush (image);
 }
@@ -698,21 +698,23 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
 {
   GimpImage *image;
   GtkWidget *widget;
-  gint       x, y, w, h;
+  gint       x, y;
+  gint       width, height;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
-                          &x, &y, &w, &h))
+                          &x, &y, &width, &height))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("Cannot crop because the current selection is empty."));
+                            _("Cannot crop because the current selection "
+                              "is empty."));
       return;
     }
 
   gimp_image_crop (image, action_data_get_context (data),
-                   x, y, w, h, TRUE);
+                   x, y, width, height, TRUE);
   gimp_image_flush (image);
 }
 
@@ -747,7 +749,8 @@ image_crop_to_content_cmd_callback (GtkAction *action,
     case GIMP_AUTO_SHRINK_UNSHRINKABLE:
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_INFO,
-                            _("Cannot crop because the image is already cropped to its content."));
+                            _("Cannot crop because the image is already "
+                              "cropped to its content."));
       break;
     }
 }

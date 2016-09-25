@@ -138,7 +138,7 @@ static void   layers_add_mask_callback        (GtkWidget             *dialog,
                                                GimpChannel           *channel,
                                                gboolean               invert,
                                                gpointer               user_data);
-static void   layers_scale_layer_callback     (GtkWidget             *dialog,
+static void   layers_scale_callback           (GtkWidget             *dialog,
                                                GimpViewable          *viewable,
                                                gint                   width,
                                                gint                   height,
@@ -148,7 +148,7 @@ static void   layers_scale_layer_callback     (GtkWidget             *dialog,
                                                gdouble                yresolution,
                                                GimpUnit               resolution_unit,
                                                gpointer               user_data);
-static void   layers_resize_layer_callback    (GtkWidget             *dialog,
+static void   layers_resize_callback          (GtkWidget             *dialog,
                                                GimpViewable          *viewable,
                                                GimpContext           *context,
                                                gint                   width,
@@ -395,9 +395,7 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                            GIMP_NORMAL_MODE,
                                            profile);
 
-  gimp_image_add_layer (image, layer,
-                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
+  gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 }
 
@@ -411,9 +409,7 @@ layers_new_group_cmd_callback (GtkAction *action,
 
   layer = gimp_group_layer_new (image);
 
-  gimp_image_add_layer (image, layer,
-                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
+  gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 }
 
@@ -513,7 +509,6 @@ layers_duplicate_cmd_callback (GtkAction *action,
   gimp_image_add_layer (image, new_layer,
                         gimp_layer_get_parent (layer), -1,
                         TRUE);
-
   gimp_image_flush (image);
 }
 
@@ -601,7 +596,6 @@ layers_text_to_vectors_cmd_callback (GtkAction *action,
 
       gimp_image_add_vectors (image, vectors,
                               GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
       gimp_image_flush (image);
     }
 }
@@ -629,7 +623,6 @@ layers_text_along_vectors_cmd_callback (GtkAction *action,
 
       gimp_image_add_vectors (image, new_vectors,
                               GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
       gimp_image_flush (image);
     }
 }
@@ -667,7 +660,7 @@ layers_resize_cmd_callback (GtkAction *action,
                                   gimp_standard_help_func,
                                   GIMP_HELP_LAYER_RESIZE,
                                   layer_resize_unit,
-                                  layers_resize_layer_callback,
+                                  layers_resize_callback,
                                   NULL);
 
       dialogs_attach_dialog (G_OBJECT (layer), RESIZE_DIALOG_KEY, dialog);
@@ -723,7 +716,7 @@ layers_scale_cmd_callback (GtkAction *action,
                                  gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
                                  layer_scale_unit,
                                  layer_scale_interp,
-                                 layers_scale_layer_callback,
+                                 layers_scale_callback,
                                  display);
 
       dialogs_attach_dialog (G_OBJECT (layer), SCALE_DIALOG_KEY, dialog);
@@ -765,7 +758,6 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
                     width, height, off_x, off_y);
 
   gimp_image_undo_group_end (image);
-
   gimp_image_flush (image);
 }
 
@@ -890,7 +882,6 @@ layers_mask_add_last_vals_cmd_callback (GtkAction *action,
     gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
   gimp_layer_add_mask (layer, mask, TRUE, NULL);
-
   gimp_image_flush (image);
 }
 
@@ -1242,16 +1233,16 @@ layers_add_mask_callback (GtkWidget       *dialog,
 }
 
 static void
-layers_scale_layer_callback (GtkWidget             *dialog,
-                             GimpViewable          *viewable,
-                             gint                   width,
-                             gint                   height,
-                             GimpUnit               unit,
-                             GimpInterpolationType  interpolation,
-                             gdouble                xresolution,    /* unused */
-                             gdouble                yresolution,    /* unused */
-                             GimpUnit               resolution_unit,/* unused */
-                             gpointer               user_data)
+layers_scale_callback (GtkWidget             *dialog,
+                       GimpViewable          *viewable,
+                       gint                   width,
+                       gint                   height,
+                       GimpUnit               unit,
+                       GimpInterpolationType  interpolation,
+                       gdouble                xresolution,    /* unused */
+                       gdouble                yresolution,    /* unused */
+                       GimpUnit               resolution_unit,/* unused */
+                       gpointer               user_data)
 {
   GimpDisplay *display = GIMP_DISPLAY (user_data);
 
@@ -1302,17 +1293,17 @@ layers_scale_layer_callback (GtkWidget             *dialog,
 }
 
 static void
-layers_resize_layer_callback (GtkWidget    *dialog,
-                              GimpViewable *viewable,
-                              GimpContext  *context,
-                              gint          width,
-                              gint          height,
-                              GimpUnit      unit,
-                              gint          offset_x,
-                              gint          offset_y,
-                              GimpItemSet   unused,
-                              gboolean      unused2,
-                              gpointer      user_data)
+layers_resize_callback (GtkWidget    *dialog,
+                        GimpViewable *viewable,
+                        GimpContext  *context,
+                        gint          width,
+                        gint          height,
+                        GimpUnit      unit,
+                        gint          offset_x,
+                        gint          offset_y,
+                        GimpItemSet   unused,
+                        gboolean      unused2,
+                        gpointer      user_data)
 {
   layer_resize_unit = unit;
 

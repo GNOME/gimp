@@ -107,7 +107,8 @@ drawable_levels_stretch_cmd_callback (GtkAction *action,
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("White Balance operates only on RGB color layers."));
+                            _("White Balance operates only on RGB color "
+                              "layers."));
       return;
     }
 
@@ -205,7 +206,6 @@ drawable_offset_cmd_callback (GtkAction *action,
 
   gtk_window_present (GTK_WINDOW (dialog));
 }
-
 
 void
 drawable_linked_cmd_callback (GtkAction *action,
