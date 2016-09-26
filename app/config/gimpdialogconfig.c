@@ -51,6 +51,10 @@ enum
   PROP_IMAGE_CONVERT_PROFILE_INTENT,
   PROP_IMAGE_CONVERT_PROFILE_BPC,
 
+  PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD,
+  PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD,
+  PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD,
+
   PROP_LAYER_NEW_NAME,
   PROP_LAYER_NEW_FILL_TYPE,
 
@@ -167,6 +171,33 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                             IMAGE_CONVERT_PROFILE_BPC_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD,
+                         "image-convert-precision-layer-dither-method",
+                         "Default layer dither type for precision conversion",
+                         IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD_BLURB,
+                         GEGL_TYPE_DITHER_METHOD,
+                         GEGL_DITHER_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD,
+                         "image-convert-precision-text-layer-dither-method",
+                         "Default text layer dither type for precision conversion",
+                         IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD_BLURB,
+                         GEGL_TYPE_DITHER_METHOD,
+                         GEGL_DITHER_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD,
+                         "image-convert-precision-channel-dither-method",
+                         "Default channel dither type for precision conversion",
+                         IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD_BLURB,
+                         GEGL_TYPE_DITHER_METHOD,
+                         GEGL_DITHER_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_LAYER_NEW_NAME,
                            "layer-new-name",
@@ -447,6 +478,19 @@ gimp_dialog_config_set_property (GObject      *object,
       config->image_convert_profile_bpc = g_value_get_boolean (value);
       break;
 
+    case PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD:
+      config->image_convert_precision_layer_dither_method =
+        g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD:
+      config->image_convert_precision_text_layer_dither_method =
+        g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD:
+      config->image_convert_precision_channel_dither_method =
+        g_value_get_enum (value);
+      break;
+
     case PROP_LAYER_NEW_NAME:
       if (config->layer_new_name)
         g_free (config->layer_new_name);
@@ -575,6 +619,19 @@ gimp_dialog_config_get_property (GObject    *object,
       break;
     case PROP_IMAGE_CONVERT_PROFILE_BPC:
       g_value_set_boolean (value, config->image_convert_profile_bpc);
+      break;
+
+    case PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD:
+      g_value_set_enum (value,
+                        config->image_convert_precision_layer_dither_method);
+      break;
+    case PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD:
+      g_value_set_enum (value,
+                        config->image_convert_precision_text_layer_dither_method);
+      break;
+    case PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD:
+      g_value_set_enum (value,
+                        config->image_convert_precision_channel_dither_method);
       break;
 
     case PROP_LAYER_NEW_NAME:

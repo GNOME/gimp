@@ -1838,6 +1838,27 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Black point compensation"),
                           GTK_BOX (vbox2));
 
+  /*  Convert Precision Dialog  */
+  vbox2 = prefs_frame_new (_("Precision Conversion Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object,
+                            "image-convert-precision-layer-dither-method",
+                            0, 0,
+                            _("Dither layers:"),
+                            GTK_TABLE (table), 0, size_group);
+  prefs_enum_combo_box_add (object,
+                            "image-convert-precision-text-layer-dither-method",
+                            0, 0,
+                            _("Dither text layers:"),
+                            GTK_TABLE (table), 1, size_group);
+  prefs_enum_combo_box_add (object,
+                            "image-convert-precision-channel-dither-method",
+                            0, 0,
+                            _("Dither channels/masks:"),
+                            GTK_TABLE (table), 2, size_group);
+
   /*  New Layer Dialog  */
   vbox2 = prefs_frame_new (_("New Layer Dialog"),
                            GTK_CONTAINER (vbox), FALSE);

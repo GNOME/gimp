@@ -28,6 +28,8 @@
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "config/gimpdialogconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -47,17 +49,17 @@
 
 typedef struct
 {
-  GtkWidget         *dialog;
+  GtkWidget          *dialog;
 
-  GimpImage         *image;
-  GimpProgress      *progress;
+  GimpImage          *image;
+  GimpProgress       *progress;
 
-  GimpComponentType  component_type;
-  gboolean           linear;
-  gint               bits;
-  gint               layer_dither_type;
-  gint               text_layer_dither_type;
-  gint               mask_dither_type;
+  GimpComponentType   component_type;
+  gboolean            linear;
+  gint                bits;
+  GeglDitherMethod    layer_dither_method;
+  GeglDitherMethod    text_layer_dither_method;
+  GeglDitherMethod    mask_dither_method;
 } ConvertDialog;
 
 
@@ -65,13 +67,6 @@ static void   convert_precision_dialog_response (GtkWidget        *widget,
                                                  gint              response_id,
                                                  ConvertDialog    *dialog);
 static void   convert_precision_dialog_free     (ConvertDialog    *dialog);
-
-
-/*  defaults  */
-
-static gint   saved_layer_dither_type      = 0;
-static gint   saved_text_layer_dither_type = 0;
-static gint   saved_mask_dither_type       = 0;
 
 
 /*  public functions  */
@@ -94,7 +89,6 @@ convert_precision_dialog_new (GimpImage         *image,
   GtkSizeGroup  *size_group;
   const gchar   *enum_desc;
   gchar         *blurb;
-  GType          dither_type;
   const Babl    *format;
   gint           bits;
   gboolean       linear;
@@ -107,8 +101,9 @@ convert_precision_dialog_new (GimpImage         *image,
   dialog = g_slice_new0 (ConvertDialog);
 
   /* a random format with precision */
-  format = gimp_babl_format (GIMP_RGB, gimp_babl_precision (component_type,
-                                                            FALSE), FALSE);
+  format = gimp_babl_format (GIMP_RGB,
+                             gimp_babl_precision (component_type, FALSE),
+                             FALSE);
   bits   = (babl_format_get_bytes_per_pixel (format) * 8 /
             babl_format_get_n_components (format));
 
@@ -124,9 +119,16 @@ convert_precision_dialog_new (GimpImage         *image,
   /* gegl:color-reduction only does 16 bits */
   if (bits <= 16)
     {
-      dialog->layer_dither_type      = saved_layer_dither_type;
-      dialog->text_layer_dither_type = saved_text_layer_dither_type;
-      dialog->mask_dither_type       = saved_mask_dither_type;
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+      dialog->layer_dither_method =
+        config->image_convert_precision_layer_dither_method;
+
+      dialog->text_layer_dither_method =
+        config->image_convert_precision_text_layer_dither_method;
+
+      dialog->mask_dither_method =
+        config->image_convert_precision_channel_dither_method;
     }
 
   gimp_enum_get_value (GIMP_TYPE_COMPONENT_TYPE, component_type,
@@ -179,9 +181,6 @@ convert_precision_dialog_new (GimpImage         *image,
 
   /*  dithering  */
 
-  dither_type = gimp_gegl_get_op_enum_type ("gegl:color-reduction",
-                                            "dither-strategy");
-
   frame = gimp_frame_new (_("Dithering"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -207,15 +206,15 @@ convert_precision_dialog_new (GimpImage         *image,
   gtk_size_group_add_widget (size_group, label);
   gtk_widget_show (label);
 
-  combo = gimp_enum_combo_box_new (dither_type);
+  combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              dialog->layer_dither_type,
+                              dialog->layer_dither_method,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dialog->layer_dither_type);
+                              &dialog->layer_dither_method);
 
   /*  text layers  */
 
@@ -229,15 +228,15 @@ convert_precision_dialog_new (GimpImage         *image,
   gtk_size_group_add_widget (size_group, label);
   gtk_widget_show (label);
 
-  combo = gimp_enum_combo_box_new (dither_type);
+  combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              dialog->text_layer_dither_type,
+                              dialog->text_layer_dither_method,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dialog->text_layer_dither_type);
+                              &dialog->text_layer_dither_method);
 
   gimp_help_set_help_data (combo,
                            _("Dithering text layers will make them uneditable"),
@@ -255,15 +254,15 @@ convert_precision_dialog_new (GimpImage         *image,
   gtk_size_group_add_widget (size_group, label);
   gtk_widget_show (label);
 
-  combo = gimp_enum_combo_box_new (dither_type);
+  combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              dialog->mask_dither_type,
+                              dialog->mask_dither_method,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dialog->mask_dither_type);
+                              &dialog->mask_dither_method);
 
   g_object_unref (size_group);
 
@@ -318,9 +317,9 @@ convert_precision_dialog_response (GtkWidget     *widget,
 
       gimp_image_convert_precision (dialog->image,
                                     precision,
-                                    dialog->layer_dither_type,
-                                    dialog->text_layer_dither_type,
-                                    dialog->mask_dither_type,
+                                    dialog->layer_dither_method,
+                                    dialog->text_layer_dither_method,
+                                    dialog->mask_dither_method,
                                     progress);
 
       if (progress)
@@ -331,10 +330,18 @@ convert_precision_dialog_response (GtkWidget     *widget,
        /* gegl:color-reduction only does 16 bits */
       if (dialog->bits <= 16)
         {
+          GimpDialogConfig *config =
+            GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
+
           /* Save defaults for next time */
-          saved_layer_dither_type      = dialog->layer_dither_type;
-          saved_text_layer_dither_type = dialog->text_layer_dither_type;
-          saved_mask_dither_type       = dialog->mask_dither_type;
+          g_object_set (config,
+                        "image-convert-precision-layer-dither-method",
+                        dialog->layer_dither_method,
+                        "image-convert-precision-text-layer-dither-method",
+                        dialog->text_layer_dither_method,
+                        "image-convert-precision-channel-dither-method",
+                        dialog->mask_dither_method,
+                        NULL);
         }
     }
 

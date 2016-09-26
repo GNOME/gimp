@@ -427,6 +427,15 @@ _("Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 _("Sets the default 'Black Point Compensation' state for the " \
   "'Convert to Color Profile' dialog.")
 
+#define IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD_BLURB \
+_("Sets the default layer dithering method for the 'Convert Precision' dialog.")
+
+#define IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD_BLURB \
+_("Sets the default text layer dithering method for the 'Convert Precision' dialog.")
+
+#define IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD_BLURB \
+_("Sets the default channel dithering method for the 'Convert Precision' dialog.")
+
 #define LAYER_NEW_NAME_BLURB \
 _("Sets the default layer name for the 'New Layer' dialog.")
 

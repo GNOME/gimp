@@ -49,6 +49,10 @@ struct _GimpDialogConfig
   GimpColorRenderingIntent  image_convert_profile_intent;
   gboolean                  image_convert_profile_bpc;
 
+  GeglDitherMethod          image_convert_precision_layer_dither_method;
+  GeglDitherMethod          image_convert_precision_text_layer_dither_method;
+  GeglDitherMethod          image_convert_precision_channel_dither_method;
+
   gchar                    *layer_new_name;
   GimpFillType              layer_new_fill_type;
 
