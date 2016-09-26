@@ -27,6 +27,7 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-levels.h"
+#include "core/gimpdrawable-offset.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -42,6 +43,17 @@
 #include "drawable-commands.h"
 
 #include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static void   drawable_offset_callback (GtkWidget      *dialog,
+                                        GimpDrawable   *drawable,
+                                        GimpContext    *context,
+                                        gboolean        wrap_around,
+                                        GimpOffsetType  fill_type,
+                                        gint            offset_x,
+                                        gint            offset_y);
 
 
 /*  public functions  */
@@ -198,7 +210,9 @@ drawable_offset_cmd_callback (GtkAction *action,
   if (! dialog)
     {
       dialog = offset_dialog_new (drawable, action_data_get_context (data),
-                                  widget);
+                                  widget,
+                                  drawable_offset_callback,
+                                  NULL);
 
       dialogs_attach_dialog (G_OBJECT (drawable),
                              OFFSET_DIALOG_KEY, dialog);
@@ -418,4 +432,26 @@ drawable_rotate_cmd_callback (GtkAction *action,
     }
 
   gimp_image_flush (image);
+}
+
+
+/*  private functions  */
+
+static void
+drawable_offset_callback (GtkWidget      *dialog,
+                          GimpDrawable   *drawable,
+                          GimpContext    *context,
+                          gboolean        wrap_around,
+                          GimpOffsetType  fill_type,
+                          gint            offset_x,
+                          gint            offset_y)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  gimp_drawable_offset (drawable, context,
+                        wrap_around, fill_type,
+                        offset_x, offset_y);
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
 }

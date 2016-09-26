@@ -26,10 +26,8 @@
 #include "dialogs-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpdrawable-offset.h"
 #include "core/gimpitem.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -49,40 +47,43 @@
 
 typedef struct
 {
-  GimpContext    *context;
+  GimpDrawable       *drawable;
+  GimpContext        *context;
+  GimpOffsetType      fill_type;
+  GimpOffsetCallback  callback;
+  gpointer            user_data;
 
-  GtkWidget      *dialog;
-  GtkWidget      *off_se;
-
-  GimpOffsetType  fill_type;
-
-  GimpImage      *image;
+  GtkWidget          *off_se;
 } OffsetDialog;
 
 
 /*  local function prototypes  */
 
-static void  offset_response         (GtkWidget    *widget,
-                                      gint          response_id,
-                                      OffsetDialog *dialog);
-static void  offset_half_xy_callback (GtkWidget    *widget,
-                                      OffsetDialog *dialog);
-static void  offset_half_x_callback  (GtkWidget    *widget,
-                                      OffsetDialog *dialog);
-static void  offset_half_y_callback  (GtkWidget    *widget,
-                                      OffsetDialog *dialog);
-static void  offset_dialog_free      (OffsetDialog *dialog);
+static void  offset_dialog_response         (GtkWidget    *dialog,
+                                             gint          response_id,
+                                             OffsetDialog *private);
+static void  offset_dialog_half_xy_callback (GtkWidget    *widget,
+                                             OffsetDialog *private);
+static void  offset_dialog_half_x_callback  (GtkWidget    *widget,
+                                             OffsetDialog *private);
+static void  offset_dialog_half_y_callback  (GtkWidget    *widget,
+                                             OffsetDialog *private);
+static void  offset_dialog_free             (OffsetDialog *private);
 
 
 /*  public functions  */
 
 GtkWidget *
-offset_dialog_new (GimpDrawable *drawable,
-                   GimpContext  *context,
-                   GtkWidget    *parent)
+offset_dialog_new (GimpDrawable       *drawable,
+                   GimpContext        *context,
+                   GtkWidget          *parent,
+                   GimpOffsetCallback  callback,
+                   gpointer            user_data)
 {
+  OffsetDialog  *private;
+  GimpImage     *image;
   GimpItem      *item;
-  OffsetDialog  *dialog;
+  GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
@@ -98,15 +99,20 @@ offset_dialog_new (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
 
-  dialog = g_slice_new0 (OffsetDialog);
+  item  = GIMP_ITEM (drawable);
+  image = gimp_item_get_image (item);
 
-  dialog->context   = context;
-  dialog->fill_type = gimp_drawable_has_alpha (drawable) | WRAP_AROUND;
-  item = GIMP_ITEM (drawable);
-  dialog->image     = gimp_item_get_image (item);
+  private = g_slice_new0 (OffsetDialog);
 
-  gimp_image_get_resolution (dialog->image, &xres, &yres);
+  private->drawable  = drawable;
+  private->context   = context;
+  private->fill_type = gimp_drawable_has_alpha (drawable) | WRAP_AROUND;
+  private->callback  = callback;
+  private->user_data = user_data;
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   if (GIMP_IS_LAYER (drawable))
     title = _("Offset Layer");
@@ -117,38 +123,37 @@ offset_dialog_new (GimpDrawable *drawable,
   else
     g_warning ("%s: unexpected drawable type", G_STRFUNC);
 
-  dialog->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable), context,
-                              _("Offset"), "gimp-drawable-offset",
-                              GIMP_STOCK_TOOL_MOVE,
-                              title,
-                              parent,
-                              gimp_standard_help_func,
-                              GIMP_HELP_LAYER_OFFSET,
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable), context,
+                                     _("Offset"), "gimp-drawable-offset",
+                                     GIMP_STOCK_TOOL_MOVE,
+                                     title,
+                                     parent,
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_LAYER_OFFSET,
 
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              /*  offset, used as a verb  */
-                              _("_Offset"),     GTK_RESPONSE_OK,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     /*  offset, used as a verb  */
+                                     _("_Offset"),     GTK_RESPONSE_OK,
 
-                              NULL);
+                                     NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) offset_dialog_free, dialog);
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) offset_dialog_free, private);
 
-  g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (offset_response),
-                    dialog);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (offset_dialog_response),
+                    private);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
@@ -167,57 +172,57 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 
-  dialog->off_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+  private->off_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                                         TRUE, TRUE, FALSE, 10,
                                         GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
-  gtk_table_set_col_spacing (GTK_TABLE (dialog->off_se), 0, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (dialog->off_se), 1, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (dialog->off_se), 0, 2);
+  gtk_table_set_col_spacing (GTK_TABLE (private->off_se), 0, 4);
+  gtk_table_set_col_spacing (GTK_TABLE (private->off_se), 1, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (private->off_se), 0, 2);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (dialog->off_se),
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->off_se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (dialog->off_se), spinbutton,
+  gtk_table_attach_defaults (GTK_TABLE (private->off_se), spinbutton,
                              1, 2, 0, 1);
   gtk_widget_show (spinbutton);
 
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (dialog->off_se),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->off_se),
                                 _("_X:"), 0, 0, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (dialog->off_se),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->off_se),
                                 _("_Y:"), 1, 0, 0.0);
 
-  gtk_box_pack_start (GTK_BOX (vbox), dialog->off_se, FALSE, FALSE, 0);
-  gtk_widget_show (dialog->off_se);
+  gtk_box_pack_start (GTK_BOX (vbox), private->off_se, FALSE, FALSE, 0);
+  gtk_widget_show (private->off_se);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (dialog->off_se), GIMP_UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->off_se), GIMP_UNIT_PIXEL);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (dialog->off_se), 0,
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->off_se), 0,
                                   xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (dialog->off_se), 1,
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->off_se), 1,
                                   yres, FALSE);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 0,
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->off_se), 0,
                                          - gimp_item_get_width (item),
                                          gimp_item_get_width (item));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 1,
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->off_se), 1,
                                          - gimp_item_get_height (item),
                                          gimp_item_get_height (item));
 
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 0,
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->off_se), 0,
                             0, gimp_item_get_width (item));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 1,
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->off_se), 1,
                             0, gimp_item_get_height (item));
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se), 0, 0);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se), 1, 0);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->off_se), 0, 0);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->off_se), 1, 0);
 
   button = gtk_button_new_with_mnemonic (_("By width/_2, height/2"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (offset_half_xy_callback),
-                    dialog);
+                    G_CALLBACK (offset_dialog_half_xy_callback),
+                    private);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -228,21 +233,21 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (offset_half_x_callback),
-                    dialog);
+                    G_CALLBACK (offset_dialog_half_x_callback),
+                    private);
 
   button = gtk_button_new_with_mnemonic ("By _height/2");
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (offset_half_y_callback),
-                    dialog);
+                    G_CALLBACK (offset_dialog_half_y_callback),
+                    private);
 
   /*  The edge behavior frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Edge Behavior"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &dialog->fill_type, dialog->fill_type,
+                                    &private->fill_type, private->fill_type,
 
                                     _("W_rap around"),
                                     WRAP_AROUND, NULL,
@@ -260,95 +265,77 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  return dialog->dialog;
+  return dialog;
 }
 
 
 /*  private functions  */
 
 static void
-offset_response (GtkWidget    *widget,
-                 gint          response_id,
-                 OffsetDialog *dialog)
+offset_dialog_response (GtkWidget    *dialog,
+                        gint          response_id,
+                        OffsetDialog *private)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpImage *image = dialog->image;
+      gint offset_x;
+      gint offset_y;
 
-      if (image)
-        {
-          GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-          gint          offset_x;
-          gint          offset_y;
+      offset_x =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->off_se),
+                                          0));
+      offset_y =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->off_se),
+                                          1));
 
-          offset_x =
-            RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                                              0));
-          offset_y =
-            RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                                              1));
-
-          gimp_drawable_offset (drawable,
-                                dialog->context,
-                                dialog->fill_type & WRAP_AROUND ? TRUE : FALSE,
-                                dialog->fill_type & FILL_MASK,
-                                offset_x, offset_y);
-          gimp_image_flush (image);
-        }
+      private->callback (dialog,
+                         private->drawable,
+                         private->context,
+                         private->fill_type & WRAP_AROUND ? TRUE : FALSE,
+                         private->fill_type & FILL_MASK,
+                         offset_x,
+                         offset_y);
     }
-
-  gtk_widget_destroy (dialog->dialog);
-}
-
-static void
-offset_half_xy_callback (GtkWidget    *widget,
-                         OffsetDialog *dialog)
-{
-  GimpImage *image = dialog->image;
-
-  if (image)
+  else
     {
-      GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                                  0, gimp_item_get_width (item) / 2);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                                  1, gimp_item_get_height (item) / 2);
-   }
+      gtk_widget_destroy (dialog);
+    }
 }
 
 static void
-offset_half_x_callback (GtkWidget    *widget,
-                        OffsetDialog *dialog)
+offset_dialog_half_xy_callback (GtkWidget    *widget,
+                                OffsetDialog *private)
 {
-  GimpImage *image = dialog->image;
+  GimpItem *item = GIMP_ITEM (private->drawable);
 
-  if (image)
-    {
-      GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                                  0, gimp_item_get_width (item) / 2);
-   }
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->off_se),
+                              0, gimp_item_get_width (item) / 2);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->off_se),
+                              1, gimp_item_get_height (item) / 2);
 }
 
 static void
-offset_half_y_callback (GtkWidget    *widget,
-                        OffsetDialog *dialog)
+offset_dialog_half_x_callback (GtkWidget    *widget,
+                               OffsetDialog *private)
 {
-  GimpImage *image = dialog->image;
+  GimpItem *item = GIMP_ITEM (private->drawable);
 
-  if (image)
-    {
-      GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                                  1, gimp_item_get_height (item) / 2);
-   }
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->off_se),
+                              0, gimp_item_get_width (item) / 2);
 }
 
 static void
-offset_dialog_free (OffsetDialog *dialog)
+offset_dialog_half_y_callback (GtkWidget    *widget,
+                               OffsetDialog *private)
 {
-  g_slice_free (OffsetDialog, dialog);
+  GimpItem *item = GIMP_ITEM (private->drawable);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->off_se),
+                              1, gimp_item_get_height (item) / 2);
+}
+
+static void
+offset_dialog_free (OffsetDialog *private)
+{
+  g_slice_free (OffsetDialog, private);
 }
