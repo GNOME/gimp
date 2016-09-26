@@ -28,11 +28,7 @@
 
 #include "dialogs-types.h"
 
-#include "config/gimpdialogconfig.h"
-
-#include "core/gimp.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
 #include "core/gimpfilloptions.h"
 
 #include "widgets/gimpfilleditor.h"
@@ -46,41 +42,63 @@
 #define RESPONSE_RESET 1
 
 
-/*  local functions  */
+typedef struct
+{
+  GimpItem         *item;
+  GimpDrawable     *drawable;
+  GimpContext      *context;
+  GimpFillOptions  *options;
+  GimpFillCallback  callback;
+  gpointer          user_data;
+} FillDialog;
 
-static void  fill_dialog_response (GtkWidget *widget,
-                                   gint       response_id,
-                                   GtkWidget *dialog);
+
+/*  local function prototypes  */
+
+static void  fill_dialog_response (GtkWidget  *dialog,
+                                   gint        response_id,
+                                   FillDialog *private);
+static void  fill_dialog_free     (FillDialog *private);
 
 
 /*  public function  */
 
 GtkWidget *
-fill_dialog_new (GimpItem    *item,
-                 GimpContext *context,
-                 const gchar *title,
-                 const gchar *icon_name,
-                 const gchar *help_id,
-                 GtkWidget   *parent)
+fill_dialog_new (GimpItem         *item,
+                 GimpDrawable     *drawable,
+                 GimpContext      *context,
+                 const gchar      *title,
+                 const gchar      *icon_name,
+                 const gchar      *help_id,
+                 GtkWidget        *parent,
+                 GimpFillOptions  *options,
+                 GimpFillCallback  callback,
+                 gpointer          user_data)
 {
-  GimpDialogConfig *config;
-  GimpFillOptions  *options;
-  GtkWidget        *dialog;
-  GtkWidget        *main_vbox;
-  GtkWidget        *fill_editor;
+  FillDialog *private;
+  GtkWidget  *dialog;
+  GtkWidget  *main_vbox;
+  GtkWidget  *fill_editor;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  config = GIMP_DIALOG_CONFIG (context->gimp->config);
+  private = g_slice_new0 (FillDialog);
 
-  options = gimp_fill_options_new (context->gimp, context, TRUE);
+  private->item      = item;
+  private->drawable  = drawable;
+  private->context   = context;
+  private->options   = gimp_fill_options_new (context->gimp, context, TRUE);
+  private->callback  = callback;
+  private->user_data = user_data;
 
-  gimp_config_sync (G_OBJECT (config->fill_options),
-                    G_OBJECT (options), 0);
+  gimp_config_sync (G_OBJECT (options),
+                    G_OBJECT (private->options), 0);
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-fill-options",
@@ -104,13 +122,12 @@ fill_dialog_new (GimpItem    *item,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) fill_dialog_free, private);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (fill_dialog_response),
-                    dialog);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp-item", item);
-  g_object_set_data_full (G_OBJECT (dialog), "gimp-fill-options", options,
-                          (GDestroyNotify) g_object_unref);
+                    private);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -118,7 +135,7 @@ fill_dialog_new (GimpItem    *item,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  fill_editor = gimp_fill_editor_new (options, FALSE);
+  fill_editor = gimp_fill_editor_new (private->options, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), fill_editor, FALSE, FALSE, 0);
   gtk_widget_show (fill_editor);
 
@@ -129,62 +146,35 @@ fill_dialog_new (GimpItem    *item,
 /*  private functions  */
 
 static void
-fill_dialog_response (GtkWidget  *widget,
+fill_dialog_response (GtkWidget  *dialog,
                       gint        response_id,
-                      GtkWidget  *dialog)
+                      FillDialog *private)
 {
-  GimpFillOptions *options;
-  GimpItem        *item;
-  GimpImage       *image;
-  GimpContext     *context;
-
-  item    = g_object_get_data (G_OBJECT (dialog), "gimp-item");
-  options = g_object_get_data (G_OBJECT (dialog), "gimp-fill-options");
-
-  image   = gimp_item_get_image (item);
-  context = GIMP_VIEWABLE_DIALOG (dialog)->context;
-
   switch (response_id)
     {
     case RESPONSE_RESET:
-      gimp_config_reset (GIMP_CONFIG (options));
+      gimp_config_reset (GIMP_CONFIG (private->options));
       break;
 
     case GTK_RESPONSE_OK:
-      {
-        GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (context->gimp->config);
-        GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
-        GError           *error    = NULL;
-
-        if (! drawable)
-          {
-            gimp_message_literal (context->gimp, G_OBJECT (widget),
-                                  GIMP_MESSAGE_WARNING,
-                                  _("There is no active layer or channel "
-                                    "to fill."));
-            return;
-          }
-
-        gimp_config_sync (G_OBJECT (options),
-                          G_OBJECT (config->fill_options), 0);
-
-        if (! gimp_item_fill (item, drawable, options, TRUE, NULL, &error))
-          {
-            gimp_message_literal (context->gimp,
-                                  G_OBJECT (widget),
-                                  GIMP_MESSAGE_WARNING,
-                                  error ? error->message : "NULL");
-
-            g_clear_error (&error);
-            return;
-          }
-
-        gimp_image_flush (image);
-      }
-      /* fallthrough */
+      private->callback (dialog,
+                         private->item,
+                         private->drawable,
+                         private->context,
+                         private->options,
+                         private->user_data);
+      break;
 
     default:
       gtk_widget_destroy (dialog);
       break;
     }
+}
+
+static void
+fill_dialog_free (FillDialog *private)
+{
+  g_object_unref (private->options);
+
+  g_slice_free (FillDialog, private);
 }

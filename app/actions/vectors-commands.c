@@ -84,6 +84,12 @@ static void   vectors_edit_attributes_callback (GtkWidget            *dialog,
                                                 GimpVectors          *vectors,
                                                 const gchar          *vectors_name,
                                                 gpointer              user_data);
+static void   vectors_fill_callback            (GtkWidget            *dialog,
+                                                GimpItem             *item,
+                                                GimpDrawable         *drawable,
+                                                GimpContext          *context,
+                                                GimpFillOptions      *options,
+                                                gpointer              user_data);
 static void   vectors_import_response          (GtkWidget            *widget,
                                                 gint                  response_id,
                                                 VectorsImportDialog  *dialog);
@@ -412,12 +418,18 @@ vectors_fill_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
       dialog = fill_dialog_new (GIMP_ITEM (vectors),
+                                drawable,
                                 action_data_get_context (data),
                                 _("Fill Path"),
                                 GIMP_STOCK_TOOL_BUCKET_FILL,
                                 GIMP_HELP_PATH_FILL,
-                                widget);
+                                widget,
+                                config->fill_options,
+                                vectors_fill_callback,
+                                NULL);
 
       dialogs_attach_dialog (G_OBJECT (drawable), FILL_DIALOG_KEY, dialog);
     }
@@ -821,6 +833,37 @@ vectors_edit_attributes_callback (GtkWidget   *dialog,
       gimp_item_rename (GIMP_ITEM (vectors), vectors_name, NULL);
       gimp_image_flush (image);
     }
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+vectors_fill_callback (GtkWidget       *dialog,
+                       GimpItem        *item,
+                       GimpDrawable    *drawable,
+                       GimpContext     *context,
+                       GimpFillOptions *options,
+                       gpointer         user_data)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
+  GimpImage        *image  = gimp_item_get_image (item);
+  GError           *error  = NULL;
+
+  gimp_config_sync (G_OBJECT (options),
+                    G_OBJECT (config->fill_options), 0);
+
+  if (! gimp_item_fill (item, drawable, options, TRUE, NULL, &error))
+    {
+      gimp_message_literal (context->gimp,
+                            G_OBJECT (dialog),
+                            GIMP_MESSAGE_WARNING,
+                            error ? error->message : "NULL");
+
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
 
   gtk_widget_destroy (dialog);
 }

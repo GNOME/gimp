@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -53,22 +54,28 @@
 
 /*  local function prototypes  */
 
-static void   select_feather_callback (GtkWidget *widget,
-                                       gdouble    size,
-                                       GimpUnit   unit,
-                                       gpointer   data);
-static void   select_border_callback  (GtkWidget *widget,
-                                       gdouble    size,
-                                       GimpUnit   unit,
-                                       gpointer   data);
-static void   select_grow_callback    (GtkWidget *widget,
-                                       gdouble    size,
-                                       GimpUnit   unit,
-                                       gpointer   data);
-static void   select_shrink_callback  (GtkWidget *widget,
-                                       gdouble    size,
-                                       GimpUnit   unit,
-                                       gpointer   data);
+static void   select_feather_callback (GtkWidget       *widget,
+                                       gdouble          size,
+                                       GimpUnit         unit,
+                                       gpointer         data);
+static void   select_border_callback  (GtkWidget       *widget,
+                                       gdouble          size,
+                                       GimpUnit         unit,
+                                       gpointer         data);
+static void   select_grow_callback    (GtkWidget       *widget,
+                                       gdouble          size,
+                                       GimpUnit         unit,
+                                       gpointer         data);
+static void   select_shrink_callback  (GtkWidget       *widget,
+                                       gdouble          size,
+                                       GimpUnit         unit,
+                                       gpointer         data);
+static void   select_fill_callback    (GtkWidget       *dialog,
+                                       GimpItem        *item,
+                                       GimpDrawable    *drawable,
+                                       GimpContext     *context,
+                                       GimpFillOptions *options,
+                                       gpointer         data);
 
 
 /*  public functions  */
@@ -407,12 +414,18 @@ select_fill_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
       dialog = fill_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
+                                drawable,
                                 action_data_get_context (data),
                                 _("Fill Selection Outline"),
                                 GIMP_STOCK_TOOL_BUCKET_FILL,
                                 GIMP_HELP_SELECTION_FILL,
-                                widget);
+                                widget,
+                                config->fill_options,
+                                select_fill_callback,
+                                NULL);
 
       dialogs_attach_dialog (G_OBJECT (drawable), FILL_DIALOG_KEY, dialog);
     }
@@ -717,4 +730,35 @@ select_shrink_callback (GtkWidget *widget,
                        config->selection_shrink_edge_lock,
 		       TRUE);
   gimp_image_flush (image);
+}
+
+static void
+select_fill_callback (GtkWidget       *dialog,
+                      GimpItem        *item,
+                      GimpDrawable    *drawable,
+                      GimpContext     *context,
+                      GimpFillOptions *options,
+                      gpointer         data)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
+  GimpImage        *image  = gimp_item_get_image (item);
+  GError           *error  = NULL;
+
+  gimp_config_sync (G_OBJECT (options),
+                    G_OBJECT (config->fill_options), 0);
+
+  if (! gimp_item_fill (item, drawable, options, TRUE, NULL, &error))
+    {
+      gimp_message_literal (context->gimp,
+                            G_OBJECT (dialog),
+                            GIMP_MESSAGE_WARNING,
+                            error ? error->message : "NULL");
+
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
 }
