@@ -725,6 +725,7 @@ gimp_warp_tool_create_graph (GimpWarpTool *wt)
 
   render = gegl_node_new_child (graph,
                                 "operation", "gegl:map-relative",
+                                "sampler_type", GEGL_SAMPLER_LINEAR,
                                 NULL);
 
   gegl_node_connect_to (input,  "output",
