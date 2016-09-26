@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -77,42 +78,50 @@
 
 /*  local function prototypes  */
 
-static void   image_resize_callback        (GtkWidget              *dialog,
-                                            GimpViewable           *viewable,
-                                            GimpContext            *context,
-                                            gint                    width,
-                                            gint                    height,
-                                            GimpUnit                unit,
-                                            gint                    offset_x,
-                                            gint                    offset_y,
-                                            GimpItemSet             layer_set,
-                                            gboolean                resize_text_layers,
-                                            gpointer                user_data);
+static void   image_convert_precision_callback (GtkWidget              *dialog,
+                                                GimpImage              *image,
+                                                GimpPrecision           precision,
+                                                GeglDitherMethod        layer_dither_method,
+                                                GeglDitherMethod        text_layer_dither_method,
+                                                GeglDitherMethod        mask_dither_method,
+                                                gpointer                user_data);
 
-static void   image_print_size_callback    (GtkWidget              *dialog,
-                                            GimpImage              *image,
-                                            gdouble                 xresolution,
-                                            gdouble                 yresolution,
-                                            GimpUnit                resolution_unit,
-                                            gpointer                user_data);
+static void   image_resize_callback            (GtkWidget              *dialog,
+                                                GimpViewable           *viewable,
+                                                GimpContext            *context,
+                                                gint                    width,
+                                                gint                    height,
+                                                GimpUnit                unit,
+                                                gint                    offset_x,
+                                                gint                    offset_y,
+                                                GimpItemSet             layer_set,
+                                                gboolean                resize_text_layers,
+                                                gpointer                user_data);
 
-static void   image_scale_callback         (GtkWidget              *dialog,
-                                            GimpViewable           *viewable,
-                                            gint                    width,
-                                            gint                    height,
-                                            GimpUnit                unit,
-                                            GimpInterpolationType   interpolation,
-                                            gdouble                 xresolution,
-                                            gdouble                 yresolution,
-                                            GimpUnit                resolution_unit,
-                                            gpointer                user_data);
+static void   image_print_size_callback        (GtkWidget              *dialog,
+                                                GimpImage              *image,
+                                                gdouble                 xresolution,
+                                                gdouble                 yresolution,
+                                                GimpUnit                resolution_unit,
+                                                gpointer                user_data);
 
-static void   image_merge_layers_callback  (GtkWidget              *dialog,
-                                            GimpImage              *image,
-                                            GimpContext            *context,
-                                            GimpMergeType           merge_type,
-                                            gboolean                merge_active_group,
-                                            gboolean                discard_invisible);
+static void   image_scale_callback             (GtkWidget              *dialog,
+                                                GimpViewable           *viewable,
+                                                gint                    width,
+                                                gint                    height,
+                                                GimpUnit                unit,
+                                                GimpInterpolationType   interpolation,
+                                                gdouble                 xresolution,
+                                                gdouble                 yresolution,
+                                                GimpUnit                resolution_unit,
+                                                gpointer                user_data);
+
+static void   image_merge_layers_callback      (GtkWidget              *dialog,
+                                                GimpImage              *image,
+                                                GimpContext            *context,
+                                                GimpMergeType           merge_type,
+                                                gboolean                merge_active_group,
+                                                gboolean                discard_invisible);
 
 
 /*  private variables  */
@@ -258,6 +267,7 @@ image_convert_precision_cmd_callback (GtkAction *action,
   GimpImage         *image;
   GimpDisplay       *display;
   GtkWidget         *widget;
+  GimpDialogConfig  *config;
   GtkWidget         *dialog;
   GimpComponentType  value;
   return_if_no_image (image, data);
@@ -273,17 +283,26 @@ image_convert_precision_cmd_callback (GtkAction *action,
 
   dialog = dialogs_get_dialog (G_OBJECT (image), CONVERT_PRECISION_DIALOG_KEY);
 
-  if (! dialog)
+  if (dialog)
     {
-      dialog = convert_precision_dialog_new (image,
-                                             action_data_get_context (data),
-                                             widget,
-                                             value,
-                                             GIMP_PROGRESS (display));
-
-      dialogs_attach_dialog (G_OBJECT (image),
-                             CONVERT_PRECISION_DIALOG_KEY, dialog);
+      gtk_widget_destroy (dialog);
+      dialog = NULL;
     }
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+  dialog = convert_precision_dialog_new (image,
+                                         action_data_get_context (data),
+                                         widget,
+                                         value,
+                                         config->image_convert_precision_layer_dither_method,
+                                         config->image_convert_precision_text_layer_dither_method,
+                                         config->image_convert_precision_channel_dither_method,
+                                         image_convert_precision_callback,
+                                         display);
+
+  dialogs_attach_dialog (G_OBJECT (image),
+                         CONVERT_PRECISION_DIALOG_KEY, dialog);
 
   gtk_window_present (GTK_WINDOW (dialog));
 
@@ -871,6 +890,50 @@ image_properties_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static void
+image_convert_precision_callback (GtkWidget        *dialog,
+                                  GimpImage        *image,
+                                  GimpPrecision     precision,
+                                  GeglDitherMethod  layer_dither_method,
+                                  GeglDitherMethod  text_layer_dither_method,
+                                  GeglDitherMethod  channel_dither_method,
+                                  gpointer          user_data)
+{
+  GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GimpProgress     *progress = user_data;
+  const gchar      *enum_desc;
+
+  g_object_set (config,
+                "image-convert-precision-layer-dither-method",
+                layer_dither_method,
+                "image-convert-precision-text-layer-dither-method",
+                text_layer_dither_method,
+                "image-convert-precision-channel-dither-method",
+                channel_dither_method,
+                NULL);
+
+  gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
+                       NULL, NULL, &enum_desc, NULL);
+
+  progress = gimp_progress_start (progress, FALSE,
+                                  _("Converting image to %s"),
+                                  enum_desc);
+
+  gimp_image_convert_precision (image,
+                                precision,
+                                layer_dither_method,
+                                text_layer_dither_method,
+                                channel_dither_method,
+                                progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
+}
 
 static void
 image_resize_callback (GtkWidget    *dialog,
