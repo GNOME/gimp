@@ -47,8 +47,8 @@ typedef struct
   GimpImage                  *image;
   gint                        n_colors;
   GimpConvertDitherType       dither_type;
-  gboolean                    alpha_dither;
-  gboolean                    text_layer_dither;
+  gboolean                    dither_alpha;
+  gboolean                    dither_text_layers;
   gboolean                    remove_dups;
   GimpConvertPaletteType      palette_type;
   GimpPalette                *custom_palette;
@@ -81,8 +81,8 @@ convert_indexed_dialog_new (GimpImage                  *image,
                             GtkWidget                  *parent,
                             gint                        n_colors,
                             GimpConvertDitherType       dither_type,
-                            gboolean                    alpha_dither,
-                            gboolean                    text_layer_dither,
+                            gboolean                    dither_alpha,
+                            gboolean                    dither_text_layers,
                             gboolean                    remove_dups,
                             GimpConvertPaletteType      palette_type,
                             GimpPalette                *custom_palette,
@@ -112,16 +112,16 @@ convert_indexed_dialog_new (GimpImage                  *image,
 
   private = g_slice_new0 (IndexedDialog);
 
-  private->image             = image;
-  private->n_colors          = n_colors;
-  private->dither_type       = dither_type;
-  private->alpha_dither      = alpha_dither;
-  private->text_layer_dither = text_layer_dither;
-  private->remove_dups       = remove_dups;
-  private->palette_type      = palette_type;
-  private->custom_palette    = custom_palette;
-  private->callback          = callback;
-  private->user_data         = user_data;
+  private->image              = image;
+  private->n_colors           = n_colors;
+  private->dither_type        = dither_type;
+  private->dither_alpha       = dither_alpha;
+  private->dither_text_layers = dither_text_layers;
+  private->remove_dups        = remove_dups;
+  private->palette_type       = palette_type;
+  private->custom_palette     = custom_palette;
+  private->callback           = callback;
+  private->user_data          = user_data;
 
   private->dialog = dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
@@ -265,25 +265,25 @@ convert_indexed_dialog_new (GimpImage                  *image,
   toggle =
     gtk_check_button_new_with_mnemonic (_("Enable dithering of _transparency"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                private->alpha_dither);
+                                private->dither_alpha);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &private->alpha_dither);
+                    &private->dither_alpha);
 
 
   toggle =
     gtk_check_button_new_with_mnemonic (_("Enable dithering of text layers"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                private->text_layer_dither);
+                                private->dither_text_layers);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &private->text_layer_dither);
+                    &private->dither_text_layers);
 
   gimp_help_set_help_data (toggle,
                            _("Dithering text layers will make them uneditable"),
@@ -306,8 +306,8 @@ convert_dialog_response (GtkWidget     *dialog,
                          private->image,
                          private->n_colors,
                          private->dither_type,
-                         private->alpha_dither,
-                         private->text_layer_dither,
+                         private->dither_alpha,
+                         private->dither_text_layers,
                          private->remove_dups,
                          private->palette_type,
                          private->custom_palette,

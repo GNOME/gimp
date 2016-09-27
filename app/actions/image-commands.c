@@ -83,8 +83,8 @@ static void   image_convert_indexed_callback   (GtkWidget              *dialog,
                                                 GimpImage              *image,
                                                 gint                    n_colors,
                                                 GimpConvertDitherType   dither_type,
-                                                gboolean                alpha_dither,
-                                                gboolean                text_layer_dither,
+                                                gboolean                dither_alpha,
+                                                gboolean                dither_text_layers,
                                                 gboolean                remove_dups,
                                                 GimpConvertPaletteType  palette_type,
                                                 GimpPalette            *custom_palette,
@@ -142,13 +142,13 @@ static GimpUnit              image_resize_unit  = GIMP_UNIT_PIXEL;
 static GimpUnit              image_scale_unit   = GIMP_UNIT_PIXEL;
 static GimpInterpolationType image_scale_interp = -1;
 
-static gint                    image_convert_indexed_n_colors          = 256;
-static GimpConvertDitherType   image_convert_indexed_dither_type       = GIMP_NO_DITHER;
-static gboolean                image_convert_indexed_alpha_dither      = FALSE;
-static gboolean                image_convert_indexed_text_layer_dither = FALSE;
-static gboolean                image_convert_indexed_remove_dups       = TRUE;
-static GimpConvertPaletteType  image_convert_indexed_palette_type      = GIMP_MAKE_PALETTE;
-static GimpPalette            *image_convert_indexed_custom_palette    = NULL;
+static gint                    image_convert_indexed_n_colors           = 256;
+static GimpConvertDitherType   image_convert_indexed_dither_type        = GIMP_NO_DITHER;
+static gboolean                image_convert_indexed_dither_alpha       = FALSE;
+static gboolean                image_convert_indexed_dither_text_layers = FALSE;
+static gboolean                image_convert_indexed_remove_dups        = TRUE;
+static GimpConvertPaletteType  image_convert_indexed_palette_type       = GIMP_MAKE_PALETTE;
+static GimpPalette            *image_convert_indexed_custom_palette     = NULL;
 
 
 /*  public functions  */
@@ -264,8 +264,8 @@ image_convert_base_type_cmd_callback (GtkAction *action,
                                            widget,
                                            image_convert_indexed_n_colors,
                                            image_convert_indexed_dither_type,
-                                           image_convert_indexed_alpha_dither,
-                                           image_convert_indexed_text_layer_dither,
+                                           image_convert_indexed_dither_alpha,
+                                           image_convert_indexed_dither_text_layers,
                                            image_convert_indexed_remove_dups,
                                            image_convert_indexed_palette_type,
                                            image_convert_indexed_custom_palette,
@@ -924,8 +924,8 @@ image_convert_indexed_callback (GtkWidget              *dialog,
                                 GimpImage              *image,
                                 gint                    n_colors,
                                 GimpConvertDitherType   dither_type,
-                                gboolean                alpha_dither,
-                                gboolean                text_layer_dither,
+                                gboolean                dither_alpha,
+                                gboolean                dither_text_layers,
                                 gboolean                remove_dups,
                                 GimpConvertPaletteType  palette_type,
                                 GimpPalette            *custom_palette,
@@ -939,13 +939,13 @@ image_convert_indexed_callback (GtkWidget              *dialog,
     g_object_remove_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
                                   (gpointer) &image_convert_indexed_custom_palette);
 
-  image_convert_indexed_n_colors          = n_colors;
-  image_convert_indexed_dither_type       = dither_type;
-  image_convert_indexed_alpha_dither      = alpha_dither;
-  image_convert_indexed_text_layer_dither = text_layer_dither;
-  image_convert_indexed_remove_dups       = remove_dups;
-  image_convert_indexed_palette_type      = palette_type;
-  image_convert_indexed_custom_palette    = custom_palette;
+  image_convert_indexed_n_colors           = n_colors;
+  image_convert_indexed_dither_type        = dither_type;
+  image_convert_indexed_dither_alpha       = dither_alpha;
+  image_convert_indexed_dither_text_layers = dither_text_layers;
+  image_convert_indexed_remove_dups        = remove_dups;
+  image_convert_indexed_palette_type       = palette_type;
+  image_convert_indexed_custom_palette     = custom_palette;
 
   if (image_convert_indexed_custom_palette)
     g_object_add_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
@@ -957,8 +957,8 @@ image_convert_indexed_callback (GtkWidget              *dialog,
   if (! gimp_image_convert_indexed (image,
                                     image_convert_indexed_n_colors,
                                     image_convert_indexed_dither_type,
-                                    image_convert_indexed_alpha_dither,
-                                    image_convert_indexed_text_layer_dither,
+                                    image_convert_indexed_dither_alpha,
+                                    image_convert_indexed_dither_text_layers,
                                     image_convert_indexed_remove_dups,
                                     image_convert_indexed_palette_type,
                                     image_convert_indexed_custom_palette,
