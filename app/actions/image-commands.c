@@ -35,6 +35,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
+#include "core/gimpimage-convert-indexed.h"
 #include "core/gimpimage-convert-precision.h"
 #include "core/gimpimage-convert-type.h"
 #include "core/gimpimage-crop.h"
@@ -77,6 +78,17 @@
 
 
 /*  local function prototypes  */
+
+static void   image_convert_indexed_callback   (GtkWidget              *dialog,
+                                                GimpImage              *image,
+                                                gint                    n_colors,
+                                                GimpConvertDitherType   dither_type,
+                                                gboolean                alpha_dither,
+                                                gboolean                text_layer_dither,
+                                                gboolean                remove_dups,
+                                                GimpConvertPaletteType  palette_type,
+                                                GimpPalette            *custom_palette,
+                                                gpointer                user_data);
 
 static void   image_convert_precision_callback (GtkWidget              *dialog,
                                                 GimpImage              *image,
@@ -129,6 +141,14 @@ static void   image_merge_layers_callback      (GtkWidget              *dialog,
 static GimpUnit              image_resize_unit  = GIMP_UNIT_PIXEL;
 static GimpUnit              image_scale_unit   = GIMP_UNIT_PIXEL;
 static GimpInterpolationType image_scale_interp = -1;
+
+static gint                    image_convert_indexed_n_colors          = 256;
+static GimpConvertDitherType   image_convert_indexed_dither_type       = GIMP_NO_DITHER;
+static gboolean                image_convert_indexed_alpha_dither      = FALSE;
+static gboolean                image_convert_indexed_text_layer_dither = FALSE;
+static gboolean                image_convert_indexed_remove_dups       = TRUE;
+static GimpConvertPaletteType  image_convert_indexed_palette_type      = GIMP_MAKE_PALETTE;
+static GimpPalette            *image_convert_indexed_custom_palette    = NULL;
 
 
 /*  public functions  */
@@ -242,7 +262,15 @@ image_convert_base_type_cmd_callback (GtkAction *action,
       dialog = convert_indexed_dialog_new (image,
                                            action_data_get_context (data),
                                            widget,
-                                           GIMP_PROGRESS (display));
+                                           image_convert_indexed_n_colors,
+                                           image_convert_indexed_dither_type,
+                                           image_convert_indexed_alpha_dither,
+                                           image_convert_indexed_text_layer_dither,
+                                           image_convert_indexed_remove_dups,
+                                           image_convert_indexed_palette_type,
+                                           image_convert_indexed_custom_palette,
+                                           image_convert_indexed_callback,
+                                           display);
       break;
     }
 
@@ -890,6 +918,70 @@ image_properties_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static void
+image_convert_indexed_callback (GtkWidget              *dialog,
+                                GimpImage              *image,
+                                gint                    n_colors,
+                                GimpConvertDitherType   dither_type,
+                                gboolean                alpha_dither,
+                                gboolean                text_layer_dither,
+                                gboolean                remove_dups,
+                                GimpConvertPaletteType  palette_type,
+                                GimpPalette            *custom_palette,
+                                gpointer                user_data)
+{
+  GimpDisplay  *display = user_data;
+  GimpProgress *progress;
+  GError       *error   = NULL;
+
+  if (image_convert_indexed_custom_palette)
+    g_object_remove_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
+                                  (gpointer) &image_convert_indexed_custom_palette);
+
+  image_convert_indexed_n_colors          = n_colors;
+  image_convert_indexed_dither_type       = dither_type;
+  image_convert_indexed_alpha_dither      = alpha_dither;
+  image_convert_indexed_text_layer_dither = text_layer_dither;
+  image_convert_indexed_remove_dups       = remove_dups;
+  image_convert_indexed_palette_type      = palette_type;
+  image_convert_indexed_custom_palette    = custom_palette;
+
+  if (image_convert_indexed_custom_palette)
+    g_object_add_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
+                               (gpointer) &image_convert_indexed_custom_palette);
+
+  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+                                  _("Converting to indexed colors"));
+
+  if (! gimp_image_convert_indexed (image,
+                                    image_convert_indexed_n_colors,
+                                    image_convert_indexed_dither_type,
+                                    image_convert_indexed_alpha_dither,
+                                    image_convert_indexed_text_layer_dither,
+                                    image_convert_indexed_remove_dups,
+                                    image_convert_indexed_palette_type,
+                                    image_convert_indexed_custom_palette,
+                                    progress,
+                                    &error))
+    {
+      gimp_message_literal (image->gimp, G_OBJECT (display),
+                            GIMP_MESSAGE_WARNING, error->message);
+      g_clear_error (&error);
+
+      if (progress)
+        gimp_progress_end (progress);
+
+      return;
+    }
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
+}
 
 static void
 image_convert_precision_callback (GtkWidget        *dialog,

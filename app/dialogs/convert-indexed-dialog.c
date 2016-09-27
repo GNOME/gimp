@@ -29,10 +29,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-convert-indexed.h"
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
-#include "core/gimpprogress.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewablebox.h"
@@ -46,55 +44,53 @@
 
 typedef struct
 {
-  GtkWidget              *dialog;
+  GimpImage                  *image;
+  gint                        n_colors;
+  GimpConvertDitherType       dither_type;
+  gboolean                    alpha_dither;
+  gboolean                    text_layer_dither;
+  gboolean                    remove_dups;
+  GimpConvertPaletteType      palette_type;
+  GimpPalette                *custom_palette;
+  GimpConvertIndexedCallback  callback;
+  gpointer                    user_data;
 
-  GimpImage              *image;
-  GimpProgress           *progress;
-  GimpContext            *context;
-  GimpContainer          *container;
-  GimpPalette            *custom_palette;
-
-  GimpConvertDitherType   dither_type;
-  gboolean                alpha_dither;
-  gboolean                text_layer_dither;
-  gboolean                remove_dups;
-  gint                    num_colors;
-  GimpConvertPaletteType  palette_type;
+  GtkWidget                  *dialog;
+  GimpContext                *context;
+  GimpContainer              *container;
 } IndexedDialog;
 
 
 static void        convert_dialog_response        (GtkWidget     *widget,
                                                    gint           response_id,
-                                                   IndexedDialog *dialog);
-static GtkWidget * convert_dialog_palette_box     (IndexedDialog *dialog);
+                                                   IndexedDialog *private);
+static GtkWidget * convert_dialog_palette_box     (IndexedDialog *private);
 static gboolean    convert_dialog_palette_filter  (GimpObject    *object,
                                                    gpointer       user_data);
 static void        convert_dialog_palette_changed (GimpContext   *context,
                                                    GimpPalette   *palette,
-                                                   IndexedDialog *dialog);
-static void        convert_dialog_free            (IndexedDialog *dialog);
-
-
-/*  defaults  */
-
-static GimpConvertDitherType   saved_dither_type       = GIMP_NO_DITHER;
-static gboolean                saved_alpha_dither      = FALSE;
-static gboolean                saved_text_layer_dither = FALSE;
-static gboolean                saved_remove_dups       = TRUE;
-static gint                    saved_num_colors        = 256;
-static GimpConvertPaletteType  saved_palette_type      = GIMP_MAKE_PALETTE;
-static GimpPalette            *saved_palette           = NULL;
+                                                   IndexedDialog *private);
+static void        convert_dialog_free            (IndexedDialog *private);
 
 
 /*  public functions  */
 
 GtkWidget *
-convert_indexed_dialog_new (GimpImage    *image,
-                            GimpContext  *context,
-                            GtkWidget    *parent,
-                            GimpProgress *progress)
+convert_indexed_dialog_new (GimpImage                  *image,
+                            GimpContext                *context,
+                            GtkWidget                  *parent,
+                            gint                        n_colors,
+                            GimpConvertDitherType       dither_type,
+                            gboolean                    alpha_dither,
+                            gboolean                    text_layer_dither,
+                            gboolean                    remove_dups,
+                            GimpConvertPaletteType      palette_type,
+                            GimpPalette                *custom_palette,
+                            GimpConvertIndexedCallback  callback,
+                            gpointer                    user_data)
 {
-  IndexedDialog *dialog;
+  IndexedDialog *private;
+  GtkWidget     *dialog;
   GtkWidget     *button;
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
@@ -110,20 +106,24 @@ convert_indexed_dialog_new (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (custom_palette == NULL ||
+                        GIMP_IS_PALETTE (custom_palette), NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
 
-  dialog = g_slice_new0 (IndexedDialog);
+  private = g_slice_new0 (IndexedDialog);
 
-  dialog->image             = image;
-  dialog->progress          = progress;
-  dialog->dither_type       = saved_dither_type;
-  dialog->alpha_dither      = saved_alpha_dither;
-  dialog->text_layer_dither = saved_text_layer_dither;
-  dialog->remove_dups       = saved_remove_dups;
-  dialog->num_colors        = saved_num_colors;
-  dialog->palette_type      = saved_palette_type;
+  private->image             = image;
+  private->n_colors          = n_colors;
+  private->dither_type       = dither_type;
+  private->alpha_dither      = alpha_dither;
+  private->text_layer_dither = text_layer_dither;
+  private->remove_dups       = remove_dups;
+  private->palette_type      = palette_type;
+  private->custom_palette    = custom_palette;
+  private->callback          = callback;
+  private->user_data         = user_data;
 
-  dialog->dialog =
+  private->dialog = dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                               _("Indexed Color Conversion"),
                               "gimp-image-convert-indexed",
@@ -137,31 +137,31 @@ convert_indexed_dialog_new (GimpImage    *image,
 
                               NULL);
 
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog->dialog),
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
                                   _("C_onvert"), GTK_RESPONSE_OK);
   gtk_button_set_image (GTK_BUTTON (button),
                         gtk_image_new_from_icon_name (GIMP_STOCK_CONVERT_INDEXED,
                                                       GTK_ICON_SIZE_BUTTON));
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) convert_dialog_free, dialog);
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) convert_dialog_free, private);
 
-  g_signal_connect (dialog->dialog, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (convert_dialog_response),
-                    dialog);
+                    private);
 
-  palette_box = convert_dialog_palette_box (dialog);
+  palette_box = convert_dialog_palette_box (private);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
@@ -176,11 +176,11 @@ convert_indexed_dialog_new (GimpImage    *image,
                                            GIMP_MONO_PALETTE),
                                           gtk_label_new (_("Colormap")),
                                           G_CALLBACK (gimp_radio_button_update),
-                                          &dialog->palette_type,
+                                          &private->palette_type,
                                           &button);
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                                   dialog->palette_type);
+                                   private->palette_type);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -194,11 +194,11 @@ convert_indexed_dialog_new (GimpImage    *image,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  if (dialog->num_colors == 256 && gimp_image_has_alpha (image))
-    dialog->num_colors = 255;
+  if (private->n_colors == 256 && gimp_image_has_alpha (image))
+    private->n_colors = 255;
 
   adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (dialog->num_colors, 2, 256, 1, 8, 0);
+    gtk_adjustment_new (private->n_colors, 2, 256, 1, 8, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
@@ -207,7 +207,7 @@ convert_indexed_dialog_new (GimpImage    *image,
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &dialog->num_colors);
+                    &private->n_colors);
 
   /*  custom palette  */
   if (palette_box)
@@ -222,13 +222,13 @@ convert_indexed_dialog_new (GimpImage    *image,
   toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused colors "
                                                  "from colormap"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                dialog->remove_dups);
+                                private->remove_dups);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 3);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &dialog->remove_dups);
+                    &private->remove_dups);
 
   g_object_bind_property (button, "active",
                           toggle, "sensitive",
@@ -258,124 +258,91 @@ convert_indexed_dialog_new (GimpImage    *image,
   gtk_widget_show (combo);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              dialog->dither_type,
+                              private->dither_type,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dialog->dither_type);
+                              &private->dither_type);
 
   toggle =
     gtk_check_button_new_with_mnemonic (_("Enable dithering of _transparency"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                dialog->alpha_dither);
+                                private->alpha_dither);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &dialog->alpha_dither);
+                    &private->alpha_dither);
 
 
   toggle =
     gtk_check_button_new_with_mnemonic (_("Enable dithering of text layers"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                dialog->text_layer_dither);
+                                private->text_layer_dither);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &dialog->text_layer_dither);
+                    &private->text_layer_dither);
 
   gimp_help_set_help_data (toggle,
                            _("Dithering text layers will make them uneditable"),
                            NULL);
 
-  return dialog->dialog;
+  return dialog;
 }
 
 
 /*  private functions  */
 
 static void
-convert_dialog_response (GtkWidget     *widget,
+convert_dialog_response (GtkWidget     *dialog,
                          gint           response_id,
-                         IndexedDialog *dialog)
+                         IndexedDialog *private)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpProgress *progress;
-      GError       *error = NULL;
-
-      progress = gimp_progress_start (dialog->progress, FALSE,
-                                      _("Converting to indexed colors"));
-
-      /*  Convert the image to indexed color  */
-      if (! gimp_image_convert_indexed (dialog->image,
-                                        dialog->num_colors,
-                                        dialog->dither_type,
-                                        dialog->alpha_dither,
-                                        dialog->text_layer_dither,
-                                        dialog->remove_dups,
-                                        dialog->palette_type,
-                                        dialog->custom_palette,
-                                        progress, &error))
-        {
-          gimp_message_literal (dialog->image->gimp, G_OBJECT (dialog->dialog),
-                                GIMP_MESSAGE_WARNING, error->message);
-          g_clear_error (&error);
-
-          if (progress)
-            gimp_progress_end (progress);
-
-          return;
-        }
-
-      if (progress)
-        gimp_progress_end (progress);
-
-      gimp_image_flush (dialog->image);
-
-      /* Save defaults for next time */
-      saved_dither_type       = dialog->dither_type;
-      saved_alpha_dither      = dialog->alpha_dither;
-      saved_text_layer_dither = dialog->text_layer_dither;
-      saved_remove_dups       = dialog->remove_dups;
-      saved_num_colors        = dialog->num_colors;
-      saved_palette_type      = dialog->palette_type;
-      saved_palette           = dialog->custom_palette;
+      private->callback (dialog,
+                         private->image,
+                         private->n_colors,
+                         private->dither_type,
+                         private->alpha_dither,
+                         private->text_layer_dither,
+                         private->remove_dups,
+                         private->palette_type,
+                         private->custom_palette,
+                         private->user_data);
     }
-
-  gtk_widget_destroy (dialog->dialog);
+  else
+    {
+      gtk_widget_destroy (dialog);
+    }
 }
 
 static GtkWidget *
-convert_dialog_palette_box (IndexedDialog *dialog)
+convert_dialog_palette_box (IndexedDialog *private)
 {
-  Gimp        *gimp = dialog->image->gimp;
+  Gimp        *gimp = private->image->gimp;
   GList       *list;
-  GimpPalette *web_palette   = NULL;
-  gboolean     default_found = FALSE;
+  GimpPalette *web_palette  = NULL;
+  gboolean     custom_found = FALSE;
 
   /* We can't dither to > 256 colors */
-  dialog->container = gimp_container_filter (gimp_data_factory_get_container (gimp->palette_factory),
-                                             convert_dialog_palette_filter,
-                                             NULL);
+  private->container =
+    gimp_container_filter (gimp_data_factory_get_container (gimp->palette_factory),
+                           convert_dialog_palette_filter,
+                           NULL);
 
-  if (gimp_container_is_empty (dialog->container))
+  if (gimp_container_is_empty (private->container))
     {
-      g_object_unref (dialog->container);
-      dialog->container = NULL;
+      g_object_unref (private->container);
+      private->container = NULL;
       return NULL;
     }
 
-  dialog->context = gimp_context_new (gimp, "convert-dialog", NULL);
+  private->context = gimp_context_new (gimp, "convert-dialog", NULL);
 
-  g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_object_unref, dialog->context);
-
-  g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_object_unref, dialog->container);
-
-  for (list = GIMP_LIST (dialog->container)->queue->head;
+  for (list = GIMP_LIST (private->container)->queue->head;
        list;
        list = g_list_next (list))
     {
@@ -388,28 +355,25 @@ convert_dialog_palette_box (IndexedDialog *dialog)
           web_palette = palette;
         }
 
-      if (saved_palette == palette)
-        {
-          dialog->custom_palette = saved_palette;
-          default_found = TRUE;
-        }
+      if (private->custom_palette == palette)
+        custom_found = TRUE;
     }
 
-  if (! default_found)
+  if (! custom_found)
     {
       if (web_palette)
-        dialog->custom_palette = web_palette;
+        private->custom_palette = web_palette;
       else
-        dialog->custom_palette = GIMP_LIST (dialog->container)->queue->head->data;
+        private->custom_palette = GIMP_LIST (private->container)->queue->head->data;
     }
 
-  gimp_context_set_palette (dialog->context, dialog->custom_palette);
+  gimp_context_set_palette (private->context, private->custom_palette);
 
-  g_signal_connect (dialog->context, "palette-changed",
+  g_signal_connect (private->context, "palette-changed",
                     G_CALLBACK (convert_dialog_palette_changed),
-                    dialog);
+                    private);
 
-  return gimp_palette_box_new (dialog->container, dialog->context, NULL, 4);
+  return gimp_palette_box_new (private->container, private->context, NULL, 4);
 }
 
 static gboolean
@@ -425,26 +389,32 @@ convert_dialog_palette_filter (GimpObject *object,
 static void
 convert_dialog_palette_changed (GimpContext   *context,
                                 GimpPalette   *palette,
-                                IndexedDialog *dialog)
+                                IndexedDialog *private)
 {
   if (! palette)
     return;
 
   if (gimp_palette_get_n_colors (palette) > 256)
     {
-      gimp_message (dialog->image->gimp, G_OBJECT (dialog->dialog),
+      gimp_message (private->image->gimp, G_OBJECT (private->dialog),
                     GIMP_MESSAGE_WARNING,
                     _("Cannot convert to a palette "
                       "with more than 256 colors."));
     }
   else
     {
-      dialog->custom_palette = palette;
+      private->custom_palette = palette;
     }
 }
 
 static void
-convert_dialog_free (IndexedDialog *dialog)
+convert_dialog_free (IndexedDialog *private)
 {
-  g_slice_free (IndexedDialog, dialog);
+  if (private->container)
+    g_object_unref (private->container);
+
+  if (private->context)
+    g_object_unref (private->context);
+
+  g_slice_free (IndexedDialog, private);
 }

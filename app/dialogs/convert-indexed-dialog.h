@@ -19,10 +19,30 @@
 #define __CONVERT_INDEXED_DIALOG_H__
 
 
-GtkWidget * convert_indexed_dialog_new (GimpImage    *image,
-                                        GimpContext  *context,
-                                        GtkWidget    *parent,
-                                        GimpProgress *progress);
+typedef void (* GimpConvertIndexedCallback) (GtkWidget              *dialog,
+                                             GimpImage              *image,
+                                             gint                    n_colors,
+                                             GimpConvertDitherType   dither_type,
+                                             gboolean                alpha_dither,
+                                             gboolean                text_layer_dither,
+                                             gboolean                remove_dups,
+                                             GimpConvertPaletteType  palette_type,
+                                             GimpPalette            *custom_palette,
+                                             gpointer                user_data);
+
+
+GtkWidget * convert_indexed_dialog_new (GimpImage                  *image,
+                                        GimpContext                *context,
+                                        GtkWidget                  *parent,
+                                        gint                        n_colors,
+                                        GimpConvertDitherType       dither_type,
+                                        gboolean                    alpha_dither,
+                                        gboolean                    text_layer_dither,
+                                        gboolean                    remove_dups,
+                                        GimpConvertPaletteType      palette_type,
+                                        GimpPalette                *custom_palette,
+                                        GimpConvertIndexedCallback  callback,
+                                        gpointer                    user_data);
 
 
 #endif  /*  __CONVERT_INDEXED_DIALOG_H__  */
