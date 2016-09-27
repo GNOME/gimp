@@ -87,6 +87,7 @@ fill_dialog_new (GimpItem         *item,
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
 
   private = g_slice_new0 (FillDialog);
 

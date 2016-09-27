@@ -27,8 +27,6 @@
 
 #include "dialogs-types.h"
 
-#include "config/gimpdialogconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -49,48 +47,72 @@
 #define RESPONSE_RESET 1
 
 
+typedef struct
+{
+  GimpItem           *item;
+  GimpDrawable       *drawable;
+  GimpContext        *context;
+  GimpStrokeOptions  *options;
+  GimpStrokeCallback  callback;
+  gpointer            user_data;
+
+  GtkWidget          *tool_combo;
+} StrokeDialog;
+
+
 /*  local functions  */
 
-static void  stroke_dialog_response (GtkWidget *widget,
-                                     gint       response_id,
-                                     GtkWidget *dialog);
+static void  stroke_dialog_response (GtkWidget    *dialog,
+                                     gint          response_id,
+                                     StrokeDialog *private);
+static void  stroke_dialog_free     (StrokeDialog *private);
 
 
 /*  public function  */
 
 GtkWidget *
-stroke_dialog_new (GimpItem    *item,
-                   GimpContext *context,
-                   const gchar *title,
-                   const gchar *icon_name,
-                   const gchar *help_id,
-                   GtkWidget   *parent)
+stroke_dialog_new (GimpItem           *item,
+                   GimpDrawable       *drawable,
+                   GimpContext        *context,
+                   const gchar        *title,
+                   const gchar        *icon_name,
+                   const gchar        *help_id,
+                   GtkWidget          *parent,
+                   GimpStrokeOptions  *options,
+                   GimpStrokeCallback  callback,
+                   gpointer            user_data)
 {
-  GimpDialogConfig  *config;
-  GimpStrokeOptions *options;
-  GimpImage         *image;
-  GtkWidget         *dialog;
-  GtkWidget         *main_vbox;
-  GtkWidget         *radio_box;
-  GtkWidget         *cairo_radio;
-  GtkWidget         *paint_radio;
-  GSList            *group;
-  GtkWidget         *frame;
+  StrokeDialog *private;
+  GimpImage    *image;
+  GtkWidget    *dialog;
+  GtkWidget    *main_vbox;
+  GtkWidget    *radio_box;
+  GtkWidget    *cairo_radio;
+  GtkWidget    *paint_radio;
+  GSList       *group;
+  GtkWidget    *frame;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
 
   image = gimp_item_get_image (item);
 
-  config = GIMP_DIALOG_CONFIG (context->gimp->config);
+  private = g_slice_new0 (StrokeDialog);
 
-  options = gimp_stroke_options_new (context->gimp, context, TRUE);
+  private->item      = item;
+  private->drawable  = drawable;
+  private->context   = context;
+  private->options   = gimp_stroke_options_new (context->gimp, context, TRUE);
+  private->callback  = callback;
+  private->user_data = user_data;
 
-  gimp_config_sync (G_OBJECT (config->stroke_options),
-                    G_OBJECT (options), 0);
+  gimp_config_sync (G_OBJECT (options),
+                    G_OBJECT (private->options), 0);
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-stroke-options",
@@ -114,13 +136,12 @@ stroke_dialog_new (GimpItem    *item,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) stroke_dialog_free, private);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (stroke_dialog_response),
-                    dialog);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp-item", item);
-  g_object_set_data_full (G_OBJECT (dialog), "gimp-stroke-options", options,
-                          (GDestroyNotify) g_object_unref);
+                    private);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -128,8 +149,8 @@ stroke_dialog_new (GimpItem    *item,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  radio_box = gimp_prop_enum_radio_box_new (G_OBJECT (options), "method",
-                                            -1, -1);
+  radio_box = gimp_prop_enum_radio_box_new (G_OBJECT (private->options),
+                                            "method", -1, -1);
 
   group = gtk_radio_button_get_group (g_object_get_data (G_OBJECT (radio_box),
                                                          "radio-button"));
@@ -174,7 +195,7 @@ stroke_dialog_new (GimpItem    *item,
 
     gimp_image_get_resolution (image, &xres, &yres);
 
-    stroke_editor = gimp_stroke_editor_new (options, yres, FALSE);
+    stroke_editor = gimp_stroke_editor_new (private->options, yres, FALSE);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 
@@ -217,14 +238,14 @@ stroke_dialog_new (GimpItem    *item,
     gtk_widget_show (label);
 
     combo = gimp_container_combo_box_new (image->gimp->paint_info_list,
-                                          GIMP_CONTEXT (options),
+                                          GIMP_CONTEXT (private->options),
                                           16, 0);
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 
-    g_object_set_data (G_OBJECT (dialog), "gimp-tool-menu", combo);
+    private->tool_combo = combo;
 
-    button = gimp_prop_check_button_new (G_OBJECT (options),
+    button = gimp_prop_check_button_new (G_OBJECT (private->options),
                                          "emulate-brush-dynamics",
                                          _("_Emulate brush dynamics"));
     gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -238,73 +259,43 @@ stroke_dialog_new (GimpItem    *item,
 /*  private functions  */
 
 static void
-stroke_dialog_response (GtkWidget  *widget,
-                        gint        response_id,
-                        GtkWidget  *dialog)
+stroke_dialog_response (GtkWidget    *dialog,
+                        gint          response_id,
+                        StrokeDialog *private)
 {
-  GimpStrokeOptions *options;
-  GimpItem          *item;
-  GimpImage         *image;
-  GimpContext       *context;
-  GtkWidget         *combo;
-
-  item    = g_object_get_data (G_OBJECT (dialog), "gimp-item");
-  options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
-  combo   = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");
-
-  image   = gimp_item_get_image (item);
-  context = GIMP_VIEWABLE_DIALOG (dialog)->context;
-
   switch (response_id)
     {
     case RESPONSE_RESET:
       {
-        GimpToolInfo *tool_info = gimp_context_get_tool (context);
+        GimpToolInfo *tool_info = gimp_context_get_tool (private->context);
 
-        gimp_config_reset (GIMP_CONFIG (options));
+        gimp_config_reset (GIMP_CONFIG (private->options));
 
-        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
+        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->tool_combo),
                                          GIMP_VIEWABLE (tool_info->paint_info));
 
       }
       break;
 
     case GTK_RESPONSE_OK:
-      {
-        GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (context->gimp->config);
-        GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
-        GError           *error    = NULL;
-
-        if (! drawable)
-          {
-            gimp_message_literal (context->gimp, G_OBJECT (widget),
-                                  GIMP_MESSAGE_WARNING,
-                                  _("There is no active layer or channel "
-                                    "to stroke to."));
-            return;
-          }
-
-        gimp_config_sync (G_OBJECT (options),
-                          G_OBJECT (config->stroke_options), 0);
-
-        if (! gimp_item_stroke (item, drawable, context, options, NULL,
-                                TRUE, NULL, &error))
-          {
-            gimp_message_literal (context->gimp,
-                                  G_OBJECT (widget),
-                                  GIMP_MESSAGE_WARNING,
-                                  error ? error->message : "NULL");
-
-            g_clear_error (&error);
-            return;
-          }
-
-        gimp_image_flush (image);
-      }
-      /* fallthrough */
+      private->callback (dialog,
+                         private->item,
+                         private->drawable,
+                         private->context,
+                         private->options,
+                         private->user_data);
+      break;
 
     default:
       gtk_widget_destroy (dialog);
       break;
     }
+}
+
+static void
+stroke_dialog_free (StrokeDialog *private)
+{
+  g_object_unref (private->options);
+
+  g_slice_free (StrokeDialog, private);
 }

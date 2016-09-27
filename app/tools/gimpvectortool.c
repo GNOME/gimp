@@ -25,9 +25,12 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+
+#include "config/gimpdialogconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -139,6 +142,12 @@ static void     gimp_vector_tool_to_selection_extended
                                                   gint                   state);
 static void     gimp_vector_tool_stroke_vectors  (GimpVectorTool        *vector_tool,
                                                   GtkWidget             *button);
+static void     gimp_vector_tool_stroke_callback (GtkWidget             *dialog,
+                                                  GimpItem              *item,
+                                                  GimpDrawable          *drawable,
+                                                  GimpContext           *context,
+                                                  GimpStrokeOptions     *options,
+                                                  gpointer               data);
 
 
 G_DEFINE_TYPE (GimpVectorTool, gimp_vector_tool, GIMP_TYPE_DRAW_TOOL)
@@ -1953,18 +1962,21 @@ static void
 gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
                                  GtkWidget      *button)
 {
-  GimpImage    *image;
-  GimpDrawable *active_drawable;
-  GtkWidget    *dialog;
+  GimpDialogConfig *config;
+  GimpImage        *image;
+  GimpDrawable     *drawable;
+  GtkWidget        *dialog;
 
   if (! vector_tool->vectors)
     return;
 
   image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
 
-  active_drawable = gimp_image_get_active_drawable (image);
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  if (! active_drawable)
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (! drawable)
     {
       gimp_tool_message (GIMP_TOOL (vector_tool),
                          GIMP_TOOL (vector_tool)->display,
@@ -1973,10 +1985,46 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (vector_tool->vectors),
+                              drawable,
                               GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
                               _("Stroke Path"),
                               GIMP_STOCK_PATH_STROKE,
                               GIMP_HELP_PATH_STROKE,
-                              button);
+                              button,
+                              config->stroke_options,
+                              gimp_vector_tool_stroke_callback,
+                              vector_tool);
   gtk_widget_show (dialog);
+}
+
+static void
+gimp_vector_tool_stroke_callback (GtkWidget         *dialog,
+                                  GimpItem          *item,
+                                  GimpDrawable      *drawable,
+                                  GimpContext       *context,
+                                  GimpStrokeOptions *options,
+                                  gpointer           data)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
+  GimpImage        *image  = gimp_item_get_image (item);
+  GError           *error  = NULL;
+
+  gimp_config_sync (G_OBJECT (options),
+                    G_OBJECT (config->stroke_options), 0);
+
+  if (! gimp_item_stroke (item, drawable, context, options, NULL,
+                          TRUE, NULL, &error))
+    {
+      gimp_message_literal (context->gimp,
+                            G_OBJECT (dialog),
+                            GIMP_MESSAGE_WARNING,
+                            error ? error->message : "NULL");
+
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
 }
