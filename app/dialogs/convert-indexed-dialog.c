@@ -219,8 +219,8 @@ convert_indexed_dialog_new (GimpImage                  *image,
 
   vbox = gtk_bin_get_child (GTK_BIN (frame));
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused colors "
-                                                 "from colormap"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused and duplicate "
+                                                 "colors from colormap"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 private->remove_duplicates);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 3);

@@ -1859,6 +1859,36 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Dither channels/masks:"),
                             GTK_TABLE (table), 2, size_group);
 
+  /*  Convert Indexed Dialog  */
+  vbox2 = prefs_frame_new (_("Indexed Conversion Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "image-convert-indexed-palette-type", 0, 0,
+                            _("Colormap:"),
+                            GTK_TABLE (table), 0, size_group);
+  prefs_spin_button_add (object, "image-convert-indexed-max-colors", 1.0, 8.0, 0,
+                         _("Maximum number of colors:"),
+                         GTK_TABLE (table), 1, size_group);
+
+  prefs_check_button_add (object, "image-convert-indexed-remove-duplicates",
+                          _("Remove unused and duplicate colors "
+                            "from colormap"),
+                          GTK_BOX (vbox2));
+
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+  prefs_enum_combo_box_add (object, "image-convert-indexed-dither-type", 0, 0,
+                            _("Color dithering:"),
+                            GTK_TABLE (table), 0, size_group);
+
+  prefs_check_button_add (object, "image-convert-indexed-dither-alpha",
+                          _("Enable dithering of transparency"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "image-convert-indexed-dither-text-layers",
+                          _("Enable dithering of text layers"),
+                          GTK_BOX (vbox2));
+
+
   /*  New Layer Dialog  */
   vbox2 = prefs_frame_new (_("New Layer Dialog"),
                            GTK_CONTAINER (vbox), FALSE);

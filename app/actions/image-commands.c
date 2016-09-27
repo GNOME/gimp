@@ -138,17 +138,11 @@ static void   image_merge_layers_callback      (GtkWidget              *dialog,
 
 /*  private variables  */
 
-static GimpUnit              image_resize_unit  = GIMP_UNIT_PIXEL;
-static GimpUnit              image_scale_unit   = GIMP_UNIT_PIXEL;
-static GimpInterpolationType image_scale_interp = -1;
+static GimpUnit               image_resize_unit  = GIMP_UNIT_PIXEL;
+static GimpUnit               image_scale_unit   = GIMP_UNIT_PIXEL;
+static GimpInterpolationType  image_scale_interp = -1;
+static GimpPalette           *image_convert_indexed_custom_palette = NULL;
 
-static GimpConvertPaletteType  image_convert_indexed_palette_type       = GIMP_MAKE_PALETTE;
-static gint                    image_convert_indexed_max_colors         = 256;
-static gboolean                image_convert_indexed_remove_duplicates  = TRUE;
-static GimpConvertDitherType   image_convert_indexed_dither_type        = GIMP_NO_DITHER;
-static gboolean                image_convert_indexed_dither_alpha       = FALSE;
-static gboolean                image_convert_indexed_dither_text_layers = FALSE;
-static GimpPalette            *image_convert_indexed_custom_palette     = NULL;
 
 /*  public functions  */
 
@@ -207,6 +201,7 @@ image_convert_base_type_cmd_callback (GtkAction *action,
   GimpImage         *image;
   GimpDisplay       *display;
   GtkWidget         *widget;
+  GimpDialogConfig  *config;
   GtkWidget         *dialog;
   GimpImageBaseType  value;
   GError            *error = NULL;
@@ -228,6 +223,8 @@ image_convert_base_type_cmd_callback (GtkAction *action,
       gtk_widget_destroy (dialog);
       dialog = NULL;
     }
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   switch (value)
     {
@@ -261,12 +258,12 @@ image_convert_base_type_cmd_callback (GtkAction *action,
       dialog = convert_indexed_dialog_new (image,
                                            action_data_get_context (data),
                                            widget,
-                                           image_convert_indexed_palette_type,
-                                           image_convert_indexed_max_colors,
-                                           image_convert_indexed_remove_duplicates,
-                                           image_convert_indexed_dither_type,
-                                           image_convert_indexed_dither_alpha,
-                                           image_convert_indexed_dither_text_layers,
+                                           config->image_convert_indexed_palette_type,
+                                           config->image_convert_indexed_max_colors,
+                                           config->image_convert_indexed_remove_duplicates,
+                                           config->image_convert_indexed_dither_type,
+                                           config->image_convert_indexed_dither_alpha,
+                                           config->image_convert_indexed_dither_text_layers,
                                            image_convert_indexed_custom_palette,
                                            image_convert_indexed_callback,
                                            display);
@@ -930,21 +927,25 @@ image_convert_indexed_callback (GtkWidget              *dialog,
                                 GimpPalette            *custom_palette,
                                 gpointer                user_data)
 {
-  GimpDisplay  *display = user_data;
-  GimpProgress *progress;
-  GError       *error   = NULL;
+  GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GimpDisplay      *display = user_data;
+  GimpProgress     *progress;
+  GError           *error   = NULL;
+
+  g_object_set (config,
+                "image-convert-indexed-palette-type",       palette_type,
+                "image-convert-indexed-max-colors",         max_colors,
+                "image-convert-indexed-remove-duplicates",  remove_duplicates,
+                "image-convert-indexed-dither-type",        dither_type,
+                "image-convert-indexed-dither-alpha",       dither_alpha,
+                "image-convert-indexed-dither-text-layers", dither_text_layers,
+                NULL);
 
   if (image_convert_indexed_custom_palette)
     g_object_remove_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
                                   (gpointer) &image_convert_indexed_custom_palette);
 
-  image_convert_indexed_palette_type       = palette_type;
-  image_convert_indexed_max_colors         = max_colors;
-  image_convert_indexed_remove_duplicates  = remove_duplicates;
-  image_convert_indexed_dither_type        = dither_type;
-  image_convert_indexed_dither_alpha       = dither_alpha;
-  image_convert_indexed_dither_text_layers = dither_text_layers;
-  image_convert_indexed_custom_palette     = custom_palette;
+  image_convert_indexed_custom_palette = custom_palette;
 
   if (image_convert_indexed_custom_palette)
     g_object_add_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
@@ -954,12 +955,12 @@ image_convert_indexed_callback (GtkWidget              *dialog,
                                   _("Converting to indexed colors"));
 
   if (! gimp_image_convert_indexed (image,
-                                    image_convert_indexed_palette_type,
-                                    image_convert_indexed_max_colors,
-                                    image_convert_indexed_remove_duplicates,
-                                    image_convert_indexed_dither_type,
-                                    image_convert_indexed_dither_alpha,
-                                    image_convert_indexed_dither_text_layers,
+                                    config->image_convert_indexed_palette_type,
+                                    config->image_convert_indexed_max_colors,
+                                    config->image_convert_indexed_remove_duplicates,
+                                    config->image_convert_indexed_dither_type,
+                                    config->image_convert_indexed_dither_alpha,
+                                    config->image_convert_indexed_dither_text_layers,
                                     image_convert_indexed_custom_palette,
                                     progress,
                                     &error))

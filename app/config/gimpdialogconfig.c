@@ -55,6 +55,13 @@ enum
   PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD,
   PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD,
 
+  PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE,
+  PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS,
+  PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES,
+  PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE,
+  PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA,
+  PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS,
+
   PROP_LAYER_NEW_NAME,
   PROP_LAYER_NEW_FILL_TYPE,
 
@@ -198,6 +205,56 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          GEGL_TYPE_DITHER_METHOD,
                          GEGL_DITHER_NONE,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE,
+                         "image-convert-indexed-palette-type",
+                         "Default palette type for indexed conversion",
+                         IMAGE_CONVERT_INDEXED_PALETTE_TYPE_BLURB,
+                         GIMP_TYPE_CONVERT_PALETTE_TYPE,
+                         GIMP_MAKE_PALETTE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class,
+                        PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS,
+                        "image-convert-indexed-max-colors",
+                        "Default maximum number of colors for indexed conversion",
+                        IMAGE_CONVERT_INDEXED_MAX_COLORS_BLURB,
+                        2, 256, 256,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES,
+                            "image-convert-indexed-remove-duplicates",
+                            "Default remove duplicates for indexed conversion",
+                            IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE,
+                         "image-convert-indexed-dither-type",
+                         "Default dither type for indexed conversion",
+                         IMAGE_CONVERT_INDEXED_DITHER_TYPE_BLURB,
+                         GIMP_TYPE_CONVERT_DITHER_TYPE,
+                         GIMP_NO_DITHER,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA,
+                            "image-convert-indexed-dither-alpha",
+                            "Default dither alpha for indexed conversion",
+                            IMAGE_CONVERT_INDEXED_DITHER_ALPHA_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS,
+                            "image-convert-indexed-dither-text-layers",
+                            "Default dither text layers for indexed conversion",
+                            IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_LAYER_NEW_NAME,
                            "layer-new-name",
@@ -491,6 +548,25 @@ gimp_dialog_config_set_property (GObject      *object,
         g_value_get_enum (value);
       break;
 
+    case PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE:
+      config->image_convert_indexed_palette_type = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS:
+      config->image_convert_indexed_max_colors = g_value_get_int (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES:
+      config->image_convert_indexed_remove_duplicates = g_value_get_boolean (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE:
+      config->image_convert_indexed_dither_type = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA:
+      config->image_convert_indexed_dither_alpha = g_value_get_boolean (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS:
+      config->image_convert_indexed_dither_text_layers = g_value_get_boolean (value);
+      break;
+
     case PROP_LAYER_NEW_NAME:
       if (config->layer_new_name)
         g_free (config->layer_new_name);
@@ -632,6 +708,25 @@ gimp_dialog_config_get_property (GObject    *object,
     case PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD:
       g_value_set_enum (value,
                         config->image_convert_precision_channel_dither_method);
+      break;
+
+    case PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE:
+      g_value_set_enum (value, config->image_convert_indexed_palette_type);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS:
+      g_value_set_int (value, config->image_convert_indexed_max_colors);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES:
+      g_value_set_boolean (value, config->image_convert_indexed_remove_duplicates);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE:
+      g_value_set_enum (value, config->image_convert_indexed_dither_type);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA:
+      g_value_set_boolean (value, config->image_convert_indexed_dither_alpha);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS:
+      g_value_set_boolean (value, config->image_convert_indexed_dither_text_layers);
       break;
 
     case PROP_LAYER_NEW_NAME:

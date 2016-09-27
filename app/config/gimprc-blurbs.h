@@ -436,7 +436,25 @@ _("Sets the default text layer dithering method for the 'Convert Precision' dial
 #define IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD_BLURB \
 _("Sets the default channel dithering method for the 'Convert Precision' dialog.")
 
-#define LAYER_NEW_NAME_BLURB \
+#define IMAGE_CONVERT_INDEXED_PALETTE_TYPE_BLURB \
+_("Sets the default palette type for the 'Convert to Indexed' dialog.")
+
+#define IMAGE_CONVERT_INDEXED_MAX_COLORS_BLURB \
+_("Sets the default maximum number of colors for the 'Convert to Indexed' dialog.")
+
+#define IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES_BLURB \
+_("Sets the default 'Remove duplicate colors' state for the 'Convert to Indexed' dialog.")
+
+#define IMAGE_CONVERT_INDEXED_DITHER_TYPE_BLURB                         \
+_("Sets the default dithering type for the 'Convert to Indexed' dialog.")
+
+#define IMAGE_CONVERT_INDEXED_DITHER_ALPHA_BLURB \
+_("Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog.")
+
+#define IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS_BLURB \
+_("Sets the default 'Dither text layers' state for the 'Convert to Indexed' dialog.")
+
+#define LAYER_NEW_NAME_BLURB                                    \
 _("Sets the default layer name for the 'New Layer' dialog.")
 
 #define LAYER_NEW_FILL_TYPE_BLURB \

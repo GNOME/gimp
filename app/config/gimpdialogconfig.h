@@ -53,6 +53,13 @@ struct _GimpDialogConfig
   GeglDitherMethod          image_convert_precision_text_layer_dither_method;
   GeglDitherMethod          image_convert_precision_channel_dither_method;
 
+  GimpConvertPaletteType    image_convert_indexed_palette_type;
+  gint                      image_convert_indexed_max_colors;
+  gboolean                  image_convert_indexed_remove_duplicates;
+  GimpConvertDitherType     image_convert_indexed_dither_type;
+  gboolean                  image_convert_indexed_dither_alpha;
+  gboolean                  image_convert_indexed_dither_text_layers;
+
   gchar                    *layer_new_name;
   GimpFillType              layer_new_fill_type;
 
