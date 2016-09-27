@@ -482,7 +482,7 @@ struct _QuantizeObj
   gulong        index_used_count[256];    /* how many times an index was used  */
   CFHistogram   histogram;                /* holds the histogram               */
 
-  gboolean      want_alpha_dither;
+  gboolean      want_dither_alpha;
   gint          error_freedom;            /* 0=much bleed, 1=controlled bleed */
 
   GimpProgress *progress;
@@ -520,21 +520,21 @@ static void          zero_histogram_gray     (CFHistogram   histogram);
 static void          zero_histogram_rgb      (CFHistogram   histogram);
 static void          generate_histogram_gray (CFHistogram   hostogram,
                                               GimpLayer    *layer,
-                                              gboolean      alpha_dither);
+                                              gboolean      dither_alpha);
 static void          generate_histogram_rgb  (CFHistogram   histogram,
                                               GimpLayer    *layer,
                                               gint          col_limit,
-                                              gboolean      alpha_dither,
+                                              gboolean      dither_alpha,
                                               GimpProgress *progress,
                                               gint          nth_layer,
                                               gint          n_layers);
 
 static QuantizeObj * initialize_median_cut   (GimpImageBaseType      old_type,
-                                              gint                   num_cols,
+                                              gint                   max_colors,
                                               GimpConvertDitherType  dither_type,
                                               GimpConvertPaletteType palette_type,
                                               GimpPalette           *custom_palette,
-                                              gboolean               alpha_dither,
+                                              gboolean               dither_alpha,
                                               GimpProgress          *progress);
 
 static void          compute_color_lin8      (QuantizeObj           *quantobj,
@@ -750,12 +750,12 @@ color_quicksort (const void *c1,
 
 gboolean
 gimp_image_convert_indexed (GimpImage               *image,
-                            gint                     num_cols,
-                            GimpConvertDitherType    dither,
-                            gboolean                 alpha_dither,
-                            gboolean                 text_layer_dither,
-                            gboolean                 remove_dups,
                             GimpConvertPaletteType   palette_type,
+                            gint                     max_colors,
+                            gboolean                 remove_duplicates,
+                            GimpConvertDitherType    dither_type,
+                            gboolean                 dither_alpha,
+                            gboolean                 dither_text_layers,
                             GimpPalette             *custom_palette,
                             GimpProgress            *progress,
                             GError                 **error)
@@ -829,15 +829,15 @@ gimp_image_convert_indexed (GimpImage               *image,
    * every color
    */
   if (old_type     == GIMP_GRAY &&
-      num_cols     == 256       &&
+      max_colors   == 256       &&
       palette_type == GIMP_MAKE_PALETTE)
     {
-      dither = GIMP_NO_DITHER;
+      dither_type = GIMP_NO_DITHER;
     }
 
-  quantobj = initialize_median_cut (old_type, num_cols, dither,
+  quantobj = initialize_median_cut (old_type, max_colors, dither_type,
                                     palette_type, custom_palette,
-                                    alpha_dither,
+                                    dither_alpha,
                                     progress);
 
   if (palette_type == GIMP_MAKE_PALETTE)
@@ -864,7 +864,7 @@ gimp_image_convert_indexed (GimpImage               *image,
           if (old_type == GIMP_GRAY)
             {
               generate_histogram_gray (quantobj->histogram,
-                                       layer, alpha_dither);
+                                       layer, dither_alpha);
             }
           else
             {
@@ -873,7 +873,7 @@ gimp_image_convert_indexed (GimpImage               *image,
                * specified by the user.
                */
               generate_histogram_rgb (quantobj->histogram,
-                                      layer, num_cols, alpha_dither,
+                                      layer, max_colors, dither_alpha,
                                       progress, nth_layer, n_layers);
             }
         }
@@ -901,11 +901,11 @@ gimp_image_convert_indexed (GimpImage               *image,
        */
 
       quantobj->delete_func (quantobj);
-      quantobj = initialize_median_cut (old_type, num_cols,
+      quantobj = initialize_median_cut (old_type, max_colors,
                                         GIMP_NODESTRUCT_DITHER,
                                         palette_type,
                                         custom_palette,
-                                        alpha_dither,
+                                        dither_alpha,
                                         progress);
       /* We can skip the first pass (palette creation) */
 
@@ -966,7 +966,7 @@ gimp_image_convert_indexed (GimpImage               *image,
       gboolean   quantize;
 
       if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
-        quantize = text_layer_dither;
+        quantize = dither_text_layers;
       else
         quantize = TRUE;
 
@@ -1001,7 +1001,7 @@ gimp_image_convert_indexed (GimpImage               *image,
     }
 
   /*  Set the final palette on the image  */
-  if (remove_dups && (palette_type != GIMP_MAKE_PALETTE))
+  if (remove_duplicates && (palette_type != GIMP_MAKE_PALETTE))
     {
       guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
       gint   i, j;
@@ -1091,7 +1091,7 @@ zero_histogram_rgb (CFHistogram histogram)
 static void
 generate_histogram_gray (CFHistogram  histogram,
                          GimpLayer   *layer,
-                         gboolean     alpha_dither)
+                         gboolean     dither_alpha)
 {
   GeglBufferIterator *iter;
   const Babl         *format;
@@ -1142,7 +1142,7 @@ static void
 generate_histogram_rgb (CFHistogram   histogram,
                         GimpLayer    *layer,
                         gint          col_limit,
-                        gboolean      alpha_dither,
+                        gboolean      dither_alpha,
                         GimpProgress *progress,
                         gint          nth_layer,
                         gint          n_layers)
@@ -1194,7 +1194,7 @@ generate_histogram_rgb (CFHistogram   histogram,
 
       if (needs_quantize)
         {
-          if (alpha_dither)
+          if (dither_alpha)
             {
               /* if alpha-dithering,
                  we need to be deterministic w.r.t. offsets */
@@ -1262,7 +1262,7 @@ generate_histogram_rgb (CFHistogram   histogram,
 
 	      if (has_alpha)
 	        {
-		  if (alpha_dither)
+		  if (dither_alpha)
 		    {
 		      if (data[ALPHA] <
                           DM[col & DM_WIDTHMASK][row & DM_HEIGHTMASK])
@@ -2817,7 +2817,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
   gint                dest_bpp;
   gint                has_alpha;
   gulong             *index_used_count = quantobj->index_used_count;
-  gboolean            alpha_dither     = quantobj->want_alpha_dither;
+  gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
@@ -2865,7 +2865,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
                 {
                   gboolean transparent = FALSE;
 
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       gint dither_x = (col + offsetx + src_roi->x) & DM_WIDTHMASK;
                       gint dither_y = (row + offsety + src_roi->y) & DM_HEIGHTMASK;
@@ -2923,7 +2923,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
   Color              *color1;
   Color              *color2;
   gulong             *index_used_count = quantobj->index_used_count;
-  gboolean            alpha_dither     = quantobj->want_alpha_dither;
+  gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
@@ -3036,7 +3036,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
                 {
                   gboolean transparent = FALSE;
 
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       if (src[ALPHA_G] < dmval)
                         transparent = TRUE;
@@ -3089,7 +3089,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   gint                green_pix        = GREEN;
   gint                blue_pix         = BLUE;
   gint                alpha_pix        = ALPHA;
-  gboolean            alpha_dither     = quantobj->want_alpha_dither;
+  gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
   gulong             *index_used_count = quantobj->index_used_count;
   glong               total_size       = 0;
@@ -3147,10 +3147,11 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
                 {
                   gboolean transparent = FALSE;
 
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       gint dither_x = (col + offsetx + src_roi->x) & DM_WIDTHMASK;
                       gint dither_y = (row + offsety + src_roi->y) & DM_HEIGHTMASK;
+
                       if ((src[alpha_pix]) < DM[dither_x][dither_y])
                         transparent = TRUE;
                     }
@@ -3224,7 +3225,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   gint                green_pix        = GREEN;
   gint                blue_pix         = BLUE;
   gint                alpha_pix        = ALPHA;
-  gboolean            alpha_dither     = quantobj->want_alpha_dither;
+  gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
   gulong             *index_used_count = quantobj->index_used_count;
   glong               total_size       = 0;
@@ -3286,7 +3287,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                 {
                   gboolean transparent = FALSE;
 
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       if (src[alpha_pix] < dmval)
                         transparent = TRUE;
@@ -3446,7 +3447,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
   gint                src_bpp;
   gint                dest_bpp;
   gint                has_alpha;
-  gboolean            alpha_dither = quantobj->want_alpha_dither;
+  gboolean            dither_alpha = quantobj->want_dither_alpha;
   gint                red_pix      = RED;
   gint                green_pix    = GREEN;
   gint                blue_pix     = BLUE;
@@ -3492,7 +3493,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
               if (has_alpha)
                 {
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       gint dither_x = (col + src_roi->x + offsetx) & DM_WIDTHMASK;
                       gint dither_y = (row + src_roi->y + offsety) & DM_HEIGHTMASK;
@@ -3676,7 +3677,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   gint          odd_row;
   gboolean      has_alpha;
   gint          offsetx, offsety;
-  gboolean      alpha_dither = quantobj->want_alpha_dither;
+  gboolean      dither_alpha = quantobj->want_dither_alpha;
   gint          width, height;
   gulong       *index_used_count = quantobj->index_used_count;
 
@@ -3766,7 +3767,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
               if (odd_row)
                 {
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       gint dither_x = ((width-col)+offsetx-1) & DM_WIDTHMASK;
                       gint dither_y = (row+offsety) & DM_HEIGHTMASK;
@@ -3795,7 +3796,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
                 }
               else
                 {
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       gint dither_x = (col + offsetx) & DM_WIDTHMASK;
                       gint dither_y = (row + offsety) & DM_HEIGHTMASK;
@@ -3937,7 +3938,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   gint          blue_pix  = BLUE;
   gint          alpha_pix = ALPHA;
   gint          offsetx, offsety;
-  gboolean      alpha_dither     = quantobj->want_alpha_dither;
+  gboolean      dither_alpha     = quantobj->want_dither_alpha;
   gulong       *index_used_count = quantobj->index_used_count;
   gint          global_rmax = 0, global_rmin = G_MAXINT;
   gint          global_gmax = 0, global_gmin = G_MAXINT;
@@ -4054,7 +4055,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 
               if (odd_row)
                 {
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       gint dither_x = ((width-col)+offsetx-1) & DM_WIDTHMASK;
                       gint dither_y = (row+offsety) & DM_HEIGHTMASK;
@@ -4083,7 +4084,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
                 }
               else
                 {
-                  if (alpha_dither)
+                  if (dither_alpha)
                     {
                       gint dither_x = (col + offsetx) & DM_WIDTHMASK;
                       gint dither_y = (row + offsety) & DM_HEIGHTMASK;
@@ -4321,7 +4322,7 @@ initialize_median_cut (GimpImageBaseType       type,
                        GimpConvertDitherType   dither_type,
                        GimpConvertPaletteType  palette_type,
                        GimpPalette            *custom_palette,
-                       gboolean                want_alpha_dither,
+                       gboolean                want_dither_alpha,
                        GimpProgress           *progress)
 {
   QuantizeObj *quantobj;
@@ -4337,7 +4338,7 @@ initialize_median_cut (GimpImageBaseType       type,
 
   quantobj->custom_palette           = custom_palette;
   quantobj->desired_number_of_colors = num_colors;
-  quantobj->want_alpha_dither        = want_alpha_dither;
+  quantobj->want_dither_alpha        = want_dither_alpha;
   quantobj->progress                 = progress;
 
   switch (type)

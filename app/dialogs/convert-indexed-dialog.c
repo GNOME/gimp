@@ -45,12 +45,12 @@
 typedef struct
 {
   GimpImage                  *image;
-  gint                        n_colors;
+  GimpConvertPaletteType      palette_type;
+  gint                        max_colors;
+  gboolean                    remove_duplicates;
   GimpConvertDitherType       dither_type;
   gboolean                    dither_alpha;
   gboolean                    dither_text_layers;
-  gboolean                    remove_dups;
-  GimpConvertPaletteType      palette_type;
   GimpPalette                *custom_palette;
   GimpConvertIndexedCallback  callback;
   gpointer                    user_data;
@@ -79,12 +79,12 @@ GtkWidget *
 convert_indexed_dialog_new (GimpImage                  *image,
                             GimpContext                *context,
                             GtkWidget                  *parent,
-                            gint                        n_colors,
+                            GimpConvertPaletteType      palette_type,
+                            gint                        max_colors,
+                            gboolean                    remove_duplicates,
                             GimpConvertDitherType       dither_type,
                             gboolean                    dither_alpha,
                             gboolean                    dither_text_layers,
-                            gboolean                    remove_dups,
-                            GimpConvertPaletteType      palette_type,
                             GimpPalette                *custom_palette,
                             GimpConvertIndexedCallback  callback,
                             gpointer                    user_data)
@@ -113,12 +113,12 @@ convert_indexed_dialog_new (GimpImage                  *image,
   private = g_slice_new0 (IndexedDialog);
 
   private->image              = image;
-  private->n_colors           = n_colors;
+  private->palette_type       = palette_type;
+  private->max_colors         = max_colors;
+  private->remove_duplicates  = remove_duplicates;
   private->dither_type        = dither_type;
   private->dither_alpha       = dither_alpha;
   private->dither_text_layers = dither_text_layers;
-  private->remove_dups        = remove_dups;
-  private->palette_type       = palette_type;
   private->custom_palette     = custom_palette;
   private->callback           = callback;
   private->user_data          = user_data;
@@ -194,11 +194,11 @@ convert_indexed_dialog_new (GimpImage                  *image,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  if (private->n_colors == 256 && gimp_image_has_alpha (image))
-    private->n_colors = 255;
+  if (private->max_colors == 256 && gimp_image_has_alpha (image))
+    private->max_colors = 255;
 
   adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (private->n_colors, 2, 256, 1, 8, 0);
+    gtk_adjustment_new (private->max_colors, 2, 256, 1, 8, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
@@ -207,7 +207,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &private->n_colors);
+                    &private->max_colors);
 
   /*  custom palette  */
   if (palette_box)
@@ -222,13 +222,13 @@ convert_indexed_dialog_new (GimpImage                  *image,
   toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused colors "
                                                  "from colormap"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                private->remove_dups);
+                                private->remove_duplicates);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 3);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &private->remove_dups);
+                    &private->remove_duplicates);
 
   g_object_bind_property (button, "active",
                           toggle, "sensitive",
@@ -304,12 +304,12 @@ convert_dialog_response (GtkWidget     *dialog,
     {
       private->callback (dialog,
                          private->image,
-                         private->n_colors,
+                         private->palette_type,
+                         private->max_colors,
+                         private->remove_duplicates,
                          private->dither_type,
                          private->dither_alpha,
                          private->dither_text_layers,
-                         private->remove_dups,
-                         private->palette_type,
                          private->custom_palette,
                          private->user_data);
     }
