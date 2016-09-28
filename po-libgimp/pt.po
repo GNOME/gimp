@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-06-13 01:25+0000\n"
-"PO-Revision-Date: 2016-06-22 14:26+0100\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-09-24 22:36+0000\n"
+"PO-Revision-Date: 2016-09-28 18:24+0100\n"
 "Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Language-Team: Português\n"
 "Language: pt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
 
@@ -171,28 +171,28 @@ msgstr "A extensão %s necessita de um canal alfa"
 msgid "Add Alpha Channel"
 msgstr "Adicionar canal alfa"
 
-#: ../libgimp/gimpexport.c:430
+#: ../libgimp/gimpexport.c:434
 msgid "Confirm Save"
 msgstr "Confirmar gravação"
 
-#: ../libgimp/gimpexport.c:436
+#: ../libgimp/gimpexport.c:440
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: ../libgimp/gimpexport.c:512
+#: ../libgimp/gimpexport.c:516
 msgid "Export File"
 msgstr "Exportar ficheiro"
 
-#: ../libgimp/gimpexport.c:516
+#: ../libgimp/gimpexport.c:520
 msgid "_Ignore"
 msgstr "_Ignorar"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
+#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1017
 msgid "_Export"
 msgstr "_Exportar"
 
 #. the headline
-#: ../libgimp/gimpexport.c:548
+#: ../libgimp/gimpexport.c:552
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -202,11 +202,11 @@ msgstr ""
 "seguintes razões:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:622
+#: ../libgimp/gimpexport.c:626
 msgid "The export conversion won't modify your original image."
 msgstr "A conversão de exportação não modificará a sua imagem original."
 
-#: ../libgimp/gimpexport.c:729
+#: ../libgimp/gimpexport.c:733
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -215,7 +215,7 @@ msgstr ""
 "Está prestes a gravar uma máscara de camada como %s.\n"
 "Isto não gravará as camadas visíveis."
 
-#: ../libgimp/gimpexport.c:735
+#: ../libgimp/gimpexport.c:739
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -224,7 +224,7 @@ msgstr ""
 "Está prestes a gravar um canal (seleção gravada) como %s.\n"
 "Isto não gravará as camadas visíveis."
 
-#: ../libgimp/gimpexport.c:1004
+#: ../libgimp/gimpexport.c:1008
 msgid "Export Image as "
 msgstr "Exportar a imagem como"
 
@@ -314,7 +314,7 @@ msgstr "por tipo"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:395
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:140
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
 msgid "No matches"
 msgstr "Sem resultados"
 
@@ -384,15 +384,15 @@ msgstr "Valores de retorno"
 msgid "Additional Information"
 msgstr "Informação adicional"
 
-#: ../libgimp/gimpprocview.c:239
+#: ../libgimp/gimpprocview.c:240
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../libgimp/gimpprocview.c:251
+#: ../libgimp/gimpprocview.c:253
 msgid "Date:"
 msgstr "Data:"
 
-#: ../libgimp/gimpprocview.c:263
+#: ../libgimp/gimpprocview.c:266
 msgid "Copyright:"
 msgstr "Direitos de autor:"
 
@@ -915,6 +915,26 @@ msgctxt "join-style"
 msgid "Bevel"
 msgstr "Chanfro"
 
+#: ../libgimpbase/gimpbaseenums.c:1023
+msgctxt "merge-type"
+msgid "Expanded as neccessary"
+msgstr "Expandir conforme o necessário"
+
+#: ../libgimpbase/gimpbaseenums.c:1024
+msgctxt "merge-type"
+msgid "Clipped to image"
+msgstr "Ajustar à imagem"
+
+#: ../libgimpbase/gimpbaseenums.c:1025
+msgctxt "merge-type"
+msgid "Clipped to bottom layer"
+msgstr "Ajustar à camada do fundo"
+
+#: ../libgimpbase/gimpbaseenums.c:1026
+msgctxt "merge-type"
+msgid "Flatten"
+msgstr "Aplanar"
+
 #: ../libgimpbase/gimpbaseenums.c:1118
 msgctxt "orientation-type"
 msgid "Horizontal"
@@ -1297,14 +1317,11 @@ msgid "No color management"
 msgstr "Sem gestão de cores"
 
 #: ../libgimpconfig/gimpconfigenums.c:25
-#| msgctxt "color-management-mode"
-#| msgid "Color managed display"
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "Monitor com gestão de cores"
 
 #: ../libgimpconfig/gimpconfigenums.c:26
-#| msgid "Softproof rendering intent"
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
 msgstr "Prova suave"
@@ -1376,10 +1393,6 @@ msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "O perfil de cores CMYK usado para converter entre RGB e CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:74
-#| msgid ""
-#| "The color profile to use for soft proofing from your image's color space "
-#| "to some other color space, including soft proofing to a printer or other "
-#| "output device profile. "
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
@@ -1433,8 +1446,6 @@ msgstr ""
 "melhor. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
-#| msgid ""
-#| "When disabled, simulation might be of better quality at the cost of speed."
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
@@ -1442,9 +1453,6 @@ msgstr ""
 "velocidade."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
-#| msgid ""
-#| "When enabled, the print simulation will mark colors which can not be "
-#| "represented in the target color space."
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
@@ -1481,7 +1489,6 @@ msgid "Use the system monitor profile"
 msgstr "Utilizar o perfil de monitor do sistema"
 
 #: ../libgimpconfig/gimpcolorconfig.c:243
-#| msgid "Simulation profile for softproofing"
 msgid "Simulation profile for soft-proofing"
 msgstr "Perfil de simulação para prova suave"
 
@@ -1498,17 +1505,14 @@ msgid "Optimize display color transformations"
 msgstr "Optimize as transformações de cor do ecrã"
 
 #: ../libgimpconfig/gimpcolorconfig.c:272
-#| msgid "Softproof rendering intent"
 msgid "Soft-proofing rendering intent"
 msgstr "Intenção da visualização da prova suave"
 
 #: ../libgimpconfig/gimpcolorconfig.c:280
-#| msgid "Use black point compensation for softproofing"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Utilizar compensação de ponto preto para a prova suave"
 
 #: ../libgimpconfig/gimpcolorconfig.c:287
-#| msgid "Optimize simulation color transformations"
 msgid "Optimize soft-proofing color transformations"
 msgstr "Optimize as transformações de cor da prova suave"
 
@@ -1567,11 +1571,11 @@ msgstr "ao processar o símbolo \"%s\": %s"
 #: ../libgimpconfig/gimpconfig-iface.c:658
 #: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
 #: ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:703
+#: ../libgimpwidgets/gimpcolorprofilestore.c:719
 msgid "fatal parse error"
 msgstr "erro fatal de processamento"
 
-#: ../libgimpconfig/gimpconfig-path.c:439
+#: ../libgimpconfig/gimpconfig-path.c:487
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossível expandir ${%s}"
@@ -1655,23 +1659,23 @@ msgstr "A miniatura não contém etiqueta Thumb::URI"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Impossível criar miniatura de \"%s\": %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:113
+#: ../libgimpwidgets/gimpbrowser.c:114
 msgid "_Search:"
 msgstr "_Procurar:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:136
+#: ../libgimpwidgets/gimpcolorbutton.c:137
 msgid "_Foreground Color"
 msgstr "Cor de 1º _Plano"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:140
+#: ../libgimpwidgets/gimpcolorbutton.c:141
 msgid "_Background Color"
 msgstr "Cor de _fundo"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:144
+#: ../libgimpwidgets/gimpcolorbutton.c:145
 msgid "Blac_k"
 msgstr "_Preto"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:148
+#: ../libgimpwidgets/gimpcolorbutton.c:149
 msgid "_White"
 msgstr "_Branco"
 
@@ -1775,100 +1779,63 @@ msgid "_Duplicate"
 msgstr "_Duplicar"
 
 #: ../libgimpwidgets/gimpicons.c:64
-msgid "_Edit"
-msgstr "_Editar"
-
-#: ../libgimpwidgets/gimpicons.c:65
 msgid "Linked"
 msgstr "Ligado"
 
-#: ../libgimpwidgets/gimpicons.c:66
+#: ../libgimpwidgets/gimpicons.c:65
 msgid "Paste as New"
 msgstr "Colar como novo"
 
-#: ../libgimpwidgets/gimpicons.c:67
+#: ../libgimpwidgets/gimpicons.c:66
 msgid "Paste Into"
 msgstr "Colar em"
 
-#: ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpicons.c:67
 msgid "_Reset"
 msgstr "_Repor"
 
-#: ../libgimpwidgets/gimpicons.c:69
+#: ../libgimpwidgets/gimpicons.c:68
 msgid "Visible"
 msgstr "Visível"
 
-#: ../libgimpwidgets/gimpicons.c:70
-msgid "Ne_xt"
-msgstr "Se_guinte"
-
-#: ../libgimpwidgets/gimpicons.c:71
-msgid "Pre_vious"
-msgstr "Ante_rior"
-
-#: ../libgimpwidgets/gimpicons.c:72
-msgid "_Open"
-msgstr "_Abrir"
-
-#: ../libgimpwidgets/gimpicons.c:73
-msgid "_Save"
-msgstr "_Gravar"
-
-#: ../libgimpwidgets/gimpicons.c:74
-msgid "Save as"
-msgstr "Gravar como"
-
-#: ../libgimpwidgets/gimpicons.c:75
-#| msgid "cancelled"
-msgid "_Cancel"
-msgstr "_Cancelar"
-
-#: ../libgimpwidgets/gimpicons.c:76
-msgid "_Quit"
-msgstr "_Sair"
-
-#: ../libgimpwidgets/gimpicons.c:127 ../libgimpwidgets/gimpicons.c:131
+#: ../libgimpwidgets/gimpicons.c:114 ../libgimpwidgets/gimpicons.c:118
 msgid "_Stroke"
 msgstr "_Traçar"
 
-#: ../libgimpwidgets/gimpicons.c:150
+#: ../libgimpwidgets/gimpicons.c:136
 msgid "L_etter Spacing"
 msgstr "_Espaçamento de letras"
 
-#: ../libgimpwidgets/gimpicons.c:151
+#: ../libgimpwidgets/gimpicons.c:137
 msgid "L_ine Spacing"
 msgstr "Espaçamento de _linhas"
 
-#: ../libgimpwidgets/gimpicons.c:152
-msgid "I_ndent"
-msgstr "Ide_ntar"
-
-#: ../libgimpwidgets/gimpicons.c:176
+#: ../libgimpwidgets/gimpicons.c:154
 msgid "Re_size"
 msgstr "_Redimensionar"
 
-#: ../libgimpwidgets/gimpicons.c:177 ../libgimpwidgets/gimpicons.c:312
+#: ../libgimpwidgets/gimpicons.c:155 ../libgimpwidgets/gimpicons.c:290
 msgid "_Scale"
 msgstr "_Dimensionar"
 
-#: ../libgimpwidgets/gimpicons.c:284
+#: ../libgimpwidgets/gimpicons.c:262
 msgid "Cr_op"
 msgstr "_Recortar"
 
-#: ../libgimpwidgets/gimpicons.c:292
+#: ../libgimpwidgets/gimpicons.c:270
 msgid "_Select"
 msgstr "_Selecionar"
 
-#: ../libgimpwidgets/gimpicons.c:295 ../libgimpwidgets/gimpicons.c:307
-#: ../libgimpwidgets/gimpicons.c:318
+#: ../libgimpwidgets/gimpicons.c:273 ../libgimpwidgets/gimpicons.c:285
+#: ../libgimpwidgets/gimpicons.c:296
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: ../libgimpwidgets/gimpicons.c:311
+#: ../libgimpwidgets/gimpicons.c:289
 msgid "_Rotate"
 msgstr "_Rodar"
 
-#: ../libgimpwidgets/gimpicons.c:314
+#: ../libgimpwidgets/gimpicons.c:292
 msgid "_Shear"
 msgstr "_Aparar"
 
@@ -1945,7 +1912,7 @@ msgstr "Tamanho do padrão"
 msgid "Check Style"
 msgstr "Estilo do padrão"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2110
+#: ../libgimpwidgets/gimppropwidgets.c:2111
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2206,13 +2173,11 @@ msgstr "Botão %d premido"
 msgid "Button %d Release"
 msgstr "Botão %d solto"
 
-#: ../modules/controller-dx-dinput.c:442
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "X - mover à esquerda"
 
-#: ../modules/controller-dx-dinput.c:445
-#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "X - mover à direita"
 
@@ -2224,13 +2189,11 @@ msgstr "Y - afastar"
 msgid "Y Move Near"
 msgstr "Y - aproximar"
 
-#: ../modules/controller-dx-dinput.c:460
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Z - mover acima"
 
-#: ../modules/controller-dx-dinput.c:463
-#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Z - mover abaixo"
 
@@ -2242,8 +2205,7 @@ msgstr "X - inclinar atrás"
 msgid "X Axis Tilt Near"
 msgstr "X - inclinar à frente"
 
-#: ../modules/controller-dx-dinput.c:478
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y - inclinar à direita"
 
@@ -2641,6 +2603,34 @@ msgstr "_Intenção:"
 #: ../modules/display-filter-proof.c:325
 msgid "_Black Point Compensation"
 msgstr "Compensação de ponto _preto"
+
+#~ msgid "_Edit"
+#~ msgstr "_Editar"
+
+#~ msgid "Ne_xt"
+#~ msgstr "Se_guinte"
+
+#~ msgid "Pre_vious"
+#~ msgstr "Ante_rior"
+
+#~ msgid "_Open"
+#~ msgstr "_Abrir"
+
+#~ msgid "_Save"
+#~ msgstr "_Gravar"
+
+#~ msgid "Save as"
+#~ msgstr "Gravar como"
+
+#~| msgid "cancelled"
+#~ msgid "_Cancel"
+#~ msgstr "_Cancelar"
+
+#~ msgid "_Quit"
+#~ msgstr "_Sair"
+
+#~ msgid "I_ndent"
+#~ msgstr "Ide_ntar"
 
 #~ msgctxt "color-management-mode"
 #~ msgid "Print simulation"
