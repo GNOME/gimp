@@ -285,12 +285,12 @@ gimp_gegl_apply_color_reduction (GeglBuffer   *src_buffer,
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
   node = gegl_node_new_child (NULL,
-                              "operation",       "gegl:color-reduction",
-                              "red-bits",        bits,
-                              "green-bits",      bits,
-                              "blue-bits",       bits,
-                              "alpha-bits",      bits,
-                              "dither-strategy", dither_type,
+                              "operation",     "gegl:color-reduction",
+                              "red-bits",      bits,
+                              "green-bits",    bits,
+                              "blue-bits",     bits,
+                              "alpha-bits",    bits,
+                              "dither-method", dither_type,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
