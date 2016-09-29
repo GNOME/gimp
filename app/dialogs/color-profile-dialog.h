@@ -34,6 +34,7 @@ typedef enum
 typedef void (* GimpColorProfileCallback) (GtkWidget                *dialog,
                                            GimpImage                *image,
                                            GimpColorProfile         *new_profile,
+                                           GFile                    *new_file,
                                            GimpColorRenderingIntent  intent,
                                            gboolean                  bpc,
                                            gpointer                  user_data);

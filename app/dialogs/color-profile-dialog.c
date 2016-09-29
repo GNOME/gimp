@@ -401,6 +401,7 @@ color_profile_dialog_response (GtkWidget     *dialog,
       private->callback (dialog,
                          private->image,
                          profile,
+                         file,
                          private->intent,
                          private->bpc,
                          private->user_data);

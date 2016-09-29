@@ -81,14 +81,16 @@
 
 static void   image_convert_rgb_callback       (GtkWidget                *dialog,
                                                 GimpImage                *image,
-                                                GimpColorProfile         *profile,
+                                                GimpColorProfile         *new_profile,
+                                                GFile                    *new_file,
                                                 GimpColorRenderingIntent  intent,
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
 
 static void   image_convert_gray_callback      (GtkWidget                *dialog,
                                                 GimpImage                *image,
-                                                GimpColorProfile         *profile,
+                                                GimpColorProfile         *new_profile,
+                                                GFile                    *new_file,
                                                 GimpColorRenderingIntent  intent,
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
@@ -114,14 +116,16 @@ static void   image_convert_precision_callback (GtkWidget              *dialog,
 
 static void   image_profile_assign_callback    (GtkWidget                *dialog,
                                                 GimpImage                *image,
-                                                GimpColorProfile         *profile,
+                                                GimpColorProfile         *new_profile,
+                                                GFile                    *new_file,
                                                 GimpColorRenderingIntent  intent,
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
 
 static void   image_profile_convert_callback   (GtkWidget                *dialog,
                                                 GimpImage                *image,
-                                                GimpColorProfile         *profile,
+                                                GimpColorProfile         *new_profile,
+                                                GFile                    *new_file,
                                                 GimpColorRenderingIntent  intent,
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
@@ -996,6 +1000,7 @@ static void
 image_convert_rgb_callback (GtkWidget                *dialog,
                             GimpImage                *image,
                             GimpColorProfile         *new_profile,
+                            GFile                    *new_file,
                             GimpColorRenderingIntent  intent,
                             gboolean                  bpc,
                             gpointer                  user_data)
@@ -1033,6 +1038,7 @@ static void
 image_convert_gray_callback (GtkWidget                *dialog,
                              GimpImage                *image,
                              GimpColorProfile         *new_profile,
+                             GFile                    *new_file,
                              GimpColorRenderingIntent  intent,
                              gboolean                  bpc,
                              gpointer                  user_data)
@@ -1182,6 +1188,7 @@ static void
 image_profile_assign_callback (GtkWidget                *dialog,
                                GimpImage                *image,
                                GimpColorProfile         *new_profile,
+                               GFile                    *new_file,
                                GimpColorRenderingIntent  intent,
                                gboolean                  bpc,
                                gpointer                  user_data)
@@ -1221,6 +1228,7 @@ static void
 image_profile_convert_callback (GtkWidget                *dialog,
                                 GimpImage                *image,
                                 GimpColorProfile         *new_profile,
+                                GFile                    *new_file,
                                 GimpColorRenderingIntent  intent,
                                 gboolean                  bpc,
                                 gpointer                  user_data)
