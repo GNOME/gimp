@@ -79,6 +79,20 @@
 
 /*  local function prototypes  */
 
+static void   image_convert_rgb_callback       (GtkWidget                *dialog,
+                                                GimpImage                *image,
+                                                GimpColorProfile         *profile,
+                                                GimpColorRenderingIntent  intent,
+                                                gboolean                  bpc,
+                                                gpointer                  user_data);
+
+static void   image_convert_gray_callback      (GtkWidget                *dialog,
+                                                GimpImage                *image,
+                                                GimpColorProfile         *profile,
+                                                GimpColorRenderingIntent  intent,
+                                                gboolean                  bpc,
+                                                gpointer                  user_data);
+
 static void   image_convert_indexed_callback   (GtkWidget              *dialog,
                                                 GimpImage              *image,
                                                 GimpConvertPaletteType  palette_type,
@@ -97,6 +111,20 @@ static void   image_convert_precision_callback (GtkWidget              *dialog,
                                                 GeglDitherMethod        text_layer_dither_method,
                                                 GeglDitherMethod        mask_dither_method,
                                                 gpointer                user_data);
+
+static void   image_profile_assign_callback    (GtkWidget                *dialog,
+                                                GimpImage                *image,
+                                                GimpColorProfile         *profile,
+                                                GimpColorRenderingIntent  intent,
+                                                gboolean                  bpc,
+                                                gpointer                  user_data);
+
+static void   image_profile_convert_callback   (GtkWidget                *dialog,
+                                                GimpImage                *image,
+                                                GimpColorProfile         *profile,
+                                                GimpColorRenderingIntent  intent,
+                                                gboolean                  bpc,
+                                                gpointer                  user_data);
 
 static void   image_resize_callback            (GtkWidget              *dialog,
                                                 GimpViewable           *viewable,
@@ -232,18 +260,45 @@ image_convert_base_type_cmd_callback (GtkAction *action,
     case GIMP_GRAY:
       if (gimp_image_get_color_profile (image))
         {
-          ColorProfileDialogType dialog_type;
+          ColorProfileDialogType    dialog_type;
+          GimpColorProfileCallback  callback;
+          GimpColorProfile         *current_profile;
+          GimpColorProfile         *default_profile;
+          const Babl               *format;
+
+          current_profile =
+            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
           if (value == GIMP_RGB)
-            dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_RGB;
+            {
+              dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_RGB;
+              callback    = image_convert_rgb_callback;
+
+              format = gimp_babl_format (GIMP_RGB,
+                                         gimp_image_get_precision (image),
+                                         TRUE);
+              default_profile = gimp_babl_format_get_color_profile (format);
+            }
           else
-            dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY;
+            {
+              dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY;
+              callback    = image_convert_gray_callback;
+
+              format = gimp_babl_format (GIMP_GRAY,
+                                         gimp_image_get_precision (image),
+                                         TRUE);
+              default_profile = gimp_babl_format_get_color_profile (format);
+            }
 
           dialog = color_profile_dialog_new (dialog_type,
                                              image,
                                              action_data_get_context (data),
                                              widget,
-                                             GIMP_PROGRESS (display));
+                                             current_profile,
+                                             default_profile,
+                                             0, 0,
+                                             callback,
+                                             display);
         }
       else if (! gimp_image_convert_type (image, value, NULL, NULL, &error))
         {
@@ -395,11 +450,21 @@ image_color_profile_assign_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
+      GimpColorProfile *current_profile;
+      GimpColorProfile *default_profile;
+
+      current_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+      default_profile = gimp_image_get_builtin_color_profile (image);
+
       dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_ASSIGN_PROFILE,
                                          image,
                                          action_data_get_context (data),
                                          widget,
-                                         GIMP_PROGRESS (display));
+                                         current_profile,
+                                         default_profile,
+                                         0, 0,
+                                         image_profile_assign_callback,
+                                         display);
 
       dialogs_attach_dialog (G_OBJECT (image),
                              PROFILE_ASSIGN_DIALOG_KEY, dialog);
@@ -426,11 +491,23 @@ image_color_profile_convert_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GimpColorProfile *current_profile;
+      GimpColorProfile *default_profile;
+
+      current_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+      default_profile = gimp_image_get_builtin_color_profile (image);
+
       dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE,
                                          image,
                                          action_data_get_context (data),
                                          widget,
-                                         GIMP_PROGRESS (display));
+                                         current_profile,
+                                         default_profile,
+                                         config->image_convert_profile_intent,
+                                         config->image_convert_profile_bpc,
+                                         image_profile_convert_callback,
+                                         display);
 
       dialogs_attach_dialog (G_OBJECT (image),
                              PROFILE_CONVERT_DIALOG_KEY, dialog);
@@ -916,6 +993,80 @@ image_properties_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
+image_convert_rgb_callback (GtkWidget                *dialog,
+                            GimpImage                *image,
+                            GimpColorProfile         *new_profile,
+                            GimpColorRenderingIntent  intent,
+                            gboolean                  bpc,
+                            gpointer                  user_data)
+{
+  GimpProgress *progress = user_data;
+  GError       *error    = NULL;
+
+  progress = gimp_progress_start (progress, FALSE,
+                                  _("Converting to RGB (%s)"),
+                                  gimp_color_profile_get_label (new_profile));
+
+  if (! gimp_image_convert_type (image, GIMP_RGB, new_profile,
+                                 progress, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (dialog),
+                    GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+
+      if (progress)
+        gimp_progress_end (progress);
+
+      return;
+    }
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  gimp_image_flush (image);
+
+ gtk_widget_destroy (dialog);
+}
+
+static void
+image_convert_gray_callback (GtkWidget                *dialog,
+                             GimpImage                *image,
+                             GimpColorProfile         *new_profile,
+                             GimpColorRenderingIntent  intent,
+                             gboolean                  bpc,
+                             gpointer                  user_data)
+{
+  GimpProgress *progress = user_data;
+  GError       *error    = NULL;
+
+  progress = gimp_progress_start (progress, FALSE,
+                                  _("Converting to grayscale (%s)"),
+                                  gimp_color_profile_get_label (new_profile));
+
+  if (! gimp_image_convert_type (image, GIMP_GRAY, new_profile,
+                                 progress, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (dialog),
+                    GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+
+      if (progress)
+        gimp_progress_end (progress);
+
+      return;
+    }
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
 image_convert_indexed_callback (GtkWidget              *dialog,
                                 GimpImage              *image,
                                 GimpConvertPaletteType  palette_type,
@@ -1028,6 +1179,90 @@ image_convert_precision_callback (GtkWidget        *dialog,
 }
 
 static void
+image_profile_assign_callback (GtkWidget                *dialog,
+                               GimpImage                *image,
+                               GimpColorProfile         *new_profile,
+                               GimpColorRenderingIntent  intent,
+                               gboolean                  bpc,
+                               gpointer                  user_data)
+{
+  GError *error = NULL;
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_PARASITE_ATTACH,
+                               _("Assign color profile"));
+
+  if (! gimp_image_set_color_profile (image, new_profile, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (dialog),
+                    GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+
+      gimp_image_undo_group_end (image);
+      gimp_image_undo (image);
+
+      return;
+    }
+
+  gimp_image_set_is_color_managed (image, TRUE, TRUE);
+
+  /*  omg...  */
+  gimp_image_parasite_detach (image, "icc-profile-name");
+
+  gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+image_profile_convert_callback (GtkWidget                *dialog,
+                                GimpImage                *image,
+                                GimpColorProfile         *new_profile,
+                                GimpColorRenderingIntent  intent,
+                                gboolean                  bpc,
+                                gpointer                  user_data)
+{
+  GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GimpProgress     *progress = user_data;
+  GError           *error    = NULL;
+
+  g_object_set (config,
+                "image-convert-profile-intent",                   intent,
+                "image-convert-profile-black-point-compensation", bpc,
+                NULL);
+
+  progress = gimp_progress_start (progress, FALSE,
+                                  _("Converting to '%s'"),
+                                  gimp_color_profile_get_label (new_profile));
+
+  if (! gimp_image_convert_color_profile (image, new_profile,
+                                          config->image_convert_profile_intent,
+                                          config->image_convert_profile_bpc,
+                                          progress, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (dialog),
+                    GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+
+      if (progress)
+        gimp_progress_end (progress);
+
+      return;
+    }
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
 image_resize_callback (GtkWidget    *dialog,
                        GimpViewable *viewable,
                        GimpContext  *context,
@@ -1120,9 +1355,10 @@ image_scale_callback (GtkWidget              *dialog,
                       GimpUnit                resolution_unit,
                       gpointer                user_data)
 {
-  GimpImage *image = GIMP_IMAGE (viewable);
-  gdouble    xres;
-  gdouble    yres;
+  GimpProgress *progress = user_data;
+  GimpImage    *image    = GIMP_IMAGE (viewable);
+  gdouble       xres;
+  gdouble       yres;
 
   image_scale_unit   = unit;
   image_scale_interp = interpolation;
@@ -1147,9 +1383,7 @@ image_scale_callback (GtkWidget              *dialog,
       if (width  != gimp_image_get_width  (image) ||
           height != gimp_image_get_height (image))
         {
-          GimpProgress *progress;
-
-          progress = gimp_progress_start (GIMP_PROGRESS (user_data), FALSE,
+          progress = gimp_progress_start (progress, FALSE,
                                           _("Scaling"));
 
           gimp_image_scale (image, width, height, interpolation, progress);

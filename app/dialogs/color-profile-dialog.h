@@ -31,11 +31,24 @@ typedef enum
 } ColorProfileDialogType;
 
 
-GtkWidget * color_profile_dialog_new (ColorProfileDialogType  dialog_type,
-                                      GimpImage              *image,
-                                      GimpContext            *context,
-                                      GtkWidget              *parent,
-                                      GimpProgress           *progress);
+typedef void (* GimpColorProfileCallback) (GtkWidget                *dialog,
+                                           GimpImage                *image,
+                                           GimpColorProfile         *new_profile,
+                                           GimpColorRenderingIntent  intent,
+                                           gboolean                  bpc,
+                                           gpointer                  user_data);
+
+
+GtkWidget * color_profile_dialog_new (ColorProfileDialogType    dialog_type,
+                                      GimpImage                *image,
+                                      GimpContext              *context,
+                                      GtkWidget                *parent,
+                                      GimpColorProfile         *current_profile,
+                                      GimpColorProfile         *default_profile,
+                                      GimpColorRenderingIntent  intent,
+                                      gboolean                  bpc,
+                                      GimpColorProfileCallback  callback,
+                                      gpointer                  user_data);
 
 
 #endif  /*  __COLOR_PROFILE_DIALOG_H__  */
