@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-28 21:22+0200\n"
-"PO-Revision-Date: 2016-09-28 21:04+0200\n"
+"PO-Revision-Date: 2016-09-29 12:18+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -7156,7 +7156,7 @@ msgstr "Alta"
 #: ../app/config/config-enums.c:147
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
-msgstr "Visualizzatore della guida di GIMP"
+msgstr "Visualizzatore dell'aiuto di GIMP"
 
 #: ../app/config/config-enums.c:148
 msgctxt "help-browser-type"
@@ -12637,9 +12637,7 @@ msgstr "Visualizzatore dell'aiuto da utilizzar_e:"
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
-msgstr ""
-"Il navigatore della guida di GIMP non sembra essere installato. Verrà usato "
-"un browser web in sua vece."
+msgstr "Il navigatore dell'aiuto di GIMP non sembra essere installato. Verrà usato un programma di navigazione web in sua vece."
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2143
@@ -19450,9 +19448,7 @@ msgstr "Il manuale utente di GIMP non è installato sul computer."
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
-msgstr ""
-"È possibile installare il pacchetto aggiuntivo contenente la guida o "
-"cambiare le preferenze per consultare la versione online."
+msgstr "È possibile installare il pacchetto aggiuntivo contenente l'aiuto o cambiare le preferenze per consultare la versione online."
 
 #: ../app/widgets/gimphistogrameditor.c:98
 msgid "Mean:"
