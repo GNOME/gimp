@@ -603,6 +603,28 @@ view_display_intent_cmd_callback (GtkAction *action,
 }
 
 void
+view_display_bpc_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpDisplayShell *shell;
+  GimpColorConfig  *color_config;
+  gboolean          active;
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (active != gimp_color_config_get_display_bpc (color_config))
+    {
+      g_object_set (color_config,
+                    "display-use-black-point-compensation", active,
+                    NULL);
+      shell->color_config_set = TRUE;
+    }
+}
+
+void
 view_softproof_intent_cmd_callback (GtkAction *action,
                                     GtkAction *current,
                                     gpointer   data)
@@ -620,28 +642,6 @@ view_softproof_intent_cmd_callback (GtkAction *action,
     {
       g_object_set (color_config,
                     "simulation-rendering-intent", value,
-                    NULL);
-      shell->color_config_set = TRUE;
-    }
-}
-
-void
-view_display_bpc_cmd_callback (GtkAction *action,
-                               gpointer   data)
-{
-  GimpDisplayShell *shell;
-  GimpColorConfig  *color_config;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  color_config = gimp_display_shell_get_color_config (shell);
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-  if (active != gimp_color_config_get_display_bpc (color_config))
-    {
-      g_object_set (color_config,
-                    "display-use-black-point-compensation", active,
                     NULL);
       shell->color_config_set = TRUE;
     }
