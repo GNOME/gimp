@@ -410,6 +410,85 @@ gimp_config_path_unexpand (const gchar  *path,
   return gimp_config_path_unexpand_only (path);
 }
 
+/**
+ * gimp_file_new_for_config_path:
+ * @path:   a NUL-terminated string in UTF-8 encoding
+ * @error:  return location for errors
+ *
+ * Expands @path using gimp_config_path_expand() and returns a #GFile
+ * for the expanded path.
+ *
+ * To reverse the expansion, use gimp_file_get_config_path().
+ *
+ * Return value: a newly allocated #GFile, or %NULL if the expansion failed.
+ *
+ * Since: 2.10
+ **/
+GFile *
+gimp_file_new_for_config_path (const gchar  *path,
+                               GError      **error)
+{
+  GFile *file = NULL;
+  gchar *expanded;
+
+  g_return_val_if_fail (path != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  expanded = gimp_config_path_expand (path, TRUE, error);
+
+  if (expanded)
+    {
+      file = g_file_new_for_path (expanded);
+      g_free (expanded);
+    }
+
+  return file;
+}
+
+/**
+ * gimp_file_new_for_config_path:
+ * @file:   a #GFile
+ * @error:  return location for errors
+ *
+ * Unexpands @file's path using gimp_config_path_unexpand() and
+ * returns the unexpanded path.
+ *
+ * The inverse operation of gimp_file_new_for_config_path().
+ *
+ * Return value: a newly allocated NUL-terminated UTF-8 string, or %NULL if
+ *               unexpanding failed.
+ *
+ * Since: 2.10
+ **/
+gchar *
+gimp_file_get_config_path (GFile   *file,
+                           GError **error)
+{
+  gchar *unexpanded = NULL;
+  gchar *path;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  path = g_file_get_path (file);
+
+  if (path)
+    {
+      unexpanded = gimp_config_path_unexpand (path, TRUE, error);
+      g_free (path);
+    }
+  else
+    {
+      g_set_error_literal (error, 0, 0,
+                           _("File has no path represantation"));
+    }
+
+  return unexpanded;
+}
+
+
+/*  private functions  */
+
 #define SUBSTS_ALLOC 4
 
 static gchar *

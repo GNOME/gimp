@@ -84,6 +84,11 @@ gchar             * gimp_config_path_unexpand        (const gchar  *path,
                                                       gboolean      recode,
                                                       GError      **error) G_GNUC_MALLOC;
 
+GFile             * gimp_file_new_for_config_path    (const gchar  *path,
+                                                      GError      **error) G_GNUC_MALLOC;
+gchar             * gimp_file_get_config_path        (GFile        *file,
+                                                      GError      **error) G_GNUC_MALLOC;
+
 gchar             * gimp_config_build_data_path      (const gchar  *name) G_GNUC_MALLOC;
 gchar             * gimp_config_build_writable_path  (const gchar  *name) G_GNUC_MALLOC;
 gchar             * gimp_config_build_plug_in_path   (const gchar  *name) G_GNUC_MALLOC;
