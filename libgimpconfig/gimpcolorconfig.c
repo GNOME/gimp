@@ -643,21 +643,25 @@ gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
 
   if (config->rgb_profile)
     {
-      GFile *file = g_file_new_for_path (config->rgb_profile);
+      GFile *file = gimp_file_new_for_config_path (config->rgb_profile,
+                                                   error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-
-      if (profile && ! gimp_color_profile_is_rgb (profile))
+      if (file)
         {
-          g_object_unref (profile);
-          profile = NULL;
+          profile = gimp_color_profile_new_from_file (file, error);
 
-          g_set_error (error, GIMP_CONFIG_ERROR, 0,
-                       _("Color profile '%s' is not for RGB color space."),
-                       gimp_file_get_utf8_name (file));
+          if (profile && ! gimp_color_profile_is_rgb (profile))
+            {
+              g_object_unref (profile);
+              profile = NULL;
+
+              g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                           _("Color profile '%s' is not for RGB color space."),
+                           gimp_file_get_utf8_name (file));
+            }
+
+          g_object_unref (file);
         }
-
-      g_object_unref (file);
     }
 
   return profile;
@@ -681,21 +685,25 @@ gimp_color_config_get_gray_color_profile (GimpColorConfig  *config,
 
   if (config->gray_profile)
     {
-      GFile *file = g_file_new_for_path (config->gray_profile);
+      GFile *file = gimp_file_new_for_config_path (config->gray_profile,
+                                                   error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-
-      if (profile && ! gimp_color_profile_is_gray (profile))
+      if (file)
         {
-          g_object_unref (profile);
-          profile = NULL;
+          profile = gimp_color_profile_new_from_file (file, error);
 
-          g_set_error (error, GIMP_CONFIG_ERROR, 0,
-                       _("Color profile '%s' is not for GRAY color space."),
-                       gimp_file_get_utf8_name (file));
+          if (profile && ! gimp_color_profile_is_gray (profile))
+            {
+              g_object_unref (profile);
+              profile = NULL;
+
+              g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                           _("Color profile '%s' is not for GRAY color space."),
+                           gimp_file_get_utf8_name (file));
+            }
+
+          g_object_unref (file);
         }
-
-      g_object_unref (file);
     }
 
   return profile;
@@ -719,21 +727,25 @@ gimp_color_config_get_cmyk_color_profile (GimpColorConfig  *config,
 
   if (config->cmyk_profile)
     {
-      GFile *file = g_file_new_for_path (config->cmyk_profile);
+      GFile *file = gimp_file_new_for_config_path (config->cmyk_profile,
+                                                   error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-
-      if (profile && ! gimp_color_profile_is_cmyk (profile))
+      if (file)
         {
-          g_object_unref (profile);
-          profile = NULL;
+          profile = gimp_color_profile_new_from_file (file, error);
 
-          g_set_error (error, GIMP_CONFIG_ERROR, 0,
-                       _("Color profile '%s' is not for CMYK color space."),
-                       gimp_file_get_utf8_name (file));
+          if (profile && ! gimp_color_profile_is_cmyk (profile))
+            {
+              g_object_unref (profile);
+              profile = NULL;
+
+              g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                           _("Color profile '%s' is not for CMYK color space."),
+                           gimp_file_get_utf8_name (file));
+            }
+
+          g_object_unref (file);
         }
-
-      g_object_unref (file);
     }
 
   return profile;
@@ -757,10 +769,15 @@ gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
 
   if (config->display_profile)
     {
-      GFile *file = g_file_new_for_path (config->display_profile);
+      GFile *file = gimp_file_new_for_config_path (config->display_profile,
+                                                   error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-      g_object_unref (file);
+      if (file)
+        {
+          profile = gimp_color_profile_new_from_file (file, error);
+
+          g_object_unref (file);
+        }
     }
 
   return profile;
@@ -784,10 +801,15 @@ gimp_color_config_get_simulation_color_profile (GimpColorConfig  *config,
 
   if (config->printer_profile)
     {
-      GFile *file = g_file_new_for_path (config->printer_profile);
+      GFile *file = gimp_file_new_for_config_path (config->printer_profile,
+                                                   error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-      g_object_unref (file);
+      if (file)
+        {
+          profile = gimp_color_profile_new_from_file (file, error);
+
+          g_object_unref (file);
+        }
     }
 
   return profile;
@@ -805,29 +827,38 @@ gimp_color_config_set_rgb_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile *profile;
-      GFile            *file = g_file_new_for_path (filename);
+      GFile *file = gimp_file_new_for_config_path (filename, error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-
-      if (profile)
+      if (file)
         {
-          if (! gimp_color_profile_is_rgb (profile))
+          GimpColorProfile *profile;
+
+          profile = gimp_color_profile_new_from_file (file, error);
+
+          if (profile)
             {
-              g_set_error (error, GIMP_CONFIG_ERROR, 0,
-                           _("Color profile '%s' is not for RGB color space."),
-                           gimp_file_get_utf8_name (file));
+              if (! gimp_color_profile_is_rgb (profile))
+                {
+                  g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                               _("Color profile '%s' is not for RGB "
+                                 "color space."),
+                               gimp_file_get_utf8_name (file));
+                  success = FALSE;
+                }
+
+              g_object_unref (profile);
+            }
+          else
+            {
               success = FALSE;
             }
 
-          g_object_unref (profile);
+          g_object_unref (file);
         }
       else
         {
           success = FALSE;
         }
-
-      g_object_unref (file);
     }
 
   if (success)
@@ -846,29 +877,38 @@ gimp_color_config_set_gray_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile *profile;
-      GFile            *file = g_file_new_for_path (filename);
+      GFile *file = gimp_file_new_for_config_path (filename, error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-
-      if (profile)
+      if (file)
         {
-          if (! gimp_color_profile_is_gray (profile))
+          GimpColorProfile *profile;
+
+          profile = gimp_color_profile_new_from_file (file, error);
+
+          if (profile)
             {
-              g_set_error (error, GIMP_CONFIG_ERROR, 0,
-                           _("Color profile '%s' is not for GRAY color space."),
-                           gimp_file_get_utf8_name (file));
+              if (! gimp_color_profile_is_gray (profile))
+                {
+                  g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                               _("Color profile '%s' is not for GRAY "
+                                 "color space."),
+                               gimp_file_get_utf8_name (file));
+                  success = FALSE;
+                }
+
+              g_object_unref (profile);
+            }
+          else
+            {
               success = FALSE;
             }
 
-          g_object_unref (profile);
+          g_object_unref (file);
         }
       else
         {
           success = FALSE;
         }
-
-      g_object_unref (file);
     }
 
   if (success)
@@ -887,29 +927,38 @@ gimp_color_config_set_cmyk_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile *profile;
-      GFile            *file = g_file_new_for_path (filename);
+      GFile *file = gimp_file_new_for_config_path (filename, error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-
-      if (profile)
+      if (file)
         {
-          if (! gimp_color_profile_is_cmyk (profile))
+          GimpColorProfile *profile;
+
+          profile = gimp_color_profile_new_from_file (file, error);
+
+          if (profile)
             {
-              g_set_error (error, GIMP_CONFIG_ERROR, 0,
-                           _("Color profile '%s' is not for CMYK color space."),
-                           gimp_file_get_utf8_name (file));
+              if (! gimp_color_profile_is_cmyk (profile))
+                {
+                  g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                               _("Color profile '%s' is not for CMYK "
+                                 "color space."),
+                               gimp_file_get_utf8_name (file));
+                  success = FALSE;
+                }
+
+              g_object_unref (profile);
+            }
+          else
+            {
               success = FALSE;
             }
 
-          g_object_unref (profile);
+          g_object_unref (file);
         }
       else
         {
           success = FALSE;
         }
-
-      g_object_unref (file);
     }
 
   if (success)
@@ -928,21 +977,29 @@ gimp_color_config_set_display_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile *profile;
-      GFile            *file = g_file_new_for_path (filename);
+      GFile *file = gimp_file_new_for_config_path (filename, error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-
-      if (profile)
+      if (file)
         {
-          g_object_unref (profile);
+          GimpColorProfile *profile;
+
+          profile = gimp_color_profile_new_from_file (file, error);
+
+          if (profile)
+            {
+              g_object_unref (profile);
+            }
+          else
+            {
+              success = FALSE;
+            }
+
+          g_object_unref (file);
         }
       else
         {
           success = FALSE;
         }
-
-      g_object_unref (file);
     }
 
   if (success)
@@ -961,21 +1018,29 @@ gimp_color_config_set_simulation_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile *profile;
-      GFile            *file = g_file_new_for_path (filename);
+      GFile *file = gimp_file_new_for_config_path (filename, error);
 
-      profile = gimp_color_profile_new_from_file (file, error);
-
-      if (profile)
+      if (file)
         {
-          g_object_unref (profile);
+          GimpColorProfile *profile;
+
+          profile = gimp_color_profile_new_from_file (file, error);
+
+          if (profile)
+            {
+              g_object_unref (profile);
+            }
+          else
+            {
+              success = FALSE;
+            }
+
+          g_object_unref (file);
         }
       else
         {
           success = FALSE;
         }
-
-      g_object_unref (file);
     }
 
   if (success)

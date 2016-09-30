@@ -1470,14 +1470,14 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 
       if (base_type == GIMP_GRAY)
         {
-          file = g_file_new_for_path (config->gray_profile);
+          file = gimp_file_new_for_config_path (config->gray_profile, NULL);
 
           label = g_strdup_printf (_("Preferred grayscale (%s)"),
                                    gimp_color_profile_get_label (profile));
         }
       else
         {
-          file = g_file_new_for_path (config->rgb_profile);
+          file = gimp_file_new_for_config_path (config->rgb_profile, NULL);
 
           label = g_strdup_printf (_("Preferred RGB (%s)"),
                                    gimp_color_profile_get_label (profile));

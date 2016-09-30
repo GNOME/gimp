@@ -1987,18 +1987,26 @@ plug_in_icc_profile_apply_invoker (GimpProcedure         *procedure,
           GimpColorProfile *p    = NULL;
 
           if (profile)
-            file = g_file_new_for_path (profile);
-          else if (image->gimp->config->color_management->rgb_profile)
-            file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
-
-          if (file)
             {
-              p = gimp_color_profile_new_from_file (file, error);
+              file = g_file_new_for_path (profile);
+            }
+          else if (image->gimp->config->color_management->rgb_profile)
+            {
+              file = gimp_file_new_for_config_path (image->gimp->config->color_management->rgb_profile, error);
 
-              if (! p)
-                success = FALSE;
+              if (file)
+                {
+                  p = gimp_color_profile_new_from_file (file, error);
 
-              g_object_unref (file);
+                  if (! p)
+                    success = FALSE;
+
+                  g_object_unref (file);
+                }
+              else
+                {
+                  success = FALSE;
+                }
             }
 
           if (success)
@@ -2043,16 +2051,20 @@ plug_in_icc_profile_apply_rgb_invoker (GimpProcedure         *procedure,
           GimpColorProfile *p    = NULL;
 
           if (image->gimp->config->color_management->rgb_profile)
-            file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
-
-          if (file)
             {
-              p = gimp_color_profile_new_from_file (file, error);
+              file = gimp_file_new_for_config_path (image->gimp->config->color_management->rgb_profile, error);
 
-              if (! p)
+              if (file)
+                {
+                  p = gimp_color_profile_new_from_file (file, error);
+
+                  if (! p)
+                    success = FALSE;
+
+                  g_object_unref (file);
+                }
+              else
                 success = FALSE;
-
-              g_object_unref (file);
             }
 
           if (success)
@@ -2095,18 +2107,24 @@ plug_in_icc_profile_set_invoker (GimpProcedure         *procedure,
           GimpColorProfile *p    = NULL;
 
           if (profile)
-            file = g_file_new_for_path (profile);
-          else if (image->gimp->config->color_management->rgb_profile)
-            file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
-
-          if (file)
             {
-              p = gimp_color_profile_new_from_file (file, error);
+              file = g_file_new_for_path (profile);
+            }
+          else if (image->gimp->config->color_management->rgb_profile)
+            {
+              file = gimp_file_new_for_config_path (image->gimp->config->color_management->rgb_profile, error);
 
-              if (! p)
+              if (file)
+                {
+                  p = gimp_color_profile_new_from_file (file, error);
+
+                  if (! p)
+                    success = FALSE;
+
+                  g_object_unref (file);
+                }
+              else
                 success = FALSE;
-
-              g_object_unref (file);
             }
 
           if (success)
@@ -2157,16 +2175,20 @@ plug_in_icc_profile_set_rgb_invoker (GimpProcedure         *procedure,
           GimpColorProfile *p    = NULL;
 
           if (image->gimp->config->color_management->rgb_profile)
-            file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
-
-          if (file)
             {
-              p = gimp_color_profile_new_from_file (file, error);
+              file = gimp_file_new_for_config_path (image->gimp->config->color_management->rgb_profile, error);
 
-              if (! p)
+              if (file)
+                {
+                  p = gimp_color_profile_new_from_file (file, error);
+
+                  if (! p)
+                    success = FALSE;
+
+                  g_object_unref (file);
+                }
+              else
                 success = FALSE;
-
-              g_object_unref (file);
             }
 
           if (success)
