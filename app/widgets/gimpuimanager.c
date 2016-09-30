@@ -522,6 +522,25 @@ gimp_ui_manager_activate_action (GimpUIManager *manager,
   return (action != NULL);
 }
 
+gboolean
+gimp_ui_manager_toggle_action (GimpUIManager *manager,
+                               const gchar   *group_name,
+                               const gchar   *action_name,
+                               gboolean       active)
+{
+  GtkAction *action;
+
+  g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), FALSE);
+  g_return_val_if_fail (action_name != NULL, FALSE);
+
+  action = gimp_ui_manager_find_action (manager, group_name, action_name);
+
+  if (GTK_IS_TOGGLE_ACTION (action))
+    gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+                                  active ? TRUE : FALSE);
+
+  return GTK_IS_TOGGLE_ACTION (action);
+}
 
 void
 gimp_ui_manager_ui_register (GimpUIManager          *manager,
