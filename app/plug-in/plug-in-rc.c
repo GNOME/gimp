@@ -260,19 +260,15 @@ plug_in_def_deserialize (Gimp      *gimp,
 {
   GimpPlugInDef       *plug_in_def;
   GimpPlugInProcedure *proc = NULL;
-  gchar               *name;
   gchar               *path;
   GFile               *file;
   gint64               mtime;
   GTokenType           token;
 
-  if (! gimp_scanner_parse_string (scanner, &name))
+  if (! gimp_scanner_parse_string (scanner, &path))
     return G_TOKEN_STRING;
 
-  path = gimp_config_path_expand (name, TRUE, NULL);
-  g_free (name);
-
-  file = g_file_new_for_path (path);
+  file = gimp_file_new_for_config_path (path, NULL);
   g_free (path);
 
   plug_in_def = gimp_plug_in_def_new (file);
@@ -825,21 +821,17 @@ plug_in_rc_write (GSList  *plug_in_defs,
         {
           GSList *list2;
           gchar  *path;
-          gchar  *utf8;
 
-          path = g_file_get_path (plug_in_def->file);
-          utf8 = gimp_config_path_unexpand (path, TRUE, NULL);
-          g_free (path);
-
-          if (! utf8)
+          path = gimp_file_get_config_path (plug_in_def->file, NULL);
+          if (! path)
             continue;
 
           gimp_config_writer_open (writer, "plug-in-def");
-          gimp_config_writer_string (writer, utf8);
+          gimp_config_writer_string (writer, path);
           gimp_config_writer_printf (writer, "%"G_GINT64_FORMAT,
                                      plug_in_def->mtime);
 
-          g_free (utf8);
+          g_free (path);
 
           for (list2 = plug_in_def->procedures; list2; list2 = list2->next)
             {

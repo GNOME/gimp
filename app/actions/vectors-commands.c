@@ -641,14 +641,14 @@ vectors_export_cmd_callback (GtkAction *action,
 
   if (config->vectors_export_path)
     {
-      gchar *folder = gimp_config_path_expand (config->vectors_export_path,
-                                                 TRUE, NULL);
+      GFile *folder = gimp_file_new_for_config_path (config->vectors_export_path,
+                                                     NULL);
 
       if (folder)
         {
-          gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog->dialog),
-                                               folder);
-          g_free (folder);
+          gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog->dialog),
+                                                    folder, NULL);
+          g_object_unref (folder);
         }
     }
 
@@ -678,14 +678,14 @@ vectors_import_cmd_callback (GtkAction *action,
 
   if (config->vectors_import_path)
     {
-      gchar *folder = gimp_config_path_expand (config->vectors_import_path,
-                                               TRUE, NULL);
+      GFile *folder = gimp_file_new_for_config_path (config->vectors_import_path,
+                                                     NULL);
 
       if (folder)
         {
-          gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog->dialog),
-                                               folder);
-          g_free (folder);
+          gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog->dialog),
+                                                    folder, NULL);
+          g_object_unref (folder);
         }
     }
 
@@ -923,18 +923,17 @@ vectors_import_response (GtkWidget           *widget,
       GimpDialogConfig *config;
       GtkFileChooser   *chooser = GTK_FILE_CHOOSER (widget);
       GFile            *file;
-      gchar            *folder;
-      GError           *error = NULL;
+      gchar            *folder = NULL;
+      GError           *error  = NULL;
 
       config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
 
-      folder = gtk_file_chooser_get_current_folder (chooser);
+      file = gtk_file_chooser_get_current_folder_file (chooser);
 
-      if (folder)
+      if (file)
         {
-          gchar *tmp = gimp_config_path_unexpand (folder, TRUE, NULL);
-          g_free (folder);
-          folder = tmp;
+          folder = gimp_file_get_config_path (file, NULL);
+          g_object_unref (file);
         }
 
       g_object_set (config,
@@ -982,18 +981,17 @@ vectors_export_response (GtkWidget           *widget,
       GtkFileChooser   *chooser = GTK_FILE_CHOOSER (widget);
       GimpVectors      *vectors = NULL;
       GFile            *file;
-      gchar            *folder;
+      gchar            *folder  = NULL;
       GError           *error   = NULL;
 
       config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
 
-      folder = gtk_file_chooser_get_current_folder (chooser);
+      file = gtk_file_chooser_get_current_folder_file (chooser);
 
-      if (folder)
+      if (file)
         {
-          gchar *tmp = gimp_config_path_unexpand (folder, TRUE, NULL);
-          g_free (folder);
-          folder = tmp;
+          folder = gimp_file_get_config_path (file, NULL);
+          g_object_unref (file);
         }
 
       g_object_set (config,
