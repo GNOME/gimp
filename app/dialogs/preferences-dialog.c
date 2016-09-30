@@ -1817,7 +1817,7 @@ prefs_dialog_new (Gimp       *gimp,
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /*  Color profile import dialog  */
-  vbox2 = prefs_frame_new (_("Color Profile Import dialog"), GTK_CONTAINER (vbox),
+  vbox2 = prefs_frame_new (_("Color Profile Import Dialog"), GTK_CONTAINER (vbox),
                            FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
