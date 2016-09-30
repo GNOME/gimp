@@ -1604,10 +1604,11 @@ gimp_prop_profile_combo_box_new (GObject      *config,
   GtkWidget  *combo;
   GFile      *file = NULL;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
 
-  if (param_spec && G_IS_PARAM_SPEC_STRING (param_spec))
+  if (G_IS_PARAM_SPEC_STRING (param_spec))
     {
       param_spec = check_param_spec_w (config, property_name,
                                        G_TYPE_PARAM_STRING, G_STRFUNC);

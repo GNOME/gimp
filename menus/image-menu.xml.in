@@ -313,6 +313,7 @@
 	</menu>
         <menuitem action="view-display-black-point-compensation" />
         <separator />
+        <menuitem action="view-softproof-profile" />
 	<menu action="view-softproof-intent-menu" name="Softproof Rendering Intent">
           <menuitem action="view-softproof-intent-perceptual" />
           <menuitem action="view-softproof-intent-relative-colorimetric" />

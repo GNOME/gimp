@@ -194,6 +194,24 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
       dest_label = _("Convert to");
       break;
 
+    case COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE:
+      dialog =
+        gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+                                  _("Soft-Proof Profile"),
+                                  "gimp-select-softproof-profile",
+                                  GTK_STOCK_PRINT,
+                                  _("Select Soft-Proof Profile"),
+                                  parent,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_VIEW_COLOR_MANAGEMENT,
+
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  _("_Select"),     GTK_RESPONSE_OK,
+
+                                  NULL);
+      dest_label = _("New Color Profile");
+      break;
+
     default:
       g_return_val_if_reached (NULL);
     }
@@ -304,49 +322,58 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 static GtkWidget *
 color_profile_combo_box_new (ProfileDialog *private)
 {
-  GtkListStore      *store;
-  GtkWidget         *combo;
-  GtkWidget         *chooser;
-  gchar             *history;
-  GimpImageBaseType  base_type;
-  GimpPrecision      precision;
-  GError            *error = NULL;
+  GtkListStore *store;
+  GtkWidget    *combo;
+  GtkWidget    *chooser;
+  gchar        *history;
 
   history = gimp_personal_rc_file ("profilerc");
   store = gimp_color_profile_store_new (history);
   g_free (history);
 
-  switch (private->dialog_type)
+  if (private->default_profile)
     {
-    case COLOR_PROFILE_DIALOG_ASSIGN_PROFILE:
-    case COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE:
-      base_type = gimp_image_get_base_type (private->image);
-      break;
+      GimpImageBaseType  base_type;
+      GimpPrecision      precision;
+      GError            *error = NULL;
 
-    case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
-      base_type = GIMP_RGB;
-      break;
+      switch (private->dialog_type)
+        {
+        case COLOR_PROFILE_DIALOG_ASSIGN_PROFILE:
+        case COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE:
+          base_type = gimp_image_get_base_type (private->image);
+          break;
 
-    case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
-      base_type = GIMP_GRAY;
-      break;
+        case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
+          base_type = GIMP_RGB;
+          break;
 
-    default:
-      g_return_val_if_reached (NULL);
+        case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
+          base_type = GIMP_GRAY;
+          break;
+
+        default:
+          g_return_val_if_reached (NULL);
+        }
+
+      precision = gimp_image_get_precision (private->image);
+
+      if (! gimp_color_profile_store_add_defaults (GIMP_COLOR_PROFILE_STORE (store),
+                                                   private->config,
+                                                   base_type,
+                                                   precision,
+                                                   &error))
+        {
+          gimp_message (private->image->gimp, G_OBJECT (private->dialog),
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_clear_error (&error);
+        }
     }
-
-  precision = gimp_image_get_precision (private->image);
-
-  if (! gimp_color_profile_store_add_defaults (GIMP_COLOR_PROFILE_STORE (store),
-                                               private->config,
-                                               base_type,
-                                               precision,
-                                               &error))
+  else
     {
-      gimp_message (private->image->gimp, G_OBJECT (private->dialog),
-                    GIMP_MESSAGE_ERROR,
-                    "%s", error->message);
-      g_clear_error (&error);
+      gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (store),
+                                         NULL, NULL);
     }
 
   chooser =
@@ -445,7 +472,7 @@ color_profile_dest_changed (GtkWidget     *combo,
   else
     {
       gimp_color_profile_view_set_error (GIMP_COLOR_PROFILE_VIEW (private->dest_view),
-                                         _("None"));
+                                         C_("profile", "None"));
     }
 
   if (dest_profile)

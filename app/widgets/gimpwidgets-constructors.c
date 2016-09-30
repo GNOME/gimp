@@ -229,15 +229,29 @@ gimp_icon_button_new (const gchar *icon_name,
 GtkWidget *
 gimp_color_profile_label_new (GimpColorProfile *profile)
 {
-  GtkWidget *expander;
-  GtkWidget *view;
+  GtkWidget   *expander;
+  GtkWidget   *view;
+  const gchar *label;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+  g_return_val_if_fail (profile == NULL ||
+                        GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  expander = gtk_expander_new (gimp_color_profile_get_label (profile));
+  if (profile)
+    label = gimp_color_profile_get_label (profile);
+  else
+    label = C_("profile", "None");
+
+  expander = gtk_expander_new (label);
 
   view = gimp_color_profile_view_new ();
-  gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (view), profile);
+
+  if (profile)
+    gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (view),
+                                         profile);
+  else
+    gimp_color_profile_view_set_error (GIMP_COLOR_PROFILE_VIEW (view),
+                                       C_("profile", "None"));
+
   gtk_container_add (GTK_CONTAINER (expander), view);
   gtk_widget_show (view);
 

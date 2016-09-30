@@ -272,6 +272,8 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
       SET_ACTIVE    ("view-display-black-point-compensation",
                      gimp_color_config_get_display_bpc (config));
 
+      SET_SENSITIVE ("view-softproof-profile", softproof);
+
       switch (gimp_color_config_get_simulation_intent (config))
         {
         case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:

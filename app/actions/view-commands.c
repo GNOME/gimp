@@ -55,6 +55,7 @@
 #include "display/gimpdisplayshell-close.h"
 #include "display/gimpimagewindow.h"
 
+#include "dialogs/color-profile-dialog.h"
 #include "dialogs/dialogs.h"
 
 #include "actions.h"
@@ -75,10 +76,17 @@
 
 /*  local function prototypes  */
 
-static void   view_padding_color_dialog_update (GimpColorDialog      *dialog,
-                                                const GimpRGB        *color,
-                                                GimpColorDialogState  state,
-                                                GimpDisplayShell     *shell);
+static void   view_softproof_profile_callback  (GtkWidget                *dialog,
+                                                GimpImage                *image,
+                                                GimpColorProfile         *new_profile,
+                                                GFile                    *new_file,
+                                                GimpColorRenderingIntent  intent,
+                                                gboolean                  bpc,
+                                                gpointer                  user_data);
+static void   view_padding_color_dialog_update (GimpColorDialog          *dialog,
+                                                const GimpRGB            *color,
+                                                GimpColorDialogState      state,
+                                                GimpDisplayShell         *shell);
 
 
 /*  public functions  */
@@ -625,6 +633,47 @@ view_display_bpc_cmd_callback (GtkAction *action,
 }
 
 void
+view_softproof_profile_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpImage        *image;
+  GimpDisplayShell *shell;
+  GimpColorConfig  *color_config;
+  GtkWidget        *dialog;
+  return_if_no_image (image, data);
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+#define SOFTPROOF_PROFILE_DIALOG_KEY "gimp-softproof-profile-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (shell), SOFTPROOF_PROFILE_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpColorProfile *current_profile;
+
+      current_profile = gimp_color_config_get_simulation_color_profile (color_config,
+                                                                        NULL);
+
+      dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE,
+                                         image,
+                                         action_data_get_context (data),
+                                         GTK_WIDGET (shell),
+                                         current_profile,
+                                         NULL,
+                                         0, 0,
+                                         view_softproof_profile_callback,
+                                         shell);
+
+      dialogs_attach_dialog (G_OBJECT (shell),
+                             SOFTPROOF_PROFILE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+void
 view_softproof_intent_cmd_callback (GtkAction *action,
                                     GtkAction *current,
                                     gpointer   data)
@@ -1028,6 +1077,32 @@ view_fullscreen_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static void
+view_softproof_profile_callback (GtkWidget                *dialog,
+                                 GimpImage                *image,
+                                 GimpColorProfile         *new_profile,
+                                 GFile                    *new_file,
+                                 GimpColorRenderingIntent  intent,
+                                 gboolean                  bpc,
+                                 gpointer                  user_data)
+{
+  GimpDisplayShell *shell = user_data;
+  GimpColorConfig  *color_config;
+  gchar            *path  = NULL;
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  if (new_file)
+    path = g_file_get_path (new_file);
+
+  g_object_set (color_config,
+                "printer-profile", path,
+                NULL);
+  shell->color_config_set = TRUE;
+
+  gtk_widget_destroy (dialog);
+}
 
 static void
 view_padding_color_dialog_update (GimpColorDialog      *dialog,
