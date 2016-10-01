@@ -97,6 +97,11 @@ all-yes: $(CATALOGS)
 all-no:
 
 $(GETTEXT_PACKAGE).pot: $(POTFILES)
+	@if test "x$(INTLTOOL_UPDATE)" = "x/bin/true"; then \
+		echo "Error: po generation deactivated on VPATH builds."; \
+		echo "       See commit c96006919."; \
+		false; \
+	fi
 	$(GENPOT)
 
 install: install-data
