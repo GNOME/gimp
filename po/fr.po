@@ -13324,7 +13324,7 @@ msgid ""
 msgstr ""
 "<big>Version de développement instable</big>\n"
 "\n"
-"<small>dépôt <tt>%s</tt>\n"
+"<small>dépôt <tt>%s</tt></small>\n"
 "<small>Vérifiez les bogues sur la dernière version de la branche\n"
 "master de git avant de les signaler.</small>"
 
