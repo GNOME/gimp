@@ -336,6 +336,9 @@ quit_close_all_dialog_container_changed (GimpContainer  *images,
                                             dialog->accel_mods);
 
   gimp_message_box_set_primary_text (dialog->box,
+                                     /* TRANSLATORS: unless your language
+                                        msgstr[0] applies to 1 only (as
+                                        in English), replace "one" with %d. */
                                      ngettext ("There is one image with "
                                                "unsaved changes:",
                                                "There are %d images with "

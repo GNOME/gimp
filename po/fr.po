@@ -13009,7 +13009,7 @@ msgstr "Si vous fermez ces images maintenant, les changements seront perdus"
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "Il y a une image avec des modifications non enregistrées :"
+msgstr[0] "Il y a %d image avec des modifications non enregistrées :"
 msgstr[1] "Il y a %d images avec des modifications non enregistrées :"
 
 #: ../app/dialogs/quit-dialog.c:311
