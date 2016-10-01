@@ -35,6 +35,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcellrendererbutton.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
@@ -321,9 +322,12 @@ gimp_container_tree_view_constructed (GObject *object)
                     G_CALLBACK (gimp_container_tree_view_drag_data_received),
                     tree_view);
 
-  g_signal_connect (tree_view->view, "query-tooltip",
-                    G_CALLBACK (gimp_container_tree_view_tooltip),
-                    tree_view);
+  /* connect_after so external code can connect to "query-tooltip" too
+   * and override the default tip
+   */
+  g_signal_connect_after (tree_view->view, "query-tooltip",
+                          G_CALLBACK (gimp_container_tree_view_tooltip),
+                          tree_view);
 }
 
 static void
@@ -520,7 +524,8 @@ gimp_container_tree_view_add_toggle_cell (GimpContainerTreeView *tree_view,
                                           GtkCellRenderer       *cell)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
-  g_return_if_fail (GIMP_IS_CELL_RENDERER_TOGGLE (cell));
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_TOGGLE (cell) ||
+                    GIMP_IS_CELL_RENDERER_BUTTON (cell));
 
   tree_view->priv->toggle_cells = g_list_prepend (tree_view->priv->toggle_cells,
                                                   cell);
@@ -1043,7 +1048,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                      &path, &column, NULL, NULL))
     {
       GimpViewRenderer         *renderer;
-      GimpCellRendererToggle   *toggled_cell = NULL;
+      GtkCellRenderer          *toggled_cell = NULL;
       GimpCellRendererViewable *clicked_cell = NULL;
       GtkCellRenderer          *edit_cell    = NULL;
       GdkRectangle              column_area;
@@ -1098,7 +1103,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
           g_list_free (cells);
         }
 
-      toggled_cell = (GimpCellRendererToggle *)
+      toggled_cell =
         gimp_container_tree_view_find_click_cell (widget,
                                                   tree_view->priv->toggle_cells,
                                                   column, &column_area,
@@ -1181,9 +1186,18 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
                       if (toggled_cell)
                         {
-                          gimp_cell_renderer_toggle_clicked (toggled_cell,
-                                                             path_str,
-                                                             bevent->state);
+                          if (GIMP_IS_CELL_RENDERER_TOGGLE (toggled_cell))
+                            {
+                              gimp_cell_renderer_toggle_clicked (GIMP_CELL_RENDERER_TOGGLE (toggled_cell),
+                                                                 path_str,
+                                                                 bevent->state);
+                            }
+                          else if (GIMP_IS_CELL_RENDERER_BUTTON (toggled_cell))
+                            {
+                              gimp_cell_renderer_button_clicked (GIMP_CELL_RENDERER_BUTTON (toggled_cell),
+                                                                 path_str,
+                                                                 bevent->state);
+                            }
                         }
                       else if (clicked_cell)
                         {

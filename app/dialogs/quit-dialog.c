@@ -37,7 +37,9 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpimagewindow.h"
 
+#include "widgets/gimpcellrendererbutton.h"
 #include "widgets/gimpcontainertreestore.h"
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpcontainerview.h"
@@ -45,6 +47,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewrenderer.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -57,20 +60,22 @@ typedef struct _QuitDialog QuitDialog;
 
 struct _QuitDialog
 {
-  Gimp            *gimp;
-  GimpContainer   *images;
-  GimpContext     *context;
+  Gimp                  *gimp;
+  GimpContainer         *images;
+  GimpContext           *context;
 
-  gboolean         do_quit;
+  gboolean               do_quit;
 
-  GtkWidget       *dialog;
-  GtkWidget       *ok_button;
-  GimpMessageBox  *box;
-  GtkWidget       *lost_label;
-  GtkWidget       *hint_label;
+  GtkWidget             *dialog;
+  GimpContainerTreeView *tree_view;
+  GtkTreeViewColumn     *save_column;
+  GtkWidget             *ok_button;
+  GimpMessageBox        *box;
+  GtkWidget             *lost_label;
+  GtkWidget             *hint_label;
 
-  guint            accel_key;
-  GdkModifierType  accel_mods;
+  guint                  accel_key;
+  GdkModifierType        accel_mods;
 };
 
 
@@ -98,7 +103,16 @@ static void        quit_close_all_dialog_name_cell_func    (GtkTreeViewColumn *t
                                                             GtkTreeModel      *tree_model,
                                                             GtkTreeIter       *iter,
                                                             gpointer           data);
-
+static void        quit_close_all_dialog_save_clicked      (GtkCellRenderer   *cell,
+                                                            const gchar       *path,
+                                                            GdkModifierType    state,
+                                                            QuitDialog        *dialog);
+static gboolean    quit_close_all_dialog_query_tooltip     (GtkWidget         *widget,
+                                                            gint               x,
+                                                            gint               y,
+                                                            gboolean           keyboard_tip,
+                                                            GtkTooltip        *tooltip,
+                                                            QuitDialog        *dialog);
 
 /*  public functions  */
 
@@ -121,6 +135,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
   QuitDialog            *dialog;
   GtkWidget             *view;
   GimpContainerTreeView *tree_view;
+  GtkTreeViewColumn     *column;
   GtkCellRenderer       *renderer;
   GtkWidget             *dnd_widget;
   GtkAccelGroup         *accel_group;
@@ -187,15 +202,35 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   view = gimp_container_tree_view_new (dialog->images, dialog->context,
                                        view_size, 1);
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
+                                       -1,
+                                       rows * (view_size + 2));
+
+  dialog->tree_view = tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+
+  gtk_tree_view_column_set_expand (tree_view->main_column, TRUE);
+
   renderer = gimp_container_tree_view_get_name_cell (tree_view);
   gtk_tree_view_column_set_cell_data_func (tree_view->main_column,
                                            renderer,
                                            quit_close_all_dialog_name_cell_func,
                                            NULL, NULL);
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
-                                       -1,
-                                       rows * (view_size + 2));
+
+  dialog->save_column = column = gtk_tree_view_column_new ();
+  renderer = gimp_cell_renderer_button_new ();
+  g_object_set (renderer,
+                "icon-name", "document-save",
+                NULL);
+  gtk_tree_view_column_pack_end (column, renderer, FALSE);
+  gtk_tree_view_column_set_attributes (column, renderer, NULL);
+
+  gtk_tree_view_append_column (tree_view->view, column);
+  gimp_container_tree_view_add_toggle_cell (tree_view, renderer);
+
+  g_signal_connect (renderer, "clicked",
+                    G_CALLBACK (quit_close_all_dialog_save_clicked),
+                    dialog);
+
   gtk_box_pack_start (GTK_BOX (dialog->box), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
 
@@ -207,6 +242,10 @@ quit_close_all_dialog_new (Gimp     *gimp,
   gimp_dnd_xds_source_add (dnd_widget,
                            (GimpDndDragViewableFunc) gimp_dnd_get_drag_data,
                            NULL);
+
+  g_signal_connect (tree_view->view, "query-tooltip",
+                    G_CALLBACK (quit_close_all_dialog_query_tooltip),
+                    dialog);
 
   if (do_quit)
     dialog->lost_label = gtk_label_new (_("If you quit GIMP now, "
@@ -435,4 +474,104 @@ quit_close_all_dialog_name_cell_func (GtkTreeViewColumn *tree_column,
 
   g_object_unref (renderer);
   g_free (name);
+}
+
+static void
+quit_close_all_dialog_save_clicked (GtkCellRenderer *cell,
+                                    const gchar     *path_str,
+                                    GdkModifierType  state,
+                                    QuitDialog      *dialog)
+{
+  GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
+  GtkTreeIter  iter;
+
+  if (gtk_tree_model_get_iter (dialog->tree_view->model, &iter, path))
+    {
+      GimpViewRenderer *renderer;
+      GimpImage        *image;
+      GList            *list;
+
+      gtk_tree_model_get (dialog->tree_view->model, &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      image = GIMP_IMAGE (renderer->viewable);
+      g_object_unref (renderer);
+
+      for (list = gimp_get_display_iter (dialog->gimp);
+           list;
+           list = g_list_next (list))
+        {
+          GimpDisplay *display = list->data;
+
+          if (gimp_display_get_image (display) == image)
+            {
+              GimpDisplayShell *shell  = gimp_display_get_shell (display);
+              GimpImageWindow  *window = gimp_display_shell_get_window (shell);
+
+              if (window)
+                {
+                  GimpUIManager *manager;
+
+                  manager = gimp_image_window_get_ui_manager (window);
+
+                  gimp_display_shell_present (shell);
+
+                  if (state & GDK_SHIFT_MASK)
+                    {
+                      gimp_ui_manager_activate_action (manager, "file",
+                                                       "file-save-as");
+                    }
+                  else
+                    {
+                      gimp_ui_manager_activate_action (manager, "file",
+                                                       "file-save");
+                    }
+                }
+
+              break;
+            }
+        }
+    }
+}
+
+static gboolean
+quit_close_all_dialog_query_tooltip (GtkWidget  *widget,
+                                     gint        x,
+                                     gint        y,
+                                     gboolean    keyboard_tip,
+                                     GtkTooltip *tooltip,
+                                     QuitDialog *dialog)
+{
+  GtkTreePath *path;
+  gboolean     show_tip = FALSE;
+
+  if (gtk_tree_view_get_tooltip_context (GTK_TREE_VIEW (widget), &x, &y,
+                                         keyboard_tip,
+                                         NULL, &path, NULL))
+    {
+      GtkTreeViewColumn *column = NULL;
+
+      gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget), x, y,
+                                     NULL, &column, NULL, NULL);
+
+      if (column == dialog->save_column)
+        {
+          gchar *tip = g_strconcat (_("Save this image"), "\n<b>",
+                                    gimp_get_mod_string (GDK_SHIFT_MASK),
+                                    "</b>  ", _("Save as"),
+                                    NULL);
+
+          gtk_tooltip_set_markup (tooltip, tip);
+          gtk_tree_view_set_tooltip_row (GTK_TREE_VIEW (widget), tooltip, path);
+
+          g_free (tip);
+
+          show_tip = TRUE;
+        }
+
+      gtk_tree_path_free (path);
+    }
+
+  return show_tip;
 }
