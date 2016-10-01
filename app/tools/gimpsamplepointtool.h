@@ -38,6 +38,8 @@ struct _GimpSamplePointTool
   GimpDrawTool     parent_instance;
 
   GimpSamplePoint *sample_point;
+  gint             sample_point_old_x;
+  gint             sample_point_old_y;
   gint             sample_point_x;
   gint             sample_point_y;
 };
