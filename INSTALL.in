@@ -127,7 +127,6 @@ header files installed.
 
      ATK     		@ATK_REQUIRED_VERSION@
      babl		@BABL_REQUIRED_VERSION@
-     libbzip2
      cairo 		@CAIRO_REQUIRED_VERSION@
      Fontconfig 	@FONTCONFIG_REQUIRED_VERSION@
      freetype2 		@FREETYPE2_REQUIRED_VERSION@
