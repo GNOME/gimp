@@ -149,7 +149,8 @@ gimp_file_entry_init (GimpFileEntry *entry)
                     entry);
 
   gimp_help_set_help_data (button,
-                           _("Show file location in the file manager"), NULL);
+                           _("Show file location in the file manager"),
+                           NULL);
 
   entry->browse_button = gtk_button_new ();
   gtk_box_pack_end (GTK_BOX (entry), entry->browse_button, FALSE, FALSE, 0);
@@ -225,7 +226,7 @@ gimp_file_entry_new (const gchar *title,
   entry->check_valid = check_valid;
 
   gimp_help_set_help_data (entry->browse_button,
-                           dir_only ?
+                           entry->dir_only ?
                            _("Open a file selector to browse your folders") :
                            _("Open a file selector to browse your files"),
                            NULL);
@@ -236,6 +237,12 @@ gimp_file_entry_new (const gchar *title,
                                                          GTK_ICON_SIZE_BUTTON);
       gtk_box_pack_start (GTK_BOX (entry), entry->file_exists, FALSE, FALSE, 0);
       gtk_widget_show (entry->file_exists);
+
+      gimp_help_set_help_data (entry->file_exists,
+                               entry->dir_only ?
+                               _("Indicates whether or not the folder exists") :
+                               _("Indicates whether or not the file exists"),
+                               NULL);
     }
 
   gimp_file_entry_set_filename (entry, filename);

@@ -32,6 +32,7 @@
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpfileentry.h"
 
+#include "gimphelpui.h"
 #include "gimpicons.h"
 #include "gimppatheditor.h"
 #include "gimp3migration.h"
@@ -175,6 +176,10 @@ gimp_path_editor_init (GimpPathEditor *editor)
                     G_CALLBACK (gimp_path_editor_new_clicked),
                     editor);
 
+  gimp_help_set_help_data (editor->new_button,
+                           _("Add a new folder"),
+                           NULL);
+
   editor->up_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
@@ -187,6 +192,10 @@ gimp_path_editor_init (GimpPathEditor *editor)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_move_clicked),
                     editor);
+
+  gimp_help_set_help_data (editor->up_button,
+                           _("Move the selected folder up"),
+                           NULL);
 
   editor->down_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
@@ -201,6 +210,10 @@ gimp_path_editor_init (GimpPathEditor *editor)
                     G_CALLBACK (gimp_path_editor_move_clicked),
                     editor);
 
+  gimp_help_set_help_data (editor->down_button,
+                           _("Move the selected folder down"),
+                           NULL);
+
   editor->delete_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
@@ -213,6 +226,10 @@ gimp_path_editor_init (GimpPathEditor *editor)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_delete_clicked),
                     editor);
+
+  gimp_help_set_help_data (editor->delete_button,
+                           _("Remove the selected folder from the list"),
+                           NULL);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
