@@ -1744,7 +1744,7 @@ gimp_tag_entry_add_to_recent (GimpTagEntry *entry,
 const gchar *
 gimp_tag_entry_get_separator (void)
 {
-  /* Seperator for tags
+  /* Separator for tags
    * IMPORTANT: use only one of Unicode terminal punctuation chars.
    * http://unicode.org/review/pr-23.html
    */
