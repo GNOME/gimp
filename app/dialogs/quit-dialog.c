@@ -270,12 +270,11 @@ quit_close_all_dialog_new (Gimp     *gimp,
                       FALSE, FALSE, 0);
   gtk_widget_show (private->hint_label);
 
-  g_signal_connect (private->images, "add",
-                    G_CALLBACK (quit_close_all_dialog_container_changed),
-                    private);
-  g_signal_connect (private->images, "remove",
-                    G_CALLBACK (quit_close_all_dialog_container_changed),
-                    private);
+  closure = g_cclosure_new (G_CALLBACK (quit_close_all_dialog_container_changed),
+                            private, NULL);
+  g_object_watch_closure (G_OBJECT (private->dialog), closure);
+  g_signal_connect_closure (private->images, "add", closure, FALSE);
+  g_signal_connect_closure (private->images, "remove", closure, FALSE);
 
   quit_close_all_dialog_container_changed (private->images, NULL,
                                            private);
