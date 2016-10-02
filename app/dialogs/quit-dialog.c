@@ -413,7 +413,12 @@ quit_close_all_dialog_image_activated (GimpContainerView *view,
       GimpDisplay *display = list->data;
 
       if (gimp_display_get_image (display) == image)
-        gimp_display_shell_present (gimp_display_get_shell (display));
+        {
+          gimp_display_shell_present (gimp_display_get_shell (display));
+          /* We only want to update the active shell. Give back keyboard
+           * focus to the quit dialog after this. */
+          gtk_window_present (GTK_WINDOW (dialog->dialog));
+        }
     }
 }
 
