@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-25 20:52+0200\n"
-"PO-Revision-Date: 2016-09-25 20:53+0200\n"
+"POT-Creation-Date: 2016-10-02 13:47+0200\n"
+"PO-Revision-Date: 2016-10-02 13:48+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1518,20 +1518,20 @@ msgstr "Wyróżnienie kolorów spoza skali"
 msgid "Out of gamut warning color"
 msgstr "Kolor ostrzeżenia kolorów spoza skali"
 
-#: ../libgimpconfig/gimpcolorconfig.c:656
-#: ../libgimpconfig/gimpcolorconfig.c:818
+#: ../libgimpconfig/gimpcolorconfig.c:659
+#: ../libgimpconfig/gimpcolorconfig.c:843
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:694
-#: ../libgimpconfig/gimpcolorconfig.c:859
+#: ../libgimpconfig/gimpcolorconfig.c:701
+#: ../libgimpconfig/gimpcolorconfig.c:893
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów szarości."
 
-#: ../libgimpconfig/gimpcolorconfig.c:732
-#: ../libgimpconfig/gimpcolorconfig.c:900
+#: ../libgimpconfig/gimpcolorconfig.c:743
+#: ../libgimpconfig/gimpcolorconfig.c:943
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów CMYK."
@@ -1542,23 +1542,23 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "wartość tokenu %s nie jest prawidłowym tekstem UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:464
+#: ../libgimpconfig/gimpconfig-deserialize.c:466
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "oczekiwano wartości „yes” lub „no” tokenu logicznego %s, otrzymano „%s”"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:538
+#: ../libgimpconfig/gimpconfig-deserialize.c:540
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "nieprawidłowa wartość „%s” tokenu %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:553
+#: ../libgimpconfig/gimpconfig-deserialize.c:555
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "nieprawidłowa wartość „%ld” tokenu %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:622
+#: ../libgimpconfig/gimpconfig-deserialize.c:624
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "podczas przetwarzania tokenu „%s”: %s"
@@ -1566,11 +1566,15 @@ msgstr "podczas przetwarzania tokenu „%s”: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:658
 #: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
 #: ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:719
+#: ../libgimpwidgets/gimpcolorprofilestore.c:712
 msgid "fatal parse error"
 msgstr "krytyczny błąd podczas przetwarzania"
 
-#: ../libgimpconfig/gimpconfig-path.c:487
+#: ../libgimpconfig/gimpconfig-path.c:483
+msgid "File has no path representation"
+msgstr "Plik nie ma reprezentacji ścieżki"
+
+#: ../libgimpconfig/gimpconfig-path.c:566
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nie można rozwinąć ${%s}"
@@ -1683,7 +1687,7 @@ msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil kolorów ICC (*.icc, *.icm)"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
-#: ../libgimpwidgets/gimppatheditor.c:249
+#: ../libgimpwidgets/gimppatheditor.c:266
 msgid "Folder"
 msgstr "Katalog"
 
@@ -1736,24 +1740,32 @@ msgstr "_Zapis języka HTML:"
 msgid "Show file location in the file manager"
 msgstr "Wyświetla położenie pliku w menedżerze plików"
 
-#: ../libgimpwidgets/gimpfileentry.c:229
+#: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your folders"
 msgstr "Otwiera przeglądarkę plików, aby odnaleźć katalogi"
 
-#: ../libgimpwidgets/gimpfileentry.c:230
+#: ../libgimpwidgets/gimpfileentry.c:231
 msgid "Open a file selector to browse your files"
 msgstr "Otwiera przeglądarkę plików, aby odnaleźć pliki"
 
-#: ../libgimpwidgets/gimpfileentry.c:397
+#: ../libgimpwidgets/gimpfileentry.c:243
+msgid "Indicates whether or not the folder exists"
+msgstr "Wskazuje, czy katalog istnieje"
+
+#: ../libgimpwidgets/gimpfileentry.c:244
+msgid "Indicates whether or not the file exists"
+msgstr "Wskazuje, czy plik istnieje"
+
+#: ../libgimpwidgets/gimpfileentry.c:404
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Nie można wyświetlić pliku w menedżerze plików: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:431
 msgid "Select Folder"
 msgstr "Wybór katalogu"
 
-#: ../libgimpwidgets/gimpfileentry.c:426
+#: ../libgimpwidgets/gimpfileentry.c:433
 msgid "Select File"
 msgstr "Wybór pliku"
 
@@ -1883,7 +1895,23 @@ msgstr[0] "%d stronę zaznaczono"
 msgstr[1] "%d strony zaznaczono"
 msgstr[2] "%d stron zaznaczono"
 
-#: ../libgimpwidgets/gimppatheditor.c:240
+#: ../libgimpwidgets/gimppatheditor.c:180
+msgid "Add a new folder"
+msgstr "Dodaje nowy katalog"
+
+#: ../libgimpwidgets/gimppatheditor.c:197
+msgid "Move the selected folder up"
+msgstr "Przenosi zaznaczony katalog do góry"
+
+#: ../libgimpwidgets/gimppatheditor.c:214
+msgid "Move the selected folder down"
+msgstr "Przenosi zaznaczony katalog w dół"
+
+#: ../libgimpwidgets/gimppatheditor.c:231
+msgid "Remove the selected folder from the list"
+msgstr "Usuwa zaznaczony katalog z listy"
+
+#: ../libgimpwidgets/gimppatheditor.c:257
 msgid "Writable"
 msgstr "Zapisywalny"
 
@@ -2591,14 +2619,14 @@ msgstr "Korekcja kolorów"
 msgid "Choose an ICC Color Profile"
 msgstr "Wybór profilu kolorów ICC"
 
-#: ../modules/display-filter-proof.c:314
+#: ../modules/display-filter-proof.c:316
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:320
+#: ../modules/display-filter-proof.c:322
 msgid "_Intent:"
 msgstr "Pożądany _efekt:"
 
-#: ../modules/display-filter-proof.c:325
+#: ../modules/display-filter-proof.c:327
 msgid "_Black Point Compensation"
 msgstr "Kompensacja _czarnego punktu"
