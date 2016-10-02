@@ -480,7 +480,7 @@ gimp_file_get_config_path (GFile   *file,
   else
     {
       g_set_error_literal (error, 0, 0,
-                           _("File has no path represantation"));
+                           _("File has no path representation"));
     }
 
   return unexpanded;
