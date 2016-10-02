@@ -81,10 +81,10 @@ struct _QuitDialog
 
 static GtkWidget * quit_close_all_dialog_new               (Gimp              *gimp,
                                                             gboolean           do_quit);
-static void        quit_close_all_dialog_free              (QuitDialog        *dialog);
-static void        quit_close_all_dialog_response          (GtkWidget         *widget,
+static void        quit_close_all_dialog_free              (QuitDialog        *private);
+static void        quit_close_all_dialog_response          (GtkWidget         *dialog,
                                                             gint               response_id,
-                                                            QuitDialog        *dialog);
+                                                            QuitDialog        *private);
 static void        quit_close_all_dialog_accel_marshal     (GClosure          *closure,
                                                             GValue            *return_value,
                                                             guint              n_param_values,
@@ -93,11 +93,11 @@ static void        quit_close_all_dialog_accel_marshal     (GClosure          *c
                                                             gpointer           marshal_data);
 static void        quit_close_all_dialog_container_changed (GimpContainer     *images,
                                                             GimpObject        *image,
-                                                            GtkWidget         *widget);
+                                                            QuitDialog        *private);
 static void        quit_close_all_dialog_image_activated   (GimpContainerView *view,
                                                             GimpImage         *image,
                                                             gpointer           insert_data,
-                                                            QuitDialog        *dialog);
+                                                            QuitDialog        *private);
 static void        quit_close_all_dialog_name_cell_func    (GtkTreeViewColumn *tree_column,
                                                             GtkCellRenderer   *cell,
                                                             GtkTreeModel      *tree_model,
@@ -106,13 +106,14 @@ static void        quit_close_all_dialog_name_cell_func    (GtkTreeViewColumn *t
 static void        quit_close_all_dialog_save_clicked      (GtkCellRenderer   *cell,
                                                             const gchar       *path,
                                                             GdkModifierType    state,
-                                                            QuitDialog        *dialog);
+                                                            QuitDialog        *private);
 static gboolean    quit_close_all_dialog_query_tooltip     (GtkWidget         *widget,
                                                             gint               x,
                                                             gint               y,
                                                             gboolean           keyboard_tip,
                                                             GtkTooltip        *tooltip,
-                                                            QuitDialog        *dialog);
+                                                            QuitDialog        *private);
+
 
 /*  public functions  */
 
@@ -128,11 +129,14 @@ close_all_dialog_new (Gimp *gimp)
   return quit_close_all_dialog_new (gimp, FALSE);
 }
 
+
+/*  private functions  */
+
 static GtkWidget *
 quit_close_all_dialog_new (Gimp     *gimp,
                            gboolean  do_quit)
 {
-  QuitDialog            *dialog;
+  QuitDialog            *private;
   GtkWidget             *view;
   GimpContainerTreeView *tree_view;
   GtkTreeViewColumn     *column;
@@ -145,17 +149,17 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  dialog = g_new0 (QuitDialog, 1);
+  private = g_slice_new0 (QuitDialog);
 
-  dialog->gimp    = gimp;
-  dialog->do_quit = do_quit;
-  dialog->images  = gimp_displays_get_dirty_images (gimp);
-  dialog->context = gimp_context_new (gimp, "close-all-dialog",
-                                      gimp_get_user_context (gimp));
+  private->gimp    = gimp;
+  private->do_quit = do_quit;
+  private->images  = gimp_displays_get_dirty_images (gimp);
+  private->context = gimp_context_new (gimp, "close-all-dialog",
+                                       gimp_get_user_context (gimp));
 
-  g_return_val_if_fail (dialog->images != NULL, NULL);
+  g_return_val_if_fail (private->images != NULL, NULL);
 
-  dialog->dialog =
+  private->dialog =
     gimp_message_dialog_new (do_quit ? _("Quit GIMP") : _("Close All Images"),
                              GIMP_STOCK_WARNING,
                              NULL, 0,
@@ -167,46 +171,46 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
                              NULL);
 
-  g_object_set_data_full (G_OBJECT (dialog->dialog), "quit-dialog",
-                          dialog, (GDestroyNotify) quit_close_all_dialog_free);
+  private->ok_button = gtk_dialog_add_button (GTK_DIALOG (private->dialog),
+                                              "", GTK_RESPONSE_OK);
 
-  dialog->ok_button = gtk_dialog_add_button (GTK_DIALOG (dialog->dialog),
-                                             "", GTK_RESPONSE_OK);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (private->dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_signal_connect (dialog->dialog, "response",
+  g_object_weak_ref (G_OBJECT (private->dialog),
+                     (GWeakNotify) quit_close_all_dialog_free, private);
+
+  g_signal_connect (private->dialog, "response",
                     G_CALLBACK (quit_close_all_dialog_response),
-                    dialog);
+                    private);
 
   /* connect <Primary>D to the quit/close button */
   accel_group = gtk_accel_group_new ();
-  gtk_window_add_accel_group (GTK_WINDOW (dialog->dialog), accel_group);
+  gtk_window_add_accel_group (GTK_WINDOW (private->dialog), accel_group);
   g_object_unref (accel_group);
 
-  closure = g_closure_new_object (sizeof (GClosure), G_OBJECT (dialog->dialog));
+  closure = g_closure_new_object (sizeof (GClosure), G_OBJECT (private->dialog));
   g_closure_set_marshal (closure, quit_close_all_dialog_accel_marshal);
   gtk_accelerator_parse ("<Primary>D",
-                         &dialog->accel_key, &dialog->accel_mods);
+                         &private->accel_key, &private->accel_mods);
   gtk_accel_group_connect (accel_group,
-                           dialog->accel_key, dialog->accel_mods,
+                           private->accel_key, private->accel_mods,
                            0, closure);
 
-  dialog->box = GIMP_MESSAGE_DIALOG (dialog->dialog)->box;
+  private->box = GIMP_MESSAGE_DIALOG (private->dialog)->box;
 
   view_size = gimp->config->layer_preview_size;
-  rows      = CLAMP (gimp_container_get_n_children (dialog->images), 3, 6);
+  rows      = CLAMP (gimp_container_get_n_children (private->images), 3, 6);
 
-  view = gimp_container_tree_view_new (dialog->images, dialog->context,
+  view = gimp_container_tree_view_new (private->images, private->context,
                                        view_size, 1);
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
                                        -1,
                                        rows * (view_size + 2));
 
-  dialog->tree_view = tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  private->tree_view = tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   gtk_tree_view_column_set_expand (tree_view->main_column, TRUE);
 
@@ -216,7 +220,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
                                            quit_close_all_dialog_name_cell_func,
                                            NULL, NULL);
 
-  dialog->save_column = column = gtk_tree_view_column_new ();
+  private->save_column = column = gtk_tree_view_column_new ();
   renderer = gimp_cell_renderer_button_new ();
   g_object_set (renderer,
                 "icon-name", "document-save",
@@ -229,14 +233,14 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   g_signal_connect (renderer, "clicked",
                     G_CALLBACK (quit_close_all_dialog_save_clicked),
-                    dialog);
+                    private);
 
-  gtk_box_pack_start (GTK_BOX (dialog->box), view, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (private->box), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
 
   g_signal_connect (view, "activate-item",
                     G_CALLBACK (quit_close_all_dialog_image_activated),
-                    dialog);
+                    private);
 
   dnd_widget = gimp_container_view_get_dnd_widget (GIMP_CONTAINER_VIEW (view));
   gimp_dnd_xds_source_add (dnd_widget,
@@ -245,58 +249,58 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   g_signal_connect (tree_view->view, "query-tooltip",
                     G_CALLBACK (quit_close_all_dialog_query_tooltip),
-                    dialog);
+                    private);
 
   if (do_quit)
-    dialog->lost_label = gtk_label_new (_("If you quit GIMP now, "
-                                          "these changes will be lost."));
+    private->lost_label = gtk_label_new (_("If you quit GIMP now, "
+                                           "these changes will be lost."));
   else
-    dialog->lost_label = gtk_label_new (_("If you close these images now, "
-                                          "changes will be lost."));
-  gtk_label_set_xalign (GTK_LABEL (dialog->lost_label), 0.0);
-  gtk_label_set_line_wrap (GTK_LABEL (dialog->lost_label), TRUE);
-  gtk_box_pack_start (GTK_BOX (dialog->box), dialog->lost_label,
+    private->lost_label = gtk_label_new (_("If you close these images now, "
+                                           "changes will be lost."));
+  gtk_label_set_xalign (GTK_LABEL (private->lost_label), 0.0);
+  gtk_label_set_line_wrap (GTK_LABEL (private->lost_label), TRUE);
+  gtk_box_pack_start (GTK_BOX (private->box), private->lost_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (dialog->lost_label);
+  gtk_widget_show (private->lost_label);
 
-  dialog->hint_label = gtk_label_new (NULL);
-  gtk_label_set_xalign (GTK_LABEL (dialog->hint_label), 0.0);
-  gtk_label_set_line_wrap (GTK_LABEL (dialog->hint_label), TRUE);
-  gtk_box_pack_start (GTK_BOX (dialog->box), dialog->hint_label,
+  private->hint_label = gtk_label_new (NULL);
+  gtk_label_set_xalign (GTK_LABEL (private->hint_label), 0.0);
+  gtk_label_set_line_wrap (GTK_LABEL (private->hint_label), TRUE);
+  gtk_box_pack_start (GTK_BOX (private->box), private->hint_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (dialog->hint_label);
+  gtk_widget_show (private->hint_label);
 
-  g_signal_connect_object (dialog->images, "add",
-                           G_CALLBACK (quit_close_all_dialog_container_changed),
-                           dialog->dialog, 0);
-  g_signal_connect_object (dialog->images, "remove",
-                           G_CALLBACK (quit_close_all_dialog_container_changed),
-                           dialog->dialog, 0);
+  g_signal_connect (private->images, "add",
+                    G_CALLBACK (quit_close_all_dialog_container_changed),
+                    private);
+  g_signal_connect (private->images, "remove",
+                    G_CALLBACK (quit_close_all_dialog_container_changed),
+                    private);
 
-  quit_close_all_dialog_container_changed (dialog->images, NULL,
-                                           dialog->dialog);
+  quit_close_all_dialog_container_changed (private->images, NULL,
+                                           private);
 
-  return dialog->dialog;
+  return private->dialog;
 }
 
 static void
-quit_close_all_dialog_free (QuitDialog *dialog)
+quit_close_all_dialog_free (QuitDialog *private)
 {
-  g_object_unref (dialog->images);
-  g_object_unref (dialog->context);
+  g_object_unref (private->images);
+  g_object_unref (private->context);
 
-  g_free (dialog);
+  g_slice_free (QuitDialog, private);
 }
 
 static void
-quit_close_all_dialog_response (GtkWidget  *widget,
+quit_close_all_dialog_response (GtkWidget  *dialog,
                                 gint        response_id,
-                                QuitDialog *dialog)
+                                QuitDialog *private)
 {
-  Gimp     *gimp    = dialog->gimp;
-  gboolean  do_quit = dialog->do_quit;
+  Gimp     *gimp    = private->gimp;
+  gboolean  do_quit = private->do_quit;
 
-  gtk_widget_destroy (dialog->dialog);
+  gtk_widget_destroy (dialog);
 
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -322,20 +326,19 @@ quit_close_all_dialog_accel_marshal (GClosure     *closure,
 }
 
 static void
-quit_close_all_dialog_container_changed (GimpContainer  *images,
-                                         GimpObject     *image,
-                                         GtkWidget      *widget)
+quit_close_all_dialog_container_changed (GimpContainer *images,
+                                         GimpObject    *image,
+                                         QuitDialog    *private)
 {
-  QuitDialog *dialog     = g_object_get_data (G_OBJECT (widget), "quit-dialog");
-  gint        num_images = gimp_container_get_n_children (images);
-  gchar      *accel_string;
-  gchar      *hint;
-  gchar      *markup;
+  gint   num_images = gimp_container_get_n_children (images);
+  gchar *accel_string;
+  gchar *hint;
+  gchar *markup;
 
-  accel_string = gtk_accelerator_get_label (dialog->accel_key,
-                                            dialog->accel_mods);
+  accel_string = gtk_accelerator_get_label (private->accel_key,
+                                            private->accel_mods);
 
-  gimp_message_box_set_primary_text (dialog->box,
+  gimp_message_box_set_primary_text (private->box,
                                      /* TRANSLATORS: unless your language
                                         msgstr[0] applies to 1 only (as
                                         in English), replace "one" with %d. */
@@ -347,51 +350,51 @@ quit_close_all_dialog_container_changed (GimpContainer  *images,
 
   if (num_images == 0)
     {
-      gtk_widget_hide (dialog->lost_label);
+      gtk_widget_hide (private->lost_label);
 
-      if (dialog->do_quit)
+      if (private->do_quit)
         hint = g_strdup_printf (_("Press %s to quit."),
                                 accel_string);
       else
         hint = g_strdup_printf (_("Press %s to close all images."),
                                 accel_string);
 
-      g_object_set (dialog->ok_button,
-                    "label",     dialog->do_quit ? GTK_STOCK_QUIT : GTK_STOCK_CLOSE,
+      g_object_set (private->ok_button,
+                    "label",     private->do_quit ? GTK_STOCK_QUIT : GTK_STOCK_CLOSE,
                     "use-stock", TRUE,
                     "image",     NULL,
                     NULL);
 
-      gtk_widget_grab_default (dialog->ok_button);
+      gtk_widget_grab_default (private->ok_button);
     }
   else
     {
       GtkWidget *icon;
 
-      if (dialog->do_quit)
+      if (private->do_quit)
         hint = g_strdup_printf (_("Press %s to discard all changes and quit."),
                                 accel_string);
       else
         hint = g_strdup_printf (_("Press %s to discard all changes and close all images."),
                                 accel_string);
 
-      gtk_widget_show (dialog->lost_label);
+      gtk_widget_show (private->lost_label);
 
       icon = gtk_image_new_from_icon_name ("edit-delete",
                                            GTK_ICON_SIZE_BUTTON);
-      g_object_set (dialog->ok_button,
+      g_object_set (private->ok_button,
                     "label",     _("_Discard Changes"),
                     "use-stock", FALSE,
                     "image",     icon,
                     NULL);
 
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog->dialog),
+      gtk_dialog_set_default_response (GTK_DIALOG (private->dialog),
                                        GTK_RESPONSE_CANCEL);
     }
 
   markup = g_strdup_printf ("<i><small>%s</small></i>", hint);
 
-  gtk_label_set_markup (GTK_LABEL (dialog->hint_label), markup);
+  gtk_label_set_markup (GTK_LABEL (private->hint_label), markup);
 
   g_free (markup);
   g_free (hint);
@@ -402,11 +405,11 @@ static void
 quit_close_all_dialog_image_activated (GimpContainerView *view,
                                        GimpImage         *image,
                                        gpointer           insert_data,
-                                       QuitDialog        *dialog)
+                                       QuitDialog        *private)
 {
   GList *list;
 
-  for (list = gimp_get_display_iter (dialog->gimp);
+  for (list = gimp_get_display_iter (private->gimp);
        list;
        list = g_list_next (list))
     {
@@ -415,9 +418,11 @@ quit_close_all_dialog_image_activated (GimpContainerView *view,
       if (gimp_display_get_image (display) == image)
         {
           gimp_display_shell_present (gimp_display_get_shell (display));
+
           /* We only want to update the active shell. Give back keyboard
-           * focus to the quit dialog after this. */
-          gtk_window_present (GTK_WINDOW (dialog->dialog));
+           * focus to the quit dialog after this.
+           */
+          gtk_window_present (GTK_WINDOW (private->dialog));
         }
     }
 }
@@ -488,25 +493,25 @@ static void
 quit_close_all_dialog_save_clicked (GtkCellRenderer *cell,
                                     const gchar     *path_str,
                                     GdkModifierType  state,
-                                    QuitDialog      *dialog)
+                                    QuitDialog      *private)
 {
   GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
   GtkTreeIter  iter;
 
-  if (gtk_tree_model_get_iter (dialog->tree_view->model, &iter, path))
+  if (gtk_tree_model_get_iter (private->tree_view->model, &iter, path))
     {
       GimpViewRenderer *renderer;
       GimpImage        *image;
       GList            *list;
 
-      gtk_tree_model_get (dialog->tree_view->model, &iter,
+      gtk_tree_model_get (private->tree_view->model, &iter,
                           GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       image = GIMP_IMAGE (renderer->viewable);
       g_object_unref (renderer);
 
-      for (list = gimp_get_display_iter (dialog->gimp);
+      for (list = gimp_get_display_iter (private->gimp);
            list;
            list = g_list_next (list))
         {
@@ -549,7 +554,7 @@ quit_close_all_dialog_query_tooltip (GtkWidget  *widget,
                                      gint        y,
                                      gboolean    keyboard_tip,
                                      GtkTooltip *tooltip,
-                                     QuitDialog *dialog)
+                                     QuitDialog *private)
 {
   GtkTreePath *path;
   gboolean     show_tip = FALSE;
@@ -563,7 +568,7 @@ quit_close_all_dialog_query_tooltip (GtkWidget  *widget,
       gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget), x, y,
                                      NULL, &column, NULL, NULL);
 
-      if (column == dialog->save_column)
+      if (column == private->save_column)
         {
           gchar *tip = g_strconcat (_("Save this image"), "\n<b>",
                                     gimp_get_mod_string (GDK_SHIFT_MASK),
