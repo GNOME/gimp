@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gimp-master-po-hu-23139.merged\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-09-29 21:07+0000\n"
-"PO-Revision-Date: 2016-09-30 08:54+0200\n"
+"POT-Creation-Date: 2016-10-01 19:01+0000\n"
+"PO-Revision-Date: 2016-10-02 11:08+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -6414,77 +6414,87 @@ msgstr "A színkezelés visszaállítása a beállításokban megadottra"
 
 #: ../app/actions/view-actions.c:150
 msgctxt "view-action"
+msgid "Soft-_Proofing Profile..."
+msgstr "Pró_banyomat profil…"
+
+#: ../app/actions/view-actions.c:151
+msgctxt "view-action"
+msgid "Set the soft-proofing profile"
+msgstr "Próbanyomat profil beállítása"
+
+#: ../app/actions/view-actions.c:156
+msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "A_blak képre zsugorítása"
 
-#: ../app/actions/view-actions.c:151
+#: ../app/actions/view-actions.c:157
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "A képet tartalmazó ablak méretének csökkentése a kép méretére"
 
-#: ../app/actions/view-actions.c:156
+#: ../app/actions/view-actions.c:162
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "_Képernyő megnyitása…"
 
-#: ../app/actions/view-actions.c:157
+#: ../app/actions/view-actions.c:163
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Kapcsolódás egy másik képernyőhöz"
 
-#: ../app/actions/view-actions.c:165
+#: ../app/actions/view-actions.c:171
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_Pontról pontra"
 
-#: ../app/actions/view-actions.c:166
+#: ../app/actions/view-actions.c:172
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr ""
 "A képernyőn megjelenő képpontok pontosan a kép egy-egy képpontjának felelnek "
 "meg"
 
-#: ../app/actions/view-actions.c:172
+#: ../app/actions/view-actions.c:178
 msgctxt "view-action"
 msgid "_Color-Manage this View"
 msgstr "_Nézet színkezelése"
 
-#: ../app/actions/view-actions.c:173
+#: ../app/actions/view-actions.c:179
 msgctxt "view-action"
 msgid "Use color management for this view"
 msgstr "Színkezelés használata ehhez a nézethez"
 
-#: ../app/actions/view-actions.c:179
+#: ../app/actions/view-actions.c:185
 msgctxt "view-action"
 msgid "_Proof Colors"
 msgstr "_Próbanyomat színei"
 
-#: ../app/actions/view-actions.c:180
+#: ../app/actions/view-actions.c:186
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
 msgstr "Ezen nézet használata a próbanyomathoz"
 
-#: ../app/actions/view-actions.c:186 ../app/actions/view-actions.c:193
+#: ../app/actions/view-actions.c:192 ../app/actions/view-actions.c:199
 msgctxt "view-action"
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
 
-#: ../app/actions/view-actions.c:187
+#: ../app/actions/view-actions.c:193
 msgctxt "view-action"
 msgid "Use black point compensation for image display"
 msgstr "Feketepont-kompenzáció használata a képmegjelenítéshez"
 
-#: ../app/actions/view-actions.c:194
+#: ../app/actions/view-actions.c:200
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Feketepont-kompenzáció használata a próbanyomathoz"
 
-#: ../app/actions/view-actions.c:200
+#: ../app/actions/view-actions.c:206
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
 msgstr "A színskálán kívüli színek _megjelölése"
 
-#: ../app/actions/view-actions.c:201
+#: ../app/actions/view-actions.c:207
 msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
@@ -6493,502 +6503,502 @@ msgstr ""
 "A próbanyomatkor jelölje meg azokat a színeket, amelyek nem ábrázolhatóak a "
 "cél színtérben"
 
-#: ../app/actions/view-actions.c:208
+#: ../app/actions/view-actions.c:214
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "_Kijelölés megjelenítése"
 
-#: ../app/actions/view-actions.c:209
+#: ../app/actions/view-actions.c:215
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "A kijelölés körvonalának megjelenítése"
 
-#: ../app/actions/view-actions.c:215
+#: ../app/actions/view-actions.c:221
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Réteg-_határvonal megjelenítése"
 
-#: ../app/actions/view-actions.c:216
+#: ../app/actions/view-actions.c:222
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Keret rajzolása az aktív réteg köré"
 
-#: ../app/actions/view-actions.c:222
+#: ../app/actions/view-actions.c:228
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "_Segédvonalak megjelenítése"
 
-#: ../app/actions/view-actions.c:223
+#: ../app/actions/view-actions.c:229
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "A kép segédvonalainak megjelenítése"
 
-#: ../app/actions/view-actions.c:229
+#: ../app/actions/view-actions.c:235
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Rá_cs megjelenítése"
 
-#: ../app/actions/view-actions.c:230
+#: ../app/actions/view-actions.c:236
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "A kép rácsának megjelenítése"
 
-#: ../app/actions/view-actions.c:236
+#: ../app/actions/view-actions.c:242
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Mintapontok megjelenítése"
 
-#: ../app/actions/view-actions.c:237
+#: ../app/actions/view-actions.c:243
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "A kép színmintapontjainak megjelenítése"
 
-#: ../app/actions/view-actions.c:243
+#: ../app/actions/view-actions.c:249
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "Illesztés a se_gédvonalakhoz"
 
-#: ../app/actions/view-actions.c:244
+#: ../app/actions/view-actions.c:250
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Az eszközműveletek használatakor illesztés a segédvonalakhoz"
 
-#: ../app/actions/view-actions.c:250
+#: ../app/actions/view-actions.c:256
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "_Illesztés a rácshoz"
 
-#: ../app/actions/view-actions.c:251
+#: ../app/actions/view-actions.c:257
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Az eszközműveletek használatakor illesztés a rácshoz"
 
-#: ../app/actions/view-actions.c:257
+#: ../app/actions/view-actions.c:263
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Illesztés a rajzvászon szél_eihez"
 
-#: ../app/actions/view-actions.c:258
+#: ../app/actions/view-actions.c:264
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Az eszközműveletek használatakor illesztés a rajzvászon széleihez"
 
-#: ../app/actions/view-actions.c:264
+#: ../app/actions/view-actions.c:270
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Illesztés az aktív _útvonalhoz"
 
-#: ../app/actions/view-actions.c:265
+#: ../app/actions/view-actions.c:271
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Az eszközműveletek használatakor illesztés az aktív útvonalhoz"
 
-#: ../app/actions/view-actions.c:271
+#: ../app/actions/view-actions.c:277
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Menüs_or megjelenítése"
 
-#: ../app/actions/view-actions.c:272
+#: ../app/actions/view-actions.c:278
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Ezen ablak menüsorának megjelenítése"
 
-#: ../app/actions/view-actions.c:278
+#: ../app/actions/view-actions.c:284
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "_Vonalzók megjelenítése"
 
-#: ../app/actions/view-actions.c:279
+#: ../app/actions/view-actions.c:285
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Ezen ablak vonalzóinak megjelenítése"
 
-#: ../app/actions/view-actions.c:285
+#: ../app/actions/view-actions.c:291
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Gör_dítősávok megjelenítése"
 
-#: ../app/actions/view-actions.c:286
+#: ../app/actions/view-actions.c:292
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Ezen ablak gördítősávjainak megjelenítése"
 
-#: ../app/actions/view-actions.c:292
+#: ../app/actions/view-actions.c:298
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Á_llapotsor megjelenítése"
 
-#: ../app/actions/view-actions.c:293
+#: ../app/actions/view-actions.c:299
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Ezen ablak állapotsorának megjelenítése"
 
-#: ../app/actions/view-actions.c:299
+#: ../app/actions/view-actions.c:305
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "_Teljes képernyő"
 
-#: ../app/actions/view-actions.c:300
+#: ../app/actions/view-actions.c:306
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Teljes képernyős nézet be- illetve kikapcsolása"
 
-#: ../app/actions/view-actions.c:324
+#: ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "_Kicsinyítés"
 
-#: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:337
+#: ../app/actions/view-actions.c:331 ../app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: ../app/actions/view-actions.c:330
+#: ../app/actions/view-actions.c:336
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Nagyítás"
 
-#: ../app/actions/view-actions.c:331 ../app/actions/view-actions.c:343
+#: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:349
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: ../app/actions/view-actions.c:336
+#: ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Kicsinyítés"
 
-#: ../app/actions/view-actions.c:342
+#: ../app/actions/view-actions.c:348
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Nagyítás"
 
-#: ../app/actions/view-actions.c:361 ../app/actions/view-actions.c:367
+#: ../app/actions/view-actions.c:367 ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:362 ../app/actions/view-actions.c:368
+#: ../app/actions/view-actions.c:368 ../app/actions/view-actions.c:374
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Nagyítás beállítása 16:1 mértékre"
 
-#: ../app/actions/view-actions.c:373 ../app/actions/view-actions.c:379
+#: ../app/actions/view-actions.c:379 ../app/actions/view-actions.c:385
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:374 ../app/actions/view-actions.c:380
+#: ../app/actions/view-actions.c:380 ../app/actions/view-actions.c:386
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Nagyítás beállítása 8:1 mértékre"
 
-#: ../app/actions/view-actions.c:385 ../app/actions/view-actions.c:391
+#: ../app/actions/view-actions.c:391 ../app/actions/view-actions.c:397
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:386 ../app/actions/view-actions.c:392
+#: ../app/actions/view-actions.c:392 ../app/actions/view-actions.c:398
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Nagyítás beállítása 4:1 mértékre"
 
-#: ../app/actions/view-actions.c:397 ../app/actions/view-actions.c:403
+#: ../app/actions/view-actions.c:403 ../app/actions/view-actions.c:409
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:398 ../app/actions/view-actions.c:404
+#: ../app/actions/view-actions.c:404 ../app/actions/view-actions.c:410
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Nagyítás beállítása 2:1 mértékre"
 
-#: ../app/actions/view-actions.c:409 ../app/actions/view-actions.c:415
+#: ../app/actions/view-actions.c:415 ../app/actions/view-actions.c:421
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:410 ../app/actions/view-actions.c:416
+#: ../app/actions/view-actions.c:416 ../app/actions/view-actions.c:422
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Nagyítás beállítása 1:1 mértékre"
 
-#: ../app/actions/view-actions.c:421
+#: ../app/actions/view-actions.c:427
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:2  (5_0%)"
 
-#: ../app/actions/view-actions.c:422
+#: ../app/actions/view-actions.c:428
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Nagyítás beállítása 1:2 mértékre"
 
-#: ../app/actions/view-actions.c:427
+#: ../app/actions/view-actions.c:433
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:4  (2_5%)"
 
-#: ../app/actions/view-actions.c:428
+#: ../app/actions/view-actions.c:434
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Nagyítás beállítása 1:4 mértékre"
 
-#: ../app/actions/view-actions.c:433
+#: ../app/actions/view-actions.c:439
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12,5%)"
 
-#: ../app/actions/view-actions.c:434
+#: ../app/actions/view-actions.c:440
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Nagyítás beállítása 1:8 mértékre"
 
-#: ../app/actions/view-actions.c:439
+#: ../app/actions/view-actions.c:445
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6,25%)"
 
-#: ../app/actions/view-actions.c:440
+#: ../app/actions/view-actions.c:446
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Nagyítás beállítása 1:16 mértékre"
 
-#: ../app/actions/view-actions.c:445
+#: ../app/actions/view-actions.c:451
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "_Egyéb…"
 
-#: ../app/actions/view-actions.c:446
+#: ../app/actions/view-actions.c:452
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Egyéni nagyítási mérték beállítása"
 
-#: ../app/actions/view-actions.c:454
+#: ../app/actions/view-actions.c:460
 msgctxt "view-action"
 msgid "Flip Horizontally"
 msgstr "Vízszintes tükrözés"
 
-#: ../app/actions/view-actions.c:460
+#: ../app/actions/view-actions.c:466
 msgctxt "view-action"
 msgid "Flip Vertically"
 msgstr "Függőleges tükrözés"
 
-#: ../app/actions/view-actions.c:474
+#: ../app/actions/view-actions.c:480
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
 msgstr "Tükrözés és forgatás _visszaállítása"
 
-#: ../app/actions/view-actions.c:476
+#: ../app/actions/view-actions.c:482
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr ""
 "A tükrözés visszaállítása tükrözetlenre és a forgatás szögének "
 "visszaállítása 0°-ra"
 
-#: ../app/actions/view-actions.c:484
+#: ../app/actions/view-actions.c:490
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Elforgatás 15°-kal az óram_utatóval megegyezően"
 
-#: ../app/actions/view-actions.c:485
+#: ../app/actions/view-actions.c:491
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
 msgstr "Elforgatás 15 fokkal jobbra"
 
-#: ../app/actions/view-actions.c:490
+#: ../app/actions/view-actions.c:496
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Elforgatás 90 fokkal az óram_utatóval megegyezően"
 
-#: ../app/actions/view-actions.c:491
+#: ../app/actions/view-actions.c:497
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Elforgatás 90 fokkal jobbra"
 
-#: ../app/actions/view-actions.c:496
+#: ../app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Elforgatás _180 fokkal"
 
-#: ../app/actions/view-actions.c:497
+#: ../app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Fejre állítás"
 
-#: ../app/actions/view-actions.c:502
+#: ../app/actions/view-actions.c:508
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Elforgatás 90 fokkal az óra_mutatóval ellentétesen"
 
-#: ../app/actions/view-actions.c:503
+#: ../app/actions/view-actions.c:509
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Elforgatás 90 fokkal balra"
 
-#: ../app/actions/view-actions.c:508
+#: ../app/actions/view-actions.c:514
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Elforgatás 15°-kal az óra_mutatóval ellentétesen"
 
-#: ../app/actions/view-actions.c:509
+#: ../app/actions/view-actions.c:515
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
 msgstr "Elforgatás 15 fokkal balra"
 
-#: ../app/actions/view-actions.c:517 ../app/actions/view-actions.c:544
+#: ../app/actions/view-actions.c:523 ../app/actions/view-actions.c:550
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "_Észlelési"
 
-#: ../app/actions/view-actions.c:518
+#: ../app/actions/view-actions.c:524
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "A képernyős megjelenítési cél észlelési"
 
-#: ../app/actions/view-actions.c:523 ../app/actions/view-actions.c:550
+#: ../app/actions/view-actions.c:529 ../app/actions/view-actions.c:556
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "_Relatív színtani"
 
-#: ../app/actions/view-actions.c:524
+#: ../app/actions/view-actions.c:530
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "A képernyős megjelenítési cél relatív színtani"
 
-#: ../app/actions/view-actions.c:529 ../app/actions/view-actions.c:556
+#: ../app/actions/view-actions.c:535 ../app/actions/view-actions.c:562
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Telítettség"
 
-#: ../app/actions/view-actions.c:530
+#: ../app/actions/view-actions.c:536
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "A képernyős megjelenítési cél a telítettség"
 
-#: ../app/actions/view-actions.c:535 ../app/actions/view-actions.c:562
+#: ../app/actions/view-actions.c:541 ../app/actions/view-actions.c:568
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "_Abszolút színtani"
 
-#: ../app/actions/view-actions.c:536
+#: ../app/actions/view-actions.c:542
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "A képernyős megjelenítési cél abszolút színtani"
 
-#: ../app/actions/view-actions.c:545
+#: ../app/actions/view-actions.c:551
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
 msgstr "A próbanyomat megjelenítési cél észlelési"
 
-#: ../app/actions/view-actions.c:551
+#: ../app/actions/view-actions.c:557
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
 msgstr "A próbanyomat megjelenítési cél relatív színtani"
 
-#: ../app/actions/view-actions.c:557
+#: ../app/actions/view-actions.c:563
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
 msgstr "A próbanyomat megjelenítési cél a telítettség"
 
-#: ../app/actions/view-actions.c:563
+#: ../app/actions/view-actions.c:569
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr "A próbanyomat megjelenítési cél abszolút színtani"
 
-#: ../app/actions/view-actions.c:571
+#: ../app/actions/view-actions.c:577
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "_Témából"
 
-#: ../app/actions/view-actions.c:572
+#: ../app/actions/view-actions.c:578
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "A jelenlegi téma háttérszínének használata"
 
-#: ../app/actions/view-actions.c:577
+#: ../app/actions/view-actions.c:583
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Négyzethá_ló világos színe"
 
-#: ../app/actions/view-actions.c:578
+#: ../app/actions/view-actions.c:584
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "A világos négyzethálószín használata"
 
-#: ../app/actions/view-actions.c:583
+#: ../app/actions/view-actions.c:589
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Négyzetháló _sötét színe"
 
-#: ../app/actions/view-actions.c:584
+#: ../app/actions/view-actions.c:590
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "A sötét négyzethálószín használata"
 
-#: ../app/actions/view-actions.c:589
+#: ../app/actions/view-actions.c:595
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "E_gyéni szín…"
 
-#: ../app/actions/view-actions.c:590
+#: ../app/actions/view-actions.c:596
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Egy tetszőleges szín használata"
 
-#: ../app/actions/view-actions.c:595
+#: ../app/actions/view-actions.c:601
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Mint a _beállításokban"
 
-#: ../app/actions/view-actions.c:597
+#: ../app/actions/view-actions.c:603
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "A kitöltési szín visszaállítása a beállításokban megadottra"
 
-#: ../app/actions/view-actions.c:895
+#: ../app/actions/view-actions.c:901
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Nagyítás v_isszaállítása (%d%%)"
 
-#: ../app/actions/view-actions.c:903
+#: ../app/actions/view-actions.c:909
 msgid "Re_vert Zoom"
 msgstr "Nagyítás v_isszaállítása"
 
-#: ../app/actions/view-actions.c:1089
+#: ../app/actions/view-actions.c:1096
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "_Egyéb (%s)…"
 
-#: ../app/actions/view-actions.c:1098
+#: ../app/actions/view-actions.c:1105
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Nagyítás (%s)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1119
+#: ../app/actions/view-actions.c:1126
 msgid "(H+V) "
 msgstr "(V+F) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1124
+#: ../app/actions/view-actions.c:1131
 msgid "(H) "
 msgstr "(V) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1129
+#: ../app/actions/view-actions.c:1136
 msgid "(V) "
 msgstr "(F) "
 
-#: ../app/actions/view-actions.c:1136
+#: ../app/actions/view-actions.c:1143
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "%s _tükrözés és forgatás (%d°)"
 
-#: ../app/actions/view-commands.c:956
+#: ../app/actions/view-commands.c:1005
 msgid "Set Canvas Padding Color"
 msgstr "Rajzvászon kitöltési színének beállítása"
 
-#: ../app/actions/view-commands.c:958
+#: ../app/actions/view-commands.c:1007
 msgid "Set Custom Canvas Padding Color"
 msgstr "Rajzvászon egyéni kitöltési színének beállítása"
 
@@ -7869,8 +7879,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:470
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Beállítja az alapértelmezett összefésülési típust a „Látható rétegek összefésülése” "
-"párbeszédablakban."
+"Beállítja az alapértelmezett összefésülési típust a „Látható rétegek "
+"összefésülése” párbeszédablakban."
 
 #: ../app/config/gimprc-blurbs.h:473
 msgid ""
@@ -10719,8 +10729,7 @@ msgid "Emulate brush dynamics"
 msgstr "Ecsetdinamika emulálása"
 
 #. no undo (or redo) steps available
-#: ../app/core/gimpsymmetry.c:132 ../app/dialogs/color-profile-dialog.c:448
-#: ../app/widgets/gimpimagepropview.c:399
+#: ../app/core/gimpsymmetry.c:132 ../app/widgets/gimpimagepropview.c:399
 #: ../app/widgets/gimpsymmetryeditor.c:168
 msgid "None"
 msgstr "Nincs"
@@ -11103,27 +11112,50 @@ msgstr "Szürkeárnyalatos átalakítás"
 msgid "Convert Image to Grayscale"
 msgstr "Kép átalakítása szürkeárnyalatos módba"
 
-#: ../app/dialogs/color-profile-dialog.c:223
+#: ../app/dialogs/color-profile-dialog.c:200
+msgid "Soft-Proof Profile"
+msgstr "Próbanyomat profil"
+
+#: ../app/dialogs/color-profile-dialog.c:203
+msgid "Select Soft-Proof Profile"
+msgstr "Próbanyomat profil kiválasztása"
+
+#: ../app/dialogs/color-profile-dialog.c:209
+msgid "_Select"
+msgstr "_Kiválasztás"
+
+#: ../app/dialogs/color-profile-dialog.c:212
+msgid "New Color Profile"
+msgstr "Új színprofil"
+
+#: ../app/dialogs/color-profile-dialog.c:241
 msgid "Current Color Profile"
 msgstr "Jelenlegi színprofil"
 
-#: ../app/dialogs/color-profile-dialog.c:243
+#: ../app/dialogs/color-profile-dialog.c:261
 msgid "Profile _details"
 msgstr "Profil _részletei"
 
-#: ../app/dialogs/color-profile-dialog.c:272
+#: ../app/dialogs/color-profile-dialog.c:290
 #: ../app/dialogs/color-profile-import-dialog.c:160
 msgid "_Rendering Intent:"
 msgstr "Meg_jelenítési cél:"
 
-#: ../app/dialogs/color-profile-dialog.c:288
+#: ../app/dialogs/color-profile-dialog.c:306
 #: ../app/dialogs/color-profile-import-dialog.c:176
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
 
-#: ../app/dialogs/color-profile-dialog.c:353
+#: ../app/dialogs/color-profile-dialog.c:380
 msgid "Select Destination Profile"
 msgstr "Célprofil kiválasztása"
+
+#: ../app/dialogs/color-profile-dialog.c:475
+#: ../app/widgets/gimpwidgets-constructors.c:242
+#: ../app/widgets/gimpwidgets-constructors.c:253
+msgctxt "profile"
+msgid "None"
+msgstr "Nincs"
 
 #: ../app/dialogs/color-profile-import-dialog.c:85
 msgid "Convert to Grayscale Working Space?"
@@ -12362,7 +12394,7 @@ msgstr "Párbeszédablak alapbeállításainak visszaállítása"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:1820
-msgid "Color Profile Import dialog"
+msgid "Color Profile Import Dialog"
 msgstr "Színprofil-importálási párbeszédablak"
 
 #: ../app/dialogs/preferences-dialog.c:1825
@@ -13117,61 +13149,69 @@ msgstr "_Y-felbontás:"
 msgid "pixels/%a"
 msgstr "képpont/%a"
 
-#: ../app/dialogs/quit-dialog.c:144
+#: ../app/dialogs/quit-dialog.c:159
 msgid "Quit GIMP"
 msgstr "Kilépés a GIMP-ből"
 
-#: ../app/dialogs/quit-dialog.c:144
+#: ../app/dialogs/quit-dialog.c:159
 msgid "Close All Images"
 msgstr "Az összes kép bezárása"
 
-#: ../app/dialogs/quit-dialog.c:212
+#: ../app/dialogs/quit-dialog.c:251
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Ha kilép a GIMP-ből, akkor ezek a változások el fognak veszni."
 
 # %s: időszakasz (például 10 másodperc)
-#: ../app/dialogs/quit-dialog.c:215
+#: ../app/dialogs/quit-dialog.c:254
 msgid "If you close these images now, changes will be lost."
 msgstr "Ha most bezárja ezeket a képeket, akkor a módosulások elvesznek."
 
-#: ../app/dialogs/quit-dialog.c:300
+#: ../app/dialogs/quit-dialog.c:339
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "A következő kép nem mentett módosítást tartalmaz:"
 msgstr[1] "A következő %d kép nem mentett módosítást tartalmaz:"
 
-#: ../app/dialogs/quit-dialog.c:311
+#: ../app/dialogs/quit-dialog.c:350
 #, c-format
 msgid "Press %s to quit."
 msgstr "Nyomja meg a(z) %s gombot a kilépéshez."
 
-#: ../app/dialogs/quit-dialog.c:314
+#: ../app/dialogs/quit-dialog.c:353
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Nyomja meg a(z) %s gombot az összes kép bezárásához."
 
-#: ../app/dialogs/quit-dialog.c:330
+#: ../app/dialogs/quit-dialog.c:369
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr ""
 "Nyomja meg a(z) %s gombot az összes változtatás eldobásához és a kilépéshez."
 
-#: ../app/dialogs/quit-dialog.c:333
+#: ../app/dialogs/quit-dialog.c:372
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
 "Nyomja meg a(z) %s gombot az összes változtatás eldobásához és minden kép "
 "bezárásához."
 
-#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:183
+#: ../app/dialogs/quit-dialog.c:380 ../app/display/gimpdisplayshell-close.c:183
 msgid "_Discard Changes"
 msgstr "Módosítások _eldobása"
 
-#: ../app/dialogs/quit-dialog.c:421
+#: ../app/dialogs/quit-dialog.c:460
 #, c-format
 msgid "Exported to %s"
 msgstr "Exportálás ebbe: %s"
+
+#: ../app/dialogs/quit-dialog.c:560
+msgid "Save this image"
+msgstr "Ezen kép elmentése"
+
+#: ../app/dialogs/quit-dialog.c:562
+msgid "Save as"
+msgstr "Mentés másként"
 
 #: ../app/dialogs/resize-dialog.c:121
 msgid "Canvas Size"
@@ -13440,7 +13480,7 @@ msgstr "Navigálás a megjelenített képen"
 msgid "Drop image files here to open them"
 msgstr "Képfájlok megnyitásához ejtse azokat ide"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:533
+#: ../app/display/gimpdisplayshell-callbacks.c:540
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -15001,176 +15041,176 @@ msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Zaj (HSV)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2115 ../app/pdb/plug-in-compat-cmds.c:2175
+#: ../app/pdb/plug-in-compat-cmds.c:2130 ../app/pdb/plug-in-compat-cmds.c:2185
 msgid "Set color profile"
 msgstr "Színprofil beállítása"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2230
+#: ../app/pdb/plug-in-compat-cmds.c:2240
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Illúzió"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2267
+#: ../app/pdb/plug-in-compat-cmds.c:2277
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2343
+#: ../app/pdb/plug-in-compat-cmds.c:2353
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Lencse-torzítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2383
+#: ../app/pdb/plug-in-compat-cmds.c:2393
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Varrat nélküli csempe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2450
+#: ../app/pdb/plug-in-compat-cmds.c:2460
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Labirintus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2533 ../app/pdb/plug-in-compat-cmds.c:2617
+#: ../app/pdb/plug-in-compat-cmds.c:2543 ../app/pdb/plug-in-compat-cmds.c:2627
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Elmosás elmozdítással"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2718
+#: ../app/pdb/plug-in-compat-cmds.c:2728
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mozaik"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2780
+#: ../app/pdb/plug-in-compat-cmds.c:2790
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Szupernóva"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2870
+#: ../app/pdb/plug-in-compat-cmds.c:2880
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Papírcsempe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2911 ../app/pdb/plug-in-compat-cmds.c:2954
+#: ../app/pdb/plug-in-compat-cmds.c:2921 ../app/pdb/plug-in-compat-cmds.c:2964
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixelesítés"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3005
+#: ../app/pdb/plug-in-compat-cmds.c:3015
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plazma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3059
+#: ../app/pdb/plug-in-compat-cmds.c:3069
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Polárkoordináták"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3099
+#: ../app/pdb/plug-in-compat-cmds.c:3109
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Vörös szem eltávolítása"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3152
+#: ../app/pdb/plug-in-compat-cmds.c:3162
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Véletlenszerű zaj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3205
+#: ../app/pdb/plug-in-compat-cmds.c:3215
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Véletlenszerű kiválasztás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3258
+#: ../app/pdb/plug-in-compat-cmds.c:3268
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Véletlenszerű elmosás csúsztatással"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3333
+#: ../app/pdb/plug-in-compat-cmds.c:3343
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB zaj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3456
+#: ../app/pdb/plug-in-compat-cmds.c:3466
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Zajosítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3500
+#: ../app/pdb/plug-in-compat-cmds.c:3510
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Szelektív Gauss-elmosás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3544
+#: ../app/pdb/plug-in-compat-cmds.c:3554
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Félig-lapítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3587
+#: ../app/pdb/plug-in-compat-cmds.c:3597
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Eltolás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3690
+#: ../app/pdb/plug-in-compat-cmds.c:3700
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Szinusz"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3738
+#: ../app/pdb/plug-in-compat-cmds.c:3748
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3799
+#: ../app/pdb/plug-in-compat-cmds.c:3809
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Egyenletes zaj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3843
+#: ../app/pdb/plug-in-compat-cmds.c:3853
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Szórás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3884
+#: ../app/pdb/plug-in-compat-cmds.c:3894
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Alfa-küszöb"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3930
+#: ../app/pdb/plug-in-compat-cmds.c:3940
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Videó"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3967
+#: ../app/pdb/plug-in-compat-cmds.c:3977
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Érték invertálása"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4071
+#: ../app/pdb/plug-in-compat-cmds.c:4081
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Érték terjesztése"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4118
+#: ../app/pdb/plug-in-compat-cmds.c:4128
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Tágítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4165
+#: ../app/pdb/plug-in-compat-cmds.c:4175
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Zsugorítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4228
+#: ../app/pdb/plug-in-compat-cmds.c:4238
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Hullámok"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4276
+#: ../app/pdb/plug-in-compat-cmds.c:4286
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Csavarás és összehúzás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4328
+#: ../app/pdb/plug-in-compat-cmds.c:4338
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Szél"
@@ -15349,12 +15389,12 @@ msgstr "„%s” kihagyása: helytelen GIMP-protokollverzió."
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "„%s” kihagyása: helytelen pluginrc fájlformátum-verzió."
 
-#: ../app/plug-in/plug-in-rc.c:511
+#: ../app/plug-in/plug-in-rc.c:507
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "érvénytelen érték („%s”) az ikontípusban"
 
-#: ../app/plug-in/plug-in-rc.c:526
+#: ../app/plug-in/plug-in-rc.c:522
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "érvénytelen érték („%ld”) az ikontípusban"
@@ -20140,15 +20180,15 @@ msgstr "Eszköz előbeállítás törlése…"
 msgid "%s Preset"
 msgstr "%s előbeállítás"
 
-#: ../app/widgets/gimpuimanager.c:741
+#: ../app/widgets/gimpuimanager.c:760
 msgid "Your GIMP installation is incomplete:"
 msgstr "A GIMP telepítése nem teljes:"
 
-#: ../app/widgets/gimpuimanager.c:743
+#: ../app/widgets/gimpuimanager.c:762
 msgid "Please make sure the menu XML files are correctly installed."
 msgstr "Ellenőrizze, hogy a menük XML-fájljai helyesen vannak-e telepítve."
 
-#: ../app/widgets/gimpuimanager.c:749
+#: ../app/widgets/gimpuimanager.c:768
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr "Hiba történt az itt levő menüdefiníció elemzése közben: „%s”: %s"
