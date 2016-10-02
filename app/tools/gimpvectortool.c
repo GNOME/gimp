@@ -1321,7 +1321,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
           break;
 
         case VECTORS_FINISHED:
-          status = NULL;
+          status = _("Clicking here does nothing, try clicking on path elements.");
           break;
       }
 
