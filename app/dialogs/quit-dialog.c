@@ -94,7 +94,7 @@ static void        quit_close_all_dialog_accel_marshal     (GClosure          *c
 static void        quit_close_all_dialog_container_changed (GimpContainer     *images,
                                                             GimpObject        *image,
                                                             QuitDialog        *private);
-static void        quit_close_all_dialog_image_activated   (GimpContainerView *view,
+static void        quit_close_all_dialog_image_selected    (GimpContainerView *view,
                                                             GimpImage         *image,
                                                             gpointer           insert_data,
                                                             QuitDialog        *private);
@@ -238,8 +238,8 @@ quit_close_all_dialog_new (Gimp     *gimp,
   gtk_box_pack_start (GTK_BOX (private->box), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
 
-  g_signal_connect (view, "activate-item",
-                    G_CALLBACK (quit_close_all_dialog_image_activated),
+  g_signal_connect (view, "select-item",
+                    G_CALLBACK (quit_close_all_dialog_image_selected),
                     private);
 
   dnd_widget = gimp_container_view_get_dnd_widget (GIMP_CONTAINER_VIEW (view));
@@ -401,10 +401,10 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
 }
 
 static void
-quit_close_all_dialog_image_activated (GimpContainerView *view,
-                                       GimpImage         *image,
-                                       gpointer           insert_data,
-                                       QuitDialog        *private)
+quit_close_all_dialog_image_selected (GimpContainerView *view,
+                                      GimpImage         *image,
+                                      gpointer           insert_data,
+                                      QuitDialog        *private)
 {
   GList *list;
 
