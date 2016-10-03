@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-09-24 22:36+0000\n"
-"PO-Revision-Date: 2016-09-26 09:53+0200\n"
+"POT-Creation-Date: 2016-10-01 19:45+0000\n"
+"PO-Revision-Date: 2016-10-02 11:11+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -1521,20 +1521,20 @@ msgstr "A színskálán kívüli színek megjelölése"
 msgid "Out of gamut warning color"
 msgstr "A színskálán kívül esés figyelmeztető színe"
 
-#: ../libgimpconfig/gimpcolorconfig.c:656
-#: ../libgimpconfig/gimpcolorconfig.c:818
+#: ../libgimpconfig/gimpcolorconfig.c:659
+#: ../libgimpconfig/gimpcolorconfig.c:843
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "A(z) „%s” színprofil nem RGB színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig.c:694
-#: ../libgimpconfig/gimpcolorconfig.c:859
+#: ../libgimpconfig/gimpcolorconfig.c:701
+#: ../libgimpconfig/gimpcolorconfig.c:893
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "A(z) „%s” színprofil nem szürkeárnyalatos színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig.c:732
-#: ../libgimpconfig/gimpcolorconfig.c:900
+#: ../libgimpconfig/gimpcolorconfig.c:743
+#: ../libgimpconfig/gimpcolorconfig.c:943
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "A(z) „%s” színprofil nem CMYK színtérhez való."
@@ -1545,24 +1545,24 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s kifejezés értéke nem egy érvényes UTF-8 szöveg"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:464
+#: ../libgimpconfig/gimpconfig-deserialize.c:466
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "csak „yes” vagy „no” érték szerepelhetne %s logikai kifejezésben, de „%s” "
 "szerepel"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:538
+#: ../libgimpconfig/gimpconfig-deserialize.c:540
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "érvénytelen érték („%s”) %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:553
+#: ../libgimpconfig/gimpconfig-deserialize.c:555
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "érvénytelen érték („%ld”) %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:622
+#: ../libgimpconfig/gimpconfig-deserialize.c:624
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "„%s” kifejezés elemzése közben: %s"
@@ -1570,11 +1570,15 @@ msgstr "„%s” kifejezés elemzése közben: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:658
 #: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
 #: ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:719
+#: ../libgimpwidgets/gimpcolorprofilestore.c:712
 msgid "fatal parse error"
 msgstr "végzetes feldolgozási hiba"
 
-#: ../libgimpconfig/gimpconfig-path.c:487
+#: ../libgimpconfig/gimpconfig-path.c:483
+msgid "File has no path represantation"
+msgstr "A fájlnak nincs útvonal ábrázolása"
+
+#: ../libgimpconfig/gimpconfig-path.c:566
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s} nem bővíthető"
@@ -1690,7 +1694,7 @@ msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC színprofil (*.icc, *.icm)"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
-#: ../libgimpwidgets/gimppatheditor.c:249
+#: ../libgimpwidgets/gimppatheditor.c:266
 msgid "Folder"
 msgstr "Mappa"
 
@@ -1743,24 +1747,32 @@ msgstr "H_TML-jelölés:"
 msgid "Show file location in the file manager"
 msgstr "A fájl helyének megjelenítése a fájlkezelőben"
 
-#: ../libgimpwidgets/gimpfileentry.c:229
+#: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your folders"
 msgstr "Fájlválasztó megnyitása a mappák böngészéséhez"
 
-#: ../libgimpwidgets/gimpfileentry.c:230
+#: ../libgimpwidgets/gimpfileentry.c:231
 msgid "Open a file selector to browse your files"
 msgstr "Fájlválasztó megnyitása a fájlok böngészéséhez"
 
-#: ../libgimpwidgets/gimpfileentry.c:397
+#: ../libgimpwidgets/gimpfileentry.c:243
+msgid "Indicates whether or not the folder exists"
+msgstr "Azt jelöli, hogy a mappa létezik-e"
+
+#: ../libgimpwidgets/gimpfileentry.c:244
+msgid "Indicates whether or not the file exists"
+msgstr "Azt jelöli, hogy a fájl létezik-e"
+
+#: ../libgimpwidgets/gimpfileentry.c:404
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Nem lehet megjeleníteni a fájlt a fájlkezelőben: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:431
 msgid "Select Folder"
 msgstr "Mappa kiválasztása"
 
-#: ../libgimpwidgets/gimpfileentry.c:426
+#: ../libgimpwidgets/gimpfileentry.c:433
 msgid "Select File"
 msgstr "Fájl kiválasztása"
 
@@ -1889,7 +1901,23 @@ msgid_plural "All %d pages selected"
 msgstr[0] "%d lap van kijelölve"
 msgstr[1] "Mind a(z) %d lap ki van jelölve"
 
-#: ../libgimpwidgets/gimppatheditor.c:240
+#: ../libgimpwidgets/gimppatheditor.c:180
+msgid "Add a new folder"
+msgstr "Új mappa hozzáadása"
+
+#: ../libgimpwidgets/gimppatheditor.c:197
+msgid "Move the selected folder up"
+msgstr "Kiválasztott mappa mozgatása felfelé"
+
+#: ../libgimpwidgets/gimppatheditor.c:214
+msgid "Move the selected folder down"
+msgstr "Kiválasztott mappa mozgatása lefelé"
+
+#: ../libgimpwidgets/gimppatheditor.c:231
+msgid "Remove the selected folder from the list"
+msgstr "Kiválasztott mappa eltávolítása a listából"
+
+#: ../libgimpwidgets/gimppatheditor.c:257
 msgid "Writable"
 msgstr "Írható"
 
@@ -2597,15 +2625,15 @@ msgstr "Színes próbanyomat"
 msgid "Choose an ICC Color Profile"
 msgstr "Válasszon egy ICC színprofilt"
 
-#: ../modules/display-filter-proof.c:314
+#: ../modules/display-filter-proof.c:316
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:320
+#: ../modules/display-filter-proof.c:322
 msgid "_Intent:"
 msgstr "_Cél:"
 
-#: ../modules/display-filter-proof.c:325
+#: ../modules/display-filter-proof.c:327
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
 
