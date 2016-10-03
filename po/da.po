@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-22 17:48+0000\n"
+"POT-Creation-Date: 2016-03-16 07:07+0000\n"
 "PO-Revision-Date: 2016-02-26 00:00+0200\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -50,9 +50,8 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "Copyright © 1995-%s\n"
-"Spencer Kimball, Peter Mattis og GIMP's udviklingsteam"
+"Spencer Kimball, Peter Mattis og GIMPs udviklingsteam"
 
-# scootergrisen: kildesprog: forslå at sætte linket i HTML-kode
 #: ../app/about.h:34
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
@@ -307,16 +306,14 @@ msgstr "Markøroplysninger"
 msgid "Debug"
 msgstr "Fejlfinding"
 
-# scootergrisen: ja dialoger er jo så ikke vinduer, kig på senere om kan gøres bedre
 #: ../app/actions/actions.c:136
 msgid "Dialogs"
-msgstr "Vinduer/Dialoger"
+msgstr "Dialoger"
 
 #: ../app/actions/actions.c:139
 msgid "Dock"
 msgstr "Fastgør"
 
-# scootergrisen: måske "Dokbar"
 #: ../app/actions/actions.c:142
 msgid "Dockable"
 msgstr "Dokbare"
@@ -644,7 +641,7 @@ msgstr "_Ny kanal"
 #: ../app/actions/channels-actions.c:61
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
-msgstr "Opret en ny kanal med de sidst anvendte værdier"
+msgstr "Opret en ny kanal med de sidst brugte værdier"
 
 #: ../app/actions/channels-actions.c:66
 msgctxt "channels-action"
@@ -716,7 +713,6 @@ msgctxt "channels-action"
 msgid "Replace the selection with this channel"
 msgstr "Erstat markeringen med denne kanal"
 
-# scootergrisen: måske Føj til
 #: ../app/actions/channels-actions.c:114
 msgctxt "channels-action"
 msgid "_Add to Selection"
@@ -737,7 +733,6 @@ msgctxt "channels-action"
 msgid "Subtract this channel from the current selection"
 msgstr "Træk denne kanal fra den nuværende markering"
 
-# scootergrisen: måske se om der findes et bedre ord for kryds med, her og andre steder
 #: ../app/actions/channels-actions.c:126
 msgctxt "channels-action"
 msgid "_Intersect with Selection"
@@ -918,11 +913,10 @@ msgctxt "context-action"
 msgid "_Hardness"
 msgstr "_Hårdhed"
 
-# scootergrisen: måske "_Højde-bredde-forhold"
 #: ../app/actions/context-actions.c:75
 msgctxt "context-action"
 msgid "_Aspect Ratio"
-msgstr "_Størrelsesforhold"
+msgstr "_Højde-bredde-forhold"
 
 #: ../app/actions/context-actions.c:77
 msgctxt "context-action"
@@ -1840,7 +1834,6 @@ msgid "Delete this dynamics"
 msgstr "Slet denne dynamik"
 
 # engelsk fejl 2 s'er
-# scootergrisen: måske "_Opdatér dynamik"
 #: ../app/actions/dynamics-actions.c:70
 msgctxt "dynamics-action"
 msgid "_Refresh Dynamics"
@@ -2162,7 +2155,7 @@ msgstr "Kopierede pixels til udklipsholderen"
 #: ../app/actions/edit-commands.c:325 ../app/actions/edit-commands.c:360
 #: ../app/actions/edit-commands.c:543
 msgid "There is no image data in the clipboard to paste."
-msgstr "Der er ingen billeddata i udklipsholderen at indsætte."
+msgstr "Der er ikke nogen billeddata i udklipsholderen til at indsætte."
 
 #: ../app/actions/edit-commands.c:348 ../app/core/gimpbrushclipboard.c:172
 #: ../app/core/gimppatternclipboard.c:172 ../app/widgets/gimpclipboard.c:345
@@ -2222,7 +2215,7 @@ msgstr "Markér _alt"
 #: ../app/actions/error-console-actions.c:50
 msgctxt "error-console-action"
 msgid "Select all error messages"
-msgstr "Marker alle fejlbeskeder"
+msgstr "Markér alle fejlmeddelelser"
 
 #: ../app/actions/error-console-actions.c:58
 msgctxt "error-console-action"
@@ -2232,7 +2225,7 @@ msgstr "_Gem fejllog i fil..."
 #: ../app/actions/error-console-actions.c:59
 msgctxt "error-console-action"
 msgid "Write all error messages to a file"
-msgstr "Gem alle fejlbeskeder i en fil"
+msgstr "Gem alle fejlmeddelelser i en fil"
 
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
@@ -2242,7 +2235,7 @@ msgstr "Gem _markering i fil..."
 #: ../app/actions/error-console-actions.c:65
 msgctxt "error-console-action"
 msgid "Write the selected error messages to a file"
-msgstr "Gem de markerede fejlbeskeder i en fil"
+msgstr "Gem de markerede fejlmeddelelser i en fil"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
@@ -2390,7 +2383,6 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Gem billedet og luk dets vindue"
 
-# scootergrisen: kildesprog: forslå at tilføje "..."
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
 msgid "Export"
@@ -2448,7 +2440,7 @@ msgstr "Åbn billede som lag"
 msgid "No changes need to be saved"
 msgstr "Ingen ændringer skal gemmes"
 
-#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:701
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:703
 #: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Gem billede"
@@ -2486,11 +2478,11 @@ msgstr ""
 "Ved at gendanne billedet til den tilstand, der er gemt på disken, vil du "
 "miste alle ændringer, inklusive al fortrydelsesinformation."
 
-#: ../app/actions/file-commands.c:731
+#: ../app/actions/file-commands.c:733
 msgid "(Unnamed Template)"
 msgstr "(unavngivet skabelon)"
 
-#: ../app/actions/file-commands.c:782
+#: ../app/actions/file-commands.c:784
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2967,7 +2959,7 @@ msgstr "_Hjælp"
 #: ../app/actions/help-actions.c:41
 msgctxt "help-action"
 msgid "Open the GIMP user manual"
-msgstr "Åbn GIMP's brugermanual"
+msgstr "Åbn GIMPs brugermanual"
 
 #: ../app/actions/help-actions.c:46
 msgctxt "help-action"
@@ -3030,7 +3022,6 @@ msgctxt "image-action"
 msgid "C_omponents"
 msgstr "K_omponenter"
 
-# scootergrisen: "nyt" som i nyt billede... hmmm kan da godt være andre programmer bruger "ny"
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_New..."
@@ -3106,7 +3097,6 @@ msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "_Duplikér"
 
-# scootergrisen: dublet/kopi
 #: ../app/actions/image-actions.c:110
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
@@ -3165,12 +3155,12 @@ msgstr "Konvertér billedet til RGB-farverummet"
 #: ../app/actions/image-actions.c:147
 msgctxt "image-convert-action"
 msgid "_Grayscale"
-msgstr "_Gråtoner"
+msgstr "_Gråtone"
 
 #: ../app/actions/image-actions.c:148
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
-msgstr "Konvertér billedet til gråtoner"
+msgstr "Konvertér billedet til gråtone"
 
 #: ../app/actions/image-actions.c:152
 msgctxt "image-convert-action"
@@ -3245,7 +3235,6 @@ msgstr "Tilpasser størrelsen"
 msgid "Set Image Print Resolution"
 msgstr "Indstil udskriftsopløsning"
 
-# scootergrisen: måske "Omvender"
 #: ../app/actions/image-commands.c:379
 #: ../app/pdb/drawable-transform-cmds.c:159
 #: ../app/pdb/drawable-transform-cmds.c:247
@@ -3405,7 +3394,6 @@ msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "Opret et nyt lag med de senest anvendte værdier"
 
-# scootergrisen: måske "Nyt fra _synligt"
 #: ../app/actions/layers-actions.c:94
 msgctxt "layers-action"
 msgid "New from _Visible"
@@ -3431,7 +3419,6 @@ msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "_Duplikér lag"
 
-# scootergrisen: dublet/kopi
 #: ../app/actions/layers-actions.c:109
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
@@ -3567,7 +3554,6 @@ msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Anbring dette lags tekst langs den aktuelle bane"
 
-# scootergrisen: bedst at det mindre om lærredstørrelse
 #: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
@@ -3704,7 +3690,6 @@ msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Erstat markeringen med lagmasken"
 
-# scootergrisen: måske Føj til
 #: ../app/actions/layers-actions.c:290
 msgctxt "layers-action"
 msgid "_Add to Selection"
@@ -3745,7 +3730,6 @@ msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Erstat markeringen med lagets alfa-kanal"
 
-# scootergrisen: måske Føj til
 #: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
 msgid "A_dd to Selection"
@@ -3851,7 +3835,6 @@ msgstr "Opret et nyt lag"
 msgid "Visible"
 msgstr "Synlig"
 
-# scootergrisen: tjek hvad der er bedst (se lærredets kanter)
 # vælg er fint her fordi det er i en vinduestitel
 #: ../app/actions/layers-commands.c:618
 msgid "Set Layer Boundary Size"
@@ -4139,13 +4122,11 @@ msgctxt "plug-in-action"
 msgid "Edge-De_tect"
 msgstr "Kant_genkendelse"
 
-# scootergrisen: Forbedre?
 #: ../app/actions/plug-in-actions.c:95
 msgctxt "plug-in-action"
 msgid "En_hance"
 msgstr "_Forbedring"
 
-# scootergrisen: _Kombinering/kombinér?
 #: ../app/actions/plug-in-actions.c:97
 msgctxt "plug-in-action"
 msgid "C_ombine"
@@ -4161,11 +4142,10 @@ msgctxt "plug-in-action"
 msgid "_Light and Shadow"
 msgstr "_Lys og skygge"
 
-# scootergrisen: måske forslå uden s på kildesprog så det bliver "Forvrængning" på dansk uden er.
 #: ../app/actions/plug-in-actions.c:103
 msgctxt "plug-in-action"
 msgid "_Distorts"
-msgstr "_Forvrængninger"
+msgstr "_Forvrænger"
 
 #: ../app/actions/plug-in-actions.c:105
 msgctxt "plug-in-action"
@@ -4247,11 +4227,10 @@ msgstr "Vis dialogen for det senest anvendte plugin igen"
 msgid "Re_peat \"%s\""
 msgstr "_Gentag \"%s\""
 
-# scootergrisen: måske _igen
 #: ../app/actions/plug-in-actions.c:552
 #, c-format
 msgid "R_e-Show \"%s\""
-msgstr "Vis \"%s\" ig_en"
+msgstr "Vis \"%s\" _igen"
 
 #: ../app/actions/plug-in-actions.c:568
 msgid "Repeat Last"
@@ -4336,7 +4315,6 @@ msgid "Selection Editor Menu"
 msgstr "Markeringsredigeringsmenu"
 
 # et navneord ser bedst ud i stedet for 'Markér'
-# scootergrisen: skal vel ikke hedder "Markér > Invertér", så prøv med markering, så kildesprog skulle vel hedde Selection
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
 msgid "_Select"
@@ -4464,15 +4442,13 @@ msgstr "_Bestryg markering"
 #: ../app/actions/select-actions.c:118
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "Bestryg markeringen med de sidst anvendte værdier"
+msgstr "Bestryg markeringen med de sidst brugte værdier"
 
-# scootergrisen: feather ~ udtynd/pelset
 #: ../app/actions/select-commands.c:156
 msgid "Feather Selection"
 msgstr "Udtynd markering"
 
 # 'over' kommer sig af at der følger antallet af pixels fra kanten som det næste
-# scootergrisen: feather ~ udtynd/pelset
 #: ../app/actions/select-commands.c:160
 msgid "Feather selection by"
 msgstr "Udtynd det markerede over"
@@ -4507,7 +4483,6 @@ msgstr "Indram markering"
 msgid "Border selection by"
 msgstr "Indram det markerede med"
 
-# scootergrisen: feather ~ udtynd/pelset
 #. Feather button
 #: ../app/actions/select-commands.c:280
 msgid "_Feather border"
@@ -4662,7 +4637,7 @@ msgstr "Åbn tekstfil (UTF-8)"
 #: ../app/core/gimppalette-load.c:274 ../app/core/gimppalette-load.c:320
 #: ../app/core/gimppalette-load.c:377 ../app/core/gimppalette-load.c:467
 #: ../app/core/gimppalette-load.c:634 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:642 ../app/tools/gimplevelstool.c:747
+#: ../app/tools/gimpcurvestool.c:658 ../app/tools/gimplevelstool.c:747
 #: ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -5102,7 +5077,6 @@ msgctxt "vectors-action"
 msgid "Replace selection with path"
 msgstr "Erstat markeringen med bane"
 
-# scootergrisen: måske Føj til
 #: ../app/actions/vectors-actions.c:180
 msgctxt "vectors-action"
 msgid "_Add to Selection"
@@ -5315,7 +5289,6 @@ msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Vis markeringsomridset"
 
-# scootergrisen: tjek hvad der er bedst (se lærredets kanter)
 #: ../app/actions/view-actions.c:147
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
@@ -5356,11 +5329,10 @@ msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Vis billedets farveprøvepunkter"
 
-# scootergrisen: måske "_Fastgør til hjælpelinjer"
 #: ../app/actions/view-actions.c:175
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
-msgstr "F_astgør til hjælpelinjer"
+msgstr "_Fastgør til hjælpelinjer"
 
 #: ../app/actions/view-actions.c:176
 msgctxt "view-action"
@@ -5417,17 +5389,15 @@ msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Vis dette vindues linealer"
 
-# scootergrisen: måske rullebjælker
 #: ../app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "Show Scroll_bars"
-msgstr "Vis _rullepaneler"
+msgstr "Vis _rullebjælker"
 
-# scootergrisen: måske rullebjælker
 #: ../app/actions/view-actions.c:218
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
-msgstr "Vis dette vindues rullepaneler"
+msgstr "Vis dette vindues rullebjælker"
 
 #: ../app/actions/view-actions.c:224
 msgctxt "view-action"
@@ -5621,7 +5591,7 @@ msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Brug den mørke ternfarve"
 
-# scootergrisen: forslå at fjerne "Select " fra kildesprog
+# scootergrisen: kildesprog: forslå at fjerne "Select " fra kildesprog
 #: ../app/actions/view-actions.c:411
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
@@ -5724,8 +5694,8 @@ msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
-"Når denne er aktiveret skjules dokker og andre dialoger, så kun billedvinduer "
-"vises."
+"Når denne er aktiveret skjules dokker og andre dialoger, så kun "
+"billedvinduer vises."
 
 #: ../app/actions/windows-actions.c:122
 msgctxt "windows-action"
@@ -6035,7 +6005,7 @@ msgstr "Højrehåndet"
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:62
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:695
+#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:711
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
 #: ../app/xcf/xcf.c:452
 #, c-format
@@ -6121,8 +6091,8 @@ msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
-"Når denne er aktiveret, vil dette sikre, at hvert pixel i et billede "
-"bliver afbildet til en pixel på skærmen."
+"Når denne er aktiveret, vil dette sikre, at hvert pixel i et billede bliver "
+"afbildet til en pixel på skærmen."
 
 #: ../app/config/gimprc-blurbs.h:93
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -6130,7 +6100,7 @@ msgstr ""
 "Dette er afstanden målt i pixels, hvor det aktiveres, at der rettes ind "
 "efter hjælpelinjer og gitter."
 
-# scootergrisen: Frøudfyldningen?
+# scootergrisen: seed fill starts - Frøudfyldningen?
 #: ../app/config/gimprc-blurbs.h:109
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
@@ -6151,9 +6121,8 @@ msgid ""
 "This may affect the way your window manager decorates and handles these "
 "windows."
 msgstr ""
-"Vinduestypehintet der sættes på dokvinduer og vinduet værktøjskasse. "
-"Dette kan påvirke den måde din vindueshåndtering dekorerer og håndterer "
-"vinduerne."
+"Vinduestypehintet der sættes på dokvinduer og vinduet værktøjskasse. Dette "
+"kan påvirke den måde din vindueshåndtering dekorerer og håndterer vinduerne."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected brush will be used for all tools."
@@ -6163,7 +6132,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected dynamics will be used for all tools."
 msgstr ""
-"Når denne er aktiveret, vil den valgte dynamik blive brugt til alle værktøjer."
+"Når denne er aktiveret, vil den valgte dynamik blive brugt til alle "
+"værktøjer."
 
 #: ../app/config/gimprc-blurbs.h:163
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -6174,7 +6144,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
-"Når denne er aktiveret, vil det valgte mønster blive brugt til alle værktøjer."
+"Når denne er aktiveret, vil det valgte mønster blive brugt til alle "
+"værktøjer."
 
 #: ../app/config/gimprc-blurbs.h:180
 msgid "Sets the browser used by the help system."
@@ -6193,8 +6164,8 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Når denne er aktiveret, sikr dette at det komplette billede er synligt efter en fil er åbnet, ellers vil "
-"den blive vist i skalaforholdet 1:1."
+"Når denne er aktiveret, sikr dette at det komplette billede er synligt efter "
+"en fil er åbnet, ellers vil den blive vist i skalaforholdet 1:1."
 
 #: ../app/config/gimprc-blurbs.h:201
 msgid ""
@@ -6208,8 +6179,7 @@ msgstr "Angiver sproget der skal bruges til brugergrænsefladen."
 #: ../app/config/gimprc-blurbs.h:211
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
-"Hvor mange filnavne over senest åbnede billeder, der skal gemmes i "
-"filmenuen."
+"Hvor mange filnavne over senest åbnede billeder, der skal gemmes i filmenuen."
 
 #: ../app/config/gimprc-blurbs.h:214
 msgid ""
@@ -6252,8 +6222,8 @@ msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
-"Hvis denne er aktiveret, vil flytteværktøjet gøre det redigerede lag eller den "
-"redigerede bane aktiv. Det var standardopførslen i tidligere versioner."
+"Hvis denne er aktiveret, vil flytteværktøjet gøre det redigerede lag eller "
+"den redigerede bane aktiv. Det var standardopførslen i tidligere versioner."
 
 #: ../app/config/gimprc-blurbs.h:242
 msgid ""
@@ -6275,11 +6245,11 @@ msgid ""
 "Conversely, on some X servers enabling this option results in faster "
 "painting."
 msgstr ""
-"Når denne er aktiveret, vil X-serveren blive spurgt om musens aktuelle position ved "
-"hver bevægelseshændelse, i stedet for at bero på positionshintet. Det "
-"betyder, at maling med større pensler bør være mere præcis, men det kan være "
-"langsommere. Omvendt, kan det på nogle X-servere resultere i hurtigere "
-"maling."
+"Når denne er aktiveret, vil X-serveren blive spurgt om musens aktuelle "
+"position ved hver bevægelseshændelse, i stedet for at bero på "
+"positionshintet. Det betyder, at maling med større pensler bør være mere "
+"præcis, men det kan være langsommere. Omvendt, kan det på nogle X-servere "
+"resultere i hurtigere maling."
 
 #: ../app/config/gimprc-blurbs.h:275
 msgid ""
@@ -6353,8 +6323,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Når denne er aktiveret, vil alle tegneværktøjer vise en forhåndsvisning af den "
-"aktuelle pensels omrids."
+"Når denne er aktiveret, vil alle tegneværktøjer vise en forhåndsvisning af "
+"den aktuelle pensels omrids."
 
 #: ../app/config/gimprc-blurbs.h:319
 msgid ""
@@ -6362,7 +6332,7 @@ msgid ""
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 msgstr ""
-"Når denne er aktiveret, vil vinduer vise en hjælpeknap, som giver adgang til "
+"Når denne er aktiveret, vil dialoger vise en hjælpeknap, som giver adgang til "
 "den relaterede hjælpeside. Hjælpesiden kan stadig nås uden denne knap ved at "
 "trykke på F1."
 
@@ -6379,43 +6349,41 @@ msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"Når denne er aktiveret, vises menulinjen som standard. Dette kan også slås til og fra "
-"med kommandoen \"Vis->Vis menulinje\"."
+"Når denne er aktiveret, vises menulinjen som standard. Dette kan også slås "
+"til og fra med kommandoen \"Vis->Vis menulinje\"."
 
 #: ../app/config/gimprc-blurbs.h:332
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Når denne er aktiveret, vises linealerne som standard. Dette kan også slås til og fra "
-"med kommandoen \"Vis->Vis linealer\"."
+"Når denne er aktiveret, vises linealerne som standard. Dette kan også slås "
+"til og fra med kommandoen \"Vis->Vis linealer\"."
 
-# scootergrisen: måske rullebjælker
 #: ../app/config/gimprc-blurbs.h:336
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Når denne er aktiveret, vises rullepaneler som standard. Dette kan også slås til og fra "
-"med kommandoen \"Vis->Vis rullepaneler\"."
+"Når denne er aktiveret, vises rullebjælker som standard. Dette kan også slås "
+"til og fra med kommandoen \"Vis->Vis rullebjælker\"."
 
 #: ../app/config/gimprc-blurbs.h:340
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"Når denne er aktiveret, vises statuslinjen som standard. Dette kan også slås til og fra "
-"med kommandoen \"Vis->Vis statuslinje\"."
+"Når denne er aktiveret, vises statuslinjen som standard. Dette kan også slås "
+"til og fra med kommandoen \"Vis->Vis statuslinje\"."
 
 #: ../app/config/gimprc-blurbs.h:344
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"Når denne er aktiveret, vises markeringen som standard. Dette kan også slås til og fra "
-"med kommandoen \"Vis->Vis markering\"."
+"Når denne er aktiveret, vises markeringen som standard. Dette kan også slås "
+"til og fra med kommandoen \"Vis->Vis markering\"."
 
-# scootergrisen: tjek hvad der er bedst (se lærredets kanter)
 #: ../app/config/gimprc-blurbs.h:348
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
@@ -6437,16 +6405,16 @@ msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Når denne er aktiveret, vises gitteret som standard. Dette kan også slås til og fra med "
-"kommandoen \"Vis->Vis gitter\"."
+"Når denne er aktiveret, vises gitteret som standard. Dette kan også slås til "
+"og fra med kommandoen \"Vis->Vis gitter\"."
 
 #: ../app/config/gimprc-blurbs.h:360
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Når denne er aktiveret, vises prøvepunkter som standard. Dette kan også slås til og fra "
-"med kommandoen \"Vis->Vis prøvepunkter\"."
+"Når denne er aktiveret, vises prøvepunkter som standard. Dette kan også slås "
+"til og fra med kommandoen \"Vis->Vis prøvepunkter\"."
 
 #: ../app/config/gimprc-blurbs.h:364
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -6543,8 +6511,7 @@ msgstr "Vis de aktuelle for- og baggrundsfarver i værktøjskassen."
 
 #: ../app/config/gimprc-blurbs.h:426
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr ""
-"Vis den valgte pensel, mønster og farveovergang i værktøjskassen."
+msgstr "Vis den valgte pensel, mønster og farveovergang i værktøjskassen."
 
 #: ../app/config/gimprc-blurbs.h:429
 msgid "Show the currently active image in the toolbox."
@@ -6563,8 +6530,8 @@ msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
-"Når denne er aktiveret, vil GIMP ikke gemme et billede, hvis det ikke er blevet "
-"ændret siden, det blev åbnet."
+"Når denne er aktiveret, vil GIMP ikke gemme et billede, hvis det ikke er "
+"blevet ændret siden, det blev åbnet."
 
 #: ../app/config/gimprc-blurbs.h:445
 msgid ""
@@ -6659,7 +6626,6 @@ msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Markering"
 
-# scootergrisen: måske "Aktive lag" eller "Aktiv lag" er bedre, ligesom "Aktiv kanal" og "Aktiv bane"
 #: ../app/core/core-enums.c:219
 msgctxt "align-reference-type"
 msgid "Active layer"
@@ -6690,7 +6656,6 @@ msgctxt "fill-type"
 msgid "White"
 msgstr "Hvid"
 
-# scootergrisen: Fyldtype for lag : Gennemsigtig
 #: ../app/core/core-enums.c:256
 msgctxt "fill-type"
 msgid "Transparency"
@@ -6881,11 +6846,10 @@ msgctxt "view-size"
 msgid "Small"
 msgstr "Små"
 
-# scootergrisen: se om medium er bedre
 #: ../app/core/core-enums.c:591
 msgctxt "view-size"
 msgid "Medium"
-msgstr "Mellem/medium"
+msgstr "Medium"
 
 #: ../app/core/core-enums.c:592
 msgctxt "view-size"
@@ -7184,7 +7148,6 @@ msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Lås/oplås alfa-kanal"
 
-# scootergrisen: måske stands
 #: ../app/core/core-enums.c:891
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
@@ -7360,7 +7323,6 @@ msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Gennemtving"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/core/core-enums.c:1298
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
@@ -7376,11 +7338,10 @@ msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Hastighed"
 
-# scootergrisen: måske "Flow"
 #: ../app/core/core-enums.c:1301
 msgctxt "dynamics-output-type"
 msgid "Flow"
-msgstr "Flyd"
+msgstr "Flow"
 
 # scootergrisen: måske flimmer eller rysten
 #: ../app/core/core-enums.c:1302
@@ -7599,8 +7560,8 @@ msgid ""
 "This might be an obsolete GIMP brush file, try loading it as image and save "
 "it again."
 msgstr ""
-"Fatal fortolkningsfejl i penselfilen \"%s\": penseldybden er ikke understøttet"
-"%d\n"
+"Fatal fortolkningsfejl i penselfilen \"%s\": penseldybden er ikke "
+"understøttet%d\n"
 "GIMP-pensler skal være gråtone eller RGBA.\n"
 "Dette kan være en forældet GIMP-penselfil. Prøv at indlæs den som et billede "
 "og gem den igen."
@@ -7611,8 +7572,8 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Fatal fortolkningsfejl i penselfilen \"%s\": penseldybden er ikke understøttet"
-"%d\n"
+"Fatal fortolkningsfejl i penselfilen \"%s\": penseldybden er ikke "
+"understøttet%d\n"
 "GIMP-pensler skal være gråtone eller RGBA."
 
 #: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:909
@@ -7686,10 +7647,9 @@ msgstr "Penselpigge"
 msgid "Brush Hardness"
 msgstr "Penselhårdhed"
 
-# scootergrisen: måske "højde-bredde-forhold"
 #: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:151
 msgid "Brush Aspect Ratio"
-msgstr "Størrelsesforhold for pensel"
+msgstr "Højde-bredde-forhold for pensel"
 
 #: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:155
 msgid "Brush Angle"
@@ -7814,7 +7774,6 @@ msgstr "Kanalen kan ikke hæves mere."
 msgid "Channel cannot be lowered more."
 msgstr "Kanalen kan ikke sænkes mere."
 
-# scootergrisen: feather ~ udtynd/pelset
 #: ../app/core/gimpchannel.c:310
 msgctxt "undo-type"
 msgid "Feather Channel"
@@ -8051,7 +8010,6 @@ msgstr "Gengiv bestrygning"
 msgid "Threshold"
 msgstr "Tærskel"
 
-# scootergrisen: måske "Omvend"
 #: ../app/core/gimpdrawable-transform.c:677
 msgctxt "undo-type"
 msgid "Flip"
@@ -8827,7 +8785,6 @@ msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Bestryg markering"
 
-# scootergrisen: feather ~ udtynd/pelset
 #: ../app/core/gimpselection.c:172
 msgctxt "undo-type"
 msgid "Feather Selection"
@@ -8986,7 +8943,7 @@ msgstr "Om GIMP"
 
 #: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
-msgstr "Besøg GIMP's websted"
+msgstr "Besøg GIMPs websted"
 
 #. Translators: insert your names here,
 #. separated by newline
@@ -9200,7 +9157,7 @@ msgid ""
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 "Du kan bruge denne dialog til at eksportere diverse filformater. Hvis du vil "
-"gemme billedet i GIMP's XCF-format, så brug i stedet Fil→Gem."
+"gemme billedet i GIMPs XCF-format, så brug i stedet Fil→Gem."
 
 #: ../app/dialogs/file-save-dialog.c:605
 msgid "Take me to the Save dialog"
@@ -9215,8 +9172,8 @@ msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
-"Du kan bruge denne dialog til at gemme i GIMP's XCF-format. Brug Fil→Eksportér "
-"for at eksportere andre filformater."
+"Du kan bruge denne dialog til at gemme i GIMPs XCF-format. Brug "
+"Fil→Eksportér for at eksportere andre filformater."
 
 #: ../app/dialogs/file-save-dialog.c:612
 msgid "Take me to the Export dialog"
@@ -9396,7 +9353,7 @@ msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr ""
-"Klik på en række og tryk på en ny genvejstast, eller tryk på tilbage-tasten "
+"Klik på en række og tryk på en ny genvejstast, eller tryk på tilbagetasten "
 "for at rydde."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:81
@@ -9598,11 +9555,10 @@ msgstr "_Kolonner:"
 msgid "I_nterval:"
 msgstr "_Interval:"
 
-# scootergrisen: måske "Forhåndsvisning"
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:361
 msgid "Preview"
-msgstr "Forhåndsvis"
+msgstr "Forhåndsvisning"
 
 #: ../app/dialogs/palette-import-dialog.c:382
 msgid "The selected source contains no colors."
@@ -9649,8 +9605,8 @@ msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Dine indstillinger for inputenheder vil blive nulstillet til standardværdierne, "
-"næste gang du starter GIMP."
+"Dine indstillinger for inputenheder vil blive nulstillet til "
+"standardværdierne, næste gang du starter GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:682
 msgid ""
@@ -9668,10 +9624,9 @@ msgstr "Vis _menulinje"
 msgid "Show _rulers"
 msgstr "Vis lineale_r"
 
-# scootergrisen: måske rullebjælker
 #: ../app/dialogs/preferences-dialog.c:1275
 msgid "Show scroll_bars"
-msgstr "Vis rulle_paneler"
+msgstr "Vis rulle_bjælker"
 
 #: ../app/dialogs/preferences-dialog.c:1278
 msgid "Show s_tatusbar"
@@ -9681,7 +9636,6 @@ msgstr "Vis _statuslinje"
 msgid "Show s_election"
 msgstr "Vis mark_ering"
 
-# scootergrisen: tjek hvad der er bedst (se lærredets kanter)
 #: ../app/dialogs/preferences-dialog.c:1289
 msgid "Show _layer boundary"
 msgstr "Vis _lagets kant"
@@ -10118,7 +10072,7 @@ msgstr "Skærmopløsning"
 
 #. Pixels
 #: ../app/dialogs/preferences-dialog.c:2335
-#: ../app/display/gimpcursorview.c:206 ../app/widgets/gimpgrideditor.c:199
+#: ../app/display/gimpcursorview.c:208 ../app/widgets/gimpgrideditor.c:199
 #: ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Pixels"
@@ -10241,11 +10195,11 @@ msgstr "_Nulstil gemte indstillinger for inputenheder til standardværdier"
 
 #: ../app/dialogs/preferences-dialog.c:2611
 msgid "Additional Input Controllers"
-msgstr "Yderligere inputcontrollere"
+msgstr "Yderligere inputstyreenhed"
 
 #: ../app/dialogs/preferences-dialog.c:2614
 msgid "Input Controllers"
-msgstr "Inputcontrollere"
+msgstr "Inputstyreenheder"
 
 #: ../app/dialogs/preferences-dialog.c:2630
 msgid "Window Management"
@@ -10435,18 +10389,16 @@ msgstr "_Bredde:"
 msgid "H_eight:"
 msgstr "_Højde:"
 
-# scootergrisen: stor eller lille x?
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:309
 msgid "_X resolution:"
-msgstr "_X-opløsning:"
+msgstr "_x-opløsning:"
 
-# scootergrisen: stor eller lille y?
 #: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:316
 msgid "_Y resolution:"
-msgstr "_Y-opløsning:"
+msgstr "_y-opløsning:"
 
 #: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:256
 #, c-format
@@ -10703,51 +10655,51 @@ msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Linjemellemrum"
 
-#: ../app/display/gimpcursorview.c:216 ../app/display/gimpcursorview.c:222
-#: ../app/display/gimpcursorview.c:241 ../app/display/gimpcursorview.c:247
-#: ../app/display/gimpcursorview.c:266 ../app/display/gimpcursorview.c:272
-#: ../app/display/gimpcursorview.c:288 ../app/display/gimpcursorview.c:295
-#: ../app/display/gimpcursorview.c:672 ../app/display/gimpcursorview.c:673
-#: ../app/display/gimpcursorview.c:674 ../app/display/gimpcursorview.c:675
-#: ../app/display/gimpcursorview.c:788 ../app/display/gimpcursorview.c:789
-#: ../app/display/gimpcursorview.c:790 ../app/display/gimpcursorview.c:791
+#: ../app/display/gimpcursorview.c:218 ../app/display/gimpcursorview.c:224
+#: ../app/display/gimpcursorview.c:243 ../app/display/gimpcursorview.c:249
+#: ../app/display/gimpcursorview.c:268 ../app/display/gimpcursorview.c:274
+#: ../app/display/gimpcursorview.c:290 ../app/display/gimpcursorview.c:297
+#: ../app/display/gimpcursorview.c:688 ../app/display/gimpcursorview.c:689
+#: ../app/display/gimpcursorview.c:690 ../app/display/gimpcursorview.c:691
+#: ../app/display/gimpcursorview.c:804 ../app/display/gimpcursorview.c:805
+#: ../app/display/gimpcursorview.c:806 ../app/display/gimpcursorview.c:807
 #: ../app/widgets/gimpcolorframe.c:633
 msgid "n/a"
 msgstr "-"
 
-#: ../app/display/gimpcursorview.c:219 ../app/display/gimpcursorview.c:244
-#: ../app/display/gimpcursorview.c:269
+#: ../app/display/gimpcursorview.c:221 ../app/display/gimpcursorview.c:246
+#: ../app/display/gimpcursorview.c:271
 #: ../app/widgets/gimpdeviceinfoeditor.c:138
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:250
-#: ../app/display/gimpcursorview.c:275
+#: ../app/display/gimpcursorview.c:227 ../app/display/gimpcursorview.c:252
+#: ../app/display/gimpcursorview.c:277
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "Y"
 msgstr "Y"
 
 #. Units
-#: ../app/display/gimpcursorview.c:231
+#: ../app/display/gimpcursorview.c:233
 msgid "Units"
 msgstr "Enheder"
 
 #. Selection Bounding Box
-#: ../app/display/gimpcursorview.c:256
+#: ../app/display/gimpcursorview.c:258
 msgid "Selection Bounding Box"
 msgstr "Markeringings afgrænsningskant"
 
 #. Width
-#: ../app/display/gimpcursorview.c:292
+#: ../app/display/gimpcursorview.c:294
 msgid "W"
 msgstr "B"
 
 #. Height
-#: ../app/display/gimpcursorview.c:299
+#: ../app/display/gimpcursorview.c:301
 msgid "H"
 msgstr "H"
 
-#: ../app/display/gimpcursorview.c:328
+#: ../app/display/gimpcursorview.c:330
 msgid "_Sample Merged"
 msgstr "Udtag prøve _forenet"
 
@@ -10994,21 +10946,20 @@ msgstr "ikke en GIMP-niveaufil"
 
 #: ../app/gegl/gimpoperationcagecoefcalc.c:67
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
-msgstr "Udregn et sæt koefficient-buffere for GIMP's bur-værktøjet"
+msgstr "Udregn et sæt koefficient-buffere for GIMPs bur-værktøjet"
 
 #: ../app/gegl/gimpoperationcagetransform.c:106
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
 msgstr ""
-"Konvertér et sæt koefficient-buffere til en koordinat-buffer for GIMP's bur-"
+"Konvertér et sæt koefficient-buffere til en koordinat-buffer for GIMPs bur-"
 "værktøjet"
 
 #: ../app/gegl/gimpoperationcagetransform.c:128
 msgid "Fill with plain color"
 msgstr "Udfyld med ensartet farve"
 
-# scootergrisen: se om kan gøre strengen lidt kortere hvis det kan lade sig gøre. Så der ikke er vandret scrollbar.
 #: ../app/gegl/gimpoperationcagetransform.c:129
 #: ../app/tools/gimpcageoptions.c:144
 msgid "Fill the original position of the cage with a plain color"
@@ -11080,7 +11031,6 @@ msgstr "Blæk"
 msgid "Ink Blob Size"
 msgstr "Blækklattens størrelse"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/paint/gimpinkoptions.c:99
 msgid "Ink Blob Aspect Ratio"
 msgstr "Blækklattens højde-bredde-forhold"
@@ -11117,10 +11067,9 @@ msgstr "Spred penslen efterhånden som du maler"
 msgid "Distance of scattering"
 msgstr "Spredningsareal"
 
-# scootergrisen: måske toner ud
 #: ../app/paint/gimppaintoptions.c:185
 msgid "Distance over which strokes fade out"
-msgstr "Afstanden hvor strøg nedtoner"
+msgstr "Afstanden hvor strøg toner ud"
 
 #: ../app/paint/gimppaintoptions.c:193
 msgid "Reverse direction of fading"
@@ -11228,7 +11177,6 @@ msgstr "Kombinér masker"
 msgid "Plug-In"
 msgstr "Plugin"
 
-# scootergrisen: Perspektiv/Perspektivér?
 #: ../app/pdb/drawable-transform-cmds.c:345
 #: ../app/pdb/drawable-transform-cmds.c:443
 #: ../app/pdb/item-transform-cmds.c:262 ../app/pdb/transform-tools-cmds.c:163
@@ -11389,8 +11337,7 @@ msgstr ""
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
-"Elementet \"%s\" (%d) kan ikke bruges, da det er vedhæftet et "
-"andet billede"
+"Elementet \"%s\" (%d) kan ikke bruges, da det er vedhæftet et andet billede"
 
 #: ../app/pdb/gimppdb-utils.c:392
 #, c-format
@@ -11674,12 +11621,12 @@ msgstr ""
 "Pluginet gik ned: \"%s\"\n"
 "(%s)\n"
 "\n"
-"Det døende modul kan have skabt uorden i GIMP's interne tilstand. Du kan evt. "
-"gemme dine billeder og genstarte GIMP for at være på den sikre side."
+"Det døende modul kan have skabt uorden i GIMPs interne tilstand. Du kan "
+"evt. gemme dine billeder og genstarte GIMP for at være på den sikre side."
 
-#: ../app/plug-in/gimppluginmanager-call.c:173
-#: ../app/plug-in/gimppluginmanager-call.c:223
-#: ../app/plug-in/gimppluginmanager-call.c:321
+#: ../app/plug-in/gimppluginmanager-call.c:185
+#: ../app/plug-in/gimppluginmanager-call.c:235
+#: ../app/plug-in/gimppluginmanager-call.c:333
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Kunne ikke køre plugin \"%s\""
@@ -11706,11 +11653,11 @@ msgstr "Starter udvidelser"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
-msgstr "Plugin-fortolkere"
+msgstr "Pluginfortolkere"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
-msgstr "Plugin-miljø"
+msgstr "Pluginmiljø"
 
 #: ../app/plug-in/gimppluginprocedure.c:978
 #, c-format
@@ -11851,8 +11798,8 @@ msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
 msgstr ""
-"Det nye tekstlag kan ikke genereres. Skriftstørrelsen er formodentligt "
-"for stor."
+"Det nye tekstlag kan ikke genereres. Skriftstørrelsen er formodentligt for "
+"stor."
 
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
@@ -11889,10 +11836,9 @@ msgstr "Kun bevægelse"
 msgid "Rate"
 msgstr "Hastighed"
 
-# scootergrisen: måske "Flow"
 #: ../app/tools/gimpairbrushtool.c:97
 msgid "Flow"
-msgstr "Flyd"
+msgstr "Flow"
 
 #: ../app/tools/gimpalignoptions.c:91
 msgid "Reference image object a layer will be aligned on"
@@ -12036,10 +11982,9 @@ msgstr "Blanding"
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "Blandingsværktøj: Udfyld markeret område med en farveovergang"
 
-# scootergrisen: måske bare "Bland"?
 #: ../app/tools/gimpblendtool.c:111
 msgid "Blen_d"
-msgstr "_Blanding/Bland"
+msgstr "_Bland"
 
 #: ../app/tools/gimpblendtool.c:166
 msgid "Blend does not operate on indexed layers."
@@ -12549,70 +12494,70 @@ msgstr "Klik eller tryk på returtasten for at beskære"
 msgid "There is no active layer to crop."
 msgstr "Der er ikke noget aktivt lag at beskære."
 
-#: ../app/tools/gimpcurvestool.c:144
+#: ../app/tools/gimpcurvestool.c:145
 msgid "Curves"
 msgstr "Kurver"
 
-#: ../app/tools/gimpcurvestool.c:145
+#: ../app/tools/gimpcurvestool.c:146
 msgid "Curves Tool: Adjust color curves"
 msgstr "Kurveværktøj: Justér farvekurver"
 
-#: ../app/tools/gimpcurvestool.c:146
+#: ../app/tools/gimpcurvestool.c:147
 msgid "_Curves..."
 msgstr "_Kurver..."
 
-#: ../app/tools/gimpcurvestool.c:172
+#: ../app/tools/gimpcurvestool.c:174
 msgid "Adjust Color Curves"
 msgstr "Justér farvekurver"
 
-#: ../app/tools/gimpcurvestool.c:174
+#: ../app/tools/gimpcurvestool.c:176
 msgid "Import Curves"
 msgstr "Importér kurver"
 
-#: ../app/tools/gimpcurvestool.c:175
+#: ../app/tools/gimpcurvestool.c:177
 msgid "Export Curves"
 msgstr "Eksportér kurver"
 
-#: ../app/tools/gimpcurvestool.c:226
+#: ../app/tools/gimpcurvestool.c:239
 msgid "Curves does not operate on indexed layers."
 msgstr "Kurver virker ikke på indekserede lag."
 
-#: ../app/tools/gimpcurvestool.c:334
+#: ../app/tools/gimpcurvestool.c:348
 msgid "Click to add a control point"
 msgstr "Klik for at tilføje et kontrolpunkt"
 
-#: ../app/tools/gimpcurvestool.c:339
+#: ../app/tools/gimpcurvestool.c:353
 msgid "Click to add control points to all channels"
 msgstr "Klik for at tilføje kontrolpunkter til alle kanaler"
 
-#: ../app/tools/gimpcurvestool.c:344
+#: ../app/tools/gimpcurvestool.c:358
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr "Klik for at finde på kurve (prøv Skift, Ctrl)"
 
-#: ../app/tools/gimpcurvestool.c:457 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:473 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: ../app/tools/gimpcurvestool.c:483 ../app/tools/gimplevelstool.c:408
+#: ../app/tools/gimpcurvestool.c:499 ../app/tools/gimplevelstool.c:408
 msgid "R_eset Channel"
 msgstr "N_ulstil kanal"
 
-#: ../app/tools/gimpcurvestool.c:574 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:590 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "Kurve_type:"
 
-#: ../app/tools/gimpcurvestool.c:651 ../app/tools/gimplevelstool.c:756
+#: ../app/tools/gimpcurvestool.c:667 ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Kunne ikke læse hoved fra \"%s\": %s"
 
-#: ../app/tools/gimpcurvestool.c:724
+#: ../app/tools/gimpcurvestool.c:740
 msgid "Use _old curves file format"
 msgstr "Brug _gammelt filformat til kurver"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
-msgstr "Afmætningsværktøj: Lav farver om til gråtoner"
+msgstr "Afmætningsværktøj: Lav farver om til toner af grå"
 
 # scootergrisen: måske _Afmæt/_Afmætning.... Se Posterisér/Posterisering
 #: ../app/tools/gimpdesaturatetool.c:79
@@ -12635,10 +12580,10 @@ msgstr "Vælg gråtone baseret på:"
 msgid "Dodge / Burn"
 msgstr "Lysne/brænde"
 
-# scootergrisen: svært?
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr "Lysne-/brændeværktøj: Selektivt lysere eller mørkere ved brug af en pensel"
+msgstr ""
+"Lysne-/brændeværktøj: Selektivt lysere eller mørkere ved brug af en pensel"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
@@ -12735,24 +12680,20 @@ msgstr "%s for at vælge en baggrundsfarve"
 msgid "Anti erase  (%s)"
 msgstr "Antislet (%s)"
 
-# scootergrisen: måske "Retning for omvending"
 #: ../app/tools/gimpflipoptions.c:66
 msgid "Direction of flipping"
 msgstr "Retning for vending"
 
-# scootergrisen: forslå at ret til "Transform" i kildesprog, ligesom de andre værktøjer rotér, skalér osv.
 #: ../app/tools/gimpflipoptions.c:133
 msgid "Affect:"
 msgstr "Påvirk:"
 
-# scootergrisen: forslå at ret til "Direction (%s)" som bruges af andre værktøj
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:142
 #, c-format
 msgid "Flip Type  (%s)"
 msgstr "Vendingstype (%s)"
 
-# scootergrisen: måske "Omvend"
 #: ../app/tools/gimpfliptool.c:84
 msgid "Flip"
 msgstr "Vend"
@@ -12776,7 +12717,6 @@ msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Vend lodret"
 
-# scootergrisen: måske "Omvend"
 #. probably this is not actually reached today, but
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
@@ -12900,7 +12840,7 @@ msgstr "Markér forgrund"
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
-"Fri markeringsværktøj: Markér et håndtegnet område med frie og polygonale "
+"Frimarkeringsværktøj: Markér et håndtegnet område med frie og polygonale "
 "segmenter"
 
 #: ../app/tools/gimpfreeselecttool.c:198
@@ -13084,10 +13024,9 @@ msgstr "Forudind_stillinger:"
 msgid "Settings saved to '%s'"
 msgstr "Indstillinger gemt i \"%s\""
 
-# scootergrisen: måske "_Forhåndsvisning"
 #: ../app/tools/gimpimagemaptool.c:363
 msgid "_Preview"
-msgstr "_Forhåndsvis"
+msgstr "_Forhåndsvisning"
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:54
@@ -13250,7 +13189,6 @@ msgstr "Redigér indstillingerne som kurver"
 msgid "Use _old levels file format"
 msgstr "Brug _gammelt niveaufilformat"
 
-# scootergrisen: accommodate?
 #: ../app/tools/gimpmagnifyoptions.c:79
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Tilpas størrelsen på billedvinduet for at rumme det nye zoomniveau"
@@ -13429,12 +13367,10 @@ msgstr "Pensel"
 msgid "Reset size to brush's native size"
 msgstr "Nulstil størrelse til pensels normale størrelse"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/tools/gimppaintoptions-gui.c:157
 msgid "Aspect Ratio"
 msgstr "Højde-bredde-forhold"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/tools/gimppaintoptions-gui.c:174
 msgid "Reset aspect ratio to brush's native"
 msgstr "Nulstil højde-bredde-forhold til penslens standard"
@@ -13616,7 +13552,6 @@ msgstr "Enhed for øverste venstre hjørnekoordinat"
 msgid "Unit of selection size"
 msgstr "Enhed for markeringsstørrelse"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/tools/gimprectangleoptions.c:187
 msgid "Enable lock of aspect ratio, width, height or size"
 msgstr "Aktivér låsning af højde-bredde-forhold, bredde, højde eller størrelse"
@@ -13650,7 +13585,6 @@ msgstr "Nuværende"
 msgid "Expand from center"
 msgstr "Udvid fra midten"
 
-# scootergrisen: måske find et bedre ord. Måske fastgjort
 #: ../app/tools/gimprectangleoptions.c:862
 msgid "Fixed:"
 msgstr "Fast:"
@@ -13717,15 +13651,13 @@ msgstr "Basér markering på alle synlige lag"
 msgid "Selection criterion"
 msgstr "Markeringskriterium"
 
-# scootergrisen: måske "Vælg gennemsigtige områder" er bedre
 #: ../app/tools/gimpregionselectoptions.c:204
 msgid "Select transparent areas"
-msgstr "Markér gennemsigtige områder"
+msgstr "Vælg gennemsigtige områder"
 
-# scootergrisen: måske "Vælg efter:" er bedre
 #: ../app/tools/gimpregionselectoptions.c:226
 msgid "Select by:"
-msgstr "Markér med:"
+msgstr "Vælg efter:"
 
 #: ../app/tools/gimpregionselecttool.c:165
 msgid "Move the mouse to change threshold"
@@ -13779,12 +13711,10 @@ msgctxt "undo-type"
 msgid "Scale to %d x %d"
 msgstr "Skalér til %d x %d"
 
-# scootergrisen: feather ~ udtynd/pelset
 #: ../app/tools/gimpselectionoptions.c:84
 msgid "Enable feathering of selection edges"
 msgstr "Aktivér udtyndning for markeringskanter"
 
-# scootergrisen: feather ~ udtynd/pelset
 #: ../app/tools/gimpselectionoptions.c:90
 msgid "Radius of feathering"
 msgstr "Radius af udtyndning"
@@ -13793,7 +13723,6 @@ msgstr "Radius af udtyndning"
 msgid "Antialiasing"
 msgstr "Udjævning"
 
-# scootergrisen: feather ~ udtynd/pelset
 #: ../app/tools/gimpselectionoptions.c:281
 msgid "Feather edges"
 msgstr "Udtynd kanter"
@@ -13943,12 +13872,9 @@ msgstr "Brug et eksternt redigeringsvindue til indtastning af tekst"
 msgid "Font"
 msgstr "Skrifttype"
 
-# scootergrisen: se om kan finde på noget bedre, editor er et ekstra vindue/dialog hvor der er lidt ekstra muligheder
-# scootergrisen: før stod der "Brug tekstredigering"
-# scootergrisen: forslå at rette "Use editor" til "Use editor window"
 #: ../app/tools/gimptextoptions.c:535
 msgid "Use editor"
-msgstr "Brug redigeringsvindue"
+msgstr "Brug redigeringsdialog"
 
 #: ../app/tools/gimptextoptions.c:555
 msgid "Hinting:"
@@ -13962,7 +13888,6 @@ msgstr "Tekstfarve"
 msgid "Color:"
 msgstr "Farve:"
 
-# scootergrisen: det er vist til hvordan teksten skal stå vandret. Se om kan finde noget bedre
 #: ../app/tools/gimptextoptions.c:570
 msgid "Justify:"
 msgstr "Justering:"
@@ -14063,10 +13988,9 @@ msgstr "Interpoleringsmetode"
 msgid "How to clip"
 msgstr "Sådan beskæres"
 
-# scootergrisen: måske "Forhåndsvis det transformerede billede"
 #: ../app/tools/gimptransformoptions.c:117
 msgid "Show a preview of the transformed image"
-msgstr "Vis en forhåndsvisning af det transformerede billede"
+msgstr "Forhåndsvis det transformerede billede"
 
 #: ../app/tools/gimptransformoptions.c:122
 msgid "Opacity of the preview image"
@@ -14118,13 +14042,11 @@ msgstr "15 grader (%s)"
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Begræns rotationstrin til 15 grader"
 
-# scootergrisen: måske "højde-bredde-forhold"
 #: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
-msgstr "Behold størrelsesforhold (%s)"
+msgstr "Bevar højde-bredde (%s)"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/tools/gimptransformoptions.c:352
 msgid "Keep the original aspect ratio"
 msgstr "Bevar det oprindelige højde-bredde-forhold"
@@ -14162,7 +14084,6 @@ msgstr "Redigeringstilstand"
 msgid "Polygonal"
 msgstr "Polygonal"
 
-# scootergrisen: måske Føj til
 #: ../app/tools/gimpvectoroptions.c:178
 #, c-format
 msgid ""
@@ -14322,7 +14243,6 @@ msgstr "Slet ankre"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Der er ikke noget aktivt lag eller en aktiv kanal at bestryge"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/tools/tools-enums.c:150
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
@@ -14353,7 +14273,6 @@ msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "Fast størrelse"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/tools/tools-enums.c:184
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
@@ -14570,7 +14489,6 @@ msgstr "Pigge"
 msgid "Hardness"
 msgstr "Hårdhed"
 
-# scootergrisen: måske højde-/breddeforhold
 #: ../app/widgets/gimpbrusheditor.c:188
 msgid "Aspect ratio"
 msgstr "Højde-bredde-forhold"
@@ -14693,7 +14611,6 @@ msgstr "Alfa:"
 msgid "Color index:"
 msgstr "Farveindeks:"
 
-# scootergrisen: se om kan finde noget bedre. Står ud fra box med hexværdi som AABBCC
 #: ../app/widgets/gimpcolormapeditor.c:210
 msgid "HTML notation:"
 msgstr "HTML-notation:"
@@ -14912,7 +14829,7 @@ msgstr ""
 
 #: ../app/widgets/gimpcontrollerlist.c:635
 msgid "Configure Input Controller"
-msgstr "Indstil inputcontroller"
+msgstr "Indstil inputstyreenhed"
 
 #: ../app/widgets/gimpcontrollermouse.c:70
 #: ../app/widgets/gimpcontrollermouse.c:73
@@ -15033,7 +14950,6 @@ msgstr "Musehjulshændelser"
 msgid "Save"
 msgstr "Gem"
 
-# scootergrisen: måske "Nulstil"
 #: ../app/widgets/gimpdataeditor.c:223
 msgid "Revert"
 msgstr "Genindlæs"
@@ -15419,7 +15335,7 @@ msgstr "Brug _webbrowser"
 
 #: ../app/widgets/gimphelp.c:712
 msgid "GIMP user manual is missing"
-msgstr "GIMP's brugermanual mangler"
+msgstr "GIMPs brugermanual mangler"
 
 #: ../app/widgets/gimphelp.c:719
 msgid "_Read Online"
@@ -15427,7 +15343,7 @@ msgstr "_Læs på nettet"
 
 #: ../app/widgets/gimphelp.c:743
 msgid "The GIMP user manual is not installed on your computer."
-msgstr "GIMP's brugermanual er ikke installeret på din computer."
+msgstr "GIMPs brugermanual er ikke installeret på din computer."
 
 #: ../app/widgets/gimphelp.c:746
 msgid ""
@@ -15514,15 +15430,13 @@ msgstr "Filtype:"
 msgid "Size in memory:"
 msgstr "Størrelse i hukommelse:"
 
-# scootergrisen: måske "Fortryd-trin:" eller "Fortrydelsestrin:"
 #: ../app/widgets/gimpimagepropview.c:144
 msgid "Undo steps:"
-msgstr "Fortryd trin:"
+msgstr "Fortrydelsestrin:"
 
-# scootergrisen: måske "Omgør-trin:" eller "Omgørelsestrin:"
 #: ../app/widgets/gimpimagepropview.c:147
 msgid "Redo steps:"
-msgstr "Omgør trin:"
+msgstr "Omgørelsestrin:"
 
 #: ../app/widgets/gimpimagepropview.c:152
 msgid "Number of pixels:"
@@ -15677,12 +15591,10 @@ msgstr "Linjebredde:"
 msgid "_Line Style"
 msgstr "_Linjetype"
 
-# scootergrisen: find noget bedre
 #: ../app/widgets/gimpstrokeeditor.c:160
 msgid "_Cap style:"
 msgstr "_Endestil:"
 
-# scootergrisen: find noget bedre
 #: ../app/widgets/gimpstrokeeditor.c:166
 msgid "_Join style:"
 msgstr "_Koblingsstil:"
@@ -15825,7 +15737,6 @@ msgstr ""
 "%s-klik for at gennemtvinge opdatering, selv hvis forhåndsvisningen er "
 "opdateret"
 
-# scootergrisen: måske "_Forhåndsvisning"
 #: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
 msgstr "_Forhåndsvisning"
@@ -15968,7 +15879,6 @@ msgstr "Anvend gemt palet"
 msgid "Apply stored font"
 msgstr "Anvend gemt skrifttype"
 
-# scootergrisen: måske "Forudindstilling for %s"
 #: ../app/widgets/gimptoolpreseteditor.c:292
 #, c-format
 msgid "%s Preset"
@@ -15988,7 +15898,7 @@ msgstr "Din installation af GIMP er ufuldstændig:"
 
 #: ../app/widgets/gimpuimanager.c:744
 msgid "Please make sure the menu XML files are correctly installed."
-msgstr "Kontroller at XML-filerne til menuen er korrekt installeret."
+msgstr "Sørg for at XML-filerne til menuen er korrekt installeret."
 
 #: ../app/widgets/gimpuimanager.c:750
 #, c-format
@@ -16221,12 +16131,10 @@ msgstr "Fejl ved gemning af XCF-fil: %s"
 msgid "round"
 msgstr "rund"
 
-# scootergrisen: feather ~ udtynd/pelset
-# scootergrisen: måske "uklar"
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
-msgstr "pelset"
+msgstr "sløret"
 
 #: ../desktop/gimp.appdata.xml.in.h:1
 msgid ""
