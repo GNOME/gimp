@@ -39,6 +39,7 @@ struct _GimpGroupLayerUndo
 
   GimpImageBaseType  prev_type;
   GimpPrecision      prev_precision;
+  gboolean           prev_has_alpha;
 };
 
 struct _GimpGroupLayerUndoClass

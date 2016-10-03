@@ -145,8 +145,6 @@ static void       gimp_channel_to_selection  (GimpItem          *item,
 static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               GimpImage         *dest_image,
                                               const Babl        *new_format,
-                                              GimpImageBaseType  new_base_type,
-                                              GimpPrecision      new_precision,
                                               GimpColorProfile  *dest_profile,
                                               gint               layer_dither_type,
                                               gint               mask_dither_type,
@@ -567,8 +565,10 @@ gimp_channel_convert (GimpItem  *item,
 
   if (! gimp_drawable_is_gray (drawable))
     {
-      gimp_drawable_convert_type (drawable, dest_image, GIMP_GRAY,
+      gimp_drawable_convert_type (drawable, dest_image,
+                                  GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
+                                  gimp_drawable_has_alpha (drawable),
                                   NULL, 0, 0,
                                   FALSE, NULL);
     }
@@ -943,8 +943,6 @@ static void
 gimp_channel_convert_type (GimpDrawable      *drawable,
                            GimpImage         *dest_image,
                            const Babl        *new_format,
-                           GimpImageBaseType  new_base_type,
-                           GimpPrecision      new_precision,
                            GimpColorProfile  *dest_profile,
                            gint               layer_dither_type,
                            gint               mask_dither_type,

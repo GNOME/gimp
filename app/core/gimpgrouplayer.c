@@ -139,8 +139,6 @@ static gint64      gimp_group_layer_estimate_memsize (GimpDrawable      *drawabl
 static void            gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                                       GimpImage         *dest_image,
                                                       const Babl        *new_format,
-                                                      GimpImageBaseType  new_base_type,
-                                                      GimpPrecision      new_precision,
                                                       GimpColorProfile  *dest_profile,
                                                       gint               layer_dither_type,
                                                       gint               mask_dither_type,
@@ -878,9 +876,7 @@ get_projection_format (GimpProjectable   *projectable,
 static void
 gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                GimpImage         *dest_image,
-                               const Babl        *new_format /* unused */,
-                               GimpImageBaseType  new_base_type,
-                               GimpPrecision      new_precision,
+                               const Babl        *new_format,
                                GimpColorProfile  *dest_profile,
                                gint               layer_dither_type,
                                gint               mask_dither_type,
@@ -903,9 +899,10 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
    *  values so the projection will create its tiles with the right
    *  depth
    */
-  private->convert_format = get_projection_format (GIMP_PROJECTABLE (drawable),
-                                                   new_base_type,
-                                                   new_precision);
+  private->convert_format =
+    get_projection_format (GIMP_PROJECTABLE (drawable),
+                           gimp_babl_format_get_base_type (new_format),
+                           gimp_babl_format_get_precision (new_format));
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
   gimp_pickable_flush (GIMP_PICKABLE (private->projection));
 
@@ -923,11 +920,15 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
   mask = gimp_layer_get_mask (GIMP_LAYER (group));
 
   if (mask &&
-      new_precision != gimp_drawable_get_precision (GIMP_DRAWABLE (mask)))
+      gimp_babl_format_get_precision (new_format) !=
+      gimp_drawable_get_precision (GIMP_DRAWABLE (mask)))
     {
       gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
-                                  GIMP_GRAY, new_precision,
-                                  NULL, layer_dither_type, mask_dither_type,
+                                  GIMP_GRAY,
+                                  gimp_babl_format_get_precision (new_format),
+                                  gimp_drawable_has_alpha (GIMP_DRAWABLE (mask)),
+                                  NULL,
+                                  layer_dither_type, mask_dither_type,
                                   push_undo, progress);
     }
 }

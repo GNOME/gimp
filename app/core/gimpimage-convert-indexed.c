@@ -993,9 +993,12 @@ gimp_image_convert_indexed (GimpImage               *image,
         }
       else
         {
-          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image, GIMP_INDEXED,
+          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image,
+                                      GIMP_INDEXED,
                                       gimp_drawable_get_precision (GIMP_DRAWABLE (layer)),
-                                      dest_profile, 0, 0,
+                                      gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)),
+                                      dest_profile,
+                                      0, 0,
                                       TRUE, NULL);
         }
     }

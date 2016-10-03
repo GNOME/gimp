@@ -154,8 +154,6 @@ static gint64  gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
 static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
                                                     const Babl        *new_format,
-                                                    GimpImageBaseType  new_base_type,
-                                                    GimpPrecision      new_precision,
                                                     GimpColorProfile  *dest_profile,
                                                     gint               layer_dither_type,
                                                     gint               mask_dither_type,
@@ -799,8 +797,6 @@ static void
 gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImage         *dest_image,
                                  const Babl        *new_format,
-                                 GimpImageBaseType  new_base_type,
-                                 GimpPrecision      new_precision,
                                  GimpColorProfile  *dest_profile,
                                  gint               layer_dither_type,
                                  gint               mask_dither_type,
@@ -1046,6 +1042,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImage         *dest_image,
                             GimpImageBaseType  new_base_type,
                             GimpPrecision      new_precision,
+                            gboolean           new_has_alpha,
                             GimpColorProfile  *dest_profile,
                             gint               layer_dither_type,
                             gint               mask_dither_type,
@@ -1058,6 +1055,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable) ||
                     new_precision != gimp_drawable_get_precision (drawable) ||
+                    new_has_alpha != gimp_drawable_has_alpha (drawable)     ||
                     dest_profile);
   g_return_if_fail (dest_profile == NULL || GIMP_IS_COLOR_PROFILE (dest_profile));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
@@ -1068,12 +1066,10 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   new_format = gimp_image_get_format (dest_image,
                                       new_base_type,
                                       new_precision,
-                                      gimp_drawable_has_alpha (drawable));
+                                      new_has_alpha);
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
                                                     new_format,
-                                                    new_base_type,
-                                                    new_precision,
                                                     dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,

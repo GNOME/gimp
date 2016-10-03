@@ -167,8 +167,6 @@ static gint64     gimp_layer_estimate_memsize   (GimpDrawable       *drawable,
 static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
-                                                 GimpImageBaseType   new_base_type,
-                                                 GimpPrecision       new_precision,
                                                  GimpColorProfile   *dest_profile,
                                                  gint                layer_dither_type,
                                                  gint                mask_dither_type,
@@ -811,7 +809,9 @@ gimp_layer_convert (GimpItem  *item,
       dest_profile)
     {
       gimp_drawable_convert_type (drawable, dest_image,
-                                  new_base_type, new_precision,
+                                  new_base_type,
+                                  new_precision,
+                                  gimp_drawable_has_alpha (drawable),
                                   dest_profile,
                                   0, 0,
                                   FALSE, NULL);
@@ -1064,8 +1064,6 @@ static void
 gimp_layer_convert_type (GimpDrawable      *drawable,
                          GimpImage         *dest_image,
                          const Babl        *new_format,
-                         GimpImageBaseType  new_base_type,
-                         GimpPrecision      new_precision,
                          GimpColorProfile  *dest_profile,
                          gint               layer_dither_type,
                          gint               mask_dither_type,
@@ -1125,10 +1123,13 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
   g_object_unref (dest_buffer);
 
   if (layer->mask &&
-      new_precision != gimp_drawable_get_precision (GIMP_DRAWABLE (layer->mask)))
+      gimp_babl_format_get_precision (new_format) !=
+      gimp_drawable_get_precision (GIMP_DRAWABLE (layer->mask)))
     {
       gimp_drawable_convert_type (GIMP_DRAWABLE (layer->mask), dest_image,
-                                  GIMP_GRAY, new_precision,
+                                  GIMP_GRAY,
+                                  gimp_babl_format_get_precision (new_format),
+                                  gimp_drawable_has_alpha (GIMP_DRAWABLE (layer->mask)),
                                   NULL,
                                   layer_dither_type, mask_dither_type,
                                   push_undo, NULL);
