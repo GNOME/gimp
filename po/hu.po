@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gimp-master-po-hu-23139.merged\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-10-01 19:01+0000\n"
-"PO-Revision-Date: 2016-10-02 11:08+0200\n"
+"POT-Creation-Date: 2016-10-03 06:50+0000\n"
+"PO-Revision-Date: 2016-10-03 10:22+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -13149,67 +13149,70 @@ msgstr "_Y-felbontás:"
 msgid "pixels/%a"
 msgstr "képpont/%a"
 
-#: ../app/dialogs/quit-dialog.c:159
+#: ../app/dialogs/quit-dialog.c:163
 msgid "Quit GIMP"
 msgstr "Kilépés a GIMP-ből"
 
-#: ../app/dialogs/quit-dialog.c:159
+#: ../app/dialogs/quit-dialog.c:163
 msgid "Close All Images"
 msgstr "Az összes kép bezárása"
 
-#: ../app/dialogs/quit-dialog.c:251
+#: ../app/dialogs/quit-dialog.c:255
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Ha kilép a GIMP-ből, akkor ezek a változások el fognak veszni."
 
 # %s: időszakasz (például 10 másodperc)
-#: ../app/dialogs/quit-dialog.c:254
+#: ../app/dialogs/quit-dialog.c:258
 msgid "If you close these images now, changes will be lost."
 msgstr "Ha most bezárja ezeket a képeket, akkor a módosulások elvesznek."
 
-#: ../app/dialogs/quit-dialog.c:339
+#. TRANSLATORS: unless your language
+#. msgstr[0] applies to 1 only (as
+#. in English), replace "one" with %d.
+#: ../app/dialogs/quit-dialog.c:344
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "A következő kép nem mentett módosítást tartalmaz:"
 msgstr[1] "A következő %d kép nem mentett módosítást tartalmaz:"
 
-#: ../app/dialogs/quit-dialog.c:350
+#: ../app/dialogs/quit-dialog.c:355
 #, c-format
 msgid "Press %s to quit."
 msgstr "Nyomja meg a(z) %s gombot a kilépéshez."
 
-#: ../app/dialogs/quit-dialog.c:353
+#: ../app/dialogs/quit-dialog.c:358
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Nyomja meg a(z) %s gombot az összes kép bezárásához."
 
-#: ../app/dialogs/quit-dialog.c:369
+#: ../app/dialogs/quit-dialog.c:374
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr ""
 "Nyomja meg a(z) %s gombot az összes változtatás eldobásához és a kilépéshez."
 
-#: ../app/dialogs/quit-dialog.c:372
+#: ../app/dialogs/quit-dialog.c:377
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
 "Nyomja meg a(z) %s gombot az összes változtatás eldobásához és minden kép "
 "bezárásához."
 
-#: ../app/dialogs/quit-dialog.c:380 ../app/display/gimpdisplayshell-close.c:183
+#: ../app/dialogs/quit-dialog.c:385 ../app/display/gimpdisplayshell-close.c:183
 msgid "_Discard Changes"
 msgstr "Módosítások _eldobása"
 
-#: ../app/dialogs/quit-dialog.c:460
+#: ../app/dialogs/quit-dialog.c:472
 #, c-format
 msgid "Exported to %s"
 msgstr "Exportálás ebbe: %s"
 
-#: ../app/dialogs/quit-dialog.c:560
+#: ../app/dialogs/quit-dialog.c:572
 msgid "Save this image"
 msgstr "Ezen kép elmentése"
 
-#: ../app/dialogs/quit-dialog.c:562
+#: ../app/dialogs/quit-dialog.c:574
 msgid "Save as"
 msgstr "Mentés másként"
 
@@ -16625,20 +16628,20 @@ msgstr "GEGL mű_velet…"
 msgid "Select an operation from the list above"
 msgstr "Válasszon egy műveletet a fenti listából"
 
-#: ../app/tools/gimpguidetool.c:273
+#: ../app/tools/gimpguidetool.c:274
 msgid "Remove Guide"
 msgstr "Segédvonal eltávolítása"
 
-#: ../app/tools/gimpguidetool.c:273
+#: ../app/tools/gimpguidetool.c:274
 msgid "Cancel Guide"
 msgstr "Segédvonal elhelyezésének visszavonása"
 
-#: ../app/tools/gimpguidetool.c:279
+#: ../app/tools/gimpguidetool.c:279 ../app/tools/gimpguidetool.c:360
 msgid "Move Guide: "
 msgstr "Segédvonal áthelyezése: "
 
 # státuszsorban
-#: ../app/tools/gimpguidetool.c:279 ../app/tools/gimpguidetool.c:348
+#: ../app/tools/gimpguidetool.c:288 ../app/tools/gimpguidetool.c:369
 msgid "Add Guide: "
 msgstr "Segédvonal felvétele: "
 
@@ -17502,13 +17505,13 @@ msgstr "Mintapont eltávolítása"
 msgid "Cancel Sample Point"
 msgstr "Mintapont felvételének megszakítása"
 
-#: ../app/tools/gimpsamplepointtool.c:248
-#: ../app/tools/gimpsamplepointtool.c:317
+#: ../app/tools/gimpsamplepointtool.c:247
+#: ../app/tools/gimpsamplepointtool.c:333
 msgid "Move Sample Point: "
 msgstr "Mintapont áthelyezése: "
 
-#: ../app/tools/gimpsamplepointtool.c:249
-#: ../app/tools/gimpsamplepointtool.c:318
+#: ../app/tools/gimpsamplepointtool.c:259
+#: ../app/tools/gimpsamplepointtool.c:345
 msgid "Add Sample Point: "
 msgstr "Mintapont felvétele: "
 
@@ -18193,6 +18196,10 @@ msgstr "Az útvonal szétnyitása: kattintással"
 #: ../app/tools/gimpvectortool.c:1320
 msgid "Click to make this node angular"
 msgstr "Kattintson a csomópont csúcsossá tételéhez"
+
+#: ../app/tools/gimpvectortool.c:1324
+msgid "Clicking here does nothing, try clicking on path elements."
+msgstr "Az ide kattintás nem csinál semmit, kattintson az útvonal elemekre."
 
 #: ../app/tools/gimpvectortool.c:1821
 msgid "Delete Anchors"
@@ -19921,7 +19928,7 @@ msgstr "szűrő"
 msgid "enter tags"
 msgstr "írjon be címkéket"
 
-#. Seperator for tags
+#. Separator for tags
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
