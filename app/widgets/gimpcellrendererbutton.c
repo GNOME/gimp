@@ -87,11 +87,10 @@ static void
 gimp_cell_renderer_button_init (GimpCellRendererButton *cell_button)
 {
   g_object_set (cell_button,
-                "mode",         GTK_CELL_RENDERER_MODE_ACTIVATABLE,
-                "xpad",         2,
-                "ypad",         2,
-                "follow-state", TRUE,
-                "stock-size",   GTK_ICON_SIZE_BUTTON,
+                "mode",       GTK_CELL_RENDERER_MODE_ACTIVATABLE,
+                "xpad",       2,
+                "ypad",       2,
+                "stock-size", GTK_ICON_SIZE_BUTTON,
                 NULL);
 }
 
