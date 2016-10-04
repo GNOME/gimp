@@ -2609,6 +2609,10 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Extended Input Devices"),
                            GTK_CONTAINER (vbox), FALSE);
 
+  prefs_check_button_add (object, "devices-share-tool",
+                          _("S_hare tool and tool options between input devices"),
+                          GTK_BOX (vbox2));
+
   button = prefs_button_add ("preferences-system",
                              _("Configure E_xtended Input Devices..."),
                              GTK_BOX (vbox2));

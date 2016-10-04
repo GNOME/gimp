@@ -291,6 +291,11 @@ _("When enabled, GIMP will try to restore windows on the monitor they " \
 _("Remember the current tool, pattern, color, and brush across GIMP " \
   "sessions.")
 
+#define DEVICES_SHARE_TOOL_BLURB \
+_("When enabled, the same tool and tool options will be used for all " \
+  "input devices. No tool switching will occur when the input device " \
+  "changes.")
+
 #define SAVE_DOCUMENT_HISTORY_BLURB \
 _("Keep a permanent record of all opened and saved files in the Recent " \
   "Documents list.")

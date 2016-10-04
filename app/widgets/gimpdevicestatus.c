@@ -30,6 +30,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpdatafactory.h"
@@ -67,6 +69,7 @@ struct _GimpDeviceStatusEntry
   GimpDeviceInfo *device_info;
 
   GtkWidget      *ebox;
+  GtkWidget      *options_hbox;
   GtkWidget      *tool;
   GtkWidget      *foreground;
   GtkWidget      *background;
@@ -91,6 +94,9 @@ static void gimp_device_status_device_remove   (GimpContainer         *devices,
                                                 GimpDeviceStatus      *status);
 
 static void gimp_device_status_notify_device   (GimpDeviceManager     *manager,
+                                                const GParamSpec      *pspec,
+                                                GimpDeviceStatus      *status);
+static void gimp_device_status_config_notify   (GimpGuiConfig         *config,
                                                 const GParamSpec      *pspec,
                                                 GimpDeviceStatus      *status);
 static void gimp_device_status_update_entry    (GimpDeviceInfo        *device_info,
@@ -170,6 +176,13 @@ gimp_device_status_constructed (GObject *object)
                     status);
 
   gimp_device_status_notify_device (GIMP_DEVICE_MANAGER (devices), NULL, status);
+
+  g_signal_connect_object (status->gimp->config, "notify::devices-share-tool",
+                           G_CALLBACK (gimp_device_status_config_notify),
+                           status, 0);
+
+  gimp_device_status_config_notify (GIMP_GUI_CONFIG (status->gimp->config),
+                                    NULL, status);
 }
 
 static void
@@ -280,7 +293,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the row of properties  */
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  hbox = entry->options_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -410,6 +423,24 @@ gimp_device_status_notify_device (GimpDeviceManager *manager,
       gtk_widget_set_state (entry->ebox,
                             entry->device_info == status->current_device ?
                             GTK_STATE_SELECTED : GTK_STATE_NORMAL);
+    }
+}
+
+static void
+gimp_device_status_config_notify (GimpGuiConfig    *config,
+                                  const GParamSpec *pspec,
+                                  GimpDeviceStatus *status)
+{
+  gboolean  show_options;
+  GList    *list;
+
+  show_options = ! GIMP_GUI_CONFIG (status->gimp->config)->devices_share_tool;
+
+  for (list = status->devices; list; list = list->next)
+    {
+      GimpDeviceStatusEntry *entry = list->data;
+
+      gtk_widget_set_visible (entry->options_hbox, show_options);
     }
 }
 
