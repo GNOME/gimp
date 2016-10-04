@@ -528,6 +528,9 @@ quit_close_all_dialog_save_clicked (GtkCellRenderer *cell,
                   manager = gimp_image_window_get_ui_manager (window);
 
                   gimp_display_shell_present (shell);
+                  /* Make sure the quit dialog kept keyboard focus when
+                   * the save dialog will exit. */
+                  gtk_window_present (GTK_WINDOW (private->dialog));
 
                   if (state & GDK_SHIFT_MASK)
                     {
