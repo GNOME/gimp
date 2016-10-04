@@ -330,9 +330,10 @@ gimp_edit_paste (GimpImage     *image,
                  gint           viewport_width,
                  gint           viewport_height)
 {
-  GimpLayer *layer;
-  gint       offset_x;
-  gint       offset_y;
+  GimpLayer  *layer = NULL;
+  const Babl *floating_format;
+  gint        offset_x;
+  gint        offset_y;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
@@ -349,6 +350,14 @@ gimp_edit_paste (GimpImage     *image,
     {
       paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
     }
+
+  /*  floating pastes always have the pasted-to drawable's format with
+   *  alpha; if drawable == NULL, user is pasting into an empty image
+   */
+  if (drawable)
+    floating_format = gimp_drawable_get_format_with_alpha (drawable);
+  else
+    floating_format = gimp_image_get_layer_format (image, TRUE);
 
   if (GIMP_IS_IMAGE (paste))
     {
@@ -382,27 +391,33 @@ gimp_edit_paste (GimpImage     *image,
         {
         case GIMP_PASTE_TYPE_FLOATING:
         case GIMP_PASTE_TYPE_FLOATING_INTO:
-          /*  when pasting as floating selection, get rid of the layer mask  */
+          /*  when pasting as floating selection, get rid of the layer mask,
+           *  and make sure the layer has the right format
+           */
           if (gimp_layer_get_mask (layer))
             gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, FALSE);
+
+          if (gimp_drawable_get_format (GIMP_DRAWABLE (layer)) !=
+              floating_format)
+            {
+              gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image,
+                                          gimp_drawable_get_base_type (drawable),
+                                          gimp_drawable_get_precision (drawable),
+                                          TRUE,
+                                          NULL,
+                                          0, 0,
+                                          FALSE, NULL);
+            }
           break;
 
         default:
           break;
         }
     }
-  else
+  else if (GIMP_IS_BUFFER (paste))
     {
-      const Babl *format;
-
-      /*  If drawable == NULL, user is pasting into an empty image  */
-      if (drawable)
-        format = gimp_drawable_get_format_with_alpha (drawable);
-      else
-        format = gimp_image_get_layer_format (image, TRUE);
-
       layer = gimp_layer_new_from_buffer (GIMP_BUFFER (paste), image,
-                                          format,
+                                          floating_format,
                                           _("Pasted Layer"),
                                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
     }
@@ -425,9 +440,9 @@ gimp_edit_paste (GimpImage     *image,
   switch (paste_type)
     {
     case GIMP_PASTE_TYPE_FLOATING:
-      /*  If there is a selection mask clear it--
-       *  this might not always be desired, but in general,
-       *  it seems like the correct behavior.
+      /*  if there is a selection mask clear it - this might not
+       *  always be desired, but in general, it seems like the correct
+       *  behavior
        */
       if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
         gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
