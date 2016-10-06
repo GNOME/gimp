@@ -203,8 +203,7 @@ static gboolean      clicked_on_segment        (GimpIscissorsTool *iscissors,
                                                 gdouble            x,
                                                 gdouble            y);
 
-static GPtrArray   * plot_pixels               (GimpIscissorsTool *iscissors,
-                                                GimpTempBuf       *dp_buf,
+static GPtrArray   * plot_pixels               (GimpTempBuf       *dp_buf,
                                                 gint               x1,
                                                 gint               y1,
                                                 gint               xs,
@@ -1270,12 +1269,6 @@ gimp_iscissors_tool_halt (GimpIscissorsTool *iscissors,
       iscissors->gradient_map = NULL;
     }
 
-  if (iscissors->dp_buf)
-    {
-      gimp_temp_buf_unref (iscissors->dp_buf);
-      iscissors->dp_buf = NULL;
-    }
-
   if (iscissors->mask)
     {
       g_object_unref (iscissors->mask);
@@ -1549,23 +1542,21 @@ calculate_segment (GimpIscissorsTool *iscissors,
     {
       /*  If the bounding box has width and height...  */
 
-      gint bb_width  = (x2 - x1);
-      gint bb_height = (y2 - y1);
+      GimpTempBuf *dp_buf; /*  dynamic programming buffer  */
+      gint         dp_width  = (x2 - x1);
+      gint         dp_height = (y2 - y1);
 
-      /*  allocate the dynamic programming array  */
-      if (iscissors->dp_buf)
-        gimp_temp_buf_unref (iscissors->dp_buf);
-
-      iscissors->dp_buf = gimp_temp_buf_new (bb_width, bb_height,
-                                             babl_format ("Y u32"));
+      dp_buf = gimp_temp_buf_new (dp_width, dp_height,
+                                  babl_format ("Y u32"));
 
       /*  find the optimal path of pixels from (x1, y1) to (x2, y2)  */
-      find_optimal_path (iscissors->gradient_map, iscissors->dp_buf,
+      find_optimal_path (iscissors->gradient_map, dp_buf,
                          x1, y1, x2, y2, xs, ys);
 
       /*  get a list of the pixels in the optimal path  */
-      segment->points = plot_pixels (iscissors, iscissors->dp_buf,
-                                     x1, y1, xs, ys, xe, ye);
+      segment->points = plot_pixels (dp_buf, x1, y1, xs, ys, xe, ye);
+
+      gimp_temp_buf_unref (dp_buf);
     }
   else if ((x2 - x1) == 0)
     {
@@ -1675,14 +1666,13 @@ calculate_link (GeglBuffer *gradient_map,
 
 
 static GPtrArray *
-plot_pixels (GimpIscissorsTool *iscissors,
-             GimpTempBuf       *dp_buf,
-             gint               x1,
-             gint               y1,
-             gint               xs,
-             gint               ys,
-             gint               xe,
-             gint               ye)
+plot_pixels (GimpTempBuf *dp_buf,
+             gint         x1,
+             gint         y1,
+             gint         xs,
+             gint         ys,
+             gint         xe,
+             gint         ye)
 {
   gint       x, y;
   guint32    coords;
