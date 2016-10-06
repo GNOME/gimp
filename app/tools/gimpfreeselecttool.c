@@ -194,7 +194,8 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-free-select-tool",
                 _("Free Select"),
-                _("Free Select Tool: Select a hand-drawn region with free and polygonal segments"),
+                _("Free Select Tool: Select a hand-drawn region with free "
+                  "and polygonal segments"),
                 N_("_Free Select"), "F",
                 NULL, GIMP_HELP_TOOL_FREE_SELECT,
                 GIMP_STOCK_TOOL_FREE_SELECT,
@@ -240,29 +241,8 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 
-  priv->grabbed_segment_index             = INVALID_INDEX;
-
-  priv->saved_points_lower_segment        = NULL;
-  priv->saved_points_higher_segment       = NULL;
-  priv->max_n_saved_points_lower_segment  = 0;
-  priv->max_n_saved_points_higher_segment = 0;
-
-  priv->polygon_modified                  = FALSE;
-
-  priv->show_pending_point                = FALSE;
-
-  priv->points                            = NULL;
-  priv->n_points                          = 0;
-  priv->max_n_points                      = 0;
-
-  priv->segment_indices                   = NULL;
-  priv->n_segment_indices                 = 0;
-  priv->max_n_segment_indices             = 0;
-
-  priv->constrain_angle                   = FALSE;
-  priv->supress_handles                   = FALSE;
-
-  priv->last_click_time                   = NO_CLICK_TIME_AVAILABLE;
+  priv->grabbed_segment_index = INVALID_INDEX;
+  priv->last_click_time       = NO_CLICK_TIME_AVAILABLE;
 }
 
 static void
@@ -306,36 +286,6 @@ gimp_free_select_tool_get_segment_point (GimpFreeSelectTool *fst,
   *start_point_y = priv->points[priv->segment_indices[segment_index]].y;
 }
 
-static void
-gimp_free_select_tool_get_last_point (GimpFreeSelectTool *fst,
-                                      gdouble            *start_point_x,
-                                      gdouble            *start_point_y)
-{
-  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
-
-  gimp_free_select_tool_get_segment_point (fst,
-                                           start_point_x,
-                                           start_point_y,
-                                           priv->n_segment_indices - 1);
-}
-
-static void
-gimp_free_select_tool_get_double_click_settings (gint *double_click_time,
-                                                 gint *double_click_distance)
-{
-  GdkScreen *screen = gdk_screen_get_default ();
-
-  if (screen != NULL)
-    {
-      GtkSettings *settings = gtk_settings_get_for_screen (screen);
-
-      g_object_get (settings,
-                    "gtk-double-click-time",     double_click_time,
-                    "gtk-double-click-distance", double_click_distance,
-                    NULL);
-    }
-}
-
 static gboolean
 gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
                                     GimpDisplay        *display,
@@ -344,7 +294,7 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
 {
   GimpFreeSelectToolPrivate *priv         = GET_PRIVATE (fst);
   gboolean                   double_click = FALSE;
-  gdouble                    dist         = G_MAXDOUBLE;
+  gdouble                    dist;
 
   if (priv->polygon_modified       ||
       priv->n_segment_indices <= 0 ||
@@ -364,10 +314,12 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
    */
   if (time != NO_CLICK_TIME_AVAILABLE)
     {
-      gint    double_click_time;
-      gint    double_click_distance;
-      gint    click_time_passed;
-      gdouble dist_from_last_point;
+      GimpDisplayShell *shell    = gimp_display_get_shell (display);
+      GtkSettings      *settings = gtk_widget_get_settings (GTK_WIDGET (shell));
+      gint              double_click_time;
+      gint              double_click_distance;
+      gint              click_time_passed;
+      gdouble           dist_from_last_point;
 
       click_time_passed = time - priv->last_click_time;
 
@@ -379,8 +331,10 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
                                              priv->last_click_coord.x,
                                              priv->last_click_coord.y);
 
-      gimp_free_select_tool_get_double_click_settings (&double_click_time,
-                                                       &double_click_distance);
+      g_object_get (settings,
+                    "gtk-double-click-time",     &double_click_time,
+                    "gtk-double-click-distance", &double_click_distance,
+                    NULL);
 
       double_click = click_time_passed    < double_click_time &&
                      dist_from_last_point < double_click_distance;
@@ -388,51 +342,6 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
 
   return ((! priv->supress_handles && dist < POINT_GRAB_THRESHOLD_SQ) ||
           double_click);
-}
-
-static void
-gimp_free_select_tool_handle_segment_selection (GimpFreeSelectTool *fst,
-                                                GimpDisplay        *display,
-                                                const GimpCoords   *coords)
-{
-  GimpFreeSelectToolPrivate *priv                  = GET_PRIVATE (fst);
-  GimpDrawTool              *draw_tool             = GIMP_DRAW_TOOL (fst);
-  gdouble                    shortest_dist         = POINT_GRAB_THRESHOLD_SQ;
-  gint                       grabbed_segment_index = INVALID_INDEX;
-  gint                       i;
-
-  if (GIMP_TOOL (fst)->display != NULL &&
-      ! priv->supress_handles)
-    {
-      for (i = 0; i < priv->n_segment_indices; i++)
-        {
-          gdouble      dist;
-          GimpVector2 *point;
-
-          point = &priv->points[priv->segment_indices[i]];
-
-          dist = gimp_draw_tool_calc_distance_square (draw_tool,
-                                                      display,
-                                                      coords->x,
-                                                      coords->y,
-                                                      point->x,
-                                                      point->y);
-
-          if (dist < shortest_dist)
-            {
-              grabbed_segment_index = i;
-            }
-        }
-    }
-
-  if (grabbed_segment_index != priv->grabbed_segment_index)
-    {
-      gimp_draw_tool_pause (draw_tool);
-
-      priv->grabbed_segment_index = grabbed_segment_index;
-
-      gimp_draw_tool_resume (draw_tool);
-    }
 }
 
 static void
@@ -689,37 +598,6 @@ gimp_free_select_tool_move_segment_vertex_to (GimpFreeSelectTool *fst,
     }
 }
 
-/**
- * gimp_free_select_tool_finish_line_segment:
- * @free_ploy_sel_tool:
- * @end_x:
- * @end_y:
- *
- * Adds a line segment. Also cancels a pending free segment if any.
- **/
-static void
-gimp_free_select_tool_finish_line_segment (GimpFreeSelectTool *fst)
-{
-  /* Revert any free segment points that might have been added */
-  gimp_free_select_tool_revert_to_last_segment (fst);
-}
-
-/**
- * gimp_free_select_tool_finish_free_segment:
- * @fst:
- *
- * Finnishes off the creation of a free segment.
- **/
-static void
-gimp_free_select_tool_finish_free_segment (GimpFreeSelectTool *fst)
-{
-  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
-
-  /* The points are all setup, just make a segment */
-  gimp_free_select_tool_add_segment_index (fst,
-                                           priv->n_points - 1);
-}
-
 static void
 gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
                               GimpDisplay        *display)
@@ -728,7 +606,7 @@ gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
 
   if (priv->n_points >= 3)
     {
-      gimp_free_select_tool_select (fst, display);
+      GIMP_FREE_SELECT_TOOL_GET_CLASS (fst)->select (fst, display);
     }
 
   gimp_image_flush (gimp_display_get_image (display));
@@ -782,16 +660,6 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
     }
 }
 
-void
-gimp_free_select_tool_select (GimpFreeSelectTool *fst,
-                              GimpDisplay        *display)
-{
-  g_return_if_fail (GIMP_IS_FREE_SELECT_TOOL (fst));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-
-  GIMP_FREE_SELECT_TOOL_GET_CLASS (fst)->select (fst, display);
-}
-
 static void
 gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
 {
@@ -811,9 +679,9 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
         {
           priv->max_n_saved_points_lower_segment = n_points;
 
-          priv->saved_points_lower_segment = g_realloc (priv->saved_points_lower_segment,
-                                                        sizeof (GimpVector2) *
-                                                        n_points);
+          priv->saved_points_lower_segment =
+            g_realloc (priv->saved_points_lower_segment,
+                       sizeof (GimpVector2) * n_points);
         }
 
       memcpy (priv->saved_points_lower_segment,
@@ -833,8 +701,9 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
         {
           priv->max_n_saved_points_higher_segment = n_points;
 
-          priv->saved_points_higher_segment = g_realloc (priv->saved_points_higher_segment,
-                                                         sizeof (GimpVector2) * n_points);
+          priv->saved_points_higher_segment =
+            g_realloc (priv->saved_points_higher_segment,
+                       sizeof (GimpVector2) * n_points);
         }
 
       memcpy (priv->saved_points_higher_segment,
@@ -919,9 +788,7 @@ gimp_free_select_tool_update_motion (GimpFreeSelectTool *fst,
       /* Don't show the pending point while we are adding points */
       priv->show_pending_point = FALSE;
 
-      gimp_free_select_tool_add_point (fst,
-                                       new_x,
-                                       new_y);
+      gimp_free_select_tool_add_point (fst, new_x, new_y);
     }
 }
 
@@ -942,8 +809,7 @@ gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
 
       if (gimp_free_select_tool_is_point_grabbed (fst))
         {
-          if (gimp_free_select_tool_should_close (fst,
-                                                  display,
+          if (gimp_free_select_tool_should_close (fst, display,
                                                   NO_CLICK_TIME_AVAILABLE,
                                                   coords))
             {
@@ -1017,16 +883,42 @@ gimp_free_select_tool_oper_update (GimpTool         *tool,
       return;
     }
 
-  gimp_free_select_tool_handle_segment_selection (fst,
-                                                  display,
-                                                  coords);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  priv->grabbed_segment_index = INVALID_INDEX;
+
+  if (tool->display && ! priv->supress_handles)
+    {
+      gdouble shortest_dist = POINT_GRAB_THRESHOLD_SQ;
+      gint    i;
+
+      for (i = 0; i < priv->n_segment_indices; i++)
+        {
+          gdouble      dist;
+          GimpVector2 *point;
+
+          point = &priv->points[priv->segment_indices[i]];
+
+          dist = gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (tool),
+                                                      display,
+                                                      coords->x,
+                                                      coords->y,
+                                                      point->x,
+                                                      point->y);
+
+          if (dist < shortest_dist)
+            {
+              shortest_dist = dist;
+
+              priv->grabbed_segment_index = i;
+            }
+        }
+    }
+
   hovering_first_point =
-    gimp_free_select_tool_should_close (fst,
-                                        display,
+    gimp_free_select_tool_should_close (fst, display,
                                         NO_CLICK_TIME_AVAILABLE,
                                         coords);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   priv->last_coords.x = coords->x;
   priv->last_coords.y = coords->y;
@@ -1056,9 +948,11 @@ gimp_free_select_tool_oper_update (GimpTool         *tool,
               gdouble start_point_x;
               gdouble start_point_y;
 
-              gimp_free_select_tool_get_last_point (fst,
-                                                    &start_point_x,
-                                                    &start_point_y);
+              /*  the last point is the line's start point  */
+              gimp_free_select_tool_get_segment_point (fst,
+                                                       &start_point_x,
+                                                       &start_point_y,
+                                                       priv->n_segment_indices - 1);
 
               gimp_constrain_line (start_point_x, start_point_y,
                                    &priv->pending_point.x,
@@ -1080,34 +974,31 @@ gimp_free_select_tool_cursor_update (GimpTool         *tool,
                                      GimpDisplay      *display)
 {
   GimpFreeSelectTool *fst = GIMP_FREE_SELECT_TOOL (tool);
+  GimpCursorModifier  modifier;
 
   if (tool->display == NULL)
     {
       GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                      display);
+      return;
+    }
+
+  if (gimp_free_select_tool_is_point_grabbed (fst) &&
+      ! gimp_free_select_tool_should_close (fst, display,
+                                            NO_CLICK_TIME_AVAILABLE,
+                                            coords))
+    {
+      modifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
   else
     {
-      GimpCursorModifier modifier;
-
-      if (gimp_free_select_tool_is_point_grabbed (fst) &&
-          ! gimp_free_select_tool_should_close (fst,
-                                                display,
-                                                NO_CLICK_TIME_AVAILABLE,
-                                                coords))
-        {
-          modifier = GIMP_CURSOR_MODIFIER_MOVE;
-        }
-      else
-        {
-          modifier = GIMP_CURSOR_MODIFIER_NONE;
-        }
-
-      gimp_tool_set_cursor (tool, display,
-                            gimp_tool_control_get_cursor (tool->control),
-                            gimp_tool_control_get_tool_cursor (tool->control),
-                            modifier);
+      modifier = GIMP_CURSOR_MODIFIER_NONE;
     }
+
+  gimp_tool_set_cursor (tool, display,
+                        gimp_tool_control_get_cursor (tool->control),
+                        gimp_tool_control_get_tool_cursor (tool->control),
+                        modifier);
 }
 
 static void
@@ -1182,8 +1073,7 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
       gimp_free_select_tool_add_point (fst,
                                        point_to_add.x,
                                        point_to_add.y);
-      gimp_free_select_tool_add_segment_index (fst,
-                                               priv->n_points - 1);
+      gimp_free_select_tool_add_segment_index (fst, priv->n_points - 1);
     }
 
   gimp_draw_tool_resume (draw_tool);
@@ -1223,7 +1113,10 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
         {
           /* First finish of the line segment if no point was grabbed */
           if (! gimp_free_select_tool_is_point_grabbed (fst))
-            gimp_free_select_tool_finish_line_segment (fst);
+            {
+              /* Revert any free segment points that might have been added */
+              gimp_free_select_tool_revert_to_last_segment (fst);
+            }
 
           /* After the segments are up to date and we have handled
            * double-click, see if it's committing time
@@ -1248,7 +1141,10 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
     case GIMP_BUTTON_RELEASE_NORMAL:
       /* First finish of the free segment if no point was grabbed */
       if (! gimp_free_select_tool_is_point_grabbed (fst))
-        gimp_free_select_tool_finish_free_segment (fst);
+        {
+          /* The points are all setup, just make a segment */
+          gimp_free_select_tool_add_segment_index (fst, priv->n_points - 1);
+        }
 
       /* After the segments are up to date, see if it's committing time */
       if (gimp_free_select_tool_should_close (fst, display,
@@ -1336,12 +1232,11 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *display)
 {
-  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
-  GimpFreeSelectToolPrivate *priv      = GET_PRIVATE (tool);
+  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (tool);
 
   if (tool->display == display)
     {
-      gimp_draw_tool_pause (draw_tool);
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
       priv->constrain_angle = ((state & gimp_get_constrain_behavior_mask ()) ?
                                TRUE : FALSE);
@@ -1349,7 +1244,7 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
       priv->supress_handles = ((state & gimp_get_extend_selection_mask ()) ?
                                TRUE : FALSE);
 
-      gimp_draw_tool_resume (draw_tool);
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
@@ -1363,13 +1258,12 @@ gimp_free_select_tool_active_modifier_key (GimpTool        *tool,
                                            GdkModifierType  state,
                                            GimpDisplay     *display)
 {
-  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
-  GimpFreeSelectToolPrivate *priv      = GET_PRIVATE (tool);
+  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (tool);
 
   if (tool->display != display)
     return;
 
-  gimp_draw_tool_pause (draw_tool);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   priv->constrain_angle = ((state & gimp_get_constrain_behavior_mask ()) ?
                            TRUE : FALSE);
@@ -1384,7 +1278,7 @@ gimp_free_select_tool_active_modifier_key (GimpTool        *tool,
                                            priv->last_coords.y);
     }
 
-  gimp_draw_tool_resume (draw_tool);
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press, state,
                                                        display);
@@ -1413,8 +1307,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
     return;
 
   hovering_first_point =
-    gimp_free_select_tool_should_close (fst,
-                                        tool->display,
+    gimp_free_select_tool_should_close (fst, tool->display,
                                         NO_CLICK_TIME_AVAILABLE,
                                         &coords);
 
@@ -1437,8 +1330,8 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
   if (handles_wants_to_show &&
       ! priv->supress_handles)
     {
-      gint i = 0;
-      gint n = 0;
+      gint i;
+      gint n;
 
       /* If the first point is hovered while button1 is held down,
        * only draw the first handle, the other handles are not
@@ -1451,8 +1344,8 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 
       for (i = 0; i < n; i++)
         {
-          GimpVector2   *point       = NULL;
-          gdouble        dist        = 0.0;
+          GimpVector2   *point;
+          gdouble        dist;
           GimpHandleType handle_type = -1;
 
           point = &priv->points[priv->segment_indices[i]];
