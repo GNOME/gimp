@@ -164,14 +164,14 @@ static void          gimp_iscissors_tool_push_undo      (GimpIscissorsTool     *
 static void          gimp_iscissors_tool_pop_undo       (GimpIscissorsTool     *iscissors);
 static void          gimp_iscissors_tool_free_redo      (GimpIscissorsTool     *iscissors);
 
-  static void          gimp_iscissors_tool_halt           (GimpIscissorsTool     *iscissors,
+static void          gimp_iscissors_tool_halt           (GimpIscissorsTool     *iscissors,
                                                          GimpDisplay           *display);
 static void          gimp_iscissors_tool_commit         (GimpIscissorsTool     *iscissors,
                                                          GimpDisplay           *display);
 
 static void          iscissors_convert         (GimpIscissorsTool *iscissors,
                                                 GimpDisplay       *display);
-static GeglBuffer  * gradient_map_new          (GimpImage         *image);
+static GeglBuffer  * gradient_map_new          (GimpPickable      *pickable);
 
 static void          find_optimal_path         (GeglBuffer        *gradient_map,
                                                 GimpTempBuf       *dp_buf,
@@ -182,7 +182,7 @@ static void          find_optimal_path         (GeglBuffer        *gradient_map,
                                                 gint               xs,
                                                 gint               ys);
 static void          find_max_gradient         (GimpIscissorsTool *iscissors,
-                                                GimpImage         *image,
+                                                GimpPickable      *pickable,
                                                 gint              *x,
                                                 gint              *y);
 static void          calculate_segment         (GimpIscissorsTool *iscissors,
@@ -418,7 +418,7 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
       iscissors->state = SEED_PLACEMENT;
 
       if (! (state & gimp_get_extend_selection_mask ()))
-        find_max_gradient (iscissors, image,
+        find_max_gradient (iscissors, GIMP_PICKABLE (image),
                            &iscissors->x, &iscissors->y);
 
       iscissors->x = CLAMP (iscissors->x, 0, gimp_image_get_width  (image) - 1);
@@ -743,7 +743,7 @@ gimp_iscissors_tool_motion (GimpTool         *tool,
 
   /*  Hold the shift key down to disable the auto-edge snap feature  */
   if (! (state & gimp_get_extend_selection_mask ()))
-    find_max_gradient (iscissors, image,
+    find_max_gradient (iscissors, GIMP_PICKABLE (image),
                        &iscissors->x, &iscissors->y);
 
   iscissors->x = CLAMP (iscissors->x, 0, gimp_image_get_width  (image) - 1);
@@ -1481,13 +1481,22 @@ static void
 calculate_segment (GimpIscissorsTool *iscissors,
                    ISegment          *segment)
 {
-  GimpDisplay *display   = GIMP_TOOL (iscissors)->display;
-  GimpImage   *image     = gimp_display_get_image (display);
-  gint         x, y, dir;
-  gint         xs, ys, xe, ye;
-  gint         x1, y1, x2, y2;
-  gint         width, height;
-  gint         ewidth, eheight;
+  GimpDisplay  *display  = GIMP_TOOL (iscissors)->display;
+  GimpPickable *pickable = GIMP_PICKABLE (gimp_display_get_image (display));
+  gint          width;
+  gint          height;
+  gint          xs, ys, xe, ye;
+  gint          x1, y1, x2, y2;
+  gint          ewidth, eheight;
+
+  /* Initialise the gradient map buffer for this pickable if we don't
+   * already have one.
+   */
+  if (! iscissors->gradient_map)
+    iscissors->gradient_map = gradient_map_new (pickable);
+
+  width  = gegl_buffer_get_width  (iscissors->gradient_map);
+  height = gegl_buffer_get_height (iscissors->gradient_map);
 
   /*  Calculate the lowest cost path from one vertex to the next as specified
    *  by the parameter "segment".
@@ -1500,10 +1509,10 @@ calculate_segment (GimpIscissorsTool *iscissors,
    */
 
   /*  Get the bounding box  */
-  xs = CLAMP (segment->x1, 0, gimp_image_get_width  (image) - 1);
-  ys = CLAMP (segment->y1, 0, gimp_image_get_height (image) - 1);
-  xe = CLAMP (segment->x2, 0, gimp_image_get_width  (image) - 1);
-  ye = CLAMP (segment->y2, 0, gimp_image_get_height (image) - 1);
+  xs = CLAMP (segment->x1, 0, width  - 1);
+  ys = CLAMP (segment->y1, 0, height - 1);
+  xe = CLAMP (segment->x2, 0, width  - 1);
+  ye = CLAMP (segment->y2, 0, height - 1);
   x1 = MIN (xs, xe);
   y1 = MIN (ys, ye);
   x2 = MAX (xs, xe) + 1;  /*  +1 because if xe = 199 & xs = 0, x2 - x1, width = 200  */
@@ -1520,12 +1529,12 @@ calculate_segment (GimpIscissorsTool *iscissors,
   eheight = (y2 - y1) * EXTEND_BY + FIXED;
 
   if (xe >= xs)
-    x2 += CLAMP (ewidth, 0, gimp_image_get_width (image) - x2);
+    x2 += CLAMP (ewidth, 0, width - x2);
   else
     x1 -= CLAMP (ewidth, 0, x1);
 
   if (ye >= ys)
-    y2 += CLAMP (eheight, 0, gimp_image_get_height (image) - y2);
+    y2 += CLAMP (eheight, 0, height - y2);
   else
     y1 -= CLAMP (eheight, 0, y1);
 
@@ -1536,22 +1545,18 @@ calculate_segment (GimpIscissorsTool *iscissors,
       segment->points = NULL;
     }
 
-  /*  If the bounding box has width and height...  */
   if ((x2 - x1) && (y2 - y1))
     {
-      width = (x2 - x1);
-      height = (y2 - y1);
+      /*  If the bounding box has width and height...  */
 
-      /* Initialise the gradient map tile manager for this image if we
-       * don't already have one. */
-      if (! iscissors->gradient_map)
-        iscissors->gradient_map = gradient_map_new (image);
+      gint bb_width  = (x2 - x1);
+      gint bb_height = (y2 - y1);
 
       /*  allocate the dynamic programming array  */
       if (iscissors->dp_buf)
         gimp_temp_buf_unref (iscissors->dp_buf);
 
-      iscissors->dp_buf = gimp_temp_buf_new (width, height,
+      iscissors->dp_buf = gimp_temp_buf_new (bb_width, bb_height,
                                              babl_format ("Y u32"));
 
       /*  find the optimal path of pixels from (x1, y1) to (x2, y2)  */
@@ -1562,12 +1567,14 @@ calculate_segment (GimpIscissorsTool *iscissors,
       segment->points = plot_pixels (iscissors, iscissors->dp_buf,
                                      x1, y1, xs, ys, xe, ye);
     }
-  /*  If the bounding box has no width  */
   else if ((x2 - x1) == 0)
     {
+      /*  If the bounding box has no width  */
+
       /*  plot a vertical line  */
-      y = ys;
-      dir = (ys > ye) ? -1 : 1;
+      gint y   = ys;
+      gint dir = (ys > ye) ? -1 : 1;
+
       segment->points = g_ptr_array_new ();
       while (y != ye)
         {
@@ -1575,12 +1582,14 @@ calculate_segment (GimpIscissorsTool *iscissors,
           y += dir;
         }
     }
-  /*  If the bounding box has no height  */
   else if ((y2 - y1) == 0)
     {
+      /*  If the bounding box has no height  */
+
       /*  plot a horizontal line  */
-      x = xs;
-      dir = (xs > xe) ? -1 : 1;
+      gint x   = xs;
+      gint dir = (xs > xe) ? -1 : 1;
+
       segment->points = g_ptr_array_new ();
       while (x != xe)
         {
@@ -1853,25 +1862,27 @@ find_optimal_path (GeglBuffer  *gradient_map,
 }
 
 static GeglBuffer *
-gradient_map_new (GimpImage *image)
+gradient_map_new (GimpPickable *pickable)
 {
   GeglBuffer      *buffer;
   GeglTileHandler *handler;
 
+  buffer = gimp_pickable_get_buffer (pickable);
+
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                            gimp_image_get_width  (image),
-                                            gimp_image_get_height (image)),
+                                            gegl_buffer_get_width  (buffer),
+                                            gegl_buffer_get_height (buffer)),
                             babl_format_n (babl_type ("u8"), 2));
 
-  handler = gimp_tile_handler_iscissors_new (image);
+  handler = gimp_tile_handler_iscissors_new (pickable);
 
   gimp_tile_handler_validate_assign (GIMP_TILE_HANDLER_VALIDATE (handler),
                                      buffer);
 
   gimp_tile_handler_validate_invalidate (GIMP_TILE_HANDLER_VALIDATE (handler),
                                          0, 0,
-                                         gimp_image_get_width  (image),
-                                         gimp_image_get_height (image));
+                                         gegl_buffer_get_width  (buffer),
+                                         gegl_buffer_get_height (buffer));
 
   g_object_unref (handler);
 
@@ -1880,32 +1891,37 @@ gradient_map_new (GimpImage *image)
 
 static void
 find_max_gradient (GimpIscissorsTool *iscissors,
-                   GimpImage         *image,
+                   GimpPickable      *pickable,
                    gint              *x,
                    gint              *y)
 {
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
+  gint                width;
+  gint                height;
   gint                radius;
   gint                cx, cy;
   gint                x1, y1, x2, y2;
   gfloat              max_gradient;
 
-  /* Initialise the gradient map buffer for this image if we don't
+  /* Initialise the gradient map buffer for this pickable if we don't
    * already have one.
    */
   if (! iscissors->gradient_map)
-    iscissors->gradient_map = gradient_map_new (image);
+    iscissors->gradient_map = gradient_map_new (pickable);
+
+  width  = gegl_buffer_get_width  (iscissors->gradient_map);
+  height = gegl_buffer_get_height (iscissors->gradient_map);
 
   radius = GRADIENT_SEARCH >> 1;
 
   /*  calculate the extent of the search  */
-  cx = CLAMP (*x, 0, gimp_image_get_width  (image));
-  cy = CLAMP (*y, 0, gimp_image_get_height (image));
-  x1 = CLAMP (cx - radius, 0, gimp_image_get_width  (image));
-  y1 = CLAMP (cy - radius, 0, gimp_image_get_height (image));
-  x2 = CLAMP (cx + radius, 0, gimp_image_get_width  (image));
-  y2 = CLAMP (cy + radius, 0, gimp_image_get_height (image));
+  cx = CLAMP (*x, 0, width);
+  cy = CLAMP (*y, 0, height);
+  x1 = CLAMP (cx - radius, 0, width);
+  y1 = CLAMP (cy - radius, 0, height);
+  x2 = CLAMP (cx + radius, 0, width);
+  y2 = CLAMP (cy + radius, 0, height);
   /*  calculate the factor to multiply the distance from the cursor by  */
 
   max_gradient = 0;
