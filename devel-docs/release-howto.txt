@@ -3,9 +3,26 @@
                       ----------------------------
                   a check-list for doing a GIMP release
 
+ ( ) Announce a string freeze on the GIMP Developer mailing list.
+ 
+     Mention that a release is planned, what brach will be frozen, and
+     how long the string freeze is going to last. Plan for a couple of
+     weeks at least. No translatable strings must be touched during
+     this time. An example announcement message is:
+     https://mail.gnome.org/archives/gimp-developer-list/2016-October/msg00004.html
+
+ ( ) Announce the planned release on the GNOME I18N mailing list.
+
+     Let them know about the planned release, what branch it's based
+     on, and how many changes to expect. An example message is:
+     https://mail.gnome.org/archives/gnome-i18n/2016-October/msg00035.html
+
+ ( ) Wait until the date specified in the announcements, use this time
+     to get bug fixes applied which don't modify strings.
 
  ( ) Check that you have working ssh access to pentagon.gnome.org and
-     that you are a member of the gimpadmins group.
+     that you are a member of the gimpadmins group. If not, ask
+     Michael Natterer or Michael Schumacher for assistance.
 
  ( ) Check that download.gimp.org has enough space to upload the
      release and to place it into the download area. If not, make
