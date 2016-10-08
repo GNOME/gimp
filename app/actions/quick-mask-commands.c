@@ -121,7 +121,7 @@ quick_mask_configure_cmd_callback (GtkAction *action,
                                            NULL,
                                            &color,
                                            _("Edit Quick Mask Color"),
-                                           _("_Mask opacity:"),
+                                           _("_Mask opacity"),
                                            FALSE,
                                            quick_mask_configure_callback,
                                            NULL);

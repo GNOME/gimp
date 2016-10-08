@@ -30,6 +30,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpspinscale.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "channel-options-dialog.h"
@@ -90,8 +91,8 @@ channel_options_dialog_new (GimpImage                  *image,
   GimpViewable         *viewable;
   GtkWidget            *hbox;
   GtkWidget            *vbox;
-  GtkWidget            *table;
-  GtkObject            *opacity_adj;
+  GtkAdjustment        *opacity_adj;
+  GtkWidget            *scale;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
@@ -152,35 +153,42 @@ channel_options_dialog_new (GimpImage                  *image,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (channel_name ? 2 : 1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
   if (channel_name)
     {
-      private->name_entry = gtk_entry_new ();
-      gtk_entry_set_activates_default (GTK_ENTRY (private->name_entry), TRUE);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Channel _name:"), 0.0, 0.5,
-                                 private->name_entry, 2, FALSE);
+      GtkWidget *vbox2;
+      GtkWidget *label;
 
+      vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+      gtk_widget_show (vbox2);
+
+      label = gtk_label_new_with_mnemonic (_("Channel _name:"));
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      private->name_entry = gtk_entry_new ();
       gtk_entry_set_text (GTK_ENTRY (private->name_entry), channel_name);
+      gtk_entry_set_activates_default (GTK_ENTRY (private->name_entry), TRUE);
+      gtk_box_pack_start (GTK_BOX (vbox2), private->name_entry,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (private->name_entry);
+
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), private->name_entry);
     }
 
-  opacity_adj = gimp_scale_entry_new (GTK_TABLE (table),
-                                      0, channel_name ? 1 : 0,
-                                      opacity_label, 100, -1,
-                                      channel_color->a * 100.0,
-                                      0.0, 100.0, 1.0, 10.0, 1,
-                                      TRUE, 0.0, 0.0,
-                                      NULL, NULL);
+  opacity_adj = (GtkAdjustment *)
+                gtk_adjustment_new (channel_color->a * 100.0,
+                                    0.0, 100.0, 1.0, 10.0, 0);
+  scale = gimp_spin_scale_new (opacity_adj, opacity_label, 1);
+  gtk_widget_set_size_request (scale, 200, -1);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   private->color_panel = gimp_color_panel_new (color_label,
                                                channel_color,
                                                GIMP_COLOR_AREA_LARGE_CHECKS,
-                                               48, 64);
+                                               48, 48);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (private->color_panel),
                                 context);
 
@@ -189,7 +197,7 @@ channel_options_dialog_new (GimpImage                  *image,
                     private->color_panel);
 
   gtk_box_pack_start (GTK_BOX (hbox), private->color_panel,
-                      TRUE, TRUE, 0);
+                      FALSE, FALSE, 0);
   gtk_widget_show (private->color_panel);
 
   g_signal_connect (private->color_panel, "color-changed",
