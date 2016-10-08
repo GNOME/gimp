@@ -8,7 +8,7 @@ WinVersionTooLowError=Ta wersja programu GIMP wymaga systemu Windows XP z Servic
 ;shown before the wizard starts on development versions of GIMP
 DevelopmentWarningTitle=Wersja rozwojowa
 ;DevelopmentWarning=To jest rozwojowa wersja programu GIMP. Niektóre funkcje nie zosta³y jeszcze ukoñczone, a ca³y program mo¿e byæ niestabilny. W razie wyst¹pienia b³êdu przed skontaktowaniem siê z programistami nale¿y sprawdziæ, czy nie zosta³ on naprawiony w repozytorium git.%nTa wersja programu GIMP nie jest przeznaczona do codziennej pracy z powodu niestabilnoœci i mo¿liwoœci utraty danych. Kontynuowaæ instalacjê mimo to?
-DevelopmentWarning=To jest rozwojowa wersja instalatora programu GIMP. Nie zosta³a ona przetestowana tak dok³adnie, jak stabilna wersja, co mo¿e powodowaæ nieprawid³owe dzia³anie programu GIMP. Prosimy zg³aszaæ napotkane b³êdy w systemie Bugzilla programu GIMP (komponent \"Installer\"):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nNiektóre b³êdy instalatora s¹ ju¿ znane:%n- wczytywanie plików TIFF nie dzia³a%n- rozmiary plików nie s¹ poprawnie wyœwietlane%nprosimy nie zg³aszaæ tych problemów, poniewa¿ s¹ one ju¿ znane programistom.%n%nKontynuowaæ instalacjê mimo to?
+DevelopmentWarning=To jest rozwojowa wersja instalatora programu GIMP. Nie zosta³a ona przetestowana tak dok³adnie, jak stabilna wersja, co mo¿e powodowaæ nieprawid³owe dzia³anie programu GIMP. Prosimy zg³aszaæ napotkane b³êdy w systemie Bugzilla programu GIMP (komponent \"Installer\"):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nKontynuowaæ instalacjê mimo to?
 DevelopmentButtonContinue=&Kontynuuj
 DevelopmentButtonExit=Zakoñcz
 

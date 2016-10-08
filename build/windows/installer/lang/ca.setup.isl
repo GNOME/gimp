@@ -8,7 +8,7 @@ WinVersionTooLowError=Aquesta versió del GIMP requereix Windows XP amb Service P
 ;shown before the wizard starts on development versions of GIMP
 DevelopmentWarningTitle=Versió de desenvolupament
 ;DevelopmentWarning=Aquesta és una versió de desenvolupament del GIMP. Així, algunes característiques no estan acabades i pot ser inestable. Si trobeu qualsevol problema, verifiqueu primer que no ha estat resolt en el GIT abans de contactar amb els desenvolupadors.%nAquesta versió del GIMP no està orientada al treball diari , així pot ser inestable i podríeu perdre la vostra feina. Voleu continuar amb la instal·lació de totes maneres?
-DevelopmentWarning=Aquesta és una versió de desenvolupament de l'instal·lador del GIMP. No ha estat provada tan com l'instal·lador estable, i això pot fer que el GIMP no funcioni correctament. Informeu de qualsevol problema que trobeu en el bugzilla del GIMP (Installer component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nAquests són alguns dels problemes coneguts en l'instal·lador:%n- la càrrega de fitxers TIFF no funciona%n- les mides del fitxer no es mostren adequadament%nNo informeu d'aquests problemes ja que n'estem a l'aguait.%n%nVoleu continuar amb la instal·lació de totes maneres?
+DevelopmentWarning=Aquesta és una versió de desenvolupament de l'instal·lador del GIMP. No ha estat provada tan com l'instal·lador estable, i això pot fer que el GIMP no funcioni correctament. Informeu de qualsevol problema que trobeu en el bugzilla del GIMP (Installer component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nVoleu continuar amb la instal·lació de totes maneres?
 DevelopmentButtonContinue=&Continua
 DevelopmentButtonExit=Surt
 

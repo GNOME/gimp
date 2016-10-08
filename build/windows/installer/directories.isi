@@ -1,0 +1,45 @@
+//directories to source files from
+#if !defined(VERSION)
+  #error "VERSION must be defined"
+#endif
+
+#define public
+
+#if !defined(VER_DIR)
+	#if defined(REVISION)
+		#define VER_DIR VERSION + "-" + REVISION
+	#else
+		#define VER_DIR VERSION
+	#endif
+#endif
+
+#ifndef DIR32
+#define DIR32 "i686"
+#endif
+#ifndef DIR64
+#define DIR64 "amd64"
+#endif
+
+#ifndef GIMP_DIR
+	#define GIMP_DIR "N:\_newdev\output\gimp\" + VER_DIR
+#endif
+
+//32-bit GIMP base directory (result of make install)
+#ifndef GIMP_DIR32
+	#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
+#endif
+//64-bit GIMP base directory (result of make install)
+#ifndef GIMP_DIR64
+	#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
+#endif
+
+#define DDIR32 DIR32 + "-w64-mingw32\sys-root\mingw"
+#define DDIR64 DIR64 + "-w64-mingw32\sys-root\mingw"
+
+#ifdef PYTHON
+
+	//python source directory
+	#ifndef PY_DIR
+		#define PY_DIR "N:\_newdev\deps\gimp\python"
+	#endif
+#endif

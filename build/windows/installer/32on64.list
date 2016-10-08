@@ -1,0 +1,9 @@
+#list of 32bit files to install on x64
+!GTK
+etc\fonts\
+lib\gtk-2.0\2.10.0\engines\
+lib\gtk-2.0\modules\
+share\themes\
+bin\gspawn*.exe
+bin\*.dll
+!end
