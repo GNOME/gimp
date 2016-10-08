@@ -2,18 +2,18 @@
 # Copyright (C) 2011-2015 Free Software Foundation, Inc.
 #
 # Yderligere oplysninger og konventioner kan findes på
-# http://wiki.dansk-gruppen.dk/index.php/Gimp
+# http://wiki.dansk-gruppen.dk/index.php/GIMP
 #
 # Joe Hansen <joedalton2@yahoo.dk>, 2011.
-# scootergrisen, 2015.
+# scootergrisen, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tags\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-06-09 05:32+0000\n"
-"PO-Revision-Date: 2015-06-09 00:00+0200\n"
+"POT-Creation-Date: 2016-03-16 07:11+0000\n"
+"PO-Revision-Date: 2016-03-16 21:36+0100\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -21,9 +21,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: \n"
-"X-Language: da_DK\n"
-"X-Source-Language: C\n"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
