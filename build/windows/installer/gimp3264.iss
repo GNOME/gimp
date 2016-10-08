@@ -1579,8 +1579,8 @@ begin
 		ExtractTemporaryFile('installsplash.bmp');
 		ExtractTemporaryFile('installsplash_small.bmp');
 	except
-		DebugMsg('InitializeSetup','Error extracting temporary file');
-		MsgBox(CustomMessage('ErrorExtractingTemp'),mbError,MB_OK);
+		DebugMsg('InitializeSetup','Error extracting temporary file: ' + GetExceptionMessage);
+		MsgBox(CustomMessage('ErrorExtractingTemp') + #13#13 + GetExceptionMessage,mbError,MB_OK);
 		Result := False;
 		exit;
 	end;
