@@ -101,10 +101,11 @@ static void       gimp_channel_scale         (GimpItem          *item,
                                               GimpProgress      *progress);
 static void       gimp_channel_resize        (GimpItem          *item,
                                               GimpContext       *context,
+                                              GimpFillType       fill_type,
                                               gint               new_width,
                                               gint               new_height,
-                                              gint               offx,
-                                              gint               offy);
+                                              gint               offset_x,
+                                              gint               offset_y);
 static void       gimp_channel_flip          (GimpItem          *item,
                                               GimpContext       *context,
                                               GimpOrientationType flip_type,
@@ -611,6 +612,7 @@ gimp_channel_convert (GimpItem  *item,
           gimp_item_get_height (item) != height)
         {
           gimp_item_resize (item, gimp_get_user_context (dest_image->gimp),
+                            GIMP_FILL_TRANSPARENT,
                             width, height, 0, 0);
         }
     }
@@ -750,14 +752,16 @@ gimp_channel_scale (GimpItem              *item,
 }
 
 static void
-gimp_channel_resize (GimpItem    *item,
-                     GimpContext *context,
-                     gint         new_width,
-                     gint         new_height,
-                     gint         offset_x,
-                     gint         offset_y)
+gimp_channel_resize (GimpItem     *item,
+                     GimpContext  *context,
+                     GimpFillType  fill_type,
+                     gint          new_width,
+                     gint          new_height,
+                     gint          offset_x,
+                     gint          offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, GIMP_FILL_TRANSPARENT,
+                                          new_width, new_height,
                                           offset_x, offset_y);
 
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)

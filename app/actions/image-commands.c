@@ -133,6 +133,7 @@ static void   image_profile_convert_callback   (GtkWidget                *dialog
 static void   image_resize_callback            (GtkWidget              *dialog,
                                                 GimpViewable           *viewable,
                                                 GimpContext            *context,
+                                                GimpFillType            fill_type,
                                                 gint                    width,
                                                 gint                    height,
                                                 GimpUnit                unit,
@@ -837,7 +838,8 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
       return;
     }
 
-  gimp_image_crop (image, action_data_get_context (data),
+  gimp_image_crop (image,
+                   action_data_get_context (data), GIMP_FILL_TRANSPARENT,
                    x, y, width, height, TRUE);
   gimp_image_flush (image);
 }
@@ -860,7 +862,8 @@ image_crop_to_content_cmd_callback (GtkAction *action,
                                      &x, &y, &width, &height))
     {
     case GIMP_AUTO_SHRINK_SHRINK:
-      gimp_image_crop (image, action_data_get_context (data),
+      gimp_image_crop (image,
+                       action_data_get_context (data), GIMP_FILL_TRANSPARENT,
                        x, y, width, height, TRUE);
       gimp_image_flush (image);
       break;
@@ -1274,6 +1277,7 @@ static void
 image_resize_callback (GtkWidget    *dialog,
                        GimpViewable *viewable,
                        GimpContext  *context,
+                       GimpFillType  fill_type,
                        gint          width,
                        gint          height,
                        GimpUnit      unit,
@@ -1302,7 +1306,7 @@ image_resize_callback (GtkWidget    *dialog,
                                       _("Resizing"));
 
       gimp_image_resize_with_layers (image,
-                                     context,
+                                     context, fill_type,
                                      width, height, offset_x, offset_y,
                                      layer_set,
                                      resize_text_layers,

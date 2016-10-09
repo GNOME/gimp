@@ -151,6 +151,7 @@ static void   layers_scale_callback           (GtkWidget             *dialog,
 static void   layers_resize_callback          (GtkWidget             *dialog,
                                                GimpViewable          *viewable,
                                                GimpContext           *context,
+                                               GimpFillType           fill_type,
                                                gint                   width,
                                                gint                   height,
                                                GimpUnit               unit,
@@ -677,7 +678,9 @@ layers_resize_to_image_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_layer_resize_to_image (layer, action_data_get_context (data));
+  gimp_layer_resize_to_image (layer,
+                              action_data_get_context (data),
+                              GIMP_FILL_TRANSPARENT);
   gimp_image_flush (image);
 }
 
@@ -755,7 +758,8 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Crop Layer to Selection"));
 
-  gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
+  gimp_item_resize (GIMP_ITEM (layer),
+                    action_data_get_context (data), GIMP_FILL_TRANSPARENT,
                     width, height, off_x, off_y);
 
   gimp_image_undo_group_end (image);
@@ -784,7 +788,8 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                    _("Crop Layer to Content"));
 
-      gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
+      gimp_item_resize (GIMP_ITEM (layer),
+                        action_data_get_context (data), GIMP_FILL_TRANSPARENT,
                         width, height, -x, -y);
 
       gimp_image_undo_group_end (image);
@@ -1300,6 +1305,7 @@ static void
 layers_resize_callback (GtkWidget    *dialog,
                         GimpViewable *viewable,
                         GimpContext  *context,
+                        GimpFillType  fill_type,
                         gint          width,
                         gint          height,
                         GimpUnit      unit,
@@ -1321,7 +1327,7 @@ layers_resize_callback (GtkWidget    *dialog,
           height == gimp_item_get_height (item))
         return;
 
-      gimp_item_resize (item, context,
+      gimp_item_resize (item, context, fill_type,
                         width, height, offset_x, offset_y);
       gimp_image_flush (gimp_item_get_image (item));
     }

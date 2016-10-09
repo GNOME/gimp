@@ -489,7 +489,7 @@ layer_resize_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
                                      GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
                                      error))
-        gimp_item_resize (GIMP_ITEM (layer), context,
+        gimp_item_resize (GIMP_ITEM (layer), context, GIMP_FILL_TRANSPARENT,
                           new_width, new_height, offx, offy);
       else
         success = FALSE;
@@ -517,7 +517,7 @@ layer_resize_to_image_size_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
                                      GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
                                      error))
-        gimp_layer_resize_to_image (layer, context);
+        gimp_layer_resize_to_image (layer, context, GIMP_FILL_TRANSPARENT);
       else
         success = FALSE;
     }

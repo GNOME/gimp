@@ -109,6 +109,7 @@ static void            gimp_group_layer_scale        (GimpItem        *item,
                                                       GimpProgress    *progress);
 static void            gimp_group_layer_resize       (GimpItem        *item,
                                                       GimpContext     *context,
+                                                      GimpFillType     fill_type,
                                                       gint             new_width,
                                                       gint             new_height,
                                                       gint             offset_x,
@@ -631,12 +632,13 @@ gimp_group_layer_scale (GimpItem              *item,
 }
 
 static void
-gimp_group_layer_resize (GimpItem    *item,
-                         GimpContext *context,
-                         gint         new_width,
-                         gint         new_height,
-                         gint         offset_x,
-                         gint         offset_y)
+gimp_group_layer_resize (GimpItem     *item,
+                         GimpContext  *context,
+                         GimpFillType  fill_type,
+                         gint          new_width,
+                         gint          new_height,
+                         gint          offset_x,
+                         gint          offset_y)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
   GimpGroupLayerPrivate *private = GET_PRIVATE (item);
@@ -677,7 +679,7 @@ gimp_group_layer_resize (GimpItem    *item,
           gint child_offset_x = gimp_item_get_offset_x (child) - child_x;
           gint child_offset_y = gimp_item_get_offset_y (child) - child_y;
 
-          gimp_item_resize (child, context,
+          gimp_item_resize (child, context, fill_type,
                             child_width, child_height,
                             child_offset_x, child_offset_y);
         }
@@ -696,7 +698,7 @@ gimp_group_layer_resize (GimpItem    *item,
   mask = gimp_layer_get_mask (GIMP_LAYER (group));
 
   if (mask)
-    gimp_item_resize (GIMP_ITEM (mask), context,
+    gimp_item_resize (GIMP_ITEM (mask), context, GIMP_FILL_TRANSPARENT,
                       new_width, new_height, offset_x, offset_y);
 
   gimp_group_layer_resume_resize (group, TRUE);

@@ -147,6 +147,7 @@ static void       gimp_item_real_scale              (GimpItem       *item,
                                                      GimpProgress   *progress);
 static void       gimp_item_real_resize             (GimpItem       *item,
                                                      GimpContext    *context,
+                                                     GimpFillType    fill_type,
                                                      gint            new_width,
                                                      gint            new_height,
                                                      gint            offset_x,
@@ -602,12 +603,13 @@ gimp_item_real_scale (GimpItem              *item,
 }
 
 static void
-gimp_item_real_resize (GimpItem    *item,
-                       GimpContext *context,
-                       gint         new_width,
-                       gint         new_height,
-                       gint         offset_x,
-                       gint         offset_y)
+gimp_item_real_resize (GimpItem     *item,
+                       GimpContext  *context,
+                       GimpFillType  fill_type,
+                       gint          new_width,
+                       gint          new_height,
+                       gint          offset_x,
+                       gint          offset_y)
 {
   GimpItemPrivate *private = GET_PRIVATE (item);
 
@@ -1393,12 +1395,13 @@ gimp_item_scale_by_origin (GimpItem              *item,
 }
 
 void
-gimp_item_resize (GimpItem    *item,
-                  GimpContext *context,
-                  gint         new_width,
-                  gint         new_height,
-                  gint         offset_x,
-                  gint         offset_y)
+gimp_item_resize (GimpItem     *item,
+                  GimpContext  *context,
+                  GimpFillType  fill_type,
+                  gint          new_width,
+                  gint          new_height,
+                  gint          offset_x,
+                  gint          offset_y)
 {
   GimpItemClass *item_class;
   GimpImage     *image;
@@ -1418,7 +1421,8 @@ gimp_item_resize (GimpItem    *item,
 
   g_object_freeze_notify (G_OBJECT (item));
 
-  item_class->resize (item, context, new_width, new_height, offset_x, offset_y);
+  item_class->resize (item, context, fill_type,
+                      new_width, new_height, offset_x, offset_y);
 
   g_object_thaw_notify (G_OBJECT (item));
 

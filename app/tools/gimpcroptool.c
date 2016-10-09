@@ -331,14 +331,15 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
           off_x -= x;
           off_y -= y;
 
-          gimp_item_resize (GIMP_ITEM (layer), GIMP_CONTEXT (options),
+          gimp_item_resize (GIMP_ITEM (layer),
+                            GIMP_CONTEXT (options), GIMP_FILL_TRANSPARENT,
                             w, h, off_x, off_y);
         }
       else
         {
-          gimp_image_crop (image, GIMP_CONTEXT (options),
-                           x, y, w, h,
-                           TRUE);
+          gimp_image_crop (image,
+                           GIMP_CONTEXT (options), GIMP_FILL_TRANSPARENT,
+                           x, y, w, h, TRUE);
         }
 
       gimp_image_flush (image);

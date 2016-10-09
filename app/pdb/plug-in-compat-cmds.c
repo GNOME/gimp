@@ -611,7 +611,8 @@ plug_in_autocrop_invoker (GimpProcedure         *procedure,
               x = y = 0;
             }
 
-          gimp_image_crop (image, context, x, y, width, height, TRUE);
+          gimp_image_crop (image, context, GIMP_FILL_TRANSPARENT,
+                           x, y, width, height, TRUE);
 
           gimp_image_undo_group_end (image);
         }
@@ -658,7 +659,8 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
                   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                                _("Autocrop layer"));
 
-                  gimp_item_resize (GIMP_ITEM (layer), context,
+                  gimp_item_resize (GIMP_ITEM (layer),
+                                    context, GIMP_FILL_TRANSPARENT,
                                     width, height, -x, -y);
 
                   gimp_image_undo_group_end (image);

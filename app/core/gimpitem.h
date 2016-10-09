@@ -80,6 +80,7 @@ struct _GimpItemClass
                                           GimpProgress           *progress);
   void            (* resize)             (GimpItem               *item,
                                           GimpContext            *context,
+                                          GimpFillType            fill_type,
                                           gint                    new_width,
                                           gint                    new_height,
                                           gint                    offset_x,
@@ -232,6 +233,7 @@ void            gimp_item_scale_by_origin    (GimpItem           *item,
                                               gboolean            local_origin);
 void            gimp_item_resize             (GimpItem           *item,
                                               GimpContext        *context,
+                                              GimpFillType        fill_type,
                                               gint                new_width,
                                               gint                new_height,
                                               gint                offset_x,

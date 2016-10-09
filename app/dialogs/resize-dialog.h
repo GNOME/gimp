@@ -22,6 +22,7 @@
 typedef void (* GimpResizeCallback) (GtkWidget    *dialog,
                                      GimpViewable *viewable,
                                      GimpContext  *context,
+                                     GimpFillType  fill_type,
                                      gint          width,
                                      gint          height,
                                      GimpUnit      unit,

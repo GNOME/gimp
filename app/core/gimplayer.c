@@ -130,6 +130,7 @@ static void       gimp_layer_scale              (GimpItem           *item,
                                                  GimpProgress       *progress);
 static void       gimp_layer_resize             (GimpItem           *item,
                                                  GimpContext        *context,
+                                                 GimpFillType        fill_type,
                                                  gint                new_width,
                                                  gint                new_height,
                                                  gint                offset_x,
@@ -929,20 +930,28 @@ gimp_layer_scale (GimpItem              *item,
 }
 
 static void
-gimp_layer_resize (GimpItem    *item,
-                   GimpContext *context,
-                   gint         new_width,
-                   gint         new_height,
-                   gint         offset_x,
-                   gint         offset_y)
+gimp_layer_resize (GimpItem     *item,
+                   GimpContext  *context,
+                   GimpFillType  fill_type,
+                   gint          new_width,
+                   gint          new_height,
+                   gint          offset_x,
+                   gint          offset_y)
 {
   GimpLayer *layer  = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
+  if (fill_type == GIMP_FILL_TRANSPARENT &&
+      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    {
+      fill_type = GIMP_FILL_BACKGROUND;
+    }
+
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, fill_type,
+                                          new_width, new_height,
                                           offset_x, offset_y);
 
   if (layer->mask)
-    gimp_item_resize (GIMP_ITEM (layer->mask), context,
+    gimp_item_resize (GIMP_ITEM (layer->mask), context, GIMP_FILL_TRANSPARENT,
                       new_width, new_height, offset_x, offset_y);
 }
 
@@ -1939,8 +1948,9 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
 }
 
 void
-gimp_layer_resize_to_image (GimpLayer   *layer,
-                            GimpContext *context)
+gimp_layer_resize_to_image (GimpLayer    *layer,
+                            GimpContext  *context,
+                            GimpFillType  fill_type)
 {
   GimpImage *image;
   gint       offset_x;
@@ -1956,7 +1966,7 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
                                C_("undo-type", "Layer to Image Size"));
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
-  gimp_item_resize (GIMP_ITEM (layer), context,
+  gimp_item_resize (GIMP_ITEM (layer), context, fill_type,
                     gimp_image_get_width  (image),
                     gimp_image_get_height (image),
                     offset_x, offset_y);

@@ -35,6 +35,7 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
+#include "gimpdrawable-fill.h"
 #include "gimpdrawable-floating-selection.h"
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-private.h"
@@ -105,6 +106,7 @@ static void       gimp_drawable_scale              (GimpItem          *item,
                                                     GimpProgress      *progress);
 static void       gimp_drawable_resize             (GimpItem          *item,
                                                     GimpContext       *context,
+                                                    GimpFillType       fill_type,
                                                     gint               new_width,
                                                     gint               new_height,
                                                     gint               offset_x,
@@ -532,12 +534,13 @@ gimp_drawable_scale (GimpItem              *item,
 }
 
 static void
-gimp_drawable_resize (GimpItem    *item,
-                      GimpContext *context,
-                      gint         new_width,
-                      gint         new_height,
-                      gint         offset_x,
-                      gint         offset_y)
+gimp_drawable_resize (GimpItem     *item,
+                      GimpContext  *context,
+                      GimpFillType  fill_type,
+                      gint          new_width,
+                      gint          new_height,
+                      gint          offset_x,
+                      gint          offset_y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GeglBuffer   *new_buffer;
@@ -578,26 +581,14 @@ gimp_drawable_resize (GimpItem    *item,
       copy_width  != new_width ||
       copy_height != new_height)
     {
-      /*  Clear the new tiles if needed  */
+      /*  Clear the new buffer if needed  */
 
-      GimpRGB    bg;
-      GeglColor *col;
+      GimpRGB      color;
+      GimpPattern *pattern;
 
-      if (! gimp_drawable_has_alpha (drawable) && ! GIMP_IS_CHANNEL (drawable))
-        {
-          gimp_context_get_background (context, &bg);
-          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                             &bg, &bg);
-        }
-      else
-        {
-          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
-        }
-
-      col = gimp_gegl_color_new (&bg);
-
-      gegl_buffer_set_color (new_buffer, NULL, col);
-      g_object_unref (col);
+      gimp_get_fill_params (context, fill_type, &color, &pattern, NULL);
+      gimp_drawable_fill_buffer (drawable, new_buffer,
+                                 &color, pattern, 0, 0);
     }
 
   if (intersect && copy_width && copy_height)

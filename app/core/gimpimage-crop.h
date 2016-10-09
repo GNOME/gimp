@@ -19,13 +19,14 @@
 #define __GIMP_IMAGE_CROP_H__
 
 
-void   gimp_image_crop (GimpImage   *image,
-                        GimpContext *context,
-                        gint         x,
-                        gint         y,
-                        gint         width,
-                        gint         height,
-                        gboolean     crop_layers);
+void   gimp_image_crop (GimpImage    *image,
+                        GimpContext  *context,
+                        GimpFillType  fill_type,
+                        gint          x,
+                        gint          y,
+                        gint          width,
+                        gint          height,
+                        gboolean      crop_layers);
 
 
 #endif  /* __GIMP_IMAGE_CROP_H__ */

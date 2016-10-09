@@ -668,7 +668,9 @@ gimp_text_layer_render (GimpTextLayer *layer)
           if (! unused_eek)
             unused_eek = gimp_context_new (image->gimp, "eek", NULL);
 
-          gimp_item_resize (GIMP_ITEM (mask), unused_eek, width, height, 0, 0);
+          gimp_item_resize (GIMP_ITEM (mask),
+                            unused_eek, GIMP_FILL_TRANSPARENT,
+                            width, height, 0, 0);
         }
     }
 
