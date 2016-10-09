@@ -551,6 +551,10 @@ gimp_get_fill_params (GimpContext   *context,
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			       _("No patterns available for this operation."));
+
+          /*  fall back to BG fill  */
+          gimp_context_get_background (context, color);
+
           return FALSE;
         }
       break;
