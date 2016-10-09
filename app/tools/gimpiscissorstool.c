@@ -109,7 +109,7 @@ struct _ICurve
 {
   GQueue   *segments;
   gboolean  first_point;
-  gboolean  connected;
+  gboolean  closed;
 };
 
 
@@ -222,6 +222,25 @@ static ICurve      * icurve_new                (void);
 static ICurve      * icurve_copy               (ICurve            *curve);
 static void          icurve_clear              (ICurve            *curve);
 static void          icurve_free               (ICurve            *curve);
+
+static ISegment    * icurve_append_segment     (ICurve            *curve,
+                                                gint               x1,
+                                                gint               y1,
+                                                gint               x2,
+                                                gint               y2);
+static ISegment    * icurve_insert_segment     (ICurve            *curve,
+                                                GList             *sibling,
+                                                gint               x1,
+                                                gint               y1,
+                                                gint               x2,
+                                                gint               y2);
+static void          icurve_delete_segment     (ICurve            *curve,
+                                                ISegment          *segment);
+
+static void          icurve_close              (ICurve            *curve);
+
+static GimpScanConvert *
+                    icurve_create_scan_convert (ICurve            *curve);
 
 
 /*  static variables  */
@@ -425,12 +444,11 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
 
       gimp_iscissors_tool_push_undo (iscissors);
 
-      segment = isegment_new (iscissors->x,
-                              iscissors->y,
-                              iscissors->x,
-                              iscissors->y);
-
-      g_queue_push_tail (iscissors->curve->segments, segment);
+      segment = icurve_append_segment (iscissors->curve,
+                                       iscissors->x,
+                                       iscissors->y,
+                                       iscissors->x,
+                                       iscissors->y);
 
       /*  Initialize the draw tool only on starting the tool  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
@@ -461,8 +479,8 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
                 calculate_segment (iscissors, iscissors->segment2);
             }
         }
-      /*  If the iscissors is connected, check if the click was inside  */
-      else if (iscissors->curve->connected && iscissors->mask &&
+      /*  If the iscissors is closed, check if the click was inside  */
+      else if (iscissors->curve->closed && iscissors->mask &&
                gimp_pickable_get_opacity_at (GIMP_PICKABLE (iscissors->mask),
                                              iscissors->x,
                                              iscissors->y))
@@ -470,9 +488,9 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
           gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
         }
-      else if (! iscissors->curve->connected)
+      else if (! iscissors->curve->closed)
         {
-          /*  if we're not connected, we're adding a new point  */
+          /*  if we're not closed, we're adding a new point  */
 
           ISegment *last = g_queue_peek_tail (iscissors->curve->segments);
 
@@ -491,12 +509,11 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
             }
           else
             {
-              segment = isegment_new (last->x2,
-                                      last->y2,
-                                      iscissors->x,
-                                      iscissors->y);
-
-              g_queue_push_tail (iscissors->curve->segments, segment);
+              segment = icurve_append_segment (iscissors->curve,
+                                               last->x2,
+                                               last->y2,
+                                               iscissors->x,
+                                               iscissors->y);
 
               if (options->interactive)
                 calculate_segment (iscissors, segment);
@@ -516,49 +533,8 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (iscissors);
   GimpImage            *image   = gimp_display_get_image (display);
   GimpScanConvert      *sc;
-  GList                *list;
-  GimpVector2          *points = NULL;
-  guint                 n_total_points = 0;
 
-  sc = gimp_scan_convert_new ();
-
-  for (list = g_queue_peek_tail_link (iscissors->curve->segments);
-       list;
-       list = g_list_previous (list))
-    {
-      ISegment *segment = list->data;
-
-      n_total_points += segment->points->len;
-    }
-
-  points = g_new (GimpVector2, n_total_points);
-  n_total_points = 0;
-
-  /* go over the segments in reverse order, adding the points we have */
-  for (list = g_queue_peek_tail_link (iscissors->curve->segments);
-       list;
-       list = g_list_previous (list))
-    {
-      ISegment *segment = list->data;
-      guint     n_points;
-      gint      i;
-
-      n_points = segment->points->len;
-
-      for (i = 0; i < n_points; i++)
-        {
-          guint32 packed = GPOINTER_TO_INT (g_ptr_array_index (segment->points,
-                                                               i));
-
-          points[n_total_points+i].x = packed & 0x0000ffff;
-          points[n_total_points+i].y = packed >> 16;
-        }
-
-      n_total_points += n_points;
-    }
-
-  gimp_scan_convert_add_polyline (sc, n_total_points, points, TRUE);
-  g_free (points);
+  sc = icurve_create_scan_convert (iscissors->curve);
 
   if (iscissors->mask)
     g_object_unref (iscissors->mask);
@@ -618,15 +594,13 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
                   iscissors->x = segment->x1;
                   iscissors->y = segment->y1;
 
-                  segment = g_queue_peek_tail (iscissors->curve->segments);
-
-                  segment->x2 = iscissors->x;
-                  segment->y2 = iscissors->y;
-
-                  iscissors->curve->connected = TRUE;
+                  icurve_close (iscissors->curve);
 
                   if (! options->interactive)
-                    calculate_segment (iscissors, segment);
+                    {
+                      segment = g_queue_peek_tail (iscissors->curve->segments);
+                      calculate_segment (iscissors, segment);
+                    }
 
                   gimp_iscissors_tool_free_redo (iscissors);
                 }
@@ -661,11 +635,8 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
             {
               if (iscissors->segment1 && iscissors->segment2)
                 {
-                  iscissors->segment1->x1 = iscissors->segment2->x1;
-                  iscissors->segment1->y1 = iscissors->segment2->y1;
-
-                  g_queue_remove (iscissors->curve->segments,
-                                  iscissors->segment2);
+                  icurve_delete_segment (iscissors->curve,
+                                         iscissors->segment2);
 
                   calculate_segment (iscissors, iscissors->segment1);
                 }
@@ -716,7 +687,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   /*  convert the curves into a region  */
-  if (iscissors->curve->connected)
+  if (iscissors->curve->closed)
     iscissors_convert (iscissors, display);
 }
 
@@ -859,8 +830,8 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
             gimp_canvas_item_set_highlight (item, TRUE);
         }
 
-      /*  Draw the last point if the curve is not connected  */
-      if (! list->next && ! iscissors->curve->connected)
+      /*  Draw the last point if the curve is not closed  */
+      if (! list->next && ! iscissors->curve->closed)
         {
           gboolean placement = (iscissors->state == SEED_PLACEMENT);
 
@@ -971,7 +942,7 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
           iscissors->op = ISCISSORS_OP_ADD_POINT;
         }
     }
-  else if (iscissors->curve->connected && iscissors->mask)
+  else if (iscissors->curve->closed && iscissors->mask)
     {
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (iscissors->mask),
                                         RINT (coords->x),
@@ -1103,7 +1074,7 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      if (iscissors->curve->connected && iscissors->mask)
+      if (iscissors->curve->closed && iscissors->mask)
         {
           gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
@@ -1284,7 +1255,7 @@ gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (display);
 
-  if (iscissors->curve->connected && iscissors->mask)
+  if (iscissors->curve->closed && iscissors->mask)
     {
       gimp_channel_select_channel (gimp_image_get_mask (image),
                                    tool->tool_info->blurb,
@@ -1448,17 +1419,12 @@ clicked_on_segment (GimpIscissorsTool *iscissors,
 
       gimp_iscissors_tool_push_undo (iscissors);
 
-      /*  Create the new segment  */
-      new_segment = isegment_new (iscissors->x,
-                                  iscissors->y,
-                                  segment->x2,
-                                  segment->y2);
-
-      segment->x2 = iscissors->x;
-      segment->y2 = iscissors->y;
-
-      /*  Create the new link and supply the new segment as data  */
-      g_queue_insert_after (iscissors->curve->segments, list, new_segment);
+      new_segment = icurve_insert_segment (iscissors->curve,
+                                           list,
+                                           iscissors->x,
+                                           iscissors->y,
+                                           segment->x2,
+                                           segment->y2);
 
       iscissors->segment1 = new_segment;
       iscissors->segment2 = segment;
@@ -2030,7 +1996,7 @@ icurve_copy (ICurve *curve)
     }
 
   copy->first_point = curve->first_point;
-  copy->connected   = curve->connected;
+  copy->closed      = curve->closed;
 
   return copy;
 }
@@ -2042,7 +2008,7 @@ icurve_clear (ICurve *curve)
     isegment_free (g_queue_pop_head (curve->segments));
 
   curve->first_point = TRUE;
-  curve->connected   = FALSE;
+  curve->closed      = FALSE;
 }
 
 static void
@@ -2051,4 +2017,125 @@ icurve_free (ICurve *curve)
   g_queue_free_full (curve->segments, (GDestroyNotify) isegment_free);
 
   g_slice_free (ICurve, curve);
+}
+
+static ISegment *
+icurve_append_segment (ICurve *curve,
+                       gint    x1,
+                       gint    y1,
+                       gint    x2,
+                       gint    y2)
+{
+  ISegment *segment = isegment_new (x1, y1, x2, y2);
+
+  g_queue_push_tail (curve->segments, segment);
+
+  return segment;
+}
+
+static ISegment *
+icurve_insert_segment (ICurve *curve,
+                       GList  *sibling,
+                       gint    x1,
+                       gint    y1,
+                       gint    x2,
+                       gint    y2)
+{
+  ISegment *segment = sibling->data;
+  ISegment *new_segment;
+
+  new_segment = isegment_new (x1, y1, x2, y2);
+
+  segment->x2 = x1;
+  segment->y2 = y1;
+
+  g_queue_insert_after (curve->segments, sibling, new_segment);
+
+  return new_segment;
+}
+
+static void
+icurve_delete_segment (ICurve   *curve,
+                       ISegment *segment)
+{
+  GList    *link         = g_queue_find (curve->segments, segment);
+  ISegment *next_segment = NULL;
+
+  if (link->next)
+    next_segment = link->next->data;
+  else if (curve->closed)
+    next_segment = g_queue_peek_head (curve->segments);
+
+  if (next_segment)
+    {
+      next_segment->x1 = segment->x1;
+      next_segment->y1 = segment->y1;
+
+      g_queue_remove (curve->segments, segment);
+
+      isegment_free (segment);
+    }
+}
+
+static void
+icurve_close (ICurve *curve)
+{
+  ISegment *first = g_queue_peek_head (curve->segments);
+  ISegment *last  = g_queue_peek_tail (curve->segments);
+
+  last->x2 = first->x1;
+  last->y2 = first->y1;
+
+  curve->closed = TRUE;
+}
+
+static GimpScanConvert *
+icurve_create_scan_convert (ICurve *curve)
+{
+  GimpScanConvert *sc;
+  GList           *list;
+  GimpVector2     *points;
+  guint            n_total_points = 0;
+
+  sc = gimp_scan_convert_new ();
+
+  for (list = g_queue_peek_tail_link (curve->segments);
+       list;
+       list = g_list_previous (list))
+    {
+      ISegment *segment = list->data;
+
+      n_total_points += segment->points->len;
+    }
+
+  points = g_new (GimpVector2, n_total_points);
+  n_total_points = 0;
+
+  /* go over the segments in reverse order, adding the points we have */
+  for (list = g_queue_peek_tail_link (curve->segments);
+       list;
+       list = g_list_previous (list))
+    {
+      ISegment *segment = list->data;
+      guint     n_points;
+      gint      i;
+
+      n_points = segment->points->len;
+
+      for (i = 0; i < n_points; i++)
+        {
+          guint32 packed = GPOINTER_TO_INT (g_ptr_array_index (segment->points,
+                                                               i));
+
+          points[n_total_points + i].x = packed & 0x0000ffff;
+          points[n_total_points + i].y = packed >> 16;
+        }
+
+      n_total_points += n_points;
+    }
+
+  gimp_scan_convert_add_polyline (sc, n_total_points, points, TRUE);
+  g_free (points);
+
+  return sc;
 }
