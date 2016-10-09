@@ -4,20 +4,22 @@
 # Mikko Paananen, 2004.
 # Ville Hautamäki <villeh@cs.joensuu.fi>, 2000.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2014.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: tiny-fu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-05-21 05:25+0000\n"
-"PO-Revision-Date: 2014-05-21 18:16+0300\n"
-"Last-Translator: Lasse Liehu <lasse.liehu@gmail.com>\n"
-"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-10-09 08:47+0000\n"
+"PO-Revision-Date: 2016-10-09 12:07+0300\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
+"Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
@@ -26,7 +28,6 @@ msgstr "Poikkeustietoja puuttuu"
 
 #: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
-#| msgid "An error occured running %s"
 msgid "An error occurred running %s"
 msgstr "Tapahtui virhe suoritettaessa %s"
 
@@ -34,24 +35,24 @@ msgstr "Tapahtui virhe suoritettaessa %s"
 msgid "_More Information"
 msgstr "_Lisätietoja"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
+#: ../plug-ins/pygimp/gimpfu.py:545
 msgid "No"
 msgstr "Ei"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
 msgid "Yes"
 msgstr "Kyllä"
 
-#: ../plug-ins/pygimp/gimpfu.py:597 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu tiedostovalinta"
 
-#: ../plug-ins/pygimp/gimpfu.py:643
+#: ../plug-ins/pygimp/gimpfu.py:644
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu kansiovalinta"
 
-#: ../plug-ins/pygimp/gimpfu.py:732
+#: ../plug-ins/pygimp/gimpfu.py:733
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Virheellinen syöte skriptille \"%s\""
@@ -102,7 +103,7 @@ msgstr "Kirjoita _erillinen CSS-tiedosto"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
-msgstr ""
+msgstr "Käytettävä väriliuku"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
@@ -325,11 +326,11 @@ msgstr "Varjon _Y-siirtymä"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:76
 msgid "Create a new brush with characters from a text sequence"
-msgstr ""
+msgstr "Luo uusi sivellin tekstissä olevissa merkeistä"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:82
 msgid "New Brush from _Text..."
-msgstr ""
+msgstr "Uusi sivellin _tekstistä..."
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:85
 msgid "Font"
@@ -337,10 +338,8 @@ msgstr "Fontti"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:86
 msgid "Pixel Size"
-msgstr ""
+msgstr "Pikselikoko"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:87
-#| msgid "Text file"
 msgid "Text"
 msgstr "Teksti"
-
