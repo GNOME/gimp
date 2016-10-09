@@ -59,6 +59,12 @@ gimp_drawable_fill (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
+  if (fill_type == GIMP_FILL_TRANSPARENT &&
+      ! gimp_drawable_has_alpha (drawable))
+    {
+      fill_type = GIMP_FILL_BACKGROUND;
+    }
+
   if (! gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
     return;
 
