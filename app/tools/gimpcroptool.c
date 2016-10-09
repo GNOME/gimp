@@ -332,7 +332,7 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
           off_y -= y;
 
           gimp_item_resize (GIMP_ITEM (layer),
-                            GIMP_CONTEXT (options), GIMP_FILL_TRANSPARENT,
+                            GIMP_CONTEXT (options), options->fill_type,
                             w, h, off_x, off_y);
         }
       else

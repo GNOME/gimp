@@ -45,6 +45,8 @@ struct _GimpCropOptions
    */
   gboolean         allow_growing;
 
+  /* How to fill new areas created by 'allow_growing. */
+  GimpFillType     fill_type;
 };
 
 
