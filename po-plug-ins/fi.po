@@ -7,21 +7,23 @@
 # Ilkka Tuohela <hile@iki.fi>, 2006.
 # Aapo Rantalainen <aapo.rantalainen@gmail.com>, 2009.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2014.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-05-21 05:24+0000\n"
-"PO-Revision-Date: 2014-05-21 18:15+0300\n"
-"Last-Translator: Lasse Liehu <lasse.liehu@gmail.com>\n"
-"Language-Team: Finnish <fi@li.org>\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-10-09 07:44+0000\n"
+"PO-Revision-Date: 2016-10-09 11:43+0300\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
+"Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:120
 msgid "Original"
@@ -279,7 +281,7 @@ msgstr "Vaihekulma 0-360°"
 
 #. Propagate Mode
 #: ../plug-ins/common/alien-map.c:516 ../plug-ins/common/hot.c:613
-#: ../plug-ins/common/value-propagate.c:1121 ../plug-ins/common/waves.c:279
+#: ../plug-ins/common/value-propagate.c:1125 ../plug-ins/common/waves.c:279
 msgid "Mode"
 msgstr "Toimintatapa"
 
@@ -618,23 +620,22 @@ msgstr "_Pystysuora"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:442
-#: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:612
-#: ../plug-ins/common/file-gif-load.c:943
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:445
+#: ../plug-ins/common/file-cel.c:448 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
-#: ../plug-ins/common/file-png.c:897 ../plug-ins/common/file-pnm.c:585
-#: ../plug-ins/common/file-raw.c:781 ../plug-ins/common/file-sunras.c:979
-#: ../plug-ins/common/file-tga.c:1073 ../plug-ins/common/file-tiff-load.c:1010
+#: ../plug-ins/common/file-png.c:898 ../plug-ins/common/file-pnm.c:585
+#: ../plug-ins/common/file-raw.c:780 ../plug-ins/common/file-sunras.c:979
+#: ../plug-ins/common/file-tga.c:1095 ../plug-ins/common/file-tiff-load.c:1011
 #: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
-#: ../plug-ins/file-bmp/bmp-read.c:680 ../plug-ins/file-faxg3/faxg3.c:474
+#: ../plug-ins/file-bmp/bmp-read.c:700 ../plug-ins/file-faxg3/faxg3.c:474
 #: ../plug-ins/file-fits/fits.c:532 ../plug-ins/file-jpeg/jpeg-load.c:260
 #: ../plug-ins/file-jpeg/jpeg-load.c:824
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
-#: ../plug-ins/file-psd/psd-load.c:1644 ../plug-ins/file-sgi/sgi.c:409
-#: ../plug-ins/gfig/gfig-dialog.c:1321
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/file-psd/psd-load.c:1655 ../plug-ins/file-sgi/sgi.c:409
+#: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -671,7 +672,7 @@ msgstr "Valikoiva Gauss-sumennus"
 #: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
-#: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1687
+#: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1691
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
 msgstr "Ei voi toimia indeksoiduilla kuvilla"
@@ -1030,16 +1031,16 @@ msgstr "Lataa kanava-asetukset"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:349
-#: ../plug-ins/common/file-cel.c:580 ../plug-ins/common/file-dicom.c:340
-#: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:355
+#: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:352
+#: ../plug-ins/common/file-cel.c:583 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:357
 #: ../plug-ins/common/file-gih.c:642 ../plug-ins/common/file-jp2-load.c:196
 #: ../plug-ins/common/file-jp2-load.c:205 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:339 ../plug-ins/common/file-pcx.c:362
 #: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
 #: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
 #: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
-#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:729
+#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:728
 #: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
 #: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
@@ -1052,12 +1053,12 @@ msgstr "Lataa kanava-asetukset"
 #: ../plug-ins/file-jpeg/jpeg-load.c:894 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
-#: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
+#: ../plug-ins/file-xjt/xjt.c:2533 ../plug-ins/file-xjt/xjt.c:2541
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:923
-#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:271
+#: ../plug-ins/help/gimphelplocale.c:287
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1069,26 +1070,27 @@ msgstr "Tallenna kanava-asetukset"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
 #: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:488
-#: ../plug-ins/common/file-pcx.c:713 ../plug-ins/common/file-pix.c:528
-#: ../plug-ins/common/file-png.c:1369 ../plug-ins/common/file-pnm.c:1012
-#: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-raw.c:609
-#: ../plug-ins/common/file-raw.c:637 ../plug-ins/common/file-sunras.c:567
-#: ../plug-ins/common/file-tga.c:1180 ../plug-ins/common/file-tiff-save.c:838
-#: ../plug-ins/common/file-xbm.c:1037 ../plug-ins/common/file-xmc.c:1449
-#: ../plug-ins/common/file-xwd.c:637 ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:478
-#: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/common/file-pcx.c:713 ../plug-ins/common/file-pdf-save.c:438
+#: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1370
+#: ../plug-ins/common/file-pnm.c:1012 ../plug-ins/common/file-ps.c:1195
+#: ../plug-ins/common/file-raw.c:623 ../plug-ins/common/file-raw.c:651
+#: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1202
+#: ../plug-ins/common/file-tiff-save.c:842 ../plug-ins/common/file-xbm.c:1037
+#: ../plug-ins/common/file-xmc.c:1449 ../plug-ins/common/file-xwd.c:637
+#: ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/file-bmp/bmp-write.c:311 ../plug-ins/file-fits/fits.c:478
+#: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1020
 #: ../plug-ins/file-jpeg/jpeg-save.c:355 ../plug-ins/file-psd/psd-save.c:1653
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
-#: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
+#: ../plug-ins/file-xjt/xjt.c:1280 ../plug-ins/file-xjt/xjt.c:1719
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
-#: ../plug-ins/gfig/gfig.c:797 ../plug-ins/ifs-compose/ifs-compose.c:2408
+#: ../plug-ins/gfig/gfig.c:801 ../plug-ins/ifs-compose/ifs-compose.c:2408
 #: ../plug-ins/lighting/lighting-ui.c:1223
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1764,7 +1766,7 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw.c:1118
+#: ../plug-ins/common/file-raw.c:1117
 msgid "RGB"
 msgstr "RGB"
 
@@ -1971,8 +1973,7 @@ msgstr "Maskin arvo"
 msgid "Stretch brightness values to cover the full range"
 msgstr "Venytä valoisuus arvoja täyttämään koko alueen"
 
-#: ../plug-ins/common/contrast-normalize.c:91
-#: ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
 msgid "_Normalize"
 msgstr "_Normalisoi"
 
@@ -2086,9 +2087,9 @@ msgstr "_Alfa"
 msgid "E_xtend"
 msgstr "_Laajenna"
 
-#: ../plug-ins/common/convolution-matrix.c:74
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:700
-#: ../plug-ins/common/fractal-trace.c:737 ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/convolution-matrix.c:74 ../plug-ins/common/displace.c:477
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/fractal-trace.c:737
+#: ../plug-ins/common/ripple.c:585
 msgid "_Wrap"
 msgstr "_Kiedo"
 
@@ -2125,7 +2126,7 @@ msgid "D_ivisor:"
 msgstr "Jakaja:"
 
 #: ../plug-ins/common/convolution-matrix.c:1001
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1139
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1138
 msgid "O_ffset:"
 msgstr "Siirtymä:"
 
@@ -2177,7 +2178,7 @@ msgstr "Tiukka automaattinen rajaus"
 msgid "Zealous cropping"
 msgstr "Tiukka automaattinen rajaus"
 
-#: ../plug-ins/common/crop-zealous.c:252
+#: ../plug-ins/common/crop-zealous.c:253
 msgid "Nothing to crop."
 msgstr "Ei rajattavaa."
 
@@ -2675,7 +2676,7 @@ msgstr "Juovituksen poisto"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
 #: ../plug-ins/common/file-ps.c:3039 ../plug-ins/common/file-ps.c:3237
-#: ../plug-ins/common/file-raw.c:1152 ../plug-ins/common/smooth-palette.c:437
+#: ../plug-ins/common/file-raw.c:1151 ../plug-ins/common/smooth-palette.c:437
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
@@ -2987,7 +2988,7 @@ msgstr "Kaiverrus"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
 #: ../plug-ins/common/file-ps.c:3049 ../plug-ins/common/file-ps.c:3246
-#: ../plug-ins/common/file-raw.c:1165 ../plug-ins/common/film.c:1002
+#: ../plug-ins/common/file-raw.c:1164 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
@@ -3005,10 +3006,9 @@ msgstr "ASCII kuvana"
 
 #. Create the actual window.
 #: ../plug-ins/common/file-aa.c:351
-#, fuzzy
 #| msgid "Texture"
 msgid "Text"
-msgstr "Kuvio"
+msgstr "Teksti"
 
 #: ../plug-ins/common/file-aa.c:359
 msgid "_Format:"
@@ -3022,8 +3022,8 @@ msgstr "KISS CEL"
 msgid "Load KISS Palette"
 msgstr "Ladataan KISS paletti"
 
-#: ../plug-ins/common/file-cel.c:309 ../plug-ins/common/file-cel.c:364
-#: ../plug-ins/common/file-cel.c:384
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-cel.c:367
+#: ../plug-ins/common/file-cel.c:387
 #, fuzzy, c-format
 #| msgid "Error while reading '%s'. File corrupted?"
 msgid "EOF or error while reading image header"
@@ -3033,13 +3033,13 @@ msgstr "Virhe luettaessa '%s'. Tiedosto korruptoitunut?"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:354 ../plug-ins/common/file-dicom.c:345
-#: ../plug-ins/common/file-gbr.c:375 ../plug-ins/common/file-gif-load.c:360
+#: ../plug-ins/common/file-cel.c:357 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-gbr.c:375 ../plug-ins/common/file-gif-load.c:362
 #: ../plug-ins/common/file-gih.c:647 ../plug-ins/common/file-jp2-load.c:189
 #: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:350
-#: ../plug-ins/common/file-png.c:769 ../plug-ins/common/file-pnm.c:501
-#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:734
+#: ../plug-ins/common/file-png.c:770 ../plug-ins/common/file-pnm.c:501
+#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:733
 #: ../plug-ins/common/file-sunras.c:489 ../plug-ins/common/file-tga.c:448
 #: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:743 ../plug-ins/common/file-xmc.c:669
@@ -3047,89 +3047,89 @@ msgstr "Virhe luettaessa '%s'. Tiedosto korruptoitunut?"
 #: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-faxg3/faxg3.c:213
 #: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:644
 #: ../plug-ins/file-jpeg/jpeg-load.c:128 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3333
+#: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3337
 #, c-format
 msgid "Opening '%s'"
 msgstr "Avataan \"%s\""
 
-#: ../plug-ins/common/file-cel.c:392
-#, fuzzy, c-format
+#: ../plug-ins/common/file-cel.c:395
+#, c-format
 #| msgid "'%s' is not a PCX file"
 msgid "is not a CEL image file"
-msgstr "'%s' ei ole PCX tiedosto"
+msgstr "ei ole CEL-kuvatiedosto"
 
-#: ../plug-ins/common/file-cel.c:406
+#: ../plug-ins/common/file-cel.c:409
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:420
+#: ../plug-ins/common/file-cel.c:423
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:433
+#: ../plug-ins/common/file-cel.c:436
 #, c-format
 msgid "Can't create a new image"
 msgstr "Ei voi luoda uutta kuvaa"
 
-#: ../plug-ins/common/file-cel.c:471 ../plug-ins/common/file-cel.c:506
-#: ../plug-ins/common/file-cel.c:531
+#: ../plug-ins/common/file-cel.c:474 ../plug-ins/common/file-cel.c:509
+#: ../plug-ins/common/file-cel.c:534
 #, fuzzy, c-format
 #| msgid "Error while reading '%s'. File corrupted?"
 msgid "EOF or error while reading image data"
 msgstr "Virhe luettaessa '%s'. Tiedosto korruptoitunut?"
 
-#: ../plug-ins/common/file-cel.c:548
+#: ../plug-ins/common/file-cel.c:551
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Värejä on väärä määrä (%d)"
 
-#: ../plug-ins/common/file-cel.c:630 ../plug-ins/common/file-cel.c:642
+#: ../plug-ins/common/file-cel.c:633 ../plug-ins/common/file-cel.c:645
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:651
-#, fuzzy, c-format
+#: ../plug-ins/common/file-cel.c:654
+#, c-format
 #| msgid "'%s' is not a PCX file"
 msgid "'%s': is not a KCF palette file"
-msgstr "'%s' ei ole PCX tiedosto"
+msgstr "'%s': ei ole KCF-palettitiedosto"
 
-#: ../plug-ins/common/file-cel.c:660
+#: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:669
+#: ../plug-ins/common/file-cel.c:672
 #, fuzzy, c-format
 #| msgid "Number of colors:"
 msgid "'%s': illegal number of colors: %u"
 msgstr "Värien lukumäärä:"
 
-#: ../plug-ins/common/file-cel.c:684 ../plug-ins/common/file-cel.c:701
-#: ../plug-ins/common/file-cel.c:721
+#: ../plug-ins/common/file-cel.c:687 ../plug-ins/common/file-cel.c:704
+#: ../plug-ins/common/file-cel.c:724
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr ""
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:670
+#: ../plug-ins/common/file-cel.c:781 ../plug-ins/common/file-gbr.c:670
 #: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
-#: ../plug-ins/common/file-png.c:1376 ../plug-ins/common/file-pnm.c:1017
+#: ../plug-ins/common/file-png.c:1377 ../plug-ins/common/file-pnm.c:1017
 #: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
-#: ../plug-ins/common/file-tga.c:1185 ../plug-ins/common/file-tiff-save.c:709
+#: ../plug-ins/common/file-tga.c:1207 ../plug-ins/common/file-tiff-save.c:713
 #: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
 #: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
-#: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:483
-#: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-bmp/bmp-write.c:322 ../plug-ins/file-fits/fits.c:483
+#: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1014
 #: ../plug-ins/file-jpeg/jpeg-save.c:312 ../plug-ins/file-psd/psd-save.c:1658
-#: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-xjt/xjt.c:1696
+#: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-xjt/xjt.c:1700
 #, c-format
 msgid "Saving '%s'"
 msgstr "Tallennetaan \"%s\""
@@ -3180,7 +3180,7 @@ msgstr "Tallenna alfakanava (RGBA/RGB)"
 #.
 #: ../plug-ins/common/file-csource.c:798
 msgid "Save as _RGB565 (16-bit)"
-msgstr ""
+msgstr "Tallenna _RGB565-muodossa (16-bit)"
 
 #: ../plug-ins/common/file-csource.c:821
 msgid "Op_acity:"
@@ -3215,7 +3215,7 @@ msgstr "Ei voi tallentaa kuvia, joissa on alfa-kanava."
 
 #: ../plug-ins/common/file-dicom.c:1354 ../plug-ins/common/file-ps.c:1185
 #: ../plug-ins/common/file-ps.c:1217 ../plug-ins/common/file-xwd.c:627
-#: ../plug-ins/file-fits/fits.c:468 ../plug-ins/file-xjt/xjt.c:1691
+#: ../plug-ins/file-fits/fits.c:468 ../plug-ins/file-xjt/xjt.c:1695
 msgid "Cannot operate on unknown image types."
 msgstr "Ei voi käsitellä tuntemattomia kuvatyyppejä."
 
@@ -3259,11 +3259,11 @@ msgid "Brush"
 msgstr "Sivellin"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:786 ../plug-ins/common/grid.c:792
+#: ../plug-ins/common/file-gbr.c:787 ../plug-ins/common/grid.c:792
 msgid "Spacing:"
 msgstr "Välistys:"
 
-#: ../plug-ins/common/file-gbr.c:797 ../plug-ins/common/file-gih.c:890
+#: ../plug-ins/common/file-gbr.c:799 ../plug-ins/common/file-gih.c:890
 #: ../plug-ins/common/file-pat.c:570 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Kuvaus:"
@@ -3273,36 +3273,36 @@ msgstr "Kuvaus:"
 msgid "GIF image"
 msgstr "GIF-kuva"
 
-#: ../plug-ins/common/file-gif-load.c:372
+#: ../plug-ins/common/file-gif-load.c:374
 msgid "This is not a GIF file"
 msgstr "Tämä ei ole GIF-kuva"
 
-#: ../plug-ins/common/file-gif-load.c:411
+#: ../plug-ins/common/file-gif-load.c:413
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Pikselisuhde ei ole neliömäinen. Kuva voi näyttää litistyneeltä."
 
-#: ../plug-ins/common/file-gif-load.c:945
+#: ../plug-ins/common/file-gif-load.c:982
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Tausta (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:968
+#: ../plug-ins/common/file-gif-load.c:1005
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Avataan \"%s\" (ruutu %d)"
 
-#: ../plug-ins/common/file-gif-load.c:997 ../plug-ins/common/iwarp.c:792
+#: ../plug-ins/common/file-gif-load.c:1034 ../plug-ins/common/iwarp.c:792
 #: ../plug-ins/common/iwarp.c:827
 #, c-format
 msgid "Frame %d"
 msgstr "Ruutu %d"
 
-#: ../plug-ins/common/file-gif-load.c:999
+#: ../plug-ins/common/file-gif-load.c:1036
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Ruutu %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1030
+#: ../plug-ins/common/file-gif-load.c:1067
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3353,7 +3353,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1135
 msgid "GIF"
-msgstr ""
+msgstr "GIF"
 
 #: ../plug-ins/common/file-gif-save.c:1143
 #, fuzzy, c-format
@@ -3587,10 +3587,9 @@ msgid "The amount of cell spacing."
 msgstr "Solujen välin leveys."
 
 #: ../plug-ins/common/file-jp2-load.c:96
-#, fuzzy
 #| msgid "JPEG image"
 msgid "JPEG 2000 image"
-msgstr "JPEG-kuva"
+msgstr "JPEG 2000 -kuva"
 
 #: ../plug-ins/common/file-jp2-load.c:214
 #, fuzzy, c-format
@@ -3655,15 +3654,14 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1913
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1914
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Läpinäkyvyyttä voi voi tallentaa, tallennetaan peittävänä."
 
 #: ../plug-ins/common/file-mng.c:1335
-#, fuzzy
 #| msgid "PNG"
 msgid "MNG"
-msgstr "PNG"
+msgstr "MNG"
 
 #: ../plug-ins/common/file-mng.c:1342
 msgid "MNG Options"
@@ -3690,7 +3688,7 @@ msgid "Save creation time"
 msgstr "Tallenna aikaleima"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1962
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1963
 msgid "PNG"
 msgstr "PNG"
 
@@ -3789,7 +3787,7 @@ msgstr "Kuviotäyttö"
 
 #: ../plug-ins/common/file-pcx.c:133 ../plug-ins/common/file-pcx.c:152
 msgid "ZSoft PCX image"
-msgstr ""
+msgstr "ZSoft PCX -kuva"
 
 #: ../plug-ins/common/file-pcx.c:373
 #, c-format
@@ -3801,13 +3799,13 @@ msgstr "Virhe luettaessa otsikko tiedostosta '%s'"
 msgid "'%s' is not a PCX file"
 msgstr "'%s' ei ole PCX tiedosto"
 
-#: ../plug-ins/common/file-pcx.c:398 ../plug-ins/file-bmp/bmp-read.c:669
+#: ../plug-ins/common/file-pcx.c:398 ../plug-ins/file-bmp/bmp-read.c:689
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Kuvan leveys ei ole tuettu tai on virheellinen: %d"
 
-#: ../plug-ins/common/file-pcx.c:404 ../plug-ins/file-bmp/bmp-read.c:675
+#: ../plug-ins/common/file-pcx.c:404 ../plug-ins/file-bmp/bmp-read.c:695
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -3853,7 +3851,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Kirjoitus tiedostoon \"%s\" epäonnistui: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:298
+#: ../plug-ins/common/file-pdf-save.c:300
 msgid "Portable Document Format"
 msgstr ""
 
@@ -3913,17 +3911,17 @@ msgstr "Antialiasointi"
 msgid "pixels/%a"
 msgstr "pikseliä/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:313
+#: ../plug-ins/common/file-pdf-save.c:315
 #, fuzzy
 #| msgid "Create Guides..."
 msgid "_Create multipage PDF..."
 msgstr "Luo apulinjoja..."
 
-#: ../plug-ins/common/file-pdf-save.c:421
+#: ../plug-ins/common/file-pdf-save.c:423
 msgid "You must select a file to save!"
-msgstr ""
+msgstr "Valitse tallennettava tiedosto!"
 
-#: ../plug-ins/common/file-pdf-save.c:431
+#: ../plug-ins/common/file-pdf-save.c:449
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3932,59 +3930,57 @@ msgid ""
 "read only!"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:785
-#: ../plug-ins/common/file-pdf-save.c:902
+#: ../plug-ins/common/file-pdf-save.c:803
+#: ../plug-ins/common/file-pdf-save.c:920
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:789
-#: ../plug-ins/common/file-pdf-save.c:906
+#: ../plug-ins/common/file-pdf-save.c:807
+#: ../plug-ins/common/file-pdf-save.c:924
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:793
-#: ../plug-ins/common/file-pdf-save.c:910
+#: ../plug-ins/common/file-pdf-save.c:811
+#: ../plug-ins/common/file-pdf-save.c:928
 msgid "Apply layer masks before saving"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:796
-#: ../plug-ins/common/file-pdf-save.c:913
+#: ../plug-ins/common/file-pdf-save.c:814
+#: ../plug-ins/common/file-pdf-save.c:931
 msgid "Keeping the masks will not change the output"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:849
+#: ../plug-ins/common/file-pdf-save.c:867
 #, fuzzy
 #| msgid "Separate to:"
 msgid "Save to:"
 msgstr "Erottele:"
 
-#: ../plug-ins/common/file-pdf-save.c:853
-#, fuzzy
+#: ../plug-ins/common/file-pdf-save.c:871
 #| msgid "_RGB Noise..."
 msgid "Browse..."
-msgstr "_RGB-kohina..."
+msgstr "Selaa..."
 
-#: ../plug-ins/common/file-pdf-save.c:854
+#: ../plug-ins/common/file-pdf-save.c:872
 msgid "Multipage PDF export"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:887
-#, fuzzy
+#: ../plug-ins/common/file-pdf-save.c:905
 #| msgid "Move Selected Objects"
 msgid "Remove the selected pages"
-msgstr "Siirrä valitut objektit"
+msgstr "Poista valitut sivut"
 
-#: ../plug-ins/common/file-pdf-save.c:897
+#: ../plug-ins/common/file-pdf-save.c:915
 #, fuzzy
 #| msgid "Print the image"
 msgid "Add this image"
 msgstr "Tulosta kuva"
 
-#: ../plug-ins/common/file-pdf-save.c:1010
+#: ../plug-ins/common/file-pdf-save.c:1028
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:1333
+#: ../plug-ins/common/file-pdf-save.c:1351
 #: ../plug-ins/print/print-draw-page.c:223
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
@@ -4013,18 +4009,18 @@ msgstr ""
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Virhe luettaessa '%s'. Tiedosto korruptoitunut?"
 
-#: ../plug-ins/common/file-png.c:877
+#: ../plug-ins/common/file-png.c:878
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Tuntematon värimalli PNG tiedostossa '%s'."
 
-#: ../plug-ins/common/file-png.c:888
+#: ../plug-ins/common/file-png.c:889
 #, fuzzy, c-format
 #| msgid "Could not create working folder '%s': %s"
 msgid "Could not create new image for '%s': %s"
 msgstr "Ei voi luoda työhakemistoa '%s': %s"
 
-#: ../plug-ins/common/file-png.c:942
+#: ../plug-ins/common/file-png.c:943
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -4032,48 +4028,47 @@ msgstr ""
 "PNG-tiedosto määrittää siirtymän, jonka takia taso sijoitetaan kuvan "
 "ulkopuolelle."
 
-#: ../plug-ins/common/file-png.c:1244
+#: ../plug-ins/common/file-png.c:1245
 msgid "Apply PNG Offset"
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1248
+#: ../plug-ins/common/file-png.c:1249
 #, fuzzy
 #| msgid "_Hole offset:"
 msgid "Ignore PNG offset"
 msgstr "Reiän siirtymä:"
 
-#: ../plug-ins/common/file-png.c:1249
+#: ../plug-ins/common/file-png.c:1250
 msgid "Apply PNG offset to layer"
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1273
+#: ../plug-ins/common/file-png.c:1274
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1341
+#: ../plug-ins/common/file-png.c:1342
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1351
+#: ../plug-ins/common/file-png.c:1352
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Virhe tallennettaessa tiedostoa \"%s\". Ei voi tallentaa."
 
-#: ../plug-ins/common/file-png.c:1979
+#: ../plug-ins/common/file-png.c:1980
 #, fuzzy, c-format
 #| msgid "Error loading desktop file '%s': %s"
 msgid "Error loading UI file '%s': %s"
 msgstr "Virhe ladattaessa desktop-tiedostoa '%s': %s"
 
-#: ../plug-ins/common/file-png.c:1980
-#, fuzzy
+#: ../plug-ins/common/file-png.c:1981
 #| msgid "Unknown reason"
 msgid "Unknown error"
-msgstr "Tuntematon syy"
+msgstr "Tuntematon virhe"
 
 #: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
@@ -4134,10 +4129,9 @@ msgid "Error reading file."
 msgstr "Virhe luettaessa tiedostoa."
 
 #: ../plug-ins/common/file-pnm.c:1221
-#, fuzzy
 #| msgid "PNG"
 msgid "PNM"
-msgstr "PNG"
+msgstr "PNM"
 
 #. file save type
 #: ../plug-ins/common/file-pnm.c:1224
@@ -4149,10 +4143,9 @@ msgid "Raw"
 msgstr "Raaka"
 
 #: ../plug-ins/common/file-pnm.c:1229
-#, fuzzy
 #| msgid "ASCII art"
 msgid "ASCII"
-msgstr "ASCII kuvana"
+msgstr "ASCII"
 
 #: ../plug-ins/common/file-ps.c:581 ../plug-ins/common/file-ps.c:673
 msgid "PostScript document"
@@ -4176,7 +4169,7 @@ msgstr "Postscript-tiedostoa \"%s\" ei voitu tulkita"
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript ei voi tallentaa kuvia joissa on läpinäkyvyys"
 
-#: ../plug-ins/common/file-ps.c:1809 ../plug-ins/common/file-tiff-load.c:1012
+#: ../plug-ins/common/file-ps.c:1809 ../plug-ins/common/file-tiff-load.c:1013
 #, c-format
 msgid "Page %d"
 msgstr "Sivu %d"
@@ -4271,10 +4264,9 @@ msgid "Graphic antialiasing"
 msgstr "Grafiikan antialiasointi"
 
 #: ../plug-ins/common/file-ps.c:3204
-#, fuzzy
 #| msgid "Save as PostScript"
 msgid "PostScript"
-msgstr "Tallenna PostScript"
+msgstr "PostScript"
 
 #. Image Size
 #: ../plug-ins/common/file-ps.c:3221
@@ -4307,8 +4299,7 @@ msgid "_Millimeter"
 msgstr "Millimetri"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3302
-#: ../plug-ins/map-object/map-object-ui.c:989
+#: ../plug-ins/common/file-ps.c:3302 ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Pyöritys"
 
@@ -4335,11 +4326,11 @@ msgstr "Esikatselun koko:"
 
 #: ../plug-ins/common/file-psp.c:599 ../plug-ins/common/file-psp.c:623
 msgid "Paint Shop Pro image"
-msgstr ""
+msgstr "Paint Shop Pro -kuva"
 
 #: ../plug-ins/common/file-psp.c:640
 msgid "PSP"
-msgstr ""
+msgstr "PSP"
 
 #. file save type
 #: ../plug-ins/common/file-psp.c:643
@@ -4365,85 +4356,84 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Raakakuva"
 
-#: ../plug-ins/common/file-raw.c:1074
+#: ../plug-ins/common/file-raw.c:1073
 msgid "Load Image from Raw Data"
 msgstr "Lataa kuva raakakuvasta"
 
-#: ../plug-ins/common/file-raw.c:1108
+#: ../plug-ins/common/file-raw.c:1107
 msgid "Image"
 msgstr "Kuva"
 
-#: ../plug-ins/common/file-raw.c:1119
+#: ../plug-ins/common/file-raw.c:1118
 msgid "RGB Alpha"
 msgstr "RGB-alfa"
 
-#: ../plug-ins/common/file-raw.c:1120
+#: ../plug-ins/common/file-raw.c:1119
 msgid "RGB565"
-msgstr ""
+msgstr "RGB565"
 
-#: ../plug-ins/common/file-raw.c:1121
+#: ../plug-ins/common/file-raw.c:1120
 msgid "Planar RGB"
 msgstr "Planaari-RGB"
 
-#: ../plug-ins/common/file-raw.c:1122
+#: ../plug-ins/common/file-raw.c:1121
 msgid "Indexed"
 msgstr "Indeksoitu"
 
-#: ../plug-ins/common/file-raw.c:1123
+#: ../plug-ins/common/file-raw.c:1122
 msgid "Indexed Alpha"
 msgstr "Indeksoitu alfa"
 
-#: ../plug-ins/common/file-raw.c:1128
+#: ../plug-ins/common/file-raw.c:1127
 msgid "Image _Type:"
 msgstr "Kuvatyyppi:"
 
-#: ../plug-ins/common/file-raw.c:1178
+#: ../plug-ins/common/file-raw.c:1177
 msgid "Palette"
 msgstr "Paletti"
 
-#: ../plug-ins/common/file-raw.c:1188 ../plug-ins/common/file-raw.c:1273
+#: ../plug-ins/common/file-raw.c:1187 ../plug-ins/common/file-raw.c:1272
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normaali)"
 
-#: ../plug-ins/common/file-raw.c:1189 ../plug-ins/common/file-raw.c:1275
+#: ../plug-ins/common/file-raw.c:1188 ../plug-ins/common/file-raw.c:1274
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (BMP-tyylinen)"
 
-#: ../plug-ins/common/file-raw.c:1194
+#: ../plug-ins/common/file-raw.c:1193
 msgid "_Palette Type:"
 msgstr "Palettityyppi:"
 
-#: ../plug-ins/common/file-raw.c:1205
+#: ../plug-ins/common/file-raw.c:1204
 msgid "Off_set:"
 msgstr "Siirtymä:"
 
-#: ../plug-ins/common/file-raw.c:1217
+#: ../plug-ins/common/file-raw.c:1216
 msgid "Select Palette File"
 msgstr "Valitse palettitiedosto"
 
-#: ../plug-ins/common/file-raw.c:1223
+#: ../plug-ins/common/file-raw.c:1222
 msgid "Pal_ette File:"
 msgstr "Palettitiedosto:"
 
-#: ../plug-ins/common/file-raw.c:1251
-#, fuzzy
+#: ../plug-ins/common/file-raw.c:1250
 #| msgid "Raw Image Save"
 msgid "Raw Image"
-msgstr "Pakkaamattoman kuvan koko"
+msgstr "Raw-kuva"
 
-#: ../plug-ins/common/file-raw.c:1259
+#: ../plug-ins/common/file-raw.c:1258
 msgid "RGB Save Type"
 msgstr "RGB-tyyppi"
 
-#: ../plug-ins/common/file-raw.c:1263
+#: ../plug-ins/common/file-raw.c:1262
 msgid "Standard (R,G,B)"
 msgstr "Standardi (R,G,B)"
 
-#: ../plug-ins/common/file-raw.c:1264
+#: ../plug-ins/common/file-raw.c:1263
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Planaari (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/file-raw.c:1269
+#: ../plug-ins/common/file-raw.c:1268
 msgid "Indexed Palette Type"
 msgstr "Indeksoitu paletti"
 
@@ -4503,7 +4493,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:522
 msgid "This image depth is not supported"
-msgstr ""
+msgstr "Tämä kuvasyvyys ei ole tuettu"
 
 #: ../plug-ins/common/file-sunras.c:546
 #, c-format
@@ -4523,10 +4513,9 @@ msgid "EOF encountered on reading"
 msgstr "Tiedosto päättyi kesken lukiessa"
 
 #: ../plug-ins/common/file-sunras.c:1629
-#, fuzzy
 #| msgid "Save as SUNRAS"
 msgid "SUNRAS"
-msgstr "Tallenna SUNRAS"
+msgstr "SUNRAS"
 
 #. file save type
 #: ../plug-ins/common/file-sunras.c:1632
@@ -4626,24 +4615,24 @@ msgstr "Virhe luettaessa tiedoston '%s' laajennosta"
 msgid "Cannot read header from '%s'"
 msgstr "Otsikkoa tiedostosta \"%s\" ei voitu lukea"
 
-#: ../plug-ins/common/file-tga.c:1381
+#: ../plug-ins/common/file-tga.c:1403
 msgid "TGA"
-msgstr ""
+msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1390
+#: ../plug-ins/common/file-tga.c:1412
 msgid "_RLE compression"
 msgstr "_RLE pakkaus"
 
-#: ../plug-ins/common/file-tga.c:1404
+#: ../plug-ins/common/file-tga.c:1426
 msgid "Or_igin:"
 msgstr "_Nollakohta:"
 
-#: ../plug-ins/common/file-tga.c:1408
+#: ../plug-ins/common/file-tga.c:1430
 msgid "Bottom left"
 msgstr "Alhaalla vasemmalla"
 
-#: ../plug-ins/common/file-tga.c:1409
+#: ../plug-ins/common/file-tga.c:1431
 msgid "Top left"
 msgstr "Ylhäällä vasemmalla"
 
@@ -4662,17 +4651,16 @@ msgstr "TIFF-tiedosto \"%s\" ei sisällä hakemistoja"
 msgid "Import from TIFF"
 msgstr "Tuo TIFF-tiedostosta"
 
-#: ../plug-ins/common/file-tiff-load.c:818
+#: ../plug-ins/common/file-tiff-load.c:819
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr ""
 
-#: ../plug-ins/common/file-tiff-load.c:1028
+#: ../plug-ins/common/file-tiff-load.c:1029
 msgid "TIFF Channel"
 msgstr "TIFF-kanava"
 
-#: ../plug-ins/common/file-tiff-load.c:1037
-#: ../plug-ins/file-psd/psd-load.c:333
+#: ../plug-ins/common/file-tiff-load.c:1038 ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -4683,70 +4671,70 @@ msgstr ""
 "Kuvassa on 16 bittiä värikanavaa kohti. GIMP voi käsitellä vain 8 bittiä per "
 "kanava. Tiedosto muunnetaan ja tarkkuutta katoaa tämän muutoksen vuoksi."
 
-#: ../plug-ins/common/file-tiff-save.c:812
+#: ../plug-ins/common/file-tiff-save.c:816
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
 msgstr ""
 
-#: ../plug-ins/common/file-tiff-save.c:826
+#: ../plug-ins/common/file-tiff-save.c:830
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr ""
 
-#: ../plug-ins/common/file-tiff-save.c:929
+#: ../plug-ins/common/file-tiff-save.c:933
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr "TIFF tukee vain ASCII-kommentteja. Kommenttia ei tallenneta."
 
-#: ../plug-ins/common/file-tiff-save.c:1104
+#: ../plug-ins/common/file-tiff-save.c:1108
 msgid "TIFF"
-msgstr ""
+msgstr "TIFF"
 
 #. compression
-#: ../plug-ins/common/file-tiff-save.c:1112
+#: ../plug-ins/common/file-tiff-save.c:1116
 msgid "Compression"
 msgstr "Pakkaus"
 
-#: ../plug-ins/common/file-tiff-save.c:1116
+#: ../plug-ins/common/file-tiff-save.c:1120
 msgid "_None"
 msgstr "Ei mitään"
 
-#: ../plug-ins/common/file-tiff-save.c:1117
+#: ../plug-ins/common/file-tiff-save.c:1121
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/file-tiff-save.c:1118
+#: ../plug-ins/common/file-tiff-save.c:1122
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/common/file-tiff-save.c:1119
+#: ../plug-ins/common/file-tiff-save.c:1123
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/file-tiff-save.c:1120
+#: ../plug-ins/common/file-tiff-save.c:1124
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/file-tiff-save.c:1121
+#: ../plug-ins/common/file-tiff-save.c:1125
 msgid "CCITT Group _3 fax"
 msgstr ""
 
-#: ../plug-ins/common/file-tiff-save.c:1122
+#: ../plug-ins/common/file-tiff-save.c:1126
 msgid "CCITT Group _4 fax"
 msgstr ""
 
-#: ../plug-ins/common/file-tiff-save.c:1151
+#: ../plug-ins/common/file-tiff-save.c:1155
 msgid "Save _color values from transparent pixels"
 msgstr "Tallenna väriarvot läpinäkyvistä pikseleistä"
 
-#: ../plug-ins/common/file-tiff-save.c:1167 ../plug-ins/common/file-xbm.c:1236
+#: ../plug-ins/common/file-tiff-save.c:1171 ../plug-ins/common/file-xbm.c:1236
 msgid "Comment:"
 msgstr "Kommentti:"
 
 #: ../plug-ins/common/file-wmf.c:129
 msgid "Microsoft WMF file"
-msgstr ""
+msgstr "Microsoft WMF -tiedosto"
 
 #: ../plug-ins/common/file-wmf.c:352
 msgid ""
@@ -4804,7 +4792,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xbm.c:1189
 msgid "XBM"
-msgstr ""
+msgstr "XBM"
 
 #. parameter settings
 #: ../plug-ins/common/file-xbm.c:1192
@@ -4849,7 +4837,7 @@ msgstr "_Maskitiedoston pääte:"
 #: ../plug-ins/common/file-xmc.c:331 ../plug-ins/common/file-xmc.c:369
 #: ../plug-ins/common/file-xmc.c:1046
 msgid "X11 Mouse Cursor"
-msgstr ""
+msgstr "X11-hiiriosoitin"
 
 #: ../plug-ins/common/file-xmc.c:473
 #, c-format
@@ -4890,10 +4878,10 @@ msgid "'%s' is too high for an X cursor."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1009
-#, fuzzy, c-format
+#, c-format
 #| msgid "Write error occurred"
 msgid "A read error occurred."
-msgstr "virhe kirjoitettaessa"
+msgstr "Tapahtui lukuvirhe."
 
 #.
 #. * parameter settings
@@ -4968,13 +4956,12 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1244
 msgid "Enter copyright information."
-msgstr ""
+msgstr "Kirjoita tekijänoikeustiedot."
 
 #: ../plug-ins/common/file-xmc.c:1246
-#, fuzzy
 #| msgid "_Top-right"
 msgid "_Copyright:"
-msgstr "Ylä-oikea"
+msgstr "_Tekijänoikeus:"
 
 #: ../plug-ins/common/file-xmc.c:1262
 msgid ""
@@ -4983,11 +4970,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1272
 msgid "Enter license information."
-msgstr ""
+msgstr "Kirjoita lisenssitiedot."
 
 #: ../plug-ins/common/file-xmc.c:1274
 msgid "_License:"
-msgstr ""
+msgstr "_Lisenssi:"
 
 #.
 #. *  Other
@@ -4995,10 +4982,9 @@ msgstr ""
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
 #: ../plug-ins/common/file-xmc.c:1281
-#, fuzzy
 #| msgid "O_thers"
 msgid "_Other:"
-msgstr "Muut"
+msgstr "_Muu:"
 
 #: ../plug-ins/common/file-xmc.c:1315
 msgid "Enter other comment if you want."
@@ -5071,7 +5057,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xpm.c:174 ../plug-ins/common/file-xpm.c:199
 msgid "X PixMap image"
-msgstr ""
+msgstr "X PixMap -kuva"
 
 #: ../plug-ins/common/file-xpm.c:364 ../plug-ins/common/file-xpm.c:776
 #, c-format
@@ -5080,11 +5066,11 @@ msgstr "Virhe avattaessa %s"
 
 #: ../plug-ins/common/file-xpm.c:370 ../plug-ins/common/file-xpm.c:782
 msgid "XPM file invalid"
-msgstr ""
+msgstr "XPM-tiedosto virheellinen"
 
 #: ../plug-ins/common/file-xpm.c:808
 msgid "XPM"
-msgstr ""
+msgstr "XPM"
 
 #: ../plug-ins/common/file-xpm.c:818
 msgid "_Alpha threshold:"
@@ -5955,27 +5941,27 @@ msgstr "Linssiefekti..."
 msgid "Applying lens"
 msgstr "Toteutetaan linssiefekti"
 
-#: ../plug-ins/common/lens-apply.c:394
+#: ../plug-ins/common/lens-apply.c:395
 msgid "Lens Effect"
 msgstr "Linssiefekti"
 
-#: ../plug-ins/common/lens-apply.c:429
+#: ../plug-ins/common/lens-apply.c:430
 msgid "_Keep original surroundings"
 msgstr "Säilytä alkuperäiset ympärykset"
 
-#: ../plug-ins/common/lens-apply.c:444
+#: ../plug-ins/common/lens-apply.c:445
 msgid "_Set surroundings to index 0"
 msgstr "Ympärykset väriksi 0"
 
-#: ../plug-ins/common/lens-apply.c:445
+#: ../plug-ins/common/lens-apply.c:446
 msgid "_Set surroundings to background color"
 msgstr "Ympärykset taustaväriksi"
 
-#: ../plug-ins/common/lens-apply.c:460
+#: ../plug-ins/common/lens-apply.c:461
 msgid "_Make surroundings transparent"
 msgstr "Ympärykset läpinäkyväksi"
 
-#: ../plug-ins/common/lens-apply.c:477
+#: ../plug-ins/common/lens-apply.c:478
 msgid "_Lens refraction index:"
 msgstr "Linssin refraktiokerroin:"
 
@@ -8052,49 +8038,49 @@ msgstr "Kasvata kuvan vaaleita alueita"
 msgid "_Dilate"
 msgstr ""
 
-#: ../plug-ins/common/value-propagate.c:476
-#: ../plug-ins/common/value-propagate.c:1086
+#: ../plug-ins/common/value-propagate.c:480
+#: ../plug-ins/common/value-propagate.c:1090
 msgid "Value Propagate"
 msgstr "Arvojen monistus"
 
 #. Parameter settings
-#: ../plug-ins/common/value-propagate.c:1153
+#: ../plug-ins/common/value-propagate.c:1157
 msgid "Propagate"
 msgstr "Monistus"
 
-#: ../plug-ins/common/value-propagate.c:1166
+#: ../plug-ins/common/value-propagate.c:1170
 msgid "Lower t_hreshold:"
 msgstr "Alempi kynnysarvo:"
 
-#: ../plug-ins/common/value-propagate.c:1178
+#: ../plug-ins/common/value-propagate.c:1182
 msgid "_Upper threshold:"
 msgstr "Ylempi kynnysarvo:"
 
-#: ../plug-ins/common/value-propagate.c:1190
+#: ../plug-ins/common/value-propagate.c:1194
 msgid "_Propagating rate:"
 msgstr "Voimakkuus:"
 
-#: ../plug-ins/common/value-propagate.c:1201
+#: ../plug-ins/common/value-propagate.c:1205
 msgid "To l_eft"
 msgstr "Vasemmalle"
 
-#: ../plug-ins/common/value-propagate.c:1204
+#: ../plug-ins/common/value-propagate.c:1208
 msgid "To _right"
 msgstr "Oikealle"
 
-#: ../plug-ins/common/value-propagate.c:1207
+#: ../plug-ins/common/value-propagate.c:1211
 msgid "To _top"
 msgstr "Ylös"
 
-#: ../plug-ins/common/value-propagate.c:1210
+#: ../plug-ins/common/value-propagate.c:1214
 msgid "To _bottom"
 msgstr "Alas"
 
-#: ../plug-ins/common/value-propagate.c:1219
+#: ../plug-ins/common/value-propagate.c:1223
 msgid "Propagating _alpha channel"
 msgstr "_Alfakanavan monistus"
 
-#: ../plug-ins/common/value-propagate.c:1230
+#: ../plug-ins/common/value-propagate.c:1234
 msgid "Propagating value channel"
 msgstr "Arvokanavan monistus"
 
@@ -8188,7 +8174,7 @@ msgstr ""
 
 #: ../plug-ins/common/video.c:47
 msgid "_3x3"
-msgstr ""
+msgstr "_3x3"
 
 #: ../plug-ins/common/video.c:48
 msgid "Larg_e 3x3"
@@ -8386,84 +8372,81 @@ msgstr "Aallon_pituus:"
 msgid "Waving"
 msgstr "Aallotetaan"
 
-#: ../plug-ins/common/web-browser.c:135
+#: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:138
+#: ../plug-ins/common/web-browser.c:144
 #, fuzzy
 #| msgid "Specified layer %d not found"
 msgid "The specified file was not found."
 msgstr "Annettua kerrosta %d ei löydy"
 
-#: ../plug-ins/common/web-browser.c:141
-#, fuzzy
+#: ../plug-ins/common/web-browser.c:147
 #| msgid "Specified layer %d not found"
 msgid "The specified path was not found."
-msgstr "Annettua kerrosta %d ei löydy"
+msgstr "Annettua polkua ei löytynyt."
 
-#: ../plug-ins/common/web-browser.c:144
+#: ../plug-ins/common/web-browser.c:150
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:147
+#: ../plug-ins/common/web-browser.c:153
 msgid "The operating system denied access to the specified file."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:150
+#: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:153
+#: ../plug-ins/common/web-browser.c:159
 msgid "DDE transaction busy"
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:156
+#: ../plug-ins/common/web-browser.c:162
 msgid "The DDE transaction failed."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:159
+#: ../plug-ins/common/web-browser.c:165
 msgid "The DDE transaction timed out."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:162
+#: ../plug-ins/common/web-browser.c:168
 #, fuzzy
 #| msgid "Specified window not found"
 msgid "The specified DLL was not found."
 msgstr "Annettua ikkunaa ei löytynyt"
 
-#: ../plug-ins/common/web-browser.c:165
+#: ../plug-ins/common/web-browser.c:171
 msgid "There is no application associated with the given file name extension."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:168
+#: ../plug-ins/common/web-browser.c:174
 #, fuzzy
 #| msgid "There are not enough layers to align."
 msgid "There was not enough memory to complete the operation."
 msgstr "Tasoja ei ole tarpeeksi kohdistukseen."
 
-#: ../plug-ins/common/web-browser.c:171
+#: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:174
-#, fuzzy
+#: ../plug-ins/common/web-browser.c:180
 #| msgid "Microsoft Windows icon"
 msgid "Unknown Microsoft Windows error."
-msgstr "Microsoft Windows -kuvake"
+msgstr "Tuntematon Microsoft Windows -virhe."
 
-#: ../plug-ins/common/web-browser.c:177
+#: ../plug-ins/common/web-browser.c:183
 #, fuzzy, c-format
 #| msgid "Failed to open GFlare file '%s': %s"
 msgid "Failed to open '%s': %s"
 msgstr "Tiedoston '%s' avaaminen epäonnistui: %s"
 
 #: ../plug-ins/common/web-page.c:98
-#, fuzzy
 #| msgid "Create an image of a textured sphere"
 msgid "Create an image of a webpage"
-msgstr "Luo kuvan pinnoitetusta pallopinnasta"
+msgstr "Luo kuva verkkosivusta"
 
 #: ../plug-ins/common/web-page.c:104
 #, fuzzy
@@ -8472,16 +8455,14 @@ msgid "From _Webpage..."
 msgstr "Paperista"
 
 #: ../plug-ins/common/web-page.c:233
-#, fuzzy
 #| msgid "Create rectangle"
 msgid "Create from webpage"
-msgstr "Luo nelikulmio"
+msgstr "Luo verkkosivustosta"
 
 #: ../plug-ins/common/web-page.c:238
-#, fuzzy
 #| msgid "Create"
 msgid "_Create"
-msgstr "Luo"
+msgstr "_Luo"
 
 #: ../plug-ins/common/web-page.c:266
 msgid "Enter location (URI):"
@@ -8493,48 +8474,44 @@ msgid "Width (pixels):"
 msgstr "Leveys (pikseliä):"
 
 #: ../plug-ins/common/web-page.c:308
-#, fuzzy
 #| msgid "Step size:"
 msgid "Font size:"
-msgstr "Askelkoko:"
+msgstr "Fontin koko:"
 
 #: ../plug-ins/common/web-page.c:315
 msgid "Huge"
-msgstr ""
+msgstr "Valtava"
 
 #: ../plug-ins/common/web-page.c:316
-#, fuzzy
 #| msgid "Target"
 msgid "Large"
-msgstr "Kohde"
+msgstr "Suuri"
 
 #: ../plug-ins/common/web-page.c:317
-#, fuzzy
 #| msgid "Default"
 msgctxt "web-page"
 msgid "Default"
 msgstr "Oletus"
 
 #: ../plug-ins/common/web-page.c:318
-#, fuzzy
 #| msgid "Small Tiles"
 msgid "Small"
-msgstr "Pienet laatat"
+msgstr "Pieni"
 
 #: ../plug-ins/common/web-page.c:319
 msgid "Tiny"
-msgstr ""
+msgstr "Pienenpieni"
 
 #: ../plug-ins/common/web-page.c:443
 #, c-format
 msgid "No URL was specified"
-msgstr ""
+msgstr "Osoitetta ei määritetty"
 
 #: ../plug-ins/common/web-page.c:510
-#, fuzzy, c-format
+#, c-format
 #| msgid "Downloading image (%s of %s)"
 msgid "Downloading webpage '%s'"
-msgstr "Noudetaan kuva (%s/%s)"
+msgstr "Ladataan verkkosivua '%s'"
 
 #: ../plug-ins/common/web-page.c:527
 #, c-format
@@ -8543,7 +8520,7 @@ msgstr ""
 
 #: ../plug-ins/common/web-page.c:536
 msgid "Webpage"
-msgstr ""
+msgstr "Verkkosivu"
 
 #: ../plug-ins/common/whirl-pinch.c:138
 msgid "Distort an image by whirling and pinching"
@@ -8649,65 +8626,65 @@ msgstr "Virheellinen värikartta"
 
 #: ../plug-ins/file-bmp/bmp-read.c:222 ../plug-ins/file-bmp/bmp-read.c:232
 #: ../plug-ins/file-bmp/bmp-read.c:239 ../plug-ins/file-bmp/bmp-read.c:248
-#: ../plug-ins/file-bmp/bmp-read.c:263 ../plug-ins/file-bmp/bmp-read.c:445
-#: ../plug-ins/file-bmp/bmp-read.c:466 ../plug-ins/file-bmp/bmp-read.c:477
-#: ../plug-ins/file-bmp/bmp-read.c:485 ../plug-ins/file-bmp/bmp-read.c:493
-#: ../plug-ins/file-bmp/bmp-read.c:505
+#: ../plug-ins/file-bmp/bmp-read.c:263 ../plug-ins/file-bmp/bmp-read.c:465
+#: ../plug-ins/file-bmp/bmp-read.c:486 ../plug-ins/file-bmp/bmp-read.c:497
+#: ../plug-ins/file-bmp/bmp-read.c:505 ../plug-ins/file-bmp/bmp-read.c:513
+#: ../plug-ins/file-bmp/bmp-read.c:525
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' ei ole kelvollinen BMP-tiedosto"
 
 #: ../plug-ins/file-bmp/bmp-read.c:277 ../plug-ins/file-bmp/bmp-read.c:304
-#: ../plug-ins/file-bmp/bmp-read.c:332 ../plug-ins/file-bmp/bmp-read.c:361
-#: ../plug-ins/file-bmp/bmp-read.c:391 ../plug-ins/file-bmp/bmp-read.c:425
+#: ../plug-ins/file-bmp/bmp-read.c:336 ../plug-ins/file-bmp/bmp-read.c:373
+#: ../plug-ins/file-bmp/bmp-read.c:403 ../plug-ins/file-bmp/bmp-read.c:445
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Virhe luettaessa BMP-tiedoston \"%s\" otsikkoa"
 
-#: ../plug-ins/file-bmp/bmp-read.c:350
+#: ../plug-ins/file-bmp/bmp-read.c:358
 #, fuzzy, c-format
 #| msgid "Unsupported compression mode: %d"
 msgid "Unsupported compression (%lu) in BMP file from '%s'"
 msgstr "Pakkaustila ei ole tuettu: %d"
 
-#: ../plug-ins/file-bmp/bmp-read.c:621
+#: ../plug-ins/file-bmp/bmp-read.c:641
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Tunnistamaton BMP pakkaustapa."
 
-#: ../plug-ins/file-bmp/bmp-read.c:663
+#: ../plug-ins/file-bmp/bmp-read.c:683
 msgid "Unsupported or invalid bitdepth."
 msgstr "Bittisyvyys ei ole tuettu tai on virheellinen."
 
-#: ../plug-ins/file-bmp/bmp-read.c:815 ../plug-ins/file-bmp/bmp-read.c:856
-#: ../plug-ins/file-bmp/bmp-read.c:906
+#: ../plug-ins/file-bmp/bmp-read.c:835 ../plug-ins/file-bmp/bmp-read.c:876
+#: ../plug-ins/file-bmp/bmp-read.c:926
 msgid "The bitmap ends unexpectedly."
 msgstr "Kuvakartta loppui yllättäen."
 
-#: ../plug-ins/file-bmp/bmp-write.c:191 ../plug-ins/file-bmp/bmp-write.c:217
+#: ../plug-ins/file-bmp/bmp-write.c:193 ../plug-ins/file-bmp/bmp-write.c:219
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr "Indeksoituja kuvia läpinäkyvyydellä ei voi tallentaa BMP-muodossa."
 
-#: ../plug-ins/file-bmp/bmp-write.c:193 ../plug-ins/file-bmp/bmp-write.c:219
+#: ../plug-ins/file-bmp/bmp-write.c:195 ../plug-ins/file-bmp/bmp-write.c:221
 msgid "Alpha channel will be ignored."
 msgstr "Alfa-kanava jätetään huomioimatta."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-write.c:864
+#: ../plug-ins/file-bmp/bmp-write.c:870
 msgid "_Run-Length Encoded"
 msgstr "RLE-pakattu"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-write.c:877
+#: ../plug-ins/file-bmp/bmp-write.c:883
 #, fuzzy
 #| msgid "Table Options"
 msgid "Co_mpatibility Options"
 msgstr "Taulukon asetukset"
 
-#: ../plug-ins/file-bmp/bmp-write.c:887
+#: ../plug-ins/file-bmp/bmp-write.c:893
 msgid "_Do not write color space information"
-msgstr ""
+msgstr "_Älä kirjoita väriavaruuden tietoja"
 
-#: ../plug-ins/file-bmp/bmp-write.c:889
+#: ../plug-ins/file-bmp/bmp-write.c:895
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -8715,19 +8692,19 @@ msgid ""
 msgstr ""
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:905 ../plug-ins/file-jpeg/jpeg-save.c:924
+#: ../plug-ins/file-bmp/bmp-write.c:911 ../plug-ins/file-jpeg/jpeg-save.c:924
 msgid "_Advanced Options"
 msgstr "_Lisäasetukset"
 
-#: ../plug-ins/file-bmp/bmp-write.c:920
+#: ../plug-ins/file-bmp/bmp-write.c:926
 msgid "16 bits"
 msgstr "16 bittiä"
 
-#: ../plug-ins/file-bmp/bmp-write.c:956
+#: ../plug-ins/file-bmp/bmp-write.c:962
 msgid "24 bits"
 msgstr "24 bittiä"
 
-#: ../plug-ins/file-bmp/bmp-write.c:973
+#: ../plug-ins/file-bmp/bmp-write.c:979
 msgid "32 bits"
 msgstr "32 bittiä"
 
@@ -8735,20 +8712,26 @@ msgstr "32 bittiä"
 msgid "Windows BMP image"
 msgstr "Windows BMP kuva"
 
-#: ../plug-ins/file-compressor/file-compressor.c:166
+#: ../plug-ins/file-compressor/file-compressor.c:167
 msgid "gzip archive"
 msgstr "gzip paketti"
 
-#: ../plug-ins/file-compressor/file-compressor.c:185
+#: ../plug-ins/file-compressor/file-compressor.c:186
 msgid "bzip archive"
 msgstr "bzip paketti"
 
-#: ../plug-ins/file-compressor/file-compressor.c:392
+#: ../plug-ins/file-compressor/file-compressor.c:393
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr ""
 "Ei tunnistettua tiedostopäätettä, tallennetaan pakattuna XCF-tiedostona."
 
-#: ../plug-ins/file-compressor/file-compressor.c:448
+#: ../plug-ins/file-compressor/file-compressor.c:416
+#, fuzzy, c-format
+#| msgid "Compression"
+msgid "Compressing '%s'"
+msgstr "Pakkaus"
+
+#: ../plug-ins/file-compressor/file-compressor.c:453
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "Ei tunnistettua päätettä, yritetään ladata tiedoston tunnistuksen avulla."
@@ -8917,10 +8900,10 @@ msgid "JPEG preview"
 msgstr "JPEG esikatselu"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:215
-#, fuzzy, c-format
+#, c-format
 #| msgid "_Tile size:"
 msgid "File size: %s"
-msgstr "Koko:"
+msgstr "Tiedoston koko: %s"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:225 ../plug-ins/file-jpeg/jpeg-save.c:233
 #: ../plug-ins/file-jpeg/jpeg-save.c:805 ../plug-ins/file-jpeg/jpeg-save.c:900
@@ -8932,10 +8915,9 @@ msgid "Calculating file size..."
 msgstr "Lasketaan kuvan koko..."
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:863
-#, fuzzy
 #| msgid "_JPEG"
 msgid "JPEG"
-msgstr "_JPEG"
+msgstr "JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:886
 msgid "_Quality:"
@@ -9005,10 +8987,9 @@ msgid "Su_bsampling:"
 msgstr "_Alinäytteistys:"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1118
-#, fuzzy
 #| msgid "1x1,1x1,1x1 (best quality)"
 msgid "4:4:4 (best quality)"
-msgstr "1x1,1x1,1x1 (paras laatu)"
+msgstr "4:4:4 (paras laatu)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1120
 msgid "4:2:2 horizontal (chroma halved)"
@@ -9143,23 +9124,23 @@ msgstr "Tason leveys ei ole tuettu tai on virheellinen: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tason leveys ei ole tuettu tai on virheellinen: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1231 ../plug-ins/file-psd/psd-load.c:1620
+#: ../plug-ins/file-psd/psd-load.c:1236 ../plug-ins/file-psd/psd-load.c:1631
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Pakkaustila ei ole tuettu: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1412
+#: ../plug-ins/file-psd/psd-load.c:1423
 msgid ""
 "Warning\n"
 "The layer mask is partly outside the layer boundary. The mask will be "
 "cropped which may result in data loss."
 msgstr ""
 
-#: ../plug-ins/file-psd/psd-load.c:1713
+#: ../plug-ins/file-psd/psd-load.c:1724
 msgid "Extra"
 msgstr "Lisäosat"
 
-#: ../plug-ins/file-psd/psd-load.c:1888
+#: ../plug-ins/file-psd/psd-load.c:1899
 #, fuzzy, c-format
 #| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid channel size"
@@ -9215,16 +9196,16 @@ msgid "Could not open '%s' for reading."
 msgstr "Ei voi avata \"%s\" lukua varten."
 
 #: ../plug-ins/file-sgi/sgi.c:345
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid X offset: %d"
 msgid "Invalid width: %hu"
-msgstr "Virheellinen x-siirtymä: %d"
+msgstr "Virheellinen leveys: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:352
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid X offset: %d"
 msgid "Invalid height: %hu"
-msgstr "Virheellinen x-siirtymä: %d"
+msgstr "Virheellinen korkeus: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:359
 #, c-format
@@ -9238,7 +9219,7 @@ msgstr "Ei voi avata \"%s\" kirjoitusta varten."
 
 #: ../plug-ins/file-sgi/sgi.c:654
 msgid "SGI"
-msgstr ""
+msgstr "SGI"
 
 #: ../plug-ins/file-sgi/sgi.c:656
 msgid "Compression type"
@@ -9349,71 +9330,71 @@ msgstr "URI"
 msgid "Failed to save to temporary file '%s'"
 msgstr "PPM-tiedoston '%s' kirjoittaminen epäonnistui: %s"
 
-#: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
+#: ../plug-ins/file-xjt/xjt.c:487 ../plug-ins/file-xjt/xjt.c:506
 msgid "GIMP compressed XJT image"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:733
+#: ../plug-ins/file-xjt/xjt.c:737
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:770
+#: ../plug-ins/file-xjt/xjt.c:774
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:786
+#: ../plug-ins/file-xjt/xjt.c:790
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:802
+#: ../plug-ins/file-xjt/xjt.c:806
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:821
+#: ../plug-ins/file-xjt/xjt.c:825
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:842
+#: ../plug-ins/file-xjt/xjt.c:846
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:863
+#: ../plug-ins/file-xjt/xjt.c:867
 msgid "XJT"
-msgstr ""
+msgstr "XJT"
 
-#: ../plug-ins/file-xjt/xjt.c:873
+#: ../plug-ins/file-xjt/xjt.c:877
 msgid "Optimize"
 msgstr "Optimoi"
 
-#: ../plug-ins/file-xjt/xjt.c:883
+#: ../plug-ins/file-xjt/xjt.c:887
 msgid "Clear transparent"
 msgstr "Läpinäkyvä"
 
-#: ../plug-ins/file-xjt/xjt.c:895
+#: ../plug-ins/file-xjt/xjt.c:899
 msgid "Quality:"
 msgstr "Laatu:"
 
-#: ../plug-ins/file-xjt/xjt.c:904
+#: ../plug-ins/file-xjt/xjt.c:908
 msgid "Smoothing:"
 msgstr "Pehmennys:"
 
-#: ../plug-ins/file-xjt/xjt.c:1705 ../plug-ins/file-xjt/xjt.c:3343
+#: ../plug-ins/file-xjt/xjt.c:1709 ../plug-ins/file-xjt/xjt.c:3347
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Ei voi luoda työhakemistoa '%s': %s"
 
-#: ../plug-ins/file-xjt/xjt.c:3209
+#: ../plug-ins/file-xjt/xjt.c:3213
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:3216
+#: ../plug-ins/file-xjt/xjt.c:3220
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr ""
@@ -10153,8 +10134,7 @@ msgstr "Näytä ohjauspisteet"
 msgid "Max undo:"
 msgstr "Perumisten enimmäismäärä:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1320
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Läpinäkyvä"
 
@@ -10297,12 +10277,12 @@ msgstr "Luo geometrisia muotoja"
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: ../plug-ins/gfig/gfig.c:734
+#: ../plug-ins/gfig/gfig.c:738
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 
-#: ../plug-ins/gfig/gfig.c:761
+#: ../plug-ins/gfig/gfig.c:765
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
@@ -10592,7 +10572,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientmap.c:552
 msgid "Vectors"
-msgstr ""
+msgstr "Vektorit"
 
 #: ../plug-ins/gimpressionist/orientmap.c:564
 msgid ""
@@ -10607,20 +10587,20 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientmap.c:611
 msgid "Select previous vector"
-msgstr ""
+msgstr "Valitse edellinen vektori"
 
 #: ../plug-ins/gimpressionist/orientmap.c:617
 msgid "Select next vector"
-msgstr ""
+msgstr "Valitse seuraava vektori"
 
 #: ../plug-ins/gimpressionist/orientmap.c:619
 #: ../plug-ins/gimpressionist/sizemap.c:489
 msgid "A_dd"
-msgstr ""
+msgstr "Lisä_ä"
 
 #: ../plug-ins/gimpressionist/orientmap.c:623
 msgid "Add new vector"
-msgstr ""
+msgstr "Lisää uusi vektori"
 
 #: ../plug-ins/gimpressionist/orientmap.c:625
 #: ../plug-ins/gimpressionist/sizemap.c:496
@@ -10629,7 +10609,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientmap.c:629
 msgid "Delete selected vector"
-msgstr ""
+msgstr "Poista valittu vektori"
 
 #: ../plug-ins/gimpressionist/orientmap.c:640
 msgid "Type"
@@ -11280,8 +11260,7 @@ msgstr "Satunnaissiemen:"
 msgid "_Second Flares"
 msgstr "Toissijainen liekki"
 
-#: ../plug-ins/help-browser/dialog.c:184
-#: ../plug-ins/help-browser/dialog.c:1133
+#: ../plug-ins/help-browser/dialog.c:184 ../plug-ins/help-browser/dialog.c:1133
 msgid "GIMP Help Browser"
 msgstr "GIMPin ohjeselain"
 
@@ -11339,7 +11318,7 @@ msgstr ""
 
 #: ../plug-ins/help-browser/dialog.c:674
 msgid "Visit the GIMP documentation website"
-msgstr ""
+msgstr "Vieraile Gimpin dokumentaation sivustolla"
 
 #: ../plug-ins/help-browser/dialog.c:1174
 msgid "Find:"
@@ -11362,29 +11341,35 @@ msgstr ""
 
 #: ../plug-ins/help/gimphelpdomain.c:186
 msgid "The GIMP user manual is not available."
-msgstr ""
+msgstr "GIMP-käyttöohjetta ei ole saatavilla."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#. TRANSLATORS: do not end the URL with a dot,
+#. * it would be in the link. Because of
+#. * technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
-"Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"Please install the additional help package or use the online user manual at: "
+"http://docs.gimp.org/"
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Avustus: koodi '%s' on tuntematon"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/gimphelplocale.c:257
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Ladataan indeksiä tiedostosta \"%s\""
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/gimphelplocale.c:315
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11595,8 +11580,7 @@ msgstr "Keskusta _x:"
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
 #: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:249
-#: ../plug-ins/imagemap/imap_grid.c:255
-#: ../plug-ins/imagemap/imap_polygon.c:505
+#: ../plug-ins/imagemap/imap_grid.c:255 ../plug-ins/imagemap/imap_polygon.c:505
 #: ../plug-ins/imagemap/imap_polygon.c:513
 #: ../plug-ins/imagemap/imap_rectangle.c:392
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -12263,7 +12247,7 @@ msgstr "Ylempi vasen _Y:"
 
 #: ../plug-ins/imagemap/imap_selection.c:349
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: ../plug-ins/imagemap/imap_selection.c:360
 msgid "URL"
@@ -12706,10 +12690,9 @@ msgid "Create new image"
 msgstr "Luo uusi kuva"
 
 #: ../plug-ins/map-object/map-object-ui.c:483
-#, fuzzy
 #| msgid "Create _new layer"
 msgid "Create new layer"
-msgstr "Luo _uusi taso"
+msgstr "Luo uusi taso"
 
 #: ../plug-ins/map-object/map-object-ui.c:494
 #, fuzzy
@@ -12954,10 +12937,9 @@ msgid "Property"
 msgstr "Ominaisuudet"
 
 #: ../plug-ins/metadata/interface.c:204 ../plug-ins/metadata/interface.c:206
-#, fuzzy
 #| msgid "Description:"
 msgid "Description"
-msgstr "Kuvaus:"
+msgstr "Kuvaus"
 
 #: ../plug-ins/metadata/interface.c:222
 #, fuzzy
@@ -12978,22 +12960,20 @@ msgid "Description _writer:"
 msgstr "Kuvaus:"
 
 #: ../plug-ins/metadata/interface.c:272
-#, fuzzy
 #| msgid "_Password:"
 msgid "_Keywords:"
-msgstr "_Salasana:"
+msgstr "_Avainsanat:"
 
 #. FIXME: add entries, cross-link with XMP model
 #: ../plug-ins/metadata/interface.c:284 ../plug-ins/metadata/interface.c:296
 #: ../plug-ins/metadata/interface.c:308 ../plug-ins/metadata/interface.c:320
 msgid "Empty"
-msgstr ""
+msgstr "Tyhjä"
 
 #: ../plug-ins/metadata/interface.c:286
-#, fuzzy
 #| msgid "_Top-right"
 msgid "Copyright"
-msgstr "Ylä-oikea"
+msgstr "Tekijänoikeus"
 
 #: ../plug-ins/metadata/interface.c:298
 #, fuzzy
@@ -13026,28 +13006,24 @@ msgid "Advanced"
 msgstr "_Lisäasetukset"
 
 #: ../plug-ins/metadata/interface.c:447
-#, fuzzy
 #| msgid "Import from TIFF"
 msgid "Import XMP from File"
-msgstr "Tuo TIFF-tiedostosta"
+msgstr "Tuo XMP-tiedostosta"
 
 #: ../plug-ins/metadata/interface.c:498
-#, fuzzy
 #| msgid "Can't create a new image"
 msgid "Cannot create file"
-msgstr "Ei voi luoda uutta kuvaa"
+msgstr "Ei voi luoda tiedostoa"
 
 #: ../plug-ins/metadata/interface.c:508
-#, fuzzy
 #| msgid "An error occurred while trying to print:"
 msgid "Some error occurred while saving"
-msgstr "Tapahtui virhe tulostettaessa:"
+msgstr "Tallennettaessa tapahtui jokin virhe"
 
 #: ../plug-ins/metadata/interface.c:518
-#, fuzzy
 #| msgid "Couldn't save file:"
 msgid "Could not close the file"
-msgstr "Tiedostoa ei voitu tallentaa:"
+msgstr "Tiedostoa ei voitu sulkea"
 
 #: ../plug-ins/metadata/interface.c:540
 #, fuzzy
@@ -13056,32 +13032,28 @@ msgid "Export XMP to File"
 msgstr "Vientiesikatselu"
 
 #: ../plug-ins/metadata/interface.c:607
-#, fuzzy
 #| msgid "Properties"
 msgid "Image Properties"
-msgstr "Ominaisuudet"
+msgstr "Kuvan ominaisuudet"
 
 #: ../plug-ins/metadata/interface.c:611
-#, fuzzy
 #| msgid "_Import"
 msgid "_Import XMP..."
-msgstr "_Tuo"
+msgstr "_Tuo XMP..."
 
 #: ../plug-ins/metadata/interface.c:612
-#, fuzzy
 #| msgid "CML _Explorer..."
 msgid "_Export XMP..."
-msgstr "CML _selain..."
+msgstr "_Vie XMP..."
 
 #: ../plug-ins/metadata/metadata.c:185
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
-msgstr ""
+msgstr "Katsele ja muokkaa metatietoja (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata.c:194
-#, fuzzy
 #| msgid "Properties"
 msgid "Propert_ies"
-msgstr "Ominaisuudet"
+msgstr "_Ominaisuudet"
 
 #: ../plug-ins/metadata/xmp-parse.c:237
 #, c-format
