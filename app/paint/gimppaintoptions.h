@@ -82,6 +82,8 @@ struct _GimpPaintOptions
 
   gboolean                  use_applicator;
 
+  GimpBrush                *brush; /* weak-refed storage for the GUI */
+
   gdouble                   brush_size;
   gboolean                  brush_zoom;
   gdouble                   brush_angle;
@@ -147,7 +149,12 @@ GimpBrushApplicationMode
 void    gimp_paint_options_set_default_brush_size
                                                (GimpPaintOptions *paint_options,
                                                 GimpBrush        *brush);
-
+void    gimp_paint_options_set_default_brush_angle
+                                               (GimpPaintOptions *paint_options,
+                                                GimpBrush        *brush);
+void    gimp_paint_options_set_default_brush_aspect_ratio
+                                               (GimpPaintOptions *paint_options,
+                                                GimpBrush        *brush);
 void    gimp_paint_options_set_default_brush_spacing
                                                (GimpPaintOptions *paint_options,
                                                 GimpBrush        *brush);
