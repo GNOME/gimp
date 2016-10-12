@@ -1945,6 +1945,7 @@ gimp_context_set_by_type (GimpContext *context,
   GValue               value = G_VALUE_INIT;
 
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (object == NULL || G_IS_OBJECT (object));
 
   prop = gimp_context_type_to_property (type);
 
