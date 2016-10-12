@@ -499,7 +499,6 @@ gimp_config_serialize_value (const GValue *value,
             g_string_append (str, parse_name);
 
           g_free (parse_name);
-          g_object_unref (file);
         }
       else
         {
