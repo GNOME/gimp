@@ -1940,7 +1940,9 @@ gimp_context_set_by_type (GimpContext *context,
                           GType        type,
                           GimpObject  *object)
 {
-  GimpContextPropType prop;
+  GimpContextPropType  prop;
+  GParamSpec          *pspec;
+  GValue               value = G_VALUE_INIT;
 
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
@@ -1948,9 +1950,26 @@ gimp_context_set_by_type (GimpContext *context,
 
   g_return_if_fail (prop != -1);
 
-  g_object_set (context,
-                gimp_context_prop_names[prop], object,
-                NULL);
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (context),
+                                        gimp_context_prop_names[prop]);
+
+  g_return_if_fail (pspec != NULL);
+
+  g_value_init (&value, pspec->value_type);
+  g_value_set_object (&value, object);
+
+  /*  we use gimp_context_set_property() (which in turn only calls
+   *  gimp_context_set_foo() functions) instead of the much more obvious
+   *  g_object_set(); this avoids g_object_freeze_notify()/thaw_notify()
+   *  around the g_object_set() and makes GimpContext callbacks being
+   *  called in a much more predictable order. See bug #731279.
+   */
+  gimp_context_set_property (G_OBJECT (context),
+                             pspec->param_id,
+                             (const GValue *) &value,
+                             pspec);
+
+  g_value_unset (&value);
 }
 
 void
