@@ -3,6 +3,9 @@
 
 <ui>
   <popup action="tool-preset-editor-popup">
+    <menuitem action="tool-preset-editor-save" />
+    <menuitem action="tool-preset-editor-restore" />
+    <separator />
     <menuitem action="tool-preset-editor-edit-active" />
   </popup>
 </ui>

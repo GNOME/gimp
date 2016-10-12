@@ -9,6 +9,7 @@
     <menuitem action="tool-presets-duplicate" />
     <menuitem action="tool-presets-copy-location" />
     <menuitem action="tool-presets-show-in-file-manager" />
+    <menuitem action="tool-presets-save" />
     <menuitem action="tool-presets-restore" />
     <menuitem action="tool-presets-delete" />
     <separator />

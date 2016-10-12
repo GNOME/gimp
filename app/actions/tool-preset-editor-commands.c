@@ -30,10 +30,9 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimptoolpreset.h"
 
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
+#include "widgets/gimpdataeditor.h"
 
-#include "tool-presets-commands.h"
+#include "tool-preset-editor-commands.h"
 
 #include "gimp-intl.h"
 
@@ -41,17 +40,15 @@
 /*  public functions  */
 
 void
-tool_presets_save_cmd_callback (GtkAction *action,
-                                gpointer   data)
+tool_preset_editor_save_cmd_callback (GtkAction *action,
+                                      gpointer   data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpToolPreset      *preset;
-  GimpToolInfo        *tool_info;
+  GimpDataEditor *editor  = GIMP_DATA_EDITOR (data);
+  GimpContext    *context = editor->context;
+  GimpToolPreset *preset;
+  GimpToolInfo   *tool_info;
 
-  context = gimp_container_view_get_context (editor->view);
-
-  preset    = gimp_context_get_tool_preset (context);
+  preset    = GIMP_TOOL_PRESET (gimp_data_editor_get_data (editor));
   tool_info = gimp_context_get_tool (gimp_get_user_context (context->gimp));
 
   if (tool_info && preset)
@@ -77,16 +74,14 @@ tool_presets_save_cmd_callback (GtkAction *action,
 }
 
 void
-tool_presets_restore_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+tool_preset_editor_restore_cmd_callback (GtkAction *action,
+                                         gpointer   data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpToolPreset      *preset;
+  GimpDataEditor *editor  = GIMP_DATA_EDITOR (data);
+  GimpContext    *context = editor->context;
+  GimpToolPreset *preset;
 
-  context = gimp_container_view_get_context (editor->view);
-
-  preset = gimp_context_get_tool_preset (context);
+  preset = GIMP_TOOL_PRESET (gimp_data_editor_get_data (editor));
 
   if (preset)
     gimp_context_tool_preset_changed (context);

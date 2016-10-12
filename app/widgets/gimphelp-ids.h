@@ -352,6 +352,7 @@
 #define GIMP_HELP_DYNAMICS_EDITOR_DIALOG          "gimp-dynamics-editor-dialog"
 
 #define GIMP_HELP_TOOL_PRESET_EDITOR_DIALOG       "gimp-tool-preset-editor-dialog"
+#define GIMP_HELP_TOOL_PRESET_EDITOR_EDIT_ACTIVE  "gimp-tool-preset-editor-edit-active"
 
 #define GIMP_HELP_DYNAMICS_DIALOG                 "gimp-dynamics-dialog"
 #define GIMP_HELP_DYNAMICS_EDIT                   "gimp-dynamics-edit"
@@ -452,6 +453,7 @@
 #define GIMP_HELP_TOOL_PRESET_DUPLICATE           "gimp-tool-preset-duplicate"
 #define GIMP_HELP_TOOL_PRESET_COPY_LOCATION       "gimp-tool-preset-copy-location"
 #define GIMP_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER "gimp-tool-preset-show-in-file-manager"
+#define GIMP_HELP_TOOL_PRESET_SAVE                "gimp-tool-preset-save"
 #define GIMP_HELP_TOOL_PRESET_RESTORE             "gimp-tool-preset-restore"
 #define GIMP_HELP_TOOL_PRESET_DELETE              "gimp-tool-preset-delete"
 #define GIMP_HELP_TOOL_PRESET_REFRESH             "gimp-tool-preset-refresh"
