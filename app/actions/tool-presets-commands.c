@@ -89,5 +89,5 @@ tool_presets_restore_cmd_callback (GtkAction *action,
   preset = gimp_context_get_tool_preset (context);
 
   if (preset)
-    gimp_context_tool_preset_changed (context);
+    gimp_context_tool_preset_changed (gimp_get_user_context (context->gimp));
 }
