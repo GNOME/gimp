@@ -49,6 +49,7 @@
 #include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-autoscroll.h"
@@ -321,11 +322,21 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   if (gimp_display_shell_events (canvas, event, shell))
     return TRUE;
 
-  /*  ignore events on overlays, which are the canvas' children
+  /*  events on overlays have a different window, but these windows'
+   *  user_data can still be the canvas, we need to check manually if
+   *  the event's window and the canvas' window are different.
    */
-  if (gtk_widget_is_ancestor (gtk_get_event_widget (event), shell->canvas))
+  if (event->any.window != gtk_widget_get_window (canvas))
     {
-      return FALSE;
+      GtkWidget *event_widget;
+
+      gdk_window_get_user_data (event->any.window, (gpointer) &event_widget);
+
+      /*  if the event came from a different window than the canvas',
+       *  check if it came from a canvas child and bail out.
+       */
+      if (gtk_widget_get_ancestor (event_widget, GIMP_TYPE_CANVAS))
+        return FALSE;
     }
 
   display = shell->display;
